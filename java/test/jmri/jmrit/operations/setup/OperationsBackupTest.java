@@ -820,6 +820,8 @@ public class OperationsBackupTest extends TestCase {
 		Assert.assertEquals("Confirm default backup directory is empty", defaultBackupRoot.list().length, 0);
 
 		String[] actualList = backup.getBackupSetList();
+		
+		Assert.assertEquals("Confirm actual list length", actualList.length, 3);
 
 		for (int i = 0; i < 3; i++) {
 			Assert.assertEquals("Default set list", expectedList[i],

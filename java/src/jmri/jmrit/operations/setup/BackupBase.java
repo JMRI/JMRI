@@ -120,12 +120,13 @@ public abstract class BackupBase {
 	}
 
 	/**
-	 * Returns a list of the Backup Sets under the backup root.
+	 * Returns a sorted list of the Backup Sets under the backup root.
 	 * 
 	 */
 	public String[] getBackupSetList() {
 		String[] setList = _backupRoot.list();
-
+		// no guarantee of order, so we need to sort
+		jmri.util.StringUtil.sort(setList);
 		return setList;
 	}
 
