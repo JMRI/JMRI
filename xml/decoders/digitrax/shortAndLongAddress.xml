@@ -17,7 +17,7 @@
 <variables>
 
     <copyright xmlns="http://docbook.org/ns/docbook">
-      <year>2010</year><holder>JMRI</holder>
+      <year>2012</year><holder>JMRI</holder>
     </copyright>
   
     <authorgroup xmlns="http://docbook.org/ns/docbook">
@@ -28,16 +28,16 @@
 
     <revhistory xmlns="http://docbook.org/ns/docbook">
       <revision>
-        <revnumber>6</revnumber>
-        <date>2010-03-12</date>
+        <revnumber>32</revnumber>
+        <date>2012-12-27</date>
         <authorinitials>BJ</authorinitials>
         <revremark>Initial release as separate file</revremark>
       </revision>
       <revision>
-        <revnumber>5</revnumber>
-        <date>2003-12-05</date>
+        <revnumber>31</revnumber>
+        <date>2011-12-30</date>
         <authorinitials>BJ</authorinitials>
-        <revremark>Revision in original 0NMRA.xml file</revremark>
+        <revremark>Revision in original Digitrax_01x3.xml file</revremark>
       </revision> 
     </revhistory>
     
