@@ -20,13 +20,29 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1><a href="JMRI_2-12_Manual/index.shtml">JMRI® v2.12 Archieve</a></h1>
-<h1><a href="JMRI_2-14_manual/index.shtml" target="_blank">JMRI®   v2.14.1</a></h1>
-<h1><a href="DP3_2-14_manual/index.shtml" target="_blank">DecoderPro3&reg; 2.14</a></h1>
-<h1><a href="3-0_DecoderPro/index.shtml">Decoder Pro&reg; 3.0</a></h1>
-<h1><a href="3-0_DecoderPro3/index.shtml">DecoderPro3® 3.0</a></h1>
-
-<h3>Updated 7/28/2012</h3>
+<h1>JMRI&reg; User's Guides</h1>
+<h4>JMRI&reg; Version 2.12</h4>
+<blockquote>
+  <h4><a href="JMRI_2-12_Manual/index.shtml">JMRI® v2.12 Archieve</a></h4>
+</blockquote>
+<h4>JMRI&reg; Version 2.14</h4>
+<blockquote>
+  <h4><a href="JMRI_2-14_manual/index.shtml" target="_blank">JMRI®   v2.14.1</a></h4>
+  <h4><a href="DP3_2-14_manual/index.shtml" target="_blank">	DecoderPro3&reg; 2.14</a></h4>
+</blockquote>
+<h4>JMRI&reg; Version 3.0</h4>
+<blockquote>
+  <h4><a href="3-0_DecoderPro/index.shtml">DecoderPro&reg; 3.0</a></h4>
+  <h4><a href="3-0_DecoderPro3/index.shtml">DecoderPro3® 3.0</a></h4>
+  <h4><a href="#">JMRI® Operations Program 3.0</a></h4>
+</blockquote>
+<h4>JMRI&reg; Version 3.2</h4>
+<blockquote>
+  <h4><a href="#">DecoderPro® 3.2</a> </h4>
+  <h4><a href="#">DecoderPro3® 3.2</a></h4>
+  <h4><a href="#">JMRI® Operations Program 3.2</a></h4>
+</blockquote>
+<h3>Updated 12/28/2012</h3>
 
 <p>&nbsp;
 </p>
