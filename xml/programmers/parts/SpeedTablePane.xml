@@ -4,8 +4,12 @@
     <column>
         <row>
             <column>
-                <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control"/>
-                <label label="            To turn off, use Basic Speed Control pane"/>
+                <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
+                   <label xml:lang="it">Seleziona questo Pulsante per usare la Tabella Velocità per il controllo Velocità</label>
+                </display>
+                <label label="            To turn off, use Basic Speed Control pane">
+                <label xml:lang="it">Per disabilitare usare il Pannello Semplificato per il controllo Velocità</label>
+                </label> 
             </column>
         </row>
         <row>
@@ -17,7 +21,9 @@
         <row>
             <column>
                 <label label=" "/>
-                <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table"/>
+                <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table">
+                    <tooltip xml:lang="it">Seleziona Tabella Velocità del Costruttore o Tabella Personalizzata</tooltip>
+                </display>
             </column>
         </row>
         <row>
@@ -29,7 +35,9 @@
 <row>
             <column>
                 <label label=" "/>
-                <display item="Forward Trim" tooltip="Fine tune the forward voltage levels"/>
+                <display item="Forward Trim" tooltip="Fine tune the forward voltage levels">
+                   <tooltip xml:lang="it">Impostazione Fine Tensione motore in Avanti</tooltip>
+                </display>
                 <label label=" "/>
             </column>
             <column>
@@ -37,7 +45,9 @@
             </column>
             <column>
                 <label label=" "/>
-                <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels"/>
+                <display item="Reverse Trim" tooltip="Fine tune the reverse voltage levels">
+                  <tooltip xml:lang="it">Impostazione Fine Tensione motore in Indietro</tooltip>
+                </display>
                 <label label=" "/>
             </column>
         </row>

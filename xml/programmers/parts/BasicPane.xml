@@ -2,29 +2,50 @@
 <pane name="Basic" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <name xml:lang="fr">Basic(fr)</name>
     <name xml:lang="ca">Bàsic</name>
+    <name xml:lang="it">Semplificato</name>
     <column>
         <dccaddress/>
         <label label=" "/>
         <display item="Short Address" tooltip="Sets the Primary (2 digit) address">
             <tooltip xml:lang="it">Indirizzo Corto"</tooltip>
         </display>
-        <display item="Long Address" tooltip="Sets the extended (4 digit) address"/>
-        <display item="Address Format" tooltip="Determines whether loco will use short or long address"/>
+        <display item="Long Address" tooltip="Sets the extended (4 digit) address">
+            <tooltip xml:lang="it">Imposta l'indirizzo esteso (4 cifre)</tooltip>
+        </display>
+        <display item="Address Format" tooltip="Determines whether loco will use short or long address">
+            <tooltip xml:lang="it">Determina se la Loco usa l'indirizzo corto o quello esteso</tooltip>
+        </display>
         <label label=" "/>
-        <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward"/>
-        <display item="Speed Step Mode" tooltip="Sets the speed step mode for headlight control"/>
-        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)"/>
+        <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
+            <tooltip xml:lang="it">Imposta la Direzione di movimento della Loco per Comando Avanti</tooltip>
+        </display>
+        <display item="Speed Step Mode" tooltip="Sets the speed step mode for headlight control">
+            <tooltip xml:lang="it">Imposta la Modalit di Step Velocit per Comando Luci</tooltip>
+        </display>
+        <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
+            <tooltip xml:lang="it">Determina se la Loco può operare in CC (analogica)</tooltip>
+        </display>
     </column>
     <column>
         <label label=" "/>
         <label label=" "/>
-        <display item="User Id #1" tooltip="Sets a custom user ID or number"/>
-        <display item="User Id #2" tooltip="Sets a custom user ID or number"/>
+        <display item="User Id #1" tooltip="Sets a custom user ID or number">
+            <tooltip xml:lang="it">Imposta un ID Utente o Numero Personalizzato</tooltip>
+        </display>
+        <display item="User Id #2" tooltip="Sets a custom user ID or number">
+            <tooltip xml:lang="it">Imposta un ID Utente o Numero Personalizzato</tooltip>
+        </display>
         <label label=" "/>
         <separator/>
         <label label=" "/>
-        <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)"/>
-        <display item="Decoder Version" tooltip="The decoder version number (read only)"/>
-        <display item="Product Number" tooltip="The decoder product number (if used) (read only)"/>
+        <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
+            <tooltip xml:lang="it">ID Costruttore (sola lettura)</tooltip>
+        </display>
+        <display item="Decoder Version" tooltip="The decoder version number (read only)">
+            <tooltip xml:lang="it">Numero versione del Decoder (sola lettura)</tooltip>
+        </display>
+        <display item="Product Number" tooltip="The decoder product number (if used) (read only)">
+            <tooltip xml:lang="it">Codice di prodotto del Decoder (se usato) (sola lettura)</tooltip>
+        </display>
     </column>
 </pane>

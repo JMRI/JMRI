@@ -1,24 +1,50 @@
 <?xml version="1.0"?>
 <pane name="Motor" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
     <column>
-        <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco to overcome starting friction"/>
-        <display item="Accel" tooltip="Sets the acceleration rate (delay)"/>
-        <display item="Decel" tooltip="Sets the deceleration rate (delay)"/>
+        <display item="Kick Start" tooltip="Provides an initial higher voltage spike to loco to overcome starting friction">
+           <tooltip xml:lang="it">Fornisce un impulso di tensione iniziale per ovviare alla frizione in partenza</tooltip>
+        </display>
+        <display item="Accel" tooltip="Sets the acceleration rate (delay)">
+           <tooltip xml:lang="it">Imposta grado di accellerazione (ritardo)</tooltip>
+        </display>
+        <display item="Decel" tooltip="Sets the deceleration rate (delay)">
+           <tooltip xml:lang="it">Imposta grado di decellerazione (ritardo)</tooltip>
+        </display>
         <label label=" "/>
-        <display item="DC Brake Momentum" tooltip="Governs how loco responds in DC powered track block"/>
+        <display item="DC Brake Momentum" tooltip="Governs how loco responds in DC powered track block">
+          <tooltip xml:lang="it">Stabilisce come la loco risponde in in blocco Analogico (CC)</tooltip>
+        </display>
         <label label=" "/>
-        <display item="Total PWM Period" tooltip="Sets the motor drive frequency"/>
-        <display item="Motor PWM Frequency" tooltip="Sets the motor drive frequency"/>
-        <display item="Dither frequency" tooltip="Sets the frequency of starting voltage pulses"/>
-        <display item="Dither option" tooltip="Sets the amplitude of the starting voltage pulses"/>
+        <display item="Total PWM Period" tooltip="Sets the motor drive frequency">
+           <tooltip xml:lang="it">Imposta periodo impulsi al Motore</tooltip>
+        </display>
+        <display item="Motor PWM Frequency" tooltip="Sets the motor drive frequency">
+            <tooltip xml:lang="it">Imposta frequenza impulsi al Motore</tooltip>
+        </display>
+        <display item="Dither frequency" tooltip="Sets the frequency of starting voltage pulses">
+           <tooltip xml:lang="it">Imposta frequenza impulsi al Motore in partenza</tooltip>
+        </display>
+        <display item="Dither option" tooltip="Sets the amplitude of the starting voltage pulses">
+           <tooltip xml:lang="it">Imposta ampiezza impulsi al Motore in Partenza</tooltip>
+        </display>
         <label label=" "/>
         <display item="Load Control"/>
         <display item="EMF Enable"/>
-        <display item="EMF Control Reference" tooltip="If the engine doesn't reach maximum speed, reduce this value"/>
-        <display item="EMF Static Config" tooltip="EMF Static Config"/>
-        <display item="EMF Dynamic Config" tooltip="EMF Dynamic Config"/>
-        <display item="EMF Droop Config" tooltip="EMF Droop Config"/>
-        <display item="EMF Feedback Cutout" tooltip="Sets the speed step above which the back EMF motor control cuts off"/>
+        <display item="EMF Control Reference" tooltip="If the engine doesn't reach maximum speed, reduce this value">
+           <tooltip xml:lang="it">Se la loco non raggiunge la massima Velocità, diminuire questo Valore</tooltip>
+        </display>
+        <display item="EMF Static Config" tooltip="EMF Static Config">
+           <tooltip xml:lang="it">Configurazione Statica EMF</tooltip>
+        </display>
+        <display item="EMF Dynamic Config" tooltip="EMF Dynamic Config">
+            <tooltip xml:lang="it">Configurazione Dinamica EMF</tooltip>
+        </display>
+        <display item="EMF Droop Config" tooltip="EMF Droop Config">
+           <tooltip xml:lang="it">Configurazione Riduzione EMF</tooltip>
+        </display>
+        <display item="EMF Feedback Cutout" tooltip="Sets the speed step above which the back EMF motor control cuts off">
+           <tooltip xml:lang="it">Imposta il valore di velocità oltre il quale il controllo di Back-EMF viene tagliato</tooltip>
+        </display>
         <display item="EMF Option 1"/>
         <display item="EMF Option 2"/>
         <display item="EMF Option 3"/>

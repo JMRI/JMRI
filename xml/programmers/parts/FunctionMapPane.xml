@@ -4,7 +4,9 @@
     <column>
         <row>
             <column>
-                <label label="Use this sheet to determine which functions will control which outputs"/>
+                <label label="Use this sheet to determine which functions will control which outputs">
+                    <label xml:lang="it">Usa questo Pannello per associare le uscite alle Funzioni</label>
+                </label>
                 <label label=" "/>
             </column>
         </row>

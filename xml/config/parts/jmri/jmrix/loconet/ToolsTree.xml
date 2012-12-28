@@ -14,12 +14,12 @@
 
   <node><name>Monitor &amp; Control</name>
     <node><name>Monitor LocoNet
-     <name xml:lang="it">LocoNet Monitor</name>
+     <name xml:lang="it">Monitor LocoNet</name>
     </name>
         <panel>jmri.jmrix.loconet.locomon.LocoMonPane</panel>
     </node>
     <node><name>Monitor Slots
-     <name xml:lang="it">Slots Monitor</name>
+     <name xml:lang="it">Monitor Slots</name>
     </name>
         <panel>jmri.jmrix.loconet.slotmon.SlotMonPane</panel>
     </node>
