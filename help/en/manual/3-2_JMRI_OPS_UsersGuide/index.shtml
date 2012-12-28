@@ -1,0 +1,205 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: index.shtml 18615 2011-09-23 09:13:40Z dat7719 $ -->
+<title>Decoder Pro Manual: Index</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>JMRI&reg; v3.0 Operations User's Guide</h1>
+<h1>&nbsp;</h1>
+<h3>In work 8/4/2012</h3>
+<p>&nbsp;</p>
+<p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
+<p><strong>The programming of Digital
+  Command Control (DCC) decoders, (DecoderPro&reg;).<br>
+  Programming decoders and using throttle run trains, DecoderPro3&reg;</strong><strong><br>
+    Drawing computer based panels for depicting a  model railroad&nbsp;  layout , (PanelPro&reg;
+    ).<br>
+    Controlling the layout , (Layout Editor).<br>
+    Creating train manifests for duplicating railroad  operations, Operations<br>
+    Controlling the signals on the layout<br>
+    Controlling&nbsp;  lighting and sound in the room, and so forth. (SoundPro&reg;)</strong></p>
+<p>All this capability is contained in one program (JMRI) which has  several &ldquo;start-up&rdquo; screens for the various applications. </p>
+<p>&nbsp;</p>
+
+<hr>
+&nbsp;JMRI&reg; can  run on any computer system that will run Java 1.6.0 or later, whether it is  Macintosh, Windows, or Linux based. It does require that Java be installed on  the computer. You can get Java as a free (but very large...) download at:
+<p><a href="http://java.sun.com/getjava/" target="_blank">http://java.sun.com/getjava/</a>
+<p>If  this is your first visit to our manual we suggest that you take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+  to get an overview of what we&rsquo;re about to cover..
+<p>Note: All screen shots in this manual are from a Windows machine using the   "Metal" User Interface option   . While your screens will probably differ  in some layout details, they will be essentially the same. All   programming examples shown are with Digitrax PR3(MS100 mode) connected   to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive   samples will be Digitrax, except for sound examples.
+<p>Note: This entire manual has been updated to   correspond to DecoderPro 2.12, and the HTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
+<p>
+<div align="right">
+<h2>Download Print version of Manual (pdf format)
+</h2>
+<p>
+<p><a href="http://sourceforge.net/apps/trac/jmri/browser/trunk/jmri/help/en/manual/pdf/jmri_Man_3_0.pdf" target="_blank"><strong>manual version 3.0</strong></a></div>
+
+<h1>Table of Contents</h1>
+<h4><a name="Installing"></a>Installing JMRI</h4>
+<ul>
+<li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
+<li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI Software</a>
+</ul>
+<h4><a name="Main"></a>DecoderPro&reg; Main Window</h4>
+<ul>
+  <li><a href="Main_Main.shtml">Main Window</a></li>
+  <li></li>
+  <li>
+    <ul>
+      <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+        <ul>
+          <li><a href="Ops_Settings.shtml">Settings</a> </li>
+          <li><a href="Ops_Locations.shtml">Locations</a> </li>
+          <li><a href="Ops_Cars.shtml">Cars</a></li>
+          <li><a href="Ops_Engines.shtml">locomotives</a></li>
+          <li><a href="Ops_Routes.shtml">Routes</a></li>
+          <li><a href="Ops_Trains.shtml">Trains</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+    <ul>
+      <li><a href="Ops_Settings.shtml">Settings</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li><strong><a href="Ops_Settings.shtml#Options">Options</a></strong></li>
+              <li><strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong></li>
+              <li>Backup</li>
+              <li>Restore</li>
+              <li>Load Demo Files</li>
+              <li>Reset Database</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="Ops_Locations.shtml">Locations</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li><a href="Ops_schedule.shtml">Schedules</a></li>
+              <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
+              <li><a href="Ops_Cars.shtml">Show Cars</a>          </li>
+              <li>Print</li>
+              <li>Preview</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="Ops_Cars.shtml">Cars</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+                <ul>
+                  <li>Import from file</li>
+                  <li>Export to file</li>
+                  <li>Delete All Cars</li>
+                  <li>Print</li>
+                  <li>Preview</li>
+                </ul>
+              </li>
+              <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
+              <li><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></li>
+              <li><a href="Ops_Locations_setCars.shtml">Set Cars</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="Ops_Engines.shtml">Locomotives</a>
+        <ul>
+          <li><strong>Tools</strong>
+<ul>
+              <li>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow">
+                <ul>
+                  <li>Import from JMRI Roster</li>
+                  <li>Import from file</li>
+                  <li>Export to file</li>
+                  <li>Delete All Locomotives</li>
+                  <li>Print</li>
+                  <li>Preview</li>
+                </ul>
+              </li>
+              <li>Synchonize with NCE Consists</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="Ops_Routes.shtml">Routes</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li>Copy Routes</li>
+              <li>Set Train Icon Coordinates</li>
+              <li>Print</li>
+              <li>Preview</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="Ops_Trains.shtml">Trains</a>
+        <ul>
+          <li><strong>Tools</strong>
+            <ul>
+              <li><a href="Ops_Trains_BuildOptions.shtml">Build Options</a></li>
+              <li><a href="Ops_PrintOptions.shtml">Print Options</a></li>
+              <li><a href="Ops_TrainsModify.shtml">Modify Trains by Car Type</a></li>
+              <li>Timetable</li>
+              <li>Copy Train</li>
+              <li>Scripts</li>
+              <li>Print</li>
+              <li>Preview</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li></li>
+</ul>
+<table width="90%" border="1" align="center" cellpadding="2" cellspacing="1">
+<caption>
+    Revisions
+  </caption>
+  <tr>
+    <th width="8%" scope="col">Version</th>
+    <th width="8%" scope="col">Revision Date</th>
+    <th width="13%" scope="col">Editors</th>
+    <th width="71%" scope="col">Major Revisions</th>
+  </tr>
+  <tr>
+    <td align="left" valign="top">3.0</td>
+    <td align="left" valign="top">x/x/2012</td>
+    <td align="left" valign="top">Dale A. Tripp<br>
+      Bruce Shanks</td>
+    <td align="left" valign="top">Updated from JMRI 2.14.1 and removed from DecoderPro&reg; as separate Guide</td>
+  </tr>
+</table>
+<p>
+<hr>
+<div align=right>Go to the
+<a href="http://groups.yahoo.com/group/jmriusers/">
+JMRI Users home page on Yahoo Groups</a></div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
