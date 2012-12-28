@@ -5,32 +5,32 @@
     <column>
         <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
             <tooltip xml:lang="ca">Determina si una locomotora pot funcionar en CC</tooltip>
-            <tooltip xml:lang="it">Determina se una locomotiva puÚ funzionare in CC</tooltip>
+            <tooltip xml:lang="it">Determina se una locomotiva put funzionare in CC</tooltip>
         </display>
         <display item="Analog Vstart" tooltip="CV 60"/>
         <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
             <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adre√Åa curta √às zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto Ë Zero</tooltip>
+            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto e Zero</tooltip>
         </display>
         <display item="Radio Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
             <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adre√Åa curta √às zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto Ë Zero</tooltip>
+            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto e Zero</tooltip>
         </display>
         <display item="Zero-1 Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
             <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adre√Åa curta √às zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto Ë Zero</tooltip>
+            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto e Zero</tooltip>
         </display>
         <display item="Trix Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
             <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adre√Åa curta √às zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto Ë Zero</tooltip>
+            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto e Zero</tooltip>
         </display>
         <display item="CTC/Railcommand Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
             <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adre√Åa curta √às zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto Ë Zero</tooltip>
+            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto e Zero</tooltip>
         </display>
         <display item="FMZ(Fleischmann)" tooltip="Sets the alternate power source to use when the short address is zero">
             <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adre√Åa curta √às zero</tooltip>
-            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto Ë Zero</tooltip>
+            <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto e Zero</tooltip>
         </display>
     </column>
     <column>
