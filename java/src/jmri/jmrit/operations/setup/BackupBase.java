@@ -342,7 +342,6 @@ public abstract class BackupBase {
 			// Create the trial name, then see if it already exists.
 			fullName = String.format("%s_%02d", baseName, i);
 					
-			// bug workaround for Linux/NFS, File.exists() can be cached returning the wrong results (true)
 			boolean foundFileNameMatch = false;		
 			for (int j = 0; j < dirNames.length; j++) {
 				if (dirNames[j].equals(fullName)) {
@@ -353,11 +352,13 @@ public abstract class BackupBase {
 			if (!foundFileNameMatch)
 				return fullName;
 
+//			This should also work, commented out by D. Boudreau
+//			The Linux problem turned out to be related to the order
+//			files names are returned by list().
 //			File testPath = new File(_backupRoot, fullName);
 //
 //			if (!testPath.exists()) {
 //				return fullName; // Found an unused name
-
 
 			// Otherwise complain and keep trying...
 			log.debug("Operations backup directory: " + fullName
