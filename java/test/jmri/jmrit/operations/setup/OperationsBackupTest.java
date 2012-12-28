@@ -651,9 +651,10 @@ public class OperationsBackupTest extends TestCase {
 
 	public void testDefaultBackupSetList() throws IOException {
 		
-		// Added these two checks to confirm that all directories have been deleted
-		Assert.assertTrue("Auto back directory exists", defaultBackupRoot.exists());
+		// confirm that all directories have been deleted
+		Assert.assertTrue("Default directory exists", defaultBackupRoot.exists());
 		Assert.assertEquals("Confirm directory is empty", defaultBackupRoot.list().length, 0);
+		Assert.assertEquals("Confirm auto back up directory is empty", autoBackupRoot.list().length, 0);
 
 		// Make three backups and then get the list of set names
 		BackupBase backup = new DefaultBackup();
@@ -666,6 +667,9 @@ public class OperationsBackupTest extends TestCase {
 			backup.backupFilesToSetName(setName);
 			expectedList[i] = setName;
 		}
+		
+		Assert.assertEquals("Confirm default directory has the right number of files", defaultBackupRoot.list().length, 3);
+		Assert.assertEquals("Confirm auto back up directory is empty", autoBackupRoot.list().length, 0);
 
 		String[] actualList = backup.getBackupSetList();
 
@@ -791,9 +795,10 @@ public class OperationsBackupTest extends TestCase {
 
 	public void testAutoBackupSetList() throws IOException {
 		
-		// Added these two checks to confirm that all directories have been deleted
-		Assert.assertTrue("Auto back directory exists", autoBackupRoot.exists());
+		// confirm that all directories have been deleted
+		Assert.assertTrue("Auto backup directory exists", autoBackupRoot.exists());
 		Assert.assertEquals("Confirm directory is empty", autoBackupRoot.list().length, 0);
+		Assert.assertEquals("Confirm default backup directory is empty", defaultBackupRoot.list().length, 0);
 		
 		// Make three backups and then get the list of set names
 		BackupBase backup = new AutoBackup();
@@ -806,6 +811,9 @@ public class OperationsBackupTest extends TestCase {
 			backup.backupFilesToSetName(setName);
 			expectedList[i] = setName;
 		}
+		
+		Assert.assertEquals("Auto backup directory has the right number of files", autoBackupRoot.list().length, 3);
+		Assert.assertEquals("Confirm default backup directory is empty", defaultBackupRoot.list().length, 0);
 
 		String[] actualList = backup.getBackupSetList();
 
