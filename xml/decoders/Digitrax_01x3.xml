@@ -421,21 +421,12 @@
       
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
-        <decVal />
-        <label>Version ID</label>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
-        <decVal />
-        <label>Manufacturer ID</label>
-      </variable>
-      <variable label="Motor Drive Frequency" CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
-        <decVal />
-        <label>Motor Drive Frequency</label>
-        <comment>00 is fastest, 255 is slowest</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
+
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
       
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
       
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
