@@ -1,0 +1,74 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009 -->
+<!-- $Id: Main_Speedometer.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<TITLE>
+DecoderPro&reg; Main Window
+</TITLE>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<h1>DecoderPro3&reg; Main Window</h1>
+<h1>The Roster Table</h1>
+
+<div align=right>
+  <p><a href="dp3_Main_Main.shtml">Back </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The Roster Table in the main body of DecoderPro3&reg; displays all of the locomotives in your roster or selected roster groups.<br>
+<strong>SORT </strong>by any column by clicking on the column header. Roster above is sorted by DCC addresses.</p>
+<p><img src="images/dp3_rosterTable.png" width="900" height="401" alt="roster table"></p>
+<p>Hide/show any column by right clicking anywhere in the Roster header and checking columns to be displayed and unchecking columns to hide.</p>
+<p><img src="images/dp3_rosterTable01.png" width="737" height="292" alt="hide/show column"></p>
+<p>With columns hidden.<br>
+  <br>
+<img src="images/dp3_rosterTable02.png" width="711" height="310" alt="roster table hide"></p>
+<p>Selecting Actions using Context menu (Right Click ) on locomotive selected. Select the action you would like to perform.</p>
+<p><img src="images/dp3_rosterTable03.png" width="584" height="309" alt="table context"></p>
+<p>Double Click on Selected locomotive and Programming Window will open.</p>
+<p>Editing column of a Roster Entry in the table. select locomotive then click on column that you want to edit. Type your change.</p>
+<p>The following columns may be edited.<br>
+ID Col<br>
+Road Name<br>
+Road Number<br>
+Manufacturer<br>
+Model<br>
+Owner
+<br>
+</p>
+<table width="90%" border="0" cellspacing="1" cellpadding="2">
+  <tr>
+    <td><img src="images/dp3_rosterTableEditCol.png" width="300" height="195" alt="edit col"></td>
+    <td><img src="images/dp3_rosterTableEditCol01.png" width="378" height="223" alt="edit col"></td>
+  </tr>
+</table>
+<p><strong>Column sequence</strong> may be modified and Saved. Just Drag and Drop the column header to the desired position.</p>
+<p><strong>Column Width </strong>may be changed by grabbing the divider between the column until the double headed arrow shows and move the arrows to the desired column width.</p>
+<p>You may use the same technique to resize panes or the main window.<br>
+</p>
+<hr>
+
+<div align=right>
+<p><a href="dp3_Main_Main.shtml">Back </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
