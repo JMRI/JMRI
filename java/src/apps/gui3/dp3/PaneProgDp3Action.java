@@ -555,6 +555,12 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                     }
                 }
             });
+            if (_cvModel.getProgrammer()== null){
+                bottom.remove(readAllButton);
+                bottom.remove(writeAllButton);
+                bottom.revalidate();
+                add(bottom);
+            }
         }
         
         public void setCVValue(int cv, int value){

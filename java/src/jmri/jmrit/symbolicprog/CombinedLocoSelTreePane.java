@@ -200,15 +200,14 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                 }
              }
             } );
-
-
-        viewButtons = new JPanel();  // can't use object initialization, as invoked from superclass ctor
+        
+        viewButtons = new JPanel();
         iddecoder = addDecoderIdentButton();
         if (iddecoder!=null) {
-                viewButtons.add(iddecoder);
-        /*}
+            viewButtons.add(iddecoder);
+        }
         if (jmri.InstanceManager.programmerManagerInstance() != null &&
-            jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){*/
+            jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
             showAll = new JRadioButton(rbt.getString("LabelAll"));
             showAll.setSelected(true);
             showMatched = new JRadioButton(rbt.getString("LabelMatched"));
