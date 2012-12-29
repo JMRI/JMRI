@@ -664,7 +664,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if train is in route
 	 */
 	public boolean isTrainInRoute() {
-		return getCurrentLocationName() != "" && getTrainDepartsRouteLocation() != getCurrentLocation();
+		return !getCurrentLocationName().equals("") && getTrainDepartsRouteLocation() != getCurrentLocation();
 	}
 	
 	/**

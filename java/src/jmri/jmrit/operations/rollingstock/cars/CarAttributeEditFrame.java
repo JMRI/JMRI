@@ -214,6 +214,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	}
 	
 	static boolean showDialogBox = true;
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	private void addItemToCombobox (String addItem){
 		if(_comboboxName == CarEditFrame.ROAD){
 			CarRoads.instance().addName(addItem);

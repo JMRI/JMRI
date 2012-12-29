@@ -25,6 +25,7 @@ public class LocationsTableAction extends AbstractAction {
     }
 
     static LocationsTableFrame f = null;
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void actionPerformed(ActionEvent e) {
         // create a location table frame
     	if (f == null || !f.isVisible()){

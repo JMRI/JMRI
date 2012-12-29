@@ -341,7 +341,7 @@ public class ImportEngines extends Thread {
 								}						
 							}
 							if (!status.equals(Track.OKAY)){
-								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToForceCar"),new Object[]{(engineRoad+" "+engineNumber), engineLocation, engineTrack}),
+								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToForceEngine"),new Object[]{(engineRoad+" "+engineNumber), engineLocation, engineTrack}),
 										rb.getString("OverRide"),
 										JOptionPane.YES_NO_OPTION);
 								if (results == JOptionPane.YES_OPTION){

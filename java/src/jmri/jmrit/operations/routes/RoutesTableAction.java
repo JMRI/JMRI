@@ -24,6 +24,7 @@ public class RoutesTableAction extends AbstractAction {
     }
 
     static RoutesTableFrame f = null;
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void actionPerformed(ActionEvent e) {
         // create a route table frame
     	if (f == null || !f.isVisible()){

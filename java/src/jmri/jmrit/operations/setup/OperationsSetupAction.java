@@ -23,6 +23,7 @@ public class OperationsSetupAction extends AbstractAction {
     }
 
     static OperationsSetupFrame f = null;
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
     	if (f == null || !f.isVisible()){

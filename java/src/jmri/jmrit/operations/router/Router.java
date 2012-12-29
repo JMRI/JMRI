@@ -129,7 +129,7 @@ public class Router extends TrainCommon {
 						&& clone.getDestinationTrack() != null && clone.getDestinationTrack().getAlternativeTrack() != null){
 					String status = car.setDestination(clone.getDestination(), clone.getDestinationTrack().getAlternativeTrack());
 					if (status.equals(Track.OKAY)){
-						if (_train == null || (_train != null && _train.servicesCar(car))){
+						if (_train == null || _train.servicesCar(car)){
 							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("RouterSendCarToAlternative"),new Object[]{car.toString(), clone.getDestinationTrack().getAlternativeTrack().getName(), clone.getDestination().getName()}));
 							return true;
 						}

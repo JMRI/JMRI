@@ -31,7 +31,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     
 	/** record the single instance **/
 	private static ScheduleManager _instance = null;
-	private static int _id = 0;
+	private int _id = 0;
 
 	public static synchronized ScheduleManager instance() {
 		if (_instance == null) {

@@ -1577,8 +1577,10 @@ public class TrainBuilder extends TrainCommon{
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
 			Car car = carManager.getById(carList.get(carIndex));
 			// build failure if car departing staging without a destination and a train
-			if (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null && 
-					(car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)){
+			if (car.getLocationName().equals(departLocation.getName()) 
+					&& (car.getDestination() == null 
+					|| car.getDestinationTrack() == null 
+					|| car.getTrain() == null)){
 				carCount++;
 				if (carCount < 21)
 					buf.append(NEW_LINE + " "+ car.toString());
