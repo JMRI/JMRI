@@ -1126,10 +1126,7 @@
         <label>Verbal CV Inquiry</label>
         <comment>CV64</comment>
       </variable>
-      <variable label="Forward Trim" CV="66" default="128">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>

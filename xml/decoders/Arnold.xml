@@ -797,9 +797,7 @@
 	<variable label="CV65(Range 0-255)" CV="65"	default="192">
 		<decVal  max="255"/>
 	</variable>
-	<variable label="Forward Trim" CV="66" default="0">
-		<decVal max="255"/>
-	</variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
 	<variable label="Speed Table" CV="67">
 		<speedTableVal/>
 	</variable>
@@ -887,9 +885,7 @@
 	<variable label="CV94(Range 0 - 255)" CV="94" default="255">
 		<decVal max="255"/>
 	</variable>
-	<variable label="Reverse Trim" CV="95" default="0">
-		<decVal max="255"/>
-	</variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
 	<variable label="CV96(Range 0 - 255)" CV="96" default="0">
 		<decVal max="255"/>
 	</variable>

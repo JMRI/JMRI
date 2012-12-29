@@ -1787,18 +1787,12 @@
         <label>Sound Level</label>
       </variable>
 <!-- CV 64 left out (Adressing in Motorola-format)-->
-      <variable label="Forward Trim" CV="66" default="0">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="0">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable label="Braking Noise Start" CV="112" default="12" item="Sound Option 7">
         <decVal/>

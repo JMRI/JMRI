@@ -952,37 +952,7 @@
       </variable>
     </variables>
   </decoder>
-<!--		
-<pane name="Motor">
-		<column>
-			<display item="Acceleration" tooltip="CV 3"/>
-			<display item="Deceleration" tooltip="CV 4"/>
-			<label label=" "/>
-			<display item="Forward Trim" tooltip="CV 66"/>
-			<display item="Reverse Trim" tooltip="CV 95"/>
-			<label label=" "/>
-			<display item="Total PWM Period" tooltip="CV 9, read manual"/>
-			<separator/>
-			<display item="PWM period low/high" tooltip="CV 29, bit 7, read manual"/>
-		</column>
-		
-		<column>
-			<display item="Exponential Acceleration" tooltip="CV 121"/>
-			<display item="Exponential Deceleration" tooltip="CV 122"/>
-			<display item="Adapts Acceleration and Deceleration" tooltip="CV 123"/>
-		</column>
 
-		<column>
-			<display item="EMF Feedback Cutoff" tooltip="CV 10"/>
-			<display item="Volume EMF Feedback Cutoff" tooltip="CV 113"/>
-			<display item="BEMF Pull" tooltip="CV 50"/>
-			<label label=" "/>
-			<display item="P adjustment" tooltip="CV 51"/>
-			<display item="I adjustment" tooltip="CV 52"/>
-			<display item="Adjust EMK Voltage" tooltip="CV 49"/>
-		</column>
-	</pane>
--->
   <pane name="Output Handling">
     <column>
       <display item="Output Reduction" layout="below" format="vslider" label="" tooltip="CV 54">

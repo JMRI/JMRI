@@ -2359,11 +2359,7 @@
         <decVal/>
         <label>Analog Vmax</label>
       </variable>
-<!-- NC addition CV 65 -->
-      <variable label="Kick Start" CV="65" tooltip="CV65">
-        <decVal/>
-        <label>Kick Start</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <variable label="Forward Trim" CV="66" default="128" tooltip="CV66 &lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Forward Trim</label>
@@ -2372,10 +2368,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="128" tooltip="CV95 &lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <variable label="User Private ID #1" CV="105" tooltip="CV105 After reset equals minor revision code" item="User Id #1">
         <decVal/>
         <label>User Private ID #1</label>

@@ -343,10 +343,7 @@
         <label>Rail wheel clack</label>
         <comment>Range 0-15</comment>
       </variable>
-      <variable label="Kick Start" CV="65">
-        <decVal/>
-        <label>Kick Start</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>

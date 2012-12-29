@@ -789,22 +789,13 @@
         <label>ZTC Real Slow Mode Tuning</label>
         <comment>allows fine tuning of the speed range</comment>
       </variable>
-      <variable label="Kick Start" CV="65">
-        <decVal/>
-        <label>Kick Start</label>
-      </variable>
-      <variable label="Forward Trim" CV="66">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <variable label="User Id #1" CV="105">
         <decVal/>
         <label>User Id #1</label>

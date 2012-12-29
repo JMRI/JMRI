@@ -1458,14 +1458,8 @@
         <label>Grade crossing logic hold time</label>
         <comment>0-15 seconds</comment>
       </variable>
-      <variable label="Forward Trim" CV="66">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
-      <variable label="Reverse Trim" CV="95">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>

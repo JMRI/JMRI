@@ -720,10 +720,7 @@
         <decVal min="0" max="15"/>
         <label>Dimming Intensity, Output X2 (0-15)</label>
       </variable>
-      <variable label="Kick Start" CV="65">
-        <decVal/>
-        <label>Kick Start</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal>
           <speedTableEntry step="1" value="0"/>

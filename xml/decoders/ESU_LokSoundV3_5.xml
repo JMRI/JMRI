@@ -689,12 +689,7 @@
         <label>Speed Table</label>
         <label xml:lang="fr">Courbe de vitesse</label>
       </variable>
-      <variable item="Reverse Trim" CV="95" default="0" comment="Range 0-255">
-        <decVal/>
-        <label>Reverse Trim</label>
-        <label xml:lang="fr">Correction vitesse arrière</label>
-        <comment xml:lang="fr">Valeur  0-255</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable item="Blinking Rate (4-64)" CV="112" default="33" comment="Controls Blink Interval">
         <decVal/>

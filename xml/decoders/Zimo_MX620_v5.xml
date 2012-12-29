@@ -2193,18 +2193,12 @@
         <decVal min="0" max="9"/>
         <label>Ditch Light Off Time</label>
       </variable>
-      <variable label="Forward Trim" CV="66" default="0">
-        <decVal/>
-        <label>Forward Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim" CV="95" default="0">
-        <decVal/>
-        <label>Reverse Trim</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <variable label="User Data #1" CV="105" item="User Id #1">
         <decVal/>
         <label>User Data #1</label>

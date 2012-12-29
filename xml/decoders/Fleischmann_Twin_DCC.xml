@@ -378,9 +378,6 @@
 		<variable label="Motor Switch-off Threshold" CV="57" item="Advanced Group 2 Option 2" default="13">
 			<decVal />
 		</variable>
-
-	  
-	  
 	
 		<variable label="Forward Trim (0-255)" CV="66"
 			item="Forward Trim" default="128"
@@ -401,9 +398,6 @@
 				Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
 			<decVal/>
 		</variable>
-			
-
-
 
 	</variables>
     <resets>

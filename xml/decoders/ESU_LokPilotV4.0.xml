@@ -509,11 +509,7 @@
         <decVal/>
         <label>BEMF Dynamic Drive Control'</label>
       </variable>
-      <variable label="Forward Trim" CV="66" default="128" comment="Range 0-255">
-        <decVal/>
-        <label>Forward Trim</label>
-        <comment>Range 0-255</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
