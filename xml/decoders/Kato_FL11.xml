@@ -1,9 +1,10 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
 <!-- Copyright (C) JMRI 2003, 2004, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <!-- $Id: Kato_FL11.xml 17977 2011-10-03 03:23:46Z zoo $ -->
-<decoder-config>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 		 <version author="John Crellin" version="1.0" lastUpdated="20111003"/>
 
 <decoder>

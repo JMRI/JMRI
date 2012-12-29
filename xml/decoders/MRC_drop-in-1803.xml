@@ -1,4 +1,5 @@
 <?xml version='1.0' encoding='ISO-8859-1'?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007,2008 All rights reserved                  -->
 <!-- $Id: MRC_soundbrilliance1803.xml,v 12011/08/14 03:38:52 van nort Exp $ -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under   -->

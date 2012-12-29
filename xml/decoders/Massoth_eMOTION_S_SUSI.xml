@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
 <!-- $Id: Massoth_eMOTION_S_SUSI.xml,v 1.6 2008/02/03 18:51:01 jacobsen Exp $ -->
@@ -16,7 +15,7 @@
 <!-- for more details.                                                      -->
 
 
-<decoder-config>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 		<version author="Jeff Schmaltz escopetas@comcast.net"
 			version="1.0" lastUpdated="20110820" />
 <!-- 

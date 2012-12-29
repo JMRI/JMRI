@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
 <!--$Id$ -->
@@ -15,7 +14,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config showEmptyPanes = "no">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
+ showEmptyPanes = "no">
 		<version author="Alain Carasso Guy Coquet"
 			version="1.0" lastUpdated="20110320" />
 
