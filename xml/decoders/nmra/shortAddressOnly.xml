@@ -44,7 +44,8 @@
     <variable label="Primary Address" CV="1" comment="Short address"
                     item="Short Address"  default="03">
         <shortAddressVal/>
-        <label xml:lang="fr">Primary Address(fr)</label>
+        <label xml:lang="fr">Adresse décodeur</label>
+        <comment xml:lang="fr">Adresse courte</comment>
     </variable>
 
 </variables>

@@ -44,12 +44,12 @@
     <variable label="Manufacturer Version No: " CV="7" readOnly="yes"
                     item="Decoder Version">
         <decVal/>
-        <label xml:lang="fr">Manufacturer Version No: (fr)</label>
+        <label xml:lang="fr">Version décodeur</label>
     </variable>
     <variable label="Manufacturer ID: " CV="8" readOnly="yes"
                     item="Manufacturer">
         <decVal/>
-        <label xml:lang="fr">Manufacturer ID: (fr)</label>
+        <label xml:lang="fr">ID constructeur</label>
     </variable>
 
 </variables>

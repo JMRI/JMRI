@@ -44,13 +44,14 @@
     <variable label="Primary Address" CV="1" comment="Short address"
                     item="Short Address"  default="03">
         <shortAddressVal/>
-        <label xml:lang="fr">Primary Address(fr)</label>
+        <label xml:lang="fr">Adresse décodeur</label>
+        <comment xml:lang="fr">Adresse courte</comment>
     </variable>
 
     <variable label="Extended Address" CV="17"
                     item="Long Address" >
         <longAddressVal/>
-        <label xml:lang="fr">Extended Address(fr)</label>
+        <label xml:lang="fr">Adresse longue</label>
     </variable>
 
     <variable label="Address Format" CV="29" mask="XXVXXXXX">
@@ -58,7 +59,7 @@
             <enumChoice choice="One byte (short) address"/>
             <enumChoice choice="Two byte (extended) address"/>
             </enumVal>
-        <label xml:lang="fr">Address Format(fr)</label>
+        <label xml:lang="fr">Config étendue</label>
     </variable>
 
 </variables>

@@ -45,7 +45,6 @@
       <variable label="Kick Start" item="Kick Start" CV="65">
         <decVal/>
         <label xml:lang="fr">Kick Start(fr)</label>
-        <label xml:lang="ca">Kick Start(ca)</label>
       </variable>
     
 </variables>

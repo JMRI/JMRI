@@ -44,12 +44,12 @@
     <variable label="Acceleration Rate" CV="3"
                     item="Accel" >
         <decVal max="31"/>
-        <label xml:lang="fr">Acceleration Rate(fr)</label>
+        <label xml:lang="fr">Accelération</label>
     </variable>
     <variable label="Deceleration Rate" CV="4"
                     item="Decel">
         <decVal max="31"/>
-        <label xml:lang="fr">Deceleration Rate(fr)</label>
+        <label xml:lang="fr">Décéleration</label>
     </variable>
  
 </variables>

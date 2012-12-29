@@ -43,15 +43,8 @@
     
     
       <variable label="Locomotive Direction" item="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label xml:lang="fr">Locomotive Direction(fr)</label>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label xml:lang="fr">Sens normal de marche</label>
       </variable>
     
 </variables>

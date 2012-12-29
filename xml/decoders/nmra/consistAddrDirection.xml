@@ -43,15 +43,12 @@
 
     <variable label="Consist Address" item="Consist Address" CV="19" mask="XVVVVVVV">
         <decVal/>
-        <label xml:lang="fr">Consist Address(fr)</label>
+        <label xml:lang="fr">Addresse UM</label>
     </variable>
     
     <variable label="Consist Direction" item="Consist Direction"  CV="19" mask="VXXXXXXX">
-        <enumVal>
-            <enumChoice choice="Normal"></enumChoice>
-            <enumChoice choice="Reversed"></enumChoice>
-            </enumVal>
-        <label xml:lang="fr">Consist Direction(fr)</label>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label xml:lang="fr">Direction UM</label>
     </variable>
     
 </variables>

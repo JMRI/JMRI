@@ -42,9 +42,10 @@
     </revhistory>
     
     
-      <variable label="Reverse Trim" item="Reverse Trim" CV="95">
+      <variable label="Reverse Trim" item="Reverse Trim" CV="95" comment="Range 0-255">
         <decVal/>
-        <label xml:lang="fr">Reverse Trim(fr)</label>
+        <label xml:lang="fr">Correction vitesse arrière</label>
+        <comment xml:lang="fr">Valeur 0-255(</comment>
       </variable>
     
 </variables>
