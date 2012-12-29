@@ -17,16 +17,16 @@
   <version author="Walter Thompson wsthompson@earthlink.net" version="11" lastUpdated="20080414"/>
   <version author="Michael Mosher" version="10" lastUpdated="20070820"/>
   <version author="Michael Mosher" version="9" lastUpdated="20050817"/>
-<!-- version 4: updates to minOut usage, function mapping -->
-<!-- version 5: correct to CV 56 for some options -->
-<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
-<!-- version 7: rename to make nicer tree -->
-<!-- version 8: added CV105&106  -->
-<!-- version 9: (20050817 BobJ): numFns corrected from 8 to 10 -->
-<!-- version 10: fixed horn/bell func map default bug -->
-<!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
-<!--            added Reset option -->
-<!-- version 12: added CV3&4  -->
+  <!-- version 4: updates to minOut usage, function mapping -->
+  <!-- version 5: correct to CV 56 for some options -->
+  <!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
+  <!-- version 7: rename to make nicer tree -->
+  <!-- version 8: added CV105&106  -->
+  <!-- version 9: (20050817 BobJ): numFns corrected from 8 to 10 -->
+  <!-- version 10: fixed horn/bell func map default bug -->
+  <!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+  <!--            added Reset option -->
+  <!-- version 12: added CV3&4  -->
   <decoder>
     <family name="DSX Diesel" mfg="Throttle-Up (SoundTraxx)">
       <model model="DSX Diesel" numOuts="0" numFns="10">
@@ -35,14 +35,14 @@
         <output name="Horn"/>
         <output name="RPM+"/>
         <output name="RPM-"/>
-<!--output name="3" label="F5/grn"/-->
-<!--output name="4" label="F6/brwn"/-->
+        <!--output name="3" label="F5/grn"/-->
+        <!--output name="4" label="F6/brwn"/-->
         <output name="Coupler"/>
         <output name="DynBrake"/>
         <output name="Dim"/>
         <output name="Mute"/>
-<!-- There are no electrical outputs -->
-<!-- for the DSX version -->
+        <!-- There are no electrical outputs -->
+        <!-- for the DSX version -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -1146,7 +1146,7 @@
         </enumVal>
         <label>F8 controls output Mute</label>
       </variable>
-<!-- Sound section -->
+      <!-- Sound section -->
       <variable label="Startup Mode" CV="56" mask="XXXXXXXV" item="Sound Option 1" default="1">
         <enumVal>
           <enumChoice choice="On at power up">
@@ -1180,7 +1180,7 @@
         </enumVal>
         <label>Engine RPM Interlock</label>
       </variable>
-<!-- Volumes section -->
+      <!-- Volumes section -->
       <variable label="Exhaust Auto Notching Control" CV="58" mask="XXXXVVVV" item="Sound Setting 1" default="7" comment="Number of speed steps per throttle notch.">
         <decVal max="15"/>
         <label>Exhaust Auto Notching Control</label>

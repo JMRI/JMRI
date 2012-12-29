@@ -15,8 +15,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="2" lastUpdated="20090831"/>
   <version author="phill_perry@bigpond.com" version="1" lastUpdated="20070630"/>
-<!-- Version 1 - made from 0NMRA.xml -->
-<!-- Version 2 - Corrected mfg. spelling -->
+  <!-- Version 1 - made from 0NMRA.xml -->
+  <!-- Version 2 - Corrected mfg. spelling -->
   <decoder>
     <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive">
       <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no"/>

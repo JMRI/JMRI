@@ -2,69 +2,48 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- $Id: PpP_Des3.xml 19243 2012-11-29 23:10:10Z fmco $ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-		<version author="http://www.ppp-digital.es" version="1" lastUpdated="20121212"/>
-			
-<decoder>
-	<family name="PpP Decoders"  mfg="PpP" 
- 	lowVersionID="22" highVersionID="22"
- 	comment="PpP-Des3 decoder.">
-	<model model="PpP-Des3" />
-	</family>
-
-<programming direct="yes" paged="yes" register="no" ops="no"></programming>
-
-<variables>
-	<variable label="Output 1. Pulse time" CV="3" default="6" 	comment="Output 1. Pulse time" item="pCV3">
-	<decVal min="1" max="255"/>
-     </variable>
-	
-	<variable label="Output 2. Pulse time" CV="4" default="6" 	comment="Output 2. Pulse time" item="pCV4">
-     <decVal min="1" max="255"/>
-     </variable>
-
-	<variable label="Output 3. Pulse time" CV="5" default="6" 	comment="Output 3. Pulse time" item="pCV5">
-     <decVal min="1" max="255"/>
-     </variable>
-	
-	<variable label="Output 4. Pulse time" CV="6" default="6" 	comment="Output 4. Pulse time" item="pCV6">
-     <decVal min="1" max="255"/>
-     </variable>
-
-	<variable label="Decoder Version" CV="7" readOnly="yes"  	default="22">
-	<decVal min="0" max = "255"></decVal>
-	</variable>
-					
-	<variable label="Manufacturer" CV="8" readOnly="yes" 	default="74">
-	<decVal min="0" max = "255"></decVal>
-	</variable>
-
-
-	<variable label="Turnout type" CV="33" mask="XXXXXXVV" 	default="0" comment="Turnout type" item="pCV33">
-	<enumVal>
-		<enumChoice choice="4 normal turnouts" value="0"/>    
-		<enumChoice choice="1 triple turnout and 1 normal turnout"  value="1"/>
-		<enumChoice choice="2 triple turnouts"  value="2"/>
-	</enumVal>
-     </variable>
-
-</variables>	
-	
-</decoder>
-  
-<pane name="PpP">
-
-<column>
+  <version author="http://www.ppp-digital.es" version="1" lastUpdated="20121212"/>
+  <decoder>
+    <family name="PpP Decoders" mfg="PpP" lowVersionID="22" highVersionID="22" comment="PpP-Des3 decoder.">
+      <model model="PpP-Des3"/>
+    </family>
+    <programming direct="yes" paged="yes" register="no" ops="no"/>
+    <variables>
+      <variable label="Output 1. Pulse time" CV="3" default="6" comment="Output 1. Pulse time" item="pCV3">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Output 2. Pulse time" CV="4" default="6" comment="Output 2. Pulse time" item="pCV4">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Output 3. Pulse time" CV="5" default="6" comment="Output 3. Pulse time" item="pCV5">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Output 4. Pulse time" CV="6" default="6" comment="Output 4. Pulse time" item="pCV6">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Decoder Version" CV="7" readOnly="yes" default="22">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Manufacturer" CV="8" readOnly="yes" default="74">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Turnout type" CV="33" mask="XXXXXXVV" default="0" comment="Turnout type" item="pCV33">
+        <enumVal>
+          <enumChoice choice="4 normal turnouts" value="0"/>
+          <enumChoice choice="1 triple turnout and 1 normal turnout" value="1"/>
+          <enumChoice choice="2 triple turnouts" value="2"/>
+        </enumVal>
+      </variable>
+    </variables>
+  </decoder>
+  <pane name="PpP">
+    <column>
       <display item="pCV3"/>
       <display item="pCV4"/>
       <display item="pCV5"/>
       <display item="pCV6"/>
-	
       <display item="pCV33"/>
-</column>
-<name>PpP Panel</name>
-</pane>
-
-
-
+    </column>
+    <name>PpP Panel</name>
+  </pane>
 </decoder-config>
-

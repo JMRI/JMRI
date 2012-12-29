@@ -14,13 +14,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="afticarr@sympatico.ca" version="4" lastUpdated="20030209"/>
-<!-- Created from version 1 of the CVProducts_AD4 file -->
-<!-- Added Manufacturer ID and Version Info - Read Only -->
-<!-- Set appropriate programming modes - Direct and Ops-->
-<!-- Reformatted AD4 Pane Objects -->
-<!-- Changed Input Line drop down menus to checkboxes -->
-<!-- V3 changed version range -->
-<!-- V4 removed ops mode, as accessory decoders not yet supported in JMRI -->
+  <!-- Created from version 1 of the CVProducts_AD4 file -->
+  <!-- Added Manufacturer ID and Version Info - Read Only -->
+  <!-- Set appropriate programming modes - Direct and Ops-->
+  <!-- Reformatted AD4 Pane Objects -->
+  <!-- Changed Input Line drop down menus to checkboxes -->
+  <!-- V3 changed version range -->
+  <!-- V4 removed ops mode, as accessory decoders not yet supported in JMRI -->
   <decoder>
     <family name="AD4" mfg="CVP Products" lowVersionID="40" highVersionID="65" type="stationary">
       <model model="AD4" nmraWarrant="yes" nmraWarrantStart="2005-06"/>

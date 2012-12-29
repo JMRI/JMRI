@@ -15,9 +15,9 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="1" lastUpdated="20071221"/>
   <version author="Marc Fournier forfoum@videotron.ca" version="2" lastUpdated="20090624"/>
-<!-- Ver 1  Made from the MRC_1645 file -->
-<!-- Ver 2  Changed family to group Athearn together, cleanup, moved the -->
-<!--        consist light function into the consist TAB -->
+  <!-- Ver 1  Made from the MRC_1645 file -->
+  <!-- Ver 2  Changed family to group Athearn together, cleanup, moved the -->
+  <!--        consist light function into the consist TAB -->
   <decoder>
     <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Athearn Genesis F Unit" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes">

@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20090218"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080127"/>
-<!-- 
+  <!-- 
       This decoder XML is meant to be used with the "Custom" programmer format.
       The pane definitions are included below the decoder definition.  The Massoth
       decoders seem to fit the description of "weird" as mentioned in that
@@ -99,7 +99,7 @@
         <shortAddressVal/>
         <label>Short Address</label>
       </variable>
-<!-- eMOTION 8FL document had motor CVs 2-6, LED document did not
+      <!-- eMOTION 8FL document had motor CVs 2-6, LED document did not
                      Left them out as they make no sense in a function/light decoder
                 -->
       <variable label="Software Version Number" CV="7" item="Decoder Version" tooltip="The decoder version number (read only) CV7">
@@ -717,7 +717,7 @@
         </enumVal>
         <label>F2: Special Function: Select Special Function</label>
       </variable>
-<!-- Do not attempt to read CV 105 on an LGB decoder -->
+      <!-- Do not attempt to read CV 105 on an LGB decoder -->
       <variable label="ID for Decoder Type" CV="106" readOnly="yes" item="Decoder Type" tooltip="ID for Decoder Type (read only)(Only needed for Software Update) CV106">
         <decVal/>
         <label>ID for Decoder Type</label>

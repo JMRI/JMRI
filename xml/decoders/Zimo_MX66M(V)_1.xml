@@ -14,8 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="sip@euronet.nl" version="1.1" lastUpdated="20031008"/>
-<!-- Based on the contribution of many others -->
-<!-- V 1.1 changed spelling of "behavior" (Jack Shall) -->
+  <!-- Based on the contribution of many others -->
+  <!-- V 1.1 changed spelling of "behavior" (Jack Shall) -->
   <decoder>
     <family name="Zimo Silent BEMF decoders, large scales" mfg="Zimo">
       <model model="MX66M(V) version 3/11" lowVersionID="3" highVersionID="11" maxInputVolts="12-24V" maxMotorCurrent="3A, peak=5A for 5 sec." maxTotalCurrent="3A" formFactor="0, LGB, 1, 2" numOuts="14" numFns="12">
@@ -89,7 +89,7 @@
         <label>EMF Feedback Cutoff</label>
         <comment>Range 0-252</comment>
       </variable>
-<!-- Deleted all CV 11 thru 16 references-->
+      <!-- Deleted all CV 11 thru 16 references-->
       <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
         <longAddressVal/>
         <label>Long Address</label>

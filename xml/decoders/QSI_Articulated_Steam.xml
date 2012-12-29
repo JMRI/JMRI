@@ -15,19 +15,19 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Walter Thompson" version="7" lastUpdated="20080412"/>
   <version author="Walter Thompson" version="8" lastUpdated="20080511"/>
-<!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
-<!-- version 2 - Changed "upgrade" notice on tabs to reflect 1.5.8 - Howard -->
-<!-- version 3 - Changed labels and tooltips for CV 23 & 24 - Howard -->
-<!-- version 3 - Added CV 64 to QSI Misc. tab - Howard -->
-<!-- version 4 - added copyright information - Howard -->
-<!-- version 4 - updated format of Sound/Volume tab - Howard -->
-<!-- version 5 - Updated info on misc. tab - Howard -->
-<!-- version 6 - Removed QSI ver. 6 models to new file - Howard -->
-<!-- version 6 - Added product number variable and build information
+  <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
+  <!-- version 2 - Changed "upgrade" notice on tabs to reflect 1.5.8 - Howard -->
+  <!-- version 3 - Changed labels and tooltips for CV 23 & 24 - Howard -->
+  <!-- version 3 - Added CV 64 to QSI Misc. tab - Howard -->
+  <!-- version 4 - added copyright information - Howard -->
+  <!-- version 4 - updated format of Sound/Volume tab - Howard -->
+  <!-- version 5 - Updated info on misc. tab - Howard -->
+  <!-- version 6 - Removed QSI ver. 6 models to new file - Howard -->
+  <!-- version 6 - Added product number variable and build information
                    on Misc. pane - Howard -->
-<!-- version 7 - Added "Throttle mode" and "Speed to MPH scale" to QSI 
+  <!-- version 7 - Added "Throttle mode" and "Speed to MPH scale" to QSI 
                    Misc. pane - wsthompson@earthlink.net -->
-<!-- Version 8 add throttle mode Walt Thompson -->
+  <!-- Version 8 add throttle mode Walt Thompson -->
   <decoder>
     <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5">
       <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" numFns="14" numOuts="14" productID="403">
@@ -409,7 +409,7 @@
         </enumVal>
         <label>Power Source Conversion</label>
       </variable>
-<!-- This bit is not used by QSI
+      <!-- This bit is not used by QSI
     <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX"
           item="Advanced Ack">
       <enumVal>
@@ -1683,7 +1683,7 @@
         <label>Programming Verbal Acknowledgement</label>
         <comment>CV62</comment>
       </variable>
-<!-- need to make this work for indexed CVs as well - TBD -->
+      <!-- need to make this work for indexed CVs as well - TBD -->
       <variable label="Verbal CV Inquiry" CV="64" opsOnly="yes" writeOnly="yes" comment="CV64" item="Verbal CV Inquiry">
         <decVal/>
         <label>Verbal CV Inquiry</label>
@@ -1703,8 +1703,8 @@
       </variable>
       <constant item="PICV" default="49" comment="CV used for Primary Index"/>
       <constant item="SICV" default="50" comment="CV used for Secondary Index"/>
-<!-- QSI CV.PI.SI formatted items -->
-<!-- Sound control -->
+      <!-- QSI CV.PI.SI formatted items -->
+      <!-- Sound control -->
       <ivariable label="System Volume" CVname="51.0" CV="51" PI="0" default="127" comment="QSI" item="CV51.0">
         <indexedVal max="127"/>
       </ivariable>
@@ -1721,7 +1721,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-<!-- Sound volumes -->
+      <!-- Sound volumes -->
       <ivariable label="Whistle" CVname="52.0" CV="52" PI="0" default="11" comment="QSI" item="CV52.0">
         <indexedVal max="15"/>
       </ivariable>
@@ -2846,13 +2846,11 @@
       <ivariable label="Speed Step to Scale MPH Scale Factor" CVname="56.10" CV="56" PI="10" default="64" comment="QSI" item="CV56.10">
         <indexedVal max="128"/>
       </ivariable>
-<!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
-
-<!-- CV 56.254 About Quantum Decoder -->
-<!-- QSI Product ID -->
-    <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
-
-<!-- CV 56.255 Play Build Information (for ops mode) -->
+      <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
+      <!-- CV 56.254 About Quantum Decoder -->
+      <!-- QSI Product ID -->
+      <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
+      <!-- CV 56.255 Play Build Information (for ops mode) -->
       <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" comment="QSI" item="CV56.255_0" default="0">
         <indexedVal/>
       </ivariable>

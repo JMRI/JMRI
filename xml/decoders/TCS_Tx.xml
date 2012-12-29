@@ -14,13 +14,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="5.1" lastUpdated="20031008"/>
-<!-- Version 1 - made from NMRA & Digitrax examples -->
-<!-- Version 2 - moved TH141 here, add function map -->
-<!-- Version 3 - updated the version IDs, hoping to distinguish among these -->
-<!-- version 4 - add consist direction - jake -->
-<!-- Version 5 - fix "rule 17" typos -->
-<!-- Version 5.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- Version 5.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 1 - made from NMRA & Digitrax examples -->
+  <!-- Version 2 - moved TH141 here, add function map -->
+  <!-- Version 3 - updated the version IDs, hoping to distinguish among these -->
+  <!-- version 4 - add consist direction - jake -->
+  <!-- Version 5 - fix "rule 17" typos -->
+  <!-- Version 5.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 5.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Tx series decoders" mfg="Train Control Systems">
       <model model="T1" numOuts="2" numFns="2" lowVersionID="16" highVersionID="22"/>

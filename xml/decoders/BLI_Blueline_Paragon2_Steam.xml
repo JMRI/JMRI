@@ -14,13 +14,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="1" lastUpdated="200090407"/>
-<!-- Version 1 New file from 0.4 manual and BLI_Blueline_diesel v5 -->
-<!-- for JMRI 2.5.2 use, the max functions is set to 27 instead of 28 -->
+  <!-- Version 1 New file from 0.4 manual and BLI_Blueline_diesel v5 -->
+  <!-- for JMRI 2.5.2 use, the max functions is set to 27 instead of 28 -->
   <version author="Michael Mosher" version="2" lastUpdated="20110129"/>
-<!-- Version 2 fix smoke control bug, CV116-117 bug, some pane tweeks, some default value changes -->
-<!--             add CV 121,122,203,204,205,206,207,211,234,235,236,237 -->
+  <!-- Version 2 fix smoke control bug, CV116-117 bug, some pane tweeks, some default value changes -->
+  <!--             add CV 121,122,203,204,205,206,207,211,234,235,236,237 -->
   <version author="Marc Fournier" version="3" lastUpdated="20110304"/>
-<!-- Version 3 correct wording of CV8 = 254 reset -->
+  <!-- Version 3 correct wording of CV8 = 254 reset -->
   <decoder>
     <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
       <model model="Steam" numOuts="3" numFns="30" connector="9pin">
@@ -355,9 +355,9 @@
         </enumVal>
         <label>Address Format</label>
       </variable>
-<!-- This decoder doesn't do the bit-wise NMRA method of -->
-<!-- assigning functions to outputs. Instead, it has -->
-<!-- a much more civilized system of one CV per function -->
+      <!-- This decoder doesn't do the bit-wise NMRA method of -->
+      <!-- assigning functions to outputs. Instead, it has -->
+      <!-- a much more civilized system of one CV per function -->
       <variable label="F0 Output Function Definition" CV="33" default="1" minFn="1" item="Function F0F effect generated">
         <enumVal>
           <enumChoice choice="Nothing" value="0">
@@ -4889,9 +4889,9 @@
           <label> </label>
         </label>
         <display item="Motor Load Chuff Power Filter" layout="above" format="hslider"/>
-      <label label=" ">
-        <label> </label>
-      </label>
+        <label label=" ">
+          <label> </label>
+        </label>
       </row>
       <label label=" ">
         <label> </label>

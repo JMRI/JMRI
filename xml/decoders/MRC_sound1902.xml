@@ -14,10 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="John Crellin   jcrellin0661@gmail.com" version="2" lastUpdated="20120801"/>
-<!-- made from another MRC file     UPDATED to fix BEMF portion -->
+  <!-- made from another MRC file     UPDATED to fix BEMF portion -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2">
-      <model model="E unit and PA Stereo Diesel Sound 1902" numOuts="7" numFns="30" maxTotalCurrent="1.5A" >
+      <model model="E unit and PA Stereo Diesel Sound 1902" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>
@@ -78,7 +78,6 @@
         <label>Max Voltage</label>
         <comment>Range 0-32</comment>
       </variable>
-      
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="32">
         <decVal/>
         <label>Version ID</label>
@@ -327,7 +326,7 @@
         <label>Coupling Volume</label>
         <comment>Range 0-15</comment>
       </variable>
-      <variable label="Auto ditch lights flash with horn" CV="63" item="Global lighting option 1" default="1" >
+      <variable label="Auto ditch lights flash with horn" CV="63" item="Global lighting option 1" default="1">
         <enumVal>
           <enumChoice choice="Disable">
             <choice>Disable</choice>
@@ -379,7 +378,7 @@
       </variable>
       <variable label="Diesel Notch Mode" item="Sound Option 6" CV="122" tooltip="CV122 can only have values of 0 or 3" default="3">
         <enumVal>
-          <enumChoice choice="Auto" value ="0">
+          <enumChoice choice="Auto" value="0">
             <choice>Auto</choice>
           </enumChoice>
           <enumChoice choice="Manual" value="3">
@@ -489,7 +488,7 @@
       </variable>
       <variable label="mars flashing on off (F28)" item="mars flashing on off (F28)" CV="121" default="1">
         <enumVal>
-          <enumChoice choice="Disabled" value ="0">
+          <enumChoice choice="Disabled" value="0">
             <choice>Disabled</choice>
           </enumChoice>
           <enumChoice choice="Enabled" value="1">

@@ -17,12 +17,12 @@
   <version author="Christopher Zurek" version="4" lastUpdated="20080309"/>
   <version author="Bob Jacobsen" version="3" lastUpdated="20070422"/>
   <version author="Michael Mosher mjmx@comcast.net" version="2" lastUpdated="20050112"/>
-<!-- Created from version 10 of the 1x3 file -->
-<!-- Version 1.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- Version 2 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" -->
-<!-- Version 3 - added reset entries - Bob Jacobsen -->
-<!-- Version 4 - removed "Rear Headlight to F4" and fixed function mapping (Christopher Zurek) -->
-<!-- Version 5 - added F1 and F2 for later made decoders (Christopher Zurek) -->
+  <!-- Created from version 10 of the 1x3 file -->
+  <!-- Version 1.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 2 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" -->
+  <!-- Version 3 - added reset entries - Bob Jacobsen -->
+  <!-- Version 4 - removed "Rear Headlight to F4" and fixed function mapping (Christopher Zurek) -->
+  <!-- Version 5 - added F1 and F2 for later made decoders (Christopher Zurek) -->
   <decoder>
     <family name="Economy Series 3 with FX3, silent" mfg="Digitrax" lowVersionID="35" highVersionID="36">
       <model model="DH123" numOuts="2" numFns="5" connector="9pin" lowVersionID="35" highVersionID="36">
@@ -39,13 +39,9 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -54,11 +50,8 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
-      
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
@@ -229,19 +222,15 @@
         <label>Decoder Lock Feature</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml" />
-
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Define the Function-Output mapping based on NMRA definitions -->
+      <!-- Define the Function-Output mapping based on NMRA definitions -->
       <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">

@@ -17,26 +17,24 @@
   <version author="Walter Thompson wsthompson@earthlink.net" version="2" lastUpdated="20080412"/>
   <version author="Matt Harris - matthew.john.harris@gmail.com" version="3" lastUpdated="20080724"/>
   <version author="Matt Harris - matthew.john.harris@gmail.com" version="3.1" lastUpdated="20080728"/>
-<!-- Version 3.1                                                    -->
-<!-- Modified CV29 by removing mask settings which had been causing -->
-<!-- problems. Initial tests using constant values did not work.    -->
-<!-- Version 3:                                                     -->
-<!-- Used Digitrax_TF4.xml version 3 as a basis                     -->
-<!-- Based on input from Bob Grosh:                                 -->
-<!--  * Modified CV masking on function outputs                     -->
-<!--  * Corrected CV29 definition                                   -->
-<!--  * Added Decoder Lock pane                                     -->
+  <!-- Version 3.1                                                    -->
+  <!-- Modified CV29 by removing mask settings which had been causing -->
+  <!-- problems. Initial tests using constant values did not work.    -->
+  <!-- Version 3:                                                     -->
+  <!-- Used Digitrax_TF4.xml version 3 as a basis                     -->
+  <!-- Based on input from Bob Grosh:                                 -->
+  <!--  * Modified CV masking on function outputs                     -->
+  <!--  * Corrected CV29 definition                                   -->
+  <!--  * Added Decoder Lock pane                                     -->
   <decoder>
     <family name="Function Only, with transponding" mfg="Digitrax">
-<!-- <model model="TL1" numOuts="1" lowVersionID="250"/> -->
+      <!-- <model model="TL1" numOuts="1" lowVersionID="250"/> -->
       <model model="TF2" numOuts="2" lowVersionID="251"/>
-<!-- <model model="TF4" numOuts="4" lowVersionID="254"/> -->
+      <!-- <model model="TF4" numOuts="4" lowVersionID="254"/> -->
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
-
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>

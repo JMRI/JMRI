@@ -14,12 +14,12 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Phil Grainger (phil.grainger@ca.com)" version="5" lastUpdated="20030731"/>
-<!-- Made from the Lenz_54.xml file version 4 -->
-<!-- version 2 - add consist direction - jake -->
-<!-- Version 3 - added outputs C & D programing, copied from Lenz_54.xml  -->
-<!-- Version 4 - fixed varable name mismatch between definition and dispaly on Lenz pane & vstart bug  -->
-<!-- Version 5 - made speed table selection more generic -->
-<!-- Version 6 - added factory reset menu items (Paul Bender) -->
+  <!-- Made from the Lenz_54.xml file version 4 -->
+  <!-- version 2 - add consist direction - jake -->
+  <!-- Version 3 - added outputs C & D programing, copied from Lenz_54.xml  -->
+  <!-- Version 4 - fixed varable name mismatch between definition and dispaly on Lenz pane & vstart bug  -->
+  <!-- Version 5 - made speed table selection more generic -->
+  <!-- Version 6 - added factory reset menu items (Paul Bender) -->
   <decoder>
     <family name="Lenz Drive-Select decoders" mfg="Lenz" lowVersionID="46" highVersionID="46">
       <model model="LE0511" numOuts="2" numFns="8" nmraWarrant="yes" nmraWarrantStart="200506">
@@ -49,7 +49,7 @@
         <label>Decel</label>
         <comment>Range 0-31</comment>
       </variable>
-<!-- deleted max and mid voltage-->
+      <!-- deleted max and mid voltage-->
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -63,7 +63,7 @@
         <label>Manufacturer ID - Reset</label>
         <comment>Writing a value of 33 using register mode will reset decoder to factory defaults</comment>
       </variable>
-<!-- Deleted all CV 13 references-->
+      <!-- Deleted all CV 13 references-->
       <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
         <longAddressVal/>
         <label>Long Address</label>
@@ -548,7 +548,7 @@
         <decVal/>
         <label>Decoder Software Version</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>

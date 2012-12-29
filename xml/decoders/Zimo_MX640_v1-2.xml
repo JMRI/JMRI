@@ -15,16 +15,16 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20090222"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20090117"/>
-<!--  This decoder configuration file is based on the Zimo_MX620_v6.xml -->
-<!--  V 1 file, dated 20080119. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file. -->
-<!--  Based on the "SW-Version 2 2008 06 03" English version of the ZIMO MX640 -->
-<!--  decoder manual (with thanks to Art Luescher of ZIMO Agency of North America -->
-<!--  for the translations!) -->
-<!--  This decoder XML is meant to be used with the "Comprehensive" programmer format. -->
-<!--  Continued the practice of using unrelated "item" names to place Zimo unique -->
-<!--  variables on the proper pane of the Comprehensive programmer. -->
-<!-- V 1 new file -->
-<!-- V 1.01 fixed errors in masks and minOut for CVs 39 to 46 -->
+  <!--  This decoder configuration file is based on the Zimo_MX620_v6.xml -->
+  <!--  V 1 file, dated 20080119. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file. -->
+  <!--  Based on the "SW-Version 2 2008 06 03" English version of the ZIMO MX640 -->
+  <!--  decoder manual (with thanks to Art Luescher of ZIMO Agency of North America -->
+  <!--  for the translations!) -->
+  <!--  This decoder XML is meant to be used with the "Comprehensive" programmer format. -->
+  <!--  Continued the practice of using unrelated "item" names to place Zimo unique -->
+  <!--  variables on the proper pane of the Comprehensive programmer. -->
+  <!-- V 1 new file -->
+  <!-- V 1.01 fixed errors in masks and minOut for CVs 39 to 46 -->
   <decoder>
     <family name="Zimo MX640" mfg="Zimo">
       <model model="MX640 versions 1-2" lowVersionID="1" highVersionID="2" maxInputVolts="12-24V" maxMotorCurrent="1.2A, peak=2A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="11" numFns="14">
@@ -3945,7 +3945,7 @@
         </enumVal>
         <label>Servo 2 Function Allocation</label>
       </variable>
-<!-- Begin sound-only variables -->
+      <!-- Begin sound-only variables -->
       <variable label="Set sound program" CV="265" default="1" tooltip="See manual! CV265">
         <enumVal>
           <enumChoice choice="Steam Set 1" value="1">
@@ -4518,7 +4518,7 @@
         <decVal min="0" max="255"/>
         <label>Switch input 2 playback time</label>
       </variable>
-<!-- End sound-only variables -->
+      <!-- End sound-only variables -->
     </variables>
     <resets>
       <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
@@ -5301,7 +5301,7 @@
     </column>
     <name>Decoder Lock</name>
   </pane>
-<!-- Begin sound-only panes -->
+  <!-- Begin sound-only panes -->
   <pane name="Sound">
     <column>
       <display item="Set sound program"/>
@@ -5559,5 +5559,5 @@
     </column>
     <name>Random Sounds</name>
   </pane>
-<!-- End sound-only panes -->
+  <!-- End sound-only panes -->
 </decoder-config>

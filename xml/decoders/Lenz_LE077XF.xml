@@ -14,14 +14,14 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Phil Grainger (phil.grainger@ca.com)" version="7.1" lastUpdated="20031008"/>
-<!-- Updated to new names by jake@physics.berkeley.edu -->
-<!-- Added CV 23, 24, and function mapping - Bob J -->
-<!-- Changed FX to match older LExxxXF decoders, file had SelectDrive FX settings -->
-<!-- version 5 - add consist direction - jake -->
-<!-- version 6 - fix Vstart and leight effects bugs -->
-<!-- version 7 - made speed table selection more generic -->
-<!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- These are the version 4.5 decoders, with "precision glide" and "XF" -->
+  <!-- Updated to new names by jake@physics.berkeley.edu -->
+  <!-- Added CV 23, 24, and function mapping - Bob J -->
+  <!-- Changed FX to match older LExxxXF decoders, file had SelectDrive FX settings -->
+  <!-- version 5 - add consist direction - jake -->
+  <!-- version 6 - fix Vstart and leight effects bugs -->
+  <!-- version 7 - made speed table selection more generic -->
+  <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- These are the version 4.5 decoders, with "precision glide" and "XF" -->
   <decoder>
     <family name="Lenz XF, precision glide decoders" mfg="Lenz" lowVersionID="44" highVersionID="45">
       <model model="LE062XF" numOuts="2" nmraWarrant="yes" nmraWarrantStart="200506">
@@ -87,7 +87,7 @@
         <label>Decel</label>
         <comment>Range 0-31</comment>
       </variable>
-<!-- deleted max and mid voltage-->
+      <!-- deleted max and mid voltage-->
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -100,7 +100,7 @@
         <decVal/>
         <label>Manufacturer ID - Reset</label>
       </variable>
-<!-- Deleted all CV 13 references-->
+      <!-- Deleted all CV 13 references-->
       <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
         <longAddressVal/>
         <label>Long Address</label>
@@ -484,7 +484,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>

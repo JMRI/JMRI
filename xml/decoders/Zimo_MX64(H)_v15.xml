@@ -14,8 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher mjmx@comcast.net" version="1" lastUpdated="20061127"/>
-<!-- Based on the contribution of many others -->
-<!-- V 1 new file -->
+  <!-- Based on the contribution of many others -->
+  <!-- V 1 new file -->
   <decoder>
     <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo">
       <model model="MX64(H) version 15+" lowVersionID="15" highVersionID="17" maxInputVolts="12-24V" maxMotorCurrent="1A(1.5A), peak=2A for 5 sec." maxTotalCurrent="1.2A (1.6A)" formFactor="HO" numOuts="8" numFns="10">

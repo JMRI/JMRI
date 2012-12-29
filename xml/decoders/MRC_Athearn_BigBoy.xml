@@ -16,15 +16,15 @@
   <version author="Bill Chown" version="1" lastUpdated="20080308"/>
   <version author="Bill Chown" version="2" lastUpdated="20080430"/>
   <version author="Bill Chown" version="3" lastUpdated="20090109"/>
-<!-- made from the MRC_1656 file (Pete Cesaro) pdsteam@aol.com -->
-<!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
-<!-- works for both loco types, despite apparent differences in the documentation -->
-<!-- works for both Athearn N scale loco types, small errors corrected -->
-<!-- works for both Athearn N scale loco types, comments and tooltips expanded -->
+  <!-- made from the MRC_1656 file (Pete Cesaro) pdsteam@aol.com -->
+  <!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
+  <!-- works for both loco types, despite apparent differences in the documentation -->
+  <!-- works for both Athearn N scale loco types, small errors corrected -->
+  <!-- works for both Athearn N scale loco types, comments and tooltips expanded -->
   <decoder>
     <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Athearn Big Boy and 4-8-4 FEF" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note All 28 functions are NMRA compatible -->
+        <!-- note All 28 functions are NMRA compatible -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

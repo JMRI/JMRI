@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="1" lastUpdated="20100125"/>
-<!-- Ver 1  Made from the MRC1806 file -->
+  <!-- Ver 1  Made from the MRC1806 file -->
   <decoder>
     <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Athearn SD45/SD60 MRC-1825" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes">

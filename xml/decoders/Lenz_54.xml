@@ -15,15 +15,15 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher mjmx@comcast.net" version="5" lastUpdated="20030815"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="6" lastUpdated="20090116"/>
-<!-- version 2 - add consist direction - jake -->
-<!-- version 3 fix vstart bug -->
-<!-- version 4 made speed table selection more generic -->
-<!-- version 5 removed LE511 - it's not a BEMF decoder -->
-<!-- version 6: fix reset bug, add tooltips, modify format and labels, -->
-<!--    fixed CV17 label/item names, add RailCom enabling, -->
-<!--    change lowVersionID to 51, move Lighting options to Lights pane -->
-<!-- These are the version 5.1 thru 5.4 decoders, with "12 bit BEMF" or "5th gen BEMF " -->
-<!-- and "XF & special" -->
+  <!-- version 2 - add consist direction - jake -->
+  <!-- version 3 fix vstart bug -->
+  <!-- version 4 made speed table selection more generic -->
+  <!-- version 5 removed LE511 - it's not a BEMF decoder -->
+  <!-- version 6: fix reset bug, add tooltips, modify format and labels, -->
+  <!--    fixed CV17 label/item names, add RailCom enabling, -->
+  <!--    change lowVersionID to 51, move Lighting options to Lights pane -->
+  <!-- These are the version 5.1 thru 5.4 decoders, with "12 bit BEMF" or "5th gen BEMF " -->
+  <!-- and "XF & special" -->
   <decoder>
     <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="51" highVersionID="54">
       <model model="LE010XF" numOuts="2" nmraWarrant="yes" nmraWarrantStart="200506">
@@ -596,7 +596,7 @@
         <decVal/>
         <label>Decoder Software Version</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>

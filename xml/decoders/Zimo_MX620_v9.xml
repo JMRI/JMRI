@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.02" lastUpdated="20090626"/>
   <version author="Nigel Cliffe ncliffe@btinternet.com and Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20090222"/>
-<!-- 
+  <!-- 
      This decoder configuration file is based the Zimo_MX620_v6.xml V 1.01 file, dated 20080328.
      With the following changes, Re-instating CV 116 (bug fixed by Zimo in v7), Modified CV124, Extended CV 161,
      Added CV146, Extended CVs 125-132 and CVs 181-2.  
@@ -28,9 +28,9 @@
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.
  -->
-<!-- V 1 new file -->
-<!-- V 1.01 Fixed error in CV161 mask -->
-<!-- V 1.02 CV's 129 & 130 added, corrected CV161 masks -->
+  <!-- V 1 new file -->
+  <!-- V 1.01 Fixed error in CV161 mask -->
+  <!-- V 1.02 CV's 129 & 130 added, corrected CV161 masks -->
   <decoder>
     <family name="Zimo MX620" mfg="Zimo">
       <model model="MX620 version 9" lowVersionID="9" maxInputVolts="12-22V" maxMotorCurrent="0.8A, peak=2A for 5 sec." maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14">
@@ -3210,7 +3210,7 @@
         <decVal min="0" max="255"/>
         <label>Distance controlled stopping speed correction (HLU)</label>
       </variable>
-<!--  NB irrelevant "item" entry to force CV onto Motor panel -->
+      <!--  NB irrelevant "item" entry to force CV onto Motor panel -->
       <variable label="Motor Backlash Control" CV="146" default="0" item="Load Control" tooltip="CV 146, Motor Backlash Control">
         <decVal min="0" max="255"/>
         <label>Motor Backlash Control</label>

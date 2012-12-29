@@ -14,12 +14,12 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bill Chown" version="3" lastUpdated="20080430"/>
-<!-- corrected more typos causing incorrect values -->
+  <!-- corrected more typos causing incorrect values -->
   <version author="Bill Chown" version="2" lastUpdated="20080221"/>
   <version author="Michael Dunn" version="1" lastUpdated="20070421"/>
-<!-- made from the MRC_1636 file by Paul Bender -->
-<!-- version 2 corrected typos causing problems with some CV fields not appearing -->
-<!-- version 2 added many decoder-specific tool tips and added CV identities to all tool tips -->
+  <!-- made from the MRC_1636 file by Paul Bender -->
+  <!-- version 2 corrected typos causing problems with some CV fields not appearing -->
+  <!-- version 2 added many decoder-specific tool tips and added CV identities to all tool tips -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Diesel Sound 1645" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
@@ -295,8 +295,8 @@
           <enumChoice choice="MP-15" value="1">
             <choice>MP-15</choice>
           </enumChoice>
-<!-- Note per Mfg. recorded sounds ARE NOT for GE P42 or EMD E8/E9! -->
-<!-- these sounds are named as EMD large diesel, EMD switcher -->
+          <!-- Note per Mfg. recorded sounds ARE NOT for GE P42 or EMD E8/E9! -->
+          <!-- these sounds are named as EMD large diesel, EMD switcher -->
         </enumVal>
         <label>Prime Mover sound</label>
       </variable>

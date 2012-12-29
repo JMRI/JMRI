@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20091216"/>
-<!-- 
+  <!-- 
      This decoder configuration file is based the Zimo_MX620_v9.xml V 1.01 file, dated 20090222.
 
      Based on the "Version 1 2008 02 15" English version of the ZIMO MX680
@@ -25,7 +25,7 @@
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.
  -->
-<!-- V 1 new file -->
+  <!-- V 1 new file -->
   <decoder>
     <family name="Zimo Function Decoders" mfg="Zimo">
       <model model="MX680 version 1-2" lowVersionID="1" highVersionID="2" maxInputVolts="12-22V" maxTotalCurrent="0.5A" formFactor="N" numOuts="8" numFns="14">

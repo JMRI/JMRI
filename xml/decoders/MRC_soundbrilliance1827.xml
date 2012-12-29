@@ -15,7 +15,7 @@
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="1.0" lastUpdated="20091003"/>
-<!--   version 1.0 Based on MRC_soundbrilliance1806-->
+  <!--   version 1.0 Based on MRC_soundbrilliance1806-->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="27" highVersionID="45">
       <model model="Synch Diesel Sound 1827 - N - KATO PA1" numOuts="2" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes">

@@ -15,8 +15,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="2" lastUpdated="20060918"/>
   <version author="Michael Mosher" version="1" lastUpdated="20060912"/>
-<!-- version 1 created by modifing NCE_SR_TC.xml ver 5 added CV 112, 113, 114, 115 -->
-<!-- Version 2 - use factory reset feature -->
+  <!-- version 1 created by modifing NCE_SR_TC.xml ver 5 added CV 112, 113, 114, 115 -->
+  <!-- Version 2 - use factory reset feature -->
   <decoder>
     <family name="Silent Running BEMF" mfg="North Coast Engineering" lowVersionID="40" highVersionID="40" comment="These are the version 4.0 decoders released after September 2006">
       <model model="D408SR-E" numOuts="9" numFns="14" connector="9pin" maxMotorCurrent="4A (peak=10A)" formFactor="O/G">
@@ -697,7 +697,7 @@
         </enumVal>
         <label>F3 controls output 8</label>
       </variable>
-<!-- this group is like NMRA, except we only go to output 8 for now -->
+      <!-- this group is like NMRA, except we only go to output 8 for now -->
       <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <enumVal>
           <enumChoice choice="No">
@@ -1121,7 +1121,7 @@
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
-<!-- NCE-specific variables -->
+      <!-- NCE-specific variables -->
       <variable label="BEMF Kp" CV="112" mask="VVVVVVVV" item="EMF Static Config" tooltip="BEMF proportional gain">
         <decVal/>
         <label>BEMF Kp</label>

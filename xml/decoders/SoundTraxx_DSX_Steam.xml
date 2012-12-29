@@ -17,30 +17,30 @@
   <version author="Walter Thompson" version="10" lastUpdated="20070816"/>
   <version author="Michael Mosher" version="9" lastUpdated="20060927"/>
   <version author="Michael Mosher" version="8" lastUpdated="20050817"/>
-<!-- version 4: updates to minOut usage, function mapping -->
-<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
-<!-- version 6: rename family for better tree shape -->
-<!-- version 7: added CV105&106  -->
-<!-- version 8: (20050817 BobJ): numFns corrected from 8 to 10 -->
-<!-- version 9: Added None to function map  -->
-<!-- version 10: Moved CV50 so CV list is in order  -->
-<!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
-<!--            added Reset option -->
+  <!-- version 4: updates to minOut usage, function mapping -->
+  <!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
+  <!-- version 6: rename family for better tree shape -->
+  <!-- version 7: added CV105&106  -->
+  <!-- version 8: (20050817 BobJ): numFns corrected from 8 to 10 -->
+  <!-- version 9: Added None to function map  -->
+  <!-- version 10: Moved CV50 so CV list is in order  -->
+  <!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+  <!--            added Reset option -->
   <decoder>
     <family name="DSX Steam" mfg="Throttle-Up (SoundTraxx)">
       <model model="DSX Steam" numOuts="0" numFns="10">
         <versionCV lowVersionID="17"/>
-<!--output name="3" label="F1/grn" -->
+        <!--output name="3" label="F1/grn" -->
         <output name="Whistle"/>
         <output name="Bell"/>
         <output name="Hiss"/>
-<!-- output name="4" label="F5/brwn" -->
+        <!-- output name="4" label="F5/brwn" -->
         <output name="None"/>
         <output name="Dynamo"/>
         <output name="Coupler"/>
         <output name="Mute"/>
-<!-- There are no electrical outputs -->
-<!-- for the DSX version -->
+        <!-- There are no electrical outputs -->
+        <!-- for the DSX version -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -1012,7 +1012,7 @@
         </enumVal>
         <label>F8 controls output Mute</label>
       </variable>
-<!-- Sound section -->
+      <!-- Sound section -->
       <variable label="Volume Control" CV="50" mask="XXXXVVVV" item="Sound Setting 1" default="8" comment="sets overall volume, 0=Mute">
         <decVal max="15"/>
         <label>Volume Control</label>
@@ -1163,7 +1163,7 @@
         </enumVal>
         <label>Startup Mode</label>
       </variable>
-<!-- Volumes section -->
+      <!-- Volumes section -->
       <variable label="Auto Exhaust Sync Rate" CV="54" mask="VVVVVVVV" item="Sound Setting 2" default="94" comment="When Auto Mode selected, this sets the Chuff Rate relative to throttle setting.">
         <decVal max="255"/>
         <label>Auto Exhaust Sync Rate</label>

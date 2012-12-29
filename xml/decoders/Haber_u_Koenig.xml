@@ -12,9 +12,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config showEmptyPanes="no" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="peter.brandenburg@t-online.de" version="1" lastUpdated="2006/11/09"/>
-<!-- version 1 - converted from Tran_DCX_new - Peter -->
+  <!-- version 1 - converted from Tran_DCX_new - Peter -->
   <decoder>
     <family name="NFA_HFA_DCC" mfg="Haber and Koenig Electronics GmbH">
       <model model="NFA" numOuts="8" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="1.2 A" comment="NFA=Niederfrequenzansteuerung">
@@ -149,7 +149,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-<!-- Funtion Mapping ONLY for F2 and F3, ONLY if extension board fitted to decoder!!!  -->
+      <!-- Funtion Mapping ONLY for F2 and F3, ONLY if extension board fitted to decoder!!!  -->
       <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <enumVal>
           <enumChoice choice="No">

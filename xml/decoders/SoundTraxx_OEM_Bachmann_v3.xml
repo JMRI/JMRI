@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2003, 2004. 2007 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
@@ -13,337 +12,247 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-		<version author="Nigel Cliffe" version="3" lastUpdated="20100906"/>
-		<version author="Peter Ulvestad" version="2" lastUpdated="20100816"/>
-		<version author="Marc Fournier" version="1" lastUpdated="20091230"/>
-
-		<!-- Version 1 - Created from Soundtraxx Tsunami definition -->
-		<!-- Version 2 - Moved to Soundtraxx based on mfg ID-->
-		<!-- Version 3 - created function mapping for outputs and features, added reset -->
-
-<decoder>
-		<family name="OEM Bachmann E-Z Command decoders" mfg="Throttle-Up (SoundTraxx)" lowVersionID="1">
-			<model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NMRAmedium" >
-				<output name="1" label="White"/>
-				<output name="2" label="Yellow"/>
-				<output name="LD" label="Light Dimming"/>
-				<output name="Bk" label="Brake Key"/>
-                <size length="13.3" width="10.0" height="3.5" units="mm"/>
-			</model>
-		</family>
-
-		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
-
-	<variables>
-
-		<variable label="Primary Address" CV="1" comment="Short address (Range 1-127)" item="Short Address"  default="03">
-			<shortAddressVal/>
-		</variable>
-
-		<variable label="Start Volts" CV="2" item="Vstart" default="1" comment="Range 0-31">
-			<decVal min="0" max="31"/>
-		</variable>
-
-		<variable label="Accel" CV="3" default="1" comment="Range 0-31">
-			<decVal max="31"/>
-		</variable>
-
-		<variable label="Decel" CV="4" default="1" comment="Range 0-31">
-			<decVal max="31"/>
-		</variable>
-
-		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
-			<decVal/>
-		</variable>
-		
-		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
-			<decVal/>
-		</variable>
-		
-		<variable label="BEMF Cutout (0-127 or 128-255)" CV="10"
-			item="EMF Feedback Cutout" default="0"
-			tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;
-				to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
-			<decVal/>
-		</variable>
-
-		<variable label="Packet Time Out Value (0-255)" CV="11"
-			item="Packet Time-out Value" default="0"
-			tooltip="&lt;html&gt;Sets the time period that is allowed to elapse between receipts of a valid packet&lt;br&gt;
-				addressed to the decoder before a throttle shutdown occurs.  Enter zero to disable.&lt;/html&gt;">
-			<decVal/>
-		</variable>
-
-		<variable label="CV Unlock Register (0-7)" CV="15" mask="XXXXXVVV"
-			item="Advanced Group 1 Option 1" default="0"
-			tooltip="&lt;html&gt;Enter the Lock ID Code to unlock access to the decoder CVs.&lt;br&gt;
-				(Tip: Establish the unlock code with CV Lock ID Code)&lt;/html&gt;">
-			<decVal/>
-		</variable>
-
-		<variable label="CV Lock ID Code (0-7)" CV="16" mask="XXXXXVVV"
-			item="Advanced Group 1 Option 2" default="0"
-			tooltip="Sets the unlock code that must be entered into the CV Unlock Register in order to access the decoder CVs">
-			<decVal/>
-		</variable>
-
-		<variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-			<longAddressVal/>
-		</variable>
-		
-
-<!-- Consisting Information follows -->		
-		
-		<variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV"
-			item="Consist Address" default="0"
-			comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-			<decVal max="127"/>
-		</variable>
-		
-		<variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV"
-			item="Consist Address Active For F1" default="0" minFn="1">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX"
-			item="Consist Address Active For F2" default="0" minFn="2">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX"
-			item="Consist Address Active For F3" default="0" minFn="3">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX"
-			item="Consist Address Active For F4" default="0" minFn="4">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX"
-            item="Consist Address Active For F5" default="0" minFn="5">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-        </variable>
-
-		<variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX"
-            item="Consist Address Active For F6" default="0" minFn="6">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-        </variable>
-
-		<variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX"
-            item="Consist Address Active For F7" default="0" minFn="7">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-        </variable>
-
-		<variable label="Consist Address Activation for F8" CV="21" mask="VXXXXXXX"
-			item="Consist Address Active For F8" default="0" minFn="8">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-		
-		<variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV"
-			item="Consist Address Active For FL in Forward" default="0">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX"
-			item="Consist Address Active For FL in Reverse" default="0">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX"
-			item="Consist Address Active For F9" default="0" minFn="9">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX"
-			item="Consist Address Active For F10" default="0" minFn="10">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX"
-			item="Consist Address Active For F11" default="0" minFn="11">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX"
-			item="Consist Address Active For F12" default="0" minFn="12">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-		
-		
-		<variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV"
-			item="Consist Address Active For FL in Forward" default="0">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX"
-			item="Consist Address Active For FL in Reverse" default="0">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX"
-			item="Consist Address Active For F9" default="0" minFn="9">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX"
-			item="Consist Address Active For F10" default="0" minFn="10">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX"
-			item="Consist Address Active For F11" default="0" minFn="11">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX"
-			item="Consist Address Active For F12" default="0" minFn="12">
-			<enumVal>
-				<enumChoice choice="Respond to locomotive address only"/>
-				<enumChoice choice="Respond to consist address"/>
-			</enumVal>
-		</variable>
-
-		
-		<variable label="Consist Acceleration Rate (0-127)" CV="23" mask="XVVVVVVV"
-			item="Consist Acceleration Adjustment" default="0"
-			comment="Additional consist acceleration (combined with CV3)"
-			tooltip="When loco is in a consist, it's base acceleration rate is modified by this amount">
-			<decVal max="127"/>
-		</variable>
-		
-		<variable label="Consist Braking Rate (0-127)" CV="24" mask="XVVVVVVV"
-			item="Consist Deceleration Adjustment" default="0"
-			comment="Additional consist braking (combined with CV4)"
-			tooltip="When loco is in a consist, it's baseline braking rate is modified by this amount">
-			<decVal max="127"/>
-		</variable>
-
-		<variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0"
-			tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
-			<enumVal>
-				<enumChoice choice="Disabled, Speed Curves not used"/>
-				<enumChoice choice="Disabled, Speed Curves not used"/>
-				<enumChoice choice="Linear Speed Curve (Straight Line)"/>
-				<enumChoice choice="Logarithmic Curve 1"/>
-				<enumChoice choice="Logarithmic Curve 2"/>
-				<enumChoice choice="Logarithmic Curve 3"/>
-				<enumChoice choice="Logarithmic Curve 4"/>
-				<enumChoice choice="Logarithmic Curve 5"/>
-				<enumChoice choice="Logarithmic Curve 6"/>
-				<enumChoice choice="Logarithmic Curve 7"/>
-				<enumChoice choice="Exponential Curve 1"/>
-				<enumChoice choice="Exponential Curve 2"/>
-				<enumChoice choice="Exponential Curve 3"/>
-				<enumChoice choice="Exponential Curve 4"/>
-				<enumChoice choice="Exponential Curve 5"/>
-				<enumChoice choice="Exponential Curve 6"/>
-				<enumChoice choice="User Defined Speed Table"/>
-			</enumVal>
-		</variable>
-				
-		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-			<enumVal>
-				<enumChoice choice="Forward"/>
-				<enumChoice choice="Reverse"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-			<enumVal>
-				<enumChoice choice="14"/>
-				<enumChoice choice="28/128 (recommended)"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
-			<enumVal>
-				<enumChoice choice="Don't use Speed Table"/>
-				<enumChoice choice="Use Speed Table"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" default="0">
-			<enumVal>
-				<enumChoice choice="2 digit addressing"/>
-				<enumChoice choice="4 digit addressing"/>
-			</enumVal>
-		</variable>
-
-<!-- Function Mapping follows -->		
-
-		<variable label="FL(f) controls Headlight" CV="33" mask="XXXXXXXV" 
-			item="FL(f) controls output 1" minOut="1" default="1">
-			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
-		</variable>
-		
-<!--		<variable label="FL(r) controls Backup Light" CV="34" mask="XXXXXXVX" 
+  <version author="Nigel Cliffe" version="3" lastUpdated="20100906"/>
+  <version author="Peter Ulvestad" version="2" lastUpdated="20100816"/>
+  <version author="Marc Fournier" version="1" lastUpdated="20091230"/>
+  <!-- Version 1 - Created from Soundtraxx Tsunami definition -->
+  <!-- Version 2 - Moved to Soundtraxx based on mfg ID-->
+  <!-- Version 3 - created function mapping for outputs and features, added reset -->
+  <decoder>
+    <family name="OEM Bachmann E-Z Command decoders" mfg="Throttle-Up (SoundTraxx)" lowVersionID="1">
+      <model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NMRAmedium">
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="LD" label="Light Dimming"/>
+        <output name="Bk" label="Brake Key"/>
+        <size length="13.3" width="10.0" height="3.5" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <variable label="Primary Address" CV="1" comment="Short address (Range 1-127)" item="Short Address" default="03">
+        <shortAddressVal/>
+      </variable>
+      <variable label="Start Volts" CV="2" item="Vstart" default="1" comment="Range 0-31">
+        <decVal min="0" max="31"/>
+      </variable>
+      <variable label="Accel" CV="3" default="1" comment="Range 0-31">
+        <decVal max="31"/>
+      </variable>
+      <variable label="Decel" CV="4" default="1" comment="Range 0-31">
+        <decVal max="31"/>
+      </variable>
+      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+        <decVal/>
+      </variable>
+      <variable label="BEMF Cutout (0-127 or 128-255)" CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;     to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
+        <decVal/>
+      </variable>
+      <variable label="Packet Time Out Value (0-255)" CV="11" item="Packet Time-out Value" default="0" tooltip="&lt;html&gt;Sets the time period that is allowed to elapse between receipts of a valid packet&lt;br&gt;     addressed to the decoder before a throttle shutdown occurs.  Enter zero to disable.&lt;/html&gt;">
+        <decVal/>
+      </variable>
+      <variable label="CV Unlock Register (0-7)" CV="15" mask="XXXXXVVV" item="Advanced Group 1 Option 1" default="0" tooltip="&lt;html&gt;Enter the Lock ID Code to unlock access to the decoder CVs.&lt;br&gt;     (Tip: Establish the unlock code with CV Lock ID Code)&lt;/html&gt;">
+        <decVal/>
+      </variable>
+      <variable label="CV Lock ID Code (0-7)" CV="16" mask="XXXXXVVV" item="Advanced Group 1 Option 2" default="0" tooltip="Sets the unlock code that must be entered into the CV Unlock Register in order to access the decoder CVs">
+        <decVal/>
+      </variable>
+      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
+        <longAddressVal/>
+      </variable>
+      <!-- Consisting Information follows -->
+      <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F8" CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0" minFn="8">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="0">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="0" minFn="10">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="0">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="0" minFn="10">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
+        <enumVal>
+          <enumChoice choice="Respond to locomotive address only"/>
+          <enumChoice choice="Respond to consist address"/>
+        </enumVal>
+      </variable>
+      <variable label="Consist Acceleration Rate (0-127)" CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" default="0" comment="Additional consist acceleration (combined with CV3)" tooltip="When loco is in a consist, it's base acceleration rate is modified by this amount">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Consist Braking Rate (0-127)" CV="24" mask="XVVVVVVV" item="Consist Deceleration Adjustment" default="0" comment="Additional consist braking (combined with CV4)" tooltip="When loco is in a consist, it's baseline braking rate is modified by this amount">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
+        <enumVal>
+          <enumChoice choice="Disabled, Speed Curves not used"/>
+          <enumChoice choice="Disabled, Speed Curves not used"/>
+          <enumChoice choice="Linear Speed Curve (Straight Line)"/>
+          <enumChoice choice="Logarithmic Curve 1"/>
+          <enumChoice choice="Logarithmic Curve 2"/>
+          <enumChoice choice="Logarithmic Curve 3"/>
+          <enumChoice choice="Logarithmic Curve 4"/>
+          <enumChoice choice="Logarithmic Curve 5"/>
+          <enumChoice choice="Logarithmic Curve 6"/>
+          <enumChoice choice="Logarithmic Curve 7"/>
+          <enumChoice choice="Exponential Curve 1"/>
+          <enumChoice choice="Exponential Curve 2"/>
+          <enumChoice choice="Exponential Curve 3"/>
+          <enumChoice choice="Exponential Curve 4"/>
+          <enumChoice choice="Exponential Curve 5"/>
+          <enumChoice choice="Exponential Curve 6"/>
+          <enumChoice choice="User Defined Speed Table"/>
+        </enumVal>
+      </variable>
+      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
+        <enumVal>
+          <enumChoice choice="Forward"/>
+          <enumChoice choice="Reverse"/>
+        </enumVal>
+      </variable>
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+        <enumVal>
+          <enumChoice choice="14"/>
+          <enumChoice choice="28/128 (recommended)"/>
+        </enumVal>
+      </variable>
+      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
+        <enumVal>
+          <enumChoice choice="Don't use Speed Table"/>
+          <enumChoice choice="Use Speed Table"/>
+        </enumVal>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" default="0">
+        <enumVal>
+          <enumChoice choice="2 digit addressing"/>
+          <enumChoice choice="4 digit addressing"/>
+        </enumVal>
+      </variable>
+      <!-- Function Mapping follows -->
+      <variable label="FL(f) controls Headlight" CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <!--		<variable label="FL(r) controls Backup Light" CV="34" mask="XXXXXXVX" 
 			item="FL(r) controls output 2" minOut="2" default="1">
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
@@ -358,8 +267,6 @@
 			<enumVal> <enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal>
 		</variable>
 -->
-
-
       <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -382,7 +289,6 @@
         </enumVal>
         <label>FL(f) controls output 2</label>
       </variable>
-
       <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
@@ -405,7 +311,6 @@
         </enumVal>
         <label>FL(r) controls output 2</label>
       </variable>
-
       <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <enumVal>
           <enumChoice choice="No">
@@ -428,7 +333,6 @@
         </enumVal>
         <label>F1 controls output 2</label>
       </variable>
-
       <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
         <enumVal>
           <enumChoice choice="No">
@@ -451,7 +355,6 @@
         </enumVal>
         <label>F2 controls output 2</label>
       </variable>
-
       <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
         <enumVal>
           <enumChoice choice="No">
@@ -474,7 +377,6 @@
         </enumVal>
         <label>F3 controls output 2</label>
       </variable>
-
       <variable label="F3 controls output LD" CV="37" mask="VXXXXXXX" minOut="2" minFn="3">
         <enumVal>
           <enumChoice choice="No">
@@ -486,7 +388,6 @@
         </enumVal>
         <label>F3 controls output LD</label>
       </variable>
-
       <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <enumVal>
           <enumChoice choice="No">
@@ -509,7 +410,6 @@
         </enumVal>
         <label>F4 controls output LD</label>
       </variable>
-
       <variable label="F5 controls output LD" CV="39" mask="VXXXXXXX" minOut="2" minFn="5">
         <enumVal>
           <enumChoice choice="No">
@@ -521,7 +421,6 @@
         </enumVal>
         <label>F5 controls output LD</label>
       </variable>
-
       <variable label="F6 controls output LD" CV="40" mask="VXXXXXXX" minOut="2" minFn="6">
         <enumVal>
           <enumChoice choice="No">
@@ -533,7 +432,6 @@
         </enumVal>
         <label>F6 controls output LD</label>
       </variable>
- 
       <variable label="F7 controls output LD" CV="41" mask="XXXVXXXX" minOut="2" minFn="7" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -556,7 +454,6 @@
         </enumVal>
         <label>F7 controls output Bk</label>
       </variable>
- 
       <variable label="F8 controls output LD" CV="42" mask="XXXVXXXX" minOut="2" minFn="8">
         <enumVal>
           <enumChoice choice="No">
@@ -579,8 +476,7 @@
         </enumVal>
         <label>F8 controls output Bk</label>
       </variable>
-	  
-     <variable label="F9 controls output LD" CV="43" mask="XXXVXXXX" minOut="2" minFn="9">
+      <variable label="F9 controls output LD" CV="43" mask="XXXVXXXX" minOut="2" minFn="9">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -602,8 +498,6 @@
         </enumVal>
         <label>F9 controls output Bk</label>
       </variable>
-
-
       <variable label="F10 controls output LD" CV="44" mask="XXXXVXXX" minOut="2" minFn="10">
         <enumVal>
           <enumChoice choice="No">
@@ -626,7 +520,6 @@
         </enumVal>
         <label>F10 controls output Bk</label>
       </variable>
-
       <variable label="F11 controls output LD" CV="45" mask="XXXXVXXX" minOut="2" minFn="11">
         <enumVal>
           <enumChoice choice="No">
@@ -649,7 +542,6 @@
         </enumVal>
         <label>F11 controls output Bk</label>
       </variable>
-	  
       <variable label="F12 controls output LD" CV="46" mask="XXXXVXXX" minOut="2" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -672,14 +564,9 @@
         </enumVal>
         <label>F12 controls output Bk</label>
       </variable>
-
-		
-<!-- Lighting Configuration follows -->				
-				
-		<variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXXXXV"
-			item="Function F0F effect generated" default="1"
-			tooltip="Determines the effect generated from the headlight">
-		  <enumVal>
+      <!-- Lighting Configuration follows -->
+      <variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXXXXV" item="Function F0F effect generated" default="1" tooltip="Determines the effect generated from the headlight">
+        <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
           </enumChoice>
@@ -687,12 +574,9 @@
             <choice>Yes</choice>
           </enumChoice>
         </enumVal>
-		</variable>
-		
-		<variable label="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXXXVX"
-			item="Function F0R effect generated" default="1"
-			tooltip="Determines the effect generated from the backup light">
-		  <enumVal>
+      </variable>
+      <variable label="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXXXVX" item="Function F0R effect generated" default="1" tooltip="Determines the effect generated from the backup light">
+        <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
           </enumChoice>
@@ -700,100 +584,53 @@
             <choice>Yes</choice>
           </enumChoice>
         </enumVal>
-		</variable>
-		
-		<variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV"
-			item="Global lighting option 2" default="3"
-			comment="0 is fast, 15 is slow, 4 is recommended for start"
-			tooltip="Sets the overall flash rate of the Hyperlight effects">
-			<decVal max="15"/>
-		</variable>
-		
-		<variable label="F11 Braking Rate (0-255)" CV="61" mask="VVVVVVVV"
-			item="Advanced Group 1 Option 6" default="0"
-			comment="Additional braking when Fll activated (combined with CV4)"
-			tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount">
-			<decVal max="255"/>
-		</variable>
-	
-		<variable label="Forward Trim (0-255)" CV="66"
-			item="Forward Trim" default="128"
-			tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;
-				Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;
-				Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
-			<decVal/>
-		</variable>
-
-		<variable label="Speed Table" CV="67">
-			<speedTableVal/>
-		</variable>
-
-		<variable label="Reverse Trim (0-255)" CV="95"
-			item="Reverse Trim" default="128"
-			tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;
-				Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;
-				Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
-			<decVal/>
-		</variable>
-			
-		<variable label="User Private ID #1" CV="105" item="User Id #1"> 
-			<decVal/>
-		</variable>
-
-		<variable label="User Private ID #2" CV="106" item="User Id #2">
-			<decVal/>
-		</variable>
-
-<!-- Advanced Motor Control Features follow -->
-
-		<variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV"
-			item="Advanced Group 2 Option 1" default="25"
-			tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
-			<decVal/>
-		</variable>
-
-		<variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV"
-			item="Advanced Group 2 Option 2" default="20"
-			tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
-			<decVal/>
-		</variable>
-
-		<variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV"
-			item="Advanced Group 2 Option 3" default="50"
-			tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
-			<decVal/>
-		</variable>
-
-		<variable label="Motor Control Sample Period (0-31)" CV="213" mask="VVVVVVVV"
-			item="Advanced Group 2 Option 4" default="8"
-			tooltip="Specifies the time period in mS (milliseconds) between measurements">
-			<decVal max="31"/>
-		</variable>
-
-		<variable label="Motor Control Sample Aperture Time (0-255)" CV="214" mask="VVVVVVVV"
-			item="Advanced Group 2 Option 5" default="8"
-			tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
-			<decVal/>
-		</variable>
-		
-		<variable label="BEMF Reference Voltage" CV="216" mask="VVVVVVVV"
-			item="Advanced Group 2 Option 6" default="160"
-			tooltip="Bachmann Specific. No availlable details at this time.">
-			<decVal/>
-		</variable>
-		
-		<variable label="Motor Control Register" CV="217" mask="VVVVVVVV"
-			item="Advanced Group 2 Option 7" default="2"
-			tooltip="Bachmann Specific. No availlable details at this time.">
-			<decVal/>
-		</variable>
-
-	</variables>
-
+      </variable>
+      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" item="Global lighting option 2" default="3" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+        <decVal max="15"/>
+      </variable>
+      <variable label="F11 Braking Rate (0-255)" CV="61" mask="VVVVVVVV" item="Advanced Group 1 Option 6" default="0" comment="Additional braking when Fll activated (combined with CV4)" tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount">
+        <decVal max="255"/>
+      </variable>
+      <variable label="Forward Trim (0-255)" CV="66" item="Forward Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+        <decVal/>
+      </variable>
+      <variable label="Speed Table" CV="67">
+        <speedTableVal/>
+      </variable>
+      <variable label="Reverse Trim (0-255)" CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+        <decVal/>
+      </variable>
+      <variable label="User Private ID #1" CV="105" item="User Id #1">
+        <decVal/>
+      </variable>
+      <variable label="User Private ID #2" CV="106" item="User Id #2">
+        <decVal/>
+      </variable>
+      <!-- Advanced Motor Control Features follow -->
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+        <decVal/>
+      </variable>
+      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+        <decVal/>
+      </variable>
+      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="50" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+        <decVal/>
+      </variable>
+      <variable label="Motor Control Sample Period (0-31)" CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="8" tooltip="Specifies the time period in mS (milliseconds) between measurements">
+        <decVal max="31"/>
+      </variable>
+      <variable label="Motor Control Sample Aperture Time (0-255)" CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="8" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+        <decVal/>
+      </variable>
+      <variable label="BEMF Reference Voltage" CV="216" mask="VVVVVVVV" item="Advanced Group 2 Option 6" default="160" tooltip="Bachmann Specific. No availlable details at this time.">
+        <decVal/>
+      </variable>
+      <variable label="Motor Control Register" CV="217" mask="VVVVVVVV" item="Advanced Group 2 Option 7" default="2" tooltip="Bachmann Specific. No availlable details at this time.">
+        <decVal/>
+      </variable>
+    </variables>
     <resets>
       <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
     </resets>
-</decoder>
+  </decoder>
 </decoder-config>
-
- 	  	 

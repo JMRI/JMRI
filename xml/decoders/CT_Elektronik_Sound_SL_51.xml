@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="mark.kasprowicz@traindecoder.com" version="1.0 beta" lastUpdated="20040818"/>
-<!-- Based on the contribution of sip@euronet.nl and many others -->
+  <!-- Based on the contribution of sip@euronet.nl and many others -->
   <decoder>
     <family name="Sound Decoder SL 51" mfg="CT Elektronik">
       <model model="SL 51" numOuts="10" numFns="8">

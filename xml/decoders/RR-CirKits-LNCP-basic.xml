@@ -21,7 +21,6 @@
   <!-- Version 0.07  Switched to xi:include for many items to control file size. -->
   <!-- Version 0.08  Limits address writes to Service Mode only to reduce accidental errors. (done in firmware) -->
   <!-- Version 0.09  Correct Master Mode CV. -->
-
   <decoder>
     <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode">
       <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01"/>
@@ -32,8 +31,8 @@
       <variable label="Primary Address" CV="1" comment="Short address">
         <shortAddressVal/>
       </variable>
-<!--  -->      
-		<variable label="Extended Address" CV="17" default="12000" item="Long Address" comment="5 digit address (Range 00001-16383)">
+      <!--  -->
+      <variable label="Extended Address" CV="17" default="12000" item="Long Address" comment="5 digit address (Range 00001-16383)">
         <longAddressVal/>
       </variable>
       <variable label="Port State Memory" CV="112" mask="XXXXXXXV" default="1">
@@ -1117,7 +1116,6 @@
       </variable>
       <variable label="Lamp C" CV="517" mask="XXXVVVVV" default="8" item="MA1 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA1 C PR" CV="517" mask="VVVXXXXX" default="0">
@@ -1125,7 +1123,6 @@
       </variable>
       <variable label="Lamp D" CV="518" mask="XXXVVVVV" default="8" item="MA1 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA1 D PR" CV="518" mask="VVVXXXXX" default="0">
@@ -1182,8 +1179,7 @@
         </qualifier>
       </variable>
       <variable label="Lamp A" CV="523" mask="XXXVVVVV" default="8" item="MA2 A">
-         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
         <label>Lamp A</label>
       </variable>
       <variable item="MA2 A PR" CV="523" mask="VVVXXXXX" default="0">
@@ -1197,8 +1193,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceRate.xml"/>
       </variable>
       <variable label="Lamp C" CV="525" mask="XXXVVVVV" default="8" item="MA2 C">
-         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
         <label>Lamp C</label>
       </variable>
       <variable item="MA2 C PR" CV="525" mask="VVVXXXXX" default="0">
@@ -1263,7 +1258,6 @@
       </variable>
       <variable label="Lamp A" CV="531" mask="XXXVVVVV" default="8" item="MA3 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA3 A PR" CV="531" mask="VVVXXXXX" default="0">
@@ -1271,7 +1265,6 @@
       </variable>
       <variable label="Lamp B" CV="532" mask="XXXVVVVV" default="8" item="MA3 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA3 B PR" CV="532" mask="VVVXXXXX" default="0">
@@ -1279,7 +1272,6 @@
       </variable>
       <variable label="Lamp C" CV="533" mask="XXXVVVVV" default="8" item="MA3 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA3 C PR" CV="533" mask="VVVXXXXX" default="0">
@@ -1287,7 +1279,6 @@
       </variable>
       <variable label="Lamp D" CV="534" mask="XXXVVVVV" default="8" item="MA3 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA3 D PR" CV="534" mask="VVVXXXXX" default="0">
@@ -1345,7 +1336,6 @@
       </variable>
       <variable label="Lamp A" CV="539" mask="XXXVVVVV" default="8" item="MA4 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA4 A PR" CV="539" mask="VVVXXXXX" default="0">
@@ -1353,7 +1343,6 @@
       </variable>
       <variable label="Lamp B" CV="540" mask="XXXVVVVV" default="8" item="MA4 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA4 B PR" CV="540" mask="VVVXXXXX" default="0">
@@ -1361,7 +1350,6 @@
       </variable>
       <variable label="Lamp C" CV="541" mask="XXXVVVVV" default="8" item="MA4 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA4 C PR" CV="541" mask="VVVXXXXX" default="0">
@@ -1369,7 +1357,6 @@
       </variable>
       <variable label="Lamp D" CV="542" mask="XXXVVVVV" default="8" item="MA4 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA4 D PR" CV="542" mask="VVVXXXXX" default="0">
@@ -1427,7 +1414,6 @@
       </variable>
       <variable label="Lamp A" CV="547" mask="XXXVVVVV" default="8" item="MA5 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA5 A PR" CV="547" mask="VVVXXXXX" default="0">
@@ -1435,7 +1421,6 @@
       </variable>
       <variable label="Lamp B" CV="548" mask="XXXVVVVV" default="8" item="MA5 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA5 B PR" CV="548" mask="VVVXXXXX" default="0">
@@ -1443,7 +1428,6 @@
       </variable>
       <variable label="Lamp C" CV="549" mask="XXXVVVVV" default="8" item="MA5 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA5 C PR" CV="549" mask="VVVXXXXX" default="0">
@@ -1451,7 +1435,6 @@
       </variable>
       <variable label="Lamp D" CV="550" mask="XXXVVVVV" default="8" item="MA5 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA5 D PR" CV="550" mask="VVVXXXXX" default="0">
@@ -1509,7 +1492,6 @@
       </variable>
       <variable label="Lamp A" CV="555" mask="XXXVVVVV" default="8" item="MA6 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA6 A PR" CV="555" mask="VVVXXXXX" default="0">
@@ -1517,7 +1499,6 @@
       </variable>
       <variable label="Lamp B" CV="556" mask="XXXVVVVV" default="8" item="MA6 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA6 B PR" CV="556" mask="VVVXXXXX" default="0">
@@ -1525,7 +1506,6 @@
       </variable>
       <variable label="Lamp C" CV="557" mask="XXXVVVVV" default="8" item="MA6 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA6 C PR" CV="557" mask="VVVXXXXX" default="0">
@@ -1533,7 +1513,6 @@
       </variable>
       <variable label="Lamp D" CV="558" mask="XXXVVVVV" default="8" item="MA6 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA6 D PR" CV="558" mask="VVVXXXXX" default="0">
@@ -1591,7 +1570,6 @@
       </variable>
       <variable label="Lamp A" CV="563" mask="XXXVVVVV" default="8" item="MA7 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA7 A PR" CV="563" mask="VVVXXXXX" default="0">
@@ -1599,7 +1577,6 @@
       </variable>
       <variable label="Lamp B" CV="564" mask="XXXVVVVV" default="8" item="MA7 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA7 B PR" CV="564" mask="VVVXXXXX" default="0">
@@ -1607,7 +1584,6 @@
       </variable>
       <variable label="Lamp C" CV="565" mask="XXXVVVVV" default="8" item="MA7 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA7 C PR" CV="565" mask="VVVXXXXX" default="0">
@@ -1615,7 +1591,6 @@
       </variable>
       <variable label="Lamp D" CV="566" mask="XXXVVVVV" default="8" item="MA7 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA7 D PR" CV="566" mask="VVVXXXXX" default="0">
@@ -1673,7 +1648,6 @@
       </variable>
       <variable label="Lamp A" CV="571" mask="XXXVVVVV" default="8" item="MA8 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA8 A PR" CV="571" mask="VVVXXXXX" default="0">
@@ -1681,7 +1655,6 @@
       </variable>
       <variable label="Lamp B" CV="572" mask="XXXVVVVV" default="8" item="MA8 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA8 B PR" CV="572" mask="VVVXXXXX" default="0">
@@ -1689,7 +1662,6 @@
       </variable>
       <variable label="Lamp C" CV="573" mask="XXXVVVVV" default="8" item="MA8 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA8 C PR" CV="573" mask="VVVXXXXX" default="0">
@@ -1697,7 +1669,6 @@
       </variable>
       <variable label="Lamp D" CV="574" mask="XXXVVVVV" default="8" item="MA8 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA8 D PR" CV="574" mask="VVVXXXXX" default="0">
@@ -1755,7 +1726,6 @@
       </variable>
       <variable label="Lamp A" CV="579" mask="XXXVVVVV" default="8" item="MA9 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA9 A PR" CV="579" mask="VVVXXXXX" default="0">
@@ -1763,7 +1733,6 @@
       </variable>
       <variable label="Lamp B" CV="580" mask="XXXVVVVV" default="8" item="MA9 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA9 B PR" CV="580" mask="VVVXXXXX" default="0">
@@ -1771,7 +1740,6 @@
       </variable>
       <variable label="Lamp C" CV="581" mask="XXXVVVVV" default="8" item="MA9 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA9 C PR" CV="581" mask="VVVXXXXX" default="0">
@@ -1779,7 +1747,6 @@
       </variable>
       <variable label="Lamp D" CV="582" mask="XXXVVVVV" default="8" item="MA9 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA9 D PR" CV="582" mask="VVVXXXXX" default="0">
@@ -1837,7 +1804,6 @@
       </variable>
       <variable label="Lamp A" CV="587" mask="XXXVVVVV" default="8" item="MA10 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA10 A PR" CV="587" mask="VVVXXXXX" default="0">
@@ -1845,7 +1811,6 @@
       </variable>
       <variable label="Lamp B" CV="588" mask="XXXVVVVV" default="8" item="MA10 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA10 B PR" CV="588" mask="VVVXXXXX" default="0">
@@ -1853,7 +1818,6 @@
       </variable>
       <variable label="Lamp C" CV="589" mask="XXXVVVVV" default="8" item="MA10 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA10 C PR" CV="589" mask="VVVXXXXX" default="0">
@@ -1861,7 +1825,6 @@
       </variable>
       <variable label="Lamp D" CV="590" mask="XXXVVVVV" default="8" item="MA10 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA10 D PR" CV="590" mask="VVVXXXXX" default="0">
@@ -1919,7 +1882,6 @@
       </variable>
       <variable label="Lamp A" CV="595" mask="XXXVVVVV" default="8" item="MA11 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA11 A PR" CV="595" mask="VVVXXXXX" default="0">
@@ -1927,7 +1889,6 @@
       </variable>
       <variable label="Lamp B" CV="596" mask="XXXVVVVV" default="8" item="MA11 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA11 B PR" CV="596" mask="VVVXXXXX" default="0">
@@ -1935,7 +1896,6 @@
       </variable>
       <variable label="Lamp C" CV="597" mask="XXXVVVVV" default="8" item="MA11 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA11 C PR" CV="597" mask="VVVXXXXX" default="0">
@@ -1943,7 +1903,6 @@
       </variable>
       <variable label="Lamp D" CV="598" mask="XXXVVVVV" default="8" item="MA11 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA11 D PR" CV="598" mask="VVVXXXXX" default="0">
@@ -2001,7 +1960,6 @@
       </variable>
       <variable label="Lamp A" CV="603" mask="XXXVVVVV" default="8" item="MA12 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA12 A PR" CV="603" mask="VVVXXXXX" default="0">
@@ -2009,7 +1967,6 @@
       </variable>
       <variable label="Lamp B" CV="604" mask="XXXVVVVV" default="8" item="MA12 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA12 B PR" CV="604" mask="VVVXXXXX" default="0">
@@ -2017,7 +1974,6 @@
       </variable>
       <variable label="Lamp C" CV="605" mask="XXXVVVVV" default="8" item="MA12 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA12 C PR" CV="605" mask="VVVXXXXX" default="0">
@@ -2025,7 +1981,6 @@
       </variable>
       <variable label="Lamp D" CV="606" mask="XXXVVVVV" default="8" item="MA12 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA12 D PR" CV="606" mask="VVVXXXXX" default="0">
@@ -2083,7 +2038,6 @@
       </variable>
       <variable label="Lamp A" CV="611" mask="XXXVVVVV" default="8" item="MA13 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA13 A PR" CV="611" mask="VVVXXXXX" default="0">
@@ -2091,7 +2045,6 @@
       </variable>
       <variable label="Lamp B" CV="612" mask="XXXVVVVV" default="8" item="MA13 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA13 B PR" CV="612" mask="VVVXXXXX" default="0">
@@ -2099,7 +2052,6 @@
       </variable>
       <variable label="Lamp C" CV="613" mask="XXXVVVVV" default="8" item="MA13 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA13 C PR" CV="613" mask="VVVXXXXX" default="0">
@@ -2107,7 +2059,6 @@
       </variable>
       <variable label="Lamp D" CV="614" mask="XXXVVVVV" default="8" item="MA13 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA13 D PR" CV="614" mask="VVVXXXXX" default="0">
@@ -2165,7 +2116,6 @@
       </variable>
       <variable label="Lamp A" CV="619" mask="XXXVVVVV" default="8" item="MA14 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA14 A PR" CV="619" mask="VVVXXXXX" default="0">
@@ -2173,7 +2123,6 @@
       </variable>
       <variable label="Lamp B" CV="620" mask="XXXVVVVV" default="8" item="MA14 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA14 B PR" CV="620" mask="VVVXXXXX" default="0">
@@ -2181,7 +2130,6 @@
       </variable>
       <variable label="Lamp C" CV="621" mask="XXXVVVVV" default="8" item="MA14 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA14 C PR" CV="621" mask="VVVXXXXX" default="0">
@@ -2189,7 +2137,6 @@
       </variable>
       <variable label="Lamp D" CV="622" mask="XXXVVVVV" default="8" item="MA14 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA14 D PR" CV="622" mask="VVVXXXXX" default="0">
@@ -2247,7 +2194,6 @@
       </variable>
       <variable label="Lamp A" CV="627" mask="XXXVVVVV" default="8" item="MA15 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA15 A PR" CV="627" mask="VVVXXXXX" default="0">
@@ -2255,7 +2201,6 @@
       </variable>
       <variable label="Lamp B" CV="628" mask="XXXVVVVV" default="8" item="MA15 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA15 B PR" CV="628" mask="VVVXXXXX" default="0">
@@ -2263,7 +2208,6 @@
       </variable>
       <variable label="Lamp C" CV="629" mask="XXXVVVVV" default="8" item="MA15 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA15 C PR" CV="629" mask="VVVXXXXX" default="0">
@@ -2271,7 +2215,6 @@
       </variable>
       <variable label="Lamp D" CV="630" mask="XXXVVVVV" default="8" item="MA15 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA15 D PR" CV="630" mask="VVVXXXXX" default="0">
@@ -2329,7 +2272,6 @@
       </variable>
       <variable label="Lamp A" CV="635" mask="XXXVVVVV" default="8" item="MA16 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA16 A PR" CV="635" mask="VVVXXXXX" default="0">
@@ -2337,7 +2279,6 @@
       </variable>
       <variable label="Lamp B" CV="636" mask="XXXVVVVV" default="8" item="MA16 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA16 B PR" CV="636" mask="VVVXXXXX" default="0">
@@ -2345,7 +2286,6 @@
       </variable>
       <variable label="Lamp C" CV="637" mask="XXXVVVVV" default="8" item="MA16 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA16 C PR" CV="637" mask="VVVXXXXX" default="0">
@@ -2353,7 +2293,6 @@
       </variable>
       <variable label="Lamp D" CV="638" mask="XXXVVVVV" default="8" item="MA16 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA16 D PR" CV="638" mask="VVVXXXXX" default="0">
@@ -2411,7 +2350,6 @@
       </variable>
       <variable label="Lamp A" CV="643" mask="XXXVVVVV" default="8" item="MA17 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA17 A PR" CV="643" mask="VVVXXXXX" default="0">
@@ -2419,7 +2357,6 @@
       </variable>
       <variable label="Lamp B" CV="644" mask="XXXVVVVV" default="8" item="MA17 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA17 B PR" CV="644" mask="VVVXXXXX" default="0">
@@ -2427,7 +2364,6 @@
       </variable>
       <variable label="Lamp C" CV="645" mask="XXXVVVVV" default="8" item="MA17 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA17 C PR" CV="645" mask="VVVXXXXX" default="0">
@@ -2435,7 +2371,6 @@
       </variable>
       <variable label="Lamp D" CV="646" mask="XXXVVVVV" default="8" item="MA17 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA17 D PR" CV="646" mask="VVVXXXXX" default="0">
@@ -2493,7 +2428,6 @@
       </variable>
       <variable label="Lamp A" CV="651" mask="XXXVVVVV" default="8" item="MA18 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA18 A PR" CV="651" mask="VVVXXXXX" default="0">
@@ -2501,7 +2435,6 @@
       </variable>
       <variable label="Lamp B" CV="652" mask="XXXVVVVV" default="8" item="MA18 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA18 B PR" CV="652" mask="VVVXXXXX" default="0">
@@ -2509,7 +2442,6 @@
       </variable>
       <variable label="Lamp C" CV="653" mask="XXXVVVVV" default="8" item="MA18 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA18 C PR" CV="653" mask="VVVXXXXX" default="0">
@@ -2517,7 +2449,6 @@
       </variable>
       <variable label="Lamp D" CV="654" mask="XXXVVVVV" default="8" item="MA18 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA18 D PR" CV="654" mask="VVVXXXXX" default="0">
@@ -2575,7 +2506,6 @@
       </variable>
       <variable label="Lamp A" CV="659" mask="XXXVVVVV" default="8" item="MA19 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA19 A PR" CV="659" mask="VVVXXXXX" default="0">
@@ -2583,7 +2513,6 @@
       </variable>
       <variable label="Lamp B" CV="660" mask="XXXVVVVV" default="8" item="MA19 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA19 B PR" CV="660" mask="VVVXXXXX" default="0">
@@ -2591,7 +2520,6 @@
       </variable>
       <variable label="Lamp C" CV="661" mask="XXXVVVVV" default="8" item="MA19 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA19 C PR" CV="661" mask="VVVXXXXX" default="0">
@@ -2599,7 +2527,6 @@
       </variable>
       <variable label="Lamp D" CV="662" mask="XXXVVVVV" default="8" item="MA19 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA19 D PR" CV="662" mask="VVVXXXXX" default="0">
@@ -2657,7 +2584,6 @@
       </variable>
       <variable label="Lamp A" CV="667" mask="XXXVVVVV" default="8" item="MA20 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA20 A PR" CV="667" mask="VVVXXXXX" default="0">
@@ -2665,7 +2591,6 @@
       </variable>
       <variable label="Lamp B" CV="668" mask="XXXVVVVV" default="8" item="MA20 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA20 B PR" CV="668" mask="VVVXXXXX" default="0">
@@ -2673,7 +2598,6 @@
       </variable>
       <variable label="Lamp C" CV="669" mask="XXXVVVVV" default="8" item="MA20 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA20 C PR" CV="669" mask="VVVXXXXX" default="0">
@@ -2681,7 +2605,6 @@
       </variable>
       <variable label="Lamp D" CV="670" mask="XXXVVVVV" default="8" item="MA20 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA20 D PR" CV="670" mask="VVVXXXXX" default="0">
@@ -2739,7 +2662,6 @@
       </variable>
       <variable label="Lamp A" CV="675" mask="XXXVVVVV" default="8" item="MA21 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA21 A PR" CV="675" mask="VVVXXXXX" default="0">
@@ -2747,7 +2669,6 @@
       </variable>
       <variable label="Lamp B" CV="676" mask="XXXVVVVV" default="8" item="MA21 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA21 B PR" CV="676" mask="VVVXXXXX" default="0">
@@ -2755,7 +2676,6 @@
       </variable>
       <variable label="Lamp C" CV="677" mask="XXXVVVVV" default="8" item="MA21 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA21 C PR" CV="677" mask="VVVXXXXX" default="0">
@@ -2763,7 +2683,6 @@
       </variable>
       <variable label="Lamp D" CV="678" mask="XXXVVVVV" default="8" item="MA21 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA21 D PR" CV="678" mask="VVVXXXXX" default="0">
@@ -2821,7 +2740,6 @@
       </variable>
       <variable label="Lamp A" CV="683" mask="XXXVVVVV" default="8" item="MA22 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA22 A PR" CV="683" mask="VVVXXXXX" default="0">
@@ -2829,7 +2747,6 @@
       </variable>
       <variable label="Lamp B" CV="684" mask="XXXVVVVV" default="8" item="MA22 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA22 B PR" CV="684" mask="VVVXXXXX" default="0">
@@ -2837,7 +2754,6 @@
       </variable>
       <variable label="Lamp C" CV="685" mask="XXXVVVVV" default="8" item="MA22 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA22 C PR" CV="685" mask="VVVXXXXX" default="0">
@@ -2845,7 +2761,6 @@
       </variable>
       <variable label="Lamp D" CV="686" mask="XXXVVVVV" default="8" item="MA22 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA22 D PR" CV="686" mask="VVVXXXXX" default="0">
@@ -2903,7 +2818,6 @@
       </variable>
       <variable label="Lamp A" CV="691" mask="XXXVVVVV" default="8" item="MA23 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA23 A PR" CV="691" mask="VVVXXXXX" default="0">
@@ -2911,7 +2825,6 @@
       </variable>
       <variable label="Lamp B" CV="692" mask="XXXVVVVV" default="8" item="MA23 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA23 B PR" CV="692" mask="VVVXXXXX" default="0">
@@ -2919,7 +2832,6 @@
       </variable>
       <variable label="Lamp C" CV="693" mask="XXXVVVVV" default="8" item="MA23 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA23 C PR" CV="693" mask="VVVXXXXX" default="0">
@@ -2927,7 +2839,6 @@
       </variable>
       <variable label="Lamp D" CV="694" mask="XXXVVVVV" default="8" item="MA23 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA23 D PR" CV="694" mask="VVVXXXXX" default="0">
@@ -2985,7 +2896,6 @@
       </variable>
       <variable label="Lamp A" CV="699" mask="XXXVVVVV" default="8" item="MA24 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA24 A PR" CV="699" mask="VVVXXXXX" default="0">
@@ -2993,7 +2903,6 @@
       </variable>
       <variable label="Lamp B" CV="700" mask="XXXVVVVV" default="8" item="MA24 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA24 B PR" CV="700" mask="VVVXXXXX" default="0">
@@ -3001,7 +2910,6 @@
       </variable>
       <variable label="Lamp C" CV="701" mask="XXXVVVVV" default="8" item="MA24 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA24 C PR" CV="701" mask="VVVXXXXX" default="0">
@@ -3009,7 +2917,6 @@
       </variable>
       <variable label="Lamp D" CV="702" mask="XXXVVVVV" default="8" item="MA24 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA24 D PR" CV="702" mask="VVVXXXXX" default="0">
@@ -3067,7 +2974,6 @@
       </variable>
       <variable label="Lamp A" CV="707" mask="XXXVVVVV" default="8" item="MA25 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA25 A PR" CV="707" mask="VVVXXXXX" default="0">
@@ -3075,7 +2981,6 @@
       </variable>
       <variable label="Lamp B" CV="708" mask="XXXVVVVV" default="8" item="MA25 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA25 B PR" CV="708" mask="VVVXXXXX" default="0">
@@ -3083,7 +2988,6 @@
       </variable>
       <variable label="Lamp C" CV="709" mask="XXXVVVVV" default="8" item="MA25 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA25 C PR" CV="709" mask="VVVXXXXX" default="0">
@@ -3091,7 +2995,6 @@
       </variable>
       <variable label="Lamp D" CV="710" mask="XXXVVVVV" default="8" item="MA25 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA25 D PR" CV="710" mask="VVVXXXXX" default="0">
@@ -3149,7 +3052,6 @@
       </variable>
       <variable label="Lamp A" CV="715" mask="XXXVVVVV" default="8" item="MA26 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA26 A PR" CV="715" mask="VVVXXXXX" default="0">
@@ -3157,7 +3059,6 @@
       </variable>
       <variable label="Lamp B" CV="716" mask="XXXVVVVV" default="8" item="MA26 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA26 B PR" CV="716" mask="VVVXXXXX" default="0">
@@ -3165,7 +3066,6 @@
       </variable>
       <variable label="Lamp C" CV="717" mask="XXXVVVVV" default="8" item="MA26 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA26 C PR" CV="717" mask="VVVXXXXX" default="0">
@@ -3173,7 +3073,6 @@
       </variable>
       <variable label="Lamp D" CV="718" mask="XXXVVVVV" default="8" item="MA26 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA26 D PR" CV="718" mask="VVVXXXXX" default="0">
@@ -3231,7 +3130,6 @@
       </variable>
       <variable label="Lamp A" CV="723" mask="XXXVVVVV" default="8" item="MA27 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA27 A PR" CV="723" mask="VVVXXXXX" default="0">
@@ -3239,7 +3137,6 @@
       </variable>
       <variable label="Lamp B" CV="724" mask="XXXVVVVV" default="8" item="MA27 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA27 B PR" CV="724" mask="VVVXXXXX" default="0">
@@ -3247,7 +3144,6 @@
       </variable>
       <variable label="Lamp C" CV="725" mask="XXXVVVVV" default="8" item="MA27 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA27 C PR" CV="725" mask="VVVXXXXX" default="0">
@@ -3255,7 +3151,6 @@
       </variable>
       <variable label="Lamp D" CV="726" mask="XXXVVVVV" default="8" item="MA27 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA27 D PR" CV="726" mask="VVVXXXXX" default="0">
@@ -3313,7 +3208,6 @@
       </variable>
       <variable label="Lamp A" CV="731" mask="XXXVVVVV" default="8" item="MA28 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA28 A PR" CV="731" mask="VVVXXXXX" default="0">
@@ -3321,7 +3215,6 @@
       </variable>
       <variable label="Lamp B" CV="732" mask="XXXVVVVV" default="8" item="MA28 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA28 B PR" CV="732" mask="VVVXXXXX" default="0">
@@ -3329,7 +3222,6 @@
       </variable>
       <variable label="Lamp C" CV="733" mask="XXXVVVVV" default="8" item="MA28 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA28 C PR" CV="733" mask="VVVXXXXX" default="0">
@@ -3337,7 +3229,6 @@
       </variable>
       <variable label="Lamp D" CV="734" mask="XXXVVVVV" default="8" item="MA28 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA28 D PR" CV="734" mask="VVVXXXXX" default="0">
@@ -3395,7 +3286,6 @@
       </variable>
       <variable label="Lamp A" CV="739" mask="XXXVVVVV" default="8" item="MA29 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA29 A PR" CV="739" mask="VVVXXXXX" default="0">
@@ -3403,7 +3293,6 @@
       </variable>
       <variable label="Lamp B" CV="740" mask="XXXVVVVV" default="8" item="MA29 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA29 B PR" CV="740" mask="VVVXXXXX" default="0">
@@ -3411,7 +3300,6 @@
       </variable>
       <variable label="Lamp C" CV="741" mask="XXXVVVVV" default="8" item="MA29 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA29 C PR" CV="741" mask="VVVXXXXX" default="0">
@@ -3419,7 +3307,6 @@
       </variable>
       <variable label="Lamp D" CV="742" mask="XXXVVVVV" default="8" item="MA29 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA29 D PR" CV="742" mask="VVVXXXXX" default="0">
@@ -3477,7 +3364,6 @@
       </variable>
       <variable label="Lamp A" CV="747" mask="XXXVVVVV" default="8" item="MA30 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA30 A PR" CV="747" mask="VVVXXXXX" default="0">
@@ -3485,7 +3371,6 @@
       </variable>
       <variable label="Lamp B" CV="748" mask="XXXVVVVV" default="8" item="MA30 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA30 B PR" CV="748" mask="VVVXXXXX" default="0">
@@ -3493,7 +3378,6 @@
       </variable>
       <variable label="Lamp C" CV="749" mask="XXXVVVVV" default="8" item="MA30 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA30 C PR" CV="749" mask="VVVXXXXX" default="0">
@@ -3501,7 +3385,6 @@
       </variable>
       <variable label="Lamp D" CV="750" mask="XXXVVVVV" default="8" item="MA30 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA30 D PR" CV="750" mask="VVVXXXXX" default="0">
@@ -3559,7 +3442,6 @@
       </variable>
       <variable label="Lamp A" CV="755" mask="XXXVVVVV" default="8" item="MA31 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA31 A PR" CV="755" mask="VVVXXXXX" default="0">
@@ -3567,7 +3449,6 @@
       </variable>
       <variable label="Lamp B" CV="756" mask="XXXVVVVV" default="8" item="MA31 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA31 B PR" CV="756" mask="VVVXXXXX" default="0">
@@ -3575,7 +3456,6 @@
       </variable>
       <variable label="Lamp C" CV="757" mask="XXXVVVVV" default="8" item="MA31 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA31 C PR" CV="757" mask="VVVXXXXX" default="0">
@@ -3583,7 +3463,6 @@
       </variable>
       <variable label="Lamp D" CV="758" mask="XXXVVVVV" default="8" item="MA31 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA31 D PR" CV="758" mask="VVVXXXXX" default="0">
@@ -3641,7 +3520,6 @@
       </variable>
       <variable label="Lamp A" CV="763" mask="XXXVVVVV" default="8" item="MA32 A">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp A</label>
       </variable>
       <variable item="MA32 A PR" CV="763" mask="VVVXXXXX" default="0">
@@ -3649,7 +3527,6 @@
       </variable>
       <variable label="Lamp B" CV="764" mask="XXXVVVVV" default="8" item="MA32 B">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp B</label>
       </variable>
       <variable item="MA32 B PR" CV="764" mask="VVVXXXXX" default="0">
@@ -3657,7 +3534,6 @@
       </variable>
       <variable label="Lamp C" CV="765" mask="XXXVVVVV" default="8" item="MA32 C">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp C</label>
       </variable>
       <variable item="MA32 C PR" CV="765" mask="VVVXXXXX" default="0">
@@ -3665,7 +3541,6 @@
       </variable>
       <variable label="Lamp D" CV="766" mask="XXXVVVVV" default="8" item="MA32 D">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
-
         <label>Lamp D</label>
       </variable>
       <variable item="MA32 D PR" CV="766" mask="VVVXXXXX" default="0">
@@ -3727,7 +3602,7 @@
           <value>1</value>
         </qualifier>
       </variable>
-     <variable label="OUT1 Secondary 1 Address" CV="773" mask="VVVVVVVV">
+      <variable label="OUT1 Secondary 1 Address" CV="773" mask="VVVVVVVV">
         <splitVal highCV="774" upperMask="XXXXVVVV" offset="1"/>
       </variable>
       <variable label="OUT1 Secondary 1 Polarity" CV="774" mask="VVXXXXXX">
@@ -3776,7 +3651,6 @@
       <variable label="OUT2 Type" CV="780" mask="XVVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/>
       </variable>
-
       <variable label="OUT2 Timing" CV="780" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
         <qualifier>
@@ -3803,8 +3677,7 @@
           <value>3</value>
         </qualifier>
       </variable>
-
-  		<variable label="OUT2 Color" CV="780" mask="XXXXVVVV">
+      <variable label="OUT2 Color" CV="780" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceColor.xml"/>
         <qualifier>
           <variableref>OUT2 Paired</variableref>
@@ -3926,7 +3799,6 @@
       <variable label="OUT4 Type" CV="796" mask="XVVVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceOutputType.xml"/>
       </variable>
-
       <variable label="OUT4 Timing" CV="796" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceTimingA.xml"/>
         <qualifier>
@@ -3953,7 +3825,7 @@
           <value>3</value>
         </qualifier>
       </variable>
- 		<variable label="OUT4 Color" CV="796" mask="XXXXVVVV">
+      <variable label="OUT4 Color" CV="796" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceColor.xml"/>
         <qualifier>
           <variableref>OUT4 Paired</variableref>
@@ -4101,7 +3973,7 @@
           <value>3</value>
         </qualifier>
       </variable>
- 		<variable label="OUT6 Color" CV="812" mask="XXXXVVVV">
+      <variable label="OUT6 Color" CV="812" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceColor.xml"/>
         <qualifier>
           <variableref>OUT6 Paired</variableref>
@@ -4252,7 +4124,7 @@
           <value>3</value>
         </qualifier>
       </variable>
- 		<variable label="OUT8 Color" CV="828" mask="XXXXVVVV">
+      <variable label="OUT8 Color" CV="828" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceColor.xml"/>
         <qualifier>
           <variableref>OUT8 Paired</variableref>
@@ -4280,11 +4152,8 @@
       </variable>
       <!-- End Outputs -->
       <constant item="PICV" default="32" comment="CV used for Primary Index"/>
-
       <!-- NMRA CV.PI formatted items -->
-
       <!-- Index 0 items -->
-
       <!-- Logic Table entry #1 -->
       <ivariable label="LT1 Block End" CVname="257.0" CV="257" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -4295,7 +4164,7 @@
       <ivariable label="LT1 Output Mode" CVname="257.0" CV="257" PI="0" default="0" item="LT1 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT1 Var1 Mode" CVname="257.0" CV="257" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT1 Var1 Mode" CVname="257.0" CV="257" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT1 Var2 Mode" CVname="257.0" CV="257" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -4460,7 +4329,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #2 -->
       <ivariable label="LT2 Block End" CVname="265.0" CV="265" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -4471,7 +4339,7 @@
       <ivariable label="LT2 Output Mode" CVname="265.0" CV="265" PI="0" default="0" item="LT2 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT2 Var1 Mode" CVname="265.0" CV="265" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT2 Var1 Mode" CVname="265.0" CV="265" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT2 Var2 Mode" CVname="265.0" CV="265" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -4636,7 +4504,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #3 -->
       <ivariable label="LT3 Block End" CVname="273.0" CV="273" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -4647,7 +4514,7 @@
       <ivariable label="LT3 Output Mode" CVname="273.0" CV="273" PI="0" default="0" item="LT3 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT3 Var1 Mode" CVname="273.0" CV="273" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT3 Var1 Mode" CVname="273.0" CV="273" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT3 Var2 Mode" CVname="273.0" CV="273" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -4812,7 +4679,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #4 -->
       <ivariable label="LT4 Block End" CVname="281.0" CV="281" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -4823,7 +4689,7 @@
       <ivariable label="LT4 Output Mode" CVname="281.0" CV="281" PI="0" default="0" item="LT4 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT4 Var1 Mode" CVname="281.0" CV="281" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT4 Var1 Mode" CVname="281.0" CV="281" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT4 Var2 Mode" CVname="281.0" CV="281" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -4988,7 +4854,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #5 -->
       <ivariable label="LT5 Block End" CVname="289.0" CV="289" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -4999,7 +4864,7 @@
       <ivariable label="LT5 Output Mode" CVname="289.0" CV="289" PI="0" default="0" item="LT5 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT5 Var1 Mode" CVname="289.0" CV="289" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT5 Var1 Mode" CVname="289.0" CV="289" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT5 Var2 Mode" CVname="289.0" CV="289" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -5164,7 +5029,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #6 -->
       <ivariable label="LT6 Block End" CVname="297.0" CV="297" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -5175,7 +5039,7 @@
       <ivariable label="LT6 Output Mode" CVname="297.0" CV="297" PI="0" default="0" item="LT6 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT6 Var1 Mode" CVname="297.0" CV="297" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT6 Var1 Mode" CVname="297.0" CV="297" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT6 Var2 Mode" CVname="297.0" CV="297" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -5340,7 +5204,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #7 -->
       <ivariable label="LT7 Block End" CVname="305.0" CV="305" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -5351,7 +5214,7 @@
       <ivariable label="LT7 Output Mode" CVname="305.0" CV="305" PI="0" default="0" item="LT7 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT7 Var1 Mode" CVname="305.0" CV="305" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT7 Var1 Mode" CVname="305.0" CV="305" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT7 Var2 Mode" CVname="305.0" CV="305" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -5516,7 +5379,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #8 -->
       <ivariable label="LT8 Block End" CVname="313.0" CV="313" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -5527,7 +5389,7 @@
       <ivariable label="LT8 Output Mode" CVname="313.0" CV="313" PI="0" default="0" item="LT8 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT8 Var1 Mode" CVname="313.0" CV="313" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT8 Var1 Mode" CVname="313.0" CV="313" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT8 Var2 Mode" CVname="313.0" CV="313" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -5692,7 +5554,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #9 -->
       <ivariable label="LT9 Block End" CVname="321.0" CV="321" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -5703,7 +5564,7 @@
       <ivariable label="LT9 Output Mode" CVname="321.0" CV="321" PI="0" default="0" item="LT9 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT9 Var1 Mode" CVname="321.0" CV="321" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT9 Var1 Mode" CVname="321.0" CV="321" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT9 Var2 Mode" CVname="321.0" CV="321" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -5868,7 +5729,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #10 -->
       <ivariable label="LT10 Block End" CVname="329.0" CV="329" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -5879,7 +5739,7 @@
       <ivariable label="LT10 Output Mode" CVname="329.0" CV="329" PI="0" default="0" item="LT10 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT10 Var1 Mode" CVname="329.0" CV="329" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT10 Var1 Mode" CVname="329.0" CV="329" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT10 Var2 Mode" CVname="329.0" CV="329" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -6044,7 +5904,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #11 -->
       <ivariable label="LT11 Block End" CVname="337.0" CV="337" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -6055,7 +5914,7 @@
       <ivariable label="LT11 Output Mode" CVname="337.0" CV="337" PI="0" default="0" item="LT11 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT11 Var1 Mode" CVname="337.0" CV="337" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT11 Var1 Mode" CVname="337.0" CV="337" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT11 Var2 Mode" CVname="337.0" CV="337" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -6220,7 +6079,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #12 -->
       <ivariable label="LT12 Block End" CVname="345.0" CV="345" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -6231,7 +6089,7 @@
       <ivariable label="LT12 Output Mode" CVname="345.0" CV="345" PI="0" default="0" item="LT12 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT12 Var1 Mode" CVname="345.0" CV="345" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT12 Var1 Mode" CVname="345.0" CV="345" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT12 Var2 Mode" CVname="345.0" CV="345" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -6396,7 +6254,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #13 -->
       <ivariable label="LT13 Block End" CVname="353.0" CV="353" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -6407,7 +6264,7 @@
       <ivariable label="LT13 Output Mode" CVname="353.0" CV="353" PI="0" default="0" item="LT13 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT13 Var1 Mode" CVname="353.0" CV="353" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT13 Var1 Mode" CVname="353.0" CV="353" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT13 Var2 Mode" CVname="353.0" CV="353" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -6572,7 +6429,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #14 -->
       <ivariable label="LT14 Block End" CVname="361.0" CV="361" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -6583,7 +6439,7 @@
       <ivariable label="LT14 Output Mode" CVname="361.0" CV="361" PI="0" default="0" item="LT14 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT14 Var1 Mode" CVname="361.0" CV="361" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT14 Var1 Mode" CVname="361.0" CV="361" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT14 Var2 Mode" CVname="361.0" CV="361" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -6748,7 +6604,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #15 -->
       <ivariable label="LT15 Block End" CVname="369.0" CV="369" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -6759,7 +6614,7 @@
       <ivariable label="LT15 Output Mode" CVname="369.0" CV="369" PI="0" default="0" item="LT15 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT15 Var1 Mode" CVname="369.0" CV="369" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT15 Var1 Mode" CVname="369.0" CV="369" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT15 Var2 Mode" CVname="369.0" CV="369" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -6924,7 +6779,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #16 -->
       <ivariable label="LT16 Block End" CVname="377.0" CV="377" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -6935,7 +6789,7 @@
       <ivariable label="LT16 Output Mode" CVname="377.0" CV="377" PI="0" default="0" item="LT16 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT16 Var1 Mode" CVname="377.0" CV="377" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT16 Var1 Mode" CVname="377.0" CV="377" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT16 Var2 Mode" CVname="377.0" CV="377" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -7100,7 +6954,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #17 -->
       <ivariable label="LT17 Block End" CVname="385.0" CV="385" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -7111,7 +6964,7 @@
       <ivariable label="LT17 Output Mode" CVname="385.0" CV="385" PI="0" default="0" item="LT17 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT17 Var1 Mode" CVname="385.0" CV="385" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT17 Var1 Mode" CVname="385.0" CV="385" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT17 Var2 Mode" CVname="385.0" CV="385" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -7276,7 +7129,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #18 -->
       <ivariable label="LT18 Block End" CVname="393.0" CV="393" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -7287,7 +7139,7 @@
       <ivariable label="LT18 Output Mode" CVname="393.0" CV="393" PI="0" default="0" item="LT18 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT18 Var1 Mode" CVname="393.0" CV="393" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT18 Var1 Mode" CVname="393.0" CV="393" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT18 Var2 Mode" CVname="393.0" CV="393" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -7452,7 +7304,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #19 -->
       <ivariable label="LT19 Block End" CVname="401.0" CV="401" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -7463,7 +7314,7 @@
       <ivariable label="LT19 Output Mode" CVname="401.0" CV="401" PI="0" default="0" item="LT19 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT19 Var1 Mode" CVname="401.0" CV="401" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT19 Var1 Mode" CVname="401.0" CV="401" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT19 Var2 Mode" CVname="401.0" CV="401" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -7628,7 +7479,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #20 -->
       <ivariable label="LT20 Block End" CVname="409.0" CV="409" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -7639,7 +7489,7 @@
       <ivariable label="LT20 Output Mode" CVname="409.0" CV="409" PI="0" default="0" item="LT20 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT20 Var1 Mode" CVname="409.0" CV="409" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT20 Var1 Mode" CVname="409.0" CV="409" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT20 Var2 Mode" CVname="409.0" CV="409" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -7804,7 +7654,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #21 -->
       <ivariable label="LT21 Block End" CVname="417.0" CV="417" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -7815,7 +7664,7 @@
       <ivariable label="LT21 Output Mode" CVname="417.0" CV="417" PI="0" default="0" item="LT21 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT21 Var1 Mode" CVname="417.0" CV="417" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT21 Var1 Mode" CVname="417.0" CV="417" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT21 Var2 Mode" CVname="417.0" CV="417" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -7980,7 +7829,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #22 -->
       <ivariable label="LT22 Block End" CVname="425.0" CV="425" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -7991,7 +7839,7 @@
       <ivariable label="LT22 Output Mode" CVname="425.0" CV="425" PI="0" default="0" item="LT22 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT22 Var1 Mode" CVname="425.0" CV="425" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT22 Var1 Mode" CVname="425.0" CV="425" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT22 Var2 Mode" CVname="425.0" CV="425" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -8156,7 +8004,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #23 -->
       <ivariable label="LT23 Block End" CVname="433.0" CV="433" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -8167,7 +8014,7 @@
       <ivariable label="LT23 Output Mode" CVname="433.0" CV="433" PI="0" default="0" item="LT23 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT23 Var1 Mode" CVname="433.0" CV="433" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT23 Var1 Mode" CVname="433.0" CV="433" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT23 Var2 Mode" CVname="433.0" CV="433" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -8332,7 +8179,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #24 -->
       <ivariable label="LT24 Block End" CVname="441.0" CV="441" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -8343,7 +8189,7 @@
       <ivariable label="LT24 Output Mode" CVname="441.0" CV="441" PI="0" default="0" item="LT24 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT24 Var1 Mode" CVname="441.0" CV="441" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT24 Var1 Mode" CVname="441.0" CV="441" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT24 Var2 Mode" CVname="441.0" CV="441" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -8508,7 +8354,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #25 -->
       <ivariable label="LT25 Block End" CVname="449.0" CV="449" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -8519,7 +8364,7 @@
       <ivariable label="LT25 Output Mode" CVname="449.0" CV="449" PI="0" default="0" item="LT25 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT25 Var1 Mode" CVname="449.0" CV="449" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT25 Var1 Mode" CVname="449.0" CV="449" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT25 Var2 Mode" CVname="449.0" CV="449" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -8684,7 +8529,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #26 -->
       <ivariable label="LT26 Block End" CVname="457.0" CV="457" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -8695,7 +8539,7 @@
       <ivariable label="LT26 Output Mode" CVname="457.0" CV="457" PI="0" default="0" item="LT26 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT26 Var1 Mode" CVname="457.0" CV="457" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT26 Var1 Mode" CVname="457.0" CV="457" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT26 Var2 Mode" CVname="457.0" CV="457" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -8860,7 +8704,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #27 -->
       <ivariable label="LT27 Block End" CVname="465.0" CV="465" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -8871,7 +8714,7 @@
       <ivariable label="LT27 Output Mode" CVname="465.0" CV="465" PI="0" default="0" item="LT27 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT27 Var1 Mode" CVname="465.0" CV="465" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT27 Var1 Mode" CVname="465.0" CV="465" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT27 Var2 Mode" CVname="465.0" CV="465" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -9036,7 +8879,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #28 -->
       <ivariable label="LT28 Block End" CVname="473.0" CV="473" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -9047,7 +8889,7 @@
       <ivariable label="LT28 Output Mode" CVname="473.0" CV="473" PI="0" default="0" item="LT28 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT28 Var1 Mode" CVname="473.0" CV="473" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT28 Var1 Mode" CVname="473.0" CV="473" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT28 Var2 Mode" CVname="473.0" CV="473" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -9212,7 +9054,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #29 -->
       <ivariable label="LT29 Block End" CVname="481.0" CV="481" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -9223,7 +9064,7 @@
       <ivariable label="LT29 Output Mode" CVname="481.0" CV="481" PI="0" default="0" item="LT29 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT29 Var1 Mode" CVname="481.0" CV="481" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT29 Var1 Mode" CVname="481.0" CV="481" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT29 Var2 Mode" CVname="481.0" CV="481" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -9388,7 +9229,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #30 -->
       <ivariable label="LT30 Block End" CVname="489.0" CV="489" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -9399,7 +9239,7 @@
       <ivariable label="LT30 Output Mode" CVname="489.0" CV="489" PI="0" default="0" item="LT30 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT30 Var1 Mode" CVname="489.0" CV="489" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT30 Var1 Mode" CVname="489.0" CV="489" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT30 Var2 Mode" CVname="489.0" CV="489" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -9564,7 +9404,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #31 -->
       <ivariable label="LT31 Block End" CVname="497.0" CV="497" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -9575,7 +9414,7 @@
       <ivariable label="LT31 Output Mode" CVname="497.0" CV="497" PI="0" default="0" item="LT31 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT31 Var1 Mode" CVname="497.0" CV="497" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT31 Var1 Mode" CVname="497.0" CV="497" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT31 Var2 Mode" CVname="497.0" CV="497" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -9740,7 +9579,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #32 -->
       <ivariable label="LT32 Block End" CVname="505.0" CV="505" PI="0" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -9751,7 +9589,7 @@
       <ivariable label="LT32 Output Mode" CVname="505.0" CV="505" PI="0" default="0" item="LT32 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT32 Var1 Mode" CVname="505.0" CV="505" PI="0"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT32 Var1 Mode" CVname="505.0" CV="505" PI="0" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT32 Var2 Mode" CVname="505.0" CV="505" PI="0" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -9916,10 +9754,8 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Begin Index 1 -->
       <!-- Logic Table entry #33 -->
-
       <ivariable label="LT33 Block End" CVname="257.1" CV="257" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
       </ivariable>
@@ -9929,7 +9765,7 @@
       <ivariable label="LT33 Output Mode" CVname="257.1" CV="257" PI="1" default="0" item="LT33 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT33 Var1 Mode" CVname="257.1" CV="257" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT33 Var1 Mode" CVname="257.1" CV="257" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT33 Var2 Mode" CVname="257.1" CV="257" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -10094,7 +9930,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #34 -->
       <ivariable label="LT34 Block End" CVname="265.1" CV="265" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -10105,7 +9940,7 @@
       <ivariable label="LT34 Output Mode" CVname="265.1" CV="265" PI="1" default="0" item="LT34 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT34 Var1 Mode" CVname="265.1" CV="265" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT34 Var1 Mode" CVname="265.1" CV="265" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT34 Var2 Mode" CVname="265.1" CV="265" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -10270,7 +10105,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #35 -->
       <ivariable label="LT35 Block End" CVname="273.1" CV="273" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -10281,7 +10115,7 @@
       <ivariable label="LT35 Output Mode" CVname="273.1" CV="273" PI="1" default="0" item="LT35 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT35 Var1 Mode" CVname="273.1" CV="273" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT35 Var1 Mode" CVname="273.1" CV="273" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT35 Var2 Mode" CVname="273.1" CV="273" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -10446,7 +10280,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #36 -->
       <ivariable label="LT36 Block End" CVname="281.1" CV="281" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -10457,7 +10290,7 @@
       <ivariable label="LT36 Output Mode" CVname="281.1" CV="281" PI="1" default="0" item="LT36 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT36 Var1 Mode" CVname="281.1" CV="281" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT36 Var1 Mode" CVname="281.1" CV="281" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT36 Var2 Mode" CVname="281.1" CV="281" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -10622,7 +10455,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #37 -->
       <ivariable label="LT37 Block End" CVname="289.1" CV="289" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -10633,7 +10465,7 @@
       <ivariable label="LT37 Output Mode" CVname="289.1" CV="289" PI="1" default="0" item="LT37 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT37 Var1 Mode" CVname="289.1" CV="289" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT37 Var1 Mode" CVname="289.1" CV="289" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT37 Var2 Mode" CVname="289.1" CV="289" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -10798,7 +10630,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #38 -->
       <ivariable label="LT38 Block End" CVname="297.1" CV="297" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -10809,7 +10640,7 @@
       <ivariable label="LT38 Output Mode" CVname="297.1" CV="297" PI="1" default="0" item="LT38 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT38 Var1 Mode" CVname="297.1" CV="297" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT38 Var1 Mode" CVname="297.1" CV="297" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT38 Var2 Mode" CVname="297.1" CV="297" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -10974,7 +10805,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #39 -->
       <ivariable label="LT39 Block End" CVname="305.1" CV="305" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -10985,7 +10815,7 @@
       <ivariable label="LT39 Output Mode" CVname="305.1" CV="305" PI="1" default="0" item="LT39 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT39 Var1 Mode" CVname="305.1" CV="305" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT39 Var1 Mode" CVname="305.1" CV="305" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT39 Var2 Mode" CVname="305.1" CV="305" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -11150,7 +10980,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #40 -->
       <ivariable label="LT40 Block End" CVname="313.1" CV="313" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -11161,7 +10990,7 @@
       <ivariable label="LT40 Output Mode" CVname="313.1" CV="313" PI="1" default="0" item="LT40 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT40 Var1 Mode" CVname="313.1" CV="313" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT40 Var1 Mode" CVname="313.1" CV="313" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT40 Var2 Mode" CVname="313.1" CV="313" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -11326,7 +11155,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #41 -->
       <ivariable label="LT41 Block End" CVname="321.1" CV="321" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -11337,7 +11165,7 @@
       <ivariable label="LT41 Output Mode" CVname="321.1" CV="321" PI="1" default="0" item="LT41 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT41 Var1 Mode" CVname="321.1" CV="321" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT41 Var1 Mode" CVname="321.1" CV="321" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT41 Var2 Mode" CVname="321.1" CV="321" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -11502,7 +11330,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #42 -->
       <ivariable label="LT42 Block End" CVname="329.1" CV="329" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -11513,7 +11340,7 @@
       <ivariable label="LT42 Output Mode" CVname="329.1" CV="329" PI="1" default="0" item="LT42 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT42 Var1 Mode" CVname="329.1" CV="329" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT42 Var1 Mode" CVname="329.1" CV="329" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT42 Var2 Mode" CVname="329.1" CV="329" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -11678,7 +11505,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #43 -->
       <ivariable label="LT43 Block End" CVname="337.1" CV="337" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -11689,7 +11515,7 @@
       <ivariable label="LT43 Output Mode" CVname="337.1" CV="337" PI="1" default="0" item="LT43 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT43 Var1 Mode" CVname="337.1" CV="337" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT43 Var1 Mode" CVname="337.1" CV="337" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT43 Var2 Mode" CVname="337.1" CV="337" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -11854,7 +11680,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #44 -->
       <ivariable label="LT44 Block End" CVname="345.1" CV="345" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -11865,7 +11690,7 @@
       <ivariable label="LT44 Output Mode" CVname="345.1" CV="345" PI="1" default="0" item="LT44 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT44 Var1 Mode" CVname="345.1" CV="345" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT44 Var1 Mode" CVname="345.1" CV="345" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT44 Var2 Mode" CVname="345.1" CV="345" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -12030,7 +11855,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #45 -->
       <ivariable label="LT45 Block End" CVname="353.1" CV="353" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -12041,7 +11865,7 @@
       <ivariable label="LT45 Output Mode" CVname="353.1" CV="353" PI="1" default="0" item="LT45 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT45 Var1 Mode" CVname="353.1" CV="353" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT45 Var1 Mode" CVname="353.1" CV="353" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT45 Var2 Mode" CVname="353.1" CV="353" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -12206,7 +12030,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #46 -->
       <ivariable label="LT46 Block End" CVname="361.1" CV="361" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -12217,7 +12040,7 @@
       <ivariable label="LT46 Output Mode" CVname="361.1" CV="361" PI="1" default="0" item="LT46 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT46 Var1 Mode" CVname="361.1" CV="361" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT46 Var1 Mode" CVname="361.1" CV="361" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT46 Var2 Mode" CVname="361.1" CV="361" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -12382,7 +12205,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #47 -->
       <ivariable label="LT47 Block End" CVname="369.1" CV="369" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -12393,7 +12215,7 @@
       <ivariable label="LT47 Output Mode" CVname="369.1" CV="369" PI="1" default="0" item="LT47 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT47 Var1 Mode" CVname="369.1" CV="369" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT47 Var1 Mode" CVname="369.1" CV="369" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT47 Var2 Mode" CVname="369.1" CV="369" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -12558,7 +12380,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #48 -->
       <ivariable label="LT48 Block End" CVname="377.1" CV="377" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -12569,7 +12390,7 @@
       <ivariable label="LT48 Output Mode" CVname="377.1" CV="377" PI="1" default="0" item="LT48 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT48 Var1 Mode" CVname="377.1" CV="377" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT48 Var1 Mode" CVname="377.1" CV="377" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT48 Var2 Mode" CVname="377.1" CV="377" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -12734,7 +12555,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #49 -->
       <ivariable label="LT49 Block End" CVname="385.1" CV="385" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -12745,7 +12565,7 @@
       <ivariable label="LT49 Output Mode" CVname="385.1" CV="385" PI="1" default="0" item="LT49 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT49 Var1 Mode" CVname="385.1" CV="385" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT49 Var1 Mode" CVname="385.1" CV="385" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT49 Var2 Mode" CVname="385.1" CV="385" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -12910,7 +12730,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #50 -->
       <ivariable label="LT50 Block End" CVname="393.1" CV="393" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -12921,7 +12740,7 @@
       <ivariable label="LT50 Output Mode" CVname="393.1" CV="393" PI="1" default="0" item="LT50 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT50 Var1 Mode" CVname="393.1" CV="393" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT50 Var1 Mode" CVname="393.1" CV="393" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT50 Var2 Mode" CVname="393.1" CV="393" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -13086,7 +12905,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #51 -->
       <ivariable label="LT51 Block End" CVname="401.1" CV="401" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -13097,7 +12915,7 @@
       <ivariable label="LT51 Output Mode" CVname="401.1" CV="401" PI="1" default="0" item="LT51 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT51 Var1 Mode" CVname="401.1" CV="401" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT51 Var1 Mode" CVname="401.1" CV="401" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT51 Var2 Mode" CVname="401.1" CV="401" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -13262,7 +13080,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #52 -->
       <ivariable label="LT52 Block End" CVname="409.1" CV="409" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -13273,7 +13090,7 @@
       <ivariable label="LT52 Output Mode" CVname="409.1" CV="409" PI="1" default="0" item="LT52 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT52 Var1 Mode" CVname="409.1" CV="409" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT52 Var1 Mode" CVname="409.1" CV="409" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT52 Var2 Mode" CVname="409.1" CV="409" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -13438,7 +13255,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #53 -->
       <ivariable label="LT53 Block End" CVname="417.1" CV="417" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -13449,7 +13265,7 @@
       <ivariable label="LT53 Output Mode" CVname="417.1" CV="417" PI="1" default="0" item="LT53 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT53 Var1 Mode" CVname="417.1" CV="417" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT53 Var1 Mode" CVname="417.1" CV="417" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT53 Var2 Mode" CVname="417.1" CV="417" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -13614,7 +13430,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #54 -->
       <ivariable label="LT54 Block End" CVname="425.1" CV="425" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -13625,7 +13440,7 @@
       <ivariable label="LT54 Output Mode" CVname="425.1" CV="425" PI="1" default="0" item="LT54 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT54 Var1 Mode" CVname="425.1" CV="425" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT54 Var1 Mode" CVname="425.1" CV="425" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT54 Var2 Mode" CVname="425.1" CV="425" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -13790,7 +13605,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #55 -->
       <ivariable label="LT55 Block End" CVname="433.1" CV="433" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -13801,7 +13615,7 @@
       <ivariable label="LT55 Output Mode" CVname="433.1" CV="433" PI="1" default="0" item="LT55 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT55 Var1 Mode" CVname="433.1" CV="433" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT55 Var1 Mode" CVname="433.1" CV="433" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT55 Var2 Mode" CVname="433.1" CV="433" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -13966,7 +13780,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #56 -->
       <ivariable label="LT56 Block End" CVname="441.1" CV="441" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -13977,7 +13790,7 @@
       <ivariable label="LT56 Output Mode" CVname="441.1" CV="441" PI="1" default="0" item="LT56 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT56 Var1 Mode" CVname="441.1" CV="441" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT56 Var1 Mode" CVname="441.1" CV="441" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT56 Var2 Mode" CVname="441.1" CV="441" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -14142,7 +13955,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #57 -->
       <ivariable label="LT57 Block End" CVname="449.1" CV="449" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -14153,7 +13965,7 @@
       <ivariable label="LT57 Output Mode" CVname="449.1" CV="449" PI="1" default="0" item="LT57 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT57 Var1 Mode" CVname="449.1" CV="449" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT57 Var1 Mode" CVname="449.1" CV="449" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT57 Var2 Mode" CVname="449.1" CV="449" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -14318,7 +14130,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #58 -->
       <ivariable label="LT58 Block End" CVname="457.1" CV="457" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -14329,7 +14140,7 @@
       <ivariable label="LT58 Output Mode" CVname="457.1" CV="457" PI="1" default="0" item="LT58 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT58 Var1 Mode" CVname="457.1" CV="457" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT58 Var1 Mode" CVname="457.1" CV="457" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT58 Var2 Mode" CVname="457.1" CV="457" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -14494,7 +14305,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #59 -->
       <ivariable label="LT59 Block End" CVname="465.1" CV="465" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -14505,7 +14315,7 @@
       <ivariable label="LT59 Output Mode" CVname="465.1" CV="465" PI="1" default="0" item="LT59 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT59 Var1 Mode" CVname="465.1" CV="465" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT59 Var1 Mode" CVname="465.1" CV="465" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT59 Var2 Mode" CVname="465.1" CV="465" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -14670,7 +14480,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #60 -->
       <ivariable label="LT60 Block End" CVname="473.1" CV="473" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -14681,7 +14490,7 @@
       <ivariable label="LT60 Output Mode" CVname="473.1" CV="473" PI="1" default="0" item="LT60 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT60 Var1 Mode" CVname="473.1" CV="473" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT60 Var1 Mode" CVname="473.1" CV="473" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT60 Var2 Mode" CVname="473.1" CV="473" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -14846,7 +14655,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #61 -->
       <ivariable label="LT61 Block End" CVname="481.1" CV="481" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -14857,7 +14665,7 @@
       <ivariable label="LT61 Output Mode" CVname="481.1" CV="481" PI="1" default="0" item="LT61 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT61 Var1 Mode" CVname="481.1" CV="481" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT61 Var1 Mode" CVname="481.1" CV="481" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT61 Var2 Mode" CVname="481.1" CV="481" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -15022,7 +14830,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #62 -->
       <ivariable label="LT62 Block End" CVname="489.1" CV="489" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -15033,7 +14840,7 @@
       <ivariable label="LT62 Output Mode" CVname="489.1" CV="489" PI="1" default="0" item="LT62 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT62 Var1 Mode" CVname="489.1" CV="489" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT62 Var1 Mode" CVname="489.1" CV="489" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT62 Var2 Mode" CVname="489.1" CV="489" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -15198,7 +15005,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #63 -->
       <ivariable label="LT63 Block End" CVname="497.1" CV="497" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -15209,7 +15015,7 @@
       <ivariable label="LT63 Output Mode" CVname="497.1" CV="497" PI="1" default="0" item="LT63 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT63 Var1 Mode" CVname="497.1" CV="497" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT63 Var1 Mode" CVname="497.1" CV="497" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT63 Var2 Mode" CVname="497.1" CV="497" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -15374,7 +15180,6 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- Logic Table entry #64 -->
       <ivariable label="LT64 Block End" CVname="505.1" CV="505" PI="1" mask="XVXXXXXX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiEnd.xml"/>
@@ -15385,7 +15190,7 @@
       <ivariable label="LT64 Output Mode" CVname="505.1" CV="505" PI="1" default="0" item="LT64 Output Mode" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
-      <ivariable label="LT64 Var1 Mode" CVname="505.1" CV="505" PI="1"  default="0" item="Input 1 Mode" mask="XXXVXXXX">
+      <ivariable label="LT64 Var1 Mode" CVname="505.1" CV="505" PI="1" default="0" item="Input 1 Mode" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceiLD.xml"/>
       </ivariable>
       <ivariable label="LT64 Var2 Mode" CVname="505.1" CV="505" PI="1" default="0" item="Input 2 Mode" mask="XXXXVXXX">
@@ -15550,9 +15355,7 @@
           <value>1</value>
         </qualifier>
       </ivariable>
-
       <!-- End of Indexed Variables -->
-           
       <!-- Presets for Composite Variables -->
       <variable label="IP1 Type">
         <compositeVal>
@@ -15716,7 +15519,7 @@
             <compositeSetting label="OUT1 Type" value="0"/>
             <compositeSetting label="OUT1 Timing" value="1"/>
             <compositeSetting label="OUT2 Type" value="0"/>
-            <compositeSetting label="OUT2 Timing" value="1"/> 
+            <compositeSetting label="OUT2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Dual Inverted">
             <compositeSetting label="OUT1 Paired" value="2"/>
@@ -15728,7 +15531,7 @@
             <compositeSetting label="OUT1 Type" value="0"/>
             <compositeSetting label="OUT1 Timing" value="1"/>
             <compositeSetting label="OUT2 Type" value="0"/>
-            <compositeSetting label="OUT2 Timing" value="1"/> 
+            <compositeSetting label="OUT2 Timing" value="1"/>
           </compositeChoice>
           <compositeChoice choice="Stall Motor">
             <compositeSetting label="OUT1 Paired" value="2"/>
@@ -15740,7 +15543,7 @@
             <compositeSetting label="OUT1 Type" value="0"/>
             <compositeSetting label="OUT1 Timing" value="0"/>
             <compositeSetting label="OUT2 Type" value="0"/>
-            <compositeSetting label="OUT2 Timing" value="0"/> 
+            <compositeSetting label="OUT2 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Stall Inverted">
             <compositeSetting label="OUT1 Paired" value="2"/>
@@ -15752,7 +15555,7 @@
             <compositeSetting label="OUT1 Type" value="0"/>
             <compositeSetting label="OUT1 Timing" value="0"/>
             <compositeSetting label="OUT2 Type" value="0"/>
-            <compositeSetting label="OUT2 Timing" value="0"/> 
+            <compositeSetting label="OUT2 Timing" value="0"/>
           </compositeChoice>
           <compositeChoice choice="Signal">
             <compositeSetting label="OUT1 Paired" value="3"/>
@@ -16121,7 +15924,7 @@
           </display>
         </column>
         <column>
-            <label label="  You may only change the unit address in Service Mode."/>
+          <label label="  You may only change the unit address in Service Mode."/>
         </column>
       </row>
       <row>
@@ -16183,13 +15986,11 @@
       </row>
     </column>
   </pane>
-
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPDetectors.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPInputA.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPInputB.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPOutputA.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPOutputB.xml"/>
-
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPDetectors.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPInputA.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPInputB.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPOutputA.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPOutputB.xml"/>
   <pane name="Bi-Polar">
     <column>
       <row>
@@ -16289,19 +16090,17 @@
       </row>
     </column>
   </pane>
-
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPMastsA.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPMastsB.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPMastsC.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPMastsD.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicA.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicB.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicC.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicD.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicE.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicF.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicG.xml"/>
-<xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicH.xml"/>
-
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPMastsA.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPMastsB.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPMastsC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPMastsD.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicA.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicB.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicC.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicD.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicE.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicF.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicG.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/PaneLNCPLogicH.xml"/>
   <!--</programmer>-->
 </decoder-config>

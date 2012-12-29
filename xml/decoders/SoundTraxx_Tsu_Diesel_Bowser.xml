@@ -12,18 +12,13 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20100602"/>
   <version author="Michael Mosher" version="2" lastUpdated="20100828"/>
-
-<!-- This file contains the Tsunami definitions for Bowser OEM diesel locomotives	-->
-
-<!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file. -->
-<!-- version 2	Add Rule 17 bit to CV51 & 52 -->
-
-<!-- Decoder Model information follows -->
-
+  <!-- This file contains the Tsunami definitions for Bowser OEM diesel locomotives	-->
+  <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file. -->
+  <!-- version 2	Add Rule 17 bit to CV51 & 52 -->
+  <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Bowser OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Bowser Tsunami diesel decoders">
       <model model="Alco C-628" numOuts="4" numFns="14" connector="other" productID="Century">
@@ -238,7 +233,7 @@
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-<!-- Configuration Variable (CV) information follows -->
+    <!-- Configuration Variable (CV) information follows -->
     <variables>
       <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="3" tooltip="Sets the Primary (short, 2 digit) address">
         <shortAddressVal/>
@@ -450,7 +445,7 @@
         <longAddressVal/>
         <label>Extended Address (0001-9999)</label>
       </variable>
-<!-- Consisting Information follows -->
+      <!-- Consisting Information follows -->
       <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
         <decVal max="127"/>
         <label>Consist Address (0-127)</label>
@@ -798,7 +793,7 @@
         </enumVal>
         <label>Function Group 2 and 3 Exchange</label>
       </variable>
-<!-- Function Mapping follows -->
+      <!-- Function Mapping follows -->
       <variable label="FL(f) controls Headlight" CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1925,7 +1920,7 @@
         <decVal/>
         <label>Analog Horn Control (0-255)</label>
       </variable>
-<!-- Lighting Configuration follows -->
+      <!-- Lighting Configuration follows -->
       <variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the headlight">
         <enumVal>
           <enumChoice choice="On/Off">
@@ -2319,7 +2314,7 @@
         <label>Hyperlight Flash Rate (0-15)</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
       </variable>
-      <variable label="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV"  default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
+      <variable label="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
         <decVal max="15"/>
         <label>Grade Crossing Hold Time (0-15)</label>
         <comment>0-15 seconds</comment>
@@ -2409,7 +2404,7 @@
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
-<!-- Airhorn Selection follows -->
+      <!-- Airhorn Selection follows -->
       <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Baldwin,F" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Leslie A200">
@@ -2598,7 +2593,7 @@
         <decVal/>
         <label>Motor Recovery Speed (0-255)</label>
       </variable>
-<!-- Volume Controls follow -->
+      <!-- Volume Controls follow -->
       <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="192" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
         <label>Master Volume Control</label>
@@ -2643,10 +2638,10 @@
         <decVal/>
         <label>Air Tank Poppet Valve Volume</label>
       </variable>
-<!-- The following sounds CVs (currently) don't map to generic -->
-<!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
-<!-- appear on pane definitions in this file -->
-<!-- Equalizer Controls follow -->
+      <!-- The following sounds CVs (currently) don't map to generic -->
+      <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
+      <!-- appear on pane definitions in this file -->
+      <!-- Equalizer Controls follow -->
       <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
         <enumVal>
           <enumChoice choice="Flat (off)">
@@ -2676,7 +2671,7 @@
         </enumVal>
         <label>Equalizer Control</label>
       </variable>
-<!-- Individual Cut/Boost Controls follow -->
+      <!-- Individual Cut/Boost Controls follow -->
       <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>62 Hz Cut/Boost</label>
@@ -2705,7 +2700,7 @@
         <decVal/>
         <label>4K Hz Cut/Boost</label>
       </variable>
-<!-- Reverb Section follows -->
+      <!-- Reverb Section follows -->
       <variable label="Reverb Control" CV="161" mask="XXXXXVVV" default="0" tooltip="Selects one of four reverb presets or selects a user adjustable profile">
         <enumVal>
           <enumChoice choice="Reverb Disabled">
@@ -2735,7 +2730,7 @@
         </enumVal>
         <label>Reverb Control</label>
       </variable>
-<!-- Individual Reverb Output Level Controls follow -->
+      <!-- Individual Reverb Output Level Controls follow -->
       <variable label="Reverb Output Level" CV="162" mask="VVVVVVVV" default="128" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
         <decVal/>
         <label>Reverb Output Level</label>
@@ -2764,7 +2759,7 @@
         <decVal/>
         <label>Air Compressor Reverb Level</label>
       </variable>
-<!-- Automatic Sound Controls (ASC) follow -->
+      <!-- Automatic Sound Controls (ASC) follow -->
       <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="15" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
         <decVal max="127"/>
         <label>Bell-On Set Point</label>
@@ -2869,8 +2864,8 @@
         </enumVal>
         <label>Automatic Brake Squeal Enable</label>
       </variable>
-<!-- End of variables for file-specific panes -->
-<!-- Advanced Motor Control Features follow -->
+      <!-- End of variables for file-specific panes -->
+      <!-- Advanced Motor Control Features follow -->
       <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
@@ -2891,29 +2886,21 @@
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
-<!-- highest used so far: -->
-<!-- "Advanced Group 1 Option 8" -->
-<!-- "Advanced Group 2 Option 6" -->
-<!-- "Sound Option 18"  -->
-<!-- "Sound Group 1 Option (none yet)" -->
-<!-- "Sound Group 2 Option (none yet)" -->
-<!-- "Sound Group 3 Option 7" -->
-<!-- "Sound Setting 25" -->
+      <!-- highest used so far: -->
+      <!-- "Advanced Group 1 Option 8" -->
+      <!-- "Advanced Group 2 Option 6" -->
+      <!-- "Sound Option 18"  -->
+      <!-- "Sound Group 1 Option (none yet)" -->
+      <!-- "Sound Group 2 Option (none yet)" -->
+      <!-- "Sound Group 3 Option 7" -->
+      <!-- "Sound Setting 25" -->
     </variables>
     <resets>
       <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
     </resets>
   </decoder>
-  
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
-  
 </decoder-config>
-
- 	  	 
-
- 	  	 
-
- 	  	 

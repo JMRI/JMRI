@@ -15,16 +15,16 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="phil.grainger@ca.com" version="9" lastUpdated="20050112"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="11" lastUpdated="20080412"/>
-<!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
-<!-- version 4 - add DH140, DN140, update DN146 ID -->
-<!-- version 5 - update versionID range -->
-<!-- version 6 - add consist direction - jake -->
-<!-- Version 7 - fix "rule 17" typos -->
-<!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
-<!-- Version 9 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
-<!-- Version 10 - fixed labels for Enable/Disable "Vstart/Vmid/Vfull in 128 step mode" - Paul Bender -->
-<!-- Version 11 - added factory reset -->
+  <!-- Version 3 - rename family, add decoders, fix bug with FX on output 1 -->
+  <!-- version 4 - add DH140, DN140, update DN146 ID -->
+  <!-- version 5 - update versionID range -->
+  <!-- version 6 - add consist direction - jake -->
+  <!-- Version 7 - fix "rule 17" typos -->
+  <!-- Version 7.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 8 - Added fifth function, also added DH83FX) Phil G -->
+  <!-- Version 9 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+  <!-- Version 10 - fixed labels for Enable/Disable "Vstart/Vmid/Vfull in 128 step mode" - Paul Bender -->
+  <!-- Version 11 - added factory reset -->
   <decoder>
     <family name="Basic FX" mfg="Digitrax" lowVersionID="91" highVersionID="111">
       <model model="DH083" numOuts="5" numFns="3"/>
@@ -46,13 +46,9 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
-      
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -542,19 +538,15 @@
         <label>Ditch light hold-over time</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml" />
-
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
       <constant item="F1 controls output 3" minOut="3" minFn="1" default="1"/>
@@ -566,7 +558,6 @@
       <constant item="F7 controls output 9" minOut="9" minFn="7" default="1"/>
       <constant item="F8 controls output 10" minOut="10" minFn="8" default="1"/>
     </variables>
-
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
       <factReset label="Reset All CVs except speed table" CV="8" default="9"/>

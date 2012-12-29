@@ -14,17 +14,16 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Dunn" version="1" lastUpdated="20070421"/>
-<!-- made from the MRC_1636 file by Paul Bender -->
+  <!-- made from the MRC_1636 file by Paul Bender -->
   <version author="Bill Chown" version="2" lastUpdated="20080313"/>
-<!-- corrected typos causing problems with some CV fields not appearing -->
-<!-- added many decoder-specific tool tips -->
-<!-- added CV identities to all tool tips -->
-<!-- derived this 1644 from 1645, decoder identical except for physical size of the board -->
+  <!-- corrected typos causing problems with some CV fields not appearing -->
+  <!-- added many decoder-specific tool tips -->
+  <!-- added CV identities to all tool tips -->
+  <!-- derived this 1644 from 1645, decoder identical except for physical size of the board -->
   <version author="Bill Chown" version="3" lastUpdated="20080430"/>
-<!-- corrected more typos causing incorrect values -->
+  <!-- corrected more typos causing incorrect values -->
   <version author="Steve Todd" version="4" lastUpdated="20120522"/>
-    <!-- fixed CV21, added function label defaults -->
-	
+  <!-- fixed CV21, added function label defaults -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="44">
       <model model="Synch Diesel Sound 1644" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
@@ -331,8 +330,8 @@
           <enumChoice choice="MP-15" value="1">
             <choice>MP-15</choice>
           </enumChoice>
-<!-- Note per Mfg. recorded sounds ARE NOT for SD70MAC or AC4400! -->
-<!-- these sounds are named as EMD large diesel, EMD switcher -->
+          <!-- Note per Mfg. recorded sounds ARE NOT for SD70MAC or AC4400! -->
+          <!-- these sounds are named as EMD large diesel, EMD switcher -->
         </enumVal>
         <label>Prime Mover sound</label>
       </variable>

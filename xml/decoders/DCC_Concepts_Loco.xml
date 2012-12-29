@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,46 +11,40 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-	<version author="Nigel Cliffe, ncliffe@btinternet.com" version="1" lastUpdated="20110511"/>
-	<version author="John Stather, steam.bloke@tesco.net" version="2" lastUpdated="20120125" />
-<!-- Version 1.0 - based on correspondance with Richard Johnson of DCC Concepts -->
-<!-- Version 2.0 - Correction of compound accel/decel CVs, add CV3/4 to Momentum page and add dither amplitude and frequency CV56/57 -->
-
-<decoder>
-	<family name="DCC Concepts Loco Decoders" mfg="DCC Concepts">
-		<model model="Red Sleeve 2 Function" numOuts="2" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
-			<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-			<output name="Dim"/>
-			<output name="Ditch"/>
-			<output name="Motor"/>
-			<output name="BEMF"/>
-        
-		</model>
-		<model model="Blue Sleeve 4 Function" numOuts="4" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
-			<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-			<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-			<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-			<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-			<output name="Dim"/>
-			<output name="Ditch"/>
-			<output name="Motor"/>
-			<output name="BEMF"/>
-        
-		</model>
-		</family>
-
-	<programming direct="yes" paged="yes" register="yes" ops="yes"/>
- 
-		<variables>
-			<variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" item="Short Address" default="03">
-				<shortAddressVal/>
-				<label>Primary Address</label>
-				<comment>Short address</comment>
-			</variable>
-				<variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
+  <version author="Nigel Cliffe, ncliffe@btinternet.com" version="1" lastUpdated="20110511"/>
+  <version author="John Stather, steam.bloke@tesco.net" version="2" lastUpdated="20120125"/>
+  <!-- Version 1.0 - based on correspondance with Richard Johnson of DCC Concepts -->
+  <!-- Version 2.0 - Correction of compound accel/decel CVs, add CV3/4 to Momentum page and add dither amplitude and frequency CV56/57 -->
+  <decoder>
+    <family name="DCC Concepts Loco Decoders" mfg="DCC Concepts">
+      <model model="Red Sleeve 2 Function" numOuts="2" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
+        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+      </model>
+      <model model="Blue Sleeve 4 Function" numOuts="4" numFns="14" lowVersionID="18" highVersionID="18" maxMotorCurrent="1.3A (peak=2A)">
+        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <variable label="Primary Address" CV="1" comment="Short address" tooltip="Sets the Short, Primary or 2-digit address, CV 1, range 1-127" item="Short Address" default="03">
+        <shortAddressVal/>
+        <label>Primary Address</label>
+        <comment>Short address</comment>
+      </variable>
+      <variable label="Start voltage" CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255, CV5" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
         <decVal/>
         <label>Start voltage</label>
         <comment>Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration</comment>
@@ -121,8 +114,6 @@
         </enumVal>
         <label>Analog Mode Purple</label>
       </variable>
-
-    
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999, mapped to CV17 and 18">
         <longAddressVal/>
@@ -165,7 +156,6 @@
         </enumVal>
         <label>Consist Address Active For Purple</label>
       </variable>
-
       <variable label="Consist Address Active For White" CV="22" mask="XXXXXXXV" minOut="1" item="Consist Address Active For FL in Forward">
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
@@ -735,8 +725,7 @@
         </enumVal>
         <label>F12 controls output 4</label>
       </variable>
- 
- <variable label="White Wire Effect" CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
+      <variable label="White Wire Effect" CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
         <enumVal>
           <enumChoice choice="Constant bright light">
             <choice>Constant bright light</choice>
@@ -1438,7 +1427,7 @@
         </enumVal>
         <label>FL(f) controls output Motor</label>
       </variable>
-      <variable label="FL(r) controls output Motor" CV="134" mask="XXXXXXVX" minOut="1" >
+      <variable label="FL(r) controls output Motor" CV="134" mask="XXXXXXVX" minOut="1">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1607,13 +1596,11 @@
         </enumVal>
         <label>F12 controls output BEMF</label>
       </variable>
-
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-  
   <pane name="Momentum">
     <column>
       <label label="If Accel 2, 3 and Decel 2, 3 are all set to zero,">
@@ -1714,7 +1701,7 @@
       <label label=" ">
         <label> </label>
       </label>
-	  <display item="Decel Base Rate (CV4)" format="hslider" label="">
+      <display item="Decel Base Rate (CV4)" format="hslider" label="">
         <label/>
       </display>
       <display item="Decel Base Rate (CV4)"/>
@@ -1751,9 +1738,7 @@
       <label label=" ">
         <label> </label>
       </label>
-      <label label="To use the Decoder Lock (CV15) must be set manually from the single CV programmer, or make use of the multi-decoder tool"></label>
-      
-      
+      <label label="To use the Decoder Lock (CV15) must be set manually from the single CV programmer, or make use of the multi-decoder tool"/>
     </column>
   </pane>
 </decoder-config>

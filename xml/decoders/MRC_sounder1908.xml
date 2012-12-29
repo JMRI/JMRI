@@ -16,9 +16,9 @@
   <version author="Bryan Vianco" version="3" lastUpdated="20120310"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20100110"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20080307"/>
-<!--   version 1 made from the MRC_1666 file by Pete Cesaro -->
-<!--   version 2 Corrected defaults, modified formatting and added MRC pane-->
-<!--   version 3 Updated for 1900-series decoder -->
+  <!--   version 1 made from the MRC_1666 file by Pete Cesaro -->
+  <!--   version 2 Corrected defaults, modified formatting and added MRC pane-->
+  <!--   version 3 Updated for 1900-series decoder -->
   <decoder>
     <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Steam Sound Decoder 1908" numOuts="2" numFns="28">
@@ -375,7 +375,7 @@
         <label>Chuff Rate</label>
         <comment>Range 0-460</comment>
       </variable>
-	<variable label="Shoveling volume" CV="118" item="Sound Setting 24" default="60" tooltip="CV118, range 0-63" comment="Range 0-63">
+      <variable label="Shoveling volume" CV="118" item="Sound Setting 24" default="60" tooltip="CV118, range 0-63" comment="Range 0-63">
         <decVal max="63"/>
         <label>Shoveling volume</label>
         <comment>Range 0-63</comment>

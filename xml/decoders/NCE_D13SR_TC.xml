@@ -19,20 +19,20 @@
   <version author="Michael Mosher" version="7" lastUpdated="20070813"/>
   <version author="Michael Mosher" version="6" lastUpdated="20060918"/>
   <version author="Michael Mosher" version="5" lastUpdated="20060912"/>
-<!-- version 1 created by modifing NCE_SR.xml ver 7 removed CV9, 23, 24, 65, 119 
+  <!-- version 1 created by modifing NCE_SR.xml ver 7 removed CV9, 23, 24, 65, 119 
 				and added CV 16, 95, 116, 117 -->
-<!-- Version 2 - added version comment (Jack Shall) -->
-<!-- Version 3 - removed CV29 bit-3, added CV11, minor formatting changes,
+  <!-- Version 2 - added version comment (Jack Shall) -->
+  <!-- Version 3 - removed CV29 bit-3, added CV11, minor formatting changes,
 				added D15SRP and ATLS4 decoders,	added some tooltips and comments (Jack Shall) -->
-<!-- Version 4 - added D12IP, D18SR, B18SR-PSC, N14SR, N14SRP, N14IP, Z14SR, Z14SRP 
+  <!-- Version 4 - added D12IP, D18SR, B18SR-PSC, N14SR, N14SRP, N14IP, Z14SR, Z14SRP 
       			plus D15SR now has 6 functions (Michael Mosher) -->
-<!-- Version 5 - added ATL-O, BachDsl, N12A2, NAVO, NMP 
+  <!-- Version 5 - added ATL-O, BachDsl, N12A2, NAVO, NMP 
       			plus D13SR & D13SRP now have 4 functions (Michael Mosher) -->
-<!-- Version 6 - use factory reset feature -->
-<!-- Version 7 - high Ver ID 36 -->
-<!-- Version 8 - added D408SR V3.6 which has different function mapping then V3.5 -->
-<!-- Version 9 - added Factory Direct Trains Trackmobile -->
-<!-- Version 10 - added BLI Hi-Rail pickup and track inspection sedan -->
+  <!-- Version 6 - use factory reset feature -->
+  <!-- Version 7 - high Ver ID 36 -->
+  <!-- Version 8 - added D408SR V3.6 which has different function mapping then V3.5 -->
+  <!-- Version 9 - added Factory Direct Trains Trackmobile -->
+  <!-- Version 10 - added BLI Hi-Rail pickup and track inspection sedan -->
   <decoder>
     <family name="Silent Running w/ Torque Compensation" mfg="North Coast Engineering" lowVersionID="35" highVersionID="36" comment="These are the version 3.5 decoders released after September 2003, 3.6 released July 2007">
       <model model="D12IP" numOuts="2" numFns="5" connector="NMRAmedium" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
@@ -949,7 +949,7 @@
         </enumVal>
         <label>F3 controls output 8</label>
       </variable>
-<!-- this group is like NMRA, except we only go to output 8 for now -->
+      <!-- this group is like NMRA, except we only go to output 8 for now -->
       <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <enumVal>
           <enumChoice choice="No">
@@ -1373,7 +1373,7 @@
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
-<!-- NCE-specific variables -->
+      <!-- NCE-specific variables -->
       <variable label="Torque Kick Rate" CV="116" mask="VVVVVVVV" item="Dither frequency" tooltip="How frequently the motor is kicked with voltage pulses">
         <decVal/>
         <label>Torque Kick Rate</label>

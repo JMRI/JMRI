@@ -7,13 +7,13 @@
   <version author="Peter Ulvestad" version="3" lastUpdated="20091205"/>
   <version author="Pete Cesaro" version="2" lastUpdated="20090215"/>
   <version author=" " version="1.1" lastUpdated="20080205"/>
-<!-- made from the MRC_1630 file by Pete Cesaro -->
-<!-- Version 2 - added many tooltips -->
-<!-- Version 3 - Corrected consist tab and some default values, modified how CV6 shows -->
+  <!-- made from the MRC_1630 file by Pete Cesaro -->
+  <!-- Version 2 - added many tooltips -->
+  <!-- Version 3 - Corrected consist tab and some default values, modified how CV6 shows -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Diesel Sound 1663 - Atlas S2/S4" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- Functions F0 to F28 are NMRA compatible -->
+        <!-- Functions F0 to F28 are NMRA compatible -->
         <size length="95" width="14" height="9" units="mm"/>
       </model>
     </family>

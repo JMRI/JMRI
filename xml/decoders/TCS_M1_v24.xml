@@ -14,11 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="2" lastUpdated="20030803"/>
-<!-- Version 1 - made from TCS_Tx -->
-<!-- Version 2 - fix "rule 17" typos -->
-<!-- Modified for old version 24  ..Eddie  -->
-<!-- Version 2.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
-
+  <!-- Version 1 - made from TCS_Tx -->
+  <!-- Version 2 - fix "rule 17" typos -->
+  <!-- Modified for old version 24  ..Eddie  -->
+  <!-- Version 2.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Mx series decoders" mfg="Train Control Systems">
       <model model="M1_v24" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24">
@@ -1982,9 +1981,9 @@
       </variable>
     </variables>
     <resets>
-        <factReset label="Reset All CVs" CV="8" default="2"/>
+      <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
-   </decoder>
+  </decoder>
   <pane name="TCS">
     <column>
       <display item="Burst duration"/>

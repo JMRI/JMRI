@@ -14,8 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="sip@euronet.nl" version="3" lastUpdated="20020810"/>
-<!-- Based on the contribution of many others -->
-<!-- version 2 added physical info -->
+  <!-- Based on the contribution of many others -->
+  <!-- version 2 added physical info -->
   <decoder>
     <family name="Zimo Silent BEMF decoders, late model" mfg="Zimo">
       <model model="MX61_2000" numOuts="6" numFns="6" maxMotorCurrent="1 Amp" maxTotalCurrent="1.2 Amp">
@@ -90,7 +90,7 @@
         <label>EMF Feedback Cutoff</label>
         <comment>Range 0-252</comment>
       </variable>
-<!-- Deleted all CV 11 to 13 references-->
+      <!-- Deleted all CV 11 to 13 references-->
       <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">

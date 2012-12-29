@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2003, 2004. 2007 All rights reserved -->
 <!-- $Id: Bachmann_EZDCC_4fn.xml,v 1.5 2009/08/30 08:00:31 jacobsen Exp $ -->
 <!--                                                                        -->
@@ -13,117 +12,88 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-		<version author="Nigel Cliffe" version="1" lastUpdated="20101110"/>
-
-		<!-- Version 1 - from information at http://www.uli-johann.homepage.t-online.de/decoderdcc1.htm -->
-
-<decoder>
-		<family name="Fleischmann Loco Decoders" mfg="Fleischmann" >
-			<model model="FMZ/Selectrix/DCC decoder" numOuts="2" numFns="8" maxMotorCurrent=".6A" formFactor="HO, N" >
-			    <versionCV lowVersionID="41" highVersionID="52"/>
-				<output name="1" label="White"/>
-				<output name="2" label="Yellow"/>
-				<output name="RA" label="Accel-Decel"/>
-				<output name="YD" label="Shunting Spd"/>
-			    <size length="16.5" width="9.0" height="4.0" units="mm"/>
-			</model>
-		</family>
-
-		<programming direct="yes" paged="yes" register="yes" ops="yes"/>
-
-	<variables>
-
-		<variable label="Primary Address" CV="1" comment="Short address (Range 1-127)" item="Short Address"  default="03">
-			<shortAddressVal/>
-		</variable>
-
-		<variable label="Acceleration" item="Accel" CV="3" default="1" >
-			<decVal />
-		</variable>
-
-		<variable label="Deceleration" item="Decel" CV="4" default="1" >
-			<decVal />
-		</variable>
-
-		<variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
-			<decVal/>
-		</variable>
-		
-		<variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
-			<decVal/>
-		</variable>
-		
-
-		<variable label="Selectrix Data Format" CV="12" mask="XXXXVXXX"
-			item="Advanced Group 1 Option 1" default="0"
-			tooltip="&lt;html&gt;Allows operation on Selectrix&lt;br&gt;/html&gt;">
-			<enumVal>
-				<enumChoice choice="Selectrix Off"/>
-				<enumChoice choice="Selectrix On"/>
-			</enumVal>
-		</variable>
-		<variable label="FMZ Data Format" CV="12" mask="XXVXXXXX"
-			item="Advanced Group 1 Option 2" default="1"
-			tooltip="&lt;html&gt;Allows operation on Selectrix&lt;br&gt;/html&gt;">
-			<enumVal>
-				<enumChoice choice="FMZ Off" />
-				<enumChoice choice="FMZ On"/>
-			</enumVal>
-		</variable>
-
-		
-
-		<variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-			<longAddressVal/>
-		</variable>
-		
-		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
-			<enumVal>
-				<enumChoice choice="Forward"/>
-				<enumChoice choice="Reverse"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
-			<enumVal>
-				<enumChoice choice="14"/>
-				<enumChoice choice="28/128 (recommended)"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="1">
-			<enumVal>
-				<enumChoice choice="Don't use Speed Table"/>
-				<enumChoice choice="Use Speed Table"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" default="0">
-			<enumVal>
-				<enumChoice choice="2 digit addressing"/>
-				<enumChoice choice="4 digit addressing"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Error Information (read only)" CV="30" mask="XXXXXXXV" item="Advanced Group 2 Option 1" readOnly="yes" default="0">
-			<decVal />
-		</variable>
-
-		
-<!-- Function Mapping follows -->		
-<!-- Decoder has virtually no function mapping capability ! -->
-
-      <variable label="F5 can disable accel/decel settings" CV="39" mask="XVXXXXXX" default="1" 
-		item="Advanced Group 1 Option 4">
+  <version author="Nigel Cliffe" version="1" lastUpdated="20101110"/>
+  <!-- Version 1 - from information at http://www.uli-johann.homepage.t-online.de/decoderdcc1.htm -->
+  <decoder>
+    <family name="Fleischmann Loco Decoders" mfg="Fleischmann">
+      <model model="FMZ/Selectrix/DCC decoder" numOuts="2" numFns="8" maxMotorCurrent=".6A" formFactor="HO, N">
+        <versionCV lowVersionID="41" highVersionID="52"/>
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="RA" label="Accel-Decel"/>
+        <output name="YD" label="Shunting Spd"/>
+        <size length="16.5" width="9.0" height="4.0" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <variable label="Primary Address" CV="1" comment="Short address (Range 1-127)" item="Short Address" default="03">
+        <shortAddressVal/>
+      </variable>
+      <variable label="Acceleration" item="Accel" CV="3" default="1">
+        <decVal/>
+      </variable>
+      <variable label="Deceleration" item="Decel" CV="4" default="1">
+        <decVal/>
+      </variable>
+      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+        <decVal/>
+      </variable>
+      <variable label="Selectrix Data Format" CV="12" mask="XXXXVXXX" item="Advanced Group 1 Option 1" default="0" tooltip="&lt;html&gt;Allows operation on Selectrix&lt;br&gt;/html&gt;">
+        <enumVal>
+          <enumChoice choice="Selectrix Off"/>
+          <enumChoice choice="Selectrix On"/>
+        </enumVal>
+      </variable>
+      <variable label="FMZ Data Format" CV="12" mask="XXVXXXXX" item="Advanced Group 1 Option 2" default="1" tooltip="&lt;html&gt;Allows operation on Selectrix&lt;br&gt;/html&gt;">
+        <enumVal>
+          <enumChoice choice="FMZ Off"/>
+          <enumChoice choice="FMZ On"/>
+        </enumVal>
+      </variable>
+      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
+        <longAddressVal/>
+      </variable>
+      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
+        <enumVal>
+          <enumChoice choice="Forward"/>
+          <enumChoice choice="Reverse"/>
+        </enumVal>
+      </variable>
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+        <enumVal>
+          <enumChoice choice="14"/>
+          <enumChoice choice="28/128 (recommended)"/>
+        </enumVal>
+      </variable>
+      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="1">
+        <enumVal>
+          <enumChoice choice="Don't use Speed Table"/>
+          <enumChoice choice="Use Speed Table"/>
+        </enumVal>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" default="0">
+        <enumVal>
+          <enumChoice choice="2 digit addressing"/>
+          <enumChoice choice="4 digit addressing"/>
+        </enumVal>
+      </variable>
+      <variable label="Error Information (read only)" CV="30" mask="XXXXXXXV" item="Advanced Group 2 Option 1" readOnly="yes" default="0">
+        <decVal/>
+      </variable>
+      <!-- Function Mapping follows -->
+      <!-- Decoder has virtually no function mapping capability ! -->
+      <variable label="F5 can disable accel/decel settings" CV="39" mask="XVXXXXXX" default="1" item="Advanced Group 1 Option 4">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -133,9 +103,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-
-      <variable label="F6 enables Shunt Speed" CV="40" mask="XVXXXXXX" default="1" 
-		item="Advanced Group 1 Option 5">
+      <variable label="F6 enables Shunt Speed" CV="40" mask="XVXXXXXX" default="1" item="Advanced Group 1 Option 5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -145,10 +113,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-		
-
-      <variable label="Motor Control" CV="51" mask="XXXXXXXV" default="1" 
-		item="Advanced Group 2 Option 5">
+      <variable label="Motor Control" CV="51" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 5">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -158,8 +123,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Motor Cycles Summary" CV="51" mask="XXXXXXVX" default="0" 
-		item="Advanced Group 2 Option 6">
+      <variable label="Motor Cycles Summary" CV="51" mask="XXXXXXVX" default="0" item="Advanced Group 2 Option 6">
         <enumVal>
           <enumChoice choice="Off">
             <choice>No</choice>
@@ -169,8 +133,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Motor Cycles Scattering" CV="51" mask="XXXXXVXX" default="0" 
-		item="Advanced Group 2 Option 7">
+      <variable label="Motor Cycles Scattering" CV="51" mask="XXXXXVXX" default="0" item="Advanced Group 2 Option 7">
         <enumVal>
           <enumChoice choice="regular">
             <choice>No</choice>
@@ -180,8 +143,7 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Load Simulation under FMZ" CV="51" mask="XXXVXXXX" default="0" 
-		item="Advanced Group 2 Option 8">
+      <variable label="Load Simulation under FMZ" CV="51" mask="XXXVXXXX" default="0" item="Advanced Group 2 Option 8">
         <enumVal>
           <enumChoice choice="Follow FMZ Central">
             <choice>No</choice>
@@ -191,95 +153,66 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Lamp indicates error state" CV="51" mask="XXVXXXXX" default="1" 
-		item="Advanced Group 2 Option 4">
+      <variable label="Lamp indicates error state" CV="51" mask="XXVXXXXX" default="1" item="Advanced Group 2 Option 4">
         <enumVal>
           <enumChoice choice="No">
-			<choice>No</choice>
+            <choice>No</choice>
           </enumChoice>
           <enumChoice choice="Yes">
-		  <choice>Yes</choice>
+            <choice>Yes</choice>
           </enumChoice>
         </enumVal>
       </variable>
-		
-		
-		
-		<variable label="Light Dimming" CV="52" mask="XXXXXVVV" item="Advanced Group 1 Option 7" default="7">
-			<enumVal>
-				<enumChoice choice="0"/>
-				<enumChoice choice="1"/>
-				<enumChoice choice="2"/>
-				<enumChoice choice="3"/>
-				<enumChoice choice="4"/>
-				<enumChoice choice="5"/>
-				<enumChoice choice="6"/>
-				<enumChoice choice="7"/>
-			</enumVal>
-		</variable>
-
-		
+      <variable label="Light Dimming" CV="52" mask="XXXXXVVV" item="Advanced Group 1 Option 7" default="7">
+        <enumVal>
+          <enumChoice choice="0"/>
+          <enumChoice choice="1"/>
+          <enumChoice choice="2"/>
+          <enumChoice choice="3"/>
+          <enumChoice choice="4"/>
+          <enumChoice choice="5"/>
+          <enumChoice choice="6"/>
+          <enumChoice choice="7"/>
+        </enumVal>
+      </variable>
       <variable label="Motor BEMF tuning, P adjustment" CV="53" default="15" item="EMF Static Config" tooltip="P adjustment, 11-17" comment="Range 11-17">
-			<enumVal>
-				<enumChoice choice="off"  value="0"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="16" value="16"/>
-				<enumChoice choice="17" value="17"/>
-
-			</enumVal>
-
+        <enumVal>
+          <enumChoice choice="off" value="0"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="16" value="16"/>
+          <enumChoice choice="17" value="17"/>
+        </enumVal>
       </variable>
       <variable label="Motor BEMF tuning, I adjustment" CV="54" default="8" item="EMF Dynamic Config" tooltip="I adjustment, 5-10" comment="Range 5-10">
-			<enumVal>
-				<enumChoice choice="off"  value="0"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-			</enumVal>
-       </variable>
-
-		<variable label="Motor Switch-off Threshold" CV="57" item="Advanced Group 2 Option 2" default="13">
-			<decVal />
-		</variable>
-
-	  
-	  
-	
-		<variable label="Forward Trim (0-255)" CV="66"
-			item="Forward Trim" default="128"
-			tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;
-				Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;
-				Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
-			<decVal/>
-		</variable>
-
-		<variable label="Speed Table" CV="67">
-			<speedTableVal/>
-		</variable>
-
-		<variable label="Reverse Trim (0-255)" CV="95"
-			item="Reverse Trim" default="128"
-			tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;
-				Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;
-				Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
-			<decVal/>
-		</variable>
-			
-
-
-
-	</variables>
+        <enumVal>
+          <enumChoice choice="off" value="0"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+        </enumVal>
+      </variable>
+      <variable label="Motor Switch-off Threshold" CV="57" item="Advanced Group 2 Option 2" default="13">
+        <decVal/>
+      </variable>
+      <variable label="Forward Trim (0-255)" CV="66" item="Forward Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+        <decVal/>
+      </variable>
+      <variable label="Speed Table" CV="67">
+        <speedTableVal/>
+      </variable>
+      <variable label="Reverse Trim (0-255)" CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+        <decVal/>
+      </variable>
+    </variables>
     <resets>
       <factReset label="HARD RESET all CVs reset to default values" CV="64" default="0"/>
     </resets>
-</decoder>
+  </decoder>
 </decoder-config>
-
- 	  	 

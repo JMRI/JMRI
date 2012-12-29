@@ -1,76 +1,51 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2003, 2004, 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <!-- $Id$ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-		<version author="dat7719@daletripp.com" 
-					version="1" lastUpdated="20080321"/>
-
-<decoder>
-	<family name="Function Only, with transponding" mfg="Kato">
-		<model model="FL12" lowVersionID="0"></model>
-	</family>
-
-	<programming direct="byteOnly" paged="yes" 
-	                     register="yes" ops="no"></programming>
-
-	<variables>
-		<variable label="Primary Address" CV="1" comment="Short address"
-						item="Short Address"  default="03">
-			<shortAddressVal/>
-		</variable>
-
-		<variable label="Version ID" CV="7" readOnly="yes"
-		          item="Decoder Version" default="0">
-			<decVal/>
-		</variable>
-
-		<variable label="Manufacturer ID" CV="8" readOnly="yes"
-		          item="Manufacturer" default="129">
-				<decVal/>
-		</variable>
-		
-		<variable label="Use F0 for function control" CV="61" mask="XXXXXXXV"
-			item="F0 use">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-				
-		<variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX"
-			item="Transpond" default="1">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-				
-		<variable label="Function controlling output" CV="64" mask="XXXXXXXV"
-      			item="ControlFn">
-			<enumVal>
-				<enumChoice choice="F0"/>
-				<enumChoice choice="F3"/>
-				<enumChoice choice="F5"/>
-				
-			</enumVal>
-		</variable>
-
-	</variables>
-
-</decoder>
-
-<pane name="Function Output">
-  <column>
-    <display item="Transpond" />
-    <display item="ControlFn" />
-    <display item="F0 use" format="checkbox" tooltip="Do not check this box if 'F0' is not selected above"/>
-   
-  </column>
-</pane>
-
+  <version author="dat7719@daletripp.com" version="1" lastUpdated="20080321"/>
+  <decoder>
+    <family name="Function Only, with transponding" mfg="Kato">
+      <model model="FL12" lowVersionID="0"/>
+    </family>
+    <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
+    <variables>
+      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
+        <shortAddressVal/>
+      </variable>
+      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="0">
+        <decVal/>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
+        <decVal/>
+      </variable>
+      <variable label="Use F0 for function control" CV="61" mask="XXXXXXXV" item="F0 use">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Transpond" default="1">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Function controlling output" CV="64" mask="XXXXXXXV" item="ControlFn">
+        <enumVal>
+          <enumChoice choice="F0"/>
+          <enumChoice choice="F3"/>
+          <enumChoice choice="F5"/>
+        </enumVal>
+      </variable>
+    </variables>
+  </decoder>
+  <pane name="Function Output">
+    <column>
+      <display item="Transpond"/>
+      <display item="ControlFn"/>
+      <display item="F0 use" format="checkbox" tooltip="Do not check this box if 'F0' is not selected above"/>
+    </column>
+  </pane>
 </decoder-config>
-
-

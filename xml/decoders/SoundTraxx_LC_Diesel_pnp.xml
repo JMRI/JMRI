@@ -15,18 +15,18 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="11" lastUpdated="20050817"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="12" lastUpdated="20080414"/>
-<!-- version 4: updates to minOut usage, function mapping -->
-<!-- version 5: added LL100LC -->
-<!--            removed erroneous CV19 definition, corrected VersionID -->
-<!-- version 6: redo family name for consistency -->
-<!-- version 7: additional models -->
-<!-- version 8: remove Atlas/Kato to other file -->
-<!-- version 9: moved LL100LC to other file -->
-<!-- version 10: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
-<!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
-<!-- version 11 (20050817 BobJ): numFns corrected from 8 to 10 -->
-<!-- Version 12 author Walter Thompson wsthompson@earthlink.net 20080412 -->
-<!--            added Reset option -->
+  <!-- version 4: updates to minOut usage, function mapping -->
+  <!-- version 5: added LL100LC -->
+  <!--            removed erroneous CV19 definition, corrected VersionID -->
+  <!-- version 6: redo family name for consistency -->
+  <!-- version 7: additional models -->
+  <!-- version 8: remove Atlas/Kato to other file -->
+  <!-- version 9: moved LL100LC to other file -->
+  <!-- version 10: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
+  <!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
+  <!-- version 11 (20050817 BobJ): numFns corrected from 8 to 10 -->
+  <!-- Version 12 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+  <!--            added Reset option -->
   <decoder>
     <family name="LC Diesel PNP decoders" mfg="Throttle-Up (SoundTraxx)">
       <model model="AT100LC/KT100LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
@@ -1347,7 +1347,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Sound section -->
+      <!-- Sound section -->
       <variable label="Startup Mode" CV="113" mask="XXXXXXXV" item="Sound Option 5" default="0">
         <enumVal>
           <enumChoice choice="On at power up">
@@ -1395,7 +1395,7 @@
         </enumVal>
         <label>Engine RPM Interlock</label>
       </variable>
-<!-- Volumes section -->
+      <!-- Volumes section -->
       <variable label="Bell Rate" CV="114" mask="XXXXVVVV" item="Sound Setting 1" default="4" comment="low values = fast, high values = slow">
         <decVal max="15"/>
         <label>Bell Rate</label>

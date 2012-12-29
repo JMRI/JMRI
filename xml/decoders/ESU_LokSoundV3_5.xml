@@ -13,21 +13,21 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-<!-- made from the ESU_LokSoundV3_0.file -->
-<!-- ver2 CV213 defined multiple times, fixed to 219,222,225,228,231,234 -->
-<!-- also added CV52,121,122,123,124 -->
+  <!-- made from the ESU_LokSoundV3_0.file -->
+  <!-- ver2 CV213 defined multiple times, fixed to 219,222,225,228,231,234 -->
+  <!-- also added CV52,121,122,123,124 -->
   <version author="Bob Jacobsen rgj1927@pacbell.net" version="2" lastUpdated="20060413"/>
-<!-- ver3 added Rule 17 lighting options from 4th ed of manual (dated 8/2005) & additional button assignments  -->
-<!-- Also removed LS XL V3.5 due to due to LS V3.5 now using Aux5 & Aux6 mapping to diesel notch up and down, XL has own file -->
-<!-- Added 21 pin version that has 6 functions - Michael Mosher -->
+  <!-- ver3 added Rule 17 lighting options from 4th ed of manual (dated 8/2005) & additional button assignments  -->
+  <!-- Also removed LS XL V3.5 due to due to LS V3.5 now using Aux5 & Aux6 mapping to diesel notch up and down, XL has own file -->
+  <!-- Added 21 pin version that has 6 functions - Michael Mosher -->
   <version author="Michael Mosher mjmx@comcast.net" version="3"/>
-<!-- ver4 still more light effects (as found in LokProg S/W, not in the manual) - Michael Mosher -->
+  <!-- ver4 still more light effects (as found in LokProg S/W, not in the manual) - Michael Mosher -->
   <version author="Michael Mosher mjmx@comcast.net" version="4" lastUpdated="20061204"/>
-<!-- ver5 changed mask for CV's to accept 16 in Sound Slot -->
+  <!-- ver5 changed mask for CV's to accept 16 in Sound Slot -->
   <version author="wsthompson@earthlink.net" version="5" lastUpdated="20080324"/>
-<!-- ver6 add function button labels -->
+  <!-- ver6 add function button labels -->
   <version author="Daniel Boudreau daboudreau@hotmail.com" version="6" lastUpdated="20081118"/>
-<!-- ver7 correct CV2,3,4,5,6 max values -->
+  <!-- ver7 correct CV2,3,4,5,6 max values -->
   <version author="Michael Mosher mjmx@comcast.net" version="7" lastUpdated="20090102"/>
   <decoder>
     <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59">
@@ -38,8 +38,8 @@
         <output name="4" label="AUX 2" maxcurrent="250mA"/>
         <size length="30" width="15.5" height="6.5" units="mm"/>
         <protocols>
-            <protocol>dcc</protocol>
-            <protocol>motorola</protocol>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
       <model model="LokSound Version 3.5 (21 pin)" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
@@ -50,8 +50,8 @@
         <output name="5" label="AUX 3" maxcurrent="250mA"/>
         <output name="6" label="AUX 4" maxcurrent="250mA"/>
         <protocols>
-            <protocol>dcc</protocol>
-            <protocol>motorola</protocol>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
       <functionlabels>
@@ -106,7 +106,7 @@
         <label>Vmid</label>
         <label xml:lang="fr">Vmoy</label>
       </variable>
-<!-- CV7 and CV must be left as readonly = no otherwise will not display -->
+      <!-- CV7 and CV must be left as readonly = no otherwise will not display -->
       <variable label="Decoder Version " CV="7" readOnly="no" item="Decoder Version">
         <decVal/>
         <label>Decoder Version </label>
@@ -1409,7 +1409,7 @@
         <label>Sensor2 Rev</label>
         <label xml:lang="fr">Son 2 en arr</label>
       </variable>
-<!-- Definitions for A mapping -->
+      <!-- Definitions for A mapping -->
       <variable label="Stop(f)1" CV="129" mask="XXXXXXXV" minOut="1" item="Stop(f)1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Stop(f)1</label>
@@ -3010,7 +3010,7 @@
         <label>sensor2(r)8</label>
         <label xml:lang="fr">Son 2 (arr)8</label>
       </variable>
-<!-- This is start of variable definition for Button Behavior -->
+      <!-- This is start of variable definition for Button Behavior -->
       <variable label="Stop Forward Button" CV="130" mask="XXXXXXXV" item="Stop forward1">
         <xi:include href="http://jmri.org/xml/decoders/esu/enum-Fbutton.xml"/>
         <label>Stop Forward Button</label>

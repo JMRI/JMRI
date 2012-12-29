@@ -15,9 +15,9 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="6" lastUpdated="20100312"/>
   <version author="Bob Jacobsen" version="5" lastUpdated="20031205"/>
-<!-- version 3 - add consist direction - jake -->
-<!-- version 4 - Minor formatting changes - Jack Shall -->
-<!-- version 6 - Start of I8N -->
+  <!-- version 3 - add consist direction - jake -->
+  <!-- version 4 - Minor formatting changes - Jack Shall -->
+  <!-- version 6 - Start of I8N -->
   <decoder>
     <family name="NMRA standard CV definitions" mfg="NMRA">
       <model model="NMRA standard CV definitions"/>
@@ -99,7 +99,7 @@
       <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
-           <choice xml:lang="it">Usare Vstart, Vmid, Vhigh</choice>
+            <choice xml:lang="it">Usare Vstart, Vmid, Vhigh</choice>
           </enumChoice>
           <enumChoice choice="Use table in CVs 66 through 95">
             <choice xml:lang="it">Usare tabella con CV dalla 66 alla 95</choice>
@@ -108,9 +108,9 @@
         <label xml:lang="fr">Speed Table Definition(fr)</label>
         <label xml:lang="it">Definizioni Tabella Velocità</label>
       </variable>
-<!-- this next large group forms a table, so doesn't need translation -->
+      <!-- this next large group forms a table, so doesn't need translation -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>
-<!-- end of table that doesn't need translation -->
+      <!-- end of table that doesn't need translation -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" item="Speed Table" CV="67">

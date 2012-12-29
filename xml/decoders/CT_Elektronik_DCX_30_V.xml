@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="peter.brandenburg@t-online.de" version="2" lastUpdated="20042912"/>
-<!-- version 2 added CT-programmer panes and tooltips - peter -->
+  <!-- version 2 added CT-programmer panes and tooltips - peter -->
   <decoder>
     <family name="Function Decoder" mfg="CT Elektronik">
       <model model="DCX30" numOuts="8" numFns="6" maxMotorCurrent="0.8 Amp per group" maxTotalCurrent="1.6 Amp">

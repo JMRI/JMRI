@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Blackwell afticarr@sympatico.ca)" version="1" lastUpdated="20060812"/>
-<!-- ZTC Speed Stabilized / WhisperDrive decoder -->
+  <!-- ZTC Speed Stabilized / WhisperDrive decoder -->
   <decoder>
     <family name="ZTC WhisperDrive" mfg="Kuehn" lowVersionID="0" highVersionID="255">
       <model model="ZTC217" numOuts="2">
@@ -137,7 +137,7 @@
         <label> Kick Start </label>
         <comment>Range 0-63</comment>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="F1 controls output 3" minOut="3" default="1"/>
       <constant item="F2 controls output 4" minOut="4" default="1"/>
       <constant item="F3 controls output 5" minOut="5" default="1"/>

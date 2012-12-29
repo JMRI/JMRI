@@ -17,14 +17,14 @@
   <version author="Peter Ulvestad" version="3" lastUpdated="20091003"/>
   <version author="Bob Jacobsen" version="2" lastUpdated="20071223"/>
   <version author="Paul Bender" version="1" lastUpdated="20060723"/>
-<!-- made from the MRC_1631 file by Rick Beaber -->
-<!-- version 2 fixed a problem in CV 115/116 -->
-<!-- version 3 added many tooltips -->
-<!-- restore function variables which were accidentaly removed -->
+  <!-- made from the MRC_1631 file by Rick Beaber -->
+  <!-- version 2 fixed a problem in CV 115/116 -->
+  <!-- version 3 added many tooltips -->
+  <!-- restore function variables which were accidentaly removed -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Diesel Sound 1636" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
-<!-- note only F0 to F12 are NMRA compatible -->
+        <!-- note only F0 to F12 are NMRA compatible -->
         <size length="70" width="9.2" height="5.8" units="mm"/>
       </model>
     </family>
@@ -132,15 +132,12 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-
-      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
-          item="Address Format">
-          <enumVal>
-             <enumChoice choice="2 digit addressing"/>
-             <enumChoice choice="4 digit addressing"/>
-          </enumVal>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+        <enumVal>
+          <enumChoice choice="2 digit addressing"/>
+          <enumChoice choice="4 digit addressing"/>
+        </enumVal>
       </variable>
-
       <variable label="Sound On/Off" CV="49" tooltip="CV49 turns sound on or off" item="Sound Option 1" mask="XXXXXXXV" default="1">
         <enumVal>
           <enumChoice choice="Off">

@@ -14,13 +14,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Pete Cesaro" version="2" lastUpdated="20090215"/>
-<!-- added many tooltips -->
+  <!-- added many tooltips -->
   <version author="Pete Cesaro" version="1" lastUpdated="20080216"/>
-<!-- made from the MRC_1630 file by Pete Cesaro pdsteam@aol.com -->
+  <!-- made from the MRC_1630 file by Pete Cesaro pdsteam@aol.com -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Steam Sound 1656" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note All functions are NMRA compatible -->
+        <!-- note All functions are NMRA compatible -->
         <size length="45" width="18" height="6.2" units="mm"/>
       </model>
     </family>

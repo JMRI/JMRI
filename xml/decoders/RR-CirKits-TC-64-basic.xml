@@ -13,16 +13,16 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-<!-- showEmptyPanes="no" -->
+  <!-- showEmptyPanes="no" -->
   <version author="dick@rr-cirkits.com" version="1.07" lastUpdated="20100907"/>
   <version author="dick@rr-cirkits.com" version="1.06" lastUpdated="20081209"/>
   <version author="dick@rr-cirkits.com" version="1.05" lastUpdated="20081029"/>
   <version author="dick@rr-cirkits.com" version="1.04" lastUpdated="20081007"/>
   <version author="dick@rr-cirkits.com" version="1.03" lastUpdated="20071227"/>
-<!-- Version 1.04  Update to include paired output drive option -->
-<!-- Version 1.05  Changed 'paired output' drive option to '* Dual Coil' -->
-<!-- Version 1.06 Correction of typos in secondary addressing (change at line 10544) -->
-<!-- Version 1.07 Changed wording to match Rev 6 firmware and added output interrogate option-->
+  <!-- Version 1.04  Update to include paired output drive option -->
+  <!-- Version 1.05  Changed 'paired output' drive option to '* Dual Coil' -->
+  <!-- Version 1.06 Correction of typos in secondary addressing (change at line 10544) -->
+  <!-- Version 1.07 Changed wording to match Rev 6 firmware and added output interrogate option-->
   <decoder>
     <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode">
       <model model="TC-64" comment="64 line I/O" lowVersionID="06"/>
@@ -336,7 +336,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-<!--		<variable label="Address" CV="17" item="Extended Address"  -->
+      <!--		<variable label="Address" CV="17" item="Extended Address"  -->
       <variable label="Long Address" CV="17" default="10000" item="Extended Address" comment="5 digit address (Range 00001-16383)">
         <longAddressVal/>
         <label>Long Address</label>
@@ -24766,5 +24766,5 @@
     </column>
     <name>Port 8</name>
   </pane>
-<!--</programmer>-->
+  <!--</programmer>-->
 </decoder-config>

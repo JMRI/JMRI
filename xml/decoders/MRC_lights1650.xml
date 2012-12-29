@@ -14,11 +14,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bill Chown" version="1" lastUpdated="20080226"/>
-<!-- made from the MRC_1656 (Pete Cesaro) file by Bill Chown orrrbrit2004@yahoo.com -->
+  <!-- made from the MRC_1656 (Pete Cesaro) file by Bill Chown orrrbrit2004@yahoo.com -->
   <decoder>
     <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note All functions are NMRA compatible -->
+        <!-- note All functions are NMRA compatible -->
         <size length="25.5" width="12.3" height="4.5" units="mm"/>
       </model>
     </family>

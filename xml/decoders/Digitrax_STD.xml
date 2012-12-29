@@ -15,28 +15,23 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="8" lastUpdated="20041005"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="9" lastUpdated="20080412"/>
-<!-- Represent the family of Digitrax decoders with STD (not STD*) outputs. -->
-<!-- Version 3 - set ops mode programming to no -->
-<!-- Version 5 - renaming, adjust decoder models -->
-<!-- version 6 - move DN140 to Basic file -->
-<!-- version 7 - add consist direction - jake -->
-<!-- version 8 - high version 45 to 46, see bug 946665 -->
-<!-- version 9 - added factory reset -->
+  <!-- Represent the family of Digitrax decoders with STD (not STD*) outputs. -->
+  <!-- Version 3 - set ops mode programming to no -->
+  <!-- Version 5 - renaming, adjust decoder models -->
+  <!-- version 6 - move DN140 to Basic file -->
+  <!-- version 7 - add consist direction - jake -->
+  <!-- version 8 - high version 45 to 46, see bug 946665 -->
+  <!-- version 9 - added factory reset -->
   <decoder>
     <family name="Basic STD" mfg="Digitrax" lowVersionID="33" highVersionID="46">
       <model model="DH121" numOuts="2" numFns="2"/>
     </family>
     <programming direct="no" paged="yes" register="yes" ops="no"/>
     <variables>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
-      
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
-
       <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="off">
@@ -184,14 +179,10 @@
         </enumVal>
         <label>Speed Table Definition</label>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml" />
-
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
@@ -207,7 +198,7 @@
         </enumVal>
         <label>Directional Headlights</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
       <constant item="F1 controls output 3" minOut="3" minFn="1" default="1"/>

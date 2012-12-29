@@ -17,37 +17,37 @@
   <version author="ncliffe@btinternet.com" version="1.6" lastUpdated="2009/4/02"/>
   <version author="ncliffe@btinternet.com" version="1.5" lastUpdated="2009/3/12"/>
   <version author="peter.brandenburg@t-online.de" version="1" lastUpdated="2006/11/20"/>
-<!-- version 1 - added CV's for new generation of decoders - Peter -->
-<!-- version 1.1 - added elements for "shunt speed" based on table supplied by CT -->
-<!--            Nigel Cliffe 2008/07/19; -->
-<!-- version 1.2 - added DCX75 -->
-<!--            Nigel Cliffe 2008/07/19; -->
-<!-- version 1.3 - changed family definition to be from V27 to v56 -->
-<!--        information on CT website implies V27 to 56 reflect current versions -->
-<!--            Nigel Cliffe 2008/12/01; -->
-<!-- version 1.4  altered prompts and drop-downs for -->
-<!-- automatic un-coupling tools and extended versions to v66  -->
-<!--            Nigel Cliffe 2008/12/09; -->
-<!-- version 1.5, Nigel Cliffe, 2009/03/12  -->
-<!--     based on German language manuals for DCX74 and 75.  -->
-<!--     Modified CV9 so appears in motor panel, and extended comment range -->
-<!--     CV137 added for 32kHz mode. Using similar technique to Zimo MX620 definition, -->
-<!--     unused "item" labels to put items on correct panels of comprehensive programmer  -->
-<!--	   CV137 bit 7 uses [item="DC Brake Momentum"] to force to motor panel -->
-<!--     Added Decoder Reset option (CV1 = 0) -->
-<!--     CV's sorted to numeric order -->
-<!--     CV's 163-166 added for "shunt mode", for completeness of shunt mode options -->
-<!--     lighting effects pane extensively revised  -->
-<!-- version 1.6, Nigel Cliffe 2009/04/02  -->
-<!-- Note that V66 decoders are now in "CT_Elektronic_DCX_V60_plus"  -->
-<!--     Splitting files to pre-v66 and post-v66 due to change in values with CV152/153 -->
-<!--     v56 DCX74 / v59 DCX75 mapping of white/yellow is white=2, yellow=1 , but yellow will "flash" in non-direction momentarily -->
-<!--     Noted in v66 DCX74 that mapping has changed to white=1, yellow=2 and works correctly -->
-<!--     Require more user observations of if any decoders exist between v59 and v66, and any -->
-<!--     four-output wire decoders.  -->
-<!-- Version 1.7, Nigel Cliffe, 2009/09/01  -->
-<!--    Improved function mapping, in line with Tran (CT) documentation  -->
-<!--    Subsequent changes to a few screens to move features to function map -->
+  <!-- version 1 - added CV's for new generation of decoders - Peter -->
+  <!-- version 1.1 - added elements for "shunt speed" based on table supplied by CT -->
+  <!--            Nigel Cliffe 2008/07/19; -->
+  <!-- version 1.2 - added DCX75 -->
+  <!--            Nigel Cliffe 2008/07/19; -->
+  <!-- version 1.3 - changed family definition to be from V27 to v56 -->
+  <!--        information on CT website implies V27 to 56 reflect current versions -->
+  <!--            Nigel Cliffe 2008/12/01; -->
+  <!-- version 1.4  altered prompts and drop-downs for -->
+  <!-- automatic un-coupling tools and extended versions to v66  -->
+  <!--            Nigel Cliffe 2008/12/09; -->
+  <!-- version 1.5, Nigel Cliffe, 2009/03/12  -->
+  <!--     based on German language manuals for DCX74 and 75.  -->
+  <!--     Modified CV9 so appears in motor panel, and extended comment range -->
+  <!--     CV137 added for 32kHz mode. Using similar technique to Zimo MX620 definition, -->
+  <!--     unused "item" labels to put items on correct panels of comprehensive programmer  -->
+  <!--	   CV137 bit 7 uses [item="DC Brake Momentum"] to force to motor panel -->
+  <!--     Added Decoder Reset option (CV1 = 0) -->
+  <!--     CV's sorted to numeric order -->
+  <!--     CV's 163-166 added for "shunt mode", for completeness of shunt mode options -->
+  <!--     lighting effects pane extensively revised  -->
+  <!-- version 1.6, Nigel Cliffe 2009/04/02  -->
+  <!-- Note that V66 decoders are now in "CT_Elektronic_DCX_V60_plus"  -->
+  <!--     Splitting files to pre-v66 and post-v66 due to change in values with CV152/153 -->
+  <!--     v56 DCX74 / v59 DCX75 mapping of white/yellow is white=2, yellow=1 , but yellow will "flash" in non-direction momentarily -->
+  <!--     Noted in v66 DCX74 that mapping has changed to white=1, yellow=2 and works correctly -->
+  <!--     Require more user observations of if any decoders exist between v59 and v66, and any -->
+  <!--     four-output wire decoders.  -->
+  <!-- Version 1.7, Nigel Cliffe, 2009/09/01  -->
+  <!--    Improved function mapping, in line with Tran (CT) documentation  -->
+  <!--    Subsequent changes to a few screens to move features to function map -->
   <decoder>
     <family name="DCX Series (v.27 and higher)" mfg="CT Elektronik" lowVersionID="27" highVersionID="59" comment="DCX74, DCX75, with variants">
       <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
@@ -283,7 +283,7 @@
         <decVal min="0" max="3"/>
         <label>Error Diagnosis</label>
       </variable>
-<!-- Define the Function-Output mapping based on NMRA definitions -->
+      <!-- Define the Function-Output mapping based on NMRA definitions -->
       <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -2028,7 +2028,7 @@
         <label>Slow Cut Off Motor</label>
         <comment>Slow Cut off Motor</comment>
       </variable>
-<!-- Special CVs for automatically uncoupling, available from version 33 -->
+      <!-- Special CVs for automatically uncoupling, available from version 33 -->
       <variable label="Speed Step Coupling Release" CV="147" default="20" tooltip="CV147">
         <decVal max="127"/>
         <label>Speed Step Coupling Release</label>
@@ -2089,7 +2089,7 @@
         </enumVal>
         <label>F-Button Used For Auto-Uncoupling</label>
       </variable>
-<!--  NC comment, version 56 and version 66 decoders seem different.  
+      <!--  NC comment, version 56 and version 66 decoders seem different.  
 	In Version 56 and documentation, the increments in values appear to be 2, 4, etc.. 
 	In Version 66, the increments appear to be 1, 2 (and presumably 3, 4)
 -->
@@ -2187,7 +2187,7 @@
         </enumVal>
         <label>V66 Loco travel BWD, front coupler</label>
       </variable>
-<!-- Tran Light Effects  -->
+      <!-- Tran Light Effects  -->
       <variable label="Light Effects FL(f)" CV="154" default="0" tooltip="CV154, Light Effects FL(f), see manual">
         <decVal/>
         <label>Light Effects FL(f)</label>
@@ -2440,8 +2440,8 @@
         </enumVal>
         <label>Light Effects Direction F2</label>
       </variable>
-<!-- Yard mode function keys, part of extended function mapping (incomplete) -->
-<!-- see also CV's 38 through 42 -->
+      <!-- Yard mode function keys, part of extended function mapping (incomplete) -->
+      <!-- see also CV's 38 through 42 -->
       <variable label="FL(f) controls output Ra" CV="163" mask="XXXXXXXV" tooltip="CV163 bit 0">
         <enumVal>
           <enumChoice choice="no">
@@ -2499,7 +2499,7 @@
       </variable>
     </variables>
     <resets>
-<!-- CT DCX74/75 use CV1 (short address) set to zero as the reset -->
+      <!-- CT DCX74/75 use CV1 (short address) set to zero as the reset -->
       <factReset label="HARD RESET all CVs reset to default values" CV="1" default="0"/>
     </resets>
   </decoder>
@@ -2697,7 +2697,7 @@
         <label>CV 114/115 and CV 154-157</label>
       </label>
       <separator/>
-<!--  NC replaces text entry with drop-downs, v1.5
+      <!--  NC replaces text entry with drop-downs, v1.5
 			<display item="Light Effects FL(f)" />
 			<display item="Light Effects FL(r)" />
 			<display item="Light Effects F 1" />
@@ -2803,7 +2803,7 @@
         <label>  </label>
       </label>
       <display item="Function selection 8 or 14/MAN Bit" tooltip="CV 137 Bit 0"/>
-<!-- NC v1.5 comment - CV137 bit 1 appears incorrect according to CT documentation -->
+      <!-- NC v1.5 comment - CV137 bit 1 appears incorrect according to CT documentation -->
       <display item="Zimo address pulse" tooltip="CV 137 Bit 1"/>
       <display item="Zimo speed control HLU" tooltip="CV 137 Bit 4"/>
       <display item="ZIMO Brake Time HLU" tooltip="cv 138"/>
@@ -2814,7 +2814,7 @@
         <label>LGB</label>
       </label>
       <display item="LGB F4 Impulse" tooltip="cv 137 Bit 6"/>
-<!-- NC v1.5 comment - CV108 appears incorrect according to CT documentation -->
+      <!-- NC v1.5 comment - CV108 appears incorrect according to CT documentation -->
       <display item="LGB Continuous Manual Sound Bitmask" tooltip="CV 108"/>
     </column>
     <column>

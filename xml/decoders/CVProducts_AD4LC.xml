@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="4" lastUpdated="20030525"/>
-<!-- Created from version 4 of the CVProducts_AD4 file -->
+  <!-- Created from version 4 of the CVProducts_AD4 file -->
   <decoder>
     <family name="Enhanced AD4" mfg="CVP Products" lowVersionID="6" highVersionID="6" type="stationary">
       <model model="AD4LC"/>

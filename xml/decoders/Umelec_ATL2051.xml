@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jefflaw@datamasta.co.nz" version="1.00" lastUpdated="20040809"/>
-<!-- version 1.00 - initial version             -->
+  <!-- version 1.00 - initial version             -->
   <decoder>
     <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero">
       <model model="ATL2051" lowVersionID="59" highVersionID="59" comment="For DC Motors, or AC Motors with Infrared Light Barrier" maxInputVolts="12V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="HO" numOuts="9" numFns="8">
@@ -158,7 +158,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-<!-- Non-Standard Speed Table -->
+      <!-- Non-Standard Speed Table -->
       <variable label="Speed Step 1" CV="30" default="1" comment="Range 1-63" item="Speed Table 1">
         <decVal min="1" max="63"/>
         <label>Speed Step 1</label>
@@ -234,7 +234,7 @@
         <label>Speed Step 15</label>
         <comment>Range 1-126</comment>
       </variable>
-<!-- Whistle Table -->
+      <!-- Whistle Table -->
       <variable label="Whistle Memory 1" CV="45" default="0" comment="Range 0-255" item="Whistle Table 1">
         <decVal min="0" max="255"/>
         <label>Whistle Memory 1</label>

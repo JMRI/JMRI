@@ -14,36 +14,36 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="3" lastUpdated="20031205"/>
-<!-- version 3 - Minor formatting changes - Jack Shall -->
+  <!-- version 3 - Minor formatting changes - Jack Shall -->
   <decoder>
     <family name="NMRA standard register definitions" mfg="NMRA">
       <model model="NMRA standard register definitions"/>
     </family>
     <programming direct="no" paged="no" register="yes" ops="no"/>
     <variables>
-<!-- Register 1 -->
+      <!-- Register 1 -->
       <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
         <shortAddressVal/>
         <label xml:lang="it">Indirizzo Primario</label>
         <comment xml:lang="it">Indirizzo Corto</comment>
       </variable>
-<!-- Register 2 -->
+      <!-- Register 2 -->
       <variable label="Vstart" CV="2" comment="A value of 255 corresponds to 100%">
         <decVal/>
         <label xml:lang="it">Vstart:</label>
         <comment xml:lang="it"> un valore di 255 corrisponde al 100%</comment>
       </variable>
-<!-- Register 3 -->
+      <!-- Register 3 -->
       <variable label="Acceleration Rate" CV="3" item="Accel">
         <decVal max="31"/>
         <label xml:lang="it">Grado Accellerazione</label>
       </variable>
-<!-- Register 4 -->
+      <!-- Register 4 -->
       <variable label="Deceleration Rate" CV="4" item="Decel">
         <decVal max="31"/>
         <label xml:lang="it">Grado Decellarazione</label>
       </variable>
-<!-- Register 5 -->
+      <!-- Register 5 -->
       <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="normal">
@@ -88,12 +88,12 @@
         </enumVal>
         <label xml:lang="it">Riconoscimento Avanzato Decoder</label>
       </variable>
-<!-- Register 7 -->
+      <!-- Register 7 -->
       <variable label="Manufacturer Version No: " CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label xml:lang="it">Numero Versione Costruttore: </label>
       </variable>
-<!-- Register 8 -->
+      <!-- Register 8 -->
       <variable label="Manufacturer ID: " CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label xml:lang="it">ID Costruttore: </label>

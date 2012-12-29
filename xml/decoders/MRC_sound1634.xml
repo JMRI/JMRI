@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bill Chown" version="1" lastUpdated="20080503"/>
-<!-- made from the MRC_1636 file by Rick Beaber -->
+  <!-- made from the MRC_1636 file by Rick Beaber -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Diesel Sound 1634" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">

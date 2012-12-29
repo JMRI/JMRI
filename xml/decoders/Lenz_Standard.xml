@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Ian Birchenough ian.birchenough@talktalk.net" version="1" lastUpdated="20081107"/>
-<!-- Version 1 - created  "20081107"-->
+  <!-- Version 1 - created  "20081107"-->
   <decoder>
     <family name="Lenz Standard" mfg="Lenz" highVersionID="81" lowVersionID="80" comment="No comment">
       <model model="Standard" numOuts="3" numFns="9" lowVersionID="80" maxMotorCurrent="1A " formFactor="N">

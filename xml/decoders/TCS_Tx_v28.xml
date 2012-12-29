@@ -14,10 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="3" lastUpdated="20060131"/>
-<!-- Version 1 - made from TCS_Tx_V27 -->
-<!-- Version 2 - Fixed bug in CV64 -->
-<!-- Version 3 - Added ver to 35 -->
-<!-- Version 3.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 1 - made from TCS_Tx_V27 -->
+  <!-- Version 2 - Fixed bug in CV64 -->
+  <!-- Version 3 - Added ver to 35 -->
+  <!-- Version 3.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Tx series decoders" mfg="Train Control Systems">
       <model model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35">
@@ -497,7 +497,6 @@
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-  
   <pane name="Misc">
     <column>
       <display item="Decoder Lock"/>

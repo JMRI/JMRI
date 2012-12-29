@@ -4,132 +4,121 @@
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <!-- $Id$ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-		<version author="ncliffe" version="4b" lastUpdated="20090330"/>
-			<!--  Version 4b (beta) by Nigel Cliffe    -->
-			
-			<!--  Based on version for steady state decoder, MERG_ACC5  -->
-			<!--  re-written main programming pane to be more intuitive -->
-			<!--  not necessary to duplicate pane for CV's in 500 region as their role duplicates low ranges -->
-			<!-- 
+  <version author="ncliffe" version="4b" lastUpdated="20090330"/>
+  <!--  Version 4b (beta) by Nigel Cliffe    -->
+  <!--  Based on version for steady state decoder, MERG_ACC5  -->
+  <!--  re-written main programming pane to be more intuitive -->
+  <!--  not necessary to duplicate pane for CV's in 500 region as their role duplicates low ranges -->
+  <!-- 
 				Extensive abuse of standard labelling conventions to make decoder address appear in "basic" pane. 
 				This decoder has address range of 1-511, split over CV1 and CV9.  By manipulating the way the address
 				range (1-511) and the base turnout address (1-2017 in steps of four), these can appear as the addresses
 				on the Basic Pane and in the Roster.
 				Current arrangement has the base turnout address show in the Roster (Short Address).  
 			-->
-			
-<decoder>
-	
-	
-	<!--  lowVersionID="4" highVersionID="52"   -->
-	<family name="ACC Decoders"  mfg="MERG"  comment="DCCACC4 is pulsed MERG decoder for solenoid motors.">
-	<model model="DCCACC4" productID="acc4">
-		<versionCV lowVersionID="4" highVersionID="5"/>
-	</model>
-
-	</family>
-
-	<programming direct="yes" paged="yes" register="no" ops="no"></programming>
-
-	<variables>
-
-		
-		<variable label="Low 7 bytes of Address CV1" CV="1" mask="XVVVVVVV" comment="Decoder address"
-			 default="01" tooltip="CV1">
-			<decVal min="1" max="63"></decVal>
-		</variable>
-		
-		
-	
-		<variable label="Outputs Active" CV="2" mask="VVVVVVVV" comment="Outputs Active"
-			 default="255" >
-			 <decVal min="1" max="255"></decVal>
-		</variable>
-		
-		<variable label="Output Active bit 0" CV="2" mask="XXXXXXXV" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Output Active bit 1" CV="2" mask="XXXXXXVX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Output Active bit 2" CV="2" mask="XXXXXVXX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Output Active bit 3" CV="2" mask="XXXXVXXX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Output Active bit 4" CV="2" mask="XXXVXXXX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Output Active bit 5" CV="2" mask="XXVXXXXX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Output Active bit 6" CV="2" mask="XVXXXXXX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Output Active bit 7" CV="2" mask="VXXXXXXX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-		</variable>
-
-					
-		<variable label="A Output (x10) Millisecs" CV="3" mask="VVVVVVVV" default="0">
-			<decVal min="0" max = "255"></decVal>
-		</variable>
-		
-		
-		<variable label="B Output (x10) Millisecs" CV="4" mask="VVVVVVVV" default="0">
-			<decVal min="0" max = "255"></decVal>
-		</variable>
-		
-		
-		<variable label="C Output (x10) Millisecs" CV="5" mask="VVVVVVVV" default="0">
-			<decVal min="0" max = "255"></decVal>
-		</variable>
-		
-		
-		<variable label="D Output (x10) Millisecs" CV="6" mask="VVVVVVVV" default="0">
-			<decVal min="0" max = "255"></decVal>
-		</variable>
-		
-		<variable label="Decoder Version" CV="7" readOnly="yes"  >
-			<decVal min="0" max = "255"></decVal>
-		</variable>
-					
-		<variable label="Manufacturer" CV="8" readOnly="yes" default="165">
-			<decVal min="0" max = "255"></decVal>
-		</variable>
-		
-		<variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV" tooltip="CV9">
-			<decVal min="0" max = "7"></decVal>
-		</variable>
-	
-
-			
-		<variable label="Turnout Address of Output 1 (1-2041)" CV="1" mask="XXVVVVVV" default="1" item="Short Address"
-			tooltip="Range 1-2041">
-			<splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3" /> </variable>
-		<variable label="Turnout Address 2" CV="1" mask="XXVVVVVV" default="2"
-			tooltip="Range 2-2042">
-			<splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-2" /> </variable>
-		<variable label="Turnout Address 3" CV="1" mask="XXVVVVVV" default="3"
-			tooltip="Range 3-2043">
-			<splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-1" /> </variable>
-		<variable label="Turnout Address 4" CV="1" mask="XXVVVVVV" default="4"
-			tooltip="Range 4-2044">
-			<splitVal highCV="9" upperMask="XXXXXVVV" factor="4" /> </variable>
-
-		<variable label="Decoder Address (1-511)" CV="1" mask="XXVVVVVV" default="1" 
-			tooltip="Range 1-511" item="Long Address">
-			<splitVal highCV="9" upperMask="XXXXXVVV"/> </variable>
-
-
-			
-		
-		<variable label="Configuration" CV="29" readOnly="yes" default="128">
-			<decVal min="0" max = "255"></decVal>
-		</variable>
-		
-		<!-- abuse the value in CV29, which should be 128 in all these decoders
+  <decoder>
+    <!--  lowVersionID="4" highVersionID="52"   -->
+    <family name="ACC Decoders" mfg="MERG" comment="DCCACC4 is pulsed MERG decoder for solenoid motors.">
+      <model model="DCCACC4" productID="acc4">
+        <versionCV lowVersionID="4" highVersionID="5"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="no" ops="no"/>
+    <variables>
+      <variable label="Low 7 bytes of Address CV1" CV="1" mask="XVVVVVVV" comment="Decoder address" default="01" tooltip="CV1">
+        <decVal min="1" max="63"/>
+      </variable>
+      <variable label="Outputs Active" CV="2" mask="VVVVVVVV" comment="Outputs Active" default="255">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Output Active bit 0" CV="2" mask="XXXXXXXV" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Output Active bit 1" CV="2" mask="XXXXXXVX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Output Active bit 2" CV="2" mask="XXXXXVXX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Output Active bit 3" CV="2" mask="XXXXVXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Output Active bit 4" CV="2" mask="XXXVXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Output Active bit 5" CV="2" mask="XXVXXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Output Active bit 6" CV="2" mask="XVXXXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Output Active bit 7" CV="2" mask="VXXXXXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="A Output (x10) Millisecs" CV="3" mask="VVVVVVVV" default="0">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="B Output (x10) Millisecs" CV="4" mask="VVVVVVVV" default="0">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="C Output (x10) Millisecs" CV="5" mask="VVVVVVVV" default="0">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="D Output (x10) Millisecs" CV="6" mask="VVVVVVVV" default="0">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Decoder Version" CV="7" readOnly="yes">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Manufacturer" CV="8" readOnly="yes" default="165">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="High 3 bytes of Address CV9" CV="9" mask="XXXXXVVV" tooltip="CV9">
+        <decVal min="0" max="7"/>
+      </variable>
+      <variable label="Turnout Address of Output 1 (1-2041)" CV="1" mask="XXVVVVVV" default="1" item="Short Address" tooltip="Range 1-2041">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-3"/>
+      </variable>
+      <variable label="Turnout Address 2" CV="1" mask="XXVVVVVV" default="2" tooltip="Range 2-2042">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-2"/>
+      </variable>
+      <variable label="Turnout Address 3" CV="1" mask="XXVVVVVV" default="3" tooltip="Range 3-2043">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="4" offset="-1"/>
+      </variable>
+      <variable label="Turnout Address 4" CV="1" mask="XXVVVVVV" default="4" tooltip="Range 4-2044">
+        <splitVal highCV="9" upperMask="XXXXXVVV" factor="4"/>
+      </variable>
+      <variable label="Decoder Address (1-511)" CV="1" mask="XXVVVVVV" default="1" tooltip="Range 1-511" item="Long Address">
+        <splitVal highCV="9" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Configuration" CV="29" readOnly="yes" default="128">
+        <decVal min="0" max="255"/>
+      </variable>
+      <!-- abuse the value in CV29, which should be 128 in all these decoders
 		<variable label="Do Not Change address mode" CV="29" readOnly="yes" mask="VXXXXXXX"
 				item="Address Format" default="1" >
 			<enumVal>
@@ -139,33 +128,40 @@
 				</enumVal>
 			</variable>
 		 -->
-		 
-		<variable label="Lenz Toggle Mode" CV="33" mask="VVVVVVVV"
-			default="15" >
-			<decVal min="0" max = "255"></decVal>
-		</variable>
-		
-		<variable label="Toggle Mode output 1" CV="33" mask="XXXXXXXV" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Toggle Mode output 2" CV="33" mask="XXXXXXVX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Toggle Mode output 3" CV="33" mask="XXXXXVXX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-		<variable label="Toggle Mode output 4" CV="33" mask="XXXXVXXX" default="1">
-		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
-			</variable>
-			
-		<!-- dual address not used in ACC4 	
+      <variable label="Lenz Toggle Mode" CV="33" mask="VVVVVVVV" default="15">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Toggle Mode output 1" CV="33" mask="XXXXXXXV" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Toggle Mode output 2" CV="33" mask="XXXXXXVX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Toggle Mode output 3" CV="33" mask="XXXXXVXX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <variable label="Toggle Mode output 4" CV="33" mask="XXXXVXXX" default="1">
+        <enumVal>
+          <enumChoice choice="Off" value="0"/>
+          <enumChoice choice="On" value="1"/>
+        </enumVal>
+      </variable>
+      <!-- dual address not used in ACC4 	
 		<variable label="Dual Address Mode" CV="33" mask="VXXXXXXX" default="1">
 		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
 			</variable>
 		
 		-->
-		
-		<!-- Output inversion not used in ACC4 
+      <!-- Output inversion not used in ACC4 
 		<variable label="Invert bit 0" CV="34" mask="XXXXXXXV" default="1" include="52">
 		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
 			</variable>
@@ -191,154 +187,137 @@
 		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
 		</variable>
 		-->
-
-
-	
-	</variables>	
-		
-	
-</decoder>
-
-<pane name="DCCACC4 Settings">
-	<column>
-		<row> 
-			<column>
-				<label label="CV1 to CV34          "/>
-				<label label=" "/>
-				<label label=" "/>
-			</column>
-			<column>
-				<label label="Lenz Toggle Mode (bits set) gives a toggle action for Lenz systems." />
-				<label label="Recommend Lenz Toggle Mode is 'on' for most commercial DCC systems." />
-			</column>
-		</row>
-		
-		<row>
-			<column>
-				<label label=" "/>
-				<label label="Addressing, enter decoder address or turnout address" />
-				<separator />
-				<label label=" "/>
-				<row>
-					<column>
-					<label label="Decoder Address (1-511) "/>
-					<display item="Long Address" label="Decoder Address "/>
-					<label label=" "/>
-					<label label=" "/>
-					<label label=" "/>
-					<label label=" "/>
-					<label label=" "/>
-					</column>
-					<column>
-					<label label="    Turnout Address in blocks"/>
-					<label label="    of 4, range 1-2024"/>
-					<display item="Short Address" label="    Output pair 1 + 2 " />
-					<display item="Turnout Address 2" label="    Output pair 3 + 4 " />
-					<display item="Turnout Address 3" label="    Output pair 5 + 6 " />
-					<display item="Turnout Address 4" label="    Output pair 7 + 8 " />
-
-					</column>
-				</row>
-				<label label=" "/>
-				
-				<label label="Output operation, select / deselect as required" />
-				<separator/>
-				<label label=" "/>
-				<row>
-				<column>
-					<display item="Output Active bit 0" format="checkbox" label="Output Active   1" />
-					<label label=" "/>
-					<display item="Invert bit 0" format="checkbox" label="Invert Outputs:   1" />
-				</column>
-				<column>
-					<display item="Output Active bit 1" format="checkbox" label="  2" />
-					<label label=" "/>
-					<display item="Invert bit 1" format="checkbox" label="  2" />
-				</column>
-				<column>
-					<display item="Output Active bit 2" format="checkbox" label="  3" />
-					<label label=" "/>
-					<display item="Invert bit 2" format="checkbox" label="  3" />
-				</column>
-				<column>
-					<display item="Output Active bit 3" format="checkbox" label="  4" />
-					<label label=" "/>
-					<display item="Invert bit 3" format="checkbox" label="  4" />
-				</column>
-				<column>
-					<display item="Output Active bit 4" format="checkbox" label="  5" />
-					<label label=" "/>
-					<display item="Invert bit 4" format="checkbox" label="  5" />
-				</column>
-				<column>
-					<display item="Output Active bit 5" format="checkbox" label="  6" />
-					<label label=" "/>
-					<display item="Invert bit 5" format="checkbox" label="  6" />
-				</column>
-				<column>
-					<display item="Output Active bit 6" format="checkbox" label="  7" />
-					<label label=" "/>
-					<display item="Invert bit 6" format="checkbox" label="  7" />
-				</column>
-				<column>
-					<display item="Output Active bit 7" format="checkbox" label="  8" />
-					<label label=" "/>
-					<display item="Invert bit 7" format="checkbox" label="  8" />
-				</column>
-				</row>
-				<label label=" "/>
-				<label label=" "/>
-				<label label=" "/>
-
-
-			</column>
-
-			<column>
-				<label label="                           "/>
-			</column>
-
-			<column>
-
-				<label label=" "/>
-				<label label="Output Duration and Toggle Mode"/>
-				<separator />
-				<row>
-				<column>
-					<label label= "Duration of Output" />
-					<display item="A Output (x10) Millisecs" label= "1+2 " />
-					<display item="B Output (x10) Millisecs" label= "3+4 "/>
-					<display item="C Output (x10) Millisecs" label= "5+6 " />
-					<display item="D Output (x10) Millisecs" label= "7+8 " />
-					<label label= "(x10 MilliSecs)" />
-					<label label= "0 = continous output"/>
-				</column>
-				<column>
-					<label label= "         " />
-				</column>
-				<column>
-					<label label ="Toggle Mode Outputs" />
-					<display item="Toggle Mode output 1" format="checkbox" label="1+2" />
-					<display item="Toggle Mode output 2" format="checkbox" label="3+4" />
-					<display item="Toggle Mode output 3" format="checkbox" label="5+6" />
-					<display item="Toggle Mode output 4" format="checkbox" label="7+8" />
-					<label label= "         " />
-					<label label= "         " />
-					</column>
-				</row>
-				<label label=" "/>
-				<label label=" "/>
-				<label label= "         " />
-				<label label= "         " />
-				<label label="Read Only Information "/>
-				<separator />
-				<display item="Configuration" />
-				<display item="Decoder Version" label="Decoder Version"/>
-				<display item="Manufacturer" label="Manufacturer"/>
-			</column>
-							
-		</row>
-	</column>
-</pane>
-
+    </variables>
+  </decoder>
+  <pane name="DCCACC4 Settings">
+    <column>
+      <row>
+        <column>
+          <label label="CV1 to CV34          "/>
+          <label label=" "/>
+          <label label=" "/>
+        </column>
+        <column>
+          <label label="Lenz Toggle Mode (bits set) gives a toggle action for Lenz systems."/>
+          <label label="Recommend Lenz Toggle Mode is 'on' for most commercial DCC systems."/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label=" "/>
+          <label label="Addressing, enter decoder address or turnout address"/>
+          <separator/>
+          <label label=" "/>
+          <row>
+            <column>
+              <label label="Decoder Address (1-511) "/>
+              <display item="Long Address" label="Decoder Address "/>
+              <label label=" "/>
+              <label label=" "/>
+              <label label=" "/>
+              <label label=" "/>
+              <label label=" "/>
+            </column>
+            <column>
+              <label label="    Turnout Address in blocks"/>
+              <label label="    of 4, range 1-2024"/>
+              <display item="Short Address" label="    Output pair 1 + 2 "/>
+              <display item="Turnout Address 2" label="    Output pair 3 + 4 "/>
+              <display item="Turnout Address 3" label="    Output pair 5 + 6 "/>
+              <display item="Turnout Address 4" label="    Output pair 7 + 8 "/>
+            </column>
+          </row>
+          <label label=" "/>
+          <label label="Output operation, select / deselect as required"/>
+          <separator/>
+          <label label=" "/>
+          <row>
+            <column>
+              <display item="Output Active bit 0" format="checkbox" label="Output Active   1"/>
+              <label label=" "/>
+              <display item="Invert bit 0" format="checkbox" label="Invert Outputs:   1"/>
+            </column>
+            <column>
+              <display item="Output Active bit 1" format="checkbox" label="  2"/>
+              <label label=" "/>
+              <display item="Invert bit 1" format="checkbox" label="  2"/>
+            </column>
+            <column>
+              <display item="Output Active bit 2" format="checkbox" label="  3"/>
+              <label label=" "/>
+              <display item="Invert bit 2" format="checkbox" label="  3"/>
+            </column>
+            <column>
+              <display item="Output Active bit 3" format="checkbox" label="  4"/>
+              <label label=" "/>
+              <display item="Invert bit 3" format="checkbox" label="  4"/>
+            </column>
+            <column>
+              <display item="Output Active bit 4" format="checkbox" label="  5"/>
+              <label label=" "/>
+              <display item="Invert bit 4" format="checkbox" label="  5"/>
+            </column>
+            <column>
+              <display item="Output Active bit 5" format="checkbox" label="  6"/>
+              <label label=" "/>
+              <display item="Invert bit 5" format="checkbox" label="  6"/>
+            </column>
+            <column>
+              <display item="Output Active bit 6" format="checkbox" label="  7"/>
+              <label label=" "/>
+              <display item="Invert bit 6" format="checkbox" label="  7"/>
+            </column>
+            <column>
+              <display item="Output Active bit 7" format="checkbox" label="  8"/>
+              <label label=" "/>
+              <display item="Invert bit 7" format="checkbox" label="  8"/>
+            </column>
+          </row>
+          <label label=" "/>
+          <label label=" "/>
+          <label label=" "/>
+        </column>
+        <column>
+          <label label="                           "/>
+        </column>
+        <column>
+          <label label=" "/>
+          <label label="Output Duration and Toggle Mode"/>
+          <separator/>
+          <row>
+            <column>
+              <label label="Duration of Output"/>
+              <display item="A Output (x10) Millisecs" label="1+2 "/>
+              <display item="B Output (x10) Millisecs" label="3+4 "/>
+              <display item="C Output (x10) Millisecs" label="5+6 "/>
+              <display item="D Output (x10) Millisecs" label="7+8 "/>
+              <label label="(x10 MilliSecs)"/>
+              <label label="0 = continous output"/>
+            </column>
+            <column>
+              <label label="         "/>
+            </column>
+            <column>
+              <label label="Toggle Mode Outputs"/>
+              <display item="Toggle Mode output 1" format="checkbox" label="1+2"/>
+              <display item="Toggle Mode output 2" format="checkbox" label="3+4"/>
+              <display item="Toggle Mode output 3" format="checkbox" label="5+6"/>
+              <display item="Toggle Mode output 4" format="checkbox" label="7+8"/>
+              <label label="         "/>
+              <label label="         "/>
+            </column>
+          </row>
+          <label label=" "/>
+          <label label=" "/>
+          <label label="         "/>
+          <label label="         "/>
+          <label label="Read Only Information "/>
+          <separator/>
+          <display item="Configuration"/>
+          <display item="Decoder Version" label="Decoder Version"/>
+          <display item="Manufacturer" label="Manufacturer"/>
+        </column>
+      </row>
+    </column>
+  </pane>
 </decoder-config>
-

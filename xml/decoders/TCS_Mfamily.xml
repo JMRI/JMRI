@@ -14,13 +14,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="4" lastUpdated="20060112"/>
-<!-- Version 1 - made from TCS_Tx -->
-<!-- Version 2 - fix "rule 17" typos -->
-<!-- Modified for old version 24  ..Eddie  -->
-<!-- Version 3-->
-<!-- made from M1 file with corrections and added M2 norman@erwbant.freeserve.co.ukJanuary 2005 -->
-<!-- Version 4 added M1P-UK from David Cuthbert -->
-<!-- Version 4.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 1 - made from TCS_Tx -->
+  <!-- Version 2 - fix "rule 17" typos -->
+  <!-- Modified for old version 24  ..Eddie  -->
+  <!-- Version 3-->
+  <!-- made from M1 file with corrections and added M2 norman@erwbant.freeserve.co.ukJanuary 2005 -->
+  <!-- Version 4 added M1P-UK from David Cuthbert -->
+  <!-- Version 4.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Mx series decoders" mfg="Train Control Systems">
       <model model="M1" numOuts="2" numFns="6" lowVersionID="24" highVersionID="24">
@@ -60,7 +60,7 @@
         <decVal/>
         <label>Midpoint Voltage</label>
       </variable>
-<!-- CV7 & CV8 are left as readonly = no, so they will display in basic pane -->
+      <!-- CV7 & CV8 are left as readonly = no, so they will display in basic pane -->
       <variable label="Version ID" CV="7" readOnly="no" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -823,7 +823,7 @@
         </enumVal>
         <label>FL(r) controls output 6</label>
       </variable>
-<!--what's the purpose of minFn ............................ none-->
+      <!--what's the purpose of minFn ............................ none-->
       <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1269,7 +1269,6 @@
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-  
   <pane name="TCS">
     <column>
       <display item="Manufacturer ID - Reset" format="checkbox" label="Trigger Decoder Reset to Factory values">

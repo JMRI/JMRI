@@ -977,9 +977,9 @@
         <label>User Id #2</label>
       </variable>
     </variables>
-  <resets>
+    <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
-  </resets>
+    </resets>
   </decoder>
   <pane name="ZTC">
     <column>

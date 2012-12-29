@@ -16,10 +16,10 @@
   <version author="td@teamdigital1.com" version="1.3" lastUpdated="20070420"/>
   <version author="td@teamdigital1.com" version="1.2" lastUpdated="20061017"/>
   <version author="td@teamdigital1.com" version="1.1" lastUpdated="20061008"/>
-<!-- Version 1 inital release -->
-<!-- Version 1.1 release fixed route group address - 10/8/06 -->
-<!-- Version 1.2 release fixed pri2 & sec3 input route number - 10/17/06 -->
-<!-- Version 1.3 release fixed output addresses - 4/20/07 -->
+  <!-- Version 1 inital release -->
+  <!-- Version 1.1 release fixed route group address - 10/8/06 -->
+  <!-- Version 1.2 release fixed pri2 & sec3 input route number - 10/17/06 -->
+  <!-- Version 1.3 release fixed output addresses - 4/20/07 -->
   <decoder>
     <family name="Stationary Decoder" mfg="Team Digital" type="stationary">
       <model model="SMD82" lowVersionID="1" comment="SMD82 is a stationary decoder, but it can be programmed in the usual way"/>
@@ -233,7 +233,7 @@
       </variable>
       <variable label="Ops Mode Address" CV="31" mask="XVVVVVVV" item="Short Address" tooltip="Range 1-99">
         <shortAddressVal/>
-<!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
+        <!-- <splitVal highCV="32" upperMask="XXXXXXXX"/> -->
         <label>Ops Mode Address</label>
       </variable>
       <variable label="" item="OS1" CV="33" mask="XXXXXXVV" default="0">
@@ -348,7 +348,7 @@
         </enumVal>
         <label/>
       </variable>
-<!-- Begin primary input variable definition -->
+      <!-- Begin primary input variable definition -->
       <variable label="Route Number" item="Rte Num P1" CV="35" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
@@ -661,7 +661,7 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-<!-- Begin secondary input variable definition -->
+      <!-- Begin secondary input variable definition -->
       <variable label="Route Number" item="Rte Num S1" CV="51" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
@@ -974,7 +974,7 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-<!-- Begin auxiliary input variable definition -->
+      <!-- Begin auxiliary input variable definition -->
       <variable label="Route Number" item="Rte Num A1" CV="67" mask="XXXVVVVV" default="0">
         <decVal/>
         <label>Route Number</label>
@@ -1225,7 +1225,7 @@
         </enumVal>
         <label>   Output State</label>
       </variable>
-<!-- Begin route variable definition -->
+      <!-- Begin route variable definition -->
       <variable label="Route Group 1-8 Address" CV="77" mask="VVVVVVVV" default="101" tooltip="Range 1-2040">
         <splitVal highCV="78" upperMask="XXXXVVVV"/>
         <label>Route Group 1-8 Address</label>

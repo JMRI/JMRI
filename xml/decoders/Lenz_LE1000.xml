@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Paul Bednder (paul.bender@acm.org)" version="1" lastUpdated="20040326"/>
-<!-- Version 2 - added factory reset menu items (Paul Bender) -->
+  <!-- Version 2 - added factory reset menu items (Paul Bender) -->
   <decoder>
     <family name="Lenz Value Line decoders" mfg="Lenz" lowVersionID="10" highVersionID="10">
       <model model="LE1000A" numOuts="2" numFns="0" lowVersionID="10" highVersionID="10" nmraWarrant="yes" nmraWarrantStart="2004" nmraWarrantEnd="200901">
@@ -43,7 +43,7 @@
         <label>Decel</label>
         <comment>Range 0-31</comment>
       </variable>
-<!-- deleted max and mid voltage-->
+      <!-- deleted max and mid voltage-->
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -57,7 +57,7 @@
         <label>Manufacturer ID - Reset</label>
         <comment>Writing a value of 33 will reset decoder to factory defaults</comment>
       </variable>
-<!-- Deleted all CV 13 references-->
+      <!-- Deleted all CV 13 references-->
       <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
         <longAddressVal/>
         <label>Long Address</label>
@@ -180,7 +180,7 @@
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>

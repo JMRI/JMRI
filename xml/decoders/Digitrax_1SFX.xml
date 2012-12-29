@@ -13,60 +13,53 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-<version author="Steve Lowens" version="1" lastUpdated="20120703"/>
-<!--    Added Con-cor Zephyr & MP54 decoders                                    -->
-<!--    See Digitrax_0SFX.xml for other attribution                             -->
-<!--                                       Steve Lowens  07/03/2012      -->
-<!--                                             -->
-
+  <version author="Steve Lowens" version="1" lastUpdated="20120703"/>
+  <!--    Added Con-cor Zephyr & MP54 decoders                                    -->
+  <!--    See Digitrax_0SFX.xml for other attribution                             -->
+  <!--                                       Steve Lowens  07/03/2012      -->
+  <!--                                             -->
   <decoder>
     <family name="Digitrax/Con-cor Sound" mfg="Digitrax">
       <model model="Con-cor MP54" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1646" comment="SDH164D">
-	<output name="1" label="F0F Pad" connection="solder" /> 
-	<output name="2" label="F0R Pad" connection="solder" /> 
-	<output name="3" label="F1 Pad" connection="solder" /> 
-	<output name="4" label="F2 Pad" connection="solder" /> 
-	<output name="5" label="F3 Pad" connection="solder" /> 
-	<output name="6" label="F4 Pad" connection="solder" /> 
-	<size length="1.05" width="0.67" height="0.25" units="inches" />
+        <output name="1" label="F0F Pad" connection="solder"/>
+        <output name="2" label="F0R Pad" connection="solder"/>
+        <output name="3" label="F1 Pad" connection="solder"/>
+        <output name="4" label="F2 Pad" connection="solder"/>
+        <output name="5" label="F3 Pad" connection="solder"/>
+        <output name="6" label="F4 Pad" connection="solder"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
       </model>
       <model model="Con-cor Zephyr - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" productID="1645" comment="SDH164D">
-	<output name="1" label="F0F Pad" connection="solder" /> 
-	<output name="2" label="F0R Pad" connection="solder" /> 
-	<output name="3" label="F1 Pad" connection="solder" /> 
-	<output name="4" label="F2 Pad" connection="solder" /> 
-	<output name="5" label="F3 Pad" connection="solder" /> 
-	<output name="6" label="F4 Pad" connection="solder" /> 
-	<size length="1.05" width="0.67" height="0.25" units="inches" />
+        <output name="1" label="F0F Pad" connection="solder"/>
+        <output name="2" label="F0R Pad" connection="solder"/>
+        <output name="3" label="F1 Pad" connection="solder"/>
+        <output name="4" label="F2 Pad" connection="solder"/>
+        <output name="5" label="F3 Pad" connection="solder"/>
+        <output name="6" label="F4 Pad" connection="solder"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
       </model>
       <model model="Con-cor Zephyr - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" productID="1446" comment="SDN144PS">
-	<output name="1" label="F0F Pad" connection="plug" /> 
-	<output name="2" label="F0R Pad" connection="plug" /> 
-	<output name="3" label="F1 Pad" connection="plug" /> 
-	<output name="4" label="F2 Pad" connection="plug" /> 			
-	<size length="1.05" width="0.67" height="0.25" units="inches" />
+        <output name="1" label="F0F Pad" connection="plug"/>
+        <output name="2" label="F0R Pad" connection="plug"/>
+        <output name="3" label="F1 Pad" connection="plug"/>
+        <output name="4" label="F2 Pad" connection="plug"/>
+        <size length="1.05" width="0.67" height="0.25" units="inches"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
     <variables>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
-      
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="16">
         <decVal/>
         <label>Version ID</label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer"  default="129">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
-
       <variable label="Sound Time Out" CV="11" tooltip="Sound stays on after loco is de-selected" item="Sound Option 5" default="6">
         <enumVal>
           <enumChoice choice="Yes" value="0">
@@ -79,11 +72,8 @@
         <label>Sound Time Out</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
-      
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
@@ -128,25 +118,20 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
-      
-<xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>      
-      
-<!-- The following code sets the Con-con Zephyr N scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
-      
-  <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="0" include="1446">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
-  </variable>
-
-  <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3" default="1" include="1446">
-    <enumVal>
-      <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
-    </enumVal>
-  </variable>
-      
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
+      <!-- The following code sets the Con-con Zephyr N scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
+      <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="0" include="1446">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
+      <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3" default="1" include="1446">
+        <enumVal>
+          <enumChoice choice="No"/>
+          <enumChoice choice="Yes"/>
+        </enumVal>
+      </variable>
       <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Forward light F0F effect generated</label>
@@ -163,7 +148,7 @@
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Reverse light F0R behavior</label>
       </variable>
-      <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minOut="3" >
+      <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 1 effect generated</label>
       </variable>
@@ -175,7 +160,7 @@
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 1 effect generated</label>
       </variable>
-      <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX"  default="2" minOut="3" include="1446">
+      <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" default="2" minOut="3" include="1446">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 1 behavior</label>
       </variable>
@@ -188,63 +173,58 @@
         <label>Function 2 behavior</label>
       </variable>
       <variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" tooltip="When enabled, F6 reduces top speed">
-           <enumVal>
-             <enumChoice choice="Disabled">
-               <choice>Disabled</choice>
-             </enumChoice>
-             <enumChoice choice="Enabled">
-               <choice>Enabled</choice>
-             </enumChoice>
-           </enumVal>
-           <label>Switching speed enabled by F6</label>
-         </variable>
-         <variable label="Torque compensation" CV="54" mask="XXXVXXXX">
-           <enumVal>
-             <enumChoice choice="Enabled">
-               <choice>Enabled</choice>
-             </enumChoice>
-             <enumChoice choice="Disabled">
-               <choice>Disabled</choice>
-             </enumChoice>
-           </enumVal>
-           <label>Torque compensation</label>
-         </variable>
-         <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
-           <enumVal>
-             <enumChoice choice="Enabled">
-               <choice>Enabled</choice>
-             </enumChoice>
-             <enumChoice choice="Disabled">
-               <choice>Disabled</choice>
-             </enumChoice>
-           </enumVal>
-           <label>Decoder Lock Feature</label>
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Switching speed enabled by F6</label>
       </variable>
-
+      <variable label="Torque compensation" CV="54" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Torque compensation</label>
+      </variable>
+      <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
+        <enumVal>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Decoder Lock Feature</label>
+      </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
-   
-    <!-- Sound options -->
-    
-         <variable label="Master Volume" CV="58" item="Sound Setting 1"  tooltip="CV 58"  default="9" comment="0-15, use about 4-8">
-           <decVal max="15"/>
-           <label>Master Volume</label>
-           <comment>0-15, use about 4-8</comment>
-         </variable>
-   	<variable label="Locomotive Sound Option" CV="60" default="0" item="Sound Option 1" include="1446,1645">
-              <enumVal>
-   		<enumChoice choice="Diesel (CV60=0)"/>
-   		<enumChoice choice="Diesel (CV60=1)"/>
-   	   </enumVal>
-           <label>Steam/Diesel Option</label>           
-   	</variable>
-
-   	<variable label="Locomotive Sound Option" CV="60" default="0" item="Sound Option 1" include="1646">
-              <enumVal>
-   		<enumChoice choice="MP54"/>
-   	   </enumVal>
-           <label>Steam/Diesel Option</label>           
-   	</variable>
-
+      <!-- Sound options -->
+      <variable label="Master Volume" CV="58" item="Sound Setting 1" tooltip="CV 58" default="9" comment="0-15, use about 4-8">
+        <decVal max="15"/>
+        <label>Master Volume</label>
+        <comment>0-15, use about 4-8</comment>
+      </variable>
+      <variable label="Locomotive Sound Option" CV="60" default="0" item="Sound Option 1" include="1446,1645">
+        <enumVal>
+          <enumChoice choice="Diesel (CV60=0)"/>
+          <enumChoice choice="Diesel (CV60=1)"/>
+        </enumVal>
+        <label>Steam/Diesel Option</label>
+      </variable>
+      <variable label="Locomotive Sound Option" CV="60" default="0" item="Sound Option 1" include="1646">
+        <enumVal>
+          <enumChoice choice="MP54"/>
+        </enumVal>
+        <label>Steam/Diesel Option</label>
+      </variable>
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
         <enumVal>
           <enumChoice choice="Off">
@@ -305,18 +285,14 @@
         <label>Ditch light hold-over time</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml" />
-
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
       <variable label="User Private ID #1" CV="105" item="User Id #1" default="252" include="1646">
         <decVal/>
         <label>User Private ID #1</label>
@@ -333,9 +309,7 @@
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 3 behavior</label>
       </variable>
-
-<!-- The following code sets the Con-con Zephyr HO scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
-
+      <!-- The following code sets the Con-con Zephyr HO scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
       <variable label="Function 3 effect generated" CV="113" mask="XXXXVVVV" default="2" minOut="5" include="1645">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 3 effect generated</label>
@@ -368,40 +342,40 @@
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 6 behavior</label>
       </variable>
-    <!-- Sound options -->
-      <variable label="Notch Rate" CV="132"  tooltip="CV 132" item="Sound Setting 2" default="127">
+      <!-- Sound options -->
+      <variable label="Notch Rate" CV="132" tooltip="CV 132" item="Sound Setting 2" default="127">
         <decVal/>
         <label>Notch Rate</label>
       </variable>
-      <variable label="Notch Rate" CV="132"  tooltip="CV 132" item="Sound Setting 2" default="64" include="1646">
+      <variable label="Notch Rate" CV="132" tooltip="CV 132" item="Sound Setting 2" default="64" include="1646">
         <decVal/>
         <label>Notch Rate</label>
       </variable>
-      <variable label="Volume When Muted" CV="135"  tooltip="CV 135" item="Sound Setting 3">
+      <variable label="Volume When Muted" CV="135" tooltip="CV 135" item="Sound Setting 3">
         <decVal/>
         <label>Volume When Muted</label>
       </variable>
-      <variable label="Prime Mover/Chuff Volume" CV="140"  tooltip="CV 140" item="Sound Setting 4" default="60" include= "1446,1645">
+      <variable label="Prime Mover/Chuff Volume" CV="140" tooltip="CV 140" item="Sound Setting 4" default="60" include="1446,1645">
         <decVal max="64"/>
         <label>Prime Mover/Chuff Volume</label>
       </variable>
-      <variable label="Motor/Track Volume (1=Off)" CV="140"  tooltip="CV 140" item="Sound Setting 4" default="64" include="1646">
+      <variable label="Motor/Track Volume (1=Off)" CV="140" tooltip="CV 140" item="Sound Setting 4" default="64" include="1646">
         <decVal max="64"/>
         <label>Motor/Track Volume</label>
       </variable>
-      <variable label="Bell Volume" CV="141"  tooltip="CV 141" item="Sound Setting 5" default="25" include="1446,1645">
+      <variable label="Bell Volume" CV="141" tooltip="CV 141" item="Sound Setting 5" default="25" include="1446,1645">
         <decVal max="64"/>
         <label>Bell Volume</label>
       </variable>
-      <variable label="Whistle Volume (1=Off)" CV="141"  tooltip="CV 141" item="Sound Setting 5" default="64" include="1646">
+      <variable label="Whistle Volume (1=Off)" CV="141" tooltip="CV 141" item="Sound Setting 5" default="64" include="1646">
         <decVal max="64"/>
         <label>Whistle Volume</label>
       </variable>
-      <variable label="Horn/Whistle Volume" CV="142"  tooltip="CV 142" item="Sound Setting 6" default="60" include="1446,1645">
+      <variable label="Horn/Whistle Volume" CV="142" tooltip="CV 142" item="Sound Setting 6" default="60" include="1446,1645">
         <decVal max="64"/>
         <label>Horn/Whistle Volume</label>
       </variable>
-      <variable label="Crossing Bell Volume (1=Off)" CV="142"  tooltip="CV 142" item="Sound Setting 6" default="64" include="1646">
+      <variable label="Crossing Bell Volume (1=Off)" CV="142" tooltip="CV 142" item="Sound Setting 6" default="64" include="1646">
         <decVal max="64"/>
         <label>Crossing Bell Volume</label>
       </variable>
@@ -439,11 +413,11 @@
         <label>Time Between Cycles</label>
         <comment>24msec counts</comment>
       </variable>
-      <variable label="Air Drier Rate" CV="147"  tooltip="CV 147" item="Sound Setting 11" default="50" include="1446,1645">
+      <variable label="Air Drier Rate" CV="147" tooltip="CV 147" item="Sound Setting 11" default="50" include="1446,1645">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
       </variable>
-      <variable label="Compressor Running Time (10=20 Seconds)" CV="147"  tooltip="CV 147" item="Sound Setting 11" default="10" include="1646">
+      <variable label="Compressor Running Time (10=20 Seconds)" CV="147" tooltip="CV 147" item="Sound Setting 11" default="10" include="1646">
         <decVal max="64"/>
         <label>Compressor Running Time</label>
       </variable>
@@ -451,7 +425,7 @@
         <decVal/>
         <label>Compressor Run/Popoff Rate</label>
       </variable>
-      <variable label="Compressor On Time" CV="149" tooltip="CV 149" item="Sound Setting 13"  default="20" include="1446,1645">
+      <variable label="Compressor On Time" CV="149" tooltip="CV 149" item="Sound Setting 13" default="20" include="1446,1645">
         <decVal/>
         <label>Compressor On Time</label>
       </variable>
@@ -482,12 +456,12 @@
         <label>Sound Project Author ID</label>
       </variable>
       <variable label="Sound Project ID" CV="153" default="5" include="1446,1645">
-	<decVal/>
-        <label>Sound Project ID</label>			
+        <decVal/>
+        <label>Sound Project ID</label>
       </variable>
-     <variable label="Sound Project ID" CV="153" default="8" include="1646">
-	<decVal/>
-        <label>Sound Project ID</label>			
+      <variable label="Sound Project ID" CV="153" default="8" include="1646">
+        <decVal/>
+        <label>Sound Project ID</label>
       </variable>
       <variable label="Notching Mode" CV="155" item="Sound Option 4" tooltip="Not supported on early EVO">
         <enumVal>
@@ -504,9 +478,9 @@
         <label>Notching Mode</label>
       </variable>
       <variable label="Horn Delay Rate" CV="156" item="Sound Setting 17" default="10" include="1446,1645">
-	<decVal/>
-        <label>Horn Delay Rate</label>			
-      </variable>      
+        <decVal/>
+        <label>Horn Delay Rate</label>
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
@@ -526,20 +500,20 @@
       <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number"/>
       <display item="Sound Project Author ID"/>
       <display item="Sound Project ID"/>
-	<label label="  ">	
-      </label>	
-        <label label="DIGITRAX SOUND DECODER NOTES: ">
-      </label>	        
+      <label label="  ">	
+      </label>
+      <label label="DIGITRAX SOUND DECODER NOTES: ">
+      </label>
       <label label="Sound labels and values are shown for decoders as manufactured.">
-      </label>  
-        <label label="These labels and values may not match downloaded sound projects.">
-     </label>   
-        <label label="Please use the CVs pane to adjust downloaded sound projects.">
+      </label>
+      <label label="These labels and values may not match downloaded sound projects.">
+     </label>
+      <label label="Please use the CVs pane to adjust downloaded sound projects.">
       </label>
       <label label="If your locomotive with downloaded sound file is silent,try setting CV 60=0.">
       </label>
       <label label="To mute bell or horn, set the sound level = 1, not 0.">
-      </label>            
+      </label>
     </column>
     <name>Digitrax</name>
   </pane>

@@ -14,8 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Martin Gostling ingleborough@yahoo.com" version="1" lastUpdated="20070411"/>
-<!-- Version 1 - created from Lenz_silver.xml "20070411"-->
-<!-- This is the Trix Selectrix - DCC decoder -->
+  <!-- Version 1 - created from Lenz_silver.xml "20070411"-->
+  <!-- This is the Trix Selectrix - DCC decoder -->
   <decoder>
     <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder">
       <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65">

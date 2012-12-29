@@ -14,10 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Howard G. Penny" version="4" lastUpdated="20050714"/>
-<!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
-<!-- version 2 - Updated info on misc. tab - Howard -->
-<!-- version 3 - Updated function features with data from QSI - Howard -->
-<!-- version 4 - Added product number ivariable and build information
+  <!-- version 1 - modified for QSI CV.PI.SI format - Howard -->
+  <!-- version 2 - Updated info on misc. tab - Howard -->
+  <!-- version 3 - Updated function features with data from QSI - Howard -->
+  <!-- version 4 - Added product number ivariable and build information
                    on Misc. pane - Howard -->
   <decoder>
     <family name="QSI Gas Turbine" mfg="QSIndustries" lowVersionID="4" highVersionID="6">
@@ -337,7 +337,7 @@
         </enumVal>
         <label>Power Source Conversion</label>
       </variable>
-<!-- This bit is not used by QSI
+      <!-- This bit is not used by QSI
     <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX"
           item="Advanced Ack">
       <enumVal>
@@ -1611,7 +1611,7 @@
         <label>Programming Verbal Acknowledgement</label>
         <comment>CV62</comment>
       </variable>
-<!-- need to make this work for indexed CVs as well - TBD -->
+      <!-- need to make this work for indexed CVs as well - TBD -->
       <variable label="Verbal CV Inquiry" CV="64" opsOnly="yes" writeOnly="yes" comment="CV64" item="Verbal CV Inquiry">
         <decVal/>
         <label>Verbal CV Inquiry</label>
@@ -1631,8 +1631,8 @@
       </variable>
       <constant item="PICV" default="49" comment="CV used for Primary Index"/>
       <constant item="SICV" default="50" comment="CV used for Secondary Index"/>
-<!-- QSI CV.PI.SI formatted items -->
-<!-- Sound control -->
+      <!-- QSI CV.PI.SI formatted items -->
+      <!-- Sound control -->
       <ivariable label="System Volume" CVname="51.0" CV="51" PI="0" default="127" comment="QSI" item="CV51.0">
         <indexedVal max="127"/>
       </ivariable>
@@ -1659,7 +1659,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-<!-- Sound volumes -->
+      <!-- Sound volumes -->
       <ivariable label="Horn" CVname="52.0" CV="52" PI="0" default="11" comment="QSI" item="CV52.0">
         <indexedVal max="15"/>
       </ivariable>
@@ -2991,13 +2991,11 @@
       <ivariable label="Speed Step to Scale MPH Scale Factor" CVname="56.10" CV="56" PI="10" default="64" comment="QSI" item="CV56.10">
         <indexedVal max="128"/>
       </ivariable>
-<!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
-
-<!-- CV 56.254 About Quantum Decoder -->
-<!-- QSI Product ID -->
-    <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
-
-<!-- CV 56.255 Play Build Information (for ops mode) -->
+      <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
+      <!-- CV 56.254 About Quantum Decoder -->
+      <!-- QSI Product ID -->
+      <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
+      <!-- CV 56.255 Play Build Information (for ops mode) -->
       <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" comment="QSI" item="CV56.255_0" default="0">
         <indexedVal/>
       </ivariable>

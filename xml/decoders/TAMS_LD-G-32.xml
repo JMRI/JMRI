@@ -14,8 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael@Povel-Walsrode.de" version="0.2" lastUpdated="20100109"/>
-<!-- 0.2 2010/01/09 MCP Added item entries for all variables -->
-<!-- 0.1 2010/01/08 MCP Copied from LD-G-21 -->
+  <!-- 0.2 2010/01/09 MCP Added item entries for all variables -->
+  <!-- 0.1 2010/01/08 MCP Copied from LD-G-21 -->
   <decoder>
     <family name="Multiprotocol Decoder" mfg="Tams Elektronik GmbH" lowVersionID="10" highVersionID="10">
       <model model="LD-G-32" numOuts="5" numFns="10">
@@ -673,7 +673,7 @@
           <enumChoice choice="1" value="1">
             <choice>1</choice>
           </enumChoice>
-<!-- Fix Me -->
+          <!-- Fix Me -->
           <enumChoice choice="Always ON" value="30">
             <choice>Always ON</choice>
           </enumChoice>
@@ -705,7 +705,7 @@
           <enumChoice choice="1" value="1">
             <choice>1</choice>
           </enumChoice>
-<!-- Fix Me -->
+          <!-- Fix Me -->
           <enumChoice choice="Always ON" value="30">
             <choice>Always ON</choice>
           </enumChoice>

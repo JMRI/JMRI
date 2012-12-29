@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Paul Bender (paul.bender@acm.org)" version="1" lastUpdated="20040802"/>
-<!-- Version 2 - added factory reset menu items (Paul Bender) -->
+  <!-- Version 2 - added factory reset menu items (Paul Bender) -->
   <decoder>
     <family name="Atlas N-Scale" mfg="Atlas" lowVersionID="46" highVersionID="46">
       <model model="VO1000 (Part #500099)" numOuts="2" numFns="0" lowVersionID="46" highVersionID="46">
@@ -131,7 +131,7 @@
         <label>Brake Momentum on DC</label>
         <comment>Governs how loco acts in DC track block</comment>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="33"/>

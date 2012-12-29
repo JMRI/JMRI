@@ -4,110 +4,110 @@
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Nigel Cliffe ncliffe@btinternet.com" version="1" lastUpdated="20090904"/>
-<!-- ZTC badged custom version of the Tsunami sound chip for UK prototypes,  -->
-<!-- Based on SoundTraxx_Tsu_Steam_3Light, version 6, with some further changes -->
-<!-- based on the consolidated Tsunami Steam file by Jack Shall. -->
-<!-- First test version, comments sought on its usefulness and accuracy -->
+  <!-- ZTC badged custom version of the Tsunami sound chip for UK prototypes,  -->
+  <!-- Based on SoundTraxx_Tsu_Steam_3Light, version 6, with some further changes -->
+  <!-- based on the consolidated Tsunami Steam file by Jack Shall. -->
+  <!-- First test version, comments sought on its usefulness and accuracy -->
   <decoder>
     <family name="ZTC Sound" mfg="ZTC">
       <model model="ZTC 471 Small Generic Locomotives" numOuts="4" numFns="15" productID="471" comment="Model 471">
         <versionCV lowVersionID="64"/>
         <output name="1" label="long whistle"/>
-<!-- name="Whistle"  -->
+        <!-- name="Whistle"  -->
         <output name="2" label="short whistle"/>
-<!-- name="Bell" -->
+        <!-- name="Bell" -->
         <output name="3" label="FX1 Firebox"/>
-<!-- name="3" -->
+        <!-- name="3" -->
         <output name="4" label="FX2 Ashpan"/>
-<!-- name="4" -->
+        <!-- name="4" -->
         <output name="FX5" label="Coasting Chuff"/>
         <output name="FX6" label="ROD"/>
         <output name="FX7 / FOF" label="Headlight"/>
-<!-- name="Dynamo" -->
+        <!-- name="Dynamo" -->
         <output name="FX8 / FOR" label="Rear Light"/>
-<!-- name="Short-Whistle" -->
+        <!-- name="Short-Whistle" -->
         <output name="FX9" label="Guard Whistle"/>
-<!-- name="Steam-Release" -->
+        <!-- name="Steam-Release" -->
         <output name="FX10" label="Steam Hiss"/>
-<!--  name="Water-Stop" -->
+        <!--  name="Water-Stop" -->
         <output name="FX11" label="Buffer Coupler"/>
-<!-- name="Dim"  -->
+        <!-- name="Dim"  -->
         <output name="FX12" label="Mute"/>
-<!-- name="Mute" -->
+        <!-- name="Mute" -->
         <output name="FX13" label="Water Stop"/>
-<!-- name="Injector" -->
+        <!-- name="Injector" -->
         <output name="FX14" label="BELL"/>
-<!-- name="Brake-Squeal" -->
+        <!-- name="Brake-Squeal" -->
         <output name="FX15" label="Brake Squeal"/>
-<!-- name="Coupler" -->
-<!-- The four electical outputs are front headlight, back -->
-<!-- headlight, F5, F6 -->
+        <!-- name="Coupler" -->
+        <!-- The four electical outputs are front headlight, back -->
+        <!-- headlight, F5, F6 -->
       </model>
       <model model="ZTC 472 LMS / LNER Locomotives" numOuts="4" numFns="15" productID="472" comment="Model 472">
         <versionCV lowVersionID="64"/>
         <output name="1" label="long whistle"/>
-<!-- name="Whistle"  -->
+        <!-- name="Whistle"  -->
         <output name="2" label="short whistle"/>
-<!-- name="Bell" -->
+        <!-- name="Bell" -->
         <output name="3" label="FX1 Firebox"/>
-<!-- name="3" -->
+        <!-- name="3" -->
         <output name="4" label="FX2 Ashpan"/>
-<!-- name="4" -->
+        <!-- name="4" -->
         <output name="FX5" label="Coasting Chuff"/>
         <output name="FX6" label="ROD"/>
         <output name="FX7 / FOF" label="Headlight"/>
-<!-- name="Dynamo" -->
+        <!-- name="Dynamo" -->
         <output name="FX8 / FOR" label="Rear Light"/>
-<!-- name="Short-Whistle" -->
+        <!-- name="Short-Whistle" -->
         <output name="FX9" label="Guard Whistle"/>
-<!-- name="Steam-Release" -->
+        <!-- name="Steam-Release" -->
         <output name="FX10" label="Steam Hiss"/>
-<!--  name="Water-Stop" -->
+        <!--  name="Water-Stop" -->
         <output name="FX11" label="Buffer Coupler"/>
-<!-- name="Dim"  -->
+        <!-- name="Dim"  -->
         <output name="FX12" label="Mute"/>
-<!-- name="Mute" -->
+        <!-- name="Mute" -->
         <output name="FX13" label="Water Stop"/>
-<!-- name="Injector" -->
+        <!-- name="Injector" -->
         <output name="FX14" label="BELL"/>
-<!-- name="Brake-Squeal" -->
+        <!-- name="Brake-Squeal" -->
         <output name="FX15" label="Brake Squeal"/>
-<!-- name="Coupler" -->
-<!-- The four electical outputs are front headlight, back -->
-<!-- headlight, F5, F6 -->
+        <!-- name="Coupler" -->
+        <!-- The four electical outputs are front headlight, back -->
+        <!-- headlight, F5, F6 -->
       </model>
       <model model="ZTC 473 GWR / SR Locomotives" numOuts="4" numFns="15" productID="473" comment="Model 473">
         <versionCV lowVersionID="64"/>
         <output name="1" label="long whistle"/>
-<!-- name="Whistle"  -->
+        <!-- name="Whistle"  -->
         <output name="2" label="short whistle"/>
-<!-- name="Bell" -->
+        <!-- name="Bell" -->
         <output name="3" label="FX1 Firebox"/>
-<!-- name="3" -->
+        <!-- name="3" -->
         <output name="4" label="FX2 Ashpan"/>
-<!-- name="4" -->
+        <!-- name="4" -->
         <output name="FX5" label="Coasting Chuff"/>
         <output name="FX6" label="ROD"/>
         <output name="FX7 / FOF" label="Headlight"/>
-<!-- name="Dynamo" -->
+        <!-- name="Dynamo" -->
         <output name="FX8 / FOR" label="Rear Light"/>
-<!-- name="Short-Whistle" -->
+        <!-- name="Short-Whistle" -->
         <output name="FX9" label="Guard Whistle"/>
-<!-- name="Steam-Release" -->
+        <!-- name="Steam-Release" -->
         <output name="FX10" label="Steam Hiss"/>
-<!--  name="Water-Stop" -->
+        <!--  name="Water-Stop" -->
         <output name="FX11" label="Buffer Coupler"/>
-<!-- name="Dim"  -->
+        <!-- name="Dim"  -->
         <output name="FX12" label="Mute"/>
-<!-- name="Mute" -->
+        <!-- name="Mute" -->
         <output name="FX13" label="Water Stop"/>
-<!-- name="Injector" -->
+        <!-- name="Injector" -->
         <output name="FX14" label="BELL"/>
-<!-- name="Brake-Squeal" -->
+        <!-- name="Brake-Squeal" -->
         <output name="FX15" label="Brake Squeal"/>
-<!-- name="Coupler" -->
-<!-- The four electical outputs are front headlight, back -->
-<!-- headlight, F5, F6 -->
+        <!-- name="Coupler" -->
+        <!-- The four electical outputs are front headlight, back -->
+        <!-- headlight, F5, F6 -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -138,7 +138,7 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-<!--  Not in SoundTraxx Tsu Steam file -->
+      <!--  Not in SoundTraxx Tsu Steam file -->
       <variable label="PWM Period" CV="9" item="Total PWM Period" default="0" tooltip="CV9 PWM">
         <decVal/>
         <label>PWM Period</label>
@@ -1097,7 +1097,7 @@
         </enumVal>
         <label>F3 controls output FX8 / FOR</label>
       </variable>
-<!--			
+      <!--			
 		<variable label="F3 controls output Bell" CV="37" mask="XXXXXXXV" 
 				default="0"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
@@ -1741,7 +1741,7 @@
         </enumVal>
         <label>F10 controls output FX14</label>
       </variable>
-<!-- <variable label="F10 controls output FX15" CV="44" mask="VXXXXXXX" default="0" minFn="10"> <enumVal> 
+      <!-- <variable label="F10 controls output FX15" CV="44" mask="VXXXXXXX" default="0" minFn="10"> <enumVal> 
 			<enumChoice choice="No"/> <enumChoice choice="Yes"/> </enumVal> </variable>
 		-->
       <variable label="F11 controls output FX8 / FOR" CV="45" mask="XXXXXXXV" default="0" minFn="11">
@@ -2375,7 +2375,7 @@
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
-<!-- NC edit of CV112 -->
+      <!-- NC edit of CV112 -->
       <variable label="Westinghouse/Vacuum pumps" CV="112" mask="XXXXXXVV" item="Sound Option 1" default="2" tooltip="CV112 bits 0,1">
         <enumVal>
           <enumChoice choice="Pumps OFF">
@@ -2427,7 +2427,7 @@
         </enumVal>
         <label>Slip Rate Control</label>
       </variable>
-<!--  There are not any articulated engines in the ZTC sound sets !
+      <!--  There are not any articulated engines in the ZTC sound sets !
 		<variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX"
 		    item="Sound Option 4" tooltip="CV112 bit 6">
 			<enumVal>
@@ -2533,7 +2533,7 @@
         <decVal max="255"/>
         <label>Engine Exhaust Rate</label>
       </variable>
-<!-- What these parameters (CV120-127) are used for is unclear, so commented out for now. 
+      <!-- What these parameters (CV120-127) are used for is unclear, so commented out for now. 
 		<variable label="Processor Parameter 0" CV="120" default="0"  tooltip="CV120" >
 			<decVal max="255"/>
 		</variable>
@@ -2651,19 +2651,19 @@
         <decVal max="255"/>
         <label>Fireman Oil Can Volume</label>
       </variable>
-<!-- NC change to CV151, in ZTC this is Clack Valve -->
+      <!-- NC change to CV151, in ZTC this is Clack Valve -->
       <variable label="Clack Valve Volume" CV="151" mask="VVVVVVVV" default="48" item="Sound Setting 26" tooltip="CV151">
         <decVal max="255"/>
         <label>Clack Valve Volume</label>
       </variable>
-<!-- NC addition CV152 -->
+      <!-- NC addition CV152 -->
       <variable label="FireBox Door Slam" CV="152" mask="VVVVVVVV" default="64" item="Sound Setting 27" tooltip="CV152">
         <decVal max="255"/>
         <label>FireBox Door Slam</label>
       </variable>
-<!-- The following sounds CVs (currently) don't map to generic -->
-<!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
-<!-- appear on pane definitions in this file -->
+      <!-- The following sounds CVs (currently) don't map to generic -->
+      <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
+      <!-- appear on pane definitions in this file -->
       <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" tooltip="CV153 bits 0-2">
         <enumVal>
           <enumChoice choice="Flat (off)">
@@ -2786,7 +2786,7 @@
         <decVal max="255"/>
         <label>Blower level</label>
       </variable>
-<!-- NC added CV 175 and CV176 -->
+      <!-- NC added CV 175 and CV176 -->
       <variable label="Rod Clank level" tooltip="CV175 Reverb channel 6" item="Reverb channel 6 mixer level" CV="175" mask="VVVVVVVV" default="0">
         <decVal max="255"/>
         <label>Rod Clank level</label>
@@ -2843,12 +2843,12 @@
         <decVal max="255"/>
         <label>BEMF Tracking Constant</label>
       </variable>
-<!-- NC addition, CV 189 -->
+      <!-- NC addition, CV 189 -->
       <variable label="BEMF Tracking Offset" item="Tracking Offset" CV="189" mask="VVVVVVVV" default="0" tooltip="CV189">
         <decVal max="255"/>
         <label>BEMF Tracking Offset</label>
       </variable>
-<!-- Automatic Sound Controls (ASC) follow -->
+      <!-- Automatic Sound Controls (ASC) follow -->
       <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="15" tooltip="CV193 Specifies the throttle speed step where the automatic bell will first turn on">
         <decVal max="127"/>
         <label>Bell-On Set Point</label>
@@ -2975,13 +2975,13 @@
         </enumVal>
         <label>Automatic Steam Blow Down Enable</label>
       </variable>
-<!-- NC added CV 199 -->
+      <!-- NC added CV 199 -->
       <variable label="Auto Chuff Start Speed" item="Sound Option 7" CV="199" mask="VVVVVVVV" default="7" tooltip="CV199">
         <decVal max="255"/>
         <label>Auto Chuff Start Speed</label>
       </variable>
-<!-- Event Probability Controls follow -->
-<!-- NC changes labels in CV's 201-208 -->
+      <!-- Event Probability Controls follow -->
+      <!-- NC changes labels in CV's 201-208 -->
       <variable label="Probability Fireman" CV="201" mask="VVVVVVVV" default="64" tooltip="CV201">
         <decVal max="255"/>
         <label>Probability Fireman</label>
@@ -3014,7 +3014,7 @@
         <decVal max="255"/>
         <label>Door Slam Range</label>
       </variable>
-<!-- End of variables for file-specific panes -->
+      <!-- End of variables for file-specific panes -->
       <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="CV209 Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
@@ -3300,7 +3300,7 @@
   </pane>
   <pane name="DDE">
     <column>
-<!-- panes always start with column elements-->
+      <!-- panes always start with column elements-->
       <row>
         <column>
           <row>
@@ -3689,7 +3689,7 @@
       <label label=" ">
         <label> </label>
       </label>
-<!--
+      <!--
 			<label label= "Processor Parameters (CV120-127)" />
 			<label label= " " />
 			<display item="Processor Parameter 0" />

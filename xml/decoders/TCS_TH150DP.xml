@@ -14,12 +14,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="3.1" lastUpdated="20031008"/>
-<!-- Version 1 - made from NMRA & Digitrax examples -->
-<!-- Version 2 - moved 141 to T1 file, add function map -->
-<!-- Version 3 - fix "rule 17" typos -->
-<!-- Version 3.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- Version 3.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
-
+  <!-- Version 1 - made from NMRA & Digitrax examples -->
+  <!-- Version 2 - moved 141 to T1 file, add function map -->
+  <!-- Version 3 - fix "rule 17" typos -->
+  <!-- Version 3.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 3.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS 150 series decoders" mfg="Train Control Systems">
       <model model="TH150DP" numOuts="5" numFns="6">
@@ -1953,7 +1952,6 @@
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-  
   <pane name="TCS">
     <column>
       <display item="Burst duration"/>

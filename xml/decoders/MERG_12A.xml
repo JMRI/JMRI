@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Len Royles len@len-royles.co.uk" version="2" lastUpdated="20050204"/>
-<!-- This is for the MERG Decod12A decoder with the new MERG(165) mfg. -->
+  <!-- This is for the MERG Decod12A decoder with the new MERG(165) mfg. -->
   <decoder>
     <family name="MERG HF PWM decoders" mfg="MERG" lowVersionID="133">
       <model model="MERG 12a" numOuts="5" numFns="3">

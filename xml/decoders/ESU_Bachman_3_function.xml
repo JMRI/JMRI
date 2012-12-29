@@ -16,7 +16,7 @@
   <version author="Peter Ulvestad" version="3" lastUpdated="20100401"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20090726"/>
   <version author="Ian Birchenough@talktalk.netJeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080131"/>
-<!--
+  <!--
      This decoder configuration file is based on ESU_LokPilotBasic 1.0.xml
      V 1.0, dated 20080131, by Jeff Schmaltz. Which also acknowledged
      "the contribution of many others" including Walter Thompson.
@@ -32,8 +32,8 @@
      Version History:
 
         1.0 - Initial release 28 Mar 2009-->
-<!-- Version 2 - Added CV17 - Extended address, corrected CV4 max value and CV5 default value (Peter Ulvestad) -->
-<!-- Version 3 - Fixed Extended address buttons not showing (Peter Ulvestad) -->
+  <!-- Version 2 - Added CV17 - Extended address, corrected CV4 max value and CV5 default value (Peter Ulvestad) -->
+  <!-- Version 3 - Fixed Extended address buttons not showing (Peter Ulvestad) -->
   <decoder>
     <family name="Bachmann" mfg="Electronic Solutions Ulm GmbH">
       <model model="EZ Command 3 function decoder (336-553)" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="4" formFactor="HO" connector="NMRAmedium">

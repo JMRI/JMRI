@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Mansvelder pman@mac.com" version="0.1" lastUpdated="20100825"/>
-<!--
+  <!--
      This decoder configuration file is based on ESU_LokPilotDCC.xml
      V 4, dated 20050619, by Walter Thompson. Which also acknowledged
      "the contribution of many others" including 'jake'.
@@ -122,11 +122,11 @@
           </enumChoice>
         </enumVal>
       </variable>
-	<variable label="Error Information" CV="30" readOnly="yes" item="Error Condition" tooltip="Decoder Error condition (read only) CV30">
+      <variable label="Error Information" CV="30" readOnly="yes" item="Error Condition" tooltip="Decoder Error condition (read only) CV30">
         <decVal/>
       </variable>
       <variable label="Light Forward" CV="33" mask="XXXXXXXV" default="1" item="Function F0F behavior" tooltip="CV33">
-          <enumVal>
+        <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
           </enumChoice>
@@ -136,7 +136,7 @@
         </enumVal>
       </variable>
       <variable label="Light Reverse" CV="34" mask="XXXXXXVX" default="1" item="Function F0R behavior" tooltip="CV34">
-          <enumVal>
+        <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
           </enumChoice>
@@ -146,7 +146,7 @@
         </enumVal>
       </variable>
       <variable label="Delay on/off" CV="35" mask="XVXXXXXX" default="1" item="Delay on/off" tooltip="CV35">
-          <enumVal>
+        <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
           </enumChoice>
@@ -154,9 +154,9 @@
             <choice>Active</choice>
           </enumChoice>
         </enumVal>
-      </variable>        
+      </variable>
       <variable label="Shunting" CV="36" mask="VXXXXXXX" default="1" item="Shunt on/off" tooltip="CV36">
-          <enumVal>
+        <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
           </enumChoice>
@@ -164,9 +164,9 @@
             <choice>Active</choice>
           </enumChoice>
         </enumVal>
-      </variable>        
+      </variable>
       <variable label="Function F3" CV="37" default="16" item="Function F3" tooltip="CV37">
-          <enumVal>
+        <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
           </enumChoice>
@@ -174,9 +174,9 @@
             <choice>Active</choice>
           </enumChoice>
         </enumVal>
-      </variable>        
+      </variable>
       <variable label="Function F4" CV="38" default="4" item="Function F4" tooltip="CV38">
-          <enumVal>
+        <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
           </enumChoice>
@@ -184,9 +184,9 @@
             <choice>Active</choice>
           </enumChoice>
         </enumVal>
-      </variable>        
+      </variable>
       <variable label="Function F5" CV="39" default="8" item="Shunt on/off" tooltip="CV39">
-          <enumVal>
+        <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
           </enumChoice>
@@ -194,9 +194,9 @@
             <choice>Active</choice>
           </enumChoice>
         </enumVal>
-      </variable>        
+      </variable>
       <variable label="Function F6" CV="40" default="16" item="Function F6" tooltip="CV40">
-          <enumVal>
+        <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
           </enumChoice>
@@ -204,8 +204,7 @@
             <choice>Active</choice>
           </enumChoice>
         </enumVal>
-      </variable>        
-
+      </variable>
       <variable label="Load control" CV="49" mask="XXXXXXXV" default="1" item="Dither option" tooltip="CV49">
         <enumVal>
           <enumChoice choice="Off">
@@ -305,7 +304,7 @@
             <choice>On</choice>
           </enumChoice>
         </enumVal>
-      </variable>      
+      </variable>
       <variable label="Fleischmann Function #3" CV="51" mask="XXXXXVXX" default="0" tooltip="CV51">
         <enumVal>
           <enumChoice choice="Off">
@@ -373,7 +372,4 @@
       <factReset label="HARD RESET all CVs reset to default values" CV="64" default="1"/>
     </resets>
   </decoder>
-
-
-
 </decoder-config>

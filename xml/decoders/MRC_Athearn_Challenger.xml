@@ -15,16 +15,16 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="1" lastUpdated="20071221"/>
   <version author="Marc Fournier forfoum@videotron.ca" version="2" lastUpdated="20090624"/>
-<!-- Ver 1  Made from the MRC_1645 file                             -->
-<!-- Ver 2  Cleanup, Move consist related items in to consist tab   -->
+  <!-- Ver 1  Made from the MRC_1645 file                             -->
+  <!-- Ver 2  Cleanup, Move consist related items in to consist tab   -->
   <decoder>
     <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Athearn Genesis Challenger" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsNmraF13="yes">
-<!-- note All 28 functions are NMRA compatible -->
+        <!-- note All 28 functions are NMRA compatible -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-<!-- Note Mfg. recognizes CV read back is not 100% correct -->
+    <!-- Note Mfg. recognizes CV read back is not 100% correct -->
     <variables>
       <variable label="Short address" CV="1" comment="Range 1-127" item="Short Address" default="3">
         <shortAddressVal/>

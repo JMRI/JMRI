@@ -18,19 +18,17 @@
   <version author="Michael Mosher" version="7" lastUpdated="20060921"/>
   <version author="Michael Mosher" version="6" lastUpdated="20060728"/>
   <version author="Michael Mosher" version="5" lastUpdated="20060206"/>
-<!-- Version 1 - made from TSC Tx -->
-<!-- Version 2 - correction to CV61 -->
-<!-- Version 3 - version range 30 to 35 -->
-<!-- Version 4 - added AMD1 & MP-15N & ver to 37 -->
-<!-- Version 5 - fix bug in MP-15N -->
-<!-- Version 6 - added VO-1000N -->
-<!-- Version 7 - added T1, M1, M1P-15, M1P-UK as they are full X series now -->
-<!-- also added factory reset feature  -->
-<!-- Version 8 - High ver to 40 -->
-<!-- Version 9 - Added CV 23&24, & auto mars to light fx & re-itemize for better layout -->
-<!-- Version 9.1 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
-
-
+  <!-- Version 1 - made from TSC Tx -->
+  <!-- Version 2 - correction to CV61 -->
+  <!-- Version 3 - version range 30 to 35 -->
+  <!-- Version 4 - added AMD1 & MP-15N & ver to 37 -->
+  <!-- Version 5 - fix bug in MP-15N -->
+  <!-- Version 6 - added VO-1000N -->
+  <!-- Version 7 - added T1, M1, M1P-15, M1P-UK as they are full X series now -->
+  <!-- also added factory reset feature  -->
+  <!-- Version 8 - High ver to 40 -->
+  <!-- Version 9 - Added CV 23&24, & auto mars to light fx & re-itemize for better layout -->
+  <!-- Version 9.1 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS X Series Decoders" mfg="Train Control Systems">
       <model model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
@@ -2143,7 +2141,6 @@
       <factReset label="Reset All CVs" CV="8" default="2"/>
     </resets>
   </decoder>
-
   <pane name="Momentum">
     <column>
       <label label="Accel Base Starting Point is 1">

@@ -16,17 +16,17 @@
   <version author="Walter Thompson wsthompson@earthlink.net" version="11" lastUpdated="20080414"/>
   <version author="Michael Mosher" version="10" lastUpdated="20070820"/>
   <version author="Michael Mosher" version="9" lastUpdated="20050817"/>
-<!-- version 4: updates to minOut usage, function mapping -->
-<!-- version 5: correct to CV 56 for some options -->
-<!-- version 6: removed erroneous CV19 definition -->
-<!--            corrected versionCVs -->
-<!-- version 7: renamed to get best tree layout -->
-<!-- version 8: added CV105&106 & fix Fn mapping bug -->
-<!-- Version 8.1: changed spelling of "behavior" (Jack Shall) -->
-<!-- version 9: (20050817 BobJ): numFns corrected from 8 to 10 -->
-<!-- version 10: fixed horn/bell func map default bug -->
-<!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
-<!--            added Reset option -->
+  <!-- version 4: updates to minOut usage, function mapping -->
+  <!-- version 5: correct to CV 56 for some options -->
+  <!-- version 6: removed erroneous CV19 definition -->
+  <!--            corrected versionCVs -->
+  <!-- version 7: renamed to get best tree layout -->
+  <!-- version 8: added CV105&106 & fix Fn mapping bug -->
+  <!-- Version 8.1: changed spelling of "behavior" (Jack Shall) -->
+  <!-- version 9: (20050817 BobJ): numFns corrected from 8 to 10 -->
+  <!-- version 10: fixed horn/bell func map default bug -->
+  <!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+  <!--            added Reset option -->
   <decoder>
     <family name="DSD diesel" mfg="Throttle-Up (SoundTraxx)">
       <model model="DSD diesel" numOuts="4" numFns="10">
@@ -42,8 +42,8 @@
         <output name="DynBrake"/>
         <output name="Dim"/>
         <output name="Mute"/>
-<!-- The four electical outputs are front headlight, back -->
-<!-- headlight, F5, F6 -->
+        <!-- The four electical outputs are front headlight, back -->
+        <!-- headlight, F5, F6 -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -1520,7 +1520,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Sound section -->
+      <!-- Sound section -->
       <variable label="Startup Mode" CV="56" mask="XXXXXXXV" item="Sound Option 1" default="1">
         <enumVal>
           <enumChoice choice="On at power up">
@@ -1554,7 +1554,7 @@
         </enumVal>
         <label>Engine RPM Interlock</label>
       </variable>
-<!-- Volumes section -->
+      <!-- Volumes section -->
       <variable label="Exhaust Auto Notching Control" CV="58" mask="XXXXVVVV" item="Sound Setting 1" default="7" comment="Number of speed steps per throttle notch.">
         <decVal max="15"/>
         <label>Exhaust Auto Notching Control</label>

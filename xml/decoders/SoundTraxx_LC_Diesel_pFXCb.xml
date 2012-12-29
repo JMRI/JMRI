@@ -15,19 +15,19 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="11" lastUpdated="20050817"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="12" lastUpdated="20080414"/>
-<!-- version 9: moved LL100LC here from LC_Diesel_pnp file -->
-<!-- version 10: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
-<!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
-<!-- version 11 (20050817 BobJ): numFns corrected from 8 to 10 -->
-<!-- Version 12 author Walter Thompson wsthompson@earthlink.net 20080412 -->
-<!--            added Reset option -->
+  <!-- version 9: moved LL100LC here from LC_Diesel_pnp file -->
+  <!-- version 10: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
+  <!-- Version 10.1: changed spelling of "behavior" (Jack Shall) -->
+  <!-- version 11 (20050817 BobJ): numFns corrected from 8 to 10 -->
+  <!-- Version 12 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+  <!--            added Reset option -->
   <decoder>
     <family name="LC Diesel PNP Cab Unit decoders" mfg="Throttle-Up (SoundTraxx)">
-<!--note: this file does not support the FX2 output for the LL100LC-->
+      <!--note: this file does not support the FX2 output for the LL100LC-->
       <model model="LL100LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
-<!-- note: The LL100LC has a headlight but no backup light -->
-<!-- note: The LL100LC has an FX2 output but no FX1 output -->
-<!-- but the headlight can be set to respond to FX1 mapping -->
+        <!-- note: The LL100LC has a headlight but no backup light -->
+        <!-- note: The LL100LC has an FX2 output but no FX1 output -->
+        <!-- but the headlight can be set to respond to FX1 mapping -->
         <versionCV lowVersionID="36"/>
         <output name="Horn"/>
         <output name="Bell"/>
@@ -1321,7 +1321,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Sound section -->
+      <!-- Sound section -->
       <variable label="Startup Mode" CV="113" mask="XXXXXXXV" item="Sound Option 5" default="0">
         <enumVal>
           <enumChoice choice="On at power up">
@@ -1369,7 +1369,7 @@
         </enumVal>
         <label>Engine RPM Interlock</label>
       </variable>
-<!-- Volumes section -->
+      <!-- Volumes section -->
       <variable label="Bell Rate" CV="114" mask="XXXXVVVV" item="Sound Setting 1" default="4" comment="low values = fast, high values = slow">
         <decVal max="15"/>
         <label>Bell Rate</label>

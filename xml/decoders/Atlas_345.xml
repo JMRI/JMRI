@@ -15,10 +15,10 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="2" lastUpdated="20091028"/>
   <version author="Joe Salemi" version="1" lastUpdated="20041105"/>
-<!-- version 1 - made from Atlas_342 Version 1 and
+  <!-- version 1 - made from Atlas_342 Version 1 and
 			Atlas_DualMode Version 5 -->
-<!-- Decoder used in Atlas Master H15-44/H16-44 engines -->
-<!-- version 2 - Added Factory reset -->
+  <!-- Decoder used in Atlas Master H15-44/H16-44 engines -->
+  <!-- version 2 - Added Factory reset -->
   <decoder>
     <family name="Four Function #345" mfg="Atlas" lowVersionID="46" highVersionID="46">
       <model model="Four Function #345 H15-44/H16-44" numOuts="4" numFns="4"/>
@@ -404,7 +404,7 @@
         <decVal/>
         <label>Decoder Software Version</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>

@@ -16,15 +16,15 @@
   <version author="Peter Osborne" version="1" lastUpdated="20090101"/>
   <version author="Bill Chown" version="2" lastUpdated="20090111"/>
   <version author="Peter Ulvestad" version="3" lastUpdated="20091011"/>
-<!-- Ver. 1 - made from the MRC_Athearn Big Boy or Challenger file (Peter Osborne) prosborne@sbcglobal.net-->
-<!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
-<!-- works for both loco types, despite apparent differences in the documentation -->
-<!-- Ver. 2 - reset default values, small errors corrected -->
-<!-- Ver. 3 - Moved Consist functions to Consist pane, Cleaned up sound level pane -->
+  <!-- Ver. 1 - made from the MRC_Athearn Big Boy or Challenger file (Peter Osborne) prosborne@sbcglobal.net-->
+  <!-- heavily rebuilt for N Big Boy and Challenger Bill Chown orrrbrit2004@yahoo.com -->
+  <!-- works for both loco types, despite apparent differences in the documentation -->
+  <!-- Ver. 2 - reset default values, small errors corrected -->
+  <!-- Ver. 3 - Moved Consist functions to Consist pane, Cleaned up sound level pane -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="G Gauge Steam Decoder 1819" maxTotalCurrent="5A" extFnsMRC="yes">
-<!-- note All 28 functions are NMRA compatible -->
+        <!-- note All 28 functions are NMRA compatible -->
         <size length="70.5" width="34" height="11.4" units="mm"/>
       </model>
     </family>

@@ -15,10 +15,10 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="sulzerbeast@gmail.com" version="2" lastUpdated="20070323"/>
   <version author="sulzerbeast@gmail.com" version="1" lastUpdated="20070321"/>
-<!-- version 1 -->
-<!-- created from LF100XF.xml -->
-<!-- version 2 -->
-<!-- tidied up directional headlights field, moved to Lenz pane -->
+  <!-- version 1 -->
+  <!-- created from LF100XF.xml -->
+  <!-- version 2 -->
+  <!-- tidied up directional headlights field, moved to Lenz pane -->
   <decoder>
     <family name="Function Decoder" mfg="Lenz" lowVersionID="10">
       <model model="LF101XF" numOuts="6" numFns="12">
@@ -2087,7 +2087,7 @@
           <label label="Flickering type 3 (excitedly)  ">
             <label>Flickering type 3 (excitedly)  </label>
           </label>
-<!-- label label="Dimming enabled                " -->
+          <!-- label label="Dimming enabled                " -->
           <label label=" ">
             <label> </label>
           </label>
@@ -2125,7 +2125,7 @@
           <label label="   4">
             <label>   4</label>
           </label>
-<!-- label label="   5" -->
+          <!-- label label="   5" -->
           <label label=" ">
             <label> </label>
           </label>
@@ -2157,7 +2157,7 @@
           <label label="   2">
             <label>   2</label>
           </label>
-<!-- label label="   3" -->
+          <!-- label label="   3" -->
           <label label=" ">
             <label> </label>
           </label>
@@ -2195,7 +2195,7 @@
           <label label="Flickering type 1 (smooth)">
             <label>Flickering type 1 (smooth)</label>
           </label>
-<!-- label label="Dimming enabled           " -->
+          <!-- label label="Dimming enabled           " -->
           <label label=" ">
             <label> </label>
           </label>

@@ -56,7 +56,7 @@
         <decVal/>
         <label>Manufacturer ID - Reset</label>
       </variable>
-<!-- Deleted all CV 9 thru 16 references-->
+      <!-- Deleted all CV 9 thru 16 references-->
       <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
         <longAddressVal/>
         <label>Long Address</label>
@@ -972,7 +972,7 @@
         <label>Second Long Address #2</label>
         <comment>4 digit address (Range 0001-9999)</comment>
       </variable>
-<!-- Function settings second address -->
+      <!-- Function settings second address -->
       <variable label="FL(f) output 1" CV="69" default="1" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1655,7 +1655,7 @@
         </enumVal>
         <label>F7 output 8</label>
       </variable>
-<!-- Function settings for matrix with MX-9 -->
+      <!-- Function settings for matrix with MX-9 -->
       <variable label="FL(f) setting 1" CV="78" default="1" mask="XXXXXXXV" minOut="1">
         <enumVal>
           <enumChoice choice="No">

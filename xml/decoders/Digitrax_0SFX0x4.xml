@@ -16,9 +16,9 @@
   <version author="Michael Mosher" version="1" lastUpdated="20070824"/>
   <version author="Michael Mosher" version="2" lastUpdated="20080204"/>
   <version author="Michael Mosher" version="3" lastUpdated="20080222"/>
-<!-- V1: Created from version 3 of the Digitrax_0SFX file -->
-<!-- V2: Update versions, bug fix, add SFX0416 -->
-<!-- V3: Add CV 133 & 134 -->
+  <!-- V1: Created from version 3 of the Digitrax_0SFX file -->
+  <!-- V2: Update versions, bug fix, add SFX0416 -->
+  <!-- V3: Add CV 133 & 134 -->
   <decoder>
     <family name="SFX Sound Only Decoders" mfg="Digitrax">
       <model model="SFX004" numOuts="0" numFns="0" lowVersionID="16" highVersionID="16" formFactor="HO">
@@ -43,9 +43,7 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
     <variables>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
-
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -54,12 +52,8 @@
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
-      
-
       <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" minOut="1" item="Function F0F effect generated">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Forward light F0F effect generated</label>
@@ -139,12 +133,9 @@
         <label>Ditch light hold-over time</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
       </variable>
-
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml" />
-
-    <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
-
-    <!-- Sound options -->
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
+      <!-- Sound options -->
       <variable label="Sound Time Out" CV="11" tooltip="Sound stays on after loco is de-selected" item="Sound Option 4" default="6">
         <enumVal>
           <enumChoice choice="Yes" value="0">

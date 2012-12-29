@@ -14,10 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Ian Ware" version="1" lastUpdated="20070323"/>
-<!-- Version 1 - created from Lenz_silver.xml "20070322"-->
-<!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
-<!-- and "Low Gear Switching Drive" -->
-<!-- need to update version ID" -->
+  <!-- Version 1 - created from Lenz_silver.xml "20070322"-->
+  <!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
+  <!-- and "Low Gear Switching Drive" -->
+  <!-- need to update version ID" -->
   <decoder>
     <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="0" lowVersionID="0" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
       <model model="Silver Mini" numOuts="2" numFns="8" lowVersionID="0" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N">
@@ -27,11 +27,9 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-
-      <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>      
-      <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>      
-      <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>      
-
+      <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>
       <variable label="Decoder Version No: " CV="7" readOnly="yes" item="Decoder Version" default="65">
         <decVal/>
         <label>Decoder Version No: </label>
@@ -50,9 +48,7 @@
         <label>Back EMF Repetition Rate (0-63)</label>
         <comment>Range 0-63</comment>
       </variable>
-
-      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>      
-
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable label="Locomotive Direction in Forward" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
         <enumVal>
           <enumChoice choice="Normal">
@@ -130,9 +126,7 @@
         </enumVal>
         <label>Motor short-circuit</label>
       </variable>
-
-      <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>      
-
+      <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>
       <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
         <enumVal>
           <enumChoice choice="0 ">

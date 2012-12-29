@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
 <!--$Id$ -->
 <!--                                                                        -->
@@ -13,165 +12,99 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"
- showEmptyPanes = "no">
-		<version author="Alain Carasso Guy Coquet"
-			version="1.0" lastUpdated="20110320" />
-
-<decoder>
-	<family name = "ESU Roco 10745" mfg = "Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255">
-		<model model = "Roco 10745 v56"
-			maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A"
-			numOuts="3" numFns="5"
-			formFactor="HO" connector="NMRAmedium" >
-			<output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
-			<output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
-			<output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
-			<size length="25.5" width="15.5" height="4.5" units="mm" />
-		</model>
-	</family>
-
-	<programming direct="yes" paged="yes"
-	                     register="yes" ops="yes"></programming>
-
-	<variables>
-
-		<variable label="Short Address" CV="1" default="3"
-			item="Short Address"
-			tooltip="Only if CV29, Bit5=0 CV1">
-			<shortAddressVal/>
-            	</variable>
-
-		<variable label="Starting Voltage" CV="2" default="3"
-			item="Vstart"
-			tooltip="Determines the starting speed, range 1-75. CV2">
-			<decVal min="1" max="75"/>
-		</variable>
-		
-		<variable label="Acceleration" CV="3" default="8"
-			item="Accel"
-			tooltip="This value multiplied by 0.5 gives the time from stop to maximum speed, range 0-64. CV3" >
-			<decVal min="0" max="64"/>
-		</variable>
-
-		<variable label="Deceleration" CV="4" default="6"
-			item="Decel"
-			tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 0-64. CV4" >
-			<decVal min="0" max="64"/>
-		</variable>
-		
-		<variable label="Maximum Speed" CV="5" default="64"
-			item="Vhigh"
-			tooltip="Maximum speed of locomotive, range 0-64. CV5">
-			<decVal min="0" max="64"/>
-		</variable>
-
-		<variable label="Medium speed" CV="6" default="22"
-			item="Vmid"
-			tooltip="Speed of locomotive at medium speed step (0-64). CV6">
-			<decVal min="0" max="64"/>
-		</variable>
-
-		<variable label="Software Version Number" CV="7" default="56"
-			item="Decoder Version"
-			tooltip="The decoder version number (read only) CV7" >
-			<decVal/>
-		</variable>
-
-		<variable label="Manufacturer ID" CV="8" readOnly="yes" default="151"
-			item="Manufacturer"
-			tooltip="The manufacturer's ID number (read only) CV8">
-			<decVal/>
-		</variable>
-
-		<variable label="Long Address" CV="17" item="Extended Address"
-		        comment="4 digit address (Range 0001-9999)">
-			<longAddressVal/>
-		</variable>
-
-		<variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0"
-			item="Locomotive Direction"
-			tooltip="Sets the relative direction of the loco when told to move forward CV29" >
-			<enumVal>
-				<enumChoice choice="Normal direction of travel"/>
-				<enumChoice choice="Reverse direction of travel"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="1"
-			item="Speed Step Mode"
-			tooltip="Sets the speed step mode. 128 speed steps are recognized automatically CV29" >
-			<enumVal>
-				<enumChoice choice="14"/>
-				<enumChoice choice="28/128"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1"
-			item="Analog (DC) Operation"
-			tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion) CV29" >
-			<enumVal>
-				<enumChoice choice="Digital Operation Only"/>
-				<enumChoice choice="Digital + Analog Operation"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0"
-			item="Address Format"
-			tooltip="Determines whether loco will use short or long address CV29" >
-			<enumVal>
-				<enumChoice choice="Short Address (CV1)"/>
-				<enumChoice choice="Long Address (CV17+18)"/>
-			</enumVal>
-		</variable>
-
-		<variable label="BEMF control" CV="49" mask="XXXXXXXV" default="1"
-			item="EMF Static Config"
-			tooltip="CV49" >
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="Active"/>
-			</enumVal>
-		</variable>
- 
-		<variable label = "Analog mode" CV = "50" default = "3"
-                item = "Analog Mode"
-                tooltip = "AC DC Off=0, AC On =1, DC On =2, AC DC On =3 CV 50">
-				<decVal min="0" max="3"/>
-		</variable>
-
-		<variable label="Front light" CV="113" default="15"
-			item = "Global lighting option 1"
-			tooltip="Defines the brightness of the function outputs, range 0-15, CV113">
-			<decVal min="0" max="15"/>
-		</variable>
-
-		<variable label="Rear light" CV="114" default="15"
-			item = "Global lighting option 2"
-			tooltip="Defines the brightness of the function outputs, range 0-15, CV114">
-			<decVal min="0" max="15"/>
-		</variable>
-	</variables>
-
-        <resets>
-		<factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
-        </resets>
-
-</decoder>
-
-<pane name = "Analog Mode settings">
-	<column>
-		<row>
-			 <label label = "Additional settings when in Analog Mode"/>
-		</row>
-	<separator/>
-		<row>
-			<display item="Analog mode" label="AC DC Off =0, AC On =1, DC On =2, AC DC On =3 "
-						tooltip = "AC DC Off =0, AC On =1, DC On =2, AC DC On =3 CV 50"/>
-		</row>
-	</column>
-</pane>
-
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+  <version author="Alain Carasso Guy Coquet" version="1.0" lastUpdated="20110320"/>
+  <decoder>
+    <family name="ESU Roco 10745" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255">
+      <model model="Roco 10745 v56" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium">
+        <output name="1" label="Front light" maxcurrent="180 mA" connection="wire"/>
+        <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire"/>
+        <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire"/>
+        <size length="25.5" width="15.5" height="4.5" units="mm"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <variable label="Short Address" CV="1" default="3" item="Short Address" tooltip="Only if CV29, Bit5=0 CV1">
+        <shortAddressVal/>
+      </variable>
+      <variable label="Starting Voltage" CV="2" default="3" item="Vstart" tooltip="Determines the starting speed, range 1-75. CV2">
+        <decVal min="1" max="75"/>
+      </variable>
+      <variable label="Acceleration" CV="3" default="8" item="Accel" tooltip="This value multiplied by 0.5 gives the time from stop to maximum speed, range 0-64. CV3">
+        <decVal min="0" max="64"/>
+      </variable>
+      <variable label="Deceleration" CV="4" default="6" item="Decel" tooltip="This value multiplied by 0.5 gives the time from maximum speed to stop, range 0-64. CV4">
+        <decVal min="0" max="64"/>
+      </variable>
+      <variable label="Maximum Speed" CV="5" default="64" item="Vhigh" tooltip="Maximum speed of locomotive, range 0-64. CV5">
+        <decVal min="0" max="64"/>
+      </variable>
+      <variable label="Medium speed" CV="6" default="22" item="Vmid" tooltip="Speed of locomotive at medium speed step (0-64). CV6">
+        <decVal min="0" max="64"/>
+      </variable>
+      <variable label="Software Version Number" CV="7" default="56" item="Decoder Version" tooltip="The decoder version number (read only) CV7">
+        <decVal/>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer" tooltip="The manufacturer's ID number (read only) CV8">
+        <decVal/>
+      </variable>
+      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
+        <longAddressVal/>
+      </variable>
+      <variable label="Direction of Travel" CV="29" mask="XXXXXXXV" default="0" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward CV29">
+        <enumVal>
+          <enumChoice choice="Normal direction of travel"/>
+          <enumChoice choice="Reverse direction of travel"/>
+        </enumVal>
+      </variable>
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" default="1" item="Speed Step Mode" tooltip="Sets the speed step mode. 128 speed steps are recognized automatically CV29">
+        <enumVal>
+          <enumChoice choice="14"/>
+          <enumChoice choice="28/128"/>
+        </enumVal>
+      </variable>
+      <variable label="Analogue mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion) CV29">
+        <enumVal>
+          <enumChoice choice="Digital Operation Only"/>
+          <enumChoice choice="Digital + Analog Operation"/>
+        </enumVal>
+      </variable>
+      <variable label="Selection of address" CV="29" mask="XXVXXXXX" default="0" item="Address Format" tooltip="Determines whether loco will use short or long address CV29">
+        <enumVal>
+          <enumChoice choice="Short Address (CV1)"/>
+          <enumChoice choice="Long Address (CV17+18)"/>
+        </enumVal>
+      </variable>
+      <variable label="BEMF control" CV="49" mask="XXXXXXXV" default="1" item="EMF Static Config" tooltip="CV49">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="Active"/>
+        </enumVal>
+      </variable>
+      <variable label="Analog mode" CV="50" default="3" item="Analog Mode" tooltip="AC DC Off=0, AC On =1, DC On =2, AC DC On =3 CV 50">
+        <decVal min="0" max="3"/>
+      </variable>
+      <variable label="Front light" CV="113" default="15" item="Global lighting option 1" tooltip="Defines the brightness of the function outputs, range 0-15, CV113">
+        <decVal min="0" max="15"/>
+      </variable>
+      <variable label="Rear light" CV="114" default="15" item="Global lighting option 2" tooltip="Defines the brightness of the function outputs, range 0-15, CV114">
+        <decVal min="0" max="15"/>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
+    </resets>
+  </decoder>
+  <pane name="Analog Mode settings">
+    <column>
+      <row>
+        <label label="Additional settings when in Analog Mode"/>
+      </row>
+      <separator/>
+      <row>
+        <display item="Analog mode" label="AC DC Off =0, AC On =1, DC On =2, AC DC On =3 " tooltip="AC DC Off =0, AC On =1, DC On =2, AC DC On =3 CV 50"/>
+      </row>
+    </column>
+  </pane>
 </decoder-config>
- 	  	 

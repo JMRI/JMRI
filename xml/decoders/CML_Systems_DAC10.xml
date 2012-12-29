@@ -16,9 +16,9 @@
   <version author="Martin Gostling ingleborough@yahoo.com" version="3" lastUpdated="20080308"/>
   <version author="Martin Gostling ingleborough@yahoo.com" version="2" lastUpdated="20070430"/>
   <version author="Martin Gostling ingleborough@yahoo.com" version="1" lastUpdated="20070314"/>
-<!-- V3 Added family type="stationary" -->
-<!-- V2 Improved descriptions of routing options -->
-<!-- Initially created from version 14 of the digitrax_yDS54 file -->
+  <!-- V3 Added family type="stationary" -->
+  <!-- V2 Improved descriptions of routing options -->
+  <!-- Initially created from version 14 of the digitrax_yDS54 file -->
   <decoder>
     <family name="DAC10" mfg="CML Systems" type="stationary" comment="DAC10 is a stationary decoder, but it can be programmed in the usual way">
       <model model="DAC10" lowVersionID="1">

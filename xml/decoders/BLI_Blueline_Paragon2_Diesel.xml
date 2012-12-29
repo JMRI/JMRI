@@ -15,8 +15,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="1" lastUpdated="20090407"/>
   <version author="Steve Williams" version="2" lastUpdated="20100225"/>
-<!-- Version 1 New file from 1.03 manual and BLI_Blueline_diesel v5 -->
-<!-- for JMRI 2.5.2 use, the max functions is set to 27 instead of 28 -->
+  <!-- Version 1 New file from 1.03 manual and BLI_Blueline_diesel v5 -->
+  <!-- for JMRI 2.5.2 use, the max functions is set to 27 instead of 28 -->
   <decoder>
     <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
       <model model="Diesel" numOuts="3" numFns="28" connector="9pin">
@@ -348,9 +348,9 @@
         </enumVal>
         <label>Address Format</label>
       </variable>
-<!-- This decoder doesn't do the bit-wise NMRA method of -->
-<!-- assigning functions to outputs. Instead, it has -->
-<!-- a much more civilized system of one CV per function -->
+      <!-- This decoder doesn't do the bit-wise NMRA method of -->
+      <!-- assigning functions to outputs. Instead, it has -->
+      <!-- a much more civilized system of one CV per function -->
       <variable label="F0 Output Function Definition" CV="33" default="1" minFn="1" item="Function F0F effect generated">
         <enumVal>
           <enumChoice choice="Nothing" value="0">

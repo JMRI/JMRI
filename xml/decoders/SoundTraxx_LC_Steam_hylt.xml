@@ -15,16 +15,16 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="10" lastUpdated="20050817"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="11" lastUpdated="20080414"/>
-<!-- version 4: updates to minOut usage, function mapping -->
-<!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
-<!-- version 6: fixed minor typo -->
-<!-- Version 7: Add a couple of models -->
-<!-- Version 8: Corrected CV7 values -->
-<!-- version 9: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
-<!-- Version 9.1: changed spelling of "behavior" (Jack Shall) -->
-<!-- version 10: (20050817 BobJ): numFns corrected from 8 to 10 -->
-<!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
-<!--            added Reset option -->
+  <!-- version 4: updates to minOut usage, function mapping -->
+  <!-- version 5: removed erroneous CV19 definition, corrected VersionID -->
+  <!-- version 6: fixed minor typo -->
+  <!-- Version 7: Add a couple of models -->
+  <!-- Version 8: Corrected CV7 values -->
+  <!-- version 9: added FX1 & FX2 to fun map & CV105&106 set CV9 default to 180   -->
+  <!-- Version 9.1: changed spelling of "behavior" (Jack Shall) -->
+  <!-- version 10: (20050817 BobJ): numFns corrected from 8 to 10 -->
+  <!-- Version 11 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+  <!--            added Reset option -->
   <decoder>
     <family name="LC Steam hyperlight decoders" mfg="Throttle-Up (SoundTraxx)">
       <model model="090LC Steam" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
@@ -35,8 +35,8 @@
         <output name="4" label="FX2"/>
         <output name="Dim"/>
         <output name="Mute"/>
-<!-- The two electical outputs are front headlight, back -->
-<!-- headlight-->
+        <!-- The two electical outputs are front headlight, back -->
+        <!-- headlight-->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -1078,7 +1078,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Sound section -->
+      <!-- Sound section -->
       <variable label="AirPump" CV="112" mask="XXXXXXXV" item="Sound Option 1" default="1">
         <enumVal>
           <enumChoice choice="Off">
@@ -1137,7 +1137,7 @@
         </enumVal>
         <label>Whistle Select</label>
       </variable>
-<!-- Volumes section -->
+      <!-- Volumes section -->
       <variable label="Bell Rate" CV="114" mask="XXXXVVVV" item="Sound Setting 1" default="4" comment="low values = fast, high values = slow">
         <decVal max="15"/>
         <label>Bell Rate</label>

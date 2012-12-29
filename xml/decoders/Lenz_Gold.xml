@@ -16,14 +16,14 @@
   <version author="Bob Jacobsen" version="5" lastUpdated="20121227"/>
   <version author="Paul Bender" version="4" lastUpdated="20050814"/>
   <version author="Mark Schutzer mark.schutzer@sbcglobal.net" version="3" lastUpdated="20050814"/>
-<!-- Version 1 - created  "20050228"-->
-<!-- Version 2 - added SUSI pane, fixed CV127 default value-->
-<!-- Version 3 - added versionID range of 60 to 61 for Gold Mini support
+  <!-- Version 1 - created  "20050228"-->
+  <!-- Version 2 - added SUSI pane, fixed CV127 default value-->
+  <!-- Version 3 - added versionID range of 60 to 61 for Gold Mini support
 						   - and removed SUSI varible support for Gold Mini-->
-<!-- Version 4 - added factory reset menu items (Paul Bender) -->
-<!-- Version 5 - XInclude (Bob Jacobsen) -->
-<!-- These are the Gold decoders, with "6th gen BEMF", "Precision Braking Control" -->
-<!-- and "Low Gear Switching Drive" -->
+  <!-- Version 4 - added factory reset menu items (Paul Bender) -->
+  <!-- Version 5 - XInclude (Bob Jacobsen) -->
+  <!-- These are the Gold decoders, with "6th gen BEMF", "Precision Braking Control" -->
+  <!-- and "Low Gear Switching Drive" -->
   <decoder>
     <family name="Lenz Gold with 6th gen BEMF" mfg="Lenz" highVersionID="61" lowVersionID="60" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
       <model model="Gold Mini" numOuts="2" numFns="8" lowVersionID="60" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="N">
@@ -39,11 +39,9 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-
-      <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>      
-      <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>      
-      <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>      
-       
+      <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>
       <variable label="Decoder Version No: " CV="7" readOnly="yes" item="Decoder Version" default="61">
         <decVal/>
         <label>Decoder Version No: </label>
@@ -62,9 +60,7 @@
         <label>Back EMF Repetition Rate (0-63)</label>
         <comment>Range 0-63</comment>
       </variable>
-
-      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>      
-
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable label="Ch. 1 for Address" CV="28" mask="XXXXXXXV" item="RailCom Address" default="1">
         <enumVal>
           <enumChoice choice="Disabled">
@@ -186,9 +182,7 @@
         </enumVal>
         <label>Motor short-circuit</label>
       </variable>
-
-      <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>      
-
+      <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>
       <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
         <enumVal>
           <enumChoice choice="0 ">

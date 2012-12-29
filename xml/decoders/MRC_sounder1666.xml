@@ -15,11 +15,11 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Christopher Zurek" version="2" lastUpdated="20081218"/>
   <version author="Pete Cesaro" version="1" lastUpdated="20080307"/>
-<!-- made from the MRC_1645 file by Bill Chown -->
-<!-- added many decoder-specific tool tips -->
-<!-- added CV identities to all tool tips -->
-<!-- Added local panel for Lights since I needed to add some text description for its use -->
-<!-- Version 2 - Changed Horn and Bell choices to drop downs (Christopher Zurek) -->
+  <!-- made from the MRC_1645 file by Bill Chown -->
+  <!-- added many decoder-specific tool tips -->
+  <!-- added CV identities to all tool tips -->
+  <!-- Added local panel for Lights since I needed to add some text description for its use -->
+  <!-- Version 2 - Changed Horn and Bell choices to drop downs (Christopher Zurek) -->
   <decoder>
     <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Diesel Sound Decoder 1666 Alco244SD60-70" numOuts="2" numFns="12">

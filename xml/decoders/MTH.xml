@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20100204"/>
-<!-- Version 1 - new file -->
+  <!-- Version 1 - new file -->
   <decoder>
     <family name="MTH HO PS3" mfg="Mikes Train House">
       <model model="MTH HO PS3"/>

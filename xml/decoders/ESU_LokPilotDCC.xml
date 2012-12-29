@@ -14,10 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Walter Thompson wsthompson#earthlink.net" version="4" lastUpdated="20050619"/>
-<!--Based on the contribution of many others -->
-<!--version 2 - add consist direction - jake -->
-<!--version 3 - fix mfg name - jake -->
-<!--version 4 - changed numerious variable "items" so that Comprehensive programmer will work
+  <!--Based on the contribution of many others -->
+  <!--version 2 - add consist direction - jake -->
+  <!--version 3 - fix mfg name - jake -->
+  <!--version 4 - changed numerious variable "items" so that Comprehensive programmer will work
          in place of MFG specific programmer, also added CV55, numFns to 8. wsthompson,@earthlink.net -->
   <decoder>
     <family name="ESU LokPilot Silent BEMF decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21">
@@ -60,10 +60,10 @@
         <label>Vmid</label>
         <comment>Range 1-63</comment>
       </variable>
-<!--readOnly="yes" -->
+      <!--readOnly="yes" -->
       <variable label="Decoder Version" CV="7" item="Decoder Version">
         <decVal/>
-<!--readOnly="yes" -->
+        <!--readOnly="yes" -->
         <label>Decoder Version</label>
       </variable>
       <variable label="Manufacturer ID" CV="8" item="Manufacturer">

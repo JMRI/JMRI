@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20100106"/>
-<!-- version 1 - new file -->
+  <!-- version 1 - new file -->
   <decoder>
     <family name="QSI Rolling Stock" mfg="QSIndustries" lowVersionID="7">
       <model model="Stock car chicken" numFns="14" numOuts="14" productID="802">
@@ -1516,7 +1516,7 @@
         <label>CV Numeric Readout</label>
         <comment>CV62</comment>
       </variable>
-<!-- need to make this work for indexed CVs as well - TBD -->
+      <!-- need to make this work for indexed CVs as well - TBD -->
       <variable label="Verbal CV Inquiry" CV="64" opsOnly="yes" writeOnly="yes" comment="CV64" item="Verbal CV Inquiry">
         <decVal/>
         <label>Verbal CV Inquiry</label>
@@ -1524,8 +1524,8 @@
       </variable>
       <constant item="PICV" default="49" comment="CV used for Primary Index"/>
       <constant item="SICV" default="50" comment="CV used for Secondary Index"/>
-<!-- QSI CV.PI.SI formatted items -->
-<!-- Sound control -->
+      <!-- QSI CV.PI.SI formatted items -->
+      <!-- Sound control -->
       <ivariable label="System Volume" CVname="51.0" CV="51" PI="0" default="50" comment="QSI" item="CV51.0">
         <indexedVal max="127"/>
       </ivariable>
@@ -1825,8 +1825,8 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-<!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
-<!-- CV 56.254 About Quantum Decoder -->
+      <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
+      <!-- CV 56.254 About Quantum Decoder -->
       <ivariable label="Hardware Profile High Byte" CVname="56.254.2" CV="56" PI="254" SI="2" readOnly="yes" item="CV56.254.2">
         <indexedVal/>
       </ivariable>
@@ -1839,18 +1839,16 @@
       <ivariable label="Sound Set" CVname="56.254.14" CV="56" PI="254" SI="14" readOnly="yes" item="CV56.254.14">
         <indexedVal/>
       </ivariable>
-
-<!-- CV 56.254 About Quantum Decoder -->
-<!-- QSI Product ID -->
+      <!-- CV 56.254 About Quantum Decoder -->
+      <!-- QSI Product ID -->
       <xi:include href="http://jmri.org/xml/decoders/qsi/ProductNumber.xml"/>
-
       <ivariable label="Hardware Profile" CVname="56.254.3" CV="56" PI="254" SI="3" readOnly="yes" item="Hardware Profile">
         <indexedPairVal highCVname="56.254.2" factor="256"/>
       </ivariable>
       <ivariable label="Sound Set Number" CVname="56.254.14" CV="56" PI="254" SI="14" include="1008,1014,1015,1018,1020,1032,1033,1034,1050" readOnly="yes">
         <indexedPairVal highCVname="56.254.15" factor="256"/>
       </ivariable>
-<!-- CV 56.255 Play Build Information (for ops mode) -->
+      <!-- CV 56.255 Play Build Information (for ops mode) -->
       <ivariable label="Play Product Identifier" CVname="56.255_0" CV="56" PI="255" opsOnly="yes" writeOnly="yes" infoOnly="yes" item="CV56.255_0" default="0">
         <indexedVal/>
       </ivariable>

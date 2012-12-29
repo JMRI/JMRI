@@ -14,13 +14,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="wsthompson@earthlink.net" version="6" lastUpdated="20050622"/>
-<!-- Based on the contribution of many others -->
-<!-- version 2 - add consist direction - jake -->
-<!-- version 3 - Change LowVersionID to "22" to match my decoder - Ian -->
-<!-- version 4 - fix mfg name - jake -->
-<!-- version 5 - Changed max values of CV2 thru 6 to 63, this matches the 
+  <!-- Based on the contribution of many others -->
+  <!-- version 2 - add consist direction - jake -->
+  <!-- version 3 - Change LowVersionID to "22" to match my decoder - Ian -->
+  <!-- version 4 - fix mfg name - jake -->
+  <!-- version 5 - Changed max values of CV2 thru 6 to 63, this matches the 
 	            Factory specs for max,also ESU pane with Factory Reset - walt -->
-<!-- version 6 - Massive changes to allow use of Comprehensive rather than
+  <!-- version 6 - Massive changes to allow use of Comprehensive rather than
                customer specific programmer, added CV49 bit 1 "Marklin brake track activated" 
              Deleted  factory reset,not provided wsthompson@earthlink.net-->
   <decoder>
@@ -1786,7 +1786,7 @@
         <decVal min="0" max="2"/>
         <label>Sound Level</label>
       </variable>
-<!-- CV 64 left out (Adressing in Motorola-format)-->
+      <!-- CV 64 left out (Adressing in Motorola-format)-->
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>

@@ -15,7 +15,7 @@
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="John Crellin" version="1" lastUpdated="20120802"/>
-<!--   version 1 Based on several MRC decoder XML files-->
+  <!--   version 1 Based on several MRC decoder XML files-->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2">
       <model model="HO Guage DC DCC Diesel Sound Decoder 1905" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -390,7 +390,7 @@
       </variable>
       <variable label="Mars Flashing on off (F28)" item="Mars Flashing on off (F28)" CV="121" default="1">
         <enumVal>
-          <enumChoice choice="Disabled" value ="0">
+          <enumChoice choice="Disabled" value="0">
             <choice>Disabled</choice>
           </enumChoice>
           <enumChoice choice="Enabled" value="1">

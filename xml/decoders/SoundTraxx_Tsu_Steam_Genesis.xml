@@ -15,16 +15,13 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20100605"/>
   <version author="Michael Mosher" version="2" lastUpdated="20100828"/>
-
-<!-- This file contains the Tsunami definitions for Genesis OEM steam locomotives	-->
-
-<!-- version 1	Based on the "SoundTraxx_Tsu_Steam.xml" Ver 5 file.						-->
-<!-- version 2	Add Rule 17 bit to CV51 & 52 -->
-
-<!-- Decoder Model information follows -->
+  <!-- This file contains the Tsunami definitions for Genesis OEM steam locomotives	-->
+  <!-- version 1	Based on the "SoundTraxx_Tsu_Steam.xml" Ver 5 file.						-->
+  <!-- version 2	Add Rule 17 bit to CV51 & 52 -->
+  <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Steam Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami steam decoders">
-      <model model="Bigboy 4-8-8-4" numOuts="4" numFns="14" connector="other" productID="BB" >
+      <model model="Bigboy 4-8-8-4" numOuts="4" numFns="14" connector="other" productID="BB">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -40,7 +37,7 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="MT-4 4-8-2" numOuts="4" numFns="14" connector="other" productID="MT4" >
+      <model model="MT-4 4-8-2" numOuts="4" numFns="14" connector="other" productID="MT4">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -56,7 +53,7 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="N Challenger" numOuts="4" numFns="14" connector="other" productID="N_Chal" >
+      <model model="N Challenger" numOuts="4" numFns="14" connector="other" productID="N_Chal">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -74,7 +71,7 @@
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-<!-- Configuration Variable (CV) information follows -->
+    <!-- Configuration Variable (CV) information follows -->
     <variables>
       <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="3" tooltip="Sets the Primary (short, 2 digit) address">
         <shortAddressVal/>
@@ -297,7 +294,7 @@
         <longAddressVal/>
         <label>Extended Address (0001-9999)</label>
       </variable>
-<!-- Consisting Information follows -->
+      <!-- Consisting Information follows -->
       <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
         <decVal max="127"/>
         <label>Consist Address (0-127)</label>
@@ -645,7 +642,7 @@
         </enumVal>
         <label>Function Group 2 and 3 Exchange</label>
       </variable>
-<!-- Function Mapping follows -->
+      <!-- Function Mapping follows -->
       <variable label="FL(f) controls Headlight" CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1882,7 +1879,7 @@
         <decVal/>
         <label>Analog Whistle Control (0-255)</label>
       </variable>
-<!-- Lighting Configuration follows -->
+      <!-- Lighting Configuration follows -->
       <variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="15" tooltip="Determines the effect generated from the headlight">
         <enumVal>
           <enumChoice choice="On/Off">
@@ -2077,7 +2074,7 @@
         </enumVal>
         <label>Backup Light F0(r) Rule 17 Mode</label>
       </variable>
-      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX"  default="0" include="MT4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="0" include="MT4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -2438,7 +2435,7 @@
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
-<!-- Whistle Selection follows -->
+      <!-- Whistle Selection follows -->
       <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="BB" tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="Union Pacific #4018">
@@ -2523,7 +2520,7 @@
         </enumVal>
         <label>Alternate Whistle Select</label>
       </variable>
-<!-- End Whistle Selection -->
+      <!-- End Whistle Selection -->
       <variable label="Alternate Whistle Enable" CV="115" mask="VXXXXXXX" item="Sound Option 11" default="0" tooltip="Choose whether to use the alternate whistle or a short toot of the primary whistle">
         <enumVal>
           <enumChoice choice="Short Whistle Function">
@@ -2547,7 +2544,7 @@
         <decVal max="255"/>
         <label>Engine Exhaust Control</label>
       </variable>
-<!-- Volume Controls follow -->
+      <!-- Volume Controls follow -->
       <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="192" include="BB,N_Chal" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
         <label>Master Volume Control</label>
@@ -2644,10 +2641,10 @@
         <decVal/>
         <label>Blower Draft Volume</label>
       </variable>
-<!-- The following sounds CVs (currently) don't map to generic -->
-<!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
-<!-- appear on pane definitions in this file -->
-<!-- Equalizer Controls follow -->
+      <!-- The following sounds CVs (currently) don't map to generic -->
+      <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
+      <!-- appear on pane definitions in this file -->
+      <!-- Equalizer Controls follow -->
       <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
         <enumVal>
           <enumChoice choice="Flat (off)">
@@ -2677,7 +2674,7 @@
         </enumVal>
         <label>Equalizer Control</label>
       </variable>
-<!-- Individual Cut/Boost Controls follow -->
+      <!-- Individual Cut/Boost Controls follow -->
       <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>62 Hz Cut/Boost</label>
@@ -2706,7 +2703,7 @@
         <decVal/>
         <label>4K Hz Cut/Boost</label>
       </variable>
-<!-- Reverb Section follows -->
+      <!-- Reverb Section follows -->
       <variable label="Reverb Control" CV="161" mask="XXXXXVVV" default="0" tooltip="Selects one of four reverb presets or selects a user adjustable profile">
         <enumVal>
           <enumChoice choice="Reverb Disabled">
@@ -2736,7 +2733,7 @@
         </enumVal>
         <label>Reverb Control</label>
       </variable>
-<!-- Individual Reverb Output Level Controls follow -->
+      <!-- Individual Reverb Output Level Controls follow -->
       <variable label="Reverb Output Level" CV="162" mask="VVVVVVVV" default="128" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
         <decVal/>
         <label>Reverb Output Level</label>
@@ -2765,7 +2762,7 @@
         <decVal/>
         <label>Air Pump Reverb Level</label>
       </variable>
-<!-- Dynamic Digital Exhaust Controls follow -->
+      <!-- Dynamic Digital Exhaust Controls follow -->
       <variable label="Throttle Gain" CV="177" mask="VVVVVVVV" default="10" tooltip="&lt;html&gt;Specifies the DDE sensitivity to the difference between the throttle&lt;br&gt;     setting and the actual locomotive speed.  Set to zero to disable.&lt;/html&gt;">
         <decVal/>
         <label>Throttle Gain</label>
@@ -2814,7 +2811,7 @@
         <decVal/>
         <label>DDE Tracking Coefficient</label>
       </variable>
-<!-- Automatic Sound Controls (ASC) follow -->
+      <!-- Automatic Sound Controls (ASC) follow -->
       <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="10" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
         <decVal max="127"/>
         <label>Bell-On Set Point</label>
@@ -2941,7 +2938,7 @@
         </enumVal>
         <label>Automatic Steam Blow Down Enable</label>
       </variable>
-<!-- Event Probability Controls follow -->
+      <!-- Event Probability Controls follow -->
       <variable label="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the fireman will shovel some coal.">
         <decVal max="255"/>
         <label>Probability Fireman Shovels Coal</label>
@@ -2974,8 +2971,8 @@
         <decVal max="255"/>
         <label>Probability Pop Valve Blows Off</label>
       </variable>
-<!-- End of variables for file-specific panes -->
-<!-- Advanced Motor Control Features follow -->
+      <!-- End of variables for file-specific panes -->
+      <!-- Advanced Motor Control Features follow -->
       <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
@@ -3000,25 +2997,21 @@
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
-<!-- highest used so far: -->
-<!-- "Advanced Group 1 Option 8" -->
-<!-- "Advanced Group 2 Option 5" -->
-<!-- "Sound Option 4" -->
-<!-- "Sound Group 1 Option (none yet)" -->
-<!-- "Sound Group 2 Option (none yet)" -->
-<!-- "Sound Setting 29 (several intermediate nos. available)" -->
+      <!-- highest used so far: -->
+      <!-- "Advanced Group 1 Option 8" -->
+      <!-- "Advanced Group 2 Option 5" -->
+      <!-- "Sound Option 4" -->
+      <!-- "Sound Group 1 Option (none yet)" -->
+      <!-- "Sound Group 2 Option (none yet)" -->
+      <!-- "Sound Setting 29 (several intermediate nos. available)" -->
     </variables>
     <resets>
       <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
     </resets>
   </decoder>
-  
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsteam.xml"/>
-  
 </decoder-config>
-
- 	  	 

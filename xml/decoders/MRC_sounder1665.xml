@@ -15,8 +15,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="2" lastUpdated="20100110"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20080307"/>
-<!--   version 1 made from the MRC_1666 file by Pete Cesaro -->
-<!--   version 2 Corrected defaults, modified formatting and added MRC pane-->
+  <!--   version 1 made from the MRC_1666 file by Pete Cesaro -->
+  <!--   version 2 Corrected defaults, modified formatting and added MRC pane-->
   <decoder>
     <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Steam Sound Decoder 1665" numOuts="2" numFns="28">

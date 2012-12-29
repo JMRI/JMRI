@@ -14,11 +14,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jack Shall jcshall@bellsouth.net" version="1" lastUpdated="20040421"/>
-<!-- Version 2 - added factory reset menu items (Paul Bender) -->
-<!-- These are the Ultra-Drive decoders, with "5th gen BEMF", "Precision Braking Control" -->
-<!-- and "Low Gear Switching Drive" -->
+  <!-- Version 2 - added factory reset menu items (Paul Bender) -->
+  <!-- These are the Ultra-Drive decoders, with "5th gen BEMF", "Precision Braking Control" -->
+  <!-- and "Low Gear Switching Drive" -->
   <version author="Michael Greene mgreene@cedarlane.com" version="3" lastUpdated="20110216"/>
-<!-- Version 3 - added support for LE1835 (Michael Greene) -->  
+  <!-- Version 3 - added support for LE1835 (Michael Greene) -->
   <decoder>
     <family name="Lenz Ultra-Drive decoders" mfg="Lenz" lowVersionID="1" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
       <model model="LE1035" numOuts="4" numFns="8" nmraWarrant="yes" nmraWarrantStart="200404" productID="LE1035">
@@ -564,41 +564,25 @@
         </enumVal>
         <label>Disable PBC with F8</label>
       </variable>
-      
       <variable label="Braking Distance (0-255)" CV="61" default="100" tooltip="Sets the constant braking distance (larger number = longer distance)" comment="Range 0-255 (0 will disable)">
         <decVal min="0" max="255"/>
         <label>Braking Distance (0-255)</label>
         <comment>Range 0-255 (0 will disable)</comment>
       </variable>
-
-      <variable label="SUSI CV Number (tens and units)" CV="62"
-			item="SUSI CV Number Tens" default="0" include="LE1835"
-			comment="For LE1835 only; Range 0-99"
-            tooltip="CV holds the tens and units components of the SUSI CV Number">
-			<decVal min="0" max="99"/>
+      <variable label="SUSI CV Number (tens and units)" CV="62" item="SUSI CV Number Tens" default="0" include="LE1835" comment="For LE1835 only; Range 0-99" tooltip="CV holds the tens and units components of the SUSI CV Number">
+        <decVal min="0" max="99"/>
       </variable>
-
-      <variable label="SUSI CV Number (hundreds)" CV="63"
-			item="SUSI CV Number Hundreds" default="0" include="LE1835"
-			comment="For LE1835 only; Range 0-99"
-            tooltip="CV holds the hundreds component of the SUSI CV Number">
-			<decVal min="0" max="99"/>
+      <variable label="SUSI CV Number (hundreds)" CV="63" item="SUSI CV Number Hundreds" default="0" include="LE1835" comment="For LE1835 only; Range 0-99" tooltip="CV holds the hundreds component of the SUSI CV Number">
+        <decVal min="0" max="99"/>
       </variable>
-
-      <variable label="SUSI CV Value" CV="64"
-			item="SUSI CV Value" default="0" include="LE1835"
-			comment="For LE1835 only; Range 0-255"
-            tooltip="The value of the CV pointed to by CVs 63,62">
-			<decVal min="0" max="255"/>
+      <variable label="SUSI CV Value" CV="64" item="SUSI CV Value" default="0" include="LE1835" comment="For LE1835 only; Range 0-255" tooltip="The value of the CV pointed to by CVs 63,62">
+        <decVal min="0" max="255"/>
       </variable>
-
-
       <variable label="Decoder Software Version (read only): " CV="128" readOnly="yes" item="Decoder Software Version" default="05">
         <decVal/>
         <label>Decoder Software Version (read only): </label>
       </variable>
-
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>
@@ -606,7 +590,6 @@
       <factReset label="Reset All CVs" CV="8" default="33"/>
     </resets>
   </decoder>
-
   <pane name="Lenz">
     <column>
       <row>
@@ -686,19 +669,17 @@
     </column>
     <name>Lenz</name>
   </pane>
-  
   <pane name="SUSI">
-	<column>
-		<row>
-			<column>
-				<label label="              S.U.S.I. Variables"/>
-				<label label=" "/>
-				<display item="SUSI CV Number Tens"/>
-                <display item="SUSI CV Number Hundreds"/>
-				<display item="SUSI CV Value"/>											
-			</column>		
-		</row>	
-	</column>
+    <column>
+      <row>
+        <column>
+          <label label="              S.U.S.I. Variables"/>
+          <label label=" "/>
+          <display item="SUSI CV Number Tens"/>
+          <display item="SUSI CV Number Hundreds"/>
+          <display item="SUSI CV Value"/>
+        </column>
+      </row>
+    </column>
   </pane>
-
 </decoder-config>

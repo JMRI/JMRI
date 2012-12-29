@@ -16,13 +16,13 @@
   <version author="Peter Ulvestad" version="3" lastUpdated="20091011"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20090904"/>
   <version author="Charles Dearden -charlied@comcen.com.au" version="1" lastUpdated="20080530"/>
-<!-- made from the MRC_1639 file by Richard Sauerbrun -->
-<!-- Version 2 - Added tooltips -->
-<!-- Version 3 - Added missing Consist direction -->
+  <!-- made from the MRC_1639 file by Richard Sauerbrun -->
+  <!-- Version 2 - Added tooltips -->
+  <!-- Version 3 - Added missing Consist direction -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Steam Sound 1637" numOuts="2" numFns="12" connector="NMRAmedium" maxTotalCurrent="1.5A" extFnsMRC="yes">
-<!-- note only F0 to F12 are NMRA compatible -->
+        <!-- note only F0 to F12 are NMRA compatible -->
         <size length="33" width="10.5" height="5.0" units="mm"/>
       </model>
     </family>

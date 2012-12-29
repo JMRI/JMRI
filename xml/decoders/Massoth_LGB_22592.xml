@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2007, 2008 All rights reserved -->
 <!-- $Id: Massoth_LGB_22592.xml,v 1.7 2009/02/22 22:20:42 jacobsen Exp $ -->
 <!--                                                                        -->
@@ -13,14 +12,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-		<version author="Jeff Schmaltz escopetas@comcast.net"
-			version="1.0" lastUpdated="20110114" />
-
-
-<!-- 
+  <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20110114"/>
+  <!-- 
       This decoder XML is for the "OnBoard Sound" decoder found in the LGB
       22592 HF-130C small diesel switcher for "LGB Club" members.  According
       to Massoth, this was the only loco this decoder was ever used in.
@@ -79,1604 +73,1381 @@
         1.0 - 14 Jan 2011
               Initial release 
 -->
-
-
-<decoder>
-	<family name="LGB" mfg="Massoth Elektronik, GmbH">
-		<model model="LGB MTS 22592 with onboard sound decoder" lowVersionID="10" highVersionID="39"
-			maxInputVolts="24 V"
-			numOuts="4" numFns="14"
-			formFactor="G" connector="other" >
-			<output name="1" label="Front light" connection="other" />
-	   	 	<output name="2" label="Rear light " connection="other" />
-	   	 	<output name="3" label="F1 " connection="other" />
-	   	 	<output name="4" label="F2 " connection="other" />
-		</model>
-	</family>
-
-	<programming direct="yes" paged="no"
-	                     register="yes" ops="no"></programming>
-
-	<variables> 
-
-		<variable label="Short Address" CV="1" 
-			item="Short Address"
-			tooltip="Sets the Primary 2 digit address - LGB 0-22 for add-on, 1-23 for onboard CV1" >
-			<shortAddressVal/>
-            </variable>
-
-		<variable label="Starting voltage" CV="2" 
-			item="Vstart"
-			tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed CV2">
-			<decVal min="0" max="255"/>
-		</variable>
-		
-		<variable label="Acceleration" CV="3"
-			item="Accel"
-			tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration CV3" >
-			<decVal min="1" max="255"/>
-		</variable>
-
-		<variable label="Braking" CV="4"
-			item="Decel"
-			tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking) CV4" >
-			<decVal min="1" max="255"/>
-		</variable>
-		
-		<variable label="Maximum Motor Voltage" CV="5"
-			item="Vhigh"
-			tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed CV5">
-			<decVal min="1" max="255"/>
-		</variable>
-
-		<variable label="Software Version Number" CV="7" readOnly="yes"
-			item="Decoder Version"
-			tooltip="The decoder version number (read only) CV7" >
-			<decVal/>
-		</variable>
-
-		<variable label="Manufacturer Code" CV="8" readOnly="yes"
-			item="Manufacturer"
-			tooltip="The manufacturer's ID number (read only) CV8">
-			<decVal/>
-		</variable>
-
-		<variable label="Motor Frequency" CV="9"
-			item="Total PWM Period"
-			tooltip="Sets the motor drive frequency - Note: Back-EMF only works with 16 kHz CV9">
-			<enumVal>
-				<enumChoice choice="16 kHz"/>
-				<enumChoice choice="1.8 kHz"/>
-				<enumChoice choice="270 Hz"/>
-				<enumChoice choice="70 Hz"/>
-			</enumVal>
-		</variable>
-
-		<variable label="F1 Function Output in Analog Mode" CV="13" mask="XXXXXXXV" default="1"
-			item="Analog Mode Function Status - F1"
-			tooltip="(On if value set) CV13">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-		<variable label="F2 Function Output in Analog Mode" CV="13" mask="XXXXXXVX" default="1"
-			item="Analog Mode Function Status - F2"
-			tooltip="(On if value set) CV13">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-		<variable label="F3 Function Output in Analog Mode" CV="13" mask="XXXXXVXX" default="0"
-			item="Analog Mode Function Status - F3"
-			tooltip="(On if value set) CV13">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-		<variable label="F4 Function Output in Analog Mode" CV="13" mask="XXXXVXXX" default="0"
-			item="Analog Mode Function Status - F4"
-			tooltip="(On if value set) CV13">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-		<variable label="F5 Function Output in Analog Mode" CV="13" mask="XXXVXXXX" default="0"
-			item="Analog Mode Function Status - F5"
-			tooltip="(On if value set) CV13">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-		<variable label="F6 Function Output in Analog Mode" CV="13" mask="XXVXXXXX" default="0"
-			item="Analog Mode Function Status - F6"
-			tooltip="(On if value set) CV13">
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Long Address" CV="17"
-			item="Extended Address"
-			tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS) CV17-18" >
-			<longAddressVal/>
-		</variable>
-
-		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV"
-			item="Locomotive Direction"
-			tooltip="Sets the relative direction of the loco when told to move forward CV29" >
-			<enumVal>
-				<enumChoice choice="Forward"/>
-				<enumChoice choice="Reverse"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Speed Steps" CV="29" mask="XXXXXXVX"
-			item="Speed Step Mode"
-			tooltip="Sets the speed step mode CV29" >
-			<enumVal>
-				<enumChoice choice="14"/>
-				<enumChoice choice="28/128 (not LGB MTS)"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Analog conversion mode" CV="29" mask="XXXXXVXX"
-			item="Analog (DC) Operation"
-			tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion) CV29" >
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX"
-			item="Speed Table Definition"
-			tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table CV29" >
-			<enumVal>
-				<enumChoice choice="internal speed step table"/>
-				<enumChoice choice="user-programmed speed step table (CV's 67-94)"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Addressing Mode" CV="29" mask="XXVXXXXX"
-			item="Address Format"
-			tooltip="Determines whether loco will use short or long address CV29" >
-			<enumVal>
-				<enumChoice choice="address 1-127 (LGB MTS: 0-22/1-23)"/>
-				<enumChoice choice="address 128-10239 (not LGB MTS)"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Voltage for F1 terminal" CV="49"
-			tooltip="Voltage for F1 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage CV49">
-			<decVal min="1" max="32"/>
-		</variable>
-
-		<variable label="Voltage for lighting terminals" CV="50"
-			tooltip="Voltage for front, rear and interior light - 1:low voltage, 5:5V light bulbs, 32:maximum voltage CV50">
-			<decVal min="1" max="32"/>
-		</variable>
-
-		<variable label="Command for F1 terminal" CV="51"
-			tooltip="Command which triggers the F1 terminal CV51">
-			<enumVal>
-				<enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
-				<enumChoice choice="button 1 (parallel only)" value="1"/>
-				<enumChoice choice="button 2 (parallel only)" value="2"/>
-				<enumChoice choice="button 3 (parallel only)" value="3"/>
-				<enumChoice choice="button 4 (parallel only)" value="4"/>
-				<enumChoice choice="button 5 (parallel only)" value="5"/>
-				<enumChoice choice="button 6 (parallel only)" value="6"/>
-				<enumChoice choice="button 7 (parallel only)" value="7"/>
-				<enumChoice choice="button 8 (parallel only)" value="8"/>
-				<enumChoice choice="button 1 (parallel and serial)" value="9"/>
-				<enumChoice choice="button 2 (parallel and serial)" value="10"/>
-				<enumChoice choice="button 3 (parallel and serial)" value="11"/>
-				<enumChoice choice="button 4 (parallel and serial)" value="12"/>
-				<enumChoice choice="button 5 (parallel and serial)" value="13"/>
-				<enumChoice choice="button 6 (parallel and serial)" value="14"/>
-				<enumChoice choice="button 7 (parallel and serial)" value="15"/>
-				<enumChoice choice="button 8 (parallel and serial)" value="16"/>
-				<enumChoice choice="buttons 1-8 with fast pulse string (for 55021 with P-Update only)" value="33"/>
-				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is reversing)" value="64"/>
-				<enumChoice choice="button 1 (on only when loco is reversing)" value="65"/>
-				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is moving forward)" value="128"/>
-				<enumChoice choice="button 1 (on only when loco is moving forward)" value="129"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Command for front lighting terminal" CV="52"
-			tooltip="Command which triggers the front light terminal CV52">
-			<enumVal>
-				<enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
-				<enumChoice choice="button 1 (parallel only)" value="1"/>
-				<enumChoice choice="button 2 (parallel only)" value="2"/>
-				<enumChoice choice="button 3 (parallel only)" value="3"/>
-				<enumChoice choice="button 4 (parallel only)" value="4"/>
-				<enumChoice choice="button 5 (parallel only)" value="5"/>
-				<enumChoice choice="button 6 (parallel only)" value="6"/>
-				<enumChoice choice="button 7 (parallel only)" value="7"/>
-				<enumChoice choice="button 8 (parallel only)" value="8"/>
-				<enumChoice choice="button 1 (parallel and serial)" value="9"/>
-				<enumChoice choice="button 2 (parallel and serial)" value="10"/>
-				<enumChoice choice="button 3 (parallel and serial)" value="11"/>
-				<enumChoice choice="button 4 (parallel and serial)" value="12"/>
-				<enumChoice choice="button 5 (parallel and serial)" value="13"/>
-				<enumChoice choice="button 6 (parallel and serial)" value="14"/>
-				<enumChoice choice="button 7 (parallel and serial)" value="15"/>
-				<enumChoice choice="button 8 (parallel and serial)" value="16"/>
-				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is reversing)" value="64"/>
-				<enumChoice choice="button 1 (on only when loco is reversing)" value="65"/>
-				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is moving forward)" value="128"/>
-				<enumChoice choice="button 1 (on only when loco is moving forward)" value="129"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Command for rear lighting terminal" CV="53"
-			tooltip="Command which triggers the rear light terminal CV53">
-			<enumVal>
-				<enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
-				<enumChoice choice="button 1 (parallel only)" value="1"/>
-				<enumChoice choice="button 2 (parallel only)" value="2"/>
-				<enumChoice choice="button 3 (parallel only)" value="3"/>
-				<enumChoice choice="button 4 (parallel only)" value="4"/>
-				<enumChoice choice="button 5 (parallel only)" value="5"/>
-				<enumChoice choice="button 6 (parallel only)" value="6"/>
-				<enumChoice choice="button 7 (parallel only)" value="7"/>
-				<enumChoice choice="button 8 (parallel only)" value="8"/>
-				<enumChoice choice="button 1 (parallel and serial)" value="9"/>
-				<enumChoice choice="button 2 (parallel and serial)" value="10"/>
-				<enumChoice choice="button 3 (parallel and serial)" value="11"/>
-				<enumChoice choice="button 4 (parallel and serial)" value="12"/>
-				<enumChoice choice="button 5 (parallel and serial)" value="13"/>
-				<enumChoice choice="button 6 (parallel and serial)" value="14"/>
-				<enumChoice choice="button 7 (parallel and serial)" value="15"/>
-				<enumChoice choice="button 8 (parallel and serial)" value="16"/>
-				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is reversing)" value="64"/>
-				<enumChoice choice="button 1 (on only when loco is reversing)" value="65"/>
-				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is moving forward)" value="128"/>
-				<enumChoice choice="button 1 (on only when loco is moving forward)" value="129"/>
-			</enumVal>
-		</variable>
-
-		<variable label="hand-off function" CV="54" mask="XXXXXXXV"
-			tooltip="Determines if MTS hand-off is on or off CV54">
-			<enumVal>
-				<enumChoice choice="off"/>
-				<enumChoice choice="on"/>
-			</enumVal>
-		</variable>
-
-		<variable label="MTS Back-EMF" CV="54" mask="XXXXXXVX"
-			tooltip="Determines if digital back-EMF is on or off CV54">
-			<enumVal>
-				<enumChoice choice="off"/>
-				<enumChoice choice="on"/>
-			</enumVal>
-		</variable>
-
-		<variable label="analog Back-EMF" CV="54" mask="XXXXXVXX"
-			tooltip="Determines if analog back-EMF is on or off CV54">	
-			<enumVal>
-				<enumChoice choice="off"/>
-				<enumChoice choice="on"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Load dependent sound" CV="54" mask="XXXXVXXX"
-			tooltip="Determines if load dependent sound is on or off CV54">	
-			<enumVal>
-				<enumChoice choice="off"/>
-				<enumChoice choice="on"/>
-			</enumVal>
-		</variable>
-
-		<variable label="F1 output flashing" CV="54" mask="XXXVXXXX"
-			tooltip="Determines if F1 is constant or flashing CV54">
-			<enumVal>
-				<enumChoice choice="F1 permanently on"/>
-				<enumChoice choice="F1 flashing"/>
-			</enumVal>
-		</variable>
-
-		<variable label="F2 output flashing" CV="54" mask="XXVXXXXX"
-			tooltip="Determines if F2 is constant or flashing CV54">
-			<enumVal>
-				<enumChoice choice="F2 permanently on"/>
-				<enumChoice choice="F2 flashing"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Automatic brake sounds" CV="54" mask="XVXXXXXX"
-			tooltip="Determines if automatic brake sounds are on or off CV54">	
-			<enumVal>
-				<enumChoice choice="off"/>
-				<enumChoice choice="on"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Loco dependent bit 8" CV="54" mask="VXXXXXXX"
-			tooltip="Check your loco's manual to determine use of this bit CV54">
-			<enumVal>
-				<enumChoice choice="0 - e.g. Automatic sounds on"/>
-				<enumChoice choice="1 - e.g. Automatic sounds off"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Voltage for F2 terminal" CV="56"
-			tooltip="Voltage for F2 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage CV56">
-			<decVal min="1" max="32"/>
-		</variable>
-
-		<variable label="Command for F2 terminal" CV="57"
-			tooltip="Command which triggers the F2 terminal CV57">
-			<enumVal>
-				<enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
-				<enumChoice choice="button 1 (parallel only)" value="1"/>
-				<enumChoice choice="button 2 (parallel only)" value="2"/>
-				<enumChoice choice="button 3 (parallel only)" value="3"/>
-				<enumChoice choice="button 4 (parallel only)" value="4"/>
-				<enumChoice choice="button 5 (parallel only)" value="5"/>
-				<enumChoice choice="button 6 (parallel only)" value="6"/>
-				<enumChoice choice="button 7 (parallel only)" value="7"/>
-				<enumChoice choice="button 8 (parallel only)" value="8"/>
-				<enumChoice choice="button 1 (parallel and serial)" value="9"/>
-				<enumChoice choice="button 2 (parallel and serial)" value="10"/>
-				<enumChoice choice="button 3 (parallel and serial)" value="11"/>
-				<enumChoice choice="button 4 (parallel and serial)" value="12"/>
-				<enumChoice choice="button 5 (parallel and serial)" value="13"/>
-				<enumChoice choice="button 6 (parallel and serial)" value="14"/>
-				<enumChoice choice="button 7 (parallel and serial)" value="15"/>
-				<enumChoice choice="button 8 (parallel and serial)" value="16"/>
-				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is reversing)" value="64"/>
-				<enumChoice choice="button 1 (on only when loco is reversing)" value="65"/>
-				<enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is moving forward)" value="128"/>
-				<enumChoice choice="button 1 (on only when loco is moving forward)" value="129"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Pause Time between changes in direction" CV="58"
-			tooltip="Pause equals programmed value x 0.5 seconds CV58">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Back-EMF Maximum Adjustment Factor" CV="60"
-			tooltip="1: small steps, 255: large steps (Note: LGB recommends not changing this CV) CV60">
-			<decVal min="1" max="255"/>
-		</variable>
-
-		<variable label="Back-EMF Adjustment Frequency" CV="61"
-			tooltip="0: immediate adjustment, 255: maximum delay (Note: LGB recommends not changing this CV) CV61">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Back-EMF Maximum Adjustment" CV="62"
-			tooltip="0: no adjustment, 255: maximum adjustment (Note: LGB recommends not changing this CV) CV62">
-			<decVal min="0" max="255"/>
-		</variable>
-
-		<variable label="Speed Table" CV="67">
-			<speedTableVal>
-				<speedTableEntry step="1" value="8"/>
-				<speedTableEntry step="2" value="16"/>
-				<speedTableEntry step="3" value="24"/>
-				<speedTableEntry step="4" value="32"/>
-				<speedTableEntry step="5" value="40"/>
-				<speedTableEntry step="6" value="48"/>
-				<speedTableEntry step="7" value="56"/>
-				<speedTableEntry step="8" value="64"/>
-				<speedTableEntry step="9" value="72"/>
-				<speedTableEntry step="10" value="80"/>
-				<speedTableEntry step="11" value="88"/>
-				<speedTableEntry step="12" value="96"/>
-				<speedTableEntry step="13" value="104"/>
-				<speedTableEntry step="14" value="112"/>
-				<speedTableEntry step="15" value="120"/>
-				<speedTableEntry step="16" value="128"/>
-				<speedTableEntry step="17" value="136"/>
-				<speedTableEntry step="18" value="144"/>
-				<speedTableEntry step="19" value="152"/>
-				<speedTableEntry step="20" value="160"/>
-				<speedTableEntry step="21" value="168"/>
-				<speedTableEntry step="22" value="176"/>
-				<speedTableEntry step="23" value="184"/>
-				<speedTableEntry step="24" value="192"/>
-				<speedTableEntry step="25" value="208"/>
-				<speedTableEntry step="26" value="224"/>
-				<speedTableEntry step="27" value="240"/>
-				<speedTableEntry step="28" value="255"/>
-			</speedTableVal>
-		</variable>
-
-		<!-- Do not attempt to read CV 105 on an LGB decoder -->
-
-		<variable label="ID for Decoder Type" CV="106" readOnly="yes" 
-			item="Product number"
-			tooltip="ID for Decoder Type (read only) CV106">
-			<decVal/>
-		</variable>
-
-		<variable label="Horn: Command Allocation - Function Keys" CV="131"
-			tooltip="Function key which switches Horn CV131">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Brake: Command Allocation - Function Keys" CV="132"
-			tooltip="Function key which switches Brake CV132">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Bell: Command Allocation - Function Keys" CV="133"
-			tooltip="Function key which switches Bell CV133">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Coupling: Command Allocation - Function Keys" CV="134"
-			tooltip="Function key which switches Coupling CV134">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Engineer enters cab: Command Allocation - Function Keys" CV="135"
-			tooltip="Function key which switches Engineer enters cab CV135">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Rolling train: Command Allocation - Function Keys" CV="136"
-			tooltip="Function key which switches Rolling train CV136">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Compressor: Command Allocation - Function Keys" CV="137"
-			tooltip="Function key which switches Compressor CV137">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Trill whistle: Command Allocation - Function Keys" CV="138"
-			tooltip="Function key which switches Trill whistle CV138">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Gear box direction change: Command Allocation - Function Keys" CV="139"
-			tooltip="Function key which switches Gear box direction change CV139">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="No sound 10: Command Allocation - Function Keys" CV="140"
-			tooltip="Function key which switches No sound 10 CV140">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="No sound 11: Command Allocation - Function Keys" CV="141"
-			tooltip="Function key which switches No sound 11 CV141">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="No sound 12: Command Allocation - Function Keys" CV="142"
-			tooltip="Function key which switches No sound 12 CV142">
-			<enumVal>
-				<enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Sound On/Off: Command Allocation - Function Keys" CV="147" default="6"
-			tooltip="Function key which switches sound (amplifier) on/off CV147">
-			<enumVal>
-				<enumChoice choice="Sound steady (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Loco Start Up/Shut Down: Command Allocation - Function Keys" CV="148" default="5"
-			tooltip="Function key which switches Loco Start Up/Shut Down CV148">
-			<enumVal>
-				<enumChoice choice="Loco always on (not switched with F-Key)" value="0"/>
-				<enumChoice choice="F1" value="1"/>
-				<enumChoice choice="F2" value="2"/>
-				<enumChoice choice="F3" value="3"/>
-				<enumChoice choice="F4" value="4"/>
-				<enumChoice choice="F5" value="5"/>
-				<enumChoice choice="F6" value="6"/>
-				<enumChoice choice="F7" value="7"/>
-				<enumChoice choice="F8" value="8"/>
-				<enumChoice choice="F9" value="9"/>
-				<enumChoice choice="F10" value="10"/>
-				<enumChoice choice="F11" value="11"/>
-				<enumChoice choice="F12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random Sounds Generator" CV="149" mask="XXXXXXXV" default="0"
-			tooltip="Random generator active or not CV149" >
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Standing Phase Noise" CV="150" mask="XXXXXXXV" default="0"
-			tooltip="Standing Phase Noise active or not CV150" >
-			<enumVal>
-				<enumChoice choice="Off"/>
-				<enumChoice choice="On"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Horn: Number of repetitions with F-Key" CV="151"
-			tooltip="How many times Horn loops when F-Key is pressed CV151">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Brake: Number of repetitions with F-Key" CV="152"
-			tooltip="How many times Brake loops when F-Key is pressed CV152">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Bell: Number of repetitions with F-Key" CV="153"
-			tooltip="How many times Bell loops when F-Key is pressed CV153">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Coupling: Number of repetitions with F-Key" CV="154"
-			tooltip="How many times Coupling loops when F-Key is pressed CV154">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Engineer enters cab: Number of repetitions with F-Key" CV="155"
-			tooltip="How many times Engineer enters cab loops when F-Key is pressed CV155">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Rolling train: Number of repetitions with F-Key" CV="156"
-			tooltip="How many times Rolling train loops when F-Key is pressed CV156">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Compressor: Number of repetitions with F-Key" CV="157"
-			tooltip="How many times Compressor loops when F-Key is pressed CV157">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Trill whistle: Number of repetitions with F-Key" CV="158"
-			tooltip="How many times Trill whistle loops when F-Key is pressed CV158">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Gear box direction change: Number of repetitions with F-Key" CV="159"
-			tooltip="How many times Gear box direction change loops when F-Key is pressed CV159">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="No sound 10: Number of repetitions with F-Key" CV="160"
-			tooltip="How many times No sound 10 loops when F-Key is pressed CV160">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="No sound 11: Number of repetitions with F-Key" CV="161"
-			tooltip="How many times No sound 11 loops when F-Key is pressed CV161">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<variable label="No sound 12: Number of repetitions with F-Key" CV="162"
-			tooltip="How many times No sound 12 loops when F-Key is pressed CV162">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-				<enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
-			</enumVal>
-		</variable>
-
-		<!-- This CV isn't documented for this decoder but appears to give correct value, 2 = diesel -->
-		<variable label="Control Register - Type of Sound" CV="167" readOnly="yes"
-			tooltip="Type of sound - DO NOT CHANGE!! - Read Only CV167">
-			<enumVal>
-				<enumChoice choice="(CV not read)" value="0"/>
-				<enumChoice choice="Steam" value="1"/>
-				<enumChoice choice="Diesel" value="2"/>
-				<enumChoice choice="Electric" value="6"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Standing sound 1 : sound assignment" CV="171"
-			tooltip="First standing sound to be played CV171">
-			<enumVal>
-				<enumChoice choice="No standing sound" value="0"/>
-				<enumChoice choice="Horn" value="1"/>
-				<enumChoice choice="Brake" value="2"/>
-				<enumChoice choice="Bell" value="3"/>
-				<enumChoice choice="Coupling" value="4"/>
-				<enumChoice choice="Engineer enters cab" value="5"/>
-				<enumChoice choice="Rolling train" value="6"/>
-				<enumChoice choice="Compressor" value="7"/>
-				<enumChoice choice="Trill whistle" value="8"/>
-				<enumChoice choice="Gear box direction change" value="9"/>
-				<enumChoice choice="No sound 10" value="10"/>
-				<enumChoice choice="No sound 11" value="11"/>
-				<enumChoice choice="No sound 12" value="12"/>
-			</enumVal>
-		</variable>
-
-
-		<variable label="Standing sound 2 : sound assignment" CV="172"
-			tooltip="Second standing sound to be played CV172">
-			<enumVal>
-				<enumChoice choice="No standing sound" value="0"/>
-				<enumChoice choice="Horn" value="1"/>
-				<enumChoice choice="Brake" value="2"/>
-				<enumChoice choice="Bell" value="3"/>
-				<enumChoice choice="Coupling" value="4"/>
-				<enumChoice choice="Engineer enters cab" value="5"/>
-				<enumChoice choice="Rolling train" value="6"/>
-				<enumChoice choice="Compressor" value="7"/>
-				<enumChoice choice="Trill whistle" value="8"/>
-				<enumChoice choice="Gear box direction change" value="9"/>
-				<enumChoice choice="No sound 10" value="10"/>
-				<enumChoice choice="No sound 11" value="11"/>
-				<enumChoice choice="No sound 12" value="12"/>
-			</enumVal>
-		</variable>
-
-
-		<variable label="Standing sound 3 : sound assignment" CV="173"
-			tooltip="Third standing sound to be played CV173">
-			<enumVal>
-				<enumChoice choice="No standing sound" value="0"/>
-				<enumChoice choice="Horn" value="1"/>
-				<enumChoice choice="Brake" value="2"/>
-				<enumChoice choice="Bell" value="3"/>
-				<enumChoice choice="Coupling" value="4"/>
-				<enumChoice choice="Engineer enters cab" value="5"/>
-				<enumChoice choice="Rolling train" value="6"/>
-				<enumChoice choice="Compressor" value="7"/>
-				<enumChoice choice="Trill whistle" value="8"/>
-				<enumChoice choice="Gear box direction change" value="9"/>
-				<enumChoice choice="No sound 10" value="10"/>
-				<enumChoice choice="No sound 11" value="11"/>
-				<enumChoice choice="No sound 12" value="12"/>
-			</enumVal>
-		</variable>
-
-
-		<variable label="Standing sound 4 : sound assignment" CV="174"
-			tooltip="Fourth standing sound to be played CV174">
-			<enumVal>
-				<enumChoice choice="No standing sound" value="0"/>
-				<enumChoice choice="Horn" value="1"/>
-				<enumChoice choice="Brake" value="2"/>
-				<enumChoice choice="Bell" value="3"/>
-				<enumChoice choice="Coupling" value="4"/>
-				<enumChoice choice="Engineer enters cab" value="5"/>
-				<enumChoice choice="Rolling train" value="6"/>
-				<enumChoice choice="Compressor" value="7"/>
-				<enumChoice choice="Trill whistle" value="8"/>
-				<enumChoice choice="Gear box direction change" value="9"/>
-				<enumChoice choice="No sound 10" value="10"/>
-				<enumChoice choice="No sound 11" value="11"/>
-				<enumChoice choice="No sound 12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Standing sound 1 : Number of repetitions" CV="175"
-			tooltip="How many times standing sound 1 loops CV175">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Standing sound 1 : Number of repetitions" CV="175"
-			tooltip="How many times first standing sound loops CV175">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Standing sound 2 : Number of repetitions" CV="176"
-			tooltip="How many times second standing sound loops CV176">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Standing sound 3 : Number of repetitions" CV="177"
-			tooltip="How many times third standing sound loops CV177">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Standing sound 4 : Number of repetitions" CV="178"
-			tooltip="How many times fourth standing sound loops CV178">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Time Value of Random Generator" CV="179" default="3"
-			tooltip="How often random sounds are generated CV179">
-			<enumVal>
-				<enumChoice choice="(CV not read)" value="0"/>
-				<enumChoice choice="Frequent triggering" value="1"/>
-				<enumChoice choice="Middling triggering" value="2"/>
-				<enumChoice choice="Infrequent triggering" value="3"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random sound 1 : sound assignment" CV="180"
-			tooltip="The sounds selected are triggered randomly CV180">
-			<enumVal>
-				<enumChoice choice="No random sound" value="0"/>
-				<enumChoice choice="Horn" value="1"/>
-				<enumChoice choice="Brake" value="2"/>
-				<enumChoice choice="Bell" value="3"/>
-				<enumChoice choice="Coupling" value="4"/>
-				<enumChoice choice="Engineer enters cab" value="5"/>
-				<enumChoice choice="Rolling train" value="6"/>
-				<enumChoice choice="Compressor" value="7"/>
-				<enumChoice choice="Trill whistle" value="8"/>
-				<enumChoice choice="Gear box direction change" value="9"/>
-				<enumChoice choice="No sound 10" value="10"/>
-				<enumChoice choice="No sound 11" value="11"/>
-				<enumChoice choice="No sound 12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random sound 2 : sound assignment" CV="181"
-			tooltip="The sounds selected are triggered randomly CV181">
-			<enumVal>
-				<enumChoice choice="No random sound" value="0"/>
-				<enumChoice choice="Horn" value="1"/>
-				<enumChoice choice="Brake" value="2"/>
-				<enumChoice choice="Bell" value="3"/>
-				<enumChoice choice="Coupling" value="4"/>
-				<enumChoice choice="Engineer enters cab" value="5"/>
-				<enumChoice choice="Rolling train" value="6"/>
-				<enumChoice choice="Compressor" value="7"/>
-				<enumChoice choice="Trill whistle" value="8"/>
-				<enumChoice choice="Gear box direction change" value="9"/>
-				<enumChoice choice="No sound 10" value="10"/>
-				<enumChoice choice="No sound 11" value="11"/>
-				<enumChoice choice="No sound 12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random sound 3 : sound assignment" CV="182"
-			tooltip="The sounds selected are triggered randomly CV182">
-			<enumVal>
-				<enumChoice choice="No random sound" value="0"/>
-				<enumChoice choice="Horn" value="1"/>
-				<enumChoice choice="Brake" value="2"/>
-				<enumChoice choice="Bell" value="3"/>
-				<enumChoice choice="Coupling" value="4"/>
-				<enumChoice choice="Engineer enters cab" value="5"/>
-				<enumChoice choice="Rolling train" value="6"/>
-				<enumChoice choice="Compressor" value="7"/>
-				<enumChoice choice="Trill whistle" value="8"/>
-				<enumChoice choice="Gear box direction change" value="9"/>
-				<enumChoice choice="No sound 10" value="10"/>
-				<enumChoice choice="No sound 11" value="11"/>
-				<enumChoice choice="No sound 12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random sound 4 : sound assignment" CV="183"
-			tooltip="The sounds selected are triggered randomly CV183">
-			<enumVal>
-				<enumChoice choice="No random sound" value="0"/>
-				<enumChoice choice="Horn" value="1"/>
-				<enumChoice choice="Brake" value="2"/>
-				<enumChoice choice="Bell" value="3"/>
-				<enumChoice choice="Coupling" value="4"/>
-				<enumChoice choice="Engineer enters cab" value="5"/>
-				<enumChoice choice="Rolling train" value="6"/>
-				<enumChoice choice="Compressor" value="7"/>
-				<enumChoice choice="Trill whistle" value="8"/>
-				<enumChoice choice="Gear box direction change" value="9"/>
-				<enumChoice choice="No sound 10" value="10"/>
-				<enumChoice choice="No sound 11" value="11"/>
-				<enumChoice choice="No sound 12" value="12"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random sound 1 : Number of repetitions" CV="184"
-			tooltip="How many times random sound 1 loops CV184">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random sound 2 : Number of repetitions" CV="185"
-			tooltip="How many times random sound 2 loops CV185">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random sound 3 : Number of repetitions" CV="186"
-			tooltip="How many times random sound 3 loops CV186">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-			</enumVal>
-		</variable>
-
-		<variable label="Random sound 4 : Number of repetitions" CV="187"
-			tooltip="How many times random sound 4 loops CV187">
-			<enumVal>
-				<enumChoice choice="Triggered only once" value="0"/>
-				<enumChoice choice="1" value="1"/>
-				<enumChoice choice="2" value="2"/>
-				<enumChoice choice="3" value="3"/>
-				<enumChoice choice="4" value="4"/>
-				<enumChoice choice="5" value="5"/>
-				<enumChoice choice="6" value="6"/>
-				<enumChoice choice="7" value="7"/>
-				<enumChoice choice="8" value="8"/>
-				<enumChoice choice="9" value="9"/>
-				<enumChoice choice="10" value="10"/>
-				<enumChoice choice="11" value="11"/>
-				<enumChoice choice="12" value="12"/>
-				<enumChoice choice="13" value="13"/>
-				<enumChoice choice="14" value="14"/>
-				<enumChoice choice="15" value="15"/>
-			</enumVal>
-		</variable>
-
-	</variables>
-
-        <resets>
-		<factReset label="Reset to factory settings" CV="55" default="55"/>
-        </resets>
-
-</decoder>
-
-<pane name="Basic">
-		<column>
-			<dccaddress />
-			<label label=" "/>
-			<display item="Short Address" />
-			<display item="Long Address" />
-			<display item="Address Format" />
-			<label label=" "/>
-			<display item="Locomotive Direction" />
-			<display item="Speed Step Mode" />
-			<display item="Analog (DC) Operation" />
-		</column>
-		<column>
-			<label label=" "/>
-			<label label=" "/>
-			<label label=" "/>
-			<separator/>
-			<label label=" "/>
-			<display item="Manufacturer" />
-			<display item="Decoder Version" />
-			<display item="Product number" />
-		</column>
-	</pane>
-
-	<pane name="Motor">
-		<column>
-			<display item="Accel" />
-			<display item="Decel" />
-			<label label=" "/>
-			<display item="Total PWM Period" />
-			<label label=" "/>
-			<display item="Pause Time between changes in direction" />
-			<label label=" "/>
-			<display item="MTS Back-EMF"/>
-			<display item="analog Back-EMF"/>
-			<label label=" "/>
-			<display item="Back-EMF Maximum Adjustment Factor"/>
-			<display item="Back-EMF Adjustment Frequency"/>
-			<display item="Back-EMF Maximum Adjustment"/>
-		</column>
-	</pane>
-
-	<pane name="Basic Speed Control">
-		<column>
-			<row>
-				<column>
-					<label label=" "/>
-					<display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below"/>
-					<label label="           To turn off, use Speed Table pane"/>
-					<label label=" "/>
-				</column>
-			</row>
-			<row>
-				<label label=" "/>
-			</row>
-			<row>
-				<label label=" "/>
-			</row>
-			<row>
-				<column>
-					<display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1"/>
-					<display item="Vhigh" tooltip="Sets the maximum voltage at full throttle"/>
-					<display item="Speed Table/Mid Range Cab Speed Step" tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first"/>
-				</column>
-				<column>
-					<display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1"/>
-					<display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle"/>
-				</column>
-			</row>
-		</column>
-	</pane>
-
-	<pane name="Speed Table">
-		<column>
-			<row>
-				<column>
-					<display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control"/>
-					<label label="            To turn off, use Basic Speed Control pane"/>
-				</column>
-			</row>
-			<row>
-				<label label=" "/>
-			</row>
-			<row>
-				<label label=" "/>
-			</row>
-			<row>
-				<column>
-					<label label=" "/>
-					<display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table"/>
-				</column>
-			</row>
-			<row>
-				<column>
-					<display item="Speed Table" layout="above"/>
-					<label label=" "/>
-				</column>
-			</row>
-		</column>
-	</pane>
-
-
-	<pane name="Lights and Functions">
-		<column>
-			<display item="Voltage for lighting terminals"/>
-			<display item="Voltage for F1 terminal"/>
-			<display item="Voltage for F2 terminal"/>
-			<label label=" "/>
-			<display item="Command for front lighting terminal"/>
-			<display item="Command for rear lighting terminal"/>
-			<display item="Command for F1 terminal"/>
-			<display item="Command for F2 terminal"/>
-			<label label=" "/>
-			<display item="F1 output flashing"/>
-			<display item="F2 output flashing"/>
-		</column>
-	</pane>
-
-        <pane name="Analog Controls">
-                <column>
-                        <display item="Analog (DC) Operation" />
-                </column>
-                <column>
-                        <display item="Analog Mode Function Status - F1" format="checkbox" />
-                        <display item="Analog Mode Function Status - F2" format="checkbox" />
-                        <display item="Analog Mode Function Status - F3" format="checkbox" />
-                        <display item="Analog Mode Function Status - F4" format="checkbox" />
-                        <display item="Analog Mode Function Status - F5" format="checkbox" />
-                        <display item="Analog Mode Function Status - F6" format="checkbox" />
-                </column>
-        </pane>
-
-	<pane name="Miscellaneous">
-		<column>
-			<display item="hand-off function"/>
-		</column>
-	</pane>
-
-	<pane name="Sound - Main">
-		<column>
-			<display item="Control Register - Type of Sound"/>
-			<display item="Sound On/Off: Command Allocation - Function Keys"/>
-			<display item="Loco Start Up/Shut Down: Command Allocation - Function Keys"/>
-			<label label=" "/>
-			<display item="Random Sounds Generator"/>
-			<display item="Standing Phase Noise"/>
-			<display item="Load dependent sound"/>
-			<display item="Automatic brake sounds"/>
-
-			<label label=" "/>
-		</column>
-	</pane>
-
-	<pane name="Sound - F-Keys">
-		<column>
-			<display item="Horn: Command Allocation - Function Keys"/>
-			<display item="Horn: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Brake: Command Allocation - Function Keys"/>
-			<display item="Brake: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Bell: Command Allocation - Function Keys"/>
-			<display item="Bell: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Coupling: Command Allocation - Function Keys"/>
-			<display item="Coupling: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Engineer enters cab: Command Allocation - Function Keys"/>
-			<display item="Engineer enters cab: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Rolling train: Command Allocation - Function Keys"/>
-			<display item="Rolling train: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Compressor: Command Allocation - Function Keys"/>
-			<display item="Compressor: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Trill whistle: Command Allocation - Function Keys"/>
-			<display item="Trill whistle: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="Gear box direction change: Command Allocation - Function Keys"/>
-			<display item="Gear box direction change: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="No sound 10: Command Allocation - Function Keys"/>
-			<display item="No sound 10: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="No sound 11: Command Allocation - Function Keys"/>
-			<display item="No sound 11: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-			<display item="No sound 12: Command Allocation - Function Keys"/>
-			<display item="No sound 12: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
-			<label label=" "/>
-		</column>
-	</pane>
-
-	<pane name="Sound - Standing">
-		<column>
-			<display item="Standing sound 1 : sound assignment"/>
-			<display item="Standing sound 1 : Number of repetitions" label="Number of repetitions"/>
-			<label label=" "/>
-			<display item="Standing sound 2 : sound assignment"/>
-			<display item="Standing sound 2 : Number of repetitions" label="Number of repetitions"/>
-			<label label=" "/>
-			<display item="Standing sound 3 : sound assignment"/>
-			<display item="Standing sound 3 : Number of repetitions" label="Number of repetitions"/>
-			<label label=" "/>
-			<display item="Standing sound 4 : sound assignment"/>
-			<display item="Standing sound 4 : Number of repetitions" label="Number of repetitions"/>
-			<label label=" "/>
-		</column>
-	</pane>
-
-	<pane name="Sound - Random">
-		<column>
-			<display item="Time Value of Random Generator"/>
-			<label label=" "/>
-			<display item="Random sound 1 : sound assignment"/>
-			<display item="Random sound 1 : Number of repetitions" label="Number of repetitions"/>
-			<label label=" "/>
-			<display item="Random sound 2 : sound assignment"/>
-			<display item="Random sound 2 : Number of repetitions" label="Number of repetitions"/>
-			<label label=" "/>
-			<display item="Random sound 3 : sound assignment"/>
-			<display item="Random sound 3 : Number of repetitions" label="Number of repetitions"/>
-			<label label=" "/>
-			<display item="Random sound 4 : sound assignment"/>
-			<display item="Random sound 4 : Number of repetitions" label="Number of repetitions"/>
-			<label label=" "/>
-		</column>
-	</pane>
-
-	<pane name="CVs">
-		<column>
-			<cvtable/>
-		</column>
-	</pane>
-
+  <decoder>
+    <family name="LGB" mfg="Massoth Elektronik, GmbH">
+      <model model="LGB MTS 22592 with onboard sound decoder" lowVersionID="10" highVersionID="39" maxInputVolts="24 V" numOuts="4" numFns="14" formFactor="G" connector="other">
+        <output name="1" label="Front light" connection="other"/>
+        <output name="2" label="Rear light " connection="other"/>
+        <output name="3" label="F1 " connection="other"/>
+        <output name="4" label="F2 " connection="other"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="no"/>
+    <variables>
+      <variable label="Short Address" CV="1" item="Short Address" tooltip="Sets the Primary 2 digit address - LGB 0-22 for add-on, 1-23 for onboard CV1">
+        <shortAddressVal/>
+      </variable>
+      <variable label="Starting voltage" CV="2" item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1 - 0: slow, 255: maximum speed CV2">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Acceleration" CV="3" item="Accel" tooltip="Sets the acceleration rate - 1: rapid acceleration, 255: gradual acceleration CV3">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Braking" CV="4" item="Decel" tooltip="Sets the deceleration rate - 1: rapid braking, 255: gradual braking) CV4">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Maximum Motor Voltage" CV="5" item="Vhigh" tooltip="Sets the maximum voltage at full throttle - 1: slow, 255: maximum speed CV5">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Software Version Number" CV="7" readOnly="yes" item="Decoder Version" tooltip="The decoder version number (read only) CV7">
+        <decVal/>
+      </variable>
+      <variable label="Manufacturer Code" CV="8" readOnly="yes" item="Manufacturer" tooltip="The manufacturer's ID number (read only) CV8">
+        <decVal/>
+      </variable>
+      <variable label="Motor Frequency" CV="9" item="Total PWM Period" tooltip="Sets the motor drive frequency - Note: Back-EMF only works with 16 kHz CV9">
+        <enumVal>
+          <enumChoice choice="16 kHz"/>
+          <enumChoice choice="1.8 kHz"/>
+          <enumChoice choice="270 Hz"/>
+          <enumChoice choice="70 Hz"/>
+        </enumVal>
+      </variable>
+      <variable label="F1 Function Output in Analog Mode" CV="13" mask="XXXXXXXV" default="1" item="Analog Mode Function Status - F1" tooltip="(On if value set) CV13">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="F2 Function Output in Analog Mode" CV="13" mask="XXXXXXVX" default="1" item="Analog Mode Function Status - F2" tooltip="(On if value set) CV13">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="F3 Function Output in Analog Mode" CV="13" mask="XXXXXVXX" default="0" item="Analog Mode Function Status - F3" tooltip="(On if value set) CV13">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="F4 Function Output in Analog Mode" CV="13" mask="XXXXVXXX" default="0" item="Analog Mode Function Status - F4" tooltip="(On if value set) CV13">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="F5 Function Output in Analog Mode" CV="13" mask="XXXVXXXX" default="0" item="Analog Mode Function Status - F5" tooltip="(On if value set) CV13">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="F6 Function Output in Analog Mode" CV="13" mask="XXVXXXXX" default="0" item="Analog Mode Function Status - F6" tooltip="(On if value set) CV13">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended 4 digit address (Range 128-10239) (not LGB MTS) CV17-18">
+        <longAddressVal/>
+      </variable>
+      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward CV29">
+        <enumVal>
+          <enumChoice choice="Forward"/>
+          <enumChoice choice="Reverse"/>
+        </enumVal>
+      </variable>
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" tooltip="Sets the speed step mode CV29">
+        <enumVal>
+          <enumChoice choice="14"/>
+          <enumChoice choice="28/128 (not LGB MTS)"/>
+        </enumVal>
+      </variable>
+      <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion) CV29">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" tooltip="Determines whether loco will use manufacturer's internal or user-defined speed step table CV29">
+        <enumVal>
+          <enumChoice choice="internal speed step table"/>
+          <enumChoice choice="user-programmed speed step table (CV's 67-94)"/>
+        </enumVal>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format" tooltip="Determines whether loco will use short or long address CV29">
+        <enumVal>
+          <enumChoice choice="address 1-127 (LGB MTS: 0-22/1-23)"/>
+          <enumChoice choice="address 128-10239 (not LGB MTS)"/>
+        </enumVal>
+      </variable>
+      <variable label="Voltage for F1 terminal" CV="49" tooltip="Voltage for F1 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage CV49">
+        <decVal min="1" max="32"/>
+      </variable>
+      <variable label="Voltage for lighting terminals" CV="50" tooltip="Voltage for front, rear and interior light - 1:low voltage, 5:5V light bulbs, 32:maximum voltage CV50">
+        <decVal min="1" max="32"/>
+      </variable>
+      <variable label="Command for F1 terminal" CV="51" tooltip="Command which triggers the F1 terminal CV51">
+        <enumVal>
+          <enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
+          <enumChoice choice="button 1 (parallel only)" value="1"/>
+          <enumChoice choice="button 2 (parallel only)" value="2"/>
+          <enumChoice choice="button 3 (parallel only)" value="3"/>
+          <enumChoice choice="button 4 (parallel only)" value="4"/>
+          <enumChoice choice="button 5 (parallel only)" value="5"/>
+          <enumChoice choice="button 6 (parallel only)" value="6"/>
+          <enumChoice choice="button 7 (parallel only)" value="7"/>
+          <enumChoice choice="button 8 (parallel only)" value="8"/>
+          <enumChoice choice="button 1 (parallel and serial)" value="9"/>
+          <enumChoice choice="button 2 (parallel and serial)" value="10"/>
+          <enumChoice choice="button 3 (parallel and serial)" value="11"/>
+          <enumChoice choice="button 4 (parallel and serial)" value="12"/>
+          <enumChoice choice="button 5 (parallel and serial)" value="13"/>
+          <enumChoice choice="button 6 (parallel and serial)" value="14"/>
+          <enumChoice choice="button 7 (parallel and serial)" value="15"/>
+          <enumChoice choice="button 8 (parallel and serial)" value="16"/>
+          <enumChoice choice="buttons 1-8 with fast pulse string (for 55021 with P-Update only)" value="33"/>
+          <enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is reversing)" value="64"/>
+          <enumChoice choice="button 1 (on only when loco is reversing)" value="65"/>
+          <enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is moving forward)" value="128"/>
+          <enumChoice choice="button 1 (on only when loco is moving forward)" value="129"/>
+        </enumVal>
+      </variable>
+      <variable label="Command for front lighting terminal" CV="52" tooltip="Command which triggers the front light terminal CV52">
+        <enumVal>
+          <enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
+          <enumChoice choice="button 1 (parallel only)" value="1"/>
+          <enumChoice choice="button 2 (parallel only)" value="2"/>
+          <enumChoice choice="button 3 (parallel only)" value="3"/>
+          <enumChoice choice="button 4 (parallel only)" value="4"/>
+          <enumChoice choice="button 5 (parallel only)" value="5"/>
+          <enumChoice choice="button 6 (parallel only)" value="6"/>
+          <enumChoice choice="button 7 (parallel only)" value="7"/>
+          <enumChoice choice="button 8 (parallel only)" value="8"/>
+          <enumChoice choice="button 1 (parallel and serial)" value="9"/>
+          <enumChoice choice="button 2 (parallel and serial)" value="10"/>
+          <enumChoice choice="button 3 (parallel and serial)" value="11"/>
+          <enumChoice choice="button 4 (parallel and serial)" value="12"/>
+          <enumChoice choice="button 5 (parallel and serial)" value="13"/>
+          <enumChoice choice="button 6 (parallel and serial)" value="14"/>
+          <enumChoice choice="button 7 (parallel and serial)" value="15"/>
+          <enumChoice choice="button 8 (parallel and serial)" value="16"/>
+          <enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is reversing)" value="64"/>
+          <enumChoice choice="button 1 (on only when loco is reversing)" value="65"/>
+          <enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is moving forward)" value="128"/>
+          <enumChoice choice="button 1 (on only when loco is moving forward)" value="129"/>
+        </enumVal>
+      </variable>
+      <variable label="Command for rear lighting terminal" CV="53" tooltip="Command which triggers the rear light terminal CV53">
+        <enumVal>
+          <enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
+          <enumChoice choice="button 1 (parallel only)" value="1"/>
+          <enumChoice choice="button 2 (parallel only)" value="2"/>
+          <enumChoice choice="button 3 (parallel only)" value="3"/>
+          <enumChoice choice="button 4 (parallel only)" value="4"/>
+          <enumChoice choice="button 5 (parallel only)" value="5"/>
+          <enumChoice choice="button 6 (parallel only)" value="6"/>
+          <enumChoice choice="button 7 (parallel only)" value="7"/>
+          <enumChoice choice="button 8 (parallel only)" value="8"/>
+          <enumChoice choice="button 1 (parallel and serial)" value="9"/>
+          <enumChoice choice="button 2 (parallel and serial)" value="10"/>
+          <enumChoice choice="button 3 (parallel and serial)" value="11"/>
+          <enumChoice choice="button 4 (parallel and serial)" value="12"/>
+          <enumChoice choice="button 5 (parallel and serial)" value="13"/>
+          <enumChoice choice="button 6 (parallel and serial)" value="14"/>
+          <enumChoice choice="button 7 (parallel and serial)" value="15"/>
+          <enumChoice choice="button 8 (parallel and serial)" value="16"/>
+          <enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is reversing)" value="64"/>
+          <enumChoice choice="button 1 (on only when loco is reversing)" value="65"/>
+          <enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is moving forward)" value="128"/>
+          <enumChoice choice="button 1 (on only when loco is moving forward)" value="129"/>
+        </enumVal>
+      </variable>
+      <variable label="hand-off function" CV="54" mask="XXXXXXXV" tooltip="Determines if MTS hand-off is on or off CV54">
+        <enumVal>
+          <enumChoice choice="off"/>
+          <enumChoice choice="on"/>
+        </enumVal>
+      </variable>
+      <variable label="MTS Back-EMF" CV="54" mask="XXXXXXVX" tooltip="Determines if digital back-EMF is on or off CV54">
+        <enumVal>
+          <enumChoice choice="off"/>
+          <enumChoice choice="on"/>
+        </enumVal>
+      </variable>
+      <variable label="analog Back-EMF" CV="54" mask="XXXXXVXX" tooltip="Determines if analog back-EMF is on or off CV54">
+        <enumVal>
+          <enumChoice choice="off"/>
+          <enumChoice choice="on"/>
+        </enumVal>
+      </variable>
+      <variable label="Load dependent sound" CV="54" mask="XXXXVXXX" tooltip="Determines if load dependent sound is on or off CV54">
+        <enumVal>
+          <enumChoice choice="off"/>
+          <enumChoice choice="on"/>
+        </enumVal>
+      </variable>
+      <variable label="F1 output flashing" CV="54" mask="XXXVXXXX" tooltip="Determines if F1 is constant or flashing CV54">
+        <enumVal>
+          <enumChoice choice="F1 permanently on"/>
+          <enumChoice choice="F1 flashing"/>
+        </enumVal>
+      </variable>
+      <variable label="F2 output flashing" CV="54" mask="XXVXXXXX" tooltip="Determines if F2 is constant or flashing CV54">
+        <enumVal>
+          <enumChoice choice="F2 permanently on"/>
+          <enumChoice choice="F2 flashing"/>
+        </enumVal>
+      </variable>
+      <variable label="Automatic brake sounds" CV="54" mask="XVXXXXXX" tooltip="Determines if automatic brake sounds are on or off CV54">
+        <enumVal>
+          <enumChoice choice="off"/>
+          <enumChoice choice="on"/>
+        </enumVal>
+      </variable>
+      <variable label="Loco dependent bit 8" CV="54" mask="VXXXXXXX" tooltip="Check your loco's manual to determine use of this bit CV54">
+        <enumVal>
+          <enumChoice choice="0 - e.g. Automatic sounds on"/>
+          <enumChoice choice="1 - e.g. Automatic sounds off"/>
+        </enumVal>
+      </variable>
+      <variable label="Voltage for F2 terminal" CV="56" tooltip="Voltage for F2 terminal - 1:low voltage, 5:5V light bulbs or smoke generator, 32:maximum voltage CV56">
+        <decVal min="1" max="32"/>
+      </variable>
+      <variable label="Command for F2 terminal" CV="57" tooltip="Command which triggers the F2 terminal CV57">
+        <enumVal>
+          <enumChoice choice="lighting button (LGB=9, others=0)" value="0"/>
+          <enumChoice choice="button 1 (parallel only)" value="1"/>
+          <enumChoice choice="button 2 (parallel only)" value="2"/>
+          <enumChoice choice="button 3 (parallel only)" value="3"/>
+          <enumChoice choice="button 4 (parallel only)" value="4"/>
+          <enumChoice choice="button 5 (parallel only)" value="5"/>
+          <enumChoice choice="button 6 (parallel only)" value="6"/>
+          <enumChoice choice="button 7 (parallel only)" value="7"/>
+          <enumChoice choice="button 8 (parallel only)" value="8"/>
+          <enumChoice choice="button 1 (parallel and serial)" value="9"/>
+          <enumChoice choice="button 2 (parallel and serial)" value="10"/>
+          <enumChoice choice="button 3 (parallel and serial)" value="11"/>
+          <enumChoice choice="button 4 (parallel and serial)" value="12"/>
+          <enumChoice choice="button 5 (parallel and serial)" value="13"/>
+          <enumChoice choice="button 6 (parallel and serial)" value="14"/>
+          <enumChoice choice="button 7 (parallel and serial)" value="15"/>
+          <enumChoice choice="button 8 (parallel and serial)" value="16"/>
+          <enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is reversing)" value="64"/>
+          <enumChoice choice="button 1 (on only when loco is reversing)" value="65"/>
+          <enumChoice choice="lighting button (LGB=9, others=0) (on only when loco is moving forward)" value="128"/>
+          <enumChoice choice="button 1 (on only when loco is moving forward)" value="129"/>
+        </enumVal>
+      </variable>
+      <variable label="Pause Time between changes in direction" CV="58" tooltip="Pause equals programmed value x 0.5 seconds CV58">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Back-EMF Maximum Adjustment Factor" CV="60" tooltip="1: small steps, 255: large steps (Note: LGB recommends not changing this CV) CV60">
+        <decVal min="1" max="255"/>
+      </variable>
+      <variable label="Back-EMF Adjustment Frequency" CV="61" tooltip="0: immediate adjustment, 255: maximum delay (Note: LGB recommends not changing this CV) CV61">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Back-EMF Maximum Adjustment" CV="62" tooltip="0: no adjustment, 255: maximum adjustment (Note: LGB recommends not changing this CV) CV62">
+        <decVal min="0" max="255"/>
+      </variable>
+      <variable label="Speed Table" CV="67">
+        <speedTableVal>
+          <speedTableEntry step="1" value="8"/>
+          <speedTableEntry step="2" value="16"/>
+          <speedTableEntry step="3" value="24"/>
+          <speedTableEntry step="4" value="32"/>
+          <speedTableEntry step="5" value="40"/>
+          <speedTableEntry step="6" value="48"/>
+          <speedTableEntry step="7" value="56"/>
+          <speedTableEntry step="8" value="64"/>
+          <speedTableEntry step="9" value="72"/>
+          <speedTableEntry step="10" value="80"/>
+          <speedTableEntry step="11" value="88"/>
+          <speedTableEntry step="12" value="96"/>
+          <speedTableEntry step="13" value="104"/>
+          <speedTableEntry step="14" value="112"/>
+          <speedTableEntry step="15" value="120"/>
+          <speedTableEntry step="16" value="128"/>
+          <speedTableEntry step="17" value="136"/>
+          <speedTableEntry step="18" value="144"/>
+          <speedTableEntry step="19" value="152"/>
+          <speedTableEntry step="20" value="160"/>
+          <speedTableEntry step="21" value="168"/>
+          <speedTableEntry step="22" value="176"/>
+          <speedTableEntry step="23" value="184"/>
+          <speedTableEntry step="24" value="192"/>
+          <speedTableEntry step="25" value="208"/>
+          <speedTableEntry step="26" value="224"/>
+          <speedTableEntry step="27" value="240"/>
+          <speedTableEntry step="28" value="255"/>
+        </speedTableVal>
+      </variable>
+      <!-- Do not attempt to read CV 105 on an LGB decoder -->
+      <variable label="ID for Decoder Type" CV="106" readOnly="yes" item="Product number" tooltip="ID for Decoder Type (read only) CV106">
+        <decVal/>
+      </variable>
+      <variable label="Horn: Command Allocation - Function Keys" CV="131" tooltip="Function key which switches Horn CV131">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Brake: Command Allocation - Function Keys" CV="132" tooltip="Function key which switches Brake CV132">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Bell: Command Allocation - Function Keys" CV="133" tooltip="Function key which switches Bell CV133">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Coupling: Command Allocation - Function Keys" CV="134" tooltip="Function key which switches Coupling CV134">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Engineer enters cab: Command Allocation - Function Keys" CV="135" tooltip="Function key which switches Engineer enters cab CV135">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Rolling train: Command Allocation - Function Keys" CV="136" tooltip="Function key which switches Rolling train CV136">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Compressor: Command Allocation - Function Keys" CV="137" tooltip="Function key which switches Compressor CV137">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Trill whistle: Command Allocation - Function Keys" CV="138" tooltip="Function key which switches Trill whistle CV138">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Gear box direction change: Command Allocation - Function Keys" CV="139" tooltip="Function key which switches Gear box direction change CV139">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="No sound 10: Command Allocation - Function Keys" CV="140" tooltip="Function key which switches No sound 10 CV140">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="No sound 11: Command Allocation - Function Keys" CV="141" tooltip="Function key which switches No sound 11 CV141">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="No sound 12: Command Allocation - Function Keys" CV="142" tooltip="Function key which switches No sound 12 CV142">
+        <enumVal>
+          <enumChoice choice="Deactivated (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Sound On/Off: Command Allocation - Function Keys" CV="147" default="6" tooltip="Function key which switches sound (amplifier) on/off CV147">
+        <enumVal>
+          <enumChoice choice="Sound steady (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Loco Start Up/Shut Down: Command Allocation - Function Keys" CV="148" default="5" tooltip="Function key which switches Loco Start Up/Shut Down CV148">
+        <enumVal>
+          <enumChoice choice="Loco always on (not switched with F-Key)" value="0"/>
+          <enumChoice choice="F1" value="1"/>
+          <enumChoice choice="F2" value="2"/>
+          <enumChoice choice="F3" value="3"/>
+          <enumChoice choice="F4" value="4"/>
+          <enumChoice choice="F5" value="5"/>
+          <enumChoice choice="F6" value="6"/>
+          <enumChoice choice="F7" value="7"/>
+          <enumChoice choice="F8" value="8"/>
+          <enumChoice choice="F9" value="9"/>
+          <enumChoice choice="F10" value="10"/>
+          <enumChoice choice="F11" value="11"/>
+          <enumChoice choice="F12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Random Sounds Generator" CV="149" mask="XXXXXXXV" default="0" tooltip="Random generator active or not CV149">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing Phase Noise" CV="150" mask="XXXXXXXV" default="0" tooltip="Standing Phase Noise active or not CV150">
+        <enumVal>
+          <enumChoice choice="Off"/>
+          <enumChoice choice="On"/>
+        </enumVal>
+      </variable>
+      <variable label="Horn: Number of repetitions with F-Key" CV="151" tooltip="How many times Horn loops when F-Key is pressed CV151">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Brake: Number of repetitions with F-Key" CV="152" tooltip="How many times Brake loops when F-Key is pressed CV152">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Bell: Number of repetitions with F-Key" CV="153" tooltip="How many times Bell loops when F-Key is pressed CV153">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Coupling: Number of repetitions with F-Key" CV="154" tooltip="How many times Coupling loops when F-Key is pressed CV154">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Engineer enters cab: Number of repetitions with F-Key" CV="155" tooltip="How many times Engineer enters cab loops when F-Key is pressed CV155">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Rolling train: Number of repetitions with F-Key" CV="156" tooltip="How many times Rolling train loops when F-Key is pressed CV156">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Compressor: Number of repetitions with F-Key" CV="157" tooltip="How many times Compressor loops when F-Key is pressed CV157">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Trill whistle: Number of repetitions with F-Key" CV="158" tooltip="How many times Trill whistle loops when F-Key is pressed CV158">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="Gear box direction change: Number of repetitions with F-Key" CV="159" tooltip="How many times Gear box direction change loops when F-Key is pressed CV159">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="No sound 10: Number of repetitions with F-Key" CV="160" tooltip="How many times No sound 10 loops when F-Key is pressed CV160">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="No sound 11: Number of repetitions with F-Key" CV="161" tooltip="How many times No sound 11 loops when F-Key is pressed CV161">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <variable label="No sound 12: Number of repetitions with F-Key" CV="162" tooltip="How many times No sound 12 loops when F-Key is pressed CV162">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+          <enumChoice choice="Manual - Sound repeats until F-Key pressed again" value="16"/>
+        </enumVal>
+      </variable>
+      <!-- This CV isn't documented for this decoder but appears to give correct value, 2 = diesel -->
+      <variable label="Control Register - Type of Sound" CV="167" readOnly="yes" tooltip="Type of sound - DO NOT CHANGE!! - Read Only CV167">
+        <enumVal>
+          <enumChoice choice="(CV not read)" value="0"/>
+          <enumChoice choice="Steam" value="1"/>
+          <enumChoice choice="Diesel" value="2"/>
+          <enumChoice choice="Electric" value="6"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing sound 1 : sound assignment" CV="171" tooltip="First standing sound to be played CV171">
+        <enumVal>
+          <enumChoice choice="No standing sound" value="0"/>
+          <enumChoice choice="Horn" value="1"/>
+          <enumChoice choice="Brake" value="2"/>
+          <enumChoice choice="Bell" value="3"/>
+          <enumChoice choice="Coupling" value="4"/>
+          <enumChoice choice="Engineer enters cab" value="5"/>
+          <enumChoice choice="Rolling train" value="6"/>
+          <enumChoice choice="Compressor" value="7"/>
+          <enumChoice choice="Trill whistle" value="8"/>
+          <enumChoice choice="Gear box direction change" value="9"/>
+          <enumChoice choice="No sound 10" value="10"/>
+          <enumChoice choice="No sound 11" value="11"/>
+          <enumChoice choice="No sound 12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing sound 2 : sound assignment" CV="172" tooltip="Second standing sound to be played CV172">
+        <enumVal>
+          <enumChoice choice="No standing sound" value="0"/>
+          <enumChoice choice="Horn" value="1"/>
+          <enumChoice choice="Brake" value="2"/>
+          <enumChoice choice="Bell" value="3"/>
+          <enumChoice choice="Coupling" value="4"/>
+          <enumChoice choice="Engineer enters cab" value="5"/>
+          <enumChoice choice="Rolling train" value="6"/>
+          <enumChoice choice="Compressor" value="7"/>
+          <enumChoice choice="Trill whistle" value="8"/>
+          <enumChoice choice="Gear box direction change" value="9"/>
+          <enumChoice choice="No sound 10" value="10"/>
+          <enumChoice choice="No sound 11" value="11"/>
+          <enumChoice choice="No sound 12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing sound 3 : sound assignment" CV="173" tooltip="Third standing sound to be played CV173">
+        <enumVal>
+          <enumChoice choice="No standing sound" value="0"/>
+          <enumChoice choice="Horn" value="1"/>
+          <enumChoice choice="Brake" value="2"/>
+          <enumChoice choice="Bell" value="3"/>
+          <enumChoice choice="Coupling" value="4"/>
+          <enumChoice choice="Engineer enters cab" value="5"/>
+          <enumChoice choice="Rolling train" value="6"/>
+          <enumChoice choice="Compressor" value="7"/>
+          <enumChoice choice="Trill whistle" value="8"/>
+          <enumChoice choice="Gear box direction change" value="9"/>
+          <enumChoice choice="No sound 10" value="10"/>
+          <enumChoice choice="No sound 11" value="11"/>
+          <enumChoice choice="No sound 12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing sound 4 : sound assignment" CV="174" tooltip="Fourth standing sound to be played CV174">
+        <enumVal>
+          <enumChoice choice="No standing sound" value="0"/>
+          <enumChoice choice="Horn" value="1"/>
+          <enumChoice choice="Brake" value="2"/>
+          <enumChoice choice="Bell" value="3"/>
+          <enumChoice choice="Coupling" value="4"/>
+          <enumChoice choice="Engineer enters cab" value="5"/>
+          <enumChoice choice="Rolling train" value="6"/>
+          <enumChoice choice="Compressor" value="7"/>
+          <enumChoice choice="Trill whistle" value="8"/>
+          <enumChoice choice="Gear box direction change" value="9"/>
+          <enumChoice choice="No sound 10" value="10"/>
+          <enumChoice choice="No sound 11" value="11"/>
+          <enumChoice choice="No sound 12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing sound 1 : Number of repetitions" CV="175" tooltip="How many times standing sound 1 loops CV175">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing sound 1 : Number of repetitions" CV="175" tooltip="How many times first standing sound loops CV175">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing sound 2 : Number of repetitions" CV="176" tooltip="How many times second standing sound loops CV176">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing sound 3 : Number of repetitions" CV="177" tooltip="How many times third standing sound loops CV177">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+        </enumVal>
+      </variable>
+      <variable label="Standing sound 4 : Number of repetitions" CV="178" tooltip="How many times fourth standing sound loops CV178">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+        </enumVal>
+      </variable>
+      <variable label="Time Value of Random Generator" CV="179" default="3" tooltip="How often random sounds are generated CV179">
+        <enumVal>
+          <enumChoice choice="(CV not read)" value="0"/>
+          <enumChoice choice="Frequent triggering" value="1"/>
+          <enumChoice choice="Middling triggering" value="2"/>
+          <enumChoice choice="Infrequent triggering" value="3"/>
+        </enumVal>
+      </variable>
+      <variable label="Random sound 1 : sound assignment" CV="180" tooltip="The sounds selected are triggered randomly CV180">
+        <enumVal>
+          <enumChoice choice="No random sound" value="0"/>
+          <enumChoice choice="Horn" value="1"/>
+          <enumChoice choice="Brake" value="2"/>
+          <enumChoice choice="Bell" value="3"/>
+          <enumChoice choice="Coupling" value="4"/>
+          <enumChoice choice="Engineer enters cab" value="5"/>
+          <enumChoice choice="Rolling train" value="6"/>
+          <enumChoice choice="Compressor" value="7"/>
+          <enumChoice choice="Trill whistle" value="8"/>
+          <enumChoice choice="Gear box direction change" value="9"/>
+          <enumChoice choice="No sound 10" value="10"/>
+          <enumChoice choice="No sound 11" value="11"/>
+          <enumChoice choice="No sound 12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Random sound 2 : sound assignment" CV="181" tooltip="The sounds selected are triggered randomly CV181">
+        <enumVal>
+          <enumChoice choice="No random sound" value="0"/>
+          <enumChoice choice="Horn" value="1"/>
+          <enumChoice choice="Brake" value="2"/>
+          <enumChoice choice="Bell" value="3"/>
+          <enumChoice choice="Coupling" value="4"/>
+          <enumChoice choice="Engineer enters cab" value="5"/>
+          <enumChoice choice="Rolling train" value="6"/>
+          <enumChoice choice="Compressor" value="7"/>
+          <enumChoice choice="Trill whistle" value="8"/>
+          <enumChoice choice="Gear box direction change" value="9"/>
+          <enumChoice choice="No sound 10" value="10"/>
+          <enumChoice choice="No sound 11" value="11"/>
+          <enumChoice choice="No sound 12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Random sound 3 : sound assignment" CV="182" tooltip="The sounds selected are triggered randomly CV182">
+        <enumVal>
+          <enumChoice choice="No random sound" value="0"/>
+          <enumChoice choice="Horn" value="1"/>
+          <enumChoice choice="Brake" value="2"/>
+          <enumChoice choice="Bell" value="3"/>
+          <enumChoice choice="Coupling" value="4"/>
+          <enumChoice choice="Engineer enters cab" value="5"/>
+          <enumChoice choice="Rolling train" value="6"/>
+          <enumChoice choice="Compressor" value="7"/>
+          <enumChoice choice="Trill whistle" value="8"/>
+          <enumChoice choice="Gear box direction change" value="9"/>
+          <enumChoice choice="No sound 10" value="10"/>
+          <enumChoice choice="No sound 11" value="11"/>
+          <enumChoice choice="No sound 12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Random sound 4 : sound assignment" CV="183" tooltip="The sounds selected are triggered randomly CV183">
+        <enumVal>
+          <enumChoice choice="No random sound" value="0"/>
+          <enumChoice choice="Horn" value="1"/>
+          <enumChoice choice="Brake" value="2"/>
+          <enumChoice choice="Bell" value="3"/>
+          <enumChoice choice="Coupling" value="4"/>
+          <enumChoice choice="Engineer enters cab" value="5"/>
+          <enumChoice choice="Rolling train" value="6"/>
+          <enumChoice choice="Compressor" value="7"/>
+          <enumChoice choice="Trill whistle" value="8"/>
+          <enumChoice choice="Gear box direction change" value="9"/>
+          <enumChoice choice="No sound 10" value="10"/>
+          <enumChoice choice="No sound 11" value="11"/>
+          <enumChoice choice="No sound 12" value="12"/>
+        </enumVal>
+      </variable>
+      <variable label="Random sound 1 : Number of repetitions" CV="184" tooltip="How many times random sound 1 loops CV184">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+        </enumVal>
+      </variable>
+      <variable label="Random sound 2 : Number of repetitions" CV="185" tooltip="How many times random sound 2 loops CV185">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+        </enumVal>
+      </variable>
+      <variable label="Random sound 3 : Number of repetitions" CV="186" tooltip="How many times random sound 3 loops CV186">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+        </enumVal>
+      </variable>
+      <variable label="Random sound 4 : Number of repetitions" CV="187" tooltip="How many times random sound 4 loops CV187">
+        <enumVal>
+          <enumChoice choice="Triggered only once" value="0"/>
+          <enumChoice choice="1" value="1"/>
+          <enumChoice choice="2" value="2"/>
+          <enumChoice choice="3" value="3"/>
+          <enumChoice choice="4" value="4"/>
+          <enumChoice choice="5" value="5"/>
+          <enumChoice choice="6" value="6"/>
+          <enumChoice choice="7" value="7"/>
+          <enumChoice choice="8" value="8"/>
+          <enumChoice choice="9" value="9"/>
+          <enumChoice choice="10" value="10"/>
+          <enumChoice choice="11" value="11"/>
+          <enumChoice choice="12" value="12"/>
+          <enumChoice choice="13" value="13"/>
+          <enumChoice choice="14" value="14"/>
+          <enumChoice choice="15" value="15"/>
+        </enumVal>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset to factory settings" CV="55" default="55"/>
+    </resets>
+  </decoder>
+  <pane name="Basic">
+    <column>
+      <dccaddress/>
+      <label label=" "/>
+      <display item="Short Address"/>
+      <display item="Long Address"/>
+      <display item="Address Format"/>
+      <label label=" "/>
+      <display item="Locomotive Direction"/>
+      <display item="Speed Step Mode"/>
+      <display item="Analog (DC) Operation"/>
+    </column>
+    <column>
+      <label label=" "/>
+      <label label=" "/>
+      <label label=" "/>
+      <separator/>
+      <label label=" "/>
+      <display item="Manufacturer"/>
+      <display item="Decoder Version"/>
+      <display item="Product number"/>
+    </column>
+  </pane>
+  <pane name="Motor">
+    <column>
+      <display item="Accel"/>
+      <display item="Decel"/>
+      <label label=" "/>
+      <display item="Total PWM Period"/>
+      <label label=" "/>
+      <display item="Pause Time between changes in direction"/>
+      <label label=" "/>
+      <display item="MTS Back-EMF"/>
+      <display item="analog Back-EMF"/>
+      <label label=" "/>
+      <display item="Back-EMF Maximum Adjustment Factor"/>
+      <display item="Back-EMF Adjustment Frequency"/>
+      <display item="Back-EMF Maximum Adjustment"/>
+    </column>
+  </pane>
+  <pane name="Basic Speed Control">
+    <column>
+      <row>
+        <column>
+          <label label=" "/>
+          <display item="Speed Table Definition" format="offradiobutton" layout="above" label="Select this button to use settings shown below"/>
+          <label label="           To turn off, use Speed Table pane"/>
+          <label label=" "/>
+        </column>
+      </row>
+      <row>
+        <label label=" "/>
+      </row>
+      <row>
+        <label label=" "/>
+      </row>
+      <row>
+        <column>
+          <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1"/>
+          <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle"/>
+          <display item="Speed Table/Mid Range Cab Speed Step" tooltip="Sets voltage curve for mid throttle, set Vstart and Vhigh first"/>
+        </column>
+        <column>
+          <display item="Vstart" format="hslider" label="" tooltip="Sets the starting voltage at throttle speed step 1"/>
+          <display item="Vhigh" format="hslider" label="" tooltip="Sets the maximum voltage at full throttle"/>
+        </column>
+      </row>
+    </column>
+  </pane>
+  <pane name="Speed Table">
+    <column>
+      <row>
+        <column>
+          <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control"/>
+          <label label="            To turn off, use Basic Speed Control pane"/>
+        </column>
+      </row>
+      <row>
+        <label label=" "/>
+      </row>
+      <row>
+        <label label=" "/>
+      </row>
+      <row>
+        <column>
+          <label label=" "/>
+          <display item="Speed Table Selection" tooltip="Select manufacturer's speed table or user table"/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Speed Table" layout="above"/>
+          <label label=" "/>
+        </column>
+      </row>
+    </column>
+  </pane>
+  <pane name="Lights and Functions">
+    <column>
+      <display item="Voltage for lighting terminals"/>
+      <display item="Voltage for F1 terminal"/>
+      <display item="Voltage for F2 terminal"/>
+      <label label=" "/>
+      <display item="Command for front lighting terminal"/>
+      <display item="Command for rear lighting terminal"/>
+      <display item="Command for F1 terminal"/>
+      <display item="Command for F2 terminal"/>
+      <label label=" "/>
+      <display item="F1 output flashing"/>
+      <display item="F2 output flashing"/>
+    </column>
+  </pane>
+  <pane name="Analog Controls">
+    <column>
+      <display item="Analog (DC) Operation"/>
+    </column>
+    <column>
+      <display item="Analog Mode Function Status - F1" format="checkbox"/>
+      <display item="Analog Mode Function Status - F2" format="checkbox"/>
+      <display item="Analog Mode Function Status - F3" format="checkbox"/>
+      <display item="Analog Mode Function Status - F4" format="checkbox"/>
+      <display item="Analog Mode Function Status - F5" format="checkbox"/>
+      <display item="Analog Mode Function Status - F6" format="checkbox"/>
+    </column>
+  </pane>
+  <pane name="Miscellaneous">
+    <column>
+      <display item="hand-off function"/>
+    </column>
+  </pane>
+  <pane name="Sound - Main">
+    <column>
+      <display item="Control Register - Type of Sound"/>
+      <display item="Sound On/Off: Command Allocation - Function Keys"/>
+      <display item="Loco Start Up/Shut Down: Command Allocation - Function Keys"/>
+      <label label=" "/>
+      <display item="Random Sounds Generator"/>
+      <display item="Standing Phase Noise"/>
+      <display item="Load dependent sound"/>
+      <display item="Automatic brake sounds"/>
+      <label label=" "/>
+    </column>
+  </pane>
+  <pane name="Sound - F-Keys">
+    <column>
+      <display item="Horn: Command Allocation - Function Keys"/>
+      <display item="Horn: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Brake: Command Allocation - Function Keys"/>
+      <display item="Brake: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Bell: Command Allocation - Function Keys"/>
+      <display item="Bell: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Coupling: Command Allocation - Function Keys"/>
+      <display item="Coupling: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Engineer enters cab: Command Allocation - Function Keys"/>
+      <display item="Engineer enters cab: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Rolling train: Command Allocation - Function Keys"/>
+      <display item="Rolling train: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Compressor: Command Allocation - Function Keys"/>
+      <display item="Compressor: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Trill whistle: Command Allocation - Function Keys"/>
+      <display item="Trill whistle: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="Gear box direction change: Command Allocation - Function Keys"/>
+      <display item="Gear box direction change: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="No sound 10: Command Allocation - Function Keys"/>
+      <display item="No sound 10: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="No sound 11: Command Allocation - Function Keys"/>
+      <display item="No sound 11: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+      <display item="No sound 12: Command Allocation - Function Keys"/>
+      <display item="No sound 12: Number of repetitions with F-Key" label="Number of repetitions with F-Key"/>
+      <label label=" "/>
+    </column>
+  </pane>
+  <pane name="Sound - Standing">
+    <column>
+      <display item="Standing sound 1 : sound assignment"/>
+      <display item="Standing sound 1 : Number of repetitions" label="Number of repetitions"/>
+      <label label=" "/>
+      <display item="Standing sound 2 : sound assignment"/>
+      <display item="Standing sound 2 : Number of repetitions" label="Number of repetitions"/>
+      <label label=" "/>
+      <display item="Standing sound 3 : sound assignment"/>
+      <display item="Standing sound 3 : Number of repetitions" label="Number of repetitions"/>
+      <label label=" "/>
+      <display item="Standing sound 4 : sound assignment"/>
+      <display item="Standing sound 4 : Number of repetitions" label="Number of repetitions"/>
+      <label label=" "/>
+    </column>
+  </pane>
+  <pane name="Sound - Random">
+    <column>
+      <display item="Time Value of Random Generator"/>
+      <label label=" "/>
+      <display item="Random sound 1 : sound assignment"/>
+      <display item="Random sound 1 : Number of repetitions" label="Number of repetitions"/>
+      <label label=" "/>
+      <display item="Random sound 2 : sound assignment"/>
+      <display item="Random sound 2 : Number of repetitions" label="Number of repetitions"/>
+      <label label=" "/>
+      <display item="Random sound 3 : sound assignment"/>
+      <display item="Random sound 3 : Number of repetitions" label="Number of repetitions"/>
+      <label label=" "/>
+      <display item="Random sound 4 : sound assignment"/>
+      <display item="Random sound 4 : Number of repetitions" label="Number of repetitions"/>
+      <label label=" "/>
+    </column>
+  </pane>
+  <pane name="CVs">
+    <column>
+      <cvtable/>
+    </column>
+  </pane>
 </decoder-config>
-
- 	  	 

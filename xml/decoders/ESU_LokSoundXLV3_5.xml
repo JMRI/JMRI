@@ -14,12 +14,12 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher mjmx@comcast.net" version="1" lastUpdated="20061120"/>
-<!-- made from the ESU_LokSoundV3_5.file -->
-<!-- Split file due to LS V3.5 now using Aux5 & Aux6 mapping to diesel notch up and down  -->
+  <!-- made from the ESU_LokSoundV3_5.file -->
+  <!-- Split file due to LS V3.5 now using Aux5 & Aux6 mapping to diesel notch up and down  -->
   <version author="Michael Mosher mjmx@comcast.net" version="2" lastUpdated="20090102"/>
-<!-- ver2 correct CV2,3,4,5,6 max values plus add function lables -->
+  <!-- ver2 correct CV2,3,4,5,6 max values plus add function lables -->
   <version author="Michael Mosher mjmx@comcast.net" version="3" lastUpdated="20090717"/>
-<!-- ver3 fix acc/dec on motor tab bug & incorporate latest changes from LS V3.5 file -->
+  <!-- ver3 fix acc/dec on motor tab bug & incorporate latest changes from LS V3.5 file -->
   <decoder>
     <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59">
       <model model="LokSoundXL Version 3.5" numOuts="8" numFns="12" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
@@ -33,8 +33,8 @@
         <output name="8" label="AUX 6" maxcurrent="600mA"/>
         <size length="51" width="40" height="14" units="mm"/>
         <protocols>
-            <protocol>dcc</protocol>
-            <protocol>motorola</protocol>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
         </protocols>
       </model>
       <functionlabels>
@@ -83,7 +83,7 @@
         <decVal max="64"/>
         <label>Vmid</label>
       </variable>
-<!-- CV7 and CV must be left as readonly = no otherwise will not display -->
+      <!-- CV7 and CV must be left as readonly = no otherwise will not display -->
       <variable label="Decoder Version " CV="7" readOnly="no" item="Decoder Version">
         <decVal/>
         <label>Decoder Version </label>
@@ -1295,7 +1295,7 @@
         <decVal max="16"/>
         <label>Sensor2 Rev</label>
       </variable>
-<!-- Definitions for A mapping -->
+      <!-- Definitions for A mapping -->
       <variable label="Stop(f)1" CV="129" mask="XXXXXXXV" minOut="1" item="Stop(f)1">
         <enumVal>
           <enumChoice choice="No">
@@ -4816,7 +4816,7 @@
         </enumVal>
         <label>sensor2(r)8</label>
       </variable>
-<!-- This is start of variable definition for Button Behavior -->
+      <!-- This is start of variable definition for Button Behavior -->
       <variable label="Stop Forward Button" CV="130" mask="XXXXXXXV" item="Stop forward1">
         <enumVal>
           <enumChoice choice="OFF/ON">

@@ -15,15 +15,15 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="10" lastUpdated="20050112"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="11" lastUpdated="20080412"/>
-<!-- Version 4 - added wire colors -->
-<!-- Version 5 - added some specific models, extended CV7 range to 249 -->
-<!-- Version 6 - renamed family, added models -->
-<!-- version 7 - adjusted top range of versionID -->
-<!-- version 8 - default BEMF value corrected -->
-<!-- Version 9 - fix "rule 17" typos -->
-<!-- Version 9.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- Version 10 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
-<!-- Version 11 - add factory reset -->
+  <!-- Version 4 - added wire colors -->
+  <!-- Version 5 - added some specific models, extended CV7 range to 249 -->
+  <!-- Version 6 - renamed family, added models -->
+  <!-- version 7 - adjusted top range of versionID -->
+  <!-- version 8 - default BEMF value corrected -->
+  <!-- Version 9 - fix "rule 17" typos -->
+  <!-- Version 9.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 10 - fixed mask for "Vstart/Vmid/Vfull in 128 step mode" - Bob Jacobsen -->
+  <!-- Version 11 - add factory reset -->
   <decoder>
     <family name="Premium FX with BEMF" mfg="Digitrax" lowVersionID="240" highVersionID="250">
       <model model="DH142" numOuts="4" numFns="2">
@@ -47,13 +47,9 @@
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="yes"/>
     <variables>
-      
       <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Version ID</label>
@@ -150,9 +146,7 @@
         </enumVal>
         <label>F0 Reverse during DC operation</label>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
-      
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
           <enumChoice choice="forward">
@@ -539,9 +533,7 @@
         </enumVal>
         <label>Function 4 behavior</label>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
-
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Advanced Ack">
         <enumVal>
           <enumChoice choice="Off">
@@ -613,19 +605,15 @@
         <label>Ditch light hold-over time</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
       </variable>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
-
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
-
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml" />
-
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
       <constant item="F1 controls output 3" minOut="3" minFn="1" default="1"/>
@@ -637,7 +625,6 @@
       <constant item="F7 controls output 9" minOut="9" minFn="7" default="1"/>
       <constant item="F8 controls output 10" minOut="10" minFn="8" default="1"/>
     </variables>
-
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
       <factReset label="Reset All CVs except speed table" CV="8" default="9"/>

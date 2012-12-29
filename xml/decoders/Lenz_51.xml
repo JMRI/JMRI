@@ -14,10 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Greene mgreene@cedarlane.com" version="2" lastUpdated="20040716"/>
-<!-- These are the version 5.1 decoders -->
-<!-- The defaults in this file match the values found in decoders from the factory but not the documentation -->
-<!-- Note that these Lenz decoders only support a 15 position speed table CV67-CV81 -->
-<!-- This file was built using the Lenz 5.4 XML file as a basis -->
+  <!-- These are the version 5.1 decoders -->
+  <!-- The defaults in this file match the values found in decoders from the factory but not the documentation -->
+  <!-- Note that these Lenz decoders only support a 15 position speed table CV67-CV81 -->
+  <!-- This file was built using the Lenz 5.4 XML file as a basis -->
   <decoder>
     <family name="Lenz 4th gen BEMF decoders" mfg="Lenz" lowVersionID="51">
       <model model="LE030" maxInputVolts="16V" maxMotorCurrent="0.7A" maxTotalCurrent="0.7A" numOuts="2" formFactor="N">
@@ -196,7 +196,7 @@
         <speedTableVal entries="15" max="63"/>
         <label>Speed Table</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
       <constant item="F1 controls output 3" minOut="3" default="1"/>

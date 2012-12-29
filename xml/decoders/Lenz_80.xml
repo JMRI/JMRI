@@ -14,10 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jack Walton jack@nyrs.com" version="2" lastUpdated="20040208"/>
-<!-- changed author email from jackwalton@ev1.net -->
-<!-- version 2 - changed CV2 'Item' to "Vstart", made CV50.1 functional, -->
-<!--    Accel/Decel Trim modified, Consist Addressing modified, -->
-<!--    minor formatting and label changes (Jack Shall) -->
+  <!-- changed author email from jackwalton@ev1.net -->
+  <!-- version 2 - changed CV2 'Item' to "Vstart", made CV50.1 functional, -->
+  <!--    Accel/Decel Trim modified, Consist Addressing modified, -->
+  <!--    minor formatting and label changes (Jack Shall) -->
   <decoder>
     <family name="Lenz SilentDrive decoders" mfg="Lenz" lowVersionID="60">
       <model model="LE080XS" numOuts="4" nmraWarrant="yes" nmraWarrantStart="200506">
@@ -478,7 +478,7 @@
         <decVal/>
         <label>Decoder Software Version (read only): </label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>

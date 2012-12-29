@@ -14,12 +14,12 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen" version="9" lastUpdated="20040227"/>
-<!-- version 4 added D15, D14, DA-SR, P2K, KRS, SW9, D408 and more functions -->
-<!-- version 6 changed the versionID range -->
-<!-- version 7 added N12 series decoders -->
-<!-- version 8 Some mods by Michael Mosher 7/2/03 -->
-<!-- Version 8.1 - changed spelling of "behavior" (Jack Shall) -->
-<!-- Version 9 - Updated version IDs, added some tooltips and comments (Jack Shall) -->
+  <!-- version 4 added D15, D14, DA-SR, P2K, KRS, SW9, D408 and more functions -->
+  <!-- version 6 changed the versionID range -->
+  <!-- version 7 added N12 series decoders -->
+  <!-- version 8 Some mods by Michael Mosher 7/2/03 -->
+  <!-- Version 8.1 - changed spelling of "behavior" (Jack Shall) -->
+  <!-- Version 9 - Updated version IDs, added some tooltips and comments (Jack Shall) -->
   <decoder>
     <family name="Silent Drive decoders" mfg="North Coast Engineering" lowVersionID="30" highVersionID="34" comment="These are the version 3.0-3.4 Silent Running decoders">
       <model model="D15SR" numOuts="5" numFns="6"/>
@@ -753,7 +753,7 @@
         </enumVal>
         <label>F3 controls output 8</label>
       </variable>
-<!-- this group is like NMRA, except we only go to output 8 for now -->
+      <!-- this group is like NMRA, except we only go to output 8 for now -->
       <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
         <enumVal>
           <enumChoice choice="No">
@@ -919,7 +919,7 @@
         </enumVal>
         <label>F6 controls output 8</label>
       </variable>
-<!-- The following are different from NMRA, both in bit value and mapping -->
+      <!-- The following are different from NMRA, both in bit value and mapping -->
       <variable label="F7 controls output 7" CV="41" mask="XXXXXXXV" minOut="7" minFn="7">
         <enumVal>
           <enumChoice choice="No">
@@ -964,7 +964,7 @@
         </enumVal>
         <label>F8 controls output 8</label>
       </variable>
-<!-- Back to NMRA-like, except we're only doing outputs 7 and 8 -->
+      <!-- Back to NMRA-like, except we're only doing outputs 7 and 8 -->
       <variable label="F9 controls output 7" CV="43" mask="XXXXXXXV" minOut="7" minFn="9">
         <enumVal>
           <enumChoice choice="No">
@@ -1058,7 +1058,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- NCE-specific variables -->
+      <!-- NCE-specific variables -->
       <variable label="Ditch light hold time" CV="118" mask="VVVVVVVV" item="Global lighting option 1" default="20" tooltip="Value in 1/4 second increments after F2 goes off">
         <decVal/>
         <label>Ditch light hold time</label>
@@ -1290,7 +1290,7 @@
         </enumVal>
         <label>Output 3 active</label>
       </variable>
-<!-- added out 3 options -->
+      <!-- added out 3 options -->
       <variable label="Output 3 connected to" CV="122" mask="VXXXXXXX" minOut="3" item="Output 3 options">
         <enumVal>
           <enumChoice choice="30-40mA incandescent bulb">
@@ -1302,7 +1302,7 @@
         </enumVal>
         <label>Output 3 connected to</label>
       </variable>
-<!--		<variable label="Output 4 connected to" CV="123" mask="VXXXXXXX" minOut="3"    -->
+      <!--		<variable label="Output 4 connected to" CV="123" mask="VXXXXXXX" minOut="3"    -->
       <variable label="Output 4 connected to" CV="123" mask="VXXXXXXX" minOut="4" item="Output 4 options">
         <enumVal>
           <enumChoice choice="30-40mA incandescent bulb">
@@ -1381,7 +1381,7 @@
         </enumVal>
         <label>Output 4 active</label>
       </variable>
-<!--		<variable label="Output 5 connected to" CV="124" mask="VXXXXXXX" minOut="4"   -->
+      <!--		<variable label="Output 5 connected to" CV="124" mask="VXXXXXXX" minOut="4"   -->
       <variable label="Output 5 connected to" CV="124" mask="VXXXXXXX" minOut="5" item="Output 5 options">
         <enumVal>
           <enumChoice choice="30-40mA incandescent bulb">

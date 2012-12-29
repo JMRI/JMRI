@@ -16,16 +16,16 @@
   <version author="Nigel Cliffe" version="6" lastUpdated="20091016"/>
   <version author="Bob Jacobsen rgj1927@pacbell.net" version="4" lastUpdated="20070411"/>
   <version author="Mark Schutzer mark.schutzer@sbcglobal.net" version="2" lastUpdated="20060114"/>
-<!-- Version 1 - created from Lenz_gold.xml "20060111"-->
-<!-- Version 2 - removed SUSI & motor timeout CV's as they are not supported "20060114"-->
-<!-- Version 3 - added factory reset menu items (Paul Bender) -->
-<!-- Version 4 - high version now 75, as reported in DCC_UK group by Ken Weiss -->
-<!-- Version 5 - Add Silver Direct to decoder family.  
+  <!-- Version 1 - created from Lenz_gold.xml "20060111"-->
+  <!-- Version 2 - removed SUSI & motor timeout CV's as they are not supported "20060114"-->
+  <!-- Version 3 - added factory reset menu items (Paul Bender) -->
+  <!-- Version 4 - high version now 75, as reported in DCC_UK group by Ken Weiss -->
+  <!-- Version 5 - Add Silver Direct to decoder family.  
                      Change high version for family to 78. (Paul Bender -->
-<!-- Version 6 - Add Silver 21 Pin to decoder family.  
+  <!-- Version 6 - Add Silver 21 Pin to decoder family.  
                      Change high version for family to 82. (Nigel Cliffe) -->
-<!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
-<!-- and "Low Gear Switching Drive" -->
+  <!-- These are the Silver decoders, with "6th gen BEMF", "Precision Braking Control" -->
+  <!-- and "Low Gear Switching Drive" -->
   <decoder>
     <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="82" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive">
       <model model="Silver" numOuts="4" numFns="12" nmraWarrant="yes" nmraWarrantStart="200604" lowVersionID="65" highVersionID="75" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO">
@@ -49,11 +49,9 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-
-      <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>      
-      <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>      
-      <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>      
-
+      <xi:include href="http://jmri.org/xml/decoders/lenz/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/accelDecel.xml"/>
       <variable label="Decoder Version No: " CV="7" readOnly="yes" item="Decoder Version" default="65">
         <decVal/>
         <label>Decoder Version No: </label>
@@ -72,9 +70,7 @@
         <label>Back EMF Repetition Rate (0-63)</label>
         <comment>Range 0-63</comment>
       </variable>
-
-      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>      
-
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable label="Locomotive Direction in Forward" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
         <enumVal>
           <enumChoice choice="Normal">
@@ -152,9 +148,7 @@
         </enumVal>
         <label>Motor short-circuit</label>
       </variable>
-
-      <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>      
-
+      <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>
       <variable label="F12 controls output D" CV="46" mask="XXXXXXXV" item="F12 controls output 4" minOut="4" minFn="12">
         <enumVal>
           <enumChoice choice="No">

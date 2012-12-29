@@ -15,8 +15,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Dale A Tripp" version="1" lastUpdated="20090625"/>
   <version author="Marc Fournier" version="1.1" lastUpdated="20091018"/>
-<!-- Created from Digitrax_01x3 file -->
-<!-- Correct variables statement error, file name corrected put K in caps, sort issue -->
+  <!-- Created from Digitrax_01x3 file -->
+  <!-- Correct variables statement error, file name corrected put K in caps, sort issue -->
   <decoder>
     <family name="EM13, silent, readback" mfg="Kato" lowVersionID="49" highVersionID="51">
       <model model="EM13" numOuts="1" numFns="0" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="unspecified">
@@ -238,7 +238,7 @@
   </decoder>
   <pane name="Digitrax">
     <column>
-<!--<display item="Advanced consist droop compensation for speed stabilization"/>-->
+      <!--<display item="Advanced consist droop compensation for speed stabilization"/>-->
       <display item="Speed Compensation Control"/>
       <display item="Split field motor"/>
       <display item="Vstart/Vmid/Vfull in 128 step mode"/>

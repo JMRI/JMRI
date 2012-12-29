@@ -17,7 +17,7 @@
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.02" lastUpdated="20090222"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20080328"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20080119"/>
-<!-- 
+  <!-- 
      This decoder configuration file is based my Zimo_MX63_MX64H_v22-30.xml
      V 1 file, dated 20071110. With some changes to Output naming to be consistent
      with Jeff Schmaltz' MX69/MX690 file. 
@@ -31,10 +31,10 @@
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.
  -->
-<!-- V 1 new file -->
-<!-- v 1.01  cv's 116, 129 & 130 deleted as not supported by MX620 -->
-<!-- V 1.02 corrected minOut in CV38 -->
-<!-- V 1.03  CV's 129 & 130 replaced (manual ambiguous)-->
+  <!-- V 1 new file -->
+  <!-- v 1.01  cv's 116, 129 & 130 deleted as not supported by MX620 -->
+  <!-- V 1.02 corrected minOut in CV38 -->
+  <!-- V 1.03  CV's 129 & 130 replaced (manual ambiguous)-->
   <decoder>
     <family name="Zimo MX620" mfg="Zimo">
       <model model="MX620 version 6" lowVersionID="6" maxInputVolts="12-22V" maxMotorCurrent="0.8A, peak=2A for 5 sec." maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14">

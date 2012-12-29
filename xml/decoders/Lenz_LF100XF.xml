@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="sip@euronet.nl" version="2" lastUpdated="20030606"/>
-<!-- version 2 - add consist direction - jake -->
+  <!-- version 2 - add consist direction - jake -->
   <decoder>
     <family name="Function Decoder" mfg="Lenz" lowVersionID="10">
       <model model="LF100XF" numOuts="4" numFns="12" nmraWarrant="yes" nmraWarrantStart="200506">
@@ -672,7 +672,7 @@
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>

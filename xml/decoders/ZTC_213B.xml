@@ -17,7 +17,7 @@
   <version author="Ian Birchenough(ian@birchenough.demon.co.uk)" version="2" lastUpdated="20060521"/>
   <version author="Phil Grainger (phil.grainger@ca.com)" version="1" lastUpdated="20030805"/>
   <!--   version 3 Added factory reset.-->
-<!-- ZTC 213B decoder -->
+  <!-- ZTC 213B decoder -->
   <decoder>
     <family name="ZTC213B" mfg="ZTC" lowVersionID="0" highVersionID="255">
       <model model="ZTC213B" numOuts="4">
@@ -155,7 +155,7 @@
         <label> Kick Start </label>
         <comment>Range 0-63</comment>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="F2 controls output 3" minOut="3" default="1"/>
       <constant item="F3 controls output 4" minOut="4" default="1"/>
     </variables>

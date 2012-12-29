@@ -15,7 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20090201"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080106"/>
-<!--
+  <!--
      This decoder configuration file is based on Zimo_MX63_MX64H_v22-30.xml
      V 1, dated 20071110, by Mark Waters.  Also on earlier ZIMO XML files by
      Sip Bosch.  All of which also acknowledged "the contribution of many others".
@@ -112,7 +112,7 @@
         <output name="14" label="   FO 12   " comment="pin-16, right" maxcurrent="1.5 A total per group" connection="plug"/>
         <size length="55" width="26" height="18" units="mm"/>
       </model>
-<!-- Begin sound-only models -->
+      <!-- Begin sound-only models -->
       <model model="MX690S" maxInputVolts="24 V" maxMotorCurrent="3 A (peak 8 A)" maxTotalCurrent="3 A (peak 8 A)" numOuts="8" numFns="14" formFactor="G" connector="other">
         <output name="1" label="Front light" comment="pin-6,  left" maxcurrent="1.5 A total per group" connection="plug"/>
         <output name="2" label="Rear light " comment="pin-11, left" maxcurrent="1.5 A total per group" connection="plug"/>
@@ -141,7 +141,7 @@
         <output name="14" label="   FO 12   " comment="pin-16, right" maxcurrent="1.5 A total per group" connection="plug"/>
         <size length="55" width="26" height="18" units="mm"/>
       </model>
-<!-- End sound-only models -->
+      <!-- End sound-only models -->
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -3280,7 +3280,7 @@
         </enumVal>
         <label>Update Lock</label>
       </variable>
-<!--  NB irrelevant "item" entry to force CV onto Motor panel -->
+      <!--  NB irrelevant "item" entry to force CV onto Motor panel -->
       <variable label="Alternative motor control method" CV="145" item="EMF Static Config" tooltip="Various control modes, see manual. CV 145">
         <enumVal>
           <enumChoice choice="Normal control mode">
@@ -3292,7 +3292,7 @@
         </enumVal>
         <label>Alternative motor control method</label>
       </variable>
-<!--  NB irrelevant "item" entry to force CV onto Motor panel -->
+      <!--  NB irrelevant "item" entry to force CV onto Motor panel -->
       <variable label="Motor Backlash Control" CV="146" default="0" item="Load Control" tooltip="CV 146, Motor Backlash Control">
         <decVal min="0" max="255"/>
         <label>Motor Backlash Control</label>
@@ -3803,7 +3803,7 @@
         </enumVal>
         <label>Special Assignment for Live Steam</label>
       </variable>
-<!-- Begin sound-only variables -->
+      <!-- Begin sound-only variables -->
       <variable label="Set sound program" CV="265" tooltip="See manual! CV265">
         <decVal min="0" max="255"/>
         <label>Set sound program</label>
@@ -4235,7 +4235,7 @@
         <decVal min="0" max="255"/>
         <label>Switch input 3 playback time</label>
       </variable>
-<!-- End sound-only variables -->
+      <!-- End sound-only variables -->
     </variables>
     <resets>
       <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
@@ -5160,7 +5160,7 @@
     </column>
     <name>Characteristic Curve for Smoke/Sound</name>
   </pane>
-<!-- Begin sound-only panes -->
+  <!-- Begin sound-only panes -->
   <pane name="Sound">
     <column>
       <display item="Set sound program"/>
@@ -5478,5 +5478,5 @@
     </column>
     <name>Random Sounds</name>
   </pane>
-<!-- End sound-only panes -->
+  <!-- End sound-only panes -->
 </decoder-config>

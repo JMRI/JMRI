@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Christopher Zurek" version="1" lastUpdated="20081219"/>
-<!-- made from the MRC_sounder1666 file by Pete Cesaro that was updated to version 2 by Christopher Zurek -->
+  <!-- made from the MRC_sounder1666 file by Pete Cesaro that was updated to version 2 by Christopher Zurek -->
   <decoder>
     <family name="MRC Sounder Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Diesel Sound Decoder 1662 SD45-SW1500" numOuts="2" numFns="12">

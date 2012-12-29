@@ -18,11 +18,11 @@
   <version author="Michael Mosher" version="3" lastUpdated="20070805"/>
   <version author="Michael Mosher" version="2" lastUpdated="20070716"/>
   <version author="Michael Mosher" version="1" lastUpdated="20070511"/>
-<!-- Version 1 New file -->
-<!-- Version 2 Added factory reset & Bug Fix -->
-<!-- Version 3 Removed paged mode programming -->
-<!-- Version 4 - update connector info -->
-<!-- Version 5 - add sound definitions -->
+  <!-- Version 1 New file -->
+  <!-- Version 2 Added factory reset & Bug Fix -->
+  <!-- Version 3 Removed paged mode programming -->
+  <!-- Version 4 - update connector info -->
+  <!-- Version 5 - add sound definitions -->
   <decoder>
     <family name="Blueline" mfg="Broadway Limited Imports, LLC">
       <model model="Diesel" numOuts="3" numFns="14" connector="9pin">

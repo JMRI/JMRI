@@ -16,7 +16,7 @@
   <version author="Peter Ulvestad" version="3" lastUpdated="20111203"/>
   <version author="John Bicknell" version="2" lastUpdated="20081501"/>
   <version author="Ian Birchenough" version="1" lastUpdated="20072009"/>
-<!--   version 3 Moved factory reset from tab to top menu.-->
+  <!--   version 3 Moved factory reset from tab to top menu.-->
   <decoder>
     <family name="ZTC 4007" mfg="ZTC" lowVersionID="0" highVersionID="0">
       <model model="ZTC 4007" numOuts="3" numFns="5"/>
@@ -805,11 +805,11 @@
         <label>User Id #2</label>
       </variable>
     </variables>
-  <resets>
+    <resets>
       <factReset label="Reset All CVs" CV="8" default="8"/>
-  </resets>
+    </resets>
   </decoder>
-    <pane name="ZTC">
+  <pane name="ZTC">
     <column>
       <row>
         <column>

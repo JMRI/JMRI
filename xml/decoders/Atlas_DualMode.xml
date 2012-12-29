@@ -15,10 +15,10 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="6" lastUpdated="20091027"/>
   <version author="Michael Mosher" version="5" lastUpdated="20030706"/>
-<!-- V3 add versionID range -->
-<!-- V4 - add consist direction - jake -->
-<!-- V5 - renamed and few tweeks to co-exist with four function decoder, fixed vstart bug -->
-<!-- V6 - Added factory reset, added CV2 max value -->
+  <!-- V3 add versionID range -->
+  <!-- V4 - add consist direction - jake -->
+  <!-- V5 - renamed and few tweeks to co-exist with four function decoder, fixed vstart bug -->
+  <!-- V6 - Added factory reset, added CV2 max value -->
   <decoder>
     <family name="Dual Mode" mfg="Atlas" lowVersionID="45" highVersionID="45">
       <model model="Dual Mode" numOuts="2" numFns="0"/>
@@ -167,7 +167,7 @@
         <decVal/>
         <label>User Id #2</label>
       </variable>
-<!-- Atlas-specific variables -->
+      <!-- Atlas-specific variables -->
       <variable label="Consist Accel and Decel Trims" CV="50" mask="XXXXXXVX" item="Consist Adjustments Active">
         <enumVal>
           <enumChoice choice="Not Active">
@@ -242,7 +242,7 @@
         <decVal/>
         <label>Decoder Software Version</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
     </variables>

@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Charles Dearden -charlied@comcen.com.au" version="1" lastUpdated="20080429"/>
-<!-- made from the MRC_1630 file by Bob Jacobsen-->
+  <!-- made from the MRC_1630 file by Bob Jacobsen-->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Mini HO/N Synch Steam Sound 1639" numOuts="2" numFns="12" connector="NMRAmedium" maxTotalCurrent="1.5A" extFnsMRC="yes">

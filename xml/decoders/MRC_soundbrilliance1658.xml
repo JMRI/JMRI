@@ -15,17 +15,17 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Peter Ulvestad" version="2" lastUpdated="20091003"/>
   <version author="Michael Dunn" version="1" lastUpdated="20070421"/>
-<!-- made from the MRC_1636 file by Richard Sauerbrun -->
-<!-- Version 2 - Updated, moved consist info to consist tab, added speed table and lots of tooltips -->
+  <!-- made from the MRC_1636 file by Richard Sauerbrun -->
+  <!-- Version 2 - Updated, moved consist info to consist tab, added speed table and lots of tooltips -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="Synch Diesel Sound 1658 - Kato N F3" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
-<!-- note only F0 to F12 are NMRA compatible -->
+        <!-- note only F0 to F12 are NMRA compatible -->
         <size length="90" width="14" height="4.2" units="mm"/>
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
-<!-- Note Mfg. recognizes CV read back is not 100% correct -->
+    <!-- Note Mfg. recognizes CV read back is not 100% correct -->
     <variables>
       <variable label="Short Address" CV="1" tooltip="CV1 sets the Short, Primary or 2-digit address [range 1-127]" item="Short Address" default="3">
         <shortAddressVal/>
@@ -309,7 +309,7 @@
           <enumChoice choice="Other" value="3">
             <choice>Other</choice>
           </enumChoice>
-<!-- Note per Mfg. recorded sounds ARE NOT for GE P42 or EMD E8! -->
+          <!-- Note per Mfg. recorded sounds ARE NOT for GE P42 or EMD E8! -->
         </enumVal>
         <label>Diesel rumble type</label>
       </variable>

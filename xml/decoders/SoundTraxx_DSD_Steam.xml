@@ -15,14 +15,14 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Walter Thompson wsthompson@earthlink.net" version="9" lastUpdated="20080414"/>
   <version author="Michael Mosher" version="8" lastUpdated="20050817"/>
-<!-- version 4: updates to minOut usage, function mapping -->
-<!-- version 5: removed erroneous CV19 definition -->
-<!--            corrected versionCVs -->
-<!-- version 6: rename to make nicer tree -->
-<!-- version 7: added CV105&106  -->
-<!-- version 8: (20050817 BobJ): numFns corrected from 8 to 10 -->
-<!-- Version 9 author Walter Thompson wsthompson@earthlink.net 20080412 -->
-<!--            added Reset option -->
+  <!-- version 4: updates to minOut usage, function mapping -->
+  <!-- version 5: removed erroneous CV19 definition -->
+  <!--            corrected versionCVs -->
+  <!-- version 6: rename to make nicer tree -->
+  <!-- version 7: added CV105&106  -->
+  <!-- version 8: (20050817 BobJ): numFns corrected from 8 to 10 -->
+  <!-- Version 9 author Walter Thompson wsthompson@earthlink.net 20080412 -->
+  <!--            added Reset option -->
   <decoder>
     <family name="DSD Steam" mfg="Throttle-Up (SoundTraxx)">
       <model model="DSD Steam" numOuts="4" numFns="10">
@@ -37,8 +37,8 @@
         <output name="Dynamo"/>
         <output name="Coupler"/>
         <output name="Mute"/>
-<!-- The four electical outputs are front headlight, back -->
-<!-- headlight, F1, F5 -->
+        <!-- The four electical outputs are front headlight, back -->
+        <!-- headlight, F1, F5 -->
       </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
@@ -1127,7 +1127,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Sound section -->
+      <!-- Sound section -->
       <variable label="Real Time Clock Mode" CV="51" mask="XXXXXXXV" item="Sound Group 1 Option 1" default="0">
         <enumVal>
           <enumChoice choice="Scale Time">
@@ -1273,7 +1273,7 @@
         </enumVal>
         <label>Startup Mode</label>
       </variable>
-<!-- Volumes section -->
+      <!-- Volumes section -->
       <variable label="Volume Control" CV="50" mask="XXXXVVVV" item="Sound Setting 1" default="8" comment="sets overall volume, 0=Mute">
         <decVal max="15"/>
         <label>Volume Control</label>

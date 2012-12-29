@@ -18,7 +18,7 @@
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.2" lastUpdated="20080127"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20070204"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20060923"/>
-<!-- 
+  <!-- 
       This decoder XML is meant to be used with the "Custom" programmer format.
       The pane definitions are included below the decoder definition.  The LGB
       decoders seem to fit the description of "weird" as mentioned in that
@@ -107,7 +107,7 @@
         <output name="3" label="F1 " maxcurrent="0.3 A" connection="other"/>
         <size length="55" width="25" height="12" units="mm"/>
       </model>
-<!-- 55020 currents are for the later Massoth versions,
+      <!-- 55020 currents are for the later Massoth versions,
            the earlier Lenz versions were 1.5 motor, 0.15 per function, and 1.5 total
 -->
       <model model="LGB MTS II 55021 loco decoders" lowVersionID="10" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A" numOuts="3" numFns="10" formFactor="G" connector="other">
@@ -483,8 +483,8 @@
         </enumVal>
         <label>analog Back-EMF</label>
       </variable>
-<!-- Bits 4-8 of "LGB Configuration" CV54 are loco dependent -->
-<!-- Check your loco's manual -->
+      <!-- Bits 4-8 of "LGB Configuration" CV54 are loco dependent -->
+      <!-- Check your loco's manual -->
       <variable label="Loco dependent bit 4" CV="54" mask="XXXXVXXX" tooltip="Check your loco's manual to determine use of this bit CV54">
         <enumVal>
           <enumChoice choice="0 - e.g. Load-dependent sounds off">
@@ -616,9 +616,9 @@
         <decVal min="0" max="255"/>
         <label>Pause Time between changes in direction</label>
       </variable>
-<!-- Found reference to this CV in Instructions for 23900 MTS-DUO switcher -->
-<!-- Not sure how it relates to using F8 to switch half-speed mode on and off -->
-<!-- Checked Instructions for a couple of other small diesels but no mention of CV59 -->
+      <!-- Found reference to this CV in Instructions for 23900 MTS-DUO switcher -->
+      <!-- Not sure how it relates to using F8 to switch half-speed mode on and off -->
+      <!-- Checked Instructions for a couple of other small diesels but no mention of CV59 -->
       <variable label="Half-speed mode" CV="59" mask="XXXXXVXX" tooltip="May only apply to 23900 MTS-DUO switcher CV59">
         <enumVal>
           <enumChoice choice="Half-speed mode deactivated">
@@ -675,7 +675,7 @@
         </speedTableVal>
         <label>Speed Table</label>
       </variable>
-<!-- Do not attempt to read CV 105 on an LGB decoder -->
+      <!-- Do not attempt to read CV 105 on an LGB decoder -->
       <variable label="ID for Decoder Type" CV="106" readOnly="yes" item="Product Number" tooltip="ID for Decoder Type (read only) CV106">
         <decVal/>
         <label>ID for Decoder Type</label>

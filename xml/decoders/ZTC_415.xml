@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Phil Grainger phil.grainger@ca.com" version="1" lastUpdated="20031027"/>
-<!-- Created from version 5 of the 1x2 file -->
+  <!-- Created from version 5 of the 1x2 file -->
   <decoder>
     <family name="ZTC 415" mfg="ZTC" lowVersionID="49" highVersionID="49">
       <model model="ZTC 415" numOuts="4" numFns="8" lowVersionID="64" highVersionID="65" maxMotorCurrent="1.5A (peak=2A)" formFactor="Z">
@@ -181,7 +181,7 @@
         </enumVal>
         <label>Advanced Consist Function 0 Override</label>
       </variable>
-<!--
+      <!--
 		<variable label="Advanced Consist Function 9 Override" CV="22" mask="XXXVXXXX" item="Consist Address Active For F9" default="0">
 			<enumVal>
 				<enumChoice choice="No"/>
@@ -1261,7 +1261,7 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-<!-- Define the Function-Output mapping based on NMRA definitions -->
+      <!-- Define the Function-Output mapping based on NMRA definitions -->
       <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">

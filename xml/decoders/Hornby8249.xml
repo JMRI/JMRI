@@ -14,13 +14,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Bob Jacobsen rgj1927@pacbell.net" version="1" lastUpdated="20080821"/>
-<!-- Decoder used in Hornby engines -->
+  <!-- Decoder used in Hornby engines -->
   <decoder>
     <family name="R8249" mfg="Hornby">
       <model model="R8249" numOuts="4" numFns="4" nmraWarrant="yes" nmraWarrantStart="200808" maxTotalCurrent="0.5A" maxMotorCurrent="0.5A">
         <size length="17" width="10" height="3.5" units="mm"/>
       </model>
-<!-- don't know version id, maybe lowVersionID="13"?  -->
+      <!-- don't know version id, maybe lowVersionID="13"?  -->
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -98,7 +98,7 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-<!-- Define the fixed Function-Output mapping -->
+      <!-- Define the fixed Function-Output mapping -->
       <constant item="FL(f) controls output 1" minOut="1" default="1"/>
       <constant item="FL(r) controls output 2" minOut="2" default="1"/>
       <constant item="F1 controls output 3" minOut="3" default="1"/>

@@ -20,9 +20,8 @@
 <!--                                                                                                                                           -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="William C Gage" version="1.0" lastUpdated="20091011"/>
-  <version author="Steve Todd" version="2" lastUpdated="20120522" />
-    <!-- added function label defaults -->
-  
+  <version author="Steve Todd" version="2" lastUpdated="20120522"/>
+  <!-- added function label defaults -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45">
       <model model="Synch Diesel Sound 1808 - N Scale KATO SD80 - SD90/43MAC" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">

@@ -825,10 +825,10 @@
   </decoder>
   <pane name="Uhlenbrock Function Remap">
     <column>
-    <display item="Select Function remapping"/>
-    <separator/>
-    <row>
-<!--    <column>
+      <display item="Select Function remapping"/>
+      <separator/>
+      <row>
+        <!--    <column>
 		<label label="" />
         <label label="Front light output" />
         <label label="Back light output" />
@@ -838,191 +838,191 @@
         <label label="Momentum" />
 		<label label="" />
 	</column> -->
-    <column>
-      <label label="                             FL(f)">
-        <label>                             FL(f)</label>
-      </label>
-      <display item="FL(f) controls front light output" format="checkbox" label="Front light output" tooltip="CV 33, bit 0">
-        <label>Front light output</label>
-      </display>
-      <display item="FL(f) controls back light output" format="checkbox" label="Back light output" tooltip="CV 33, bit 1">
-        <label>Back light output</label>
-      </display>
-      <display item="FL(f) controls Special function output 1" format="checkbox" label="Special function output 1" tooltip="CV 33, bit 2">
-        <label>Special function output 1</label>
-      </display>
-      <display item="FL(f) controls Special function output 2" format="checkbox" label="Special function output 2" tooltip="CV 33, bit 3">
-        <label>Special function output 2</label>
-      </display>
-      <display item="FL(f) controls switching speed" format="checkbox" label="Switching speed" tooltip="CV 33, bit 4">
-        <label>Switching speed</label>
-      </display>
-      <display item="FL(f) controls momentum" format="checkbox" label="Momentum" tooltip="CV 33, bit 5">
-        <label>Momentum</label>
-      </display>
-    </column>
-    <column>
-      <label label="  FL(r)">
-        <label>  FL(r)</label>
-      </label>
-      <display item="FL(r) controls front light output" format="checkbox" label="" tooltip="CV 34, bit 0">
-        <label/>
-      </display>
-      <display item="FL(r) controls back light output" format="checkbox" label="" tooltip="CV 34, bit 1">
-        <label/>
-      </display>
-      <display item="FL(r) controls Special function output 1" format="checkbox" label="" tooltip="CV 34, bit 2">
-        <label/>
-      </display>
-      <display item="FL(r) controls Special function output 2" format="checkbox" label="" tooltip="CV 34, bit 3">
-        <label/>
-      </display>
-      <display item="FL(r) controls switching speed" format="checkbox" label="" tooltip="CV 34, bit 4">
-        <label/>
-      </display>
-      <display item="FL(r) controls momentum" format="checkbox" label="" tooltip="CV 34, bit 5">
-        <label/>
-      </display>
-    </column>
-    <column>
-      <label label="   F1">
-        <label>   F1</label>
-      </label>
-      <display item="F1 controls front light output" format="checkbox" label="" tooltip="CV 35, bit 0">
-        <label/>
-      </display>
-      <display item="F1 controls back light output" format="checkbox" label="" tooltip="CV 35, bit 1">
-        <label/>
-      </display>
-      <display item="F1 controls Special function output 1" format="checkbox" label="" tooltip="CV 35, bit 2">
-        <label/>
-      </display>
-      <display item="F1 controls Special function output 2" format="checkbox" label="" tooltip="CV 35, bit 3">
-        <label/>
-      </display>
-      <display item="F1 controls switching speed" format="checkbox" label="" tooltip="CV 35, bit 4">
-        <label/>
-      </display>
-      <display item="F1 controls momentum" format="checkbox" label="" tooltip="CV 35, bit 5">
-        <label/>
-      </display>
-    </column>
-    <column>
-      <label label="   F2">
-        <label>   F2</label>
-      </label>
-      <display item="F2 controls front light output" format="checkbox" label="" tooltip="CV 36, bit 0">
-        <label/>
-      </display>
-      <display item="F2 controls back light output" format="checkbox" label="" tooltip="CV 36, bit 1">
-        <label/>
-      </display>
-      <display item="F2 controls Special function output 1" format="checkbox" label="" tooltip="CV 36, bit 2">
-        <label/>
-      </display>
-      <display item="F2 controls Special function output 2" format="checkbox" label="" tooltip="CV 36, bit 3">
-        <label/>
-      </display>
-      <display item="F2 controls switching speed" format="checkbox" label="" tooltip="CV 36, bit 4">
-        <label/>
-      </display>
-      <display item="F2 controls momentum" format="checkbox" label="" tooltip="CV 36, bit 5">
-        <label/>
-      </display>
-    </column>
-    <column>
-      <label label="   F3">
-        <label>   F3</label>
-      </label>
-      <display item="F3 controls front light output" format="checkbox" label="" tooltip="CV 37, bit 0">
-        <label/>
-      </display>
-      <display item="F3 controls back light output" format="checkbox" label="" tooltip="CV 37, bit 1">
-        <label/>
-      </display>
-      <display item="F3 controls Special function output 1" format="checkbox" label="" tooltip="CV 37, bit 2">
-        <label/>
-      </display>
-      <display item="F3 controls Special function output 2" format="checkbox" label="" tooltip="CV 37, bit 3">
-        <label/>
-      </display>
-      <display item="F3 controls switching speed" format="checkbox" label="" tooltip="CV 37, bit 4">
-        <label/>
-      </display>
-      <display item="F3 controls momentum" format="checkbox" label="" tooltip="CV 37, bit 5">
-        <label/>
-      </display>
-    </column>
-    <column>
-      <label label="   F4">
-        <label>   F4</label>
-      </label>
-      <display item="F4 controls front light output" format="checkbox" label="" tooltip="CV 38, bit 0">
-        <label/>
-      </display>
-      <display item="F4 controls back light output" format="checkbox" label="" tooltip="CV 38, bit 1">
-        <label/>
-      </display>
-      <display item="F4 controls Special function output 1" format="checkbox" label="" tooltip="CV 38, bit 2">
-        <label/>
-      </display>
-      <display item="F4 controls Special function output 2" format="checkbox" label="" tooltip="CV 38, bit 3">
-        <label/>
-      </display>
-      <display item="F4 controls switching speed" format="checkbox" label="" tooltip="CV 38, bit 4">
-        <label/>
-      </display>
-      <display item="F4 controls momentum" format="checkbox" label="" tooltip="CV 38, bit 5">
-        <label/>
-      </display>
-    </column>
-    <column>
-      <label label="   F5">
-        <label>   F5</label>
-      </label>
-      <display item="F5 controls front light output" format="checkbox" label="" tooltip="CV 39, bit 0">
-        <label/>
-      </display>
-      <display item="F5 controls back light output" format="checkbox" label="" tooltip="CV 39, bit 1">
-        <label/>
-      </display>
-      <display item="F5 controls Special function output 1" format="checkbox" label="" tooltip="CV 39, bit 2">
-        <label/>
-      </display>
-      <display item="F5 controls Special function output 2" format="checkbox" label="" tooltip="CV 39, bit 3">
-        <label/>
-      </display>
-      <display item="F5 controls switching speed" format="checkbox" label="" tooltip="CV 39, bit 4">
-        <label/>
-      </display>
-      <display item="F5 controls momentum" format="checkbox" label="" tooltip="CV 39, bit 5">
-        <label/>
-      </display>
-    </column>
-    <column>
-      <label label="   F6">
-        <label>   F6</label>
-      </label>
-      <display item="F6 controls front light output" format="checkbox" label="" tooltip="CV 40, bit 0">
-        <label/>
-      </display>
-      <display item="F6 controls back light output" format="checkbox" label="" tooltip="CV 40, bit 1">
-        <label/>
-      </display>
-      <display item="F6 controls Special function output 1" format="checkbox" label="" tooltip="CV 40, bit 2">
-        <label/>
-      </display>
-      <display item="F6 controls Special function output 2" format="checkbox" label="" tooltip="CV 40, bit 3">
-        <label/>
-      </display>
-      <display item="F6 controls switching speed" format="checkbox" label="" tooltip="CV 40, bit 4">
-        <label/>
-      </display>
-      <display item="F6 controls momentum" format="checkbox" label="" tooltip="CV 40, bit 5">
-        <label/>
-      </display>
-    </column>
-    </row>
+        <column>
+          <label label="                             FL(f)">
+            <label>                             FL(f)</label>
+          </label>
+          <display item="FL(f) controls front light output" format="checkbox" label="Front light output" tooltip="CV 33, bit 0">
+            <label>Front light output</label>
+          </display>
+          <display item="FL(f) controls back light output" format="checkbox" label="Back light output" tooltip="CV 33, bit 1">
+            <label>Back light output</label>
+          </display>
+          <display item="FL(f) controls Special function output 1" format="checkbox" label="Special function output 1" tooltip="CV 33, bit 2">
+            <label>Special function output 1</label>
+          </display>
+          <display item="FL(f) controls Special function output 2" format="checkbox" label="Special function output 2" tooltip="CV 33, bit 3">
+            <label>Special function output 2</label>
+          </display>
+          <display item="FL(f) controls switching speed" format="checkbox" label="Switching speed" tooltip="CV 33, bit 4">
+            <label>Switching speed</label>
+          </display>
+          <display item="FL(f) controls momentum" format="checkbox" label="Momentum" tooltip="CV 33, bit 5">
+            <label>Momentum</label>
+          </display>
+        </column>
+        <column>
+          <label label="  FL(r)">
+            <label>  FL(r)</label>
+          </label>
+          <display item="FL(r) controls front light output" format="checkbox" label="" tooltip="CV 34, bit 0">
+            <label/>
+          </display>
+          <display item="FL(r) controls back light output" format="checkbox" label="" tooltip="CV 34, bit 1">
+            <label/>
+          </display>
+          <display item="FL(r) controls Special function output 1" format="checkbox" label="" tooltip="CV 34, bit 2">
+            <label/>
+          </display>
+          <display item="FL(r) controls Special function output 2" format="checkbox" label="" tooltip="CV 34, bit 3">
+            <label/>
+          </display>
+          <display item="FL(r) controls switching speed" format="checkbox" label="" tooltip="CV 34, bit 4">
+            <label/>
+          </display>
+          <display item="FL(r) controls momentum" format="checkbox" label="" tooltip="CV 34, bit 5">
+            <label/>
+          </display>
+        </column>
+        <column>
+          <label label="   F1">
+            <label>   F1</label>
+          </label>
+          <display item="F1 controls front light output" format="checkbox" label="" tooltip="CV 35, bit 0">
+            <label/>
+          </display>
+          <display item="F1 controls back light output" format="checkbox" label="" tooltip="CV 35, bit 1">
+            <label/>
+          </display>
+          <display item="F1 controls Special function output 1" format="checkbox" label="" tooltip="CV 35, bit 2">
+            <label/>
+          </display>
+          <display item="F1 controls Special function output 2" format="checkbox" label="" tooltip="CV 35, bit 3">
+            <label/>
+          </display>
+          <display item="F1 controls switching speed" format="checkbox" label="" tooltip="CV 35, bit 4">
+            <label/>
+          </display>
+          <display item="F1 controls momentum" format="checkbox" label="" tooltip="CV 35, bit 5">
+            <label/>
+          </display>
+        </column>
+        <column>
+          <label label="   F2">
+            <label>   F2</label>
+          </label>
+          <display item="F2 controls front light output" format="checkbox" label="" tooltip="CV 36, bit 0">
+            <label/>
+          </display>
+          <display item="F2 controls back light output" format="checkbox" label="" tooltip="CV 36, bit 1">
+            <label/>
+          </display>
+          <display item="F2 controls Special function output 1" format="checkbox" label="" tooltip="CV 36, bit 2">
+            <label/>
+          </display>
+          <display item="F2 controls Special function output 2" format="checkbox" label="" tooltip="CV 36, bit 3">
+            <label/>
+          </display>
+          <display item="F2 controls switching speed" format="checkbox" label="" tooltip="CV 36, bit 4">
+            <label/>
+          </display>
+          <display item="F2 controls momentum" format="checkbox" label="" tooltip="CV 36, bit 5">
+            <label/>
+          </display>
+        </column>
+        <column>
+          <label label="   F3">
+            <label>   F3</label>
+          </label>
+          <display item="F3 controls front light output" format="checkbox" label="" tooltip="CV 37, bit 0">
+            <label/>
+          </display>
+          <display item="F3 controls back light output" format="checkbox" label="" tooltip="CV 37, bit 1">
+            <label/>
+          </display>
+          <display item="F3 controls Special function output 1" format="checkbox" label="" tooltip="CV 37, bit 2">
+            <label/>
+          </display>
+          <display item="F3 controls Special function output 2" format="checkbox" label="" tooltip="CV 37, bit 3">
+            <label/>
+          </display>
+          <display item="F3 controls switching speed" format="checkbox" label="" tooltip="CV 37, bit 4">
+            <label/>
+          </display>
+          <display item="F3 controls momentum" format="checkbox" label="" tooltip="CV 37, bit 5">
+            <label/>
+          </display>
+        </column>
+        <column>
+          <label label="   F4">
+            <label>   F4</label>
+          </label>
+          <display item="F4 controls front light output" format="checkbox" label="" tooltip="CV 38, bit 0">
+            <label/>
+          </display>
+          <display item="F4 controls back light output" format="checkbox" label="" tooltip="CV 38, bit 1">
+            <label/>
+          </display>
+          <display item="F4 controls Special function output 1" format="checkbox" label="" tooltip="CV 38, bit 2">
+            <label/>
+          </display>
+          <display item="F4 controls Special function output 2" format="checkbox" label="" tooltip="CV 38, bit 3">
+            <label/>
+          </display>
+          <display item="F4 controls switching speed" format="checkbox" label="" tooltip="CV 38, bit 4">
+            <label/>
+          </display>
+          <display item="F4 controls momentum" format="checkbox" label="" tooltip="CV 38, bit 5">
+            <label/>
+          </display>
+        </column>
+        <column>
+          <label label="   F5">
+            <label>   F5</label>
+          </label>
+          <display item="F5 controls front light output" format="checkbox" label="" tooltip="CV 39, bit 0">
+            <label/>
+          </display>
+          <display item="F5 controls back light output" format="checkbox" label="" tooltip="CV 39, bit 1">
+            <label/>
+          </display>
+          <display item="F5 controls Special function output 1" format="checkbox" label="" tooltip="CV 39, bit 2">
+            <label/>
+          </display>
+          <display item="F5 controls Special function output 2" format="checkbox" label="" tooltip="CV 39, bit 3">
+            <label/>
+          </display>
+          <display item="F5 controls switching speed" format="checkbox" label="" tooltip="CV 39, bit 4">
+            <label/>
+          </display>
+          <display item="F5 controls momentum" format="checkbox" label="" tooltip="CV 39, bit 5">
+            <label/>
+          </display>
+        </column>
+        <column>
+          <label label="   F6">
+            <label>   F6</label>
+          </label>
+          <display item="F6 controls front light output" format="checkbox" label="" tooltip="CV 40, bit 0">
+            <label/>
+          </display>
+          <display item="F6 controls back light output" format="checkbox" label="" tooltip="CV 40, bit 1">
+            <label/>
+          </display>
+          <display item="F6 controls Special function output 1" format="checkbox" label="" tooltip="CV 40, bit 2">
+            <label/>
+          </display>
+          <display item="F6 controls Special function output 2" format="checkbox" label="" tooltip="CV 40, bit 3">
+            <label/>
+          </display>
+          <display item="F6 controls switching speed" format="checkbox" label="" tooltip="CV 40, bit 4">
+            <label/>
+          </display>
+          <display item="F6 controls momentum" format="checkbox" label="" tooltip="CV 40, bit 5">
+            <label/>
+          </display>
+        </column>
+      </row>
     </column>
     <name>Uhlenbrock Function Remap</name>
   </pane>

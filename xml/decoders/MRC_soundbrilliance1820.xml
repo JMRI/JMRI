@@ -18,10 +18,10 @@
   <version author="Peter Ulvestad" version="3" lastUpdated="20091003"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20090904"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20090827"/>
-<!--   version 1 Based on MRC_soundbrilliance1806-->
-<!--   version 2 Modified CV6 to better match manual-->
-<!--   version 3 Modified MRC tab, added missing sound option and setting, corrected some defaults.-->
-<!--   version 3.1 Modified function lables so they are automatically inserted and corrected CV123-->
+  <!--   version 1 Based on MRC_soundbrilliance1806-->
+  <!--   version 2 Modified CV6 to better match manual-->
+  <!--   version 3 Modified MRC tab, added missing sound option and setting, corrected some defaults.-->
+  <!--   version 3.1 Modified function lables so they are automatically inserted and corrected CV123-->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="60">
       <model model="Synch Diesel Sound 1820 - Athearn RS3" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -199,7 +199,7 @@
         </enumVal>
         <label>Sound on/off</label>
       </variable>
-<!--   CV 49 seems to be reverse of what the manual states   -->
+      <!--   CV 49 seems to be reverse of what the manual states   -->
       <variable label="Horn Type" CV="50" item="Sound Option 2" tooltip="CV50 selects the Horn Type [range 0-16] or turns off the Horn [16]" default="4">
         <decVal max="16"/>
         <label>Horn Type</label>
@@ -334,8 +334,8 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-<!--   CV 123 order does not seem to be the same as what the manual states. Can someone else please confirm   -->
-<!--   CV 123 corrected confirmed settings   -->
+      <!--   CV 123 order does not seem to be the same as what the manual states. Can someone else please confirm   -->
+      <!--   CV 123 corrected confirmed settings   -->
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="125" default="1"/>

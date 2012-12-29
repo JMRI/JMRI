@@ -15,8 +15,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="4" lastUpdated="20071121"/>
   <version author="jake@physics.berkeley.edu" version="3" lastUpdated="20031112"/>
-<!-- Version 4 adds CV9 for the high address -->
-<!-- Version 3 fixes typo in CV47 definition -->
+  <!-- Version 4 adds CV9 for the high address -->
+  <!-- Version 3 fixes typo in CV47 definition -->
   <decoder>
     <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way">
       <model model="DS54" lowVersionID="65"/>

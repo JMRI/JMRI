@@ -25,19 +25,19 @@
         <output name="4" label="F6/brwn"/>
         <output name="Coupler"/>
         <output name="Mute"/>
-<!-- The four electical outputs are front headlight, back -->
-<!-- headlight, F5, F6 -->
+        <!-- The four electical outputs are front headlight, back -->
+        <!-- headlight, F5, F6 -->
       </model>
     </family>
     <programming direct="no" paged="yes" register="no" ops="yes"/>
     <variables>
-<!-- Register 1 -->
+      <!-- Register 1 -->
       <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
         <shortAddressVal/>
         <label>Primary Address</label>
         <comment>Short address</comment>
       </variable>
-<!-- Register 2 -->
+      <!-- Register 2 -->
       <variable label="Start Volts" CV="2" item="Vstart" comment="A value of 32 corresponds to 100%">
         <decVal max="32"/>
         <label>Start Volts</label>
@@ -48,17 +48,17 @@
         <label>Max Volts</label>
         <comment>A value of 32 corresponds to 100%</comment>
       </variable>
-<!-- Register 3 -->
+      <!-- Register 3 -->
       <variable label="Acceleration Rate" CV="3" item="Accel">
         <decVal max="31"/>
         <label>Acceleration Rate</label>
       </variable>
-<!-- Register 4 -->
+      <!-- Register 4 -->
       <variable label="Deceleration Rate" CV="4" item="Decel">
         <decVal max="31"/>
         <label>Deceleration Rate</label>
       </variable>
-<!-- Register 5 -->
+      <!-- Register 5 -->
       <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
         <enumVal>
           <enumChoice choice="normal">
@@ -92,12 +92,12 @@
         </enumVal>
         <label>Addressing Mode</label>
       </variable>
-<!-- Register 7 -->
+      <!-- Register 7 -->
       <variable label="Manufacturer Version No" CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Manufacturer Version No</label>
       </variable>
-<!-- Register 8 -->
+      <!-- Register 8 -->
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
@@ -145,7 +145,7 @@
         <decVal/>
         <label>User Private ID #2</label>
       </variable>
-<!--  They have to be here somewhere...
+      <!--  They have to be here somewhere...
 
 		<variable label="AirHorn Volume" CV="60" mask="XXXXVVVV"
 				item="Sound Setting 3" default="8" >
