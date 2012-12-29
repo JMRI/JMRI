@@ -79,7 +79,7 @@ public class WebServerPreferences extends Bean {
         if (df != null) {
             this.disallowedFrames.clear();
             for (Object f : df.getChildren("frame")) {
-                this.addDisallowedFrame(((Element)f).getText().trim());
+                this.addDisallowedFrame(((Element) f).getText().trim());
             }
         }
     }
@@ -113,7 +113,7 @@ public class WebServerPreferences extends Bean {
         setClickDelay(prefs.getClickDelay());
         setRefreshDelay(prefs.getRefreshDelay());
         setUseAjax(prefs.useAjax());
-        setDisallowedFrames((ArrayList<String>)prefs.getDisallowedFrames());
+        setDisallowedFrames((ArrayList<String>) prefs.getDisallowedFrames());
         setRebuildIndex(prefs.isRebuildIndex());
         setPort(prefs.getPort());
         setRailRoadName(prefs.getRailRoadName());
@@ -279,5 +279,4 @@ public class WebServerPreferences extends Bean {
 
     public static class WebServerPreferencesXml extends XmlFile {
     }
-
 }

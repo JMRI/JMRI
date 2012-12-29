@@ -39,7 +39,6 @@ public final class WebServer implements LifeCycle.Listener {
     protected WebServer() {
         preferences = WebServerManager.getWebServerPreferences();
         shutDownTask = new QuietShutDownTask("Stop Web Server") {
-
             @Override
             public boolean execute() {
                 try {
@@ -144,7 +143,6 @@ public final class WebServer implements LifeCycle.Listener {
     @Override
     public void lifeCycleStarted(LifeCycle lc) {
         zeroConfService = ZeroConfService.create("_http._tcp.local.", preferences.getPort(), new HashMap<String, String>() {
-
             {
                 put("path", "/index.html");
             }

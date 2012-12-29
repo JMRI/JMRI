@@ -19,13 +19,12 @@ import jmri.swing.DefaultListCellEditor;
 import jmri.swing.EditableList;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-
 import org.apache.log4j.Logger;
 
 public class WebServerPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
-	private static final long serialVersionUID = 6907436730813458420L;
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.WebServerStrings");
+    private static final long serialVersionUID = 6907436730813458420L;
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.WebServerStrings");
     static Logger log = Logger.getLogger(WebServerPreferencesPanel.class.getName());
     Border lineBorder;
     JSpinner clickDelaySpinner;
@@ -53,18 +52,17 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     }
 
     /*
-    private void initComponents() {
-        GroupLayout layout = new GroupLayout(this);
-        this.setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
-        SequentialGroup group = layout.createSequentialGroup();
-        group.addComponent(new JTitledSeparator(rb.getString("TitleWebServerPreferences")));
-        group.addGroup(webServerPreferences(layout));
-        layout.setVerticalGroup(group);
-    }
-    */
-
+     private void initComponents() {
+     GroupLayout layout = new GroupLayout(this);
+     this.setLayout(layout);
+     layout.setAutoCreateGaps(true);
+     layout.setAutoCreateContainerGaps(true);
+     SequentialGroup group = layout.createSequentialGroup();
+     group.addComponent(new JTitledSeparator(rb.getString("TitleWebServerPreferences")));
+     group.addGroup(webServerPreferences(layout));
+     layout.setVerticalGroup(group);
+     }
+     */
     private void initGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(new JTitledSeparator(rb.getString("TitleWebServerPreferences")));
@@ -78,17 +76,16 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     }
 
     /*
-    private Group webServerPreferences(GroupLayout layout) {
-        railroadName = new JTextField(preferences.getRailRoadName());
-        railroadName.setToolTipText(rb.getString("ToolTipRailRoadName"));
-        railroadName.setColumns(30);
-        ParallelGroup group = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
-        group.addComponent(new JLabel(rb.getString("LabelRailRoadName")), GroupLayout.Alignment.TRAILING);
-        group.addComponent(this.railroadName, GroupLayout.Alignment.LEADING);
-        return group;
-    }
-    */
-
+     private Group webServerPreferences(GroupLayout layout) {
+     railroadName = new JTextField(preferences.getRailRoadName());
+     railroadName.setToolTipText(rb.getString("ToolTipRailRoadName"));
+     railroadName.setColumns(30);
+     ParallelGroup group = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
+     group.addComponent(new JLabel(rb.getString("LabelRailRoadName")), GroupLayout.Alignment.TRAILING);
+     group.addComponent(this.railroadName, GroupLayout.Alignment.LEADING);
+     return group;
+     }
+     */
     private void setGUI() {
         clickDelaySpinner.setValue(preferences.getClickDelay());
         refreshDelaySpinner.setValue(preferences.getRefreshDelay());
@@ -244,7 +241,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         cancelB = new JButton(rb.getString("ButtonCancel"));
         cancelB.setVisible(false);
         cancelB.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent event) {
                 cancelValues();
@@ -252,7 +248,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         });
         JButton applyB = new JButton(rb.getString("ButtonApply"));
         applyB.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent event) {
                 applyValues();
@@ -261,7 +256,6 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         saveB = new JButton(rb.getString("ButtonSave"));
         saveB.setVisible(false);
         saveB.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent event) {
                 storeValues();
@@ -294,43 +288,43 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         }
     }
 
-	@Override
-	public String getPreferencesItem() {
-		return rb.getString("PreferencesItem");
-	}
+    @Override
+    public String getPreferencesItem() {
+        return rb.getString("PreferencesItem");
+    }
 
-	@Override
-	public String getPreferencesItemText() {
-		return rb.getString("PreferencesItemTitle");
-	}
+    @Override
+    public String getPreferencesItemText() {
+        return rb.getString("PreferencesItemTitle");
+    }
 
-	@Override
-	public String getTabbedPreferencesTitle() {
-		return null;
-	}
+    @Override
+    public String getTabbedPreferencesTitle() {
+        return null;
+    }
 
-	@Override
-	public String getLabelKey() {
-		return null;
-	}
+    @Override
+    public String getLabelKey() {
+        return null;
+    }
 
-	@Override
-	public JComponent getPreferencesComponent() {
-		return this;
-	}
+    @Override
+    public JComponent getPreferencesComponent() {
+        return this;
+    }
 
-	@Override
-	public boolean isPersistant() {
-		return false;
-	}
+    @Override
+    public boolean isPersistant() {
+        return false;
+    }
 
-	@Override
-	public String getPreferencesTooltip() {
-		return null;
-	}
+    @Override
+    public String getPreferencesTooltip() {
+        return null;
+    }
 
-	@Override
-	public void savePreferences() {
-		this.storeValues();
-	}
+    @Override
+    public void savePreferences() {
+        this.storeValues();
+    }
 }
