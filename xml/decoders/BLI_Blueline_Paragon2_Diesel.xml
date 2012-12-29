@@ -100,10 +100,7 @@
         <decVal/>
         <label>UnLock ID Code</label>
       </variable>
-      <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
-        <decVal/>
-        <label>Decoder Lock ID number</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <variable label="Extended Address" CV="17" item="Long Address" default="128">
         <longAddressVal/>
         <label>Extended Address</label>

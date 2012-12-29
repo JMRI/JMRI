@@ -84,10 +84,7 @@
         <decVal/>
         <label>Decoder Lock</label>
       </variable>
-      <variable label="Lock Mode" CV="16" default="1" tooltip="Unlocked when CV16 = CV15">
-        <decVal/>
-        <label>Lock Mode</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <variable label="Long Address" CV="17" item="Extended Address">
         <longAddressVal/>
         <label>Long Address</label>

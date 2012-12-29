@@ -315,10 +315,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F12</label>
       </variable>
-      <variable label="Decoder Lock" CV="16" mask="XXXXXVVV" default="0" tooltip="CV16 Sets the unlock code that must be entered into the CV Unlock Register CV15 in order to access the decoder CVs">
-        <decVal/>
-        <label>Decoder Lock</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <variable label="Long Address" CV="17" item="Extended Address" default="0003" tooltip="CV17/18 Sets the Extended (long, 4 digit) address">
         <longAddressVal/>
         <label>Long Address</label>

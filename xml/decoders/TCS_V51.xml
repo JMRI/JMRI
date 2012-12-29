@@ -629,9 +629,7 @@
             <variable label="Decoder Lock control number" CV="15" mask="XXXXXVVV" default="0" tooltip="To unlock a decoder make CV15=0 or CV15=CV16">
                 <decVal/>
             </variable>
-            <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="1" tooltip="Set this decoder's locking ID number, range 1-6, default 1, CV16">
-                <decVal/>
-            </variable>
+            <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
             <variable label="Long Address" CV="17" item="Extended Address" tooltip="Sets the Extended (4 digit) address, range 128-9999, mapped to CV17 and 18">
                 <longAddressVal/>
             </variable>

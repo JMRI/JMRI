@@ -216,10 +216,7 @@
         <label>Ditch light hold-over time</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
       </variable>
-      <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
-        <decVal/>
-        <label>Decoder Lock ID number</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <variable label="User Private ID #1" CV="105" item="User Id #1">
         <decVal/>

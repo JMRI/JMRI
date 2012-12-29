@@ -308,10 +308,7 @@
         </enumVal>
         <label>Analog Mode Pink</label>
       </variable>
-      <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="1" tooltip="Set this decoder's unique locking ID number">
-        <decVal/>
-        <label>Decoder Lock ID number</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <variable label="Long Address" CV="17" item="Extended Address">
         <longAddressVal/>
         <label>Long Address</label>

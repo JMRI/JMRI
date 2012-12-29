@@ -67,11 +67,7 @@
         <label xml:lang="it">CTC/Railcommand Conversione Alimentazione</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
-      <variable label="Decoder Lock ID number" item="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
-        <decVal/>
-        <label xml:lang="fr">Decoder Lock ID number(fr)</label>
-        <label xml:lang="it">Numero ID per Lock Decoder</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>

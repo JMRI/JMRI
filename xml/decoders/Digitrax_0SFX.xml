@@ -177,10 +177,7 @@
         </enumVal>
         <label>Sound Time Out</label>
       </variable>
-      <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
-        <decVal/>
-        <label>Decoder Lock ID number</label>
-      </variable>      
+      <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
 
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
       
