@@ -4,7 +4,7 @@
 
 <!-- version 1 - for Unified Software -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="Function output 7 effect generated" CV="159" mask="VVVVVVXX" tooltip="CV 159" item="Output 9 effect generated" minOut="9">
         <enumVal>
           <enumChoice choice="Standard on/off function output">

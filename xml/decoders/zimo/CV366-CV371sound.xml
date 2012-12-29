@@ -4,7 +4,7 @@
 
 <!-- version 1 - for Unified Software -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="Maximum volume of Turbocharger" CV="366" default="48" tooltip="CV366">
         <decVal min="0" max="255"/>
         <label>Maximum volume of Turbocharger</label>

@@ -10,7 +10,7 @@
 -->
 <!-- version 1.2 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="User Data #1" CV="105" item="User Id #1">
         <decVal/>
         <label>User Data #1</label>

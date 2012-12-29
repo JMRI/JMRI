@@ -14,7 +14,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
 
     <copyright xmlns="http://docbook.org/ns/docbook">
       <year>2012</year><holder>JMRI</holder>

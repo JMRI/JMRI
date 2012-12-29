@@ -4,7 +4,7 @@
 
 <!-- version 1 - for Unified Software -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="Swiss Mapping Group 1 F-key" CV="430" tooltip="CV 430">
         <enumVal>
           <enumChoice choice="F-Key">

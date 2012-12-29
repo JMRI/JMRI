@@ -4,7 +4,7 @@
 <!-- version 1.1, correction to CV354 by Nigel Cliffe -->
 <!-- version 1, Mark Waters - for Unified Software version 30, added additional CV313 settings to CV260-CV355sound.xml -->
 
-<variables>      		
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
 		<variable label="Load Code 1" CV="260">
 			<decVal/>
 			<label>Load Code 1</label>

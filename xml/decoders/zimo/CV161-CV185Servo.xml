@@ -7,7 +7,7 @@
                  - added 224 to includes for servo 3 and 4
 -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="Servo Protocol" CV="161" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Negative Pulse" value="0">

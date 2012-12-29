@@ -4,7 +4,7 @@
 
 <!-- version 1 - for Unified Software -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="Input mapping for internal F0" CV="400" tooltip="CV 400">
         <decVal/>
         <label>Input mapping for internal F0</label>

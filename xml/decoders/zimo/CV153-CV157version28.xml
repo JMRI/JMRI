@@ -4,7 +4,7 @@
 <!-- version 1.1, Nigel Cliffe - correcting naming of CV's 155 and 156  -->
 <!-- version 1, Mark Waters - for Unified Software -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="Max drive Time after signal loss" CV="153" item="Packet Time-out Value" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec) CV153">
         <decVal min="0" max="255"/>
         <label>Max drive Time after signal loss</label>

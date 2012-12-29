@@ -4,7 +4,7 @@
 
 <!-- version 1 - for Unified Software -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="Thyristor Volume at Higher Speed" CV="357" default="0" tooltip="0 to 255, CV357">
         <decVal min="0" max="255"/>
         <label>Thyristor Volume at Higher Speed</label>

@@ -15,7 +15,7 @@
 <!-- no need to translate the following, as it generally only appears -->
 <!-- in the function map selection pane -->
 <!-- differs from 0NMRA.xml version only in default values -->
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
     <holder>JMRI</holder>

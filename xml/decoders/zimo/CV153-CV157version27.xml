@@ -4,7 +4,7 @@
 
 <!-- version 1 - for Unified Software -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="Max drive Time after signal loss" CV="153" item="Advanced Group 1 Option 3" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec) CV153">
         <decVal min="0" max="255"/>
         <label>Max drive Time after signal loss</label>

@@ -7,7 +7,7 @@
                  - added F9-F12 to CV 22
 -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
         <shortAddressVal/>
         <label>Primary Address</label>

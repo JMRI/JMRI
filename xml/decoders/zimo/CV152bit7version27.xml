@@ -7,7 +7,7 @@
                  - added minOut
 -->
 
-<variables>
+<variables xmlns:xi="http://www.w3.org/2001/XInclude">
       <variable label="FO9 directional setting" CV="152" mask="VXXXXXXX" default="0" minOut="11">
         <enumVal>
           <enumChoice choice="Non Directional, normal NMRA mapping" value="0">
