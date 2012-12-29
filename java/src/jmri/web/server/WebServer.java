@@ -1,8 +1,11 @@
 package jmri.web.server;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.util.HashMap;
+import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.concurrent.TimeUnit;
 import jmri.InstanceManager;
@@ -38,7 +41,7 @@ public final class WebServer implements LifeCycle.Listener {
 
     protected WebServer() {
         preferences = WebServerManager.getWebServerPreferences();
-        shutDownTask = new QuietShutDownTask("Stop Web Server") {
+        shutDownTask = new QuietShutDownTask("Stop Web Server") { // NOI18N
             @Override
             public boolean execute() {
                 try {
@@ -65,15 +68,28 @@ public final class WebServer implements LifeCycle.Listener {
             server.setConnectors(new Connector[]{connector});
 
             ContextHandlerCollection contexts = new ContextHandlerCollection();
-            for (String path : ResourceBundle.getBundle("jmri.web.server.Services").keySet()) {
+            Properties services = new Properties();
+            Properties filePaths = new Properties();
+            try {
+                InputStream in;
+                in = this.getClass().getResourceAsStream("Services.properties"); // NOI18N
+                services.load(in);
+                in.close();
+                in = this.getClass().getResourceAsStream("FilePaths.properties"); // NOI18N
+                filePaths.load(in);
+                in.close();
+            } catch (IOException e) {
+                log.error(e.getMessage());
+            }
+            for (String path : services.stringPropertyNames()) {
                 ServletContextHandler context = new ServletContextHandler(ServletContextHandler.NO_SECURITY);
                 context.setContextPath(path);
-                if (ResourceBundle.getBundle("jmri.web.server.Services").getString(path).equals("fileHandler")) {
-                    ServletHolder holder = context.addServlet(DefaultServlet.class, "/*");
-                    holder.setInitParameter("resourceBase", FileUtil.getAbsoluteFilename(ResourceBundle.getBundle("jmri.web.server.FilePaths").getString(path)));
-                    holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(ResourceBundle.getBundle("jmri.web.server.FilePaths").getString("/css")) + "/miniServer.css");
+                if (services.getProperty(path).equals("fileHandler")) { // NOI18N
+                    ServletHolder holder = context.addServlet(DefaultServlet.class, "/*"); // NOI18N
+                    holder.setInitParameter("resourceBase", FileUtil.getAbsoluteFilename(filePaths.getProperty(path))); // NOI18N
+                    holder.setInitParameter("stylesheet", FileUtil.getAbsoluteFilename(filePaths.getProperty("/css")) + "/miniServer.css"); // NOI18N
                 } else {
-                    context.addServlet(ResourceBundle.getBundle("jmri.web.server.Services").getString(path), "/*");
+                    context.addServlet(services.getProperty(path), "/*"); // NOI18N
                 }
                 contexts.addHandler(context);
             }
@@ -102,7 +118,7 @@ public final class WebServer implements LifeCycle.Listener {
             hostAddress = ZeroConfService.hostAddress();  //lookup from interfaces
         }
         if (hostAddress == null) {
-            return "(local host not found)";
+            return WebServer.getString("MessageAddressNotFound");
         } else {
             return hostAddress.getHostAddress().toString();
         }
@@ -120,12 +136,17 @@ public final class WebServer implements LifeCycle.Listener {
      */
     public static String URIforPortablePath(String path) {
         if (path.startsWith(FileUtil.PREFERENCES)) {
-            return path.replaceFirst(FileUtil.PREFERENCES, "/prefs/");
+            return path.replaceFirst(FileUtil.PREFERENCES, "/prefs/"); // NOI18N
         } else if (path.startsWith(FileUtil.PROGRAM)) {
-            return path.replaceFirst(FileUtil.PROGRAM, "/dist/");
+            return path.replaceFirst(FileUtil.PROGRAM, "/dist/"); // NOI18N
         } else {
             return null;
         }
+    }
+
+    @SuppressWarnings("FinalStaticMethod")
+    public static final String getString(String message) {
+        return ResourceBundle.getBundle("jmri.web.server.Bundle").getString(message);
     }
 
     public int getPort() {
@@ -142,9 +163,9 @@ public final class WebServer implements LifeCycle.Listener {
 
     @Override
     public void lifeCycleStarted(LifeCycle lc) {
-        zeroConfService = ZeroConfService.create("_http._tcp.local.", preferences.getPort(), new HashMap<String, String>() {
+        zeroConfService = ZeroConfService.create("_http._tcp.local.", preferences.getPort(), new HashMap<String, String>() { // NOI18N
             {
-                put("path", "/index.html");
+                put("path", "/index.html"); // NOI18N
             }
         });
         zeroConfService.publish();

@@ -16,7 +16,7 @@ import org.apache.log4j.Logger;
 public class WebServerAction extends JmriAbstractAction {
 
     ServerThread serverThread = null;
-    static Logger log = Logger.getLogger(WebServerAction.class.getName());
+    static Logger log = Logger.getLogger(WebServerAction.class);
 
     public WebServerAction(String s, WindowInterface wi) {
         super(s, wi);
@@ -27,7 +27,7 @@ public class WebServerAction extends JmriAbstractAction {
     }
 
     public WebServerAction() {
-        super("Start JMRI Web Server");
+        super(WebServer.getString("MenuWebServerAction"));
     }
 
     @Override

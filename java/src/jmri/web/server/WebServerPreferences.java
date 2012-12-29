@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
 import org.apache.log4j.Logger;
@@ -18,7 +17,18 @@ import org.jdom.Element;
  */
 public class WebServerPreferences extends Bean {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.WebServerStrings");
+    // XML elements
+    public static final String DisallowedFrames = "disallowedFrames"; // NOI18N
+    public static final String WebServerPreferences = "WebServerPreferences"; // NOI18N
+    public static final String Frame = "frame"; // NOI18N
+    public static final String Port = "port"; // NOI18N
+    public static final String ClickDelay = "clickDelay"; // NOI18N
+    public static final String RefreshDelay = "refreshDelay"; // NOI18N
+    public static final String RebuildIndex = "rebuildIndex"; // NOI18N
+    public static final String UseAjax = "useAjax"; // NOI18N
+    public static final String Simple = "simple"; // NOI18N
+    public static final String RailRoadName = "railRoadName"; // NOI18N
+
     //  Flag that prefs have not been saved:
     private boolean isDirty = false;
     // initial defaults if prefs not found
@@ -26,9 +36,9 @@ public class WebServerPreferences extends Bean {
     private int refreshDelay = 5;
     private boolean useAjax = true;
     private boolean plain = false;
-    private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(rb.getString("DefaultDisallowedFrames").split(";")));
+    private ArrayList<String> disallowedFrames = new ArrayList<String>(Arrays.asList(WebServer.getString("DefaultDisallowedFrames").split(";")));
     private boolean rebuildIndex = false;
-    private String railRoadName = rb.getString("DefaultRailroadName");
+    private String railRoadName = WebServer.getString("DefaultRailroadName");
     private int port = 12080;
     private static Logger log = Logger.getLogger(WebServerPreferences.class.getName());
 
@@ -41,30 +51,30 @@ public class WebServerPreferences extends Bean {
 
     public void load(Element child) {
         Attribute a;
-        if ((a = child.getAttribute("clickDelay")) != null) {
+        if ((a = child.getAttribute(ClickDelay)) != null) {
             try {
                 setClickDelay(Integer.valueOf(a.getValue()));
             } catch (NumberFormatException e) {
                 log.debug(e);
             }
         }
-        if ((a = child.getAttribute("refreshDelay")) != null) {
+        if ((a = child.getAttribute(RefreshDelay)) != null) {
             try {
                 setRefreshDelay(Integer.valueOf(a.getValue()));
             } catch (NumberFormatException e) {
                 log.debug(e);
             }
         }
-        if ((a = child.getAttribute("useAjax")) != null) {
-            setUseAjax(a.getValue().equalsIgnoreCase("true"));
+        if ((a = child.getAttribute(UseAjax)) != null) {
+            setUseAjax(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute("simple")) != null) {
-            setPlain(a.getValue().equalsIgnoreCase("true"));
+        if ((a = child.getAttribute(Simple)) != null) {
+            setPlain(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute("rebuildIndex")) != null) {
-            setRebuildIndex(a.getValue().equalsIgnoreCase("true"));
+        if ((a = child.getAttribute(RebuildIndex)) != null) {
+            setRebuildIndex(Boolean.parseBoolean(a.getValue()));
         }
-        if ((a = child.getAttribute("port")) != null) {
+        if ((a = child.getAttribute(Port)) != null) {
             try {
                 setPort(a.getIntValue());
             } catch (DataConversionException ex) {
@@ -72,13 +82,13 @@ public class WebServerPreferences extends Bean {
                 log.error("Unable to read port. Setting to default value.", ex);
             }
         }
-        if ((a = child.getAttribute("railRoadName")) != null) {
+        if ((a = child.getAttribute(RailRoadName)) != null) {
             setRailRoadName(a.getValue());
         }
-        Element df = child.getChild("disallowedFrames");
+        Element df = child.getChild(DisallowedFrames);
         if (df != null) {
             this.disallowedFrames.clear();
-            for (Object f : df.getChildren("frame")) {
+            for (Object f : df.getChildren(Frame)) {
                 this.addDisallowedFrame(((Element) f).getText().trim());
             }
         }
@@ -120,18 +130,18 @@ public class WebServerPreferences extends Bean {
     }
 
     public Element store() {
-        Element prefs = new Element("WebServerPreferences");
-        prefs.setAttribute("clickDelay", "" + getClickDelay());
-        prefs.setAttribute("refreshDelay", "" + getRefreshDelay());
-        prefs.setAttribute("useAjax", "" + useAjax());
-        prefs.setAttribute("simple", "" + isPlain());
-        prefs.setAttribute("disallowedFrames", "" + getDisallowedFrames());
-        prefs.setAttribute("rebuildIndex", "" + isRebuildIndex());
-        prefs.setAttribute("port", "" + getPort());
-        prefs.setAttribute("railRoadName", getRailRoadName());
-        Element df = new Element("disallowedFrames");
+        Element prefs = new Element(WebServerPreferences);
+        prefs.setAttribute(ClickDelay, "" + getClickDelay());
+        prefs.setAttribute(RefreshDelay, "" + getRefreshDelay());
+        prefs.setAttribute(UseAjax, "" + useAjax());
+        prefs.setAttribute(Simple, "" + isPlain());
+        prefs.setAttribute(DisallowedFrames, "" + getDisallowedFrames());
+        prefs.setAttribute(RebuildIndex, "" + isRebuildIndex());
+        prefs.setAttribute(Port, "" + getPort());
+        prefs.setAttribute(RailRoadName, getRailRoadName());
+        Element df = new Element(DisallowedFrames);
         for (String name : getDisallowedFrames()) {
-            Element frame = new Element("frame");
+            Element frame = new Element(Frame);
             frame.addContent(name);
             df.addContent(frame);
         }
@@ -273,7 +283,7 @@ public class WebServerPreferences extends Bean {
         if (railRoadName != null) {
             this.railRoadName = railRoadName;
         } else {
-            this.railRoadName = "JMRI";
+            this.railRoadName = WebServer.getString("DefaultRailroadName");
         }
     }
 

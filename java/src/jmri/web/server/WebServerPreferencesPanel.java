@@ -9,7 +9,6 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.event.ListDataEvent;
@@ -24,7 +23,6 @@ import org.apache.log4j.Logger;
 public class WebServerPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
     private static final long serialVersionUID = 6907436730813458420L;
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.web.server.WebServerStrings");
     static Logger log = Logger.getLogger(WebServerPreferencesPanel.class.getName());
     Border lineBorder;
     JSpinner clickDelaySpinner;
@@ -58,18 +56,18 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
      layout.setAutoCreateGaps(true);
      layout.setAutoCreateContainerGaps(true);
      SequentialGroup group = layout.createSequentialGroup();
-     group.addComponent(new JTitledSeparator(rb.getString("TitleWebServerPreferences")));
+     group.addComponent(new JTitledSeparator(WebServer.getString("TitleWebServerPreferences")));
      group.addGroup(webServerPreferences(layout));
      layout.setVerticalGroup(group);
      }
      */
     private void initGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        add(new JTitledSeparator(rb.getString("TitleWebServerPreferences")));
+        add(new JTitledSeparator(WebServer.getString("TitleWebServerPreferences")));
         add(rrNamePanel());
         add(rebuildIndexPanel());
         add(portPanel());
-        add(new JTitledSeparator(rb.getString("TitleDelayPanel")));
+        add(new JTitledSeparator(WebServer.getString("TitleDelayPanel")));
         add(delaysPanel());
         add(new JSeparator());
         add(cancelApplySave());
@@ -78,10 +76,10 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     /*
      private Group webServerPreferences(GroupLayout layout) {
      railroadName = new JTextField(preferences.getRailRoadName());
-     railroadName.setToolTipText(rb.getString("ToolTipRailRoadName"));
+     railroadName.setToolTipText(WebServer.getString("ToolTipRailRoadName"));
      railroadName.setColumns(30);
      ParallelGroup group = layout.createParallelGroup(GroupLayout.Alignment.CENTER);
-     group.addComponent(new JLabel(rb.getString("LabelRailRoadName")), GroupLayout.Alignment.TRAILING);
+     group.addComponent(new JLabel(WebServer.getString("LabelRailRoadName")), GroupLayout.Alignment.TRAILING);
      group.addComponent(this.railroadName, GroupLayout.Alignment.LEADING);
      return group;
      }
@@ -137,8 +135,8 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         }
         if ((portNum < 1) || (portNum > 65535)) { //  Invalid port value
             javax.swing.JOptionPane.showMessageDialog(this,
-                    rb.getString("WarningInvalidPort"),
-                    rb.getString("TitlePortWarningDialog"),
+                    WebServer.getString("WarningInvalidPort"),
+                    WebServer.getString("TitlePortWarningDialog"),
                     JOptionPane.WARNING_MESSAGE);
             didSet = false;
         } else {
@@ -182,17 +180,19 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         SpinnerNumberModel spinMod = new SpinnerNumberModel(1, 0, 999, 1);
         clickDelaySpinner = new JSpinner(spinMod);
         ((JSpinner.DefaultEditor) clickDelaySpinner.getEditor()).getTextField().setEditable(false);
+        clickDelaySpinner.setToolTipText(WebServer.getString("ToolTipClickDelay"));
         panel.add(clickDelaySpinner);
-        panel.add(new JLabel(rb.getString("LabelClickDelay")));
+        panel.add(new JLabel(WebServer.getString("LabelClickDelay")));
 
         spinMod = new SpinnerNumberModel(5, 1, 999, 1);
         refreshDelaySpinner = new JSpinner(spinMod);
         ((JSpinner.DefaultEditor) refreshDelaySpinner.getEditor()).getTextField().setEditable(false);
+        refreshDelaySpinner.setToolTipText(WebServer.getString("ToolTipRefreshDelay"));
         panel.add(refreshDelaySpinner);
-        panel.add(new JLabel(rb.getString("LabelRefreshDelay")));
+        panel.add(new JLabel(WebServer.getString("LabelRefreshDelay")));
 
-        useAjaxCB = new JCheckBox(rb.getString("LabelUseAjax"));
-        useAjaxCB.setToolTipText(rb.getString("ToolTipUseAjax"));
+        useAjaxCB = new JCheckBox(WebServer.getString("LabelUseAjax"));
+        useAjaxCB.setToolTipText(WebServer.getString("ToolTipUseAjax"));
         panel.add(useAjaxCB);
 
         JPanel dfPanel = new JPanel();
@@ -201,7 +201,8 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         tf.setBorder(BorderFactory.createLineBorder(Color.black));
         disallowedFrames.setListCellEditor(new DefaultListCellEditor(tf));
         dfPanel.add(new JScrollPane(disallowedFrames));
-        dfPanel.add(new JLabel(rb.getString("LabelDisallowedFrames")));
+        dfPanel.add(new JLabel(WebServer.getString("LabelDisallowedFrames")));
+        dfPanel.setToolTipText(WebServer.getString("ToolTipDisallowedFrames"));
 
         panel.add(dfPanel);
 
@@ -211,17 +212,17 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     private JPanel rrNamePanel() {
         JPanel panel = new JPanel();
         railroadName = new JTextField(preferences.getRailRoadName());
-        railroadName.setToolTipText(rb.getString("ToolTipRailRoadName"));
+        railroadName.setToolTipText(WebServer.getString("ToolTipRailRoadName"));
         railroadName.setColumns(30);
-        panel.add(new JLabel(rb.getString("LabelRailRoadName")));
+        panel.add(new JLabel(WebServer.getString("LabelRailRoadName")));
         panel.add(railroadName);
         return panel;
     }
 
     private JPanel rebuildIndexPanel() {
         JPanel panel = new JPanel();
-        rebuildIndexCB = new JCheckBox(rb.getString("LabelRebuildIndex"));
-        rebuildIndexCB.setToolTipText(rb.getString("ToolTipRebuildIndex"));
+        rebuildIndexCB = new JCheckBox(WebServer.getString("LabelRebuildIndex"));
+        rebuildIndexCB.setToolTipText(WebServer.getString("ToolTipRebuildIndex"));
         panel.add(rebuildIndexCB);
         return panel;
     }
@@ -229,16 +230,17 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     private JPanel portPanel() {
         JPanel panel = new JPanel();
         port = new JTextField();
-        port.setText("12080");
+        port.setText(Integer.toString(preferences.getPort()));
         port.setColumns(6);
+        port.setToolTipText(WebServer.getString("ToolTipPort"));
         panel.add(port);
-        panel.add(new JLabel(rb.getString("LabelPort")));
+        panel.add(new JLabel(WebServer.getString("LabelPort")));
         return panel;
     }
 
     private JPanel cancelApplySave() {
         JPanel panel = new JPanel();
-        cancelB = new JButton(rb.getString("ButtonCancel"));
+        cancelB = new JButton(WebServer.getString("ButtonCancel"));
         cancelB.setVisible(false);
         cancelB.addActionListener(new ActionListener() {
             @Override
@@ -246,14 +248,14 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
                 cancelValues();
             }
         });
-        JButton applyB = new JButton(rb.getString("ButtonApply"));
+        JButton applyB = new JButton(WebServer.getString("ButtonApply"));
         applyB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
                 applyValues();
             }
         });
-        saveB = new JButton(rb.getString("ButtonSave"));
+        saveB = new JButton(WebServer.getString("ButtonSave"));
         saveB.setVisible(false);
         saveB.addActionListener(new ActionListener() {
             @Override
@@ -263,7 +265,7 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
         });
         panel.add(cancelB);
         panel.add(saveB);
-        panel.add(new JLabel(rb.getString("LabelApplyWarning")));
+        panel.add(new JLabel(WebServer.getString("LabelApplyWarning")));
         panel.add(applyB);
         return panel;
     }
@@ -290,12 +292,12 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
 
     @Override
     public String getPreferencesItem() {
-        return rb.getString("PreferencesItem");
+        return WebServer.getString("PreferencesItem");
     }
 
     @Override
     public String getPreferencesItemText() {
-        return rb.getString("PreferencesItemTitle");
+        return WebServer.getString("PreferencesItemTitle");
     }
 
     @Override
