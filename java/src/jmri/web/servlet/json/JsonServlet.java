@@ -39,6 +39,7 @@ public class JsonServlet extends WebSocketServlet {
         super();
     }
 
+    @Override
     public void init() throws ServletException {
         super.init();
         this.mapper = new ObjectMapper();
@@ -54,11 +55,6 @@ public class JsonServlet extends WebSocketServlet {
                     socket.wsConnection.close();
                 }
                 return true;
-            }
-
-            @Override
-            public String name() {
-                return "CloseJsonWebSockets";
             }
         });
     }
