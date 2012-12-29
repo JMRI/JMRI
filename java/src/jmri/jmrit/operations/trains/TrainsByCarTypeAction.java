@@ -15,14 +15,18 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class TrainsByCarTypeAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-
+	
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
+	
     public TrainsByCarTypeAction(String s) {
     	super(s);
     }
     
     public TrainsByCarTypeAction(){
-    	super(rb.getString("TitleModifyTrains"));
+    	super(getString("TitleModifyTrains"));
     }
 
     TrainsByCarTypeFrame f = null;

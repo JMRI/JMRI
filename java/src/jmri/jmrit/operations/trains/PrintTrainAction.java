@@ -15,92 +15,95 @@ import java.util.ResourceBundle;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 
-
 /**
  * Action to print a summary of a train
  * <P>
- * This uses the older style printing, for compatibility with Java 1.1.8 in
- * Macintosh MRJ
- *
- * @author	Bob Jacobsen   Copyright (C) 2003
- * @author  Dennis Miller  Copyright (C) 2005
+ * This uses the older style printing, for compatibility with Java 1.1.8 in Macintosh MRJ
+ * 
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009
- * @version     $Revision$
+ * @version $Revision$
  */
-public class PrintTrainAction  extends AbstractAction {
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+public class PrintTrainAction extends AbstractAction {
+
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
+
 	String newLine = "\n";
 	public static final int MAX_NAME_LENGTH = 15;
 
-    public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview, Frame frame) {
-        super(actionName);
-        this.mFrame = mFrame;
-        this.isPreview = isPreview;
-        this.frame = frame;
-    }
+	public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview, Frame frame) {
+		super(actionName);
+		this.mFrame = mFrame;
+		this.isPreview = isPreview;
+		this.frame = frame;
+	}
 
-    /**
-     * Frame hosting the printing
-     */
-    Frame mFrame;
-    Frame frame;	// TrainEditFrame
-    /**
-     * Variable to set whether this is to be printed or previewed
-     */
-    boolean isPreview;
-    
+	/**
+	 * Frame hosting the printing
+	 */
+	Frame mFrame;
+	Frame frame; // TrainEditFrame
+	/**
+	 * Variable to set whether this is to be printed or previewed
+	 */
+	boolean isPreview;
 
-    public void actionPerformed(ActionEvent e) {
-    	TrainEditFrame f = (TrainEditFrame)frame;
-    	Train train = f._train;
-    	if (train == null)
-    		return;
+	public void actionPerformed(ActionEvent e) {
+		TrainEditFrame f = (TrainEditFrame) frame;
+		Train train = f._train;
+		if (train == null)
+			return;
 
-        // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
-        try {
-            writer = new HardcopyWriter(mFrame, MessageFormat.format(rb.getString("TitleTrain"), new Object[] {train.getName()}), 10, .5, .5, .5, .5, isPreview);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
-        
-        try {
-        	String s = rb.getString("Name") + ": " + train.getName() + newLine;
-        	writer.write(s, 0, s.length());
-        	s = rb.getString("Description") + ": " + train.getDescription() + newLine;
-        	writer.write(s, 0, s.length());
-        	s = rb.getString("Departs") + ": " + train.getTrainDepartsName() + newLine;
-        	writer.write(s, 0, s.length());
-        	s = rb.getString("DepartTime") + ": " + train.getDepartureTime() + newLine;
-        	writer.write(s, 0, s.length());
-        	s = rb.getString("Terminates") + ": " + train.getTrainTerminatesName() + newLine;
-        	writer.write(s, 0, s.length());
-        	s = newLine;
-        	writer.write(s, 0, s.length());
-        	s = rb.getString("Route") + ": " + train.getTrainRouteName() + newLine;
-        	writer.write(s, 0, s.length());
-        	Route route = train.getRoute();
-        	if (route != null){
-        		List<String> locations = route.getLocationsBySequenceList();
-        		for (int i=0; i<locations.size(); i++){
-        			RouteLocation rl = route.getLocationById(locations.get(i));   
-        			s = "\t" + rl.getName() + newLine;
-        			writer.write(s, 0, s.length());		
-        		}
-        	}
-        	if (!train.getComment().equals("")){
-        		s = rb.getString("Comment") + ": " + train.getComment() + newLine;
-        		writer.write(s);
-        	}
-        	
-        	// and force completion of the printing
-        	writer.close();
-        } catch (IOException we) {
-        	log.error("Error printing ConsistRosterEntry: " + e);
-        }
-    }
-    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintTrainAction.class.getName());
+		// obtain a HardcopyWriter to do this
+		HardcopyWriter writer = null;
+		try {
+			writer = new HardcopyWriter(mFrame, MessageFormat.format(getString("TitleTrain"),
+					new Object[] { train.getName() }), 10, .5, .5, .5, .5, isPreview);
+		} catch (HardcopyWriter.PrintCanceledException ex) {
+			log.debug("Print cancelled");
+			return;
+		}
+
+		try {
+			String s = getString("Name") + ": " + train.getName() + newLine;
+			writer.write(s, 0, s.length());
+			s = getString("Description") + ": " + train.getDescription() + newLine;
+			writer.write(s, 0, s.length());
+			s = getString("Departs") + ": " + train.getTrainDepartsName() + newLine;
+			writer.write(s, 0, s.length());
+			s = getString("DepartTime") + ": " + train.getDepartureTime() + newLine;
+			writer.write(s, 0, s.length());
+			s = getString("Terminates") + ": " + train.getTrainTerminatesName() + newLine;
+			writer.write(s, 0, s.length());
+			s = newLine;
+			writer.write(s, 0, s.length());
+			s = getString("Route") + ": " + train.getTrainRouteName() + newLine;
+			writer.write(s, 0, s.length());
+			Route route = train.getRoute();
+			if (route != null) {
+				List<String> locations = route.getLocationsBySequenceList();
+				for (int i = 0; i < locations.size(); i++) {
+					RouteLocation rl = route.getLocationById(locations.get(i));
+					s = "\t" + rl.getName() + newLine;
+					writer.write(s, 0, s.length());
+				}
+			}
+			if (!train.getComment().equals("")) {
+				s = getString("Comment") + ": " + train.getComment() + newLine;
+				writer.write(s);
+			}
+
+			// and force completion of the printing
+			writer.close();
+		} catch (IOException we) {
+			log.error("Error printing ConsistRosterEntry: " + e);
+		}
+	}
+
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintTrainAction.class
+			.getName());
 }

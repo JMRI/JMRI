@@ -55,8 +55,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * EngineManager engineManager = EngineManager.instance();
 	 */
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
+	
 	protected String _id = "";
 	protected String _name = "";		
 	protected String _description = "";
@@ -143,13 +146,13 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	
 	// Train status
-	public static final String BUILDFAILED = rb.getString("BuildFailed");
-	public static final String BUILDING = rb.getString("Building");
-	public static final String BUILT = rb.getString("Built");
-	public static final String PARTIALBUILT = rb.getString("Partial");
-	public static final String TERMINATED = rb.getString("Terminated");
-	public static final String TRAINRESET = rb.getString("TrainReset");
-	public static final String TRAININROUTE = rb.getString("TrainInRoute");
+	public static final String BUILDFAILED = getString("BuildFailed");
+	public static final String BUILDING = getString("Building");
+	public static final String BUILT = getString("Built");
+	public static final String PARTIALBUILT = getString("Partial");
+	public static final String TERMINATED = getString("Terminated");
+	public static final String TRAINRESET = getString("TrainReset");
+	public static final String TRAININROUTE = getString("TrainInRoute");
 	
 	// train requirements
 	public static final int NONE = 0;		// default
@@ -157,25 +160,25 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final int FRED = 2;
 	
 	// road options
-	public static final String ALLROADS = rb.getString("All");			// train services all road names 
-	public static final String INCLUDEROADS = rb.getString("Include");
-	public static final String EXCLUDEROADS = rb.getString("Exclude");
+	public static final String ALLROADS = getString("All");			// train services all road names 
+	public static final String INCLUDEROADS = getString("Include");
+	public static final String EXCLUDEROADS = getString("Exclude");
 	
 	// owner options
-	public static final String ALLOWNERS = rb.getString("All");			// train services all owner names 
-	public static final String INCLUDEOWNERS = rb.getString("Include");
-	public static final String EXCLUDEOWNERS = rb.getString("Exclude");
+	public static final String ALLOWNERS = getString("All");			// train services all owner names 
+	public static final String INCLUDEOWNERS = getString("Include");
+	public static final String EXCLUDEOWNERS = getString("Exclude");
 	
 	// load options
-	public static final String ALLLOADS = rb.getString("All");			// train services all loads 
-	public static final String INCLUDELOADS = rb.getString("Include");
-	public static final String EXCLUDELOADS = rb.getString("Exclude");
+	public static final String ALLLOADS = getString("All");			// train services all loads 
+	public static final String INCLUDELOADS = getString("Include");
+	public static final String EXCLUDELOADS = getString("Exclude");
 
 	// Switch list status
 	public static final String UNKNOWN = "";
-	public static final String PRINTED = rb.getString("Printed");
+	public static final String PRINTED = getString("Printed");
 	
-	public static final String AUTO = rb.getString("Auto");				// how engines are assigned to this train
+	public static final String AUTO = getString("Auto");				// how engines are assigned to this train
 	
 	public Train(String id, String name) {
 		log.debug("New train " + name + " " + id);
@@ -2105,7 +2108,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (isPreview && Setup.isBuildReportEditorEnabled())
 			TrainPrintUtilities.editReport(buildFile, getName());
 		else
-			TrainPrintUtilities.printReport(buildFile, MessageFormat.format(rb.getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true, "");
+			TrainPrintUtilities.printReport(buildFile, MessageFormat.format(getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true, "");
 		return true;
 	}
 	
@@ -2479,9 +2482,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	private void updateStatus(RouteLocation old, RouteLocation next){
 		if (next != null){
-			setStatus(TRAININROUTE+" "+getNumberCarsInTrain()+" "+rb.getString("cars")
-					+" "+getTrainLength()+" "+rb.getString("feet")
-					+", "+getTrainWeight()+" "+rb.getString("tons"));
+			setStatus(TRAININROUTE+" "+getNumberCarsInTrain()+" "+getString("cars")
+					+" "+getTrainLength()+" "+getString("feet")
+					+", "+getTrainWeight()+" "+getString("tons"));
 			// run move scripts
 			runScripts(getMoveScripts());
 		}else{

@@ -21,10 +21,13 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class TrainsScheduleEditAction extends AbstractAction {
 		
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
 	
 	public TrainsScheduleEditAction(){
-		super(rb.getString("MenuItemEditSchedule"));
+		super(getString("MenuItemEditSchedule"));
 	}
 	
 	 public void actionPerformed(ActionEvent e) {
@@ -35,7 +38,10 @@ public class TrainsScheduleEditAction extends AbstractAction {
 
 class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
 	
 	// text box
 	JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
@@ -44,9 +50,9 @@ class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.Prop
 	JComboBox comboBox;
     
     // major buttons
-    JButton addButton = new JButton(rb.getString("Add"));
-    JButton deleteButton = new JButton(rb.getString("Delete"));
-    JButton replaceButton = new JButton(rb.getString("Replace"));
+    JButton addButton = new JButton(getString("Add"));
+    JButton deleteButton = new JButton(getString("Delete"));
+    JButton replaceButton = new JButton(getString("Replace"));
     
     TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
 	
@@ -76,7 +82,7 @@ class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.Prop
         addButtonAction(deleteButton);
 		addButtonAction(replaceButton);
 		
-		setTitle(rb.getString("MenuItemEditSchedule"));
+		setTitle(getString("MenuItemEditSchedule"));
 		
 		pack();
 	   	if ((getWidth()<225)) 

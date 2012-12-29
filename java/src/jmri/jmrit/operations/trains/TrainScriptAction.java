@@ -16,8 +16,12 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class TrainScriptAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
+	
     public TrainScriptAction(String s, TrainEditFrame frame) {
     	super(s);
     	this.frame = frame;
@@ -35,7 +39,7 @@ public class TrainScriptAction extends AbstractAction {
     	f.setLocation(frame.getLocation());
     	f.initComponents(frame);
     	f.setExtendedState(Frame.NORMAL);  	
-    	f.setTitle(rb.getString("MenuItemScripts"));
+    	f.setTitle(getString("MenuItemScripts"));
     }
 }
 

@@ -3,7 +3,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 
@@ -15,13 +14,12 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class TrainByCarTypeAction extends AbstractAction {
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
 	public TrainByCarTypeAction(String s, TrainEditFrame frame) {
 		super(s);
 		this.frame = frame;
 	}
-	
+
 	TrainEditFrame frame;
 
 	public void actionPerformed(ActionEvent e) {

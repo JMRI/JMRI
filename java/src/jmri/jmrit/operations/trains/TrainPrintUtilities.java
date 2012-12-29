@@ -23,39 +23,60 @@ import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Train print utilities
+ * 
  * @author Daniel Boudreau (C) 2010
  * @version $Revision$
- *
+ * 
  */
 public class TrainPrintUtilities {
-	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	
-	/**
-	 * Print or preview a train manifest, build report, or switch list.
-	 * @param file File to be printed or previewed
-	 * @param name Title of document
-	 * @param isPreview true if preview
-	 * @param fontName optional font to use when printing document
-	 * @param isBuildReport true if build report
-	 * @param logoURL optional pathname for logo
-	 */
-	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport, String logoURL){
-		printReport (file,name, isPreview, fontName, isBuildReport, logoURL, "", Setup.PORTRAIT);
+
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
 	}
-	
+
 	/**
 	 * Print or preview a train manifest, build report, or switch list.
-	 * @param file File to be printed or previewed
-	 * @param name Title of document
-	 * @param isPreview true if preview
-	 * @param fontName optional font to use when printing document
-	 * @param isBuildReport true if build report
-	 * @param logoURL optional pathname for logo
-	 * @param printerName optional default printer name
+	 * 
+	 * @param file
+	 *            File to be printed or previewed
+	 * @param name
+	 *            Title of document
+	 * @param isPreview
+	 *            true if preview
+	 * @param fontName
+	 *            optional font to use when printing document
+	 * @param isBuildReport
+	 *            true if build report
+	 * @param logoURL
+	 *            optional pathname for logo
 	 */
-	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport, String logoURL, String printerName, String orientation){
-	    // obtain a HardcopyWriter to do this
+	public static void printReport(File file, String name, boolean isPreview, String fontName,
+			boolean isBuildReport, String logoURL) {
+		printReport(file, name, isPreview, fontName, isBuildReport, logoURL, "", Setup.PORTRAIT);
+	}
+
+	/**
+	 * Print or preview a train manifest, build report, or switch list.
+	 * 
+	 * @param file
+	 *            File to be printed or previewed
+	 * @param name
+	 *            Title of document
+	 * @param isPreview
+	 *            true if preview
+	 * @param fontName
+	 *            optional font to use when printing document
+	 * @param isBuildReport
+	 *            true if build report
+	 * @param logoURL
+	 *            optional pathname for logo
+	 * @param printerName
+	 *            optional default printer name
+	 */
+	public static void printReport(File file, String name, boolean isPreview, String fontName,
+			boolean isBuildReport, String logoURL, String printerName, String orientation) {
+		// obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		Frame mFrame = new Frame();
 		boolean isLandScape = false;
@@ -64,17 +85,18 @@ public class TrainPrintUtilities {
 			isLandScape = true;
 		if (orientation.equals(Setup.HANDHELD))
 			printHeader = false;
-        try {
-            writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5, isPreview, printerName, isLandScape, printHeader);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
-        // set font
-        if (!fontName.equals(""))
-        	writer.setFontName(fontName);
-        
-        // now get the build file to print
+		try {
+			writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5,
+					isPreview, printerName, isLandScape, printHeader);
+		} catch (HardcopyWriter.PrintCanceledException ex) {
+			log.debug("Print cancelled");
+			return;
+		}
+		// set font
+		if (!fontName.equals(""))
+			writer.setFontName(fontName);
+
+		// now get the build file to print
 		BufferedReader in;
 		try {
 			in = new BufferedReader(new FileReader(file));
@@ -84,7 +106,7 @@ public class TrainPrintUtilities {
 		}
 		String newLine = "\n";
 		String line = " ";
-		
+
 		if (!isBuildReport && (!logoURL.equals(""))) {
 			ImageIcon icon = new ImageIcon(logoURL);
 			writer.write(icon.getImage(), new JLabel(icon));
@@ -101,33 +123,38 @@ public class TrainPrintUtilities {
 				break;
 			// check for build report print level
 			if (isBuildReport) {
-				line = filterBuildReport(line, false);	// no indent
+				line = filterBuildReport(line, false); // no indent
 				if (line.equals(""))
 					continue;
-			// printing the train manifest
-			}else{
+				// printing the train manifest
+			} else {
 				// determine if line is a pickup or drop
-				if((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup.getPickupEnginePrefix()))
-						|| (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup.getPickupCarPrefix()))
-						|| (!Setup.getSwitchListPickupCarPrefix().equals("") && line.startsWith(Setup.getSwitchListPickupCarPrefix()))){
-					//log.debug("found a pickup line");
+				if ((!Setup.getPickupEnginePrefix().equals("") && line.startsWith(Setup
+						.getPickupEnginePrefix()))
+						|| (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup
+								.getPickupCarPrefix()))
+						|| (!Setup.getSwitchListPickupCarPrefix().equals("") && line
+								.startsWith(Setup.getSwitchListPickupCarPrefix()))) {
+					// log.debug("found a pickup line");
 					c = Setup.getPickupColor();
-				}
-				else if((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup.getDropEnginePrefix()))
-						|| (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup.getDropCarPrefix()))
-						|| (!Setup.getSwitchListDropCarPrefix().equals("") && line.startsWith(Setup.getSwitchListDropCarPrefix()))){
-					//log.debug("found a drop line");
+				} else if ((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup
+						.getDropEnginePrefix()))
+						|| (!Setup.getDropCarPrefix().equals("") && line.startsWith(Setup
+								.getDropCarPrefix()))
+						|| (!Setup.getSwitchListDropCarPrefix().equals("") && line.startsWith(Setup
+								.getSwitchListDropCarPrefix()))) {
+					// log.debug("found a drop line");
 					c = Setup.getDropColor();
-				}
-				else if((!Setup.getLocalPrefix().equals("") && line.startsWith(Setup.getLocalPrefix()))
-						|| (!Setup.getSwitchListLocalPrefix().equals("") && line.startsWith(Setup.getSwitchListLocalPrefix()))){
-					//log.debug("found a drop line");
+				} else if ((!Setup.getLocalPrefix().equals("") && line.startsWith(Setup
+						.getLocalPrefix()))
+						|| (!Setup.getSwitchListLocalPrefix().equals("") && line.startsWith(Setup
+								.getSwitchListLocalPrefix()))) {
+					// log.debug("found a drop line");
 					c = Setup.getLocalColor();
-				}
-				else if(!line.startsWith(TrainCommon.TAB)){
+				} else if (!line.startsWith(TrainCommon.TAB)) {
 					c = null;
 				}
-				if (c != null){
+				if (c != null) {
 					try {
 						writer.write(c, line + newLine);
 						continue;
@@ -144,22 +171,25 @@ public class TrainPrintUtilities {
 				break;
 			}
 		}
-        // and force completion of the printing
+		// and force completion of the printing
 		try {
 			in.close();
 		} catch (IOException e) {
 			log.debug("Print close failed");
 		}
-        writer.close();
+		writer.close();
 	}
 
 	/**
-	 * Creates a new build report file with the print detail numbers 
-	 * replaced by indentations. Then calls open desktop editor.
-	 * @param file build file
-	 * @param name train name
+	 * Creates a new build report file with the print detail numbers replaced by indentations. Then calls open desktop
+	 * editor.
+	 * 
+	 * @param file
+	 *            build file
+	 * @param name
+	 *            train name
 	 */
-	public static void editReport(File file, String name){
+	public static void editReport(File file, String name) {
 		// make a new file with the build report levels removed
 		BufferedReader in;
 		try {
@@ -169,10 +199,11 @@ public class TrainPrintUtilities {
 			return;
 		}
 		java.io.PrintWriter out;
-		File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(rb.getString("Report")+" "+name);
+		File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(
+				getString("Report") + " " + name);
 		try {
-			out = new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(buildReport)),
-					true);
+			out = new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(
+					buildReport)), true);
 		} catch (IOException e) {
 			log.error("Can not create build report file");
 			return;
@@ -192,7 +223,7 @@ public class TrainPrintUtilities {
 				break;
 			}
 		}
-        // and force completion of the printing
+		// and force completion of the printing
 		try {
 			in.close();
 		} catch (IOException e) {
@@ -202,49 +233,46 @@ public class TrainPrintUtilities {
 		// open editor
 		openDesktopEditor(buildReport);
 	}
-	
-	/* Removes the print levels from the build report
-	 * 
-	 */	
-	private static String filterBuildReport(String line, boolean indent){
+
+	/*
+	 * Removes the print levels from the build report
+	 */
+	private static String filterBuildReport(String line, boolean indent) {
 		String[] inputLine = line.split("\\s+");
 		if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")
 				|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
 				|| inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
 				|| inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
-			
-			if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL)){
-				if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-") 
+
+			if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL)) {
+				if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
 						|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
 						|| inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
-					return "";	// don't print this line
+					return ""; // don't print this line
 				}
 			}
-			if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)){
+			if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
 				if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
-						|| inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
-					return "";	// don't print this line
+						|| inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+					return ""; // don't print this line
 				}
 			}
-			if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED)){
-				if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
-					return "";	// don't print this line
+			if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED)) {
+				if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+					return ""; // don't print this line
 				}
 			}
 			// do not indent if false
 			int start = 0;
-			if (indent){
+			if (indent) {
 				// indent lines based on level
-				if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
+				if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
 					inputLine[0] = "   ";
-				}
-				else if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")){
+				} else if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")) {
 					inputLine[0] = "  ";
-				}
-				else if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")){
+				} else if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")) {
 					inputLine[0] = " ";
-				}
-				else if (inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")){
+				} else if (inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
 					inputLine[0] = "";
 				}
 			} else {
@@ -260,17 +288,16 @@ public class TrainPrintUtilities {
 				return " ";
 			return buf.toString();
 		} else {
-			log.debug("ERROR first characters of build report not valid ("
-					+ line + ")");
+			log.debug("ERROR first characters of build report not valid (" + line + ")");
 			return "ERROR " + line;
 		}
 	}
-	
+
 	/**
-	 * This method uses Desktop which is supported in Java 1.6. Since we're
-	 * currently limiting the code to Java 1.5, this method must be commented out.
+	 * This method uses Desktop which is supported in Java 1.6. Since we're currently limiting the code to Java 1.5,
+	 * this method must be commented out.
 	 */
-	public static void openDesktopEditor(File file){
+	public static void openDesktopEditor(File file) {
 		if (!java.awt.Desktop.isDesktopSupported()) {
 			log.warn("desktop not supported");
 			return;
@@ -287,45 +314,38 @@ public class TrainPrintUtilities {
 		}
 	}
 
-	
 	/**
-	 * This method replaces the method above for
-	 * compatibility with Java 1.5.
+	 * This method replaces the method above for compatibility with Java 1.5.
 	 */
 	/*
-	public static void openDesktopEditor(File file){
-		log.info("Open file using editor not supported yet!  Requires Java 1.6");
-		String path = file.getAbsolutePath();
-		JOptionPane.showMessageDialog(null,
-				"Open file using editor not available, file path: "+path +
-				"\n If you want to use this feature, download replacement jmri.jar file from:" +
-				"\n http://home.comcast.net/~daboudreau/JMRI_JAVA1.6/jmri.jar",
-				"Requires custom jmri.jar file and Java 1.6",
-				JOptionPane.INFORMATION_MESSAGE);
-		return;
-	}
-	*/
-	
-	public static JComboBox getPrinterJComboBox(){
+	 * public static void openDesktopEditor(File file){
+	 * log.info("Open file using editor not supported yet!  Requires Java 1.6"); String path = file.getAbsolutePath();
+	 * JOptionPane.showMessageDialog(null, "Open file using editor not available, file path: "+path +
+	 * "\n If you want to use this feature, download replacement jmri.jar file from:" +
+	 * "\n http://home.comcast.net/~daboudreau/JMRI_JAVA1.6/jmri.jar", "Requires custom jmri.jar file and Java 1.6",
+	 * JOptionPane.INFORMATION_MESSAGE); return; }
+	 */
+
+	public static JComboBox getPrinterJComboBox() {
 		JComboBox box = new JComboBox();
 		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
 		for (int i = 0; i < services.length; i++) {
 			box.addItem(services[i].getName());
-			//log.debug(services[i].getName());
+			// log.debug(services[i].getName());
 		}
-		
+
 		// Set to default printer
 		box.setSelectedItem(getDefaultPrinterName());
-		
+
 		return box;
 	}
-	
-	public static String getDefaultPrinterName(){
+
+	public static String getDefaultPrinterName() {
 		if (PrintServiceLookup.lookupDefaultPrintService() != null)
 			return PrintServiceLookup.lookupDefaultPrintService().getName();
-		return "";	// no default printer specified
+		return ""; // no default printer specified
 	}
-	
+
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(TrainPrintUtilities.class.getName());
+			.getLogger(TrainPrintUtilities.class.getName());
 }

@@ -4,8 +4,6 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -16,21 +14,22 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class TrainsTableAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
-    public TrainsTableAction(String s) {
-    	super(s);
-    }
+	public TrainsTableAction(String s) {
+		super(s);
+	}
 
-    static TrainsTableFrame f = null;
-    public void actionPerformed(ActionEvent e) {
-        // create a train table frame
-    	if (f == null || !f.isVisible()){
-    		f = new TrainsTableFrame();
-    	}
-    	f.setExtendedState(Frame.NORMAL);
-    	f.setVisible(true);
-    }
+	static TrainsTableFrame f = null;
+
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	public void actionPerformed(ActionEvent e) {
+		// create a train table frame
+		if (f == null || !f.isVisible()) {
+			f = new TrainsTableFrame();
+		}
+		f.setExtendedState(Frame.NORMAL);
+		f.setVisible(true);
+	}
 }
 
 /* @(#)TrainsTableAction.java */

@@ -24,8 +24,11 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
+	
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; 
     
 	public TrainScheduleManager() {
@@ -286,13 +289,13 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     
     private void createDefaultSchedules(){
     	log.debug("creating default schedules");
-    	newSchedule(rb.getString("Sunday"));
-    	newSchedule(rb.getString("Monday"));
-    	newSchedule(rb.getString("Tuesday"));
-    	newSchedule(rb.getString("Wednesday"));
-    	newSchedule(rb.getString("Thursday"));
-    	newSchedule(rb.getString("Friday"));
-    	newSchedule(rb.getString("Saturday"));
+    	newSchedule(getString("Sunday"));
+    	newSchedule(getString("Monday"));
+    	newSchedule(getString("Tuesday"));
+    	newSchedule(getString("Wednesday"));
+    	newSchedule(getString("Thursday"));
+    	newSchedule(getString("Friday"));
+		newSchedule(getString("Saturday"));
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {

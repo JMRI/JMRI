@@ -4,7 +4,6 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ResourceBundle;
 
 /**
  * Train print utilities
@@ -13,9 +12,7 @@ import java.util.ResourceBundle;
  *
  */
 public class TrainUtilities {
-	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	
+		
 	/**
 	 * This method uses Desktop which is supported in Java 1.6.
 	 */

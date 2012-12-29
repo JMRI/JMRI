@@ -21,7 +21,6 @@ import javax.swing.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
-
 /**
  * Frame to display by rolling stock, the locations serviced by this train
  * 
@@ -29,29 +28,33 @@ import java.util.ResourceBundle;
  * @version $Revision$
  */
 
-public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
+public class TrainByCarTypeFrame extends OperationsFrame implements
+		java.beans.PropertyChangeListener {
 
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
+
 	// train
 	Train train = null;
-	
+
 	LocationManager locationManager = LocationManager.instance();
-	
+
 	// panels
 	JPanel pLocations = new JPanel();
-	
+
 	// radio buttons
 
 	// for padding out panel
-	
+
 	// combo boxes
 	JComboBox typeComboBox = CarTypes.instance().getComboBox();
 	JComboBox carsComboBox = new JComboBox();
-	
+
 	// Blank space
 	String blank = "";
-	
+
 	// The car currently selected
 	Car car;
 
@@ -60,86 +63,86 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 	}
 
 	public void initComponents(Train train) {
-		
+
 		this.train = train;
-		
+
 		// general GUI config
-		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
-		
-	    //      Set up the panels
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+		// Set up the panels
 		JPanel pCarType = new JPanel();
-    	pCarType.setLayout(new GridBagLayout());
-    	pCarType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
-    	
-    	addItem(pCarType, typeComboBox, 0,0);
-    	addItem(pCarType, carsComboBox, 1,0);
-    	
-    	// increase width of combobox so large text names display properly
+		pCarType.setLayout(new GridBagLayout());
+		pCarType.setBorder(BorderFactory.createTitledBorder(getString("Type")));
+
+		addItem(pCarType, typeComboBox, 0, 0);
+		addItem(pCarType, carsComboBox, 1, 0);
+
+		// increase width of combobox so large text names display properly
 		Dimension boxsize = typeComboBox.getMinimumSize();
-		if (boxsize != null){
-			boxsize.setSize(boxsize.width+10, boxsize.height);
+		if (boxsize != null) {
+			boxsize.setSize(boxsize.width + 10, boxsize.height);
 			typeComboBox.setMinimumSize(boxsize);
 		}
-		
+
 		adjustCarsComboBoxSize();
 
-    	pLocations.setLayout(new GridBagLayout());
-    	JScrollPane locationPane = new JScrollPane(pLocations);
-    	locationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	locationPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Route")));
-    	updateCarsComboBox();
-    	updateRoute();
-    	
-    	getContentPane().add(pCarType);
-    	getContentPane().add(locationPane);
-    	
+		pLocations.setLayout(new GridBagLayout());
+		JScrollPane locationPane = new JScrollPane(pLocations);
+		locationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		locationPane.setBorder(BorderFactory.createTitledBorder(getString("Route")));
+		updateCarsComboBox();
+		updateRoute();
+
+		getContentPane().add(pCarType);
+		getContentPane().add(locationPane);
+
 		// setup combo box
 		addComboBoxAction(typeComboBox);
 		addComboBoxAction(carsComboBox);
-		
+
 		locationManager.addPropertyChangeListener(this);
 		CarTypes.instance().addPropertyChangeListener(this);
-		if (train != null){
+		if (train != null) {
 			train.addPropertyChangeListener(this);
-			setTitle(rb.getString("MenuItemShowCarTypes")+" "+train.getName());
+			setTitle(getString("MenuItemShowCarTypes") + " " + train.getName());
 		}
 		// listen to all tracks and locations
 		addLocationAndTrackPropertyChange();
-		
+
 		setPreferredSize(null);
 		pack();
-		if (getWidth()<400)
-			setSize(400, getHeight());	
+		if (getWidth() < 400)
+			setSize(400, getHeight());
 		setVisible(true);
-		
+
 	}
-		
+
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("combo box action");
 		if (ae.getSource().equals(typeComboBox))
 			updateCarsComboBox();
-		updateRoute();		
+		updateRoute();
 	}
 
-	private void updateRoute(){
+	private void updateRoute() {
 		if (train == null)
 			return;
-		log.debug("update locations served by train "+train.getName());
-		int x=0;
+		log.debug("update locations served by train " + train.getName());
+		int x = 0;
 		pLocations.removeAll();
-		String carType = (String)typeComboBox.getSelectedItem();
+		String carType = (String) typeComboBox.getSelectedItem();
 		if (car != null)
 			car.removePropertyChangeListener(this);
 		car = null;
-		if (carsComboBox.getSelectedItem() != null && !carsComboBox.getSelectedItem().equals(blank)){
-			car = (Car)carsComboBox.getSelectedItem();
+		if (carsComboBox.getSelectedItem() != null && !carsComboBox.getSelectedItem().equals(blank)) {
+			car = (Car) carsComboBox.getSelectedItem();
 			car.addPropertyChangeListener(this);
 		}
 		Route route = train.getRoute();
 		if (route == null)
 			return;
 		List<String> routeIds = route.getLocationsBySequenceList();
-		for (int i=0; i<routeIds.size(); i++){
+		for (int i = 0; i < routeIds.size(); i++) {
 			JLabel loc = new JLabel();
 			RouteLocation rl = route.getLocationById(routeIds.get(i));
 			String locationName = rl.getName();
@@ -147,94 +150,96 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			addItemLeft(pLocations, loc, 0, x++);
 			Location location = locationManager.getLocationByName(locationName);
 			List<String> tracks = location.getTrackIdsByNameList(null);
-			for (int j=0; j<tracks.size(); j++){
+			for (int j = 0; j < tracks.size(); j++) {
 				Track track = location.getTrackById(tracks.get(j));
 				JLabel trk = new JLabel();
 				trk.setText(track.getName());
 				addItemLeft(pLocations, trk, 1, x);
 				// is the car at this location and track?
-				if (car !=null && location.equals(car.getLocation()) && track.equals(car.getTrack())){
+				if (car != null && location.equals(car.getLocation())
+						&& track.equals(car.getTrack())) {
 					JLabel here = new JLabel("  -->");
 					addItemLeft(pLocations, here, 0, x);
-				}			
-				JLabel op = new JLabel();			
+				}
+				JLabel op = new JLabel();
 				addItemLeft(pLocations, op, 2, x++);
 				if (!train.acceptsTypeName(carType))
-					op.setText(rb.getString("X(TrainType)"));
+					op.setText(getString("X(TrainType)"));
 				else if (car != null && !train.acceptsRoadName(car.getRoad()))
-					op.setText(rb.getString("X(TrainRoad)"));
-				else if (car != null && !car.isCaboose() && !train.acceptsLoad(car.getLoad(), car.getType()))
-					op.setText(rb.getString("X(TrainLoad)"));
+					op.setText(getString("X(TrainRoad)"));
+				else if (car != null && !car.isCaboose()
+						&& !train.acceptsLoad(car.getLoad(), car.getType()))
+					op.setText(getString("X(TrainLoad)"));
 				else if (car != null && !train.acceptsBuiltDate(car.getBuilt()))
-					op.setText(rb.getString("X(TrainBuilt)"));
+					op.setText(getString("X(TrainBuilt)"));
 				else if (car != null && !train.acceptsOwnerName(car.getOwner()))
-					op.setText(rb.getString("X(TrainOwner)"));
+					op.setText(getString("X(TrainOwner)"));
 				else if (train.skipsLocation(rl.getId()))
-					op.setText(rb.getString("X(TrainSkips)"));
+					op.setText(getString("X(TrainSkips)"));
 				else if (!rl.canDrop() && !rl.canPickup())
-					op.setText(rb.getString("X(Route)"));
+					op.setText(getString("X(Route)"));
 				else if (rl.getMaxCarMoves() <= 0)
-					op.setText(rb.getString("X(RouteMoves)"));
+					op.setText(getString("X(RouteMoves)"));
 				else if (!location.acceptsTypeName(carType))
-					op.setText(rb.getString("X(LocationType)"));
+					op.setText(getString("X(LocationType)"));
 				// check route before checking train, check train calls check route
 				else if (!track.acceptsPickupRoute(route) && !track.acceptsDropRoute(route))
-					op.setText(rb.getString("X(TrackRoute)"));
+					op.setText(getString("X(TrackRoute)"));
 				else if (!track.acceptsPickupTrain(train) && !track.acceptsDropTrain(train))
-					op.setText(rb.getString("X(TrackTrain)"));
+					op.setText(getString("X(TrackTrain)"));
 				else if (!track.acceptsTypeName(carType))
-					op.setText(rb.getString("X(TrackType)"));
+					op.setText(getString("X(TrackType)"));
 				else if (car != null && !track.acceptsRoadName(car.getRoad()))
-					op.setText(rb.getString("X(TrackRoad)"));
+					op.setText(getString("X(TrackRoad)"));
 				else if (car != null && !track.acceptsLoad(car.getLoad(), car.getType()))
-					op.setText(rb.getString("X(TrackLoad)"));
+					op.setText(getString("X(TrackLoad)"));
 				else if ((rl.getTrainDirection() & location.getTrainDirections()) == 0)
-					op.setText(rb.getString("X(DirLoc)"));
+					op.setText(getString("X(DirLoc)"));
 				else if ((rl.getTrainDirection() & track.getTrainDirections()) == 0)
-					op.setText(rb.getString("X(DirTrk)"));
+					op.setText(getString("X(DirTrk)"));
 				else if (!checkScheduleAttribute(TYPE, carType, null, track))
-					op.setText(rb.getString("X(ScheduleType)"));
+					op.setText(getString("X(ScheduleType)"));
 				else if (!checkScheduleAttribute(LOAD, carType, car, track))
-					op.setText(rb.getString("X(ScheduleLoad)"));
+					op.setText(getString("X(ScheduleLoad)"));
 				else if (!checkScheduleAttribute(ROAD, carType, car, track))
-					op.setText(rb.getString("X(ScheduleRoad)"));
+					op.setText(getString("X(ScheduleRoad)"));
 				else if (!checkScheduleAttribute(TIMETABLE, carType, car, track))
-					op.setText(rb.getString("X(ScheduleTimeTable)"));
+					op.setText(getString("X(ScheduleTimeTable)"));
 				else if (!checkScheduleAttribute(ALL, carType, car, track))
-					op.setText(rb.getString("X(Schedule)"));			
-				else if (!track.acceptsPickupTrain(train)){
+					op.setText(getString("X(Schedule)"));
+				else if (!track.acceptsPickupTrain(train)) {
 					// can the train drop off car?
 					if (rl.canDrop() && track.acceptsDropTrain(train))
-						op.setText(rb.getString("DropOnly"));
+						op.setText(getString("DropOnly"));
 					else
-						op.setText(rb.getString("X(TrainPickup)"));
-				}
-				else if (!track.acceptsDropTrain(train))
+						op.setText(getString("X(TrainPickup)"));
+				} else if (!track.acceptsDropTrain(train))
 					// can the train pick up car?
 					if (rl.canPickup() && track.acceptsPickupTrain(train))
-						op.setText(rb.getString("PickupOnly"));
+						op.setText(getString("PickupOnly"));
 					else
-						op.setText(rb.getString("X(TrainDrop)"));
+						op.setText(getString("X(TrainDrop)"));
 				else if (rl.canDrop() && rl.canPickup())
-					op.setText(rb.getString("OK"));
+					op.setText(getString("OK"));
 				else if (rl.canDrop())
-					op.setText(rb.getString("DropOnly"));
+					op.setText(getString("DropOnly"));
 				else if (rl.canPickup())
-					op.setText(rb.getString("PickupOnly"));
+					op.setText(getString("PickupOnly"));
 				else
-					op.setText("X");	//default shouldn't occur
+					op.setText("X"); // default shouldn't occur
 			}
 		}
 		pLocations.revalidate();
 		repaint();
 	}
-	
+
 	private static final String ROAD = "road";
 	private static final String LOAD = "load";
 	private static final String TIMETABLE = "timetable";
 	private static final String TYPE = "type";
 	private static final String ALL = "all";
-	private boolean checkScheduleAttribute(String attribute, String carType, Car car, Track track){
+
+	private boolean checkScheduleAttribute(String attribute, String carType, Car car, Track track) {
 		Schedule schedule = track.getSchedule();
 		if (schedule == null)
 			return true;
@@ -242,75 +247,85 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 		if (car != null && car.getTrack() == track)
 			return true;
 		List<String> scheduleItems = schedule.getItemsBySequenceList();
-		for (int i=0; i<scheduleItems.size(); i++){
+		for (int i = 0; i < scheduleItems.size(); i++) {
 			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
 			// check to see if schedule services car type
-			if (attribute.equals(TYPE) && si.getType().equals(carType)) 
+			if (attribute.equals(TYPE) && si.getType().equals(carType))
 				return true;
 			// check to see if schedule services car type and load
-			if (attribute.equals(LOAD) && si.getType().equals(carType) 
-					&& (si.getLoad().equals("") || car == null || si.getLoad().equals(car.getLoad())))
+			if (attribute.equals(LOAD)
+					&& si.getType().equals(carType)
+					&& (si.getLoad().equals("") || car == null || si.getLoad()
+							.equals(car.getLoad())))
 				return true;
 			// check to see if schedule services car type and road
-			if (attribute.equals(ROAD) && si.getType().equals(carType) 
-					&& (si.getRoad().equals("") || car == null || si.getRoad().equals(car.getRoad())))
+			if (attribute.equals(ROAD)
+					&& si.getType().equals(carType)
+					&& (si.getRoad().equals("") || car == null || si.getRoad()
+							.equals(car.getRoad())))
 				return true;
 			// check to see if schedule timetable allows delivery
-			if (attribute.equals(TIMETABLE) && si.getType().equals(carType)
-					&& (si.getTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
+			if (attribute.equals(TIMETABLE)
+					&& si.getType().equals(carType)
+					&& (si.getTrainScheduleId().equals("") || TrainManager.instance()
+							.getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
 				return true;
 			// check to see if at least one schedule item can service car
-			if (attribute.equals(ALL) && si.getType().equals(carType)
-					&& (si.getLoad().equals("") || car == null || si.getLoad().equals(car.getLoad()))
-					&& (si.getRoad().equals("") || car == null || si.getRoad().equals(car.getRoad()))
-					&& (si.getTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
+			if (attribute.equals(ALL)
+					&& si.getType().equals(carType)
+					&& (si.getLoad().equals("") || car == null || si.getLoad()
+							.equals(car.getLoad()))
+					&& (si.getRoad().equals("") || car == null || si.getRoad()
+							.equals(car.getRoad()))
+					&& (si.getTrainScheduleId().equals("") || TrainManager.instance()
+							.getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
 				return true;
 		}
 		return false;
 	}
-	
-	private void updateComboBox(){
+
+	private void updateComboBox() {
 		log.debug("update combobox");
 		CarTypes.instance().updateComboBox(typeComboBox);
 	}
-	
-	private void updateCarsComboBox(){
+
+	private void updateCarsComboBox() {
 		log.debug("update car combobox");
 		carsComboBox.removeAllItems();
-		String carType = (String)typeComboBox.getSelectedItem();
+		String carType = (String) typeComboBox.getSelectedItem();
 		// load car combobox
 		carsComboBox.addItem(blank);
 		List<String> cars = CarManager.instance().getByTypeList(carType);
-		for (int i=0; i<cars.size(); i++){
-			Car car = CarManager.instance().getById(cars.get(i));	
+		for (int i = 0; i < cars.size(); i++) {
+			Car car = CarManager.instance().getById(cars.get(i));
 			carsComboBox.addItem(car);
 		}
 	}
-	
-	private void adjustCarsComboBoxSize(){
+
+	private void adjustCarsComboBoxSize() {
 		List<String> cars = CarManager.instance().getList();
-		for (int i=0; i<cars.size(); i++){
-			Car car = CarManager.instance().getById(cars.get(i));	
+		for (int i = 0; i < cars.size(); i++) {
+			Car car = CarManager.instance().getById(cars.get(i));
 			carsComboBox.addItem(car);
 		}
 		Dimension boxsize = carsComboBox.getMinimumSize();
-		if (boxsize != null){
-			boxsize.setSize(boxsize.width+10, boxsize.height);
+		if (boxsize != null) {
+			boxsize.setSize(boxsize.width + 10, boxsize.height);
 			carsComboBox.setMinimumSize(boxsize);
 		}
 		carsComboBox.removeAllItems();
 	}
-	
+
 	/**
 	 * Add property listeners for locations and tracks
 	 */
-	private void addLocationAndTrackPropertyChange(){
+	private void addLocationAndTrackPropertyChange() {
 		List<String> locations = locationManager.getLocationsByIdList();
-		for (int i=0; i<locations.size(); i++){
+		for (int i = 0; i < locations.size(); i++) {
 			Location loc = locationManager.getLocationById(locations.get(i));
 			loc.addPropertyChangeListener(this);
 			List<String> tracks = loc.getTrackIdsByNameList(null);
-			for (int j=0; j<tracks.size(); j++){
+			for (int j = 0; j < tracks.size(); j++) {
 				Track track = loc.getTrackById(tracks.get(j));
 				track.addPropertyChangeListener(this);
 				Schedule schedule = track.getSchedule();
@@ -319,20 +334,20 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			}
 		}
 	}
-	
+
 	/**
 	 * Remove property listeners for locations and tracks
 	 */
-	private void removeLocationAndTrackPropertyChange(){
+	private void removeLocationAndTrackPropertyChange() {
 		List<String> locations = locationManager.getLocationsByIdList();
-		for (int i=0; i<locations.size(); i++){
+		for (int i = 0; i < locations.size(); i++) {
 			Location loc = locationManager.getLocationById(locations.get(i));
-			if (loc != null){
+			if (loc != null) {
 				loc.removePropertyChangeListener(this);
 				List<String> tracks = loc.getTrackIdsByNameList(null);
-				for (int j=0; j<tracks.size(); j++){
+				for (int j = 0; j < tracks.size(); j++) {
 					Track track = loc.getTrackById(tracks.get(j));
-					if (track != null){
+					if (track != null) {
 						track.removePropertyChangeListener(this);
 						Schedule schedule = track.getSchedule();
 						if (schedule != null)
@@ -342,8 +357,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			}
 		}
 	}
-	
-	public void dispose(){
+
+	public void dispose() {
 		locationManager.removePropertyChangeListener(this);
 		CarTypes.instance().removePropertyChangeListener(this);
 		removeLocationAndTrackPropertyChange();
@@ -353,30 +368,32 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			car.removePropertyChangeListener(this);
 		super.dispose();
 	}
-	
- 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (log.isDebugEnabled()) 
-			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		if (log.isDebugEnabled())
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
+					+ " new: " + e.getNewValue());
 		if (e.getSource().equals(car) || e.getSource().equals(train))
 			updateRoute();
-		if (e.getSource().getClass().equals(Track.class) || e.getSource().getClass().equals(Location.class)
+		if (e.getSource().getClass().equals(Track.class)
+				|| e.getSource().getClass().equals(Location.class)
 				|| e.getSource().getClass().equals(Schedule.class))
 			updateRoute();
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY))
 			updateRoute();
 		if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY))
-				dispose();
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY))
+			dispose();
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY))
 			updateComboBox();
 		if (e.getPropertyName().equals(Location.LENGTH_CHANGED_PROPERTY)) {
 			// a track has been add or deleted update property listeners
 			removeLocationAndTrackPropertyChange();
 			addLocationAndTrackPropertyChange();
 		}
- 	}
+	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(TrainByCarTypeFrame.class.getName());
+			.getLogger(TrainByCarTypeFrame.class.getName());
 }

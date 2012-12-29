@@ -4,7 +4,6 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
-import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 
@@ -15,21 +14,21 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class TrainsScheduleAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
-    public TrainsScheduleAction(String s) {
-    	super(s);
-    }
+	public TrainsScheduleAction(String s) {
+		super(s);
+	}
 
-    TrainsScheduleTableFrame f = null;
-    public void actionPerformed(ActionEvent e) {
-        // create a frame
-    	if (f == null || !f.isVisible()){
-    		f = new TrainsScheduleTableFrame();
-     	}
-    	f.setExtendedState(Frame.NORMAL);
-   		f.setVisible(true);
-    }
+	TrainsScheduleTableFrame f = null;
+
+	public void actionPerformed(ActionEvent e) {
+		// create a frame
+		if (f == null || !f.isVisible()) {
+			f = new TrainsScheduleTableFrame();
+		}
+		f.setExtendedState(Frame.NORMAL);
+		f.setVisible(true);
+	}
 }
 
 /* @(#)TrainsScheduleAction.java */

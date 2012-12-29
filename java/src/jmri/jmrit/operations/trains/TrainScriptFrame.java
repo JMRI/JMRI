@@ -36,7 +36,10 @@ import jmri.util.FileUtil;
 
 public class TrainScriptFrame extends OperationsFrame {
 
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
 	
 	TrainManager manager;
 	TrainManagerXml managerXml;
@@ -58,17 +61,17 @@ public class TrainScriptFrame extends OperationsFrame {
 	JLabel trainDescription = new JLabel();
 
 	// major buttons
-	JButton addBuildScriptButton = new JButton(rb.getString("AddScript"));
-	JButton addAfterBuildScriptButton = new JButton(rb.getString("AddScript"));
-	JButton addMoveScriptButton = new JButton(rb.getString("AddScript"));
-	JButton addTerminationScriptButton = new JButton(rb.getString("AddScript"));
+	JButton addBuildScriptButton = new JButton(getString("AddScript"));
+	JButton addAfterBuildScriptButton = new JButton(getString("AddScript"));
+	JButton addMoveScriptButton = new JButton(getString("AddScript"));
+	JButton addTerminationScriptButton = new JButton(getString("AddScript"));
 	
-	JButton runBuildScriptButton = new JButton(rb.getString("RunScripts"));
-	JButton runAfterBuildScriptButton = new JButton(rb.getString("RunScripts"));
-	JButton runMoveScriptButton = new JButton(rb.getString("RunScripts"));
-	JButton runTerminationScriptButton = new JButton(rb.getString("RunScripts"));
+	JButton runBuildScriptButton = new JButton(getString("RunScripts"));
+	JButton runAfterBuildScriptButton = new JButton(getString("RunScripts"));
+	JButton runMoveScriptButton = new JButton(getString("RunScripts"));
+	JButton runTerminationScriptButton = new JButton(getString("RunScripts"));
 	
-	JButton saveTrainButton = new JButton(rb.getString("SaveTrain"));
+	JButton saveTrainButton = new JButton(getString("SaveTrain"));
 
 	public TrainScriptFrame() {
 		super();
@@ -78,19 +81,19 @@ public class TrainScriptFrame extends OperationsFrame {
     	// Set up script options in a Scroll Pane..
      	buildScriptPane = new JScrollPane(pBuildScript);
       	buildScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	buildScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsBeforeBuild")));
+      	buildScriptPane.setBorder(BorderFactory.createTitledBorder(getString("ScriptsBeforeBuild")));
       	
      	afterBuildScriptPane = new JScrollPane(pAfterBuildScript);
       	afterBuildScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	afterBuildScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsAfterBuild")));
+      	afterBuildScriptPane.setBorder(BorderFactory.createTitledBorder(getString("ScriptsAfterBuild")));
 
      	moveScriptPane = new JScrollPane(pMoveScript);
       	moveScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	moveScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsWhenMoved")));
+      	moveScriptPane.setBorder(BorderFactory.createTitledBorder(getString("ScriptsWhenMoved")));
  
       	terminationScriptPane = new JScrollPane(pTerminationScript);
       	terminationScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	terminationScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsWhenTerminated")));  	
+      	terminationScriptPane.setBorder(BorderFactory.createTitledBorder(getString("ScriptsWhenTerminated")));  	
 
 		// remember who called us
 		parent.setChildFrame(this);
@@ -109,13 +112,13 @@ public class TrainScriptFrame extends OperationsFrame {
 		// row 1a
        	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
-    	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
+    	pName.setBorder(BorderFactory.createTitledBorder(getString("Name")));
     	addItem(pName, trainName, 0, 0);
 
 		// row 1b
        	JPanel pDesc = new JPanel();
     	pDesc.setLayout(new GridBagLayout());
-    	pDesc.setBorder(BorderFactory.createTitledBorder(rb.getString("Description")));
+    	pDesc.setBorder(BorderFactory.createTitledBorder(getString("Description")));
     	addItem(pDesc, trainDescription, 0, 0);
 		
     	p1.add(pName);
@@ -178,7 +181,7 @@ public class TrainScriptFrame extends OperationsFrame {
     		if (scripts.size()>0)
     			addItem(pBuildScript, runBuildScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeBuildScripts = new JButton(rb.getString("RemoveScript"));
+    			JButton removeBuildScripts = new JButton(getString("RemoveScript"));
     			removeBuildScripts.setName(scripts.get(i));
     			removeBuildScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -204,7 +207,7 @@ public class TrainScriptFrame extends OperationsFrame {
     		if (scripts.size()>0)
     			addItem(pAfterBuildScript, runAfterBuildScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeAfterBuildScripts = new JButton(rb.getString("RemoveScript"));
+    			JButton removeAfterBuildScripts = new JButton(getString("RemoveScript"));
     			removeAfterBuildScripts.setName(scripts.get(i));
     			removeAfterBuildScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -230,7 +233,7 @@ public class TrainScriptFrame extends OperationsFrame {
       		if (scripts.size()>0)
     			addItem(pMoveScript, runMoveScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeMoveScripts = new JButton(rb.getString("RemoveScript"));
+    			JButton removeMoveScripts = new JButton(getString("RemoveScript"));
     			removeMoveScripts.setName(scripts.get(i));
     			removeMoveScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -256,7 +259,7 @@ public class TrainScriptFrame extends OperationsFrame {
       		if (scripts.size()>0)
     			addItem(pTerminationScript, runTerminationScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeTerminationScripts = new JButton(rb.getString("RemoveScript"));
+				JButton removeTerminationScripts = new JButton(getString("RemoveScript"));
     			removeTerminationScripts.setName(scripts.get(i));
        			removeTerminationScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {

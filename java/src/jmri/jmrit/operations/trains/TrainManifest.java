@@ -19,9 +19,9 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
- * Builds a train's manifest. 
+ * Builds a train's manifest.
  * 
- * @author Daniel Boudreau  Copyright (C) 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2011, 2012
  * @version $Revision: 1 $
  */
 public class TrainManifest extends TrainCommon {
@@ -29,16 +29,14 @@ public class TrainManifest extends TrainCommon {
 	int cars = 0;
 	int emptyCars = 0;
 	boolean newWork = false;
-	
-	public TrainManifest(Train train){
+
+	public TrainManifest(Train train) {
 		// create manifest file
-		File file = TrainManagerXml.instance().createTrainManifestFile(
-				train.getName());
+		File file = TrainManagerXml.instance().createTrainManifestFile(train.getName());
 		PrintWriter fileOut;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file)),
-					true);
+			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file)), true);
 		} catch (IOException e) {
 			log.error("can not open train manifest file");
 			return;
@@ -49,62 +47,82 @@ public class TrainManifest extends TrainCommon {
 		else
 			newLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
-		newLine(fileOut, MessageFormat.format(rb.getString("ManifestForTrain"), new Object[]{train.getName(), train.getDescription()}));
-		
-		String valid = MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()});
-		
-		if (Setup.isPrintTimetableNameEnabled()){
-			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(TrainManager.instance().getTrainScheduleActiveId());
+		newLine(fileOut,
+				MessageFormat.format(getString("ManifestForTrain"), new Object[] { train.getName(),
+						train.getDescription() }));
+
+		String valid = MessageFormat.format(getString("Valid"), new Object[] { getDate() });
+
+		if (Setup.isPrintTimetableNameEnabled()) {
+			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
+					TrainManager.instance().getTrainScheduleActiveId());
 			if (sch != null)
-				valid = valid + " ("+sch.getName()+")"; 
-		}		
+				valid = valid + " (" + sch.getName() + ")";
+		}
 		if (Setup.isPrintValidEnabled())
 			newLine(fileOut, valid);
-		
+
 		if (!train.getComment().equals(""))
 			newLine(fileOut, train.getComment());
-		
-		List<String> engineList = engineManager.getByTrainList(train);		
-		//pickupEngines(fileOut, engineList, train.getTrainDepartsRouteLocation());
-		
+
+		List<String> engineList = engineManager.getByTrainList(train);
+		// pickupEngines(fileOut, engineList, train.getTrainDepartsRouteLocation());
+
 		if (Setup.isPrintRouteCommentsEnabled() && !train.getRoute().getComment().equals(""))
 			newLine(fileOut, train.getRoute().getComment());
-		
+
 		List<String> carList = carManager.getByTrainDestinationList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");
-		
+
 		boolean work = false;
 		String previousRouteLocationName = null;
 		List<String> routeList = train.getRoute().getLocationsBySequenceList();
-		
+
 		for (int r = 0; r < routeList.size(); r++) {
-			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));			
+			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
 			boolean oldWork = work;
-			work = isThereWorkAtLocation(carList, engineList, rl);	
+			work = isThereWorkAtLocation(carList, engineList, rl);
 
 			// print info only if new location
 			String routeLocationName = splitString(rl.getName());
-			if (!routeLocationName.equals(previousRouteLocationName) ||
-					(routeLocationName.equals(previousRouteLocationName) && oldWork == false && work == true && newWork == false)){
-				if (work){
+			if (!routeLocationName.equals(previousRouteLocationName)
+					|| (routeLocationName.equals(previousRouteLocationName) && oldWork == false
+							&& work == true && newWork == false)) {
+				if (work) {
 					// add line break between locations without work and ones with work
-					// TODO sometimes an extra line break appears when the user has two or more locations with the "same" name
+					// TODO sometimes an extra line break appears when the user has two or more locations with the
+					// "same" name
 					// and the second location doesn't have work
 					if (oldWork == false)
 						newLine(fileOut);
 					newWork = true;
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-					String workAt = MessageFormat.format(rb.getString("ScheduledWorkAt"), new Object[]{routeLocationName});
-					if (!train.isShowArrivalAndDepartureTimesEnabled()){
+					String workAt = MessageFormat.format(getString("ScheduledWorkAt"),
+							new Object[] { routeLocationName });
+					if (!train.isShowArrivalAndDepartureTimesEnabled()) {
 						newLine(fileOut, workAt);
-					} else if (r == 0){
-						newLine(fileOut, workAt	+ MessageFormat.format(rb.getString("departureTime"), new Object[] {train.getFormatedDepartureTime()}));
-					} else if (!rl.getDepartureTime().equals("")){
-						newLine(fileOut, workAt	+ MessageFormat.format(rb.getString("departureTime"), new Object[] {rl.getFormatedDepartureTime()}));
-					} else if (Setup.isUseDepartureTimeEnabled() && r != routeList.size()-1){
-						newLine(fileOut, workAt + MessageFormat.format(rb.getString("departureTime"), new Object[] {train.getExpectedDepartureTime(rl)}));
-					} else if (!expectedArrivalTime.equals("-1")){
-						newLine(fileOut, workAt	+ MessageFormat.format(rb.getString("estimatedArrival"), new Object[] {expectedArrivalTime}));
+					} else if (r == 0) {
+						newLine(fileOut,
+								workAt
+										+ MessageFormat.format(getString("departureTime"),
+												new Object[] { train.getFormatedDepartureTime() }));
+					} else if (!rl.getDepartureTime().equals("")) {
+						newLine(fileOut,
+								workAt
+										+ MessageFormat.format(getString("departureTime"),
+												new Object[] { rl.getFormatedDepartureTime() }));
+					} else if (Setup.isUseDepartureTimeEnabled() && r != routeList.size() - 1) {
+						newLine(fileOut,
+								workAt
+										+ MessageFormat
+												.format(getString("departureTime"),
+														new Object[] { train
+																.getExpectedDepartureTime(rl) }));
+					} else if (!expectedArrivalTime.equals("-1")) {
+						newLine(fileOut,
+								workAt
+										+ MessageFormat.format(getString("estimatedArrival"),
+												new Object[] { expectedArrivalTime }));
 					} else {
 						newLine(fileOut, workAt);
 					}
@@ -113,144 +131,174 @@ public class TrainManifest extends TrainCommon {
 						newLine(fileOut, rl.getComment());
 				}
 				// add location comment
-				if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(""))
-					newLine(fileOut, rl.getLocation().getComment());				
+				if (Setup.isPrintLocationCommentsEnabled()
+						&& !rl.getLocation().getComment().equals(""))
+					newLine(fileOut, rl.getLocation().getComment());
 			}
-			
+
 			// engine change or helper service?
-			if (train.getSecondLegOptions() != Train.NONE){
+			if (train.getSecondLegOptions() != Train.NONE) {
 				if (rl == train.getSecondLegStartLocation())
 					printChange(fileOut, rl, train.getSecondLegOptions());
-				if (rl == train.getSecondLegEndLocation() && train.getSecondLegOptions() == Train.HELPER_ENGINES)
-					newLine(fileOut, MessageFormat.format(rb.getString("RemoveHelpersAt"), new Object[]{splitString(rl.getName())}));
+				if (rl == train.getSecondLegEndLocation()
+						&& train.getSecondLegOptions() == Train.HELPER_ENGINES)
+					newLine(fileOut, MessageFormat.format(getString("RemoveHelpersAt"),
+							new Object[] { splitString(rl.getName()) }));
 			}
-			if (train.getThirdLegOptions() != Train.NONE){
+			if (train.getThirdLegOptions() != Train.NONE) {
 				if (rl == train.getThirdLegStartLocation())
 					printChange(fileOut, rl, train.getThirdLegOptions());
-				if (rl == train.getThirdLegEndLocation() && train.getThirdLegOptions() == Train.HELPER_ENGINES)
-					newLine(fileOut, MessageFormat.format(rb.getString("RemoveHelpersAt"), new Object[]{splitString(rl.getName())}));
+				if (rl == train.getThirdLegEndLocation()
+						&& train.getThirdLegOptions() == Train.HELPER_ENGINES)
+					newLine(fileOut, MessageFormat.format(getString("RemoveHelpersAt"),
+							new Object[] { splitString(rl.getName()) }));
 			}
-			
+
 			pickupEngines(fileOut, engineList, rl, Setup.getManifestOrientation());
 
 			if (Setup.isSortByTrackEnabled())
 				blockCarsByTrack(fileOut, train, carList, routeList, rl, r);
 			else
 				blockCarsByPickUpAndSetOut(fileOut, train, carList, routeList, rl, r);
-			
+
 			dropEngines(fileOut, engineList, rl, Setup.getManifestOrientation());
 
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
-				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
-				if (!routeLocationName.equals(splitString(rlNext.getName()))){
-					if (newWork){
+				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r + 1));
+				if (!routeLocationName.equals(splitString(rlNext.getName()))) {
+					if (newWork) {
 						// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
 						String trainDeparts = MessageFormat.format(
-								rb.getString("TrainDepartsCars"),
-								new Object[] { routeLocationName, rl.getTrainDirectionString(), 
-									cars, train.getTrainLength(rl),	Setup.getLengthUnit().toLowerCase(), 
-									train.getTrainWeight(rl) });
+								getString("TrainDepartsCars"),
+								new Object[] { routeLocationName, rl.getTrainDirectionString(),
+										cars, train.getTrainLength(rl),
+										Setup.getLengthUnit().toLowerCase(),
+										train.getTrainWeight(rl) });
 						// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000 tons
 						if (Setup.isPrintLoadsAndEmptiesEnabled())
 							trainDeparts = MessageFormat.format(
-									rb.getString("TrainDepartsLoads"),
-									new Object[] { routeLocationName, rl.getTrainDirectionString(), 
-										cars-emptyCars, emptyCars, train.getTrainLength(rl),	Setup.getLengthUnit().toLowerCase(), 
-										train.getTrainWeight(rl) });
+									getString("TrainDepartsLoads"),
+									new Object[] { routeLocationName, rl.getTrainDirectionString(),
+											cars - emptyCars, emptyCars, train.getTrainLength(rl),
+											Setup.getLengthUnit().toLowerCase(),
+											train.getTrainWeight(rl) });
 						newLine(fileOut, trainDeparts);
 						newWork = false;
 						newLine(fileOut);
 					} else {
 						// no work at this location
-						String s = MessageFormat.format(rb.getString("NoScheduledWorkAt"), new Object[]{routeLocationName});
-						// if a route comment, then only use location name and route comment, useful for passenger trains
-						if (!rl.getComment().equals("")){
+						String s = MessageFormat.format(getString("NoScheduledWorkAt"),
+								new Object[] { routeLocationName });
+						// if a route comment, then only use location name and route comment, useful for passenger
+						// trains
+						if (!rl.getComment().equals("")) {
 							s = routeLocationName;
-							if (rl.getComment().trim().length()>0)
-								s = s +", "+rl.getComment();
+							if (rl.getComment().trim().length() > 0)
+								s = s + ", " + rl.getComment();
 						}
-						if (train.isShowArrivalAndDepartureTimesEnabled()){
+						if (train.isShowArrivalAndDepartureTimesEnabled()) {
 							if (r == 0)
-								s = s + MessageFormat.format(rb.getString("departureTime"), new Object[] {train.getDepartureTime()});
+								s = s
+										+ MessageFormat.format(getString("departureTime"),
+												new Object[] { train.getDepartureTime() });
 							else if (!rl.getDepartureTime().equals(""))
-								s = s + MessageFormat.format(rb.getString("departureTime"), new Object[] {rl.getFormatedDepartureTime()});
-							else if (Setup.isUseDepartureTimeEnabled() && !rl.getComment().equals("") && r != routeList.size()-1)
-								s = s + MessageFormat.format(rb.getString("departureTime"), new Object[] {train.getExpectedDepartureTime(rl)});
+								s = s
+										+ MessageFormat.format(getString("departureTime"),
+												new Object[] { rl.getFormatedDepartureTime() });
+							else if (Setup.isUseDepartureTimeEnabled()
+									&& !rl.getComment().equals("") && r != routeList.size() - 1)
+								s = s
+										+ MessageFormat
+												.format(getString("departureTime"),
+														new Object[] { train
+																.getExpectedDepartureTime(rl) });
 						}
 						newLine(fileOut, s);
 					}
 				}
 			} else {
-				newLine(fileOut, MessageFormat.format(rb.getString("TrainTerminatesIn"), new Object[] {routeLocationName}));
+				newLine(fileOut, MessageFormat.format(getString("TrainTerminatesIn"),
+						new Object[] { routeLocationName }));
 			}
 			previousRouteLocationName = routeLocationName;
 		}
 		// Are there any cars that need to be found?
 		addCarsLocationUnknown(fileOut);
-		
+
 		fileOut.flush();
 		fileOut.close();
-		
+
 		train.setModified(false);
 	}
-	
+
 	/**
 	 * Block cars by pick up and set out for each location in a train's route.
 	 */
-	private void blockCarsByPickUpAndSetOut(PrintWriter fileOut, Train train, List<String> carList, List<String> routeList, RouteLocation rl, int r) {
+	private void blockCarsByPickUpAndSetOut(PrintWriter fileOut, Train train, List<String> carList,
+			List<String> routeList, RouteLocation rl, int r) {
 		// block car pick ups by destination
 		for (int j = r; j < routeList.size(); j++) {
-			RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));				
-			utilityCarTypes.clear();	// list utility cars by quantity
+			RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+			utilityCarTypes.clear(); // list utility cars by quantity
 			for (int k = 0; k < carList.size(); k++) {
 				Car car = carManager.getById(carList.get(k));
-				if (car.getRouteLocation() == rl
-						&& car.getRouteDestination() == rld) {
+				if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
 					if (car.isUtility())
 						pickupCars(fileOut, carList, car, rl, rld);
 					// use truncated format if there's a switch list
-					else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+					else if (Setup.isTruncateManifestEnabled()
+							&& rl.getLocation().isSwitchListEnabled())
 						pickUpCarTruncated(fileOut, car);
-					else 
+					else
 						pickUpCar(fileOut, car);
 					cars++;
 					newWork = true;
-					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad())
+							.equals(CarLoad.LOAD_TYPE_EMPTY))
 						emptyCars++;
 				}
 			}
-		}		
-		utilityCarTypes.clear();	// list utility cars by quantity
+		}
+		utilityCarTypes.clear(); // list utility cars by quantity
 		for (int j = 0; j < carList.size(); j++) {
 			Car car = carManager.getById(carList.get(j));
 			if (car.getRouteDestination() == rl) {
 				if (car.isUtility())
-					setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
+					setoutCars(
+							fileOut,
+							carList,
+							car,
+							rl,
+							car.getRouteLocation().equals(car.getRouteDestination())
+									&& car.getTrack() != null);
 				// use truncated format if there's a switch list
-				else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+				else if (Setup.isTruncateManifestEnabled()
+						&& rl.getLocation().isSwitchListEnabled())
 					truncatedDropCar(fileOut, car);
 				else
 					dropCar(fileOut, car);
 				cars--;
 				newWork = true;
-				if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+				if (CarLoads.instance().getLoadType(car.getType(), car.getLoad())
+						.equals(CarLoad.LOAD_TYPE_EMPTY))
 					emptyCars--;
 			}
 		}
 	}
-	
+
 	/**
 	 * Block cars by track, then pick up and set out for each location in a train's route.
 	 */
-	private void blockCarsByTrack(PrintWriter fileOut, Train train, List<String> carList, List<String> routeList, RouteLocation rl, int r) {
+	private void blockCarsByTrack(PrintWriter fileOut, Train train, List<String> carList,
+			List<String> routeList, RouteLocation rl, int r) {
 		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
-		for (int i=0; i<trackIds.size(); i++) {
-			Track track = rl.getLocation().getTrackById(trackIds.get(i));		
+		for (int i = 0; i < trackIds.size(); i++) {
+			Track track = rl.getLocation().getTrackById(trackIds.get(i));
 			// block car pick ups by destination
 			for (int j = r; j < routeList.size(); j++) {
-				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));				
-				utilityCarTypes.clear();	// list utility cars by quantity
+				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+				utilityCarTypes.clear(); // list utility cars by quantity
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carManager.getById(carList.get(k));
 					if (car.getRouteLocation() == rl && track == car.getTrack()
@@ -258,39 +306,50 @@ public class TrainManifest extends TrainCommon {
 						if (car.isUtility())
 							pickupCars(fileOut, carList, car, rl, rld);
 						// use truncated format if there's a switch list
-						else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+						else if (Setup.isTruncateManifestEnabled()
+								&& rl.getLocation().isSwitchListEnabled())
 							pickUpCarTruncated(fileOut, car);
-						else 
+						else
 							pickUpCar(fileOut, car);
 						cars++;
 						newWork = true;
-						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad())
+								.equals(CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 					}
 				}
-			}		
-			utilityCarTypes.clear();	// list utility cars by quantity
+			}
+			utilityCarTypes.clear(); // list utility cars by quantity
 			for (int j = 0; j < carList.size(); j++) {
 				Car car = carManager.getById(carList.get(j));
 				if (car.getRouteDestination() == rl && track == car.getDestinationTrack()) {
 					if (car.isUtility())
-						setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack()!=null);
+						setoutCars(
+								fileOut,
+								carList,
+								car,
+								rl,
+								car.getRouteLocation().equals(car.getRouteDestination())
+										&& car.getTrack() != null);
 					// use truncated format if there's a switch list
-					else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+					else if (Setup.isTruncateManifestEnabled()
+							&& rl.getLocation().isSwitchListEnabled())
 						truncatedDropCar(fileOut, car);
 					else
 						dropCar(fileOut, car);
 					cars--;
 					newWork = true;
-					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(CarLoad.LOAD_TYPE_EMPTY))
+					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad())
+							.equals(CarLoad.LOAD_TYPE_EMPTY))
 						emptyCars--;
 				}
 			}
 		}
 	}
-	
+
 	// returns true if there's work at location
-	private boolean isThereWorkAtLocation(List<String> carList, List<String> engList, RouteLocation rl){
+	private boolean isThereWorkAtLocation(List<String> carList, List<String> engList,
+			RouteLocation rl) {
 		for (int i = 0; i < carList.size(); i++) {
 			Car car = carManager.getById(carList.get(i));
 			if (car.getRouteLocation() == rl || car.getRouteDestination() == rl)
@@ -303,20 +362,27 @@ public class TrainManifest extends TrainCommon {
 		}
 		return false;
 	}
-	
-	private void printChange(PrintWriter fileOut, RouteLocation rl, int legOptions){
+
+	private void printChange(PrintWriter fileOut, RouteLocation rl, int legOptions) {
 		if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)
-			newLine(fileOut, MessageFormat.format(rb.getString("AddHelpersAt"), new Object[]{splitString(rl.getName())}));
-		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES && ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE))
-			newLine(fileOut, MessageFormat.format(rb.getString("EngineAndCabooseChangeAt"), new Object[]{splitString(rl.getName())}));
+			newLine(fileOut,
+					MessageFormat.format(getString("AddHelpersAt"),
+							new Object[] { splitString(rl.getName()) }));
+		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES
+				&& ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE))
+			newLine(fileOut, MessageFormat.format(getString("EngineAndCabooseChangeAt"),
+					new Object[] { splitString(rl.getName()) }));
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
-			newLine(fileOut, MessageFormat.format(rb.getString("EngineChangeAt"), new Object[]{splitString(rl.getName())}));
-		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
-			newLine(fileOut, MessageFormat.format(rb.getString("CabooseChangeAt"), new Object[]{splitString(rl.getName())}));
+			newLine(fileOut,
+					MessageFormat.format(getString("EngineChangeAt"),
+							new Object[] { splitString(rl.getName()) }));
+		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
+				|| (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
+			newLine(fileOut, MessageFormat.format(getString("CabooseChangeAt"),
+					new Object[] { splitString(rl.getName()) }));
 	}
-	
-	private void newLine(PrintWriter file, String string){
+
+	private void newLine(PrintWriter file, String string) {
 		newLine(file, string, Setup.getManifestOrientation());
 	}
 }
-

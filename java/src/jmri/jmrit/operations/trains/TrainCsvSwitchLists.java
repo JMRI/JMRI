@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -25,8 +24,6 @@ import jmri.jmrit.operations.setup.Setup;
  *
  */
 public class TrainCsvSwitchLists extends TrainCsvCommon {
-	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
 	TrainManager trainManager = TrainManager.instance();
 	

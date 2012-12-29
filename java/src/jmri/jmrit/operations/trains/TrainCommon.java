@@ -36,8 +36,11 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class TrainCommon {
 
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
+
 	private static final String LENGTHABV = Setup.LENGTHABV;
 	protected static final String TAB = "    ";
 	protected static final String NEW_LINE = "\n";
@@ -95,8 +98,7 @@ public class TrainCommon {
 	}
 
 	/*
-	 * Adds the car's pick up string to the output file using the manifest
-	 * format
+	 * Adds the car's pick up string to the output file using the manifest format
 	 */
 	protected void pickUpCar(PrintWriter file, Car car) {
 		pickUpCar(file, car, new StringBuffer(Setup.getPickupCarPrefix()),
@@ -104,8 +106,7 @@ public class TrainCommon {
 	}
 
 	/**
-	 * Adds the car's pick up string to the output file using the truncated
-	 * manifest format
+	 * Adds the car's pick up string to the output file using the truncated manifest format
 	 * 
 	 * @param file
 	 * @param car
@@ -116,8 +117,7 @@ public class TrainCommon {
 	}
 
 	/*
-	 * Adds the car's pick up string to the output file using the switch list
-	 * format
+	 * Adds the car's pick up string to the output file using the switch list format
 	 */
 	protected void switchListPickUpCar(PrintWriter file, Car car) {
 		pickUpCar(file, car, new StringBuffer(Setup.getSwitchListPickupCarPrefix()),
@@ -152,8 +152,7 @@ public class TrainCommon {
 	}
 
 	/*
-	 * Adds the car's set out string to the output file using the manifest
-	 * format
+	 * Adds the car's set out string to the output file using the manifest format
 	 */
 	protected void dropCar(PrintWriter file, Car car) {
 		StringBuffer buf = new StringBuffer(Setup.getDropCarPrefix());
@@ -169,9 +168,8 @@ public class TrainCommon {
 	}
 
 	/*
-	 * Adds the car's set out string to the output file using the truncated
-	 * manifest format. Does not print out local moves. Local moves are shown on
-	 * the switch list for that location.
+	 * Adds the car's set out string to the output file using the truncated manifest format. Does not print out local
+	 * moves. Local moves are shown on the switch list for that location.
 	 */
 	protected void truncatedDropCar(PrintWriter file, Car car) {
 		// local move?
@@ -183,8 +181,7 @@ public class TrainCommon {
 	}
 
 	/*
-	 * Adds the car's set out string to the output file using the switch list
-	 * format
+	 * Adds the car's set out string to the output file using the switch list format
 	 */
 	protected void switchListDropCar(PrintWriter file, Car car) {
 		StringBuffer buf = new StringBuffer(Setup.getSwitchListDropCarPrefix());
@@ -319,8 +316,7 @@ public class TrainCommon {
 	}
 
 	/**
-	 * Splits a string (example-number) as long as the second part of the string
-	 * is an integer.
+	 * Splits a string (example-number) as long as the second part of the string is an integer.
 	 * 
 	 * @param name
 	 * @return First half the string.
@@ -386,13 +382,13 @@ public class TrainCommon {
 			return " " + tabString(car.getKernelName(), Control.max_len_string_attibute);
 		else if (attribute.equals(Setup.RWE)) {
 			if (!car.getReturnWhenEmptyDestName().equals(""))
-				return " " + rb.getString("RWE") + " "
+				return " " + getString("RWE") + " "
 						+ splitString(car.getReturnWhenEmptyDestinationName()) + " ("
 						+ splitString(car.getReturnWhenEmptyDestTrackName()) + ")";
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getNextDestinationName().equals(""))
-				return " " + rb.getString("FD") + " " + splitString(car.getNextDestinationName());
+				return " " + getString("FD") + " " + splitString(car.getNextDestinationName());
 			return "";
 		}
 		return getRollingStockAttribute(car, attribute, pickup, local);
@@ -417,20 +413,19 @@ public class TrainCommon {
 			return " " + tabString(rs.getColor(), CarColors.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.LOCATION) && (pickup || local)) {
 			if (rs.getTrack() != null)
-				return " " + rb.getString("from") + " " + splitString(rs.getTrackName());
+				return " " + getString("from") + " " + splitString(rs.getTrackName());
 			return "";
 		} else if (attribute.equals(Setup.LOCATION) && !pickup && !local)
-			return " " + rb.getString("from") + " " + splitString(rs.getLocationName());
+			return " " + getString("from") + " " + splitString(rs.getLocationName());
 		else if (attribute.equals(Setup.DESTINATION) && pickup) {
 			if (Setup.isTabEnabled())
-				return " " + rb.getString("dest") + " " + splitString(rs.getDestinationName());
+				return " " + getString("dest") + " " + splitString(rs.getDestinationName());
 			else
-				return " " + rb.getString("destination") + " "
-						+ splitString(rs.getDestinationName());
+				return " " + getString("destination") + " " + splitString(rs.getDestinationName());
 		} else if (attribute.equals(Setup.DESTINATION) && !pickup)
-			return " " + rb.getString("to") + " " + splitString(rs.getDestinationTrackName());
+			return " " + getString("to") + " " + splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.DEST_TRACK))
-			return " " + rb.getString("dest") + " " + splitString(rs.getDestinationName()) + ", "
+			return " " + getString("dest") + " " + splitString(rs.getDestinationName()) + ", "
 					+ splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.OWNER))
 			return " " + tabString(rs.getOwner(), CarOwners.instance().getCurMaxNameLength());
@@ -452,7 +447,7 @@ public class TrainCommon {
 		// tab?
 		else if (attribute.equals(Setup.TAB))
 			return " " + tabString("", Setup.getTabLength());
-		return " (" + rb.getString("ErrorPrintOptions") + ") "; // maybe user changed locale
+		return " (" + getString("ErrorPrintOptions") + ") "; // maybe user changed locale
 	}
 
 	protected static String getDate() {

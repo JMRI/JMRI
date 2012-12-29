@@ -29,7 +29,11 @@ import java.util.ResourceBundle;
  */
 public class PrintTrainsByCarTypesAction  extends AbstractAction {
 	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
+
 	String newLine = "\n";
 	TrainManager trainManager = TrainManager.instance();
 
@@ -53,7 +57,7 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// obtain a HardcopyWriter
 		try {
-			writer = new HardcopyWriter(mFrame, rb.getString("TitleTrainsByType"), 10, .5, .5, .5, .5,
+			writer = new HardcopyWriter(mFrame, getString("TitleTrainsByType"), 10, .5, .5, .5, .5,
 					isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -68,8 +72,8 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 
 		try {
 			// title line
-			String s = rb.getString("Type") + "\t" + rb.getString("Trains")
-					+ "\t\t\t  " + rb.getString("Description") + newLine;
+			String s = getString("Type") + "\t" + getString("Trains")
+					+ "\t\t\t  " + getString("Description") + newLine;
 			writer.write(s);
 			// car types
 			for (int t = 0; t < carTypes.length; t++) {

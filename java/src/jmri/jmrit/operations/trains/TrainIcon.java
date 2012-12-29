@@ -2,8 +2,6 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
@@ -27,8 +25,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 
 public class TrainIcon extends LocoIcon {
 
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
- 
 	public TrainIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
     	super(editor); 

@@ -23,7 +23,6 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.FileUtil;
 
-
 /**
  * Frame for user edit of startup and shutdown operation scripts.
  * 
@@ -34,8 +33,11 @@ import jmri.util.FileUtil;
 
 public class TrainsScriptFrame extends OperationsFrame {
 
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
+
 	TrainManager manager;
 	TrainManagerXml managerXml;
 
@@ -48,77 +50,80 @@ public class TrainsScriptFrame extends OperationsFrame {
 	// labels
 
 	// major buttons
-	JButton addStartUpScriptButton = new JButton(rb.getString("AddScript"));
-	JButton addShutDownScriptButton = new JButton(rb.getString("AddScript"));
-	JButton runStartUpScriptButton = new JButton(rb.getString("RunScripts"));
-	JButton runShutDownScriptButton = new JButton(rb.getString("RunScripts"));
-	JButton saveButton = new JButton(rb.getString("Save"));
+	JButton addStartUpScriptButton = new JButton(getString("AddScript"));
+	JButton addShutDownScriptButton = new JButton(getString("AddScript"));
+	JButton runStartUpScriptButton = new JButton(getString("RunScripts"));
+	JButton runShutDownScriptButton = new JButton(getString("RunScripts"));
+	JButton saveButton = new JButton(getString("Save"));
 
 	public TrainsScriptFrame() {
 		super();
-  	}
+	}
 
-	public void initComponents() {		
-	   	// Set up script options in a Scroll Pane..
-     	startUpScriptPane = new JScrollPane(pStartUpScript);
-      	startUpScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	startUpScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsStartUp")));
- 
-      	shutDownScriptPane = new JScrollPane(pShutDownScript);
-      	shutDownScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	shutDownScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsShutDown")));  	
+	public void initComponents() {
+		// Set up script options in a Scroll Pane..
+		startUpScriptPane = new JScrollPane(pStartUpScript);
+		startUpScriptPane
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		startUpScriptPane.setBorder(BorderFactory.createTitledBorder(getString("ScriptsStartUp")));
+
+		shutDownScriptPane = new JScrollPane(pShutDownScript);
+		shutDownScriptPane
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		shutDownScriptPane
+				.setBorder(BorderFactory.createTitledBorder(getString("ScriptsShutDown")));
 
 		// remember who called us
 
 		// load managers
 		manager = TrainManager.instance();
 		managerXml = TrainManagerXml.instance();
-	
-	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
-				
+
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
 		// Layout the panel by rows
-				
+
 		// row 1
-    
+
 		// row 2
-    	updateStartUpScriptPanel();
-    	
+		updateStartUpScriptPanel();
+
 		// row 3
-    	updateShutDownScriptPanel();
- 
+		updateShutDownScriptPanel();
+
 		// row 4 buttons
-	   	JPanel pB = new JPanel();
-    	pB.setLayout(new GridBagLayout());		
+		JPanel pB = new JPanel();
+		pB.setLayout(new GridBagLayout());
 		addItem(pB, saveButton, 3, 0);
-		
+
 		getContentPane().add(startUpScriptPane);
 		getContentPane().add(shutDownScriptPane);
-      	getContentPane().add(pB);
-		
+		getContentPane().add(pB);
+
 		// setup buttons
-      	addButtonAction(addStartUpScriptButton);
+		addButtonAction(addStartUpScriptButton);
 		addButtonAction(addShutDownScriptButton);
-     	addButtonAction(runStartUpScriptButton);
+		addButtonAction(runStartUpScriptButton);
 		addButtonAction(runShutDownScriptButton);
 		addButtonAction(saveButton);
-		
+
 		enableButtons(true);
 
 		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true);
 		packFrame();
 	}
-	
-	private void updateStartUpScriptPanel(){
+
+	private void updateStartUpScriptPanel() {
 		pStartUpScript.removeAll();
 		pStartUpScript.setLayout(new GridBagLayout());
 		addItem(pStartUpScript, addStartUpScriptButton, 0, 0);
 
 		// load any existing startup scripts
 		List<String> scripts = manager.getStartUpScripts();
-		if (scripts.size()>0)
+		if (scripts.size() > 0)
 			addItem(pStartUpScript, runStartUpScriptButton, 1, 0);
-		for (int i=0; i<scripts.size(); i++){
-			JButton removeStartUpScripts = new JButton(rb.getString("RemoveScript"));
+		for (int i = 0; i < scripts.size(); i++) {
+			JButton removeStartUpScripts = new JButton(getString("RemoveScript"));
 			removeStartUpScripts.setName(scripts.get(i));
 			removeStartUpScripts.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -127,22 +132,22 @@ public class TrainsScriptFrame extends OperationsFrame {
 			});
 			addButtonAction(removeStartUpScripts);
 			JLabel pathname = new JLabel(scripts.get(i));
-			addItem(pStartUpScript, removeStartUpScripts, 0, i+1);
-			addItem(pStartUpScript, pathname, 1, i+1);
+			addItem(pStartUpScript, removeStartUpScripts, 0, i + 1);
+			addItem(pStartUpScript, pathname, 1, i + 1);
 		}
 	}
-	
-	private void updateShutDownScriptPanel(){
+
+	private void updateShutDownScriptPanel() {
 		pShutDownScript.removeAll();
 		pShutDownScript.setLayout(new GridBagLayout());
 		addItem(pShutDownScript, addShutDownScriptButton, 0, 0);
 
 		// load any existing shutdown scripts
 		List<String> scripts = manager.getShutDownScripts();
- 		if (scripts.size()>0)
+		if (scripts.size() > 0)
 			addItem(pShutDownScript, runShutDownScriptButton, 1, 0);
-		for (int i=0; i<scripts.size(); i++){
-			JButton removeShutDownScripts = new JButton(rb.getString("RemoveScript"));
+		for (int i = 0; i < scripts.size(); i++) {
+			JButton removeShutDownScripts = new JButton(getString("RemoveScript"));
 			removeShutDownScripts.setName(scripts.get(i));
 			removeShutDownScripts.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -150,112 +155,112 @@ public class TrainsScriptFrame extends OperationsFrame {
 				}
 			});
 			JLabel pathname = new JLabel(scripts.get(i));
-			addItem(pShutDownScript, removeShutDownScripts, 0, i+1);
-			addItem(pShutDownScript, pathname, 1, i+1);
+			addItem(pShutDownScript, removeShutDownScripts, 0, i + 1);
+			addItem(pShutDownScript, pathname, 1, i + 1);
 		}
 	}
-	
+
 	// Save train, add scripts buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-		if (ae.getSource() == addStartUpScriptButton){
+		if (ae.getSource() == addStartUpScriptButton) {
 			log.debug("train add move script button activated");
 			File f = selectFile();
-			if (f != null){
+			if (f != null) {
 				manager.addStartUpScript(FileUtil.getPortableFilename(f));
 				updateStartUpScriptPanel();
 				packFrame();
 			}
 		}
-		if (ae.getSource() == addShutDownScriptButton){
+		if (ae.getSource() == addShutDownScriptButton) {
 			log.debug("train add termination script button activated");
 			File f = selectFile();
-			if (f != null){
+			if (f != null) {
 				manager.addShutDownScript(FileUtil.getPortableFilename(f));
 				updateShutDownScriptPanel();
 				packFrame();
 			}
 		}
-		if (ae.getSource() == runStartUpScriptButton){
-			runScripts(manager.getStartUpScripts());				
+		if (ae.getSource() == runStartUpScriptButton) {
+			runScripts(manager.getStartUpScripts());
 		}
-		if (ae.getSource() == runShutDownScriptButton){
-			runScripts(manager.getShutDownScripts());				
+		if (ae.getSource() == runShutDownScriptButton) {
+			runScripts(manager.getShutDownScripts());
 		}
-		if (ae.getSource() == saveButton){
+		if (ae.getSource() == saveButton) {
 			log.debug("Save button activated");
 			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
 	}
-	
-	public void buttonActionRemoveStartUpScript(java.awt.event.ActionEvent ae){
-		JButton rb = (JButton)ae.getSource();
-		log.debug("remove move script button activated "+rb.getName());
+
+	public void buttonActionRemoveStartUpScript(java.awt.event.ActionEvent ae) {
+		JButton rb = (JButton) ae.getSource();
+		log.debug("remove move script button activated " + rb.getName());
 		manager.deleteStartUpScript(rb.getName());
 		updateStartUpScriptPanel();
 		packFrame();
 	}
-	
-	public void buttonActionRemoveShutDownScript(java.awt.event.ActionEvent ae){
-		JButton rb = (JButton)ae.getSource();
-		log.debug("remove termination script button activated "+rb.getName());
+
+	public void buttonActionRemoveShutDownScript(java.awt.event.ActionEvent ae) {
+		JButton rb = (JButton) ae.getSource();
+		log.debug("remove termination script button activated " + rb.getName());
 		manager.deleteShutDownScript(rb.getName());
 		updateShutDownScriptPanel();
 		packFrame();
 	}
 
 	/**
-	 * We always use the same file chooser in this class, so that
-	 * the user's last-accessed directory remains available.
+	 * We always use the same file chooser in this class, so that the user's last-accessed directory remains available.
 	 */
 	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
 
 	private File selectFile() {
-		if (fc==null) {
-        	log.error("Could not find user directory");
-        } else {
-            fc.setDialogTitle("Find desired script file");
-            // when reusing the chooser, make sure new files are included
-            fc.rescanCurrentDirectory();
-        }
+		if (fc == null) {
+			log.error("Could not find user directory");
+		} else {
+			fc.setDialogTitle("Find desired script file");
+			// when reusing the chooser, make sure new files are included
+			fc.rescanCurrentDirectory();
+		}
 
-        int retVal = fc.showOpenDialog(null);
-        // handle selection or cancel
-        if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            // Run the script from it's filename
-            return file;
-        }
-        return null;
-    }
-	
-	private void enableButtons(boolean enabled){
+		int retVal = fc.showOpenDialog(null);
+		// handle selection or cancel
+		if (retVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			// Run the script from it's filename
+			return file;
+		}
+		return null;
+	}
+
+	private void enableButtons(boolean enabled) {
 		addStartUpScriptButton.setEnabled(enabled);
 		addShutDownScriptButton.setEnabled(enabled);
 		saveButton.setEnabled(enabled);
 	}
-	
-	private void runScripts(List<String> scripts){
-		for (int i=0; i<scripts.size(); i++){
-			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scripts.get(i)));
+
+	private void runScripts(List<String> scripts) {
+		for (int i = 0; i < scripts.size(); i++) {
+			jmri.util.PythonInterp
+					.runScript(jmri.util.FileUtil.getExternalFilename(scripts.get(i)));
 		}
 	}
-	
-    private void packFrame(){
-    	setPreferredSize(null);
- 		pack();
-		if(getWidth()<600)
- 			setSize(600, getHeight());
- 		if (getHeight()<300)
- 			setSize(getWidth(), 300);
+
+	private void packFrame() {
+		setPreferredSize(null);
+		pack();
+		if (getWidth() < 600)
+			setSize(600, getHeight());
+		if (getHeight() < 300)
+			setSize(getWidth(), 300);
 		setVisible(true);
-    }
-	
+	}
+
 	public void dispose() {
 		super.dispose();
 	}
- 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(TrainsScriptFrame.class.getName());
+
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainsScriptFrame.class
+			.getName());
 }

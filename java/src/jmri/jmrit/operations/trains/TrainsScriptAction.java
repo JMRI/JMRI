@@ -16,27 +16,32 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class TrainsScriptAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
-    public TrainsScriptAction(String s, TrainsTableFrame frame) {
-    	super(s);
-    	this.frame = frame;
-    }
-    
-    TrainsTableFrame frame;	// the parent frame that is launching the TrainScriptFrame.
+	protected static final String getString(String key) {
+		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
+				.getString(key);
+	}
 
-    TrainsScriptFrame f = null;
-    public void actionPerformed(ActionEvent e) {
-        // create a train scripts frame
-    	if (f != null && f.isVisible()){
-    		f.dispose();
-    	}
-    	f = new TrainsScriptFrame();
-    	f.setLocation(frame.getLocation());
-    	f.initComponents();
-    	f.setExtendedState(Frame.NORMAL);  	
-    	f.setTitle(rb.getString("MenuItemScripts"));
-    }
+	public TrainsScriptAction(String s, TrainsTableFrame frame) {
+		super(s);
+		this.frame = frame;
+	}
+
+	TrainsTableFrame frame; // the parent frame that is launching the TrainScriptFrame.
+
+	TrainsScriptFrame f = null;
+
+	public void actionPerformed(ActionEvent e) {
+		// create a train scripts frame
+		if (f != null && f.isVisible()) {
+			f.dispose();
+		}
+		f = new TrainsScriptFrame();
+		f.setLocation(frame.getLocation());
+		f.initComponents();
+		f.setExtendedState(Frame.NORMAL);
+		f.setTitle(getString("MenuItemScripts"));
+	}
 }
 
 /* @(#)TrainScriptAction.java */
