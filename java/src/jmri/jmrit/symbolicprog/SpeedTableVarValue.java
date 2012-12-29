@@ -12,6 +12,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.ResourceBundle;
 
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
@@ -344,7 +345,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             decVal.setState(currentState);
 
             Component v = decVal.getCommonRep();
-            ((JTextField)v).setToolTipText("Step "+(i+1)+" CV "+(getCvNum()+i));
+            ((JTextField)v).setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
+                                +" "+(i+1)+" CV "+(getCvNum()+i));
             ((JComponent)v).setBorder(null);  // pack tighter
             
             g.setConstraints(v, cs);
@@ -369,43 +371,43 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // add control buttons
         JPanel k = new JPanel();
         JButton b;
-        k.add(b = new JButton("Force Straight"));
-        b.setToolTipText("Insert straight line between min and max");
+        k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonForceStraight")));
+        b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipForceStraight"));
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doForceStraight(e);
                 }
             });
-        k.add(b = new JButton("Match ends"));
-        b.setToolTipText("Insert a straight line between existing endpoints");
+        k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonMatchEnds")));
+        b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipMatchEnds"));
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doMatchEnds(e);
                 }
             });
-        k.add(b = new JButton("Constant ratio curve"));
-        b.setToolTipText("Insert a constant ratio curve between existing endpoints");
+        k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonConstantRatio")));
+        b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipConstantRatio"));
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doRatioCurve(e);
                 }
             });
-        k.add(b = new JButton("Log curve"));
-        b.setToolTipText("Insert a logarithmic curve between existing endpoints");
+        k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonLogCurve")));
+        b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipLogCurve"));
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLogCurve(e);
                 }
             });
-        k.add(b = new JButton("Shift left"));
-        b.setToolTipText("Shift the existing curve left one slot");
+        k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonShiftLeft")));
+        b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipShiftLeft"));
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doShiftLeft(e);
                 }
             });
-        k.add(b = new JButton("Shift right"));
-        b.setToolTipText("Shift the existing curve right one slot");
+        k.add(b = new JButton(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("ButtonShiftRight")));
+        b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipShiftRight"));
         b.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     doShiftRight(e);
@@ -431,7 +433,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         stepCheckBoxes = new ArrayList<JCheckBox>();
         for (int i=0; i<nValues; i++) {
             JCheckBox b = new JCheckBox();
-            b.setToolTipText("Check to fix this point when adjusting; uncheck to adjust individually");
+            b.setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TooltipCheckToFix"));
             stepCheckBoxes.add(b);            
         }
     }
@@ -733,7 +735,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             // get the original color right
             setBackground(_var.getColor());
             // tooltip label
-            setToolTipText("Step "+step+" CV "+var.number());
+            setToolTipText(ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextStep")
+                            +" "+step+" CV "+var.number());
             // listen for changes to original state
             _var.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
                     public void propertyChange(java.beans.PropertyChangeEvent e) {

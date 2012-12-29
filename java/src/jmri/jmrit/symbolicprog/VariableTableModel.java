@@ -778,14 +778,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      */
     public void setConstant(Element e) {
         // get the values for the VariableValue ctor
+        String stdname = e.getAttribute("item").getValue();
+        if (log.isDebugEnabled()) log.debug("Starting to setConstant \""+stdname+"\"");
+ 
         String name = LocaleSelector.getAttribute(e, "label");
-        if (log.isDebugEnabled()) log.debug("Starting to setConstant \""+name+"\"");
-        String stdname = ( e.getAttribute("item")!=null ?
-                           e.getAttribute("item").getValue() :
-                           null);
-        String comment = null;
-        if (e.getAttribute("comment") != null)
-            comment = e.getAttribute("comment").getValue();
+        if (name == null || name.equals("")) name = stdname;
+        
+        String comment = LocaleSelector.getAttribute(e, "comment");
+
         String mask = null;
 
         // intrinsically readOnly, so use just that branch
@@ -805,11 +805,11 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         int defaultVal = 0;
         if ( (a = e.getAttribute("default")) != null) {
             String val = a.getValue();
-            if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+name);
+            if (log.isDebugEnabled()) log.debug("Found default value: "+val+" for "+stdname);
             defaultVal = Integer.valueOf(val).intValue();
-            if ( name.compareTo("PICV") == 0 ) {
+            if ( stdname.compareTo("PICV") == 0 ) {
                 _piCv = Integer.valueOf(val).intValue();
-            } else if ( name.compareTo("SICV") == 0 ) {
+            } else if ( stdname.compareTo("SICV") == 0 ) {
                 _siCv = Integer.valueOf(val).intValue();
             }
         }
