@@ -5,44 +5,10 @@
                  - added F9-F12 to CV 22
 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-  <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-    <shortAddressVal/>
-    <label>Primary Address</label>
-    <comment>Short address</comment>
-  </variable>
-  <variable label="Vstart" CV="2" default="2" comment="Range 0-252">
-    <decVal max="252"/>
-    <label>Vstart</label>
-    <comment>Range 0-252</comment>
-  </variable>
-  <variable label="Acceleration" CV="3" default="12" item="Accel" comment="Range 0-255">
-    <decVal max="255"/>
-    <label>Acceleration</label>
-    <comment>Range 0-255</comment>
-  </variable>
-  <variable label="Deceleration" CV="4" default="12" item="Decel" comment="Range 0-255">
-    <decVal max="255"/>
-    <label>Deceleration</label>
-    <comment>Range 0-255</comment>
-  </variable>
-  <variable label="Vhigh" CV="5" default="1" comment="Range 0-252(0 or 1 = no effect)">
-    <decVal max="252"/>
-    <label>Vhigh</label>
-    <comment>Range 0-252(0 or 1 = no effect)</comment>
-  </variable>
-  <variable label="Vmid" CV="6" default="1" comment="Range 0-252">
-    <decVal max="252"/>
-    <label>Vmid</label>
-    <comment>Range 0-252</comment>
-  </variable>
-  <variable label="Decoder Version   " CV="7" readOnly="yes" item="Decoder Version">
-    <decVal/>
-    <label>Decoder Version   </label>
-  </variable>
-  <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="145">
-    <decVal/>
-    <label>Manufacturer ID</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
   <variable label="Motor Frequency and EMF sample Rate" CV="9" default="0">
     <decVal/>
     <label>Motor Frequency and EMF sample Rate</label>
@@ -226,11 +192,6 @@
       </enumChoice>
     </enumVal>
     <label>DC Regulation</label>
-  </variable>
-  <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
-    <longAddressVal/>
-    <label>Long Address</label>
-    <comment>4 digit address (Range 0001-9999)</comment>
   </variable>
   <variable label="Consist Address" CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
     <decVal/>
@@ -514,17 +475,6 @@
       </enumChoice>
     </enumVal>
     <label>Use Speed Table</label>
-  </variable>
-  <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
-    <enumVal>
-      <enumChoice choice="2 digit addressing">
-        <choice>2 digit addressing</choice>
-      </enumChoice>
-      <enumChoice choice="4 digit addressing">
-        <choice>4 digit addressing</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Addressing Mode</label>
   </variable>
   <variable label="FL(f) controls output 1" CV="33" default="1" mask="XXXXXXXV" minOut="1" tooltip="CV 33">
     <enumVal>
@@ -2725,16 +2675,11 @@
     <decVal/>
     <label>Sub-version</label>
   </variable>
-  <variable label="Forward Trim" CV="66" default="0">
-    <decVal/>
-    <label>Forward Trim</label>
-  </variable>
-  <variable label="Speed Table" CV="67">
+  <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
+  <variable label="Speed Table" item="Speed Table" CV="67">
     <speedTableVal/>
-    <label>Speed Table</label>
+    <label xml:lang="fr">Speed Table(fr)</label>
+    <label xml:lang="it">Tabella Velocità</label>
   </variable>
-  <variable label="Reverse Trim" CV="95" default="0">
-    <decVal/>
-    <label>Reverse Trim</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
 </variables>
