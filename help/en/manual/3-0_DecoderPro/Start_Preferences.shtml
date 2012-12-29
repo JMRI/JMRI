@@ -32,7 +32,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 
 <div align=right>
 <p><a href="Start_DecoderPro.shtml">Previous</a>
-<p><a href="index.shtml#Getting Started">Back to Index</a> </div>
+<p><a href="index.shtml#GettingStarted">Back to Index</a> </div>
 
 <hr>
 <h3>&nbsp;</h3>
@@ -268,7 +268,7 @@ button to save all your selections.</h2>
 <hr>
 <div align=right>
 <p><a href="Start_DecoderPro.shtml">Previous</a>
-<p><a href="index.shtml#Getting Started">Back to Index</a> </div>
+<p><a href="index.shtml#GettingStarted">Back to Index</a> </div>
 
 <!--#include virtual="/Footer" -->
 </body>

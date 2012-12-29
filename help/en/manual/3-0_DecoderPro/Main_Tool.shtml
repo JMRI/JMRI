@@ -168,15 +168,7 @@
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <h3><strong>USS CTC Tool</strong> <img src="images/arrow.gif" alt="arrow" width="20" height="9">(advanced users, beyond the scope of this manual)</h3>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
-<h3><a name="Ops"></a><a href="Ops_Start.shtml"><strong>Operations</strong></a><strong><img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong></h3>
-<ul>
-  <li><strong>Settings</strong></li>
-  <li><strong>Locations</strong></li>
-  <li><strong>Cars</strong></li>
-  <li><strong>Locomotives</strong></li>
-  <li><strong>Routes</strong></li>
-  <li><strong>Trains</strong></li>
-</ul>
+<h3><a name="Ops"></a><strong>Operations<img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong>(Covered in JMRI&reg; Operations User's Guidee)</h3>
 <h3>Start JMRI Web Server</h3>
 <blockquote>
   <p>Starts a Web Server on your computer. You can access the Index.shtml page using the URL displayed in the dialog.</p>

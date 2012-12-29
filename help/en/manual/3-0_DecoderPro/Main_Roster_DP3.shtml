@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: zoo $) 2009 -->
-<!-- $Id: Ops_Locations.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
-<title>Operations-Locations</title>
+<!-- $Id: Main_Speedometer.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<TITLE>
+DecoderPro&reg; Main Window
+</TITLE>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -16,24 +18,26 @@
 
 <body>
 <!--#include virtual="/Header" -->
+
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-
-<h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Modify Trains by Car Type Window</h1>
+<h1>DecoderPro3&reg; Main Window</h1>
+<h1>DecoderPro3&reg; </h1>
 
 <div align=right>
-<p><a href="Ops_Locations_ShowCars.shtml">Back </a></p>
+  <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <hr>
-<p><img src="images/Ops_Location_Modify_Trains.png" width="300" height="356" alt="modify trains"></p>
+<p>DecoderPro3 opens with the Roster Table in the main body displaying all  of the locomotives in your roster or selected roster groups.<br>
+<strong>Refer to DecoderPro3&reg; User's Guide for detailed instructions.</strong></p>
+<p><img src="images/dp3_rosterTable.png" width="900" height="401" alt="roster table"></p>
+<p>&nbsp;</p>
 <hr>
 
 <div align=right>
-<p><a href="Ops_Locations_ShowCars.shtml">Back </a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

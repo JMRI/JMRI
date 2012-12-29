@@ -118,7 +118,7 @@
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong>USB Input Control</strong></p>
 <blockquote>
-  <p>The<a href="../package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml"> USB Assignments window</a> lets you connect JMRI sensors and memories to USB input  devices on your computer.  For example, you could have a JMRI sensor  go ACTIVE when you type a key or press a joystick button.  You can then use   <a href="../html/tools/Routes.shtml">Routes</a> and <a href="../html/tools/Logix.shtml">Logix</a> to use that USB input to control your layout. </p>
+  <p>The USB Assignments window lets you connect JMRI sensors and memories to USB input  devices on your computer.  For example, you could have a JMRI sensor  go ACTIVE when you type a key or press a joystick button.  You can then use   Routes and Logix to use that USB input to control your layout. </p>
 </blockquote>
 <p><strong>USB Device Viewer</strong></p>
 <blockquote>
@@ -127,13 +127,13 @@
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong>Rail Driver Throttle</strong></p>
 <blockquote>
-  <p>Opens a <a href="Main_Throttle.shtml">Throttle </a>window that is designed to work with <a href="../html/hardware/raildriver/index.shtml">Rail Driver</a>.</p>
+  <p>Opens a <a href="Main_Throttle.shtml">Throttle </a>window that is designed to work with <a href="file:///G|/JMRI_SVN/html/hardware/raildriver/index.shtml">Rail Driver</a>.</p>
 </blockquote>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <p><strong>Start JMRI Web Server</strong></p>
 <blockquote>
   <p>Starts a Web Server on your computer. You can access the Index.shtml page using the URL displayed in the dialog.</p>
-  <p>The <a href="http://jmri.org/help/en/html/web/MiniServer.shtml">JMRI web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
+  <p>The <a href="file:///G|/JMRI_SVN/html/web/index.shtml">JMRI web server </a>is meant to be a quick and easy  way for model railroaders, not Masters of the Web,   to get a web connection to JMRI up and running.</p>
 </blockquote>
 <p align="center"><img src="images/Main_Debug03.png" width="428" height="70" alt="mini server"></p>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
