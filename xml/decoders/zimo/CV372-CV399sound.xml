@@ -1,140 +1,134 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software, Nigel Cliffe 17 Nov 2012 -->
 <!-- For Version 32+ Zimo firmware -->
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-
-	<variable label="Function Key for Coasting" CV="374" default="0" tooltip="CV374">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="F13">
-            <choice>F13</choice>
-          </enumChoice>
-          <enumChoice choice="F14">
-            <choice>F14</choice>
-          </enumChoice>
-          <enumChoice choice="F15">
-            <choice>F15</choice>
-          </enumChoice>
-          <enumChoice choice="F16">
-            <choice>F16</choice>
-          </enumChoice>
-          <enumChoice choice="F17">
-            <choice>F17</choice>
-          </enumChoice>
-          <enumChoice choice="F18">
-            <choice>F18</choice>
-          </enumChoice>
-          <enumChoice choice="F19">
-            <choice>F19</choice>
-          </enumChoice>
-          <enumChoice choice="F20">
-            <choice>F20</choice>
-          </enumChoice>
-          <enumChoice choice="F21">
-            <choice>F21</choice>
-          </enumChoice>
-          <enumChoice choice="F22">
-            <choice>F22</choice>
-          </enumChoice>
-          <enumChoice choice="F23">
-            <choice>F23</choice>
-          </enumChoice>
-          <enumChoice choice="F24">
-            <choice>F24</choice>
-          </enumChoice>
-          <enumChoice choice="F25">
-            <choice>F25</choice>
-          </enumChoice>
-          <enumChoice choice="F26">
-            <choice>F26</choice>
-          </enumChoice>
-          <enumChoice choice="F27">
-            <choice>F27</choice>
-          </enumChoice>
-          <enumChoice choice="F28">
-            <choice>F28</choice>
-          </enumChoice>
-		</enumVal>  
-	</variable>
-	
-	<variable label="Sound Slot during Coasting" CV="375" default="0" tooltip="CV375">
-        <enumVal>
-          <enumChoice choice="0">
-            <choice>0</choice>
-          </enumChoice>
-          <enumChoice choice="1">
-            <choice>1</choice>
-          </enumChoice>
-          <enumChoice choice="2">
-            <choice>2</choice>
-          </enumChoice>
-          <enumChoice choice="3">
-            <choice>3</choice>
-          </enumChoice>
-          <enumChoice choice="4">
-            <choice>4</choice>
-          </enumChoice>
-          <enumChoice choice="5">
-            <choice>5</choice>
-          </enumChoice>
-          <enumChoice choice="6">
-            <choice>6</choice>
-          </enumChoice>
-          <enumChoice choice="7">
-            <choice>7</choice>
-          </enumChoice>
-          <enumChoice choice="8">
-            <choice>8</choice>
-          </enumChoice>
-          <enumChoice choice="9">
-            <choice>9</choice>
-          </enumChoice>
-          <enumChoice choice="10">
-            <choice>10</choice>
-          </enumChoice>
-		</enumVal>
-	</variable>
-	
+  <variable label="Function Key for Coasting" CV="374" default="0" tooltip="CV374">
+    <enumVal>
+      <enumChoice choice="Off">
+        <choice>Off</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+      <enumChoice choice="F20">
+        <choice>F20</choice>
+      </enumChoice>
+      <enumChoice choice="F21">
+        <choice>F21</choice>
+      </enumChoice>
+      <enumChoice choice="F22">
+        <choice>F22</choice>
+      </enumChoice>
+      <enumChoice choice="F23">
+        <choice>F23</choice>
+      </enumChoice>
+      <enumChoice choice="F24">
+        <choice>F24</choice>
+      </enumChoice>
+      <enumChoice choice="F25">
+        <choice>F25</choice>
+      </enumChoice>
+      <enumChoice choice="F26">
+        <choice>F26</choice>
+      </enumChoice>
+      <enumChoice choice="F27">
+        <choice>F27</choice>
+      </enumChoice>
+      <enumChoice choice="F28">
+        <choice>F28</choice>
+      </enumChoice>
+    </enumVal>
+  </variable>
+  <variable label="Sound Slot during Coasting" CV="375" default="0" tooltip="CV375">
+    <enumVal>
+      <enumChoice choice="0">
+        <choice>0</choice>
+      </enumChoice>
+      <enumChoice choice="1">
+        <choice>1</choice>
+      </enumChoice>
+      <enumChoice choice="2">
+        <choice>2</choice>
+      </enumChoice>
+      <enumChoice choice="3">
+        <choice>3</choice>
+      </enumChoice>
+      <enumChoice choice="4">
+        <choice>4</choice>
+      </enumChoice>
+      <enumChoice choice="5">
+        <choice>5</choice>
+      </enumChoice>
+      <enumChoice choice="6">
+        <choice>6</choice>
+      </enumChoice>
+      <enumChoice choice="7">
+        <choice>7</choice>
+      </enumChoice>
+      <enumChoice choice="8">
+        <choice>8</choice>
+      </enumChoice>
+      <enumChoice choice="9">
+        <choice>9</choice>
+      </enumChoice>
+      <enumChoice choice="10">
+        <choice>10</choice>
+      </enumChoice>
+    </enumVal>
+  </variable>
 </variables>

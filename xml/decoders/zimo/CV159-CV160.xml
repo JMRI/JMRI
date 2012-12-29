@@ -1,168 +1,163 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-      <variable label="Function output 7 effect generated" CV="159" mask="VVVVVVXX" tooltip="CV 159" item="Output 9 effect generated" minOut="9">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 7 effect generated</label>
-      </variable>
-      <variable label="Function output 7 behavior" CV="159" mask="XXXXXXVV" tooltip="CV 159" item="Output 9 behavior" minOut="9">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 7 behavior</label>
-      </variable>
-      <variable label="Function output 8 effect generated" CV="160" mask="VVVVVVXX" tooltip="CV 160" item="Output 10 effect generated" minOut="10">
-        <enumVal>
-          <enumChoice choice="Standard on/off function output">
-            <choice>Standard on/off function output</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Random Flicker">
-            <choice>Random Flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing Headlight">
-            <choice>Flashing Headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single Pulse Strobe">
-            <choice>Single Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double Pulse Strobe">
-            <choice>Double Pulse Strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary Beacon">
-            <choice>Rotary Beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, right">
-            <choice>Ditch Light Type 1, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 1, left">
-            <choice>Ditch Light Type 1, left</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, right">
-            <choice>Ditch Light Type 2, right</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Light Type 2, left">
-            <choice>Ditch Light Type 2, left</choice>
-          </enumChoice>
-          <enumChoice choice="Uncoupling">
-            <choice>Uncoupling</choice>
-          </enumChoice>
-          <enumChoice choice="Soft Start">
-            <choice>Soft Start</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic Stop Lights for Streetcars">
-            <choice>Automatic Stop Lights for Streetcars</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off when speed is greater than 0">
-            <choice>Turns off when speed is greater than 0</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 5 Min.">
-            <choice>Turns off after 5 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Turns off after 10 Min.">
-            <choice>Turns off after 10 Min.</choice>
-          </enumChoice>
-          <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
-            <choice>Speed or Load dependent Smoke for Steam Engines</choice>
-          </enumChoice>
-          <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
-            <choice>Operation dependent Smoke for Diesels</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 8 effect generated</label>
-      </variable>
-      <variable label="Function output 8 behavior" CV="160" mask="XXXXXXVV" tooltip="CV 160" item="Output 10 behavior" minOut="10">
-        <enumVal>
-          <enumChoice choice="Both directions">
-            <choice>Both directions</choice>
-          </enumChoice>
-          <enumChoice choice="Only in forward">
-            <choice>Only in forward</choice>
-          </enumChoice>
-          <enumChoice choice="Only in reverse">
-            <choice>Only in reverse</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Function output 8 behavior</label>
-      </variable>
-
-
+  <variable label="Function output 7 effect generated" CV="159" mask="VVVVVVXX" tooltip="CV 159" item="Output 9 effect generated" minOut="9">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 7 effect generated</label>
+  </variable>
+  <variable label="Function output 7 behavior" CV="159" mask="XXXXXXVV" tooltip="CV 159" item="Output 9 behavior" minOut="9">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 7 behavior</label>
+  </variable>
+  <variable label="Function output 8 effect generated" CV="160" mask="VVVVVVXX" tooltip="CV 160" item="Output 10 effect generated" minOut="10">
+    <enumVal>
+      <enumChoice choice="Standard on/off function output">
+        <choice>Standard on/off function output</choice>
+      </enumChoice>
+      <enumChoice choice="Mars light">
+        <choice>Mars light</choice>
+      </enumChoice>
+      <enumChoice choice="Random Flicker">
+        <choice>Random Flicker</choice>
+      </enumChoice>
+      <enumChoice choice="Flashing Headlight">
+        <choice>Flashing Headlight</choice>
+      </enumChoice>
+      <enumChoice choice="Single Pulse Strobe">
+        <choice>Single Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Double Pulse Strobe">
+        <choice>Double Pulse Strobe</choice>
+      </enumChoice>
+      <enumChoice choice="Rotary Beacon">
+        <choice>Rotary Beacon</choice>
+      </enumChoice>
+      <enumChoice choice="Gyralite">
+        <choice>Gyralite</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, right">
+        <choice>Ditch Light Type 1, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 1, left">
+        <choice>Ditch Light Type 1, left</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, right">
+        <choice>Ditch Light Type 2, right</choice>
+      </enumChoice>
+      <enumChoice choice="Ditch Light Type 2, left">
+        <choice>Ditch Light Type 2, left</choice>
+      </enumChoice>
+      <enumChoice choice="Uncoupling">
+        <choice>Uncoupling</choice>
+      </enumChoice>
+      <enumChoice choice="Soft Start">
+        <choice>Soft Start</choice>
+      </enumChoice>
+      <enumChoice choice="Automatic Stop Lights for Streetcars">
+        <choice>Automatic Stop Lights for Streetcars</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off when speed is greater than 0">
+        <choice>Turns off when speed is greater than 0</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 5 Min.">
+        <choice>Turns off after 5 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Turns off after 10 Min.">
+        <choice>Turns off after 10 Min.</choice>
+      </enumChoice>
+      <enumChoice choice="Speed or Load dependent Smoke for Steam Engines">
+        <choice>Speed or Load dependent Smoke for Steam Engines</choice>
+      </enumChoice>
+      <enumChoice choice="Operation dependent Smoke for Diesels" value="80">
+        <choice>Operation dependent Smoke for Diesels</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 8 effect generated</label>
+  </variable>
+  <variable label="Function output 8 behavior" CV="160" mask="XXXXXXVV" tooltip="CV 160" item="Output 10 behavior" minOut="10">
+    <enumVal>
+      <enumChoice choice="Both directions">
+        <choice>Both directions</choice>
+      </enumChoice>
+      <enumChoice choice="Only in forward">
+        <choice>Only in forward</choice>
+      </enumChoice>
+      <enumChoice choice="Only in reverse">
+        <choice>Only in reverse</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Function output 8 behavior</label>
+  </variable>
 </variables>

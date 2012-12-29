@@ -42,8 +42,8 @@
       <revremark>Revision in original Digitrax_1x3.xml file</revremark>
     </revision>
   </revhistory>
-<!-- no need to translate the following, as it generally only appears -->
-<!-- in the function map selection pane -->
+  <!-- no need to translate the following, as it generally only appears -->
+  <!-- in the function map selection pane -->
   <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
     <enumVal>
       <enumChoice choice="No"/>

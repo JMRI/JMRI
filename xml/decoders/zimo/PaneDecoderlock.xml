@@ -1,16 +1,13 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
 <pane name="Decoder Lock">
-    <column>
-      <display item="Service Mode Programming Locked" format="checkbox" tooltip="CV 144 bit 6"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Software Update Locked" format="checkbox" tooltip="CV 144 bit 7"/>
-    </column>
-    <name>Decoder Lock</name>
-  </pane>
+  <column>
+    <display item="Service Mode Programming Locked" format="checkbox" tooltip="CV 144 bit 6"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Software Update Locked" format="checkbox" tooltip="CV 144 bit 7"/>
+  </column>
+  <name>Decoder Lock</name>
+</pane>

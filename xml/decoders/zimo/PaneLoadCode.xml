@@ -1,31 +1,28 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
 <pane name="Load Code">
-	<column>
-		<display item="Decoder ID 1" tooltip="CV 250" />
-		<display item="Decoder ID 2" tooltip="CV 251" />
-		<display item="Decoder ID 3" tooltip="CV 252" />
-		<display item="Decoder ID 4" tooltip="CV 253" />
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-		<separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-		<display item="Load Code 1" tooltip="CV 260" />
-		<display item="Load Code 2" tooltip="CV 261" />
-		<display item="Load Code 3" tooltip="CV 262" />
-		<display item="Load Code 4" tooltip="CV 263" />
-	</column>
+  <column>
+    <display item="Decoder ID 1" tooltip="CV 250"/>
+    <display item="Decoder ID 2" tooltip="CV 251"/>
+    <display item="Decoder ID 3" tooltip="CV 252"/>
+    <display item="Decoder ID 4" tooltip="CV 253"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Load Code 1" tooltip="CV 260"/>
+    <display item="Load Code 2" tooltip="CV 261"/>
+    <display item="Load Code 3" tooltip="CV 262"/>
+    <display item="Load Code 4" tooltip="CV 263"/>
+  </column>
 </pane>

@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2007, 2010  All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,39 +11,36 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file panes for QSi V7 files -->
-
 <pane name="QSI Misc.">
   <column>
-       	<label label="JMRI 2.9.5 or later is required for QSI V7"/>
-       	<label label="JMRI 2.13.2 or later is required for QSI V8"/>
-		<label label=" "/>
-		<display item="Decoder Version" />
-		<display item="CV56.254.6"/>
-		<display item="CV56.254.8"/>
-		<display item="Product Number" />
-		<display item="Sound Set"/>
-		<display item="Sound Set Number"/>
-		<display item="Hardware Profile"/>
-		<label label=" "/>
-		<display item="CV56.254.10"/>
-		<display item="CV56.254.11"/>
-		<display item="CV56.254.12"/>
-		<label label=" "/>
-		<display item="CV56.254.16"/>
-		<display item="CV56.254.17"/>
-		<display item="CV56.254.18"/>
-		<label label=" "/>
-		<label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
-		<label label=" "/>
-		<display item="CV62 Verbal Ack"/>
-		<display item="CV62 CV Readout"/>
-		<label label=" "/>
-		<label label="When in Ops-mode:"/>
-		<label label="Enter a CV you wish to hear and press -- Write changes on sheet"/>
-		<label label=" "/>
-		<display item="Verbal CV Inquiry"/>
-	</column>
+    <label label="JMRI 2.9.5 or later is required for QSI V7"/>
+    <label label="JMRI 2.13.2 or later is required for QSI V8"/>
+    <label label=" "/>
+    <display item="Decoder Version"/>
+    <display item="CV56.254.6"/>
+    <display item="CV56.254.8"/>
+    <display item="Product Number"/>
+    <display item="Sound Set"/>
+    <display item="Sound Set Number"/>
+    <display item="Hardware Profile"/>
+    <label label=" "/>
+    <display item="CV56.254.10"/>
+    <display item="CV56.254.11"/>
+    <display item="CV56.254.12"/>
+    <label label=" "/>
+    <display item="CV56.254.16"/>
+    <display item="CV56.254.17"/>
+    <display item="CV56.254.18"/>
+    <label label=" "/>
+    <label label="When programming in Ops-mode, set Verbal Acknowledgement to disable"/>
+    <label label=" "/>
+    <display item="CV62 Verbal Ack"/>
+    <display item="CV62 CV Readout"/>
+    <label label=" "/>
+    <label label="When in Ops-mode:"/>
+    <label label="Enter a CV you wish to hear and press -- Write changes on sheet"/>
+    <label label=" "/>
+    <display item="Verbal CV Inquiry"/>
+  </column>
 </pane>

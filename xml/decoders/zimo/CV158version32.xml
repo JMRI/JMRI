@@ -1,51 +1,48 @@
-
+<?xml version="1.0"?>
 <!-- CV158, which is sound & Railcom related, added by Nigel Cliffe, 17 Nov 2012 -->
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-	  <variable label="RailCom speed reporting method" CV="158" mask="XXXXXVXX" default="1">
-		<enumVal>
-          <enumChoice choice="Zimo for MX31ZL" value="0">
-            <choice>Present</choice>
-          </enumChoice>
-          <enumChoice choice="Standard Reporting" value="1">
-            <choice>Disappear</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Standing Sound on premature shutdown</label>
-      </variable>
-
-	  <variable label="Standing Sound on premature shutdown" CV="158" mask="XXXXVXXX" default="0">
-		<enumVal>
-          <enumChoice choice="Present" value="0">
-            <choice>Present</choice>
-          </enumChoice>
-          <enumChoice choice="Disappear" value="1">
-            <choice>Disappear</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Standing Sound on premature shutdown</label>
-      </variable>
-	  <variable label="Chuff rate at higher speed steps" CV="158" mask="XXXVXXXX" default="0">
-		<enumVal>
-          <enumChoice choice="Normal" value="0">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reduced" value="1">
-            <choice>Reduced</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Chuff rate at higher speed steps</label>
-      </variable>
-	  <variable label="Drop one speed step to lower turbocharger" CV="158" mask="XXVXXXXX" default="0">
-		<enumVal>
-          <enumChoice choice="Off (default)" value="0">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="On" value="1">
-            <choice>Reduced</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Drop one speed step to lower turbocharger</label>
-      </variable>
-	  
+  <variable label="RailCom speed reporting method" CV="158" mask="XXXXXVXX" default="1">
+    <enumVal>
+      <enumChoice choice="Zimo for MX31ZL" value="0">
+        <choice>Present</choice>
+      </enumChoice>
+      <enumChoice choice="Standard Reporting" value="1">
+        <choice>Disappear</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Standing Sound on premature shutdown</label>
+  </variable>
+  <variable label="Standing Sound on premature shutdown" CV="158" mask="XXXXVXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Present" value="0">
+        <choice>Present</choice>
+      </enumChoice>
+      <enumChoice choice="Disappear" value="1">
+        <choice>Disappear</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Standing Sound on premature shutdown</label>
+  </variable>
+  <variable label="Chuff rate at higher speed steps" CV="158" mask="XXXVXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Normal" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="Reduced" value="1">
+        <choice>Reduced</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Chuff rate at higher speed steps</label>
+  </variable>
+  <variable label="Drop one speed step to lower turbocharger" CV="158" mask="XXVXXXXX" default="0">
+    <enumVal>
+      <enumChoice choice="Off (default)" value="0">
+        <choice>Normal</choice>
+      </enumChoice>
+      <enumChoice choice="On" value="1">
+        <choice>Reduced</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Drop one speed step to lower turbocharger</label>
+  </variable>
 </variables>

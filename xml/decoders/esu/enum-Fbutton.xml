@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,12 +11,8 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - selection from ESU_LokSoundV3_5.xml -->
-
 <!-- function choices for selection matrix -->
-
 <enumVal>
   <enumChoice choice="OFF/ON"/>
   <enumChoice choice="Acceleration on/off"/>
@@ -29,5 +24,3 @@
   <enumChoice choice="Mute/Volume Control"/>
   <enumChoice choice="Dynamic Brake"/>
 </enumVal>
-
-

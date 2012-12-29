@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
@@ -13,42 +12,39 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-
-    <copyright xmlns="http://docbook.org/ns/docbook">
-      <year>2010</year><holder>JMRI</holder>
-    </copyright>
-  
-    <authorgroup xmlns="http://docbook.org/ns/docbook">
-      <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
-      </author>    
-    </authorgroup>
-
-    <revhistory xmlns="http://docbook.org/ns/docbook">
-      <revision>
-        <revnumber>6</revnumber>
-        <date>2010-03-12</date>
-        <authorinitials>BJ</authorinitials>
-        <revremark>Initial release as separate file</revremark>
-      </revision>
-      <revision>
-        <revnumber>5</revnumber>
-        <date>2003-12-05</date>
-        <authorinitials>BJ</authorinitials>
-        <revremark>Revision in original 0NMRA.xml file</revremark>
-      </revision> 
-    </revhistory>
-    
-    
-    <variable label="User Id #1" item="User Id #1" CV="105">
-        <decVal/>
-        <label xml:lang="fr">User Id #1(fr)</label>
-    </variable>
-    <variable label="User Id #2" item="User Id #2" CV="106">
-        <decVal/>
-        <label xml:lang="fr">User Id #2(fr)</label>
-    </variable>
-    
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>6</revnumber>
+      <date>2010-03-12</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2003-12-05</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original 0NMRA.xml file</revremark>
+    </revision>
+  </revhistory>
+  <variable label="User Id #1" item="User Id #1" CV="105">
+    <decVal/>
+    <label xml:lang="fr">User Id #1(fr)</label>
+  </variable>
+  <variable label="User Id #2" item="User Id #2" CV="106">
+    <decVal/>
+    <label xml:lang="fr">User Id #2(fr)</label>
+  </variable>
 </variables>

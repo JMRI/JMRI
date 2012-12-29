@@ -1,125 +1,112 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-<!-- Nigel Cliffe, 16th Nov 2012 --> 
-<!-- from version 30 firmware --> 
+<!-- Nigel Cliffe, 16th Nov 2012 -->
+<!-- from version 30 firmware -->
 <!-- CV's 500-603 control volume and sound choices of individual sounds -->
 <!-- manual hints that control of sound in slot, looping etc. is possible, but gives no details -->
 <!-- see Zimo German manual for small decoders, -->
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-
-<!-- include this CV to put it onto the Sound Levels pane -->
-	<variable label="Overall Volume" CV="266" tooltip="CV266" item="Zimo Sound Setting 1">
-		<decVal/>
-	</variable>
-	
-	
-      <variable label="Volume on Key F0" CV="571" tooltip="CV 571" item="Zimo Sound Setting 2">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F1" CV="514" tooltip="CV 514" item="Zimo Sound Setting 3">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F2" CV="517" tooltip="CV 517" item="Zimo Sound Setting 4">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F3" CV="520" tooltip="CV 520" item="Zimo Sound Setting 5">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F4" CV="523" tooltip="CV 523" item="Zimo Sound Setting 6">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F5" CV="526" tooltip="CV 526" item="Zimo Sound Setting 7">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F6" CV="529" tooltip="CV 529" item="Zimo Sound Setting 8">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F7" CV="532" tooltip="CV 532" item="Zimo Sound Setting 9">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F8" CV="535" tooltip="CV 535" item="Zimo Sound Setting 10">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F9" CV="538" tooltip="CV 538" item="Zimo Sound Setting 11">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F10" CV="541" tooltip="CV 541" item="Zimo Sound Setting 12">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F11" CV="544" tooltip="CV 544" item="Zimo Sound Setting 13">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F12" CV="547" tooltip="CV 547" item="Zimo Sound Setting 14">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F13" CV="550" tooltip="CV 550" item="Zimo Sound Setting 15">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F14" CV="553" tooltip="CV 553" item="Zimo Sound Setting 16">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F15" CV="556" tooltip="CV 556" item="Zimo Sound Setting 17">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F16" CV="559" tooltip="CV 559" item="Zimo Sound Setting 18">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F17" CV="562" tooltip="CV 562" item="Zimo Sound Setting 19">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F18" CV="565" tooltip="CV 565" item="Zimo Sound Setting 20">
-        <decVal/>
-      </variable>
-	  <variable label="Volume on Key F19" CV="568" tooltip="CV 568" item="Zimo Sound Setting 21">
-        <decVal/>
-      </variable>
-
-	  <!-- assume Zimo extend this to F28 in time, so require settings 22 to 30 to be reserved -->
-	  <!-- CV571 is at top of list for Fn Key F0 -->
-	  
-	  <variable label="Boiling Sound" CV="574" tooltip="CV 574" item="Zimo Sound Setting 31">
-        <decVal/>
-      </variable>
-	  <variable label="Change of Direction" CV="576" tooltip="CV 576" item="Zimo Sound Setting 32">
-        <decVal/>
-      </variable>
-	  <variable label="Brake Squeal" CV="578" tooltip="CV 578" item="Zimo Sound Setting 33">
-        <decVal/>
-      </variable>
-
-	  <variable label="Thyristor noise (Electric)" CV="580" tooltip="CV 580" item="Zimo Sound Setting 34">
-        <decVal/>
-      </variable>
-	  <variable label="Starting whistle or horn" CV="582" tooltip="CV 582" item="Zimo Sound Setting 35">
-        <decVal/>
-      </variable>
-	  <variable label="Drain valves (Steam)" CV="584" tooltip="CV 584" item="Zimo Sound Setting 36">
-        <decVal/>
-      </variable>
-	  <variable label="Electric motor (Electric)" CV="586" tooltip="CV 586" item="Zimo Sound Setting 37">
-        <decVal/>
-      </variable>
-	  <variable label="Rolling noise" CV="588" tooltip="CV 588" item="Zimo Sound Setting 38">
-        <decVal/>
-      </variable>
-	  <variable label="Switchgear noise (Electric)" CV="590" tooltip="CV 590" item="Zimo Sound Setting 39">
-        <decVal/>
-      </variable>
-	  <variable label="Second Thyrister (Electric)" CV="592" tooltip="CV 592" item="Zimo Sound Setting 40">
-        <decVal/>
-      </variable>
-	  <variable label="Turbocharger (Diesel)" CV="600" tooltip="CV 600" item="Zimo Sound Setting 41">
-        <decVal/>
-      </variable>
-	  <variable label="Dynamic Brake (Electric)" CV="602" tooltip="CV 602" item="Zimo Sound Setting 42">
-        <decVal/>
-      </variable>
-
-
-
-
+  <!-- include this CV to put it onto the Sound Levels pane -->
+  <variable label="Overall Volume" CV="266" tooltip="CV266" item="Zimo Sound Setting 1">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F0" CV="571" tooltip="CV 571" item="Zimo Sound Setting 2">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F1" CV="514" tooltip="CV 514" item="Zimo Sound Setting 3">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F2" CV="517" tooltip="CV 517" item="Zimo Sound Setting 4">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F3" CV="520" tooltip="CV 520" item="Zimo Sound Setting 5">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F4" CV="523" tooltip="CV 523" item="Zimo Sound Setting 6">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F5" CV="526" tooltip="CV 526" item="Zimo Sound Setting 7">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F6" CV="529" tooltip="CV 529" item="Zimo Sound Setting 8">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F7" CV="532" tooltip="CV 532" item="Zimo Sound Setting 9">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F8" CV="535" tooltip="CV 535" item="Zimo Sound Setting 10">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F9" CV="538" tooltip="CV 538" item="Zimo Sound Setting 11">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F10" CV="541" tooltip="CV 541" item="Zimo Sound Setting 12">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F11" CV="544" tooltip="CV 544" item="Zimo Sound Setting 13">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F12" CV="547" tooltip="CV 547" item="Zimo Sound Setting 14">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F13" CV="550" tooltip="CV 550" item="Zimo Sound Setting 15">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F14" CV="553" tooltip="CV 553" item="Zimo Sound Setting 16">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F15" CV="556" tooltip="CV 556" item="Zimo Sound Setting 17">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F16" CV="559" tooltip="CV 559" item="Zimo Sound Setting 18">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F17" CV="562" tooltip="CV 562" item="Zimo Sound Setting 19">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F18" CV="565" tooltip="CV 565" item="Zimo Sound Setting 20">
+    <decVal/>
+  </variable>
+  <variable label="Volume on Key F19" CV="568" tooltip="CV 568" item="Zimo Sound Setting 21">
+    <decVal/>
+  </variable>
+  <!-- assume Zimo extend this to F28 in time, so require settings 22 to 30 to be reserved -->
+  <!-- CV571 is at top of list for Fn Key F0 -->
+  <variable label="Boiling Sound" CV="574" tooltip="CV 574" item="Zimo Sound Setting 31">
+    <decVal/>
+  </variable>
+  <variable label="Change of Direction" CV="576" tooltip="CV 576" item="Zimo Sound Setting 32">
+    <decVal/>
+  </variable>
+  <variable label="Brake Squeal" CV="578" tooltip="CV 578" item="Zimo Sound Setting 33">
+    <decVal/>
+  </variable>
+  <variable label="Thyristor noise (Electric)" CV="580" tooltip="CV 580" item="Zimo Sound Setting 34">
+    <decVal/>
+  </variable>
+  <variable label="Starting whistle or horn" CV="582" tooltip="CV 582" item="Zimo Sound Setting 35">
+    <decVal/>
+  </variable>
+  <variable label="Drain valves (Steam)" CV="584" tooltip="CV 584" item="Zimo Sound Setting 36">
+    <decVal/>
+  </variable>
+  <variable label="Electric motor (Electric)" CV="586" tooltip="CV 586" item="Zimo Sound Setting 37">
+    <decVal/>
+  </variable>
+  <variable label="Rolling noise" CV="588" tooltip="CV 588" item="Zimo Sound Setting 38">
+    <decVal/>
+  </variable>
+  <variable label="Switchgear noise (Electric)" CV="590" tooltip="CV 590" item="Zimo Sound Setting 39">
+    <decVal/>
+  </variable>
+  <variable label="Second Thyrister (Electric)" CV="592" tooltip="CV 592" item="Zimo Sound Setting 40">
+    <decVal/>
+  </variable>
+  <variable label="Turbocharger (Diesel)" CV="600" tooltip="CV 600" item="Zimo Sound Setting 41">
+    <decVal/>
+  </variable>
+  <variable label="Dynamic Brake (Electric)" CV="602" tooltip="CV 602" item="Zimo Sound Setting 42">
+    <decVal/>
+  </variable>
 </variables>

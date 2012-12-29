@@ -42,7 +42,6 @@
       <revremark>Revision in original Digitrax_1x3.xml file</revremark>
     </revision>
   </revhistory>
-
   <enumChoice choice="Normal function of lead">
     <choice>Normal function of lead</choice>
   </enumChoice>
@@ -91,5 +90,4 @@
   <enumChoice choice="Reserved (0x0F)">
     <choice>Reserved (0x0F)</choice>
   </enumChoice>
-
 </enumVal>

@@ -1,44 +1,41 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-      <variable label="Thyristor Volume at Higher Speed" CV="357" default="0" tooltip="0 to 255, CV357">
-        <decVal min="0" max="255"/>
-        <label>Thyristor Volume at Higher Speed</label>
-      </variable>
-      <variable label="Thyristor Volume Change Speed Step" CV="358" default="0" tooltip="0 to 255, Internal Speed step from which volume is decreased. CV358">
-        <decVal min="0" max="255"/>
-        <label>Thyristor Volume Change Speed Step</label>
-      </variable>
-      <variable label="Switchgear noise Duration at speed change" CV="359" default="30" tooltip="0 to 255(0-25sec), CV359">
-        <decVal min="0" max="255"/>
-        <label>Switchgear noise Duration at speed change</label>
-      </variable>
-      <variable label="Switchgear noise Duration after stop" CV="360" default="0" tooltip="0 to 255(0-25sec), CV360">
-        <decVal min="0" max="255"/>
-        <label>Switchgear noise Duration after stop</label>
-      </variable>
-      <variable label="Switchgear noise minimum Wait before the next play" CV="361" default="0" tooltip="0 to 255(0-25sec), CV361">
-        <decVal min="0" max="255"/>
-        <label>Switchgear noise minimum Wait before the next play</label>
-      </variable>
-      <variable label="Thyristor Second Switching Threshold" CV="362" default="0" tooltip="0 to 255, CV362">
-        <decVal min="0" max="255"/>
-        <label>Thyristor Second Switching Threshold</label>
-      </variable>
-      <variable label="Switchgear noise Distribution of speed in Switching stages" CV="363" default="0" tooltip="0 to 255,0 is the default which is equivalent to five stages, CV363">
-        <decVal min="0" max="255"/>
-        <label>Switchgear noise Distribution of speed in Switching stages</label>
-      </variable>
-      <variable label="Engine Speed Fallback when changing gear" CV="364" default="0" tooltip="0 to 255, CV364">
-        <decVal min="0" max="255"/>
-        <label>Engine Speed Fallback when changing gear</label>
-      </variable>
-	<variable label="Maximum speed before upshifting" CV="365" default="0" tooltip="0 to 255, CV365">
-        <decVal min="0" max="255"/>
-        <label>Maximum speed before upshifting</label>
-      </variable>
+  <variable label="Thyristor Volume at Higher Speed" CV="357" default="0" tooltip="0 to 255, CV357">
+    <decVal min="0" max="255"/>
+    <label>Thyristor Volume at Higher Speed</label>
+  </variable>
+  <variable label="Thyristor Volume Change Speed Step" CV="358" default="0" tooltip="0 to 255, Internal Speed step from which volume is decreased. CV358">
+    <decVal min="0" max="255"/>
+    <label>Thyristor Volume Change Speed Step</label>
+  </variable>
+  <variable label="Switchgear noise Duration at speed change" CV="359" default="30" tooltip="0 to 255(0-25sec), CV359">
+    <decVal min="0" max="255"/>
+    <label>Switchgear noise Duration at speed change</label>
+  </variable>
+  <variable label="Switchgear noise Duration after stop" CV="360" default="0" tooltip="0 to 255(0-25sec), CV360">
+    <decVal min="0" max="255"/>
+    <label>Switchgear noise Duration after stop</label>
+  </variable>
+  <variable label="Switchgear noise minimum Wait before the next play" CV="361" default="0" tooltip="0 to 255(0-25sec), CV361">
+    <decVal min="0" max="255"/>
+    <label>Switchgear noise minimum Wait before the next play</label>
+  </variable>
+  <variable label="Thyristor Second Switching Threshold" CV="362" default="0" tooltip="0 to 255, CV362">
+    <decVal min="0" max="255"/>
+    <label>Thyristor Second Switching Threshold</label>
+  </variable>
+  <variable label="Switchgear noise Distribution of speed in Switching stages" CV="363" default="0" tooltip="0 to 255,0 is the default which is equivalent to five stages, CV363">
+    <decVal min="0" max="255"/>
+    <label>Switchgear noise Distribution of speed in Switching stages</label>
+  </variable>
+  <variable label="Engine Speed Fallback when changing gear" CV="364" default="0" tooltip="0 to 255, CV364">
+    <decVal min="0" max="255"/>
+    <label>Engine Speed Fallback when changing gear</label>
+  </variable>
+  <variable label="Maximum speed before upshifting" CV="365" default="0" tooltip="0 to 255, CV365">
+    <decVal min="0" max="255"/>
+    <label>Maximum speed before upshifting</label>
+  </variable>
 </variables>

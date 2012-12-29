@@ -1,65 +1,62 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
-  <pane name="Shunt/Uncouple">
-    <column>
-      <display item="Shunting" tooltip="CV 124, bit 2"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Shunt Function Key" tooltip="CV 124 bits 2 + 6"/>
-      <display item="Shunt Function Key Extension" />
-      <label label=" ">
-        <label> </label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Half Speed Key" tooltip="CV 124, bit 3 + 4"/>
-      <display item="Half Speed Key Extension" />
-      <label label=" ">
-        <label> </label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <column>
-          <display item="Uncoupler" tooltip="CV 115"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Auto Uncouple" tooltip="CV 116"/>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Tens digit = Pull In time (0-9)">
-            <label>Tens digit = Pull In time (0-9)</label>
-          </label>
-          <label label="Ones digit = Hold power % x10 (0-9)">
-            <label>Ones digit = Hold power % x10 (0-9)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Tens digit = Move Away time (0-9)">
-            <label>Tens digit = Move Away time (0-9)</label>
-          </label>
-          <label label="Ones digit = Internal Speed Step x4 (0-9)">
-            <label>Ones digit = Internal Speed Step x4 (0-9)</label>
-          </label>
-          <label label="Hundreds digit, 1 = Tension Relieve">
-            <label>Hundreds digit, 1 = Tension Relieve</label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>Shunt/Uncouple</name>
-  </pane>
+<pane name="Shunt/Uncouple">
+  <column>
+    <display item="Shunting" tooltip="CV 124, bit 2"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Shunt Function Key" tooltip="CV 124 bits 2 + 6"/>
+    <display item="Shunt Function Key Extension"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Half Speed Key" tooltip="CV 124, bit 3 + 4"/>
+    <display item="Half Speed Key Extension"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <column>
+        <display item="Uncoupler" tooltip="CV 115"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Auto Uncouple" tooltip="CV 116"/>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <label label="Tens digit = Pull In time (0-9)">
+          <label>Tens digit = Pull In time (0-9)</label>
+        </label>
+        <label label="Ones digit = Hold power % x10 (0-9)">
+          <label>Ones digit = Hold power % x10 (0-9)</label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <label label="Tens digit = Move Away time (0-9)">
+          <label>Tens digit = Move Away time (0-9)</label>
+        </label>
+        <label label="Ones digit = Internal Speed Step x4 (0-9)">
+          <label>Ones digit = Internal Speed Step x4 (0-9)</label>
+        </label>
+        <label label="Hundreds digit, 1 = Tension Relieve">
+          <label>Hundreds digit, 1 = Tension Relieve</label>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>Shunt/Uncouple</name>
+</pane>

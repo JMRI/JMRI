@@ -1,203 +1,200 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
-  <pane name="Accel/Decel">
-    <column>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <column>
-              <display item="Acceleration" tooltip="CV 3"/>
-              <display item="Deceleration" tooltip="CV 4"/>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-            <label label="      ">
-              <label>      </label>
-            </label>
-            <column>
-              <display item="Acceleration Trim" tooltip="CV 23 bits 0-6"/>
-              <display item="Acceleration Trim Sign" tooltip="CV 23 bit 7"/>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-            <label label="    ">
-              <label>    </label>
-            </label>
-            <column>
-              <display item="Deceleration Trim" tooltip="CV 24 bit 0-6"/>
-              <display item="Deceleration Trim Sign" tooltip="CV 24 bit 7"/>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-          </row>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="BEMF Intensity"/>
-        </column>
-        <column>
-          <label label="   ">
-            <label>   </label>
-          </label>
-        </column>
-        <separator/>
-        <column>
-          <display item="BEMF config"/>
-        </column>
-        <column>
-          <label label="     ">
-            <label>     </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors">
-            <label>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</label>
-          </label>
-          <label label="Tens digit is the Proportional value, mid value = 5">
-            <label>Tens digit is the Proportional value, mid value = 5</label>
-          </label>
-          <label label="Ones digit is the integral value, mid value = 5">
-            <label>Ones digit is the integral value, mid value = 5</label>
-          </label>
-          <label label="With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5">
-            <label>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <display item="Motor Frequency and EMF sample Rate" tooltip="CV 9"/>
-        </column>
-        <label label="    ">
-          <label>    </label>
+<pane name="Accel/Decel">
+  <column>
+    <row>
+      <column>
+        <label label=" ">
+          <label> </label>
         </label>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz">
-            <label>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</label>
-          </label>
-          <label label="Tens digit = Sampling rate (1-9) mid value = 5">
-            <label>Tens digit = Sampling rate (1-9) mid value = 5</label>
-          </label>
-          <label label="Ones digit = EMF sampling time (1-9) mid value = 5">
-            <label>Ones digit = EMF sampling time (1-9) mid value = 5</label>
-          </label>
-          <label label="100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time">
-            <label>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</label>
-          </label>
-          <label label="255-176 = Low frequency according to formula;-">
-            <label>255-176 = Low frequency according to formula;-</label>
-          </label>
-          <label label="(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp">
-            <label>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <label label="Acceleration/Deceleration time (momentum) can be streched in the lower speed range">
-          <label>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</label>
-        </label>
-      </row>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Exponential Acceleration" tooltip="CV 121"/>
-          <display item="Exponential Deceleration" tooltip="CV 122"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
+        <row>
+          <column>
+            <display item="Acceleration" tooltip="CV 3"/>
+            <display item="Deceleration" tooltip="CV 4"/>
+            <label label=" ">
+              <label> </label>
+            </label>
+          </column>
           <label label="      ">
             <label>      </label>
           </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
+          <column>
+            <display item="Acceleration Trim" tooltip="CV 23 bits 0-6"/>
+            <display item="Acceleration Trim Sign" tooltip="CV 23 bit 7"/>
+            <label label=" ">
+              <label> </label>
+            </label>
+          </column>
+          <label label="    ">
+            <label>    </label>
           </label>
-          <label label="Tens digit = percentage of speed range to be included (0-9)">
-            <label>Tens digit = percentage of speed range to be included (0-9)</label>
-          </label>
-          <label label="Ones digit = Exponential curve (0-9)">
-            <label>Ones digit = Exponential curve (0-9)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
+          <column>
+            <display item="Deceleration Trim" tooltip="CV 24 bit 0-6"/>
+            <display item="Deceleration Trim Sign" tooltip="CV 24 bit 7"/>
+            <label label=" ">
+              <label> </label>
+            </label>
+          </column>
+        </row>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="BEMF Intensity"/>
+      </column>
+      <column>
+        <label label="   ">
+          <label>   </label>
+        </label>
+      </column>
       <separator/>
-      <row>
-        <column>
-          <label label="Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance">
-            <label>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</label>
-          </label>
-          <label label="for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)">
-            <label>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</label>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Adaptive Acceleration/Deceleration" tooltip="CV 123"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="     ">
-            <label>     </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Tens digit = acceleration (1-9)">
-            <label>Tens digit = acceleration (1-9)</label>
-          </label>
-          <label label="Ones digit = deceleration (1-9)">
-            <label>Ones digit = deceleration (1-9)</label>
-          </label>
-          <label label="Value 0 = no adaptive acceleration/deceleration">
-            <label>Value 0 = no adaptive acceleration/deceleration</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>Accel/Decel</name>
-  </pane>
+      <column>
+        <display item="BEMF config"/>
+      </column>
+      <column>
+        <label label="     ">
+          <label>     </label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <label label="A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors">
+          <label>A 'Hundreds' digit of 1 offsets the mid value for 'coreless' motors</label>
+        </label>
+        <label label="Tens digit is the Proportional value, mid value = 5">
+          <label>Tens digit is the Proportional value, mid value = 5</label>
+        </label>
+        <label label="Ones digit is the integral value, mid value = 5">
+          <label>Ones digit is the integral value, mid value = 5</label>
+        </label>
+        <label label="With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5">
+          <label>With default setting of 0, proportional value auto adjusts and integral value is equivalent to 5</label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <display item="Motor Frequency and EMF sample Rate" tooltip="CV 9"/>
+      </column>
+      <label label="    ">
+        <label>    </label>
+      </label>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <label label="0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz">
+          <label>0 = 20/40KHz (set with CV112) and sample rate auto adjusts between 200Hz (low speed) and 50Hz</label>
+        </label>
+        <label label="Tens digit = Sampling rate (1-9) mid value = 5">
+          <label>Tens digit = Sampling rate (1-9) mid value = 5</label>
+        </label>
+        <label label="Ones digit = EMF sampling time (1-9) mid value = 5">
+          <label>Ones digit = EMF sampling time (1-9) mid value = 5</label>
+        </label>
+        <label label="100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time">
+          <label>100 = 'Spread Spectrum' sampling rate for reduced noise, with medium sampling time</label>
+        </label>
+        <label label="255-176 = Low frequency according to formula;-">
+          <label>255-176 = Low frequency according to formula;-</label>
+        </label>
+        <label label="(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp">
+          <label>(131 + mantissa * 4) * 2 exp. Bits 0-4 = mantissa, Bits 5-7 = exp</label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <label label="Acceleration/Deceleration time (momentum) can be streched in the lower speed range">
+        <label>Acceleration/Deceleration time (momentum) can be streched in the lower speed range</label>
+      </label>
+    </row>
+    <row>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Exponential Acceleration" tooltip="CV 121"/>
+        <display item="Exponential Deceleration" tooltip="CV 122"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label="      ">
+          <label>      </label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <label label="Tens digit = percentage of speed range to be included (0-9)">
+          <label>Tens digit = percentage of speed range to be included (0-9)</label>
+        </label>
+        <label label="Ones digit = Exponential curve (0-9)">
+          <label>Ones digit = Exponential curve (0-9)</label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <label label="Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance">
+          <label>Raising or lowering the speed to the next internal step occurs only if the precedingstep is nearly reached.The tolerance</label>
+        </label>
+        <label label="for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)">
+          <label>for reaching the preceding step is defined by this CV (the smaller this value the smoother the acceleration/deceleration)</label>
+        </label>
+      </column>
+    </row>
+    <row>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <display item="Adaptive Acceleration/Deceleration" tooltip="CV 123"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label="     ">
+          <label>     </label>
+        </label>
+      </column>
+      <column>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <label label="Tens digit = acceleration (1-9)">
+          <label>Tens digit = acceleration (1-9)</label>
+        </label>
+        <label label="Ones digit = deceleration (1-9)">
+          <label>Ones digit = deceleration (1-9)</label>
+        </label>
+        <label label="Value 0 = no adaptive acceleration/deceleration">
+          <label>Value 0 = no adaptive acceleration/deceleration</label>
+        </label>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>Accel/Decel</name>
+</pane>

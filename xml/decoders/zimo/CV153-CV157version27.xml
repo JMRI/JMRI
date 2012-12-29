@@ -1,218 +1,215 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-      <variable label="Max drive Time after signal loss" CV="153" item="Advanced Group 1 Option 3" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec) CV153">
-        <decVal min="0" max="255"/>
-        <label>Max drive Time after signal loss</label>
-      </variable>
-      <variable label="Special Output Configuration" CV="154" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="No Special Configuration">
-            <choice>No Special Configuration</choice>
-          </enumChoice>
-          <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
-            <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Special Output Configuration</label>
-      </variable>
-      <variable label="Shunt Function Key Extension" CV="155" default="0" tooltip="CV155">
-        <enumVal>
-          <enumChoice choice="Use Setting in CV124 above">
-            <choice>Setting in CV124</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="F13">
-            <choice>F13</choice>
-          </enumChoice>
-          <enumChoice choice="F14">
-            <choice>F14</choice>
-          </enumChoice>
-          <enumChoice choice="F15">
-            <choice>F15</choice>
-          </enumChoice>          
-          <enumChoice choice="F16">
-            <choice>F16</choice>
-          </enumChoice>
-          <enumChoice choice="F17">
-            <choice>F17</choice>
-          </enumChoice>
-          <enumChoice choice="F18">
-            <choice>F18</choice>
-          </enumChoice>
-          <enumChoice choice="F19">
-            <choice>F19</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Shunt Function Key Extension</label>
-      </variable>
-      <variable label="Half Speed Key Extension" CV="156" default="0" tooltip="CV156">
-        <enumVal>
-          <enumChoice choice="Use Setting in CV124 above">
-            <choice>Setting in CV124</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="F13">
-            <choice>F13</choice>
-          </enumChoice>
-          <enumChoice choice="F14">
-            <choice>F14</choice>
-          </enumChoice>
-          <enumChoice choice="F15">
-            <choice>F15</choice>
-          </enumChoice>          
-          <enumChoice choice="F16">
-            <choice>F16</choice>
-          </enumChoice>
-          <enumChoice choice="F17">
-            <choice>F17</choice>
-          </enumChoice>
-          <enumChoice choice="F18">
-            <choice>F18</choice>
-          </enumChoice>
-          <enumChoice choice="F19">
-            <choice>F19</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Half Speed Key Extension</label>
-      </variable>
-      <variable label="MAN Key Extension (Disable HLU or ABC signal control)" CV="157" default="0" tooltip="Disables ABC and HLU Signal Control. CV157">
-        <enumVal>
-          <enumChoice choice="MAN (Zimo)">
-            <choice>Setting in CV124</choice>
-          </enumChoice>
-          <enumChoice choice="F1">
-            <choice>F1</choice>
-          </enumChoice>
-          <enumChoice choice="F2">
-            <choice>F2</choice>
-          </enumChoice>
-          <enumChoice choice="F3">
-            <choice>F3</choice>
-          </enumChoice>
-          <enumChoice choice="F4">
-            <choice>F4</choice>
-          </enumChoice>
-          <enumChoice choice="F5">
-            <choice>F5</choice>
-          </enumChoice>
-          <enumChoice choice="F6">
-            <choice>F6</choice>
-          </enumChoice>
-          <enumChoice choice="F7">
-            <choice>F7</choice>
-          </enumChoice>
-          <enumChoice choice="F8">
-            <choice>F8</choice>
-          </enumChoice>
-          <enumChoice choice="F9">
-            <choice>F9</choice>
-          </enumChoice>
-          <enumChoice choice="F10">
-            <choice>F10</choice>
-          </enumChoice>
-          <enumChoice choice="F11">
-            <choice>F11</choice>
-          </enumChoice>
-          <enumChoice choice="F12">
-            <choice>F12</choice>
-          </enumChoice>
-          <enumChoice choice="F13">
-            <choice>F13</choice>
-          </enumChoice>
-          <enumChoice choice="F14">
-            <choice>F14</choice>
-          </enumChoice>
-          <enumChoice choice="F15">
-            <choice>F15</choice>
-          </enumChoice>          
-          <enumChoice choice="F16">
-            <choice>F16</choice>
-          </enumChoice>
-          <enumChoice choice="F17">
-            <choice>F17</choice>
-          </enumChoice>
-          <enumChoice choice="F18">
-            <choice>F18</choice>
-          </enumChoice>
-          <enumChoice choice="F19">
-            <choice>F19</choice>
-          </enumChoice>
-        </enumVal>
-        <label>MAN Key Extension (Disable HLU or ABC signal control)</label>
-      </variable>
+  <variable label="Max drive Time after signal loss" CV="153" item="Advanced Group 1 Option 3" default="0" tooltip="When Energy storage cct connected, 0-255 (0-25sec) CV153">
+    <decVal min="0" max="255"/>
+    <label>Max drive Time after signal loss</label>
+  </variable>
+  <variable label="Special Output Configuration" CV="154" mask="XXXXXXXV" default="0">
+    <enumVal>
+      <enumChoice choice="No Special Configuration">
+        <choice>No Special Configuration</choice>
+      </enumChoice>
+      <enumChoice choice="Pantograph Operation (Zimo/Roco BR110)">
+        <choice>Pantograph Operation (Zimo/Roco BR110)</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Special Output Configuration</label>
+  </variable>
+  <variable label="Shunt Function Key Extension" CV="155" default="0" tooltip="CV155">
+    <enumVal>
+      <enumChoice choice="Use Setting in CV124 above">
+        <choice>Setting in CV124</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Shunt Function Key Extension</label>
+  </variable>
+  <variable label="Half Speed Key Extension" CV="156" default="0" tooltip="CV156">
+    <enumVal>
+      <enumChoice choice="Use Setting in CV124 above">
+        <choice>Setting in CV124</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Half Speed Key Extension</label>
+  </variable>
+  <variable label="MAN Key Extension (Disable HLU or ABC signal control)" CV="157" default="0" tooltip="Disables ABC and HLU Signal Control. CV157">
+    <enumVal>
+      <enumChoice choice="MAN (Zimo)">
+        <choice>Setting in CV124</choice>
+      </enumChoice>
+      <enumChoice choice="F1">
+        <choice>F1</choice>
+      </enumChoice>
+      <enumChoice choice="F2">
+        <choice>F2</choice>
+      </enumChoice>
+      <enumChoice choice="F3">
+        <choice>F3</choice>
+      </enumChoice>
+      <enumChoice choice="F4">
+        <choice>F4</choice>
+      </enumChoice>
+      <enumChoice choice="F5">
+        <choice>F5</choice>
+      </enumChoice>
+      <enumChoice choice="F6">
+        <choice>F6</choice>
+      </enumChoice>
+      <enumChoice choice="F7">
+        <choice>F7</choice>
+      </enumChoice>
+      <enumChoice choice="F8">
+        <choice>F8</choice>
+      </enumChoice>
+      <enumChoice choice="F9">
+        <choice>F9</choice>
+      </enumChoice>
+      <enumChoice choice="F10">
+        <choice>F10</choice>
+      </enumChoice>
+      <enumChoice choice="F11">
+        <choice>F11</choice>
+      </enumChoice>
+      <enumChoice choice="F12">
+        <choice>F12</choice>
+      </enumChoice>
+      <enumChoice choice="F13">
+        <choice>F13</choice>
+      </enumChoice>
+      <enumChoice choice="F14">
+        <choice>F14</choice>
+      </enumChoice>
+      <enumChoice choice="F15">
+        <choice>F15</choice>
+      </enumChoice>
+      <enumChoice choice="F16">
+        <choice>F16</choice>
+      </enumChoice>
+      <enumChoice choice="F17">
+        <choice>F17</choice>
+      </enumChoice>
+      <enumChoice choice="F18">
+        <choice>F18</choice>
+      </enumChoice>
+      <enumChoice choice="F19">
+        <choice>F19</choice>
+      </enumChoice>
+    </enumVal>
+    <label>MAN Key Extension (Disable HLU or ABC signal control)</label>
+  </variable>
 </variables>

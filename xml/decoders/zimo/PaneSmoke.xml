@@ -1,96 +1,93 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 2 Aug 11 JES
                  - made item name for CV 133 more generic
 -->
-
 <pane name="Smoke">
-	<column>
-          <display item="Smoke Characteristic" tooltip="CV112 bit 0"/>
-      		<label label=" ">
-        	<label> </label>
-      		</label>
-		<row>
-			<column>
-			<display item="Smoke PWM at standstill" tooltip="CV137"/>
-			<display item="Smoke PWM at minimum speed" tooltip="CV138"/>
-         	<display item="Smoke PWM at max speed" tooltip="CV139"/>
-			</column>
-            <column>
-            <display item="Smoke PWM at standstill" format="hslider" tooltip="CV137" label="">
-            <label/>
-            </display>
-            <display item="Smoke PWM at minimum speed" format="hslider" tooltip="CV138" label="">
-            <label/>
-            </display>
-            <display item="Smoke PWM at max speed" format="hslider" tooltip="CV139" label="">
-            <label/>
-            </display>
-			</column>
-		</row>
-      		<label label=" ">
-        	<label> </label>
-      		</label>
-			<display item="Automatic Shut-down of Smoke Generator"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label="Smoke Fan Settings">
-        <label> </label>
-      </label>
-		<separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-        <display item="Function Output as virtual Cam or Smoke Fan" tooltip="CV 133"/>
-      <label label=" ">
-        <label> </label>
-      </label>
-        <row>
-        	<column>
-				<display item="Fan Speed at Standstill"/>
-			</column>
-			<column>
-              	<display item="Fan Speed at Standstill" format="hslider" label="">
-                	<label/>
-              	</display>
-            </column>
-        </row>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label="Settings for Diesels">
-        <label> </label>
-      </label>
-        <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      	<row>
-      		<column>
-				<display item="Smoke Fan Speed at Steady Speed"/>
-				<display item="Smoke Fan Speed at Startup and Acceleration"/>
-			</column>
-			<column>
-              	<display item="Smoke Fan Speed at Steady Speed" format="hslider" label="">
-                	<label/>
-              	</display>
-              	<display item="Smoke Fan Speed at Startup and Acceleration" format="hslider" label="">
-                	<label/>
-                </display>
-            </column>
-         </row>
-	</column>
+  <column>
+    <display item="Smoke Characteristic" tooltip="CV112 bit 0"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <column>
+        <display item="Smoke PWM at standstill" tooltip="CV137"/>
+        <display item="Smoke PWM at minimum speed" tooltip="CV138"/>
+        <display item="Smoke PWM at max speed" tooltip="CV139"/>
+      </column>
+      <column>
+        <display item="Smoke PWM at standstill" format="hslider" tooltip="CV137" label="">
+          <label/>
+        </display>
+        <display item="Smoke PWM at minimum speed" format="hslider" tooltip="CV138" label="">
+          <label/>
+        </display>
+        <display item="Smoke PWM at max speed" format="hslider" tooltip="CV139" label="">
+          <label/>
+        </display>
+      </column>
+    </row>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Automatic Shut-down of Smoke Generator"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label="Smoke Fan Settings">
+      <label> </label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Function Output as virtual Cam or Smoke Fan" tooltip="CV 133"/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <column>
+        <display item="Fan Speed at Standstill"/>
+      </column>
+      <column>
+        <display item="Fan Speed at Standstill" format="hslider" label="">
+          <label/>
+        </display>
+      </column>
+    </row>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label="Settings for Diesels">
+      <label> </label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <column>
+        <display item="Smoke Fan Speed at Steady Speed"/>
+        <display item="Smoke Fan Speed at Startup and Acceleration"/>
+      </column>
+      <column>
+        <display item="Smoke Fan Speed at Steady Speed" format="hslider" label="">
+          <label/>
+        </display>
+        <display item="Smoke Fan Speed at Startup and Acceleration" format="hslider" label="">
+          <label/>
+        </display>
+      </column>
+    </row>
+  </column>
 </pane>

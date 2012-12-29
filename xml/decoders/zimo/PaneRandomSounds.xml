@@ -1,177 +1,174 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
-
-  <pane name="Random Sounds">
-    <column>
-      <label label="Random Generator Z1">
-        <label>Random Generator Z1</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Minimum interval for random generator Z1" label="Minimum interval">
-        <label>Minimum interval</label>
-      </display>
-      <display item="Maximum interval for random generator Z1" label="Maximum interval">
-        <label>Maximum interval</label>
-      </display>
-      <display item="Playback length for random generator Z1" label="Playback length">
-        <label>Playback length</label>
-      </display>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label="Random Generator Z2">
-        <label>Random Generator Z2</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Minimum interval for random generator Z2" label="Minimum interval">
-        <label>Minimum interval</label>
-      </display>
-      <display item="Maximum interval for random generator Z2" label="Maximum interval">
-        <label>Maximum interval</label>
-      </display>
-      <display item="Playback length for random generator Z2" label="Playback length">
-        <label>Playback length</label>
-      </display>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label="Random Generator Z3">
-        <label>Random Generator Z3</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Minimum interval for random generator Z3" label="Minimum interval">
-        <label>Minimum interval</label>
-      </display>
-      <display item="Maximum interval for random generator Z3" label="Maximum interval">
-        <label>Maximum interval</label>
-      </display>
-      <display item="Playback length for random generator Z3" label="Playback length">
-        <label>Playback length</label>
-      </display>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label="Random Generator Z4">
-        <label>Random Generator Z4</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Minimum interval for random generator Z4" label="Minimum interval">
-        <label>Minimum interval</label>
-      </display>
-      <display item="Maximum interval for random generator Z4" label="Maximum interval">
-        <label>Maximum interval</label>
-      </display>
-      <display item="Playback length for random generator Z4" label="Playback length">
-        <label>Playback length</label>
-      </display>
-    </column>
-    <column>
-      <label label="Random Generator Z5">
-        <label>Random Generator Z5</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Minimum interval for random generator Z5" label="Minimum interval">
-        <label>Minimum interval</label>
-      </display>
-      <display item="Maximum interval for random generator Z5" label="Maximum interval">
-        <label>Maximum interval</label>
-      </display>
-      <display item="Playback length for random generator Z5" label="Playback length">
-        <label>Playback length</label>
-      </display>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label="Random Generator Z6">
-        <label>Random Generator Z6</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Minimum interval for random generator Z6" label="Minimum interval">
-        <label>Minimum interval</label>
-      </display>
-      <display item="Maximum interval for random generator Z6" label="Maximum interval">
-        <label>Maximum interval</label>
-      </display>
-      <display item="Playback length for random generator Z6" label="Playback length">
-        <label>Playback length</label>
-      </display>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label="Random Generator Z7">
-        <label>Random Generator Z7</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Minimum interval for random generator Z7" label="Minimum interval">
-        <label>Minimum interval</label>
-      </display>
-      <display item="Maximum interval for random generator Z7" label="Maximum interval">
-        <label>Maximum interval</label>
-      </display>
-      <display item="Playback length for random generator Z7" label="Playback length">
-        <label>Playback length</label>
-      </display>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <label label="Random Generator Z8">
-        <label>Random Generator Z8</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Minimum interval for random generator Z8" label="Minimum interval">
-        <label>Minimum interval</label>
-      </display>
-      <display item="Maximum interval for random generator Z8" label="Maximum interval">
-        <label>Maximum interval</label>
-      </display>
-      <display item="Playback length for random generator Z8" label="Playback length">
-        <label>Playback length</label>
-      </display>
-    </column>
-    <name>Random Sounds</name>
-  </pane>
+<pane name="Random Sounds">
+  <column>
+    <label label="Random Generator Z1">
+      <label>Random Generator Z1</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Minimum interval for random generator Z1" label="Minimum interval">
+      <label>Minimum interval</label>
+    </display>
+    <display item="Maximum interval for random generator Z1" label="Maximum interval">
+      <label>Maximum interval</label>
+    </display>
+    <display item="Playback length for random generator Z1" label="Playback length">
+      <label>Playback length</label>
+    </display>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label="Random Generator Z2">
+      <label>Random Generator Z2</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Minimum interval for random generator Z2" label="Minimum interval">
+      <label>Minimum interval</label>
+    </display>
+    <display item="Maximum interval for random generator Z2" label="Maximum interval">
+      <label>Maximum interval</label>
+    </display>
+    <display item="Playback length for random generator Z2" label="Playback length">
+      <label>Playback length</label>
+    </display>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label="Random Generator Z3">
+      <label>Random Generator Z3</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Minimum interval for random generator Z3" label="Minimum interval">
+      <label>Minimum interval</label>
+    </display>
+    <display item="Maximum interval for random generator Z3" label="Maximum interval">
+      <label>Maximum interval</label>
+    </display>
+    <display item="Playback length for random generator Z3" label="Playback length">
+      <label>Playback length</label>
+    </display>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label="Random Generator Z4">
+      <label>Random Generator Z4</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Minimum interval for random generator Z4" label="Minimum interval">
+      <label>Minimum interval</label>
+    </display>
+    <display item="Maximum interval for random generator Z4" label="Maximum interval">
+      <label>Maximum interval</label>
+    </display>
+    <display item="Playback length for random generator Z4" label="Playback length">
+      <label>Playback length</label>
+    </display>
+  </column>
+  <column>
+    <label label="Random Generator Z5">
+      <label>Random Generator Z5</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Minimum interval for random generator Z5" label="Minimum interval">
+      <label>Minimum interval</label>
+    </display>
+    <display item="Maximum interval for random generator Z5" label="Maximum interval">
+      <label>Maximum interval</label>
+    </display>
+    <display item="Playback length for random generator Z5" label="Playback length">
+      <label>Playback length</label>
+    </display>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label="Random Generator Z6">
+      <label>Random Generator Z6</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Minimum interval for random generator Z6" label="Minimum interval">
+      <label>Minimum interval</label>
+    </display>
+    <display item="Maximum interval for random generator Z6" label="Maximum interval">
+      <label>Maximum interval</label>
+    </display>
+    <display item="Playback length for random generator Z6" label="Playback length">
+      <label>Playback length</label>
+    </display>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label="Random Generator Z7">
+      <label>Random Generator Z7</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Minimum interval for random generator Z7" label="Minimum interval">
+      <label>Minimum interval</label>
+    </display>
+    <display item="Maximum interval for random generator Z7" label="Maximum interval">
+      <label>Maximum interval</label>
+    </display>
+    <display item="Playback length for random generator Z7" label="Playback length">
+      <label>Playback length</label>
+    </display>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <label label="Random Generator Z8">
+      <label>Random Generator Z8</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Minimum interval for random generator Z8" label="Minimum interval">
+      <label>Minimum interval</label>
+    </display>
+    <display item="Maximum interval for random generator Z8" label="Maximum interval">
+      <label>Maximum interval</label>
+    </display>
+    <display item="Playback length for random generator Z8" label="Playback length">
+      <label>Playback length</label>
+    </display>
+  </column>
+  <name>Random Sounds</name>
+</pane>

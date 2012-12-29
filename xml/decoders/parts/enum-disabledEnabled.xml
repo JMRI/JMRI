@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
@@ -13,14 +12,13 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice xml:lang="fr">disabled(fr)</choice>
-            <choice xml:lang="it">disabilitato</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice xml:lang="fr">enabled(fr)</choice>
-            <choice xml:lang="it">abilitato</choice>
-          </enumChoice>
-        </enumVal>
+<enumVal>
+  <enumChoice choice="disabled">
+    <choice xml:lang="fr">disabled(fr)</choice>
+    <choice xml:lang="it">disabilitato</choice>
+  </enumChoice>
+  <enumChoice choice="enabled">
+    <choice xml:lang="fr">enabled(fr)</choice>
+    <choice xml:lang="it">abilitato</choice>
+  </enumChoice>
+</enumVal>

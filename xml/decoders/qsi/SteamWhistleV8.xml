@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,46 +11,40 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-
 <!-- version 1 - new file for QSi V8 files -->
-
 <!-- Steam whistle selections -->
-
 <ienumVal>
-	<ienumChoice choice="Native Whistle" value="1" />
-	<ienumChoice choice="Lukenheimer 3 Chime" />
-	<ienumChoice choice="Sata Fe LFM 192 6 Chime" />
-	<ienumChoice choice="PRR 3 Chime" />
-	<ienumChoice choice="NYC 6 Chime" />
-	<ienumChoice choice="PRR Banshee Single Chime" />
-	<ienumChoice choice="NW Single Chime" />
-	<ienumChoice choice="NH 3 Chime" />
-	<ienumChoice choice="PRR 3 Chime #2" />
-	<ienumChoice choice="DRGW 4 Chime" />
-	<ienumChoice choice="LN 3 Chime" />
-	<ienumChoice choice="SP 3 Chime" />
-	<ienumChoice choice="Santa Fe LFM 191 5 Chime" />
-	<ienumChoice choice="GCER 5 Chime" />
-	<ienumChoice choice="SP 6 Chime" />
-	<ienumChoice choice="Hancock 3 Chime" />
-	<ienumChoice choice="CN 4 Chime" />
-	<ienumChoice choice="NW Single Chime #2" />
-	<ienumChoice choice="LNER A4 3 Chime (British)" />
-	<ienumChoice choice="NYC 5 Chime" />
-	<ienumChoice choice="NYC 6 Chime #2" />
-	<ienumChoice choice="SAR AD60 Whistle" />
-	<ienumChoice choice="Peanut Single Chime" />
-	<ienumChoice choice="BO Single Chime " />
-	<ienumChoice choice="Nathan 5 Chime" />
-	<ienumChoice choice="PRR Banshee Single Chime #2" />
-	<ienumChoice choice="NSW C35 Class" />
-	<ienumChoice choice="NSW C38 Class" />
-	<ienumChoice choice="Hancock 4700 Air" />
-	<ienumChoice choice="Hancock 4710 Air" />
-	<ienumChoice choice="Hancock 3 Chime Air" />
-	<ienumChoice choice="Unknown Single Chime" />
-	<ienumChoice choice="WABCo E1 (horn)" />
+  <ienumChoice choice="Native Whistle" value="1"/>
+  <ienumChoice choice="Lukenheimer 3 Chime"/>
+  <ienumChoice choice="Sata Fe LFM 192 6 Chime"/>
+  <ienumChoice choice="PRR 3 Chime"/>
+  <ienumChoice choice="NYC 6 Chime"/>
+  <ienumChoice choice="PRR Banshee Single Chime"/>
+  <ienumChoice choice="NW Single Chime"/>
+  <ienumChoice choice="NH 3 Chime"/>
+  <ienumChoice choice="PRR 3 Chime #2"/>
+  <ienumChoice choice="DRGW 4 Chime"/>
+  <ienumChoice choice="LN 3 Chime"/>
+  <ienumChoice choice="SP 3 Chime"/>
+  <ienumChoice choice="Santa Fe LFM 191 5 Chime"/>
+  <ienumChoice choice="GCER 5 Chime"/>
+  <ienumChoice choice="SP 6 Chime"/>
+  <ienumChoice choice="Hancock 3 Chime"/>
+  <ienumChoice choice="CN 4 Chime"/>
+  <ienumChoice choice="NW Single Chime #2"/>
+  <ienumChoice choice="LNER A4 3 Chime (British)"/>
+  <ienumChoice choice="NYC 5 Chime"/>
+  <ienumChoice choice="NYC 6 Chime #2"/>
+  <ienumChoice choice="SAR AD60 Whistle"/>
+  <ienumChoice choice="Peanut Single Chime"/>
+  <ienumChoice choice="BO Single Chime "/>
+  <ienumChoice choice="Nathan 5 Chime"/>
+  <ienumChoice choice="PRR Banshee Single Chime #2"/>
+  <ienumChoice choice="NSW C35 Class"/>
+  <ienumChoice choice="NSW C38 Class"/>
+  <ienumChoice choice="Hancock 4700 Air"/>
+  <ienumChoice choice="Hancock 4710 Air"/>
+  <ienumChoice choice="Hancock 3 Chime Air"/>
+  <ienumChoice choice="Unknown Single Chime"/>
+  <ienumChoice choice="WABCo E1 (horn)"/>
 </ienumVal>
-
- 	  	 

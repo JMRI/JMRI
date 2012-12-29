@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
@@ -13,64 +12,62 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-
-    <copyright xmlns="http://docbook.org/ns/docbook">
-      <year>2012</year><holder>JMRI</holder>
-    </copyright>
-  
-    <authorgroup xmlns="http://docbook.org/ns/docbook">
-      <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
-      </author>    
-    </authorgroup>
-
-    <revhistory xmlns="http://docbook.org/ns/docbook">
-      <revision>
-        <revnumber>32</revnumber>
-        <date>2012-12-27</date>
-        <authorinitials>BJ</authorinitials>
-        <revremark>Initial release as separate file</revremark>
-      </revision>
-      <revision>
-        <revnumber>31</revnumber>
-        <date>2011-12-30</date>
-        <authorinitials>BJ</authorinitials>
-        <revremark>Revision in original Digitrax_01x3.xml file</revremark>
-      </revision> 
-    </revhistory>
-    
-      <variable label="Static compensation for speed stabilization" CV="55" default="128" item="EMF Static Config" comment="Factory default is 128, no effect until droop (CV57) set">
-        <decVal />
-        <label>Static compensation for speed stabilization</label>
-        <comment>Factory default is 128, no effect until droop (CV57) set</comment>
-      </variable>
-      <variable label="Dynamic compensation for speed stabilization" CV="56" default="48" item="EMF Dynamic Config" comment="Factory default is 48, no effect until droop (CV57) set">
-        <decVal />
-        <label>Dynamic compensation for speed stabilization</label>
-        <comment>Factory default is 48, no effect until droop (CV57) set</comment>
-      </variable>
-      <variable label="Solo operation droop compensation for speed stabilization" CV="57" mask="XXXXVVVV" default="6" item="EMF Droop Config" comment="0 is compenstation off, 15 is full on, typical value is 5">
-        <decVal max="15" />
-        <label>Solo operation droop compensation for speed stabilization</label>
-        <comment>0 is compenstation off, 15 is full on, typical value is 5</comment>
-      </variable>
-      <variable label="Advanced consist droop compensation for speed stabilization" CV="57" mask="VVVVXXXX" default="0" comment="0 is compenstation off, 15 is full on, typical value is 5">
-        <decVal max="15" />
-        <label>Advanced consist droop compensation for speed stabilization</label>
-        <comment>0 is compenstation off, 15 is full on, typical value is 5</comment>
-      </variable>
-      <variable label="Speed Compensation Control" CV="61" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="F5 has no effect on speed compensation">
-            <choice>F5 has no effect on speed compensation</choice>
-          </enumChoice>
-          <enumChoice choice="F5 On disables speed compensation">
-            <choice>F5 On disables speed compensation</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Speed Compensation Control</label>
-      </variable>
-
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>32</revnumber>
+      <date>2012-12-27</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>31</revnumber>
+      <date>2011-12-30</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Digitrax_01x3.xml file</revremark>
+    </revision>
+  </revhistory>
+  <variable label="Static compensation for speed stabilization" CV="55" default="128" item="EMF Static Config" comment="Factory default is 128, no effect until droop (CV57) set">
+    <decVal/>
+    <label>Static compensation for speed stabilization</label>
+    <comment>Factory default is 128, no effect until droop (CV57) set</comment>
+  </variable>
+  <variable label="Dynamic compensation for speed stabilization" CV="56" default="48" item="EMF Dynamic Config" comment="Factory default is 48, no effect until droop (CV57) set">
+    <decVal/>
+    <label>Dynamic compensation for speed stabilization</label>
+    <comment>Factory default is 48, no effect until droop (CV57) set</comment>
+  </variable>
+  <variable label="Solo operation droop compensation for speed stabilization" CV="57" mask="XXXXVVVV" default="6" item="EMF Droop Config" comment="0 is compenstation off, 15 is full on, typical value is 5">
+    <decVal max="15"/>
+    <label>Solo operation droop compensation for speed stabilization</label>
+    <comment>0 is compenstation off, 15 is full on, typical value is 5</comment>
+  </variable>
+  <variable label="Advanced consist droop compensation for speed stabilization" CV="57" mask="VVVVXXXX" default="0" comment="0 is compenstation off, 15 is full on, typical value is 5">
+    <decVal max="15"/>
+    <label>Advanced consist droop compensation for speed stabilization</label>
+    <comment>0 is compenstation off, 15 is full on, typical value is 5</comment>
+  </variable>
+  <variable label="Speed Compensation Control" CV="61" mask="XXXVXXXX">
+    <enumVal>
+      <enumChoice choice="F5 has no effect on speed compensation">
+        <choice>F5 has no effect on speed compensation</choice>
+      </enumChoice>
+      <enumChoice choice="F5 On disables speed compensation">
+        <choice>F5 On disables speed compensation</choice>
+      </enumChoice>
+    </enumVal>
+    <label>Speed Compensation Control</label>
+  </variable>
 </variables>

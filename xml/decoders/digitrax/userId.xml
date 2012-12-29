@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
@@ -13,41 +12,39 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
 <variables xmlns:xi="http://www.w3.org/2001/XInclude">
-
-    <copyright xmlns="http://docbook.org/ns/docbook">
-      <year>2012</year><holder>JMRI</holder>
-    </copyright>
-  
-    <authorgroup xmlns="http://docbook.org/ns/docbook">
-      <author>
-        <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
-      </author>    
-    </authorgroup>
-
-    <revhistory xmlns="http://docbook.org/ns/docbook">
-      <revision>
-        <revnumber>32</revnumber>
-        <date>2012-12-27</date>
-        <authorinitials>BJ</authorinitials>
-        <revremark>Initial release as separate file</revremark>
-      </revision>
-      <revision>
-        <revnumber>31</revnumber>
-        <date>2011-12-30</date>
-        <authorinitials>BJ</authorinitials>
-        <revremark>Revision in original Digitrax_01x3.xml file</revremark>
-      </revision> 
-    </revhistory>
-    
-      <variable label="User Private ID #1" CV="105" item="User Id #1">
-        <decVal />
-        <label>User Private ID #1</label>
-      </variable>
-      <variable label="User Private ID #2" CV="106" item="User Id #2">
-        <decVal />
-        <label>User Private ID #2</label>
-      </variable>
-
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>32</revnumber>
+      <date>2012-12-27</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+    <revision>
+      <revnumber>31</revnumber>
+      <date>2011-12-30</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Revision in original Digitrax_01x3.xml file</revremark>
+    </revision>
+  </revhistory>
+  <variable label="User Private ID #1" CV="105" item="User Id #1">
+    <decVal/>
+    <label>User Private ID #1</label>
+  </variable>
+  <variable label="User Private ID #2" CV="106" item="User Id #2">
+    <decVal/>
+    <label>User Private ID #2</label>
+  </variable>
 </variables>

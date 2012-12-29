@@ -42,7 +42,6 @@
       <revremark>Revision in original Digitrax_1x3.xml file</revremark>
     </revision>
   </revhistory>
-
   <enumChoice choice="Forward direction, ON with function ON, phase A">
     <choice>Forward direction, ON with function ON, phase A</choice>
   </enumChoice>
@@ -91,5 +90,4 @@
   <enumChoice choice="Ditch off phase B - Alternate operation, flash with F2">
     <choice>Ditch off phase B - Alternate operation, flash with F2</choice>
   </enumChoice>
-
 </enumVal>

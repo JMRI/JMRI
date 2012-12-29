@@ -1,64 +1,59 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 2 Aug 11 JES
                  - added turbocharger CVs 366-371
 -->
-
-  <pane name="Sound - Diesel Loco">
-    <column>
-      <label label="Diesel Mechanical">
-        <label>Diesel Mechanical</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Engine Speed Fallback when changing gear">
+<pane name="Sound - Diesel Loco">
+  <column>
+    <label label="Diesel Mechanical">
+      <label>Diesel Mechanical</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Engine Speed Fallback when changing gear">
       <label>Engine Speed Fallback when changing gear</label>
-      </display>
-      <display item="Maximum speed before upshifting">
-        <label>Maximum speed before upshifting</label>
-      </display>
-    </column>
-	<column>
-      <label label=" " />
-      <display item="Function Key for Coasting"/>
-      <display item="Sound Slot during Coasting"/>
-	  </column>
-    <column>
-      <label label="Turbocharger">
-        <label>Turbocharger</label>
-      </label>
-      <separator/>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <display item="Maximum volume of Turbocharger">
+    </display>
+    <display item="Maximum speed before upshifting">
+      <label>Maximum speed before upshifting</label>
+    </display>
+  </column>
+  <column>
+    <label label=" "/>
+    <display item="Function Key for Coasting"/>
+    <display item="Sound Slot during Coasting"/>
+  </column>
+  <column>
+    <label label="Turbocharger">
+      <label>Turbocharger</label>
+    </label>
+    <separator/>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <display item="Maximum volume of Turbocharger">
       <label>Maximum volume of Turbocharger</label>
-      </display>
-      <display item="Turbocharger dependence on speed">
+    </display>
+    <display item="Turbocharger dependence on speed">
       <label>Turbocharger dependence on speed</label>
-      </display>
-      <display item="Turbocharger dependence on acceleration">
+    </display>
+    <display item="Turbocharger dependence on acceleration">
       <label>Turbocharger dependence on acceleration</label>
-      </display>
-      <display item="Minimum load on the Turbocharger">
+    </display>
+    <display item="Minimum load on the Turbocharger">
       <label>Minimum load on the Turbocharger</label>
-      </display>
-      <display item="Increase in frequency of the Turbocharger">
+    </display>
+    <display item="Increase in frequency of the Turbocharger">
       <label>Increase in frequency of the Turbocharger</label>
-      </display>
-      <display item="Decrease in frequency of the Turbocharger">
+    </display>
+    <display item="Decrease in frequency of the Turbocharger">
       <label>Decrease in frequency of the Turbocharger</label>
-      </display>
-	  
-      <display item="Drop one speed step to lower turbocharger">
+    </display>
+    <display item="Drop one speed step to lower turbocharger">
       <label>Drop one speed step to lower turbocharger</label>
-      </display>
-	  
-    </column>
-    <name>Sound - Diesel Loco</name>
-  </pane>
+    </display>
+  </column>
+  <name>Sound - Diesel Loco</name>
+</pane>
