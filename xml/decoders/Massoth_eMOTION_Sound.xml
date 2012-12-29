@@ -156,7 +156,6 @@
 			maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.7 A"
 			numOuts="9" numFns="18"
 			formFactor="G" connector="other" >
-			<size length="54" width="25" height="15" units="mm" />
 			<output name="1" label="Front light" maxcurrent="300 mA" connection="plug" />
 	   	 	<output name="2" label="Rear light " maxcurrent="300 mA" connection="plug" />
 	   	 	<output name="3" label="Interior light " maxcurrent="300 mA" connection="plug" />
@@ -166,12 +165,12 @@
 	   	 	<output name="7" label="F4 " maxcurrent="10 mA" connection="solder" />
 	   	 	<output name="8" label="F7 " maxcurrent="10 mA" connection="solder" />
 	   	 	<output name="9" label="F8 " maxcurrent="10 mA" connection="solder" />
+			<size length="54" width="25" height="15" units="mm" />
 		</model>
 		<model model="eMOTION XLS" lowVersionID="10"
 			maxInputVolts="24 V" maxMotorCurrent="3 A" maxTotalCurrent="4 A"
 			numOuts="11" numFns="18"
 			formFactor="G" connector="other" >
-			<size length="60" width="32" height="18" units="mm" />
 			<output name="1" label="Front light" maxcurrent="300 mA" connection="plug" />
 	   	 	<output name="2" label="Rear light " maxcurrent="300 mA" connection="plug" />
 	   	 	<output name="3" label="Interior light " maxcurrent="300 mA" connection="plug" />
@@ -183,6 +182,7 @@
 	   	 	<output name="9" label="F6 " maxcurrent="20 mA" connection="other" />
 	   	 	<output name="10" label="F7 " maxcurrent="20 mA" connection="solder" />
 	   	 	<output name="11" label="F8 " maxcurrent="20 mA" connection="solder" />
+			<size length="60" width="32" height="18" units="mm" />
 		</model>
 	</family>
 

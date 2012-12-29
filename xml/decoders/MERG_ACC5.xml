@@ -225,7 +225,7 @@
 					<decVal min="0" max = "255"></decVal>
 		</variable>
 		
-		<constant label="PICV" default="33" comment="CV used for Primary Index" />
+		<constant item="PICV" default="33" comment="CV used for Primary Index" />
 		<ivariable label="Address Range 1" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV" >
 			<indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" /> 
 		</ivariable>

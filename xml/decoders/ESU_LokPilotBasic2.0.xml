@@ -28,10 +28,10 @@
 			maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A"
 			numOuts="3" numFns="5"
 			formFactor="HO" connector="NMRAmedium" >
-			<size length="25.5" width="15.5" height="4.5" units="mm" />
 			<output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
 			<output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
 			<output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
+			<size length="25.5" width="15.5" height="4.5" units="mm" />
 		</model>
 	</family>
 

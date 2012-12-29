@@ -62,10 +62,10 @@
 			maxInputVolts="24 V" maxTotalCurrent="370 mA"
 			numOuts="3" numFns="18"
 			formFactor="G" connector="other" >
-			<size length="35" width="20" height="12" units="mm" />
 			<output name="1" label="A3" maxcurrent="70 mA" connection="solder" />
 	   	 	<output name="2" label="A7" maxcurrent="10 mA" connection="solder" />
 	   	 	<output name="3" label="A8" maxcurrent="10 mA" connection="solder" />
+			<size length="35" width="20" height="12" units="mm" />
 		</model>
 	</family>
 
