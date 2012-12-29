@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import jmri.jmrit.XmlFile;
-import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 /**
