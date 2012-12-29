@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- $Id: PpP_Sem2.xml 19243 2012-11-29 23:10:10Z fmco $ -->
-<decoder-config>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 		<version author="http://www.ppp-digital.es" version="1" lastUpdated="20121212"/>
 			
 <decoder>
