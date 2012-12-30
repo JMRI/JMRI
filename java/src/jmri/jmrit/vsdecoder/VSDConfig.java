@@ -31,6 +31,8 @@ import jmri.util.PhysicalLocation;
 import jmri.jmrit.roster.RosterEntry;
 
 public class VSDConfig {
+
+    private float DEFAULT_VOLUME = 0.8f;
     
     private String my_id;
     private String vsd_path;
@@ -46,7 +48,7 @@ public class VSDConfig {
 	vsd_path = "";
 	profile_name = "";
 	address = null;
-	volume = 0.0f;
+	volume = DEFAULT_VOLUME;
 	location = null;
 	roster = null;
     }
