@@ -1,18 +1,22 @@
 // PackageTest.java
 
-package jmri.jmrit.logix;
+package jmri.jmrit.roster.swing.attributetable;
 
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * Invokes complete set of tests in the jmri.jmrit.logix tree
- *
- * @author	    Bob Jacobsen  Copyright 2010
- * @version         $Revision$
+ * Tests for the jmrit.roster.swing.attributetable package 
+ * @author	Bob Jacobsen     Copyright (C) 2001, 2002, 2012
+ * @version     $Revision$
  */
 public class PackageTest extends TestCase {
-    
+
+
     // from here down is testing infrastructure
+
     public PackageTest(String s) {
         super(s);
     }
@@ -25,10 +29,10 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.jmrit.logix.PackageTest");   // no tests in this class itself
+        TestSuite suite = new TestSuite("jmri.jmrit.roster.swing.attributetable.PackageTest");
 
-        suite.addTest(OPathTest.suite());
-
+        suite.addTest(AttributeTableModelTest.suite());
+        
         return suite;
     }
 

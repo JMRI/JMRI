@@ -17,8 +17,8 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmrit.roster package & jmrit.roster.Roster class.
- * @author	Bob Jacobsen     Copyright (C) 2001, 2002
+ * Tests for the jmrit.roster.Roster class.
+ * @author	Bob Jacobsen     Copyright (C) 2001, 2002, 2012
  * @version     $Revision$
  */
 public class RosterTest extends TestCase {
@@ -304,19 +304,6 @@ public class RosterTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(RosterTest.class);
-        suite.addTest(jmri.jmrit.roster.BundleTest.suite());
-        suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
-        suite.addTest(jmri.jmrit.roster.swing.BundleTest.suite());
-        suite.addTest(jmri.jmrit.roster.swing.RosterTableModelTest.suite());
-        suite.addTest(jmri.jmrit.roster.swing.attributetable.AttributeTableModelTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(jmri.jmrit.roster.CopyRosterItemActionTest.suite());
-            suite.addTest(jmri.jmrit.roster.RosterEntryPaneTest.suite());
-            suite.addTest(jmri.jmrit.roster.FunctionLabelPaneTest.suite());
-            suite.addTest(jmri.jmrit.roster.IdentifyLocoTest.suite());
-        }
-        
         return suite;
     }
 
