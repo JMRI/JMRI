@@ -1,0 +1,44 @@
+  <pane name="Back EMF">
+    <column/>
+    <column/>
+    <column>
+      <display item="BEMF Active" format="checkbox" label="BEMF off/on" layout="above" tooltip="Sets BEMF off or on">
+        <label xml:lang="fr">Comp.charge off/on</label>
+      </display>
+    </column>
+    <column>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="Controlref" layout="right" tooltip="If the motor does not reach max speed then reduce this parameter">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="ParaK" layout="right">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="ParaI" layout="right">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <display item="Range" layout="right">
+      </display>
+      <label label=" ">
+        <label> </label>
+      </label>
+      <label label=" ">
+        <label> </label>
+      </label>
+    </column>
+    <name>Back EMF</name>
+  </pane>

@@ -1,0 +1,142 @@
+  <pane name="Sound Slot">
+    <column>
+      <row>
+        <label label="Enter the required sound slot number 1 - 16">
+          <label xml:lang="fr">Entrez la valeur du son 1 - 16</label>
+        </label>
+      </row>
+    </column>
+    <column>
+      <display item="Soundkey5" label="F0 Forward " layout="left">
+        <label xml:lang="fr">F0 en av</label>
+      </display>
+      <display item="Soundkey6" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey7" label="F1 Forward " layout="left">
+        <label xml:lang="fr">F1 en av</label>
+      </display>
+      <display item="Soundkey8" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey9" label="F2 Forward " layout="left">
+        <label xml:lang="fr">F2 en av</label>
+      </display>
+      <display item="Soundkey10" label="Reverse" layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey11" label="F3  Forward " layout="left">
+        <label xml:lang="fr">F3  en av</label>
+      </display>
+      <display item="Soundkey12" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey13" label="F4 Forward " layout="left">
+        <label xml:lang="fr">F4 en av</label>
+      </display>
+      <display item="Soundkey14" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey15" label="F5 Forward " layout="left">
+        <label xml:lang="fr">F5 en av</label>
+      </display>
+      <display item="Soundkey16" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey17" label="F6 Forward " layout="left">
+        <label xml:lang="fr">F6 en av</label>
+      </display>
+      <display item="Soundkey18" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey19" label="F7 Forward " layout="left">
+        <label xml:lang="fr">F7 en av</label>
+      </display>
+      <display item="Soundkey20" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey21" label="F8 Forward " layout="left">
+        <label xml:lang="fr">F8 en av</label>
+      </display>
+      <display item="Soundkey22" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey23" label="F9 Forward " layout="left">
+        <label xml:lang="fr">F9 en av</label>
+      </display>
+      <display item="Soundkey24" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey25" label="F10 Forward " layout="left">
+        <label xml:lang="fr">F10 en av</label>
+      </display>
+      <display item="Soundkey26" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+    </column>
+    <column>
+      <display item="Soundkey27" label="F11 Forward " layout="left">
+        <label xml:lang="fr">F11 en av</label>
+      </display>
+      <display item="Soundkey28" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey29" label="F12 Forward " layout="left">
+        <label xml:lang="fr">F12 en av</label>
+      </display>
+      <display item="Soundkey30" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey31" label="F13 Forward " layout="left">
+        <label xml:lang="fr">F13 en av</label>
+      </display>
+      <display item="Soundkey32" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey33" label="F14 Forward " layout="left">
+        <label xml:lang="fr">F14 en av</label>
+      </display>
+      <display item="Soundkey34" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey35" label="F15 Forward " layout="left">
+        <label xml:lang="fr">F15 en av</label>
+      </display>
+      <display item="Soundkey36" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <row>
+			</row>
+      <separator/>
+      <separator/>
+      <display item="Soundkey1" label="Stop Forward " layout="left">
+        <label xml:lang="fr">Stop en av</label>
+      </display>
+      <display item="Soundkey2" label="Reverse " layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey3" label="Running  Forward " layout="left">
+        <label xml:lang="fr">démarrage  en av</label>
+      </display>
+      <display item="Soundkey4" label="Reverse" layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <row>
+			</row>
+      <separator/>
+      <separator/>
+      <display item="Soundkey37" label="Sensor 1 Forward" layout="left">
+        <label xml:lang="fr">Son 1 en av</label>
+      </display>
+      <display item="Soundkey38" label="Reverse" layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+      <display item="Soundkey39" label="Sensor 2 Forward" layout="left">
+        <label xml:lang="fr">Son 2 en av</label>
+      </display>
+      <display item="Soundkey40" label="Reverse" layout="left">
+        <label xml:lang="fr">en arr</label>
+      </display>
+    </column>
+    <name>Sound Slot</name>
+  </pane>
