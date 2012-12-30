@@ -1,0 +1,50 @@
+        <ienumVal>
+          <ienumChoice choice="Standard on off">
+            <choice>Standard on off</choice>
+          </ienumChoice>
+          <ienumChoice choice="Dimmable headlight">
+            <choice>Dimmable headlight</choice>
+          </ienumChoice>
+          <ienumChoice choice="Dimmable headlight (fade in/out)">
+            <choice>Dimmable headlight (fade in/out)</choice>
+          </ienumChoice>
+          <ienumChoice choice="Fire box">
+            <choice>Fire box</choice>
+          </ienumChoice>
+          <ienumChoice choice="Intelligent fire box">
+            <choice>Intelligent fire box</choice>
+          </ienumChoice>
+          <ienumChoice choice="Single stobe">
+            <choice>Single stobe</choice>
+          </ienumChoice>
+          <ienumChoice choice="Double strobe">
+            <choice>Double strobe</choice>
+          </ienumChoice>
+          <ienumChoice choice="Rotary beacon">
+            <choice>Rotary beacon</choice>
+          </ienumChoice>
+          <ienumChoice choice="Strato light">
+            <choice>Strato light</choice>
+          </ienumChoice>
+          <ienumChoice choice="Ditch light type 1">
+            <choice>Ditch light type 1</choice>
+          </ienumChoice>
+          <ienumChoice choice="Ditch light type 2">
+            <choice>Ditch light type 2</choice>
+          </ienumChoice>
+          <ienumChoice choice="Flash light" value="12">
+            <choice>Flash light</choice>
+          </ienumChoice>
+          <ienumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </ienumChoice>
+          <ienumChoice choice="Gyra light">
+            <choice>Gyra light</choice>
+          </ienumChoice>
+          <ienumChoice choice="End of train flasher"> <!-- from LokPilotV4.0 -->
+            <choice>End of train flasher</choice>
+          </ienumChoice>
+          <ienumChoice choice="Coupler function" value="28">
+            <choice>Coupler function</choice> <!-- not in LokSoundSelect? -->
+          </ienumChoice>
+        </ienumVal>
