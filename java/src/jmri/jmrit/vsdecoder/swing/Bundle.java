@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
  * @version $Revision: 18209 $
  */
 
-public class VSDSwingBundle {
+public class Bundle {
 
     static private final String bundleFile = "jmri.jmrit.vsdecoder.swing.VSDSwingBundle"; // NOI18N
 
