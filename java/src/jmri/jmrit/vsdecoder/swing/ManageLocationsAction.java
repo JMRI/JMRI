@@ -50,7 +50,7 @@ public class ManageLocationsAction extends AbstractAction {
 	    listenerLoc = VSDecoderManager.instance().getVSDecoderPreferences().getListenerPosition();
 	    ReporterManager rmgr = jmri.InstanceManager.reporterManagerInstance();
 	    String[] nameArray = rmgr.getSystemNameArray();
-	    Object[][] reporterTable = new Object[nameArray.length][5];
+	    Object[][] reporterTable = new Object[nameArray.length][6];
 	    reporterMap = new HashMap<String, PhysicalLocation>();
 	    int i = 0;
 	    for (String s : nameArray) {
@@ -63,12 +63,14 @@ public class ManageLocationsAction extends AbstractAction {
 		    reporterTable[i][2] = p.getX();
 		    reporterTable[i][3] = p.getY();
 		    reporterTable[i][4] = p.getZ();
+		    reporterTable[i][5] = new Boolean(p.isTunnel());
 		} else {
 		    reporterTable[i][0] = s;
 		    reporterTable[i][1] = new Boolean(false);
 		    reporterTable[i][2] = new Float(0.0f);
 		    reporterTable[i][3] = new Float(0.0f);
 		    reporterTable[i][4] = new Float(0.0f);
+		    reporterTable[i][5] = new Boolean(false);
 		}
 		i++;
 	    }
@@ -76,7 +78,7 @@ public class ManageLocationsAction extends AbstractAction {
 	    List<String> lnames = lmgr.getLocationsByIdList();
 	    opsMap = new HashMap<String, PhysicalLocation>();
 	    log.debug("TableSize : " + lnames.size());
-	    Object[][] opsTable = new Object[lnames.size()][5];
+	    Object[][] opsTable = new Object[lnames.size()][6];
 	    i = 0;
 	    for (String s : lnames) {
 		Location l = lmgr.getLocationById(s);
@@ -93,6 +95,7 @@ public class ManageLocationsAction extends AbstractAction {
 		opsTable[i][2] = p.getX();
 		opsTable[i][3] = p.getY();
 		opsTable[i][4] = p.getZ();
+		opsTable[i][5] = new Boolean(p.isTunnel());
 		opsMap.put(l.getName(), l.getPhysicalLocation());
 		i++;
 	    }

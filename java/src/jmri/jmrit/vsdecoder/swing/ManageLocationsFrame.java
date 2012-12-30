@@ -335,7 +335,8 @@ class LocationTableModel extends AbstractTableModel {
 				     "Use Location",
 				     "X",
 				     "Y",
-				     "Z" };
+				     "Z",
+				     "Is Tunnel"};
     private Object[][]rowData;
 
     public LocationTableModel(Object[][] dataMap) {
@@ -343,6 +344,7 @@ class LocationTableModel extends AbstractTableModel {
 	// Use i18n-ized column titles.
 	columnNames[0] =  rb.getString("LocationTableNameColumn");
 	columnNames[1] = rb.getString("LocationTableUseColumn");
+	columnNames[5] = rb.getString("LocationTableIsTunnelColumn");
 	rowData = dataMap;
     }
 
@@ -352,7 +354,7 @@ class LocationTableModel extends AbstractTableModel {
 	for (Object[] row : rowData) {
 	    if ((Boolean)row[1]) {
 		retv.put((String)row[0], 
-			 new PhysicalLocation((Float)row[2], (Float)row[3], (Float)row[4]));
+			 new PhysicalLocation((Float)row[2], (Float)row[3], (Float)row[4], (Boolean)row[5]));
 	    }
 	}
 	return(retv);
@@ -376,6 +378,7 @@ class LocationTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int columnIndex) {
 	switch(columnIndex) {
 	case 1:
+	case 5:
 	    return Boolean.class;
 	case 4:
 	case 3:
