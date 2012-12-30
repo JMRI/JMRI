@@ -75,14 +75,7 @@
         <label>Speed steps</label>
       </variable>
       <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
       </variable>
       <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
@@ -129,14 +122,7 @@
         <label>Function 2 behavior</label>
       </variable>
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Advanced Ack">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
       </variable>
       <variable label="Split field motor" CV="61" mask="XXXXXVXX">
@@ -151,25 +137,11 @@
         <label>Split field motor</label>
       </variable>
       <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Vstart/Vmid/Vfull in 128 step mode</label>
       </variable>
       <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Short-circuit protection</label>
         <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
       </variable>
@@ -200,25 +172,11 @@
         <label>Switching speed enabled by F6</label>
       </variable>
       <variable label="Torque compensation" CV="54" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Torque compensation</label>
       </variable>
       <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Decoder Lock Feature</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
@@ -232,256 +190,95 @@
       </variable>
       <!-- Define the Function-Output mapping based on NMRA definitions -->
       <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 1</label>
       </variable>
       <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 2</label>
       </variable>
       <variable label="FL(f) controls output 3" CV="33" mask="XXXXXVXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 3</label>
       </variable>
       <variable label="FL(f) controls output 4" CV="33" mask="XXXXVXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(f) controls output 4</label>
       </variable>
       <variable label="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 1</label>
       </variable>
       <variable label="FL(r) controls output 2" CV="34" mask="XXXXXXVX" minOut="2" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 2</label>
       </variable>
       <variable label="FL(r) controls output 3" CV="34" mask="XXXXXVXX" minOut="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 3</label>
       </variable>
       <variable label="FL(r) controls output 4" CV="34" mask="XXXXVXXX" minOut="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>FL(r) controls output 4</label>
       </variable>
       <variable label="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 1</label>
       </variable>
       <variable label="F1 controls output 2" CV="35" mask="XXXXXXVX" minOut="2" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 2</label>
       </variable>
       <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 3</label>
       </variable>
       <variable label="F1 controls output 4" CV="35" mask="XXXXVXXX" minOut="4" minFn="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 controls output 4</label>
       </variable>
       <variable label="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 1</label>
       </variable>
       <variable label="F2 controls output 2" CV="36" mask="XXXXXXVX" minOut="2" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 2</label>
       </variable>
       <variable label="F2 controls output 3" CV="36" mask="XXXXXVXX" minOut="3" minFn="2">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 3</label>
       </variable>
       <variable label="F2 controls output 4" CV="36" mask="XXXXVXXX" minOut="4" minFn="2" default="1">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F2 controls output 4</label>
       </variable>
       <variable label="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 1</label>
       </variable>
       <variable label="F3 controls output 2" CV="37" mask="XXXXXXVX" minOut="2" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 2</label>
       </variable>
       <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 3</label>
       </variable>
       <variable label="F3 controls output 4" CV="37" mask="XXXXVXXX" minOut="4" minFn="3">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F3 controls output 4</label>
       </variable>
       <variable label="F4 controls output 4" CV="38" mask="XXXXXXXV" minOut="4" minFn="4">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F4 controls output 4</label>
       </variable>
       <variable label="F5 controls output 4" CV="39" mask="XXXXXXXV" minOut="4" minFn="5">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F5 controls output 4</label>
       </variable>
       <variable label="F6 controls output 4" CV="40" mask="XXXXXXXV" minOut="4" minFn="6">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F6 controls output 4</label>
       </variable>
     </variables>

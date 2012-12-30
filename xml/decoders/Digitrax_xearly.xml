@@ -33,91 +33,35 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
       <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F1</label>
       </variable>
       <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F2</label>
       </variable>
       <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F3</label>
       </variable>
       <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F4</label>
       </variable>
       <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F5</label>
       </variable>
       <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F6</label>
       </variable>
       <variable label="Analog Mode Function Status - FL(f)" CV="13" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(f)</label>
       </variable>
       <variable label="Analog Mode Function Status - FL(r)" CV="13" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(r)</label>
       </variable>
       <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">

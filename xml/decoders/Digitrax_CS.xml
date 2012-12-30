@@ -53,91 +53,35 @@
         <label>Manufacturer</label>
       </variable>
       <variable label="F1 during DC operation" CV="13" mask="XXXXXXXV" minFn="1" item="Analog Mode Function Status - F1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F1 during DC operation</label>
       </variable>
       <variable label="F2 during DC operation" CV="13" mask="XXXXXXVX" minFn="2" item="Analog Mode Function Status - F2">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F2 during DC operation</label>
       </variable>
       <variable label="F3 during DC operation" CV="13" mask="XXXXXVXX" minFn="3" item="Analog Mode Function Status - F3">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F3 during DC operation</label>
       </variable>
       <variable label="F4 during DC operation" CV="13" mask="XXXXVXXX" minFn="4" item="Analog Mode Function Status - F4">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F4 during DC operation</label>
       </variable>
       <variable label="F5 during DC operation" CV="13" mask="XXXVXXXX" minFn="5" item="Analog Mode Function Status - F5">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F5 during DC operation</label>
       </variable>
       <variable label="F6 during DC operation" CV="13" mask="XXVXXXXX" minFn="6" item="Analog Mode Function Status - F6">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F6 during DC operation</label>
       </variable>
       <variable label="F0 Forward during DC operation" CV="13" mask="XVXXXXXX" item="Analog Mode Function Status - FL(f)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F0 Forward during DC operation</label>
       </variable>
       <variable label="F0 Reverse during DC operation" CV="13" mask="VXXXXXXX" item="Analog Mode Function Status - FL(r)">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F0 Reverse during DC operation</label>
       </variable>
       <variable label="Long Address" CV="17" item="Extended Address">
@@ -182,14 +126,7 @@
         <label>Speed steps</label>
       </variable>
       <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
       </variable>
       <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
@@ -302,14 +239,7 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Advanced Ack">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
       </variable>
       <variable label="Directional Headlights" CV="61" mask="XXXXXXXV">
@@ -324,25 +254,11 @@
         <label>Directional Headlights</label>
       </variable>
       <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Vstart/Vmid/Vfull in 128 step mode</label>
       </variable>
       <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Short-circuit protection</label>
         <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
       </variable>

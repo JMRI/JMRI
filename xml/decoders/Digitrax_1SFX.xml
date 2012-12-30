@@ -97,14 +97,7 @@
         <label>Speed steps</label>
       </variable>
       <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
       </variable>
       <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
@@ -184,25 +177,11 @@
         <label>Switching speed enabled by F6</label>
       </variable>
       <variable label="Torque compensation" CV="54" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Torque compensation</label>
       </variable>
       <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Decoder Lock Feature</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
@@ -226,14 +205,7 @@
         <label>Steam/Diesel Option</label>
       </variable>
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
       </variable>
       <variable label="Split field motor" CV="61" mask="XXXXXVXX">
@@ -248,25 +220,11 @@
         <label>Split field motor</label>
       </variable>
       <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Vstart/Vmid/Vfull in 128 step mode</label>
       </variable>
       <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Short-circuit protection</label>
         <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
       </variable>

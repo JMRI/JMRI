@@ -60,25 +60,11 @@
         <label>Effect Generated</label>
       </variable>
       <variable label="Use F0 for function control" CV="61" mask="XXXXXXXV" item="F0 use">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Use F0 for function control</label>
       </variable>
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Transpond" default="1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
       </variable>
       <variable label="Effect Rate" CV="62" mask="XXXXXVVV" item="Effect Rate" tooltip="0 is slowest- max 7">

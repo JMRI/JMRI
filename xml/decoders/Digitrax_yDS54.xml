@@ -918,14 +918,7 @@
         <label>When Switch D output changes</label>
       </variable>
       <variable label="Aux A local route includes A" CV="49" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux A local route includes A</label>
       </variable>
       <variable label="Aux A local route sets A" CV="49" mask="XXXXXXXV">
@@ -940,14 +933,7 @@
         <label>Aux A local route sets A</label>
       </variable>
       <variable label="Aux A local route includes B" CV="49" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux A local route includes B</label>
       </variable>
       <variable label="Aux A local route sets B" CV="49" mask="XXXXXXVX">
@@ -962,14 +948,7 @@
         <label>Aux A local route sets B</label>
       </variable>
       <variable label="Aux A local route includes C" CV="49" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux A local route includes C</label>
       </variable>
       <variable label="Aux A local route sets C" CV="49" mask="XXXXXVXX">
@@ -984,14 +963,7 @@
         <label>Aux A local route sets C</label>
       </variable>
       <variable label="Aux A local route includes D" CV="49" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux A local route includes D</label>
       </variable>
       <variable label="Aux A local route sets D" CV="49" mask="XXXXVXXX">
@@ -1006,14 +978,7 @@
         <label>Aux A local route sets D</label>
       </variable>
       <variable label="Switch A local route includes A" CV="50" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch A local route includes A</label>
       </variable>
       <variable label="Switch A local route sets A" CV="50" mask="XXXXXXXV">
@@ -1028,14 +993,7 @@
         <label>Switch A local route sets A</label>
       </variable>
       <variable label="Switch A local route includes B" CV="50" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch A local route includes B</label>
       </variable>
       <variable label="Switch A local route sets B" CV="50" mask="XXXXXXVX">
@@ -1050,14 +1008,7 @@
         <label>Switch A local route sets B</label>
       </variable>
       <variable label="Switch A local route includes C" CV="50" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch A local route includes C</label>
       </variable>
       <variable label="Switch A local route sets C" CV="50" mask="XXXXXVXX">
@@ -1072,14 +1023,7 @@
         <label>Switch A local route sets C</label>
       </variable>
       <variable label="Switch A local route includes D" CV="50" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch A local route includes D</label>
       </variable>
       <variable label="Switch A local route sets D" CV="50" mask="XXXXVXXX">
@@ -1094,14 +1038,7 @@
         <label>Switch A local route sets D</label>
       </variable>
       <variable label="Aux B local route includes A" CV="51" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux B local route includes A</label>
       </variable>
       <variable label="Aux B local route sets A" CV="51" mask="XXXXXXXV">
@@ -1116,14 +1053,7 @@
         <label>Aux B local route sets A</label>
       </variable>
       <variable label="Aux B local route includes B" CV="51" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux B local route includes B</label>
       </variable>
       <variable label="Aux B local route sets B" CV="51" mask="XXXXXXVX">
@@ -1138,14 +1068,7 @@
         <label>Aux B local route sets B</label>
       </variable>
       <variable label="Aux B local route includes C" CV="51" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux B local route includes C</label>
       </variable>
       <variable label="Aux B local route sets C" CV="51" mask="XXXXXVXX">
@@ -1160,14 +1083,7 @@
         <label>Aux B local route sets C</label>
       </variable>
       <variable label="Aux B local route includes D" CV="51" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux B local route includes D</label>
       </variable>
       <variable label="Aux B local route sets D" CV="51" mask="XXXXVXXX">
@@ -1182,14 +1098,7 @@
         <label>Aux B local route sets D</label>
       </variable>
       <variable label="Switch B local route includes A" CV="52" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch B local route includes A</label>
       </variable>
       <variable label="Switch B local route sets A" CV="52" mask="XXXXXXXV">
@@ -1204,14 +1113,7 @@
         <label>Switch B local route sets A</label>
       </variable>
       <variable label="Switch B local route includes B" CV="52" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch B local route includes B</label>
       </variable>
       <variable label="Switch B local route sets B" CV="52" mask="XXXXXXVX">
@@ -1226,14 +1128,7 @@
         <label>Switch B local route sets B</label>
       </variable>
       <variable label="Switch B local route includes C" CV="52" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch B local route includes C</label>
       </variable>
       <variable label="Switch B local route sets C" CV="52" mask="XXXXXVXX">
@@ -1248,14 +1143,7 @@
         <label>Switch B local route sets C</label>
       </variable>
       <variable label="Switch B local route includes D" CV="52" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch B local route includes D</label>
       </variable>
       <variable label="Switch B local route sets D" CV="52" mask="XXXXVXXX">
@@ -1270,14 +1158,7 @@
         <label>Switch B local route sets D</label>
       </variable>
       <variable label="Aux C local route includes A" CV="53" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux C local route includes A</label>
       </variable>
       <variable label="Aux C local route sets A" CV="53" mask="XXXXXXXV">
@@ -1292,14 +1173,7 @@
         <label>Aux C local route sets A</label>
       </variable>
       <variable label="Aux C local route includes B" CV="53" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux C local route includes B</label>
       </variable>
       <variable label="Aux C local route sets B" CV="53" mask="XXXXXXVX">
@@ -1314,14 +1188,7 @@
         <label>Aux C local route sets B</label>
       </variable>
       <variable label="Aux C local route includes C" CV="53" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux C local route includes C</label>
       </variable>
       <variable label="Aux C local route sets C" CV="53" mask="XXXXXVXX">
@@ -1336,14 +1203,7 @@
         <label>Aux C local route sets C</label>
       </variable>
       <variable label="Aux C local route includes D" CV="53" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux C local route includes D</label>
       </variable>
       <variable label="Aux C local route sets D" CV="53" mask="XXXXVXXX">
@@ -1358,14 +1218,7 @@
         <label>Aux C local route sets D</label>
       </variable>
       <variable label="Switch C local route includes A" CV="54" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch C local route includes A</label>
       </variable>
       <variable label="Switch C local route sets A" CV="54" mask="XXXXXXXV">
@@ -1380,14 +1233,7 @@
         <label>Switch C local route sets A</label>
       </variable>
       <variable label="Switch C local route includes B" CV="54" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch C local route includes B</label>
       </variable>
       <variable label="Switch C local route sets B" CV="54" mask="XXXXXXVX">
@@ -1402,14 +1248,7 @@
         <label>Switch C local route sets B</label>
       </variable>
       <variable label="Switch C local route includes C" CV="54" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch C local route includes C</label>
       </variable>
       <variable label="Switch C local route sets C" CV="54" mask="XXXXXVXX">
@@ -1424,14 +1263,7 @@
         <label>Switch C local route sets C</label>
       </variable>
       <variable label="Switch C local route includes D" CV="54" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch C local route includes D</label>
       </variable>
       <variable label="Switch C local route sets D" CV="54" mask="XXXXVXXX">
@@ -1446,14 +1278,7 @@
         <label>Switch C local route sets D</label>
       </variable>
       <variable label="Aux D local route includes A" CV="55" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux D local route includes A</label>
       </variable>
       <variable label="Aux D local route sets A" CV="55" mask="XXXXXXXV">
@@ -1468,14 +1293,7 @@
         <label>Aux D local route sets A</label>
       </variable>
       <variable label="Aux D local route includes B" CV="55" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux D local route includes B</label>
       </variable>
       <variable label="Aux D local route sets B" CV="55" mask="XXXXXXVX">
@@ -1490,14 +1308,7 @@
         <label>Aux D local route sets B</label>
       </variable>
       <variable label="Aux D local route includes C" CV="55" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux D local route includes C</label>
       </variable>
       <variable label="Aux D local route sets C" CV="55" mask="XXXXXVXX">
@@ -1512,14 +1323,7 @@
         <label>Aux D local route sets C</label>
       </variable>
       <variable label="Aux D local route includes D" CV="55" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux D local route includes D</label>
       </variable>
       <variable label="Aux D local route sets D" CV="55" mask="XXXXVXXX">
@@ -1534,14 +1338,7 @@
         <label>Aux D local route sets D</label>
       </variable>
       <variable label="Switch D local route includes A" CV="56" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch D local route includes A</label>
       </variable>
       <variable label="Switch D local route sets A" CV="56" mask="XXXXXXXV">
@@ -1556,14 +1353,7 @@
         <label>Switch D local route sets A</label>
       </variable>
       <variable label="Switch D local route includes B" CV="56" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch D local route includes B</label>
       </variable>
       <variable label="Switch D local route sets B" CV="56" mask="XXXXXXVX">
@@ -1578,14 +1368,7 @@
         <label>Switch D local route sets B</label>
       </variable>
       <variable label="Switch D local route includes C" CV="56" mask="XVXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch D local route includes C</label>
       </variable>
       <variable label="Switch D local route sets C" CV="56" mask="XXXXXVXX">
@@ -1600,14 +1383,7 @@
         <label>Switch D local route sets C</label>
       </variable>
       <variable label="Switch D local route includes D" CV="56" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="No">
-            <choice>No</choice>
-          </enumChoice>
-          <enumChoice choice="Yes">
-            <choice>Yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch D local route includes D</label>
       </variable>
       <variable label="Switch D local route sets D" CV="56" mask="XXXXVXXX">
@@ -1622,14 +1398,7 @@
         <label>Switch D local route sets D</label>
       </variable>
       <variable label="Aux A local route does cascade" CV="57" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux A local route does cascade</label>
       </variable>
       <variable label="Aux A cascaded turnout address" CV="58" mask="XVVVVVVV">
@@ -1654,14 +1423,7 @@
         <label>Aux A cascaded turnout set to</label>
       </variable>
       <variable label="Switch A local route does cascade" CV="59" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch A local route does cascade</label>
       </variable>
       <variable label="Switch A cascaded turnout address" CV="60" mask="XVVVVVVV">
@@ -1686,14 +1448,7 @@
         <label>Switch A cascaded turnout set to</label>
       </variable>
       <variable label="Aux B local route does cascade" CV="61" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux B local route does cascade</label>
       </variable>
       <variable label="Aux B cascaded turnout address" CV="62" mask="XVVVVVVV">
@@ -1718,14 +1473,7 @@
         <label>Aux B cascaded turnout set to</label>
       </variable>
       <variable label="Switch B local route does cascade" CV="63" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch B local route does cascade</label>
       </variable>
       <variable label="Switch B cascaded turnout address" CV="64" mask="XVVVVVVV">
@@ -1750,14 +1498,7 @@
         <label>Switch B cascaded turnout set to</label>
       </variable>
       <variable label="Aux C local route does cascade" CV="65" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux C local route does cascade</label>
       </variable>
       <variable label="Aux C cascaded turnout address" CV="66" mask="XVVVVVVV">
@@ -1782,14 +1523,7 @@
         <label>Aux C cascaded turnout set to</label>
       </variable>
       <variable label="Switch C local route does cascade" CV="67" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch C local route does cascade</label>
       </variable>
       <variable label="Switch C cascaded turnout address" CV="68" mask="XVVVVVVV">
@@ -1814,14 +1548,7 @@
         <label>Switch C cascaded turnout set to</label>
       </variable>
       <variable label="Aux D local route does cascade" CV="69" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Aux D local route does cascade</label>
       </variable>
       <variable label="Aux D cascaded turnout address" CV="70" mask="XVVVVVVV">
@@ -1846,14 +1573,7 @@
         <label>Aux D cascaded turnout set to</label>
       </variable>
       <variable label="Switch D local route does cascade" CV="71" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="no">
-            <choice>no</choice>
-          </enumChoice>
-          <enumChoice choice="yes">
-            <choice>yes</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Switch D local route does cascade</label>
       </variable>
       <variable label="Switch D cascaded turnout address" CV="72" mask="XVVVVVVV">

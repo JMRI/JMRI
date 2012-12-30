@@ -130,14 +130,7 @@
         <label>Effect Generated for Yellow Lead</label>
       </variable>
       <variable label="Decoder Lock" CV="54" mask="XVXXXXXX" item="Decoder Lock" default="1">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Decoder Lock</label>
       </variable>
       <variable label="CV 61" CV="61" mask="XXXXXXVV" item="CV61" default="2">
@@ -145,25 +138,11 @@
         <label>CV 61</label>
       </variable>
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Transponding" default="1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
       </variable>
       <variable label="Use F0 for White Function Control" CV="61" mask="XXXXXXXV" item="F0 use" inOptions="numOuts=2">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Use F0 for White Function Control</label>
       </variable>
       <variable label="Effect Rate White Lead" CV="62" mask="XXXXXVVV" item="Effect Rate W">
