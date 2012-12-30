@@ -23,7 +23,7 @@
 
 <a NAME="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Add Spurs </h1>
+<h1>Add Spurs </h1>
 
 <div align=right>
 <p><a href="Ops_Locations.shtml">Back</a><a href="#"></a></p>
@@ -35,19 +35,33 @@
   <input type="button" name="button17" id="button17" value="Add Spur"> 
 . Spurs are very similar to <strong><a href="Ops_AddYard.shtml">Yards</a> . </strong>You can if you with schedule the order that cars will be delivered to a spur, or demand cars with certain loads using <strong><a href="Ops_schedule.shtml">Schedules</a>.</strong></p>
 <p align="left">When a car is placed at a spur the car's load status is modified. The program provides two load names for all cars. The default <strong>Empty</strong> or <strong>E</strong>  and the default <strong>load</strong> or <strong>L</strong>. If a car has one of these loads when it arrives at a spur, the load will change to the other, i.e. <strong>E</strong> becomes <strong>L</strong> and <strong>L</strong> becomes <strong>E</strong>.</p>
-<p align="center"><img src="images/Ops_AddSiding.png" width="703" height="620" alt="Add Siding"></p>
-<p><br> 
-  To add a location as a spur, in the <strong>Add Location</strong> window, type the<strong> Name</strong>
-  <input type="text" name="textfield" id="textfield"> 
-of the spur location, note most of the window is greyed out until the location is added. The location name must be unique; the program  will not allow two locations with identical names. However, if you want  more than one location to have the same name for your manifests and  switch lists, add a hyphen and a number to the locations name. For  example, "Boston-1" and "Boston-2" will print as "Boston". The program  will remove the hyphen and number when printing manifests and switch  lists.</p>
+<p>To add a location as a spur, in the <strong>Add Location</strong> window, type the<strong> Name</strong>
+  <input type="text" name="textfield" id="textfield">
+  of the spur location, note most of the window is greyed out until the location is added. The location name must be unique; the program  will not allow two locations with identical names. However, if you want  more than one location to have the same name for your manifests and  switch lists, add a hyphen and a number to the locations name. For  example, "Boston-1" and "Boston-2" will print as "Boston". The program  will remove the hyphen and number when printing manifests and switch  lists.</p>
 <p>Now select <strong>Operations at this location</strong>
-<input name="radio" type="radio" id="radio" value="radio" checked> 
+  <input name="radio" type="radio" id="radio" value="radio" checked>
   <strong>Spurs</strong>, then press the
-  <input type="submit" name="button" id="button" value="Add Location"> 
-at the bottom of the window.</p>
+  <input type="submit" name="button" id="button" value="Add Location">
+  at the bottom of the window.</p>
 <p>A siding can be an industry or any place where a car  is loaded or unloaded. For a train to service a location, there must be  at least one track for that location. </p>
 <p>This opens the <strong>Add Location</strong> window with all the options enabled.</p>
-<p><img src="images/Ops_AddLocation02.png" width="760" height="615" alt="location"></p>
+<p align="left">&nbsp;</p>
+<p align="center"><img src="images/Ops_AddSiding.png" width="764" height="624" alt="adds spur"></p>
+<h4>Add Spur Menu</h4>
+<p><img src="images/Ops_AddSidingMenu.png" width="758" height="213" alt="menu"></p>
+<h3>Tools</h3>
+<blockquote>
+  <p><strong><a href="Ops_Cars.shtml">Show Cars</a></strong></p>
+  <p><strong>Track Pools</strong></p>
+  <p>Spurs may be combined and the their lengths combined.</p>
+  <p><strong>Alernate Track</strong></p>
+  <p><img src="images/Ops_AddSidingTrack05.png" width="300" height="100"></p>
+  <p><strong>Change Track Type</strong></p>
+  <p><img src="images/Ops_AddSidingTrack06.png" width="305" height="107"></p>
+  <p><strong>Planned Pick Ups</strong><br>
+  </p>
+  <p><img src="images/Ops_AddSidingTrack07.png" width="321" height="117"></p>
+</blockquote>
 <p>You may select <strong>This location is serviced by trains traveling</strong>, select at least or any number of the directions depending on access to your siding. We have selected 
   <input name="checkbox" type="checkbox" id="checkbox" checked>
 East and
@@ -87,7 +101,7 @@ then the <strong>Add Spur Track</strong> window is displayed, so that you can de
 <p>&nbsp;</p>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="48%" align="left" valign="top"><img src="images/Ops_AddSidingTrack.png" width="750" height="726" alt="spur track"></td>
+    <td width="48%" align="left" valign="top"><img src="images/Ops_AddSiding.png" width="764" height="624" alt="add spur track"></td>
     <td width="52%" align="left" valign="top"><p>In <strong>Name</strong>
       <input type="text" name="textfield2" id="textfield2">
       type the specific siding track to be serviced at this location.</p>
@@ -102,13 +116,14 @@ then the <strong>Add Spur Track</strong> window is displayed, so that you can de
   </tr>
 </table>
 <p><strong>Add Spur Track </strong> window now displays with all options active to let you detail the spur.</p>
-<p><img src="images/Ops_AddSidingTrack01.png" width="713" height="575" alt="spur "></p>
+<p><img src="images/Ops_AddSidingTrack01.png" width="750" height="726" alt="spur"></p>
 <h3><strong>Select the rolling stock serviced by this spur</strong></h3>
 <p>Only those items selected in the previous location window will be displayed. The program uses those that are chedked.
   <input type="button" name="button18" id="button18" value="Clear all">
   unchecks all rolling stock. Now you may select any you require or press the
   <input type="button" name="button19" id="button19" value="Select all">
   to check all the rolling stock.</p>
+<p>We are setting up a spur for an Oil Co. so we will clear all the select Tank for oil, kerosene and gas.</p>
 <h3><strong>Select the roads serviced by this track</strong></h3>
 <blockquote>
   <p>
@@ -159,10 +174,11 @@ Default accepts any load</p>
     <input name="radio9" type="radio" id="radio9" value="radio9" checked>
   <strong>  any</strong> <br>
   Default cars may be set out by any Train or Route</p>
+  <p><img src="images/Ops_Select_setOuts.png" width="755" height="78" alt="setouts"></p>
   <p>
     <input type="radio" name="radio10" id="radio10" value="radio10">
   <strong>Trains</strong></p>
-  <p><img src="images/Ops_Select_setOuts.png" width="757" height="152" alt="set out"><br>
+  <p><img src="images/Ops_Select_setOuts_train.png" width="759" height="113" alt="trains"><br>
     Select Train form the drop-down List then press 
       <input type="button" name="button25" id="button25" value="Add">
   to add train that may set out cars at this location. To remove Train from list press 
@@ -172,6 +188,15 @@ Default accepts any load</p>
     <input type="radio" name="radio11" id="radio11" value="radio11">
   <strong>  Routes</strong><br>
   Similar to Trains except you select a Route to add or remove  to determine routes that may set out cars at this location.</p>
+  <p><img src="images/Ops_Select_setOuts_routes.png" width="757" height="119" alt="routes"></p>
+  <p>
+    <input type="radio" name="radio12" id="radio12" value="radio12">
+  <strong>Exclude Trains</strong></p>
+  <p><img src="images/Ops_Select_setOuts_ExcludeTrains.png" width="652" height="120" alt="exclude trains"></p>
+  <p>
+    <input type="radio" name="radio13" id="radio13" value="radio13">
+  <strong>Exclude Routes</strong></p>
+  <p><img src="images/Ops_Select_setOuts_ExcludeRoutes.png" width="761" height="113" alt="exclude routes"></p>
 </blockquote>
 <h3><strong>Select trains or routes for car pick ups</strong></h3>
 <blockquote>
@@ -195,18 +220,19 @@ if you do not want to store the track.</p>
   <input type="button" name="button13" id="button13" value="Add Spur Track">
 to add the track.</p>
 <p>Close the window when done with this location.</p>
-<p>The <strong>Add Location</strong> window shows one siding track at the Tank Facility in Red Valley.</p>
-<p><img src="images/Ops_AddLocation03.png" width="762" height="516" alt="location"></p>
+<p>The <strong>Add Location</strong> window shows one siding track at the Tank Facility in Red Rock Oil.</p>
+<p><img src="images/Ops_AddLocation03.png" width="768" height="479" alt="location"></p>
 <p>If you want to change information for any track entry, press  
   <input type="submit" name="button14" id="button14" value="Edit"> 
 and the <strong>Edit Spur Track</strong> window will open.</p>
-<p><img src="images/Ops_EditTrack.png" width="750" height="726" alt="Edit"><br>
+<p><img src="images/Ops_EditTrack.png" width="750" height="726" alt="track"><br>
 </p>
 <p>Note that it is identical to the Add Siding Track except for the title. Change any of the entries that you want to edit and then press the
   <input type="button" name="button15" id="button15" value="Save SpurTrack">
 to save the changes. You may also
   <input type="submit" name="button16" id="button16" value="Delete Siding Track">
 from your data base.</p>
+<p>Note we changed the length of the spur to 200 scale feet.</p>
 <p>When done with editing close the window. </p>
 <p>&nbsp; </p>
 <p>The Locations window shows all the locations in your database.</p>

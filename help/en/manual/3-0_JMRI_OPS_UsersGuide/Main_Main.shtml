@@ -29,29 +29,16 @@
 </div>
 
 <hr>
-<p align="left">When you start Decoder Pro, the DecoderPro  window is displayed. All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window, additional menus are added when functions are selected, example below with added operations menu(selected on operations setup window), which is also in the tools menu.</p>
+<p align="left">When you start Decoder Pro, the DecoderPro  window is displayed. All of the JMRI functions including the Operations Program can be accessed via the menu bar on the DecoderPro&reg; window, additional menus are added when functions are selected, example below with added operations menu(selected on operations setup window), which is also in the tools menu.</p>
 <p align="center"><img src="images/Splash_Screen.png" width="496" height="282" alt="splash"></p>
 <p align="left">After initial setup of preferences, you may have added buttons at the bottom of the screen to open various tools that you may want to use. These buttons will vary to match your preferences, I have setup buttons for <strong>New Throttle</strong>, <strong>Power Control</strong> and <strong>Monitor Loconet</strong>.</p>
 <p align="center"><img src="images/Splash_Screen01.png" width="496" height="308" alt="splash"></p>
 <p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
 <p align="left">Contains  the menus that allows you to access all the features and tools in JMRI</p>
-<p align="left">DecoderPro&reg; icon and DecoderPro version information is displayed. The version of Java installed and in use is also shown</p>
-<p align="left"><strong>
-  <input type="button" name="button" id="button" value="Service Mode (Programming Track) Programmer"> 
-</strong>Provides access to the decoder programming capability in <strong>Service Mode Programmer<br>
-</strong>
-<input type="button" name="button2" id="button2" value="Operations Mode (Main Track) Programmer">
-Provides access to the <strong>Operations Mode Programmer. 
-<br>
-<input type="button" name="button3" id="button3" value="Help">
-</strong>Opens the Help Window<br>
-<input type="button" name="button4" id="button4" value="Quit">
-Exits the program, with confirmation dialog.</p>
-<p>The buttons shown at the bottom of the window are not JMRI defaults, but instead are setup in your <strong>preference </strong>to open each time you start DecoderPro&reg;. The following are samples that could be set in your preferences. (Shown are for a Digitrax LocoNet system)
-<hr>
-
+<p align="left">DecoderPro&reg; icon and DecoderPro&reg; version information is displayed. The version of Java installed and in use is also shown</p>
+<p align="left">&nbsp;</p>
 <div align=right>
-<p><a href="index.shtml#Main">Back to Index</a></p>
+  <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

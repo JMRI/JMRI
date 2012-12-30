@@ -29,26 +29,29 @@
 </div>
 
 <hr>
-<p><img src="images/Ops_Print.png" width="900" height="545" alt="print">&nbsp;</p>
-<p>You can modify the how the program prints the train manifests and the amount of detail  that the build report provides.  </p>
-<h3><strong>Manifest  Options</strong><br>
+<p><img src="images/Ops_Print.png" width="900" height="515" alt="print options">&nbsp;</p>
+<p>You can modify  how the program prints the train manifests and the amount of detail  that the build report provides.  </p>
+<h3><strong>Print   Options</strong><br>
   <br>
 </h3>
 <table width="90%" border="1" cellspacing="1" cellpadding="2">
   <tr>
-    <td><img src="images/Ops_PrintOption_font.png" width="241" height="211" alt="print font"></td>
-    <td><img src="images/Ops_PrintOption_fontSize.png" width="200" height="236" alt="font size"></td>
-    <td><img src="images/Ops_PrintOption_color_pu.png" width="190" height="176" alt="pickup"></td>
-    <td><img src="images/Ops_PrintOption_color_su.png" width="195" height="185" alt="set out"></td>
-    <td><img src="images/Ops_PrintOption_color_move.png" width="193" height="200" alt="move"></td>
-    <td><img src="images/Ops_PrintOption_Format.png" width="236" height="147" alt="format"></td>
+    <td><img src="images/Ops_PrintOption_font.png" width="110" height="113" alt="fosnt"></td>
+    <td><img src="images/Ops_PrintOption_fontSize.png" width="110" height="208" alt="font size"></td>
+    <td><img src="images/Ops_PrintOption_Orientation.png" width="110" height="96"></td>
+    <td><img src="images/Ops_PrintOption_color_pu.png" width="110" height="127" alt="pick up color"></td>
+    <td><img src="images/Ops_PrintOption_color_su.png" width="110" height="126" alt="set out color"></td>
+    <td><img src="images/Ops_PrintOption_color_move.png" width="110" height="111" alt="color move"></td>
+    <td><img src="images/Ops_PrintOption_Format.png" width="143" height="115" alt="format"></td>
+    <td><img src="images/Ops_PrintOption_SwitchList.png" width="194" height="101" alt="switch List"></td>
   </tr>
   <tr>
-    <td colspan="2"><div align="center">Select the desired <strong>Font</strong> and <strong>Size </strong></div></td>
+    <td colspan="3"><div align="center">Select the desired <strong>Font</strong>,<strong>Size </strong>and page <strong>Orientation</strong></div></td>
     <td><div align="center">Assign manifest print color for car or locomotive <strong>Pick Up</strong></div></td>
     <td><div align="center">Assign manifest print color for car or locomotive <strong>Set Out</strong></div></td>
     <td><div align="center">Assign manifest print color when the operation is to move a car from one track to another at same location</div></td>
     <td><div align="center">Select if you want manifest printed in tabular format. It works best with mono-spaced fonts, <strong>Courier</strong> or <strong>Monospaced</strong></div></td>
+    <td><div align="center">Select if you want the Switch List in the same format as the Manifest</div></td>
   </tr>
 </table>
 <table width="90%" border="1" cellspacing="1" cellpadding="2">
@@ -69,19 +72,23 @@
     <td><h4>Local Mover Message Format</h4></td>
   </tr>
 </table>
-<p><strong>Manifest Comments</strong><br>
-  Each location can have an optional comment.  You can print these comments on your manifest if they are selected.
-    <br>
+<p><strong>Manifest Options</strong><br>
+  Each location can have an optional comment.  You can print these comments on your manifest if they are selected.</p>
+<p>
+  <input name="checkbox6" type="checkbox" id="checkbox6" checked>
+  <strong>Print Valid</strong>  Prints the time of the train build, not the time the manifest was printed.<br>
   <input type="checkbox" name="checkbox" id="checkbox">
-<strong>  Location</strong>. <br>
-<input type="checkbox" name="checkbox3" id="checkbox3"> 
-<strong>Route</strong><br>
-<input type="checkbox" name="checkbox2" id="checkbox2"> 
-<strong>Loads and Empties </strong>to show how many car loads and empties are in the train. <br>
-<input type="checkbox" name="checkbox4" id="checkbox4"> 
-<strong>12hr Format</strong><br>
-<input type="checkbox" name="checkbox5" id="checkbox5"> 
-<strong>Show Timetable</strong></p>
+  <strong>  Location</strong>. allows location comment for each car is selected<br>
+  <input type="checkbox" name="checkbox3" id="checkbox3"> 
+  <strong>Route</strong> allows comments about location for each car if selected<br>
+  <input type="checkbox" name="checkbox2" id="checkbox2"> 
+  <strong>Loads and Empties </strong>to show how many car loads and empties are in the train. <br>
+  <input type="checkbox" name="checkbox4" id="checkbox4"> 
+  <strong>12hr Format</strong> default is 24 hr clock<br>
+  <input type="checkbox" name="checkbox5" id="checkbox5"> 
+  <strong>Show Timetable show which timetable was used when train build was made.<br>
+  <input type="checkbox" name="checkbox7" id="checkbox7">
+  Truncate</strong> Reduces the amount of information at a location that has a separate switch list.</p>
 <p><strong>Logo</strong><br>
   <input type="button" name="button3" id="button3" value="Add Logo"> 
   allows you to add a logo in the top right hand corner of your manifests and switch lists, press 
@@ -89,6 +96,19 @@
 and select a file with the image you want to display. Each train in your roster may have a different logo, this is set in <strong><a href="Ops_Trains.shtml">Trains Setup</a></strong> </p>
 <p><strong>Misplaced Cars Comment</strong></p>
 <p>Allows you to add a notification for operators to be  looking for cars that have been misplaced </p>
+<p><strong>Switch List Options</strong></p>
+<p>
+  <input name="checkbox8" type="checkbox" id="checkbox8" checked> 
+All Trains<br>
+<input type="checkbox" name="checkbox9" id="checkbox9"> 
+Page per Train<br>
+<input name="checkbox10" type="checkbox" id="checkbox10" checked> 
+Real Time</p>
+<p><strong>Manifest Preview</strong></p>
+<p>
+  <input type="checkbox" name="checkbox11" id="checkbox11"> 
+  Use Text Editor
+</p>
 <p><strong>Build Report Options </strong><br>
   <br>
   <strong>Detail Level </strong>You can adjust the amount of information that the build report will  show. Select one of the four levels.  The program  when generating the build reports stores the <strong>Very Detailed</strong> information  to disk. <br>
@@ -103,11 +123,14 @@ and select a file with the image you want to display. Each train in your roster 
   Detailed -- setting will generate quite  a few pages depending on the size of your railroad. It will show all  available cars and engines, and a bit how the program finds destinations  for the cars and engines. <br>
   <br>
   <input type="radio" name="radio6" id="radio6" value="radio6">
-  Very Detailed -- setting produces the most  pages, and will show why cars are not picked up or dropped. <br>
+Very Detailed -- setting produces the most  pages, and will show why cars are not picked up or dropped. </p>
+<p>
+  <input type="checkbox" name="checkbox12" id="checkbox12">
+  Use Text Editor to Preview Build Reports<br>
   <br>
   Be sure and  press 
   <input type="submit" name="button" id="button" value="Save">
-after changing the build report selection.</p>
+  after changing the build report selections.</p>
 <hr>
 
 <div align=right>

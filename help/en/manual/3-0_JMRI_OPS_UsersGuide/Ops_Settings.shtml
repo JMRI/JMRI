@@ -99,7 +99,7 @@
   
     <li><strong>Trains</strong>
       <blockquote>
-        <p>Opens <a href="Ops_Trains.shtml">Trains</a> window.</p>
+        <p>Opens<strong> <a href="Ops_Trains.shtml">Trains</a> </strong>window.</p>
       </blockquote>
     </li>
   </ul>
@@ -113,7 +113,7 @@
   .</blockquote>
   <table width="100%" border="0" cellspacing="1" cellpadding="2">
     <tr>
-      <td width="62%" align="left" valign="top"><p><img src="images/Ops_Setting01.png" width="800" height="625" alt="ops set"></p></td>
+      <td width="62%" align="left" valign="top"><p><img src="images/Ops_Setting01.png" width="778" height="608" alt="ops setting"></p></td>
       <td width="38%" align="left" valign="top"><p><strong>Railroad Name</strong>
         <input type="text" name="textfield" id="textfield">      
         <br>
@@ -175,24 +175,31 @@
         <input name="checkbox3" type="checkbox" id="checkbox3" checked>
         <strong>Add Operations Menu to Main Menu</strong><br>
         When selected, and saved, the operations menu will be added  to the main menu bar the next time you start JMRI..  To remove it go through  the same procedure&hellip; in the Settings window uncheck the box, &ldquo;Save&rdquo; the change  and restart DecoderPro&reg;. </p>
+        <p>&nbsp;</p>
+        <p><img src="images/Ops_Setting02.png" width="492" height="402" alt="operation menu"></p>
         <p>
           <input type="checkbox" name="checkbox4" id="checkbox4">
-        <strong>Close Windows on Save</strong></p>
-        <p><img src="images/Ops_Setting02.png" width="492" height="402" alt="operation menu"></p>
+        <strong>Close Windows on Save<br>
+        <input name="checkbox12" type="checkbox" id="checkbox12" checked>
+        </strong> Auto Save<br>
+        <input name="checkbox13" type="checkbox" id="checkbox13" checked>
+        Auto Backup</p>
         <p><strong>Panel options</strong> will not be covered in this manual at this time. Panels are normally created as a part of PanelPro&reg;<br>
           <br>
         <strong>Icon Colors</strong>  Not covered here and normally used with PanelPro&reg;</p>
-        <p><br>
-          <input type="submit" name="button" id="button" value="Save">
-          When you're finished with the settings window, press the save button to  store the setting in a file called <strong>Operations.xml.</strong> You can find this  file in your JMRI directory in a folder called <strong>operations</strong>. The program  will also create a backup file each time you press the 
-          <input type="submit" name="button2" id="button2" value="Save">
-          <br>
-          <br>
+        <p>
+          <input type="submit" name="button4" id="button4" value="Restore">
+will prompt you to select which set of backup files you  wish to use to recover your operation files. You must quit and restart  DecoderPro&reg; to complete the restoration of the operation files.<br>
+<br>
           <input type="submit" name="button3" id="button3" value="Backup">
           will store a copy of the operation files in a  new  directory in operations called <strong>backups</strong>, and then stores the operation  files in a directory that is based on the day you created the backup. For example, if today was November 21, 2008, the program will  create a backup directory named <strong>2008_11_21</strong>.<br>
-          <br>
-          <input type="submit" name="button4" id="button4" value="Restore">
-      will prompt you to select which set of backup files you  wish to use to recover your operation files. You must quit and restart  DecoderPro&reg; to complete the restoration of the operation files.</p></td>
+        </p>
+        <p>
+          <input type="submit" name="button" id="button" value="Save">
+When you're finished with the settings window, press the save button to  store the setting in a file called <strong>Operations.xml.</strong> You can find this  file in your JMRI directory in a folder called <strong>operations</strong>. The program  will also create a backup file each time you press the
+<input type="submit" name="button2" id="button2" value="Save">
+<br>
+        </p></td>
     </tr>
 </table>
 <hr>
@@ -219,7 +226,7 @@
       </strong></td>
     </tr>
     <tr>
-      <td colspan="2" valign="top"><img src="images/Ops_Setting_tool_options02.png" width="410" height="159" alt="options"></td>
+      <td colspan="2" valign="top"><img src="images/Ops_Setting_tool_options02.png" width="473" height="219" alt="setting"></td>
     </tr>
     <tr>
       <td colspan="2" valign="top"><p><strong>Staging
@@ -228,6 +235,14 @@
         <input name="checkbox5" type="checkbox" id="checkbox5" checked>
         <strong>Enable Type, Road and </strong>Load Restrictions into Staging<br>
       This opton restricts trains to staging tracks that only accept the train's rolling stock type, road and load names. This is useful when you want trains delivered to staging tracks based on the train's rolling stock restrictions. However, if you want certan car types, car loads, or road name to be transported by a train, but not delivered to staging, deselect this feature</p></td>
+    </tr>
+    <tr>
+      <td colspan="2" valign="top"><p>
+        <input type="checkbox" name="checkbox11" id="checkbox11"> 
+        Make departure track available after train is built (Greyed out in Normal mode)<br>
+        When selected the departure track in staging becomes a
+        available for other trains immediately after the departure train is built. For trains that return to same staging location, this option allow the train to return to the same track it departed on. This option is only available when using the aggessive mode for building trains.<br>
+      </p></td>
     </tr>
     <tr>
       <td colspan="2" valign="top"><input type="checkbox" name="checkbox6" id="checkbox6">
@@ -405,7 +420,7 @@ you would like the program to ask you which track a train should Arrive to stagi
       <td width="34%" valign="top">&nbsp;</td>
     </tr>
   </table>
-  <p>&nbsp;</p>
+<p>&nbsp;</p>
   <p align="right"><a href="#OptionsMenu">Back</a></p>
   <div align=right>
     <div align=right>

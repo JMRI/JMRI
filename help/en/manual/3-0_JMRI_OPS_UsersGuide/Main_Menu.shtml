@@ -29,11 +29,11 @@
 </div>
 
 <hr>
-<p wrap="">All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window.</p>
+<p wrap="">All of the JMRI functions can be accessed via the menu bar on the DecoderPro&reg; window. We are concerned with Operations only in this guide.</p>
 <p><img src="images/Main_05_MenuBar.png" width="505" height="100" alt="menu bar"></p>
 <h4>File</h4>
 <h4>Edit</h4>
-<h4><a href="Main_Tool.shtml">Tools</a></h4>
+<h4>Tools</h4>
 <ul>
   <li><strong><a href="Ops_Start.shtml">Operations </a><img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings)</li>
 </ul>

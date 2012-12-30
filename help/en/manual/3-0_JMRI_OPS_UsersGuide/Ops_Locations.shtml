@@ -38,37 +38,39 @@
 <p><strong>menu bar</strong>
 </p>
 <ul>
-  <li><strong>  Tools</strong>
-    <ul>
-      <li><strong>Print
-        </strong><br>
-        <img src="images/Ops_locations_print.png" width="195" height="158" alt="print"><br>
-        Click on 
-        <input type="button" name="button10" id="button10" value="Okay">
-opens system printer dialog.<br>
-      </li>
-    </ul>
-  </li>
+  <li><strong>  Tools</strong></li>
   <ul>
+    <li><a href="Ops_schedule.shtml"><strong>Schedules</strong></a><br>
+      Opens the <strong>Schedules</strong> panel. &nbsp;If you would like to see  cars delivered in a particular sequence, or with a specific load for delivery  or shipping, the program allows you to apply a schedule to a siding. This is an  optional feature and shouldn't be used until you become very familiar with how  the program generates manifests and switch lists. <br>
+      <br>
+    </li>
+    <li><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a><br>
+      Opens the <strong>Modify Locations by Car Type </strong>window.<br>
+      <br>
+    </li>
+  </ul>
+  <ul>
+    <li><strong><a href="Ops_Cars.shtml">Show Cars</a></strong><br>
+      Opens Cars window which lists cars for this location    <br>
+      <br>
+    </li>
+    <li><strong>Print
+      </strong><br>
+      <img src="images/Ops_locations_print.png" width="195" height="158" alt="print"><br>
+      Click on 
+      <input type="button" name="button10" id="button10" value="Okay">
+      opens system printer dialog.<br>
+      <br>
+    </li>
+  
     <li>    <strong>Preview</strong><br>
       <img src="images/Ops_locations_print.png" width="195" height="158" alt="print"><br>
       Click 
       <input type="button" name="button11" id="button11" value="Okay"> 
       opens the print previw window showing Location information.<br>
+      <br>
     </li>
-    <li><a href="Ops_schedule.shtml"><strong>Schedules</strong></a><br>
-      Opens the <strong>Schedules</strong> panel. &nbsp;If you would like to see  cars delivered in a particular sequence, or with a specific load for delivery  or shipping, the program allows you to apply a schedule to a siding. This is an  optional feature and shouldn't be used until you become very familiar with how  the program generates manifests and switch lists. </li>
-  
-    <li><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a><br>
-    Opens the <strong>Modify Locations by Car Type </strong>window.</li>
   </ul>
-  <ul>
-    <li><strong><a href="Ops_Cars.shtml">Show Cars</a></strong><br>
-    Opens Cars window which lists cars for this location</li>
-  </ul>
-  <blockquote>
-    <p>&nbsp;</p>
-  </blockquote>
   <li><strong>Operations</strong>
   </li>
 </ul>
@@ -119,11 +121,19 @@ Press to add a location</p>
 <p><img src="images/Ops_AddLocation.png" width="760" height="650" alt="location"></p>
 <p><strong>Name</strong>
   <input type="text" name="textfield" id="textfield">
-  The location name must be unique; the program  will not allow two locations with identical names. However, if you want  more than one location to have the same name for your manifests and  switch lists, add a hyphen and a number to the locations name. For  example, <strong>Boston-1</strong> and <strong>Boston-2</strong> will print as <strong>Boston</strong>. The program  will remove the hyphen and number when printing manifests and switch  lists.<br>
-  <br>
-  Press the 
-  <input type="submit" name="button2" id="button2" value="Add Location">
-at  the bottom of the panel. The various fields that were disabled should  be enabled.</p>
+The location name must be unique; the program  will not allow two locations with identical names. However, if you want  more than one location to have the same name for your manifests and  switch lists, add a hyphen and a number to the locations name. For  example, <strong>Boston-1</strong> and <strong>Boston-2</strong> will print as <strong>Boston</strong>. The program  will remove the hyphen and number when printing manifests and switch  lists.</p>
+<p>Add Location Menu</p>
+<p><img src="images/Ops_AddLocation_menu.png" width="776" height="168" alt="menu"></p>
+<p><strong>Tools</strong></p>
+<blockquote>
+  <p><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a></p>
+  <p><strong><a href="Ops_Cars.shtml">Show Cars</a></strong></p>
+  <p><strong>Change Track Type</strong><br>
+    <br>
+    Press the 
+    <input type="submit" name="button2" id="button2" value="Add Location">
+    at  the bottom of the panel. The various fields that were disabled should  be enabled.</p>
+</blockquote>
 <p><img src="images/Ops_AddLocation01.png" width="760" height="650" alt="location"></p>
 <p>Each location can have several yard, spurs, interchange or  staging tracks. Yards are where cars and engines are placed for  temporary storage. A spur can be an industry or any place where a car  is loaded or unloaded. For a train to service a location, there must be  at least one track for that location. See below how to add tracks to  your location.</p>
 <p><strong>Select the rolling stock serviced by this location</strong></p>
@@ -159,13 +169,16 @@ To add a location, press the "Add ... Track" button. Now enter the name of  the 
 </p>
 <h3>Add Spurs, Yards, Interchange, or Staging Only(corresponding to the present task)</h3>
 <p>To add a location , press the "Add ...(location)" button. </p>
-<p><a href="Ops_AddSiding.shtml"><input type="button" name="button4" id="button4" value="Add Spur Track"></a></p>
+<p><a href="Ops_AddSiding.shtml"><input type="button" name="button4" id="button4" value="Add Spur Track">
+</a>  <a href="Ops_AddSiding.shtml">Add Spur Track</a></p>
 <p><a href="Ops_AddYard.shtml">
   
   <input type="button" name="button5" id="button5" value="Add Yard Track">
-</a></p>
-<p><a href="Ops_AddInterchange.shtml"><input type="button" name="button6" id="button6" value="Add Interchange Track"></a></p>
-<p><a href="Ops_AddStaging.shtml"><input type="button" name="button7" id="button7" value="Add Staging Only Track"></a></p>
+</a><a href="Ops_AddYard.shtml">Add Yard Track</a></p>
+<p><a href="Ops_AddInterchange.shtml"><input type="button" name="button6" id="button6" value="Add Interchange Track">
+</a><a href="Ops_AddInterchange.shtml">Add Classification Interchange Track</a></p>
+<p><a href="Ops_AddStaging.shtml"><input type="button" name="button7" id="button7" value="Add Staging Only Track">
+</a><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></p>
 <h3>Each of these buttons opens a corresponding dialog to describe its function.</h3>
 <h3>Save --- Track</h3>
 Press the 

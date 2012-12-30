@@ -47,11 +47,12 @@
 <p>Selecting Load Demo Files closes DecoderPro&reg; and it must be restarted to open the Demo Railroad.</p>
 <p><img src="images/Ops_Demo02.png" width="756" height="180" alt="demo"></p>
 <p> The program  will create a backup of your current configuration if you have one, and  then load the demo files. Restart JMRI to complete the demo load  process.&nbsp;&nbsp;To get rid of the demo files, use the <strong>Restore </strong>function in the <strong>Tools</strong> menu of the <strong>Operations Settings </strong>to reload the  first backup date, which is the blank entry form.</p>
-<p>The program also supplies a simple panel to show how the train  icons work. Load the panel before building the trains by selecting in  the main JMRI menu, "Panels-&gt;Load Panels .." a window should appear and  open the "operations" directory and then open the "Operations Demo  Panel" xml file. </p>
+<p>The program also supplies a simple panel to show how the train  icons work. Load the panel before building the trains by selecting in  the main JMRI menu, "Panels-&gt;Open Panels .." a window should appear and  open the "operations" directory and then open the "Operations Demo  Panel" xml file.</p>
+<p><img src="images/Ops_DemoPanel.png" width="800" height="220" alt="Demo panel"> </p>
 <em><strong>Quick Start</strong></em>
 <p align="left">In the Main DecoderPro menu Select<strong> Tools </strong>menu.</p>
 <p align="left"><img src="images/Ops_menu.png" width="283" height="184" alt="ops menu"></p>
-<p align="left">There  are six items in this menu. It is recommended that you start with <strong>Settings</strong> and work your way down to <strong>Trains.</strong> We also recommend that when defining  your locations that you first used a yarnd spur tracks, and try  staging and interchange tracks when you're more comfortable with how the  program operates. </p>
+<p align="left">There  are six items in this menu. It is recommended that you start with <strong>Settings</strong> and work your way down to <strong>Trains.</strong> We also recommend that when defining  your locations that you first use yard spur tracks, and try  staging and interchange tracks when you're more comfortable with how the  program operates. </p>
 <strong><em>British Railways </em></strong>
 <p>The program supports an alternate set of railway terminology for our  British modelers. To use British terminologies, go to the JMRI Advanced  Preferences (Edit-&gt;Preferences.. select the Show Advanced Preferences  checkbox) and select English (United Kingdom) in the "Locale:" menu  box. The program will also convert from centimeters to meters when  entering wagon, locomotive, or location lengths, just append "cm" to any  length.
 </p>
