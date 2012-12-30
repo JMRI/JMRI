@@ -401,47 +401,19 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
       <variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F9</label>
       </variable>
       <variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="0" minFn="10">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F10</label>
       </variable>
       <variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F11</label>
       </variable>
       <variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F12</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
