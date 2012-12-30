@@ -8,14 +8,17 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
-//import org.i18nchecker.I18nChecker;
+import org.i18nchecker.I18nChecker;
 
 /**
  *
@@ -30,7 +33,9 @@ public class I18NTest extends TestCase {
         suiteDir = suiteDir.getCanonicalFile();
         String topDirs = "."; // use "." since null or "" cause tests to fail
         Boolean allProperties = true; // test all .properties files, not just <package>/Bundle.properties
-        String result = I18nChecker.runAsTest(suiteDir, topDirs, this.getUnfinishedI18NModules(), allProperties);
+        String logger = "log";
+        List<String> loggerMethods = Arrays.asList(new String[] {"info", "warn", "error", "debug"});
+        String result = I18nChecker.runAsTest(suiteDir, topDirs, this.getUnfinishedI18NModules(), allProperties, logger, loggerMethods);
         if (!result.isEmpty()) {
             fail(result);
         }

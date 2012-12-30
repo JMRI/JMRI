@@ -221,10 +221,12 @@
 
     <target name="i18n-consistency-check"  description="Verification of localized strings in source code" depends="jar">
         <property name="i18n.modulefilter" value=""/>
+        <property name="i18n.logger" value="log" /> <!-- name of logging token to match with logging methods -->
+        <property name="i18n.loggerMethods" value="info,debug,error,warn" /> <!-- logging methods that should not be checked for i18n consistency -->
         <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
         <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpath="${ant.home}/lib/ant.jar:lib/antlr-3.4-complete.jar:lib/i18nchecker.jar"/>
         <!-- check includes all .properties files including ones we use for non-translatable files -->
-        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" modulefilter="${i18n.modulefilter}"/>
+        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
     </target>
     
     <target name="init"
