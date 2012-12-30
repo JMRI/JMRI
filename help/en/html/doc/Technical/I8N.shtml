@@ -198,108 +198,101 @@ Some parts of JMRI remain English only due to our developer population.
 In particular, comments and variable names in the code should remain in
 English, as should messages sent to the logging system.  
 <P>
-As JMRI is open source, it would be OK to take a copy of the source
-and translate it.  Apart from being a lot of work, this would effectively
-isolate that copy from the rapid pace of improvements to the main code.
+There are several properties files that are used for internal control,
+and should not be translated.  These are marked by a comment at the top
+of the file.  Examples are the apps/AppsStructureBundle.properties,
+jmri/web/server/Services.properties and jmri/web/server/FilePaths.properties files.
+<p>
+In the XML files, the 'item' attributes have to stay untranslated, as 
+does the entire names.xml file.
 
+<A name="code"><h2>Translating JMRI to a new language</h2></a>
 
-<A name="custom">
-<h2>Customizing JMRI for your own use</h2></a>
+There are three parts to translating JMRI into a new language.  You have
+to translate the properties files that the code uses, you have
+to add translations to the XML files for decoder programming, and 
+if you're really committed you can translate the help files.
 
-You can use the internationalization feature to customize the program
-for your own purposes.  This section describes how to do that, assuming 
-that your native language is English.
-<P>
-Basically, you're going to create an "English" version of the program
-text that gets used in front of the "default" version.  We do this so
-that new versions of the program, which might change the default 
-version, don't overwrite your changes.
-<P>
+<A name="code"><h3>Translating properties files</h3>
+
+Translating the properties involves making new properties files for the
+new language (some of this may have been done by an earlier translator)
+and then translating their contents.
 <OL>
 <LI>
-Obtain a copy of the appropriate set of "properties" files.
+Obtain a copy of the appropriate set of source files from SVN.
 Note that you really do need the set of files that's consistent
 with the version of JMRI you're using.
-There are several ways to do this:
-<UL>
-<LI>
-Look for a "properties files" download on the 
-<A HREF="http://sourceforge.net/project/showfiles.php?group_id=26788">JMRI downloads</a>
-page.  For example, the files for JMRI version 2.3.6 can
-be downloaded via
-<A HREF="http://prdownloads.sourceforge.net/jmri/properties.2.3.6.zip?download">http://prdownloads.sourceforge.net/jmri/properties.2.3.6.zip?download</a>.
-<P>This will give you a "classes" directory, which should be placed
-in the same directory as the jmri.jar file.
-<LI>
-You can get these by checking out the "properties" module from
-cvs with "cvs checkout properties" (see the
-<A HREF="index.shtml#cvs">CVS information</a> on the
-technical page for background on how to use CVS if you're not 
-familiar with it.  The steps are:
-<ol>
-<LI>Create a directory named "classes" in the same directory
-as your "jmri.jar" file.  E.g. on Mac OS X or linux:
-<PRE>
-	mkdir classes
-</PRE>
-<LI>Change to that directory:
-<PRE>
-	cd classes
-</PRE>
-
-<LI>Check out the properties module for the version you're interested in:
-<PRE>
-	cvs co -r Release-1-2-5 properties
-</PRE>
-
-</ol>
-
-</ul>
+See the <a href="getcode.shtml">getting code from SVN</a> page for more info.
 
 <LI>
-Now, you have to find the correct file to edit, and the correct
-string within it.
-Some of the more useful files are:
-<ul>
-<LI>classes/jmri/jmrit/roster/JmritRosterBundle.properties for the 
-labels on the "Roster" panel and similar.
-<LI>classes/jmri/jmrit/JmritToolsBundle.properties for many
-of the Tools menu names
-<LI>classes/jmri/jmrix/JmrixSystemsBundle.properties for the names
-of the DCC systems that appear in the Systems menu
-</ul>
-<br>
-You're looking for a line that contains the string you
-want to change.  For example, the 
-classes/jmri/jmrit/roster/JmritRosterBundle.properties file
-contains the line
+Under the java/src directory you'll find the JMRI code, which contains
+files with names that end with .properties, for example:
+<pre><code>
+java/src/jmri/jmrit/JmritDebugBundle.properties
+</code></pre>
+For each of those that you're going to translate, make a 
+copy with the language at the end of the name, for example
+<pre><code>
+java/src/jmri/jmrit/JmritDebugBundle_fr.properties
+</code></pre>
+for the French translation.
+<LI>
+Inside each file are lines containing key/value pairs for strings.
+For example, a file might 
+contain the line
 <PRE>
 FieldRoadName       = Road Name:
 </PRE>
 To the left of the equal sign is the name that the program uses
 to refer to the string; to the right of the equals sign is the
 string that will be displayed.
-<LI>
-Once you've found the right file, make a copy of it with a "_en" 
-appended to the name.  For example, make a file
-classes/jmri/jmrit/roster/JmritRosterBundle_en.properties
-that's a copy of the classes/jmri/jmrit/roster/JmritRosterBundle.properties
-file.  Because of the way that Java searches these files, this
-new file will be found before the original.
-<LI>
-Change the strings you want to change, and (this part is important)
-<i>remove the rest of the lines</i>!  This will greatly reduce the
-changes that you'll have problems with a later version of JMRI 
-conflicting with your changes.
-<LI>
-Restart a JMRI program, and see if your changes appear in the user interface.
+<p>
+Translate the strings you want to translate in each file.
+If you're unable to translate the entire file, (this part is important)
+<i>remove the untranslated lines</i>!  The program will fall back to using the 
+values from the original file for these, and this will greatly reduce the
+chance of conflicts with a later version of JMRI.
 </OL>
 
 If that doesn't work, please get in touch so that we can help you find the
 problem and improve the instructions.
 
-<A name="code"><h2>Coding for Internationalization</h2></a>
+<a id="xml"><h3>Translating XML files</h3>
+XML files can also be internationalized.  There are examples in the 
+decoder definition directories.  Look for elements with a xml:lang="fr"
+attribute. Basically, you create additional elements with that attribute to 
+specify the language used:
+<code><pre>
+      &lt;variable label="Vmid" CV="6" default="22" item="Vmid"&gt;
+        &lt;decVal max="64"/&gt;
+        &lt;label&gt;Vmid&lt;/label&gt;
+        &lt;label xml:lang="fr"&gt;Vmoy&lt;/label&gt;
+      &lt;/variable&gt;
+</pre></code>
 
+<a id="help"><h3>Translating help files</h3>
+(This has only been done once, so these instructions may not be complete)
+<p>
+The English help files are found in the help/en directory.
+If you want to create a complete set of files:
+<ul>
+<li>Create a copy of the existing files from the help/en
+directory in a new help/LL directory, where LL is the language
+code for your language, e.g. help/fr.  (Please be careful doing
+this in SVN, and ask a developer for help if needed)
+<li>Rename the help/fr/JmriHelp_en.hs file you just created to help/fr/JmriHelp_fr.hs
+<li>Edit the help/fr/format.xsl to create a <code>&lt;HTML LANG="fr"&gt;</code> tag.
+<li>Translate the .shtml files below the help/fr directory.  Do not translate
+any .xml, .jhm files or the web*.shtml files in the top directory, as they
+are automatically produced.
+</ul>
+
+<a name="dev"><h2>Internationalization for Developers</h2>
+
+For internationalization to work, you have to do a few things in the code 
+you write.
+<p>
 Some web references on how to do this:
 <UL>
 <li><A HREF="http://java.sun.com/docs/books/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
@@ -307,7 +300,7 @@ Some web references on how to do this:
 </UL>
 
 <P>
-Briefly, you reference a Bundle object in your class that handles the lookup of 
+First, you reference a Bundle object in your class that handles the lookup of 
 strings:
 
 <pre><code>
@@ -365,19 +358,17 @@ value is inserted.  It's therefore better to use "\n" within a
 single message from the properties file to create line breaks, rather
 than providing multiple lines in the code itself.
 
-<a id="xml">
-<h3>XML files</h3>
-XML files can also be internationalized.  There are examples in the 
-decoder definition directories.  Look for elements with a xml:lang="fr"
-attribute. Basically, you create additional elements with that attribute to 
-specify the language used:
+<p>
+Second, you have to retrieve XML elements and attributes properly.
+The jmri.util.jdom.LocaleSelector provides a getAttribute(...) method
+that replaces the JDOM getAttribute element when the content of the 
+attribute might have been internationalized.  You use it like this:
+
 <code><pre>
-      &lt;variable item="Vmid" CV="6" default="22"&gt;
-        &lt;decVal max="64"/&gt;
-        &lt;label&gt;Vmid&lt;/label&gt;
-        &lt;label xml:lang="fr"&gt;Vmoy&lt;/label&gt;
-      &lt;/variable&gt;
+String choice = LocaleSelector.getAttribute(choiceElement, "choice")
 </pre></code>
+where "choiceElement" is a JDOM element containing a (possible translated)
+"choice" attribute.  Null will be returning if nothing is found.
 
 <a id="testing">
 <h3>Testing</h3>
@@ -398,6 +389,7 @@ using the new properties files.
 </ul>
 If all is well, all the message text will have been translated to upper case.
 Anything you wrote that remains in lower case has not been completely internationalized.
+
 
 <!--#include virtual="/Footer" -->
 
