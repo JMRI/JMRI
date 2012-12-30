@@ -81,7 +81,7 @@ class Diesel3Sound extends EngineSound {
 	    // Really, nothing to do here.  The engine should be started/stopped through
 	    // the startEngine() and stopEngine() calls.  Maybe should clean that up or have
 	    // play() == loop() == startEngine() and stop == stopEngine() some time.
-	    if(_loopThread.isRunning())
+	    if((_loopThread != null) && (_loopThread.isRunning()))
 		_loopThread.setRunning(true);
 	}
     }
@@ -91,11 +91,6 @@ class Diesel3Sound extends EngineSound {
 	// Stop the loop thread, in case it's running
 	if (_loopThread != null)
 	    _loopThread.setRunning(false);
-	// Stop the loop timer, in case it's running
-	//if (t != null)
-	//    t.stop();
-	//if (_sound != null)
-	//    _sound.stop();
 	is_looping = false;
     }
 
@@ -109,7 +104,8 @@ class Diesel3Sound extends EngineSound {
     // Responds to "CHANGE" trigger
     public void changeThrottle(float s) {
 	// This is all we have to do.  The loop thread will handle everything else.
-	_loopThread.setThrottle(s);
+	if (_loopThread != null)
+	    _loopThread.setThrottle(s);
     }
 
     protected void changeSpeed(Float s, EnginePane e) {
@@ -131,7 +127,8 @@ class Diesel3Sound extends EngineSound {
     @Override
     public void stopEngine() {
 	log.debug("stopEngine.  ID = " + this.getName());
-	_loopThread.stopEngine(stop_buffer);
+	if (_loopThread != null)
+	    _loopThread.stopEngine(stop_buffer);
     }			      
 
     @Override
@@ -141,20 +138,20 @@ class Diesel3Sound extends EngineSound {
 
     @Override
     public void mute(boolean m) {
-	_loopThread.mute(m);
-	//	_sound.mute(m);
+	if (_loopThread != null)
+	    _loopThread.mute(m);
     }
 
     @Override
     public void setVolume(float v) {
-	_loopThread.setVolume(v);
-	//_sound.setVolume(v);
+	if (_loopThread != null)
+	    _loopThread.setVolume(v);
     }
 
     @Override
     public void setPosition(PhysicalLocation p) {
-	_loopThread.setPosition(p);
-	//_sound.setPosition(p);
+	if (_loopThread != null)
+	    _loopThread.setPosition(p);
     }
 
     protected Timer newTimer(long time, boolean repeat, ActionListener al) {
