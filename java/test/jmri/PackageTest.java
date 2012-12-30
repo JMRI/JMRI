@@ -30,6 +30,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.PackageTest");  // no tests in this class itself
 
 		suite.addTest(jmri.BeanSettingTest.suite());
+		suite.addTest(jmri.BundleTest.suite());
         suite.addTest(jmri.NamedBeanHandleManagerTest.suite());
 		suite.addTest(jmri.BlockTest.suite());
 		suite.addTest(jmri.BlockManagerTest.suite());

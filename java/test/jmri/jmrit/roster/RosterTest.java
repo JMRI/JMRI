@@ -304,7 +304,9 @@ public class RosterTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(RosterTest.class);
+        suite.addTest(jmri.jmrit.roster.BundleTest.suite());
         suite.addTest(jmri.jmrit.roster.RosterEntryTest.suite());
+        suite.addTest(jmri.jmrit.roster.swing.BundleTest.suite());
         suite.addTest(jmri.jmrit.roster.swing.RosterTableModelTest.suite());
         suite.addTest(jmri.jmrit.roster.swing.attributetable.AttributeTableModelTest.suite());
 
