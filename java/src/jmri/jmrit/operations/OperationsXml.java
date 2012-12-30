@@ -95,14 +95,14 @@ public class OperationsXml extends XmlFile {
 	public static String getOperationsDirectoryName(){
 		return operationsDirectoryName;
 	}
-	private static String operationsDirectoryName = "operations";
+	private static String operationsDirectoryName = "operations";	// NOI18N
 
 	public void setOperationsFileName(String name) { operationsFileName = name; }
 	public String getOperationsFileName(){
 		return operationsFileName;
 	}
 	
-	private String operationsFileName = "DefaultOperations.xml";	// should be overridden
+	private String operationsFileName = "DefaultOperations.xml";	// NOI18N should be overridden
 	
     /**
      * Absolute path to location of Operations files.

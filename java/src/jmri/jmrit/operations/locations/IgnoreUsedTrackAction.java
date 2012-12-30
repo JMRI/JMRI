@@ -42,10 +42,10 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 	
 	// radio buttons
 	JRadioButton zeroPercent = new JRadioButton(rb.getString("Disabled"));
-	JRadioButton twentyfivePercent = new JRadioButton("25%");
-	JRadioButton fiftyPercent = new JRadioButton("50%");
-	JRadioButton seventyfivePercent = new JRadioButton("75%");
-	JRadioButton hundredPercent = new JRadioButton("100%");
+	JRadioButton twentyfivePercent = new JRadioButton("25%");	// NOI18N
+	JRadioButton fiftyPercent = new JRadioButton("50%");		// NOI18N
+	JRadioButton seventyfivePercent = new JRadioButton("75%");	// NOI18N
+	JRadioButton hundredPercent = new JRadioButton("100%");		// NOI18N
     
     // major buttons
     JButton saveButton = new JButton(rb.getString("Save"));

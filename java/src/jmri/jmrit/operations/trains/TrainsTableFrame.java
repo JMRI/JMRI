@@ -536,14 +536,19 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
 	protected void handleModified() {
 		if (OperationsXml.areFilesDirty()) {
-			ResourceBundle rbu = ResourceBundle.getBundle("jmri.util.UtilBundle");
-			int result = javax.swing.JOptionPane.showOptionDialog(this,
-					Bundle.getString("PromptQuitWindowNotWritten"), Bundle.getString("PromptSaveQuit"),
+			int result = javax.swing.JOptionPane.showOptionDialog(
+					this,
+					Bundle.getString("PromptQuitWindowNotWritten"),
+					Bundle.getString("PromptSaveQuit"),
 					javax.swing.JOptionPane.YES_NO_OPTION,
 					javax.swing.JOptionPane.WARNING_MESSAGE,
 					null, // icon
-					new String[] { rbu.getString("WarnYesSave"), rbu.getString("WarnNoClose") },
-					rbu.getString("WarnYesSave"));
+					new String[] {
+							ResourceBundle.getBundle("jmri.util.UtilBundle").getString(
+									"WarnYesSave"),
+							ResourceBundle.getBundle("jmri.util.UtilBundle").getString(
+									"WarnNoClose") },
+					ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"));
 			if (result == javax.swing.JOptionPane.NO_OPTION) {
 				return;
 			}

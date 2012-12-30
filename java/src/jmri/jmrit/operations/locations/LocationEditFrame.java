@@ -89,7 +89,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
 	public static final String NAME = rb.getString("Name");
 	public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
-	public static final String DISPOSE = "dispose" ;
+	public static final String DISPOSE = "dispose" ;	// NOI18N
 
 	public LocationEditFrame() {
 		super();
@@ -274,7 +274,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			toolMenu.add(new SetPhysicalLocationAction(rb.getString("MenuSetPhysicalLocation"), _location));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);	// NOI18N
 
 		pack();
 		if (getWidth()<750)
@@ -442,7 +442,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	 */
 	private boolean checkName(String s){
 		if (locationNameTextField.getText().trim().equals("")){
-			log.debug("Must enter a location name");
 			JOptionPane.showMessageDialog(this,
 					rb.getString("MustEnterName"),
 					MessageFormat.format(rb.getString("CanNotLocation"),new Object[]{s }),
@@ -450,7 +449,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			return false;
 		}
 		if (locationNameTextField.getText().length() > MAX_NAME_LENGTH){
-			log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
+//			log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
 			JOptionPane.showMessageDialog(this,
 					MessageFormat.format(rb.getString("LocationNameLengthMax"),new Object[]{Integer.toString(MAX_NAME_LENGTH+1)}),
 					MessageFormat.format(rb.getString("CanNotLocation"),new Object[]{s }),
@@ -461,7 +460,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 	
 	private void reportLocationExists(String s){
-		log.info("Can not " + s + ", location already exists");
+//		log.info("Can not " + s + ", location already exists");
 		JOptionPane.showMessageDialog(this,
 				rb.getString("LocationAlreadyExists"), MessageFormat.format(rb.getString("CanNotLocation"),new Object[]{s }),
 				JOptionPane.ERROR_MESSAGE);
@@ -509,7 +508,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 	
 	private void setEnabledLocations(){
-		log.debug("set radio button");
 		if (sidingModel.getRowCount()>0 || yardModel.getRowCount()>0 || interchangeModel.getRowCount()>0){
 			if(stageRadioButton.isSelected())
 				sidingRadioButton.setSelected(true);

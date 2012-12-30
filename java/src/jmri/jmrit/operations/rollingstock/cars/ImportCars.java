@@ -458,7 +458,7 @@ public class ImportCars extends Thread {
 							weightResults = JOptionPane.showOptionDialog(null, 
 									MessageFormat.format(rb.getString("CarWeightNotFound"),new Object[]{(carRoad+" "+carNumber)}),
 									rb.getString("CarWeightMissing"),
-									JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"), rb.getString("ButtonDontShow")}, autoCalculate?"Yes":"No");
+									JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"), rb.getString("ButtonDontShow")}, autoCalculate?rb.getString("ButtonYes"):rb.getString("ButtonNo"));
 						}
 						if (weightResults == JOptionPane.NO_OPTION)
 							autoCalculate = false;

@@ -25,7 +25,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		
 		_toolMenu.add(new ChangeTrackTypeAction (this));
 		_toolMenu.add(new IgnoreUsedTrackAction (this));
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true);	// NOI18N
 		
 		// override text strings for tracks
 		//panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainInterchange")));
