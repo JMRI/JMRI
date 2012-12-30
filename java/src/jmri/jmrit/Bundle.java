@@ -2,8 +2,6 @@
 
 package jmri.jmrit;
 
-import java.util.ResourceBundle;
-
 /**
  * Provides standard access for resource bundles in a package.
  * 
@@ -30,7 +28,7 @@ import java.util.ResourceBundle;
  */
 public class Bundle extends jmri.Bundle {
 
-    protected static Bundle b = new Bundle("jmri.jmrit.JmritToolsBundle");
+    protected static Bundle b = new Bundle("jmri.jmrit.JmritToolsBundle"); // NOI18N
 
     /**
      * Provides access to a string for a given 

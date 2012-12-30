@@ -36,7 +36,7 @@ import java.util.ResourceBundle;
  */
 public class Bundle {
 
-    private static Bundle b = new Bundle("jmri.NamedBeanBundle");
+    private static Bundle b = new Bundle("jmri.NamedBeanBundle");  // NOI18N
 
     /**
      * Provides access to a string for a given 
@@ -71,7 +71,7 @@ public class Bundle {
     
     // the following is different from the method in subclasses because
     // this is the root of the search tree
-    protected String retry(String key) { throw new java.util.MissingResourceException("Resource not found", this.getClass().toString(), key); }
+    protected String retry(String key) { throw new java.util.MissingResourceException("Resource not found", this.getClass().toString(), key); } // NOI18N
     protected Bundle(String name) { this.name = name;}   
     protected Bundle() { this.name = null;} 
     protected jmri.Bundle getBundle() { return b; }

@@ -1,6 +1,6 @@
 // BundleTest.java
 
-package jmri.jmrit.roster.swing;
+package jmri.jmrit.roster;
 
 import junit.framework.Assert;
 import junit.framework.Test;
