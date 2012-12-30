@@ -4,8 +4,6 @@ package jmri.jmrit.operations;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import java.util.ResourceBundle;
-
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -31,8 +29,6 @@ import jmri.util.swing.XTableColumnModel;
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
 	public static SwingShutDownTask trainDirtyTask;
@@ -317,8 +313,8 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	protected synchronized void createShutDownTask(){
 		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
 			trainDirtyTask = new SwingShutDownTask(
-					"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
-					rb.getString("PromptSaveQuit"), this) {
+					"Operations Train Window Check", Bundle.getString("PromptQuitWindowNotWritten"),
+					Bundle.getString("PromptSaveQuit"), this) {
 				public boolean checkPromptNeeded() {
 					return !OperationsXml.areFilesDirty();
 				}

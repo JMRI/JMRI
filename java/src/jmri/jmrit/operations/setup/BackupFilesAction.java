@@ -4,8 +4,6 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -24,9 +22,6 @@ public class BackupFilesAction extends AbstractAction {
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(BackupFilesAction.class.getName());
 
-	static final ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
-
 	public BackupFilesAction(String s) {
 		super(s);
 	}
@@ -39,8 +34,8 @@ public class BackupFilesAction extends AbstractAction {
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
 			if (JOptionPane.showConfirmDialog(null,
-					rb.getString("OperationsFilesModified"),
-					rb.getString("SaveOperationFiles"),
+					Bundle.getString("OperationsFilesModified"),
+					Bundle.getString("SaveOperationFiles"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
@@ -82,7 +77,7 @@ public class BackupFilesAction extends AbstractAction {
 		}
 
 		public String getDescription() {
-			return rb.getString("BackupFolders");
+			return Bundle.getString("BackupFolders");
 		}
 	}
 

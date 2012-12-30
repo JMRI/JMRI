@@ -6,8 +6,6 @@ import java.awt.GridBagLayout;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -34,16 +32,13 @@ import jmri.util.swing.FontComboUtil;
 
 public class PrintOptionFrame extends OperationsFrame {
 
-	static final ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
-
 	// labels
 	JLabel logoURL = new JLabel("");
 
 	// major buttons
-	JButton saveButton = new JButton(rb.getString("Save"));
-	JButton addLogoButton = new JButton(rb.getString("AddLogo"));
-	JButton removeLogoButton = new JButton(rb.getString("RemoveLogo"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton addLogoButton = new JButton(Bundle.getString("AddLogo"));
+	JButton removeLogoButton = new JButton(Bundle.getString("RemoveLogo"));
 
 	JButton addEngPickupComboboxButton = new JButton("+");
 	JButton deleteEngPickupComboboxButton = new JButton("-");
@@ -63,18 +58,18 @@ public class PrintOptionFrame extends OperationsFrame {
 	JButton deleteSwitchListLocalComboboxButton = new JButton("-");
 
 	// check boxes
-	JCheckBox tabFormatCheckBox = new JCheckBox(rb.getString("TabFormat"));
-	JCheckBox formatSwitchListCheckBox = new JCheckBox(rb.getString("SameAsManifest"));
-	JCheckBox editManifestCheckBox = new JCheckBox(rb.getString("UseTextEditor"));
-	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
-	JCheckBox printRouteCommentsCheckBox = new JCheckBox(rb.getString("PrintRouteComments"));
-	JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(rb.getString("PrintLoadsEmpties"));
-	JCheckBox printTimetableNameCheckBox = new JCheckBox(rb.getString("PrintTimetableName"));
-	JCheckBox use12hrFormatCheckBox = new JCheckBox(rb.getString("12hrFormat"));
-	JCheckBox printValidCheckBox = new JCheckBox(rb.getString("PrintValid"));
-	JCheckBox sortByTrackCheckBox = new JCheckBox(rb.getString("SortByTrack"));
-	JCheckBox truncateCheckBox = new JCheckBox(rb.getString("Truncate"));
-	JCheckBox departureTimeCheckBox = new JCheckBox(rb.getString("DepartureTime"));
+	JCheckBox tabFormatCheckBox = new JCheckBox(Bundle.getString("TabFormat"));
+	JCheckBox formatSwitchListCheckBox = new JCheckBox(Bundle.getString("SameAsManifest"));
+	JCheckBox editManifestCheckBox = new JCheckBox(Bundle.getString("UseTextEditor"));
+	JCheckBox printLocCommentsCheckBox = new JCheckBox(Bundle.getString("PrintLocationComments"));
+	JCheckBox printRouteCommentsCheckBox = new JCheckBox(Bundle.getString("PrintRouteComments"));
+	JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(Bundle.getString("PrintLoadsEmpties"));
+	JCheckBox printTimetableNameCheckBox = new JCheckBox(Bundle.getString("PrintTimetableName"));
+	JCheckBox use12hrFormatCheckBox = new JCheckBox(Bundle.getString("12hrFormat"));
+	JCheckBox printValidCheckBox = new JCheckBox(Bundle.getString("PrintValid"));
+	JCheckBox sortByTrackCheckBox = new JCheckBox(Bundle.getString("SortByTrack"));
+	JCheckBox truncateCheckBox = new JCheckBox(Bundle.getString("Truncate"));
+	JCheckBox departureTimeCheckBox = new JCheckBox(Bundle.getString("DepartureTime"));
 
 	// text field
 	JTextField pickupEngPrefix = new JTextField(10);
@@ -127,8 +122,7 @@ public class PrintOptionFrame extends OperationsFrame {
 	JPanel pSwLocal = new JPanel();
 
 	public PrintOptionFrame() {
-		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle")
-				.getString("TitlePrintOptions"));
+		super(Bundle.getString("TitlePrintOptions"));
 	}
 
 	public void initComponents() {
@@ -136,41 +130,41 @@ public class PrintOptionFrame extends OperationsFrame {
 		// the following code sets the frame's initial state
 
 		// add tool tips
-		saveButton.setToolTipText(rb.getString("SaveToolTip"));
-		addLogoButton.setToolTipText(rb.getString("AddLogoToolTip"));
-		removeLogoButton.setToolTipText(rb.getString("RemoveLogoToolTip"));
-		tabFormatCheckBox.setToolTipText(rb.getString("TabComment"));
-		printLocCommentsCheckBox.setToolTipText(rb.getString("AddLocationComments"));
-		printRouteCommentsCheckBox.setToolTipText(rb.getString("AddRouteComments"));
-		printLoadsEmptiesCheckBox.setToolTipText(rb.getString("LoadsEmptiesComment"));
-		printTimetableNameCheckBox.setToolTipText(rb.getString("ShowTimetableTip"));
-		use12hrFormatCheckBox.setToolTipText(rb.getString("Use12hrFormatTip"));
-		printValidCheckBox.setToolTipText(rb.getString("PrintValidTip"));
-		sortByTrackCheckBox.setToolTipText(rb.getString("SortByTrackTip"));
-		truncateCheckBox.setToolTipText(rb.getString("TruncateTip"));
-		departureTimeCheckBox.setToolTipText(rb.getString("DepartureTimeTip"));
-		editManifestCheckBox.setToolTipText(rb.getString("UseTextEditorTip"));
+		saveButton.setToolTipText(Bundle.getString("SaveToolTip"));
+		addLogoButton.setToolTipText(Bundle.getString("AddLogoToolTip"));
+		removeLogoButton.setToolTipText(Bundle.getString("RemoveLogoToolTip"));
+		tabFormatCheckBox.setToolTipText(Bundle.getString("TabComment"));
+		printLocCommentsCheckBox.setToolTipText(Bundle.getString("AddLocationComments"));
+		printRouteCommentsCheckBox.setToolTipText(Bundle.getString("AddRouteComments"));
+		printLoadsEmptiesCheckBox.setToolTipText(Bundle.getString("LoadsEmptiesComment"));
+		printTimetableNameCheckBox.setToolTipText(Bundle.getString("ShowTimetableTip"));
+		use12hrFormatCheckBox.setToolTipText(Bundle.getString("Use12hrFormatTip"));
+		printValidCheckBox.setToolTipText(Bundle.getString("PrintValidTip"));
+		sortByTrackCheckBox.setToolTipText(Bundle.getString("SortByTrackTip"));
+		truncateCheckBox.setToolTipText(Bundle.getString("TruncateTip"));
+		departureTimeCheckBox.setToolTipText(Bundle.getString("DepartureTimeTip"));
+		editManifestCheckBox.setToolTipText(Bundle.getString("UseTextEditorTip"));
 
-		addEngPickupComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
-		deleteEngPickupComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
-		addEngDropComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
-		deleteEngDropComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		addEngPickupComboboxButton.setToolTipText(Bundle.getString("AddMessageComboboxTip"));
+		deleteEngPickupComboboxButton.setToolTipText(Bundle.getString("DeleteMessageComboboxTip"));
+		addEngDropComboboxButton.setToolTipText(Bundle.getString("AddMessageComboboxTip"));
+		deleteEngDropComboboxButton.setToolTipText(Bundle.getString("DeleteMessageComboboxTip"));
 
-		addCarPickupComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
-		deleteCarPickupComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
-		addCarDropComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
-		deleteCarDropComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
-		addLocalComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
-		deleteLocalComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+		addCarPickupComboboxButton.setToolTipText(Bundle.getString("AddMessageComboboxTip"));
+		deleteCarPickupComboboxButton.setToolTipText(Bundle.getString("DeleteMessageComboboxTip"));
+		addCarDropComboboxButton.setToolTipText(Bundle.getString("AddMessageComboboxTip"));
+		deleteCarDropComboboxButton.setToolTipText(Bundle.getString("DeleteMessageComboboxTip"));
+		addLocalComboboxButton.setToolTipText(Bundle.getString("AddMessageComboboxTip"));
+		deleteLocalComboboxButton.setToolTipText(Bundle.getString("DeleteMessageComboboxTip"));
 
-		addSwitchListPickupComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
-		deleteSwitchListPickupComboboxButton.setToolTipText(rb
+		addSwitchListPickupComboboxButton.setToolTipText(Bundle.getString("AddMessageComboboxTip"));
+		deleteSwitchListPickupComboboxButton.setToolTipText(Bundle
 				.getString("DeleteMessageComboboxTip"));
-		addSwitchListDropComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
-		deleteSwitchListDropComboboxButton.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
-		addSwitchListLocalComboboxButton.setToolTipText(rb.getString("AddMessageComboboxTip"));
+		addSwitchListDropComboboxButton.setToolTipText(Bundle.getString("AddMessageComboboxTip"));
+		deleteSwitchListDropComboboxButton.setToolTipText(Bundle.getString("DeleteMessageComboboxTip"));
+		addSwitchListLocalComboboxButton.setToolTipText(Bundle.getString("AddMessageComboboxTip"));
 		deleteSwitchListLocalComboboxButton
-				.setToolTipText(rb.getString("DeleteMessageComboboxTip"));
+				.setToolTipText(Bundle.getString("DeleteMessageComboboxTip"));
 
 		// Manifest panel
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -183,39 +177,39 @@ public class PrintOptionFrame extends OperationsFrame {
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
 
 		JPanel pFont = new JPanel();
-		pFont.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFont")));
+		pFont.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutFont")));
 		pFont.add(fontComboBox);
 
 		JPanel pFontSize = new JPanel();
-		pFontSize.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFontSize")));
+		pFontSize.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutFontSize")));
 		pFontSize.add(fontSizeComboBox);
 
 		JPanel pFormat = new JPanel();
-		pFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFormat")));
+		pFormat.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutFormat")));
 		pFormat.add(tabFormatCheckBox);
 
 		JPanel pOrientation = new JPanel();
-		pOrientation.setBorder(BorderFactory.createTitledBorder(rb
+		pOrientation.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutOrientation")));
 		pOrientation.add(manifestOrientationComboBox);
 
 		JPanel pPickupColor = new JPanel();
-		pPickupColor.setBorder(BorderFactory.createTitledBorder(rb
+		pPickupColor.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutPickupColor")));
 		pPickupColor.add(pickupComboBox);
 
 		JPanel pDropColor = new JPanel();
 		pDropColor
-				.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropColor")));
+				.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutDropColor")));
 		pDropColor.add(dropComboBox);
 
 		JPanel pLocalColor = new JPanel();
-		pLocalColor.setBorder(BorderFactory.createTitledBorder(rb
+		pLocalColor.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutLocalColor")));
 		pLocalColor.add(localComboBox);
 
 		JPanel pSwitchFormat = new JPanel();
-		pSwitchFormat.setBorder(BorderFactory.createTitledBorder(rb
+		pSwitchFormat.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutSwitchListFormat")));
 		pSwitchFormat.add(formatSwitchListCheckBox);
 
@@ -236,7 +230,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		pSl.setLayout(new BoxLayout(pSl, BoxLayout.X_AXIS));
 
 		pSwitchListOrientation.setLayout(new GridBagLayout());
-		pSwitchListOrientation.setBorder(BorderFactory.createTitledBorder(rb
+		pSwitchListOrientation.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutSwitchListOrientation")));
 		addItem(pSwitchListOrientation, switchListOrientationComboBox, 0, 0);
 		addItem(pSwitchListOrientation, new JLabel(" "), 1, 0); // pad
@@ -247,7 +241,7 @@ public class PrintOptionFrame extends OperationsFrame {
 
 		// Manifest comments
 		JPanel pManifestOptions = new JPanel();
-		pManifestOptions.setBorder(BorderFactory.createTitledBorder(rb
+		pManifestOptions.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutManifestOptions")));
 		pManifestOptions.add(printValidCheckBox);
 		pManifestOptions.add(printLocCommentsCheckBox);
@@ -264,13 +258,13 @@ public class PrintOptionFrame extends OperationsFrame {
 
 		// Use text editor for manifest
 		JPanel pEdit = new JPanel();
-		pEdit.setBorder(BorderFactory.createTitledBorder(rb
+		pEdit.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutManifestPreview")));
 		pEdit.add(editManifestCheckBox);
 
 		// manifest logo
 		JPanel pLogo = new JPanel();
-		pLogo.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLogo")));
+		pLogo.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutLogo")));
 		pLogo.add(removeLogoButton);
 		pLogo.add(addLogoButton);
 		pLogo.add(logoURL);
@@ -285,14 +279,14 @@ public class PrintOptionFrame extends OperationsFrame {
 		// missing cars comment
 		JPanel pComment = new JPanel();
 		pComment.setLayout(new GridBagLayout());
-		pComment.setBorder(BorderFactory.createTitledBorder(rb
+		pComment.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutCommentOptions")));
 		addItem(pComment, commentScroller, 0, 0);
 
 		// Hazardous comment
 		JPanel pHazardous = new JPanel();
 		pHazardous
-				.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutHazardous")));
+				.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutHazardous")));
 		pHazardous.add(hazardousTextField);
 
 		pComments.add(pComment);
@@ -383,7 +377,7 @@ public class PrintOptionFrame extends OperationsFrame {
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
 		toolMenu.add(new PrintMoreOptionAction());
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
@@ -621,7 +615,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		// loco pick up message format
 		pEngPickup.removeAll();
 		enginePickupMessageList.clear();
-		pEngPickup.setBorder(BorderFactory.createTitledBorder(rb
+		pEngPickup.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutPickupEngine")));
 		pEngPickup.add(pickupEngPrefix);
 		pickupEngPrefix.setText(Setup.getPickupEnginePrefix());
@@ -639,7 +633,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		// loco set out message format
 		pEngDrop.removeAll();
 		engineDropMessageList.clear();
-		pEngDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropEngine")));
+		pEngDrop.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutDropEngine")));
 		pEngDrop.add(dropEngPrefix);
 		dropEngPrefix.setText(Setup.getDropEnginePrefix());
 		format = Setup.getDropEngineMessageFormat();
@@ -656,7 +650,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		// car pickup message format
 		pPickup.removeAll();
 		carPickupMessageList.clear();
-		pPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupCar")));
+		pPickup.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutPickupCar")));
 		pPickup.add(pickupCarPrefix);
 		pickupCarPrefix.setText(Setup.getPickupCarPrefix());
 		String[] pickFormat = Setup.getPickupCarMessageFormat();
@@ -673,7 +667,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		// car drop message format
 		pDrop.removeAll();
 		carDropMessageList.clear();
-		pDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropCar")));
+		pDrop.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutDropCar")));
 		pDrop.add(dropCarPrefix);
 		dropCarPrefix.setText(Setup.getDropCarPrefix());
 		String[] dropFormat = Setup.getDropCarMessageFormat();
@@ -690,7 +684,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		// local car move message format
 		pLocal.removeAll();
 		localMessageList.clear();
-		pLocal.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLocal")));
+		pLocal.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutLocal")));
 		pLocal.add(localPrefix);
 		localPrefix.setText(Setup.getLocalPrefix());
 		String[] localFormat = Setup.getLocalMessageFormat();
@@ -707,7 +701,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		// switch list car pickup message format
 		pSwPickup.removeAll();
 		switchListCarPickupMessageList.clear();
-		pSwPickup.setBorder(BorderFactory.createTitledBorder(rb
+		pSwPickup.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutSwitchListPickupCar")));
 		pSwPickup.add(switchListPickupCarPrefix);
 		switchListPickupCarPrefix.setText(Setup.getSwitchListPickupCarPrefix());
@@ -724,7 +718,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		// switch list car drop message format
 		pSwDrop.removeAll();
 		switchListCarDropMessageList.clear();
-		pSwDrop.setBorder(BorderFactory.createTitledBorder(rb
+		pSwDrop.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutSwitchListDropCar")));
 		pSwDrop.add(switchListDropCarPrefix);
 		switchListDropCarPrefix.setText(Setup.getSwitchListDropCarPrefix());
@@ -741,7 +735,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		// switch list local car move message format
 		pSwLocal.removeAll();
 		switchListLocalMessageList.clear();
-		pSwLocal.setBorder(BorderFactory.createTitledBorder(rb
+		pSwLocal.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutSwitchListLocal")));
 		pSwLocal.add(switchListLocalPrefix);
 		switchListLocalPrefix.setText(Setup.getSwitchListLocalPrefix());

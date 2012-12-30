@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -24,29 +22,27 @@ import jmri.jmrit.operations.OperationsFrame;
  */
 
 public class BuildReportOptionFrame extends OperationsFrame{
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 	
 	// labels
-	JLabel textBuildReport = new JLabel(rb.getString("BuildReport"));
+	JLabel textBuildReport = new JLabel(Bundle.getString("BuildReport"));
 
 	// major buttons	
-	JButton saveButton = new JButton(rb.getString("Save"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
 
 	// radio buttons		    
-    JRadioButton buildReportMin = new JRadioButton(rb.getString("Minimal"));
-    JRadioButton buildReportNor = new JRadioButton(rb.getString("Normal"));
-    JRadioButton buildReportMax = new JRadioButton(rb.getString("Detailed"));
-    JRadioButton buildReportVD = new JRadioButton(rb.getString("VeryDetailed"));
+    JRadioButton buildReportMin = new JRadioButton(Bundle.getString("Minimal"));
+    JRadioButton buildReportNor = new JRadioButton(Bundle.getString("Normal"));
+    JRadioButton buildReportMax = new JRadioButton(Bundle.getString("Detailed"));
+    JRadioButton buildReportVD = new JRadioButton(Bundle.getString("VeryDetailed"));
     
     // check boxes
-	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
-	JCheckBox buildReportIndentCheckBox = new JCheckBox(rb.getString("BuildReportIndent"));
+	JCheckBox buildReportCheckBox = new JCheckBox(Bundle.getString("BuildReportEdit"));
+	JCheckBox buildReportIndentCheckBox = new JCheckBox(Bundle.getString("BuildReportIndent"));
 	
 	
 
 	public BuildReportOptionFrame() {
-		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitleBuildReportOptions"));
+		super(Bundle.getString("TitleBuildReportOptions"));
 	}
 
 	public void initComponents() {
@@ -54,15 +50,15 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		// the following code sets the frame's initial state
 
 		// add tool tips
-		saveButton.setToolTipText(rb.getString("SaveToolTip"));
-		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFileTip"));
+		saveButton.setToolTipText(Bundle.getString("SaveToolTip"));
+		buildReportCheckBox.setToolTipText(Bundle.getString("CreatesTextFileTip"));
 		
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 			
 		// build report
 		JPanel pReport = new JPanel();
 		pReport.setLayout(new GridBagLayout());		
-		pReport.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutReportOptions")));
+		pReport.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutReportOptions")));
 		// build report options
 		addItem (pReport, textBuildReport, 0, 0);
 		addItemLeft (pReport, buildReportMin, 1, 0);

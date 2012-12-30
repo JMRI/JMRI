@@ -4,8 +4,6 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 
@@ -18,10 +16,8 @@ import javax.swing.AbstractAction;
  */
 public class PrintMoreOptionAction extends AbstractAction {
 	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
-
     public PrintMoreOptionAction() {
-    	this (rb.getString("TitlePrintMoreOptions"));
+    	this (Bundle.getString("TitlePrintMoreOptions"));
     }
 	
 	public PrintMoreOptionAction(String s) {

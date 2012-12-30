@@ -4,8 +4,6 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -16,7 +14,6 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class OperationsSetupAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
     public OperationsSetupAction(String s) {
     	super(s);

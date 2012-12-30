@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
@@ -24,11 +22,8 @@ import apps.Apps;
  * @version $Revision$
  */
 public class LoadDemoAction extends AbstractAction {
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-			.getLogger(LoadDemoAction.class.getName());
-
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadDemoAction.class
+			.getName());
 
 	public LoadDemoAction(String s) {
 		super(s);
@@ -37,19 +32,14 @@ public class LoadDemoAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
-			if (JOptionPane
-					.showConfirmDialog(
-							null,
-							rb.getString("OperationsFilesModified"),
-							rb.getString("SaveOperationFiles"),
-							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(null, Bundle.getString("OperationsFilesModified"),
+					Bundle.getString("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
 		}
 
-		int results = JOptionPane.showConfirmDialog(null,
-				rb.getString("AreYouSureDemoFiles"),
-				rb.getString("LoadDemo"), JOptionPane.OK_CANCEL_OPTION);
+		int results = JOptionPane.showConfirmDialog(null, Bundle.getString("AreYouSureDemoFiles"),
+				Bundle.getString("LoadDemo"), JOptionPane.OK_CANCEL_OPTION);
 		if (results != JOptionPane.OK_OPTION)
 			return;
 
@@ -72,18 +62,13 @@ public class LoadDemoAction extends AbstractAction {
 				log.debug("Unable to deregister Train Dirty Task");
 			}
 
-			JOptionPane
-					.showMessageDialog(
-							null,
-							rb.getString("YouMustRestartAfterLoadDemo"),
-							rb.getString("LoadDemoSuccessful"),
-							JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getString("YouMustRestartAfterLoadDemo"),
+					Bundle.getString("LoadDemoSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
 			Apps.handleRestart();
 
 		} catch (Exception ex) {
-			ExceptionContext context = new ExceptionContext(ex,
-					"Loading demo files",
+			ExceptionContext context = new ExceptionContext(ex, "Loading demo files",
 					"Make sure that all of the demo files exist and can be read.");
 			new ExceptionDisplayFrame(context);
 		}

@@ -5,7 +5,6 @@
 package jmri.jmrit.operations;
 
 import javax.swing.*;
-import java.util.*;
 
 /**
  * Create a "Operations" menu 
@@ -21,21 +20,16 @@ public class OperationsMenu extends JMenu {
     }
 
     public OperationsMenu() {
-
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.JmritOperationsBundle");
-
-        setText(rb.getString("MenuOperations"));
+        setText(Bundle.getString("MenuOperations"));
         
-        add(new jmri.jmrit.operations.setup.OperationsSetupAction(rb.getString("MenuSetup")));
-        add(new jmri.jmrit.operations.locations.LocationsTableAction(rb.getString("MenuLocations")));
-        add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction(rb.getString("MenuCars")));
-        add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction(rb.getString("MenuEngines")));
-        add(new jmri.jmrit.operations.routes.RoutesTableAction(rb.getString("MenuRoutes")));
-        add(new jmri.jmrit.operations.trains.TrainsTableAction(rb.getString("MenuTrains")));
-        //add(new JSeparator());
-        //add(new jmri.jmrit.powerpanel.PowerPanelAction(rb.getString("MenuCalendar")));
+        add(new jmri.jmrit.operations.setup.OperationsSetupAction(Bundle.getString("MenuSetup")));
+        add(new jmri.jmrit.operations.locations.LocationsTableAction(Bundle.getString("MenuLocations")));
+        add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction(Bundle.getString("MenuCars")));
+        add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction(Bundle.getString("MenuEngines")));
+        add(new jmri.jmrit.operations.routes.RoutesTableAction(Bundle.getString("MenuRoutes")));
+        add(new jmri.jmrit.operations.trains.TrainsTableAction(Bundle.getString("MenuTrains")));
             
     }
 

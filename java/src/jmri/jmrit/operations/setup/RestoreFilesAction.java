@@ -4,8 +4,6 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -27,9 +25,6 @@ public class RestoreFilesAction extends AbstractAction {
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(RestoreFilesAction.class.getName());
-	
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
 	public RestoreFilesAction(String s) {
 		super(s);
@@ -48,8 +43,8 @@ public class RestoreFilesAction extends AbstractAction {
 			if (JOptionPane
 					.showConfirmDialog(
 							null,
-							rb.getString("OperationsFilesModified"),
-							rb.getString("SaveOperationFiles"),
+							Bundle.getString("OperationsFilesModified"),
+							Bundle.getString("SaveOperationFiles"),
 							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
@@ -83,8 +78,8 @@ public class RestoreFilesAction extends AbstractAction {
 			backup.restoreFilesFromDirectory(directory);
 
 			JOptionPane.showMessageDialog(null,
-					rb.getString("YouMustRestartAfterRestore"),
-					rb.getString("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
+					Bundle.getString("YouMustRestartAfterRestore"),
+					Bundle.getString("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
 			// now deregister shut down task
 			// If Trains window was opened, then task is active
@@ -121,7 +116,7 @@ public class RestoreFilesAction extends AbstractAction {
 		}
 
 		public String getDescription() {
-			return rb.getString("BackupFolders");
+			return Bundle.getString("BackupFolders");
 		}
 	}
 

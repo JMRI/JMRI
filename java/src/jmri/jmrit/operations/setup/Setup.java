@@ -2,7 +2,6 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import java.util.List;
 import javax.swing.JComboBox;
 
@@ -19,9 +18,7 @@ import org.jdom.Element;
  * @version $Revision$
  */
 public class Setup {
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
-		
+			
 	// scale ratios from NMRA
 	private static final int Z_RATIO = 220;
 	private static final int N_RATIO = 160;
@@ -88,10 +85,10 @@ public class Setup {
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
 	
-	public static final String EAST_DIR = rb.getString("East");
-	public static final String WEST_DIR = rb.getString("West");
-	public static final String NORTH_DIR = rb.getString("North");
-	public static final String SOUTH_DIR = rb.getString("South");
+	public static final String EAST_DIR = Bundle.getString("East");
+	public static final String WEST_DIR = Bundle.getString("West");
+	public static final String NORTH_DIR = Bundle.getString("North");
+	public static final String SOUTH_DIR = Bundle.getString("South");
 	
 	public static final String DESCRIPTIVE = "Descriptive"; // Car types
 	public static final String AAR = "ARR Codes"; // Car types
@@ -102,38 +99,38 @@ public class Setup {
 	public static final String SANSERIF = "SansSerif";
 	public static final String SERIF = "Serif";
 	
-	public static final String PORTRAIT = rb.getString("Portrait");
-	public static final String LANDSCAPE = rb.getString("Landscape");
-	public static final String HANDHELD	= rb.getString("HandHeld");
+	public static final String PORTRAIT = Bundle.getString("Portrait");
+	public static final String LANDSCAPE = Bundle.getString("Landscape");
+	public static final String HANDHELD	= Bundle.getString("HandHeld");
 	
-	public static final String LENGTHABV =rb.getString("LengthSymbol");
+	public static final String LENGTHABV =Bundle.getString("LengthSymbol");
 	
 	public static final String BUILD_REPORT_MINIMAL = "1";
 	public static final String BUILD_REPORT_NORMAL = "3";
 	public static final String BUILD_REPORT_DETAILED = "5";
 	public static final String BUILD_REPORT_VERY_DETAILED = "7";
 	
-	public static final String ROAD = rb.getString("Road");		// the supported message format options
-	public static final String NUMBER = rb.getString("Number");
-	public static final String TYPE = rb.getString("Type");
-	public static final String MODEL = rb.getString("Model");
-	public static final String LENGTH = rb.getString("Length");
-	public static final String LOAD = rb.getString("Load");
-	public static final String COLOR = rb.getString("Color");
-	public static final String DESTINATION = rb.getString("Destination");
-	public static final String DEST_TRACK = rb.getString("DestAndTrack");
-	public static final String FINAL_DEST = rb.getString("FinalDestination");
-	public static final String LOCATION = rb.getString("Location");
-	public static final String CONSIST = rb.getString("Consist");
-	public static final String KERNEL = rb.getString("Kernel");
-	public static final String OWNER = rb.getString("Owner");
-	public static final String RWE = rb.getString("RWE");
-	public static final String COMMENT = rb.getString("Comment");
-	public static final String DROP_COMMENT = rb.getString("DropComment");
-	public static final String PICKUP_COMMENT = rb.getString("PickupComment");
-	public static final String HAZARDOUS = rb.getString("Hazardous");
+	public static final String ROAD = Bundle.getString("Road");		// the supported message format options
+	public static final String NUMBER = Bundle.getString("Number");
+	public static final String TYPE = Bundle.getString("Type");
+	public static final String MODEL = Bundle.getString("Model");
+	public static final String LENGTH = Bundle.getString("Length");
+	public static final String LOAD = Bundle.getString("Load");
+	public static final String COLOR = Bundle.getString("Color");
+	public static final String DESTINATION = Bundle.getString("Destination");
+	public static final String DEST_TRACK = Bundle.getString("DestAndTrack");
+	public static final String FINAL_DEST = Bundle.getString("FinalDestination");
+	public static final String LOCATION = Bundle.getString("Location");
+	public static final String CONSIST = Bundle.getString("Consist");
+	public static final String KERNEL = Bundle.getString("Kernel");
+	public static final String OWNER = Bundle.getString("Owner");
+	public static final String RWE = Bundle.getString("RWE");
+	public static final String COMMENT = Bundle.getString("Comment");
+	public static final String DROP_COMMENT = Bundle.getString("DropComment");
+	public static final String PICKUP_COMMENT = Bundle.getString("PickupComment");
+	public static final String HAZARDOUS = Bundle.getString("Hazardous");
 	public static final String NONE = " ";				// none has be a character or a space
-	public static final String TAB = rb.getString("Tab");	// used to tab out in tabular mode
+	public static final String TAB = Bundle.getString("Tab");	// used to tab out in tabular mode
 	public static final String BOX = " [ ] ";
 	
 	// these are for the utility printing when using tabs
@@ -146,14 +143,14 @@ public class Setup {
 	public static final String NO_DEST_TRACK = "NO_DEST_TRACK";
 	public static final String NO_LOCATION = "NO_LOCATION";
 	
-	public static final String BLACK = rb.getString("Black");	// the supported pick up and set out colors
-	public static final String BLUE = rb.getString("Blue");
-	public static final String GREEN = rb.getString("Green");
-	public static final String RED = rb.getString("Red");
+	public static final String BLACK = Bundle.getString("Black");	// the supported pick up and set out colors
+	public static final String BLUE = Bundle.getString("Blue");
+	public static final String GREEN = Bundle.getString("Green");
+	public static final String RED = Bundle.getString("Red");
 	
 	// Unit of Length
-	public static final String FEET = rb.getString("Feet");
-	public static final String METER = rb.getString("Meter");
+	public static final String FEET = Bundle.getString("Feet");
+	public static final String METER = Bundle.getString("Meter");
 	
 	private static int scale = HO_SCALE;	// Default scale	
 	private static int ratio = HO_RATIO;
@@ -183,16 +180,16 @@ public class Setup {
 	private static String[] switchListDropCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION, COMMENT, DROP_COMMENT};
 	private static String[] switchListLocalMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, DESTINATION, COMMENT};
 	private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
-	private static String pickupEnginePrefix = BOX + rb.getString("PickUpPrefix");
-	private static String dropEnginePrefix = BOX + rb.getString("SetOutPrefix");
-	private static String pickupCarPrefix = BOX + rb.getString("PickUpPrefix");
-	private static String dropCarPrefix = BOX + rb.getString("SetOutPrefix");
-	private static String localPrefix = BOX + rb.getString("LocalCarPrefix");
-	private static String switchListPickupCarPrefix = BOX + rb.getString("PickUpPrefix");
-	private static String switchListDropCarPrefix = BOX + rb.getString("SetOutPrefix");
-	private static String switchListLocalPrefix = BOX + rb.getString("LocalCarPrefix");	
-	private static String miaComment = rb.getString("misplacedCars");
-	private static String hazardousMsg = "("+rb.getString("Hazardous")+")";
+	private static String pickupEnginePrefix = BOX + Bundle.getString("PickUpPrefix");
+	private static String dropEnginePrefix = BOX + Bundle.getString("SetOutPrefix");
+	private static String pickupCarPrefix = BOX + Bundle.getString("PickUpPrefix");
+	private static String dropCarPrefix = BOX + Bundle.getString("SetOutPrefix");
+	private static String localPrefix = BOX + Bundle.getString("LocalCarPrefix");
+	private static String switchListPickupCarPrefix = BOX + Bundle.getString("PickUpPrefix");
+	private static String switchListDropCarPrefix = BOX + Bundle.getString("SetOutPrefix");
+	private static String switchListLocalPrefix = BOX + Bundle.getString("LocalCarPrefix");	
+	private static String miaComment = Bundle.getString("misplacedCars");
+	private static String hazardousMsg = "("+Bundle.getString("Hazardous")+")";
 	private static String logoURL ="";
 	private static String panelName ="Panel";
 	private static String buildReportLevel = BUILD_REPORT_VERY_DETAILED;	
@@ -227,9 +224,9 @@ public class Setup {
 	private static boolean autoSave = true;				//when true, automatically save files if modified
 	private static boolean autoBackup = true;			//when true, automatically backup files
 	private static boolean enableValue = false;			//when true show value fields for rolling stock
-	private static String labelValue = rb.getString("Value");
+	private static String labelValue = Bundle.getString("Value");
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
-	private static String labelRfid = rb.getString("RFID");
+	private static String labelRfid = Bundle.getString("RFID");
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
 	private static boolean forwardToYardEnabled = true;	//when true forward car to yard if track is full

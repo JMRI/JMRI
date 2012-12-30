@@ -5,8 +5,6 @@ package jmri.jmrit.operations.setup;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -43,23 +41,20 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 public class OperationsSetupFrame extends OperationsFrame implements
 		java.beans.PropertyChangeListener {
 
-	static final ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
-
 	// labels
 
-	JLabel textIconNorth = new JLabel(rb.getString("IconNorth"));
-	JLabel textIconSouth = new JLabel(rb.getString("IconSouth"));
-	JLabel textIconEast = new JLabel(rb.getString("IconEast"));
-	JLabel textIconWest = new JLabel(rb.getString("IconWest"));
-	JLabel textIconLocal = new JLabel(rb.getString("IconLocal"));
-	JLabel textIconTerminate = new JLabel(rb.getString("IconTerminate"));
-	// JLabel textComment = new JLabel(rb.getString("Comment"));
+	JLabel textIconNorth = new JLabel(Bundle.getString("IconNorth"));
+	JLabel textIconSouth = new JLabel(Bundle.getString("IconSouth"));
+	JLabel textIconEast = new JLabel(Bundle.getString("IconEast"));
+	JLabel textIconWest = new JLabel(Bundle.getString("IconWest"));
+	JLabel textIconLocal = new JLabel(Bundle.getString("IconLocal"));
+	JLabel textIconTerminate = new JLabel(Bundle.getString("IconTerminate"));
+	// JLabel textComment = new JLabel(Bundle.getString("Comment"));
 
 	// major buttons
-	JButton backupButton = new JButton(rb.getString("Backup"));
-	JButton restoreButton = new JButton(rb.getString("Restore"));
-	JButton saveButton = new JButton(rb.getString("Save"));
+	JButton backupButton = new JButton(Bundle.getString("Backup"));
+	JButton restoreButton = new JButton(Bundle.getString("Restore"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
 
 	// radio buttons
 	JRadioButton scaleZ = new JRadioButton("Z");
@@ -74,22 +69,22 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	JRadioButton scaleO = new JRadioButton("O");
 	JRadioButton scaleG = new JRadioButton("G");
 
-	JRadioButton typeDesc = new JRadioButton(rb.getString("Descriptive"));
-	JRadioButton typeAAR = new JRadioButton(rb.getString("AAR"));
+	JRadioButton typeDesc = new JRadioButton(Bundle.getString("Descriptive"));
+	JRadioButton typeAAR = new JRadioButton(Bundle.getString("AAR"));
 
-	JRadioButton feetUnit = new JRadioButton(rb.getString("Feet"));
-	JRadioButton meterUnit = new JRadioButton(rb.getString("Meter"));
+	JRadioButton feetUnit = new JRadioButton(Bundle.getString("Feet"));
+	JRadioButton meterUnit = new JRadioButton(Bundle.getString("Meter"));
 
 	// check boxes
-	JCheckBox eastCheckBox = new JCheckBox(rb.getString("eastwest"));
-	JCheckBox northCheckBox = new JCheckBox(rb.getString("northsouth"));
-	JCheckBox mainMenuCheckBox = new JCheckBox(rb.getString("MainMenu"));
-	JCheckBox closeOnSaveCheckBox = new JCheckBox(rb.getString("CloseOnSave"));
-	JCheckBox autoSaveCheckBox = new JCheckBox(rb.getString("AutoSave"));
-	JCheckBox autoBackupCheckBox = new JCheckBox(rb.getString("AutoBackup"));
-	JCheckBox iconCheckBox = new JCheckBox(rb.getString("trainIcon"));
-	JCheckBox appendCheckBox = new JCheckBox(rb.getString("trainIconAppend"));
-	// JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
+	JCheckBox eastCheckBox = new JCheckBox(Bundle.getString("eastwest"));
+	JCheckBox northCheckBox = new JCheckBox(Bundle.getString("northsouth"));
+	JCheckBox mainMenuCheckBox = new JCheckBox(Bundle.getString("MainMenu"));
+	JCheckBox closeOnSaveCheckBox = new JCheckBox(Bundle.getString("CloseOnSave"));
+	JCheckBox autoSaveCheckBox = new JCheckBox(Bundle.getString("AutoSave"));
+	JCheckBox autoBackupCheckBox = new JCheckBox(Bundle.getString("AutoBackup"));
+	JCheckBox iconCheckBox = new JCheckBox(Bundle.getString("trainIcon"));
+	JCheckBox appendCheckBox = new JCheckBox(Bundle.getString("trainIconAppend"));
+	// JCheckBox rfidCheckBox = new JCheckBox(Bundle.getString("EnableRfid"));
 
 	// text field
 	// JTextField ownerTextField = new JTextField(10);
@@ -113,9 +108,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	protected static final String NEW_LINE = "\n";
 
 	public OperationsSetupFrame() {
-		super(ResourceBundle.getBundle(
-				"jmri.jmrit.operations.setup.JmritOperationsSetupBundle")
-				.getString("TitleOperationsSetup"));
+		super(Bundle.getString("TitleOperationsSetup"));
 	}
 
 	public void initComponents() {
@@ -144,15 +137,14 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		appendCheckBox.setSelected(Setup.isTrainIconAppendEnabled());
 
 		// add tool tips
-		backupButton.setToolTipText(rb.getString("BackupToolTip"));
-		restoreButton.setToolTipText(rb.getString("RestoreToolTip"));
-		saveButton.setToolTipText(rb.getString("SaveToolTip"));
-		panelTextField.setToolTipText(rb.getString("EnterPanelName"));
-		yearTextField.setToolTipText(rb.getString("EnterYearModeled"));
+		backupButton.setToolTipText(Bundle.getString("BackupToolTip"));
+		restoreButton.setToolTipText(Bundle.getString("RestoreToolTip"));
+		saveButton.setToolTipText(Bundle.getString("SaveToolTip"));
+		panelTextField.setToolTipText(Bundle.getString("EnterPanelName"));
+		yearTextField.setToolTipText(Bundle.getString("EnterYearModeled"));
 
 		// Layout the panel by rows
-		getContentPane().setLayout(
-				new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		JPanel panel = new JPanel();
 		JScrollPane panelPane = new JScrollPane(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -164,16 +156,14 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		JPanel pRailroadName = new JPanel();
 		pRailroadName.setLayout(new GridBagLayout());
-		pRailroadName.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("RailroadName")));
+		pRailroadName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("RailroadName")));
 		addItem(pRailroadName, railroadNameTextField, 0, 0);
 		p1.add(pRailroadName);
 
 		// row 1b
 		JPanel pTrainDir = new JPanel();
 		pTrainDir.setLayout(new GridBagLayout());
-		pTrainDir.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("direction")));
+		pTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getString("direction")));
 		addItemLeft(pTrainDir, northCheckBox, 1, 2);
 		addItemLeft(pTrainDir, eastCheckBox, 2, 2);
 		p1.add(pTrainDir);
@@ -185,15 +175,13 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		p3.setLayout(new BoxLayout(p3, BoxLayout.X_AXIS));
 
 		JPanel pTrainLength = new JPanel();
-		pTrainLength.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("MaxLength")));
+		pTrainLength.setBorder(BorderFactory.createTitledBorder(Bundle.getString("MaxLength")));
 		addItem(pTrainLength, maxLengthTextField, 0, 0);
 		p3.add(pTrainLength);
 
 		// row 3b
 		JPanel pMaxEngine = new JPanel();
-		pMaxEngine.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("MaxEngine")));
+		pMaxEngine.setBorder(BorderFactory.createTitledBorder(Bundle.getString("MaxEngine")));
 		addItem(pMaxEngine, maxEngineSizeTextField, 0, 0);
 		p3.add(pMaxEngine);
 
@@ -202,21 +190,19 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
 
 		JPanel pSwitchTime = new JPanel();
-		pSwitchTime.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("MoveTime")));
+		pSwitchTime.setBorder(BorderFactory.createTitledBorder(Bundle.getString("MoveTime")));
 		addItem(pSwitchTime, switchTimeTextField, 0, 0);
 		p3.add(pSwitchTime);
 
 		// row 3d
 		JPanel pTravelTime = new JPanel();
-		pTravelTime.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("TravelTime")));
+		pTravelTime.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TravelTime")));
 		addItem(pTravelTime, travelTimeTextField, 0, 0);
 		p3.add(pTravelTime);
 
 		// row 2
 		JPanel pScale = new JPanel();
-		pScale.setBorder(BorderFactory.createTitledBorder(rb.getString("Scale")));
+		pScale.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Scale")));
 
 		ButtonGroup scaleGroup = new ButtonGroup();
 		scaleGroup.add(scaleZ);
@@ -249,8 +235,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		p9.setLayout(new BoxLayout(p9, BoxLayout.X_AXIS));
 
 		JPanel pCarTypeButtons = new JPanel();
-		pCarTypeButtons.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("CarTypes")));
+		pCarTypeButtons.setBorder(BorderFactory.createTitledBorder(Bundle.getString("CarTypes")));
 		ButtonGroup carTypeGroup = new ButtonGroup();
 		carTypeGroup.add(typeDesc);
 		carTypeGroup.add(typeAAR);
@@ -261,8 +246,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		// row 4b
 		JPanel pLengthUnit = new JPanel();
-		pLengthUnit.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("BorderLayoutLength")));
+		pLengthUnit.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutLength")));
 		ButtonGroup lengthUnitGroup = new ButtonGroup();
 		lengthUnitGroup.add(feetUnit);
 		lengthUnitGroup.add(meterUnit);
@@ -273,7 +257,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		// row 4c
 		JPanel pYearModeled = new JPanel();
-		pYearModeled.setBorder(BorderFactory.createTitledBorder(rb
+		pYearModeled.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutYearModeled")));
 		pYearModeled.add(yearTextField);
 
@@ -282,8 +266,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		// Option panel
 		JPanel options = new JPanel();
 		options.setLayout(new GridBagLayout());
-		options.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("BorderLayoutOptions")));
+		options.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutOptions")));
 		addItem(options, mainMenuCheckBox, 0, 0);
 		addItem(options, closeOnSaveCheckBox, 1, 0);
 		addItem(options, autoSaveCheckBox, 2, 0);
@@ -302,7 +285,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		JPanel pIcon = new JPanel();
 		pIcon.setLayout(new BoxLayout(pIcon, BoxLayout.Y_AXIS));
 		JScrollPane pIconPane = new JScrollPane(pIcon);
-		pIconPane.setBorder(BorderFactory.createTitledBorder(rb
+		pIconPane.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutPanelOptions")));
 
 		// row 1 Icon panel
@@ -311,14 +294,14 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		JPanel pPanelName = new JPanel();
 		pPanelName.setLayout(new GridBagLayout());
-		pPanelName.setBorder(BorderFactory.createTitledBorder(rb
-				.getString("BorderLayoutPanelName")));
+		pPanelName
+				.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutPanelName")));
 		addItem(pPanelName, panelTextField, 0, 0);
 		p1Icon.add(pPanelName);
 
 		JPanel pIconControl = new JPanel();
 		pIconControl.setLayout(new GridBagLayout());
-		pIconControl.setBorder(BorderFactory.createTitledBorder(rb
+		pIconControl.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutIconOptions")));
 		addItem(pIconControl, appendCheckBox, 0, 0);
 		addItem(pIconControl, iconCheckBox, 1, 0);
@@ -328,7 +311,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		JPanel pIconColors = new JPanel();
 		pIconColors.setLayout(new GridBagLayout());
-		pIconColors.setBorder(BorderFactory.createTitledBorder(rb
+		pIconColors.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getString("BorderLayoutIconColors")));
 
 		addItem(pIconColors, textIconNorth, 0, 4);
@@ -381,14 +364,14 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new OptionAction(rb.getString("TitleOptions")));
+		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
+		toolMenu.add(new OptionAction(Bundle.getString("TitleOptions")));
 		toolMenu.add(new PrintOptionAction());
 		toolMenu.add(new BuildReportOptionAction());
-		toolMenu.add(new BackupFilesAction(rb.getString("Backup")));
-		toolMenu.add(new RestoreFilesAction(rb.getString("Restore")));
-		toolMenu.add(new LoadDemoAction(rb.getString("LoadDemo")));
-		toolMenu.add(new ResetAction(rb.getString("ResetOperations")));
+		toolMenu.add(new BackupFilesAction(Bundle.getString("Backup")));
+		toolMenu.add(new RestoreFilesAction(Bundle.getString("Restore")));
+		toolMenu.add(new LoadDemoAction(Bundle.getString("LoadDemo")));
+		toolMenu.add(new ResetAction(Bundle.getString("ResetOperations")));
 		toolMenu.add(new ManageBackupsAction("Manage Auto Backups"));
 
 		menuBar.add(toolMenu);
@@ -397,14 +380,12 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
 
 		/*
-		 * all JMRI window position and size are now saved // set frame size and
-		 * location for display if (Setup.getOperationsSetupFramePosition()!=
-		 * null){ setLocation(Setup.getOperationsSetupFramePosition()); }
+		 * all JMRI window position and size are now saved // set frame size and location for display if
+		 * (Setup.getOperationsSetupFramePosition()!= null){ setLocation(Setup.getOperationsSetupFramePosition()); }
 		 */
 		packFrame();
 		setVisible(true);
 	}
-
 
 	// Save, Delete, Add buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -428,48 +409,42 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 	private void save() {
 		/*
-		 * String addOwner = ownerTextField.getText(); if (addOwner.length() >
-		 * Control.max_len_string_attibute) {
-		 * JOptionPane.showMessageDialog(this, MessageFormat.format(rb
-		 * .getString("OwnerText"), new Object[] { Integer
-		 * .toString(Control.max_len_string_attibute) }), rb
-		 * .getString("CanNotAddOwner"), JOptionPane.ERROR_MESSAGE); return; }
+		 * String addOwner = ownerTextField.getText(); if (addOwner.length() > Control.max_len_string_attibute) {
+		 * JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getString("OwnerText"), new Object[] { Integer
+		 * .toString(Control.max_len_string_attibute) }), Bundle.getString("CanNotAddOwner"), JOptionPane.ERROR_MESSAGE);
+		 * return; }
 		 */
 
 		// check input fields
 		try {
 			Integer.parseInt(maxLengthTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, rb.getString("MaxLength"),
-					rb.getString("CanNotAcceptNumber"),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getString("MaxLength"),
+					Bundle.getString("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		try {
 			Integer.parseInt(maxEngineSizeTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, rb.getString("MaxEngine"),
-					rb.getString("CanNotAcceptNumber"),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getString("MaxEngine"),
+					Bundle.getString("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		try {
 			Integer.parseInt(switchTimeTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, rb.getString("MoveTime"),
-					rb.getString("CanNotAcceptNumber"),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getString("MoveTime"),
+					Bundle.getString("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		try {
 			Integer.parseInt(travelTimeTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, rb.getString("TravelTime"),
-					rb.getString("CanNotAcceptNumber"),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getString("TravelTime"),
+					Bundle.getString("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -482,10 +457,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		// CarOwners.instance().addName(addOwner);
 
 		// set car types
-		if (typeDesc.isSelected()
-				&& !Setup.getCarTypes().equals(Setup.DESCRIPTIVE)
-				|| typeAAR.isSelected()
-				&& !Setup.getCarTypes().equals(Setup.AAR)) {
+		if (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE)
+				|| typeAAR.isSelected() && !Setup.getCarTypes().equals(Setup.AAR)) {
 
 			// backup files before changing car type descriptions
 			AutoBackup backup = new AutoBackup();
@@ -496,8 +469,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 			try {
 				backup.autoBackup();
 			} catch (Exception ex) {
-				UnexpectedExceptionContext context = new UnexpectedExceptionContext(
-						ex, "Auto backup before changing Car types");
+				UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
+						"Auto backup before changing Car types");
 				new ExceptionDisplayFrame(context);
 			}
 
@@ -535,8 +508,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		Setup.setTrainIconColorEast((String) eastComboBox.getSelectedItem());
 		Setup.setTrainIconColorWest((String) westComboBox.getSelectedItem());
 		Setup.setTrainIconColorLocal((String) localComboBox.getSelectedItem());
-		Setup.setTrainIconColorTerminate((String) terminateComboBox
-				.getSelectedItem());
+		Setup.setTrainIconColorTerminate((String) terminateComboBox.getSelectedItem());
 		// set train direction
 		int direction = 0;
 		if (eastCheckBox.isSelected())
@@ -601,10 +573,9 @@ public class OperationsSetupFrame extends OperationsFrame implements
 				for (int j = 0; j < locations.size(); j++) {
 					RouteLocation rl = r.getLocationById(locations.get(j));
 					if (rl.getMaxTrainLength() > maxLength) {
-						String s = MessageFormat.format(
-								rb.getString("RouteMaxLengthExceeds"),
-								new Object[] { r.getName(), rl.getName(),
-										rl.getMaxTrainLength(), maxLength });
+						String s = MessageFormat.format(Bundle.getString("RouteMaxLengthExceeds"),
+								new Object[] { r.getName(), rl.getName(), rl.getMaxTrainLength(),
+										maxLength });
 						log.info(s);
 						sb.append(s + NEW_LINE);
 						count++;
@@ -613,28 +584,23 @@ public class OperationsSetupFrame extends OperationsFrame implements
 				}
 				// maximum of 20 route warnings
 				if (count > 20) {
-					sb.append(rb.getString("More") + NEW_LINE);
+					sb.append(Bundle.getString("More") + NEW_LINE);
 					break;
 				}
 			}
 			if (sb.length() > 0) {
 				JOptionPane.showMessageDialog(null, sb.toString(),
-						rb.getString("YouNeedToAdjustRoutes"),
-						JOptionPane.WARNING_MESSAGE);
-				if (JOptionPane.showConfirmDialog(null,
-						"Change maximum train departure length to " + maxLength
-								+ "?", "Modify all routes?",
-						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						Bundle.getString("YouNeedToAdjustRoutes"), JOptionPane.WARNING_MESSAGE);
+				if (JOptionPane.showConfirmDialog(null, "Change maximum train departure length to "
+						+ maxLength + "?", "Modify all routes?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					for (int i = 0; i < routes.size(); i++) {
 						Route r = rm.getRouteById(routes.get(i));
 						List<String> locations = r.getLocationsBySequenceList();
 						for (int j = 0; j < locations.size(); j++) {
-							RouteLocation rl = r.getLocationById(locations
-									.get(j));
+							RouteLocation rl = r.getLocationById(locations.get(j));
 							if (rl.getMaxTrainLength() > maxLength) {
-								log.debug("Setting route (" + r.getName()
-										+ ") routeLocation (" + rl.getName()
-										+ ") max traim length to " + maxLength);
+								log.debug("Setting route (" + r.getName() + ") routeLocation ("
+										+ rl.getName() + ") max traim length to " + maxLength);
 								rl.setMaxTrainLength(maxLength);
 							}
 						}
@@ -742,17 +708,15 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	private void packFrame() {
 		pack();
 		/*
-		 * all JMRI window position and size are now saved if
-		 * (Setup.getOperationsSetupFrameSize()!= null)
-		 * setSize(Setup.getOperationsSetupFrameSize()); /* else {
-		 * setSize(getWidth(), getHeight()+20); // made the panel a bit larger
-		 * to eliminate scroll bars }
+		 * all JMRI window position and size are now saved if (Setup.getOperationsSetupFrameSize()!= null)
+		 * setSize(Setup.getOperationsSetupFrameSize()); /* else { setSize(getWidth(), getHeight()+20); // made the
+		 * panel a bit larger to eliminate scroll bars }
 		 */
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("OperationsSetupFrame sees propertyChange "
-				+ e.getPropertyName() + " " + e.getNewValue());
+		log.debug("OperationsSetupFrame sees propertyChange " + e.getPropertyName() + " "
+				+ e.getNewValue());
 
 	}
 

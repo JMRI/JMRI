@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -19,9 +17,6 @@ import javax.swing.AbstractAction;
 public class ManageBackupsAction extends AbstractAction {
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(ManageBackupsAction.class.getName());
-
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 
 	public ManageBackupsAction(String s) {
 		super(s);
