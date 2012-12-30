@@ -42,6 +42,7 @@ import java.util.Iterator;
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.vsdecoder.VSDecoderEvent;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.locations.Location;
 
@@ -57,6 +58,8 @@ public class VSDecoder implements PropertyChangeListener {
     private boolean is_default = false;  // This decoder is the default for its file
 
     private VSDConfig config;
+
+    private float tunnelVolume = 0.5f;
 
     // List of registered event listeners
     protected javax.swing.event.EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -456,6 +459,17 @@ public class VSDecoder implements PropertyChangeListener {
 	    //s.setPosition(PhysicalLocation.translate(p, ref));
 	    s.setPosition(p);
 	}
+	// Set (relative) volume for this location (in case we're in a tunnel)
+	float tv = config.getVolume();
+	if (p.isTunnel()) {
+	    tv *= tunnelVolume;
+	    log.debug("VSD: Tunnel volume: " + tv);
+	} else {
+	    log.debug("VSD: Not in tunnel. Volume = " + tv);
+	}
+	for (VSDSound vs : sound_list.values()) {
+	    vs.setVolume(tv);
+	}
 	fireMyEvent(new VSDecoderEvent(this, VSDecoderEvent.EventType.LOCATION_CHANGE, p));
     }
 
@@ -480,14 +494,18 @@ public class VSDecoder implements PropertyChangeListener {
      */
     @SuppressWarnings("cast")
     public void propertyChange(PropertyChangeEvent evt) {
+	String property = evt.getPropertyName();
 	// Respond to events from the new GUI.
 	if (evt.getSource() instanceof VSDControl) {
-	    // Nothing to do... yet...
+	    if (property.equals(VSDControl.PCIDMap.get(VSDControl.PropertyChangeID.OPTION_CHANGE))) {
+		Train selected_train = TrainManager.instance().getTrainByName((String)evt.getNewValue());
+		if (selected_train != null)
+		    selected_train.addPropertyChangeListener(this);
+	    }
 	    return;
 	}
 
 	// Respond to events from the old GUI.
-	String property = evt.getPropertyName();
 	if ((property.equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.MUTE))) ||
 	    (property.equals(VSDecoderPane.PCIDMap.get(VSDecoderPane.PropertyChangeID.MUTE)))) {
 	    // Either GUI Mute button
