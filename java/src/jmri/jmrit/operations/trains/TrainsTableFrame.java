@@ -5,6 +5,8 @@ package jmri.jmrit.operations.trains;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.io.File;
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,6 +26,7 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 //import javax.swing.table.TableColumnModel;
 
+import jmri.jmrit.operations.FileHelper;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -329,6 +332,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			}
 		}
 		if (ae.getSource() == openFileButton) {
+			// Processes the CSV Manifest files using an external custom program.
+			CustomManifest customManifest = new CustomManifest();
+ 
 			List<String> trains = getSortByList();
 			for (int i = 0; i < trains.size(); i++) {
 				Train train = trainManager.getTrainById(trains.get(i));
@@ -351,10 +357,19 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 																: Bundle.getString("print") }),
 										JOptionPane.ERROR_MESSAGE);
 					} else {
-						train.openFile();
+						//train.openFile();
+						
+						// Make sure our csv manifest file exists for this Train. 
+						File csvFile = train.createCSVManifestFile();
+						
+						// Add it to our collection to be processed.
+						customManifest.AddCVSFile(csvFile);						
 					}
 				}
 			}
+			
+			// Now run the user specified custom Manifest processor program
+			customManifest.Process();
 		}
 		if (ae.getSource() == printSwitchButton) {
 			if (tslef != null)
