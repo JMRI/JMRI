@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<enumVal>
+  <enumChoice choice="Enabled">
+    <choice xml:lang="fr">Enabled(fr)</choice>
+    <choice xml:lang="it">Abilitato</choice>
+  </enumChoice>
+  <enumChoice choice="Disabled">
+    <choice xml:lang="fr">Disabled(fr)</choice>
+    <choice xml:lang="it">Disabilitato</choice>
+  </enumChoice>
+</enumVal>
