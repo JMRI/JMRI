@@ -149,157 +149,59 @@
         <label>Manufacturer ID</label>
       </variable>
       <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F1</label>
       </variable>
       <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F2</label>
       </variable>
       <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F3</label>
       </variable>
       <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F4</label>
       </variable>
       <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F5</label>
       </variable>
       <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F6</label>
       </variable>
       <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F7</label>
       </variable>
       <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F8</label>
       </variable>
       <variable label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(f)</label>
       </variable>
       <variable label="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(r)</label>
       </variable>
       <variable label="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F9</label>
       </variable>
       <variable label="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F10</label>
       </variable>
       <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F11</label>
       </variable>
       <variable label="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F12</label>
       </variable>
       <variable label="Decoder Lock ID number" CV="15" mask="XXXXVVVV" item="Advanced Group 1 Option 11" tooltip="CV15" default="0">
@@ -586,95 +488,7 @@
       <constant item="PICV" default="32" comment="CV used for Primary Index"/>
       <!-- Output Effects -->
       <ivariable label="Headlight Mode" CVname="259.0" CV="259" PI="0" default="1" item="Function F0F option 1" mask="XXXVVVVV">
-        <ienumVal>
-          <ienumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Oscillating headlight">
-            <choice>Oscillating headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="End of train flasher">
-            <choice>End of train flasher</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Seuthe smoke unit">
-            <choice>Seuthe smoke unit</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="Headlight Switch On Delay" CVname="260.0" CV="260" PI="0" default="0" mask="XXXXVVVV" item="Function F0F effect generated" tooltip="Units = 0.4 sec">
         <indexedVal max="31"/>
@@ -714,95 +528,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Backup Light Mode" CVname="267.0" CV="267" PI="0" default="1" item="Function F0R option 1" mask="XXXVVVVV">
-        <ienumVal>
-          <ienumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Oscillating headlight">
-            <choice>Oscillating headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="End of train flasher">
-            <choice>End of train flasher</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Seuthe smoke unit">
-            <choice>Seuthe smoke unit</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="Backup Light Switch On Delay" CVname="268.0" CV="268" PI="0" default="0" mask="XXXXVVVV" item="Function F0R effect generated" tooltip="Units = 0.4 sec">
         <indexedVal max="31"/>
@@ -842,98 +568,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="AUX1 Mode" CVname="275.0" CV="275" PI="0" default="1" item="Function 1 option 1" mask="XXXVVVVV">
-        <ienumVal>
-          <ienumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Oscillating headlight">
-            <choice>Oscillating headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="End of train flasher">
-            <choice>End of train flasher</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Seuthe smoke unit">
-            <choice>Seuthe smoke unit</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-          <ienumChoice choice="Roco Coupler">
-            <choice>Roco Coupler</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="AUX1 Switch On Delay" CVname="276.0" CV="276" PI="0" default="0" mask="XXXXVVVV" item="Function 1 effect generated" tooltip="Units = 0.4 sec">
         <indexedVal max="31"/>
@@ -973,98 +608,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="AUX2 Mode" CVname="283.0" CV="283" PI="0" default="1" item="Function 2 option 1" mask="XXXVVVVV">
-        <ienumVal>
-          <ienumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Oscillating headlight">
-            <choice>Oscillating headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="End of train flasher">
-            <choice>End of train flasher</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Seuthe smoke unit">
-            <choice>Seuthe smoke unit</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-          <ienumChoice choice="Roco Coupler">
-            <choice>Roco Coupler</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="AUX2 Switch On Delay" CVname="284.0" CV="284" PI="0" default="0" mask="XXXXVVVV" item="Function 2 effect generated" tooltip="Units = 0.4 sec">
         <indexedVal max="31"/>
@@ -1104,95 +648,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="AUX3 Mode" CVname="291.0" CV="291" PI="0" default="1" item="Function 3 option 1" mask="XXXVVVVV">
-        <ienumVal>
-          <ienumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Oscillating headlight">
-            <choice>Oscillating headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="End of train flasher">
-            <choice>End of train flasher</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Seuthe smoke unit">
-            <choice>Seuthe smoke unit</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="AUX3 Switch On Delay" CVname="292.0" CV="292" PI="0" default="0" mask="XXXXVVVV" item="Function 3 effect generated" tooltip="Units = 0.4 sec">
         <indexedVal max="31"/>
@@ -1232,95 +688,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="AUX4 Mode" CVname="299.0" CV="299" PI="0" default="1" item="Function 4 option 1" mask="XXXVVVVV">
-        <ienumVal>
-          <ienumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Oscillating headlight">
-            <choice>Oscillating headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="End of train flasher">
-            <choice>End of train flasher</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Seuthe smoke unit">
-            <choice>Seuthe smoke unit</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice=" -- reserved">
-            <choice> -- reserved</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="AUX4 Switch On Delay" CVname="300.0" CV="300" PI="0" default="0" mask="XXXXVVVV" item="Function 4 effect generated" tooltip="Units = 0.4 sec">
         <indexedVal max="31"/>

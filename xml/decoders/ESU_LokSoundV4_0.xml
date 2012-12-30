@@ -306,157 +306,59 @@
         <label>Manufacturer ID</label>
       </variable>
       <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F1</label>
       </variable>
       <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F2</label>
       </variable>
       <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F3</label>
       </variable>
       <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F4</label>
       </variable>
       <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F5</label>
       </variable>
       <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F6</label>
       </variable>
       <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F7</label>
       </variable>
       <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F8</label>
       </variable>
       <variable label="Analog Mode Function Status - FL(f)" CV="14" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(f)</label>
       </variable>
       <variable label="Analog Mode Function Status - FL(r)" CV="14" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - FL(r)</label>
       </variable>
       <variable label="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F9</label>
       </variable>
       <variable label="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F10</label>
       </variable>
       <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F11</label>
       </variable>
       <variable label="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog Mode Function Status - F12</label>
       </variable>
       <variable label="Preset Lock ID number" CV="16" mask="XXXXVVVV" item="Advanced Group 1 Option 12" tooltip="CV16" default="0">
@@ -854,53 +756,7 @@
       <constant item="PICV" default="32" comment="CV used for Primary Index"/>
       <!-- Light output config -->
       <ivariable label="Headlight Mode" CVname="259.0" CV="259" PI="0" default="2" item="Function F0F effect generated" mask="XXXXVVVV">
-        <ienumVal>
-          <ienumChoice choice="Standard on off">
-            <choice>Standard on off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light" value="12">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function" value="28">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="Headlight Auto Switch Off" CVname="261.0" CV="261" PI="0" default="0" item="Function F0F options" tooltip="Units = 0.4 seconds">
         <indexedVal/>
@@ -934,53 +790,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Backup Light Mode" CVname="267.0" CV="267" PI="0" default="2" item="Function F0R effect generated" mask="XXXXVVVV">
-        <ienumVal>
-          <ienumChoice choice="Standard on off">
-            <choice>Standard on off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light" value="12">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function" value="28">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="Backup Light Auto Switch Off" CVname="269.0" CV="269" PI="0" default="0" item="Function F0R options" tooltip="Units = 0.4 seconds">
         <indexedVal/>
@@ -1014,53 +824,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="AUX1 Mode" CVname="275.0" CV="275" PI="0" default="0" item="Function 1 effect generated" mask="XXXXVVVV">
-        <ienumVal>
-          <ienumChoice choice="Standard on off">
-            <choice>Standard on off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light" value="12">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function" value="28">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="AUX1 Auto Switch Off" CVname="277.0" CV="277" PI="0" default="0" item="Function 1 options" tooltip="Units = 0.4 seconds">
         <indexedVal/>
@@ -1094,53 +858,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="AUX2 Mode" CVname="283.0" CV="283" PI="0" default="0" item="Function 2 effect generated" mask="XXXXVVVV">
-        <ienumVal>
-          <ienumChoice choice="Standard on off">
-            <choice>Standard on off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light" value="12">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function" value="28">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="AUX2 Auto Switch Off" CVname="285.0" CV="285" PI="0" default="0" item="Function 2 options" tooltip="Units = 0.4 seconds">
         <indexedVal/>
@@ -1174,53 +892,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="AUX3 Mode" CVname="291.0" CV="291" PI="0" default="0" item="Function 3 effect generated" mask="XXXXVVVV">
-        <ienumVal>
-          <ienumChoice choice="Standard on off">
-            <choice>Standard on off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light" value="12">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function" value="28">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="AUX3 Auto Switch Off" CVname="293.0" CV="293" PI="0" default="0" item="Function 3 options" tooltip="Units = 0.4 seconds">
         <indexedVal/>
@@ -1254,53 +926,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="AUX4 Mode" CVname="299.0" CV="299" PI="0" default="0" item="Function 4 effect generated" mask="XXXXVVVV">
-        <ienumVal>
-          <ienumChoice choice="Standard on off">
-            <choice>Standard on off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dimmable headlight (fade in/out)">
-            <choice>Dimmable headlight (fade in/out)</choice>
-          </ienumChoice>
-          <ienumChoice choice="Fire box">
-            <choice>Fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Intelligent fire box">
-            <choice>Intelligent fire box</choice>
-          </ienumChoice>
-          <ienumChoice choice="Single stobe">
-            <choice>Single stobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Double strobe">
-            <choice>Double strobe</choice>
-          </ienumChoice>
-          <ienumChoice choice="Rotary beacon">
-            <choice>Rotary beacon</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strato light">
-            <choice>Strato light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 1">
-            <choice>Ditch light type 1</choice>
-          </ienumChoice>
-          <ienumChoice choice="Ditch light type 2">
-            <choice>Ditch light type 2</choice>
-          </ienumChoice>
-          <ienumChoice choice="Flash light" value="12">
-            <choice>Flash light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Gyra light">
-            <choice>Gyra light</choice>
-          </ienumChoice>
-          <ienumChoice choice="Coupler function" value="28">
-            <choice>Coupler functiont</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
       </ivariable>
       <ivariable label="AUX4 Auto Switch Off" CVname="301.0" CV="301" PI="0" default="0" item="Function 4 options" tooltip="Units = 0.4 seconds">
         <indexedVal/>
