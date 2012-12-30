@@ -14,7 +14,6 @@ import javax.swing.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 /**
@@ -25,11 +24,6 @@ import java.util.ResourceBundle;
  */
 
 public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
-
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
 	
 	TrainManager manager;
 	String Empty = "            ";
@@ -41,12 +35,12 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 	JPanel pTrains;
 
 	// major buttons
-	JButton clearButton = new JButton(getString("Clear"));
-	JButton setButton = new JButton(getString("Select"));
-	JButton saveButton = new JButton(getString("Save"));
+	JButton clearButton = new JButton(Bundle.getString("Clear"));
+	JButton setButton = new JButton(Bundle.getString("Select"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
 	
 	// check boxes
-	JCheckBox copyCheckBox = new JCheckBox(getString("Copy"));
+	JCheckBox copyCheckBox = new JCheckBox(Bundle.getString("Copy"));
 	
 	// radio buttons
         
@@ -73,19 +67,19 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 	    //      Set up the panels
     	JPanel pCarType = new JPanel();
     	pCarType.setLayout(new GridBagLayout());
-    	pCarType.setBorder(BorderFactory.createTitledBorder(getString("Type")));
+    	pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Type")));
     	
     	addItem(pCarType, typeComboBox, 0,0);
     	addItem(pCarType, copyCheckBox, 1,0);
     	addItem(pCarType, textCarType, 2,0);
     	typeComboBox.setSelectedItem(carType);
-    	copyCheckBox.setToolTipText(getString("TipCopyCarType"));
+    	copyCheckBox.setToolTipText(Bundle.getString("TipCopyCarType"));
 
     	pTrains = new JPanel();
     	pTrains.setLayout(new GridBagLayout());
     	JScrollPane trainPane = new JScrollPane(pTrains);
     	trainPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	trainPane.setBorder(BorderFactory.createTitledBorder(getString("Trains")));
+    	trainPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Trains")));
     	updateTrains();
     	
     	JPanel pButtons = new JPanel();
@@ -116,9 +110,9 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 		
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(getString("Tools"));
-		toolMenu.add(new PrintTrainsByCarTypesAction(getString("MenuItemPrintByType"), new Frame(), false, this));
-		toolMenu.add(new PrintTrainsByCarTypesAction(getString("MenuItemPreviewByType"), new Frame(), true, this));
+		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
+		toolMenu.add(new PrintTrainsByCarTypesAction(Bundle.getString("MenuItemPrintByType"), new Frame(), false, this));
+		toolMenu.add(new PrintTrainsByCarTypesAction(Bundle.getString("MenuItemPreviewByType"), new Frame(), true, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyTrainsByCarType", true);
@@ -127,7 +121,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 		pack();
 		if (getWidth()<300)
 			setSize(300, getHeight());
-		setTitle(getString("TitleModifyTrains"));
+		setTitle(Bundle.getString("TitleModifyTrains"));
 		setVisible(true);
 	}
 		
@@ -184,7 +178,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 			train.addPropertyChangeListener(this);
 			JCheckBox cb = new JCheckBox(train.getName());
 			cb.setName(train.getId());
-			cb.setToolTipText(MessageFormat.format(getString("TipTrainCarType"),new Object[]{carType}));
+			cb.setToolTipText(MessageFormat.format(Bundle.getString("TipTrainCarType"),new Object[]{carType}));
 			addCheckBoxAction(cb);
 			trainList.add(cb);
 			boolean trainAcceptsType = train.acceptsTypeName(carType);

@@ -3,7 +3,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
 import java.util.List;
 import java.io.File;
 
@@ -12,8 +11,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
-//import javax.swing.JMenu;
-//import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -33,11 +30,6 @@ import jmri.util.FileUtil;
 
 public class TrainsScriptFrame extends OperationsFrame {
 
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
-
 	TrainManager manager;
 	TrainManagerXml managerXml;
 
@@ -50,11 +42,11 @@ public class TrainsScriptFrame extends OperationsFrame {
 	// labels
 
 	// major buttons
-	JButton addStartUpScriptButton = new JButton(getString("AddScript"));
-	JButton addShutDownScriptButton = new JButton(getString("AddScript"));
-	JButton runStartUpScriptButton = new JButton(getString("RunScripts"));
-	JButton runShutDownScriptButton = new JButton(getString("RunScripts"));
-	JButton saveButton = new JButton(getString("Save"));
+	JButton addStartUpScriptButton = new JButton(Bundle.getString("AddScript"));
+	JButton addShutDownScriptButton = new JButton(Bundle.getString("AddScript"));
+	JButton runStartUpScriptButton = new JButton(Bundle.getString("RunScripts"));
+	JButton runShutDownScriptButton = new JButton(Bundle.getString("RunScripts"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
 
 	public TrainsScriptFrame() {
 		super();
@@ -65,13 +57,13 @@ public class TrainsScriptFrame extends OperationsFrame {
 		startUpScriptPane = new JScrollPane(pStartUpScript);
 		startUpScriptPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		startUpScriptPane.setBorder(BorderFactory.createTitledBorder(getString("ScriptsStartUp")));
+		startUpScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScriptsStartUp")));
 
 		shutDownScriptPane = new JScrollPane(pShutDownScript);
 		shutDownScriptPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		shutDownScriptPane
-				.setBorder(BorderFactory.createTitledBorder(getString("ScriptsShutDown")));
+				.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScriptsShutDown")));
 
 		// remember who called us
 
@@ -123,7 +115,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 		if (scripts.size() > 0)
 			addItem(pStartUpScript, runStartUpScriptButton, 1, 0);
 		for (int i = 0; i < scripts.size(); i++) {
-			JButton removeStartUpScripts = new JButton(getString("RemoveScript"));
+			JButton removeStartUpScripts = new JButton(Bundle.getString("RemoveScript"));
 			removeStartUpScripts.setName(scripts.get(i));
 			removeStartUpScripts.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -147,7 +139,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 		if (scripts.size() > 0)
 			addItem(pShutDownScript, runShutDownScriptButton, 1, 0);
 		for (int i = 0; i < scripts.size(); i++) {
-			JButton removeShutDownScripts = new JButton(getString("RemoveScript"));
+			JButton removeShutDownScripts = new JButton(Bundle.getString("RemoveScript"));
 			removeShutDownScripts.setName(scripts.get(i));
 			removeShutDownScripts.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {

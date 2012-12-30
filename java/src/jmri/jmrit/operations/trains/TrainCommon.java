@@ -8,7 +8,6 @@ import java.awt.FontMetrics;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.ResourceBundle;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -35,11 +34,6 @@ import jmri.jmrit.operations.setup.Setup;
  * @version $Revision: 1 $
  */
 public class TrainCommon {
-
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
 
 	private static final String LENGTHABV = Setup.LENGTHABV;
 	protected static final String TAB = "    ";
@@ -382,13 +376,13 @@ public class TrainCommon {
 			return " " + tabString(car.getKernelName(), Control.max_len_string_attibute);
 		else if (attribute.equals(Setup.RWE)) {
 			if (!car.getReturnWhenEmptyDestName().equals(""))
-				return " " + getString("RWE") + " "
+				return " " + Bundle.getString("RWE") + " "
 						+ splitString(car.getReturnWhenEmptyDestinationName()) + " ("
 						+ splitString(car.getReturnWhenEmptyDestTrackName()) + ")";
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getNextDestinationName().equals(""))
-				return " " + getString("FD") + " " + splitString(car.getNextDestinationName());
+				return " " + Bundle.getString("FD") + " " + splitString(car.getNextDestinationName());
 			return "";
 		}
 		return getRollingStockAttribute(car, attribute, pickup, local);
@@ -413,19 +407,19 @@ public class TrainCommon {
 			return " " + tabString(rs.getColor(), CarColors.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.LOCATION) && (pickup || local)) {
 			if (rs.getTrack() != null)
-				return " " + getString("from") + " " + splitString(rs.getTrackName());
+				return " " + Bundle.getString("from") + " " + splitString(rs.getTrackName());
 			return "";
 		} else if (attribute.equals(Setup.LOCATION) && !pickup && !local)
-			return " " + getString("from") + " " + splitString(rs.getLocationName());
+			return " " + Bundle.getString("from") + " " + splitString(rs.getLocationName());
 		else if (attribute.equals(Setup.DESTINATION) && pickup) {
 			if (Setup.isTabEnabled())
-				return " " + getString("dest") + " " + splitString(rs.getDestinationName());
+				return " " + Bundle.getString("dest") + " " + splitString(rs.getDestinationName());
 			else
-				return " " + getString("destination") + " " + splitString(rs.getDestinationName());
+				return " " + Bundle.getString("destination") + " " + splitString(rs.getDestinationName());
 		} else if (attribute.equals(Setup.DESTINATION) && !pickup)
-			return " " + getString("to") + " " + splitString(rs.getDestinationTrackName());
+			return " " + Bundle.getString("to") + " " + splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.DEST_TRACK))
-			return " " + getString("dest") + " " + splitString(rs.getDestinationName()) + ", "
+			return " " + Bundle.getString("dest") + " " + splitString(rs.getDestinationName()) + ", "
 					+ splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.OWNER))
 			return " " + tabString(rs.getOwner(), CarOwners.instance().getCurMaxNameLength());
@@ -447,7 +441,7 @@ public class TrainCommon {
 		// tab?
 		else if (attribute.equals(Setup.TAB))
 			return " " + tabString("", Setup.getTabLength());
-		return " (" + getString("ErrorPrintOptions") + ") "; // maybe user changed locale
+		return " (" + Bundle.getString("ErrorPrintOptions") + ") "; // maybe user changed locale
 	}
 
 	protected static String getDate() {

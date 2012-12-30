@@ -7,8 +7,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -40,11 +38,6 @@ import java.beans.PropertyChangeEvent;
 public class TrainSwitchListEditFrame extends OperationsFrame implements
 		java.beans.PropertyChangeListener {
 
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
-
 	JScrollPane switchPane;
 
 	// load managers
@@ -54,29 +47,29 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	JPanel locationPanelCheckBoxes = new JPanel();
 
 	// labels
-	JLabel textName = new JLabel(getString("Location"));
-	JLabel textStatus = new JLabel(getString("Status"));
-	JLabel textComment = new JLabel(getString("Comment"));
-	JLabel textPrinter = new JLabel(getString("Printer"));
+	JLabel textName = new JLabel(Bundle.getString("Location"));
+	JLabel textStatus = new JLabel(Bundle.getString("Status"));
+	JLabel textComment = new JLabel(Bundle.getString("Comment"));
+	JLabel textPrinter = new JLabel(Bundle.getString("Printer"));
 	JLabel space1 = new JLabel("        ");
 	JLabel space2 = new JLabel("        ");
 	JLabel space3 = new JLabel("        ");
 
 	// checkboxes
-	JCheckBox switchListRealTimeCheckBox = new JCheckBox(getString("SwitchListRealTime"));
-	JCheckBox switchListAllTrainsCheckBox = new JCheckBox(getString("SwitchListAllTrains"));
-	JCheckBox switchListPageCheckBox = new JCheckBox(getString("SwitchListPage"));
+	JCheckBox switchListRealTimeCheckBox = new JCheckBox(Bundle.getString("SwitchListRealTime"));
+	JCheckBox switchListAllTrainsCheckBox = new JCheckBox(Bundle.getString("SwitchListAllTrains"));
+	JCheckBox switchListPageCheckBox = new JCheckBox(Bundle.getString("SwitchListPage"));
 
 	// major buttons
-	JButton clearButton = new JButton(getString("Clear"));
-	JButton setButton = new JButton(getString("Select"));
-	JButton printButton = new JButton(getString("PrintSwitchLists"));
-	JButton previewButton = new JButton(getString("PreviewSwitchLists"));
-	JButton changeButton = new JButton(getString("PrintChanges"));
-	JButton csvGenerateButton = new JButton(getString("CsvGenerate"));
-	JButton csvChangeButton = new JButton(getString("CsvChanges"));
-	JButton updateButton = new JButton(getString("Update"));
-	JButton saveButton = new JButton(getString("Save"));
+	JButton clearButton = new JButton(Bundle.getString("Clear"));
+	JButton setButton = new JButton(Bundle.getString("Select"));
+	JButton printButton = new JButton(Bundle.getString("PrintSwitchLists"));
+	JButton previewButton = new JButton(Bundle.getString("PreviewSwitchLists"));
+	JButton changeButton = new JButton(Bundle.getString("PrintChanges"));
+	JButton csvGenerateButton = new JButton(Bundle.getString("CsvGenerate"));
+	JButton csvChangeButton = new JButton(Bundle.getString("CsvChanges"));
+	JButton updateButton = new JButton(Bundle.getString("Update"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
 
 	// text field
 
@@ -95,11 +88,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// tool tips
-		switchListRealTimeCheckBox.setToolTipText(getString("RealTimeTip"));
-		switchListAllTrainsCheckBox.setToolTipText(getString("AllTrainsTip"));
-		switchListPageCheckBox.setToolTipText(getString("PageTrainTip"));
-		csvChangeButton.setToolTipText(getString("CsvChangesTip"));
-		changeButton.setToolTipText(getString("PrintChangesTip"));
+		switchListRealTimeCheckBox.setToolTipText(Bundle.getString("RealTimeTip"));
+		switchListAllTrainsCheckBox.setToolTipText(Bundle.getString("AllTrainsTip"));
+		switchListPageCheckBox.setToolTipText(Bundle.getString("PageTrainTip"));
+		csvChangeButton.setToolTipText(Bundle.getString("CsvChangesTip"));
+		changeButton.setToolTipText(Bundle.getString("PrintChangesTip"));
 
 		switchPane = new JScrollPane(locationPanelCheckBoxes);
 		switchPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -121,7 +114,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		JPanel pSwitchListOptions = new JPanel();
 		pSwitchListOptions.setLayout(new GridBagLayout());
 		pSwitchListOptions.setBorder(BorderFactory
-				.createTitledBorder(getString("BorderLayoutSwitchListOptions")));
+				.createTitledBorder(Bundle.getString("BorderLayoutSwitchListOptions")));
 		addItem(pSwitchListOptions, switchListAllTrainsCheckBox, 1, 0);
 		addItem(pSwitchListOptions, switchListPageCheckBox, 2, 0);
 		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 3, 0);
@@ -180,7 +173,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			setSize(400, getHeight());
 		if (getHeight() < 300)
 			setSize(getWidth(), 300);
-		setTitle(getString("TitleSwitchLists"));
+		setTitle(Bundle.getString("TitleSwitchLists"));
 		setVisible(true);
 	}
 
@@ -354,9 +347,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			JLabel status = new JLabel(l.getStatus());
 			addItem(locationPanelCheckBoxes, status, 2, y);
 
-			JButton button = new JButton(getString("Add"));
+			JButton button = new JButton(Bundle.getString("Add"));
 			if (!l.getSwitchListComment().equals(""))
-				button.setText(getString("Edit"));
+				button.setText(Bundle.getString("Edit"));
 			button.setName(l.getName());
 			addCommentButtonAction(button);
 			addItem(locationPanelCheckBoxes, button, 4, y);
@@ -481,7 +474,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		Dimension minScrollerDim = new Dimension(1200, 500);
-		JButton saveButton = new JButton(getString("Save"));
+		JButton saveButton = new JButton(Bundle.getString("Save"));
 
 		Location _location;
 
@@ -496,7 +489,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 			JPanel pC = new JPanel();
-			pC.setBorder(BorderFactory.createTitledBorder(getString("Comment")));
+			pC.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Comment")));
 			pC.setLayout(new GridBagLayout());
 			commentScroller.setMinimumSize(minScrollerDim);
 			addItem(pC, commentScroller, 1, 0);

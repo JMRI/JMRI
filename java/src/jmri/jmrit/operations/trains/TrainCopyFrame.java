@@ -7,8 +7,6 @@ import jmri.jmrit.operations.setup.Control;
 
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import java.util.ResourceBundle;
-
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -22,29 +20,22 @@ import javax.swing.JPanel;
  */
 public class TrainCopyFrame extends OperationsFrame {
 
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
-
 	TrainManager trainManager = TrainManager.instance();
 
 	// labels
-	javax.swing.JLabel textCopyTrain = new javax.swing.JLabel(getString("SelectTrain"));
-	javax.swing.JLabel textTrainName = new javax.swing.JLabel(getString("Name"));
+	javax.swing.JLabel textCopyTrain = new javax.swing.JLabel(Bundle.getString("SelectTrain"));
+	javax.swing.JLabel textTrainName = new javax.swing.JLabel(Bundle.getString("Name"));
 
 	// text field
 	javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(20);
 
 	// major buttons
-	javax.swing.JButton copyButton = new javax.swing.JButton(getString("Copy"));
+	javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getString("Copy"));
 
 	// combo boxes
 	javax.swing.JComboBox trainBox = TrainManager.instance().getComboBox();
 
 	public TrainCopyFrame() {
-		super(ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString("TitleTrainCopy"));
 		// general GUI config
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -75,6 +66,8 @@ public class TrainCopyFrame extends OperationsFrame {
 			setSize(400, getHeight());
 		if (getHeight() < 150)
 			setSize(getWidth(), 150);
+		
+		setTitle(Bundle.getString("TitleTrainCopy"));
 
 		// setup buttons
 		addButtonAction(copyButton);
@@ -110,20 +103,20 @@ public class TrainCopyFrame extends OperationsFrame {
 
 			TrainEditFrame f = new TrainEditFrame();
 			f.initComponents(newTrain);
-			f.setTitle(getString("TitleTrainEdit"));
+			f.setTitle(Bundle.getString("TitleTrainEdit"));
 			f.setVisible(true);
 		}
 	}
 
 	private void reportTrainExists() {
-		JOptionPane.showMessageDialog(this, getString("TrainNameExists"),
-				MessageFormat.format(getString("CanNotTrain"), new Object[] { getString("copy") }),
+		JOptionPane.showMessageDialog(this, Bundle.getString("TrainNameExists"),
+				MessageFormat.format(Bundle.getString("CanNotTrain"), new Object[] { Bundle.getString("copy") }),
 				JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void reportTrainDoesNotExist() {
-		JOptionPane.showMessageDialog(this, getString("SelectTrain"),
-				MessageFormat.format(getString("CanNotTrain"), new Object[] { getString("copy") }),
+		JOptionPane.showMessageDialog(this, Bundle.getString("SelectTrain"),
+				MessageFormat.format(Bundle.getString("CanNotTrain"), new Object[] { Bundle.getString("copy") }),
 				JOptionPane.ERROR_MESSAGE);
 	}
 
@@ -133,15 +126,15 @@ public class TrainCopyFrame extends OperationsFrame {
 	 */
 	private boolean checkName() {
 		if (trainNameTextField.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(this, getString("EnterTrainName"), MessageFormat.format(
-					getString("CanNotTrain"), new Object[] { getString("copy") }),
+			JOptionPane.showMessageDialog(this, Bundle.getString("EnterTrainName"), MessageFormat.format(
+					Bundle.getString("CanNotTrain"), new Object[] { Bundle.getString("copy") }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (trainNameTextField.getText().length() > Control.max_len_string_train_name) {
-			JOptionPane.showMessageDialog(this, MessageFormat.format(getString("TrainNameLess"),
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getString("TrainNameLess"),
 					new Object[] { Control.max_len_string_train_name + 1 }), MessageFormat.format(
-					getString("CanNot"), new Object[] { getString("copy") }),
+					Bundle.getString("CanNot"), new Object[] { Bundle.getString("copy") }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

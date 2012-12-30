@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -30,11 +28,6 @@ import java.io.File;
  */
 
 public class TrainManifestOptionFrame extends OperationsFrame{
-
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
 	
 	Train _train = null;
 	
@@ -43,14 +36,14 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 	JLabel logoURL = new JLabel("");
 
 	// major buttons	
-	JButton saveButton = new JButton(getString("Save"));
-	JButton addLogoButton = new JButton(getString("AddLogo"));
-	JButton removeLogoButton = new JButton(getString("RemoveLogo"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton addLogoButton = new JButton(Bundle.getString("AddLogo"));
+	JButton removeLogoButton = new JButton(Bundle.getString("RemoveLogo"));
 
 	// radio buttons		
     
     // check boxes
-	JCheckBox ShowTimesCheckBox = new JCheckBox(getString("ShowTimes"));
+	JCheckBox ShowTimesCheckBox = new JCheckBox(Bundle.getString("ShowTimes"));
 	
 	// text fields
 	JTextField railroadNameTextField = new JTextField(35);
@@ -59,7 +52,7 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 	// combo boxes
 
 	public TrainManifestOptionFrame() {
-		super(getString("TitleOptions"));
+		super(Bundle.getString("TitleOptions"));
 	}
 
 	public void initComponents(TrainEditFrame parent) {
@@ -69,8 +62,8 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		_train = parent._train;
 		
 		// add tool tips
-		addLogoButton.setToolTipText(getString("AddLogoToolTip"));
-		removeLogoButton.setToolTipText(getString("RemoveLogoToolTip"));
+		addLogoButton.setToolTipText(Bundle.getString("AddLogoToolTip"));
+		removeLogoButton.setToolTipText(Bundle.getString("RemoveLogoToolTip"));
 			
 		// Option panel
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));		
@@ -78,14 +71,14 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		JPanel pOptionName = new JPanel();
 		pOptionName.setLayout(new GridBagLayout());
 		JScrollPane pOptionNamePane = new JScrollPane(pOptionName);
-		pOptionNamePane.setBorder(BorderFactory.createTitledBorder(getString("BorderLayoutRailRoadName")));
+		pOptionNamePane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutRailRoadName")));
 		addItem (pOptionName, railroadNameTextField, 0, 0);
 		
 		// manifest logo
 		JPanel pOptionLogo = new JPanel();
 		pOptionLogo.setLayout(new GridBagLayout());
 		JScrollPane pOptionLogoPane = new JScrollPane(pOptionLogo);
-		pOptionLogoPane.setBorder(BorderFactory.createTitledBorder(getString("BorderLayoutLogo")));
+		pOptionLogoPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutLogo")));
 		addItem (pOptionLogo, textPad, 2, 18);
 		addItem (pOptionLogo, addLogoButton, 2, 20);
 		addItemLeft (pOptionLogo, removeLogoButton, 0, 21);
@@ -97,7 +90,7 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		pCheckboxes.setLayout(new GridBagLayout());
 		JScrollPane pCheckboxesPane = new JScrollPane(pCheckboxes);
 		pCheckboxesPane.setBorder(BorderFactory
-				.createTitledBorder(getString("BorderLayoutManifest")));
+				.createTitledBorder(Bundle.getString("BorderLayoutManifest")));
 		addItem (pCheckboxes, ShowTimesCheckBox, 0, 0);
 		
 		// row 11

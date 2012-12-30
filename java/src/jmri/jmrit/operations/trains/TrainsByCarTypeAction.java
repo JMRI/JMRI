@@ -4,8 +4,6 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -16,17 +14,12 @@ import javax.swing.AbstractAction;
  */
 public class TrainsByCarTypeAction extends AbstractAction {
 	
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
-	
     public TrainsByCarTypeAction(String s) {
     	super(s);
     }
     
     public TrainsByCarTypeAction(){
-    	super(getString("TitleModifyTrains"));
+    	super(Bundle.getString("TitleModifyTrains"));
     }
 
     TrainsByCarTypeFrame f = null;

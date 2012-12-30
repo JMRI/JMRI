@@ -9,8 +9,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Calendar;
-import java.util.ResourceBundle;
-
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -25,11 +23,6 @@ import java.util.List;
  * @version $Revision$
  */
 public class TrainLogger extends XmlFile implements java.beans.PropertyChangeListener {
-
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
 
 	File _fileLogger;
 	private boolean _trainLog = false; // when true logging train movements
@@ -103,10 +96,10 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 	}
 
 	private String getHeader() {
-		String header = getString("Name") + del + getString("Description") + del
-				+ getString("Current") + del + getString("NextLocation") + del
-				+ getString("Status") + del + getString("BuildMessages") + del
-				+ getString("DateAndTime");
+		String header = Bundle.getString("Name") + del + Bundle.getString("Description") + del
+				+ Bundle.getString("Current") + del + Bundle.getString("NextLocation") + del
+				+ Bundle.getString("Status") + del + Bundle.getString("BuildMessages") + del
+				+ Bundle.getString("DateAndTime");
 		return header;
 	}
 

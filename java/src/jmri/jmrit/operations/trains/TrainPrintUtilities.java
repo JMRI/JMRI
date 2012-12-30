@@ -9,14 +9,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ResourceBundle;
-
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-//import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -29,11 +26,6 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * 
  */
 public class TrainPrintUtilities {
-
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
 
 	/**
 	 * Print or preview a train manifest, build report, or switch list.
@@ -200,7 +192,7 @@ public class TrainPrintUtilities {
 		}
 		java.io.PrintWriter out;
 		File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(
-				getString("Report") + " " + name);
+				Bundle.getString("Report") + " " + name);
 		try {
 			out = new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(
 					buildReport)), true);

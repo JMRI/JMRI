@@ -11,7 +11,6 @@ import java.text.MessageFormat;
 import javax.swing.*;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 
@@ -26,11 +25,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * @version $Revision$
  */
 public class PrintTrainAction extends AbstractAction {
-
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
 
 	String newLine = "\n";
 	public static final int MAX_NAME_LENGTH = 15;
@@ -61,7 +55,7 @@ public class PrintTrainAction extends AbstractAction {
 		// obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		try {
-			writer = new HardcopyWriter(mFrame, MessageFormat.format(getString("TitleTrain"),
+			writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getString("TitleTrain"),
 					new Object[] { train.getName() }), 10, .5, .5, .5, .5, isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -69,19 +63,19 @@ public class PrintTrainAction extends AbstractAction {
 		}
 
 		try {
-			String s = getString("Name") + ": " + train.getName() + newLine;
+			String s = Bundle.getString("Name") + ": " + train.getName() + newLine;
 			writer.write(s, 0, s.length());
-			s = getString("Description") + ": " + train.getDescription() + newLine;
+			s = Bundle.getString("Description") + ": " + train.getDescription() + newLine;
 			writer.write(s, 0, s.length());
-			s = getString("Departs") + ": " + train.getTrainDepartsName() + newLine;
+			s = Bundle.getString("Departs") + ": " + train.getTrainDepartsName() + newLine;
 			writer.write(s, 0, s.length());
-			s = getString("DepartTime") + ": " + train.getDepartureTime() + newLine;
+			s = Bundle.getString("DepartTime") + ": " + train.getDepartureTime() + newLine;
 			writer.write(s, 0, s.length());
-			s = getString("Terminates") + ": " + train.getTrainTerminatesName() + newLine;
+			s = Bundle.getString("Terminates") + ": " + train.getTrainTerminatesName() + newLine;
 			writer.write(s, 0, s.length());
 			s = newLine;
 			writer.write(s, 0, s.length());
-			s = getString("Route") + ": " + train.getTrainRouteName() + newLine;
+			s = Bundle.getString("Route") + ": " + train.getTrainRouteName() + newLine;
 			writer.write(s, 0, s.length());
 			Route route = train.getRoute();
 			if (route != null) {
@@ -93,7 +87,7 @@ public class PrintTrainAction extends AbstractAction {
 				}
 			}
 			if (!train.getComment().equals("")) {
-				s = getString("Comment") + ": " + train.getComment() + newLine;
+				s = Bundle.getString("Comment") + ": " + train.getComment() + newLine;
 				writer.write(s);
 			}
 

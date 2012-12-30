@@ -7,8 +7,6 @@ import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.JComboBox;
 
 import org.jdom.Element;
@@ -23,11 +21,6 @@ import jmri.jmrit.operations.setup.Control;
  * @version	$Revision$
  */
 public class TrainScheduleManager implements java.beans.PropertyChangeListener {
-	
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
 	
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; 
     
@@ -289,13 +282,13 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     
     private void createDefaultSchedules(){
     	log.debug("creating default schedules");
-    	newSchedule(getString("Sunday"));
-    	newSchedule(getString("Monday"));
-    	newSchedule(getString("Tuesday"));
-    	newSchedule(getString("Wednesday"));
-    	newSchedule(getString("Thursday"));
-    	newSchedule(getString("Friday"));
-		newSchedule(getString("Saturday"));
+    	newSchedule(Bundle.getString("Sunday"));
+    	newSchedule(Bundle.getString("Monday"));
+    	newSchedule(Bundle.getString("Tuesday"));
+    	newSchedule(Bundle.getString("Wednesday"));
+    	newSchedule(Bundle.getString("Thursday"));
+    	newSchedule(Bundle.getString("Friday"));
+		newSchedule(Bundle.getString("Saturday"));
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {

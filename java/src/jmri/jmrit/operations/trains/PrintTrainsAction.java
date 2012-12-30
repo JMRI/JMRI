@@ -10,7 +10,6 @@ import java.io.IOException;
 import javax.swing.*;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Action to print a summary of the Roster contents
@@ -23,11 +22,6 @@ import java.util.ResourceBundle;
  * @version $Revision$
  */
 public class PrintTrainsAction extends AbstractAction {
-
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
 
 	String newLine = "\n";
 	TrainManager manager = TrainManager.instance();
@@ -55,7 +49,7 @@ public class PrintTrainsAction extends AbstractAction {
 		// obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		try {
-			writer = new HardcopyWriter(mFrame, getString("TitleTrainsTable"), 10, .5, .5, .5, .5,
+			writer = new HardcopyWriter(mFrame, Bundle.getString("TitleTrainsTable"), 10, .5, .5, .5, .5,
 					isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -67,9 +61,9 @@ public class PrintTrainsAction extends AbstractAction {
 		List<String> trains = panel.getSortByList();
 
 		try {
-			String s = getString("Name") + "\t\t" + getString("Description") + "\t"
-					+ getString("Route") + "\t\t" + getString("Departs") + "\t\t"
-					+ getString("Time") + "  " + getString("Terminates") + "\t" + newLine;
+			String s = Bundle.getString("Name") + "\t\t" + Bundle.getString("Description") + "\t"
+					+ Bundle.getString("Route") + "\t\t" + Bundle.getString("Departs") + "\t\t"
+					+ Bundle.getString("Time") + "  " + Bundle.getString("Terminates") + "\t" + newLine;
 			writer.write(s, 0, s.length());
 			for (int i = 0; i < trains.size(); i++) {
 				Train train = manager.getTrainById(trains.get(i));

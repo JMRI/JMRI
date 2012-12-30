@@ -5,8 +5,6 @@ package jmri.jmrit.operations.trains;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.JTable;
 import javax.swing.table.TableColumnModel;
 
@@ -21,11 +19,6 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements
 		PropertyChangeListener {
-
-	protected static final String getString(String key) {
-		return ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle")
-				.getString(key);
-	}
 
 	TrainManager trainManager = TrainManager.instance();
 	TrainScheduleManager scheduleManager = TrainScheduleManager.instance();
@@ -130,13 +123,13 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		case IDCOLUMN:
 			synchronized (this) {
 				if (_sort == SORTBYID)
-					return getString("Id");
-				return getString("Time");
+					return Bundle.getString("Id");
+				return Bundle.getString("Time");
 			}
 		case NAMECOLUMN:
-			return getString("Name");
+			return Bundle.getString("Name");
 		case DESCRIPTIONCOLUMN:
-			return getString("Description");
+			return Bundle.getString("Description");
 		}
 		TrainSchedule ts = getSchedule(col);
 		if (ts != null) {
