@@ -66,6 +66,7 @@ public class PrintEngineRosterAction  extends AbstractAction {
         
         // Loop through the Roster, printing as needed
         String newLine = "\n";
+    	String tab = "\t";
         String number;       
         String road;
         String model;
@@ -81,8 +82,8 @@ public class PrintEngineRosterAction  extends AbstractAction {
         List<String> engines = panel.getSortByList();
         try {
         	// header
-        	String s = rb.getString("Number") + "\t" + rb.getString("Road")
-					+ "\t" + rb.getString("Model") + "\t     "
+        	String s = rb.getString("Number") + tab + rb.getString("Road")
+					+ tab + rb.getString("Model") + tab + "     "
 					+ rb.getString("Type") + "      " + rb.getString("Length")
 					+ " " + (panel.sortByConsist.isSelected()?rb.getString("Consist")+"     ":rb.getString("Owner"))
 					+ (panel.sortByValue.isSelected()?" " +padAttribute(Setup.getValueLabel(), Control.max_len_string_attibute):"")

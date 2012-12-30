@@ -30,7 +30,10 @@ import java.util.ResourceBundle;
 public class PrintLocationsByCarTypesAction  extends AbstractAction {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	String newLine = "\n";
+	
+	static final String newLine = "\n";	// NOI18N
+	static final String tab = "\t";		// NOI18N
+	
 	LocationManager locManager = LocationManager.instance();
 
     public PrintLocationsByCarTypesAction(String actionName, Frame frame, boolean preview, Component pWho) {
@@ -67,8 +70,8 @@ public class PrintLocationsByCarTypesAction  extends AbstractAction {
 
 		try {
 			// title line
-			String s = rb.getString("Type") + "\t" + rb.getString("Location")
-					+ "\t" + rb.getString("Track") + "\t" + newLine;
+			String s = rb.getString("Type") + tab + rb.getString("Location")
+					+ tab + rb.getString("Track") + newLine;
 			writer.write(s);
 			// car types
 			for (int t = 0; t < carTypes.length; t++) {
@@ -78,14 +81,14 @@ public class PrintLocationsByCarTypesAction  extends AbstractAction {
 				for (int i = 0; i < locations.size(); i++) {
 					Location location = locManager.getLocationById(locations.get(i));
 					if (location.acceptsTypeName(carTypes[t])) {
-						s = "\t" + location.getName() + newLine;
+						s = tab + location.getName() + newLine;
 						writer.write(s);
 						// tracks
 						List<String> tracks = location.getTrackIdsByNameList(null);
 						for (int j = 0; j < tracks.size(); j++) {
 							Track track = location.getTrackById(tracks.get(j));
 							if (track.acceptsTypeName(carTypes[t])) {
-								s = "\t\t\t" + track.getName() + newLine;
+								s = tab + tab + tab + track.getName() + newLine;
 								writer.write(s);
 							}
 						}

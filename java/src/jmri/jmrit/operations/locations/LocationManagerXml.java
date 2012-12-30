@@ -46,19 +46,19 @@ public class LocationManagerXml extends OperationsXml {
 	            file = new File(name);
 	        }
 	        // create root element
-	        Element root = new Element("operations-config");
-	        Document doc = newDocument(root, dtdLocation+"operations-locations.dtd");
+	        Element root = new Element("operations-config");	// NOI18N
+	        Document doc = newDocument(root, dtdLocation+"operations-locations.dtd");	// NOI18N
 
 	        // add XSLT processing instruction
 	        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
-	        m.put("type", "text/xsl");
-	        m.put("href", xsltLocation+"operations-locations.xsl");
-	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+	        m.put("type", "text/xsl");	// NOI18N
+	        m.put("href", xsltLocation+"operations-locations.xsl");	// NOI18N
+	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);	// NOI18N
 	        doc.addContent(0,p);
 		        
 	        LocationManager manager = LocationManager.instance();
 	        Element values;
-	        root.addContent(values = new Element("locations"));
+	        root.addContent(values = new Element("locations"));	// NOI18N
 	        // add entries
 	        List<String> locationList = manager.getLocationsByIdList();
 	        for (int i=0; i<locationList.size(); i++) {
@@ -69,7 +69,7 @@ public class LocationManagerXml extends OperationsXml {
  	            values.addContent(loc.store());
 	        }
 	        
-	        root.addContent(values = new Element("schedules"));
+	        root.addContent(values = new Element("schedules"));	// NOI18N
 	        // add entries
 	        ScheduleManager scheduleManager = ScheduleManager.instance();
 	        List<String> scheduleList = scheduleManager.getSchedulesByIdList();
@@ -121,9 +121,9 @@ public class LocationManagerXml extends OperationsXml {
     	LocationManager manager = LocationManager.instance();
     	
     	// decode type, invoke proper processing routine if a decoder file
-    	if (root.getChild("locations") != null) {
+    	if (root.getChild("locations") != null) {	// NOI18N
 
-    		List<Element> l = root.getChild("locations").getChildren("location");
+    		List<Element> l = root.getChild("locations").getChildren("location");	// NOI18N
     		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" locations");
     		for (int i=0; i<l.size(); i++) {
     			manager.register(new Location(l.get(i)));
@@ -144,9 +144,9 @@ public class LocationManagerXml extends OperationsXml {
     	
        	// load schedules       
     	ScheduleManager scheduleManager = ScheduleManager.instance();
-    	if (root.getChild("schedules") != null) {
+    	if (root.getChild("schedules") != null) {	// NOI18N
 
-    		List<Element> l = root.getChild("schedules").getChildren("schedule");
+    		List<Element> l = root.getChild("schedules").getChildren("schedule");	// NOI18N
     		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" schedules");
     		for (int i=0; i<l.size(); i++) {
     			scheduleManager.register(new Schedule(l.get(i)));
@@ -169,7 +169,7 @@ public class LocationManagerXml extends OperationsXml {
 		return operationsFileName;
 	}
 
-    private String operationsFileName = "OperationsLocationRoster.xml";
+    private String operationsFileName = "OperationsLocationRoster.xml";	// NOI18N
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocationManagerXml.class.getName());
 

@@ -24,7 +24,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * @version	$Revision$
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";	// NOI18N
 	
 	public LocationManager() {
 		CarTypes.instance().addPropertyChangeListener(this);

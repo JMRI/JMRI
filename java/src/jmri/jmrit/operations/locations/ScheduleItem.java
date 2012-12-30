@@ -224,7 +224,8 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     	firePropertyChange (DISPOSE, null, DISPOSE);
     }
     
-	
+    static final String ITEM = "item";	// NOI18N
+    
 	   /**
      * Construct this Entry from XML. This member has to remain synchronized with the
      * detailed DTD in operations-config.xml

@@ -26,8 +26,8 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	protected int _IdNumber = 0;			// each item in a schedule gets its own id
 	protected int _sequenceNum = 0;			// each item has a unique sequence number
 	
-	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange";
-	public static final String DISPOSE = "dispose";
+	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange";	// NOI18N
+	public static final String DISPOSE = "dispose";	// NOI18N
 	
 
 	public Schedule(String id, String name){
@@ -44,7 +44,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name))
-			firePropertyChange("ScheduleName", old, name);
+			firePropertyChange("ScheduleName", old, name);	// NOI18N
 	}
 	
 	// for combo boxes
@@ -64,7 +64,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment))
-			firePropertyChange("ScheduleComment", old, comment);
+			firePropertyChange("ScheduleComment", old, comment);	// NOI18N
 	}
 	
 	public String getComment(){
@@ -302,6 +302,9 @@ public class Schedule implements java.beans.PropertyChangeListener {
     	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
 
+    static final String ID = "id";		// NOI18N
+    static final String NAME = "name";	// NOI18N
+    static final String COMMENT = "comment";	// NOI18N
  	
    /**
      * Construct this Entry from XML. This member has to remain synchronized with the
@@ -312,13 +315,13 @@ public class Schedule implements java.beans.PropertyChangeListener {
     public Schedule(org.jdom.Element e) {
 //        if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
-        if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
+        if ((a = e.getAttribute(ID)) != null )  _id = a.getValue();
         else log.warn("no id attribute in schedule element when reading operations");
-        if ((a = e.getAttribute("name")) != null )  _name = a.getValue();
-        if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
-        if (e.getChildren("item") != null) {
+        if ((a = e.getAttribute(NAME)) != null )  _name = a.getValue();
+        if ((a = e.getAttribute(COMMENT)) != null )  _comment = a.getValue();
+        if (e.getChildren(ScheduleItem.ITEM) != null) {
         	@SuppressWarnings("unchecked")
-            List<Element> l = e.getChildren("item");
+            List<Element> l = e.getChildren(ScheduleItem.ITEM);
             if (log.isDebugEnabled()) log.debug("schedule: "+getName()+" has "+l.size()+" items");
             for (int i=0; i<l.size(); i++) {
                 register(new ScheduleItem(l.get(i)));
@@ -333,9 +336,9 @@ public class Schedule implements java.beans.PropertyChangeListener {
      */
     public org.jdom.Element store() {
         org.jdom.Element e = new org.jdom.Element("schedule");
-        e.setAttribute("id", getId());
-        e.setAttribute("name", getName());
-        e.setAttribute("comment", getComment());
+        e.setAttribute(ID, getId());
+        e.setAttribute(NAME, getName());
+        e.setAttribute(COMMENT, getComment());
         List<String> l = getItemsBySequenceList();
         for (int i=0; i<l.size(); i++) {
         	String id = l.get(i);
@@ -349,7 +352,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled())
     		log.debug("schedule (" + getName() + ") sees property change: "
-    				+ e.getPropertyName() + " from (" +e.getSource()+ ") old: " + e.getOldValue() + " new: "
+    				+ e.getPropertyName() + " from (" +e.getSource()+ ") old: " + e.getOldValue() + " new: "  // NOI18N
     				+ e.getNewValue());
     	// forward all schedule item changes
     	firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());

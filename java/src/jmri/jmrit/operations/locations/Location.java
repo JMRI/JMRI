@@ -800,7 +800,7 @@ public class Location implements java.beans.PropertyChangeListener {
     		Track track = getTrackById(tracks.get(i));
     		deleteTrack(track);
     	}
-    	setDirtyAndFirePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
+    	setDirtyAndFirePropertyChange (DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
     }
  	
    /**

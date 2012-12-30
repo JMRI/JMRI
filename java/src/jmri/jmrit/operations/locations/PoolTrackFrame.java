@@ -157,7 +157,7 @@ class PoolTrackFrame extends OperationsFrame implements
 
 		// Check for null first,
 		if (t == null)
-			throw new NullPointerException("Track instance can't be null");
+			throw new NullPointerException("Track instance can't be null");	// NOI18N
 		
 		// then save the Track we will work with
 		_track = t;
@@ -364,7 +364,7 @@ class PoolTrackFrame extends OperationsFrame implements
 		// enabled, etc.
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: "
-					+ e.getOldValue() + " new: " + e.getNewValue());
+					+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
 
 		if (e.getPropertyName().equals(Location.POOL_LENGTH_CHANGED_PROPERTY))
 			updatePoolsComboBox();

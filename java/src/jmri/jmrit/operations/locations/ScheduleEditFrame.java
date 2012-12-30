@@ -65,7 +65,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
 	public static final int MAX_NAME_LENGTH = 25;
 	public static final String NAME = rb.getString("Name");
-	public static final String DISPOSE = "dispose" ;
+	public static final String DISPOSE = "dispose" ; // NOI18N
 
 	public ScheduleEditFrame() {
 		super();
@@ -184,7 +184,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		menuBar.add(toolMenu);
 		toolMenu.add(new ScheduleOptionsAction(this));
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 
 		//	 get notified if car types or roads are changed
 		CarTypes.instance().addPropertyChangeListener(this);

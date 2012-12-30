@@ -202,7 +202,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		if (p == null)
 			return;
 		TableSorter sorter = null;
-		String tableref = getWindowFrameRef() + ":table";
+		String tableref = getWindowFrameRef() + ":table";	// NOI18N
 		try {
 			sorter = (TableSorter) table.getModel();
 		} catch (Exception e) {
@@ -243,7 +243,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	public boolean loadTableDetails(JTable table) {
 		UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
 		TableSorter sorter = null;
-		String tableref = getWindowFrameRef() + ":table";
+		String tableref = getWindowFrameRef() + ":table";	// NOI18N
 		if (p == null || p.getTablesColumnList(tableref).size() == 0)
 			return false;
 		try {
@@ -313,7 +313,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	protected synchronized void createShutDownTask(){
 		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
 			trainDirtyTask = new SwingShutDownTask(
-					"Operations Train Window Check", Bundle.getString("PromptQuitWindowNotWritten"),
+					"Operations Train Window Check", Bundle.getString("PromptQuitWindowNotWritten"),	// NOI18N
 					Bundle.getString("PromptSaveQuit"), this) {
 				public boolean checkPromptNeeded() {
 					return !OperationsXml.areFilesDirty();

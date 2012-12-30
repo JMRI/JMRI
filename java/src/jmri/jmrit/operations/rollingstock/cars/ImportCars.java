@@ -33,6 +33,8 @@ public class ImportCars extends Thread {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 	
+	static final String newLine = "\n";
+	
 	CarManager manager = CarManager.instance();
 	
 	javax.swing.JLabel textLine = new javax.swing.JLabel();
@@ -200,7 +202,7 @@ public class ImportCars extends Thread {
 						CarTypes.instance().addName(carType);
 					} else {
 						int results = JOptionPane.showConfirmDialog(null,
-								rb.getString("Car")+" ("+carRoad+" "+carNumber+") \n"+MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{carType}),
+								rb.getString("Car")+" ("+carRoad+" "+carNumber+")"+ newLine +MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{carType}),
 								rb.getString("carAddType"),
 								JOptionPane.YES_NO_CANCEL_OPTION);
 						if (results == JOptionPane.YES_OPTION){

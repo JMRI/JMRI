@@ -54,6 +54,8 @@ public class PrintCarLoadsAction  extends AbstractAction {
     
     public class CarLoadPrintOption {
     	
+    	static final String tab = "\t";
+    	
     	// no frame needed for now
     	public CarLoadPrintOption(){
     		super();
@@ -77,8 +79,8 @@ public class PrintCarLoadsAction  extends AbstractAction {
             CarLoads carLoads = CarLoads.instance();
             Hashtable<String, List<CarLoad>> list = carLoads.getList();
             try {
-            	String s = rb.getString("Type") + "\t"
-            	+ rb.getString("Load") + "\t" 
+            	String s = rb.getString("Type") + tab
+            	+ rb.getString("Load") + tab 
             	+ rb.getString("BorderLayoutPriority") + "  "
             	+ rb.getString("LoadPickupMessage") + "  "
             	+ rb.getString("LoadDropMessage")           	

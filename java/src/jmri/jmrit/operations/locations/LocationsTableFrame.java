@@ -7,7 +7,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
-
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
@@ -97,7 +96,7 @@ public class LocationsTableFrame extends OperationsFrame {
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);	// NOI18N
     	
     	pack();
     	if ((getWidth()<670)) setSize(670, getHeight());
@@ -127,7 +126,7 @@ public class LocationsTableFrame extends OperationsFrame {
 		if (ae.getSource() == addButton){
 			LocationEditFrame f = new LocationEditFrame();
 			f.initComponents(null);
-			f.setTitle("Add Location");
+			f.setTitle(rb.getString("TitleLocationAdd"));
 		}
 	}
 

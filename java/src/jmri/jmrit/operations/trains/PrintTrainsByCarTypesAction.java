@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class PrintTrainsByCarTypesAction  extends AbstractAction {
 
-	String newLine = "\n";
+	static final String newLine = "\n";
 	TrainManager trainManager = TrainManager.instance();
 
     public PrintTrainsByCarTypesAction(String actionName, Frame frame, boolean preview, Component pWho) {
@@ -63,10 +63,11 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 		String carTypes[] = CarTypes.instance().getNames();
 
 		List<String> trains = trainManager.getTrainsByNameList();
-
+		String tab = "\t";
+		
 		try {
 			// title line
-			String s = Bundle.getString("Type") + "\t" + Bundle.getString("Trains")
+			String s = Bundle.getString("Type") + tab + Bundle.getString("Trains")
 					+ "\t\t\t  " + Bundle.getString("Description") + newLine;
 			writer.write(s);
 			// car types

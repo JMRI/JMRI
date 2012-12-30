@@ -136,7 +136,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		toolMenu.add(new PrintLocationsByCarTypesAction(rb.getString("MenuItemPreviewByType"), new Frame(), true, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyLocationsByCarType", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyLocationsByCarType", true);	// NOI18N
 
 		setPreferredSize(null);	// we need to resize this frame
 		pack();

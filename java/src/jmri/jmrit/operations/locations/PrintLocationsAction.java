@@ -41,9 +41,10 @@ import java.util.ResourceBundle;
 public class PrintLocationsAction  extends AbstractAction {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	String newLine = "\n";
-	String formFeed = "\f";
-	String tab = "   ";
+	static final String newLine = "\n";		// NOI18N
+	static final String formFeed = "\f";	// NOI18N
+	static final String tab = "\t";			// NOI18N
+	static final String space = "   ";
 	LocationManager manager = LocationManager.instance();
 	public static final int MAX_NAME_LENGTH = 25;
 
@@ -110,12 +111,12 @@ public class PrintLocationsAction  extends AbstractAction {
 		int numberRS = 0;
 		int numberCars = 0;
 		int numberEngines = 0;
-		String s = rb.getString("Location") + "\t\t\t "
+		String s = rb.getString("Location") + tab + tab +tab
 		+ rb.getString("Length") + " " + rb.getString("Used")
-		+ "\t" + rb.getString("RS") 
-		+ "\t" + rb.getString("Cars")
-		+ "\t" + rb.getString("Engines")
-		+ "\t" + rb.getString("Pickup")
+		+ tab + rb.getString("RS") 
+		+ tab + rb.getString("Cars")
+		+ tab + rb.getString("Engines")
+		+ tab + rb.getString("Pickup")
 		+ " " + rb.getString("Drop") + newLine;
 		writer.write(s);
 		for (int i=0; i<locations.size(); i++){
@@ -126,11 +127,11 @@ public class PrintLocationsAction  extends AbstractAction {
 			for (int j=name.length(); j < LocationEditFrame.MAX_NAME_LENGTH; j++) {
 				buf.append(" ");
 			}
-			s = buf.toString() + " \t  " + Integer.toString(location.getLength()) + "\t"
-			+ Integer.toString(location.getUsedLength()) + "\t"
-			+ Integer.toString(location.getNumberRS()) + "\t"
-			+ "\t" + "\t"
-			+ Integer.toString(location.getPickupRS()) + "\t"
+			s = buf.toString() + tab + Integer.toString(location.getLength()) + tab
+			+ Integer.toString(location.getUsedLength()) + tab
+			+ Integer.toString(location.getNumberRS()) + tab
+			+ tab + tab
+			+ Integer.toString(location.getPickupRS()) + tab
 			+ Integer.toString(location.getDropRS())+ newLine;
 			writer.write(s);
 
@@ -238,7 +239,7 @@ public class PrintLocationsAction  extends AbstractAction {
 	private void printSchedulesSelected() throws IOException{
 		List<String> locations = manager.getLocationsByNameList();
 		writer.write(newLine);
-		String s = rb.getString("Schedules") + "\t\t  " +rb.getString("Location") + " - " +  rb.getString("SidingName") + newLine;
+		String s = rb.getString("Schedules") + tab + tab +rb.getString("Location") + " - " + rb.getString("SidingName") + newLine;
 		writer.write(s);
 		ScheduleManager sm = ScheduleManager.instance();
 		List<String> schedules = sm.getSchedulesByNameList();
@@ -266,7 +267,7 @@ public class PrintLocationsAction  extends AbstractAction {
 							s = buf.toString();
 							if (s.length()>63)
 								s = s.substring(0, 63);
-							s = s + "\t" + status;
+							s = s + tab + status;
 						}
 						s = s + newLine;
 						writer.write(s);
@@ -293,28 +294,28 @@ public class PrintLocationsAction  extends AbstractAction {
 
 			List<String> yards = location.getTrackIdsByNameList(Track.YARD);
 			if (yards.size()>0){
-				s = tab + rb.getString("YardName") + newLine;
+				s = space + rb.getString("YardName") + newLine;
 				writer.write(s);
 				printTrackInfo(location, yards);
 			}
 
 			List<String> sidings = location.getTrackIdsByNameList(Track.SIDING);
 			if (sidings.size()>0){
-				s = tab + rb.getString("SidingName") + newLine;
+				s = space + rb.getString("SidingName") + newLine;
 				writer.write(s);
 				printTrackInfo(location, sidings);
 			}
 
 			List<String> interchanges = location.getTrackIdsByNameList(Track.INTERCHANGE);
 			if (interchanges.size()>0){
-				s = tab + rb.getString("InterchangeName") + newLine;
+				s = space + rb.getString("InterchangeName") + newLine;
 				writer.write(s);
 				printTrackInfo(location, interchanges);
 			}
 
 			List<String> stagings = location.getTrackIdsByNameList(Track.STAGING);
 			if (stagings.size()>0){
-				s = tab + rb.getString("StagingName") + newLine;
+				s = space + rb.getString("StagingName") + newLine;
 				writer.write(s);
 				printTrackInfo(location, stagings);
 			}
@@ -348,34 +349,34 @@ public class PrintLocationsAction  extends AbstractAction {
 			// don't bother reporting when the number of cars for a given type is zero
 			if (numberOfCars > 0){
 				// spurs
-				writer.write(tab+MessageFormat.format(rb.getString("SpurTrackThatAccept"),new Object[]{type})+ newLine);
+				writer.write(space+MessageFormat.format(rb.getString("SpurTrackThatAccept"),new Object[]{type})+ newLine);
 				int trackLength = getTrackLengthAcceptType(locations, type, Track.SIDING);
 				if (trackLength > 0)
-					writer.write(tab+MessageFormat.format(rb.getString("TotalLengthSpur"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
+					writer.write(space+MessageFormat.format(rb.getString("TotalLengthSpur"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
 				else
-					writer.write(tab+ rb.getString("None") + newLine);
+					writer.write(space+ rb.getString("None") + newLine);
 				// yards
-				writer.write(tab+MessageFormat.format(rb.getString("YardTrackThatAccept"),new Object[]{type})+ newLine);
+				writer.write(space+MessageFormat.format(rb.getString("YardTrackThatAccept"),new Object[]{type})+ newLine);
 				trackLength = getTrackLengthAcceptType(locations, type, Track.YARD);
 				if (trackLength > 0)
-					writer.write(tab+MessageFormat.format(rb.getString("TotalLengthYard"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
+					writer.write(space+MessageFormat.format(rb.getString("TotalLengthYard"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
 				else
-					writer.write(tab+ rb.getString("None") + newLine);
+					writer.write(space+ rb.getString("None") + newLine);
 				// interchanges
-				writer.write(tab+MessageFormat.format(rb.getString("InterchangesThatAccept"),new Object[]{type})+ newLine);
+				writer.write(space+MessageFormat.format(rb.getString("InterchangesThatAccept"),new Object[]{type})+ newLine);
 				trackLength = getTrackLengthAcceptType(locations, type, Track.INTERCHANGE);
 				if (trackLength > 0)
-					writer.write(tab+MessageFormat.format(rb.getString("TotalLengthInterchange"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
+					writer.write(space+MessageFormat.format(rb.getString("TotalLengthInterchange"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
 				else
-					writer.write(tab+ rb.getString("None") + newLine);
+					writer.write(space+ rb.getString("None") + newLine);
 				// staging
 				if (showStaging){
-					writer.write(tab+MessageFormat.format(rb.getString("StageTrackThatAccept"),new Object[]{type})+ newLine);
+					writer.write(space+MessageFormat.format(rb.getString("StageTrackThatAccept"),new Object[]{type})+ newLine);
 					trackLength = getTrackLengthAcceptType(locations, type, Track.STAGING);
 					if (trackLength > 0)
-						writer.write(tab+MessageFormat.format(rb.getString("TotalLengthStage"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
+						writer.write(space+MessageFormat.format(rb.getString("TotalLengthStage"),new Object[]{type, trackLength, 100*totalTrackLength/trackLength}) + newLine);
 					else
-						writer.write(tab+ rb.getString("None") + newLine);
+						writer.write(space+ rb.getString("None") + newLine);
 				}
 			}
 		}
@@ -391,7 +392,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				Track track = location.getTrackById(tracks.get(k));
 				if (track.acceptsTypeName(carType)){
 					trackLength = trackLength + track.getLength();
-					writer.write(tab+tab+MessageFormat.format(rb.getString("LocationTrackLength"),new Object[]{location.getName(), track.getName(), track.getLength()})+ newLine);
+					writer.write(space+space+MessageFormat.format(rb.getString("LocationTrackLength"),new Object[]{location.getName(), track.getName(), track.getLength()})+ newLine);
 				}
 			}
 		}
@@ -399,13 +400,13 @@ public class PrintLocationsAction  extends AbstractAction {
 	}
 
 	private String getTrackString (Track track, String name){
-		String s = "\t" + name + " "
-		+ Integer.toString(track.getLength()) + "\t"
-		+ Integer.toString(track.getUsedLength()) + "\t"
-		+ Integer.toString(track.getNumberRS())	+ "\t"
-		+ Integer.toString(track.getNumberCars()) + "\t"
-		+ Integer.toString(track.getNumberEngines()) + "\t"
-		+ Integer.toString(track.getPickupRS())	+ "\t"
+		String s = tab + name + " "
+		+ Integer.toString(track.getLength()) + tab
+		+ Integer.toString(track.getUsedLength()) + tab
+		+ Integer.toString(track.getNumberRS())	+ tab
+		+ Integer.toString(track.getNumberCars()) + tab
+		+ Integer.toString(track.getNumberEngines()) + tab
+		+ Integer.toString(track.getPickupRS())	+ tab
 		+ Integer.toString(track.getDropRS())
 		+ newLine;
 		return s;
@@ -433,7 +434,7 @@ public class PrintLocationsAction  extends AbstractAction {
 			Track track = location.getTrackById(tracks.get(k));
 			String name = track.getName();
 			try {
-				String s = "\t" +name + getDirection(track.getTrainDirections());
+				String s = tab +name + getDirection(track.getTrainDirections());
 				writer.write(s);
 				writer.write(getTrackTypes(location, track));
 				writer.write(getTrackRoads(track));
@@ -450,7 +451,7 @@ public class PrintLocationsAction  extends AbstractAction {
 
 	private int characters = 70;
 	private String getLocationTypes(Location location){
-		StringBuffer buf = new StringBuffer("\t\t" + rb.getString("TypesServiced") + newLine + "\t\t");
+		StringBuffer buf = new StringBuffer(tab + tab + rb.getString("TypesServiced") + newLine + tab + tab);
 		int charCount = 0;
 		int typeCount = 0;
 		String[] cTypes = CarTypes.instance().getNames();	
@@ -459,7 +460,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				typeCount++;
 				charCount += cTypes[i].length() +2;
 				if(charCount > characters){
-					buf.append(newLine + "\t\t");
+					buf.append(newLine + tab + tab);
 					charCount = cTypes[i].length() +2;
 				}
 				buf.append(cTypes[i] + ", ");
@@ -471,7 +472,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				typeCount++;
 				charCount += eTypes[i].length() +2;
 				if(charCount > characters){
-					buf.append(newLine + "\t\t");
+					buf.append(newLine + tab + tab);
 					charCount = eTypes[i].length() +2;
 				}
 				buf.append(eTypes[i] + ", ");
@@ -480,13 +481,13 @@ public class PrintLocationsAction  extends AbstractAction {
 		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
 		// does this location accept all types?
 		if (typeCount == cTypes.length + eTypes.length )
-			buf = new StringBuffer("\t\t" + rb.getString("LocationAcceptsAllTypes"));
+			buf = new StringBuffer(tab + tab + rb.getString("LocationAcceptsAllTypes"));
 		buf.append(newLine);
 		return buf.toString();
 	}
 
 	private String getTrackTypes(Location location, Track track){
-		StringBuffer buf = new StringBuffer("\t\t" + rb.getString("TypesServicedTrack") + newLine + "\t\t");
+		StringBuffer buf = new StringBuffer(tab + tab + rb.getString("TypesServicedTrack") + newLine + tab + tab);
 		int charCount = 0;
 		int typeCount = 0;
 		String[] cTypes = CarTypes.instance().getNames();	
@@ -495,7 +496,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				typeCount++;
 				charCount += cTypes[i].length() +2;
 				if(charCount > characters){
-					buf.append(newLine + "\t\t");
+					buf.append(newLine + tab + tab);
 					charCount = cTypes[i].length() +2;
 				}
 				buf.append(cTypes[i] + ", ");
@@ -507,7 +508,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				typeCount++;
 				charCount += eTypes[i].length() +2;
 				if( charCount > characters){
-					buf.append(newLine + "\t\t");
+					buf.append(newLine + tab + tab);
 					charCount = eTypes[i].length() +2;
 				}
 				buf.append(eTypes[i] + ", ");
@@ -516,23 +517,23 @@ public class PrintLocationsAction  extends AbstractAction {
 		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
 		// does this track accept all types?
 		if (typeCount == cTypes.length + eTypes.length )
-			buf = new StringBuffer("\t\t" + rb.getString("TrackAcceptsAllTypes"));
+			buf = new StringBuffer(tab + tab + rb.getString("TrackAcceptsAllTypes"));
 		buf.append(newLine);
 		return buf.toString();
 	}
 
 	private String getTrackRoads(Track track){
 		if (track.getRoadOption().equals(Track.ALLROADS)){
-			return "\t\t" + rb.getString("AcceptsAllRoads") + newLine;
+			return tab + tab + rb.getString("AcceptsAllRoads") + newLine;
 		}
-		StringBuffer buf = new StringBuffer("\t\t" + rb.getString("RoadsServicedTrack") + newLine + "\t\t");
+		StringBuffer buf = new StringBuffer(tab + tab + rb.getString("RoadsServicedTrack") + newLine + tab + tab);
 		int charCount = 0;
 		String[] roads = CarRoads.instance().getNames();	
 		for (int i=0; i<roads.length; i++){
 			if (track.acceptsRoadName(roads[i])){
 				charCount += roads[i].length() +2;
 				if( charCount > characters){
-					buf.append(newLine + "\t\t");
+					buf.append(newLine + tab + tab);
 					charCount = roads[i].length() +2;
 				}
 				buf.append(roads[i] +", ");
@@ -545,9 +546,9 @@ public class PrintLocationsAction  extends AbstractAction {
 
 	private String getTrackLoads(Track track){
 		if (track.getLoadOption().equals(Track.ALLLOADS)){
-			return "\t\t" + rb.getString("AcceptsAllLoads") + newLine;
+			return tab + tab + rb.getString("AcceptsAllLoads") + newLine;
 		}
-		StringBuffer buf = new StringBuffer("\t\t" + rb.getString("LoadsServicedTrack") + newLine + "\t\t");
+		StringBuffer buf = new StringBuffer(tab + tab + rb.getString("LoadsServicedTrack") + newLine + tab + tab);
 		int charCount = 0;
 		String[] cTypes = CarTypes.instance().getNames();
 		List<String> serviceLoads = new ArrayList<String>();
@@ -560,7 +561,7 @@ public class PrintLocationsAction  extends AbstractAction {
 							serviceLoads.add(loads.get(j));
 							charCount += loads.get(j).length() +2;
 							if( charCount > characters){
-								buf.append(newLine + "\t\t");
+								buf.append(newLine + tab + tab);
 								charCount = loads.get(j).length() +2;
 							}
 							buf.append(loads.get(j) +", ");
@@ -581,18 +582,18 @@ public class PrintLocationsAction  extends AbstractAction {
 				|| track.getServiceOrder().equals(Track.NORMAL))
 			return "";
 		if (track.getServiceOrder().equals(Track.FIFO))
-			return "\t\t"+rb.getString("TrackPickUpOrderFIFO")+ newLine;
-		return "\t\t"+rb.getString("TrackPickUpOrderLIFO")+ newLine;
+			return tab + tab +rb.getString("TrackPickUpOrderFIFO")+ newLine;
+		return tab + tab +rb.getString("TrackPickUpOrderLIFO")+ newLine;
 	}
 	
 	private String getSetOutTrains(Track track){
 		if (track.getDropOption().equals(Track.ANY))
-			return "\t\t" + rb.getString("SetOutAllTrains") + newLine;
+			return tab + tab + rb.getString("SetOutAllTrains") + newLine;
 		StringBuffer buf;
 		int charCount = 0;
 		String[] ids = track.getDropIds();
 		if (track.getDropOption().equals(Track.TRAINS)){
-			buf = new StringBuffer("\t\t" + rb.getString("TrainsSetOutTrack") + newLine + "\t\t");			
+			buf = new StringBuffer(tab + tab + rb.getString("TrainsSetOutTrack") + newLine + tab + tab);			
 			for (int i=0; i<ids.length; i++){
 				Train train = TrainManager.instance().getTrainById(ids[i]);
 				if (train == null){
@@ -601,13 +602,13 @@ public class PrintLocationsAction  extends AbstractAction {
 				}
 				charCount += train.getName().length() +2;
 				if( charCount > characters){
-					buf.append(newLine + "\t\t");
+					buf.append(newLine + tab + tab);
 					charCount = train.getName().length() +2;
 				}
 				buf.append(train.getName() +", ");
 			}
 		} else {
-			buf = new StringBuffer("\t\t" + rb.getString("RoutesSetOutTrack") + newLine + "\t\t");
+			buf = new StringBuffer(tab + tab + rb.getString("RoutesSetOutTrack") + newLine + tab + tab);
 			for (int i=0; i<ids.length; i++){
 				Route route = RouteManager.instance().getRouteById(ids[i]);
 				if (route == null){
@@ -616,7 +617,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				}
 				charCount += route.getName().length() +2;
 				if( charCount > characters){
-					buf.append(newLine + "\t\t");
+					buf.append(newLine + tab + tab);
 					charCount = route.getName().length() +2;
 				}
 				buf.append(route.getName() +", ");
@@ -629,12 +630,12 @@ public class PrintLocationsAction  extends AbstractAction {
 	
 	private String getPickUpTrains(Track track){
 		if (track.getPickupOption().equals(Track.ANY))
-			return "\t\t" + rb.getString("PickUpAllTrains") + newLine;
+			return tab + tab + rb.getString("PickUpAllTrains") + newLine;
 		StringBuffer buf;
 		int charCount = 0;
 		String[] ids = track.getPickupIds();
 		if (track.getPickupOption().equals(Track.TRAINS)){
-			buf = new StringBuffer("\t\t" + rb.getString("TrainsPickUpTrack") + newLine + "\t\t");			
+			buf = new StringBuffer(tab + tab + rb.getString("TrainsPickUpTrack") + newLine + tab + tab);			
 			for (int i=0; i<ids.length; i++){
 				Train train = TrainManager.instance().getTrainById(ids[i]);
 				if (train == null){
@@ -643,13 +644,13 @@ public class PrintLocationsAction  extends AbstractAction {
 				}
 				charCount += train.getName().length() +2;
 				if( charCount > characters){
-					buf.append(newLine + "\t\t");
+					buf.append(newLine + tab + tab);
 					charCount = train.getName().length() +2;
 				}
 				buf.append(train.getName() +", ");
 			}
 		} else {
-			buf = new StringBuffer("\t\t" + rb.getString("RoutesPickUpTrack") + newLine + "\t\t");
+			buf = new StringBuffer(tab + tab + rb.getString("RoutesPickUpTrack") + newLine + tab + tab);
 			for (int i=0; i<ids.length; i++){
 				Route route = RouteManager.instance().getRouteById(ids[i]);
 				if (route == null){
@@ -658,7 +659,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				}
 				charCount += route.getName().length() +2;
 				if( charCount > characters){
-					buf.append(newLine + "\t\t");
+					buf.append(newLine + tab + tab);
 					charCount = route.getName().length() +2;
 				}
 				buf.append(route.getName() +", ");
@@ -673,11 +674,11 @@ public class PrintLocationsAction  extends AbstractAction {
 		// only spurs have schedules
 		if (!track.getLocType().equals(Track.SIDING) || track.getSchedule() == null)
 			return "";
-		StringBuffer buf = new StringBuffer("\t\t" + MessageFormat.format(rb.getString("TrackScheduleName"),new Object[]{track.getScheduleName()}) + newLine);
+		StringBuffer buf = new StringBuffer(tab + tab + MessageFormat.format(rb.getString("TrackScheduleName"),new Object[]{track.getScheduleName()}) + newLine);
 		if (track.getAlternativeTrack() != null)
-			buf.append("\t\t" + MessageFormat.format(rb.getString("AlternateTrackName"),new Object[]{track.getAlternativeTrack().getName()}) + newLine);
+			buf.append(tab + tab + MessageFormat.format(rb.getString("AlternateTrackName"),new Object[]{track.getAlternativeTrack().getName()}) + newLine);
 		if (track.getReservationFactor() != 100)
-			buf.append("\t\t" + MessageFormat.format(rb.getString("PercentageStaging"),new Object[]{track.getReservationFactor()}) + newLine);
+			buf.append(tab + tab + MessageFormat.format(rb.getString("PercentageStaging"),new Object[]{track.getReservationFactor()}) + newLine);
 		return buf.toString();
 	}
 

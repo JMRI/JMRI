@@ -123,8 +123,8 @@ public class OperationsXml extends XmlFile {
     public String convertToXmlComment(String comment){
     	StringBuffer buf = new StringBuffer();
         for (int k = 0; k < comment.length(); k++) {
-            if (comment.startsWith("\n", k)) {
-                buf.append("<?p?>");
+            if (comment.startsWith("\n", k)) {	// NOI18N
+                buf.append("<?p?>");			// NOI18N
             }
             else {
             	buf.append(comment.substring(k, k + 1));
@@ -145,8 +145,8 @@ public class OperationsXml extends XmlFile {
     public String convertFromXmlComment(String comment){
     	StringBuffer buf = new StringBuffer();
     	for (int k = 0; k < comment.length(); k++) {
-    		if (comment.startsWith("<?p?>", k)) {
-    			buf.append("\n");
+    		if (comment.startsWith("<?p?>", k)) {	// NOI18N
+    			buf.append("\n");					// NOI18N
     			k = k + 4;
     		}
     		else {

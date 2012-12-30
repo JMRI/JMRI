@@ -15,8 +15,8 @@ import jmri.jmrit.operations.BeanBase;
  */
 public class Pool extends BeanBase {
 
-	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange";
-	public static final String DISPOSE = "dispose";
+	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange";	// NOI18N
+	public static final String DISPOSE = "dispose";	// NOI18N
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(Pool.class);
@@ -132,7 +132,7 @@ public class Pool extends BeanBase {
 				// overloading.
 				// && (t.getUsedLength() + additionalLength) <= t.getLength()){
 				log.debug("Increasing track (" + track.getName() + ") length ("
-						+ additionalLength + ") decreasing (" + t.getName()
+						+ additionalLength + ") decreasing (" + t.getName()	// NOI18N
 						+ ")");
 				t.setLength(t.getLength() - additionalLength);
 				track.setLength(track.getLength() + additionalLength);

@@ -53,9 +53,8 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-	// static final ResourceBundle rbr = ResourceBundle
-	// .getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
-
+	static final String newLine = "\n";
+	
 	TrainManager manager;
 	TrainManagerXml managerXml;
 	RouteManager routeManager;
@@ -536,7 +535,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				|| trainName.contains("/") || trainName.contains("|") || trainName.contains("?")
 				|| trainName.contains("*")) {
 			log.error("Train name must not contain reserved characters");
-			JOptionPane.showMessageDialog(this, Bundle.getString("TrainNameResChar") + "\n"
+			JOptionPane.showMessageDialog(this, Bundle.getString("TrainNameResChar") + newLine
 					+ Bundle.getString("ReservedChar"),
 					MessageFormat.format(Bundle.getString("CanNot"), new Object[] { s }),
 					JOptionPane.ERROR_MESSAGE);

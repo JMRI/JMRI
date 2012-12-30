@@ -59,11 +59,12 @@ public class PrintTrainsAction extends AbstractAction {
 		// Loop through the Roster, printing as needed
 
 		List<String> trains = panel.getSortByList();
+		String tab = "\t";
 
 		try {
-			String s = Bundle.getString("Name") + "\t\t" + Bundle.getString("Description") + "\t"
-					+ Bundle.getString("Route") + "\t\t" + Bundle.getString("Departs") + "\t\t"
-					+ Bundle.getString("Time") + "  " + Bundle.getString("Terminates") + "\t" + newLine;
+			String s = Bundle.getString("Name") + tab + tab + Bundle.getString("Description") + tab
+					+ Bundle.getString("Route") + tab + tab + Bundle.getString("Departs") + tab + tab
+					+ Bundle.getString("Time") + "  " + Bundle.getString("Terminates") + tab + newLine;
 			writer.write(s, 0, s.length());
 			for (int i = 0; i < trains.size(); i++) {
 				Train train = manager.getTrainById(trains.get(i));

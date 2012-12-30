@@ -30,6 +30,9 @@ import jmri.jmrit.operations.setup.Control;
 public class ImportEngines extends Thread {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
+	
+	static final String newLine = "\n";
+	
 	private static String defaultEngineType = rb.getString("engineDefaultType");
 	private static String defaultEngineHp = rb.getString("engineDefaultHp");
 
@@ -167,7 +170,7 @@ public class ImportEngines extends Thread {
 				}
 				if (!EngineModels.instance().containsName(engineModel)){
 					int results = JOptionPane.showConfirmDialog(null,
-							rb.getString("Engine")+" ("+engineRoad+" "+engineNumber+") \n"+MessageFormat.format(rb.getString("modelNameNotExist"),new Object[]{engineModel}),
+							rb.getString("Engine")+" ("+engineRoad+" "+engineNumber+")"+ newLine +MessageFormat.format(rb.getString("modelNameNotExist"),new Object[]{engineModel}),
 							rb.getString("engineAddModel"),
 							JOptionPane.YES_NO_CANCEL_OPTION);
 					if (results == JOptionPane.YES_OPTION)

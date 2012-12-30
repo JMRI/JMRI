@@ -111,7 +111,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case PICKUPS: return rb.getString("Pickup");
         case DROPS: return rb.getString("Drop");
         case EDITCOLUMN: return "";		//edit column
-        default: return "unknown";
+        default: return "unknown";	// NOI18N
         }
     }
 
@@ -148,11 +148,11 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     		lef.requestFocus();
     	}
     	if (row >= getRowCount())
-    		return "ERROR row "+row;
+    		return "ERROR row "+row;	// NOI18N
     	String locId = sysList.get(row);
     	Location l = manager.getLocationById(locId);
     	if (l == null)
-    		return "ERROR location unknown "+row;
+    		return "ERROR location unknown "+row;	// NOI18N
         switch (col) {
         case IDCOLUMN: return l.getId();
         case NAMECOLUMN: return l.getName();
@@ -162,7 +162,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case PICKUPS: return Integer.toString(l.getPickupRS());
         case DROPS: return Integer.toString(l.getDropRS());
         case EDITCOLUMN: return rb.getString("Edit");
-        default: return "unknown "+col;
+        default: return "unknown "+col;	// NOI18N
         }
     }
 
