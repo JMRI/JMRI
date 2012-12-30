@@ -13,6 +13,7 @@ import jmri.Sensor;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
+import jmri.NamedBean;
 
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -1019,13 +1020,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     class DestinationMast{
         LayoutBlock destinationBlock = null;
         
-        Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>(0);
+        //Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>(0);
+        ArrayList<NamedBeanSetting> userSetTurnouts = new ArrayList<NamedBeanSetting>(0);
         Hashtable<Turnout, Integer> autoTurnouts = new Hashtable<Turnout, Integer>(0);
         //Hashtable<Turnout, Boolean> turnoutThroats = new Hashtable<Turnout, Boolean>(0);
         //Hashtable<Turnout, Boolean> autoTurnoutThroats = new Hashtable<Turnout, Boolean>(0);
         Hashtable<SignalMast, String> masts = new Hashtable<SignalMast, String>(0);
         Hashtable<SignalMast, String> autoMasts = new Hashtable<SignalMast, String>(0);
-        Hashtable<NamedBeanHandle<Sensor>, Integer> sensors = new Hashtable<NamedBeanHandle<Sensor>, Integer>(0);
+        ArrayList<NamedBeanSetting> userSetSensors = new ArrayList<NamedBeanSetting>(0);
         //Blocks is used for user defined blocks between two signalmasts
         Hashtable<Block, Integer> blocks = new Hashtable<Block, Integer>(0);
         boolean turnoutThrown = false;
@@ -1135,19 +1137,21 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts){
-                if(this.turnouts!=null){
-                Enumeration<NamedBeanHandle<Turnout>> keys = this.turnouts.keys();
-                while ( keys.hasMoreElements() )
-                {
-                   Turnout key = keys.nextElement().getBean();
-                   key.removePropertyChangeListener(propertyTurnoutListener);
+            if (this.userSetTurnouts!=null){
+                for(NamedBeanSetting nbh:userSetTurnouts){
+                    nbh.getBean().removePropertyChangeListener(propertyTurnoutListener);
                 }
             }
             destMastInit = false;
             if(turnouts==null){
-                this.turnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>(0);
+                userSetTurnouts = new ArrayList<NamedBeanSetting>(0);
             } else {
-                this.turnouts=turnouts;
+                    Enumeration<NamedBeanHandle<Turnout>> e = turnouts.keys();
+                    while(e.hasMoreElements()){
+                        NamedBeanHandle nbh = e.nextElement();
+                        NamedBeanSetting nbs = new NamedBeanSetting(nbh, turnouts.get(nbh));
+                        userSetTurnouts.add(nbs);
+                    }
             }
             firePropertyChange("turnouts", null, this.destination);
         }
@@ -1342,39 +1346,46 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
          * @param sensors
          */
         void setSensors(Hashtable<NamedBeanHandle<Sensor>, Integer> sensors){
-            if (this.sensors!=null){
-                Enumeration<NamedBeanHandle<Sensor>> keys = this.sensors.keys();
-                while ( keys.hasMoreElements() )
-                {
-                   Sensor key = keys.nextElement().getBean();
-                   key.removePropertyChangeListener(propertySensorListener);
+            if (this.userSetSensors!=null){
+                for(NamedBeanSetting nbh:userSetSensors){
+                    nbh.getBean().removePropertyChangeListener(propertySensorListener);
                 }
             }
             destMastInit = false;
 
             if(sensors==null){
-                this.sensors = new Hashtable<NamedBeanHandle<Sensor>, Integer>(0);
+                userSetSensors = new ArrayList<NamedBeanSetting>(0);
             } else {
-                this.sensors=sensors;
+                    Enumeration<NamedBeanHandle<Sensor>> e = sensors.keys();
+                    while(e.hasMoreElements()){
+                        NamedBeanHandle nbh = e.nextElement();
+                        NamedBeanSetting nbs = new NamedBeanSetting(nbh, sensors.get(nbh));
+                        userSetSensors.add(nbs);
+                    }
             }
             firePropertyChange("sensors", null, this.destination);
-            this.sensors = sensors;
         }
 
         void addSensor(NamedBeanHandle<Sensor> sen, int state){
-            if(sensors.containsKey(sen))
-                return;
+            for(NamedBeanSetting nbh:userSetSensors){
+                if (nbh.getBean().equals(sen.getBean()))
+                    return;
+            }
             sen.getBean().addPropertyChangeListener(propertySensorListener);
-            sensors.put(sen, state);
+            NamedBeanSetting nbs = new NamedBeanSetting(sen, state);
+            userSetSensors.add(nbs);
             firePropertyChange("sensors", null, this.destination);
         }
         
         void removeSensor(NamedBeanHandle<Sensor> sen){
-            if(!sensors.containsKey(sen))
-                return;
-            sen.getBean().removePropertyChangeListener(propertySensorListener);
-            sensors.remove(sen);
-            firePropertyChange("sensors", null, this.destination);
+            for(NamedBeanSetting nbh:userSetSensors){
+                if (nbh.getBean().equals(sen.getBean())){
+                    sen.getBean().removePropertyChangeListener(propertySensorListener);
+                    userSetSensors.remove(nbh);
+                    firePropertyChange("sensors", null, this.destination);
+                    return;
+                }
+            }
         }
 
         ArrayList<Block> getBlocks(){
@@ -1400,18 +1411,17 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         ArrayList<Turnout> getTurnouts(){
             ArrayList<Turnout> out = new ArrayList<Turnout>();
-            Enumeration<NamedBeanHandle<Turnout>> en = turnouts.keys();
-            while (en.hasMoreElements()) {
-                out.add(en.nextElement().getBean());
+            for(NamedBeanSetting nbh:userSetTurnouts){
+                out.add((Turnout)nbh.getBean());
             }
             return out;
         }
         
+        @SuppressWarnings("unchecked")
         ArrayList<NamedBeanHandle<Turnout>> getNamedTurnouts(){
             ArrayList<NamedBeanHandle<Turnout>> out = new ArrayList<NamedBeanHandle<Turnout>>();
-            Enumeration<NamedBeanHandle<Turnout>> en = turnouts.keys();
-            while (en.hasMoreElements()) {
-                out.add(en.nextElement());
+            for(NamedBeanSetting nbh:userSetTurnouts){
+                out.add(nbh.getNamedBean());
             }
             return out;
         }
@@ -1445,18 +1455,17 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         ArrayList<Sensor> getSensors(){
             ArrayList<Sensor> out = new ArrayList<Sensor>();
-            Enumeration<NamedBeanHandle<Sensor>> en = sensors.keys();
-            while (en.hasMoreElements()) {
-                out.add(en.nextElement().getBean());
+            for(NamedBeanSetting nbh:userSetSensors){
+                out.add((Sensor)nbh.getBean());
             }
             return out;
         }
-
+        
+        @SuppressWarnings("unchecked")
         ArrayList<NamedBeanHandle<Sensor>> getNamedSensors(){
             ArrayList<NamedBeanHandle<Sensor>> out = new ArrayList<NamedBeanHandle<Sensor>>();
-            Enumeration<NamedBeanHandle<Sensor>> en = sensors.keys();
-            while (en.hasMoreElements()) {
-                out.add(en.nextElement());
+            for(NamedBeanSetting nbh:userSetSensors){
+                out.add(nbh.getNamedBean());
             }
             return out;
         }
@@ -1482,18 +1491,16 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         boolean isTurnoutIncluded(Turnout turnout){
-            Enumeration<NamedBeanHandle<Turnout>> en = turnouts.keys();
-            while (en.hasMoreElements()) {
-                if(en.nextElement().getBean()==turnout)
+            for(NamedBeanSetting nbh:userSetTurnouts){
+                if (nbh.getBean().equals(turnout))
                     return true;
             }
             return false;
         }
         
         boolean isSensorIncluded(Sensor sensor){
-            Enumeration<NamedBeanHandle<Sensor>> en = sensors.keys();
-            while (en.hasMoreElements()) {
-                if(en.nextElement().getBean()==sensor)
+            for(NamedBeanSetting nbh:userSetSensors){
+                if (nbh.getBean().equals(sensor))
                     return true;
             }
             return false;
@@ -1514,25 +1521,21 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }*/
         
         int getSensorState(Sensor sensor){
-            if(sensors==null)
+            if(userSetSensors==null)
                 return -1;
-            Enumeration<NamedBeanHandle<Sensor>> en = sensors.keys();
-            while (en.hasMoreElements()) {
-                NamedBeanHandle<Sensor> namedSensor = en.nextElement();
-                if (namedSensor.getBean()==sensor)
-                    return sensors.get(namedSensor);
+            for(NamedBeanSetting nbh:userSetSensors){
+                if (nbh.getBean().equals(sensor))
+                    return nbh.getSetting();
             }
             return -1;
         }
         
         int getTurnoutState(Turnout turnout){
-            if(turnouts==null)
+            if(userSetTurnouts==null)
                 return -1;
-            Enumeration<NamedBeanHandle<Turnout>> en = turnouts.keys();
-            while (en.hasMoreElements()) {
-                NamedBeanHandle<Turnout> namedTurnout = en.nextElement();
-                if (namedTurnout.getBean()==turnout)
-                    return turnouts.get(namedTurnout);
+            for(NamedBeanSetting nbh:userSetTurnouts){
+                if (nbh.getBean().equals(turnout))
+                    return nbh.getSetting();
             }
             return -1;
         }
@@ -1647,12 +1650,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
             }
             
-            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
-            while ( turnoutKeys.hasMoreElements() )
-            {
-               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
-               Turnout key = namedTurnout.getBean();
-               if (key.getKnownState()!=turnouts.get(namedTurnout))
+            for(NamedBeanSetting nbh:userSetTurnouts){
+                Turnout key = (Turnout) nbh.getBean();
+                if (key.getKnownState()!=nbh.getSetting())
                    state=false;
                 else if (key.getState()==Turnout.THROWN){
                     turnoutThrown=true;
@@ -1688,14 +1688,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                    state=false;
             }
 
-            Enumeration<NamedBeanHandle<Sensor>> sensorKeys = sensors.keys();
-            while ( sensorKeys.hasMoreElements() )
-            {
-               NamedBeanHandle<Sensor> namedSensor = sensorKeys.nextElement();
-               Sensor key = namedSensor.getBean();
-               if (key.getKnownState()!=sensors.get(namedSensor))
-                   state=false;
+            for(NamedBeanSetting nbh:userSetSensors){
+                Sensor key =(Sensor) nbh.getBean();
+                if (key.getKnownState()!=nbh.getSetting())
+                    state = false;
             }
+
             Set<Block> blockAutoKeys = autoBlocks.keySet();
             //while ( blockKeys.hasMoreElements() )
             for(Block key:blockAutoKeys)
@@ -1789,13 +1787,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                }
             }
 
-            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
-            while ( turnoutKeys.hasMoreElements() )
-            {
-               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
-               Turnout key = namedTurnout.getBean();
-               key.addPropertyChangeListener(propertyTurnoutListener, namedTurnout.getName(), "Signal Mast Logic:" + source.getDisplayName() + " to " + destination.getDisplayName());
-               if (key.getKnownState()!=turnouts.get(namedTurnout))
+            for(NamedBeanSetting nbh:userSetTurnouts){
+                Turnout key = (Turnout) nbh.getBean();
+                key.addPropertyChangeListener(propertyTurnoutListener, nbh.getBeanName(), "Signal Mast Logic:" + source.getDisplayName() + " to " + destination.getDisplayName());
+                if (key.getKnownState()!=nbh.getSetting())
                    routeclear=false;
                 else if (key.getState()==Turnout.THROWN){
                     turnoutThrown=true;
@@ -1829,19 +1824,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if ((key.getAspect()==null) || (!key.getAspect().equals(masts.get(key))))
                     routeclear=false;
             }
-
-            Enumeration<NamedBeanHandle<Sensor>> sensorKeys = sensors.keys();
-            while ( sensorKeys.hasMoreElements() )
-            {
-               NamedBeanHandle<Sensor> namedSensor = sensorKeys.nextElement();
-               Sensor sensor = namedSensor.getBean();
-               log.debug(source.getDisplayName() + " to " + destination.getDisplayName() + " Add change listener to sensor  " + namedSensor.getName());
-               sensor.addPropertyChangeListener(propertySensorListener, namedSensor.getName(), "Signal Mast Logic:" + source.getDisplayName() + " to " + destination.getDisplayName());
-
-               if (sensor.getKnownState()!=sensors.get(namedSensor))
-                   routeclear = false;
+            for(NamedBeanSetting nbh:userSetSensors){
+                Sensor sensor = (Sensor) nbh.getBean();
+                sensor.addPropertyChangeListener(propertySensorListener, nbh.getBeanName(), "Signal Mast Logic:" + source.getDisplayName() + " to " + destination.getDisplayName());
+                if (sensor.getKnownState()!=nbh.getSetting())
+                    routeclear = false;
             }
-
+            
             Set<Block> autoBlockKeys = autoBlocks.keySet();
             for(Block key:autoBlockKeys)
             {
@@ -2193,14 +2182,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             //the logic is not active, or if we do not allow the turnouts to be locked
             if((disposed) || (!lockTurnouts) || (!active))
                 return;
-                
-            
-            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
-            while ( turnoutKeys.hasMoreElements() )
-            {
-               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
-               Turnout key = namedTurnout.getBean();
-               key.setLocked(Turnout.CABLOCKOUT+Turnout.PUSHBUTTONLOCKOUT, true);
+
+            for(NamedBeanSetting nbh:userSetTurnouts){
+                Turnout key = (Turnout) nbh.getBean();
+                key.setLocked(Turnout.CABLOCKOUT+Turnout.PUSHBUTTONLOCKOUT, true);
             }
             Enumeration<Turnout> keys = autoTurnouts.keys();
             while ( keys.hasMoreElements() )
@@ -2223,11 +2208,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                key.setLocked(Turnout.CABLOCKOUT+Turnout.PUSHBUTTONLOCKOUT, false);
             }
             
-            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
-            while ( turnoutKeys.hasMoreElements() )
-            {
-               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
-               Turnout key = namedTurnout.getBean();
+            for(NamedBeanSetting nbh:userSetTurnouts){
+                Turnout key = (Turnout) nbh.getBean();
                 key.setLocked(Turnout.CABLOCKOUT+Turnout.PUSHBUTTONLOCKOUT, false);
             }
         }
@@ -2243,8 +2225,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                if(log.isDebugEnabled())
                     log.debug(destination.getDisplayName() + " turnout " + key.getDisplayName());
                //if(!turnouts.containsKey(key)){
-                for(NamedBeanHandle<Turnout> nbTurn : turnouts.keySet()){
-                    if(nbTurn.getBean().equals(key)){
+                for(NamedBeanSetting nbTurn:userSetTurnouts){
+                    if(!nbTurn.getBean().equals(key)){
                        if (key.getState()==Turnout.CLOSED){
                             if (((key.getStraightLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getStraightLimit()!=-1)){
                                 minimumBlockSpeed = key.getStraightLimit();
@@ -2261,12 +2243,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     }
                 }
             }
-            Enumeration<NamedBeanHandle<Turnout>> turnoutKeys = turnouts.keys();
-            while ( turnoutKeys.hasMoreElements() )
-            {
-               NamedBeanHandle<Turnout> namedTurnout = turnoutKeys.nextElement();
-               Turnout key = namedTurnout.getBean();
-               if (key.getState()==Turnout.CLOSED){
+            
+
+            for(NamedBeanSetting nbh:userSetTurnouts){
+                Turnout key = (Turnout) nbh.getBean();
+                if (key.getState()==Turnout.CLOSED){
                     if (((key.getStraightLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getStraightLimit()!=-1)){
                         minimumBlockSpeed = key.getStraightLimit();
                         if(log.isDebugEnabled())
@@ -2505,19 +2486,37 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         };*/
         
         protected boolean IsSensorIncluded(Sensor sen){
-            Enumeration<NamedBeanHandle<Sensor>> sensorKeys = sensors.keys();
-            while ( sensorKeys.hasMoreElements() )
-            {
-                NamedBeanHandle<Sensor> namedSensor = sensorKeys.nextElement();
-                if(namedSensor.getBean()==sen) {
+            for(NamedBeanSetting nbh:userSetSensors){
+                if (nbh.getBean()==sen)
                     return true;
-                }
             }
             return false;
         }
-    
+        
+        class NamedBeanSetting {
+            NamedBeanHandle namedBean;
+            int setting;
+            NamedBeanSetting(NamedBeanHandle namedBean, int setting){
+                this.namedBean = namedBean;
+                this.setting = setting;
+            }
+            
+            NamedBean getBean(){
+                return (NamedBean)namedBean.getBean();
+            }
+            
+            NamedBeanHandle getNamedBean(){
+                return namedBean;
+            }
+            int getSetting(){
+                return setting;
+            }
+            
+            String getBeanName(){
+                return namedBean.getName();
+            }
+        }
     }
-    
     
     //This is the listener on the destination signalMast
     protected PropertyChangeListener propertyDestinationMastListener = new PropertyChangeListener(){
@@ -2565,6 +2564,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             //InstanceManager.signalMastLogicManagerInstance().removeDestinationMastToLogic(this, dm);
         }
     }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastLogic.class.getName());
 }
