@@ -75,7 +75,7 @@ public class Bundle {
     protected Bundle(String name) { this.name = name;}   
     protected Bundle() { this.name = null;} 
     protected jmri.Bundle getBundle() { return b; }
-    protected String bundleName() {return name; };
+    protected String bundleName() {return name; }
     private String name;
     
 }

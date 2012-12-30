@@ -46,8 +46,11 @@ public class Bundle extends jmri.Bundle {
     
     protected Bundle(String name) { this.name = name;}   
     protected Bundle() {} 
+    @Override
     protected jmri.Bundle getBundle() { return b; }
-    protected String bundleName() {return name; };
+    @Override
+    protected String bundleName() {return name; }
+    @Override
     protected String retry(String key) { return super.getBundle().handleGetString(key); }
     private String name;
 }
