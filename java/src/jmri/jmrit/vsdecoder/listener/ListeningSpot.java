@@ -226,7 +226,10 @@ public class ListeningSpot {
     }
 
     public String toString() {
-	return(new String("ListeningSpot Name: " + _name + " Location: " + _location.toString() + " LookAt: " + _lookAt.toString() + " Up: " + _up.toString()));
+	if ((_location == null) || ( _lookAt == null) || (_up == null))
+	    return("ListeningSpot (undefined)");
+	else
+	    return("ListeningSpot Name: " + _name + " Location: " + _location.toString() + " LookAt: " + _lookAt.toString() + " Up: " + _up.toString());
     }
     
     public Element getXml(String elementName) {
