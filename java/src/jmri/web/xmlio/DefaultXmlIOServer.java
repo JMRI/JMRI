@@ -16,6 +16,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServerManager;
+import static jmri.web.xmlio.XmlIO.*;
 import org.apache.log4j.Logger;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
@@ -42,101 +43,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
     static HashMap<Integer, ThrottleContext> map = new HashMap<Integer, ThrottleContext>();
     boolean useAttributes = false;
     static Logger log = Logger.getLogger(DefaultXmlIOServer.class);
-
-    /* TODO: place those elements that are shared across servers into, ideally,
-     * the a Class in the package that they are supporting (i.e. name constants
-     * for elements common to namedBean subClasses that are common between
-     * JSON, Simple, and XmlIO servers would be in a single Class so all servers
-     * use the same String for those elements.
-     */
-    // Frequently used XML strings
-    static final String COMMENT = "comment"; // NOI18N
-    static final String FALSE = "false"; // NOI18N
-    static final String INVERTED = "inverted"; // NOI18N
-    static final String IS_NULL = "isNull"; // NOI18N
-    static final String ITEM = "item"; // NOI18N
-    static final String NAME = "name"; // NOI18N
-    static final String SET = "set"; // NOI18N
-    static final String TRUE = "true"; // NOI18N
-    static final String TYPE = "type"; // NOI18N
-    static final String USERNAME = "userName"; // NOI18N
-    static final String VALUE = "value"; // NOI18N
-    // XmlIO object types
-    static final String FRAME = "frame"; // NOI18N
-    static final String LIST = "list"; // NOI18N
-    static final String MEMORY = "memory"; // NOI18N
-    static final String METADATA = "metadata"; // NOI18N
-    static final String PANEL_ELEMENT = "panel"; // NOI18N
-    static final String POWER = "power"; // NOI18N
-    static final String RAILROAD = "railroad"; // NOI18N
-    static final String ROSTER = "roster"; // NOI18N
-    static final String ROUTE = "route"; // NOI18N
-    static final String SENSOR = "sensor"; // NOI18N
-    static final String SIGNAL_HEAD = "signalHead"; // NOI18N
-    static final String SIGNAL_MAST = "signalMast"; // NOI18N
-    static final String THROTTLE = "throttle"; // NOI18N
-    static final String TURNOUT = "turnout"; // NOI18N
-    // XmlIO panel elements
-    static final String CONTROLPANEL = "ControlPanel"; // NOI18N
-    static final String LAYOUT = "Layout"; // NOI8N
-    static final String PANEL = "Panel"; // NOI8N
-    static final String PATH_SEP = "/"; // NOI8N
-    // XmlIO roster elements
-    static final String DCC_ADDRESS = "dccAddress"; // NOI18N
-    static final String ADDRESS_LENGTH = "addressLength"; // NOI18N
-    static final String ROAD_NAME = "roadName"; // NOI18N
-    static final String ROAD_NUMBER = "roadNumber"; // NOI18N
-    static final String MFG = "mfg"; // NOI18N
-    static final String MODEL = "model"; // NOI18N
-    static final String MAX_SPEED_PCT = "maxSpeedPct"; // NOI18N
-    static final String IMAGE_FILE_NAME = "imageFileName"; // NOI18N
-    static final String IMAGE_ICON_NAME = "imageIconName"; // NOI18N
-    static final String FUNCTION = "function"; // NOI18N
-    static final String LABEL = "label"; // NOI18N
-    static final String LOCKABLE = "lockable"; // NOI18N
-    static final String FUNCTION_LABEL = "functionLabel"; // NOI18N
-    static final String FUNCTION_LOCKABLE = "functionLockable"; // NOI18N
-    static final String F = "F"; // NOI18N
-    static final String L = "L"; // NOI18N
-    static final String S = "S"; // NOI18N
-    // XmlIO signal elements
-    static final String HELD = "Held"; // NOI18N
-    static final String DARK = "Dark"; // NOI18N
-    static final String UNKNOWN = "Unknown"; // NOI18N
-    // XmlIO throttle elements
-    static final String ADDRESS = "address"; // NOI18N
-    static final String FORWARD = "forward"; // NOI18N
-    static final String SPEED = "speed"; // NOI18N
-    static final String SSM = "SSM"; // NOI18N
-    static final String F0 = "F0"; // NOI18N
-    static final String F1 = "F1"; // NOI18N
-    static final String F2 = "F2"; // NOI18N
-    static final String F3 = "F3"; // NOI18N
-    static final String F4 = "F4"; // NOI18N
-    static final String F5 = "F5"; // NOI18N
-    static final String F6 = "F6"; // NOI18N
-    static final String F7 = "F7"; // NOI18N
-    static final String F8 = "F8"; // NOI18N
-    static final String F9 = "F9"; // NOI18N
-    static final String F10 = "F10"; // NOI18N
-    static final String F11 = "F11"; // NOI18N
-    static final String F12 = "F12"; // NOI18N
-    static final String F13 = "F13"; // NOI18N
-    static final String F14 = "F14"; // NOI18N
-    static final String F15 = "F15"; // NOI18N
-    static final String F16 = "F16"; // NOI18N
-    static final String F17 = "F17"; // NOI18N
-    static final String F18 = "F18"; // NOI18N
-    static final String F19 = "F19"; // NOI18N
-    static final String F20 = "F20"; // NOI18N
-    static final String F21 = "F21"; // NOI18N
-    static final String F22 = "F22"; // NOI18N
-    static final String F23 = "F23"; // NOI18N
-    static final String F24 = "F24"; // NOI18N
-    static final String F25 = "F25"; // NOI18N
-    static final String F26 = "F26"; // NOI18N
-    static final String F27 = "F27"; // NOI18N
-    static final String F28 = "F28"; // NOI18N
     
     @Override
     public Element immediateRequest(Element e) throws JmriException {
