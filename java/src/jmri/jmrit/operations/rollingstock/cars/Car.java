@@ -48,12 +48,12 @@ public class Car extends RollingStock {
 	protected Location _previousNextDestination = null;	// previous next destination (for train resets)
 	protected Track _previousNextDestTrack = null;		// previous next track (for train resets)	
 		
-	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
-	public static final String WAIT_CHANGED_PROPERTY = "Car wait changed";
-	public static final String NEXTWAIT_CHANGED_PROPERTY = "Next wait changed";
-	public static final String NEXT_DESTINATION_CHANGED_PROPERTY = "Next destination changed";
-	public static final String NEXT_DESTINATION_TRACK_CHANGED_PROPERTY = "Next destination track changed";
-	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Return when empty changed";
+	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		 // NOI18N property change descriptions
+	public static final String WAIT_CHANGED_PROPERTY = "Car wait changed"; 			// NOI18N
+	public static final String NEXTWAIT_CHANGED_PROPERTY = "Car next wait changed"; // NOI18N
+	public static final String NEXT_DESTINATION_CHANGED_PROPERTY = "Car next destination changed"; // NOI18N
+	public static final String NEXT_DESTINATION_TRACK_CHANGED_PROPERTY = "Car next destination track changed"; // NOI18N
+	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Car return when empty changed"; // NOI18N
 	
 	// return status when placing cars at a location or destination
 	public static final String SCHEDULE = Bundle.getString("schedule");
@@ -74,7 +74,7 @@ public class Car extends RollingStock {
 		boolean old = _hazardous;
 		_hazardous = hazardous;
 		if (!old == hazardous)
-			firePropertyChange("car hazardous", old?"true":"false", hazardous?"true":"false");
+			firePropertyChange("car hazardous", old?"true":"false", hazardous?"true":"false"); // NOI18N
 	}
 	
 	public boolean isHazardous(){
@@ -85,7 +85,7 @@ public class Car extends RollingStock {
 		boolean old = _passenger;
 		_passenger = passenger;
 		if (!old == passenger)
-			firePropertyChange("car passenger", old?"true":"false", passenger?"true":"false");
+			firePropertyChange("car passenger", old?"true":"false", passenger?"true":"false"); // NOI18N
 	}
 	
 	public boolean isPassenger(){
@@ -96,7 +96,7 @@ public class Car extends RollingStock {
 		boolean old = _fred;
 		_fred = fred;
 		if (!old == fred)
-			firePropertyChange("car fred", old?"true":"false", fred?"true":"false");
+			firePropertyChange("car has fred", old?"true":"false", fred?"true":"false"); // NOI18N
 	}
 	
 	public boolean hasFred(){
@@ -142,7 +142,7 @@ public class Car extends RollingStock {
 		String old = _scheduleId;
 		_scheduleId = id;
 		if (!old.equals(id))
-			firePropertyChange("carScheduleId", old, id);
+			firePropertyChange("car schedule id changed", old, id); // NOI18N
 	}
 	
 	public String getScheduleId(){
@@ -215,7 +215,7 @@ public class Car extends RollingStock {
 		int old = _order;
 		_order = number;
 		if (old != number)
-			firePropertyChange("carOrder", old, number);
+			firePropertyChange("car order changed", old, number); // NOI18N
 	}
 	
 	public int getOrder(){
@@ -368,7 +368,7 @@ public class Car extends RollingStock {
 		boolean old = _caboose;
 		_caboose = caboose;
 		if (!old == caboose)
-			firePropertyChange("car caboose", old?"true":"false", caboose?"true":"false");
+			firePropertyChange("car is caboose", old?"true":"false", caboose?"true":"false"); // NOI18N
 	}
 	
 	public boolean isCaboose(){
@@ -379,7 +379,7 @@ public class Car extends RollingStock {
 		boolean old = _utility;
 		_utility = utility;
 		if (!old == utility)
-			firePropertyChange("car caol", old?"true":"false", utility?"true":"false");
+			firePropertyChange("car is utility", old?"true":"false", utility?"true":"false"); // NOI18N
 	}
 	
 	public boolean isUtility(){
@@ -406,7 +406,7 @@ public class Car extends RollingStock {
 			newName = _kernel.getName();
 		}
 		if (!old.equals(newName))
-			firePropertyChange("kernel", old, newName);
+			firePropertyChange("kernel name changed", old, newName); // NOI18N
 	}
 
 	public Kernel getKernel() {
@@ -461,7 +461,7 @@ public class Car extends RollingStock {
 		ScheduleItem si = track.getCurrentScheduleItem();
 		if (si == null){
 			log.error("Could not find schedule item id ("+track.getScheduleItemId()+") for schedule ("+track.getScheduleName()+")");
-			return SCHEDULE + " ERROR";
+			return SCHEDULE + " ERROR"; // NOI18N
 		}
 		if (track.getScheduleMode() == Track.SEQUENTIAL)
 			return checkScheduleItem(track, si);
@@ -475,11 +475,11 @@ public class Car extends RollingStock {
 		for (int i=0; i<track.getSchedule().getSize(); i++){
 			ScheduleItem si = track.getNextScheduleItem();
 			if (debugFlag)log.debug("Item id ("+si.getId()+") requesting type ("+si.getType()+") " +
-					"load ("+si.getLoad()+") next dest ("+si.getDestinationName()+") track ("+si.getDestinationTrackName()+")");
+					"load ("+si.getLoad()+") next dest ("+si.getDestinationName()+") track ("+si.getDestinationTrackName()+")"); // NOI18N
 			String status = checkScheduleItem(track, si);
 			if (status.equals(Track.OKAY)){
 				log.debug("Found item match ("+si.getId()+") car ("+toString()+") load ("+si.getLoad()+") ship ("+si.getShip()+") " +
-						"destination ("+si.getDestinationName()+", "+si.getDestinationTrackName()+")");
+						"destination ("+si.getDestinationName()+", "+si.getDestinationTrackName()+")"); // NOI18N
 				setScheduleId(si.getId());
 				return Track.OKAY;
 			} else {
@@ -487,7 +487,7 @@ public class Car extends RollingStock {
 			}
 		}
 		if (debugFlag)log.debug("No Match");
-		return SCHEDULE + " NO MATCH";
+		return SCHEDULE + " NO MATCH"; // NOI18N
 	}
 	
 	private String checkScheduleItem(Track track, ScheduleItem si) {
@@ -619,7 +619,7 @@ public class Car extends RollingStock {
 			track.bumpSchedule();
 		} else if (currentSi != null){
 			log.debug("Car ("+toString()+") type ("+getType()+") road ("+getRoad()+") load ("+getLoad()
-					+") arrived out of sequence, needed type ("+currentSi.getType()+") road ("+currentSi.getRoad()+") load ("+currentSi.getLoad()+")");
+					+") arrived out of sequence, needed type ("+currentSi.getType()+") road ("+currentSi.getRoad()+") load ("+currentSi.getLoad()+")"); // NOI18N
 		} else {
 			log.error("ERROR Track "+track.getName()+" current schedule item is null!");
 		}
@@ -757,67 +757,65 @@ public class Car extends RollingStock {
 		super.rollingStock(e);
 		loading = false;
 		org.jdom.Attribute a;
-		if ((a = e.getAttribute("passenger")) != null)
-			_passenger = a.getValue().equals("true");
-		if ((a = e.getAttribute("hazardous")) != null)
-			_hazardous = a.getValue().equals("true");
-		if ((a = e.getAttribute("caboose")) != null)
-			_caboose = a.getValue().equals("true");
-		if ((a = e.getAttribute("fred")) != null)
-			_fred = a.getValue().equals("true");
-		if ((a = e.getAttribute("utility")) != null)
-			_utility = a.getValue().equals("true");
-		if ((a = e.getAttribute("locUnknown")) != null)
-			_locationUnknown = a.getValue().equals("true");
-		if ((a = e.getAttribute("kernel")) != null){
+		if ((a = e.getAttribute(Xml.PASSENGER)) != null)
+			_passenger = a.getValue().equals(Xml.TRUE);
+		if ((a = e.getAttribute(Xml.HAZARDOUS)) != null)
+			_hazardous = a.getValue().equals(Xml.TRUE);
+		if ((a = e.getAttribute(Xml.CABOOSE)) != null)
+			_caboose = a.getValue().equals(Xml.TRUE);
+		if ((a = e.getAttribute(Xml.FRED)) != null)
+			_fred = a.getValue().equals(Xml.TRUE);
+		if ((a = e.getAttribute(Xml.UTILITY)) != null)
+			_utility = a.getValue().equals(Xml.TRUE);
+		if ((a = e.getAttribute(Xml.KERNEL)) != null){
 			Kernel k = CarManager.instance().getKernelByName(a.getValue());
 			if (k != null){
 				setKernel(k);
-				if ((a = e.getAttribute("leadKernel")) != null && a.getValue().equals("true")){
+				if ((a = e.getAttribute(Xml.LEAD_KERNEL)) != null && a.getValue().equals(Xml.TRUE)){
 					_kernel.setLead(this);
 				}
 			} else {
 				log.error("Kernel "+a.getValue()+" does not exist");
 			}
 		}
-		if ((a = e.getAttribute("load")) != null){
+		if ((a = e.getAttribute(Xml.LOAD)) != null){
 			_load = a.getValue();
 		}
-		if ((a = e.getAttribute("loadFromStaging")) != null && a.getValue().equals("true")){
+		if ((a = e.getAttribute(Xml.LOAD_FROM_STAGING)) != null && a.getValue().equals(Xml.TRUE)){
 			setLoadGeneratedFromStaging(true);
 		}
 
-		if ((a = e.getAttribute("wait")) != null){
+		if ((a = e.getAttribute(Xml.WAIT)) != null){
 			_wait = Integer.parseInt(a.getValue());
 		}
-		if ((a = e.getAttribute("scheduleId")) != null){
+		if ((a = e.getAttribute(Xml.SCHEDULE_ID)) != null){
 			_scheduleId = a.getValue();
 		}
-		if ((a = e.getAttribute("nextLoad")) != null){
+		if ((a = e.getAttribute(Xml.NEXT_LOAD)) != null){
 			_nextLoad = a.getValue();
 		}
-		if ((a = e.getAttribute("nextWait")) != null){
+		if ((a = e.getAttribute(Xml.NEXT_WAIT)) != null){
 			_nextWait = Integer.parseInt(a.getValue());
 		}
-		if ((a = e.getAttribute("nextDestId")) != null){
+		if ((a = e.getAttribute(Xml.NEXT_DEST_ID)) != null){
 			setNextDestination(LocationManager.instance().getLocationById(a.getValue()));
 		}
-		if (getNextDestination() != null && (a = e.getAttribute("nextDestTrackId")) != null){
+		if (getNextDestination() != null && (a = e.getAttribute(Xml.NEXT_DEST_TRACK_ID)) != null){
 			setNextDestTrack(getNextDestination().getTrackById(a.getValue()));
 		}
-		if ((a = e.getAttribute("previousNextDestId")) != null){
+		if ((a = e.getAttribute(Xml.PREVIOUS_NEXT_DEST_ID)) != null){
 			setPreviousNextDestination(LocationManager.instance().getLocationById(a.getValue()));
 		}
-		if (getPreviousNextDestination() != null && (a = e.getAttribute("previousNextDestTrackId")) != null){
+		if (getPreviousNextDestination() != null && (a = e.getAttribute(Xml.PREVIOUS_NEXT_DEST_TRACK_ID)) != null){
 			setPreviousNextDestTrack(getPreviousNextDestination().getTrackById(a.getValue()));
 		}
-		if ((a = e.getAttribute("rweDestId")) != null){
+		if ((a = e.getAttribute(Xml.RWE_DEST_ID)) != null){
 			_rweDestination = LocationManager.instance().getLocationById(a.getValue());
 		}
-		if (_rweDestination != null && (a = e.getAttribute("rweDestTrackId")) != null){
+		if (_rweDestination != null && (a = e.getAttribute(Xml.RWE_DEST_TRACK_ID)) != null){
 			_rweDestTrack = _rweDestination.getTrackById(a.getValue());
 		}
-		if ((a = e.getAttribute("order")) != null){
+		if ((a = e.getAttribute(Xml.ORDER)) != null){
 			_order = Integer.parseInt(a.getValue());
 		}
 		addPropertyChangeListeners();
@@ -830,61 +828,61 @@ public class Car extends RollingStock {
 	 * @return Contents in a JDOM Element
 	 */
 	public org.jdom.Element store() {
-		org.jdom.Element e = new org.jdom.Element("car");
+		org.jdom.Element e = new org.jdom.Element(Xml.CAR);
 		super.store(e);
 		if (isPassenger())
-			e.setAttribute("passenger", isPassenger()?"true":"false");
+			e.setAttribute(Xml.PASSENGER, isPassenger()?Xml.TRUE:Xml.FALSE);
 		if (isHazardous())
-			e.setAttribute("hazardous", isHazardous()?"true":"false");
+			e.setAttribute(Xml.HAZARDOUS, isHazardous()?Xml.TRUE:Xml.FALSE);
 		if (isCaboose())
-			e.setAttribute("caboose", isCaboose()?"true":"false");
+			e.setAttribute(Xml.CABOOSE, isCaboose()?Xml.TRUE:Xml.FALSE);
 		if (hasFred())
-			e.setAttribute("fred", hasFred()?"true":"false");
+			e.setAttribute(Xml.FRED, hasFred()?Xml.TRUE:Xml.FALSE);
 		if (isUtility())
-			e.setAttribute("utility", isUtility()?"true":"false");
+			e.setAttribute(Xml.UTILITY, isUtility()?Xml.TRUE:Xml.FALSE);
 		if (getKernel() != null){
-			e.setAttribute("kernel", getKernelName());
+			e.setAttribute(Xml.KERNEL, getKernelName());
 			if (getKernel().isLead(this))
-				e.setAttribute("leadKernel", "true");
+				e.setAttribute(Xml.LEAD_KERNEL, Xml.TRUE);
 		}
 		if (!getLoad().equals("")){
-			e.setAttribute("load", getLoad());
+			e.setAttribute(Xml.LOAD, getLoad());
 		}
 		if (isLoadGeneratedFromStaging())
-			e.setAttribute("loadFromStaging", "true");
+			e.setAttribute(Xml.LOAD_FROM_STAGING, Xml.TRUE);
 
 		if (getWait() != 0){
-			e.setAttribute("wait", Integer.toString(getWait()));
+			e.setAttribute(Xml.WAIT, Integer.toString(getWait()));
 		}
 		
 		if (!getScheduleId().equals("")){
-			e.setAttribute("scheduleId", getScheduleId());
+			e.setAttribute(Xml.SCHEDULE_ID, getScheduleId());
 		}
 
 		if (!getNextLoad().equals("")){
-			e.setAttribute("nextLoad", getNextLoad());
+			e.setAttribute(Xml.NEXT_LOAD, getNextLoad());
 		}
 
 		if (getNextWait() != 0){
-			e.setAttribute("nextWait", Integer.toString(getNextWait()));
+			e.setAttribute(Xml.NEXT_WAIT, Integer.toString(getNextWait()));
 		}
 		if (getNextDestination() != null){
-			e.setAttribute("nextDestId", getNextDestination().getId());
+			e.setAttribute(Xml.NEXT_DEST_ID, getNextDestination().getId());
 			if (getNextDestTrack() != null)
-				e.setAttribute("nextDestTrackId", getNextDestTrack().getId());
+				e.setAttribute(Xml.NEXT_DEST_TRACK_ID, getNextDestTrack().getId());
 		}
 		if (getPreviousNextDestination() != null){
-			e.setAttribute("previousNextDestId", getPreviousNextDestination().getId());
+			e.setAttribute(Xml.PREVIOUS_NEXT_DEST_ID, getPreviousNextDestination().getId());
 			if (getPreviousNextDestTrack() != null)
-				e.setAttribute("previousNextDestTrackId", getPreviousNextDestTrack().getId());
+				e.setAttribute(Xml.PREVIOUS_NEXT_DEST_TRACK_ID, getPreviousNextDestTrack().getId());
 		}
 		if (getReturnWhenEmptyDestination() != null){
-			e.setAttribute("rweDestId", getReturnWhenEmptyDestination().getId());
+			e.setAttribute(Xml.RWE_DEST_ID, getReturnWhenEmptyDestination().getId());
 			if (getReturnWhenEmptyDestTrack() != null)
-				e.setAttribute("rweDestTrackId", getReturnWhenEmptyDestTrack().getId());
+				e.setAttribute(Xml.RWE_DEST_TRACK_ID, getReturnWhenEmptyDestTrack().getId());
 		}
 		
-		e.setAttribute("order", Integer.toString(getOrder()));
+		e.setAttribute(Xml.ORDER, Integer.toString(getOrder()));
 
 		return e;
 	}

@@ -808,54 +808,54 @@ public class Location implements java.beans.PropertyChangeListener {
     public Location(Element e) {
     	//if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         Attribute a;
-        if ((a = e.getAttribute("id")) != null )  _id = a.getValue();	// NOI18N
+        if ((a = e.getAttribute(Xml.ID)) != null )  _id = a.getValue();
         else log.warn("no id attribute in location element when reading operations");
-        if ((a = e.getAttribute("name")) != null )  _name = a.getValue();	// NOI18N
-        if ((a = e.getAttribute("ops")) != null )  _locationOps = Integer.parseInt(a.getValue());	// NOI18N
-        if ((a = e.getAttribute("dir")) != null )  _trainDir = Integer.parseInt(a.getValue());	// NOI18N
-        if ((a = e.getAttribute("switchList")) != null )  _switchList = (a.getValue().equals("true"));	// NOI18N
-        if ((a = e.getAttribute("switchListState")) != null ) {	// NOI18N
+        if ((a = e.getAttribute(Xml.NAME)) != null )  _name = a.getValue();
+        if ((a = e.getAttribute(Xml.OPS)) != null )  _locationOps = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(Xml.DIR)) != null )  _trainDir = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(Xml.SWITCH_LIST)) != null )  _switchList = (a.getValue().equals(Xml.TRUE));
+        if ((a = e.getAttribute(Xml.SWITCH_LIST_STATE)) != null ) {
         	_switchListState = Integer.parseInt(a.getValue());
         	if (getSwitchListState() == SW_PRINTED)
         		setStatus(PRINTED);
         }
-        if ((a = e.getAttribute("printerName")) != null )  _defaultPrinter = a.getValue();	// NOI18N
+        if ((a = e.getAttribute(Xml.PRINTER_NAME)) != null )  _defaultPrinter = a.getValue();
         // load train icon coordinates
         Attribute x;
         Attribute y;
-        if ((x = e.getAttribute("eastTrainIconX")) != null && (y = e.getAttribute("eastTrainIconY"))!= null){	// NOI18N
+        if ((x = e.getAttribute(Xml.EAST_TRAIN_ICON_X)) != null && (y = e.getAttribute(Xml.EAST_TRAIN_ICON_Y))!= null){
         	setTrainIconEast(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
         }
-        if ((x = e.getAttribute("westTrainIconX")) != null && (y = e.getAttribute("westTrainIconY"))!= null){	// NOI18N
+        if ((x = e.getAttribute(Xml.WEST_TRAIN_ICON_X)) != null && (y = e.getAttribute(Xml.WEST_TRAIN_ICON_Y))!= null){
         	setTrainIconWest(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
         }
-        if ((x = e.getAttribute("northTrainIconX")) != null && (y = e.getAttribute("northTrainIconY"))!= null){	// NOI18N
+        if ((x = e.getAttribute(Xml.NORTH_TRAIN_ICON_X)) != null && (y = e.getAttribute(Xml.NORTH_TRAIN_ICON_Y))!= null){
         	setTrainIconNorth(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
         }
-        if ((x = e.getAttribute("southTrainIconX")) != null && (y = e.getAttribute("southTrainIconY"))!= null){	// NOI18N
+        if ((x = e.getAttribute(Xml.SOUTH_TRAIN_ICON_X)) != null && (y = e.getAttribute(Xml.SOUTH_TRAIN_ICON_Y))!= null){
         	setTrainIconSouth(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
         }      
-        if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();	// NOI18N
-        if ((a = e.getAttribute("switchListComment")) != null )  _switchListComment = a.getValue();	// NOI18N
-        if ((a = e.getAttribute("physicalLocation")) != null) _physicalLocation = PhysicalLocation.parse(a.getValue());	// NOI18N
-        if ((a = e.getAttribute("carTypes")) != null ) {	// NOI18N
+        if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = a.getValue();
+        if ((a = e.getAttribute(Xml.SWITCH_LIST_COMMENT)) != null )  _switchListComment = a.getValue();
+        if ((a = e.getAttribute(Xml.PHYSICAL_LOCATION)) != null) _physicalLocation = PhysicalLocation.parse(a.getValue());
+        if ((a = e.getAttribute(Xml.CAR_TYPES)) != null ) {
         	String names = a.getValue();
         	String[] Types = names.split("%%");	// NOI18N
         	//if (log.isDebugEnabled()) log.debug("rolling stock types: "+names);
         	setTypeNames(Types);
         }
         // early version of operations called tracks "secondary"
-        if (e.getChildren("secondary") != null) {	// NOI18N
+        if (e.getChildren(Xml.SECONDARY) != null) {
         	@SuppressWarnings("unchecked")
-            List<Element> l = e.getChildren("secondary");	// NOI18N
+            List<Element> l = e.getChildren(Xml.SECONDARY);
             //if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" secondary locations");
             for (int i=0; i<l.size(); i++) {
                 register(new Track(l.get(i), this));
             }
         }
-        if (e.getChildren("track") != null) {	// NOI18N
+        if (e.getChildren(Xml.TRACK) != null) {
         	@SuppressWarnings("unchecked")
-            List<Element> l = e.getChildren("track");	// NOI18N
+            List<Element> l = e.getChildren(Xml.TRACK);
             if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" tracks");
             for (int i=0; i<l.size(); i++) {
                 register(new Track(l.get(i), this));
@@ -869,32 +869,32 @@ public class Location implements java.beans.PropertyChangeListener {
      * @return Contents in a JDOM Element
      */
     public Element store() {
-        Element e = new Element("location");	// NOI18N
-        e.setAttribute("id", getId());	// NOI18N
-        e.setAttribute("name", getName());	// NOI18N
-        e.setAttribute("ops", Integer.toString(getLocationOps()));	// NOI18N
-        e.setAttribute("dir", Integer.toString(getTrainDirections()));	// NOI18N
-        e.setAttribute("switchList", isSwitchListEnabled()?"true":"false");	// NOI18N
+        Element e = new Element(Xml.LOCATION);
+        e.setAttribute(Xml.ID, getId());
+        e.setAttribute(Xml.NAME, getName());
+        e.setAttribute(Xml.OPS, Integer.toString(getLocationOps()));
+        e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
+        e.setAttribute(Xml.SWITCH_LIST, isSwitchListEnabled()?Xml.TRUE:Xml.FALSE);
         if (!Setup.isSwitchListRealTime())
-        	e.setAttribute("switchListState", Integer.toString(getSwitchListState()));	// NOI18N
+        	e.setAttribute(Xml.SWITCH_LIST_STATE, Integer.toString(getSwitchListState()));
         if (!getDefaultPrinterName().equals("")){
-        	e.setAttribute("printerName", getDefaultPrinterName());	// NOI18N
+        	e.setAttribute(Xml.PRINTER_NAME, getDefaultPrinterName());
         }
         if (!getTrainIconEast().equals(new Point())){
-        	e.setAttribute("eastTrainIconX", Integer.toString(getTrainIconEast().x));	// NOI18N
-        	e.setAttribute("eastTrainIconY", Integer.toString(getTrainIconEast().y));	// NOI18N
+        	e.setAttribute(Xml.EAST_TRAIN_ICON_X, Integer.toString(getTrainIconEast().x));
+        	e.setAttribute(Xml.EAST_TRAIN_ICON_Y, Integer.toString(getTrainIconEast().y));
         }
         if (!getTrainIconWest().equals(new Point())){
-        	e.setAttribute("westTrainIconX", Integer.toString(getTrainIconWest().x));	// NOI18N
-        	e.setAttribute("westTrainIconY", Integer.toString(getTrainIconWest().y));	// NOI18N
+        	e.setAttribute(Xml.WEST_TRAIN_ICON_X, Integer.toString(getTrainIconWest().x));
+        	e.setAttribute(Xml.WEST_TRAIN_ICON_Y, Integer.toString(getTrainIconWest().y));
         }
         if (!getTrainIconNorth().equals(new Point())){
-        	e.setAttribute("northTrainIconX", Integer.toString(getTrainIconNorth().x));	// NOI18N
-        	e.setAttribute("northTrainIconY", Integer.toString(getTrainIconNorth().y));	// NOI18N
+        	e.setAttribute(Xml.NORTH_TRAIN_ICON_X, Integer.toString(getTrainIconNorth().x));
+        	e.setAttribute(Xml.NORTH_TRAIN_ICON_Y, Integer.toString(getTrainIconNorth().y));
         }
         if (!getTrainIconSouth().equals(new Point())){
-        	e.setAttribute("southTrainIconX", Integer.toString(getTrainIconSouth().x));	// NOI18N
-        	e.setAttribute("southTrainIconY", Integer.toString(getTrainIconSouth().y));	// NOI18N
+        	e.setAttribute(Xml.SOUTH_TRAIN_ICON_X, Integer.toString(getTrainIconSouth().x));
+        	e.setAttribute(Xml.SOUTH_TRAIN_ICON_Y, Integer.toString(getTrainIconSouth().y));
         }
         // build list of rolling stock types for this location
         String[] types = getTypeNames();
@@ -906,13 +906,13 @@ public class Location implements java.beans.PropertyChangeListener {
     		if (ct.containsName(types[i]) || et.containsName(types[i]))
     			buf.append(types[i]+"%%");	// NOI18N
         }
-        e.setAttribute("carTypes", buf.toString());	// NOI18N
+        e.setAttribute(Xml.CAR_TYPES, buf.toString());
 
         if (_physicalLocation != null)
-        	e.setAttribute("physicalLocation", _physicalLocation.toString());	// NOI18N
+        	e.setAttribute(Xml.PHYSICAL_LOCATION, _physicalLocation.toString());
 
-        e.setAttribute("comment", getComment());	// NOI18N
-        e.setAttribute("switchListComment", getSwitchListComment());	// NOI18N
+        e.setAttribute(Xml.COMMENT, getComment());
+        e.setAttribute(Xml.SWITCH_LIST_COMMENT, getSwitchListComment());
         
         List<String> tracks = getTrackIdsByIdList();
         for (int i=0; i<tracks.size(); i++) {

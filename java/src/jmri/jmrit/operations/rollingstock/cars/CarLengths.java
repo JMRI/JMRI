@@ -17,8 +17,8 @@ import jmri.jmrit.operations.setup.Control;
 public class CarLengths implements java.beans.PropertyChangeListener {
 
 	private static final String LENGTHS = Bundle.getString("carLengths");
-	public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths";
-	public static final String CARLENGTHS_NAME_CHANGED_PROPERTY = "CarLengthsName";
+	public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths";	// NOI18N
+	public static final String CARLENGTHS_NAME_CHANGED_PROPERTY = "CarLengthsName";	// NOI18N
 
 	private static final int MIN_NAME_LENGTH = 4;
 
@@ -59,7 +59,7 @@ public class CarLengths implements java.beans.PropertyChangeListener {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] lengths = LENGTHS.split("%%");
+			String[] lengths = LENGTHS.split("%%");	// NOI18N
 			for (int i = 0; i < lengths.length; i++)
 				list.add(lengths[i]);
 		}

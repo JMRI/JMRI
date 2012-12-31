@@ -156,7 +156,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarLoads", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarLoads", true);	// NOI18N
 
 		pack();
 		if (getWidth() < 300)

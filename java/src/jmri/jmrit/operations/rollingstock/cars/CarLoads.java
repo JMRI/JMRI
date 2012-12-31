@@ -445,11 +445,11 @@ public class CarLoads {
 	 * @return Contents in a JDOM Element
 	 */
 	public Element store() {
-		Element values = new Element("loads");
+		Element values = new Element(Xml.LOADS);
 		// store default load and empty
-		Element defaults = new Element("defaults");
-		defaults.setAttribute("empty", getDefaultEmptyName());
-		defaults.setAttribute("load", getDefaultLoadName());
+		Element defaults = new Element(Xml.DEFAULTS);
+		defaults.setAttribute(Xml.EMPTY, getDefaultEmptyName());
+		defaults.setAttribute(Xml.LOAD, getDefaultLoadName());
 		values.addContent(defaults);
 		// store loads based on car types
 		Enumeration<String> en = list.keys();
@@ -458,27 +458,27 @@ public class CarLoads {
 			// check to see if car type still exists
 			if (!CarTypes.instance().containsName(carType))
 				continue;
-			Element load = new Element("load");
-			load.setAttribute("type", carType);
+			Element load = new Element(Xml.LOAD);
+			load.setAttribute(Xml.TYPE, carType);
 			List<CarLoad> loads = getSortedList(carType);
 			StringBuffer buf = new StringBuffer();
 			for (int j = 0; j < loads.size(); j++) {
 				buf.append(loads.get(j).getName());
-				Element carLoad = new Element("carLoad");
+				Element carLoad = new Element(Xml.CAR_LOAD);
 				carLoad.setAttribute("name", loads.get(j).getName());
 				if (!loads.get(j).getPriority().equals(CarLoad.PRIORITY_LOW)) {
-					carLoad.setAttribute("priority", loads.get(j).getPriority());
-					buf.append("P"); // must store
+					carLoad.setAttribute(Xml.PRIORITY, loads.get(j).getPriority());
+					buf.append("P");  // NOI18N must store
 				}
 				if (!loads.get(j).getPickupComment().equals("")) {
-					carLoad.setAttribute("pickupComment", loads.get(j).getPickupComment());
-					buf.append("PC"); // must store
+					carLoad.setAttribute(Xml.PICKUP_COMMENT, loads.get(j).getPickupComment());
+					buf.append("PC");  // NOI18N must store
 				}
 				if (!loads.get(j).getDropComment().equals("")) {
-					carLoad.setAttribute("dropComment", loads.get(j).getDropComment());
-					buf.append("DC"); // must store
+					carLoad.setAttribute(Xml.DROP_COMMENT, loads.get(j).getDropComment());
+					buf.append("DC");  // NOI18N must store
 				}
-				carLoad.setAttribute("loadType", loads.get(j).getLoadType());
+				carLoad.setAttribute(Xml.LOAD_TYPE, loads.get(j).getLoadType());
 				load.addContent(carLoad);
 			}
 			// only store loads that aren't the defaults
@@ -490,28 +490,28 @@ public class CarLoads {
 
 	public void load(Element e) {
 		org.jdom.Attribute a;
-		Element defaults = e.getChild("loads").getChild("defaults");
+		Element defaults = e.getChild(Xml.LOADS).getChild(Xml.DEFAULTS);
 		if (defaults != null) {
-			if ((a = defaults.getAttribute("load")) != null) {
+			if ((a = defaults.getAttribute(Xml.LOAD)) != null) {
 				_loadName = a.getValue();
 			}
-			if ((a = defaults.getAttribute("empty")) != null) {
+			if ((a = defaults.getAttribute(Xml.EMPTY)) != null) {
 				_emptyName = a.getValue();
 			}
 		}
 		@SuppressWarnings("unchecked")
-		List<Element> l = e.getChild("loads").getChildren("load");
+		List<Element> l = e.getChild(Xml.LOADS).getChildren(Xml.LOAD);
 		if (log.isDebugEnabled())
 			log.debug("readFile sees " + l.size() + " car loads");
 		for (int i = 0; i < l.size(); i++) {
 			Element load = l.get(i);
-			if ((a = load.getAttribute("type")) != null) {
+			if ((a = load.getAttribute(Xml.TYPE)) != null) {
 				String type = a.getValue();
 				addType(type);
 				// old style had a list of names
-				if ((a = load.getAttribute("names")) != null) {
+				if ((a = load.getAttribute(Xml.NAMES)) != null) {
 					String names = a.getValue();
-					String[] loadNames = names.split("%%");
+					String[] loadNames = names.split("%%");// NOI18N
 					jmri.util.StringUtil.sort(loadNames);
 					if (log.isDebugEnabled())
 						log.debug("Car load type: " + type + " loads: " + names);
@@ -522,24 +522,24 @@ public class CarLoads {
 				}
 				// new style load and comments
 				@SuppressWarnings("unchecked")
-				List<Element> loads = load.getChildren("carLoad");
+				List<Element> loads = load.getChildren(Xml.CAR_LOAD);
 				if (log.isDebugEnabled())
 					log.debug(loads.size() + " car loads for type: " + type);
 				for (int j = 0; j < loads.size(); j++) {
 					Element carLoad = loads.get(j);
-					if ((a = carLoad.getAttribute("name")) != null) {
+					if ((a = carLoad.getAttribute(Xml.NAME)) != null) {
 						String name = a.getValue();
 						addName(type, name);
-						if ((a = carLoad.getAttribute("priority")) != null) {
+						if ((a = carLoad.getAttribute(Xml.PRIORITY)) != null) {
 							setPriority(type, name, a.getValue());
 						}
-						if ((a = carLoad.getAttribute("pickupComment")) != null) {
+						if ((a = carLoad.getAttribute(Xml.PICKUP_COMMENT)) != null) {
 							setPickupComment(type, name, a.getValue());
 						}
-						if ((a = carLoad.getAttribute("dropComment")) != null) {
+						if ((a = carLoad.getAttribute(Xml.DROP_COMMENT)) != null) {
 							setDropComment(type, name, a.getValue());
 						}
-						if ((a = carLoad.getAttribute("loadType")) != null) {
+						if ((a = carLoad.getAttribute(Xml.LOAD_TYPE)) != null) {
 							setLoadType(type, name, a.getValue());
 						}
 					}

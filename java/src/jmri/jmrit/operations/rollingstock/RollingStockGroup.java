@@ -38,7 +38,7 @@ public class RollingStockGroup {
 		}
 		int oldSize = _group.size();
 		_group.add(rs);
-		firePropertyChange("listLength", Integer.toString(oldSize), Integer.valueOf(_group.size()));
+		firePropertyChange("grouplistLength", Integer.toString(oldSize), Integer.valueOf(_group.size())); // NOI18N
 	}
 	
 	public void delete(RollingStock rs){
@@ -52,7 +52,7 @@ public class RollingStockGroup {
 			// need a new lead rs
 			setLead(_group.get(0));
 		}
-		firePropertyChange("listLength", Integer.toString(oldSize), Integer.valueOf(_group.size()));
+		firePropertyChange("grouplistLength", Integer.toString(oldSize), Integer.valueOf(_group.size())); // NOI18N
 	}
 	
 	public List<RollingStock> getGroup(){

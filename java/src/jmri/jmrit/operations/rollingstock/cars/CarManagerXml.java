@@ -68,46 +68,46 @@ public class CarManagerXml extends OperationsXml {
 	        // add top-level elements
 	        root.addContent(manager.store());
 	        Element values;
-	        root.addContent(values = new Element("roadNames"));
+	        root.addContent(values = new Element(Xml.ROAD_NAMES));
 	        String[]roads = CarRoads.instance().getNames();
 	        for (int i=0; i<roads.length; i++){
-	        	String roadNames = roads[i]+"%%";
+	        	String roadNames = roads[i]+"%%"; // NOI18N
 	        	values.addContent(roadNames);
 	        }
-	        root.addContent(values = new Element("carTypes"));
+	        root.addContent(values = new Element(Xml.CAR_TYPES));
 	        String[]types = CarTypes.instance().getNames();
 	        for (int i=0; i<types.length; i++){
-	        	String typeNames = types[i]+"%%";
+	        	String typeNames = types[i]+"%%"; // NOI18N
 	        	values.addContent(typeNames);
 	        }
-	        root.addContent(values = new Element("carColors"));
+	        root.addContent(values = new Element(Xml.CAR_COLORS));
 	        String[]colors = CarColors.instance().getNames();
 	        for (int i=0; i<colors.length; i++){
-	        	String colorNames = colors[i]+"%%";
+	        	String colorNames = colors[i]+"%%"; // NOI18N
 	        	values.addContent(colorNames);
 	        }
-	        root.addContent(values = new Element("carLengths"));
+	        root.addContent(values = new Element(Xml.CAR_LENGTHS));
 	        String[]lengths = CarLengths.instance().getNames();
 	        for (int i=0; i<lengths.length; i++){
-	        	String lengthNames = lengths[i]+"%%";
+	        	String lengthNames = lengths[i]+"%%"; // NOI18N
 	        	values.addContent(lengthNames);
 	        }
-	        root.addContent(values = new Element("carOwners"));
+	        root.addContent(values = new Element(Xml.CAR_OWNERS));
 	        String[]owners = CarOwners.instance().getNames();
 	        for (int i=0; i<owners.length; i++){
-	        	String ownerNames = owners[i]+"%%";
+	        	String ownerNames = owners[i]+"%%"; // NOI18N
 	        	values.addContent(ownerNames);
 	        }
-	        root.addContent(values = new Element("kernels"));
+	        root.addContent(values = new Element(Xml.KERNELS));
 	        List<String> kernels = manager.getKernelNameList();
 	        for (int i=0; i<kernels.size(); i++){
-	        	String kernelNames = kernels.get(i)+"%%";
+	        	String kernelNames = kernels.get(i)+"%%"; // NOI18N
 	        	values.addContent(kernelNames);
 	        }
 	        // store car loads based on car types
 	        root.addContent(CarLoads.instance().store());
 	        
-	        root.addContent(values = new Element("cars"));
+	        root.addContent(values = new Element(Xml.CARS));
 	        // add entries
 	        List<String> carList = manager.getList();
 	        for (int i=0; i<carList.size(); i++) {
@@ -151,45 +151,45 @@ public class CarManagerXml extends OperationsXml {
     		manager.options(e);
     	}
        	
-        if (root.getChild("roadNames")!= null){
-        	String names = root.getChildText("roadNames");
-        	String[] roads = names.split("%%");
+        if (root.getChild(Xml.ROAD_NAMES)!= null){
+        	String names = root.getChildText(Xml.ROAD_NAMES);
+        	String[] roads = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("road names: "+names);
         	CarRoads.instance().setNames(roads);
         }
         
-        if (root.getChild("carTypes")!= null){
-        	String names = root.getChildText("carTypes");
-        	String[] types = names.split("%%");
+        if (root.getChild(Xml.CAR_TYPES)!= null){
+        	String names = root.getChildText(Xml.CAR_TYPES);
+        	String[] types = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("car types: "+names);
         	CarTypes.instance().setNames(types);
         }
         
-        if (root.getChild("carColors")!= null){
-        	String names = root.getChildText("carColors");
-        	String[] colors = names.split("%%");
+        if (root.getChild(Xml.CAR_COLORS)!= null){
+        	String names = root.getChildText(Xml.CAR_COLORS);
+        	String[] colors = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("car colors: "+names);
         	CarColors.instance().setNames(colors);
         }
         
-        if (root.getChild("carLengths")!= null){
-        	String names = root.getChildText("carLengths");
-        	String[] lengths = names.split("%%");
+        if (root.getChild(Xml.CAR_LENGTHS)!= null){
+        	String names = root.getChildText(Xml.CAR_LENGTHS);
+        	String[] lengths = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("car lengths: "+names);
         	CarLengths.instance().setNames(lengths);
         }
         
-        if (root.getChild("carOwners")!= null){
-        	String names = root.getChildText("carOwners");
-        	String[] owners = names.split("%%");
+        if (root.getChild(Xml.CAR_OWNERS)!= null){
+        	String names = root.getChildText(Xml.CAR_OWNERS);
+        	String[] owners = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("car owners: "+names);
         	CarOwners.instance().setNames(owners);
         }
         
-        if (root.getChild("kernels")!= null){
-        	String names = root.getChildText("kernels");
+        if (root.getChild(Xml.KERNELS)!= null){
+        	String names = root.getChildText(Xml.KERNELS);
         	if(!names.equals("")){
-        		String[] kernelNames = names.split("%%");
+        		String[] kernelNames = names.split("%%"); // NOI18N
         		if (log.isDebugEnabled()) log.debug("kernels: "+names);
         		for (int i=0; i<kernelNames.length; i++){
         			manager.newKernel(kernelNames[i]);
@@ -197,13 +197,13 @@ public class CarManagerXml extends OperationsXml {
         	}
         }
         
-        if (root.getChild("loads")!= null){
+        if (root.getChild(Xml.LOADS)!= null){
         	CarLoads.instance().load(root);
         }
          
-        if (root.getChild("cars") != null) {
+        if (root.getChild(Xml.CARS) != null) {
         	@SuppressWarnings("unchecked")
-            List<Element> l = root.getChild("cars").getChildren("car");
+            List<Element> l = root.getChild(Xml.CARS).getChildren(Xml.CAR);
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" cars");
             for (int i=0; i<l.size(); i++) {
                 manager.register(new Car(l.get(i)));

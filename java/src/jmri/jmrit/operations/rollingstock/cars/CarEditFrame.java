@@ -306,7 +306,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		// JMenu toolMenu = new JMenu("Tools");
 		// menuBar.add(toolMenu);
 		// setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true);	// NOI18N
 
 		// get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);
@@ -837,7 +837,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("CarEditFrame sees propertyChange " + e.getPropertyName() + " old: "
-					+ e.getOldValue() + " new: " + e.getNewValue());
+					+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_car != null)

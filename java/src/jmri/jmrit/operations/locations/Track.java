@@ -1440,36 +1440,6 @@ public class Track {
 		setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
 	}
 
-	static final String TRACK = "track"; // NOI18N
-	static final String ID = "id"; // NOI18N
-	static final String NAME = "name"; // NOI18N
-	static final String LOC_TYPE = "locType"; // NOI18N
-	static final String XML_LENGTH = "length"; // NOI18N
-	static final String MOVES = "moves"; // NOI18N
-	static final String DIR = "dir"; // NOI18N
-	static final String COMMENT = "comment"; // NOI18N
-	static final String CAR_TYPES = "carTypes"; // NOI18N
-	static final String CAR_ROAD_OPERATION = "carRoadOperation"; // NOI18N misspelled should have been carRoadOption
-	static final String CAR_ROADS = "carRoads"; // NOI18N
-	static final String CAR_LOAD_OPTION = "carLoadOption"; // NOI18N
-	static final String CAR_LOADS = "carLoads"; // NOI18N
-	static final String DROP_IDS = "dropIds"; // NOI18N
-	static final String DROP_OPTION = "dropOption"; // NOI18N
-	static final String PICKUP_IDS = "pickupIds"; // NOI18N
-	static final String PICKUP_OPTION = "pickupOption"; // NOI18N
-	static final String SCHEDULE = "schedule"; // NOI18N
-	static final String SCHEDULE_ID = "scheduleId"; // NOI18N
-	static final String ITEM_ID = "itemId"; // NOI18N
-	static final String ITEM_COUNT = "itemCount"; // NOI18N
-	static final String FACTOR = "factor"; // NOI18N
-	static final String SCHEDULE_MODE = "scheduleMode"; // NOI18N
-	static final String ALTERNATIVE = "alternative"; // NOI18N
-	static final String LOAD_OPTIONS = "loadOptions"; // NOI18N
-	static final String BLOCK_OPTIONS = "blockOptions"; // NOI18N
-	static final String ORDER = "order"; // NOI18N
-	static final String POOL = "pool"; // NOI18N
-	static final String MIN_LENGTH = "minLength"; // NOI18N
-	static final String IGNORE_USED_PERCENTAGE = "ignoreUsedPercentage"; // NOI18N
 
 	/**
 	 * Construct this Entry from XML. This member has to remain synchronized with the detailed DTD in
@@ -1484,92 +1454,92 @@ public class Track {
 		// if (log.isDebugEnabled()) log.debug("ctor from element "+e);
 		_location = location;
 		org.jdom.Attribute a;
-		if ((a = e.getAttribute(ID)) != null)
+		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
 			log.warn("no id attribute in track element when reading operations");
-		if ((a = e.getAttribute(NAME)) != null)
+		if ((a = e.getAttribute(Xml.NAME)) != null)
 			_name = a.getValue();
-		if ((a = e.getAttribute(LOC_TYPE)) != null)
+		if ((a = e.getAttribute(Xml.LOC_TYPE)) != null)
 			_locType = a.getValue();
-		if ((a = e.getAttribute(XML_LENGTH)) != null)
+		if ((a = e.getAttribute(Xml.LENGTH)) != null)
 			_length = Integer.parseInt(a.getValue());
-		if ((a = e.getAttribute(MOVES)) != null)
+		if ((a = e.getAttribute(Xml.MOVES)) != null)
 			_moves = Integer.parseInt(a.getValue());
-		if ((a = e.getAttribute(DIR)) != null)
+		if ((a = e.getAttribute(Xml.DIR)) != null)
 			_trainDir = Integer.parseInt(a.getValue());
-		if ((a = e.getAttribute(COMMENT)) != null)
+		if ((a = e.getAttribute(Xml.COMMENT)) != null)
 			_comment = a.getValue();
-		if ((a = e.getAttribute(CAR_TYPES)) != null) {
+		if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
 			String names = a.getValue();
 			String[] types = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled() && debugFlag)
 				log.debug("track (" + getName() + ") accepts car types: " + names);
 			setTypeNames(types);
 		}
-		if ((a = e.getAttribute(CAR_LOAD_OPTION)) != null)
+		if ((a = e.getAttribute(Xml.CAR_LOAD_OPTION)) != null)
 			_loadOption = a.getValue();
-		if ((a = e.getAttribute(CAR_LOADS)) != null) {
+		if ((a = e.getAttribute(Xml.CAR_LOADS)) != null) {
 			String names = a.getValue();
 			String[] loads = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled())
 				log.debug("Track (" + getName() + ") " + getLoadOption() + " car loads: " + names);
 			setLoadNames(loads);
 		}
-		if ((a = e.getAttribute(DROP_IDS)) != null) {
+		if ((a = e.getAttribute(Xml.DROP_IDS)) != null) {
 			String names = a.getValue();
 			String[] ids = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled() && debugFlag)
 				log.debug("track (" + getName() + ") has drop ids : " + names);
 			setDropIds(ids);
 		}
-		if ((a = e.getAttribute(DROP_OPTION)) != null)
+		if ((a = e.getAttribute(Xml.DROP_OPTION)) != null)
 			_dropOption = a.getValue();
-		if ((a = e.getAttribute(PICKUP_IDS)) != null) {
+		if ((a = e.getAttribute(Xml.PICKUP_IDS)) != null) {
 			String names = a.getValue();
 			String[] ids = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled() && debugFlag)
 				log.debug("track (" + getName() + ") has pickup ids : " + names);
 			setPickupIds(ids);
 		}
-		if ((a = e.getAttribute(PICKUP_OPTION)) != null)
+		if ((a = e.getAttribute(Xml.PICKUP_OPTION)) != null)
 			_pickupOption = a.getValue();
-		if ((a = e.getAttribute(CAR_ROADS)) != null) {
+		if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
 			String names = a.getValue();
 			String[] roads = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled() && debugFlag)
 				log.debug("track (" + getName() + ") " + getRoadOption() + " car roads: " + names);
 			setRoadNames(roads);
 		}
-		if ((a = e.getAttribute(CAR_ROAD_OPERATION)) != null)
+		if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null)
 			_roadOption = a.getValue();
-		if ((a = e.getAttribute(SCHEDULE)) != null)
+		if ((a = e.getAttribute(Xml.SCHEDULE)) != null)
 			_scheduleName = a.getValue();
-		if ((a = e.getAttribute(SCHEDULE_ID)) != null)
+		if ((a = e.getAttribute(Xml.SCHEDULE_ID)) != null)
 			_scheduleId = a.getValue();
-		if ((a = e.getAttribute(ITEM_ID)) != null)
+		if ((a = e.getAttribute(Xml.ITEM_ID)) != null)
 			_scheduleItemId = a.getValue();
-		if ((a = e.getAttribute(ITEM_COUNT)) != null)
+		if ((a = e.getAttribute(Xml.ITEM_COUNT)) != null)
 			_scheduleCount = Integer.parseInt(a.getValue());
-		if ((a = e.getAttribute(FACTOR)) != null)
+		if ((a = e.getAttribute(Xml.FACTOR)) != null)
 			_reservationFactor = Integer.parseInt(a.getValue());
-		if ((a = e.getAttribute(SCHEDULE_MODE)) != null)
+		if ((a = e.getAttribute(Xml.SCHEDULE_MODE)) != null)
 			_mode = Integer.parseInt(a.getValue());
-		if ((a = e.getAttribute(ALTERNATIVE)) != null)
+		if ((a = e.getAttribute(Xml.ALTERNATIVE)) != null)
 			_alternativeTrackId = a.getValue();
 
-		if ((a = e.getAttribute(LOAD_OPTIONS)) != null)
+		if ((a = e.getAttribute(Xml.LOAD_OPTIONS)) != null)
 			_loadOptions = Integer.parseInt(a.getValue());
-		if ((a = e.getAttribute(BLOCK_OPTIONS)) != null)
+		if ((a = e.getAttribute(Xml.BLOCK_OPTIONS)) != null)
 			_blockOptions = Integer.parseInt(a.getValue());
-		if ((a = e.getAttribute(ORDER)) != null)
+		if ((a = e.getAttribute(Xml.ORDER)) != null)
 			_order = a.getValue();
-		if ((a = e.getAttribute(POOL)) != null) {
+		if ((a = e.getAttribute(Xml.POOL)) != null) {
 			setPool(_location.addPool(a.getValue()));
-			if ((a = e.getAttribute(MIN_LENGTH)) != null)
+			if ((a = e.getAttribute(Xml.MIN_LENGTH)) != null)
 				_minimumLength = Integer.parseInt(a.getValue());
 		}
-		if ((a = e.getAttribute(IGNORE_USED_PERCENTAGE)) != null)
+		if ((a = e.getAttribute(Xml.IGNORE_USED_PERCENTAGE)) != null)
 			_ignoreUsedLengthPercentage = Integer.parseInt(a.getValue());
 	}
 
@@ -1580,13 +1550,13 @@ public class Track {
 	 * @return Contents in a JDOM Element
 	 */
 	public org.jdom.Element store() {
-		org.jdom.Element e = new org.jdom.Element(TRACK);
-		e.setAttribute(ID, getId());
-		e.setAttribute(NAME, getName());
-		e.setAttribute(LOC_TYPE, getLocType());
-		e.setAttribute(DIR, Integer.toString(getTrainDirections()));
-		e.setAttribute(XML_LENGTH, Integer.toString(getLength()));
-		e.setAttribute(MOVES, Integer.toString(getMoves() - getDropRS()));
+		org.jdom.Element e = new org.jdom.Element(Xml.TRACK);
+		e.setAttribute(Xml.ID, getId());
+		e.setAttribute(Xml.NAME, getName());
+		e.setAttribute(Xml.LOC_TYPE, getLocType());
+		e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
+		e.setAttribute(Xml.LENGTH, Integer.toString(getLength()));
+		e.setAttribute(Xml.MOVES, Integer.toString(getMoves() - getDropRS()));
 		// build list of car types for this track
 		String[] types = getTypeNames();
 		StringBuffer buf = new StringBuffer();
@@ -1596,16 +1566,16 @@ public class Track {
 					|| EngineTypes.instance().containsName(types[i]))
 				buf.append(types[i] + "%%"); // NOI18N
 		}
-		e.setAttribute(CAR_TYPES, buf.toString());
-		e.setAttribute(CAR_ROAD_OPERATION, getRoadOption());
+		e.setAttribute(Xml.CAR_TYPES, buf.toString());
+		e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption());
 		// build list of car roads for this track
 		String[] roads = getRoadNames();
 		buf = new StringBuffer();
 		for (int i = 0; i < roads.length; i++) {
 			buf.append(roads[i] + "%%"); // NOI18N
 		}
-		e.setAttribute(CAR_ROADS, buf.toString());
-		e.setAttribute(CAR_LOAD_OPTION, getLoadOption());
+		e.setAttribute(Xml.CAR_ROADS, buf.toString());
+		e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
 		// save list of car loads for this track
 		if (!getLoadOption().equals(ALLLOADS)) {
 			String[] loads = getLoadNames();
@@ -1613,47 +1583,47 @@ public class Track {
 			for (int i = 0; i < loads.length; i++) {
 				buf.append(loads[i] + "%%"); // NOI18N
 			}
-			e.setAttribute(CAR_LOADS, buf.toString());
+			e.setAttribute(Xml.CAR_LOADS, buf.toString());
 		}
-		e.setAttribute(DROP_OPTION, getDropOption());
+		e.setAttribute(Xml.DROP_OPTION, getDropOption());
 		// build list of drop ids for this track
 		String[] dropIds = getDropIds();
 		buf = new StringBuffer();
 		for (int i = 0; i < dropIds.length; i++) {
 			buf.append(dropIds[i] + "%%"); // NOI18N
 		}
-		e.setAttribute(DROP_IDS, buf.toString());
-		e.setAttribute(PICKUP_OPTION, getPickupOption());
+		e.setAttribute(Xml.DROP_IDS, buf.toString());
+		e.setAttribute(Xml.PICKUP_OPTION, getPickupOption());
 		// build list of pickup ids for this track
 		String[] pickupIds = getPickupIds();
 		buf = new StringBuffer();
 		for (int i = 0; i < pickupIds.length; i++) {
 			buf.append(pickupIds[i] + "%%"); // NOI18N
 		}
-		e.setAttribute(PICKUP_IDS, buf.toString());
+		e.setAttribute(Xml.PICKUP_IDS, buf.toString());
 		if (getSchedule() != null) {
-			e.setAttribute(SCHEDULE, getScheduleName());
-			e.setAttribute(SCHEDULE_ID, getScheduleId());
-			e.setAttribute(ITEM_ID, getScheduleItemId());
-			e.setAttribute(ITEM_COUNT, Integer.toString(getScheduleCount()));
-			e.setAttribute(FACTOR, Integer.toString(getReservationFactor()));
-			e.setAttribute(SCHEDULE_MODE, Integer.toString(getScheduleMode()));
+			e.setAttribute(Xml.SCHEDULE, getScheduleName());
+			e.setAttribute(Xml.SCHEDULE_ID, getScheduleId());
+			e.setAttribute(Xml.ITEM_ID, getScheduleItemId());
+			e.setAttribute(Xml.ITEM_COUNT, Integer.toString(getScheduleCount()));
+			e.setAttribute(Xml.FACTOR, Integer.toString(getReservationFactor()));
+			e.setAttribute(Xml.SCHEDULE_MODE, Integer.toString(getScheduleMode()));
 		}
 		if (getAlternativeTrack() != null)
-			e.setAttribute(ALTERNATIVE, getAlternativeTrack().getId());
+			e.setAttribute(Xml.ALTERNATIVE, getAlternativeTrack().getId());
 		if (_loadOptions != 0)
-			e.setAttribute(LOAD_OPTIONS, Integer.toString(_loadOptions));
+			e.setAttribute(Xml.LOAD_OPTIONS, Integer.toString(_loadOptions));
 		if (_blockOptions != 0)
-			e.setAttribute(BLOCK_OPTIONS, Integer.toString(_blockOptions));
+			e.setAttribute(Xml.BLOCK_OPTIONS, Integer.toString(_blockOptions));
 		if (!getServiceOrder().equals(NORMAL))
-			e.setAttribute(ORDER, getServiceOrder());
-		e.setAttribute(COMMENT, getComment());
+			e.setAttribute(Xml.ORDER, getServiceOrder());
+		e.setAttribute(Xml.COMMENT, getComment());
 		if (getPool() != null) {
-			e.setAttribute(POOL, getPool().getName());
-			e.setAttribute(MIN_LENGTH, Integer.toString(getMinimumLength()));
+			e.setAttribute(Xml.POOL, getPool().getName());
+			e.setAttribute(Xml.MIN_LENGTH, Integer.toString(getMinimumLength()));
 		}
 		if (getIgnoreUsedLengthPercentage() > 0)
-			e.setAttribute(IGNORE_USED_PERCENTAGE,
+			e.setAttribute(Xml.IGNORE_USED_PERCENTAGE,
 					Integer.toString(getIgnoreUsedLengthPercentage()));
 
 		return e;

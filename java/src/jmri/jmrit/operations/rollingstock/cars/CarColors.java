@@ -17,8 +17,8 @@ import jmri.jmrit.operations.setup.Control;
 public class CarColors {
 
 	private static final String COLORS = Bundle.getString("carColors");
-	public static final String CARCOLORS_CHANGED_PROPERTY = "CarColors";
-	public static final String CARCOLORS_NAME_CHANGED_PROPERTY = "CarColorsName";
+	public static final String CARCOLORS_CHANGED_PROPERTY = "CarColors";	// NOI18N
+	public static final String CARCOLORS_NAME_CHANGED_PROPERTY = "CarColorsName";	// NOI18N
 
 	private static final int MIN_NAME_LENGTH = 4;
 
@@ -51,7 +51,7 @@ public class CarColors {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] colors = COLORS.split("%%");
+			String[] colors = COLORS.split("%%");	// NOI18N
 			for (int i = 0; i < colors.length; i++)
 				list.add(colors[i]);
 		}

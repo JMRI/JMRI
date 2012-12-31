@@ -31,7 +31,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	File fileLogger;
 	private boolean engLog = false; // when true logging engine movements
 	private boolean carLog = false; // when true logging car movements
-	private String del = ","; // delimiter
+	static final String del = ","; // delimiter
+	static final String esc = "\""; // escape character NOI18N
 
 	public RollingStockLogger() {
 	}
@@ -118,18 +119,18 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		String rsType = rs.getType();
 		if (rsType.contains(del)) {
 			log.debug("RS (" + rs.toString() + ") has delimiter in type field: " + rsType);
-			rsType = "\"" + rs.getType() + "\"";
+			rsType = esc + rs.getType() + esc;
 		}
 		String rsLocationName = rs.getLocationName();
 		if (rsLocationName.contains(del)) {
 			log.debug("RS (" + rs.toString() + ") has delimiter in location field: "
 					+ rsLocationName);
-			rsLocationName = "\"" + rs.getLocationName() + "\"";
+			rsLocationName = esc + rs.getLocationName() + esc;
 		}
 		String rsTrackName = rs.getTrackName();
 		if (rsTrackName.contains(del)) {
 			log.debug("RS (" + rs.toString() + ") has delimiter in track field: " + rsTrackName);
-			rsTrackName = "\"" + rs.getTrackName() + "\"";
+			rsTrackName = esc + rs.getTrackName() + esc;
 		}
 		String carLoad = " ";
 		String carFinalDest = " ";
@@ -139,20 +140,20 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 			carLoad = car.getLoad();
 			if (carLoad.contains(del)) {
 				log.debug("RS (" + rs.toString() + ") has delimiter in car load field: " + carLoad);
-				carLoad = "\"" + car.getLoad() + "\"";
+				carLoad = esc + car.getLoad() + esc;
 			}
 			carFinalDest = car.getNextDestinationName();
 			if (carFinalDest.contains(del)) {
 				log.debug("RS (" + rs.toString()
-						+ ") has delimiter in car final destination field: " + carFinalDest);
-				carFinalDest = "\"" + car.getNextDestinationName() + "\"";
+						+ ") has delimiter in car final destination field: " + carFinalDest); // NOI18N
+				carFinalDest = esc + car.getNextDestinationName() + esc;
 			}
 			carFinalDestTrack = car.getNextDestTrackName();
 			if (carFinalDestTrack.contains(del)) {
 				log.debug("RS (" + rs.toString()
-						+ ") has delimiter in car final destination track field: "
+						+ ") has delimiter in car final destination track field: " // NOI18N
 						+ carFinalDestTrack);
-				carFinalDestTrack = "\"" + car.getNextDestTrackName() + "\"";
+				carFinalDestTrack = esc + car.getNextDestTrackName() + esc;
 			}
 		}
 
@@ -280,7 +281,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 
 	private String operationsDirectory = OperationsSetupXml.getFileLocation()
 			+ OperationsSetupXml.getOperationsDirectoryName();
-	private String loggingDirectory = operationsDirectory + File.separator + "logger";
+	private String loggingDirectory = operationsDirectory + File.separator + "logger"; // NOI18N
 
 	public String getDirectoryName() {
 		return loggingDirectory;
@@ -294,7 +295,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 
 	public String getFileName() {
 		if (fileName == null)
-			fileName = getDate() + ".csv";
+			fileName = getDate() + ".csv"; // NOI18N
 		return fileName;
 	}
 

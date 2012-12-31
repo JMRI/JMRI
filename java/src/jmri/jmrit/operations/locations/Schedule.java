@@ -301,10 +301,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
     	}
     	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
-
-    static final String ID = "id";		// NOI18N
-	static final String NAME = "name"; // NOI18N
-	static final String COMMENT = "comment"; // NOI18N
  	
    /**
      * Construct this Entry from XML. This member has to remain synchronized with the
@@ -315,13 +311,13 @@ public class Schedule implements java.beans.PropertyChangeListener {
     public Schedule(org.jdom.Element e) {
 //        if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
-        if ((a = e.getAttribute(ID)) != null )  _id = a.getValue();
+        if ((a = e.getAttribute(Xml.ID)) != null )  _id = a.getValue();
         else log.warn("no id attribute in schedule element when reading operations");
-        if ((a = e.getAttribute(NAME)) != null )  _name = a.getValue();
-        if ((a = e.getAttribute(COMMENT)) != null )  _comment = a.getValue();
-        if (e.getChildren(ScheduleItem.ITEM) != null) {
+        if ((a = e.getAttribute(Xml.NAME)) != null )  _name = a.getValue();
+        if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = a.getValue();
+        if (e.getChildren(Xml.ITEM) != null) {
         	@SuppressWarnings("unchecked")
-            List<Element> l = e.getChildren(ScheduleItem.ITEM);
+            List<Element> l = e.getChildren(Xml.ITEM);
             if (log.isDebugEnabled()) log.debug("schedule: "+getName()+" has "+l.size()+" items");
             for (int i=0; i<l.size(); i++) {
                 register(new ScheduleItem(l.get(i)));
@@ -335,10 +331,10 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
-        org.jdom.Element e = new org.jdom.Element("schedule");
-        e.setAttribute(ID, getId());
-        e.setAttribute(NAME, getName());
-        e.setAttribute(COMMENT, getComment());
+        org.jdom.Element e = new org.jdom.Element(Xml.SCHEDULE);
+        e.setAttribute(Xml.ID, getId());
+        e.setAttribute(Xml.NAME, getName());
+        e.setAttribute(Xml.COMMENT, getComment());
         List<String> l = getItemsBySequenceList();
         for (int i=0; i<l.size(); i++) {
         	String id = l.get(i);

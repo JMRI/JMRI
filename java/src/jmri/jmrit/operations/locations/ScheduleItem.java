@@ -224,46 +224,32 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     	firePropertyChange (DISPOSE, null, DISPOSE);
     }
     
-    static final String ID = "id";		// NOI18N
-    static final String ITEM = "item";	// NOI18N
-    static final String SEQUENCE_ID = "ScheduleId";	// NOI18N
-    static final String TRAIN_SCHEDULE_ID = "trainScheduleId";	// NOI18N
-    static final String COUNT = "count";	// NOI18N
-    static final String WAIT = "wait";	// NOI18N
-    static final String TYPE = "type";	// NOI18N
-    static final String ROAD = "road";	// NOI18N
-    static final String LOAD = "load";	// NOI18N
-    static final String SHIP = "ship";	// NOI18N
-    static final String DESTINATION_ID = "destinationId";	// NOI18N
-    static final String DEST_TRACK_ID = "destTrackId";	// NOI18N
-    static final String COMMENT = "comment";	// NOI18N
-    static final String HITS = "hits";	// NOI18N
-    
-	   /**
-     * Construct this Entry from XML. This member has to remain synchronized with the
-     * detailed DTD in operations-config.xml
-     *
-     * @param e  Consist XML element
-     */
+	/**
+	 * Construct this Entry from XML. This member has to remain synchronized with the detailed DTD in
+	 * operations-config.xml
+	 * 
+	 * @param e
+	 *            Consist XML element
+	 */
     public ScheduleItem(org.jdom.Element e) {
         //if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
-        if ((a = e.getAttribute(ID)) != null )  _id = a.getValue();
+        if ((a = e.getAttribute(Xml.ID)) != null )  _id = a.getValue();
         else log.warn("no id attribute in Schedule Item element when reading operations");
-        if ((a = e.getAttribute(SEQUENCE_ID)) != null )  _sequenceId = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute(TRAIN_SCHEDULE_ID)) != null )  _trainScheduleId = a.getValue();
-        if ((a = e.getAttribute(COUNT)) != null )  _count = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute(WAIT)) != null )  _wait = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute(TYPE)) != null )  _type = a.getValue();
-        if ((a = e.getAttribute(ROAD)) != null )  _road = a.getValue();
-        if ((a = e.getAttribute(LOAD)) != null )  _load = a.getValue();
-        if ((a = e.getAttribute(SHIP)) != null )  _ship = a.getValue();
-		if ((a = e.getAttribute(DESTINATION_ID)) != null)
+        if ((a = e.getAttribute(Xml.SEQUENCE_ID)) != null )  _sequenceId = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(Xml.TRAIN_SCHEDULE_ID)) != null )  _trainScheduleId = a.getValue();
+        if ((a = e.getAttribute(Xml.COUNT)) != null )  _count = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(Xml.WAIT)) != null )  _wait = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(Xml.TYPE)) != null )  _type = a.getValue();
+        if ((a = e.getAttribute(Xml.ROAD)) != null )  _road = a.getValue();
+        if ((a = e.getAttribute(Xml.LOAD)) != null )  _load = a.getValue();
+        if ((a = e.getAttribute(Xml.SHIP)) != null )  _ship = a.getValue();
+		if ((a = e.getAttribute(Xml.DESTINATION_ID)) != null)
 			_destination = LocationManager.instance().getLocationById(a.getValue());
-		if ((a = e.getAttribute(DEST_TRACK_ID)) != null  && _destination != null)
+		if ((a = e.getAttribute(Xml.DEST_TRACK_ID)) != null  && _destination != null)
 			_trackDestination = _destination.getTrackById(a.getValue());
-        if ((a = e.getAttribute(COMMENT)) != null )  _comment = a.getValue();
-        if ((a = e.getAttribute(HITS)) != null )  _hits = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = a.getValue();
+        if ((a = e.getAttribute(Xml.HITS)) != null )  _hits = Integer.parseInt(a.getValue());
     }
 
     /**
@@ -272,22 +258,22 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
-    	org.jdom.Element e = new org.jdom.Element(ITEM);
-    	e.setAttribute(ID, getId());
-    	e.setAttribute(SEQUENCE_ID, Integer.toString(getSequenceId()));
-    	e.setAttribute(TRAIN_SCHEDULE_ID, getTrainScheduleId());
-    	e.setAttribute(COUNT, Integer.toString(getCount()));
-    	e.setAttribute(WAIT, Integer.toString(getWait()));
-    	e.setAttribute(TYPE, getType());
-    	e.setAttribute(ROAD, getRoad());
-    	e.setAttribute(LOAD, getLoad());
-    	e.setAttribute(SHIP, getShip());
+    	org.jdom.Element e = new org.jdom.Element(Xml.ITEM);
+    	e.setAttribute(Xml.ID, getId());
+    	e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
+    	e.setAttribute(Xml.TRAIN_SCHEDULE_ID, getTrainScheduleId());
+    	e.setAttribute(Xml.COUNT, Integer.toString(getCount()));
+    	e.setAttribute(Xml.WAIT, Integer.toString(getWait()));
+    	e.setAttribute(Xml.TYPE, getType());
+    	e.setAttribute(Xml.ROAD, getRoad());
+    	e.setAttribute(Xml.LOAD, getLoad());
+    	e.setAttribute(Xml.SHIP, getShip());
 		if (!getDestinationId().equals(""))
-			e.setAttribute(DESTINATION_ID, getDestinationId());
+			e.setAttribute(Xml.DESTINATION_ID, getDestinationId());
 		if (!getDestinationTrackId().equals(""))
-			e.setAttribute(DEST_TRACK_ID, getDestinationTrackId());
-       	e.setAttribute(COMMENT, getComment());
-       	e.setAttribute(HITS, Integer.toString(getHits()));
+			e.setAttribute(Xml.DEST_TRACK_ID, getDestinationTrackId());
+       	e.setAttribute(Xml.COMMENT, getComment());
+       	e.setAttribute(Xml.HITS, Integer.toString(getHits()));
     	return e;
     }
     

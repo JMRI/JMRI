@@ -25,7 +25,7 @@ public class RollingStockManager {
 
 	protected Hashtable<String, RollingStock> _hashTable = new Hashtable<String, RollingStock>(); //RollingStock by id
 
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength";
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "RollingStockListLength"; // NOI18N
 
     public RollingStockManager() {
     }
@@ -471,7 +471,7 @@ public class RollingStockManager {
     	case BY_OWNER: return rs.getOwner();
     	case BY_RFID: return rs.getRfid();
     	case BY_VALUE: return rs.getValue();
-    	default: return "unknown";	
+    	default: return "unknown";	 // NOI18N
     	}
     }
     

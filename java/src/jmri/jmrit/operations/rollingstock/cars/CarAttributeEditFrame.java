@@ -53,7 +53,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 	JTextField addTextBox = new JTextField(Control.max_len_string_attibute);
 
 	// property change
-	public static final String DISPOSE = "dispose";
+	public static final String DISPOSE = "dispose";	// NOI18N
 
 	public CarAttributeEditFrame() {
 	}
@@ -119,7 +119,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarAttributes", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarAttributes", true);	// NOI18N
 
 		pack();
 
@@ -257,7 +257,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 		}
 		if (_comboboxName == CarEditFrame.LENGTH) {
 			// convert from inches to feet if needed
-			if (addItem.endsWith("\"")) {
+			if (addItem.endsWith("\"")) {	// NOI18N
 				addItem = addItem.substring(0, addItem.length() - 1);
 				try {
 					double inches = Double.parseDouble(addItem);
@@ -270,7 +270,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 					return;
 				}
 			}
-			if (addItem.endsWith("cm")) {
+			if (addItem.endsWith("cm")) {	// NOI18N
 				addItem = addItem.substring(0, addItem.length() - 2);
 				try {
 					double cm = Double.parseDouble(addItem);
@@ -422,7 +422,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 					Engine engine = EngineManager.instance().getById(engines.get(i));
 					if (engine.getRoad().equals(item)) {
 						log.info("Engine (" + engine.getRoad() + " " + engine.getNumber()
-								+ ") has assigned road name (" + item + ")");
+								+ ") has assigned road name (" + item + ")");	// NOI18N
 						return;
 					}
 				}
@@ -472,7 +472,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug("CarsAttributeFrame sees propertyChange " + e.getPropertyName() + " old: "
-				+ e.getOldValue() + " new: " + e.getNewValue());
+				+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY))
 			CarRoads.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY))
