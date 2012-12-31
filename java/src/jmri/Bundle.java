@@ -50,7 +50,7 @@ public class Bundle {
     static String getMessage(String key) {
         return b.handleGetMessage(key);
     }
-    static String getMessage(String key, Object[] subs) {
+    static String getMessage(String key, Object ... subs) {
         return b.handleGetMessage(key, subs);
     }
 
