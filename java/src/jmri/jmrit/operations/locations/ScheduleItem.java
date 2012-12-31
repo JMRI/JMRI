@@ -24,16 +24,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	protected int _hits = 0;				// how many times this schedule item has been used
 	protected String _comment = "";
 			
-	public static final String TRAIN_SCHEDULE_CHANGED_PROPERTY = "trainScheduleId";
-	public static final String COUNT_CHANGED_PROPERTY = "count";
-	public static final String TYPE_CHANGED_PROPERTY = "type";
-	public static final String ROAD_CHANGED_PROPERTY = "road";
-	public static final String LOAD_CHANGED_PROPERTY = "load";
-	public static final String DESTINATION_CHANGED_PROPERTY = "destination";
-	public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "destinationTrack";
-	public static final String WAIT_CHANGED_PROPERTY = "wait";
-	public static final String HITS_CHANGED_PROPERTY = "hits";
-	public static final String DISPOSE = "dispose";
+	public static final String TRAIN_SCHEDULE_CHANGED_PROPERTY = "trainScheduleId";	// NOI18N
+	public static final String COUNT_CHANGED_PROPERTY = "scheduleItemCount";	// NOI18N
+	public static final String TYPE_CHANGED_PROPERTY = "scheduleItemType";	// NOI18N
+	public static final String ROAD_CHANGED_PROPERTY = "scheduleItemRoad";	// NOI18N
+	public static final String LOAD_CHANGED_PROPERTY = "scheduleItemLoad";	// NOI18N
+	public static final String DESTINATION_CHANGED_PROPERTY = "scheduleItemDestination";	// NOI18N
+	public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "scheduleItemDestinationTrack";	// NOI18N
+	public static final String WAIT_CHANGED_PROPERTY = "scheduleItemWait";	// NOI18N
+	public static final String HITS_CHANGED_PROPERTY = "scheduleItemHits";	// NOI18N
+	public static final String DISPOSE = "dispose";	// NOI18N
 	
 	/**
 	 * 
@@ -162,10 +162,10 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public void setDestination(Location destination){
 		Location old = _destination;
 		_destination = destination;
-		String oldName = "null";
+		String oldName = "null";	// NOI18N
 		if (old != null)
 			oldName = old.getName();
-		String newName = "null";
+		String newName = "null";	// NOI18N
 		if (_destination != null)
 			newName = _destination.getName();
 		firePropertyChange (DESTINATION_CHANGED_PROPERTY, oldName, newName);
@@ -190,10 +190,10 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public void setDestinationTrack(Track track){
 		Track old = _trackDestination;
 		_trackDestination = track;
-		String oldName = "null";
+		String oldName = "null";	// NOI18N
 		if (old != null)
 			oldName = old.getName();
-		String newName = "null";
+		String newName = "null";	// NOI18N
 		if (_trackDestination != null)
 			newName = _trackDestination.getName();
 		firePropertyChange (DESTINATION_TRACK_CHANGED_PROPERTY, oldName, newName);
@@ -224,7 +224,20 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     	firePropertyChange (DISPOSE, null, DISPOSE);
     }
     
+    static final String ID = "id";		// NOI18N
     static final String ITEM = "item";	// NOI18N
+    static final String SEQUENCE_ID = "ScheduleId";	// NOI18N
+    static final String TRAIN_SCHEDULE_ID = "trainScheduleId";	// NOI18N
+    static final String COUNT = "count";	// NOI18N
+    static final String WAIT = "wait";	// NOI18N
+    static final String TYPE = "type";	// NOI18N
+    static final String ROAD = "road";	// NOI18N
+    static final String LOAD = "load";	// NOI18N
+    static final String SHIP = "ship";	// NOI18N
+    static final String DESTINATION_ID = "destinationId";	// NOI18N
+    static final String DEST_TRACK_ID = "destTrackId";	// NOI18N
+    static final String COMMENT = "comment";	// NOI18N
+    static final String HITS = "hits";	// NOI18N
     
 	   /**
      * Construct this Entry from XML. This member has to remain synchronized with the
@@ -235,22 +248,22 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     public ScheduleItem(org.jdom.Element e) {
         //if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
-        if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
+        if ((a = e.getAttribute(ID)) != null )  _id = a.getValue();
         else log.warn("no id attribute in Schedule Item element when reading operations");
-        if ((a = e.getAttribute("sequenceId")) != null )  _sequenceId = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute("trainScheduleId")) != null )  _trainScheduleId = a.getValue();
-        if ((a = e.getAttribute("count")) != null )  _count = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute("wait")) != null )  _wait = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute("type")) != null )  _type = a.getValue();
-        if ((a = e.getAttribute("road")) != null )  _road = a.getValue();
-        if ((a = e.getAttribute("load")) != null )  _load = a.getValue();
-        if ((a = e.getAttribute("ship")) != null )  _ship = a.getValue();
-		if ((a = e.getAttribute("destinationId")) != null)
+        if ((a = e.getAttribute(SEQUENCE_ID)) != null )  _sequenceId = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(TRAIN_SCHEDULE_ID)) != null )  _trainScheduleId = a.getValue();
+        if ((a = e.getAttribute(COUNT)) != null )  _count = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(WAIT)) != null )  _wait = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(TYPE)) != null )  _type = a.getValue();
+        if ((a = e.getAttribute(ROAD)) != null )  _road = a.getValue();
+        if ((a = e.getAttribute(LOAD)) != null )  _load = a.getValue();
+        if ((a = e.getAttribute(SHIP)) != null )  _ship = a.getValue();
+		if ((a = e.getAttribute(DESTINATION_ID)) != null)
 			_destination = LocationManager.instance().getLocationById(a.getValue());
-		if ((a = e.getAttribute("destTrackId")) != null  && _destination != null)
+		if ((a = e.getAttribute(DEST_TRACK_ID)) != null  && _destination != null)
 			_trackDestination = _destination.getTrackById(a.getValue());
-        if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
-        if ((a = e.getAttribute("hits")) != null )  _hits = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute(COMMENT)) != null )  _comment = a.getValue();
+        if ((a = e.getAttribute(HITS)) != null )  _hits = Integer.parseInt(a.getValue());
     }
 
     /**
@@ -259,22 +272,22 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
-    	org.jdom.Element e = new org.jdom.Element("item");
-    	e.setAttribute("id", getId());
-    	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
-    	e.setAttribute("trainScheduleId", getTrainScheduleId());
-    	e.setAttribute("count", Integer.toString(getCount()));
-    	e.setAttribute("wait", Integer.toString(getWait()));
-    	e.setAttribute("type", getType());
-    	e.setAttribute("road", getRoad());
-    	e.setAttribute("load", getLoad());
-    	e.setAttribute("ship", getShip());
+    	org.jdom.Element e = new org.jdom.Element(ITEM);
+    	e.setAttribute(ID, getId());
+    	e.setAttribute(SEQUENCE_ID, Integer.toString(getSequenceId()));
+    	e.setAttribute(TRAIN_SCHEDULE_ID, getTrainScheduleId());
+    	e.setAttribute(COUNT, Integer.toString(getCount()));
+    	e.setAttribute(WAIT, Integer.toString(getWait()));
+    	e.setAttribute(TYPE, getType());
+    	e.setAttribute(ROAD, getRoad());
+    	e.setAttribute(LOAD, getLoad());
+    	e.setAttribute(SHIP, getShip());
 		if (!getDestinationId().equals(""))
-			e.setAttribute("destinationId", getDestinationId());
+			e.setAttribute(DESTINATION_ID, getDestinationId());
 		if (!getDestinationTrackId().equals(""))
-			e.setAttribute("destTrackId", getDestinationTrackId());
-       	e.setAttribute("comment", getComment());
-       	e.setAttribute("hits", Integer.toString(getHits()));
+			e.setAttribute(DEST_TRACK_ID, getDestinationTrackId());
+       	e.setAttribute(COMMENT, getComment());
+       	e.setAttribute(HITS, Integer.toString(getHits()));
     	return e;
     }
     

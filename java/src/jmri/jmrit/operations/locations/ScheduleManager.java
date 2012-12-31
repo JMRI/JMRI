@@ -22,7 +22,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * @version	$Revision$
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; 
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; // NOI18N
     
 	public ScheduleManager() {
 		CarTypes.instance().addPropertyChangeListener(this);

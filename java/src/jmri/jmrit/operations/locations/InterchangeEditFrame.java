@@ -1,44 +1,45 @@
 // InterchangeEditFrame.java
 
 package jmri.jmrit.operations.locations;
+
 import javax.swing.BorderFactory;
 
-
 /**
- * Frame for user edit of an interchange track.  Adds two panels 
- * to TrackEditFram for train/route car drops and pick ups.
+ * Frame for user edit of an interchange track. Adds two panels to TrackEditFram for train/route car drops and pick ups.
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2011
  * @version $Revision$
  */
 
-public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
-	
+public class InterchangeEditFrame extends TrackEditFrame implements
+		java.beans.PropertyChangeListener {
+
 	public InterchangeEditFrame() {
 		super();
 	}
 
 	public void initComponents(Location location, Track track) {
 		_type = Track.INTERCHANGE;
-				
+
 		super.initComponents(location, track);
-		
-		_toolMenu.add(new ChangeTrackTypeAction (this));
-		_toolMenu.add(new IgnoreUsedTrackAction (this));
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true);	// NOI18N
-		
+
+		_toolMenu.add(new ChangeTrackTypeAction(this));
+		_toolMenu.add(new IgnoreUsedTrackAction(this));
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true); // NOI18N
+
 		// override text strings for tracks
-		//panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainInterchange")));
-		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesInterchange")));
-		//deleteTrackButton.setText(rb.getString("DeleteInterchange"));
-		addTrackButton.setText(rb.getString("AddInterchange"));
-		saveTrackButton.setText(rb.getString("SaveInterchange"));
-		
+		// panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainInterchange")));
+		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle
+				.getString("TypesInterchange")));
+		// deleteTrackButton.setText(Bundle.getString("DeleteInterchange"));
+		addTrackButton.setText(Bundle.getString("AddInterchange"));
+		saveTrackButton.setText(Bundle.getString("SaveInterchange"));
+
 		// finish
 		packFrame();
 		setVisible(true);
 	}
-	
+
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(InterchangeEditFrame.class.getName());
+			.getLogger(InterchangeEditFrame.class.getName());
 }

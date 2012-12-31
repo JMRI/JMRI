@@ -15,11 +15,10 @@ import jmri.jmrit.operations.BeanBase;
  */
 public class Pool extends BeanBase {
 
-	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange";	// NOI18N
-	public static final String DISPOSE = "dispose";	// NOI18N
+	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange"; // NOI18N
+	public static final String DISPOSE = "dispose"; // NOI18N
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-			.getLogger(Pool.class);
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pool.class);
 
 	// stores tracks for this pool
 	protected List<Track> _tracks = new ArrayList<Track>();
@@ -73,8 +72,8 @@ public class Pool extends BeanBase {
 			int oldSize = _tracks.size();
 			_tracks.add(track);
 
-			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY,
-					Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
+			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize),
+					Integer.valueOf(_tracks.size()));
 		}
 	}
 
@@ -90,8 +89,8 @@ public class Pool extends BeanBase {
 			int oldSize = _tracks.size();
 			_tracks.remove(track);
 
-			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY,
-					Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
+			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize),
+					Integer.valueOf(_tracks.size()));
 		}
 	}
 
@@ -101,9 +100,8 @@ public class Pool extends BeanBase {
 	}
 
 	/**
-	 * Request track length from one of the other tracks in this pool. Other
-	 * tracks in the same pool may have their length shortened or lengthened by
-	 * this operation.
+	 * Request track length from one of the other tracks in this pool. Other tracks in the same pool may have their
+	 * length shortened or lengthened by this operation.
 	 * 
 	 * @param track
 	 *            the track requesting additional length
@@ -112,9 +110,9 @@ public class Pool extends BeanBase {
 	 * @return true if successful
 	 */
 	public boolean requestTrackLength(Track track, int length) {
-		int additionalLength = track.getUsedLength() + track.getReserved()
-				+ length - track.getLength();
-		
+		int additionalLength = track.getUsedLength() + track.getReserved() + length
+				- track.getLength();
+
 		List<Track> tracks = getTracks();
 
 		for (int i = 0; i < tracks.size(); i++) {
@@ -124,15 +122,13 @@ public class Pool extends BeanBase {
 			// for the second check that doesn't include the reserve, this
 			// prevent overloading.
 			if (t != track
-					&& (t.getUsedLength() + t.getReserved() + additionalLength) <= t
-							.getLength()
-					&& (t.getLength() - additionalLength) >= t
-							.getMinimumLength()) {
+					&& (t.getUsedLength() + t.getReserved() + additionalLength) <= t.getLength()
+					&& (t.getLength() - additionalLength) >= t.getMinimumLength()) {
 				// allow overloading. Even tracks out of pools experience
 				// overloading.
 				// && (t.getUsedLength() + additionalLength) <= t.getLength()){
-				log.debug("Increasing track (" + track.getName() + ") length ("
-						+ additionalLength + ") decreasing (" + t.getName()	// NOI18N
+				log.debug("Increasing track (" + track.getName() + ") length (" + additionalLength
+						+ ") decreasing (" + t.getName() // NOI18N
 						+ ")");
 				t.setLength(t.getLength() - additionalLength);
 				track.setLength(track.getLength() + additionalLength);

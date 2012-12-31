@@ -10,8 +10,6 @@ import javax.swing.table.TableColumnModel;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
@@ -25,8 +23,6 @@ import java.util.Hashtable;
  * @version   $Revision$
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
    
     ScheduleManager manager;						// There is only one manager
  
@@ -119,14 +115,14 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     public String getColumnName(int col) {
         switch (col) {
-        case IDCOLUMN: return rb.getString("Id");
-        case NAMECOLUMN: return rb.getString("Name");
-        case SCH_STATUSCOLUMN: return rb.getString("Status");
-        case SIDINGSCOLUMN: return rb.getString("Sidings");
-        case STATUSCOLUMN: return rb.getString("StatusSiding");
-        case EDITCOLUMN: return rb.getString("Edit");
-        case DELETECOLUMN: return rb.getString("Delete");
-        default: return "unknown";
+        case IDCOLUMN: return Bundle.getString("Id");
+        case NAMECOLUMN: return Bundle.getString("Name");
+        case SCH_STATUSCOLUMN: return Bundle.getString("Status");
+        case SIDINGSCOLUMN: return Bundle.getString("Sidings");
+        case STATUSCOLUMN: return Bundle.getString("StatusSiding");
+        case EDITCOLUMN: return Bundle.getString("Edit");
+        case DELETECOLUMN: return Bundle.getString("Delete");
+        default: return "unknown"; // NOI18N
         }
     }
 
@@ -164,11 +160,11 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     		sef.requestFocus();
     	}
        	if (row >= sysList.size())
-    		return "ERROR row "+row;
+    		return "ERROR row "+row; // NOI18N
     	String id = sysList.get(row);
     	Schedule s = manager.getScheduleById(id);
        	if (s == null)
-    		return "ERROR schedule unknown "+row;
+    		return "ERROR schedule unknown "+row; // NOI18N
         switch (col) {
         case IDCOLUMN: return s.getId();
         case NAMECOLUMN: return s.getName();
@@ -182,9 +178,9 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         	return box;
         }
         case STATUSCOLUMN: return getSidingStatus(row);
-        case EDITCOLUMN: return rb.getString("Edit");
-        case DELETECOLUMN: return rb.getString("Delete");
-        default: return "unknown "+col;
+        case EDITCOLUMN: return Bundle.getString("Edit");
+        case DELETECOLUMN: return Bundle.getString("Delete");
+        default: return "unknown "+col; // NOI18N
         }
     }
 
@@ -212,13 +208,13 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	if (ltp == null){
     		log.debug("Need location track pair");
 			JOptionPane.showMessageDialog(null,
-					MessageFormat.format(rb.getString("AssignSchedule"),new Object[]{s.getName()}),
-					MessageFormat.format(rb.getString("CanNotSchedule"),new Object[]{rb.getString("Edit")}),
+					MessageFormat.format(Bundle.getString("AssignSchedule"),new Object[]{s.getName()}),
+					MessageFormat.format(Bundle.getString("CanNotSchedule"),new Object[]{Bundle.getString("Edit")}),
 					JOptionPane.ERROR_MESSAGE);
     		return;
     	}
        	sef = new ScheduleEditFrame();
-    	sef.setTitle(MessageFormat.format(rb.getString("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
+    	sef.setTitle(MessageFormat.format(Bundle.getString("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
     	sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
     	focusSef = true;
     }
@@ -227,8 +223,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	log.debug("Delete schedule");
     	Schedule s = manager.getScheduleById(sysList.get(row));
     	if (JOptionPane.showConfirmDialog(null,
-    			MessageFormat.format(rb.getString("DoYouWantToDeleteSchedule"),new Object[]{s.getName()}),
-    			rb.getString("DeleteSchedule?"),
+    			MessageFormat.format(Bundle.getString("DoYouWantToDeleteSchedule"),new Object[]{s.getName()}),
+    			Bundle.getString("DeleteSchedule?"),
     			JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
     		manager.deregister(s);
     		OperationsXml.save();
@@ -263,9 +259,9 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
            	LocationTrackPair ltp = (LocationTrackPair)box.getItemAt(i);
            	String status = ltp.getTrack().checkScheduleValid();
            	if (!status.equals(""))
-           		return rb.getString("Error");
+           		return Bundle.getString("Error");
        	}
-       	return rb.getString("Okay");
+       	return Bundle.getString("Okay");
     }
     
     private String getSidingStatus(int row){
@@ -275,7 +271,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	String status = ltp.getTrack().checkScheduleValid();
     	if (!status.equals(""))
     		return status;
-    	return rb.getString("Okay");
+    	return Bundle.getString("Okay");
     }
     
     private void removePropertyChangeSchedules() {

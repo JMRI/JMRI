@@ -69,11 +69,11 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Constant SOUTH", 8, Location.SOUTH);
 
 		Assert.assertEquals("Location Constant YARDLISTLENGTH_CHANGED_PROPERTY", "trackListLength", Location.TRACK_LISTLENGTH_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Constant TYPES_CHANGED_PROPERTY", "types", Location.TYPES_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Constant TRAINDIRECTION_CHANGED_PROPERTY", "trainDirection", Location.TRAINDIRECTION_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Constant LENGTH_CHANGED_PROPERTY", "length", Location.LENGTH_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Constant USEDLENGTH_CHANGED_PROPERTY", "usedLength", Location.USEDLENGTH_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Constant NAME_CHANGED_PROPERTY", "name", Location.NAME_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant TYPES_CHANGED_PROPERTY", "locationTypes", Location.TYPES_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant TRAINDIRECTION_CHANGED_PROPERTY", "locationTrainDirection", Location.TRAINDIRECTION_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant LENGTH_CHANGED_PROPERTY", "locationTrackLengths", Location.LENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant USEDLENGTH_CHANGED_PROPERTY", "locationUsedLength", Location.USEDLENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant NAME_CHANGED_PROPERTY", "locationName", Location.NAME_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Constant SWITCHLIST_CHANGED_PROPERTY", "switchList", Location.SWITCHLIST_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Constant DISPOSE_CHANGED_PROPERTY", "dispose", Location.DISPOSE_CHANGED_PROPERTY);
 	}
@@ -81,10 +81,10 @@ public class OperationsLocationsTest extends TestCase {
 	// test ScheduleItem class
 	// test ScheduleItem public constants
 	public void testScheduleItemConstants() {
-		Assert.assertEquals("Location ScheduleItem Constant NUMBER_CHANGED_PROPERTY", "count", ScheduleItem.COUNT_CHANGED_PROPERTY);
-		Assert.assertEquals("Location ScheduleItem Constant TYPE_CHANGED_PROPERTY", "type", ScheduleItem.TYPE_CHANGED_PROPERTY);
-		Assert.assertEquals("Location ScheduleItem Constant ROAD_CHANGED_PROPERTY", "road", ScheduleItem.ROAD_CHANGED_PROPERTY);
-		Assert.assertEquals("Location ScheduleItem Constant LOAD_CHANGED_PROPERTY", "load", ScheduleItem.LOAD_CHANGED_PROPERTY);
+		Assert.assertEquals("Location ScheduleItem Constant COUNT_CHANGED_PROPERTY", "scheduleItemCount", ScheduleItem.COUNT_CHANGED_PROPERTY);
+		Assert.assertEquals("Location ScheduleItem Constant TYPE_CHANGED_PROPERTY", "scheduleItemType", ScheduleItem.TYPE_CHANGED_PROPERTY);
+		Assert.assertEquals("Location ScheduleItem Constant ROAD_CHANGED_PROPERTY", "scheduleItemRoad", ScheduleItem.ROAD_CHANGED_PROPERTY);
+		Assert.assertEquals("Location ScheduleItem Constant LOAD_CHANGED_PROPERTY", "scheduleItemLoad", ScheduleItem.LOAD_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant DISPOSE", "dispose", ScheduleItem.DISPOSE);
 	}
 
@@ -327,10 +327,10 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Constant INCLUDEROADS", "Include", Track.INCLUDEROADS);
 		Assert.assertEquals("Location track Constant EXCLUDEROADS", "Exclude", Track.EXCLUDEROADS);
 
-		Assert.assertEquals("Location Track Constant TYPES_CHANGED_PROPERTY", "types", Track.TYPES_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Track Constant ROADS_CHANGED_PROPERTY", "roads", Track.ROADS_CHANGED_PROPERTY);
-		Assert.assertEquals("Location track Constant SCHEDULE_CHANGED_PROPERTY", "schedule change", Track.SCHEDULE_CHANGED_PROPERTY);
-		Assert.assertEquals("Location track Constant DISPOSE_CHANGED_PROPERTY", "dispose", Track.DISPOSE_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Track Constant TYPES_CHANGED_PROPERTY", "trackRollingStockTypes", Track.TYPES_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Track Constant ROADS_CHANGED_PROPERTY", "trackRoads", Track.ROADS_CHANGED_PROPERTY);
+		Assert.assertEquals("Location track Constant SCHEDULE_CHANGED_PROPERTY", "trackScheduleChange", Track.SCHEDULE_CHANGED_PROPERTY);
+		Assert.assertEquals("Location track Constant DISPOSE_CHANGED_PROPERTY", "trackDispose", Track.DISPOSE_CHANGED_PROPERTY);
 	}
 
 	// test Track attributes

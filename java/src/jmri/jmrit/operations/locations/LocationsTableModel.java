@@ -9,8 +9,6 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
 import java.util.List;
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -22,9 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * @version   $Revision$
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
-
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-   
+  
     LocationManager manager;						// There is only one manager
  
     // Defines the columns
@@ -103,13 +99,13 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     public String getColumnName(int col) {
         switch (col) {
-        case IDCOLUMN: return rb.getString("Id");
-        case NAMECOLUMN: return rb.getString("Name");
-        case LENGTHCOLUMN: return rb.getString("Length");
-        case USEDLENGTHCOLUMN: return rb.getString("Used");
-        case ROLLINGSTOCK: return rb.getString("RollingStock");
-        case PICKUPS: return rb.getString("Pickup");
-        case DROPS: return rb.getString("Drop");
+        case IDCOLUMN: return Bundle.getString("Id");
+        case NAMECOLUMN: return Bundle.getString("Name");
+        case LENGTHCOLUMN: return Bundle.getString("Length");
+        case USEDLENGTHCOLUMN: return Bundle.getString("Used");
+        case ROLLINGSTOCK: return Bundle.getString("RollingStock");
+        case PICKUPS: return Bundle.getString("Pickup");
+        case DROPS: return Bundle.getString("Drop");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";	// NOI18N
         }
@@ -161,7 +157,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case ROLLINGSTOCK: return Integer.toString(l.getNumberRS());
         case PICKUPS: return Integer.toString(l.getPickupRS());
         case DROPS: return Integer.toString(l.getDropRS());
-        case EDITCOLUMN: return rb.getString("Edit");
+        case EDITCOLUMN: return Bundle.getString("Edit");
         default: return "unknown "+col;	// NOI18N
         }
     }
@@ -183,7 +179,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     		lef.dispose();
     	lef = new LocationEditFrame();
     	Location loc = manager.getLocationById(sysList.get(row));
-     	lef.setTitle(rb.getString("TitleLocationEdit"));
+     	lef.setTitle(Bundle.getString("TitleLocationEdit"));
     	lef.initComponents(loc);
     	focusLef = true;
    }

@@ -10,8 +10,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -32,25 +30,22 @@ import javax.swing.ScrollPaneConstants;
  */
 public class LocationsTableFrame extends OperationsFrame {
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-
 	LocationsTableModel locationsModel = new LocationsTableModel();
 	javax.swing.JTable locationsTable = new javax.swing.JTable(locationsModel);
 	JScrollPane locationsPane;
 	
 	// labels
-	JLabel textSort = new JLabel(rb.getString("SortBy"));
+	JLabel textSort = new JLabel(Bundle.getString("SortBy"));
 	JLabel textSep = new JLabel("          ");
 	
 	// radio buttons
-    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(rb.getString("Name"));
-    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(rb.getString("Id"));
+    javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(Bundle.getString("Name"));
+    javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getString("Id"));
 
 	// major buttons
-	JButton addButton = new JButton(rb.getString("Add"));
+	JButton addButton = new JButton(Bundle.getString("Add"));
 
     public LocationsTableFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle").getString("TitleLocationsTable"));
         // general GUI config
 
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
@@ -85,14 +80,14 @@ public class LocationsTableFrame extends OperationsFrame {
     	
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new SchedulesTableAction(rb.getString("Schedules")));
-		toolMenu.add(new ModifyLocationsAction(rb.getString("TitleModifyLocations")));
+		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
+		toolMenu.add(new SchedulesTableAction(Bundle.getString("Schedules")));
+		toolMenu.add(new ModifyLocationsAction(Bundle.getString("TitleModifyLocations")));
 		toolMenu.add(new ShowCarsByLocationAction(false, null, null));
 		if (Setup.isVsdPhysicalLocationEnabled())
-			toolMenu.add(new SetPhysicalLocationAction(rb.getString("MenuSetPhysicalLocation"), null));
-		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
-		toolMenu.add(new PrintLocationsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
+			toolMenu.add(new SetPhysicalLocationAction(Bundle.getString("MenuSetPhysicalLocation"), null));
+		toolMenu.add(new PrintLocationsAction(Bundle.getString("MenuItemPrint"), new Frame(), false, this));
+		toolMenu.add(new PrintLocationsAction(Bundle.getString("MenuItemPreview"), new Frame(), true, this));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
@@ -126,7 +121,7 @@ public class LocationsTableFrame extends OperationsFrame {
 		if (ae.getSource() == addButton){
 			LocationEditFrame f = new LocationEditFrame();
 			f.initComponents(null);
-			f.setTitle(rb.getString("TitleLocationAdd"));
+			f.setTitle(Bundle.getString("TitleLocationAdd"));
 		}
 	}
 

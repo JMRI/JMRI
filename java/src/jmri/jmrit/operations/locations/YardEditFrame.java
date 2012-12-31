@@ -12,7 +12,7 @@ import javax.swing.BorderFactory;
  */
 
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
-	
+
 	public YardEditFrame() {
 		super();
 	}
@@ -20,23 +20,23 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 	public void initComponents(Location location, Track track) {
 		_type = Track.YARD;
 		super.initComponents(location, track);
-		
-		_toolMenu.add(new ChangeTrackTypeAction (this));
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true);
-		
+
+		_toolMenu.add(new ChangeTrackTypeAction(this));
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true); // NOI18N
+
 		// override text strings for tracks
-		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainYard")));
-		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesYard")));
-		deleteTrackButton.setText(rb.getString("DeleteYard"));
-		addTrackButton.setText(rb.getString("AddYard"));
-		saveTrackButton.setText(rb.getString("SaveYard"));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainYard")));
+		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TypesYard")));
+		deleteTrackButton.setText(Bundle.getString("DeleteYard"));
+		addTrackButton.setText(Bundle.getString("AddYard"));
+		saveTrackButton.setText(Bundle.getString("SaveYard"));
 		// finish
-		dropPanel.setVisible(false);	// don't show drop and pick up panel
+		dropPanel.setVisible(false); // don't show drop and pick up panel
 		pickupPanel.setVisible(false);
 		packFrame();
 		setVisible(true);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(YardEditFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(YardEditFrame.class
+			.getName());
 }

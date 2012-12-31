@@ -9,8 +9,6 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -23,8 +21,6 @@ import jmri.util.table.ButtonRenderer;
  * @version   $Revision$
  */
 public class TrackTableModel extends AbstractTableModel implements PropertyChangeListener {
-
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
     
     public static final int SORTBYNAME = 1;
     public static final int SORTBYID = 2;
@@ -138,19 +134,19 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
     public String getColumnName(int col){
         switch (col) {
-        case IDCOLUMN: return rb.getString("Id");
-        case NAMECOLUMN: return rb.getString("TrackName");
-        case LENGTHCOLUMN: return rb.getString("Length");
-        case USEDLENGTHCOLUMN: return rb.getString("Used");
-        case RESERVEDCOLUMN: return rb.getString("Reserved");
-        case ENGINESCOLUMN: return rb.getString("Engines");
-        case CARSCOLUMN: return rb.getString("Cars");
-        case PICKUPSCOLUMN: return rb.getString("Pickup");
-        case DROPSCOLUMN: return rb.getString("Drop");
-        case POOLCOLUMN: return rb.getString("Pool");
-        case PLANPICKUPCOLUMN: return rb.getString("PlanPickUp");
+        case IDCOLUMN: return Bundle.getString("Id");
+        case NAMECOLUMN: return Bundle.getString("TrackName");
+        case LENGTHCOLUMN: return Bundle.getString("Length");
+        case USEDLENGTHCOLUMN: return Bundle.getString("Used");
+        case RESERVEDCOLUMN: return Bundle.getString("Reserved");
+        case ENGINESCOLUMN: return Bundle.getString("Engines");
+        case CARSCOLUMN: return Bundle.getString("Cars");
+        case PICKUPSCOLUMN: return Bundle.getString("Pickup");
+        case DROPSCOLUMN: return Bundle.getString("Drop");
+        case POOLCOLUMN: return Bundle.getString("Pool");
+        case PLANPICKUPCOLUMN: return Bundle.getString("PlanPickUp");
         case EDITCOLUMN: return "";		//edit column
-        default: return "unknown";
+        default: return "unknown"; // NOI18N
         }
     }
 
@@ -191,11 +187,11 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
     		tef.requestFocus();
     	}
     	if(row >= tracksList.size())
-    		return "ERROR row "+row;
+    		return "ERROR row "+row; // NOI18N
     	String tracksId = tracksList.get(row);
     	Track track = _location.getTrackById(tracksId);
     	if (track == null)
-    		return "ERROR track unknown "+row;
+    		return "ERROR track unknown "+row; // NOI18N
         switch (col) {
         case IDCOLUMN: return track.getId();
         case NAMECOLUMN: return track.getName();
@@ -211,8 +207,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         	if (track.getIgnoreUsedLengthPercentage() > 0)
         		return track.getIgnoreUsedLengthPercentage()+"%";
         	return "";
-        case EDITCOLUMN: return rb.getString("Edit");
-        default: return "unknown "+col;
+        case EDITCOLUMN: return Bundle.getString("Edit");
+        default: return "unknown "+col; // NOI18N
         }
     }
 
@@ -237,7 +233,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		String tracksId = tracksList.get(row);
     	Track tracks = _location.getTrackById(tracksId);
     	tef.initComponents(_location, tracks);
-    	tef.setTitle(rb.getString("EditTrack"));
+    	tef.setTitle(Bundle.getString("EditTrack"));
     	focusEditFrame = true;
     }
 

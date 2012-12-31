@@ -4,8 +4,6 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.GridBagLayout;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -32,9 +30,6 @@ import jmri.jmrit.operations.trains.TrainScheduleManager;
 public class SchedulesByLoadFrame extends OperationsFrame implements
 		java.beans.PropertyChangeListener {
 
-	static final ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-
 	// combo box
 	JComboBox typesComboBox = CarTypes.instance().getComboBox();
 	JComboBox loadsComboBox = new JComboBox();
@@ -56,11 +51,11 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
 
 		JPanel type = new JPanel();
-		type.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
+		type.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Type")));
 		type.add(typesComboBox);
 
 		JPanel load = new JPanel();
-		load.setBorder(BorderFactory.createTitledBorder(rb.getString("Load")));
+		load.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Load")));
 		load.add(loadsComboBox);
 
 		p1.add(type);
@@ -70,7 +65,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		locationsPanel.setLayout(new GridBagLayout());
 		JScrollPane locationsPane = new JScrollPane(locationsPanel);
 		locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		locationsPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Locations")));
+		locationsPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Locations")));
 
 		getContentPane().add(p1);
 		getContentPane().add(locationsPane);
@@ -85,17 +80,18 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new PrintCarLoadsAction(rb.getString("MenuItemCarLoadsPreview"), true, this));
-		toolMenu.add(new PrintCarLoadsAction(rb.getString("MenuItemCarLoadsPrint"), false, this));
+		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
+		toolMenu.add(new PrintCarLoadsAction(Bundle.getString("MenuItemCarLoadsPreview"), true,
+				this));
+		toolMenu.add(new PrintCarLoadsAction(Bundle.getString("MenuItemCarLoadsPrint"), false, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N
 
 		// select first item to load contents
 		typesComboBox.setSelectedIndex(0);
 
-		setTitle(rb.getString("MenuItemShowSchedulesByLoad"));
+		setTitle(Bundle.getString("MenuItemShowSchedulesByLoad"));
 		pack();
 		if (getWidth() < 750)
 			setSize(750, getHeight());
@@ -123,10 +119,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		log.debug("Update locations for type " + type + " load " + load);
 		locationsPanel.removeAll();
 		int x = 0;
-		addItemLeft(locationsPanel, new JLabel(rb.getString("trackSchedule")), 1, x);
-		addItemLeft(locationsPanel, new JLabel(rb.getString("receiveTypeLoad")), 2, x);
-		addItemLeft(locationsPanel, new JLabel(rb.getString("shipLoad")), 3, x);
-		addItemLeft(locationsPanel, new JLabel(rb.getString("destinationTrack")), 4, x++);
+		addItemLeft(locationsPanel, new JLabel(Bundle.getString("trackSchedule")), 1, x);
+		addItemLeft(locationsPanel, new JLabel(Bundle.getString("receiveTypeLoad")), 2, x);
+		addItemLeft(locationsPanel, new JLabel(Bundle.getString("shipLoad")), 3, x);
+		addItemLeft(locationsPanel, new JLabel(Bundle.getString("destinationTrack")), 4, x++);
 		List<String> locations = locationManager.getLocationsByIdList();
 		for (int i = 0; i < locations.size(); i++) {
 			Location l = locationManager.getLocationById(locations.get(i));
@@ -170,10 +166,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 								else
 									s = s + ",";
 								s = s + ", " + item.getLoad();
-								addItemLeft(locationsPanel, new JLabel(rb.getString("Receive")
+								addItemLeft(locationsPanel, new JLabel(Bundle.getString("Receive")
 										+ " (" + s + ")"), 2, x);
-								addItemLeft(locationsPanel, new JLabel(rb.getString("Ship") + " ("
-										+ item.getShip() + ")"), 3, x++);
+								addItemLeft(locationsPanel, new JLabel(Bundle.getString("Ship")
+										+ " (" + item.getShip() + ")"), 3, x++);
 								if (item.getDestination() != null)
 									addItemLeft(
 											locationsPanel,
@@ -202,7 +198,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY))
 			CarTypes.instance().updateComboBox(typesComboBox);
 		if (e.getSource().getClass().equals(CarLoads.class))

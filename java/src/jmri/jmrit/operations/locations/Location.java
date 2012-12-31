@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -27,8 +25,6 @@ import org.jdom.Element;
  */
 public class Location implements java.beans.PropertyChangeListener {
 	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-
 	protected String _id = "";
 	protected String _name = "";
 	protected int _IdNumber = 0;
@@ -67,10 +63,10 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	// Switch list status
 	public static final String UNKNOWN = "";
-	public static final String PRINTED = rb.getString("Printed");
-	public static final String CSV_GENERATED = rb.getString("CsvGenerated");
-	public static final String MODIFIED = rb.getString("Modified");
-	public static final String UPDATED = rb.getString("Updated");
+	public static final String PRINTED = Bundle.getString("Printed");
+	public static final String CSV_GENERATED = Bundle.getString("CsvGenerated");
+	public static final String MODIFIED = Bundle.getString("Modified");
+	public static final String UPDATED = Bundle.getString("Updated");
 	
 	// Switch list states
 	public static final int SW_CREATE = 0;		// create new switch list
@@ -79,15 +75,15 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	// For property change
 	public static final String TRACK_LISTLENGTH_CHANGED_PROPERTY = "trackListLength";	// NOI18N
-	public static final String TYPES_CHANGED_PROPERTY = "types";						// NOI18N
-	public static final String TRAINDIRECTION_CHANGED_PROPERTY = "trainDirection";		// NOI18N
-	public static final String LENGTH_CHANGED_PROPERTY = "length";						// NOI18N
-	public static final String USEDLENGTH_CHANGED_PROPERTY = "usedLength";				// NOI18N
-	public static final String NAME_CHANGED_PROPERTY = "name";							// NOI18N
+	public static final String TYPES_CHANGED_PROPERTY = "locationTypes";				// NOI18N
+	public static final String TRAINDIRECTION_CHANGED_PROPERTY = "locationTrainDirection";	// NOI18N
+	public static final String LENGTH_CHANGED_PROPERTY = "locationTrackLengths";		// NOI18N
+	public static final String USEDLENGTH_CHANGED_PROPERTY = "locationUsedLength";		// NOI18N
+	public static final String NAME_CHANGED_PROPERTY = "locationName";					// NOI18N
 	public static final String SWITCHLIST_CHANGED_PROPERTY = "switchList";				// NOI18N
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";					// NOI18N
 	public static final String STATUS_CHANGED_PROPERTY = "locationStatus";				// NOI18N
-	public static final String POOL_LENGTH_CHANGED_PROPERTY = "PoolLengthChanged";		// NOI18N
+	public static final String POOL_LENGTH_CHANGED_PROPERTY = "poolLengthChanged";		// NOI18N
 	public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";// NOI18N
 
 	public Location(String id, String name) {
@@ -931,7 +927,7 @@ public class Location implements java.beans.PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled())
     		log.debug("location (" + getName() + ") sees property change: "
-    				+ e.getPropertyName() + " from track (" +e.getSource()+") old: " + e.getOldValue() + " new: "
+    				+ e.getPropertyName() + " from track (" +e.getSource()+") old: " + e.getOldValue() + " new: "// NOI18N
     				+ e.getNewValue());
     	// update length of tracks at this location if track length changes
     	if(e.getPropertyName().equals(Track.LENGTH_CHANGED_PROPERTY)){

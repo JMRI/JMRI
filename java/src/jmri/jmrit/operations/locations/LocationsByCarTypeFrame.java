@@ -14,7 +14,6 @@ import javax.swing.*;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 
 /**
@@ -25,8 +24,6 @@ import java.util.ResourceBundle;
  */
 
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	
 	LocationManager manager;
 	String Empty = "            ";
@@ -39,12 +36,12 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	JPanel pLocations;
 
 	// major buttons
-	JButton clearButton = new JButton(rb.getString("Clear"));
-	JButton setButton = new JButton(rb.getString("Select"));
-	JButton saveButton = new JButton(rb.getString("Save"));
+	JButton clearButton = new JButton(Bundle.getString("Clear"));
+	JButton setButton = new JButton(Bundle.getString("Select"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
 	
 	// check boxes
-	JCheckBox copyCheckBox = new JCheckBox(rb.getString("Copy"));
+	JCheckBox copyCheckBox = new JCheckBox(Bundle.getString("Copy"));
 	
 	// radio buttons
         
@@ -88,19 +85,19 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	    //      Set up the panels
     	JPanel pCarType = new JPanel();
     	pCarType.setLayout(new GridBagLayout());
-    	pCarType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
+    	pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Type")));
     	
     	addItem(pCarType, typeComboBox, 0,0);
     	addItem(pCarType, copyCheckBox, 1,0);
     	addItem(pCarType, textCarType, 2,0);
     	typeComboBox.setSelectedItem(carType);
-    	copyCheckBox.setToolTipText(rb.getString("TipCopyCarType"));
+    	copyCheckBox.setToolTipText(Bundle.getString("TipCopyCarType"));
 
     	pLocations = new JPanel();
     	pLocations.setLayout(new GridBagLayout());
     	JScrollPane locationPane = new JScrollPane(pLocations);
     	locationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	locationPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Locations")));
+    	locationPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Locations")));
     	updateLocations();
     	
     	JPanel pButtons = new JPanel();
@@ -131,9 +128,9 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new PrintLocationsByCarTypesAction(rb.getString("MenuItemPrintByType"), new Frame(), false, this));
-		toolMenu.add(new PrintLocationsByCarTypesAction(rb.getString("MenuItemPreviewByType"), new Frame(), true, this));
+		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
+		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getString("MenuItemPrintByType"), new Frame(), false, this));
+		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getString("MenuItemPreviewByType"), new Frame(), true, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyLocationsByCarType", true);	// NOI18N
@@ -142,9 +139,9 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		pack();
 		setSize(getWidth()+30, getHeight());
 		if (location != null)
-			setTitle(rb.getString("TitleModifyLocation"));
+			setTitle(Bundle.getString("TitleModifyLocation"));
 		else
-			setTitle(rb.getString("TitleModifyLocations"));
+			setTitle(Bundle.getString("TitleModifyLocations"));
 		setVisible(true);
 	}
 		
@@ -218,7 +215,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 			loc.addPropertyChangeListener(this);
 			JCheckBox cb = new JCheckBox(loc.getName());
 			cb.setName(loc.getId());
-			cb.setToolTipText(MessageFormat.format(rb.getString("TipLocCarType"),new Object[]{carType}));
+			cb.setToolTipText(MessageFormat.format(Bundle.getString("TipLocCarType"),new Object[]{carType}));
 			addCheckBoxAction(cb);
 			locationList.add(cb);
 			boolean locAcceptsType = loc.acceptsTypeName(carType);
@@ -230,7 +227,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				track.addPropertyChangeListener(this);
 				cb = new JCheckBox(track.getName());
 				cb.setName(track.getId());
-				cb.setToolTipText(MessageFormat.format(rb.getString("TipTrackCarType"),new Object[]{carType}));
+				cb.setToolTipText(MessageFormat.format(Bundle.getString("TipTrackCarType"),new Object[]{carType}));
 				addCheckBoxAction(cb);
 				trackList.add(cb);
 				cb.setSelected(track.acceptsTypeName(carType));

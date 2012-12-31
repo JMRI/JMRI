@@ -9,8 +9,6 @@ import javax.swing.*;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 
@@ -23,13 +21,11 @@ import jmri.jmrit.operations.OperationsXml;
  * @version $Revision: 18559 $
  */
 public class ChangeTracksTypeAction extends AbstractAction {
-		
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+			
 	private LocationEditFrame _lef;
 	
 	public ChangeTracksTypeAction(LocationEditFrame lef){
-		super(rb.getString("MenuItemChangeTrackType"));
+		super(Bundle.getString("MenuItemChangeTrackType"));
 		_lef = lef;
 	}
 	
@@ -40,17 +36,15 @@ public class ChangeTracksTypeAction extends AbstractAction {
 }
 
 class ChangeTracksFrame extends OperationsFrame{
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+		
 	// radio buttons
-    JRadioButton sidingRadioButton = new JRadioButton(rb.getString("Siding"));
-    JRadioButton yardRadioButton = new JRadioButton(rb.getString("Yard"));
-    JRadioButton interchangeRadioButton = new JRadioButton(rb.getString("Interchange"));
-    JRadioButton stagingRadioButton = new JRadioButton(rb.getString("Staging")); 
+    JRadioButton sidingRadioButton = new JRadioButton(Bundle.getString("Siding"));
+    JRadioButton yardRadioButton = new JRadioButton(Bundle.getString("Yard"));
+    JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getString("Interchange"));
+    JRadioButton stagingRadioButton = new JRadioButton(Bundle.getString("Staging")); 
     
     // major buttons
-    JButton saveButton = new JButton(rb.getString("Save"));
+    JButton saveButton = new JButton(Bundle.getString("Save"));
     
     private LocationEditFrame _lef;
     private Location _location;
@@ -72,7 +66,7 @@ class ChangeTracksFrame extends OperationsFrame{
 	   	// row 1a
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
-    	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(rb.getString("TrackType"),new Object[]{_location.getName()})));
+    	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getString("TrackType"),new Object[]{_location.getName()})));
     	addItem(p1, sidingRadioButton, 0, 0);
     	addItem(p1, yardRadioButton, 1, 0);
     	addItem(p1, interchangeRadioButton, 2, 0);
@@ -90,7 +84,7 @@ class ChangeTracksFrame extends OperationsFrame{
     	addButtonAction(saveButton);
     	
     	getContentPane().add(p1);
-    	setTitle(rb.getString("MenuItemChangeTrackType"));
+    	setTitle(Bundle.getString("MenuItemChangeTrackType"));
     	pack();
     	if (getWidth() < 250)
     		setSize(getWidth()+100, getHeight());

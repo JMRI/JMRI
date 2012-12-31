@@ -7,8 +7,6 @@ import java.awt.event.*;
 
 import javax.swing.*;
 
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 
@@ -19,13 +17,11 @@ import jmri.jmrit.operations.OperationsXml;
  * @version     $Revision: 17977 $
  */
 public class AlternateTrackAction extends AbstractAction {
-		
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+			
 	private TrackEditFrame _tef;
 	
 	public AlternateTrackAction(TrackEditFrame tef){
-		super(rb.getString("AlternateTrack"));
+		super(Bundle.getString("AlternateTrack"));
 		_tef = tef;
 	}
 	
@@ -36,16 +32,14 @@ public class AlternateTrackAction extends AbstractAction {
 }
 
 class AlternateTrackFrame extends OperationsFrame{
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
+		
 	// combo boxes
 	JComboBox trackBox = new JComboBox();
 	
 	// radio buttons
 	
     // major buttons
-    JButton saveButton = new JButton(rb.getString("Save"));
+    JButton saveButton = new JButton(Bundle.getString("Save"));
     
     Track _track;
 	
@@ -78,7 +72,7 @@ class AlternateTrackFrame extends OperationsFrame{
     	getContentPane().add(pAlternate);
     	getContentPane().add(pControls);
     	
-    	setTitle(rb.getString("AlternateTrack"));
+    	setTitle(Bundle.getString("AlternateTrack"));
     	pack();
     	if (getWidth() < 300 || getHeight() < 100)
     		setSize(300, 100);

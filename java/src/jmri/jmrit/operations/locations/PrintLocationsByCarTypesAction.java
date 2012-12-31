@@ -12,51 +12,46 @@ import java.io.IOException;
 import javax.swing.*;
 
 import java.util.List;
-import java.util.ResourceBundle;
-
 
 /**
- * Action to print a summary of locations and tracks that service specific
- * car types.
+ * Action to print a summary of locations and tracks that service specific car types.
  * <P>
- * This uses the older style printing, for compatibility with Java 1.1.8 in
- * Macintosh MRJ
- *
- * @author	Bob Jacobsen   Copyright (C) 2003
- * @author  Dennis Miller  Copyright (C) 2005
+ * This uses the older style printing, for compatibility with Java 1.1.8 in Macintosh MRJ
+ * 
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision$
+ * @version $Revision$
  */
-public class PrintLocationsByCarTypesAction  extends AbstractAction {
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-	
-	static final String newLine = "\n";	// NOI18N
-	static final String tab = "\t";		// NOI18N
-	
+public class PrintLocationsByCarTypesAction extends AbstractAction {
+
+	static final String newLine = "\n"; // NOI18N
+	static final String tab = "\t"; // NOI18N
+
 	LocationManager locManager = LocationManager.instance();
 
-    public PrintLocationsByCarTypesAction(String actionName, Frame frame, boolean preview, Component pWho) {
-        super(actionName);
-        mFrame = frame;
-        isPreview = preview;
-    }
+	public PrintLocationsByCarTypesAction(String actionName, Frame frame, boolean preview,
+			Component pWho) {
+		super(actionName);
+		mFrame = frame;
+		isPreview = preview;
+	}
 
-    /**
-     * Frame hosting the printing
-     */
-    Frame mFrame;
-    /**
-     * Variable to set whether this is to be printed or previewed
-     */
-    boolean isPreview;
-    HardcopyWriter writer;
+	/**
+	 * Frame hosting the printing
+	 */
+	Frame mFrame;
+	/**
+	 * Variable to set whether this is to be printed or previewed
+	 */
+	boolean isPreview;
+	HardcopyWriter writer;
 
 	public void actionPerformed(ActionEvent e) {
 		// obtain a HardcopyWriter
 		try {
-			writer = new HardcopyWriter(mFrame, rb.getString("TitleLocationsByType"), 10, .5, .5, .5, .5,
-					isPreview);
+			writer = new HardcopyWriter(mFrame, Bundle.getString("TitleLocationsByType"), 10, .5,
+					.5, .5, .5, isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
 			return;
@@ -70,8 +65,8 @@ public class PrintLocationsByCarTypesAction  extends AbstractAction {
 
 		try {
 			// title line
-			String s = rb.getString("Type") + tab + rb.getString("Location")
-					+ tab + rb.getString("Track") + newLine;
+			String s = Bundle.getString("Type") + tab + Bundle.getString("Location") + tab
+					+ Bundle.getString("Track") + newLine;
 			writer.write(s);
 			// car types
 			for (int t = 0; t < carTypes.length; t++) {
@@ -100,7 +95,8 @@ public class PrintLocationsByCarTypesAction  extends AbstractAction {
 		} catch (IOException we) {
 			log.error("Error printing PrintLocationAction: " + we);
 		}
-	}        	
- 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintLocationsByCarTypesAction.class.getName());
+	}
+
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+			.getLogger(PrintLocationsByCarTypesAction.class.getName());
 }

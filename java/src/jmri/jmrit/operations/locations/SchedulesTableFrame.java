@@ -7,8 +7,6 @@ import jmri.jmrit.operations.OperationsFrame;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.ResourceBundle;
-
 import javax.swing.BoxLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -25,9 +23,6 @@ import javax.swing.ScrollPaneConstants;
  */
 public class SchedulesTableFrame extends OperationsFrame {
 
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
-
 	SchedulesTableModel schedulesModel = new SchedulesTableModel();
 	javax.swing.JTable schedulesTable = new javax.swing.JTable(schedulesModel);
 	JScrollPane schedulesPane;
@@ -37,16 +32,14 @@ public class SchedulesTableFrame extends OperationsFrame {
 	javax.swing.JLabel textSep = new javax.swing.JLabel();
 
 	// radio buttons
-	javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(rb.getString("Name"));
-	javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(rb.getString("Id"));
+	javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(Bundle.getString("Name"));
+	javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getString("Id"));
 
 	// major buttons
 	// javax.swing.JButton addButton = new javax.swing.JButton();
 
 	public SchedulesTableFrame() {
-		super(ResourceBundle.getBundle(
-				"jmri.jmrit.operations.locations.JmritOperationsLocationsBundle").getString(
-				"TitleSchedulesTable"));
+		super(Bundle.getString("TitleSchedulesTable"));
 		// general GUI config
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -63,7 +56,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
 
-		textSort.setText(rb.getString("SortBy"));
+		textSort.setText(Bundle.getString("SortBy"));
 		controlPanel.add(textSort);
 		controlPanel.add(sortByName);
 		sortByName.setSelected(true);
@@ -72,7 +65,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 		controlPanel.add(textSep);
 
 		// TODO allow user to add schedule to a spur
-		// addButton.setText(rb.getString("Add"));
+		// addButton.setText(Bundle.getString("Add"));
 		// addButton.setVisible(true);
 		// controlPanel.add (addButton);
 		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
@@ -87,10 +80,10 @@ public class SchedulesTableFrame extends OperationsFrame {
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu("Tools");
-		toolMenu.add(new SchedulesByLoadAction(rb.getString("MenuItemShowSchedulesByLoad")));
+		toolMenu.add(new SchedulesByLoadAction(Bundle.getString("MenuItemShowSchedulesByLoad")));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 
 		pack();
 		if (getWidth() < Control.panelWidth)
@@ -117,7 +110,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 	// log.debug("add schedule button activated");
 	// if (ae.getSource() == addButton){
 	// ScheduleEditFrame f = new ScheduleEditFrame();
-	// f.setTitle(MessageFormat.format(rb.getString("TitleScheduleAdd"), new Object[]{"Track Name"}));
+	// f.setTitle(MessageFormat.format(Bundle.getString("TitleScheduleAdd"), new Object[]{"Track Name"}));
 	// f.initComponents(null, null, null);
 	// }
 	// }

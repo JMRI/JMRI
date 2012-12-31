@@ -5,8 +5,6 @@ package jmri.jmrit.operations.locations;
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
 
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 
@@ -18,7 +16,6 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class LocationsTableAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 
     public LocationsTableAction(String s) {
     	super(s);

@@ -303,8 +303,8 @@ public class Schedule implements java.beans.PropertyChangeListener {
     }
 
     static final String ID = "id";		// NOI18N
-    static final String NAME = "name";	// NOI18N
-    static final String COMMENT = "comment";	// NOI18N
+	static final String NAME = "name"; // NOI18N
+	static final String COMMENT = "comment"; // NOI18N
  	
    /**
      * Construct this Entry from XML. This member has to remain synchronized with the
