@@ -213,7 +213,7 @@ public class Track {
 		int old = _reserved;
 		_reserved = reserved;
 		if (old != reserved)
-			setDirtyAndFirePropertyChange("reserved", Integer.toString(old),
+			setDirtyAndFirePropertyChange("reserved", Integer.toString(old),	// NOI18N
 					Integer.toString(reserved)); // NOI18N
 	}
 
@@ -226,7 +226,7 @@ public class Track {
 		_numberCarsInRoute++;
 		_reservedInRoute = old + Integer.parseInt(car.getLength()) + RollingStock.COUPLER;
 		if (old != _reservedInRoute)
-			setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old),
+			setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old),	// NOI18N
 					Integer.toString(_reservedInRoute)); // NOI18N
 	}
 
@@ -235,7 +235,7 @@ public class Track {
 		_numberCarsInRoute--;
 		_reservedInRoute = old - (Integer.parseInt(car.getLength()) + RollingStock.COUPLER);
 		if (old != _reservedInRoute)
-			setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old),
+			setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old),	// NOI18N
 					Integer.toString(_reservedInRoute)); // NOI18N
 	}
 
@@ -335,7 +335,7 @@ public class Track {
 		int old = _usedLength;
 		_usedLength = length;
 		if (old != length)
-			setDirtyAndFirePropertyChange("usedLength", Integer.toString(old),
+			setDirtyAndFirePropertyChange("usedLength", Integer.toString(old),	// NOI18N
 					Integer.toString(length)); // NOI18N
 	}
 
@@ -370,7 +370,7 @@ public class Track {
 		int old = _numberRS;
 		_numberRS = number;
 		if (old != number)
-			setDirtyAndFirePropertyChange("numberRS", Integer.toString(old),
+			setDirtyAndFirePropertyChange("numberRS", Integer.toString(old),	// NOI18N
 					Integer.toString(number)); // NOI18N
 	}
 
@@ -383,7 +383,7 @@ public class Track {
 		int old = _numberCars;
 		_numberCars = number;
 		if (old != number)
-			setDirtyAndFirePropertyChange("numberCars", Integer.toString(old),
+			setDirtyAndFirePropertyChange("numberCars", Integer.toString(old),	// NOI18N
 					Integer.toString(number)); // NOI18N
 	}
 
@@ -396,7 +396,7 @@ public class Track {
 		int old = _numberEngines;
 		_numberEngines = number;
 		if (old != number)
-			setDirtyAndFirePropertyChange("numberEngines", Integer.toString(old),
+			setDirtyAndFirePropertyChange("numberEngines", Integer.toString(old),	// NOI18N
 					Integer.toString(number)); // NOI18N
 	}
 
@@ -455,8 +455,8 @@ public class Track {
 		_pickupRS++;
 		if (Setup.isBuildAggressive())
 			setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
-		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old),
-				Integer.toString(_pickupRS)); // NOI18N
+		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), // NOI18N
+				Integer.toString(_pickupRS));
 	}
 
 	public void deletePickupRS(RollingStock rs) {
@@ -464,8 +464,8 @@ public class Track {
 		if (Setup.isBuildAggressive())
 			setReserved(getReserved() + (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
 		_pickupRS--;
-		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old),
-				Integer.toString(_pickupRS)); // NOI18N
+		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), // NOI18N
+				Integer.toString(_pickupRS));
 	}
 
 	/**
@@ -494,8 +494,8 @@ public class Track {
 		_dropRS--;
 		setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
 		_reservedDrops = _reservedDrops - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
-		setDirtyAndFirePropertyChange("deleteDropRS", Integer.toString(old),
-				Integer.toString(_dropRS)); // NOI18N
+		setDirtyAndFirePropertyChange("deleteDropRS", Integer.toString(old), // NOI18N
+				Integer.toString(_dropRS));
 	}
 
 	public void setComment(String comment) {
@@ -937,14 +937,14 @@ public class Track {
 		// first determine if rolling stock can be move to the new location
 		if (!acceptsTypeName(rs.getType())) {
 			log.debug("Rolling stock (" + rs.toString() + ") type (" + rs.getType()
-					+ ") not accepted at location (" + getLocation().getName() + ", " + getName()
-					+ ") wrong type");
+					+ ") not accepted at location (" + getLocation().getName() + ", " + getName() // NOI18N
+					+ ") wrong type"); // NOI18N
 			return TYPE + " (" + rs.getType() + ")";
 		}
 		if (!acceptsRoadName(rs.getRoad())) {
 			log.debug("Rolling stock (" + rs.toString() + ") road (" + rs.getRoad()
-					+ ") not accepted at location (" + getLocation().getName() + ", " + getName()
-					+ ") wrong road");
+					+ ") not accepted at location (" + getLocation().getName() + ", " + getName() // NOI18N
+					+ ") wrong road"); // NOI18N
 			return ROAD + " (" + rs.getRoad() + ")";
 		}
 		// now determine if there's enough space for the rolling stock
@@ -972,8 +972,8 @@ public class Track {
 			}
 			if (!acceptsLoad(car.getLoad(), car.getType())) {
 				log.debug("Car  (" + rs.toString() + ") load (" + car.getLoad()
-						+ ") not accepted at location (" + getLocation().getName() + ", "
-						+ getName() + ") wrong load");
+						+ ") not accepted at location (" + getLocation().getName() + ", " // NOI18N
+						+ getName() + ") wrong load"); // NOI18N
 				return LOAD + " (" + car.getLoad() + ")";
 			}
 		}
@@ -1013,7 +1013,7 @@ public class Track {
 					return OKAY;
 			}
 			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location ("
-					+ getLocation().getName() + ", " + getName() + ") no room!");
+					+ getLocation().getName() + ", " + getName() + ") no room!"); // NOI18N
 			return LENGTH + " (" + length + ")";
 		}
 		return OKAY;

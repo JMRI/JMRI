@@ -631,7 +631,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (trackNameTextField.getText().length() > MAX_NAME_LENGTH) {
 			log.error("Track name must be less than " + Integer.toString(MAX_NAME_LENGTH + 1)
-					+ " charaters");
+					+ " charaters"); // NOI18N
 			JOptionPane
 					.showMessageDialog(this, MessageFormat.format(
 							Bundle.getString("TrackNameLengthMax"),
@@ -1223,7 +1223,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {

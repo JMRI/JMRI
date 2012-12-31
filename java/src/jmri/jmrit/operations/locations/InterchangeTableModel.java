@@ -47,7 +47,7 @@ public class InterchangeTableModel extends TrackTableModel {
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue());	// NOI18N
 		super.propertyChange(e);
 		if (e.getSource().getClass().equals(Track.class)) {
 			String type = ((Track) e.getSource()).getLocType();

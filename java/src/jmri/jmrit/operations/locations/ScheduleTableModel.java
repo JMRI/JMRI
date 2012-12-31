@@ -625,7 +625,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("ScheduleTableModel sees property change: " + e.getPropertyName() + " old: "
-					+ e.getOldValue() + " new: " + e.getNewValue());
+					+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
 		if (e.getPropertyName().equals(Schedule.LISTCHANGE_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();

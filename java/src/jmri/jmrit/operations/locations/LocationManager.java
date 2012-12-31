@@ -346,7 +346,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	 */
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: "
-				+ e.getOldValue() + " new: " + e.getNewValue());
+				+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
 			replaceType((String) e.getOldValue(), (String) e.getNewValue());
