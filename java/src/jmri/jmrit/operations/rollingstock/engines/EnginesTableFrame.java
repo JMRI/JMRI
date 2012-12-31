@@ -7,8 +7,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -41,9 +39,6 @@ import jmri.util.com.sun.TableSorter;
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
 
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
-
 	EnginesTableModel enginesModel;
 	TableSorter sorter;
 	javax.swing.JTable enginesTable;
@@ -56,31 +51,29 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	JLabel textSep1 = new JLabel("          ");
 
 	// radio buttons
-	JRadioButton sortByNumber = new JRadioButton(rb.getString("Number"));
-	JRadioButton sortByRoad = new JRadioButton(rb.getString("Road"));
-	JRadioButton sortByModel = new JRadioButton(rb.getString("Model"));
-	JRadioButton sortByConsist = new JRadioButton(rb.getString("Consist"));
-	JRadioButton sortByLocation = new JRadioButton(rb.getString("Location"));
-	JRadioButton sortByDestination = new JRadioButton(rb.getString("Destination"));
-	JRadioButton sortByTrain = new JRadioButton(rb.getString("Train"));
-	JRadioButton sortByMoves = new JRadioButton(rb.getString("Moves"));
-	JRadioButton sortByBuilt = new JRadioButton(rb.getString("Built"));
-	JRadioButton sortByOwner = new JRadioButton(rb.getString("Owner"));
+	JRadioButton sortByNumber = new JRadioButton(Bundle.getString("Number"));
+	JRadioButton sortByRoad = new JRadioButton(Bundle.getString("Road"));
+	JRadioButton sortByModel = new JRadioButton(Bundle.getString("Model"));
+	JRadioButton sortByConsist = new JRadioButton(Bundle.getString("Consist"));
+	JRadioButton sortByLocation = new JRadioButton(Bundle.getString("Location"));
+	JRadioButton sortByDestination = new JRadioButton(Bundle.getString("Destination"));
+	JRadioButton sortByTrain = new JRadioButton(Bundle.getString("Train"));
+	JRadioButton sortByMoves = new JRadioButton(Bundle.getString("Moves"));
+	JRadioButton sortByBuilt = new JRadioButton(Bundle.getString("Built"));
+	JRadioButton sortByOwner = new JRadioButton(Bundle.getString("Owner"));
 	JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
 	JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
 	ButtonGroup group = new ButtonGroup();
 
 	// major buttons
-	JButton addButton = new JButton(rb.getString("Add"));
-	JButton findButton = new JButton(rb.getString("Find"));
-	JButton saveButton = new JButton(rb.getString("Save"));
+	JButton addButton = new JButton(Bundle.getString("Add"));
+	JButton findButton = new JButton(Bundle.getString("Find"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
 
 	JTextField findEngineTextBox = new JTextField(6);
 
 	public EnginesTableFrame() {
-		super(ResourceBundle.getBundle(
-				"jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle")
-				.getString("TitleEnginesTable"));
+		super(Bundle.getString("TitleEnginesTable"));
 		// general GUI config
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -97,13 +90,13 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		// load the number of engines and listen for changes
 		numEngines.setText(Integer.toString(engineManager.getNumEntries()));
 		engineManager.addPropertyChangeListener(this);
-		textEngines.setText(rb.getString("engines"));
+		textEngines.setText(Bundle.getString("engines"));
 
 		// Set up the control panel
 
 		// row 1
 		JPanel cp1 = new JPanel();
-		cp1.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
+		cp1.setBorder(BorderFactory.createTitledBorder(Bundle.getString("SortBy")));
 
 		cp1.add(sortByNumber);
 		cp1.add(sortByRoad);
@@ -134,8 +127,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		// row 2
 		JPanel cp2 = new JPanel();
 		cp2.setBorder(BorderFactory.createTitledBorder(""));
-		findButton.setToolTipText(rb.getString("findEngine"));
-		findEngineTextBox.setToolTipText(rb.getString("findEngine"));
+		findButton.setToolTipText(Bundle.getString("findEngine"));
+		findEngineTextBox.setToolTipText(Bundle.getString("findEngine"));
 
 		cp2.add(numEngines);
 		cp2.add(textEngines);
@@ -194,9 +187,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
 		toolMenu.add(new EngineRosterMenu("Roster", EngineRosterMenu.MAINMENU, this));
-		toolMenu.add(new NceConsistEngineAction(rb.getString("MenuItemNceSync"), this));
+		toolMenu.add(new NceConsistEngineAction(Bundle.getString("MenuItemNceSync"), this));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
@@ -266,8 +259,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			int rowindex = enginesModel.findEngineByRoadNumber(findEngineTextBox.getText());
 			if (rowindex < 0) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						rb.getString("engineWithRoadNumNotFound"),
-						new Object[] { findEngineTextBox.getText() }), rb
+						Bundle.getString("engineWithRoadNumNotFound"),
+						new Object[] { findEngineTextBox.getText() }), Bundle
 						.getString("engineCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
 				return;
 
@@ -282,7 +275,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 				f.dispose();
 			f = new EngineEditFrame();
 			f.initComponents();
-			f.setTitle(rb.getString("TitleEngineAdd"));
+			f.setTitle(Bundle.getString("TitleEngineAdd"));
 			f.setVisible(true);
 		}
 		if (ae.getSource() == saveButton) {

@@ -12,124 +12,118 @@ import javax.swing.*;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.ResourceBundle;
 import jmri.jmrit.operations.setup.Control;
-
 
 /**
  * Action to print a summary of car loads ordered by car type.
  * <P>
- * This uses the older style printing, for compatibility with Java 1.1.8 in
- * Macintosh MRJ
- *
- * @author	Bob Jacobsen   Copyright (C) 2003
- * @author  Dennis Miller  Copyright (C) 2005
+ * This uses the older style printing, for compatibility with Java 1.1.8 in Macintosh MRJ
+ * 
+ * @author Bob Jacobsen Copyright (C) 2003
+ * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2011
- * @version     $Revision$
+ * @version $Revision$
  */
-public class PrintCarLoadsAction  extends AbstractAction {
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
-	
+public class PrintCarLoadsAction extends AbstractAction {
+
 	CarManager manager = CarManager.instance();
 
-    public PrintCarLoadsAction(String actionName, boolean preview, Component pWho) {
-        super(actionName);
-        isPreview = preview;
-    }
+	public PrintCarLoadsAction(String actionName, boolean preview, Component pWho) {
+		super(actionName);
+		isPreview = preview;
+	}
 
-    /**
-     * Frame hosting the printing
-     */
+	/**
+	 * Frame hosting the printing
+	 */
 
-    /**
-     * Variable to set whether this is to be printed or previewed
-     */
-    boolean isPreview;
- 
+	/**
+	 * Variable to set whether this is to be printed or previewed
+	 */
+	boolean isPreview;
 
-    public void actionPerformed(ActionEvent e) {
-    		new CarLoadPrintOption();
-    }
-    
-    public class CarLoadPrintOption {
-    	
-    	static final String tab = "\t";
-    	
-    	// no frame needed for now
-    	public CarLoadPrintOption(){
-    		super();
-    		printCars();
-    	}
-    	
-        private void printCars(){
-        	 
-            // obtain a HardcopyWriter to do this
-            HardcopyWriter writer = null;
-            Frame mFrame = new Frame();
-            try {
-                writer = new HardcopyWriter(mFrame, rb.getString("TitleCarLoads"), 10, .5, .5, .5, .5, isPreview);
-            } catch (HardcopyWriter.PrintCanceledException ex) {
-                log.debug("Print cancelled");
-                return;
-            }
-            
-            // Loop through the Roster, printing as needed
-            String newLine = "\n";
-            CarLoads carLoads = CarLoads.instance();
-            Hashtable<String, List<CarLoad>> list = carLoads.getList();
-            try {
-            	String s = rb.getString("Type") + tab
-            	+ rb.getString("Load") + tab 
-            	+ rb.getString("BorderLayoutPriority") + "  "
-            	+ rb.getString("LoadPickupMessage") + "  "
-            	+ rb.getString("LoadDropMessage")           	
-            	+ newLine;
-            	writer.write(s);
-        		Enumeration<String> en = list.keys();
-        		while(en.hasMoreElements()) {
-        			String key = en.nextElement();
-        			List<CarLoad> loads = list.get(key);
-        			boolean printType = true;
-        			for (int j=0; j<loads.size(); j++){
-        				StringBuffer buf = new StringBuffer("\t");
-        				String load = loads.get(j).getName();
-        				// don't print out default load or empty
-        				if ((load.equals(carLoads.getDefaultEmptyName())
-        						|| load.equals(carLoads.getDefaultLoadName()))
-        						&& loads.get(j).getPickupComment().equals("")
-        						&& loads.get(j).getDropComment().equals("")
-        						&& loads.get(j).getPriority().equals(CarLoad.PRIORITY_LOW))
-        						continue;
-        				// print the car type once
-        				if (printType){
-        					writer.write(key + newLine);
-        					printType = false;
-        				}
-        				buf.append(tabString(load, Control.max_len_string_attibute));
-        				buf.append(tabString(loads.get(j).getPriority(), 5));
-        				buf.append(tabString(loads.get(j).getPickupComment(), 27));
-        				buf.append(loads.get(j).getDropComment());
-        				writer.write(buf.toString() + newLine);
-        			}
-            	}
-            	// and force completion of the printing
-            	writer.close();
-            } catch (IOException we) {
-            	log.error("Error printing car roster");
-            }
-        }
-    }
-    
-	private static String tabString(String s, int fieldSize){
-		if (s.length()>fieldSize)
+	public void actionPerformed(ActionEvent e) {
+		new CarLoadPrintOption();
+	}
+
+	public class CarLoadPrintOption {
+
+		static final String tab = "\t";
+
+		// no frame needed for now
+		public CarLoadPrintOption() {
+			super();
+			printCars();
+		}
+
+		private void printCars() {
+
+			// obtain a HardcopyWriter to do this
+			HardcopyWriter writer = null;
+			Frame mFrame = new Frame();
+			try {
+				writer = new HardcopyWriter(mFrame, Bundle.getString("TitleCarLoads"), 10, .5, .5,
+						.5, .5, isPreview);
+			} catch (HardcopyWriter.PrintCanceledException ex) {
+				log.debug("Print cancelled");
+				return;
+			}
+
+			// Loop through the Roster, printing as needed
+			String newLine = "\n";
+			CarLoads carLoads = CarLoads.instance();
+			Hashtable<String, List<CarLoad>> list = carLoads.getList();
+			try {
+				String s = Bundle.getString("Type") + tab + Bundle.getString("Load") + tab
+						+ Bundle.getString("BorderLayoutPriority") + "  "
+						+ Bundle.getString("LoadPickupMessage") + "  "
+						+ Bundle.getString("LoadDropMessage") + newLine;
+				writer.write(s);
+				Enumeration<String> en = list.keys();
+				while (en.hasMoreElements()) {
+					String key = en.nextElement();
+					List<CarLoad> loads = list.get(key);
+					boolean printType = true;
+					for (int j = 0; j < loads.size(); j++) {
+						StringBuffer buf = new StringBuffer("\t");
+						String load = loads.get(j).getName();
+						// don't print out default load or empty
+						if ((load.equals(carLoads.getDefaultEmptyName()) || load.equals(carLoads
+								.getDefaultLoadName()))
+								&& loads.get(j).getPickupComment().equals("")
+								&& loads.get(j).getDropComment().equals("")
+								&& loads.get(j).getPriority().equals(CarLoad.PRIORITY_LOW))
+							continue;
+						// print the car type once
+						if (printType) {
+							writer.write(key + newLine);
+							printType = false;
+						}
+						buf.append(tabString(load, Control.max_len_string_attibute));
+						buf.append(tabString(loads.get(j).getPriority(), 5));
+						buf.append(tabString(loads.get(j).getPickupComment(), 27));
+						buf.append(loads.get(j).getDropComment());
+						writer.write(buf.toString() + newLine);
+					}
+				}
+				// and force completion of the printing
+				writer.close();
+			} catch (IOException we) {
+				log.error("Error printing car roster");
+			}
+		}
+	}
+
+	private static String tabString(String s, int fieldSize) {
+		if (s.length() > fieldSize)
 			s = s.substring(0, fieldSize);
-		StringBuffer buf = new StringBuffer(s+" ");
-		while (buf.length() < fieldSize){
+		StringBuffer buf = new StringBuffer(s + " ");
+		while (buf.length() < fieldSize) {
 			buf.append(" ");
 		}
 		return buf.toString();
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintCarLoadsAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+			.getLogger(PrintCarLoadsAction.class.getName());
 }

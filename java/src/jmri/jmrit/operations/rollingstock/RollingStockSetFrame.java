@@ -53,17 +53,17 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	// labels
 	JLabel textRoad = new JLabel();
 	JLabel textType = new JLabel();
-	JLabel textName = new JLabel(rb.getString("Name"));
-	JLabel textTrack = new JLabel(rb.getString("Track"));
-	JLabel textName2 = new JLabel(rb.getString("Name"));
-	JLabel textTrack2 = new JLabel(rb.getString("Track"));
-	JLabel textName3 = new JLabel(rb.getString("Name"));
-	JLabel textTrack3 = new JLabel(rb.getString("Track"));
-	JLabel textName4 = new JLabel(rb.getString("Name"));
-	JLabel textTrack4 = new JLabel(rb.getString("Track"));
+	JLabel textName = new JLabel(Bundle.getString("Name"));
+	JLabel textTrack = new JLabel(Bundle.getString("Track"));
+	JLabel textName2 = new JLabel(Bundle.getString("Name"));
+	JLabel textTrack2 = new JLabel(Bundle.getString("Track"));
+	JLabel textName3 = new JLabel(Bundle.getString("Name"));
+	JLabel textTrack3 = new JLabel(Bundle.getString("Track"));
+	JLabel textName4 = new JLabel(Bundle.getString("Name"));
+	JLabel textTrack4 = new JLabel(Bundle.getString("Track"));
 
 	// major buttons
-	protected JButton saveButton = new JButton(rb.getString("Save"));
+	protected JButton saveButton = new JButton(Bundle.getString("Save"));
 	
 	// combo boxes
 	protected JComboBox locationBox = LocationManager.instance().getComboBox();
@@ -77,21 +77,21 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	protected JComboBox trainBox = TrainManager.instance().getComboBox();
 	
 	// check boxes
-	protected JCheckBox autoTrackCheckBox = new JCheckBox(rb.getString("Auto"));
-	protected JCheckBox autoDestinationTrackCheckBox = new JCheckBox(rb.getString("Auto"));
-	protected JCheckBox autoFinalDestTrackCheckBox = new JCheckBox(rb.getString("Auto"));
-	protected JCheckBox autoReturnWhenEmptyTrackCheckBox = new JCheckBox(rb.getString("Auto"));
-	protected JCheckBox autoTrainCheckBox = new JCheckBox(rb.getString("Auto"));
+	protected JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getString("Auto"));
+	protected JCheckBox autoDestinationTrackCheckBox = new JCheckBox(Bundle.getString("Auto"));
+	protected JCheckBox autoFinalDestTrackCheckBox = new JCheckBox(Bundle.getString("Auto"));
+	protected JCheckBox autoReturnWhenEmptyTrackCheckBox = new JCheckBox(Bundle.getString("Auto"));
+	protected JCheckBox autoTrainCheckBox = new JCheckBox(Bundle.getString("Auto"));
 	
-	protected JCheckBox locationUnknownCheckBox = new JCheckBox(rb.getString("LocationUnknown"));
-	protected JCheckBox outOfServiceCheckBox = new JCheckBox(rb.getString("OutOfService"));
+	protected JCheckBox locationUnknownCheckBox = new JCheckBox(Bundle.getString("LocationUnknown"));
+	protected JCheckBox outOfServiceCheckBox = new JCheckBox(Bundle.getString("OutOfService"));
 	
-	protected JCheckBox ignoreStatusCheckBox = new JCheckBox(rb.getString("Ignore"));
-	protected JCheckBox ignoreLocationCheckBox = new JCheckBox(rb.getString("Ignore"));
-	protected JCheckBox ignoreRWECheckBox = new JCheckBox(rb.getString("Ignore"));	
-	protected JCheckBox ignoreDestinationCheckBox = new JCheckBox(rb.getString("Ignore"));
-	protected JCheckBox ignoreFinalDestinationCheckBox = new JCheckBox(rb.getString("Ignore"));
-	protected JCheckBox ignoreTrainCheckBox = new JCheckBox(rb.getString("Ignore"));
+	protected JCheckBox ignoreStatusCheckBox = new JCheckBox(Bundle.getString("Ignore"));
+	protected JCheckBox ignoreLocationCheckBox = new JCheckBox(Bundle.getString("Ignore"));
+	protected JCheckBox ignoreRWECheckBox = new JCheckBox(Bundle.getString("Ignore"));	
+	protected JCheckBox ignoreDestinationCheckBox = new JCheckBox(Bundle.getString("Ignore"));
+	protected JCheckBox ignoreFinalDestinationCheckBox = new JCheckBox(Bundle.getString("Ignore"));
+	protected JCheckBox ignoreTrainCheckBox = new JCheckBox(Bundle.getString("Ignore"));
 	
 	// optional panels
 	protected JPanel pOptional = new JPanel();
@@ -128,14 +128,14 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// row 1b
 		JPanel pType = new JPanel();
 		pType.setLayout(new GridBagLayout());
-		pType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
+		pType.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Type")));
 		addItem(pType, textType, 1, 0);
 		pRow1.add(pType);
 		
 		// row 1c
 		JPanel pStatus = new JPanel();
 		pStatus.setLayout(new GridBagLayout());
-		pStatus.setBorder(BorderFactory.createTitledBorder(rb.getString("Status")));
+		pStatus.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Status")));
 		addItem(pStatus, ignoreStatusCheckBox, 1, 0);
 		addItem(pStatus, locationUnknownCheckBox, 1, 1);
 		addItem(pStatus, outOfServiceCheckBox, 1, 2);
@@ -146,7 +146,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// row 2
 		JPanel pLocation = new JPanel();
 		pLocation.setLayout(new GridBagLayout());
-		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
+		pLocation.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Location")));
 		addItem(pLocation, textName, 1, 0);
 		addItem(pLocation, textTrack, 2, 0);
 		addItem(pLocation, ignoreLocationCheckBox, 0, 1);
@@ -157,12 +157,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		
 		// optional panel return when empty
 		pOptional.setLayout(new BoxLayout(pOptional,BoxLayout.Y_AXIS));
-		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
+		pOptional.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutOptional")));
 		
 		// row 5
 		JPanel pReturnWhenEmpty = new JPanel();
 		pReturnWhenEmpty.setLayout(new GridBagLayout());
-		pReturnWhenEmpty.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutReturnWhenEmpty")));
+		pReturnWhenEmpty.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutReturnWhenEmpty")));
 		addItem(pReturnWhenEmpty, textName4, 1, 0);
 		addItem(pReturnWhenEmpty, textTrack4, 2, 0);
 		addItem(pReturnWhenEmpty, ignoreRWECheckBox, 0, 1);
@@ -174,12 +174,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// optional panel 2
 		JPanel pOptional2 = new JPanel();
 		pOptional2.setLayout(new BoxLayout(pOptional2,BoxLayout.Y_AXIS));
-		pOptional2.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptionalProgram")));
+		pOptional2.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutOptionalProgram")));
 
 		// row 6
 		JPanel pDestination = new JPanel();
 		pDestination.setLayout(new GridBagLayout());
-		pDestination.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDestination")));
+		pDestination.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutDestination")));
 		addItem(pDestination, textName2, 1, 0);
 		addItem(pDestination, textTrack2, 2, 0);
 		addItem(pDestination, ignoreDestinationCheckBox, 0, 1);
@@ -190,7 +190,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		
 		// row 7
 		pFinalDestination.setLayout(new GridBagLayout());
-		pFinalDestination.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFinalDestination")));
+		pFinalDestination.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutFinalDestination")));
 		addItem(pFinalDestination, textName3, 1, 0);
 		addItem(pFinalDestination, textTrack3, 2, 0);
 		addItem(pFinalDestination, ignoreFinalDestinationCheckBox, 0, 1);
@@ -202,7 +202,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// row 8
 		JPanel pTrain = new JPanel();
 		pTrain.setLayout(new GridBagLayout());
-		pTrain.setBorder(BorderFactory.createTitledBorder(rb.getString("Train")));
+		pTrain.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Train")));
 		addItem(pTrain, ignoreTrainCheckBox, 0, 0);
 		addItem(pTrain, trainBox, 1, 0);
 		addItem(pTrain, autoTrainCheckBox, 2, 0);
@@ -263,9 +263,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// add tool tips
 		autoTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
 		autoDestinationTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
-		autoFinalDestTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
-		autoReturnWhenEmptyTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
-		autoTrainCheckBox.setToolTipText(rb.getString("TipAutoTrain"));
+		autoFinalDestTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
+		autoReturnWhenEmptyTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
+		autoTrainCheckBox.setToolTipText(Bundle.getString("TipAutoTrain"));
 		
 		ignoreStatusCheckBox.setToolTipText(getRb().getString("TipIgnore"));
 		ignoreLocationCheckBox.setToolTipText(getRb().getString("TipIgnore"));

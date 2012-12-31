@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -15,20 +13,19 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class EnginesTableAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
-    public EnginesTableAction(String s) {
-	super(s);
-    }
+	public EnginesTableAction(String s) {
+		super(s);
+	}
 
-    public EnginesTableAction() {
-        this(rb.getString("TitleEnginesTable"));
-    }
+	public EnginesTableAction() {
+		this(Bundle.getString("TitleEnginesTable"));
+	}
 
-    public void actionPerformed(ActionEvent e) {
-        // create a engine table frame
-        new EnginesTableFrame();
-    }
+	public void actionPerformed(ActionEvent e) {
+		// create a engine table frame
+		new EnginesTableFrame();
+	}
 }
 
 /* @(#)EnginesTableAction.java */

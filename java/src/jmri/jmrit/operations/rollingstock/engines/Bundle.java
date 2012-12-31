@@ -1,6 +1,6 @@
 // Bundle.java
 
-package jmri.jmrit.operations;
+package jmri.jmrit.operations.rollingstock.engines;
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -24,7 +24,7 @@ package jmri.jmrit.operations;
 public class Bundle extends jmri.Bundle {
 
 	protected static Bundle b = new Bundle(
-			"jmri.jmrit.operations.JmritOperationsBundle"); // NOI18N
+			"jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle"); // NOI18N
 
 	/**
 	 * Provides access to a string for a given key from the package resource bundle or parent.

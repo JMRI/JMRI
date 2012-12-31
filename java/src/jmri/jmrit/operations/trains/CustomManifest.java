@@ -2,8 +2,6 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
-
 import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.FileHelper;

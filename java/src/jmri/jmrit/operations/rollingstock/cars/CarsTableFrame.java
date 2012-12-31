@@ -1,16 +1,14 @@
 // CarsTableFrame.java
 
- package jmri.jmrit.operations.rollingstock.cars;
+package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.Dimension;
-import javax.swing.event.TableModelListener; 
+import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.TableColumnModel;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -38,14 +36,12 @@ import jmri.util.com.sun.TableSorter;
 
 /**
  * Frame for adding and editing the car roster for operations.
- *
- * @author Bob Jacobsen   Copyright (C) 2001
+ * 
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011
  * @version $Revision$
  */
-public class CarsTableFrame extends OperationsFrame implements TableModelListener{
-	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
+public class CarsTableFrame extends OperationsFrame implements TableModelListener {
 
 	CarsTableModel carsModel;
 	JTable carsTable;
@@ -53,44 +49,42 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	String locationName;
 	String trackName;
 	CarManager carManager = CarManager.instance();
-		
+
 	// labels
 	JLabel numCars = new JLabel();
-	JLabel textCars = new JLabel(rb.getString("cars"));
+	JLabel textCars = new JLabel(Bundle.getString("cars"));
 	JLabel textSep1 = new JLabel("      ");
-	
+
 	// radio buttons
-	
-    JRadioButton sortByNumber = new JRadioButton(rb.getString("Number"));
-    JRadioButton sortByRoad = new JRadioButton(rb.getString("Road"));
-    JRadioButton sortByType = new JRadioButton(rb.getString("Type"));
-    JRadioButton sortByColor = new JRadioButton(rb.getString("Color"));
-    JRadioButton sortByLoad = new JRadioButton(rb.getString("Load"));
-    JRadioButton sortByKernel = new JRadioButton(rb.getString("Kernel"));
-    JRadioButton sortByLocation = new JRadioButton(rb.getString("Location"));
-    JRadioButton sortByDestination = new JRadioButton(rb.getString("Destination"));
-    JRadioButton sortByFinalDestination = new JRadioButton(rb.getString("FD"));
-    JRadioButton sortByRwe = new JRadioButton(rb.getString("RWE"));
-    JRadioButton sortByTrain = new JRadioButton(rb.getString("Train"));
-    JRadioButton sortByMoves = new JRadioButton(rb.getString("Moves"));
-    JRadioButton sortByBuilt = new JRadioButton(rb.getString("Built"));
-    JRadioButton sortByOwner = new JRadioButton(rb.getString("Owner"));
-    JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
-    JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
-    JRadioButton sortByWait = new JRadioButton(rb.getString("Wait"));
-    ButtonGroup group = new ButtonGroup();
-    
+
+	JRadioButton sortByNumber = new JRadioButton(Bundle.getString("Number"));
+	JRadioButton sortByRoad = new JRadioButton(Bundle.getString("Road"));
+	JRadioButton sortByType = new JRadioButton(Bundle.getString("Type"));
+	JRadioButton sortByColor = new JRadioButton(Bundle.getString("Color"));
+	JRadioButton sortByLoad = new JRadioButton(Bundle.getString("Load"));
+	JRadioButton sortByKernel = new JRadioButton(Bundle.getString("Kernel"));
+	JRadioButton sortByLocation = new JRadioButton(Bundle.getString("Location"));
+	JRadioButton sortByDestination = new JRadioButton(Bundle.getString("Destination"));
+	JRadioButton sortByFinalDestination = new JRadioButton(Bundle.getString("FD"));
+	JRadioButton sortByRwe = new JRadioButton(Bundle.getString("RWE"));
+	JRadioButton sortByTrain = new JRadioButton(Bundle.getString("Train"));
+	JRadioButton sortByMoves = new JRadioButton(Bundle.getString("Moves"));
+	JRadioButton sortByBuilt = new JRadioButton(Bundle.getString("Built"));
+	JRadioButton sortByOwner = new JRadioButton(Bundle.getString("Owner"));
+	JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
+	JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
+	JRadioButton sortByWait = new JRadioButton(Bundle.getString("Wait"));
+	ButtonGroup group = new ButtonGroup();
+
 	// major buttons
-	JButton addButton = new JButton(rb.getString("Add"));
-	JButton findButton = new JButton(rb.getString("Find"));
-	JButton saveButton = new JButton(rb.getString("Save"));
-	
+	JButton addButton = new JButton(Bundle.getString("Add"));
+	JButton findButton = new JButton(Bundle.getString("Find"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
+
 	JTextField findCarTextBox = new JTextField(6);
 
 	public CarsTableFrame(boolean showAllCars, String locationName, String trackName) {
-		super(ResourceBundle.getBundle(
-				"jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle").getString(
-				"TitleCarsTable"));
+		super(Bundle.getString("TitleCarsTable"));
 		this.showAllCars = showAllCars;
 		this.locationName = locationName;
 		this.trackName = trackName;
@@ -114,7 +108,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
 		// row 1
 		JPanel cp1 = new JPanel();
-		cp1.setBorder(BorderFactory.createTitledBorder(rb.getString("SortBy")));
+		cp1.setBorder(BorderFactory.createTitledBorder(Bundle.getString("SortBy")));
 		cp1.add(sortByNumber);
 		cp1.add(sortByRoad);
 		cp1.add(sortByType);
@@ -163,8 +157,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		// row 2
 		JPanel cp2 = new JPanel();
 		cp2.setBorder(BorderFactory.createTitledBorder(""));
-		findButton.setToolTipText(rb.getString("findCar"));
-		findCarTextBox.setToolTipText(rb.getString("findCar"));
+		findButton.setToolTipText(Bundle.getString("findCar"));
+		findCarTextBox.setToolTipText(Bundle.getString("findCar"));
 
 		cp2.add(numCars);
 		cp2.add(textCars);
@@ -230,22 +224,22 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		group.add(sortByValue);
 		group.add(sortByRfid);
 		group.add(sortByWait);
-		
+
 		// sort by location
-		if (!showAllCars){
+		if (!showAllCars) {
 			sortByLocation.doClick();
-			if (locationName != null){
-				String title = rb.getString("TitleCarsTable") +" "+ locationName;
-				if (trackName != null){
-					title = title + " "+trackName;
+			if (locationName != null) {
+				String title = Bundle.getString("TitleCarsTable") + " " + locationName;
+				if (trackName != null) {
+					title = title + " " + trackName;
 				}
 				setTitle(title);
 			}
 		}
-    	
- 		// build menu
+
+		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
 		toolMenu.add(new CarRosterMenu("Roster", CarRosterMenu.MAINMENU, this));
 		toolMenu.add(new ModifyLocationsAction());
 		toolMenu.add(new TrainsByCarTypeAction());
@@ -253,105 +247,106 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
-    	
-    	pack();
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
+
+		pack();
 		setVisible(true);
-		
-        // create ShutDownTasks
-        createShutDownTask();
-    	// also load the engines
-    	EngineManagerXml.instance();
-    }
-    
+
+		// create ShutDownTasks
+		createShutDownTask();
+		// also load the engines
+		EngineManagerXml.instance();
+	}
+
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
-		if (ae.getSource() == sortByNumber){
+		if (ae.getSource() == sortByNumber) {
 			carsModel.setSort(carsModel.SORTBYNUMBER);
 		}
-		if (ae.getSource() == sortByRoad){
+		if (ae.getSource() == sortByRoad) {
 			carsModel.setSort(carsModel.SORTBYROAD);
 		}
-		if (ae.getSource() == sortByType){
+		if (ae.getSource() == sortByType) {
 			carsModel.setSort(carsModel.SORTBYTYPE);
 		}
-		if (ae.getSource() == sortByColor){
+		if (ae.getSource() == sortByColor) {
 			carsModel.setSort(carsModel.SORTBYCOLOR);
 		}
-		if (ae.getSource() == sortByLoad){
+		if (ae.getSource() == sortByLoad) {
 			carsModel.setSort(carsModel.SORTBYLOAD);
 		}
-		if (ae.getSource() == sortByKernel){
+		if (ae.getSource() == sortByKernel) {
 			carsModel.setSort(carsModel.SORTBYKERNEL);
 		}
-		if (ae.getSource() == sortByLocation){
+		if (ae.getSource() == sortByLocation) {
 			carsModel.setSort(carsModel.SORTBYLOCATION);
 		}
-		if (ae.getSource() == sortByDestination){
+		if (ae.getSource() == sortByDestination) {
 			carsModel.setSort(carsModel.SORTBYDESTINATION);
 		}
-		if (ae.getSource() == sortByFinalDestination){
+		if (ae.getSource() == sortByFinalDestination) {
 			carsModel.setSort(carsModel.SORTBYFINALDESTINATION);
 		}
-		if (ae.getSource() == sortByRwe){
+		if (ae.getSource() == sortByRwe) {
 			carsModel.setSort(carsModel.SORTBYRWE);
 		}
-		if (ae.getSource() == sortByTrain){
+		if (ae.getSource() == sortByTrain) {
 			carsModel.setSort(carsModel.SORTBYTRAIN);
 		}
-		if (ae.getSource() == sortByMoves){
+		if (ae.getSource() == sortByMoves) {
 			carsModel.setSort(carsModel.SORTBYMOVES);
 		}
-		if (ae.getSource() == sortByBuilt){
+		if (ae.getSource() == sortByBuilt) {
 			carsModel.setSort(carsModel.SORTBYBUILT);
 		}
-		if (ae.getSource() == sortByOwner){
+		if (ae.getSource() == sortByOwner) {
 			carsModel.setSort(carsModel.SORTBYOWNER);
 		}
-		if (ae.getSource() == sortByValue){
+		if (ae.getSource() == sortByValue) {
 			carsModel.setSort(carsModel.SORTBYVALUE);
 		}
-		if (ae.getSource() == sortByRfid){
+		if (ae.getSource() == sortByRfid) {
 			carsModel.setSort(carsModel.SORTBYRFID);
 		}
-		if (ae.getSource() == sortByWait){
+		if (ae.getSource() == sortByWait) {
 			carsModel.setSort(carsModel.SORTBYWAIT);
 		}
 		// clear any sorts by column
-    	clearTableSort(carsTable);
+		clearTableSort(carsTable);
 	}
-	
-	public List<String> getSortByList(){
+
+	public List<String> getSortByList() {
 		return carsModel.sysList;
 	}
-    
+
 	CarEditFrame f = null;
-	
+
 	// add, find or save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//		log.debug("car button activated");
-		if (ae.getSource() == findButton){
+		// log.debug("car button activated");
+		if (ae.getSource() == findButton) {
 			int rowindex = carsModel.findCarByRoadNumber(findCarTextBox.getText());
-			if (rowindex < 0){
-				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(rb.getString("carWithRoadNumNotFound"),new Object[]{findCarTextBox.getText()}), rb.getString("carCouldNotFind"),
-						JOptionPane.INFORMATION_MESSAGE);
+			if (rowindex < 0) {
+				JOptionPane.showMessageDialog(this, MessageFormat.format(
+						Bundle.getString("carWithRoadNumNotFound"),
+						new Object[] { findCarTextBox.getText() }), Bundle
+						.getString("carCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
 			// clear any sorts by column
-		   	clearTableSort(carsTable);
+			clearTableSort(carsTable);
 			carsTable.changeSelection(rowindex, 0, false, false);
 			return;
 		}
-		if (ae.getSource() == addButton){
+		if (ae.getSource() == addButton) {
 			if (f != null)
 				f.dispose();
 			f = new CarEditFrame();
 			f.initComponents();
-			f.setTitle(rb.getString("TitleCarAdd"));
+			f.setTitle(Bundle.getString("TitleCarAdd"));
 		}
-		if (ae.getSource() == saveButton){
-			if(carsTable.isEditing()){
+		if (ae.getSource() == saveButton) {
+			if (carsTable.isEditing()) {
 				log.debug("cars table edit true");
 				carsTable.getCellEditor().stopCellEditing();
 			}
@@ -362,39 +357,40 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 				dispose();
 		}
 	}
-	
-	protected int[] getCurrentTableColumnWidths(){	
+
+	protected int[] getCurrentTableColumnWidths() {
 		TableColumnModel tcm = carsTable.getColumnModel();
 		int[] widths = new int[tcm.getColumnCount()];
-		for (int i=0; i<tcm.getColumnCount(); i++)
+		for (int i = 0; i < tcm.getColumnCount(); i++)
 			widths[i] = tcm.getColumn(i).getWidth();
 		return widths;
 	}
 
-    public void dispose() {
-    	carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
-    	carsModel.removeTableModelListener(this);
-    	carsModel.dispose();
-    	if (f != null)
-    		f.dispose();
-        super.dispose();
-    }
-    
-    public void tableChanged(TableModelEvent e){
-    	if(Control.showProperty && log.isDebugEnabled()) log.debug("Table changed");
-    	updateNumCars();
-    }
-    
-    private void updateNumCars(){
-    	String totalNumber = Integer.toString(CarManager.instance().getNumEntries());
-    	if (showAllCars){
-    		numCars.setText(totalNumber);
-    		return;
-    	}
-    	String showNumber = Integer.toString(getSortByList().size());
-       	numCars.setText(showNumber + "/" + totalNumber);
-    }
-    
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(CarsTableFrame.class.getName());
+	public void dispose() {
+		carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
+		carsModel.removeTableModelListener(this);
+		carsModel.dispose();
+		if (f != null)
+			f.dispose();
+		super.dispose();
+	}
+
+	public void tableChanged(TableModelEvent e) {
+		if (Control.showProperty && log.isDebugEnabled())
+			log.debug("Table changed");
+		updateNumCars();
+	}
+
+	private void updateNumCars() {
+		String totalNumber = Integer.toString(CarManager.instance().getNumEntries());
+		if (showAllCars) {
+			numCars.setText(totalNumber);
+			return;
+		}
+		String showNumber = Integer.toString(getSortByList().size());
+		numCars.setText(showNumber + "/" + totalNumber);
+	}
+
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarsTableFrame.class
+			.getName());
 }

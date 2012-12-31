@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -15,20 +13,19 @@ import javax.swing.AbstractAction;
  * @version $Revision$
  */
 public class CarsTableAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 
-    public CarsTableAction(String s) {
-	super(s);
-    }
+	public CarsTableAction(String s) {
+		super(s);
+	}
 
-    public CarsTableAction() {
-        this(rb.getString("TitleCarsTable"));
-    }
+	public CarsTableAction() {
+		this(Bundle.getString("TitleCarsTable"));
+	}
 
-    public void actionPerformed(ActionEvent e) {
-        // create a car table frame
-        new CarsTableFrame(true, null, null);
-    }
+	public void actionPerformed(ActionEvent e) {
+		// create a car table frame
+		new CarsTableFrame(true, null, null);
+	}
 }
 
 /* @(#)CarsTableAction.java */

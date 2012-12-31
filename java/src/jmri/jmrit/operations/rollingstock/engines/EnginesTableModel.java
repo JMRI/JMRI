@@ -5,8 +5,6 @@ package jmri.jmrit.operations.rollingstock.engines;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -25,9 +23,6 @@ import jmri.util.table.ButtonRenderer;
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements
 		PropertyChangeListener {
-
-	static ResourceBundle rb = ResourceBundle
-			.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 
 	EngineManager manager = EngineManager.instance(); // There is only one manager
 
@@ -249,39 +244,39 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	public String getColumnName(int col) {
 		switch (col) {
 		case NUMCOLUMN:
-			return rb.getString("Number");
+			return Bundle.getString("Number");
 		case ROADCOLUMN:
-			return rb.getString("Road");
+			return Bundle.getString("Road");
 		case MODELCOLUMN:
-			return rb.getString("Model");
+			return Bundle.getString("Model");
 		case TYPECOLUMN:
-			return rb.getString("Type");
+			return Bundle.getString("Type");
 		case LENGTHCOLUMN:
-			return rb.getString("Len");
+			return Bundle.getString("Len");
 		case CONSISTCOLUMN:
-			return rb.getString("Consist");
+			return Bundle.getString("Consist");
 		case LOCATIONCOLUMN:
-			return rb.getString("Location");
+			return Bundle.getString("Location");
 		case DESTINATIONCOLUMN:
-			return rb.getString("Destination");
+			return Bundle.getString("Destination");
 		case TRAINCOLUMN:
-			return rb.getString("Train");
+			return Bundle.getString("Train");
 		case MOVESCOLUMN: {
 			if (showMoveCol == SHOWBUILT)
-				return rb.getString("Built");
+				return Bundle.getString("Built");
 			else if (showMoveCol == SHOWOWNER)
-				return rb.getString("Owner");
+				return Bundle.getString("Owner");
 			else if (showMoveCol == SHOWVALUE)
 				return Setup.getValueLabel();
 			else if (showMoveCol == SHOWRFID)
 				return Setup.getRfidLabel();
 			else
-				return rb.getString("Moves");
+				return Bundle.getString("Moves");
 		}
 		case SETCOLUMN:
-			return rb.getString("Set");
+			return Bundle.getString("Set");
 		case EDITCOLUMN:
-			return rb.getString("Edit");
+			return Bundle.getString("Edit");
 		default:
 			return "unknown";
 		}
@@ -395,9 +390,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 				return eng.getMoves();
 		}
 		case SETCOLUMN:
-			return rb.getString("Set");
+			return Bundle.getString("Set");
 		case EDITCOLUMN:
-			return rb.getString("Edit");
+			return Bundle.getString("Edit");
 		default:
 			return "unknown " + col;
 		}
@@ -417,7 +412,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			if (esf != null)
 				esf.dispose();
 			esf = new EngineSetFrame();
-			esf.setTitle(rb.getString("TitleEngineSet"));
+			esf.setTitle(Bundle.getString("TitleEngineSet"));
 			esf.initComponents();
 			esf.loadEngine(engine);
 			esf.setVisible(true);
@@ -431,7 +426,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			eef = new EngineEditFrame();
 			eef.initComponents();
 			eef.loadEngine(engine);
-			eef.setTitle(rb.getString("TitleEngineEdit"));
+			eef.setTitle(Bundle.getString("TitleEngineEdit"));
 			eef.setVisible(true);
 			eef.setExtendedState(java.awt.Frame.NORMAL);
 			focusEef = true;

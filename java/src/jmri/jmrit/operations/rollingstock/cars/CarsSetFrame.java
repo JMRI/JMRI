@@ -9,7 +9,6 @@ import javax.swing.JTable;
 
 import jmri.util.com.sun.TableSorter;
 
-
 /**
  * Frame for user to place a group of cars on the layout
  * 
@@ -18,16 +17,16 @@ import jmri.util.com.sun.TableSorter;
  */
 
 public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChangeListener {
-	
+
 	CarsTableModel _carsTableModel;
 	JTable _carsTable;
 	TableSorter _sorter;
-		
+
 	public CarsSetFrame() {
 		super();
 	}
-	
-	//Ignore checkbox states
+
+	// Ignore checkbox states
 	private static boolean ignoreStatusCheckBoxSelected = false;
 	private static boolean ignoreLocationCheckBoxSelected = false;
 	private static boolean ignoreRWECheckBoxSelected = false;
@@ -36,16 +35,16 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 	private static boolean ignoreFinalDestinationCheckBoxSelected = false;
 	private static boolean ignoreTrainCheckBoxSelected = false;
 
-	public void initComponents(JTable carsTable){	
+	public void initComponents(JTable carsTable) {
 		_carsTable = carsTable;
 		_sorter = (TableSorter) carsTable.getModel();
 		_carsTableModel = (CarsTableModel) _sorter.getTableModel();
-		
+
 		super.initComponents();
-		
-		setTitle(rb.getString("TitleSetCars"));
+
+		setTitle(Bundle.getString("TitleSetCars"));
 		// modify Save button text to "Change"
-		saveButton.setText(rb.getString("Change"));
+		saveButton.setText(Bundle.getString("Change"));
 		// disable edit load button if no cars selected
 		editLoadButton.setEnabled(false);
 		// show ignore checkboxes
@@ -56,7 +55,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreDestinationCheckBox.setVisible(true);
 		ignoreFinalDestinationCheckBox.setVisible(true);
 		ignoreTrainCheckBox.setVisible(true);
-	
+
 		// set the last state
 		ignoreStatusCheckBox.setSelected(ignoreStatusCheckBoxSelected);
 		ignoreLocationCheckBox.setSelected(ignoreLocationCheckBoxSelected);
@@ -72,9 +71,9 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			super.loadCar(car);
 		}
 	}
-	
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
-	protected boolean save(){
+
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	protected boolean save() {
 		// save ignore states
 		ignoreStatusCheckBoxSelected = ignoreStatusCheckBox.isSelected();
 		ignoreLocationCheckBoxSelected = ignoreLocationCheckBox.isSelected();
@@ -83,28 +82,25 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreDestinationCheckBoxSelected = ignoreDestinationCheckBox.isSelected();
 		ignoreFinalDestinationCheckBoxSelected = ignoreFinalDestinationCheckBox.isSelected();
 		ignoreTrainCheckBoxSelected = ignoreTrainCheckBox.isSelected();
-		
+
 		int rows[] = _carsTable.getSelectedRows();
-		if (rows.length == 0)					
-			JOptionPane.showMessageDialog(this,
-				rb.getString("selectCars"),
-				rb.getString("carNoneSelected"),
-				JOptionPane.WARNING_MESSAGE);
-		
-		for (int i=0; i<rows.length; i++){
+		if (rows.length == 0)
+			JOptionPane.showMessageDialog(this, Bundle.getString("selectCars"),
+					Bundle.getString("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
+
+		for (int i = 0; i < rows.length; i++) {
 			Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[i]));
-			if (_car == null){
+			if (_car == null) {
 				super.loadCar(car);
 				continue;
 			}
 			if (i == 0 && car != _car) {
 				log.debug("Default car isn't the first one selected");
-				if (JOptionPane.showConfirmDialog(this,
-						MessageFormat.format(rb.getString("doYouWantToChange"),new Object[]{car.toString()}),
-						rb.getString("changeDefaultCar"),					
-						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					super.loadCar(car);	// new default car
-					break;				// done, don't modify any of the cars selected
+				if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
+						Bundle.getString("doYouWantToChange"), new Object[] { car.toString() }),
+						Bundle.getString("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+					super.loadCar(car); // new default car
+					break; // done, don't modify any of the cars selected
 				}
 			}
 			if (!super.change(car))
@@ -113,6 +109,6 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		return true;
 	}
 
-
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarsSetFrame.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarsSetFrame.class
+			.getName());
 }

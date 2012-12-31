@@ -4,8 +4,6 @@ package jmri.jmrit.operations.rollingstock.engines;
 
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -19,13 +17,11 @@ import jmri.jmrit.roster.RosterEntry;
  *
  */
 public class ImportRosterEngines extends Thread {
-	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
-	
+		
 	EngineManager manager = EngineManager.instance();
-	private static String defaultEngineLength = rb.getString("engineDefaultLength");
-	private static String defaultEngineType = rb.getString("engineDefaultType");
-	private static String defaultEngineHp = rb.getString("engineDefaultHp");
+	private static String defaultEngineLength = Bundle.getString("engineDefaultLength");
+	private static String defaultEngineType = Bundle.getString("engineDefaultType");
+	private static String defaultEngineHp = Bundle.getString("engineDefaultHp");
 	
 	javax.swing.JLabel textEngine = new javax.swing.JLabel();
 	javax.swing.JLabel textId = new javax.swing.JLabel();
@@ -35,7 +31,7 @@ public class ImportRosterEngines extends Thread {
 		
 		// create a status frame
 	   	JPanel ps = new JPanel();
-	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(rb.getString("TitleImportEngines"));
+	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getString("TitleImportEngines"));
 	   	fstatus.setLocationRelativeTo(null);
 	   	fstatus.setSize (200,100);
 
@@ -92,12 +88,12 @@ public class ImportRosterEngines extends Thread {
 
 		if (enginesAdded>0) {
 			JOptionPane.showMessageDialog(null, 
-					MessageFormat.format(rb.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
-					rb.getString("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
+					MessageFormat.format(Bundle.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
+					Bundle.getString("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null,
-					MessageFormat.format(rb.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
-					rb.getString("ImportFailed"), JOptionPane.ERROR_MESSAGE);
+					MessageFormat.format(Bundle.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
+					Bundle.getString("ImportFailed"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

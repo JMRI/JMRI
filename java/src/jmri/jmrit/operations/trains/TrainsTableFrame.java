@@ -6,7 +6,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.io.File;
-import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -26,7 +25,6 @@ import javax.swing.JTable;
 import javax.swing.ScrollPaneConstants;
 //import javax.swing.table.TableColumnModel;
 
-import jmri.jmrit.operations.FileHelper;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
