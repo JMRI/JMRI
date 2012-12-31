@@ -8,33 +8,29 @@ import jmri.ProgrammerException;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
-import java.util.ResourceBundle;
-
 /**
  * Common implementations for the Programmer interface.
  *
- * @author	Bob Jacobsen  Copyright (C) 2001
+ * @author	Bob Jacobsen  Copyright (C) 2001, 2012
  * @version     $Revision$
  */
 public abstract class AbstractProgrammer implements Programmer {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.ProgrammingError");
-    
     public String decodeErrorCode(int code) {
-        if (code == ProgListener.OK) return rb.getString("OK");
+        if (code == ProgListener.OK) return Bundle.getString("StatusOK");
         StringBuffer sbuf = new StringBuffer("");
         // add each code; terminate each string with ";" please.
-        if ((code & ProgListener.NoLocoDetected) != 0) sbuf.append(rb.getString("NoLocoDetected")+" ");
-        if ((code & ProgListener.ProgrammerBusy) != 0) sbuf.append(rb.getString("ProgrammerBusy")+" ");
-        if ((code & ProgListener.NotImplemented) != 0) sbuf.append(rb.getString("NotImplemented")+" ");
-        if ((code & ProgListener.UserAborted) != 0) sbuf.append(rb.getString("UserAborted")+" ");
-        if ((code & ProgListener.ConfirmFailed) != 0) sbuf.append(rb.getString("ConfirmFailed")+" ");
-        if ((code & ProgListener.FailedTimeout) != 0) sbuf.append(rb.getString("FailedTimeout")+" ");
-        if ((code & ProgListener.UnknownError) != 0) sbuf.append(rb.getString("UnknownError")+" ");
-        if ((code & ProgListener.NoAck) != 0) sbuf.append(rb.getString("NoAck")+" ");
-	    if ((code & ProgListener.ProgrammingShort) != 0) sbuf.append(rb.getString("ProgrammingShort")+" ");
-	    if ((code & ProgListener.SequenceError) != 0) sbuf.append(rb.getString("SequenceError")+" ");
-	    if ((code & ProgListener.CommError) != 0) sbuf.append(rb.getString("CommError")+" ");
+        if ((code & ProgListener.NoLocoDetected) != 0) sbuf.append(Bundle.getString("NoLocoDetected")+" ");
+        if ((code & ProgListener.ProgrammerBusy) != 0) sbuf.append(Bundle.getString("ProgrammerBusy")+" ");
+        if ((code & ProgListener.NotImplemented) != 0) sbuf.append(Bundle.getString("NotImplemented")+" ");
+        if ((code & ProgListener.UserAborted) != 0) sbuf.append(Bundle.getString("UserAborted")+" ");
+        if ((code & ProgListener.ConfirmFailed) != 0) sbuf.append(Bundle.getString("ConfirmFailed")+" ");
+        if ((code & ProgListener.FailedTimeout) != 0) sbuf.append(Bundle.getString("FailedTimeout")+" ");
+        if ((code & ProgListener.UnknownError) != 0) sbuf.append(Bundle.getString("UnknownError")+" ");
+        if ((code & ProgListener.NoAck) != 0) sbuf.append(Bundle.getString("NoAck")+" ");
+	    if ((code & ProgListener.ProgrammingShort) != 0) sbuf.append(Bundle.getString("ProgrammingShort")+" ");
+	    if ((code & ProgListener.SequenceError) != 0) sbuf.append(Bundle.getString("SequenceError")+" ");
+	    if ((code & ProgListener.CommError) != 0) sbuf.append(Bundle.getString("CommError")+" ");
 
         // remove trailing separators
         if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);
