@@ -28,7 +28,7 @@ package jmri.jmrit;
  */
 public class Bundle extends jmri.Bundle {
 
-    protected static Bundle b = new Bundle("jmri.jmrit.JmritToolsBundle"); // NOI18N
+    protected static Bundle b = new Bundle("jmri.jmrit.Bundle"); // NOI18N
 
     /**
      * Provides access to a string for a given 
