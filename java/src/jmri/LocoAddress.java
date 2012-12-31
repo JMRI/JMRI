@@ -2,8 +2,6 @@
 
 package jmri;
 
-import java.util.ResourceBundle;
-
 /** 
  * Interface for generic Locomotive Address.
  *
@@ -34,24 +32,19 @@ public interface LocoAddress {
     public Protocol getProtocol();
 
     public enum Protocol {
-        DCC_SHORT(  "dcc_short","ProtocolDCC_Short"),
-        DCC_LONG(   "dcc_long", "ProtocolDCC_Long"),
-        DCC(        "dcc",      "ProtocolDCC"),
-        SELECTRIX(  "selectrix","ProtocolSelectrix"),
-        MOTOROLA(   "motorola", "ProtocolMotorola"),
-        MFX(        "mfx",      "ProtocolMFX"),
-        M4(         "m4",       "ProtocolM4"),
-        OPENLCB(    "openlcb",  "ProtocolOpenLCB");
+        DCC_SHORT(  "dcc_short","ProtocolDCC_Short"), // NOI18N
+        DCC_LONG(   "dcc_long", "ProtocolDCC_Long"),  // NOI18N 
+        DCC(        "dcc",      "ProtocolDCC"),       // NOI18N
+        SELECTRIX(  "selectrix","ProtocolSelectrix"), // NOI18N
+        MOTOROLA(   "motorola", "ProtocolMotorola"),  // NOI18N
+        MFX(        "mfx",      "ProtocolMFX"),       // NOI18N
+        M4(         "m4",       "ProtocolM4"),        // NOI18N
+        OPENLCB(    "openlcb",  "ProtocolOpenLCB");   // NOI18N
         
-        static ResourceBundle rb;
-        private static ResourceBundle getRB() { // needed due to order of initialization
-            if (rb == null) rb = ResourceBundle.getBundle("jmri.ProtocolBundle");
-            return rb;
-        }
 
         Protocol(String shName, String peopleKey) {
             this.shortName = shName;
-            this.peopleName = getRB().getString(peopleKey);
+            this.peopleName = Bundle.getString(peopleKey);
         }
         
         String shortName;
