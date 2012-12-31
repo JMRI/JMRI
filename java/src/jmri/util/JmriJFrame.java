@@ -275,7 +275,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         this.setLocation(frameOffSetx, frameOffSety);
     }
     
-    jmri.UserPreferencesManager p;
+    transient jmri.UserPreferencesManager p;
     
     String windowFrameRef;
     
@@ -699,7 +699,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     
     public void componentShown(java.awt.event.ComponentEvent e) { }
     
-    private jmri.implementation.AbstractShutDownTask task = null;
+    private transient jmri.implementation.AbstractShutDownTask task = null;
     protected void setShutDownTask() {
         if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
             task = 
