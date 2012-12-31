@@ -34,6 +34,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -180,6 +181,7 @@ public class VSDecoder implements PropertyChangeListener {
 
     private boolean _init() {
 	// Do nothing for now
+	this.enable();
 	return(true);
     }
 
@@ -357,8 +359,8 @@ public class VSDecoder implements PropertyChangeListener {
     public void setAddress(LocoAddress l) {
 	// Hack for ThrottleManager Dcc dependency
 	config.setLocoAddress(l);
-	DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
-	jmri.InstanceManager.throttleManagerInstance().attachListener(dl, new PropertyChangeListener() {
+	//DccLocoAddress dl = new DccLocoAddress(l.getNumber(), l.getProtocol());
+	jmri.InstanceManager.throttleManagerInstance().attachListener(config.getDccAddress(), new PropertyChangeListener() {
 		public void propertyChange(PropertyChangeEvent event) {
 		    log.debug("property change name " + event.getPropertyName() + " old " + event.getOldValue() + " new " + event.getNewValue());
 		    throttlePropertyChange(event);
@@ -931,7 +933,16 @@ public class VSDecoder implements PropertyChangeListener {
 	}
 
 	// Handle other types of children similarly here.
-	
+
+	// Check for an existing throttle and update speed if it exists.
+	Float s = (Float) InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), "SpeedSetting");
+	if (s != null) {
+	    // Mimic a throttlePropertyChange to propagate the current (init) speed setting of the throttle.
+	    log.debug("Existing Throttle found.  Speed = " + s);
+	    this.throttlePropertyChange(new PropertyChangeEvent(this, "SpeedSetting", null, s));
+	} else {
+	    log.debug("No existing throttle found.");
+	}
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoder.class.getName());

@@ -67,6 +67,11 @@ class Diesel3Sound extends EngineSound {
 	log.debug("New Diesel3Sound name(param) = " + name + " name(val) " + this.getName());
     }
 
+    private void startThread() {
+	_loopThread = new D3LoopThread(this, notch_sounds.get(current_notch), _soundName, true);
+	log.debug("Loop Thread Started.  Sound name = " + _soundName);
+    }
+
     // Note:  Play and Loop do the same thing, since all of the notch sounds are set to loop.
     @Override
     public void play() {
@@ -96,6 +101,7 @@ class Diesel3Sound extends EngineSound {
 
     @Override
     public void handleSpeedChange(Float s, EnginePane e) {
+	//log.debug("Handling SpeedSetting event. speed = " + s);
 	throttle_setting = s;
 	if (!changing_speed) 
 	    changeSpeed(s, e);
@@ -120,7 +126,7 @@ class Diesel3Sound extends EngineSound {
     @Override
     public void startEngine() {
 	log.debug("startEngine.  ID = " + this.getName());
-	_loopThread = new D3LoopThread(this, notch_sounds.get(current_notch), _soundName, true);
+	//_loopThread = new D3LoopThread(this, notch_sounds.get(current_notch), _soundName, true);
 	_loopThread.startEngine(start_buffer);
     }
 
@@ -241,6 +247,8 @@ class Diesel3Sound extends EngineSound {
 	    stop_buffer = D3Notch.getBuffer(vf, fn, "Engine_shutdown", "Engine_Shutdown");
 	}
 
+	// Kick-start the loop thread.
+	this.startThread();
     }
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Diesel3Sound.class.getName());
@@ -424,11 +432,29 @@ class D3LoopThread extends Thread {
 
     public boolean isRunning() { return(is_running); }
 
-    public void setThrottle(float t) { _throttle = t; }
+    public void setThrottle(float t) { _throttle = t; log.debug("Throttle set: " + _throttle); }
 
     public void startEngine(AudioBuffer start_buf) {
 	_sound.unqueueBuffers();
-	_sound.queueBuffer(start_buf);
+	// Adjust the current notch to match the throttle setting
+	log.debug("Notch = " + _notch.getNotch() + " prev = " + _notch.getPrevNotch() + " next = " + _notch.getNextNotch());
+	if (!_notch.isInLimits(_throttle)) {
+	    // We're out of whack. Find the right notch for the current throttle setting.
+	    while (!_notch.isInLimits(_throttle)) {
+		if (_throttle > _notch.getAccelLimit())
+		    _notch = _parent.getNotch(_notch.getNextNotch());
+		else if (_throttle < _notch.getDecelLimit())
+		    _notch = _parent.getNotch(_notch.getPrevNotch());
+	    }
+	}
+	// Only queue the start buffer if we know we're in the idle notch.
+	// This is indicated by prevNotch == self.
+	if (_notch.getNotch() == _notch.getPrevNotch()) {
+	    _sound.queueBuffer(start_buf);
+	} else {
+	    _sound.queueBuffer(_notch.nextLoopBuffer());
+	}
+	// Follow up with another loop buffer.
 	_sound.queueBuffer(_notch.nextLoopBuffer());
 	is_looping = true;
 	if (!_sound.isPlaying())
@@ -451,10 +477,11 @@ class D3LoopThread extends Thread {
 			_sound.unqueueBuffers();
 		    //log.debug("D3Loop"+ _sound.getName() + "Run loop. Buffers: " + _sound.getSource().numQueuedBuffers());
 		    if (!_notch.isInLimits(_throttle)) {
+			//log.debug("Notch Change! throttle = " + _throttle);
 			changeNotch();
 		    }
 		    if (_sound.getSource().numQueuedBuffers() < 2) {
-			log.debug("D3Loop"+ _sound.getName() + "Buffer count low (" + _sound.getSource().numQueuedBuffers() + ").  Adding buffer.");
+			log.debug("D3Loop"+ _sound.getName() + "Buffer count low (" + _sound.getSource().numQueuedBuffers() + ").  Adding buffer. Throttle = " + _throttle);
 			AudioBuffer b = _notch.nextLoopBuffer();
 			log.debug("D3Loop"+ _sound.getName() + "Loop: Adding buffer " + b.getSystemName());
 			_sound.queueBuffer(b);
@@ -469,7 +496,7 @@ class D3LoopThread extends Thread {
 			_sound.unqueueBuffers();
 		    if (is_dying && (_sound.getSource().getState() != Audio.STATE_PLAYING)) {
 			_sound.stop(); // good reason to get rid of SoundBite.is_playing variable!
-			return;
+			//return;
 		    }
 		}
 		sleep(100);

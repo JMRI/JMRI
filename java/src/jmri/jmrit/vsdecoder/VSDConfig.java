@@ -27,6 +27,7 @@ package jmri.jmrit.vsdecoder;
  */
 
 import jmri.LocoAddress;
+import jmri.DccLocoAddress;
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -67,6 +68,10 @@ public class VSDConfig {
 
     public LocoAddress getLocoAddress() {
 	return(address);
+    }
+
+    public DccLocoAddress getDccAddress() {
+	return(new DccLocoAddress(address.getNumber(), address.getProtocol()));
     }
 
     public float getVolume() {
