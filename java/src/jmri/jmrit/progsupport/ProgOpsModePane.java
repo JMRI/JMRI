@@ -39,10 +39,10 @@ public class ProgOpsModePane extends javax.swing.JPanel {
         mModeGroup = group;
 
         // configure items for GUI
-        mOpsByteButton.setText("Ops Byte Mode");
+        mOpsByteButton.setText(Bundle.getString("OpsByteMode"));
         mModeGroup.add(mOpsByteButton);
-        mAddrField.setToolTipText("Enter the decoder numeric address");
-        mLongAddrCheck.setToolTipText("If checked, use a long address, otherwise use a short address");
+        mAddrField.setToolTipText(Bundle.getString("ToolTipEnterDecoderAddress"));
+        mLongAddrCheck.setToolTipText(Bundle.getString("ToolTipCheckedLongAddress"));
 
         // if a programmer is available, disable buttons for unavailable modes
         if (InstanceManager.programmerManagerInstance()!=null) {
