@@ -35,10 +35,10 @@ public class LogixLoadAction extends AbstractAction {
                                                   JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (retval != 0) {
             InstanceManager.logixManagerInstance().setLoadDisabled(false);
-            log.error("Requested load Logixs enabled via Debug menu.");
+            log.info("Requested load Logixs enabled via Debug menu.");
         } else {
             InstanceManager.logixManagerInstance().setLoadDisabled(true);
-            log.error("Requested load Logixs diabled via Debug menu.");
+            log.info("Requested load Logixs diabled via Debug menu.");
         }
 
     }
