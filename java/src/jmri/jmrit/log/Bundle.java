@@ -1,11 +1,11 @@
 // Bundle.java
 
-package jmri.jmrit.roster;
+package jmri.jmrit.log;
 
 /**
  * Provides standard access for resource bundles in a package.
  * 
- * Convention pattern is to provide a subclass of the same name
+ * Convention pattern is to provide a subclass of this name
  * in each package, working off the local resource bundle name.
  *
  * <hr>
@@ -28,7 +28,7 @@ package jmri.jmrit.roster;
  */
 public class Bundle extends jmri.jmrit.Bundle {
 
-    protected static Bundle b = new Bundle("jmri.jmrit.roster.JmritRosterBundle");
+    protected static Bundle b = new Bundle(); // No local bundle
 
     /**
      * Provides access to a string for a given 

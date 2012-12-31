@@ -2,8 +2,6 @@
 
 package jmri.jmrit.roster.swing;
 
-import java.util.ResourceBundle;
-
 /**
  * Provides standard access for resource bundles in a package.
  * 

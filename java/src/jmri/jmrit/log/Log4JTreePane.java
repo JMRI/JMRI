@@ -4,7 +4,6 @@ package jmri.jmrit.log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -33,7 +32,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
      */
     @Override
     public String getTitle() { 
-        return ResourceBundle.getBundle("jmri.jmrit.JmritDebugBundle").getString("MenuItemLogTreeAction"); 
+        return Bundle.getString("MenuItemLogTreeAction"); 
     }
     
     /**

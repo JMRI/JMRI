@@ -21,8 +21,6 @@ public class LogixLoadAction extends AbstractAction {
         super(s);
         _who = who;
     }
-
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.JmritDebugBundle");
 	
     JPanel _who;
 
@@ -32,7 +30,7 @@ public class LogixLoadAction extends AbstractAction {
         Object[] options = {"Disable",
                     "Enable"};
 
-        int retval = JOptionPane.showOptionDialog(_who, rb.getString("LogixDisabledMessage"), rb.getString("DebugOption"),
+        int retval = JOptionPane.showOptionDialog(_who, Bundle.getString("LogixDisabledMessage"), Bundle.getString("DebugOption"),
                                                   JOptionPane.YES_NO_OPTION,
                                                   JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
         if (retval != 0) {

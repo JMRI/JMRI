@@ -2,8 +2,6 @@
 
 package jmri;
 
-import java.util.ResourceBundle;
-
 /**
  * Provides standard access for resource bundles in a package.
  * 
@@ -61,7 +59,7 @@ public class Bundle {
      */
     public String handleGetString(String key) {
         if (bundleName() != null) {
-            ResourceBundle rb = ResourceBundle.getBundle(bundleName());
+            java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle(bundleName());
             if (rb.containsKey(key)) return rb.getString(key);
             else return retry(key);
         } else {  // case of no local bundle

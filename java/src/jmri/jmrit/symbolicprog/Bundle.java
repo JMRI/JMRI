@@ -2,8 +2,6 @@
 
 package jmri.jmrit.symbolicprog;
 
-import java.util.ResourceBundle;
-
 /**
  * Provides standard access for resource bundles in a package.
  * 
