@@ -14,13 +14,35 @@ import junit.framework.TestSuite;
  */
 public class BundleTest extends TestCase {
 
-    public void testGoodKeys() {
+    public void testGoodKeysString() {
         Assert.assertEquals("Tools", Bundle.getString("MenuTools"));        
         Assert.assertEquals("Turnout", Bundle.getString("BeanNameTurnout"));        
     } 
-    public void testBadKey() {
+    public void testBadKeyString() {
         try {
             Bundle.getString("FFFFFTTTTTTT");   
+        } catch (java.util.MissingResourceException e) { return;} // OK
+        Assert.fail("No exception thrown");     
+    }
+
+    public void testGoodKeysMessage() {
+        Assert.assertEquals("Tools", Bundle.getMessage("MenuTools"));        
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));        
+    } 
+    public void testBadKeyMessage() {
+        try {
+            Bundle.getMessage("FFFFFTTTTTTT");   
+        } catch (java.util.MissingResourceException e) { return;} // OK
+        Assert.fail("No exception thrown");     
+    }
+
+    public void testGoodKeysMessageArg() {
+        Assert.assertEquals("Tools", Bundle.getMessage("MenuTools", new Object[]{}));        
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));        
+    } 
+    public void testBadKeyMessageArg() {
+        try {
+            Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});   
         } catch (java.util.MissingResourceException e) { return;} // OK
         Assert.fail("No exception thrown");     
     }

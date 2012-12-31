@@ -47,6 +47,12 @@ public class Bundle {
     static String getString(String key) {
         return b.handleGetString(key);
     }
+    static String getMessage(String key) {
+        return b.handleGetMessage(key);
+    }
+    static String getMessage(String key, Object[] subs) {
+        return b.handleGetMessage(key, subs);
+    }
 
    /**
      * This method handles the inheritance tree.
@@ -65,6 +71,14 @@ public class Bundle {
         } else {  // case of no local bundle
             return retry(key);
         }
+    }
+    
+    public String handleGetMessage(String key) {
+        return handleGetString(key);
+    }
+    
+    public String handleGetMessage(String key, Object[] subs) {
+        return java.text.MessageFormat.format(handleGetString(key), subs);
     }
     
     // the following is different from the method in subclasses because

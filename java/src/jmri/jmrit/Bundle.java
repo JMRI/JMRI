@@ -41,7 +41,13 @@ public class Bundle extends jmri.Bundle {
     static String getString(String key) {
         return b.handleGetString(key);
     }
-    
+    static String getMessage(String key) {
+        return b.handleGetMessage(key);
+    }
+    static String getMessage(String key, Object[] subs) {
+        return b.handleGetMessage(key, subs);
+    }
+   
     protected Bundle(String name) { this.name = name;}   
     protected Bundle() {} 
     @Override

@@ -24,6 +24,26 @@ public class BundleTest extends TestCase {
         Assert.fail("No exception thrown");     
     }
 
+    public void testGoodKeyMessage() {
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));        
+    } 
+    public void testBadKeyMessage() {
+        try {
+            Bundle.getMessage("FFFFFTTTTTTT");   
+        } catch (java.util.MissingResourceException e) { return;} // OK
+        Assert.fail("No exception thrown");     
+    }
+
+    public void testGoodKeyMessageArg() {
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));        
+    } 
+    public void testBadKeyMessageArg() {
+        try {
+            Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});   
+        } catch (java.util.MissingResourceException e) { return;} // OK
+        Assert.fail("No exception thrown");     
+    }
+
     // from here down is testing infrastructure
 
     public BundleTest(String s) {
