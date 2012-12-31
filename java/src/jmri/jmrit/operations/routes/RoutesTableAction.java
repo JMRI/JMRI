@@ -4,8 +4,6 @@ package jmri.jmrit.operations.routes;
 
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
@@ -17,7 +15,6 @@ import javax.swing.AbstractAction;
  * @version         $Revision$
  */
 public class RoutesTableAction extends AbstractAction {
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 
     public RoutesTableAction(String s) {
     	super(s);

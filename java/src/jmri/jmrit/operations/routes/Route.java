@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.locations.Location;
@@ -23,8 +21,6 @@ import org.jdom.Element;
  */
 public class Route implements java.beans.PropertyChangeListener {
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
-
 	protected String _id = "";
 	protected String _name = "";
 	protected String _comment = "";
@@ -42,9 +38,9 @@ public class Route implements java.beans.PropertyChangeListener {
 	public static final String LISTCHANGE_CHANGED_PROPERTY = "routeListChange";
 	public static final String DISPOSE = "dispose";
 	
-	public static final String OKAY = rb.getString("Okay");
-	public static final String ORPHAN = rb.getString("Orphan");
-	public static final String ERROR = rb.getString("Error");
+	public static final String OKAY = Bundle.getString("Okay");
+	public static final String ORPHAN = Bundle.getString("Orphan");
+	public static final String ERROR = Bundle.getString("Error");
 	
 
 	public Route(String id, String name) {

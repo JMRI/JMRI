@@ -17,7 +17,6 @@ import java.awt.Point;
 import java.awt.event.ComponentListener;
 import java.text.MessageFormat;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -37,8 +36,6 @@ import javax.swing.SpinnerNumberModel;
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
-
 	RouteManager routeManager = RouteManager.instance();
 	
 	// labels
@@ -56,9 +53,9 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	// check boxes
 
 	// major buttons
-	JButton placeButton = new JButton(rb.getString("PlaceTestIcon"));
-	JButton applyButton = new JButton(rb.getString("UpdateRoutes"));
-	JButton saveButton = new JButton(rb.getString("Save"));
+	JButton placeButton = new JButton(Bundle.getString("PlaceTestIcon"));
+	JButton applyButton = new JButton(Bundle.getString("UpdateRoutes"));
+	JButton saveButton = new JButton(Bundle.getString("Save"));
 	
 	
 	// combo boxes
@@ -81,24 +78,24 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	TrainIcon _tIonSouth;
     
     public SetTrainIconPositionFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString("MenuSetTrainIcon"));
+        super(Bundle.getString("MenuSetTrainIcon"));
         
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
         // set tool tips
-        placeButton.setToolTipText(rb.getString("TipPlaceButton") +" "+ Setup.getPanelName());
-        applyButton.setToolTipText(rb.getString("TipApplyAllButton"));
-        saveButton.setToolTipText(rb.getString("TipSaveButton"));
+        placeButton.setToolTipText(Bundle.getString("TipPlaceButton") +" "+ Setup.getPanelName());
+        applyButton.setToolTipText(Bundle.getString("TipApplyAllButton"));
+        saveButton.setToolTipText(Bundle.getString("TipSaveButton"));
 	    
         //      Set up the panels
         JPanel pLocation = new JPanel();
-        pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
+        pLocation.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Location")));
         pLocation.add(locationBox);
         
         JPanel pEast = new JPanel();
         pEast.setLayout(new GridBagLayout());
-        pEast.setBorder(BorderFactory.createTitledBorder(rb.getString("EastTrainIcon")));
+        pEast.setBorder(BorderFactory.createTitledBorder(Bundle.getString("EastTrainIcon")));
         addItem(pEast, textEastX, 0, 0);
         addItem(pEast, spinTrainIconEastX, 1, 0);
         addItem(pEast, textEastY, 2, 0);
@@ -106,7 +103,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         
         JPanel pWest = new JPanel();
         pWest.setLayout(new GridBagLayout());
-        pWest.setBorder(BorderFactory.createTitledBorder(rb.getString("WestTrainIcon")));
+        pWest.setBorder(BorderFactory.createTitledBorder(Bundle.getString("WestTrainIcon")));
         addItem(pWest, textWestX, 0, 0);
         addItem(pWest, spinTrainIconWestX, 1, 0);
         addItem(pWest, textWestY, 2, 0);
@@ -114,7 +111,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         
         JPanel pNorth = new JPanel();
         pNorth.setLayout(new GridBagLayout());
-        pNorth.setBorder(BorderFactory.createTitledBorder(rb.getString("NorthTrainIcon")));
+        pNorth.setBorder(BorderFactory.createTitledBorder(Bundle.getString("NorthTrainIcon")));
         addItem(pNorth, textNorthX, 0, 0);
         addItem(pNorth, spinTrainIconNorthX, 1, 0);
         addItem(pNorth, textNorthY, 2, 0);
@@ -122,7 +119,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         
         JPanel pSouth = new JPanel();
         pSouth.setLayout(new GridBagLayout());
-        pSouth.setBorder(BorderFactory.createTitledBorder(rb.getString("SouthTrainIcon")));
+        pSouth.setBorder(BorderFactory.createTitledBorder(Bundle.getString("SouthTrainIcon")));
         addItem(pSouth, textSouthX, 0, 0);
         addItem(pSouth, spinTrainIconSouthX, 1, 0);
         addItem(pSouth, textSouthY, 2, 0);
@@ -183,7 +180,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
     	// check to see if a location has been selected 
     	if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")){
-    		JOptionPane.showMessageDialog(null, rb.getString("SelectLocationToEdit"), rb.getString("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, Bundle.getString("SelectLocationToEdit"), Bundle.getString("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
     		return;
     	}
     	Location l = (Location)locationBox.getSelectedItem();
@@ -195,8 +192,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     	if (ae.getSource() == applyButton){
     		// update all routes?
     		int value = JOptionPane.showConfirmDialog(null,
-    				MessageFormat.format(rb.getString("UpdateTrainIcon"),new Object[]{l.getName()}),
-    				rb.getString("DoYouWantAllRoutes"), 
+    				MessageFormat.format(Bundle.getString("UpdateTrainIcon"),new Object[]{l.getName()}),
+    				Bundle.getString("DoYouWantAllRoutes"), 
 					JOptionPane.YES_NO_OPTION);
     		if (value == JOptionPane.YES_OPTION){
     			saveSpinnerValues(l);
@@ -205,8 +202,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     	}
     	if (ae.getSource() == saveButton){
    	  		int value = JOptionPane.showConfirmDialog(null,
-	  				MessageFormat.format(rb.getString("UpdateTrainIcon"),new Object[]{l.getName()}),
-    				rb.getString("UpdateDefaults"), 
+	  				MessageFormat.format(Bundle.getString("UpdateTrainIcon"),new Object[]{l.getName()}),
+    				Bundle.getString("UpdateDefaults"), 
 					JOptionPane.YES_NO_OPTION);
 	   		if (value == JOptionPane.YES_OPTION)
 	   			saveSpinnerValues(l);
@@ -306,15 +303,15 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 			return;
 		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
 		if (editor == null) {
-			JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("LoadPanel"), new Object[]{Setup.getPanelName()}),
-					rb.getString("PanelNotFound"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getString("LoadPanel"), new Object[]{Setup.getPanelName()}),
+					Bundle.getString("PanelNotFound"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
         Location l = (Location)locationBox.getSelectedItem();
 		if (l != null) { 
 			// East icon
 			if ((Setup.getTrainDirection() & Setup.EAST) > 0){
-				_tIonEast = editor.addTrainIcon(rb.getString("East"));
+				_tIonEast = editor.addTrainIcon(Bundle.getString("East"));
 				_tIonEast.getTooltip().setText(l.getName());
 				_tIonEast.getTooltip().setBackgroundColor(Color.white);
 				_tIonEast.setLocoColor(Setup.getTrainIconColorEast());
@@ -323,7 +320,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 			}
 			// West icon
 			if ((Setup.getTrainDirection() & Setup.WEST) > 0){
-				_tIonWest = editor.addTrainIcon(rb.getString("West"));
+				_tIonWest = editor.addTrainIcon(Bundle.getString("West"));
 				_tIonWest.getTooltip().setText(l.getName());
 				_tIonWest.getTooltip().setBackgroundColor(Color.white);
 				_tIonWest.setLocoColor(Setup.getTrainIconColorWest());
@@ -332,7 +329,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 			}
 			// North icon
 			if ((Setup.getTrainDirection() & Setup.NORTH) > 0){
-				_tIonNorth = editor.addTrainIcon(rb.getString("North"));
+				_tIonNorth = editor.addTrainIcon(Bundle.getString("North"));
 				_tIonNorth.getTooltip().setText(l.getName());
 				_tIonNorth.getTooltip().setBackgroundColor(Color.white);
 				_tIonNorth.setLocoColor(Setup.getTrainIconColorNorth());
@@ -341,7 +338,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 			}
 			// South icon
 			if ((Setup.getTrainDirection() & Setup.SOUTH) > 0){
-				_tIonSouth = editor.addTrainIcon(rb.getString("South"));
+				_tIonSouth = editor.addTrainIcon(Bundle.getString("South"));
 				_tIonSouth.getTooltip().setText(l.getName());
 				_tIonSouth.getTooltip().setBackgroundColor(Color.white);
 				_tIonSouth.setLocoColor(Setup.getTrainIconColorSouth());

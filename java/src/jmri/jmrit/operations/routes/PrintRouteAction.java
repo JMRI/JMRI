@@ -11,7 +11,6 @@ import java.text.MessageFormat;
 import javax.swing.*;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 
@@ -29,8 +28,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  */
 public class PrintRouteAction  extends AbstractAction {
 	
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
-	String newLine = "\n";
+	static final String newLine = "\n";
 	private static final int MAX_NAME_LENGTH = 20;
 
     public PrintRouteAction(String actionName, boolean preview, Route route) {
@@ -57,7 +55,7 @@ public class PrintRouteAction  extends AbstractAction {
     	// obtain a HardcopyWriter to do this
     	HardcopyWriter writer = null;
     	try {
-    		writer = new HardcopyWriter(mFrame, MessageFormat.format(rb.getString("TitleRoute"), new Object[] {route.getName()}), 10, .5, .5, .5, .5, isPreview);
+    		writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getString("TitleRoute"), new Object[] {route.getName()}), 10, .5, .5, .5, .5, isPreview);
     	} catch (HardcopyWriter.PrintCanceledException ex) {
     		log.debug("Print cancelled");
     		return;
@@ -70,16 +68,16 @@ public class PrintRouteAction  extends AbstractAction {
     protected void printRoute(HardcopyWriter writer, Route route) {
     	try {
     		writer.write(route.getComment()+newLine);
-        	String s = rb.getString("Location") 
-        	+ "\t    " + rb.getString("Direction") 
-        	+ " " + rb.getString("MaxMoves") 
-        	+ " " + rb.getString("Pickups")
-        	+ " " + rb.getString("Drops")
-        	+ " " + rb.getString("Wait")
-        	+ "\t" + rb.getString("Length")     	
-        	+ "\t" + rb.getString("Grade")
-        	+ "\t" + rb.getString("X")
-        	+ "    " + rb.getString("Y")
+        	String s = Bundle.getString("Location") 
+        	+ "\t    " + Bundle.getString("Direction") 
+        	+ " " + Bundle.getString("MaxMoves") 
+        	+ " " + Bundle.getString("Pickups")
+        	+ " " + Bundle.getString("Drops")
+        	+ " " + Bundle.getString("Wait")
+        	+ "\t" + Bundle.getString("Length")     	
+        	+ "\t" + Bundle.getString("Grade")
+        	+ "\t" + Bundle.getString("X")
+        	+ "    " + Bundle.getString("Y")
         	+ newLine;
         	writer.write(s);
     		List<String> locations = route.getLocationsBySequenceList();
@@ -97,8 +95,8 @@ public class PrintRouteAction  extends AbstractAction {
     			s = name 
     			+ "\t" + rl.getTrainDirectionString() 
     			+ "\t" + rl.getMaxCarMoves()
-    			+ "\t" + (rl.canPickup()?rb.getString("yes"):rb.getString("no"))
-    			+ "\t" + (rl.canDrop()?rb.getString("yes"):rb.getString("no"))
+    			+ "\t" + (rl.canPickup()?Bundle.getString("yes"):Bundle.getString("no"))
+    			+ "\t" + (rl.canDrop()?Bundle.getString("yes"):Bundle.getString("no"))
     			+ "\t" + rl.getWait()
     			+ "\t" + rl.getMaxTrainLength()
     			+ "\t" + rl.getGrade()
@@ -107,9 +105,9 @@ public class PrintRouteAction  extends AbstractAction {
     			+ newLine;
     			writer.write(s);		
     		}
-    		s = newLine + rb.getString("Location") 
-        	+ "\t" + rb.getString("DepartTime") 
-        	+ "\t" + rb.getString("Comment")
+    		s = newLine + Bundle.getString("Location") 
+        	+ "\t" + Bundle.getString("DepartTime") 
+        	+ "\t" + Bundle.getString("Comment")
         	+ newLine;
     		writer.write(s);
     		for (int i=0; i<locations.size(); i++){

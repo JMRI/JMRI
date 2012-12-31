@@ -1,10 +1,7 @@
 package jmri.jmrit.operations.routes;
 
-import java.util.ResourceBundle;
-
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-//import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -17,8 +14,6 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 	
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
-
 	protected String _id = "";
 	protected Location _location = null;	// the location in the route
 	protected String _locationId = "";		// the location's id
@@ -50,7 +45,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public static final String SOUTH_DIR = Setup.SOUTH_DIR;
 	
 	public static final String DISPOSE = "dispose";
-	public static final String DELETED = rb.getString("locationDeleted");
+	public static final String DELETED = Bundle.getString("locationDeleted");
 	
 	public static final String DROP_CHANGED_PROPERTY = "dropChange";
 	public static final String PICKUP_CHANGED_PROPERTY = "pickupChange";

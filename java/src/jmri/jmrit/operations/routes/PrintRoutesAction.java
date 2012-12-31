@@ -10,43 +10,44 @@ import java.util.List;
 
 import jmri.jmrit.operations.routes.Route;
 
-
 /**
  * Action to print all of the routes used in operations.
- *
+ * 
  * @author Daniel Boudreau Copyright (C) 2012
- * @version     $Revision: 17977 $
+ * @version $Revision: 17977 $
  */
-public class PrintRoutesAction  extends PrintRouteAction {
+public class PrintRoutesAction extends PrintRouteAction {
 
-    public PrintRoutesAction(String actionName, boolean preview) {
-        super(actionName, preview, null);
-    }
-    
-    public void actionPerformed(ActionEvent e) {
-    	log.debug("Print all routes");   
-    	// obtain a HardcopyWriter to do this
-    	HardcopyWriter writer = null;
-    	try {
-    		writer = new HardcopyWriter(mFrame, MessageFormat.format(rb.getString("TitleRoutesTable"), new Object[] {}), 10, .5, .5, .5, .5, isPreview);
-    	} catch (HardcopyWriter.PrintCanceledException ex) {
-    		log.debug("Print cancelled");
-    		return;
-    	}
-    	RouteManager routeManager = RouteManager.instance();
-    	List<String> routes = routeManager.getRoutesByNameList();
-    	for (int i=0; i<routes.size(); i++){
-    		Route route = routeManager.getRouteById(routes.get(i));		
-    		try {
-    			writer.write(route.getName()+newLine);
-    			printRoute(writer, route);
-    			if (i != routes.size()-1)
-    				writer.write('\f');
-    		} catch (IOException e1) {
-    			log.error("Exception in print routes");
+	public PrintRoutesAction(String actionName, boolean preview) {
+		super(actionName, preview, null);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		log.debug("Print all routes");
+		// obtain a HardcopyWriter to do this
+		HardcopyWriter writer = null;
+		try {
+			writer = new HardcopyWriter(mFrame, MessageFormat.format(
+					Bundle.getString("TitleRoutesTable"), new Object[] {}), 10, .5, .5, .5, .5,
+					isPreview);
+		} catch (HardcopyWriter.PrintCanceledException ex) {
+			log.debug("Print cancelled");
+			return;
+		}
+		RouteManager routeManager = RouteManager.instance();
+		List<String> routes = routeManager.getRoutesByNameList();
+		for (int i = 0; i < routes.size(); i++) {
+			Route route = routeManager.getRouteById(routes.get(i));
+			try {
+				writer.write(route.getName() + newLine);
+				printRoute(writer, route);
+				if (i != routes.size() - 1)
+					writer.write('\f');
+			} catch (IOException e1) {
+				log.error("Exception in print routes");
 			}
-    	}
-       	// and force completion of the printing
-    	writer.close();    	
-    }
+		}
+		// and force completion of the printing
+		writer.close();
+	}
 }
