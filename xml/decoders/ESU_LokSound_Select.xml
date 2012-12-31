@@ -1536,8 +1536,8 @@
         <label>Constant Brake Mode - Brake Distance</label>
       </variable>
       <!-- Indexed variables -->
-      <constant label="PICV" default="31" comment="CV used for Primary Index"/>
-      <constant label="SICV" default="32" comment="CV used for Secondary Index"/>
+      <constant item="PICV" default="31" comment="CV used for Primary Index"/>
+      <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
       <!-- Light output config -->
       <ivariable label="Headlight Mode" CVname="259.0" CV="259" PI="16" SI="0" default="2" item="Function F0F effect generated" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/esu/v4lightEnum.xml"/>
