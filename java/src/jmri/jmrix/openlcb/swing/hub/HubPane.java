@@ -84,7 +84,13 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
                 if (m.source == null) return;  // was from this
                 // process and forward m.line;
                 GridConnectReply msg = new GridConnectReply();
-                byte[] bytes = m.line.getBytes();
+                byte[] bytes;
+                try {
+                    bytes = m.line.getBytes("US-ASCII");  // GC adapters use ASCII // NOI18N
+                } catch (java.io.UnsupportedEncodingException e) {
+                    log.error("Cannot proceed with GC input message since US-ASCII not supported");
+                    return;
+                }
                 for (int i = 0; i<m.line.length(); i++) {
                     msg.setElement(i, bytes[i]);
                 }
