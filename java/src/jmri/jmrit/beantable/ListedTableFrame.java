@@ -35,8 +35,6 @@ public class ListedTableFrame extends BeanTableFrame {
     
     
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
-    ResourceBundle rbs = ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle");
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     ActionJList actionList;
     
     public boolean isMultipleInstances() { return true; }
@@ -56,7 +54,7 @@ public class ListedTableFrame extends BeanTableFrame {
     
 
     public ListedTableFrame(){
-        this(rbean.getString("TitleListedTable"));
+        this(Bundle.getString("TitleListedTable"));
     }
     
     public ListedTableFrame(String s) {
@@ -68,23 +66,23 @@ public class ListedTableFrame extends BeanTableFrame {
         if (!init){
             /*Add the default tables to the static list array, this should only be done
             once when first loaded*/
-            addTable("jmri.jmrit.beantable.TurnoutTableTabAction", rbs.getString("MenuItemTurnoutTable"), false);
-            addTable("jmri.jmrit.beantable.SensorTableTabAction", rbs.getString("MenuItemSensorTable"), false);
-            addTable("jmri.jmrit.beantable.LightTableTabAction", rbs.getString("MenuItemLightTable"), false);
-            addTable("jmri.jmrit.beantable.SignalHeadTableAction", rbs.getString("MenuItemSignalTable"), true);
-            addTable("jmri.jmrit.beantable.SignalMastTableAction", rbs.getString("MenuItemSignalMastTable"), true);
-            addTable("jmri.jmrit.beantable.SignalGroupTableAction", rbs.getString("MenuItemSignalGroupTable"), true);
-            addTable("jmri.jmrit.beantable.SignalMastLogicTableAction",  rbs.getString("MenuItemSignalMastLogicTable"), true);
-            addTable("jmri.jmrit.beantable.ReporterTableAction", rbs.getString("MenuItemReporterTable"), true);
-            addTable("jmri.jmrit.beantable.MemoryTableAction", rbs.getString("MenuItemMemoryTable"), true);
-            addTable("jmri.jmrit.beantable.RouteTableAction", rbs.getString("MenuItemRouteTable"), true);
-            addTable("jmri.jmrit.beantable.LRouteTableAction", rbs.getString("MenuItemLRouteTable"), true);
-            addTable("jmri.jmrit.beantable.LogixTableAction", rbs.getString("MenuItemLogixTable"), true);
-            addTable("jmri.jmrit.beantable.BlockTableAction", rbs.getString("MenuItemBlockTable"), true);
-            addTable("jmri.jmrit.beantable.SectionTableAction", rbs.getString("MenuItemSectionTable"), true);
-            addTable("jmri.jmrit.beantable.TransitTableAction", rbs.getString("MenuItemTransitTable"), true);
-            addTable("jmri.jmrit.beantable.AudioTableAction",  rbs.getString("MenuItemAudioTable"), false);
-            addTable("jmri.jmrit.beantable.IdTagTableAction", rbs.getString("MenuItemIdTagTable"), true);
+            addTable("jmri.jmrit.beantable.TurnoutTableTabAction", Bundle.getString("MenuItemTurnoutTable"), false);
+            addTable("jmri.jmrit.beantable.SensorTableTabAction", Bundle.getString("MenuItemSensorTable"), false);
+            addTable("jmri.jmrit.beantable.LightTableTabAction", Bundle.getString("MenuItemLightTable"), false);
+            addTable("jmri.jmrit.beantable.SignalHeadTableAction", Bundle.getString("MenuItemSignalTable"), true);
+            addTable("jmri.jmrit.beantable.SignalMastTableAction", Bundle.getString("MenuItemSignalMastTable"), true);
+            addTable("jmri.jmrit.beantable.SignalGroupTableAction", Bundle.getString("MenuItemSignalGroupTable"), true);
+            addTable("jmri.jmrit.beantable.SignalMastLogicTableAction",  Bundle.getString("MenuItemSignalMastLogicTable"), true);
+            addTable("jmri.jmrit.beantable.ReporterTableAction", Bundle.getString("MenuItemReporterTable"), true);
+            addTable("jmri.jmrit.beantable.MemoryTableAction", Bundle.getString("MenuItemMemoryTable"), true);
+            addTable("jmri.jmrit.beantable.RouteTableAction", Bundle.getString("MenuItemRouteTable"), true);
+            addTable("jmri.jmrit.beantable.LRouteTableAction", Bundle.getString("MenuItemLRouteTable"), true);
+            addTable("jmri.jmrit.beantable.LogixTableAction", Bundle.getString("MenuItemLogixTable"), true);
+            addTable("jmri.jmrit.beantable.BlockTableAction", Bundle.getString("MenuItemBlockTable"), true);
+            addTable("jmri.jmrit.beantable.SectionTableAction", Bundle.getString("MenuItemSectionTable"), true);
+            addTable("jmri.jmrit.beantable.TransitTableAction", Bundle.getString("MenuItemTransitTable"), true);
+            addTable("jmri.jmrit.beantable.AudioTableAction",  Bundle.getString("MenuItemAudioTable"), false);
+            addTable("jmri.jmrit.beantable.IdTagTableAction", Bundle.getString("MenuItemIdTagTable"), true);
             init=true;
         }
     }
@@ -160,7 +158,7 @@ public class ListedTableFrame extends BeanTableFrame {
     
     JPanel errorPanel(String text){
         JPanel error = new JPanel();
-        error.add(new JLabel(rbean.getString("ErrorAddingTable") + " " + text), BorderLayout.CENTER);
+        error.add(new JLabel(Bundle.getString("ErrorAddingTable") + " " + text), BorderLayout.CENTER);
         return error;
     }
     
@@ -383,7 +381,7 @@ public class ListedTableFrame extends BeanTableFrame {
             
             dataPanel.add(bottomBox, BorderLayout.SOUTH);
             if(tableAction.includeAddButton()){
-                JButton addButton = new JButton(rbean.getString("ButtonAdd"));
+                JButton addButton = new JButton(Bundle.getString("ButtonAdd"));
                 addToBottomBox(addButton);
                 addButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {

@@ -44,7 +44,7 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
     //"base" variables used to hold original gifs, other variables used with scaled images
 
     public NixieClockFrame() {
-        super(java.util.ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle").getString("MenuItemNixieClock"));
+        super(Bundle.getString("MenuItemNixieClock"));
         
         clock = InstanceManager.timebaseInstance();
 

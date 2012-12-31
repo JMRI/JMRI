@@ -80,7 +80,7 @@ public class RouteController extends AbstractController implements PropertyChang
 
         StringBuilder labels = new StringBuilder("PRT");    //  Panel Turnout Titles
 
-        labels.append("]\\[" + ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle").getString("MenuItemRouteTable") + "}|{Route");
+        labels.append("]\\[" + Bundle.getString("MenuItemRouteTable") + "}|{Route");
         labels.append("]\\[" + "Active" + "}|{2");
         labels.append("]\\[" + "Inactive" + "}|{4");
 

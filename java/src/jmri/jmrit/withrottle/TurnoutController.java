@@ -91,7 +91,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
 
         StringBuilder labels = new StringBuilder("PTT");    //  Panel Turnout Titles
 
-        labels.append("]\\[" + ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle").getString("MenuItemTurnoutTable") + "}|{Turnout");
+        labels.append("]\\[" + Bundle.getString("MenuItemTurnoutTable") + "}|{Turnout");
         labels.append("]\\[" + manager.getClosedText() + "}|{2");
         labels.append("]\\[" + manager.getThrownText() + "}|{4");
 

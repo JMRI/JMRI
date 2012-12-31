@@ -47,7 +47,7 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
     //"base" variables used to hold original gifs, other variables used with scaled images
 
     public LcdClockFrame() {
-        super(java.util.ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle").getString("MenuItemLcdClock"));
+        super(Bundle.getString("MenuItemLcdClock"));
         
         clock = InstanceManager.timebaseInstance();
 
