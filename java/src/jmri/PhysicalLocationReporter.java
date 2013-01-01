@@ -36,7 +36,6 @@ public interface PhysicalLocationReporter {
 
     public Direction getDirection(String s);
 
-    @Deprecated
     public PhysicalLocation getPhysicalLocation();
 
     public PhysicalLocation getPhysicalLocation(String s);
