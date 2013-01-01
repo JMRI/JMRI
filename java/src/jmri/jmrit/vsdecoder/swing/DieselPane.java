@@ -39,8 +39,6 @@ import jmri.jmrit.vsdecoder.EnginePane;
 @SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
     
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
-
     static final int THROTTLE_MIN = 1;
     static final int THROTTLE_MAX = 8;
     static final int THROTTLE_INIT = 1;
@@ -80,15 +78,15 @@ public class DieselPane extends EnginePane {
 	
 	//Set up the throttle spinner
 	throttle_spinner = new JSpinner(new SpinnerNumberModel(THROTTLE_INIT, THROTTLE_MIN, THROTTLE_MAX, 1));
-	throttle_spinner.setToolTipText(rb.getString("DP_ThrottleSpinnerToolTip"));
+	throttle_spinner.setToolTipText(Bundle.getString("ToolTipDP_ThrottleSpinner"));
 	throttle_spinner.setEnabled(false);
 
 	this.add(throttle_spinner);
 
 	// Setup the start button
 	start_button = new JToggleButton();
-	start_button.setText("Engine Start");
-	start_button.setToolTipText(rb.getString("DP_StartButtonToolTip"));
+	start_button.setText(Bundle.getString("ButtonEngineStart"));
+	start_button.setToolTipText(Bundle.getString("ToolTipDP_StartButton"));
 	start_button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    startButtonChange(e);
@@ -101,14 +99,14 @@ public class DieselPane extends EnginePane {
 
 	/** Respond to a throttle change. Basically, doesn't do anything */
 	public void throttleChange(ChangeEvent e) {
-		firePropertyChangeEvent(new PropertyChangeEvent(this, "throttle", throttle_setting,
-				throttle_spinner.getModel().getValue()));
-		throttle_setting = (Integer) throttle_spinner.getModel().getValue();
+	    firePropertyChangeEvent(new PropertyChangeEvent(this, "throttle", throttle_setting, // NOI18N
+							    throttle_spinner.getModel().getValue()));
+	    throttle_setting = (Integer) throttle_spinner.getModel().getValue();
 	}
 
     /** Respond to a start button press */
     public void startButtonChange(ActionEvent e) {
-	firePropertyChangeEvent(new PropertyChangeEvent(this, "start",
+	firePropertyChangeEvent(new PropertyChangeEvent(this, "start",  // NOI18N
 							engine_started, 
 							start_button.isSelected()));
 	engine_started = start_button.isSelected();
