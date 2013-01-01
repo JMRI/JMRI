@@ -945,7 +945,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     @Override
     public synchronized void message(CanMessage m) {  // receive a message and log it
         nextLine("sent: "+m.toString()+"\n",
-                "ID:"+CbusMessage.getId(m)+ " "+(m.isRtr() ? "R " : "N ")+decode(m)+" ["+CbusMessage.toAddress(m)+"]\n",
+                "ID:"+CbusMessage.getId(m)+ " "+(m.isRtr() ? "R " : "N ")+decode(m, m.isExtended(), m.getHeader())+" ["+CbusMessage.toAddress(m)+"]\n",
                 "Dyn Pri:"+CbusMessage.getPri(m)/4+" Min Pri:"+(CbusMessage.getPri(m)&3),
                 (_filterFrame != null) ? _filterFrame.filter(m) : -1);
         sentCountField.setText(Integer.toString(++_sent));
@@ -971,7 +971,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             }
         }
         nextLine("rcvd: "+r.toString()+"\n",
-                "ID:"+CbusMessage.getId(r)+" "+(r.isRtr() ? "R " : "N ")+decode(r)+" ["+CbusMessage.toAddress(r)+"]\n",
+                "ID:"+CbusMessage.getId(r)+" "+(r.isRtr() ? "R " : "N ")+decode(r, r.isExtended(), r.getHeader())+" ["+CbusMessage.toAddress(r)+"]\n",
                 "Dyn Pri:"+CbusMessage.getPri(r)/4+" Min Pri:"+(CbusMessage.getPri(r)&3),
                 (_filterFrame != null) ? _filterFrame.filter(r) : -1);
         rcvdCountField.setText(Integer.toString(++_rcvd));
@@ -983,8 +983,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      * @param msg CanMessage to be decoded
      * Return String decoded message
      */
-    public String decode(AbstractMessage msg) {
-        String str = CbusOpCodes.decode(msg);
+    public String decode(AbstractMessage msg, Boolean ext, int header) {
+        String str = CbusOpCodes.decode(msg, ext, header);
         return (str);
     }
     
