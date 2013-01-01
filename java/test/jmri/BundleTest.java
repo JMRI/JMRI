@@ -36,6 +36,7 @@ public class BundleTest extends TestCase {
 
     public void testGoodKeyMessageArg() {
         Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));        
+        Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));        
     } 
     public void testBadKeyMessageArg() {
         try {

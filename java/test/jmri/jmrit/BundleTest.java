@@ -37,12 +37,13 @@ public class BundleTest extends TestCase {
     }
 
     public void testGoodKeysMessageArg() {
-        Assert.assertEquals("Tools", Bundle.getMessage("MenuTools", new Object[]{}));        
-        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", new Object[]{}));        
+        Assert.assertEquals("Tools", Bundle.getMessage("MenuTools", "foo"));        
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout", "foo"));        
+        Assert.assertEquals("About Test", Bundle.getMessage("TitleAbout", "Test"));        
     } 
     public void testBadKeyMessageArg() {
         try {
-            Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});   
+            Bundle.getMessage("FFFFFTTTTTTT", "foo");   
         } catch (java.util.MissingResourceException e) { return;} // OK
         Assert.fail("No exception thrown");     
     }

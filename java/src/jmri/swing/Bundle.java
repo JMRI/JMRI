@@ -1,6 +1,6 @@
 // Bundle.java
 
-package jmri.jmrit;
+package jmri.swing;
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -28,7 +28,7 @@ package jmri.jmrit;
  */
 public class Bundle extends jmri.Bundle {
 
-    protected static Bundle b = new Bundle("jmri.jmrit.Bundle"); // NOI18N
+    protected static Bundle b = new Bundle();
 
     /**
      * Provides access to a string for a given 

@@ -41,7 +41,7 @@ public class AboutDialog extends JDialog {
         this.pack();
         this.setResizable(false);
         this.setLocationRelativeTo(null); // center on screen
-        this.setTitle(MessageFormat.format(rb.getString("TitleAbout"), Application.getApplicationName()));
+        this.setTitle(Bundle.getMessage("TitleAbout", Application.getApplicationName()));
         log.debug("End constructor");
     }
 
