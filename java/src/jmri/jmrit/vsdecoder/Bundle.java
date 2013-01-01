@@ -1,6 +1,6 @@
 // Bundle.java
 
-package jmri.jmrit.vsdecoder.swing;
+package jmri.jmrit.vsdecoder;
 
 /**
  * Provides standard access for resource bundles in a package.
@@ -24,7 +24,7 @@ package jmri.jmrit.vsdecoder.swing;
 public class Bundle extends jmri.Bundle {
 
 	protected static Bundle b = new Bundle(
-			"jmri.jmrit.vsdecoder.swing.VSDSwingBundle"); // NOI18N
+			"jmri.jmrit.vsdecoder.VSDecoderBundle"); // NOI18N
 
 	/**
 	 * Provides access to a string for a given key from the package resource bundle or parent.

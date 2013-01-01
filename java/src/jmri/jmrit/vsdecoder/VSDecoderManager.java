@@ -35,10 +35,13 @@ import org.jdom.Element;
 import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
+import jmri.Block;
 import jmri.Reporter;
 import jmri.LocoAddress;
 import jmri.PhysicalLocationReporter;
 import jmri.IdTag;
+import jmri.Manager;
+import jmri.NamedBean;
 import jmri.jmrit.vsdecoder.listener.VSDListener;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
@@ -50,9 +53,9 @@ import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 public class VSDecoderManager implements PropertyChangeListener {
 
 
-    private static final ResourceBundle rb = VSDecoderBundle.bundle();
+    //private static final ResourceBundle rb = VSDecoderBundle.bundle();
 
-    private static final String vsd_property_change_name = "VSDecoder Manager";
+    private static final String vsd_property_change_name = "VSDecoder Manager"; //NOI18N
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
 
     HashMap<String, VSDListener> listenerTable; // list of listeners
@@ -90,9 +93,9 @@ public class VSDecoderManager implements PropertyChangeListener {
 	profiletable = new HashMap<String, String>();  // key = profile name, value = path
 	reportertable = new ArrayList<String>();
 	// Get preferences
-	String dirname = XmlFile.prefsDir()+ "vsdecoder" +File.separator;
+	String dirname = XmlFile.prefsDir()+ "vsdecoder" +File.separator; // NOI18N
 	XmlFile.ensurePrefsPresent(dirname);
-	vsdecoderPrefs = new VSDecoderPreferences(dirname+ rb.getString("VSDPreferencesFileName"));
+	vsdecoderPrefs = new VSDecoderPreferences(dirname+ Bundle.getString("VSDPreferencesFileName"));
 	// Listen to ReporterManager for Report List changes
 	setupReporterManagerListener();
 	// Get a Listener (the only one for now)
@@ -113,7 +116,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     private void buildVSDecoderPreferencesFrame() {
-	vsdecoderPreferencesFrame = new JmriJFrame(rb.getString("VSDecoderPreferencesFrameTitle"));
+	vsdecoderPreferencesFrame = new JmriJFrame(Bundle.getString("FieldVSDecoderPreferencesFrameTitle"));
 	VSDecoderPreferencesPane tpP = new VSDecoderPreferencesPane(vsdecoderPrefs);
 	vsdecoderPreferencesFrame.add(tpP);
 	tpP.setContainer(vsdecoderPreferencesFrame);
@@ -140,7 +143,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private String getNextVSDecoderID() {
 	// vsdecoderID initialized to zero, pre-incremented before return...
 	// first returned ID value is 1.
-	return("IAD:VSD:VSDecoderID" + (++vsdecoderID));
+	return("IAD:VSD:VSDecoderID" + (++vsdecoderID)); // NOI18N
     }
 
     // To be used in the future
@@ -148,7 +151,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 	// ListenerID initialized to zero, pre-incremented before return...
 	// first returned ID value is 1.
 	// Prefix is added by the VSDListener constructor
-	return("VSDecoderID" + (++listenerID));
+	return("VSDecoderID" + (++listenerID)); // NOI18N
     }
 
     @Deprecated
@@ -288,7 +291,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     public String getDefaultListenerName() {
-	return(VSDListener.ListenerSysNamePrefix + "ListenerID1");
+	return(VSDListener.ListenerSysNamePrefix + "ListenerID1"); // NOI18N
     }
 
     public ListeningSpot getDefaultListenerLocation() {
@@ -316,8 +319,12 @@ public class VSDecoderManager implements PropertyChangeListener {
 	// Find the addressed decoder
 	// This is a bit hokey.  Need a better way to index decoder by address
 	// OK, this whole LocoAddress vs. DccLocoAddress thing has rendered this SUPER HOKEY.
-	if ((a == null) || (l == null)) {
-	    log.debug("Decoder Address is Null");
+	if (a == null) {
+	    log.warn("Decoder Address is Null");
+	    return;
+	}
+	if (l == null) {
+	    log.warn("PhysicalLocation is Null");
 	    return;
 	}
 	if (l.equals(PhysicalLocation.Origin)) {
@@ -417,10 +424,32 @@ public class VSDecoderManager implements PropertyChangeListener {
 	}
     }
 
+    protected void registerBeanListener(Manager beanManager, String sysName) {
+	NamedBean b = beanManager.getBeanBySystemName(sysName);
+	if (b == null) {
+	    log.debug("No bean by name " + sysName);
+	    return;
+	}
+	jmri.NamedBeanHandle<NamedBean> h = nbhm.getNamedBeanHandle(sysName, b);
+	if (h == null) {
+	    log.debug("no handle for bean " + b.getDisplayName());
+	    return;
+	}
+	// Make sure we aren't already registered.
+	ArrayList<java.beans.PropertyChangeListener> ll = b.getPropertyChangeListeners(h.getName());
+	if (ll.isEmpty()) { 
+	    b.addPropertyChangeListener(this, h.getName(), vsd_property_change_name);
+	    log.debug("Added listener to bean " + b.getDisplayName() + " type " + b.getClass().getName());
+	}
+    }
+
     protected void registerReporterListeners() {
 	// Walk through the list of reporters
 	for (String sysName : jmri.InstanceManager.reporterManagerInstance().getSystemNameList()) {
 	    registerReporterListener(sysName);
+	}
+	for (String sysname : jmri.InstanceManager.blockManagerInstance().getSystemNameList()) {
+	    registerBeanListener(jmri.InstanceManager.blockManagerInstance(), sysname);
 	}
     }
 
@@ -442,6 +471,9 @@ public class VSDecoderManager implements PropertyChangeListener {
 	
 	for (String sysName : jmri.InstanceManager.reporterManagerInstance().getSystemNameList()) {
 	    registerReporterListener(sysName);
+	}
+	for (String sysname : jmri.InstanceManager.blockManagerInstance().getSystemNameList()) {
+	    registerBeanListener(jmri.InstanceManager.blockManagerInstance(), sysname);
 	}
     }
 
@@ -474,11 +506,16 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-	log.debug("property change name " + evt.getPropertyName() + " old " + evt.getOldValue() + " new " + evt.getNewValue());
+	log.debug("property change type " + evt.getSource().getClass().getName() + 
+		  " name " + evt.getPropertyName() + " old " + evt.getOldValue() + 
+		  " new " + evt.getNewValue());
 	if (evt.getSource() instanceof jmri.ReporterManager) {
 	    reporterManagerPropertyChange(evt);
 	} else if (evt.getSource() instanceof jmri.Reporter) {
 	    reporterPropertyChange(evt);
+	} else if (evt.getSource() instanceof jmri.Block) {
+	    log.debug("Block property change! name = " + evt.getPropertyName() + " old= " + evt.getOldValue() + " new= " + evt.getNewValue());
+	    blockPropertyChange(evt);
 	} else if (evt.getSource() instanceof VSDManagerFrame) {
 	    if (evt.getPropertyName().equals(VSDManagerFrame.PCIDMap.get(VSDManagerFrame.PropertyChangeID.REMOVE_DECODER))) {
 		// Shut down the requested decoder and remove it from the manager's hash maps. 
@@ -501,12 +538,44 @@ public class VSDecoderManager implements PropertyChangeListener {
 	return;
     }
 
+    public void blockPropertyChange(PropertyChangeEvent event) {
+	// Needs to check the ID on the event, look up the appropriate VSDecoder,
+	// get the location of the event source, and update the decoder's location.
+	@SuppressWarnings("cast") // NOI18N
+	String eventName = (String)event.getPropertyName();
+	if ((event.getSource() instanceof PhysicalLocationReporter) && eventName.equals("state")) { // NOI18N
+	    Block blk = (Block) event.getSource();
+	    // Need to decide which reporter it is, so we can use different methods
+	    // to extract the address and the location.
+	    String repVal = null;
+	    if ((Integer)event.getNewValue() == Block.OCCUPIED) {
+		// Get this Block's Reporter's current/last report value.  need to fix this - it could be
+		/// an idtag type reporter.
+		if (blk.isReportingCurrent())
+		    repVal = (String)blk.getReporter().getCurrentReport();
+		else
+		    repVal = (String)blk.getReporter().getLastReport();
+		if (repVal == null) {
+		    log.warn("Report from Block " + blk.getUserName() + " Reporter " + blk.getReporter().getSystemName() + " is null!");
+		}
+		// Set the decoder's position.
+		setDecoderPositionByAddr(blk.getLocoAddress(repVal), blk.getPhysicalLocation()); 
+	    } else {
+		log.debug("Ignoring report. not an entry event.");
+		return;
+	    }
+	} else {
+	    log.debug("Reporter doesn't support physical location reporting or isn't reporting new info.");
+	}  // Reporting object implements PhysicalLocationReporter
+	return;
+    }
+
     public void reporterPropertyChange(PropertyChangeEvent event) {
 	// Needs to check the ID on the event, look up the appropriate VSDecoder,
 	// get the location of the event source, and update the decoder's location.
-	@SuppressWarnings("cast")
+	@SuppressWarnings("cast") // NOI18N
 	String eventName = (String)event.getPropertyName();
-	if ((event.getSource() instanceof PhysicalLocationReporter) && (eventName.equals("currentReport"))) {
+	if ((event.getSource() instanceof PhysicalLocationReporter) && (eventName.equals("currentReport"))) { // NOI18N
 	    PhysicalLocationReporter arp = (PhysicalLocationReporter) event.getSource();
 	    // Need to decide which reporter it is, so we can use different methods
 	    // to extract the address and the location.
@@ -535,7 +604,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 	String eventName = event.getPropertyName();
 
 	log.debug("VSDecoder received Reporter Manager Property Change: " + eventName);
-	if (eventName.equals("length")) {
+	if (eventName.equals("length")) { // NOI18N
 	    
 	    // Re-register for all the reporters. The registerReporterListener() will skip
 	    // any that we're already registered for.
@@ -556,12 +625,12 @@ public class VSDecoderManager implements PropertyChangeListener {
 	
 	ArrayList<String> new_entries = new ArrayList<String>();
 
-	@SuppressWarnings("unchecked")
-	java.util.Iterator<Element> i = root.getChildren("profile").iterator();
+	@SuppressWarnings("unchecked") // NOI18N
+	java.util.Iterator<Element> i = root.getChildren("profile").iterator(); // NOI18N
 	while (i.hasNext()) {
 	    Element e = i.next();
 	    log.debug(e.toString());
-	    if ((pname = e.getAttributeValue("name")) != null) {
+	    if ((pname = e.getAttributeValue("name")) != null) { // NOI18N
 		profiletable.put(pname, vf.getName());
 		new_entries.add(pname);
 	    }

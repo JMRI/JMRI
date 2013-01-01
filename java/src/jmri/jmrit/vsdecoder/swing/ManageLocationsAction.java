@@ -25,6 +25,8 @@ import java.util.HashMap;
 import java.util.List;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.Block;
+import jmri.BlockManager;
 import jmri.PhysicalLocationReporter;
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
@@ -38,6 +40,7 @@ public class ManageLocationsAction extends AbstractAction {
 
     private ManageLocationsFrame f = null;
     private HashMap<String, PhysicalLocation> reporterMap;
+    private HashMap<String, PhysicalLocation> blockMap;
     private HashMap<String, PhysicalLocation> opsMap;
     private ListeningSpot listenerLoc;
 
@@ -47,13 +50,16 @@ public class ManageLocationsAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 	if (f == null || !f.isVisible()) {
+	    // Handle the Listener
 	    listenerLoc = VSDecoderManager.instance().getVSDecoderPreferences().getListenerPosition();
+	    
+	    // Handle Reporters
 	    ReporterManager rmgr = jmri.InstanceManager.reporterManagerInstance();
-	    String[] nameArray = rmgr.getSystemNameArray();
-	    Object[][] reporterTable = new Object[nameArray.length][6];
+	    String[] reporterNameArray = rmgr.getSystemNameArray();
+	    Object[][] reporterTable = new Object[reporterNameArray.length][6];
 	    reporterMap = new HashMap<String, PhysicalLocation>();
 	    int i = 0;
-	    for (String s : nameArray) {
+	    for (String s : reporterNameArray) {
 		Reporter r = rmgr.getByDisplayName(s);
 		if (r instanceof PhysicalLocationReporter) {
 		    reporterMap.put(s, ((PhysicalLocationReporter)r).getPhysicalLocation());
@@ -74,6 +80,36 @@ public class ManageLocationsAction extends AbstractAction {
 		}
 		i++;
 	    }
+
+	    // Handle Blocks
+	    BlockManager bmgr = jmri.InstanceManager.blockManagerInstance();
+	    String[] blockNameArray = bmgr.getSystemNameArray();
+	    Object[][] blockTable = new Object[blockNameArray.length][6];
+	    blockMap = new HashMap<String, PhysicalLocation>();
+	    i = 0;
+	    for (String s : blockNameArray) {
+		Block b = bmgr.getByDisplayName(s);
+		if (b instanceof PhysicalLocationReporter) {
+		    blockMap.put(s, ((PhysicalLocationReporter)b).getPhysicalLocation());
+		    PhysicalLocation p = ((PhysicalLocationReporter)b).getPhysicalLocation();
+		    blockTable[i][0] = s;
+		    blockTable[i][1] = new Boolean(true);
+		    blockTable[i][2] = p.getX();
+		    blockTable[i][3] = p.getY();
+		    blockTable[i][4] = p.getZ();
+		    blockTable[i][5] = new Boolean(p.isTunnel());
+		} else {
+		    blockTable[i][0] = s;
+		    blockTable[i][1] = new Boolean(false);
+		    blockTable[i][2] = new Float(0.0f);
+		    blockTable[i][3] = new Float(0.0f);
+		    blockTable[i][4] = new Float(0.0f);
+		    blockTable[i][5] = new Boolean(false);
+		}
+		i++;
+	    }
+
+	    // Handle Ops Locations
 	    LocationManager lmgr = LocationManager.instance();
 	    List<String> lnames = lmgr.getLocationsByIdList();
 	    opsMap = new HashMap<String, PhysicalLocation>();
@@ -101,7 +137,7 @@ public class ManageLocationsAction extends AbstractAction {
 	    }
 	    
 
-	    f = new ManageLocationsFrame(listenerLoc, reporterTable, opsTable);
+	    f = new ManageLocationsFrame(listenerLoc, reporterTable, opsTable, blockTable);
 	}
 	f.setExtendedState(Frame.NORMAL);
     }

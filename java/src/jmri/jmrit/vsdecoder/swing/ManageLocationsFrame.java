@@ -43,6 +43,8 @@ import jmri.jmrit.vsdecoder.VSDecoderPreferencesAction;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.ReporterManager;
 import jmri.Reporter;
+import jmri.BlockManager;
+import jmri.Block;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -52,29 +54,29 @@ import jmri.jmrit.operations.locations.Location;
 public class ManageLocationsFrame extends JmriJFrame {
 
     // Uncomment this when we add labels...
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
     public static enum PropertyChangeID { MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER }
 
     public static final Map<PropertyChangeID, String> PCIDMap;
     static {
 	Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
-	aMap.put(PropertyChangeID.MUTE, "VSDMF:Mute");
-	aMap.put(PropertyChangeID.VOLUME_CHANGE, "VSDMF:VolumeChange");
-	aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder");
-	aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder");
+	aMap.put(PropertyChangeID.MUTE, "VSDMF:Mute"); // NOI18N
+	aMap.put(PropertyChangeID.VOLUME_CHANGE, "VSDMF:VolumeChange"); // NOI18N
+	aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder"); // NOI18N
+	aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder"); // NOI18N
 	PCIDMap = Collections.unmodifiableMap(aMap);
     }
 
     // Map of Mnemonic KeyEvent values to GUI Components
     private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
-	static {
-	Mnemonics.put("RoomMode", KeyEvent.VK_R);
-	Mnemonics.put("HeadphoneMode", KeyEvent.VK_H);
-	Mnemonics.put("ReporterTab", KeyEvent.VK_E);
-	Mnemonics.put("OpsTab", KeyEvent.VK_P);
-	Mnemonics.put("ListenerTab", KeyEvent.VK_L);
-	Mnemonics.put("CloseButton", KeyEvent.VK_O);
-	Mnemonics.put("SaveButton", KeyEvent.VK_S);
+    static {
+	Mnemonics.put("RoomMode", KeyEvent.VK_R); // NOI18N
+	Mnemonics.put("HeadphoneMode", KeyEvent.VK_H); // NOI18N
+	Mnemonics.put("ReporterTab", KeyEvent.VK_E); // NOI18N
+	Mnemonics.put("OpsTab", KeyEvent.VK_P); // NOI18N
+	Mnemonics.put("ListenerTab", KeyEvent.VK_L); // NOI18N
+	Mnemonics.put("BlockTab", KeyEvent.VK_B); // NOI18N
+	Mnemonics.put("CloseButton", KeyEvent.VK_O); // NOI18N
+	Mnemonics.put("SaveButton", KeyEvent.VK_S); // NOI18N
     }
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -83,47 +85,52 @@ public class ManageLocationsFrame extends JmriJFrame {
     private JPanel listenerPanel;
     private JPanel reporterPanel;
     private JPanel opsPanel;
+    private JPanel blockPanel;
 
     private Object[][] reporterData;  // positions of Reporters
     private Object[][] opsData;       // positions of Operations Locations
     private Object[][] locData;       // positions of Listener Locations
+    private Object[][] blockData;     // positions of Blocks
     private LocationTableModel reporterModel;
     private LocationTableModel opsModel;
     private ListenerTableModel locModel;
+    private LocationTableModel blockModel;
     private ListeningSpot listenerLoc;
 
     private List<JMenu> menuList;
 
     public ManageLocationsFrame(ListeningSpot listener, 
 				Object[][] reporters,
-				Object[][] ops) {
+				Object[][] ops,
+				Object[][] blocks) {
 	super(false, false);
 	reporterData = reporters;
 	opsData = ops;
 	listenerLoc = listener;
+	blockData = blocks;
 	initGui();
     }
     
     private void initGui() {
 
-	this.setTitle(rb.getString("ManageLocationsFrameTitle"));
+	this.setTitle(Bundle.getString("FieldManageLocationsFrameTitle"));
 	this.buildMenu();
 	// Panel for managing listeners
 	listenerPanel = new JPanel();
 	listenerPanel.setLayout(new BoxLayout(listenerPanel, BoxLayout.Y_AXIS));
 
 	// Audio Mode Buttons
-	JRadioButton b1 = new JRadioButton(rb.getString("AudioModeRoomButton"));
-	b1.setToolTipText(rb.getString("MLFModeButtonRoomAudioToolTip"));
-	b1.setMnemonic(Mnemonics.get("RoomMode"));
+	JRadioButton b1 = new JRadioButton(Bundle.getString("ButtonAudioModeRoom"));
+	b1.setToolTipText(Bundle.getString("ToolTipButtonAudioModeRoom"));
+	b1.setMnemonic(Mnemonics.get("RoomMode")); // NOI18N
 	b1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    modeRadioButtonPressed(e);
 		}
 	    });
-	JRadioButton b2 = new JRadioButton(rb.getString("AudioModeHeadphoneButton"));
-	b2.setMnemonic(Mnemonics.get("HeadphoneMode"));
-	b2.setToolTipText(rb.getString("MLFModeButtonHeadphoneToolTip"));
+	JRadioButton b2 = new JRadioButton(Bundle.getString("ButtonAudioModeHeadphone"));
+	b2.setMnemonic(Mnemonics.get("HeadphoneMode")); // NOI18N
+	b2.setToolTipText(Bundle.getString("ToolTipButtonAudioModeHeadphone"));
 	b2.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    modeRadioButtonPressed(e);
@@ -136,7 +143,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 	b1.setSelected(true);
 	JPanel modePanel = new JPanel();
 	modePanel.setLayout(new BoxLayout(modePanel, BoxLayout.LINE_AXIS));
-	modePanel.add(new JLabel("Listener Mode:"));
+	modePanel.add(new JLabel(Bundle.getString("FieldAudioMode")));
 	modePanel.add(b1);
 	modePanel.add(b2);
 
@@ -171,17 +178,21 @@ public class ManageLocationsFrame extends JmriJFrame {
 
 	reporterPanel = new JPanel();
 	reporterPanel.setLayout(new GridBagLayout());
-	GridBagConstraints gbcr = new GridBagConstraints();
-	gbcr.gridx = 0; gbcr.gridy = GridBagConstraints.RELATIVE;
-	gbcr.fill = GridBagConstraints.NONE;
-	gbcr.anchor = GridBagConstraints.LINE_START;
-	gbcr.weightx = 1.0; gbcr.weighty = 1.0;
 	JScrollPane reporterScrollPanel = new JScrollPane();
 	reporterModel = new LocationTableModel(reporterData);
 	JTable reporterTable = new JTable(reporterModel);
 	reporterTable.setFillsViewportHeight(true);
 	reporterScrollPanel.getViewport().add(reporterTable);
 	reporterTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
+
+	blockPanel = new JPanel();
+	blockPanel.setLayout(new GridBagLayout());
+	JScrollPane blockScrollPanel = new JScrollPane();
+	blockModel = new LocationTableModel(blockData);
+	JTable blockTable = new JTable(blockModel);
+	blockTable.setFillsViewportHeight(true);
+	blockScrollPanel.getViewport().add(blockTable);
+	blockTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
 	opsPanel = new JPanel();
 	opsPanel.setLayout(new GridBagLayout());
@@ -195,29 +206,32 @@ public class ManageLocationsFrame extends JmriJFrame {
 	opsScrollPanel.getViewport().add(opsTable);
 
 	tabbedPane = new JTabbedPane();
-	tabbedPane.addTab(rb.getString("ReportersTabTitle"), reporterScrollPanel);
-	tabbedPane.setToolTipTextAt(0, rb.getString("MLFReporterTabToolTip"));
-	tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab"));
-	tabbedPane.addTab(rb.getString("OpsTabTitle"), opsScrollPanel);
-	tabbedPane.setToolTipTextAt(1, rb.getString("MLFOpsTabToolTip"));
-	tabbedPane.setMnemonicAt(1, Mnemonics.get("OpsTab"));
-	tabbedPane.addTab(rb.getString("ListenersTabTitle"), listenerPanel);
-	tabbedPane.setToolTipTextAt(2, rb.getString("MLFListenerTabToolTip"));
-	tabbedPane.setMnemonicAt(2, Mnemonics.get("ListenerTab"));
+	tabbedPane.addTab(Bundle.getString("FieldReportersTabTitle"), reporterScrollPanel);
+	tabbedPane.setToolTipTextAt(0, Bundle.getString("ToolTipReporterTab"));
+	tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab")); // NOI18N
+	tabbedPane.addTab(Bundle.getString("FieldBlockTabTitle"), blockScrollPanel);
+	tabbedPane.setToolTipTextAt(0, Bundle.getString("ToolTipBlockTab"));
+	tabbedPane.setMnemonicAt(0, Mnemonics.get("BlockTab")); // NOI18N
+	tabbedPane.addTab(Bundle.getString("FieldOpsTabTitle"), opsScrollPanel);
+	tabbedPane.setToolTipTextAt(1, Bundle.getString("ToolTipOpsTab"));
+	tabbedPane.setMnemonicAt(1, Mnemonics.get("OpsTab")); // NOI18N
+	tabbedPane.addTab(Bundle.getString("FieldListenersTabTitle"), listenerPanel);
+	tabbedPane.setToolTipTextAt(2, Bundle.getString("ToolTipListenerTab"));
+	tabbedPane.setMnemonicAt(2, Mnemonics.get("ListenerTab")); // NOI18N
 
 	JPanel buttonPane = new JPanel();
 	buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-	JButton closeButton = new JButton(rb.getString("MLFCloseButton"));
-	closeButton.setToolTipText(rb.getString("MLFCloseButtonToolTip"));
-	closeButton.setMnemonic(Mnemonics.get("CloseButton"));
+	JButton closeButton = new JButton(Bundle.getString("ButtonClose"));
+	closeButton.setToolTipText(Bundle.getString("ToolTipButtonMLFClose"));
+	closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
 	closeButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    closeButtonPressed(e);
 		}
 	    });
-	JButton saveButton = new JButton(rb.getString("MLFSaveButton"));
-	saveButton.setToolTipText(rb.getString("MLFSaveButtonToolTip"));
-	saveButton.setMnemonic(	Mnemonics.get("SaveButton"));
+	JButton saveButton = new JButton(Bundle.getString("ButtonSave"));
+	saveButton.setToolTipText(Bundle.getString("ToolTipButtonMLFSave"));
+	saveButton.setMnemonic(	Mnemonics.get("SaveButton")); // NOI18N
 	saveButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    saveButtonPressed(e);
@@ -234,14 +248,14 @@ public class ManageLocationsFrame extends JmriJFrame {
     }
 
     private void buildMenu() {
-	JMenu fileMenu = new JMenu(rb.getString("VSDecoderFileMenu"));
+	JMenu fileMenu = new JMenu(Bundle.getString("MenuFile"));
 
-        fileMenu.add(new LoadVSDFileAction(rb.getString("VSDecoderFileMenuLoadVSDFile" )));
-        fileMenu.add(new StoreXmlVSDecoderAction(rb.getString("VSDecoderFileMenuSaveProfile" )));
-        fileMenu.add(new LoadXmlVSDecoderAction(rb.getString("VSDecoderFileMenuLoadProfile")));
+        fileMenu.add(new LoadVSDFileAction(Bundle.getString("MenuItemLoadVSDFile" )));
+        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getString("MenuItemSaveProfile" )));
+        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getString("MenuItemLoadProfile")));
 
-	JMenu editMenu = new JMenu(rb.getString("VSDecoderEditMenu"));
-	editMenu.add(new VSDecoderPreferencesAction(rb.getString("VSDecoderEditMenuPreferences")));
+	JMenu editMenu = new JMenu(Bundle.getString("MenuEdit"));
+	editMenu.add(new VSDecoderPreferencesAction(Bundle.getString("MenuItemEditPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load
@@ -254,7 +268,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 	this.setJMenuBar(new JMenuBar());
 	this.getJMenuBar().add(fileMenu);
 	this.getJMenuBar().add(editMenu);
-	this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // Fix this... needs to be help for the new frame
+	this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // NOI18N
 	
     }
 
@@ -278,8 +292,8 @@ public class ManageLocationsFrame extends JmriJFrame {
     }
 
     private void saveButtonPressed(ActionEvent e) {
-	int value = JOptionPane.showConfirmDialog(null, rb.getString("MLFSaveDialogMessage"), 
-						  rb.getString("MLFSaveDialogTitle"), 
+	int value = JOptionPane.showConfirmDialog(null, Bundle.getString("FieldMLFSaveDialogConfirmMessage"), 
+						  Bundle.getString("FieldMLFSaveDialogTitle"), 
 						  JOptionPane.YES_NO_OPTION);
 	if (value == JOptionPane.YES_OPTION) {
 	    saveTableValues();
@@ -307,6 +321,14 @@ public class ManageLocationsFrame extends JmriJFrame {
 	    PhysicalLocation.setBeanPhysicalLocation(data.get(s), r);
 	}
 
+	data = blockModel.getDataMap();
+	BlockManager bmgr = jmri.InstanceManager.blockManagerInstance();
+	for (String s : data.keySet()) {
+	    log.debug("Block: " + s + " Location: " + data.get(s));
+	    Block b = bmgr.getByDisplayName(s);
+	    PhysicalLocation.setBeanPhysicalLocation(data.get(s), b);
+	}
+
 	data = opsModel.getDataMap();
 	LocationManager lmgr = LocationManager.instance();
 	for (String s : data.keySet()) {
@@ -329,22 +351,20 @@ public class ManageLocationsFrame extends JmriJFrame {
 
 /** Private class to serve as TableModel for Reporters and Ops Locations */
 class LocationTableModel extends AbstractTableModel {
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
-    private String[] columnNames = { "Name",
-				     "Use Location",
-				     "X",
-				     "Y",
-				     "Z",
-				     "Is Tunnel"};
+    // These get internationalized at runtime in the constructor below.
+    private String[] columnNames = new String[6];
     private Object[][]rowData;
 
     public LocationTableModel(Object[][] dataMap) {
 	super();
 	// Use i18n-ized column titles.
-	columnNames[0] =  rb.getString("LocationTableNameColumn");
-	columnNames[1] = rb.getString("LocationTableUseColumn");
-	columnNames[5] = rb.getString("LocationTableIsTunnelColumn");
+	columnNames[0] = Bundle.getString("FieldTableNameColumn");
+	columnNames[1] = Bundle.getString("FieldTableUseColumn");
+	columnNames[2] = Bundle.getString("FieldTableXColumn");
+	columnNames[3] = Bundle.getString("FieldTableYColumn");
+	columnNames[4] = Bundle.getString("FieldTableZColumn");
+	columnNames[5] = Bundle.getString("FieldTableIsTunnelColumn");
 	rowData = dataMap;
     }
 
@@ -396,18 +416,20 @@ class LocationTableModel extends AbstractTableModel {
 class ListenerTableModel extends AbstractTableModel {
     private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
-    private String[] columnNames = {"Name",
-				     "Use Location",
-				     "X", "Y", "Z", "Bearing", "Azimuth" };
+    // These get internationalized at runtime in the constructor below.
+    private String[] columnNames = new String[7];
     private Object[][]rowData = null;
 
     public ListenerTableModel(Object[][] dataMap) {
 	super();
 	// Use i18n-ized column titles.
-	columnNames[0] =  rb.getString("ListenerTableNameColumn");
-	columnNames[1] = rb.getString("ListenerTableUseColumn");
-	columnNames[5] = rb.getString("ListenerTableBearingColumn");
-	columnNames[6] = rb.getString("ListenerTableAzimuthColumn");
+	columnNames[0] = Bundle.getString("FieldTableNameColumn");
+	columnNames[1] = Bundle.getString("FieldTableUseColumn");
+	columnNames[2] = Bundle.getString("FieldTableXColumn");
+	columnNames[3] = Bundle.getString("FieldTableYColumn");
+	columnNames[4] = Bundle.getString("FieldTableZColumn");
+	columnNames[5] = Bundle.getString("FieldTableBearingColumn");
+	columnNames[6] = Bundle.getString("FieldTableAzimuthColumn");
 	rowData = dataMap;
     }
 
