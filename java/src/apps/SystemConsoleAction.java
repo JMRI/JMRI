@@ -3,7 +3,6 @@
 package apps;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import javax.swing.Icon;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
@@ -38,7 +37,7 @@ public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     public SystemConsoleAction() {
-        super(ResourceBundle.getBundle("apps.AppsBundle").getString("TitleConsole"));
+        super(Bundle.getString("TitleConsole"));
     }
 
     @Override
@@ -50,7 +49,7 @@ public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
     // never invoked, because we overrode actionPerformed above
     @Override
     public JmriPanel makePanel() {
-        throw new IllegalArgumentException("Should not be invoked");
+        throw new IllegalArgumentException("Should not be invoked"); // NOI18N
     }
 
 }
