@@ -481,9 +481,9 @@ class D3LoopThread extends Thread {
 			changeNotch();
 		    }
 		    if (_sound.getSource().numQueuedBuffers() < 2) {
-			log.debug("D3Loop"+ _sound.getName() + "Buffer count low (" + _sound.getSource().numQueuedBuffers() + ").  Adding buffer. Throttle = " + _throttle);
+			//log.debug("D3Loop"+ _sound.getName() + "Buffer count low (" + _sound.getSource().numQueuedBuffers() + ").  Adding buffer. Throttle = " + _throttle);
 			AudioBuffer b = _notch.nextLoopBuffer();
-			log.debug("D3Loop"+ _sound.getName() + "Loop: Adding buffer " + b.getSystemName());
+			//log.debug("D3Loop"+ _sound.getName() + "Loop: Adding buffer " + b.getSystemName());
 			_sound.queueBuffer(b);
 		    }
 		    if (!_sound.isPlaying()) {
