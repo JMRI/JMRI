@@ -54,19 +54,19 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
 	// then just return quickly.
 	// Careful: Takes advantage of "lazy OR" behavior
 	if (target == null) {
-	    log.debug("Quit.  No target.");
+	    //log.debug("Quit.  No target.");
 	    return;
 	}
 	if (event.getPropertyName().equals(this.getEventName()) != true) {
-	    log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
+	    //log.debug("Quit. Event name mismatch event = " + event.getPropertyName() + " this = " + this.getEventName());
 	    return;
 	}
 	if (this.getTriggerType() == TriggerType.NONE) {
-	    log.debug("Quit.  TriggerType = NONE");
+	    //log.debug("Quit.  TriggerType = NONE");
 	    return;
 	}
 	if (this.getTargetAction() == TargetAction.NOTHING) {
-	    log.debug("Quit.  TargetAction = NOTHING");
+	    //log.debug("Quit.  TargetAction = NOTHING");
 	    return;
 	}
 
