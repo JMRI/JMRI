@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.ArrayList;
 import java.util.List;
+import jmri.util.PhysicalLocation;
 
 /**
  * Represents a particular piece of track, more informally a "Block".
@@ -92,7 +93,7 @@ import java.util.List;
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
-public class Block extends jmri.implementation.AbstractNamedBean {
+public class Block extends jmri.implementation.AbstractNamedBean implements PhysicalLocationReporter {
 
     public Block(String systemName) {
         super(systemName.toUpperCase());
@@ -537,6 +538,77 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         // in any case, go OCCUPIED
         setState(OCCUPIED);
     }
-       
+
+    // Methods to implmement PhysicalLocationReporter Interface
+    //
+    // For now (maybe forever) we defer to the Block's associated Reporter.
+    // A Block without a Reporter that is also a PhysicalLocationReporter is
+    // essentially a mis-use of the protocol.  The option is open, though for a subclass
+    // of Block to override these functions, or to add more code later that doesn't defer
+    // to the Reporter, if it makes sense to do so.
+
+    /** Parse a given string and return the LocoAddress value that is presumed stored
+     * within it based on this object's protocol.
+     * The Class Block implementationd defers to its associated Reporter, if it exists.
+     *
+     * @param String rep : String to be parsed
+     * @return LocoAddress address parsed from string, or null if this Block isn't associated
+     *         with a Reporter, or is associated with a Reporter that is not also a
+     *         PhysicalLocationReporter
+     */
+    public LocoAddress getLocoAddress(String rep) {
+	// Defer parsing to our associated Reporter if we can.
+	if ((this.getReporter() != null) && (this.getReporter() instanceof PhysicalLocationReporter)) {
+	    return(((PhysicalLocationReporter)this.getReporter()).getLocoAddress(rep));
+	} else {
+	    // We shouldn't get here.  
+	    return(null);
+	}
+
+    }
+     
+    /** Parses out a (possibly old) LnReporter-generated report string to extract the direction from
+     * within it based on this object's protocol.
+     * The Class Block implementationd defers to its associated Reporter, if it exists.
+     *
+     * @param String rep : String to be parsed
+     * @return PhysicalLocationReporter.Direction direction parsed from string, or null if 
+     *         this Block isn't associated with a Reporter, or is associated with a Reporter 
+     *         that is not also a PhysicalLocationReporter
+     */
+    public PhysicalLocationReporter.Direction getDirection(String rep) {
+	// Defer parsing to our associated Reporter if we can.
+	if ((this.getReporter() != null) && (this.getReporter() instanceof PhysicalLocationReporter)) {
+	    return(((PhysicalLocationReporter)this.getReporter()).getDirection(rep));
+	} else {
+	    // We shouldn't get here.
+	    return(null);
+	}
+
+    }
+
+    /** Return this Block's physical location, if it exists.
+     * Defers actual work to the helper methods in class PhysicalLocation
+     *
+     * @return PhysicalLocation : this Block's location.
+     */
+    public PhysicalLocation getPhysicalLocation() {
+	// We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
+	return(PhysicalLocation.getBeanPhysicalLocation(this));
+    }
+
+    /** Return this Block's physical location, if it exists.
+     * Does not use the parameter s
+     * Defers actual work to the helper methods in class PhysicalLocation
+     *
+     * @param String s : (this parameter is ignored)
+     * @return PhysicalLocation : this Block's location.
+     */
+    public PhysicalLocation getPhysicalLocation(String s) {
+	// We have our won PhysicalLocation. That's the point.  No need to defer to the Reporter.
+	// Intentionally ignore the String s
+	return(PhysicalLocation.getBeanPhysicalLocation(this));
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Block.class.getName());
 }
