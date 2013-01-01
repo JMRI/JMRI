@@ -107,6 +107,10 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	public RollingStockSetFrame() {
 		super();
 	}
+	
+	public RollingStockSetFrame(String title) {
+		super(title);
+	}
 
 	public void initComponents() {	
 		// the following code sets the frame's initial state

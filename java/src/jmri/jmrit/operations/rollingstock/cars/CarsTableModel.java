@@ -564,7 +564,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			if (csf != null)
 				csf.dispose();
 			csf = new CarSetFrame();
-			csf.setTitle(Bundle.getString("TitleCarSet"));
+//			csf.setTitle(Bundle.getString("TitleCarSet"));
 			csf.initComponents();
 			csf.loadCar(car);
 			csf.setVisible(true);

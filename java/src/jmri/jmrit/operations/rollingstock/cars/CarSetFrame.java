@@ -51,7 +51,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	CarLoadEditFrame lef = null;
 		
 	public CarSetFrame() {
-		super();
+		super(Bundle.getString("TitleCarSet"));
 	}
 
 	public void initComponents() {

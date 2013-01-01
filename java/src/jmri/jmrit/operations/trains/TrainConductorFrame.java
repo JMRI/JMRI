@@ -1,4 +1,4 @@
-// TrainConductorFrame.java
+ // TrainConductorFrame.java
 
 package jmri.jmrit.operations.trains;
 
@@ -28,6 +28,8 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarSetFrame;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -43,9 +45,11 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainConductorFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 	
 	Train _train = null;
+	EngineManager engManager = EngineManager.instance();
 	CarManager carManager = CarManager.instance();
 	TrainCommon trainCommon = new TrainCommon();
 	
+	JScrollPane locoPane;
 	JScrollPane pickupPane;
 	JScrollPane setoutPane;
 	JScrollPane movePane;
@@ -75,6 +79,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	// combo boxes
 	
 	// panels
+	JPanel pLocos = new JPanel();
 	JPanel pPickups = new JPanel();
 	JPanel pSetouts = new JPanel();
 	JPanel pMoves = new JPanel();
@@ -98,6 +103,10 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 	    
+       	locoPane = new JScrollPane(pLocos);
+       	locoPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Engines")));
+       	locoPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+	    
        	pickupPane = new JScrollPane(pPickups);
        	pickupPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Pickup")));
        	pickupPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -113,6 +122,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
       	movePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 	    //      Set up the panels
+      	pLocos.setLayout(new BoxLayout(pLocos,BoxLayout.Y_AXIS));
+       	pPickups.setLayout(new BoxLayout(pPickups,BoxLayout.Y_AXIS));
+       	pSetouts.setLayout(new BoxLayout(pSetouts,BoxLayout.Y_AXIS));
+       	pMoves.setLayout(new BoxLayout(pMoves,BoxLayout.Y_AXIS));
+ 
 				
 		// Layout the panel by rows
 		
@@ -187,10 +201,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	// row 12
        	JPanel pRow12 = new JPanel();
        	pRow12.setLayout(new BoxLayout(pRow12,BoxLayout.X_AXIS));
-
-       	pPickups.setLayout(new BoxLayout(pPickups,BoxLayout.Y_AXIS));
-       	pSetouts.setLayout(new BoxLayout(pSetouts,BoxLayout.Y_AXIS));
-       	pMoves.setLayout(new BoxLayout(pMoves,BoxLayout.Y_AXIS));
+      	
        	pRow12.add(pickupPane);
        	pRow12.add(setoutPane);
        	
@@ -220,13 +231,14 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	
        	pRow14.add(pWork);
        	pRow14.add(pButtons);
-       	       	
+       	     
        	update();
 		
 		getContentPane().add(pRow2);
 		getContentPane().add(pTrainComment);
 		getContentPane().add(pRow6);
 		getContentPane().add(pRow10);
+		getContentPane().add(locoPane);
 		getContentPane().add(pRow12);
 		getContentPane().add(movePane);
 		getContentPane().add(pStatus);
@@ -305,7 +317,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
    		csf = new CarSetFrame();
 		csf.initComponents();
     	csf.loadCar(car);
-    	csf.setTitle(Bundle.getString("TitleCarSet"));
+//    	csf.setTitle(Bundle.getString("TitleCarSet"));
     	csf.setVisible(true);
     	csf.setExtendedState(Frame.NORMAL);
 	}
@@ -352,9 +364,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		log.debug("update, setMode "+setMode);
 		removePropertyChangeListerners();
 		if (_train != null && _train.getRoute() != null){
+			pLocos.removeAll();
 			pPickups.removeAll();
 			pSetouts.removeAll();
 			pMoves.removeAll();
+			locoPane.setVisible(false);
 			movePane.setVisible(false);	
 			RouteLocation rl = _train.getCurrentLocation();
 			if (rl != null){
@@ -366,9 +380,31 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				textLocationComment.setText(rl.getLocation().getComment());				
 				textNextLocationName.setText(_train.getNextLocationName());
 				
+				List<String> routeList = _train.getRoute().getLocationsBySequenceList();
+				
+				// check for locos
+				List<String> engList = engManager.getByTrainList(_train);
+				for (int k = 0; k < engList.size(); k++) {
+					Engine engine = engManager.getById(engList.get(k));
+					if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")){
+						locoPane.setVisible(true);
+						rollingStock.add(engine);
+						engine.addPropertyChangeListener(this);
+						JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
+						setCheckBoxFont(checkBox);
+						pLocos.add(checkBox);
+					}
+					if (engine.getRouteDestination() == rl && engine.getTrackName().equals("")){
+						locoPane.setVisible(true);
+						rollingStock.add(engine);
+						engine.addPropertyChangeListener(this);
+						JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
+						setCheckBoxFont(checkBox);
+						pLocos.add(checkBox);
+					}
+				}
 				// now update the car pick ups and set outs
 				List<String> carList = carManager.getByTrainDestinationList(_train);
-				List<String> routeList = _train.getRoute().getLocationsBySequenceList();
 				
 				// block pick ups by destination
 				for (int j = 0; j < routeList.size(); j++) {
@@ -452,9 +488,12 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				moveButton.setEnabled(false);
 				setButton.setEnabled(false);
 			}
+			pLocos.repaint();
 			pPickups.repaint();
 			pSetouts.repaint();
 			pMoves.repaint();
+			
+			pLocos.validate();
 			pPickups.validate();
 			pSetouts.validate();
 			pMoves.validate();
@@ -476,7 +515,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		});
 		JLabel label = new JLabel(car.toString());
 		addItem(pSet, label, 0,0);
-		addItem(pSet, carSetButton, 1,0);								
+		addItemLeft(pSet, carSetButton, 1,0);								
 		return pSet;
 	}
 	

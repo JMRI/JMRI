@@ -29,7 +29,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements
 	Engine _engine;
 
 	public EngineSetFrame() {
-		super();
+		super(Bundle.getString("TitleEngineSet"));
 	}
 
 	public void initComponents() {

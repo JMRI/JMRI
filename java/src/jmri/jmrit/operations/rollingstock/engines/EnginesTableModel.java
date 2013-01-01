@@ -412,7 +412,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			if (esf != null)
 				esf.dispose();
 			esf = new EngineSetFrame();
-			esf.setTitle(Bundle.getString("TitleEngineSet"));
+//			esf.setTitle(Bundle.getString("TitleEngineSet"));
 			esf.initComponents();
 			esf.loadEngine(engine);
 			esf.setVisible(true);

@@ -76,6 +76,16 @@ public class TrainCommon {
 		}
 		addLine(file, buf.toString());
 	}
+	
+	protected String pickupEngine(Engine engine) {
+		StringBuffer buf = new StringBuffer();
+		String[] format = Setup.getPickupEngineMessageFormat();
+		for (int i = 0; i < format.length; i++) {
+			String s = getEngineAttribute(engine, format[i], pickup);
+			buf.append(s);
+		}
+		return buf.toString();
+	}
 
 	protected void dropEngine(PrintWriter file, Engine engine, String orientation) {
 		StringBuffer buf = new StringBuffer(Setup.getDropEnginePrefix());
@@ -89,6 +99,16 @@ public class TrainCommon {
 			buf.append(s);
 		}
 		addLine(file, buf.toString());
+	}
+	
+	protected String dropEngine(Engine engine) {
+		StringBuffer buf = new StringBuffer();
+		String[] format = Setup.getDropEngineMessageFormat();
+		for (int i = 0; i < format.length; i++) {
+			String s = getEngineAttribute(engine, format[i], !pickup);
+			buf.append(s);
+		}
+		return buf.toString();
 	}
 
 	/*

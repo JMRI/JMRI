@@ -46,6 +46,7 @@ public class LocationsTableFrame extends OperationsFrame {
 	JButton addButton = new JButton(Bundle.getString("Add"));
 
     public LocationsTableFrame() {
+        super(Bundle.getString("TitleLocationsTable"));
         // general GUI config
 
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
