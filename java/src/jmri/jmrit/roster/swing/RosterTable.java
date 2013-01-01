@@ -15,6 +15,7 @@ import java.util.Enumeration;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.roster.Roster;
 import jmri.util.com.sun.TableSorter;
+import jmri.util.swing.JmriPanel;
 import jmri.util.swing.XTableColumnModel;
 
 /**
@@ -24,7 +25,7 @@ import jmri.util.swing.XTableColumnModel;
  * @author	Bob Jacobsen   Copyright (C) 2003, 2010
  * @version	$Revision$
  */
-public class RosterTable extends jmri.util.swing.JmriPanel {
+public class RosterTable extends JmriPanel {
 
     RosterTableModel    dataModel;
     TableSorter         sorter;
