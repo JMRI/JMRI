@@ -129,6 +129,19 @@ public class BlockManager extends AbstractManager
     public Block getByUserName(String key) {
         return (Block)_tuser.get(key);
     }
+
+    public Block getByDisplayName(String key) {
+	// First try to find it in the user list.
+	// If that fails, look it up in the system list
+	Block retv = this.getByUserName(key);
+	if (retv == null) {
+	    retv = this.getBySystemName(key);
+	}
+	// If it's not in the system list, go ahead and return null
+	return(retv);
+    }
+
+
     
     static BlockManager _instance = null;
     static public BlockManager instance() {
