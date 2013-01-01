@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriConnection;
+import static jmri.jmris.json.JSON.*;
 import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonLister;
 import jmri.jmris.json.JsonServerManager;
@@ -43,12 +44,12 @@ public class JsonServlet extends WebSocketServlet {
     public void init() throws ServletException {
         super.init();
         this.mapper = new ObjectMapper();
-        InstanceManager.shutDownManagerInstance().register(new QuietShutDownTask("Close JSON web sockets") {
+        InstanceManager.shutDownManagerInstance().register(new QuietShutDownTask("Close JSON web sockets") { // NOI18N
             @Override
             public boolean execute() {
                 for (JsonWebSocket socket : sockets) {
                     try {
-                        socket.wsConnection.sendMessage(socket.mapper.writeValueAsString(socket.mapper.createObjectNode().put("type", "goodbye")));
+                        socket.wsConnection.sendMessage(socket.mapper.writeValueAsString(socket.mapper.createObjectNode().put(TYPE, GOODBYE)));
                     } catch (Exception e) {
                         log.warn("Unable to send goodbye while closing socket.\n" + e.getMessage());
                     }
@@ -76,93 +77,93 @@ public class JsonServlet extends WebSocketServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("text/html");
-        response.setHeader("Connection", "Keep-Alive");
-        response.setDateHeader("Date", now.getTime());
-        response.setDateHeader("Last-Modified", now.getTime());
-        response.setDateHeader("Expires", now.getTime());
+        response.setContentType("text/html"); // NOI18N
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        response.setDateHeader("Date", now.getTime()); // NOI18N
+        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
+        response.setDateHeader("Expires", now.getTime()); // NOI18N
 
-        String[] rest = request.getPathInfo().split("/");
+        String[] rest = request.getPathInfo().split("/"); // NOI18N
         String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
             String name = (rest.length > 2) ? rest[2] : null;
             JsonNode reply = null;
-            if (type.equals("cars")) {
+            if (type.equals(CARS)) {
                 reply = JsonLister.getCars();
-            } else if (type.equals("engines")) {
+            } else if (type.equals(ENGINES)) {
                 reply = JsonLister.getEngines();
-            } else if (type.equals("lights")) {
+            } else if (type.equals(LIGHTS)) {
                 reply = JsonLister.getLights();
-            } else if (type.equals("locations")) {
+            } else if (type.equals(LOCATIONS)) {
                 reply = JsonLister.getLocations();
-            } else if (type.equals("memories")) {
+            } else if (type.equals(MEMORIES)) {
                 reply = JsonLister.getMemories();
-            } else if (type.equals("metadata")) {
+            } else if (type.equals(METADATA)) {
                 reply = JsonLister.getMetadata();
-            } else if (type.equals("panels")) {
+            } else if (type.equals(PANELS)) {
                 reply = JsonLister.getPanels();
-            } else if (type.equals("power")) {
+            } else if (type.equals(POWER)) {
                 reply = JsonLister.getPower();
-            } else if (type.equals("railroad")) {
+            } else if (type.equals(RAILROAD)) {
                 reply = JsonLister.getRailroad();
-            } else if (type.equals("roster")) {
+            } else if (type.equals(ROSTER)) {
                 reply = JsonLister.getRoster();
-            } else if (type.equals("routes")) {
+            } else if (type.equals(ROUTES)) {
                 reply = JsonLister.getRoutes();
-            } else if (type.equals("sensors")) {
+            } else if (type.equals(SENSORS)) {
                 reply = JsonLister.getSensors();
-            } else if (type.equals("signalHeads")) {
+            } else if (type.equals(SIGNAL_HEADS)) {
                 reply = JsonLister.getSignalHeads();
-            } else if (type.equals("signalMasts")) {
+            } else if (type.equals(SIGNAL_MASTS)) {
                 reply = JsonLister.getSignalMasts();
-            } else if (type.equals("trains")) {
+            } else if (type.equals(TRAINS)) {
                 reply = JsonLister.getTrains();
-            } else if (type.equals("turnouts")) {
+            } else if (type.equals(TURNOUTS)) {
                 reply = JsonLister.getTurnouts();
             } else if (name != null) {
-                if (type.equals("car")) {
+                if (type.equals(CAR)) {
                     reply = JsonLister.getCar(name);
-                } else if (type.equals("engine")) {
+                } else if (type.equals(ENGINE)) {
                     reply = JsonLister.getEngine(name);
-                } else if (type.equals("light")) {
+                } else if (type.equals(LIGHT)) {
                     reply = JsonLister.getLight(name);
-                } else if (type.equals("location")) {
+                } else if (type.equals(LOCATION)) {
                     reply = JsonLister.getLocation(name);
-                } else if (type.equals("memory")) {
+                } else if (type.equals(MEMORY)) {
                     reply = JsonLister.getMemory(name);
-                } else if (type.equals("reporter")) {
+                } else if (type.equals(REPORTER)) {
                     reply = JsonLister.getReporter(name);
-                } else if (type.equals("rosterEntry")) {
+                } else if (type.equals(ROSTER_ENTRY)) {
                     reply = JsonLister.getRosterEntry(name);
-                } else if (type.equals("route")) {
+                } else if (type.equals(ROUTE)) {
                     reply = JsonLister.getRoute(name);
-                } else if (type.equals("sensor")) {
+                } else if (type.equals(SENSOR)) {
                     reply = JsonLister.getSensor(name);
-                } else if (type.equals("signalHead")) {
+                } else if (type.equals(SIGNAL_HEAD)) {
                     reply = JsonLister.getSignalHead(name);
-                } else if (type.equals("signalMast")) {
+                } else if (type.equals(SIGNAL_MAST)) {
                     reply = JsonLister.getSignalMast(name);
-                } else if (type.equals("train")) {
+                } else if (type.equals(TRAIN)) {
                     reply = JsonLister.getTrain(name);
-                } else if (type.equals("turnout")) {
+                } else if (type.equals(TURNOUT)) {
                     reply = JsonLister.getTurnout(name);
                 } else {
                     log.warn("Type \"" + type + "\" unknown.");
-                    reply = JsonLister.getUnknown();
+                    reply = JsonLister.getUnknown(type);
                 }
             } else {
                 log.warn("Type \"" + type + "\" unknown.");
-                reply = JsonLister.getUnknown();
+                reply = JsonLister.getUnknown(type);
             }
             response.getWriter().write(this.mapper.writeValueAsString(reply));
         } else {
-            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("HeadFormat"),
-                    ResourceBundle.getBundle("jmri.web.server.Html").getString("HTML5DocType"),
-                    "JSON Console",
+            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("HeadFormat"), // NOI18N
+                    ResourceBundle.getBundle("jmri.web.server.Html").getString("HTML5DocType"), // NOI18N
+                    "JSON Console", // NOI18N
                     JsonServlet.class.getSimpleName(),
-                    ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml").getString("HeadAdditions")));
-            response.getWriter().println(ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml").getString("BodyContent"));
-            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("TailFormat"), "", ""));
+                    ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml").getString("HeadAdditions"))); // NOI18N
+            response.getWriter().println(ResourceBundle.getBundle("jmri.web.servlet.json.JsonHtml").getString("BodyContent")); // NOI18N
+            response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("TailFormat"), "", "")); // NOI18N
         }
     }
 

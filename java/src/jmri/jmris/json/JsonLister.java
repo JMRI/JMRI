@@ -1,9 +1,12 @@
 // JsonLister.java
 package jmri.jmris.json;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.util.List;
-
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
@@ -16,6 +19,7 @@ import jmri.SensorManager;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
+import static jmri.jmris.json.JSON.*;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -33,13 +37,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.web.server.WebServerManager;
-
 import org.apache.log4j.Logger;
-
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 
 /**
  *
@@ -52,28 +50,28 @@ public class JsonLister {
 
     static public JsonNode getCar(String id) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "car");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, CAR);
+        ObjectNode data = root.putObject(DATA);
         Car car = CarManager.instance().getById(id);
-        data.put("id", car.getId());
-        data.put("road", car.getRoad());
-        data.put("number", car.getNumber());
-        data.put("load", car.getLoad());
-        data.put("locationId", car.getRouteLocationId());
-        data.put("trackName", car.getTrackName());
-        data.put("destinationId", car.getRouteDestinationId());
-        data.put("destinationTrackName", car.getDestinationTrackName());
-        data.put("type", car.getType());
-        data.put("length", car.getLength());
-        data.put("color", car.getColor());
-        data.put("comment", car.getComment());
+        data.put(ID, car.getId());
+        data.put(ROAD, car.getRoad());
+        data.put(NUMBER, car.getNumber());
+        data.put(LOAD, car.getLoad());
+        data.put(LOCATION, car.getRouteLocationId());
+        data.put(LOCATION_TRACK, car.getTrackName());
+        data.put(DESTINATION, car.getRouteDestinationId());
+        data.put(DESTINATION_TRACK, car.getDestinationTrackName());
+        data.put(TYPE, car.getType());
+        data.put(LENGTH, car.getLength());
+        data.put(COLOR, car.getColor());
+        data.put(COMMENT, car.getComment());
         return root;
     }
 
     static public JsonNode getCars() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode cars = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode cars = root.putArray(LIST);
         for (String id : CarManager.instance().getByIdList()) {
             cars.add(getCar(id));
         }
@@ -82,25 +80,25 @@ public class JsonLister {
 
     static public JsonNode getEngine(String id) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "engine");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, ENGINE);
+        ObjectNode data = root.putObject(DATA);
         Engine engine = EngineManager.instance().getById(id);
-        data.put("id", engine.getId());
-        data.put("road", engine.getRoad());
-        data.put("number", engine.getNumber());
-        data.put("locationId", engine.getRouteLocationId());
-        data.put("trackName", engine.getTrackName());
-        data.put("destinationId", engine.getRouteDestinationId());
-        data.put("destinationTrackName", engine.getDestinationTrackName());
-        data.put("model", engine.getModel());
-        data.put("comment", engine.getComment());
+        data.put(ID, engine.getId());
+        data.put(ROAD, engine.getRoad());
+        data.put(NUMBER, engine.getNumber());
+        data.put(LOCATION, engine.getRouteLocationId());
+        data.put(LOCATION_TRACK, engine.getTrackName());
+        data.put(DESTINATION, engine.getRouteDestinationId());
+        data.put(DESTINATION_TRACK, engine.getDestinationTrackName());
+        data.put(MODEL, engine.getModel());
+        data.put(COMMENT, engine.getComment());
         return root;
     }
 
     static public JsonNode getEngines() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode engines = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode engines = root.putArray(LIST);
         for (String id : EngineManager.instance().getByIdList()) {
             engines.add(getEngine(id));
         }
@@ -109,20 +107,20 @@ public class JsonLister {
 
     static public JsonNode getLight(String name) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "light");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, LIGHT);
+        ObjectNode data = root.putObject(DATA);
         Light light = InstanceManager.lightManagerInstance().getLight(name);
-        data.put("name", light.getSystemName());
-        data.put("userName", light.getUserName());
-        data.put("comment", light.getComment());
-        data.put("state", light.getState());
+        data.put(NAME, light.getSystemName());
+        data.put(USERNAME, light.getUserName());
+        data.put(COMMENT, light.getComment());
+        data.put(STATE, light.getState());
         return root;
     }
 
     static public JsonNode getLights() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode lights = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode lights = root.putArray(LIST);
         for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
             lights.add(getLight(name));
         }
@@ -131,18 +129,18 @@ public class JsonLister {
 
     static public JsonNode getLocation(String id) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "location");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, LOCATION);
+        ObjectNode data = root.putObject(DATA);
         try {
             Location location = LocationManager.instance().getLocationById(id);
-            data.put("name", location.getName());
-            data.put("id", location.getId());
-            data.put("length", location.getLength());
-            data.put("comment", location.getComment());
+            data.put(NAME, location.getName());
+            data.put(ID, location.getId());
+            data.put(LENGTH, location.getLength());
+            data.put(COMMENT, location.getComment());
         } catch (NullPointerException e) {
-            root.put("type", "error");
-            data.put("code", -1);
-            data.put("message", "Unable to get location id=" + id);
+            root.put(TYPE, ERROR);
+            data.put(CODE, -1);
+            data.put(MESSAGE, Bundle.getMessage("ErrorObject", LOCATION, id));
             log.error("Unable to get location id=" + id + ".", e);
         }
         return root;
@@ -150,8 +148,8 @@ public class JsonLister {
 
     static public JsonNode getLocations() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode locations = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode locations = root.putArray(LIST);
         for (String locationID : LocationManager.instance().getLocationsByIdList()) {
             locations.add(getLocation(locationID));
         }
@@ -160,8 +158,8 @@ public class JsonLister {
 
     static public JsonNode getMemories() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode memories = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode memories = root.putArray(LIST);
         for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
             memories.add(getMemory(name));
         }
@@ -170,22 +168,22 @@ public class JsonLister {
 
     static public JsonNode getMemory(String name) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "memory");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, MEMORY);
+        ObjectNode data = root.putObject(DATA);
         Memory memory = InstanceManager.memoryManagerInstance().getMemory(name);
         try {
-            data.put("name", memory.getSystemName());
-            data.put("userName", memory.getUserName());
-            data.put("comment", memory.getComment());
+            data.put(NAME, memory.getSystemName());
+            data.put(USERNAME, memory.getUserName());
+            data.put(COMMENT, memory.getComment());
             if (memory.getValue() == null) {
-                data.put("value", (String) memory.getValue());
+                data.put(VALUE, (String) memory.getValue());
             } else {
-                data.put("value", memory.getValue().toString());
+                data.put(VALUE, memory.getValue().toString());
             }
         } catch (NullPointerException e) {
-            root.put("type", "error");
-            data.put("code", -1);
-            data.put("message", "Unable to get memory: " + name);
+            root.put(TYPE, ERROR);
+            data.put(CODE, -1);
+            data.put(MESSAGE, Bundle.getMessage("ErrorObject", MEMORY, name));
             log.error("Unable to get memory: " + name + ".");
         }
         return root;
@@ -193,15 +191,15 @@ public class JsonLister {
 
     static public JsonNode getMetadata() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode metadatas = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode metadatas = root.putArray(LIST);
         List<String> names = Metadata.getSystemNameList();
         for (String name : names) {
             ObjectNode metadata = mapper.createObjectNode();
-            metadata.put("type", "metadata");
-            ObjectNode data = metadata.putObject("data");
-            data.put("name", name);
-            data.put("value", Metadata.getBySystemName(name));
+            metadata.put(TYPE, METADATA);
+            ObjectNode data = metadata.putObject(DATA);
+            data.put(NAME, name);
+            data.put(VALUE, Metadata.getBySystemName(name));
             metadatas.add(metadata);
         }
         return root;
@@ -210,8 +208,8 @@ public class JsonLister {
     static public JsonNode getPanels() {
         List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode panels = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode panels = root.putArray(LIST);
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
         List<JmriJFrame> frames = JmriJFrame.getFrameList(ControlPanelEditor.class);
         for (JmriJFrame frame : frames) {
@@ -219,12 +217,12 @@ public class JsonLister {
                 String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                 if (!title.equals("") && !disallowedFrames.contains(title)) {
                     ObjectNode panel = mapper.createObjectNode();
-                    panel.put("type", "panel");
-                    ObjectNode data = panel.putObject("data");
-                    data.put("name", "ControlPanel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23"));
-                    data.put("URL", "/panel/" + data.path("name").asText() + "?format=json");
-                    data.put("userName", title);
-                    data.put("type", "Control Panel");
+                    panel.put(TYPE, PANEL);
+                    ObjectNode data = panel.putObject(DATA);
+                    data.put(NAME, "ControlPanel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=json"); // NOI18N
+                    data.put(USERNAME, title);
+                    data.put(TYPE, CONTROL_PANEL);
                     panels.add(data);
                 }
             }
@@ -235,12 +233,12 @@ public class JsonLister {
                 String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                 if (!title.equals("") && !disallowedFrames.contains(title)) {
                     ObjectNode panel = mapper.createObjectNode();
-                    panel.put("type", "panel");
-                    ObjectNode data = panel.putObject("data");
-                    data.put("name", "Panel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23"));
-                    data.put("URL", "/panel/" + data.path("name").asText() + "?format=json");
-                    data.put("userName", title);
-                    data.put("type", "Panel");
+                    panel.put(TYPE, PANEL);
+                    ObjectNode data = panel.putObject(DATA);
+                    data.put(NAME, "Panel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=json"); // NOI18N
+                    data.put(USERNAME, title);
+                    data.put(TYPE, PANEL_PANEL);
                     panels.add(data);
                 }
             }
@@ -251,12 +249,12 @@ public class JsonLister {
                 String title = ((JmriJFrame) ((Editor) frame).getTargetPanel().getTopLevelAncestor()).getTitle();
                 if (!title.equals("") && !disallowedFrames.contains(title)) {
                     ObjectNode panel = mapper.createObjectNode();
-                    panel.put("type", "panel");
-                    ObjectNode data = panel.putObject("data");
-                    data.put("name", "Layout/" + title.replaceAll(" ", "%20").replaceAll("#", "%23"));
-                    data.put("URL", "/panel/" + data.path("name").asText() + "?format=json");
-                    data.put("userName", title);
-                    data.put("type", "Layout");
+                    panel.put(TYPE, PANEL);
+                    ObjectNode data = panel.putObject(DATA);
+                    data.put(NAME, "Layout/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=json"); // NOI18N
+                    data.put(USERNAME, title);
+                    data.put(TYPE, LAYOUT_PANEL);
                     panels.add(data);
                 }
             }
@@ -266,12 +264,12 @@ public class JsonLister {
 
     static public JsonNode getPower() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "power");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, POWER);
+        ObjectNode data = root.putObject(DATA);
         try {
-            data.put("state", InstanceManager.powerManagerInstance().getPower());
+            data.put(STATE, InstanceManager.powerManagerInstance().getPower());
         } catch (JmriException e) {
-            data.put("state", -1);
+            data.put(STATE, -1);
             log.error("Unable to get Power state." + e);
         }
         return root;
@@ -279,30 +277,30 @@ public class JsonLister {
 
     static public JsonNode getRailroad() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "railroad");
-        ObjectNode data = root.putObject("data");
-        data.put("name", WebServerManager.getWebServerPreferences().getRailRoadName());
+        root.put(TYPE, RAILROAD);
+        ObjectNode data = root.putObject(DATA);
+        data.put(NAME, WebServerManager.getWebServerPreferences().getRailRoadName());
         return root;
     }
 
     static public JsonNode getReporter(String name) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "reporter");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, REPORTER);
+        ObjectNode data = root.putObject(DATA);
         Reporter reporter = InstanceManager.reporterManagerInstance().getReporter(name);
-        data.put("name", reporter.getSystemName());
-        data.put("userName", reporter.getUserName());
-        data.put("state", reporter.getState());
-        data.put("comment", reporter.getComment());
-        data.put("currentReport", reporter.getCurrentReport().toString());
-        data.put("lastReport", reporter.getLastReport().toString());
+        data.put(NAME, reporter.getSystemName());
+        data.put(USERNAME, reporter.getUserName());
+        data.put(STATE, reporter.getState());
+        data.put(COMMENT, reporter.getComment());
+        data.put(REPORT, reporter.getCurrentReport().toString());
+        data.put(LAST_REPORT, reporter.getLastReport().toString());
         return root;
     }
 
     static public JsonNode getReporters() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode reporters = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode reporters = root.putArray(LIST);
         for (String name : InstanceManager.reporterManagerInstance().getSystemNameList()) {
             reporters.add(getReporter(name));
         }
@@ -311,28 +309,28 @@ public class JsonLister {
 
     static public JsonNode getRosterEntry(String id) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "rosterEntry");
-        ObjectNode entry = root.putObject("data");
+        root.put(TYPE, ROSTER_ENTRY);
+        ObjectNode entry = root.putObject(DATA);
         RosterEntry re = Roster.instance().getEntryForId(id);
-        entry.put("name", re.getId());
-        entry.put("dccAddress", re.getDccAddress());
-        entry.put("isLongAddress", re.isLongAddress());
-        entry.put("roadName", re.getRoadName());
-        entry.put("roadNumber", re.getRoadNumber());
-        entry.put("mfg", re.getMfg());
-        entry.put("model", re.getModel());
-        entry.put("comment", re.getComment());
-        entry.put("maxSpeedPct", Integer.valueOf(re.getMaxSpeedPCT()).toString());
+        entry.put(NAME, re.getId());
+        entry.put(ADDRESS, re.getDccAddress());
+        entry.put(IS_LONG_ADDRESS, re.isLongAddress());
+        entry.put(ROAD, re.getRoadName());
+        entry.put(NUMBER, re.getRoadNumber());
+        entry.put(MFG, re.getMfg());
+        entry.put(MODEL, re.getModel());
+        entry.put(COMMENT, re.getComment());
+        entry.put(MAX_SPD_PCT, Integer.valueOf(re.getMaxSpeedPCT()).toString());
         File file = new File(re.getImagePath());
-        entry.put("imageFileName", file.getName());
+        entry.put(IMAGE_FILE_NAME, file.getName());
         file = new File(re.getIconPath());
-        entry.put("imageIconName", file.getName());
-        ArrayNode labels = entry.putArray("functionKeys");
+        entry.put(IMAGE_ICON_NAME, file.getName());
+        ArrayNode labels = entry.putArray(FUNCTION_KEYS);
         for (int i = 0; i < re.getMAXFNNUM(); i++) {
             ObjectNode label = mapper.createObjectNode();
-            label.put("name", "F" + i);
-            label.put("label", (re.getFunctionLabel(i) != null) ? re.getFunctionLabel(i) : "F" + i);
-            label.put("lockable", re.getFunctionLockable(i));
+            label.put(NAME, F + i);
+            label.put(LABEL, (re.getFunctionLabel(i) != null) ? re.getFunctionLabel(i) : F + i);
+            label.put(LOCKABLE, re.getFunctionLockable(i));
             labels.add(label);
         }
         return root;
@@ -340,8 +338,8 @@ public class JsonLister {
 
     static public JsonNode getRoster() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode roster = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode roster = root.putArray(LIST);
         for (RosterEntry re : Roster.instance().matchingList(null, null, null, null, null, null, null)) {
             roster.add(getRosterEntry(re.getId()));
         }
@@ -350,19 +348,19 @@ public class JsonLister {
 
     static public JsonNode getRoute(String name) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "route");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, ROUTE);
+        ObjectNode data = root.putObject(DATA);
         try {
             Route route = InstanceManager.routeManagerInstance().getRoute(name);
             SensorManager s = InstanceManager.sensorManagerInstance();
-            data.put("name", route.getSystemName());
-            data.put("userName", route.getUserName());
-            data.put("comment", route.getComment());
-            data.put("state", (s.provideSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.provideSensor(route.getTurnoutsAlignedSensor())).getKnownState() : Route.UNKNOWN);
+            data.put(NAME, route.getSystemName());
+            data.put(USERNAME, route.getUserName());
+            data.put(COMMENT, route.getComment());
+            data.put(STATE, (s.provideSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.provideSensor(route.getTurnoutsAlignedSensor())).getKnownState() : Route.UNKNOWN);
         } catch (NullPointerException e) {
-            root.put("type", "error");
-            data.put("code", -1);
-            data.put("message", "Unable to get route");
+            root.put(TYPE, ERROR);
+            data.put(CODE, -1);
+            data.put(MESSAGE, Bundle.getMessage("ErrorObject", ROUTE, name));
             log.error("Unable to get route." + e);
         }
         return root;
@@ -370,8 +368,8 @@ public class JsonLister {
 
     static public JsonNode getRoutes() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode routes = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode routes = root.putArray(LIST);
         for (String name : InstanceManager.routeManagerInstance().getSystemNameList()) {
             routes.add(getRoute(name));
         }
@@ -380,21 +378,28 @@ public class JsonLister {
 
     static public JsonNode getSensor(String name) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "sensor");
-        ObjectNode data = root.putObject("data");
-        Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
-        data.put("name", name);
-        data.put("userName", sensor.getUserName());
-        data.put("comment", sensor.getComment());
-        data.put("inverted", sensor.getInverted());
-        data.put("state", sensor.getKnownState());
+        root.put(TYPE, SENSOR);
+        ObjectNode data = root.putObject(DATA);
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
+            data.put(NAME, name);
+            data.put(USERNAME, sensor.getUserName());
+            data.put(COMMENT, sensor.getComment());
+            data.put(INVERTED, sensor.getInverted());
+            data.put(STATE, sensor.getKnownState());
+        } catch (NullPointerException e) {
+            root.put(TYPE, ERROR);
+            data.put(CODE, -1);
+            data.put(MESSAGE, Bundle.getMessage("ErrorObject", SENSOR, name));
+            log.error("Unable to get sensor." + e);
+        }
         return root;
     }
 
     static public JsonNode getSensors() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode sensors = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode sensors = root.putArray(LIST);
         for (String name : InstanceManager.sensorManagerInstance().getSystemNameList()) {
             sensors.add(getSensor(name));
         }
@@ -403,27 +408,27 @@ public class JsonLister {
 
     static public JsonNode getSignalHead(String name) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "signalHead");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, SIGNAL_HEAD);
+        ObjectNode data = root.putObject(DATA);
         SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         try {
-            data.put("name", name);
-            data.put("userName", signalHead.getUserName());
-            data.put("comment", signalHead.getComment());
-            data.put("lit", signalHead.getLit());
-            data.put("appearance", signalHead.getAppearance());
-            data.put("held", signalHead.getHeld());
+            data.put(NAME, name);
+            data.put(USERNAME, signalHead.getUserName());
+            data.put(COMMENT, signalHead.getComment());
+            data.put(LIT, signalHead.getLit());
+            data.put(APPEARANCE, signalHead.getAppearance());
+            data.put(HELD, signalHead.getHeld());
             //state is appearance, plus a flag for held status
             if (signalHead.getHeld()) {
-                data.put("state", SignalHead.HELD);
+                data.put(STATE, SignalHead.HELD);
             } else {
-                data.put("state", signalHead.getAppearance());
+                data.put(STATE, signalHead.getAppearance());
             }
-            data.put("appearanceName", signalHead.getAppearanceName());
+            data.put(APPEARANCE_NAME, signalHead.getAppearanceName());
         } catch (NullPointerException e) {
-            root.put("type", "error");
-            data.put("code", -1);
-            data.put("message", "Unable to get signalHead [" + name + "]");
+            root.put(TYPE, ERROR);
+            data.put(CODE, -1);
+            data.put(MESSAGE, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
             log.error("Unable to get signalHead [" + name + "].", e);
         }
         return root;
@@ -431,8 +436,8 @@ public class JsonLister {
 
     static public JsonNode getSignalHeads() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode signalHeads = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode signalHeads = root.putArray(LIST);
         for (String name : InstanceManager.signalHeadManagerInstance().getSystemNameList()) {
             signalHeads.add(getSignalHead(name));
         }
@@ -441,34 +446,34 @@ public class JsonLister {
 
     static public JsonNode getSignalMast(String name) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "signalMast");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, SIGNAL_MAST);
+        ObjectNode data = root.putObject(DATA);
         SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
         try {
-            data.put("name", name);
-            data.put("userName", signalMast.getUserName());
+            data.put(NAME, name);
+            data.put(USERNAME, signalMast.getUserName());
             if (signalMast.getComment() != null) {
-                data.put("comment", signalMast.getComment());
+                data.put(COMMENT, signalMast.getComment());
             }
             String aspect = signalMast.getAspect();
             if (aspect == null) {
-                aspect = "Unknown"; //if null, set aspect to "Unknown"   
+                aspect = ASPECT_UNKNOWN; //if null, set aspect to "Unknown"   
             }
-            data.put("aspect", aspect);
-            data.put("lit", signalMast.getLit());
-            data.put("held", signalMast.getHeld());
+            data.put(ASPECT, aspect);
+            data.put(LIT, signalMast.getLit());
+            data.put(HELD, signalMast.getHeld());
             //state is appearance, plus flags for held and dark statii
             if ((signalMast.getHeld()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
-                data.put("state", "Held");
+                data.put(STATE, ASPECT_HELD);
             } else if ((signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
-                data.put("state", "Dark");
+                data.put(STATE, ASPECT_DARK);
             } else {
-                data.put("state", aspect);
+                data.put(STATE, aspect);
             }
         } catch (NullPointerException e) {
-            root.put("type", "error");
-            data.put("code", -1);
-            data.put("message", "Unable to get signalMast [" + name + "]");
+            root.put(TYPE, ERROR);
+            data.put(CODE, -1);
+            data.put(MESSAGE, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
             log.error("Unable to get signalMast [" + name + "].", e);
         }
         return root;
@@ -476,8 +481,8 @@ public class JsonLister {
 
     static public JsonNode getSignalMasts() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode signalMasts = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode signalMasts = root.putArray(LIST);
         for (String name : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
             signalMasts.add(getSignalMast(name));
         }
@@ -486,42 +491,42 @@ public class JsonLister {
 
     static public JsonNode getTrain(String id) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "train");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, TRAIN);
+        ObjectNode data = root.putObject(DATA);
         try {
             Train train = TrainManager.instance().getTrainById(id);
-            data.put("name", train.getName());
-            data.put("id", train.getId());
-            data.put("departureTime", train.getFormatedDepartureTime());
-            data.put("description", train.getDescription());
-            data.put("comment", train.getComment());
-            data.put("route", train.getRoute().getName());
-            data.put("routeId", train.getRoute().getId());
-            data.put("routeLocations", getRouteLocationsForTrain(train));
-            data.put("engines", getEnginesForTrain(train));
-            data.put("cars", getCarsForTrain(train));
+            data.put(NAME, train.getName());
+            data.put(ID, train.getId());
+            data.put(DEPARTURE_TIME, train.getFormatedDepartureTime());
+            data.put(DESCRIPTION, train.getDescription());
+            data.put(COMMENT, train.getComment());
+            data.put(ROUTE, train.getRoute().getName());
+            data.put(ROUTE_ID, train.getRoute().getId());
+            data.put(LOCATIONS, getRouteLocationsForTrain(train));
+            data.put(ENGINES, getEnginesForTrain(train));
+            data.put(CARS, getCarsForTrain(train));
             if (train.getTrainDepartsName() != null) {
-                data.put("trainDepartsName", train.getTrainDepartsName());
+                data.put(DEPARTURE_LOCATION, train.getTrainDepartsName());
             }
             if (train.getTrainTerminatesName() != null) {
-                data.put("trainTerminatesName", train.getTrainTerminatesName());
+                data.put(TERMINATES_LOCATION, train.getTrainTerminatesName());
             }
-            data.put("currentLocationName", train.getCurrentLocationName());
-            data.put("status", train.getStatus());
-            data.put("trainLength", train.getTrainLength());
-            data.put("trainWeight", train.getTrainWeight());
-            data.put("numberCarsInTrain", train.getNumberCarsInTrain());
+            data.put(LOCATION, train.getCurrentLocationName());
+            data.put(STATUS, train.getStatus());
+            data.put(LENGTH, train.getTrainLength());
+            data.put(WEIGHT, train.getTrainWeight());
+            data.put(CARS, train.getNumberCarsInTrain());
             if (train.getLeadEngine() != null) {
-                data.put("leadEngine", train.getLeadEngine().toString());
+                data.put(LEAD_ENGINE, train.getLeadEngine().toString());
             }
             if (train.getCabooseRoadAndNumber() != null) {
-                data.put("cabooseRoadAndNumber", train.getCabooseRoadAndNumber());
+                data.put(CABOOSE, train.getCabooseRoadAndNumber());
             }
 
         } catch (NullPointerException e) {
-            root.put("type", "error");
-            data.put("code", -1);
-            data.put("message", "Unable to get train id=" + id);
+            root.put(TYPE, ERROR);
+            data.put(CODE, -1);
+            data.put(MESSAGE, Bundle.getMessage("ErrorObject", TRAIN, id));
             log.error("Unable to get train id= " + id + ".", e);
         }
         return root;
@@ -529,8 +534,8 @@ public class JsonLister {
 
     static public JsonNode getTrains() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode trains = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode trains = root.putArray(LIST);
         for (String trainID : TrainManager.instance().getTrainsByNameList()) {
             trains.add(getTrain(trainID));
         }
@@ -539,19 +544,19 @@ public class JsonLister {
 
     static public JsonNode getTurnout(String name) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "turnout");
-        ObjectNode data = root.putObject("data");
+        root.put(TYPE, TURNOUT);
+        ObjectNode data = root.putObject(DATA);
         try {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
-            data.put("name", turnout.getSystemName());
-            data.put("userName", turnout.getUserName());
-            data.put("comment", turnout.getComment());
-            data.put("inverted", turnout.getInverted());
-            data.put("state", turnout.getKnownState());
+            data.put(NAME, turnout.getSystemName());
+            data.put(USERNAME, turnout.getUserName());
+            data.put(COMMENT, turnout.getComment());
+            data.put(INVERTED, turnout.getInverted());
+            data.put(STATE, turnout.getKnownState());
         } catch (NullPointerException e) {
-            root.put("type", "error");
-            data.put("code", -1);
-            data.put("message", "Unable to get turnout [" + name + "]");
+            root.put(TYPE, ERROR);
+            data.put(CODE, -1);
+            data.put(MESSAGE, Bundle.getMessage("ErrorObject", TURNOUT, name));
             log.error("Unable to get turnout [" + name + "]." + e);
         }
         return root;
@@ -559,20 +564,20 @@ public class JsonLister {
 
     static public JsonNode getTurnouts() {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "list");
-        ArrayNode turnouts = root.putArray("list");
+        root.put(TYPE, LIST);
+        ArrayNode turnouts = root.putArray(LIST);
         for (String name : InstanceManager.turnoutManagerInstance().getSystemNameList()) {
             turnouts.add(getTurnout(name));
         }
         return root;
     }
 
-    static public JsonNode getUnknown() {
+    static public JsonNode getUnknown(String type) {
         ObjectNode root = mapper.createObjectNode();
-        root.put("type", "error");
-        ObjectNode data = root.putObject("data");
-        data.put("code", "-1");
-        data.put("message", "unknown type");
+        root.put(TYPE, ERROR);
+        ObjectNode data = root.putObject(DATA);
+        data.put(CODE, -1);
+        data.put(MESSAGE, Bundle.getMessage("ErrorUnknownType", type));
         return root;
     }
 
@@ -581,7 +586,7 @@ public class JsonLister {
         CarManager carManager = CarManager.instance();
         List<String> carList = carManager.getByTrainDestinationList(train);
         for (int k = 0; k < carList.size(); k++) {
-            clan.add(getCar(carList.get(k)).get("data")); //add each car's data to the carList array
+            clan.add(getCar(carList.get(k)).get(DATA)); //add each car's data to the carList array
         }
         return clan;  //return array of car data
     }
@@ -591,7 +596,7 @@ public class JsonLister {
         EngineManager engineManager = EngineManager.instance();
         List<String> engineList = engineManager.getByTrainList(train);
         for (int k = 0; k < engineList.size(); k++) {
-            elan.add(getEngine(engineList.get(k)).get("data")); //add each engine's data to the engineList array
+            elan.add(getEngine(engineList.get(k)).get(DATA)); //add each engine's data to the engineList array
         }
         return elan;  //return array of engine data
     }
@@ -602,17 +607,14 @@ public class JsonLister {
         for (int r = 0; r < routeList.size(); r++) {
             ObjectNode rln = mapper.createObjectNode();
             RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
-            rln.put("id", rl.getId());
-            rln.put("name", rl.getName());
-            rln.put("trainDirection", rl.getTrainDirectionString());
-            rln.put("comment", rl.getComment());
-            rln.put("sequenceId", rl.getSequenceId());
-            rln.put("expectedArrivalTime", train.getExpectedArrivalTime(rl));
-            rln.put("expectedDepartureTime", train.getExpectedDepartureTime(rl));
-            rln.put("location", rl.getLocation().getName());
-            rln.put("locationId", rl.getLocation().getId());
-            rln.put("locationLength", rl.getLocation().getLength());
-            rln.put("locationComment", rl.getLocation().getComment());
+            rln.put(ID, rl.getId());
+            rln.put(NAME, rl.getName());
+            rln.put(DIRECTION, rl.getTrainDirectionString());
+            rln.put(COMMENT, rl.getComment());
+            rln.put(SEQUENCE, rl.getSequenceId());
+            rln.put(EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));
+            rln.put(EXPECTED_DEPARTURE, train.getExpectedDepartureTime(rl));
+            rln.put(LOCATION, getLocation(rl.getLocation().getId()).get(DATA));
             rlan.add(rln); //add this routeLocation to the routeLocation array
         }
         return rlan;  //return array of routeLocations

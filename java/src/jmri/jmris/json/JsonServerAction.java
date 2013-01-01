@@ -1,22 +1,20 @@
 package jmri.jmris.json;
 
 import java.awt.event.ActionEvent;
-
 import javax.swing.AbstractAction;
 
 public class JsonServerAction extends AbstractAction {
 
-	public JsonServerAction(String s) {
-		super(s);
-	}
-
-    public JsonServerAction() {
-    	this("Start JMRI JSON Server");
+    public JsonServerAction(String s) {
+        super(s);
     }
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		JsonServerManager.getJsonServer().start();
-	}
+    public JsonServerAction() {
+        this(Bundle.getMessage("MenuItemStartServer"));
+    }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JsonServerManager.getJsonServer().start();
+    }
 }

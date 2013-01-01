@@ -1,24 +1,20 @@
 package jmri.jmris.json;
 
 import java.io.File;
-import java.util.ResourceBundle;
-
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-
 import org.apache.log4j.Logger;
 
 public class JsonServerManager {
 
-	static private JsonServerManager instance = null;
+    static private JsonServerManager instance = null;
     private JsonServerPreferences preferences;
     private JsonServer server;
     static Logger log = Logger.getLogger(JsonServer.class.getName());
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.json.JsonServer");
 
     private JsonServerManager() {
         if (InstanceManager.getDefault(JsonServerPreferences.class) == null) {
-            InstanceManager.store(new JsonServerPreferences(XmlFile.prefsDir() + "networkServices" + File.separator + "JsonServerPreferences.xml"), JsonServerPreferences.class);
+            InstanceManager.store(new JsonServerPreferences(XmlFile.prefsDir() + "networkServices" + File.separator + "JsonServerPreferences.xml"), JsonServerPreferences.class); // NOI18N
         }
         preferences = InstanceManager.getDefault(JsonServerPreferences.class);
     }
@@ -51,6 +47,4 @@ public class JsonServerManager {
     public static JsonServer getJsonServer() {
         return getInstance().getServer();
     }
-
-	
 }
