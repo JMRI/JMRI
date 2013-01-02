@@ -14,9 +14,14 @@ import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.util.ResourceBundle;
 import java.io.File;
 import java.util.List;
 import java.util.ArrayList;
+
+import javax.swing.tree.TreeNode;
 
 import javax.swing.*;
 import java.awt.Rectangle;
@@ -171,12 +176,14 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                         dTree.addTreeSelectionListener(dListener = new TreeSelectionListener() {
                             public void valueChanged(TreeSelectionEvent e) {
                                 if (!dTree.isSelectionEmpty() && dTree.getSelectionPath()!=null &&
+                                  // check that this isn't just a model
+                                 ((TreeNode)dTree.getSelectionPath().getLastPathComponent()).isLeaf()  &&
                                   // can't be just a mfg, has to be at least a family
                                   dTree.getSelectionPath().getPathCount()>2 &&
                                   // can't be a multiple decoder selection
                                   dTree.getSelectionCount()<2) {
                                     log.debug("Selection event with "+dTree.getSelectionPath().toString());
-                                    if (locoBox != null) locoBox.setSelectedIndex(0);
+                                    //if (locoBox != null) locoBox.setSelectedIndex(0);
                                     go2.setEnabled(true);
                                     go2.setRequestFocusEnabled(true);
                                     go2.requestFocus();
@@ -337,6 +344,8 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             case 5 : cv19 = value;
                      finishRead();
                      break;
+            default: log.error("unknown test state " + teststatus);
+                     break;
         }
     }
     
@@ -388,6 +397,15 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             p.add(rosterIdField);
             rosterPanel.add(p, BorderLayout.NORTH);
             rosterIdField.setText(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"));
+            rosterIdField.addFocusListener(
+                new FocusListener() {
+                    public void focusGained(FocusEvent e){}
+                    public void focusLost(FocusEvent e) {
+                        if (checkDuplicate())
+                            JOptionPane.showMessageDialog(progPane,jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ErrorDuplicateID"));
+                    }
+                }
+            );
             saveBasicRoster = new JButton("Save");
             saveBasicRoster.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -466,10 +484,28 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     
     JButton saveBasicRoster;
     
-   void saveRosterEntry(){
+    /**
+     *
+     * @return true if the value in the id JTextField
+     * is a duplicate of some other RosterEntry in the roster
+     */
+    boolean checkDuplicate() {
+        // check its not a duplicate
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, rosterIdField.getText());
+        boolean oops = false;
+        for (int i=0; i<l.size(); i++) {
+            if (re!=l.get(i)) oops =true;
+        }
+        return oops;
+    }
+    
+    void saveRosterEntry(){
         if(rosterIdField.getText().equals(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"))){
+            JOptionPane.showMessageDialog(progPane, jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("PromptFillInID"));
             return;
         }
+        if(checkDuplicate())
+            return;
         re = new RosterEntry();
         re.setDecoderFamily(decoderFile.getFamily());
         re.setDecoderModel(decoderFile.getModel());
@@ -477,7 +513,9 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         re.setDccAddress(""+address);
         re.setLongAddress(!shortAddr);
         re.ensureFilenameExists();
-        re.writeFile(cvModel, iCvModel, variableModel );
+        synchronized(this){
+            re.writeFile(cvModel, iCvModel, variableModel );
+        }
         Roster.instance().addEntry(re);
         Roster.writeRosterFile();
     }
