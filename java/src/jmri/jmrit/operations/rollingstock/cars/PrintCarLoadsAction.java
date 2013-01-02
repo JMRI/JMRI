@@ -48,7 +48,8 @@ public class PrintCarLoadsAction extends AbstractAction {
 
 	public class CarLoadPrintOption {
 
-		static final String tab = "\t";
+		static final String TAB = "\t"; // NOI18N
+		static final String NEW_LINE = "\n";
 
 		// no frame needed for now
 		public CarLoadPrintOption() {
@@ -70,14 +71,13 @@ public class PrintCarLoadsAction extends AbstractAction {
 			}
 
 			// Loop through the Roster, printing as needed
-			String newLine = "\n";
 			CarLoads carLoads = CarLoads.instance();
 			Hashtable<String, List<CarLoad>> list = carLoads.getList();
 			try {
-				String s = Bundle.getString("Type") + tab + Bundle.getString("Load") + tab
+				String s = Bundle.getString("Type") + TAB + Bundle.getString("Load") + TAB
 						+ Bundle.getString("BorderLayoutPriority") + "  "
 						+ Bundle.getString("LoadPickupMessage") + "  "
-						+ Bundle.getString("LoadDropMessage") + newLine;
+						+ Bundle.getString("LoadDropMessage") + NEW_LINE;
 				writer.write(s);
 				Enumeration<String> en = list.keys();
 				while (en.hasMoreElements()) {
@@ -96,14 +96,14 @@ public class PrintCarLoadsAction extends AbstractAction {
 							continue;
 						// print the car type once
 						if (printType) {
-							writer.write(key + newLine);
+							writer.write(key + NEW_LINE);
 							printType = false;
 						}
 						buf.append(tabString(load, Control.max_len_string_attibute));
 						buf.append(tabString(loads.get(j).getPriority(), 5));
 						buf.append(tabString(loads.get(j).getPickupComment(), 27));
 						buf.append(loads.get(j).getDropComment());
-						writer.write(buf.toString() + newLine);
+						writer.write(buf.toString() + NEW_LINE);
 					}
 				}
 				// and force completion of the printing

@@ -31,8 +31,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	File fileLogger;
 	private boolean engLog = false; // when true logging engine movements
 	private boolean carLog = false; // when true logging car movements
-	static final String del = ","; // delimiter
-	static final String esc = "\""; // escape character NOI18N
+	static final String DEL = ","; // delimiter
+	static final String ESC = "\""; // escape character NOI18N
 
 	public RollingStockLogger() {
 	}
@@ -98,11 +98,11 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	}
 
 	private String getHeader() {
-		String header = Bundle.getString("Number") + del + Bundle.getString("Road") + del
-				+ Bundle.getString("Type") + del + Bundle.getString("Load") + del
-				+ Bundle.getString("Location") + del + Bundle.getString("Track") + del
-				+ Bundle.getString("FinalDestination") + del + Bundle.getString("Track") + del
-				+ Bundle.getString("Train") + del + Bundle.getString("Moves") + del
+		String header = Bundle.getString("Number") + DEL + Bundle.getString("Road") + DEL
+				+ Bundle.getString("Type") + DEL + Bundle.getString("Load") + DEL
+				+ Bundle.getString("Location") + DEL + Bundle.getString("Track") + DEL
+				+ Bundle.getString("FinalDestination") + DEL + Bundle.getString("Track") + DEL
+				+ Bundle.getString("Train") + DEL + Bundle.getString("Moves") + DEL
 				+ Bundle.getString("DateAndTime");
 		return header;
 	}
@@ -117,20 +117,20 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 			return;
 
 		String rsType = rs.getType();
-		if (rsType.contains(del)) {
+		if (rsType.contains(DEL)) {
 			log.debug("RS (" + rs.toString() + ") has delimiter in type field: " + rsType);
-			rsType = esc + rs.getType() + esc;
+			rsType = ESC + rs.getType() + ESC;
 		}
 		String rsLocationName = rs.getLocationName();
-		if (rsLocationName.contains(del)) {
+		if (rsLocationName.contains(DEL)) {
 			log.debug("RS (" + rs.toString() + ") has delimiter in location field: "
 					+ rsLocationName);
-			rsLocationName = esc + rs.getLocationName() + esc;
+			rsLocationName = ESC + rs.getLocationName() + ESC;
 		}
 		String rsTrackName = rs.getTrackName();
-		if (rsTrackName.contains(del)) {
+		if (rsTrackName.contains(DEL)) {
 			log.debug("RS (" + rs.toString() + ") has delimiter in track field: " + rsTrackName);
-			rsTrackName = esc + rs.getTrackName() + esc;
+			rsTrackName = ESC + rs.getTrackName() + ESC;
 		}
 		String carLoad = " ";
 		String carFinalDest = " ";
@@ -138,28 +138,28 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (rs.getClass().equals(Car.class)) {
 			Car car = (Car) rs;
 			carLoad = car.getLoad();
-			if (carLoad.contains(del)) {
+			if (carLoad.contains(DEL)) {
 				log.debug("RS (" + rs.toString() + ") has delimiter in car load field: " + carLoad);
-				carLoad = esc + car.getLoad() + esc;
+				carLoad = ESC + car.getLoad() + ESC;
 			}
 			carFinalDest = car.getNextDestinationName();
-			if (carFinalDest.contains(del)) {
+			if (carFinalDest.contains(DEL)) {
 				log.debug("RS (" + rs.toString()
 						+ ") has delimiter in car final destination field: " + carFinalDest); // NOI18N
-				carFinalDest = esc + car.getNextDestinationName() + esc;
+				carFinalDest = ESC + car.getNextDestinationName() + ESC;
 			}
 			carFinalDestTrack = car.getNextDestTrackName();
-			if (carFinalDestTrack.contains(del)) {
+			if (carFinalDestTrack.contains(DEL)) {
 				log.debug("RS (" + rs.toString()
 						+ ") has delimiter in car final destination track field: " // NOI18N
 						+ carFinalDestTrack);
-				carFinalDestTrack = esc + car.getNextDestTrackName() + esc;
+				carFinalDestTrack = ESC + car.getNextDestTrackName() + ESC;
 			}
 		}
 
-		String line = rs.getNumber() + del + rs.getRoad() + del + rsType + del + carLoad + del
-				+ rsLocationName + del + rsTrackName + del + carFinalDest + del + carFinalDestTrack
-				+ del + rs.getTrainName() + del + rs.getMoves() + del + getTime();
+		String line = rs.getNumber() + DEL + rs.getRoad() + DEL + rsType + DEL + carLoad + DEL
+				+ rsLocationName + DEL + rsTrackName + DEL + carFinalDest + DEL + carFinalDestTrack
+				+ DEL + rs.getTrainName() + DEL + rs.getMoves() + DEL + getTime();
 
 		// append line to file
 		fileOut(line);

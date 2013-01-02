@@ -53,14 +53,14 @@ public class CarManagerXml extends OperationsXml {
 	            file = new File(name);
 	        }
 	        // create root element
-	        Element root = new Element("operations-config");
-	        Document doc = newDocument(root, dtdLocation+"operations-cars.dtd");
+	        Element root = new Element("operations-config"); // NOI18N
+	        Document doc = newDocument(root, dtdLocation+"operations-cars.dtd"); // NOI18N
 
 	        // add XSLT processing instruction
 	        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
-	        m.put("type", "text/xsl");
-	        m.put("href", xsltLocation+"operations-cars.xsl");
-	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+	        m.put("type", "text/xsl"); // NOI18N
+	        m.put("href", xsltLocation+"operations-cars.xsl");	// NOI18N
+	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
 	        doc.addContent(0,p);
 	        
 	        //All Comments line feeds have been changed to processor directives
@@ -146,8 +146,8 @@ public class CarManagerXml extends OperationsXml {
         }
         
         CarManager manager = CarManager.instance();
-       	if (root.getChild("options") != null) {
-    		Element e = root.getChild("options");
+       	if (root.getChild(Xml.OPTIONS) != null) {
+    		Element e = root.getChild(Xml.OPTIONS);
     		manager.options(e);
     	}
        	
@@ -233,7 +233,7 @@ public class CarManagerXml extends OperationsXml {
 	public String getOperationsFileName(){
 		return operationsFileName;
 	}
-    private String operationsFileName = "OperationsCarRoster.xml";
+    private String operationsFileName = "OperationsCarRoster.xml"; // NOI18N
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarManagerXml.class.getName());
 

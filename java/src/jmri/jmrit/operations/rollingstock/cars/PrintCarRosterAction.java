@@ -126,7 +126,7 @@ public class PrintCarRosterAction extends AbstractAction {
 				else if (!previousLocation.equals("")
 						&& !car.getLocationName().trim().equals(previousLocation)
 						&& printSpace.isSelected()) {
-					writer.write(newLine);
+					writer.write(NEW_LINE);
 				}
 				previousLocation = car.getLocationName().trim();
 
@@ -175,7 +175,7 @@ public class PrintCarRosterAction extends AbstractAction {
 
 				if (s.length() > numberCharPerLine)
 					s = s.substring(0, numberCharPerLine);
-				writer.write(s + newLine);
+				writer.write(s + NEW_LINE);
 			}
 
 			// and force completion of the printing
@@ -213,7 +213,7 @@ public class PrintCarRosterAction extends AbstractAction {
 				+ (printCarComment.isSelected() ? Bundle.getString("Comment") : "");
 		if (s.length() > numberCharPerLine)
 			s = s.substring(0, numberCharPerLine);
-		writer.write(s + newLine);
+		writer.write(s + NEW_LINE);
 	}
 
 	private String padAttribute(String attribute, int length) {
@@ -250,7 +250,7 @@ public class PrintCarRosterAction extends AbstractAction {
 
 	JButton okayButton = new JButton(Bundle.getString("ButtonOkay"));
 
-	String newLine = "\n";
+	static final String NEW_LINE = "\n"; // NOI18N
 
 	public class CarPrintOptionFrame extends OperationsFrame {
 		PrintCarRosterAction pcr;

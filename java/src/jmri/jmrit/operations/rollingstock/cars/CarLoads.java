@@ -25,8 +25,8 @@ public class CarLoads {
 	protected String _loadName = Bundle.getString("LoadedCar");
 
 	// for property change
-	public static final String LOAD_CHANGED_PROPERTY = "CarLoads Load";
-	public static final String LOAD_NAME_CHANGED_PROPERTY = "CarLoads Name";
+	public static final String LOAD_CHANGED_PROPERTY = "CarLoads Load"; // NOI18N
+	public static final String LOAD_NAME_CHANGED_PROPERTY = "CarLoads Name"; // NOI18N
 
 	private static final int MIN_NAME_LENGTH = 4;
 
@@ -300,7 +300,7 @@ public class CarLoads {
 			if (cl.getName().equals(name))
 				return cl.getLoadType();
 		}
-		return "error";
+		return "error"; // NOI18N
 	}
 
 	/**
@@ -340,7 +340,7 @@ public class CarLoads {
 			if (cl.getName().equals(name))
 				return cl.getPriority();
 		}
-		return "error";
+		return "error"; // NOI18N
 	}
 
 	public void setPickupComment(String type, String name, String comment) {
@@ -465,7 +465,7 @@ public class CarLoads {
 			for (int j = 0; j < loads.size(); j++) {
 				buf.append(loads.get(j).getName());
 				Element carLoad = new Element(Xml.CAR_LOAD);
-				carLoad.setAttribute("name", loads.get(j).getName());
+				carLoad.setAttribute(Xml.NAME, loads.get(j).getName());
 				if (!loads.get(j).getPriority().equals(CarLoad.PRIORITY_LOW)) {
 					carLoad.setAttribute(Xml.PRIORITY, loads.get(j).getPriority());
 					buf.append("P");  // NOI18N must store

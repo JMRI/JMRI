@@ -15,8 +15,8 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class CarOwners {
 	
-	public static final String CAROWNERS_NAME_CHANGED_PROPERTY = "CarOwners Name";
-	public static final String CAROWNERS_LENGTH_CHANGED_PROPERTY = "CarOwners Length";
+	public static final String CAROWNERS_NAME_CHANGED_PROPERTY = "CarOwners Name"; // NOI18N
+	public static final String CAROWNERS_LENGTH_CHANGED_PROPERTY = "CarOwners Length"; // NOI18N
 	
 	private static final int MIN_NAME_LENGTH = 4;
 	

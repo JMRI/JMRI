@@ -39,8 +39,13 @@ public class Xml {
 	static final String PREVIOUS_NEXT_DEST_TRACK_ID = "previousNextDestTrackId"; // NOI18N	
 	static final String RWE_DEST_ID = "rweDestId"; // NOI18N
 	static final String RWE_DEST_TRACK_ID = "rweDestTrackId"; // NOI18N
+	
+	// CarManager.java
+	static final String CARS_OPTIONS = "carsOptions"; // NOI18N
+	static final String COLUMN_WIDTHS = "columnWidths"; // NOI18N backwards compatible TODO remove in 2013 after production release
 
 	// CarManagerXml.java
+	static final String OPTIONS = "options"; // NOI18N
 	static final String CARS = "cars"; // NOI18N
 	static final String ROAD_NAMES = "roadNames"; // NOI18N
 	static final String CAR_TYPES = "carTypes"; // NOI18N

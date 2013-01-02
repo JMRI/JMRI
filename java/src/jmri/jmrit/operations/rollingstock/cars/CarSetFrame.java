@@ -58,7 +58,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		super.initComponents();
 
 		// build menu
-		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
 		
 		// Only show nextDestination if routing enabled
 		pOptional.setVisible(true);

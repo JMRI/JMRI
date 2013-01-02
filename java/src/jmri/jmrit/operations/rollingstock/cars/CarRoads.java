@@ -17,8 +17,8 @@ import jmri.jmrit.operations.setup.Control;
 public class CarRoads {
 
 	private static final String ROADS = Bundle.getString("carRoadNames");
-	public static final String CARROADS_LENGTH_CHANGED_PROPERTY = "CarRoads Length";
-	public static final String CARROADS_NAME_CHANGED_PROPERTY = "CarRoads Name";
+	public static final String CARROADS_LENGTH_CHANGED_PROPERTY = "CarRoads Length"; // NOI18N
+	public static final String CARROADS_NAME_CHANGED_PROPERTY = "CarRoads Name"; // NOI18N
 
 	private static final int MIN_NAME_LENGTH = 4;
 
@@ -48,7 +48,7 @@ public class CarRoads {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] roads = ROADS.split("%%");
+			String[] roads = ROADS.split("%%"); // NOI18N
 			for (int i = 0; i < roads.length; i++)
 				list.add(roads[i]);
 		}

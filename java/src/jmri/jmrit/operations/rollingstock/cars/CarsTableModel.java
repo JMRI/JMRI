@@ -183,7 +183,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		case SORTBYWAIT:
 			return Bundle.getString("Wait");
 		default:
-			return "Error";
+			return "Error";	// NOI18N
 		}
 	}
 
@@ -403,7 +403,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		case EDITCOLUMN:
 			return Bundle.getString("Edit");
 		default:
-			return "unknown";
+			return "unknown";	// NOI18N
 		}
 	}
 
@@ -463,10 +463,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			cef.requestFocus();
 		}
 		if (row >= sysList.size())
-			return "ERROR row " + row;
+			return "ERROR row " + row;	// NOI18N
 		Car c = manager.getById(sysList.get(row));
 		if (c == null)
-			return "ERROR car unknown " + row;
+			return "ERROR car unknown " + row;	// NOI18N
 		switch (col) {
 		case NUMCOLUMN:
 			return c.getNumber();
@@ -513,7 +513,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 				if (!c.getDestinationName().equals(""))
 					s = c.getDestinationName() + " (" + c.getDestinationTrackName() + ")";
 				if (!c.getNextDestinationName().equals(""))
-					s = s + "->" + c.getNextDestinationName();
+					s = s + "->" + c.getNextDestinationName();	// NOI18N
 				if (!c.getNextDestTrackName().equals(""))
 					s = s + " (" + c.getNextDestTrackName() + ")";
 			} else {
@@ -547,7 +547,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			return Bundle.getString("Edit");
 
 		default:
-			return "unknown " + col;
+			return "unknown " + col;	// NOI18N
 		}
 	}
 
@@ -644,7 +644,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue());	// NOI18N
 		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();

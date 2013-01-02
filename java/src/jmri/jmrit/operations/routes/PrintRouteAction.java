@@ -28,7 +28,8 @@ import jmri.jmrit.operations.routes.RouteLocation;
  */
 public class PrintRouteAction  extends AbstractAction {
 	
-	static final String newLine = "\n";
+	static final String NEW_LINE = "\n";
+	static final String TAB = "\t";
 	private static final int MAX_NAME_LENGTH = 20;
 
     public PrintRouteAction(String actionName, boolean preview, Route route) {
@@ -67,18 +68,18 @@ public class PrintRouteAction  extends AbstractAction {
     	
     protected void printRoute(HardcopyWriter writer, Route route) {
     	try {
-    		writer.write(route.getComment()+newLine);
+    		writer.write(route.getComment()+NEW_LINE);
         	String s = Bundle.getString("Location") 
-        	+ "\t    " + Bundle.getString("Direction") 
+        	+ TAB +"    " + Bundle.getString("Direction") 
         	+ " " + Bundle.getString("MaxMoves") 
         	+ " " + Bundle.getString("Pickups")
         	+ " " + Bundle.getString("Drops")
         	+ " " + Bundle.getString("Wait")
-        	+ "\t" + Bundle.getString("Length")     	
-        	+ "\t" + Bundle.getString("Grade")
-        	+ "\t" + Bundle.getString("X")
+        	+ TAB + Bundle.getString("Length")     	
+        	+ TAB + Bundle.getString("Grade")
+        	+ TAB + Bundle.getString("X")
         	+ "    " + Bundle.getString("Y")
-        	+ newLine;
+        	+ NEW_LINE;
         	writer.write(s);
     		List<String> locations = route.getLocationsBySequenceList();
     		for (int i=0; i<locations.size(); i++){
@@ -93,31 +94,31 @@ public class PrintRouteAction  extends AbstractAction {
     			else if (rl.getTrainIconX() < 1000)
     				pad = "  ";
     			s = name 
-    			+ "\t" + rl.getTrainDirectionString() 
-    			+ "\t" + rl.getMaxCarMoves()
-    			+ "\t" + (rl.canPickup()?Bundle.getString("yes"):Bundle.getString("no"))
-    			+ "\t" + (rl.canDrop()?Bundle.getString("yes"):Bundle.getString("no"))
-    			+ "\t" + rl.getWait()
-    			+ "\t" + rl.getMaxTrainLength()
-    			+ "\t" + rl.getGrade()
-    			+ "\t" + rl.getTrainIconX()
+    			+ TAB + rl.getTrainDirectionString() 
+    			+ TAB + rl.getMaxCarMoves()
+    			+ TAB + (rl.canPickup()?Bundle.getString("yes"):Bundle.getString("no"))
+    			+ TAB + (rl.canDrop()?Bundle.getString("yes"):Bundle.getString("no"))
+    			+ TAB + rl.getWait()
+    			+ TAB + rl.getMaxTrainLength()
+    			+ TAB + rl.getGrade()
+    			+ TAB + rl.getTrainIconX()
     			+ pad + rl.getTrainIconY()
-    			+ newLine;
+    			+ NEW_LINE;
     			writer.write(s);		
     		}
-    		s = newLine + Bundle.getString("Location") 
-        	+ "\t" + Bundle.getString("DepartTime") 
-        	+ "\t" + Bundle.getString("Comment")
-        	+ newLine;
+    		s = NEW_LINE + Bundle.getString("Location") 
+        	+ TAB + Bundle.getString("DepartTime") 
+        	+ TAB + Bundle.getString("Comment")
+        	+ NEW_LINE;
     		writer.write(s);
     		for (int i=0; i<locations.size(); i++){
     			RouteLocation rl = route.getLocationById(locations.get(i)); 
     			String name = rl.getName();
     			name = truncate(name);
     			s = name 
-    			+ "\t" + rl.getDepartureTime()
-    			+ "\t" + rl.getComment()
-    			+ newLine;
+    			+ TAB + rl.getDepartureTime()
+    			+ TAB + rl.getComment()
+    			+ NEW_LINE;
     			writer.write(s);
     		}
     	} catch (IOException we) {

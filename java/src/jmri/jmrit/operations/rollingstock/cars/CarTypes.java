@@ -22,8 +22,8 @@ public class CarTypes {
 																					// Descriptive
 	private static final String ARRTYPES = Bundle.getString("carTypeARR");
 	// for property change
-	public static final String CARTYPES_LENGTH_CHANGED_PROPERTY = "CarTypes Length";
-	public static final String CARTYPES_NAME_CHANGED_PROPERTY = "CarTypes Name";
+	public static final String CARTYPES_LENGTH_CHANGED_PROPERTY = "CarTypes Length"; // NOI18N
+	public static final String CARTYPES_NAME_CHANGED_PROPERTY = "CarTypes Name"; // NOI18N
 
 	private static final int MIN_NAME_LENGTH = 4;
 
@@ -53,9 +53,9 @@ public class CarTypes {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] types = TYPES.split("%%");
+			String[] types = TYPES.split("%%"); // NOI18N
 			if (Setup.getCarTypes().equals(Setup.AAR))
-				types = ARRTYPES.split("%%");
+				types = ARRTYPES.split("%%"); // NOI18N
 			for (int i = 0; i < types.length; i++)
 				list.add(types[i]);
 		}
@@ -70,7 +70,7 @@ public class CarTypes {
 			return;
 		jmri.util.StringUtil.sort(types);
 		for (int i = 0; i < types.length; i++) {
-			if (!list.contains(types[i]) && !types[i].equals("Engine")) { // old code used Engine as car type remove
+			if (!list.contains(types[i]) && !types[i].equals("Engine")) {  // NOI18N old code used Engine as car type remove
 				list.add(types[i]);
 			}
 		}
@@ -83,13 +83,13 @@ public class CarTypes {
 	public void changeDefaultNames(String type) {
 		if (type.equals(Setup.DESCRIPTIVE)) {
 			// first replace the types
-			String[] convert = CONVERTTYPES.split("%%");
-			String[] types = TYPES.split("%%");
+			String[] convert = CONVERTTYPES.split("%%"); // NOI18N
+			String[] types = TYPES.split("%%"); // NOI18N
 			for (int i = 0; i < convert.length; i++) {
 				replaceName(convert[i], types[i]);
 			}
 			// remove AAR types
-			String[] aarTypes = ARRTYPES.split("%%");
+			String[] aarTypes = ARRTYPES.split("%%"); // NOI18N
 			for (int i = 0; i < aarTypes.length; i++)
 				list.remove(aarTypes[i]);
 			// add descriptive types
@@ -99,8 +99,8 @@ public class CarTypes {
 			}
 		} else {
 			// first replace the types
-			String[] convert = CONVERTTYPES.split("%%");
-			String[] types = TYPES.split("%%");
+			String[] convert = CONVERTTYPES.split("%%"); // NOI18N
+			String[] types = TYPES.split("%%"); // NOI18N
 			for (int i = 0; i < convert.length; i++) {
 				replaceName(types[i], convert[i]);
 			}
@@ -108,7 +108,7 @@ public class CarTypes {
 			for (int i = 0; i < types.length; i++)
 				list.remove(types[i]);
 			// add AAR types
-			types = ARRTYPES.split("%%");
+			types = ARRTYPES.split("%%"); // NOI18N
 			for (int i = 0; i < types.length; i++) {
 				if (!list.contains(types[i]))
 					list.add(types[i]);

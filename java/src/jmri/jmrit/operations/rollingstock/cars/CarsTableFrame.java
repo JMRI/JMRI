@@ -240,14 +240,14 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new CarRosterMenu("Roster", CarRosterMenu.MAINMENU, this));
+		toolMenu.add(new CarRosterMenu(Bundle.getString("TitleCarRoster"), CarRosterMenu.MAINMENU, this));
 		toolMenu.add(new ModifyLocationsAction());
 		toolMenu.add(new TrainsByCarTypeAction());
 		toolMenu.add(new CarsSetFrameAction(carsTable));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);	// NOI18N
 
 		pack();
 		setVisible(true);

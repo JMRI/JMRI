@@ -33,7 +33,7 @@ public class CarManager extends RollingStockManager{
 	
 	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>(); // stores Kernels by number
 
-	public static final String KERNELLISTLENGTH_CHANGED_PROPERTY = "KernelListLength";
+	public static final String KERNELLISTLENGTH_CHANGED_PROPERTY = "KernelListLength"; // NOI18N
 
     public CarManager() {
     }
@@ -365,11 +365,11 @@ public class CarManager extends RollingStockManager{
 	public void options (Element values) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
 		// get Cars Table Frame attributes
-		Element e = values.getChild("carsOptions");
+		Element e = values.getChild(Xml.CARS_OPTIONS);
 		if (e != null){
 			org.jdom.Attribute a;
 			// backwards compatible TODO remove in 2013 after production release
-	  		if ((a = e.getAttribute("columnWidths")) != null){
+	  		if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null){
              	String[] widths = a.getValue().split(" ");
              	for (int i=0; i<widths.length; i++){
              		try{
@@ -388,7 +388,7 @@ public class CarManager extends RollingStockManager{
      * @return Contents in a JDOM Element
      */
     public Element store() {
-    	Element values = new Element("options");
+    	Element values = new Element(Xml.OPTIONS);
     	// nothing to save!
         return values;
     }

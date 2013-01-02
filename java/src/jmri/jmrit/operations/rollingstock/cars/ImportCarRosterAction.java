@@ -22,7 +22,7 @@ public class ImportCarRosterAction extends AbstractAction {
 	
 	public void actionPerformed(ActionEvent ae) {
 		Thread mb = new ImportCars();
-		mb.setName("ImportCars");
+		mb.setName("Import Cars"); // NOI18N
 		mb.start();
 	}
 

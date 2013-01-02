@@ -39,7 +39,7 @@ public class PrintRoutesAction extends PrintRouteAction {
 		for (int i = 0; i < routes.size(); i++) {
 			Route route = routeManager.getRouteById(routes.get(i));
 			try {
-				writer.write(route.getName() + newLine);
+				writer.write(route.getName() + NEW_LINE);
 				printRoute(writer, route);
 				if (i != routes.size() - 1)
 					writer.write('\f');
