@@ -591,7 +591,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      * <ul>
      * <li>Source
      * </ul>
-     * @param audioBuffer the AudioBuffer to bind to this AudioSource
+     * @param buffer The AudioBuffer to bind to this AudioSource
      * @return true if successful
      */
     abstract boolean bindAudioBuffer(AudioBuffer buffer);
