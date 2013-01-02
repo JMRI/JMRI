@@ -111,7 +111,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		case EDITCOLUMN:
 			return ""; // edit column
 		default:
-			return "unknown";
+			return "unknown"; // NOI18N
 		}
 	}
 
@@ -151,7 +151,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 			ref.requestFocus();
 		}
 		if (row >= sysList.size())
-			return "ERROR unknown " + row;
+			return "ERROR unknown " + row; // NOI18N
 		String locId = sysList.get(row);
 		Route r = manager.getRouteById(locId);
 		if (r == null)
@@ -168,7 +168,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		case EDITCOLUMN:
 			return Bundle.getString("Edit");
 		default:
-			return "unknown " + col;
+			return "unknown " + col; // NOI18N
 		}
 	}
 
@@ -199,7 +199,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			fireTableDataChanged();
 		} else if (e.getPropertyName().equals(RouteManager.LISTLENGTH_CHANGED_PROPERTY)) {

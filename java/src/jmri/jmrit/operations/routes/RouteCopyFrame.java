@@ -65,7 +65,7 @@ public class RouteCopyFrame extends OperationsFrame {
 		getContentPane().add(p1);
 
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_CopyRoute", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_CopyRoute", true); // NOI18N
 
 		pack();
 		if (getWidth() < 400)

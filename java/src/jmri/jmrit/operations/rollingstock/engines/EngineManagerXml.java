@@ -49,45 +49,45 @@ public class EngineManagerXml extends OperationsXml {
 			file = new File(name);
 		}
 		// create root element
-		Element root = new Element("operations-config");
-		Document doc = newDocument(root, dtdLocation+"operations-engines.dtd");
+		Element root = new Element("operations-config"); // NOI18N
+		Document doc = newDocument(root, dtdLocation+"operations-engines.dtd"); // NOI18N
 
 		// add XSLT processing instruction
 		java.util.Map<String, String> m = new java.util.HashMap<String, String>();
-		m.put("type", "text/xsl");
-		m.put("href", xsltLocation+"operations-engines.xsl");
-		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+		m.put("type", "text/xsl"); // NOI18N
+		m.put("href", xsltLocation+"operations-engines.xsl"); // NOI18N
+		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
 		doc.addContent(0,p);
 
 		// add top-level elements
 		EngineManager manager = EngineManager.instance();
 		root.addContent(manager.store());
 		Element values;
-		root.addContent(values = new Element("engineModels"));
+		root.addContent(values = new Element(Xml.ENGINE_MODELS));
 		String[]models = EngineModels.instance().getNames();
 		for (int i=0; i<models.length; i++){
-			String typeNames = models[i]+"%%";
+			String typeNames = models[i]+"%%"; // NOI18N
 			values.addContent(typeNames);
 		}
-		root.addContent(values = new Element("engineTypes"));
+		root.addContent(values = new Element(Xml.ENGINE_TYPES));
 		String[]types = EngineTypes.instance().getNames();
 		for (int i=0; i<types.length; i++){
-			String typeNames = types[i]+"%%";
+			String typeNames = types[i]+"%%"; // NOI18N
 			values.addContent(typeNames);
 		}
-		root.addContent(values = new Element("engineLengths"));
+		root.addContent(values = new Element(Xml.ENGINE_LENGTHS));
 		String[]lengths = EngineLengths.instance().getNames();
 		for (int i=0; i<lengths.length; i++){
-			String lengthNames = lengths[i]+"%%";
+			String lengthNames = lengths[i]+"%%"; // NOI18N
 			values.addContent(lengthNames);
 		}
-		root.addContent(values = new Element("consists"));
+		root.addContent(values = new Element(Xml.CONSIST));
 		List<String> consists = manager.getConsistNameList();
 		for (int i=0; i<consists.size(); i++){
-			String consistNames = consists.get(i)+"%%";
+			String consistNames = consists.get(i)+"%%"; // NOI18N
 			values.addContent(consistNames);
 		}
-		root.addContent(values = new Element("engines"));
+		root.addContent(values = new Element(Xml.ENGINES));
 		// add entries
 		List<String> engineList = manager.getByRoadNameList();
 		for (int i=0; i<engineList.size(); i++) {
@@ -125,36 +125,36 @@ public class EngineManagerXml extends OperationsXml {
         }
         
         EngineManager manager = EngineManager.instance();
-       	if (root.getChild("options") != null) {
-    		Element e = root.getChild("options");
+       	if (root.getChild(Xml.OPTIONS) != null) {
+    		Element e = root.getChild(Xml.OPTIONS);
     		manager.options(e);
     	}
        	
-        if (root.getChild("engineModels")!= null){
-        	String names = root.getChildText("engineModels");
-        	String[] models = names.split("%%");
+        if (root.getChild(Xml.ENGINE_MODELS)!= null){
+        	String names = root.getChildText(Xml.ENGINE_MODELS);
+        	String[] models = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("engine models: "+names);
         	EngineModels.instance().setNames(models);
         }
         
-        if (root.getChild("engineTypes")!= null){
-        	String names = root.getChildText("engineTypes");
-        	String[] types = names.split("%%");
+        if (root.getChild(Xml.ENGINE_TYPES)!= null){
+        	String names = root.getChildText(Xml.ENGINE_TYPES);
+        	String[] types = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("engine types: "+names);
         	EngineTypes.instance().setNames(types);
         }
           
-        if (root.getChild("engineLengths")!= null){
-        	String names = root.getChildText("engineLengths");
-        	String[] lengths = names.split("%%");
+        if (root.getChild(Xml.ENGINE_LENGTHS)!= null){
+        	String names = root.getChildText(Xml.ENGINE_LENGTHS);
+        	String[] lengths = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("engine lengths: "+names);
         	EngineLengths.instance().setNames(lengths);
         }
         
-        if (root.getChild("consists")!= null){
-        	String names = root.getChildText("consists");
+        if (root.getChild(Xml.CONSIST)!= null){
+        	String names = root.getChildText(Xml.CONSIST);
         	if(!names.equals("")){
-        		String[] consistNames = names.split("%%");
+        		String[] consistNames = names.split("%%"); // NOI18N
         		if (log.isDebugEnabled()) log.debug("consists: "+names);
         		for (int i=0; i<consistNames.length; i++){
         			manager.newConsist(consistNames[i]);
@@ -162,9 +162,9 @@ public class EngineManagerXml extends OperationsXml {
         	}
         }
          
-        if (root.getChild("engines") != null) {
+        if (root.getChild(Xml.ENGINES) != null) {
         	@SuppressWarnings("unchecked")
-            List<Element> l = root.getChild("engines").getChildren("engine");
+            List<Element> l = root.getChild(Xml.ENGINES).getChildren(Xml.ENGINE);
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" engines");
             for (int i=0; i<l.size(); i++) {
                 manager.register(new Engine(l.get(i)));
@@ -186,8 +186,8 @@ public class EngineManagerXml extends OperationsXml {
                 //when <?p?> is found.  In that case, insert a \n and skip over those
                 //characters in tempComment.
                 for (int k = 0; k < tempComment.length(); k++) {
-                    if (tempComment.startsWith("<?p?>", k)) {
-                        buf.append("\n");
+                    if (tempComment.startsWith("<?p?>", k)) { // NOI18N
+                        buf.append("\n"); // NOI18N
                         k = k + 4;
                     }
                     else {
@@ -213,7 +213,7 @@ public class EngineManagerXml extends OperationsXml {
 		return operationsFileName;
 	}
  
-    private String operationsFileName = "OperationsEngineRoster.xml";
+    private String operationsFileName = "OperationsEngineRoster.xml"; // NOI18N
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineManagerXml.class.getName());
 

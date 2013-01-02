@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * @version	$Revision$
  */
 public class RouteManager {
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLengthChanged";  // NOI18N
     
 	public RouteManager() {
     }

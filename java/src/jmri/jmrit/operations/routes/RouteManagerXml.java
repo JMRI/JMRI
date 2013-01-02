@@ -46,18 +46,18 @@ public class RouteManagerXml extends OperationsXml {
 			file = new File(name);
 		}
 		// create root element
-		Element root = new Element("operations-config");
-		Document doc = newDocument(root, dtdLocation+"operations-routes.dtd");
+		Element root = new Element("operations-config"); // NOI18N
+		Document doc = newDocument(root, dtdLocation+"operations-routes.dtd"); // NOI18N
 
 		// add XSLT processing instruction
 		java.util.Map<String, String> m = new java.util.HashMap<String, String>();
-		m.put("type", "text/xsl");
-		m.put("href", xsltLocation+"operations-routes.xsl");
-		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+		m.put("type", "text/xsl"); // NOI18N
+		m.put("href", xsltLocation+"operations-routes.xsl"); // NOI18N
+		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
 		doc.addContent(0,p);
 
 		// add top-level elements
-		Element values = new Element("routes");
+		Element values = new Element(Xml.ROUTES);
 		root.addContent(values);
 		// add entries
 		RouteManager manager = RouteManager.instance();
@@ -100,9 +100,9 @@ public class RouteManagerXml extends OperationsXml {
         RouteManager manager = RouteManager.instance();
 
         // decode type, invoke proper processing routine if a decoder file
-        if (root.getChild("routes") != null) {
+        if (root.getChild(Xml.ROUTES) != null) {
         	@SuppressWarnings("unchecked")
-            List<Element> l = root.getChild("routes").getChildren("route");
+            List<Element> l = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" routes");
             for (int i=0; i<l.size(); i++) {
                 manager.register(new Route(l.get(i)));
@@ -128,7 +128,7 @@ public class RouteManagerXml extends OperationsXml {
 		return operationsFileName;
 	}
 	
-    private String operationsFileName = "OperationsRouteRoster.xml";
+    private String operationsFileName = "OperationsRouteRoster.xml"; // NOI18N
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteManagerXml.class.getName());
 

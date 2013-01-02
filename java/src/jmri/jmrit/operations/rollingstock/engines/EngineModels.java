@@ -31,8 +31,8 @@ public class EngineModels {
 	private static final String ENGINETYPES = Bundle.getString("engineModelTypes");
 	private static final String ENGINEWEIGHTS = Bundle.getString("engineModelWeights");
 
-	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
-	public static final String ENGINEMODELS_NAME_CHANGED_PROPERTY = "EngineModelsName";
+	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels"; // NOI18N
+	public static final String ENGINEMODELS_NAME_CHANGED_PROPERTY = "EngineModelsName"; // NOI18N
 
 	protected List<String> _list = new ArrayList<String>();
 	protected Hashtable<String, String> _engineHorsepowerHashTable = new Hashtable<String, String>();
@@ -70,7 +70,7 @@ public class EngineModels {
 
 	public String[] getNames() {
 		if (_list.size() == 0) {
-			String[] types = MODELS.split("%%");
+			String[] types = MODELS.split("%%"); // NOI18N
 			for (int i = 0; i < types.length; i++)
 				_list.add(types[i]);
 		}
@@ -168,16 +168,16 @@ public class EngineModels {
 	}
 
 	private void loadDefaults() {
-		String[] models = MODELS.split("%%");
-		String[] hps = HORSEPOWER.split("%%");
-		String[] lengths = ENGINELENGTHS.split("%%");
-		String[] types = ENGINETYPES.split("%%");
-		String[] weights = ENGINEWEIGHTS.split("%%");
+		String[] models = MODELS.split("%%"); // NOI18N
+		String[] hps = HORSEPOWER.split("%%"); // NOI18N
+		String[] lengths = ENGINELENGTHS.split("%%"); // NOI18N
+		String[] types = ENGINETYPES.split("%%"); // NOI18N
+		String[] weights = ENGINEWEIGHTS.split("%%"); // NOI18N
 		if (models.length != hps.length || models.length != lengths.length
 				|| models.length != types.length || models.length != weights.length) {
 			log.error("Defaults do not have the right number of items, " + "models="
-					+ models.length + " hps=" + hps.length + " lengths=" + lengths.length
-					+ " types=" + types.length);
+					+ models.length + " hps=" + hps.length + " lengths=" + lengths.length // NOI18N
+					+ " types=" + types.length); // NOI18N
 			return;
 		}
 

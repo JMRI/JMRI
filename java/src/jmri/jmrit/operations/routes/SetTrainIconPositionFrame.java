@@ -147,7 +147,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         getContentPane().add(pControl);
     	
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates", true); // NOI18N
     	
        	// setup buttons
 		addButtonAction(placeButton);

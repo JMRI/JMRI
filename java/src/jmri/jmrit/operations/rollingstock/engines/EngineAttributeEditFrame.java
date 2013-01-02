@@ -41,7 +41,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 	javax.swing.JTextField addTextBox = new javax.swing.JTextField(Control.max_len_string_attibute);
 
 	// property change
-	public static final String DISPOSE = "dispose";
+	public static final String DISPOSE = "dispose"; // NOI18N
 
 	public EngineAttributeEditFrame() {
 	}
@@ -95,7 +95,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 		addButtonAction(replaceButton);
 
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true); // NOI18N
 
 		pack();
 		if (getWidth() < 300)
@@ -189,7 +189,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 		}
 		if (_comboboxName == EngineEditFrame.LENGTH) {
 			// convert from inches to feet if needed
-			if (addItem.endsWith("\"")) {
+			if (addItem.endsWith("\"")) { // NOI18N
 				addItem = addItem.substring(0, addItem.length() - 1);
 				try {
 					double inches = Double.parseDouble(addItem);
@@ -202,7 +202,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 					return;
 				}
 			}
-			if (addItem.endsWith("cm")) {
+			if (addItem.endsWith("cm")) { // NOI18N
 				addItem = addItem.substring(0, addItem.length() - 2);
 				try {
 					double cm = Double.parseDouble(addItem);

@@ -49,7 +49,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 	public class CarLoadPrintOption {
 
 		static final String TAB = "\t"; // NOI18N
-		static final String NEW_LINE = "\n";
+		static final String NEW_LINE = "\n";	// NOI18N
 
 		// no frame needed for now
 		public CarLoadPrintOption() {
@@ -85,7 +85,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 					List<CarLoad> loads = list.get(key);
 					boolean printType = true;
 					for (int j = 0; j < loads.size(); j++) {
-						StringBuffer buf = new StringBuffer("\t");
+						StringBuffer buf = new StringBuffer(TAB);
 						String load = loads.get(j).getName();
 						// don't print out default load or empty
 						if ((load.equals(carLoads.getDefaultEmptyName()) || load.equals(carLoads

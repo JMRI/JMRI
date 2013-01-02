@@ -30,7 +30,7 @@ public class EngineManager extends RollingStockManager{
 
 	protected Hashtable<String, Consist> _consistHashTable = new Hashtable<String, Consist>();   	// stores Consists by number
 
-	public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength";
+	public static final String CONSISTLISTLENGTH_CHANGED_PROPERTY = "ConsistListLength"; // NOI18N
 
     public EngineManager() {
     }
@@ -227,11 +227,11 @@ public class EngineManager extends RollingStockManager{
 	public void options (org.jdom.Element values) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
 		// get Engines Table Frame attributes
-		Element e = values.getChild("enginesOptions");
+		Element e = values.getChild(Xml.ENGINES_OPTIONS);
 		if (e != null){
 			//TODO this code is here for backwards compatibility, remove after next major release
 			org.jdom.Attribute a;
-	  		if ((a = e.getAttribute("columnWidths")) != null){
+	  		if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null){
              	String[] widths = a.getValue().split(" ");
              	for (int i=0; i<widths.length; i++){
              		try{
@@ -250,7 +250,7 @@ public class EngineManager extends RollingStockManager{
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
-    	Element values = new Element("options");
+    	Element values = new Element(Xml.OPTIONS);
     	// nothing to store!
         return values;
     }

@@ -175,7 +175,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		case DELETECOLUMN:
 			return Bundle.getString("Delete");
 		default:
-			return "unknown";
+			return "unknown"; // NOI18N
 		}
 	}
 
@@ -243,10 +243,10 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	public Object getValueAt(int row, int col) {
 		if (row >= list.size())
-			return "ERROR unknown " + row;
+			return "ERROR unknown " + row; // NOI18N
 		RouteLocation rl = _route.getLocationById(list.get(row));
 		if (rl == null)
-			return "ERROR unknown route location " + row;
+			return "ERROR unknown route location " + row; // NOI18N
 		switch (col) {
 		case IDCOLUMN:
 			return rl.getId();
@@ -299,7 +299,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		case DELETECOLUMN:
 			return Bundle.getString("Delete");
 		default:
-			return "unknown " + col;
+			return "unknown " + col; // NOI18N
 		}
 	}
 
@@ -561,7 +561,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();

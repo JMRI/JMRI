@@ -17,8 +17,8 @@ import jmri.jmrit.operations.setup.Control;
 public class EngineLengths {
 
 	private static final String LENGTHS = Bundle.getString("engineDefaultLengths");
-	public static final String ENGINELENGTHS_CHANGED_PROPERTY = "EngineLengths";
-	public static final String ENGINELENGTHS_NAME_CHANGED_PROPERTY = "EngineLengthsName";
+	public static final String ENGINELENGTHS_CHANGED_PROPERTY = "EngineLengths"; // NOI18N
+	public static final String ENGINELENGTHS_NAME_CHANGED_PROPERTY = "EngineLengthsName"; // NOI18N
 
 	public EngineLengths() {
 	}
@@ -46,7 +46,7 @@ public class EngineLengths {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] lengths = LENGTHS.split("%%");
+			String[] lengths = LENGTHS.split("%%"); // NOI18N
 			for (int i = 0; i < lengths.length; i++)
 				list.add(lengths[i]);
 		}

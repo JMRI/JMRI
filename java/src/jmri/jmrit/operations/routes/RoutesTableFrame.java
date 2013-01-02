@@ -92,7 +92,7 @@ public class RoutesTableFrame extends OperationsFrame {
 		setJMenuBar(menuBar);
 
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true); // NOI18N
 
 		pack();
 		setSize(730, getHeight());

@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class ImportEngines extends Thread {
 
-	static final String newLine = "\n";
+	static final String NEW_LINE = "\n"; // NOI18N
 
 	private static String defaultEngineType = Bundle.getString("engineDefaultType");
 	private static String defaultEngineHp = Bundle.getString("engineDefaultHp");
@@ -57,14 +57,14 @@ public class ImportEngines extends Thread {
 
 		// create a status frame
 		JPanel ps = new JPanel();
-		jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame("Import engines");
+		jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getString("ImportEngines"));
 		fstatus.setLocationRelativeTo(null);
 		fstatus.setSize(200, 100);
 
 		ps.add(textLine);
 		ps.add(lineNumber);
 		fstatus.getContentPane().add(ps);
-		textLine.setText("Line number: ");
+		textLine.setText(Bundle.getString("LineNumber"));
 		textLine.setVisible(true);
 		lineNumber.setVisible(true);
 		fstatus.setVisible(true);
@@ -86,7 +86,7 @@ public class ImportEngines extends Thread {
 		String[] inputLine;
 
 		// does the file name end with .csv?
-		if (f.getAbsolutePath().endsWith(".csv")) {
+		if (f.getAbsolutePath().endsWith(".csv")) { // NOI18N
 			log.info("Using comma as delimiter for import cars");
 			comma = true;
 		}
@@ -112,7 +112,7 @@ public class ImportEngines extends Thread {
 			if (log.isDebugEnabled()) {
 				log.debug("Import: " + line);
 			}
-			if (line.equalsIgnoreCase("comma")) {
+			if (line.equalsIgnoreCase("comma")) { // NOI18N
 				log.info("Using comma as delimiter for import engines");
 				comma = true;
 				continue;
@@ -121,7 +121,7 @@ public class ImportEngines extends Thread {
 			if (comma)
 				inputLine = parseCommaLine(line, 9);
 			else
-				inputLine = line.split("\\s+");
+				inputLine = line.split("\\s+"); // NOI18N
 
 			if (inputLine.length < 1 || line.equals("")) {
 				log.debug("Skipping blank line");
@@ -143,7 +143,7 @@ public class ImportEngines extends Thread {
 				engineTrack = "";
 
 				log.debug("Checking engine number (" + engineNumber + ") road (" + engineRoad
-						+ ") model (" + engineModel + ") length (" + engineLength + ")");
+						+ ") model (" + engineModel + ") length (" + engineLength + ")"); // NOI18N
 				if (engineNumber.length() > Control.max_len_string_road_number) {
 					JOptionPane.showMessageDialog(null, MessageFormat.format(
 							Bundle.getString("EngineRoadNumberTooLong"), new Object[] {
@@ -178,7 +178,7 @@ public class ImportEngines extends Thread {
 									+ " "
 									+ engineNumber
 									+ ")"
-									+ newLine
+									+ NEW_LINE
 									+ MessageFormat.format(Bundle.getString("modelNameNotExist"),
 											new Object[] { engineModel }),
 							Bundle.getString("engineAddModel"), JOptionPane.YES_NO_CANCEL_OPTION);
@@ -208,7 +208,7 @@ public class ImportEngines extends Thread {
 				Engine e = manager.getByRoadAndNumber(engineRoad, engineNumber);
 				if (e != null) {
 					log.info("Can not add, engine number (" + engineNumber + ") road ("
-							+ engineRoad + ") already exists");
+							+ engineRoad + ") already exists"); // NOI18N
 				} else {
 
 					if (inputLine.length > base + 5) {
@@ -327,7 +327,7 @@ public class ImportEngines extends Thread {
 						}
 					}
 					log.debug("Add engine (" + engineRoad + " " + engineNumber + ") owner ("
-							+ engineOwner + ") built (" + engineBuilt + ") location ("
+							+ engineOwner + ") built (" + engineBuilt + ") location (" // NOI18N
 							+ engineLocation + ", " + engineTrack + ")");
 					Engine engine = manager.newEngine(engineRoad, engineNumber);
 					engine.setModel(engineModel);
@@ -424,17 +424,17 @@ public class ImportEngines extends Thread {
 
 	protected String[] parseCommaLine(String line, int arraySize) {
 		String[] outLine = new String[arraySize];
-		if (line.contains("\"")) {
+		if (line.contains("\"")) { // NOI18N
 			// log.debug("line number "+lineNum+" has escape char \"");
 			String[] parseLine = line.split(",");
 			int j = 0;
 			for (int i = 0; i < parseLine.length; i++) {
-				if (parseLine[i].contains("\"")) {
+				if (parseLine[i].contains("\"")) { // NOI18N
 					StringBuilder sb = new StringBuilder(parseLine[i++]);
 					sb.deleteCharAt(0); // delete the "
 					outLine[j] = sb.toString();
 					while (i < parseLine.length) {
-						if (parseLine[i].contains("\"")) {
+						if (parseLine[i].contains("\"")) { // NOI18N
 							sb = new StringBuilder(parseLine[i]);
 							sb.deleteCharAt(sb.length() - 1); // delete the "
 							outLine[j] = outLine[j] + "," + sb.toString();
@@ -463,16 +463,16 @@ public class ImportEngines extends Thread {
 			if (f.isDirectory())
 				return true;
 			String name = f.getName();
-			if (name.matches(".*\\.txt"))
+			if (name.matches(".*\\.txt")) // NOI18N
 				return true;
-			if (name.matches(".*\\.csv"))
+			if (name.matches(".*\\.csv")) // NOI18N
 				return true;
 			else
 				return false;
 		}
 
 		public String getDescription() {
-			return "Text & CSV Documents (*.txt, *.csv)";
+			return Bundle.getString("Text&CSV");
 		}
 	}
 

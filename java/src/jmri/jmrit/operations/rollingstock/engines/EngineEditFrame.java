@@ -259,7 +259,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		// JMenu toolMenu = new JMenu("Tools");
 		// menuBar.add(toolMenu);
 		// setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_LocomotivesAdd", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_LocomotivesAdd", true); // NOI18N
 
 		// get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);

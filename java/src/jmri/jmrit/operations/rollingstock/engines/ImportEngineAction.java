@@ -20,7 +20,7 @@ public class ImportEngineAction extends AbstractAction {
 	
 	public void actionPerformed(ActionEvent ae) {
 		Thread mb = new ImportEngines();
-		mb.setName("ImportEngines");
+		mb.setName("Import Engines"); // NOI18N
 		mb.start();
 	}
 

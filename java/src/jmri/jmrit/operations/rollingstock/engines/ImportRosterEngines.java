@@ -38,7 +38,7 @@ public class ImportRosterEngines extends Thread {
 	   	ps.add (textEngine);
 	   	ps.add(textId);
 	   	fstatus.getContentPane().add (ps);
-		textEngine.setText("Add engine: ");
+		textEngine.setText(Bundle.getString("AddEngine"));
         textEngine.setVisible(true);
         textId.setVisible(true);
 		fstatus.setVisible (true);

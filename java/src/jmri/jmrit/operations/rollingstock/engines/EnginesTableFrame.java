@@ -188,12 +188,12 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new EngineRosterMenu("Roster", EngineRosterMenu.MAINMENU, this));
+		toolMenu.add(new EngineRosterMenu(Bundle.getString("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
 		toolMenu.add(new NceConsistEngineAction(Bundle.getString("MenuItemNceSync"), this));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true); // NOI18N
 
 		pack();
 		setVisible(true);
@@ -309,7 +309,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			numEngines.setText(Integer.toString(engineManager.getNumEntries()));
 		}

@@ -278,7 +278,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		case EDITCOLUMN:
 			return Bundle.getString("Edit");
 		default:
-			return "unknown";
+			return "unknown"; // NOI18N
 		}
 	}
 
@@ -338,11 +338,11 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			eef.requestFocus();
 		}
 		if (row >= sysList.size())
-			return "ERROR row " + row;
+			return "ERROR row " + row; // NOI18N
 		String engineId = sysList.get(row);
 		Engine eng = manager.getById(engineId);
 		if (eng == null)
-			return "ERROR engine unknown " + row;
+			return "ERROR engine unknown " + row; // NOI18N
 		switch (col) {
 		case NUMCOLUMN:
 			return eng.getNumber();
@@ -394,7 +394,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		case EDITCOLUMN:
 			return Bundle.getString("Edit");
 		default:
-			return "unknown " + col;
+			return "unknown " + col; // NOI18N
 		}
 	}
 
@@ -478,7 +478,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();

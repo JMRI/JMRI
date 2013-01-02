@@ -36,7 +36,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements
 		super.initComponents();
 
 		// build menu
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true); // NOI18N
 
 		// disable location unknown, return when empty, final destination fields
 		locationUnknownCheckBox.setVisible(false);

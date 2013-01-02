@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.MessageFormat;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -22,6 +23,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  */
 public class ExportEngines extends XmlFile {
 	
+	static final String ESC = "\""; // escape character NOI18N
 	private String del = ","; 	// delimiter
 	
 	public ExportEngines(){
@@ -90,37 +92,38 @@ public class ExportEngines extends XmlFile {
         	engineModel = engine.getModel();
         	if (engineModel.contains(del)){
         		log.debug("Engine ("+engine.getRoad()+" "+engine.getNumber()+") has delimiter in model field: "+engineModel);
-        		engineModel = "\""+engine.getModel()+"\"";
+        		engineModel = ESC+engine.getModel()+ESC;
         	}
         	engineLocationName = engine.getLocationName();
         	if (engineLocationName.contains(del)){
         		log.debug("Engine ("+engine.getRoad()+" "+engine.getNumber()+") has delimiter in location field: "+engineLocationName);
-        		engineLocationName = "\""+engine.getLocationName()+"\"";
+        		engineLocationName = ESC+engine.getLocationName()+ESC;
         	}
         	engineTrackName = engine.getTrackName();
         	if (engineTrackName.contains(del)){
         		log.debug("Engine ("+engine.getRoad()+" "+engine.getNumber()+") has delimiter in track field: "+engineTrackName);
-        		engineTrackName = "\""+engine.getTrackName()+"\"";
+        		engineTrackName = ESC+engine.getTrackName()+ESC;
         	}
            	// only export value field if value has been set.
         	value = "";
         	if (!engine.getValue().equals("")){
-        		value = del + "\""+engine.getValue()+"\"";
+        		value = del + ESC+engine.getValue()+ESC;
         	}
 			line = engine.getNumber() + del + engine.getRoad() + del
 					+ engineModel + del + engine.getLength() + del
 					+ engine.getOwner() + del + engine.getBuilt() + del
-					+ engineLocationName + ",-," + engineTrackName
+					+ engineLocationName + ",-," + engineTrackName // NOI18N
 					+ value;
 			fileOut.println(line);
         }
 		fileOut.flush();
 		fileOut.close();
 		log.info("Exported "+engineList.size()+" engines to file "+defaultOperationsFilename());
-		JOptionPane.showMessageDialog(null,"Exported "+engineList.size()+" engines to file "+defaultOperationsFilename(),
-				"Export complete",
-				JOptionPane.INFORMATION_MESSAGE);
-
+		JOptionPane.showMessageDialog(
+				null,
+				MessageFormat.format(Bundle.getString("ExportedEnginesToFile"), new Object[] {
+						engineList.size(), defaultOperationsFilename() }),
+				Bundle.getString("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
     }
     
     // Operation files always use the same directory
@@ -132,7 +135,7 @@ public class ExportEngines extends XmlFile {
     public static String getOperationsFileName(){
     	return OperationsFileName;
     }
-    private static String OperationsFileName = "ExportOperationsEngineRoster.csv";
+    private static String OperationsFileName = "ExportOperationsEngineRoster.csv"; // NOI18N
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ExportEngines.class.getName());
 

@@ -62,7 +62,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	JComboBox locationBox = LocationManager.instance().getComboBox();
 
 	public static final String NAME = Bundle.getString("Name");
-	public static final String DISPOSE = "dispose";
+	public static final String DISPOSE = "dispose"; // NOI18N
 
 	public RouteEditFrame() {
 		super();
@@ -178,7 +178,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		toolMenu.add(new PrintRouteAction(Bundle.getString("MenuItemPreview"), true, _route));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true); // NOI18N
 
 		// get notified if combo box gets modified
 		LocationManager.instance().addPropertyChangeListener(this);
@@ -364,7 +364,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateComboBoxes();
 		}

@@ -46,6 +46,9 @@ public class PrintEngineRosterAction extends AbstractAction {
 	 */
 	boolean isPreview;
 	EnginesTableFrame panel;
+	
+	static final String NEW_LINE = "\n"; // NOI18N
+	static final String TAB = "\t"; // NOI18N
 
 	public void actionPerformed(ActionEvent e) {
 
@@ -60,8 +63,6 @@ public class PrintEngineRosterAction extends AbstractAction {
 		}
 
 		// Loop through the Roster, printing as needed
-		String newLine = "\n";
-		String tab = "\t";
 		String number;
 		String road;
 		String model;
@@ -78,11 +79,11 @@ public class PrintEngineRosterAction extends AbstractAction {
 		try {
 			// header
 			String s = Bundle.getString("Number")
-					+ tab
+					+ TAB
 					+ Bundle.getString("Road")
-					+ tab
+					+ TAB
 					+ Bundle.getString("Model")
-					+ tab
+					+ TAB
 					+ "     "
 					+ Bundle.getString("Type")
 					+ "      "
@@ -98,7 +99,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 							: "")
 					+ ((!panel.sortByValue.isSelected() && !panel.sortByRfid.isSelected()) ? " "
 							+ Bundle.getString("Built") : "") + " " + Bundle.getString("Location")
-					+ newLine;
+					+ NEW_LINE;
 			writer.write(s);
 			for (int i = 0; i < engines.size(); i++) {
 				Engine engine = manager.getById(engines.get(i));
@@ -133,7 +134,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 						+ location;
 				if (s.length() > numberCharPerLine)
 					s = s.substring(0, numberCharPerLine);
-				writer.write(s + newLine);
+				writer.write(s + NEW_LINE);
 			}
 
 			// and force completion of the printing

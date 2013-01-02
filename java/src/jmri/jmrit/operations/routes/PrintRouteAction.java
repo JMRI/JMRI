@@ -28,8 +28,8 @@ import jmri.jmrit.operations.routes.RouteLocation;
  */
 public class PrintRouteAction  extends AbstractAction {
 	
-	static final String NEW_LINE = "\n";
-	static final String TAB = "\t";
+	static final String NEW_LINE = "\n"; // NOI18N
+	static final String TAB = "\t"; // NOI18N
 	private static final int MAX_NAME_LENGTH = 20;
 
     public PrintRouteAction(String actionName, boolean preview, Route route) {

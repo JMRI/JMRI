@@ -19,8 +19,8 @@ public class EngineTypes {
 	private static final String TYPES = Bundle.getString("engineDefaultTypes");
 
 	// for property change
-	public static final String ENGINETYPES_LENGTH_CHANGED_PROPERTY = "EngineTypesLength";
-	public static final String ENGINETYPES_NAME_CHANGED_PROPERTY = "EngineTypesName";
+	public static final String ENGINETYPES_LENGTH_CHANGED_PROPERTY = "EngineTypesLength"; // NOI18N
+	public static final String ENGINETYPES_NAME_CHANGED_PROPERTY = "EngineTypesName"; // NOI18N
 
 	public EngineTypes() {
 	}
@@ -48,7 +48,7 @@ public class EngineTypes {
 
 	public String[] getNames() {
 		if (list.size() == 0) {
-			String[] types = TYPES.split("%%");
+			String[] types = TYPES.split("%%"); // NOI18N
 			for (int i = 0; i < types.length; i++)
 				list.add(types[i]);
 		}

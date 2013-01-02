@@ -15,8 +15,9 @@ public class Xml {
 	static final String CAR_TYPES = "carTypes"; // NOI18N
 	static final String DIR = "dir"; // NOI18N
 	static final String COMMENT = "comment"; // NOI18N
-//	static final String SCHEDULE = "schedule"; // NOI18N
 	static final String TRACK = "track"; // NOI18N
+	static final String TYPE = "type"; // NOI18N
+	static final String LENGTH = "length"; // NOI18N
 	
 	static final String TRUE = "true"; // NOI18N
 	static final String FALSE = "false"; // NOI18N
@@ -24,9 +25,6 @@ public class Xml {
 	// RollingStock.java
 	static final String ROAD_NUMBER = "roadNumber"; // NOI18N
 	static final String ROAD_NAME = "roadName"; // NOI18N
-	static final String TYPE = "type"; // NOI18N
-//	static final String ROAD = "road"; // NOI18N
-	static final String LENGTH = "length"; // NOI18N
 	static final String COLOR = "color"; // NOI18N
 	static final String WEIGHT = "weight"; // NOI18N
 	static final String WEIGHT_TONS = "weightTons"; // NOI18N
