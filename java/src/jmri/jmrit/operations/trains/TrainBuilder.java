@@ -402,6 +402,7 @@ public class TrainBuilder extends TrainCommon {
 									Integer.toString(stagingTracksTerminate.size()) }));
 			if (stagingTracksTerminate.size() > 1 && Setup.isPromptToStagingEnabled()) {
 				terminateStageTrack = PromptToStagingDialog();
+				startTime = new Date();	// reset build time
 			} else
 				for (int i = 0; i < stagingTracksTerminate.size(); i++) {
 					terminateStageTrack = terminateLocation.getTrackById(stagingTracksTerminate
@@ -443,6 +444,7 @@ public class TrainBuilder extends TrainCommon {
 							departLocation.getName(), Integer.toString(stagingTracks.size()) }));
 			if (stagingTracks.size() > 1 && Setup.isPromptFromStagingEnabled()) {
 				departStageTrack = PromptFromStagingDialog();
+				startTime = new Date();	// restart build timer
 				if (departStageTrack == null)
 					throw new BuildFailedException(MessageFormat.format(
 							Bundle.getString("buildErrorStagingEmpty"),
@@ -3377,6 +3379,17 @@ public class TrainBuilder extends TrainCommon {
 			car.setNextDestination(car.getPreviousNextDestination());
 			car.setNextDestTrack(car.getPreviousNextDestTrack());
 			car.setDestination(null, null);
+			// is car sitting on a FIFO or LIFO track?
+			if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
+				addLine(buildReport,
+						SEVEN,
+						MessageFormat.format(Bundle.getString("buildBypassCarServiceOrder"), new Object[] {
+								car.toString(), car.getTrack().getName(),
+								car.getTrack().getServiceOrder() }));
+				// move car id in front of current pointer so car is no longer used on this pass
+				carList.remove(car.getId());
+				carList.add(carIndex, car.getId());
+			}
 			addLine(buildReport,
 					FIVE,
 					MessageFormat.format(Bundle.getString("buildNoDestForCar"),
@@ -3773,11 +3786,12 @@ public class TrainBuilder extends TrainCommon {
 		if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
 			addLine(buildReport,
 					SEVEN,
-					MessageFormat.format(Bundle.getString("buildRemoveCarServiceOrder"), new Object[] {
+					MessageFormat.format(Bundle.getString("buildBypassCarServiceOrder"), new Object[] {
 							car.toString(), car.getTrack().getName(),
 							car.getTrack().getServiceOrder() }));
+			// move car id in front of current pointer so car is no longer used on this pass
 			carList.remove(car.getId());
-			carIndex--; // removed car from list, so backup pointer
+			carList.add(carIndex, car.getId());
 		}
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getString("buildNoDestForCar"),
 				new Object[] { car.toString() }));
