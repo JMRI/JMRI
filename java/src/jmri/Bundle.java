@@ -2,6 +2,15 @@
 
 package jmri;
 
+import edu.umd.cs.findbugs.annotations.CheckReturnValue;
+import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+
+@DefaultAnnotation({NonNull.class, CheckReturnValue.class})
+
+@net.jcip.annotations.Immutable
+
 /**
  * Provides standard access for resource bundles in a package.
  * 
@@ -14,6 +23,16 @@ package jmri;
  *<p>
  * Only a single package-scope method is exposed from the class, 
  * forcing all requests for strings to be a the package level.
+ *<p>
+ * To add this to a new package, copy exactly a 
+ * subclass file such as jmri.jmrit.Bundle, and change three places:
+ *<OL>
+ *<li>The import statement at the top
+ *<li>The extends clause in the class definition statement
+ *<li>The resource pathname assigned to the name variable, which
+ *     must be set to null if there are no local resources.
+ *</ol>
+ *
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -34,7 +53,7 @@ package jmri;
  */
 public class Bundle {
 
-    private static Bundle b = new Bundle("jmri.NamedBeanBundle");  // NOI18N
+    private final static String name = "jmri.NamedBeanBundle";  // NOI18N
 
     /**
      * Provides access to a string for a given 
@@ -107,11 +126,10 @@ public class Bundle {
     // the following is different from the method in subclasses because
     // this is the root of the search tree
     protected String retry(String key) { throw new java.util.MissingResourceException("Resource not found", this.getClass().toString(), key); } // NOI18N
-    protected Bundle(String name) { this.name = name; }   
-    protected Bundle() { this.name = null; } 
+
+    private final static Bundle b = new Bundle();
+    @Nullable protected String bundleName() {return name; }
     protected jmri.Bundle getBundle() { return b; }
-    protected String bundleName() {return name; }
-    private String name;
     
     // Can get pathname of ctor class (to auto-generate BundleName) via getClass().getPackage()
 }

@@ -2,6 +2,17 @@
 
 package jmri.jmrit;
 
+import edu.umd.cs.findbugs.annotations.CheckReturnValue;
+import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+
+@DefaultAnnotation({NonNull.class, CheckReturnValue.class})
+@SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS",justification="Desired pattern is repeated class names with package-level access to members")
+
+@net.jcip.annotations.Immutable
+
 /**
  * Provides standard access for resource bundles in a package.
  * 
@@ -14,7 +25,7 @@ package jmri.jmrit;
  */
 public class Bundle extends jmri.Bundle {
 
-    protected static Bundle b = new Bundle("jmri.jmrit.Bundle"); // NOI18N
+    private final static String name = "jmri.jmrit.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
@@ -61,15 +72,11 @@ public class Bundle extends jmri.Bundle {
         return b.handleGetMessage(key, subs);
     }
    
-    protected Bundle(String name) { this.name = name;}   
-    protected Bundle() {} 
-    @Override
-    protected jmri.Bundle getBundle() { return b; }
-    @Override
-    protected String bundleName() {return name; }
-    @Override
-    protected String retry(String key) { return super.getBundle().handleGetString(key); }
-    private String name;
+    private final static Bundle b = new Bundle();
+    @Override @Nullable protected String bundleName() {return name; }
+    @Override protected jmri.Bundle getBundle() { return b; }
+    @Override protected String retry(String key) { return super.getBundle().handleGetString(key); }
+
 }
 
 /* @(#)Bundle.java */
