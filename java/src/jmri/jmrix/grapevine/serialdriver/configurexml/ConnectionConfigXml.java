@@ -82,7 +82,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     /**
      * Service routine to look through "parameter" child elements
      * to find a particular parameter value
-     * @param node Element containing parameters
+     * @param e Element containing parameters
      * @param name name of desired parameter
      * @return String value
      */

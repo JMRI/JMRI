@@ -170,7 +170,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * Check entries on either side to see if they are set monotonically.
      * If not, adjust.
      *
-     * @param i number (index) of the entry
+     * @param modifiedStepIndex number (index) of the entry
      * @param value  new value
      */
     void forceMonotonic(int modifiedStepIndex, int value) {

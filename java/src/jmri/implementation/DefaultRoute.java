@@ -768,8 +768,8 @@ public class DefaultRoute extends AbstractNamedBean
     }
     
     /**
-     * Turnout has changed, check to see if this fires
-     * @return will fire route if appropriate
+     * Turnout has changed, check to see if this fires.
+     * Will fire route if appropriate
      */
      void checkTurnout(int newState, int oldState, Turnout t) {
         if (isVetoed()) return; // skip setting route
@@ -909,7 +909,7 @@ public class DefaultRoute extends AbstractNamedBean
      * Internal method to check whether
      * operation of the route has been vetoed by a sensor
      * or turnout setting.
-     * @returns true if veto, i.e. don't fire route; false if no veto, OK to fire
+     * @return true if veto, i.e. don't fire route; false if no veto, OK to fire
      */
     boolean isVetoed() {
         log.debug("check for veto");

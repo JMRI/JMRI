@@ -269,7 +269,7 @@ class LocoFile extends XmlFile {
      * writing out changes to the RosterEntry information only.
      *
      * @param pFile Destination file. This file is overwritten if it exists.
-     * @param pRootElement Root element of the existing JDOM tree containing
+     * @param existingElement Root element of the existing JDOM tree containing
      *                           the CV and variable contents
      * @param newLocomotive Element from RosterEntry providing name, etc, information
      */

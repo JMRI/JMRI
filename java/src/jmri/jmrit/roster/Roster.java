@@ -583,7 +583,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * <P>
      * Note that this does not
      * clear any existing entries.
-     * @name filename of roster file
+     * @param name filename of roster file
      */
     @SuppressWarnings("unchecked")
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 

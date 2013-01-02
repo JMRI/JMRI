@@ -1194,7 +1194,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         /**
          * Sets which blocks must be inactive for the signal not to be set at a stop aspect
-         * @param blocks
          */
         void setAutoTurnouts(Hashtable<Turnout, Integer> turnouts){
             log.debug(destination.getDisplayName() + " setAutoTurnouts Called");
@@ -1300,7 +1299,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         /**
          * Sets which signalMasts must be at Danager for the signal not to be set at a stop aspect
-         * @param blocks
          */
         void setAutoMasts(Hashtable<SignalMast, String> newAutoMasts, boolean overright){
             if(log.isDebugEnabled())
