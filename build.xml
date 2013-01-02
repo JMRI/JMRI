@@ -917,6 +917,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
+           package="yes"
            use="true"
            windowtitle="JMRI API">
             <packageset dir="${source}" defaultexcludes="yes">
@@ -976,7 +977,7 @@
            additionalparam="-breakiterator"
            author="true"
            version="false"
-           public="yes"
+           package="yes"
            use="true"
            windowtitle="JMRI API">
             <packageset dir="${source}" defaultexcludes="yes">
