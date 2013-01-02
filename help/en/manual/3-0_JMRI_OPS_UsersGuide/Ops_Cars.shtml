@@ -33,8 +33,8 @@
 </div>
 
 <hr>
-<p>This window is opened from the <strong>Location</strong> Window <strong>Tools</strong> menu, <strong>Show Cars.</strong></p>
-<p>The cars window allows you to edit your car roster. You can enter a car's number, road, type, length. The program will automatically calculate the car's weight based on length and the scale you are modeling. Optionally the car's color, build date, load and owner can be added. You may want to switch a group of cars as a unit, then you create a &quot;kernel&quot;. You can assign any number of cars to a kernel but the type of the first car assigned will be used by the program to determine if the kernel is allowed at a location. The entire length of the kernel is used to determine if the cars in the kernel will fit. Note that the program also includes space for the car's couplers when calculating the length of a kernel.(group of similar cars)</p>
+<p>This window is opened from the DecoderPro&reg; Tools Menu, or Operations Menu; and alternatively from <strong>Location</strong> Window <strong>Tools</strong> menu, <strong>Show Cars: and various Windows Opertions Menus.</strong></p>
+<p>The cars window allows you to edit your car roster. or add a car by entering a car's number, road, type, length. The program will automatically calculate the car's weight based on length and the scale you are modeling. Optionally the car's color, build date, load and owner can be added. You may want to switch a group of cars as a unit, then you may create a &quot;kernel&quot;. You can assign any number of cars to a kernel but the type of the first car assigned will be used by the program to determine if the kernel is allowed at a location. The entire length of the kernel is used to determine if the cars in the kernel will fit. Note that the program also includes space for the car's couplers when calculating the length of a kernel.(group of similar cars)</p>
 <p>The complete roster of cars is displayed. At the bottom of the page is a series of radio buttons that allow you to select the sort order.</p>
 <p>
   <input type="button" name="button2" id="button2" value="Add"> 
@@ -86,7 +86,7 @@ opens the<strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></str
         </strong></li>
         <li><strong>Print</strong><br>
           <br>
-        <img src="images/Ops_carRoster_printOptions.png" width="260" height="326" alt="print options">        </li>
+        <img src="images/Ops_carRoster_printOptions.png" width="290" height="477" alt="options"></li>
         <li><strong>Print Preview</strong><br>
           Print options dialog displays, 
           <input type="button" name="button" id="button" value="OK"> 
@@ -94,7 +94,10 @@ opens the<strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></str
         </li>
       </ul>
     </li>
-    <li><strong><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></strong></li>
+    <blockquote>
+      <p><img src="Ops_Cars_Ops_location_setCars_0000.png" alt="set cars" height="650" width="500"></p>
+    </blockquote>
+    <li><strong><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></strong><img src="Ops_Cars_Ops_location_setCars.png" alt="set cars" height="650" width="500"></li>
     <li><strong><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></strong></li>
     <li><strong><a href="Ops_Locations_setCars.shtml">Set Cars</a></strong></li>
  </ul>

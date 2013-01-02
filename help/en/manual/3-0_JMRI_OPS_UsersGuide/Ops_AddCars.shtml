@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright ($Author: dat7719 $) 2009 -->
 <!-- $Id: Ops_AddCars.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
-<title>Comprehensive Programmer - Advanced Features Pane</title>
+<title>Operations Add Cars</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -131,7 +131,7 @@ and the <a href="Ops_CarAttributes.shtml">Edit Color</a> dialog box will display
         </select>
 state of the car. Select E for empty or  L for loaded. Press
 <input type="submit" name="button6" id="button6" value="Edit">
-to create your own car loads, but there are  restrictions. Only sidings with <a href="Ops_shedule.shtml">Schedules</a> can  load or unload cars with loads that you've created. It is also suggested  that you use a format similar to L(commodity) to describe your loads.  For example a load of tools could be entered as L(Tools).</p></td>
+to create your own car loads, but there are  restrictions. Only sidings with <a href="Ops_schedule.shtml">Schedules</a> can  load or unload cars with loads that you've created. It is also suggested  that you use a format similar to L(commodity) to describe your loads.  For example a load of tools could be entered as L(Tools).</p></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarKernel.png" width="471" height="93" alt="Car Kernel"></td>
@@ -186,7 +186,7 @@ for  this car.</td>
 <p align="center"><img src="images/Ops_Cars06.png" width="922" height="421" alt="Cars with roster"></p>
 <p align="left">Now if you desire to change a value in a <strong>Cars </strong>attributes that is already in the Cars roster, press the 
   <input type="submit" name="button2" id="button2" value="Edit"> 
-to the right of that car.  The <strong>Edit Car</strong> window will open, it is almost identical to the <strong>Add Car</strong> window. </p>
+to the right of that car.  The<strong><a href="Ops_AddCars.shtml"> Edit Car</a></strong>window will open, it is almost identical to the <strong>Add Car</strong> window. </p>
 <p align="left"><img src="images/Ops_EditCar.png" width="467" height="765" alt="Edit Car"></p>
 <p align="left">You may now</p>
 <p align="left">

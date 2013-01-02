@@ -38,7 +38,8 @@ in the <a href="Ops_Cars.shtml">Cars</a> window if you want to keep your changes
 <p><img src="images/Ops_car_release.png" width="406" height="122" alt="release"></p>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td valign="top"><img src="images/Ops_location_setCars.png" width="500" height="650" alt="set cars"></td>
+    <td valign="top"><p>&nbsp;</p>
+    <p><img src="images/Ops_location_setCars.png" width="500" height="650" alt="set cars"></p></td>
     <td><p><strong>Status</strong>      </p>
       <p><strong>
         <input type="checkbox" name="checkbox4" id="checkbox4">

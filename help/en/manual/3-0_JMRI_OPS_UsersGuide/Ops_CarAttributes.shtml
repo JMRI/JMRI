@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright ($Author: dat7719 $) 2009 -->
 <!-- $Id: Ops_CarAttributes.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
-<title>Comprehensive Programmer - Advanced Features Pane</title>
+<title>Operations-Car Attributes</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -40,6 +40,14 @@
   <input type="submit" name="button4" id="button4" value="Replace">
   the available attributes for a car.</p>
 <p><img src="images/Ops_EditAttributes.png" width="254" height="163" alt="Edit Car Attributes"></p>
+<p><strong>Tools menu</strong></p>
+<blockquote>
+  <p><strong>Show the number of cars with this attribute</strong></p>
+  <p><img src="images/Ops_EditAttributes_number.png" width="300" height="180" alt="Edit"></p>
+  <p><strong>Delete unused attributes.</strong></p>
+  <p>Prompt to delete unused attributes.</p>
+  <p><img src="images/Ops_DeleteAttributes.png" width="292" height="122" alt="delete"></p>
+</blockquote>
 <p>
   <input type="submit" name="button5" id="button5" value="Add">
   To add a new car attribute, enter the desired text in the text box and  press 
