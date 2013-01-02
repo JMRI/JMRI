@@ -78,11 +78,7 @@
         <label>Decoder ID 1</label>
       </variable>
     </variables>
-    <resets>
-      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
-      <factReset label="HARD RESET all CVs reset to default for the current Sound Project or CVset" CV="8" default="0"/>
-      <factReset label="HARD RESET for LGB operation (14 speed steps,pulse chain)" CV="8" default="9"/>
-    </resets>
+    <xi:include href="http://jmri.org/xml/decoders/zimo/factReset-v32.xml"/>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneAccelDecel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneShuntUncouple.xml"/>
