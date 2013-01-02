@@ -49,7 +49,7 @@ public class VSDOptionsDialog extends JDialog {
 	opsTrainComboBox = TrainManager.instance().getComboBox();
 	this.add(opsTrainComboBox);
 
-	JButton closeButton = new JButton(Bundle.getString("ButtonClose"));
+	JButton closeButton = new JButton(Bundle.getString("ButtonOK"));
 	closeButton.setEnabled(true);
 	closeButton.setToolTipText(Bundle.getString("ToolTipCloseDialog"));
 	closeButton.addActionListener(new java.awt.event.ActionListener() {
