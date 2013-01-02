@@ -551,7 +551,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * within it based on this object's protocol.
      * The Class Block implementationd defers to its associated Reporter, if it exists.
      *
-     * @param String rep : String to be parsed
+     * @param rep String to be parsed
      * @return LocoAddress address parsed from string, or null if this Block isn't associated
      *         with a Reporter, or is associated with a Reporter that is not also a
      *         PhysicalLocationReporter
@@ -571,7 +571,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * within it based on this object's protocol.
      * The Class Block implementationd defers to its associated Reporter, if it exists.
      *
-     * @param String rep : String to be parsed
+     * @param rep String to be parsed
      * @return PhysicalLocationReporter.Direction direction parsed from string, or null if 
      *         this Block isn't associated with a Reporter, or is associated with a Reporter 
      *         that is not also a PhysicalLocationReporter
@@ -601,7 +601,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      * Does not use the parameter s
      * Defers actual work to the helper methods in class PhysicalLocation
      *
-     * @param String s : (this parameter is ignored)
+     * @param s (this parameter is ignored)
      * @return PhysicalLocation : this Block's location.
      */
     public PhysicalLocation getPhysicalLocation(String s) {
