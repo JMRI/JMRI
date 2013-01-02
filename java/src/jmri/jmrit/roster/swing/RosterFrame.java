@@ -98,14 +98,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         this.buildWindow();
     }
     int clickDelay = 0;
-    JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getString("Edit"));
-    JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem(Bundle.getString("ProgrammingOnMain"));
-    JRadioButtonMenuItem contextService = new JRadioButtonMenuItem(Bundle.getString("ProgrammingTrack"));
+    JRadioButtonMenuItem contextEdit = new JRadioButtonMenuItem(Bundle.getMessage("Edit"));
+    JRadioButtonMenuItem contextOps = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingOnMain"));
+    JRadioButtonMenuItem contextService = new JRadioButtonMenuItem(Bundle.getMessage("ProgrammingTrack"));
     JTextPane dateUpdated = new JTextPane();
     JTextPane dccAddress = new JTextPane();
     JTextPane decoderFamily = new JTextPane();
     JTextPane decoderModel = new JTextPane();
-    JRadioButton edit = new JRadioButton(Bundle.getString("EditOnly"));
+    JRadioButton edit = new JRadioButton(Bundle.getMessage("EditOnly"));
     JTextPane filename = new JTextPane();
     JLabel firstHelpLabel;
     //int firstTimeAddedEntry = 0x00;
@@ -121,16 +121,16 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     ProgModeSelector modePanel = new ProgServiceModeComboBox();
     JTextPane model = new JTextPane();
     JLabel operationsModeProgrammerLabel = new JLabel();
-    JRadioButton ops = new JRadioButton(Bundle.getString("ProgrammingOnMain"));
+    JRadioButton ops = new JRadioButton(Bundle.getMessage("ProgrammingOnMain"));
     ConnectionConfig opsModeProCon = null;
     JTextPane owner = new JTextPane();
     UserPreferencesManager p;
-    JButton prog1Button = new JButton(Bundle.getString("Program"));
-    JButton prog2Button = new JButton(Bundle.getString("BasicProgrammer"));
+    JButton prog1Button = new JButton(Bundle.getMessage("Program"));
+    JButton prog2Button = new JButton(Bundle.getMessage("BasicProgrammer"));
     ActionListener programModeListener;
     ProgDebugger programmer = new ProgDebugger();
-    String programmer1 = Bundle.getString("Comprehensive");
-    String programmer2 = Bundle.getString("Basic");
+    String programmer1 = Bundle.getMessage("Comprehensive");
+    String programmer2 = Bundle.getMessage("Basic");
     java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3Bundle");
     //current selected loco
     RosterEntry re;
@@ -139,17 +139,17 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     JPanel rosterDetailPanel = new JPanel();
     PropertyChangeListener rosterEntryUpdateListener;
     JSplitPane rosterGroupSplitPane;
-    JButton rosterMedia = new JButton(Bundle.getString("LabelsAndMedia"));
+    JButton rosterMedia = new JButton(Bundle.getMessage("LabelsAndMedia"));
     RosterTable rtable;
     RosterEntry[] selectedRosterEntries = null;
     ConnectionConfig serModeProCon = null;
-    JRadioButton service = new JRadioButton(Bundle.getString("ProgrammingTrack"));
+    JRadioButton service = new JRadioButton(Bundle.getMessage("ProgrammingTrack"));
     JLabel serviceModeProgrammerLabel = new JLabel();
     JLabel statusField = new JLabel();
     Dimension summaryPaneDim = new Dimension(0, 170);
     protected ListSelectionListener tableSelectionListener;
-    JButton throttleLabels = new JButton(Bundle.getString("ThrottleLabels"));
-    JButton throttleLaunch = new JButton(Bundle.getString("Throttle"));
+    JButton throttleLabels = new JButton(Bundle.getMessage("ThrottleLabels"));
+    JButton throttleLaunch = new JButton(Bundle.getMessage("Throttle"));
 
     void additionsToToolBar() {
         //This value may return null if the DP3 window has been called from a the traditional JMRI menu frame
@@ -639,7 +639,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     protected void exportLoco() {
-        ExportRosterItem act = new ExportRosterItem(Bundle.getString("Export"), this, re);
+        ExportRosterItem act = new ExportRosterItem(Bundle.getMessage("Export"), this, re);
         act.actionPerformed(null);
     }
 
@@ -952,7 +952,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         cL.ipadx = 3;
         cL.anchor = GridBagConstraints.EAST;
         cL.insets = new Insets(0, 0, 0, 15);
-        JLabel row0Label = new JLabel(Bundle.getString("FieldID") + ":", JLabel.LEFT);
+        JLabel row0Label = new JLabel(Bundle.getMessage("FieldID") + ":", JLabel.LEFT);
         gbLayout.setConstraints(row0Label, cL);
         panel.setLayout(gbLayout);
         panel.add(row0Label);
@@ -964,7 +964,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         formatTextAreaAsLabel(id);
         panel.add(id);
         cL.gridy = 1;
-        JLabel row1Label = new JLabel(Bundle.getString("FieldRoadName") + ":", JLabel.LEFT);
+        JLabel row1Label = new JLabel(Bundle.getMessage("FieldRoadName") + ":", JLabel.LEFT);
         gbLayout.setConstraints(row1Label, cL);
         panel.add(row1Label);
         cR.gridy = 1;
@@ -973,7 +973,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         formatTextAreaAsLabel(roadName);
         panel.add(roadName);
         cL.gridy = 2;
-        JLabel row2Label = new JLabel(Bundle.getString("FieldRoadNumber") + ":");
+        JLabel row2Label = new JLabel(Bundle.getMessage("FieldRoadNumber") + ":");
         gbLayout.setConstraints(row2Label, cL);
         panel.add(row2Label);
         cR.gridy = 2;
@@ -982,7 +982,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         formatTextAreaAsLabel(roadNumber);
         panel.add(roadNumber);
         cL.gridy = 3;
-        JLabel row3Label = new JLabel(Bundle.getString("FieldManufacturer") + ":");
+        JLabel row3Label = new JLabel(Bundle.getMessage("FieldManufacturer") + ":");
         gbLayout.setConstraints(row3Label, cL);
         panel.add(row3Label);
         cR.gridy = 3;
@@ -991,7 +991,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         formatTextAreaAsLabel(mfg);
         panel.add(mfg);
         cL.gridy = 4;
-        JLabel row4Label = new JLabel(Bundle.getString("FieldOwner") + ":");
+        JLabel row4Label = new JLabel(Bundle.getMessage("FieldOwner") + ":");
         gbLayout.setConstraints(row4Label, cL);
         panel.add(row4Label);
         cR.gridy = 4;
@@ -1000,7 +1000,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         formatTextAreaAsLabel(owner);
         panel.add(owner);
         cL.gridy = 5;
-        JLabel row5Label = new JLabel(Bundle.getString("FieldModel") + ":");
+        JLabel row5Label = new JLabel(Bundle.getMessage("FieldModel") + ":");
         gbLayout.setConstraints(row5Label, cL);
         panel.add(row5Label);
         cR.gridy = 5;
@@ -1009,7 +1009,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         formatTextAreaAsLabel(model);
         panel.add(model);
         cL.gridy = 6;
-        JLabel row6Label = new JLabel(Bundle.getString("FieldDCCAddress") + ":");
+        JLabel row6Label = new JLabel(Bundle.getMessage("FieldDCCAddress") + ":");
         gbLayout.setConstraints(row6Label, cL);
         panel.add(row6Label);
         cR.gridy = 6;
@@ -1022,7 +1022,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         cL.gridy = 8;
         cR.gridy = 8;
         cL.gridy = 9;
-        JLabel row9Label = new JLabel(Bundle.getString("FieldDecoderFamily") + ":");
+        JLabel row9Label = new JLabel(Bundle.getMessage("FieldDecoderFamily") + ":");
         gbLayout.setConstraints(row9Label, cL);
         panel.add(row9Label);
         cR.gridy = 9;
@@ -1031,7 +1031,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         formatTextAreaAsLabel(decoderFamily);
         panel.add(decoderFamily);
         cL.gridy = 10;
-        JLabel row10Label = new JLabel(Bundle.getString("FieldDecoderModel") + ":");
+        JLabel row10Label = new JLabel(Bundle.getMessage("FieldDecoderModel") + ":");
         gbLayout.setConstraints(row10Label, cL);
         panel.add(row10Label);
         cR.gridy = 10;
@@ -1042,7 +1042,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         cL.gridy = 11;
         cR.gridy = 11;
         cL.gridy = 12;
-        JLabel row12Label = new JLabel(Bundle.getString("FieldFilename") + ":");
+        JLabel row12Label = new JLabel(Bundle.getMessage("FieldFilename") + ":");
         gbLayout.setConstraints(row12Label, cL);
         panel.add(row12Label);
         cR.gridy = 12;
@@ -1053,7 +1053,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         cL.gridy = 13;
         /*
          * JLabel row13Label = new
-         * JLabel(Bundle.getString("FieldDateUpdated")+":");
+         * JLabel(Bundle.getMessage("FieldDateUpdated")+":");
          * gbLayout.setConstraints(row13Label,cL); panel.add(row13Label);
          */
         cR.gridy = 13;
@@ -1292,7 +1292,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected void startIdentifyLoco() {
         if (InstanceManager.programmerManagerInstance() == null || !InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             log.error("Identify loco called when no service mode programmer is available");
-            JOptionPane.showMessageDialog(null, Bundle.getString("IdentifyError"));
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("IdentifyError"));
             return;
         }
         // start identifying a loco
@@ -1365,8 +1365,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected void statusBar() {
         addToStatusBox(serviceModeProgrammerLabel, null);
         addToStatusBox(operationsModeProgrammerLabel, null);
-        JLabel programmerStatusLabel = new JLabel(Bundle.getString("ProgrammerStatus"));
-        statusField.setText(Bundle.getString("Idle"));
+        JLabel programmerStatusLabel = new JLabel(Bundle.getMessage("ProgrammerStatus"));
+        statusField.setText(Bundle.getMessage("Idle"));
         addToStatusBox(programmerStatusLabel, statusField);
     }
 
@@ -1467,16 +1467,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (serModeProCon != null) {
             if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
                 serviceModeProgrammerLabel.setText(
-                    java.text.MessageFormat.format(
-                        Bundle.getString("ServiceModeProgOnline"),
-                        new Object[] {serModeProCon.getConnectionName()})
+                        Bundle.getMessage("ServiceModeProgOnline",serModeProCon.getConnectionName())
                 );
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
                 serviceModeProgrammerLabel.setText(
-                    java.text.MessageFormat.format(
-                        Bundle.getString("ServiceModeProgOffline"),
-                        new Object[] {serModeProCon.getConnectionName()})
+                        Bundle.getMessage("ServiceModeProgOffline",serModeProCon.getConnectionName())
                 );
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
@@ -1488,7 +1484,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", true);
             }
         } else {
-            serviceModeProgrammerLabel.setText(Bundle.getString("NoServiceProgrammerAvailable"));
+            serviceModeProgrammerLabel.setText(Bundle.getMessage("NoServiceProgrammerAvailable"));
             serviceModeProgrammerLabel.setForeground(Color.red);
             if (oldServMode != null) {
                 contextService.setEnabled(false);
@@ -1501,16 +1497,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (opsModeProCon != null) {
             if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
                 operationsModeProgrammerLabel.setText(
-                    java.text.MessageFormat.format(
-                        Bundle.getString("OpsModeProgOnline"),
-                        new Object[] {opsModeProCon.getConnectionName()})
+                        Bundle.getMessage("OpsModeProgOnline",opsModeProCon.getConnectionName())
                 );
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
                 operationsModeProgrammerLabel.setText(
-                    java.text.MessageFormat.format(
-                        Bundle.getString("OpsModeProgOffline"),
-                        new Object[] {opsModeProCon.getConnectionName()})
+                        Bundle.getMessage("OpsModeProgOffline",opsModeProCon.getConnectionName())
                 );
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
@@ -1522,7 +1514,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogops", "setEnabled", true);
             }
         } else {
-            operationsModeProgrammerLabel.setText(Bundle.getString("NoOpsProgrammerAvailable"));
+            operationsModeProgrammerLabel.setText(Bundle.getMessage("NoOpsProgrammerAvailable"));
             operationsModeProgrammerLabel.setForeground(Color.red);
             if (oldOpsMode != null) {
                 contextOps.setEnabled(false);

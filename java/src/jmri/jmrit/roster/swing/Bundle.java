@@ -41,19 +41,6 @@ public class Bundle extends jmri.jmrit.roster.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static String getString(String key) {
-        return b.handleGetString(key);
-    }
-    /**
-     * Provides access to a string for a given 
-     * key from the package resource bundle or 
-     * parent.
-     *<p>
-     * Note that this is intentionally package-local
-     * access.
-     * @param key Bundle key to be translated
-     * @return Internationalized text
-     */
     static String getMessage(String key) {
         return b.handleGetMessage(key);
     }
