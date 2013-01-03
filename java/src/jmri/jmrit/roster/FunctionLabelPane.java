@@ -66,30 +66,30 @@ public class FunctionLabelPane extends javax.swing.JPanel {
         int nextx = 0;
         
         // first column
-        add(new JLabel(Bundle.getString("FunctionButtonN")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonN")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonLabel")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonLabel")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonLockable")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonLockable")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonImageOff")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonImageOff")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonImageOn")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonImageOn")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonShunterFn")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonShunterFn")), cL);
         cL.gridx++;
         // second column
-        add(new JLabel(Bundle.getString("FunctionButtonN")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonN")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonLabel")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonLabel")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonLockable")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonLockable")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonImageOff")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonImageOff")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonImageOn")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonImageOn")), cL);
         cL.gridx++;
-        add(new JLabel(Bundle.getString("FunctionButtonShunterFn")), cL);
+        add(new JLabel(Bundle.getMessage("FunctionButtonShunterFn")), cL);
         cL.gridx++;
         
         cL.gridx = 0;
@@ -115,7 +115,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     		_imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
     		_imageFilePath[i].setDropFolder(XmlFile.resourcesDir());
     		_imageFilePath[i].setBackground(new Color(0,0,0,0));
-    		_imageFilePath[i].setToolTipText(Bundle.getString("FunctionButtonRosterImageToolTip"));
+    		_imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
     		_imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
             add(_imageFilePath[i], cL);
             cL.gridx++;
@@ -123,7 +123,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     		_imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
     		_imagePressedFilePath[i].setDropFolder(XmlFile.resourcesDir());
     		_imagePressedFilePath[i].setBackground(new Color(0,0,0,0));
-    		_imagePressedFilePath[i].setToolTipText(Bundle.getString("FunctionButtonPressedRosterImageToolTip"));
+    		_imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
     		_imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
     		add(_imagePressedFilePath[i], cL);    		
             cL.gridx++;

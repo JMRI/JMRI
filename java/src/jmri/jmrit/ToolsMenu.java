@@ -34,12 +34,12 @@ public class ToolsMenu extends JMenu {
 
         super();
 
-        setText(Bundle.getString("MenuTools"));
+        setText(Bundle.getMessage("MenuTools"));
 
-        JMenu programmerMenu = new JMenu(Bundle.getString("MenuProgrammers"));
+        JMenu programmerMenu = new JMenu(Bundle.getMessage("MenuProgrammers"));
         programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction());
-        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getString("MenuItemDecoderProServiceProgrammer")));
-        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getString("MenuItemDecoderProOpsModeProgrammer")));
+        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("MenuItemDecoderProServiceProgrammer")));
+        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("MenuItemDecoderProOpsModeProgrammer")));
         programmerMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
         add(programmerMenu);
 
@@ -48,46 +48,46 @@ public class ToolsMenu extends JMenu {
         	programmerMenu.setEnabled(false);
         }
         
-        JMenu tableMenu = new JMenu(Bundle.getString("MenuTables"));
+        JMenu tableMenu = new JMenu(Bundle.getMessage("MenuTables"));
         
         tableMenu.add(tableMenu);
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemTurnoutTable"), "jmri.jmrit.beantable.TurnoutTableTabAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemSensorTable"), "jmri.jmrit.beantable.SensorTableTabAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemLightTable"), "jmri.jmrit.beantable.LightTableTabAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTurnoutTable"), "jmri.jmrit.beantable.TurnoutTableTabAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSensorTable"), "jmri.jmrit.beantable.SensorTableTabAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLightTable"), "jmri.jmrit.beantable.LightTableTabAction"));
         
-        JMenu signalMenu = new JMenu(Bundle.getString("MenuSignals"));
-        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemSignalTable"), "jmri.jmrit.beantable.SignalHeadTableAction"));
-        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemSignalMastTable"), "jmri.jmrit.beantable.SignalMastTableAction"));
-        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemSignalGroupTable"), "jmri.jmrit.beantable.SignalGroupTableAction"));
-        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemSignalMastLogicTable"), "jmri.jmrit.beantable.SignalMastLogicTableAction"));
+        JMenu signalMenu = new JMenu(Bundle.getMessage("MenuSignals"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalTable"), "jmri.jmrit.beantable.SignalHeadTableAction"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalMastTable"), "jmri.jmrit.beantable.SignalMastTableAction"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalGroupTable"), "jmri.jmrit.beantable.SignalGroupTableAction"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalMastLogicTable"), "jmri.jmrit.beantable.SignalMastLogicTableAction"));
         
         tableMenu.add(signalMenu);
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemReporterTable"), "jmri.jmrit.beantable.ReporterTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemMemoryTable"), "jmri.jmrit.beantable.MemoryTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemRouteTable"), "jmri.jmrit.beantable.RouteTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemLRouteTable"), "jmri.jmrit.beantable.LRouteTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemLogixTable"), "jmri.jmrit.beantable.LogixTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getString("MenuItemOBlockTable")));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemBlockTable"), "jmri.jmrit.beantable.BlockTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemSectionTable"), "jmri.jmrit.beantable.SectionTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemTransitTable"), "jmri.jmrit.beantable.TransitTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemAudioTable"), "jmri.jmrit.beantable.AudioTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getString("MenuItemIdTagTable"), "jmri.jmrit.beantable.IdTagTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemReporterTable"), "jmri.jmrit.beantable.ReporterTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemMemoryTable"), "jmri.jmrit.beantable.MemoryTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRouteTable"), "jmri.jmrit.beantable.RouteTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLRouteTable"), "jmri.jmrit.beantable.LRouteTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixTable"), "jmri.jmrit.beantable.LogixTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable")));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemBlockTable"), "jmri.jmrit.beantable.BlockTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSectionTable"), "jmri.jmrit.beantable.SectionTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTransitTable"), "jmri.jmrit.beantable.TransitTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemAudioTable"), "jmri.jmrit.beantable.AudioTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemIdTagTable"), "jmri.jmrit.beantable.IdTagTableAction"));
         add(tableMenu);
 
-        JMenu throttleMenu = new JMenu(Bundle.getString("MenuThrottles"));
-        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getString("MenuItemNewThrottle" )));
-        throttleMenu.add(new jmri.jmrit.throttle.ThrottlesListAction(Bundle.getString("MenuItemThrottlesList" )));
+        JMenu throttleMenu = new JMenu(Bundle.getMessage("MenuThrottles"));
+        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getMessage("MenuItemNewThrottle" )));
+        throttleMenu.add(new jmri.jmrit.throttle.ThrottlesListAction(Bundle.getMessage("MenuItemThrottlesList" )));
         throttleMenu.addSeparator();
-        throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottlesLayoutAction(Bundle.getString("MenuItemSaveThrottleLayout" )));
-        throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction(Bundle.getString("MenuItemLoadThrottleLayout")));
+        throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemSaveThrottleLayout" )));
+        throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemLoadThrottleLayout")));
         throttleMenu.addSeparator();
-        throttleMenu.add(new jmri.jmrit.throttle.StoreDefaultXmlThrottlesLayoutAction(Bundle.getString("MenuItemSaveAsDefaultThrottleLayout" )));
-        throttleMenu.add(new jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction(Bundle.getString("MenuItemLoadDefaultThrottleLayout" )));
+        throttleMenu.add(new jmri.jmrit.throttle.StoreDefaultXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemSaveAsDefaultThrottleLayout" )));
+        throttleMenu.add(new jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemLoadDefaultThrottleLayout" )));
         //throttleMenu.addSeparator();
-        //throttleMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(Bundle.getString("MenuItemThrottlesPreferences"))); // now in tabbed preferences
+        //throttleMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(Bundle.getMessage("MenuItemThrottlesPreferences"))); // now in tabbed preferences
         throttleMenu.add(new JSeparator());
-        throttleMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction(Bundle.getString("MenuItemStartWiThrottle")));
+        throttleMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction(Bundle.getMessage("MenuItemStartWiThrottle")));
         add(throttleMenu);
 
 	// disable the throttle menu if there is no throttle Manager
@@ -95,7 +95,7 @@ public class ToolsMenu extends JMenu {
             throttleMenu.setEnabled(false);
         }
 
-        AbstractAction consistAction= new jmri.jmrit.consisttool.ConsistToolAction(Bundle.getString("MenuItemConsistTool"));
+        AbstractAction consistAction= new jmri.jmrit.consisttool.ConsistToolAction(Bundle.getMessage("MenuItemConsistTool"));
 
         add(consistAction);
 
@@ -105,26 +105,26 @@ public class ToolsMenu extends JMenu {
         }
 
 
-        JMenu clockMenu = new JMenu(Bundle.getString("MenuClocks"));
-        clockMenu.add(new jmri.jmrit.simpleclock.SimpleClockAction(Bundle.getString("MenuItemSetupClock")));
-        clockMenu.add(new jmri.jmrit.nixieclock.NixieClockAction(Bundle.getString("MenuItemNixieClock")));
-        clockMenu.add(new jmri.jmrit.lcdclock.LcdClockAction(Bundle.getString("MenuItemLcdClock")));
-        clockMenu.add(new jmri.jmrit.analogclock.AnalogClockAction(Bundle.getString("MenuItemAnalogClock")));
+        JMenu clockMenu = new JMenu(Bundle.getMessage("MenuClocks"));
+        clockMenu.add(new jmri.jmrit.simpleclock.SimpleClockAction(Bundle.getMessage("MenuItemSetupClock")));
+        clockMenu.add(new jmri.jmrit.nixieclock.NixieClockAction(Bundle.getMessage("MenuItemNixieClock")));
+        clockMenu.add(new jmri.jmrit.lcdclock.LcdClockAction(Bundle.getMessage("MenuItemLcdClock")));
+        clockMenu.add(new jmri.jmrit.analogclock.AnalogClockAction(Bundle.getMessage("MenuItemAnalogClock")));
 	add(clockMenu);
 
         add(new JSeparator());
 
-        add(new jmri.jmrit.powerpanel.PowerPanelAction(Bundle.getString("MenuItemPowerControl")));
-        add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction(Bundle.getString("MenuItemTurnoutControl")));
-        add(new jmri.jmrit.blockboss.BlockBossAction(Bundle.getString("MenuItemSimpleSignal")));
-        add(new jmri.jmrit.sensorgroup.SensorGroupAction(Bundle.getString("MenuItemSensorGroup")));
-    	add(new jmri.jmrit.speedometer.SpeedometerAction(Bundle.getString("MenuItemSpeedometer")));
-        add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(Bundle.getString("MenuItemLightControl")));
-        add(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getString("MenuItemDispatcher")));
+        add(new jmri.jmrit.powerpanel.PowerPanelAction(Bundle.getMessage("MenuItemPowerControl")));
+        add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction(Bundle.getMessage("MenuItemTurnoutControl")));
+        add(new jmri.jmrit.blockboss.BlockBossAction(Bundle.getMessage("MenuItemSimpleSignal")));
+        add(new jmri.jmrit.sensorgroup.SensorGroupAction(Bundle.getMessage("MenuItemSensorGroup")));
+    	add(new jmri.jmrit.speedometer.SpeedometerAction(Bundle.getMessage("MenuItemSpeedometer")));
+        add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(Bundle.getMessage("MenuItemLightControl")));
+        add(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemDispatcher")));
 
         add(new JSeparator());
 
-        add(new jmri.jmrit.sendpacket.SendPacketAction( Bundle.getString("MenuItemSendDCCPacket") ));
+        add(new jmri.jmrit.sendpacket.SendPacketAction( Bundle.getMessage("MenuItemSendDCCPacket") ));
 
         add(new JSeparator());
         // US&S CTC subsystem tools

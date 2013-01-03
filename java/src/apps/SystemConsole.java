@@ -190,7 +190,7 @@ public final class SystemConsole extends JTextArea {
      */
     private void createFrame() {
         // Use a JmriJFrame to ensure that we fit on the screen
-        frame = new JmriJFrame(Bundle.getString("TitleConsole"));
+        frame = new JmriJFrame(Bundle.getMessage("TitleConsole"));
 
         pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         
@@ -203,7 +203,7 @@ public final class SystemConsole extends JTextArea {
 
         // Add button to allow copy to clipboard
         JPanel p = new JPanel();
-        JButton copy = new JButton(Bundle.getString("ButtonCopyClip"));
+        JButton copy = new JButton(Bundle.getMessage("ButtonCopyClip"));
         copy.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -214,7 +214,7 @@ public final class SystemConsole extends JTextArea {
         p.add(copy);
 
         // Add button to allow console window to be closed
-        JButton close = new JButton(Bundle.getString("ButtonClose"));
+        JButton close = new JButton(Bundle.getMessage("ButtonClose"));
         close.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -224,7 +224,7 @@ public final class SystemConsole extends JTextArea {
         });
         p.add(close);
         
-        JButton stackTrace = new JButton(Bundle.getString("ButtonStackTrace"));
+        JButton stackTrace = new JButton(Bundle.getMessage("ButtonStackTrace"));
         stackTrace.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
@@ -235,7 +235,7 @@ public final class SystemConsole extends JTextArea {
         
         // Add checkbox to enable/disable auto-scrolling
         // Use the inverted SimplePreferenceState to default as enabled
-        p.add(autoScroll = new JCheckBox(Bundle.getString("CheckBoxAutoScroll"),
+        p.add(autoScroll = new JCheckBox(Bundle.getMessage("CheckBoxAutoScroll"),
                 !pref.getSimplePreferenceState(alwaysScrollCheck)));
         autoScroll.addActionListener(new ActionListener() {
             @Override
@@ -246,10 +246,10 @@ public final class SystemConsole extends JTextArea {
         });
         
         // Add checkbox to enable/disable always on top
-        p.add(alwaysOnTop = new JCheckBox(Bundle.getString("CheckBoxOnTop"),
+        p.add(alwaysOnTop = new JCheckBox(Bundle.getMessage("CheckBoxOnTop"),
                 pref.getSimplePreferenceState(alwaysOnTopCheck)));
         alwaysOnTop.setVisible(true);
-        alwaysOnTop.setToolTipText(Bundle.getString("ToolTipOnTop"));
+        alwaysOnTop.setToolTipText(Bundle.getMessage("ToolTipOnTop"));
         alwaysOnTop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -261,7 +261,7 @@ public final class SystemConsole extends JTextArea {
         frame.setAlwaysOnTop(alwaysOnTop.isSelected());
 
          // Define the pop-up menu
-        JMenuItem menuItem = new JMenuItem(Bundle.getString("ButtonCopyClip"));
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("ButtonCopyClip"));
         menuItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {

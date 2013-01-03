@@ -28,7 +28,7 @@ public class MemoryFrameAction extends AbstractAction {
         super(s);
     }
     public MemoryFrameAction() {
-        this(Bundle.getString("Memory_Usage_Monitor"));
+        this(Bundle.getMessage("Memory_Usage_Monitor"));
     }
 
 	JTextField used1 = new JTextField(15);
@@ -43,9 +43,9 @@ public class MemoryFrameAction extends AbstractAction {
 	JTextField total2 = new JTextField(15);
 	JTextField total3 = new JTextField(15);
 
-	JButton updateButton = new JButton(Bundle.getString("Update"));
-	JButton gcButton = new JButton(Bundle.getString("Collect_Memory"));
-	JButton testButton = new JButton(Bundle.getString("Test"));
+	JButton updateButton = new JButton(Bundle.getMessage("Update"));
+	JButton gcButton = new JButton(Bundle.getMessage("Collect_Memory"));
+	JButton testButton = new JButton(Bundle.getMessage("Test"));
 
     java.text.NumberFormat nf;
 
@@ -56,14 +56,14 @@ public class MemoryFrameAction extends AbstractAction {
         nf.setMaximumFractionDigits(3);
         nf.setGroupingUsed(false);
 
-		JmriJFrame f = new JmriJFrame(Bundle.getString("Memory_Usage_Monitor"));
+		JmriJFrame f = new JmriJFrame(Bundle.getMessage("Memory_Usage_Monitor"));
 
 		Container p = f.getContentPane();
 		p.setLayout(new GridLayout(5,3));
 
-		p.add(new JLabel(Bundle.getString("used_(MB)")));
-		p.add(new JLabel(Bundle.getString("free_(MB)")));
-		p.add(new JLabel(Bundle.getString("total_(MB,_of_")+nf.format(Runtime.getRuntime().maxMemory()/(1024.*1024.))+"Mb)"));
+		p.add(new JLabel(Bundle.getMessage("used_(MB)")));
+		p.add(new JLabel(Bundle.getMessage("free_(MB)")));
+		p.add(new JLabel(Bundle.getMessage("total_(MB,_of_")+nf.format(Runtime.getRuntime().maxMemory()/(1024.*1024.))+"Mb)"));
 
 		p.add(used3);
 		p.add(free3);

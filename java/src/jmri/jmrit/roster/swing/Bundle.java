@@ -32,12 +32,13 @@ public class Bundle extends jmri.jmrit.roster.Bundle {
     //
     
     /**
-     * Provides access to a string for a given 
+     * Provides a translated string for a given 
      * key from the package resource bundle or 
      * parent.
      *<p>
      * Note that this is intentionally package-local
      * access.
+     * 
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
@@ -45,12 +46,17 @@ public class Bundle extends jmri.jmrit.roster.Bundle {
         return b.handleGetMessage(key);
     }
     /**
-     * Merges user data with a string for a given 
+     * Merges user data with a translated string for a given 
      * key from the package resource bundle or 
      * parent.
      *<p>
+     * Uses the transformation conventions of 
+     * the Java MessageFormat utility.
+     *<p>
      * Note that this is intentionally package-local
      * access.
+     *
+     * @see java.text.MessageFormat
      * @param key Bundle key to be translated
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text

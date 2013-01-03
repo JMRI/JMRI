@@ -37,7 +37,7 @@ public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
     }
 
     public SystemConsoleAction() {
-        super(Bundle.getString("TitleConsole"));
+        super(Bundle.getMessage("TitleConsole"));
     }
 
     @Override

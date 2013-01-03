@@ -22,33 +22,33 @@ public class DebugMenu extends JMenu {
 
         super();
 
-        setText(Bundle.getString("MenuDebug"));
+        setText(Bundle.getMessage("MenuDebug"));
 
-        add(new jmri.jmrit.MemoryFrameAction(Bundle.getString("MenuItemMemoryUsageMonitor")));
+        add(new jmri.jmrit.MemoryFrameAction(Bundle.getMessage("MenuItemMemoryUsageMonitor")));
         add(new JSeparator());
-        add(new jmri.jmrit.decoderdefn.InstallDecoderFileAction(Bundle.getString("MenuItemImportDecoderFile"), panel));
-        add(new jmri.jmrit.decoderdefn.InstallDecoderURLAction(Bundle.getString("MenuItemImportDecoderURL"), panel));
-        add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction(Bundle.getString("MenuItemRecreateDecoderIndex")));
-        add(new jmri.jmrit.roster.RecreateRosterAction(Bundle.getString("MenuItemRecreateRoster")));
+        add(new jmri.jmrit.decoderdefn.InstallDecoderFileAction(Bundle.getMessage("MenuItemImportDecoderFile"), panel));
+        add(new jmri.jmrit.decoderdefn.InstallDecoderURLAction(Bundle.getMessage("MenuItemImportDecoderURL"), panel));
+        add(new jmri.jmrit.decoderdefn.DecoderIndexCreateAction(Bundle.getMessage("MenuItemRecreateDecoderIndex")));
+        add(new jmri.jmrit.roster.RecreateRosterAction(Bundle.getMessage("MenuItemRecreateRoster")));
         add(new JSeparator());
-        add(new jmri.jmrit.XmlFileCheckAction(Bundle.getString("MenuItemCheckXMLFile"), panel));
-        add(new jmri.jmrit.XmlFileValidateAction(Bundle.getString("MenuItemValidateXMLFile"), panel));
-        add(new jmri.jmrit.decoderdefn.NameCheckAction(Bundle.getString("MenuItemCheckDecoderNames"), panel));
-        add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction(Bundle.getString("MenuItemCheckProgrammerNames"), panel));
+        add(new jmri.jmrit.XmlFileCheckAction(Bundle.getMessage("MenuItemCheckXMLFile"), panel));
+        add(new jmri.jmrit.XmlFileValidateAction(Bundle.getMessage("MenuItemValidateXMLFile"), panel));
+        add(new jmri.jmrit.decoderdefn.NameCheckAction(Bundle.getMessage("MenuItemCheckDecoderNames"), panel));
+        add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction(Bundle.getMessage("MenuItemCheckProgrammerNames"), panel));
         add(new JSeparator());
-		add(new jmri.jmrit.LogixLoadAction(Bundle.getString("MenuItemLogixDisabled"), panel));
-        add(new jmri.jmrit.log.LogAction(Bundle.getString("MenuItemLogAction")));
-        add(new jmri.jmrit.log.LogOutputWindowAction(Bundle.getString("MenuItemLogOutputWindowAction")));
-        add(new jmri.util.swing.JmriNamedPaneAction(Bundle.getString("MenuItemLogTreeAction"), 
+		add(new jmri.jmrit.LogixLoadAction(Bundle.getMessage("MenuItemLogixDisabled"), panel));
+        add(new jmri.jmrit.log.LogAction(Bundle.getMessage("MenuItemLogAction")));
+        add(new jmri.jmrit.log.LogOutputWindowAction(Bundle.getMessage("MenuItemLogOutputWindowAction")));
+        add(new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"), 
             new jmri.util.swing.sdi.JmriJFrameInterface(),
             "jmri.jmrit.log.Log4JTreePane"));
         add(new JSeparator());
-	JMenu vsdMenu = new JMenu(Bundle.getString("VSDMenuItem"));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getString("VSDecoderManagerAction"), true));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getString("VSDecoderLocationManager"), null));
-	JMenu oldVsdMenu = new JMenu(Bundle.getString("OldVSDInterfaceMenuItem"));
-	oldVsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getString("OldVSDecoderWindow"), false));
-	oldVsdMenu.add(new jmri.jmrit.beantable.SetPhysicalLocationAction(Bundle.getString("OldSetReporterLocationsAction"), null));
+	JMenu vsdMenu = new JMenu(Bundle.getMessage("VSDMenuItem"));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("VSDecoderManagerAction"), true));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getMessage("VSDecoderLocationManager"), null));
+	JMenu oldVsdMenu = new JMenu(Bundle.getMessage("OldVSDInterfaceMenuItem"));
+	oldVsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("OldVSDecoderWindow"), false));
+	oldVsdMenu.add(new jmri.jmrit.beantable.SetPhysicalLocationAction(Bundle.getMessage("OldSetReporterLocationsAction"), null));
 	oldVsdMenu.setEnabled(false);
 	vsdMenu.add(oldVsdMenu);
 	add(vsdMenu);

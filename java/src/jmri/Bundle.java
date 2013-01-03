@@ -13,15 +13,16 @@ import edu.umd.cs.findbugs.annotations.Nullable;
 
 /**
  * Provides standard access for resource bundles in a package.
- * 
- * Convention pattern is to provide a subclass of the same name
- * in each package, working off the local resource bundle name.
+ *<p>
+ * Convention is to provide a subclass of this same name
+ * in each package, working off the local resource bundle name,
+ * usually 'package.Bundle' stored in a Bundle.properties file.
  * <p>
  * This is the root of a tree of classes that are chained 
  * through class-static members so that they each do a search
  * as a request works up the inheritance tree.
  *<p>
- * Only a single package-scope method is exposed from the class, 
+ * Only package-scope methods exposed are from the class, 
  * forcing all requests for strings to be a the package level.
  *<p>
  * To add this to a new package, copy exactly a 
@@ -56,25 +57,13 @@ public class Bundle {
     private final static String name = "jmri.NamedBeanBundle";  // NOI18N
 
     /**
-     * Provides access to a string for a given 
+     * Provides a translated string for a given 
      * key from the package resource bundle or 
      * parent.
      *<p>
      * Note that this is intentionally package-local
      * access.
-     * @param key Bundle key to be translated
-     * @return Internationalized text
-     */
-    static String getString(String key) {
-        return b.handleGetString(key);
-    }
-    /**
-     * Provides access to a string for a given 
-     * key from the package resource bundle or 
-     * parent.
-     *<p>
-     * Note that this is intentionally package-local
-     * access.
+     * 
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
@@ -82,12 +71,17 @@ public class Bundle {
         return b.handleGetMessage(key);
     }
     /**
-     * Merges user data with a string for a given 
+     * Merges user data with a translated string for a given 
      * key from the package resource bundle or 
      * parent.
      *<p>
+     * Uses the transformation conventions of 
+     * the Java MessageFormat utility.
+     *<p>
      * Note that this is intentionally package-local
      * access.
+     *
+     * @see java.text.MessageFormat
      * @param key Bundle key to be translated
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
@@ -105,7 +99,7 @@ public class Bundle {
      *
      * @throws MissingResourceException
      */
-    public String handleGetString(String key) {
+    public String handleGetMessage(String key) {
         if (bundleName() != null) {
             java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle(bundleName());
             if (rb.containsKey(key)) return rb.getString(key);
@@ -115,8 +109,12 @@ public class Bundle {
         }
     }
     
-    public String handleGetMessage(String key) {
-        return handleGetString(key);
+    /**
+     * @deprecated Use getMessage(String) instead
+     */
+    @Deprecated
+    public String handleGetString(String key) {
+        return handleGetMessage(key);
     }
     
     public String handleGetMessage(String key, Object[] subs) {

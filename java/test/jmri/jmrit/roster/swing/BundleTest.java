@@ -15,13 +15,13 @@ import junit.framework.TestSuite;
 public class BundleTest extends TestCase {
 
     public void testGoodKeys() {
-        Assert.assertEquals("Roster", Bundle.getString("MenuItemRoster"));        
-        Assert.assertEquals("Tools", Bundle.getString("MenuTools"));        
-        Assert.assertEquals("Turnout", Bundle.getString("BeanNameTurnout"));        
+        Assert.assertEquals("Roster", Bundle.getMessage("MenuItemRoster"));        
+        Assert.assertEquals("Tools", Bundle.getMessage("MenuTools"));        
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));        
     } 
     public void testBadKey() {
         try {
-            Bundle.getString("FFFFFTTTTTTT");   
+            Bundle.getMessage("FFFFFTTTTTTT");   
         } catch (java.util.MissingResourceException e) { return;} // OK
         Assert.fail("No exception thrown");     
     }

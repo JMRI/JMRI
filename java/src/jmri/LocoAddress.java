@@ -44,7 +44,7 @@ public interface LocoAddress {
 
         Protocol(String shName, String peopleKey) {
             this.shortName = shName;
-            this.peopleName = Bundle.getString(peopleKey);
+            this.peopleName = Bundle.getMessage(peopleKey);
         }
         
         String shortName;
