@@ -113,24 +113,24 @@ public class ManageLocationsFrame extends JmriJFrame {
     
     private void initGui() {
 
-	this.setTitle(Bundle.getString("FieldManageLocationsFrameTitle"));
+	this.setTitle(Bundle.getMessage("FieldManageLocationsFrameTitle"));
 	this.buildMenu();
 	// Panel for managing listeners
 	listenerPanel = new JPanel();
 	listenerPanel.setLayout(new BoxLayout(listenerPanel, BoxLayout.Y_AXIS));
 
 	// Audio Mode Buttons
-	JRadioButton b1 = new JRadioButton(Bundle.getString("ButtonAudioModeRoom"));
-	b1.setToolTipText(Bundle.getString("ToolTipButtonAudioModeRoom"));
+	JRadioButton b1 = new JRadioButton(Bundle.getMessage("ButtonAudioModeRoom"));
+	b1.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeRoom"));
 	b1.setMnemonic(Mnemonics.get("RoomMode")); // NOI18N
 	b1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    modeRadioButtonPressed(e);
 		}
 	    });
-	JRadioButton b2 = new JRadioButton(Bundle.getString("ButtonAudioModeHeadphone"));
+	JRadioButton b2 = new JRadioButton(Bundle.getMessage("ButtonAudioModeHeadphone"));
 	b2.setMnemonic(Mnemonics.get("HeadphoneMode")); // NOI18N
-	b2.setToolTipText(Bundle.getString("ToolTipButtonAudioModeHeadphone"));
+	b2.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeHeadphone"));
 	b2.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    modeRadioButtonPressed(e);
@@ -143,7 +143,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 	b1.setSelected(true);
 	JPanel modePanel = new JPanel();
 	modePanel.setLayout(new BoxLayout(modePanel, BoxLayout.LINE_AXIS));
-	modePanel.add(new JLabel(Bundle.getString("FieldAudioMode")));
+	modePanel.add(new JLabel(Bundle.getMessage("FieldAudioMode")));
 	modePanel.add(b1);
 	modePanel.add(b2);
 
@@ -206,31 +206,31 @@ public class ManageLocationsFrame extends JmriJFrame {
 	opsScrollPanel.getViewport().add(opsTable);
 
 	tabbedPane = new JTabbedPane();
-	tabbedPane.addTab(Bundle.getString("FieldReportersTabTitle"), reporterScrollPanel);
-	tabbedPane.setToolTipTextAt(0, Bundle.getString("ToolTipReporterTab"));
+	tabbedPane.addTab(Bundle.getMessage("FieldReportersTabTitle"), reporterScrollPanel);
+	tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipReporterTab"));
 	tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab")); // NOI18N
-	tabbedPane.addTab(Bundle.getString("FieldBlockTabTitle"), blockScrollPanel);
-	tabbedPane.setToolTipTextAt(0, Bundle.getString("ToolTipBlockTab"));
+	tabbedPane.addTab(Bundle.getMessage("FieldBlockTabTitle"), blockScrollPanel);
+	tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipBlockTab"));
 	tabbedPane.setMnemonicAt(0, Mnemonics.get("BlockTab")); // NOI18N
-	tabbedPane.addTab(Bundle.getString("FieldOpsTabTitle"), opsScrollPanel);
-	tabbedPane.setToolTipTextAt(1, Bundle.getString("ToolTipOpsTab"));
+	tabbedPane.addTab(Bundle.getMessage("FieldOpsTabTitle"), opsScrollPanel);
+	tabbedPane.setToolTipTextAt(1, Bundle.getMessage("ToolTipOpsTab"));
 	tabbedPane.setMnemonicAt(1, Mnemonics.get("OpsTab")); // NOI18N
-	tabbedPane.addTab(Bundle.getString("FieldListenersTabTitle"), listenerPanel);
-	tabbedPane.setToolTipTextAt(2, Bundle.getString("ToolTipListenerTab"));
+	tabbedPane.addTab(Bundle.getMessage("FieldListenersTabTitle"), listenerPanel);
+	tabbedPane.setToolTipTextAt(2, Bundle.getMessage("ToolTipListenerTab"));
 	tabbedPane.setMnemonicAt(2, Mnemonics.get("ListenerTab")); // NOI18N
 
 	JPanel buttonPane = new JPanel();
 	buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-	JButton closeButton = new JButton(Bundle.getString("ButtonClose"));
-	closeButton.setToolTipText(Bundle.getString("ToolTipButtonMLFClose"));
+	JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+	closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFClose"));
 	closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
 	closeButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    closeButtonPressed(e);
 		}
 	    });
-	JButton saveButton = new JButton(Bundle.getString("ButtonSave"));
-	saveButton.setToolTipText(Bundle.getString("ToolTipButtonMLFSave"));
+	JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+	saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFSave"));
 	saveButton.setMnemonic(	Mnemonics.get("SaveButton")); // NOI18N
 	saveButton.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
@@ -248,14 +248,14 @@ public class ManageLocationsFrame extends JmriJFrame {
     }
 
     private void buildMenu() {
-	JMenu fileMenu = new JMenu(Bundle.getString("MenuFile"));
+	JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
 
-        fileMenu.add(new LoadVSDFileAction(Bundle.getString("MenuItemLoadVSDFile" )));
-        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getString("MenuItemSaveProfile" )));
-        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getString("MenuItemLoadProfile")));
+        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("MenuItemLoadVSDFile" )));
+        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("MenuItemSaveProfile" )));
+        fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
 
-	JMenu editMenu = new JMenu(Bundle.getString("MenuEdit"));
-	editMenu.add(new VSDecoderPreferencesAction(Bundle.getString("MenuItemEditPreferences")));
+	JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
+	editMenu.add(new VSDecoderPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load
@@ -292,8 +292,8 @@ public class ManageLocationsFrame extends JmriJFrame {
     }
 
     private void saveButtonPressed(ActionEvent e) {
-	int value = JOptionPane.showConfirmDialog(null, Bundle.getString("FieldMLFSaveDialogConfirmMessage"), 
-						  Bundle.getString("FieldMLFSaveDialogTitle"), 
+	int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMLFSaveDialogConfirmMessage"), 
+						  Bundle.getMessage("FieldMLFSaveDialogTitle"), 
 						  JOptionPane.YES_NO_OPTION);
 	if (value == JOptionPane.YES_OPTION) {
 	    saveTableValues();
@@ -359,12 +359,12 @@ class LocationTableModel extends AbstractTableModel {
     public LocationTableModel(Object[][] dataMap) {
 	super();
 	// Use i18n-ized column titles.
-	columnNames[0] = Bundle.getString("FieldTableNameColumn");
-	columnNames[1] = Bundle.getString("FieldTableUseColumn");
-	columnNames[2] = Bundle.getString("FieldTableXColumn");
-	columnNames[3] = Bundle.getString("FieldTableYColumn");
-	columnNames[4] = Bundle.getString("FieldTableZColumn");
-	columnNames[5] = Bundle.getString("FieldTableIsTunnelColumn");
+	columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+	columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
+	columnNames[2] = Bundle.getMessage("FieldTableXColumn");
+	columnNames[3] = Bundle.getMessage("FieldTableYColumn");
+	columnNames[4] = Bundle.getMessage("FieldTableZColumn");
+	columnNames[5] = Bundle.getMessage("FieldTableIsTunnelColumn");
 	rowData = dataMap;
     }
 
@@ -423,13 +423,13 @@ class ListenerTableModel extends AbstractTableModel {
     public ListenerTableModel(Object[][] dataMap) {
 	super();
 	// Use i18n-ized column titles.
-	columnNames[0] = Bundle.getString("FieldTableNameColumn");
-	columnNames[1] = Bundle.getString("FieldTableUseColumn");
-	columnNames[2] = Bundle.getString("FieldTableXColumn");
-	columnNames[3] = Bundle.getString("FieldTableYColumn");
-	columnNames[4] = Bundle.getString("FieldTableZColumn");
-	columnNames[5] = Bundle.getString("FieldTableBearingColumn");
-	columnNames[6] = Bundle.getString("FieldTableAzimuthColumn");
+	columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
+	columnNames[1] = Bundle.getMessage("FieldTableUseColumn");
+	columnNames[2] = Bundle.getMessage("FieldTableXColumn");
+	columnNames[3] = Bundle.getMessage("FieldTableYColumn");
+	columnNames[4] = Bundle.getMessage("FieldTableZColumn");
+	columnNames[5] = Bundle.getMessage("FieldTableBearingColumn");
+	columnNames[6] = Bundle.getMessage("FieldTableAzimuthColumn");
 	rowData = dataMap;
     }
 
