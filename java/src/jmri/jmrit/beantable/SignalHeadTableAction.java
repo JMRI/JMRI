@@ -444,16 +444,13 @@ public class SignalHeadTableAction extends AbstractTableAction {
      */
     protected void addPressed(ActionEvent e) {
         if (addFrame==null) {
-
-            java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
-            if(connList!=null){
-                for(int x = 0; x < connList.size(); x++){
-                    jmri.CommandStation station = (jmri.CommandStation) connList.get(x);
+            for(Object obj:jmri.InstanceManager.getList(jmri.CommandStation.class)){
+                if(obj!=null){
+                    jmri.CommandStation station = (jmri.CommandStation) obj;
                     prefixBox.addItem(station.getUserName());
                 }
-            } else {
-                prefixBox.addItem("None");
             }
+            
             to1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
             to2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
             to3 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
@@ -464,11 +461,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             addFrame = new JmriJFrame(rb.getString("TitleAddSignal"), false, true);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BorderLayout());
-            //addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
-            /*addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
-                acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput, 
-                singleTurnout, se8c4Aspect, tripleTurnout, virtualHead
-            }));*/
             
             JPanel panelHeader = new JPanel();
             panelHeader.setLayout(new BoxLayout(panelHeader, BoxLayout.Y_AXIS));
@@ -476,7 +468,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 acelaAspect, dccSignalDecoder, doubleTurnout, lsDec, mergSignalDriver, quadOutput, 
                 singleTurnout, se8c4Aspect, tripleTurnout, virtualHead
             }));
-            
+            //If no DCC Comand station is found remove the DCC Signal Decoder option.
+            if(prefixBox.getItemCount()==0){
+                typeBox.removeItem(dccSignalDecoder);
+            }
             if (jmri.jmrix.grapevine.ActiveFlag.isActive()) typeBox.addItem(grapevine);
             typeBox.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
