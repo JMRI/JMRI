@@ -40,6 +40,9 @@ public class EliteXNetInitilizationManager extends AbstractXNetInitilizationMana
         systemMemo.setTurnoutManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager(systemMemo.getXNetTrafficController(),systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
         
+        systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
+        jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
+        
         systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(),systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
         systemMemo.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetProgrammer(systemMemo.getXNetTrafficController()),systemMemo));
