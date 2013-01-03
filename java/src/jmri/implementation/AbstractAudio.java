@@ -63,12 +63,12 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
         Object _old = this._state;
         this._state = newState;
         stateChanged((Integer) _old);
-        firePropertyChange("State", _old, _state);
+        firePropertyChange("State", _old, _state); //NOI18N
     }
 
     @Override
     public String toString() {
-        return this.getClass().getName() + " (" + this.getSystemName() + ")";
+        return this.getClass().getName() + " (" + this.getSystemName() + ")"; //NOI18N
     }
 
     /**
