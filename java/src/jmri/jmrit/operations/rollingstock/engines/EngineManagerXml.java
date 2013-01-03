@@ -81,7 +81,7 @@ public class EngineManagerXml extends OperationsXml {
 			String lengthNames = lengths[i]+"%%"; // NOI18N
 			values.addContent(lengthNames);
 		}
-		root.addContent(values = new Element(Xml.CONSIST));
+		root.addContent(values = new Element(Xml.CONSISTS));
 		List<String> consists = manager.getConsistNameList();
 		for (int i=0; i<consists.size(); i++){
 			String consistNames = consists.get(i)+"%%"; // NOI18N
@@ -151,8 +151,8 @@ public class EngineManagerXml extends OperationsXml {
         	EngineLengths.instance().setNames(lengths);
         }
         
-        if (root.getChild(Xml.CONSIST)!= null){
-        	String names = root.getChildText(Xml.CONSIST);
+        if (root.getChild(Xml.CONSISTS)!= null){
+        	String names = root.getChildText(Xml.CONSISTS);
         	if(!names.equals("")){
         		String[] consistNames = names.split("%%"); // NOI18N
         		if (log.isDebugEnabled()) log.debug("consists: "+names);
