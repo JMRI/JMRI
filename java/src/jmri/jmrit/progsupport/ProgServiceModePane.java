@@ -82,11 +82,11 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
         modeGroup = group;
 
         // configure items for GUI
-        pagedButton.setText(Bundle.getString("PagedMode"));
-        directBitButton.setText(Bundle.getString("DirectBit"));
-        directByteButton.setText(Bundle.getString("DirectByte"));
-        registerButton.setText(Bundle.getString("RegisterMode"));
-        addressButton.setText(Bundle.getString("AddressMode"));
+        pagedButton.setText(Bundle.getMessage("PagedMode"));
+        directBitButton.setText(Bundle.getMessage("DirectBit"));
+        directByteButton.setText(Bundle.getMessage("DirectByte"));
+        registerButton.setText(Bundle.getMessage("RegisterMode"));
+        addressButton.setText(Bundle.getMessage("AddressMode"));
         modeGroup.add(pagedButton);
         modeGroup.add(registerButton);
         modeGroup.add(directByteButton);

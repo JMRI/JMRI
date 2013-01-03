@@ -27,7 +27,7 @@ public class DualDecoderToolAction extends AbstractAction {
 
     public DualDecoderToolAction() {
 
-        this(Bundle.getString("MenuItemMultiDecoderControl"));
+        this(Bundle.getMessage("MenuItemMultiDecoderControl"));
     }
 
     public void actionPerformed(ActionEvent e) {

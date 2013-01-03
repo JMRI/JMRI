@@ -103,7 +103,7 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
         });
 
         // create the set frame
-        setFrame = new JFrame(Bundle.getString("TitleSetProgrammingMode"));
+        setFrame = new JFrame(Bundle.getMessage("TitleSetProgrammingMode"));
         setFrame.getContentPane().add(servicePane);
         setFrame.pack();
 
@@ -133,12 +133,12 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
 
     private String decodeMode(int mode) {
         switch (mode) {
-        case Programmer.ADDRESSMODE:    return Bundle.getString("AddressMode");
-        case Programmer.DIRECTBITMODE:  return Bundle.getString("DirectBit");
-        case Programmer.DIRECTBYTEMODE: return Bundle.getString("DirectByte");
-        case Programmer.PAGEMODE:       return Bundle.getString("PagedMode");
-        case Programmer.REGISTERMODE:   return Bundle.getString("RegisterMode");
-        default:                        return Bundle.getString("UnknownMode");
+        case Programmer.ADDRESSMODE:    return Bundle.getMessage("AddressMode");
+        case Programmer.DIRECTBITMODE:  return Bundle.getMessage("DirectBit");
+        case Programmer.DIRECTBYTEMODE: return Bundle.getMessage("DirectByte");
+        case Programmer.PAGEMODE:       return Bundle.getMessage("PagedMode");
+        case Programmer.REGISTERMODE:   return Bundle.getMessage("RegisterMode");
+        default:                        return Bundle.getMessage("UnknownMode");
         }
     }
 

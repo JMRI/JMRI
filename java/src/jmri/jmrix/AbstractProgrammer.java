@@ -17,20 +17,20 @@ import java.util.Vector;
 public abstract class AbstractProgrammer implements Programmer {
 
     public String decodeErrorCode(int code) {
-        if (code == ProgListener.OK) return Bundle.getString("StatusOK");
+        if (code == ProgListener.OK) return Bundle.getMessage("StatusOK");
         StringBuffer sbuf = new StringBuffer("");
         // add each code; terminate each string with ";" please.
-        if ((code & ProgListener.NoLocoDetected) != 0) sbuf.append(Bundle.getString("NoLocoDetected")+" ");
-        if ((code & ProgListener.ProgrammerBusy) != 0) sbuf.append(Bundle.getString("ProgrammerBusy")+" ");
-        if ((code & ProgListener.NotImplemented) != 0) sbuf.append(Bundle.getString("NotImplemented")+" ");
-        if ((code & ProgListener.UserAborted) != 0) sbuf.append(Bundle.getString("UserAborted")+" ");
-        if ((code & ProgListener.ConfirmFailed) != 0) sbuf.append(Bundle.getString("ConfirmFailed")+" ");
-        if ((code & ProgListener.FailedTimeout) != 0) sbuf.append(Bundle.getString("FailedTimeout")+" ");
-        if ((code & ProgListener.UnknownError) != 0) sbuf.append(Bundle.getString("UnknownError")+" ");
-        if ((code & ProgListener.NoAck) != 0) sbuf.append(Bundle.getString("NoAck")+" ");
-	    if ((code & ProgListener.ProgrammingShort) != 0) sbuf.append(Bundle.getString("ProgrammingShort")+" ");
-	    if ((code & ProgListener.SequenceError) != 0) sbuf.append(Bundle.getString("SequenceError")+" ");
-	    if ((code & ProgListener.CommError) != 0) sbuf.append(Bundle.getString("CommError")+" ");
+        if ((code & ProgListener.NoLocoDetected) != 0) sbuf.append(Bundle.getMessage("NoLocoDetected")+" ");
+        if ((code & ProgListener.ProgrammerBusy) != 0) sbuf.append(Bundle.getMessage("ProgrammerBusy")+" ");
+        if ((code & ProgListener.NotImplemented) != 0) sbuf.append(Bundle.getMessage("NotImplemented")+" ");
+        if ((code & ProgListener.UserAborted) != 0) sbuf.append(Bundle.getMessage("UserAborted")+" ");
+        if ((code & ProgListener.ConfirmFailed) != 0) sbuf.append(Bundle.getMessage("ConfirmFailed")+" ");
+        if ((code & ProgListener.FailedTimeout) != 0) sbuf.append(Bundle.getMessage("FailedTimeout")+" ");
+        if ((code & ProgListener.UnknownError) != 0) sbuf.append(Bundle.getMessage("UnknownError")+" ");
+        if ((code & ProgListener.NoAck) != 0) sbuf.append(Bundle.getMessage("NoAck")+" ");
+	    if ((code & ProgListener.ProgrammingShort) != 0) sbuf.append(Bundle.getMessage("ProgrammingShort")+" ");
+	    if ((code & ProgListener.SequenceError) != 0) sbuf.append(Bundle.getMessage("SequenceError")+" ");
+	    if ((code & ProgListener.CommError) != 0) sbuf.append(Bundle.getMessage("CommError")+" ");
 
         // remove trailing separators
         if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);

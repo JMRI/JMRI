@@ -15,7 +15,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ResourceBundle;
 
 import javax.swing.ButtonGroup;
 import javax.swing.Box;
@@ -59,7 +58,6 @@ import jmri.util.JmriJFrame;
 
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener
 {
-    static final ResourceBundle rb = jmri.jmrit.throttle.ThrottleBundle.bundle();
     static int STRUT_SIZE = 10;
     
     public int accelerateKey = 107; // numpad +;
@@ -189,7 +187,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     private void initializeMenu() {
 		JMenu editControl = new JMenu("Speed Control... ");
         ButtonGroup buttonGroup = new ButtonGroup();
-        JRadioButtonMenuItem displaySlider = new JRadioButtonMenuItem(rb.getString("ButtonDisplaySpeedSlider"));
+        JRadioButtonMenuItem displaySlider = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSlider"));
         displaySlider.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     _controlPanel.setSpeedController(true); 
@@ -198,7 +196,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         displaySlider.setSelected(true);
         buttonGroup.add(displaySlider);
         editControl.add(displaySlider);
-        JRadioButtonMenuItem displaySteps = new JRadioButtonMenuItem(rb.getString("ButtonDisplaySpeedSteps"));
+        JRadioButtonMenuItem displaySteps = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSteps"));
         displaySteps.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     _controlPanel.setSpeedController(false); 
@@ -207,7 +205,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         buttonGroup.add(displaySteps);
         editControl.add(displaySteps);
 
-        JCheckBoxMenuItem trackBox = new JCheckBoxMenuItem(rb.getString("CheckBoxTrackSliderInRealTime"), true);
+        JCheckBoxMenuItem trackBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxTrackSliderInRealTime"), true);
         trackBox.addActionListener(new ActionListener() {
                 JCheckBoxMenuItem trackBox;
                 public void actionPerformed(ActionEvent e) {
@@ -411,8 +409,8 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         
         ButtonFrame() {
             super();
-            forwardButton = new JButton(rb.getString("ButtonForward"));
-            reverseButton = new JButton(rb.getString("ButtonReverse"));
+            forwardButton = new JButton(Bundle.getMessage("ButtonForward"));
+            reverseButton = new JButton(Bundle.getMessage("ButtonReverse"));
             initGUI();
         }
 

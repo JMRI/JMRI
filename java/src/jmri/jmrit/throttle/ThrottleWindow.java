@@ -92,7 +92,7 @@ public class ThrottleWindow extends JmriJFrame {
     
     private void initGUI()
     {
-        setTitle(Bundle.getString("ThrottleFrameTitle"));
+        setTitle(Bundle.getMessage("ThrottleFrameTitle"));
         setLayout(new BorderLayout());
         throttlesLayout = new CardLayout();
         throttlesPanel = new JPanel(throttlesLayout);
@@ -165,9 +165,9 @@ public class ThrottleWindow extends JmriJFrame {
     	throttleToolBar = new JToolBar("Throttles toolbar");
     	
     	jbNew = new JButton();
- //   	nouveau.setText(Bundle.getString("ThrottleToolBarNew"));
+ //   	nouveau.setText(Bundle.getMessage("ThrottleToolBarNew"));
     	jbNew.setIcon(new NamedIcon("resources/icons/throttles/add.png","resources/icons/throttles/add.png"));
-    	jbNew.setToolTipText(Bundle.getString("ThrottleToolBarNewToolTip"));
+    	jbNew.setToolTipText(Bundle.getMessage("ThrottleToolBarNewToolTip"));
     	jbNew.setVerticalTextPosition(JButton.BOTTOM);
     	jbNew.setHorizontalTextPosition(JButton.CENTER);
     	jbNew.addActionListener(new ActionListener() {
@@ -178,9 +178,9 @@ public class ThrottleWindow extends JmriJFrame {
     	throttleToolBar.add(jbNew);
     	
     	jbClose = new JButton();
-//    	close.setText(Bundle.getString("ThrottleToolBarClose"));
+//    	close.setText(Bundle.getMessage("ThrottleToolBarClose"));
     	jbClose.setIcon(new NamedIcon("resources/icons/throttles/remove.png","resources/icons/throttles/remove.png"));
-    	jbClose.setToolTipText(Bundle.getString("ThrottleToolBarCloseToolTip"));
+    	jbClose.setToolTipText(Bundle.getMessage("ThrottleToolBarCloseToolTip"));
     	jbClose.setVerticalTextPosition(JButton.BOTTOM);
     	jbClose.setHorizontalTextPosition(JButton.CENTER);
     	jbClose.addActionListener(new ActionListener() {
@@ -193,11 +193,11 @@ public class ThrottleWindow extends JmriJFrame {
     	throttleToolBar.addSeparator();
 
        	jbPreviousRunning = new JButton();
-       	//   	previous.setText(Bundle.getString("ThrottleToolBarPrev"));
+       	//   	previous.setText(Bundle.getMessage("ThrottleToolBarPrev"));
        	jbPreviousRunning.setIcon(new NamedIcon("resources/icons/throttles/previous-jump.png","resources/icons/throttles/previous-jump.png"));
        	jbPreviousRunning.setVerticalTextPosition(JButton.BOTTOM);
        	jbPreviousRunning.setHorizontalTextPosition(JButton.CENTER);
-       	jbPreviousRunning.setToolTipText(Bundle.getString("ThrottleToolBarPrevRunToolTip"));
+       	jbPreviousRunning.setToolTipText(Bundle.getMessage("ThrottleToolBarPrevRunToolTip"));
        	jbPreviousRunning.addActionListener(new ActionListener() {
        		public void actionPerformed(ActionEvent e) {
        			previousRunningThrottleFrame();
@@ -206,11 +206,11 @@ public class ThrottleWindow extends JmriJFrame {
        	throttleToolBar.add(jbPreviousRunning);
        	
     	jbPrevious = new JButton();
- //   	previous.setText(Bundle.getString("ThrottleToolBarPrev"));
+ //   	previous.setText(Bundle.getMessage("ThrottleToolBarPrev"));
     	jbPrevious.setIcon(new NamedIcon("resources/icons/throttles/previous.png","resources/icons/throttles/previous.png"));
     	jbPrevious.setVerticalTextPosition(JButton.BOTTOM);
     	jbPrevious.setHorizontalTextPosition(JButton.CENTER);
-    	jbPrevious.setToolTipText(Bundle.getString("ThrottleToolBarPrevToolTip"));
+    	jbPrevious.setToolTipText(Bundle.getMessage("ThrottleToolBarPrevToolTip"));
     	jbPrevious.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				previousThrottleFrame();
@@ -219,9 +219,9 @@ public class ThrottleWindow extends JmriJFrame {
     	throttleToolBar.add(jbPrevious);
     	
     	jbNext = new JButton();
- //   	next.setText(Bundle.getString("ThrottleToolBarNext"));
+ //   	next.setText(Bundle.getMessage("ThrottleToolBarNext"));
     	jbNext.setIcon(new NamedIcon("resources/icons/throttles/next.png","resources/icons/throttles/next.png"));
-    	jbNext.setToolTipText(Bundle.getString("ThrottleToolBarNextToolTip"));
+    	jbNext.setToolTipText(Bundle.getMessage("ThrottleToolBarNextToolTip"));
     	jbNext.setVerticalTextPosition(JButton.BOTTOM);
     	jbNext.setHorizontalTextPosition(JButton.CENTER);
     	jbNext.addActionListener(new ActionListener() {
@@ -235,9 +235,9 @@ public class ThrottleWindow extends JmriJFrame {
 
 
        	jbNextRunning = new JButton();
-       	//   	next.setText(Bundle.getString("ThrottleToolBarNext"));
+       	//   	next.setText(Bundle.getMessage("ThrottleToolBarNext"));
        	jbNextRunning.setIcon(new NamedIcon("resources/icons/throttles/next-jump.png","resources/icons/throttles/next-jump.png"));
-       	jbNextRunning.setToolTipText(Bundle.getString("ThrottleToolBarNextRunToolTip"));
+       	jbNextRunning.setToolTipText(Bundle.getMessage("ThrottleToolBarNextRunToolTip"));
        	jbNextRunning.setVerticalTextPosition(JButton.BOTTOM);
        	jbNextRunning.setHorizontalTextPosition(JButton.CENTER);
        	jbNextRunning.addActionListener(new ActionListener() {
@@ -257,9 +257,9 @@ public class ThrottleWindow extends JmriJFrame {
     	throttleToolBar.addSeparator();
 
     	jbMode = new JButton();
-//    	jbMode.setText(Bundle.getString("ThrottleToolBarEdit"));
+//    	jbMode.setText(Bundle.getMessage("ThrottleToolBarEdit"));
     	jbMode.setIcon(new NamedIcon("resources/icons/throttles/edit-view.png","resources/icons/throttles/edit-view.png"));
-    	jbMode.setToolTipText(Bundle.getString("ThrottleToolBarEditToolTip"));
+    	jbMode.setToolTipText(Bundle.getMessage("ThrottleToolBarEditToolTip"));
     	jbMode.setVerticalTextPosition(JButton.BOTTOM);
     	jbMode.setHorizontalTextPosition(JButton.CENTER);
     	jbMode.addActionListener(new ActionListener() {
@@ -272,9 +272,9 @@ public class ThrottleWindow extends JmriJFrame {
     	throttleToolBar.addSeparator();
 
     	jbThrottleList = new JButton();
- //   	stop.setText(Bundle.getString("ThrottleToolBarOpenThrottleList"));
+ //   	stop.setText(Bundle.getMessage("ThrottleToolBarOpenThrottleList"));
     	jbThrottleList.setIcon(new NamedIcon("resources/icons/throttles/list.png","resources/icons/throttles/list.png"));
-    	jbThrottleList.setToolTipText(Bundle.getString("ThrottleToolBarOpenThrottleListToolTip"));
+    	jbThrottleList.setToolTipText(Bundle.getMessage("ThrottleToolBarOpenThrottleListToolTip"));
     	jbThrottleList.setVerticalTextPosition(JButton.BOTTOM);
     	jbThrottleList.setHorizontalTextPosition(JButton.CENTER);
     	jbThrottleList.addActionListener(new ThrottlesListAction() );
@@ -318,23 +318,23 @@ public class ThrottleWindow extends JmriJFrame {
      *  Set up View, Edit and Power Menus
      */
     private void initializeMenu() {
-        JMenu fileMenu = new JMenu(Bundle.getString("ThrottleFileMenu"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("ThrottleFileMenu"));
 
-        JMenuItem fileMenuLoad = new JMenuItem(Bundle.getString("ThrottleFileMenuLoadThrottle"));
+        JMenuItem fileMenuLoad = new JMenuItem(Bundle.getMessage("ThrottleFileMenuLoadThrottle"));
         fileMenuLoad.addActionListener(new AbstractAction() {
 
             public void actionPerformed(ActionEvent e) {
                 getCurrentThrottleFrame().loadThrottle(null);
             }
         });
-        fileMenuSave = new JMenuItem(Bundle.getString("ThrottleFileMenuSaveThrottle"));
+        fileMenuSave = new JMenuItem(Bundle.getMessage("ThrottleFileMenuSaveThrottle"));
         fileMenuSave.addActionListener(new AbstractAction() {
 
             public void actionPerformed(ActionEvent e) {
                 getCurrentThrottleFrame().saveThrottle();
             }
         });
-        JMenuItem fileMenuSaveAs = new JMenuItem(Bundle.getString("ThrottleFileMenuSaveAsThrottle"));
+        JMenuItem fileMenuSaveAs = new JMenuItem(Bundle.getMessage("ThrottleFileMenuSaveAsThrottle"));
         fileMenuSaveAs.addActionListener(new AbstractAction() {
 
             public void actionPerformed(ActionEvent e) {
@@ -344,22 +344,22 @@ public class ThrottleWindow extends JmriJFrame {
         
         
         
-        fileMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getString("MenuItemNewThrottle")));
+        fileMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getMessage("MenuItemNewThrottle")));
         fileMenu.add(fileMenuLoad);
         fileMenu.add(fileMenuSave);
         fileMenu.add(fileMenuSaveAs);
         fileMenu.addSeparator();
         
-        fileMenu.add(new jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction(Bundle.getString("MenuItemLoadThrottleLayout")));
-        fileMenu.add(new jmri.jmrit.throttle.StoreXmlThrottlesLayoutAction(Bundle.getString("MenuItemSaveThrottleLayout" )));
+        fileMenu.add(new jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemLoadThrottleLayout")));
+        fileMenu.add(new jmri.jmrit.throttle.StoreXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemSaveThrottleLayout" )));
         fileMenu.addSeparator();
-        fileMenu.add(new jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction(Bundle.getString("MenuItemLoadDefaultThrottleLayout" )));
-        fileMenu.add(new jmri.jmrit.throttle.StoreDefaultXmlThrottlesLayoutAction(Bundle.getString("MenuItemSaveAsDefaultThrottleLayout" )));
+        fileMenu.add(new jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemLoadDefaultThrottleLayout" )));
+        fileMenu.add(new jmri.jmrit.throttle.StoreDefaultXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemSaveAsDefaultThrottleLayout" )));
         fileMenu.addSeparator();
-        fileMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction(Bundle.getString("MenuItemStartWiThrottle")));
+        fileMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction(Bundle.getMessage("MenuItemStartWiThrottle")));
 
-        JMenu viewMenu = new JMenu(Bundle.getString("ThrottleMenuView"));
-        viewAddressPanel = new JCheckBoxMenuItem(Bundle.getString("ThrottleMenuViewAddressPanel"));
+        JMenu viewMenu = new JMenu(Bundle.getMessage("ThrottleMenuView"));
+        viewAddressPanel = new JCheckBoxMenuItem(Bundle.getMessage("ThrottleMenuViewAddressPanel"));
         viewAddressPanel.setSelected(true);
         viewAddressPanel.addItemListener(new ItemListener() {
 
@@ -368,7 +368,7 @@ public class ThrottleWindow extends JmriJFrame {
             }
         });
 
-        viewControlPanel = new JCheckBoxMenuItem(Bundle.getString("ThrottleMenuViewControlPanel"));
+        viewControlPanel = new JCheckBoxMenuItem(Bundle.getMessage("ThrottleMenuViewControlPanel"));
         viewControlPanel.setSelected(true);
         viewControlPanel.addItemListener(new ItemListener() {
 
@@ -376,7 +376,7 @@ public class ThrottleWindow extends JmriJFrame {
                 getCurrentThrottleFrame().getControlPanel().setVisible(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
-        viewFunctionPanel = new JCheckBoxMenuItem(Bundle.getString("ThrottleMenuViewFunctionPanel"));
+        viewFunctionPanel = new JCheckBoxMenuItem(Bundle.getMessage("ThrottleMenuViewFunctionPanel"));
         viewFunctionPanel.setSelected(true);
         viewFunctionPanel.addItemListener(new ItemListener() {
 
@@ -385,7 +385,7 @@ public class ThrottleWindow extends JmriJFrame {
             }
         });
 
-        viewAllButtons = new JMenuItem(Bundle.getString("ThrottleMenuViewAllFunctionButtons"));
+        viewAllButtons = new JMenuItem(Bundle.getMessage("ThrottleMenuViewAllFunctionButtons"));
         viewAllButtons.addActionListener(new AbstractAction() {
 
             public void actionPerformed(ActionEvent ev) {
@@ -394,7 +394,7 @@ public class ThrottleWindow extends JmriJFrame {
             }
         });
 
-        JMenuItem makeAllComponentsInBounds = new JMenuItem(Bundle.getString("ThrottleMenuViewMakeAllComponentsInBounds"));
+        JMenuItem makeAllComponentsInBounds = new JMenuItem(Bundle.getMessage("ThrottleMenuViewMakeAllComponentsInBounds"));
         makeAllComponentsInBounds.addActionListener(new AbstractAction() {
 
             public void actionPerformed(ActionEvent ev) {
@@ -402,14 +402,14 @@ public class ThrottleWindow extends JmriJFrame {
             }
         });
 
-        JMenuItem switchViewMode = new JMenuItem(Bundle.getString("ThrottleMenuViewSwitchMode"));
+        JMenuItem switchViewMode = new JMenuItem(Bundle.getMessage("ThrottleMenuViewSwitchMode"));
         switchViewMode.addActionListener(new AbstractAction() {
 
             public void actionPerformed(ActionEvent ev) {
                 switchMode();
             }
         });
-        JMenuItem viewThrottlesList = new JMenuItem(Bundle.getString("ThrottleMenuViewViewThrottleList"));
+        JMenuItem viewThrottlesList = new JMenuItem(Bundle.getMessage("ThrottleMenuViewViewThrottleList"));
         viewThrottlesList.addActionListener(new ThrottlesListAction());
 
         viewMenu.add(viewAddressPanel);
@@ -422,8 +422,8 @@ public class ThrottleWindow extends JmriJFrame {
         viewMenu.add(switchViewMode);
         viewMenu.add(viewThrottlesList);
 
-        JMenu editMenu = new JMenu(Bundle.getString("ThrottleMenuEdit"));
-        JMenuItem preferencesItem = new JMenuItem(Bundle.getString("ThrottleMenuEditFrameProperties"));
+        JMenu editMenu = new JMenu(Bundle.getMessage("ThrottleMenuEdit"));
+        JMenuItem preferencesItem = new JMenuItem(Bundle.getMessage("ThrottleMenuEditFrameProperties"));
         editMenu.add(preferencesItem);
         preferencesItem.addActionListener(new ActionListener() {
 
@@ -431,7 +431,7 @@ public class ThrottleWindow extends JmriJFrame {
                 editPreferences();
             }
         });
-        editMenuExportRoster = new JMenuItem(Bundle.getString("ThrottleMenuEditSaveCustoms"));
+        editMenuExportRoster = new JMenuItem(Bundle.getMessage("ThrottleMenuEditSaveCustoms"));
         editMenu.add(editMenuExportRoster);
         editMenuExportRoster.addActionListener(new ActionListener() {
 
@@ -440,7 +440,7 @@ public class ThrottleWindow extends JmriJFrame {
             }
         });
         editMenu.addSeparator();
-        editMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(Bundle.getString("MenuItemThrottlesPreferences"))); // now in tabbed preferences
+        editMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(Bundle.getMessage("MenuItemThrottlesPreferences"))); // now in tabbed preferences
 
         this.setJMenuBar(new JMenuBar());
         this.getJMenuBar().add(fileMenu);
@@ -448,8 +448,8 @@ public class ThrottleWindow extends JmriJFrame {
         this.getJMenuBar().add(viewMenu);
 
         if (powerMgr != null) {
-            JMenu powerMenu = new JMenu(Bundle.getString("ThrottleMenuPower"));
-            JMenuItem powerOn = new JMenuItem(Bundle.getString("ThrottleMenuPowerOn"));
+            JMenu powerMenu = new JMenu(Bundle.getMessage("ThrottleMenuPower"));
+            JMenuItem powerOn = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOn"));
             powerMenu.add(powerOn);
             powerOn.addActionListener(new ActionListener() {
 
@@ -462,7 +462,7 @@ public class ThrottleWindow extends JmriJFrame {
                 }
             });
 
-            JMenuItem powerOff = new JMenuItem(Bundle.getString("ThrottleMenuPowerOff"));
+            JMenuItem powerOff = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOff"));
             powerMenu.add(powerOff);
             powerOff.addActionListener(new ActionListener() {
 

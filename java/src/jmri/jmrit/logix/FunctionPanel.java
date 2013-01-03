@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ResourceBundle;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
@@ -22,7 +21,6 @@ import jmri.jmrit.throttle.KeyListenerInstaller;
  */
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener
 {
-	static final ResourceBundle rb = jmri.jmrit.throttle.ThrottleBundle.bundle();
 	
 	public static final int NUM_FUNCTION_BUTTONS = 29;
     public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
@@ -224,7 +222,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             functionButton[i].setIdentity(i);
             functionButton[i].setFunctionListener(this);
             if(i < 3)
-            	functionButton[i].setText(rb.getString("F"+String.valueOf(i)));
+            	functionButton[i].setText(Bundle.getMessage("F"+String.valueOf(i)));
             else
             	functionButton[i].setText("F"+String.valueOf(i));
              if (i > 0)

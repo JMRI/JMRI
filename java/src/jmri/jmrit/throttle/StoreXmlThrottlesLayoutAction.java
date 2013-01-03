@@ -21,8 +21,6 @@ import org.jdom.output.*;
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
-	static final ResourceBundle rb = ThrottleBundle.bundle();
-
 	/**
 	 * Constructor
 	 * @param s Name for the action.
@@ -45,7 +43,7 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 	 * @param e The event causing the action.
 	 */
 	public void actionPerformed(ActionEvent e) {
-		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
 		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 		fileChooser.setCurrentDirectory(new File( ThrottleFrame.getDefaultThrottleFolder()));
 		java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);

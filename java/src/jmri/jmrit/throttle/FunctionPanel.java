@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ResourceBundle;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
@@ -24,8 +23,6 @@ import org.jdom.Element;
  */
 public class FunctionPanel extends JInternalFrame implements FunctionListener, java.beans.PropertyChangeListener, AddressListener
 {
-	static final ResourceBundle rb = ThrottleBundle.bundle();
-
 	public static final int NUM_FUNCTION_BUTTONS = 29;
 	public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
 	private DccThrottle mThrottle;
@@ -276,7 +273,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 			functionButton[i].setIdentity(i);
 			functionButton[i].setFunctionListener(this);
 			if(i < 3)
-				functionButton[i].setButtonLabel(rb.getString("F"+String.valueOf(i)));
+				functionButton[i].setButtonLabel(Bundle.getMessage("F"+String.valueOf(i)));
 			else
 				functionButton[i].setButtonLabel("F"+String.valueOf(i));
 

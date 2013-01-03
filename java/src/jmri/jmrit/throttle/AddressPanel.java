@@ -36,7 +36,6 @@ import org.jdom.Element;
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
-    static final ResourceBundle rb = ThrottleBundle.bundle();
 	private DccThrottle throttle;
 	private DccThrottle consistThrottle;
 
@@ -171,7 +170,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	    	boolean requestOK =
 	    		InstanceManager.throttleManagerInstance().requestThrottle(currentAddress.getNumber(), currentAddress.isLongAddress(), this);
 	    	if (!requestOK)
-	    		JOptionPane.showMessageDialog(mainPanel, rb.getString("AddressInUse"));
+	    		JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
 	    	return;
 		} 
 		
@@ -217,7 +216,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	}
     
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
-        javax.swing.JOptionPane.showMessageDialog(null,reason,rb.getString("FailedSetupRequestTitle"),javax.swing.JOptionPane.WARNING_MESSAGE);
+        javax.swing.JOptionPane.showMessageDialog(null,reason,Bundle.getMessage("FailedSetupRequestTitle"),javax.swing.JOptionPane.WARNING_MESSAGE);
     }
 
 	/**
@@ -301,7 +300,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		addrSelector.setVariableSize(true);
 		mainPanel.add(addrSelector.getCombinedJPanel(), constraints);
 
-		setButton = new JButton(rb.getString("ButtonSet"));
+		setButton = new JButton(Bundle.getMessage("ButtonSet"));
 		constraints.gridx = GridBagConstraints.RELATIVE;
 		constraints.fill = GridBagConstraints.NONE;
 		constraints.weightx = 0;
@@ -316,8 +315,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		});
 
 		rosterBox = new RosterEntrySelectorPanel();
-        getRosterEntrySelector().setNonSelectedItem(rb.getString("NoLocoSelected"));
-		getRosterEntrySelector().setToolTipText(rb.getString("SelectLocoFromRosterTT"));
+        getRosterEntrySelector().setNonSelectedItem(Bundle.getMessage("NoLocoSelected"));
+		getRosterEntrySelector().setToolTipText(Bundle.getMessage("SelectLocoFromRosterTT"));
 		getRosterEntrySelector().addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener() {
 
             @Override
@@ -338,7 +337,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		if (NceConsistRoster.instance().numEntries() > 0) {
 			conRosterBox.insertItemAt(new NullComboBoxConsist(), 0);
 			conRosterBox.setSelectedIndex(0);
-			conRosterBox.setToolTipText(rb.getString("SelectConsistFromRosterTT"));
+			conRosterBox.setToolTipText(Bundle.getMessage("SelectConsistFromRosterTT"));
 			conRosterBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					consistRosterSelected();
@@ -354,7 +353,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout());
-		dispatchButton = new JButton(rb.getString("ButtonDispatch"));
+		dispatchButton = new JButton(Bundle.getMessage("ButtonDispatch"));
 		buttonPanel.add(dispatchButton);
 		dispatchButton.setEnabled(false);
 		dispatchButton.addActionListener(new ActionListener() {
@@ -363,7 +362,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			}
 		});
 
-		releaseButton = new JButton(rb.getString("ButtonRelease"));
+		releaseButton = new JButton(Bundle.getMessage("ButtonRelease"));
 		buttonPanel.add(releaseButton);
 		releaseButton.setEnabled(false);
 		releaseButton.addActionListener(new ActionListener() {
@@ -372,7 +371,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			}
 		});
 
-		progButton = new JButton(rb.getString("ButtonProgram"));
+		progButton = new JButton(Bundle.getMessage("ButtonProgram"));
 		buttonPanel.add(progButton);
 		progButton.setEnabled(false);
 		progButton.addActionListener(new ActionListener() {
@@ -419,13 +418,13 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			} else {
 				log.warn("consist number missing " + cre.getLoco1DccAddress());
 				JOptionPane.showMessageDialog(mainPanel,
-						rb.getString("ConsistNumberHasNotBeenAssigned"),
-						rb.getString("NeedsConsistNumber"),
+						Bundle.getMessage("ConsistNumberHasNotBeenAssigned"),
+						Bundle.getMessage("NeedsConsistNumber"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			if (JOptionPane.showConfirmDialog(mainPanel,
-					rb.getString("SendFunctionToLead"), rb.getString("NCEconsistThrottle"),
+					Bundle.getMessage("SendFunctionToLead"), Bundle.getMessage("NCEconsistThrottle"),
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				addrSelector.setAddress(consistAddress);
 				consistAddress = null;
@@ -452,7 +451,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     	boolean requestOK =
     		InstanceManager.throttleManagerInstance().requestThrottle(getCurrentAddress(), rosterEntry, this);
     	if (!requestOK)
-    		JOptionPane.showMessageDialog(mainPanel, rb.getString("AddressInUse"));
+    		JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
 	}
 
 	private void changeOfConsistAddress() {
@@ -469,7 +468,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     	boolean requestOK =
     		InstanceManager.throttleManagerInstance().requestThrottle(consistAddress.getNumber(), consistAddress.isLongAddress(), this);
     	if (!requestOK)
-    		JOptionPane.showMessageDialog(mainPanel, rb.getString("AddressInUse"));
+    		JOptionPane.showMessageDialog(mainPanel, Bundle.getMessage("AddressInUse"));
 	}
 
     /**
@@ -600,7 +599,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	static class NullComboBoxConsist {
         @Override
 		public String toString() {
-			return rb.getString("NoConsistSelected");
+			return Bundle.getMessage("NoConsistSelected");
 		}
 	}
 

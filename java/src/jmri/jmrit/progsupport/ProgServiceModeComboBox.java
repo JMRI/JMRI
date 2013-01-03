@@ -69,34 +69,34 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
         box = new JComboBox();
 
         // install items in GUI
-        add(new JLabel(Bundle.getString("ProgrammingMode")));
+        add(new JLabel(Bundle.getMessage("ProgrammingMode")));
         add(box);
 
         if (InstanceManager.programmerManagerInstance() != null
                 && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
             Programmer p = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
             if (p.hasMode(Programmer.PAGEMODE)) {
-                box.addItem(Bundle.getString("PagedMode"));
+                box.addItem(Bundle.getMessage("PagedMode"));
                 modes.add(modes.size(), Programmer.PAGEMODE);
             }
             if (p.hasMode(Programmer.REGISTERMODE)) {
-                box.addItem(Bundle.getString("RegisterMode"));
+                box.addItem(Bundle.getMessage("RegisterMode"));
                 modes.add(modes.size(), Programmer.REGISTERMODE);
             }
             if (p.hasMode(Programmer.DIRECTBYTEMODE)) {
-                box.addItem(Bundle.getString("DirectByte"));
+                box.addItem(Bundle.getMessage("DirectByte"));
                 modes.add(modes.size(), Programmer.DIRECTBYTEMODE);
             }
             if (p.hasMode(Programmer.DIRECTBITMODE)) {
-                box.addItem(Bundle.getString("DirectBit"));
+                box.addItem(Bundle.getMessage("DirectBit"));
                 modes.add(modes.size(), Programmer.DIRECTBITMODE);
             }
             if (p.hasMode(Programmer.ADDRESSMODE)) {
-                box.addItem(Bundle.getString("AddressMode"));
+                box.addItem(Bundle.getMessage("AddressMode"));
                 modes.add(modes.size(), Programmer.ADDRESSMODE);
             }
         } else {
-            box.addItem(Bundle.getString("NotAvailable"));
+            box.addItem(Bundle.getMessage("NotAvailable"));
             log.info("No programmer available, so modes not set");
         }
         box.setEnabled((!modes.isEmpty()));

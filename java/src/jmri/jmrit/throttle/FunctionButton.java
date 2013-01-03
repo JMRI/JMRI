@@ -10,7 +10,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.util.ResourceBundle;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -41,7 +40,6 @@ import org.jdom.Element;
  */
 public class FunctionButton extends JToggleButton implements ActionListener
 {
-    static final ResourceBundle rb = ThrottleBundle.bundle();
     private ArrayList<FunctionListener> listeners = new ArrayList<FunctionListener>();
     private int identity; // F0, F1, etc?
     private boolean isOn;
@@ -75,7 +73,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     {
         popup = new JPopupMenu();
 
-        JMenuItem propertiesItem = new JMenuItem(rb.getString("MenuItemProperties"));
+        JMenuItem propertiesItem = new JMenuItem(Bundle.getMessage("MenuItemProperties"));
         propertiesItem.addActionListener(this);
         popup.add(propertiesItem);
 

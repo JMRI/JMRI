@@ -32,7 +32,7 @@ import java.awt.event.ActionEvent;
      }
      
      public SimpleProgAction() {
-        this(Bundle.getString("MenuItemSingleCVProgrammer"));
+        this(Bundle.getMessage("MenuItemSingleCVProgrammer"));
      }
      
      public void actionPerformed(ActionEvent e) {

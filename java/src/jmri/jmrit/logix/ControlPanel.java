@@ -1,7 +1,6 @@
 package jmri.jmrit.logix;
 
 import jmri.DccThrottle;
-import java.util.ResourceBundle;
 
 import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
@@ -39,8 +38,6 @@ import javax.swing.event.ChangeListener;
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
-    static final ResourceBundle rb = jmri.jmrit.throttle.ThrottleBundle.bundle();
-    
     private LearnThrottleFrame _throttleFrame;
     
     private JSlider speedSlider;
@@ -97,10 +94,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSpinner.setModel(speedSpinnerModel);
         speedSpinner.setFocusable(false);
 
-        SpeedStep128Button = new JRadioButton(rb.getString("Button128SS"));
-        SpeedStep28Button = new JRadioButton(rb.getString("Button28SS"));
-        SpeedStep27Button = new JRadioButton(rb.getString("Button27SS"));
-        SpeedStep14Button= new JRadioButton(rb.getString("Button14SS"));
+        SpeedStep128Button = new JRadioButton(Bundle.getMessage("Button128SS"));
+        SpeedStep28Button = new JRadioButton(Bundle.getMessage("Button28SS"));
+        SpeedStep27Button = new JRadioButton(Bundle.getMessage("Button27SS"));
+        SpeedStep14Button= new JRadioButton(Bundle.getMessage("Button14SS"));
         
         initGUI();
         pack();
@@ -226,7 +223,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
         labelTable.put(Integer.valueOf(MAX_SPEED/2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(MAX_SPEED), new JLabel("100%"));
-        labelTable.put(Integer.valueOf(0), new JLabel(rb.getString("LabelStop")));
+        labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("LabelStop")));
         speedSlider.setLabelTable(labelTable);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);
@@ -313,7 +310,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         java.util.Hashtable<Integer,JLabel> labelTable = new java.util.Hashtable<Integer,JLabel>();
         labelTable.put(Integer.valueOf(MAX_SPEED/2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(MAX_SPEED), new JLabel("100%"));
-        labelTable.put(Integer.valueOf(0), new JLabel(rb.getString("LabelStop")));
+        labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("LabelStop")));
         speedSlider.setLabelTable(labelTable);
         speedSlider.setPaintTicks(true);
         speedSlider.setPaintLabels(true);

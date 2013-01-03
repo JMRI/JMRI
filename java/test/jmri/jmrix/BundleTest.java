@@ -15,13 +15,13 @@ import junit.framework.TestSuite;
 public class BundleTest extends TestCase {
 
     public void testGoodKeys() {
-        Assert.assertEquals("(none)", Bundle.getString("none"));        
-        Assert.assertEquals("No locomotive detected (301);", Bundle.getString("NoLocoDetected"));        
-        Assert.assertEquals("Turnout", Bundle.getString("BeanNameTurnout"));        
+        Assert.assertEquals("(none)", Bundle.getMessage("none"));        
+        Assert.assertEquals("No locomotive detected (301);", Bundle.getMessage("NoLocoDetected"));        
+        Assert.assertEquals("Turnout", Bundle.getMessage("BeanNameTurnout"));        
     } 
     public void testBadKey() {
         try {
-            Bundle.getString("FFFFFTTTTTTT");   
+            Bundle.getMessage("FFFFFTTTTTTT");   
         } catch (java.util.MissingResourceException e) { return;} // OK
         Assert.fail("No exception thrown");     
     }

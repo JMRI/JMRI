@@ -32,7 +32,7 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
      */
     @Override
     public String getTitle() { 
-        return Bundle.getString("MenuItemLogTreeAction"); 
+        return Bundle.getMessage("MenuItemLogTreeAction"); 
     }
     
     /**

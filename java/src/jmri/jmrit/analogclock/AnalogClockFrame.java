@@ -30,7 +30,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     String amPm;
     
     public AnalogClockFrame() {
-        super(Bundle.getString("MenuItemAnalogClock"));
+        super(Bundle.getMessage("MenuItemAnalogClock"));
         
         clock = InstanceManager.timebaseInstance();
         

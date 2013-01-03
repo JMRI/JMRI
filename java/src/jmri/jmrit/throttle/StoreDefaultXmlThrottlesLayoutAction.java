@@ -2,7 +2,6 @@ package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 
@@ -13,8 +12,6 @@ import javax.swing.AbstractAction;
  *  @version $Revision$
  */
 public class StoreDefaultXmlThrottlesLayoutAction extends AbstractAction {
-
-	static ResourceBundle rb = ThrottleBundle.bundle();
 
 	/**
 	 * Constructor

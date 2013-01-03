@@ -3,7 +3,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
 
@@ -17,9 +16,7 @@ import jmri.util.JmriJFrame;
  * @version    $Revision$
  */
 public class ThrottleFrameManager
-{
-	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
-	
+{	
     /** record the single instance of Roster **/
     private static ThrottleFrameManager instance = null;
 
@@ -191,7 +188,7 @@ public class ThrottleFrameManager
 	}
 	
 	private void buildThrottlePreferencesFrame() {
-		throttlePreferencesFrame = new JmriJFrame(throttleBundle.getString("ThrottlePreferencesFrameTitle"));
+		throttlePreferencesFrame = new JmriJFrame(Bundle.getMessage("ThrottlePreferencesFrameTitle"));
 		ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane();
 		throttlePreferencesFrame.add(tpP);
 		tpP.setContainer(throttlePreferencesFrame);
@@ -200,7 +197,7 @@ public class ThrottleFrameManager
 	}
 	
 	private void buildThrottleListFrame() {
-		throttlesListFrame = new JmriJFrame(throttleBundle.getString("ThrottleListFrameTile"));
+		throttlesListFrame = new JmriJFrame(Bundle.getMessage("ThrottleListFrameTile"));
 		throttlesListPanel = new ThrottlesListPanel();
 		throttlesListFrame.setContentPane(throttlesListPanel);
 		throttlesListFrame.pack();

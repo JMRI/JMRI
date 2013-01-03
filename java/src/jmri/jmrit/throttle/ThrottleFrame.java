@@ -17,7 +17,6 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.swing.JComponent;
 import javax.swing.JDesktopPane;
@@ -52,7 +51,6 @@ import org.jdom.Element;
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
-	private static final ResourceBundle rb = ThrottleBundle.bundle();
 
     private final Integer BACKPANEL_LAYER = Integer.valueOf(Integer.MIN_VALUE);
     private final Integer PANEL_LAYER_FRAME = Integer.valueOf(1);
@@ -194,7 +192,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     
     public void loadThrottle(String sfile) {
     	if (sfile == null) {
-    		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+    		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
     		fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
 		fileChooser.setDialogType(JFileChooser.OPEN_DIALOG);
     		java.io.File file = LoadXmlConfigAction.getFile(fileChooser);
@@ -265,7 +263,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         controlPanel.setResizable(true);
         controlPanel.setClosable(true);
         controlPanel.setIconifiable(true);
-        controlPanel.setTitle(rb.getString("ThrottleMenuViewControlPanel"));
+        controlPanel.setTitle(Bundle.getMessage("ThrottleMenuViewControlPanel"));
         controlPanel.pack();
         controlPanel.setVisible(true);
         controlPanel.setEnabled(false);
@@ -275,7 +273,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         functionPanel.setResizable(true);
         functionPanel.setClosable(true);
         functionPanel.setIconifiable(true);
-        functionPanel.setTitle(rb.getString("ThrottleMenuViewFunctionPanel"));
+        functionPanel.setTitle(Bundle.getMessage("ThrottleMenuViewFunctionPanel"));
         
         // assumes button width of 54, height of 30 (set in class FunctionButton) with
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
@@ -299,7 +297,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         addressPanel.setResizable(true);
         addressPanel.setClosable(true);
         addressPanel.setIconifiable(true);
-        addressPanel.setTitle(rb.getString("ThrottleMenuViewAddressPanel"));
+        addressPanel.setTitle(Bundle.getMessage("ThrottleMenuViewAddressPanel"));
         addressPanel.pack();
         //                if (addressPanel.getWidth()<functionPanel.getWidth()) {addressPanel.setSize(functionPanel.getWidth(),addressPanel.getHeight());}
         addressPanel.setLocation(controlPanel.getWidth(), functionPanel.getHeight());
@@ -531,10 +529,10 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     public void saveRosterChanges(){
     	RosterEntry rosterEntry = addressPanel.getRosterEntry();
     	if (rosterEntry == null){
-			JOptionPane.showMessageDialog(this, rb.getString("ThrottleFrameNoRosterItemMessageDialog"), rb.getString("ThrottleFrameNoRosterItemTitleDialog"),	JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("ThrottleFrameNoRosterItemMessageDialog"), Bundle.getMessage("ThrottleFrameNoRosterItemTitleDialog"),	JOptionPane.ERROR_MESSAGE);
     		return;
     	}
-		if (JOptionPane.showConfirmDialog(this, rb.getString("ThrottleFrameRosterChangeMesageDialog"), rb.getString("ThrottleFrameRosterChangeTitleDialog"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+		if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("ThrottleFrameRosterChangeMesageDialog"), Bundle.getMessage("ThrottleFrameRosterChangeTitleDialog"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 			return;
 		}
 		functionPanel.saveFunctionButtonsToRoster(rosterEntry);
@@ -756,7 +754,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
      * setFrameTitle - set the frame title based on type, text and address
      */
     public void setFrameTitle() {
-    	String addr = rb.getString("ThrottleFrameTitle");
+    	String addr = Bundle.getMessage("ThrottleFrameTitle");
     	if (addressPanel.getThrottle() != null) 
     		addr = addressPanel.getCurrentAddress().toString();    	
     	if ( throttleWindow.getTitleTextType().compareTo("address") == 0) {
@@ -804,7 +802,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	}
 	
 	public void saveThrottleAs() {
-		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(rb.getString("PromptXmlFileTypes"), "xml");
+		JFileChooser fileChooser = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PromptXmlFileTypes"), "xml");
 		fileChooser.setCurrentDirectory(new File(getDefaultThrottleFolder()));
 		fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
 		java.io.File file = StoreXmlConfigAction.getFileName(fileChooser);

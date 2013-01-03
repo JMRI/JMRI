@@ -49,12 +49,12 @@ public class SimpleClockFrame extends JmriJFrame
     protected javax.swing.JTextField startHoursField = new javax.swing.JTextField(2);
     protected javax.swing.JTextField startMinutesField = new javax.swing.JTextField(2);
 
-    protected javax.swing.JButton setRateButton = new javax.swing.JButton(Bundle.getString("ButtonSet"));
-    protected javax.swing.JButton setTimeButton = new javax.swing.JButton(Bundle.getString("ButtonSet"));
-    protected javax.swing.JButton startButton = new javax.swing.JButton(Bundle.getString("ButtonStart"));
-    protected javax.swing.JButton stopButton = new javax.swing.JButton(Bundle.getString("ButtonStop"));
+    protected javax.swing.JButton setRateButton = new javax.swing.JButton(Bundle.getMessage("ButtonSet"));
+    protected javax.swing.JButton setTimeButton = new javax.swing.JButton(Bundle.getMessage("ButtonSet"));
+    protected javax.swing.JButton startButton = new javax.swing.JButton(Bundle.getMessage("ButtonStart"));
+    protected javax.swing.JButton stopButton = new javax.swing.JButton(Bundle.getMessage("ButtonStop"));
     protected javax.swing.JButton setStartTimeButton = new javax.swing.JButton(
-														Bundle.getString("ButtonSet"));
+														Bundle.getMessage("ButtonSet"));
 
     protected javax.swing.JLabel clockStatus = new javax.swing.JLabel();
     protected javax.swing.JLabel timeLabel = new javax.swing.JLabel();
@@ -79,7 +79,7 @@ public class SimpleClockFrame extends JmriJFrame
      */
     @SuppressWarnings("deprecation")
     public void initComponents() throws Exception {
-        setTitle(Bundle.getString("SimpleClockWindowTitle"));
+        setTitle(Bundle.getMessage("SimpleClockWindowTitle"));
 
         Container contentPane = getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -100,13 +100,13 @@ public class SimpleClockFrame extends JmriJFrame
 
         // Set up time source choice
         JPanel panel11 = new JPanel();
-        panel11.add(new JLabel(Bundle.getString("TimeSource")+" "));
+        panel11.add(new JLabel(Bundle.getMessage("TimeSource")+" "));
         timeSourceBox = new JComboBox();
         panel11.add(timeSourceBox);
-        timeSourceBox.addItem(Bundle.getString("ComputerClock"));
+        timeSourceBox.addItem(Bundle.getMessage("ComputerClock"));
 		hardwareName = InstanceManager.clockControlInstance().getHardwareClockName();
 		if (hardwareName!=null) timeSourceBox.addItem(hardwareName);
-        timeSourceBox.setToolTipText(Bundle.getString("TipTimeSource"));
+        timeSourceBox.setToolTipText(Bundle.getMessage("TipTimeSource"));
 		timeSourceBox.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setTimeSourceChanged();
@@ -117,9 +117,9 @@ public class SimpleClockFrame extends JmriJFrame
 			if (clock.getInternalMaster()) timeSourceBox.setSelectedIndex(internalSourceIndex);
 			else timeSourceBox.setSelectedIndex(hardwareSourceIndex);
 			JPanel panel11x = new JPanel();
-			synchronizeCheckBox = new JCheckBox(Bundle.getString("Synchronize")+" "+
+			synchronizeCheckBox = new JCheckBox(Bundle.getMessage("Synchronize")+" "+
 							hardwareName);
-			synchronizeCheckBox.setToolTipText(Bundle.getString("TipSynchronize"));
+			synchronizeCheckBox.setToolTipText(Bundle.getMessage("TipSynchronize"));
 			synchronizeCheckBox.setSelected(clock.getSynchronize());
 			synchronizeCheckBox.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -130,8 +130,8 @@ public class SimpleClockFrame extends JmriJFrame
 			contentPane.add(panel11x);
 			if (InstanceManager.clockControlInstance().canCorrectHardwareClock()) {
 				JPanel panel11y = new JPanel();
-				correctCheckBox = new JCheckBox(Bundle.getString("Correct"));
-				correctCheckBox.setToolTipText(Bundle.getString("TipCorrect"));
+				correctCheckBox = new JCheckBox(Bundle.getMessage("Correct"));
+				correctCheckBox.setToolTipText(Bundle.getMessage("TipCorrect"));
 				correctCheckBox.setSelected(clock.getCorrectHardware());
 				correctCheckBox.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -143,8 +143,8 @@ public class SimpleClockFrame extends JmriJFrame
 			}
 			if (InstanceManager.clockControlInstance().canSet12Or24HourClock()) {
 				JPanel panel11z = new JPanel();
-				displayCheckBox = new JCheckBox(Bundle.getString("Display12Hour"));
-				displayCheckBox.setToolTipText(Bundle.getString("TipDisplay"));
+				displayCheckBox = new JCheckBox(Bundle.getMessage("Display12Hour"));
+				displayCheckBox.setToolTipText(Bundle.getMessage("TipDisplay"));
 				displayCheckBox.setSelected(clock.use12HourDisplay());
 				displayCheckBox.addActionListener(new java.awt.event.ActionListener() {
 					public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -158,12 +158,12 @@ public class SimpleClockFrame extends JmriJFrame
 
         // Set up speed up factor
         JPanel panel12 = new JPanel();
-        panel12.add(new JLabel(Bundle.getString("SpeedUpFactor")+" "));
+        panel12.add(new JLabel(Bundle.getMessage("SpeedUpFactor")+" "));
         panel12.add(factorField);
         factorField.setText(threeDigits.format(clock.userGetRate()));
-        factorField.setToolTipText(Bundle.getString("TipFactorField"));
+        factorField.setToolTipText(Bundle.getMessage("TipFactorField"));
         panel12.add(new JLabel(":1 "));
-        setRateButton.setToolTipText(Bundle.getString("TipSetRateButton"));
+        setRateButton.setToolTipText(Bundle.getMessage("TipSetRateButton"));
         setRateButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setRateButtonActionPerformed();
@@ -174,15 +174,15 @@ public class SimpleClockFrame extends JmriJFrame
 
         // Set up time setup information
         JPanel panel2 = new JPanel();
-        panel2.add(new JLabel(Bundle.getString("NewTime")+" "));
+        panel2.add(new JLabel(Bundle.getMessage("NewTime")+" "));
         panel2.add(hoursField);
         hoursField.setText("00");
-        hoursField.setToolTipText(Bundle.getString("TipHoursField"));
+        hoursField.setToolTipText(Bundle.getMessage("TipHoursField"));
         panel2.add(new JLabel(":"));
         panel2.add(minutesField);
         minutesField.setText("00");
-        minutesField.setToolTipText(Bundle.getString("TipMinutesField"));
-        setTimeButton.setToolTipText(Bundle.getString("TipSetTimeButton"));
+        minutesField.setToolTipText(Bundle.getMessage("TipMinutesField"));
+        setTimeButton.setToolTipText(Bundle.getMessage("TipSetTimeButton"));
         setTimeButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     setTimeButtonActionPerformed();
@@ -195,8 +195,8 @@ public class SimpleClockFrame extends JmriJFrame
 		JPanel panel6 = new JPanel();
         panel6.setLayout(new BoxLayout(panel6, BoxLayout.Y_AXIS));
         JPanel panel61 = new JPanel();
-		startStoppedCheckBox = new JCheckBox(Bundle.getString("StartStopped"));
-		startStoppedCheckBox.setToolTipText(Bundle.getString("TipStartStopped"));
+		startStoppedCheckBox = new JCheckBox(Bundle.getMessage("StartStopped"));
+		startStoppedCheckBox.setToolTipText(Bundle.getMessage("TipStartStopped"));
 		startStoppedCheckBox.setSelected(clock.getStartStopped());
 		startStoppedCheckBox.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -206,8 +206,8 @@ public class SimpleClockFrame extends JmriJFrame
 		panel61.add(startStoppedCheckBox);
 		panel6.add(panel61);
         JPanel panel62 = new JPanel();
-		startSetTimeCheckBox = new JCheckBox(Bundle.getString("StartSetTime"));
-		startSetTimeCheckBox.setToolTipText(Bundle.getString("TipStartSetTime"));
+		startSetTimeCheckBox = new JCheckBox(Bundle.getMessage("StartSetTime"));
+		startSetTimeCheckBox.setToolTipText(Bundle.getMessage("TipStartSetTime"));
 		startSetTimeCheckBox.setSelected(clock.getStartSetTime());
 		startSetTimeCheckBox.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -217,13 +217,13 @@ public class SimpleClockFrame extends JmriJFrame
 		panel62.add(startSetTimeCheckBox);
 		Date tem = clock.getStartTime();
 		startHoursField.setText(""+tem.getHours());
-		startHoursField.setToolTipText(Bundle.getString("TipStartHours"));
+		startHoursField.setToolTipText(Bundle.getMessage("TipStartHours"));
 		panel62.add(startHoursField);
         panel62.add(new JLabel(":"));
 		startMinutesField.setText(""+tem.getMinutes());
-		startMinutesField.setToolTipText(Bundle.getString("TipStartMinutes"));
+		startMinutesField.setToolTipText(Bundle.getMessage("TipStartMinutes"));
 		panel62.add(startMinutesField);
-        setStartTimeButton.setToolTipText(Bundle.getString("TipSetStartTimeButton"));
+        setStartTimeButton.setToolTipText(Bundle.getMessage("TipSetStartTimeButton"));
         setStartTimeButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				startSetTimeChanged();
@@ -232,13 +232,13 @@ public class SimpleClockFrame extends JmriJFrame
         panel62.add(setStartTimeButton);
 		panel6.add(panel62);
 		JPanel panel63 = new JPanel();
-        panel63.add(new JLabel(Bundle.getString("StartClock")+" "));
+        panel63.add(new JLabel(Bundle.getMessage("StartClock")+" "));
 		clockStartBox = new JComboBox();
         panel63.add(clockStartBox);
-        clockStartBox.addItem(Bundle.getString("None"));
-        clockStartBox.addItem(Bundle.getString("MenuItemNixieClock"));
-        clockStartBox.addItem(Bundle.getString("MenuItemAnalogClock"));
-        clockStartBox.addItem(Bundle.getString("MenuItemLcdClock"));
+        clockStartBox.addItem(Bundle.getMessage("None"));
+        clockStartBox.addItem(Bundle.getMessage("MenuItemNixieClock"));
+        clockStartBox.addItem(Bundle.getMessage("MenuItemAnalogClock"));
+        clockStartBox.addItem(Bundle.getMessage("MenuItemLcdClock"));
 		clockStartBox.setSelectedIndex(startNone);
 		if (clock.getStartClockOption()==Timebase.NIXIE_CLOCK)
 			clockStartBox.setSelectedIndex(startNixieClock);
@@ -246,7 +246,7 @@ public class SimpleClockFrame extends JmriJFrame
 			clockStartBox.setSelectedIndex(startAnalogClock);
 		else if (clock.getStartClockOption()==Timebase.LCD_CLOCK)
 			clockStartBox.setSelectedIndex(startLcdClock);
-        clockStartBox.setToolTipText(Bundle.getString("TipClockStartOption"));
+        clockStartBox.setToolTipText(Bundle.getMessage("TipClockStartOption"));
 		clockStartBox.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				setClockStartChanged();
@@ -256,7 +256,7 @@ public class SimpleClockFrame extends JmriJFrame
 		
         Border panel6Border = BorderFactory.createEtchedBorder();
         Border panel6Titled = BorderFactory.createTitledBorder(panel6Border,
-                                                Bundle.getString("BoxLabelStartUp"));
+                                                Bundle.getMessage("BoxLabelStartUp"));
         panel6.setBorder(panel6Titled);
         contentPane.add(panel6);		
 
@@ -268,26 +268,26 @@ public class SimpleClockFrame extends JmriJFrame
         panel31.add(clockStatus);
         panel3.add(panel31);
         JPanel panel32 = new JPanel();
-        panel32.add(new JLabel(Bundle.getString("CurrentTime")+" "));
+        panel32.add(new JLabel(Bundle.getMessage("CurrentTime")+" "));
         setTimeLabel();
         panel32.add(timeLabel);
         panel3.add(panel32);
         Border panel3Border = BorderFactory.createEtchedBorder();
         Border panel3Titled = BorderFactory.createTitledBorder(panel3Border,
-                                                Bundle.getString("BoxLabelClockState"));
+                                                Bundle.getMessage("BoxLabelClockState"));
         panel3.setBorder(panel3Titled);
         contentPane.add(panel3);
 
         // Set up Start and Stop buttons
         JPanel panel4 = new JPanel();
-        startButton.setToolTipText(Bundle.getString("TipStartButton"));
+        startButton.setToolTipText(Bundle.getMessage("TipStartButton"));
         startButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     startButtonActionPerformed();
                 }
             });
         panel4.add(startButton);
-        stopButton.setToolTipText(Bundle.getString("TipStopButton"));
+        stopButton.setToolTipText(Bundle.getMessage("TipStopButton"));
         stopButton.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     stopButtonActionPerformed();
@@ -332,12 +332,12 @@ public class SimpleClockFrame extends JmriJFrame
     void updateRunningButton() {
     	boolean running = clock.getRun();
         if (running) {
-            clockStatus.setText(Bundle.getString("ClockRunning"));
+            clockStatus.setText(Bundle.getMessage("ClockRunning"));
             startButton.setVisible(false);
             stopButton.setVisible(true);
         }
         else {
-            clockStatus.setText(Bundle.getString("ClockStopped"));
+            clockStatus.setText(Bundle.getMessage("ClockStopped"));
             startButton.setVisible(true);
             stopButton.setVisible(false);
         }
@@ -353,22 +353,22 @@ public class SimpleClockFrame extends JmriJFrame
             rate = Double.valueOf(factorField.getText()).doubleValue();
         }
         catch (Exception e) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("ParseRateError")+"\n"+e),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("ParseRateError")+"\n"+e),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing Rate Field: "+e);
             return;
         }
 		if (rate < 0.0) {
-            JOptionPane.showMessageDialog(this,Bundle.getString("NegativeRateError"),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,Bundle.getMessage("NegativeRateError"),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
 			factorField.setText(threeDigits.format(clock.userGetRate()));
 			return;
 		}
 		if (InstanceManager.clockControlInstance().requiresIntegerRate()) {
 			double frac = rate-(int)rate;
 			if (frac > 0.001) {
-				JOptionPane.showMessageDialog(this,Bundle.getString("NonIntegerError"),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this,Bundle.getMessage("NonIntegerError"),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
 				factorField.setText(threeDigits.format(clock.userGetRate()));
 				return;
 			}
@@ -377,8 +377,8 @@ public class SimpleClockFrame extends JmriJFrame
             clock.userSetRate(rate);
         }
         catch (Exception e) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("SetRateError")+"\n"+e),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("SetRateError")+"\n"+e),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             log.error("Exception when setting timebase rate: "+e);
         }
 		changed = true;
@@ -435,14 +435,14 @@ public class SimpleClockFrame extends JmriJFrame
             hours = Integer.parseInt(hoursField.getText());
         }
         catch (Exception e) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("HoursError")+"\n"+e),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("HoursError")+"\n"+e),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing hours Field: "+e);
             return;
         }
         if ( (hours<0) || (hours>23) ) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("HoursRangeError")),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("HoursRangeError")),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             return;
         }
         // get minutes, reporting errors if any
@@ -450,14 +450,14 @@ public class SimpleClockFrame extends JmriJFrame
             minutes = Integer.parseInt(minutesField.getText());
         }
         catch (Exception e) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("HoursError")+"\n"+e),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("HoursError")+"\n"+e),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing hours Field: "+e);
             return;
         }
         if ( (minutes<0) || (minutes>59) ) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("MinutesRangeError")),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("MinutesRangeError")),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             return;
         }
         // set time of the fast clock
@@ -493,14 +493,14 @@ public class SimpleClockFrame extends JmriJFrame
             hours = Integer.parseInt(startHoursField.getText());
         }
         catch (Exception e) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("HoursError")+"\n"+e),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("HoursError")+"\n"+e),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing hours Field: "+e);
             return;
         }
         if ( (hours<0) || (hours>23) ) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("HoursRangeError")),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("HoursRangeError")),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             return;
         }
         // get minutes, reporting errors if any
@@ -508,14 +508,14 @@ public class SimpleClockFrame extends JmriJFrame
             minutes = Integer.parseInt(startMinutesField.getText());
         }
         catch (Exception e) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("HoursError")+"\n"+e),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("HoursError")+"\n"+e),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             log.error("Exception when parsing hours Field: "+e);
             return;
         }
         if ( (minutes<0) || (minutes>59) ) {
-            JOptionPane.showMessageDialog(this,(Bundle.getString("MinutesRangeError")),
-                    Bundle.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this,(Bundle.getMessage("MinutesRangeError")),
+                    Bundle.getMessage("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
             return;
         }
         // set time of the fast clock
@@ -599,8 +599,8 @@ public class SimpleClockFrame extends JmriJFrame
 		if (changed) {
 			// remind to save		
 			javax.swing.JOptionPane.showMessageDialog(null,
-					Bundle.getString("Reminder1")+"\n"+Bundle.getString("Reminder2"),
-						Bundle.getString("ReminderTitle"),
+					Bundle.getMessage("Reminder1")+"\n"+Bundle.getMessage("Reminder2"),
+						Bundle.getMessage("ReminderTitle"),
 							javax.swing.JOptionPane.INFORMATION_MESSAGE);
 			changed = false;
 		}	
