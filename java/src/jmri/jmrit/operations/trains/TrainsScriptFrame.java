@@ -187,17 +187,17 @@ public class TrainsScriptFrame extends OperationsFrame {
 	}
 
 	public void buttonActionRemoveStartUpScript(java.awt.event.ActionEvent ae) {
-		JButton rb = (JButton) ae.getSource();
-		log.debug("remove move script button activated " + rb.getName());
-		manager.deleteStartUpScript(rb.getName());
+		JButton rbutton = (JButton) ae.getSource();
+		log.debug("remove move script button activated " + rbutton.getName());
+		manager.deleteStartUpScript(rbutton.getName());
 		updateStartUpScriptPanel();
 		packFrame();
 	}
 
 	public void buttonActionRemoveShutDownScript(java.awt.event.ActionEvent ae) {
-		JButton rb = (JButton) ae.getSource();
-		log.debug("remove termination script button activated " + rb.getName());
-		manager.deleteShutDownScript(rb.getName());
+		JButton rbutton = (JButton) ae.getSource();
+		log.debug("remove termination script button activated " + rbutton.getName());
+		manager.deleteShutDownScript(rbutton.getName());
 		updateShutDownScriptPanel();
 		packFrame();
 	}

@@ -39,14 +39,14 @@ public class TrainIcon extends LocoIcon {
      */
 	public boolean showPopUp(JPopupMenu popup) {
 		if (train != null){
-			popup.add(new AbstractAction(rb.getString("Move")) {
+			popup.add(new AbstractAction(Bundle.getString("Move")) {
 				public void actionPerformed(ActionEvent e) {
 					train.move();
 				}
 			});
 			popup.add(makeTrainRouteMenu()); 
-			popup.add(new TrainConductorAction(rb.getString("TitleTrainConductor"), train));
-			popup.add(new ShowCarsInTrainAction(rb.getString("MenuItemShowCarsInTrain"), train));
+			popup.add(new TrainConductorAction(Bundle.getString("TitleTrainConductor"), train));
+			popup.add(new ShowCarsInTrainAction(Bundle.getString("MenuItemShowCarsInTrain"), train));
             if (!isEditable()) {
                 popup.add(new AbstractAction("Set X&Y") {
                     public void actionPerformed(ActionEvent e) {
@@ -104,7 +104,7 @@ public class TrainIcon extends LocoIcon {
 	}
 
 	private JMenu makeTrainRouteMenu(){
-		JMenu routeMenu = new JMenu(rb.getString("Route"));
+		JMenu routeMenu = new JMenu(Bundle.getString("Route"));
 		Route route = train.getRoute();
 		if (route == null)
 			return routeMenu;
@@ -131,12 +131,12 @@ public class TrainIcon extends LocoIcon {
 			String pickups = "";
 			String drops = "";
 			if (pickupCars > 0){
-				pickups = " "+rb.getString("Pickup")+" " + pickupCars;
+				pickups = " "+Bundle.getString("Pickup")+" " + pickupCars;
 				if (dropCars > 0)
-					drops = ", "+rb.getString("SetOut")+" " + dropCars;
+					drops = ", "+Bundle.getString("SetOut")+" " + dropCars;
 			}
 			else if (dropCars > 0)
-				drops = " "+rb.getString("SetOut")+" " + dropCars;
+				drops = " "+Bundle.getString("SetOut")+" " + dropCars;
 			if (pickupCars > 0 || dropCars > 0)
 				rText = current + rl.getName() +"  (" + pickups + drops +" )";
 			else
