@@ -63,11 +63,11 @@ public abstract class AbstractAudioManager extends AbstractManager
     @Override
     public Audio newAudio(String systemName, String userName) throws AudioException {
         if (log.isDebugEnabled()) log.debug("new Audio:"
-                                            +( (systemName==null) ? "null" : systemName)
-                                            +";"+( (userName==null) ? "null" : userName));
+                                            +( (systemName==null) ? "null" : systemName)   // NOI18N
+                                            +";"+( (userName==null) ? "null" : userName)); // NOI18N
         if (systemName == null) { 
             log.error("SystemName cannot be null. UserName was "
-                    +( (userName==null) ? "null" : userName));
+                    +( (userName==null) ? "null" : userName)); // NOI18N
             return null;
         }
         // is system name in correct format?
@@ -76,9 +76,9 @@ public abstract class AbstractAudioManager extends AbstractManager
            &&(!systemName.startsWith(""+getSystemPrefix()+typeLetter()+Audio.LISTENER))
             ){
             log.error("Invalid system name for Audio: "+systemName
-                            +" needed either "+getSystemPrefix()+typeLetter()+Audio.BUFFER
-                            +" or "+getSystemPrefix()+typeLetter()+Audio.SOURCE
-                            +" or "+getSystemPrefix()+typeLetter()+Audio.LISTENER);
+                            +" needed either "+getSystemPrefix()+typeLetter()+Audio.BUFFER // NOI18N
+                            +" or "+getSystemPrefix()+typeLetter()+Audio.SOURCE            // NOI18N
+                            +" or "+getSystemPrefix()+typeLetter()+Audio.LISTENER);        // NOI18N
             throw new AudioException("Invalid system name for Audio: "+systemName
                             +" needed either "+getSystemPrefix()+typeLetter()+Audio.BUFFER
                             +" or "+getSystemPrefix()+typeLetter()+Audio.SOURCE
@@ -96,7 +96,7 @@ public abstract class AbstractAudioManager extends AbstractManager
             if ((s.getUserName() == null) && (userName != null))
                 s.setUserName(userName);
             else if (userName != null) log.warn("Found audio via system name ("+systemName
-                                    +") with non-null user name ("+userName+")");
+                                    +") with non-null user name ("+userName+")"); // NOI18N
             return s;
         }
 
