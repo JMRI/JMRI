@@ -24,7 +24,7 @@
 <h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Importing Locomotives </h1>
 <div align=right>
-  <p><a href="Ops_Cars.shtml">Back </a></p>
+  <p><a href="Ops_Engines.shtml">Back </a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
@@ -143,7 +143,7 @@
       <p>Close the window when completed.</p></td>
   </tr>
 </table>
-<h4>Import locomotives from a File</h4>
+<h4><a name="FromFile"></a>Import locomotives from a File</h4>
 The import from file function requires an ACSII text file, with one line  for each locomotive. The import order is locomotive number, locomotive road name,  locomotive model, and locomotive length. The following shows two examples of the  correct format:
 <p>236 UP RS4 40 <br>
 5578 SP SW1200 42</p>
@@ -165,7 +165,7 @@ that can be found at the bottom  right of the <strong>Edit locomotive</strong> w
 <hr>
 
 <div align=right>
-<p><a href="Ops_Cars.shtml">Back </a></p>
+<p><a href="Ops_Engines.shtml">Back </a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 

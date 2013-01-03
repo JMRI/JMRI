@@ -34,13 +34,13 @@
 <p>The Locomotives window allows you to edit your engine roster. You can enter  an engine's number, road, model, type, and length. You can optionally  add the engine's build date and owner. If you want a group of engines to  be assigned as a unit, you can create a "consist". The engine type is  used by the program to determine where engines are picked up and or  stored at the various locations on your layout. Some of default engine  types are electric, diesel, gas turbine, and steam.</p>
 <p><img src="images/Ops_Engine.png" width="900" height="453" alt="engine"></p>
 <p><strong>Menu Bar</strong></p>
-<p><img src="images/Ops_EngineMenu.png" width="437" height="226" alt="engine menu"></p>
+<p><img src="images/Ops_EngineMenu.png" width="273" height="125" alt="engine menu"></p>
 <p><strong>Tools </strong></p>
 <ul>
   <li><strong>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
     <ul>
       <li><a href="Ops_ImportEngines.shtml">Import from JMRI roster</a></li>
-      <li><a href="Ops_ImportEngines.shtml">Import from file</a></li>
+      <li><a href="Ops_ImportEngines.shtml#FromFile">Import from file</a></li>
       <li>Export to file</li>
     </ul>
     <blockquote>
@@ -53,9 +53,18 @@
         <img src="images/Ops_Engine_deleteRoster.png" width="446" height="122" alt="delete"><br>
       </li>
       <li><strong>Print</strong> -- Opens your computers <strong>Print</strong> window and will print your locomotive roster.</li>
+    </ul>
+    <blockquote>
+      <p><img src="images/Ops_Engine_print.png" width="722" height="345" alt="print"></p>
+    </blockquote>
+    <ul>
       <li><strong>Preview</strong> -- Opens your computers <strong>Print Preview </strong> window and shows the preview of your locomotive roster.</li>
     </ul>
+    <blockquote>
+      <p><img src="images/Ops_Engine_preview.png" width="670" height="301" alt="engine preview"></p>
+    </blockquote>
 </ul>
+<p><strong>Operations</strong> -- same as DecoderPro&reg; Operations menu</p>
 <p><strong>Window</strong> -- same as other JMRI&reg; menus.</p>
 <p><strong>Help</strong> -- same as other JMRI&reg; menus.</p>
 <p><strong><em>Body of window</em></strong></p>

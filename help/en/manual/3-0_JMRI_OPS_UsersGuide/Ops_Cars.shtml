@@ -66,7 +66,7 @@ opens the<strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></str
     <li><strong>Roster --&gt;
       </strong>
       <ul>
-        <li><strong>Import from File<br>
+        <li><strong><a href="Ops_ImportCarsFile.shtml">Import from File</a><br>
         </strong>Opens the <strong>Open</strong> dialog box, to import a roster of cars if you already have a list of cars in a database. The import function requires an ACSII text file, with one line for each car. The car import requires four attributes and the order is car number, road name, type, and length. An example of a correct format:</li>
       </ul>
       <blockquote>

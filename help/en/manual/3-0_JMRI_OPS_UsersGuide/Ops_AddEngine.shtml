@@ -24,7 +24,7 @@
 <h1>Add Locomotive</h1>
 
 <div align=right>
-<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
+<p><a href="Ops_Engines.shtml">Back</a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
@@ -160,7 +160,7 @@ where you may enter the owner's name. Then select the Owner name from the drop-d
 <hr>
 
 <div align=right>
-<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Routes.shtml">Next</a></p>
+<p><a href="Ops_Engines.shtml">Back</a><a href="Ops_Routes.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
