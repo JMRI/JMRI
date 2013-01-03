@@ -76,7 +76,7 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 		addButtonAction(saveButton);
 
 		// build menu
-		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true); // NOI18N
 
 		pack();
 		setVisible(true);

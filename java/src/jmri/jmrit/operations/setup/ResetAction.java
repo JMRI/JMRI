@@ -68,7 +68,7 @@ public class ResetAction extends AbstractAction {
 
 		} catch (Exception ex) {
 			UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
-					"Deleting Operations files");
+					"Deleting Operations files"); // NOI18N
 			new ExceptionDisplayFrame(context);
 		}
 	}

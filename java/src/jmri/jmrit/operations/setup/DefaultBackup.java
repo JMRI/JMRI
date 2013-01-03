@@ -17,6 +17,6 @@ public class DefaultBackup extends BackupBase {
 	 * the given name.
 	 */
 	public DefaultBackup() {
-		super("backups");
+		super("backups"); // NOI18N
 	}
 }

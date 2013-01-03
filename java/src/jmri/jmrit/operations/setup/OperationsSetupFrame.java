@@ -57,17 +57,17 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	JButton saveButton = new JButton(Bundle.getString("Save"));
 
 	// radio buttons
-	JRadioButton scaleZ = new JRadioButton("Z");
-	JRadioButton scaleN = new JRadioButton("N");
-	JRadioButton scaleTT = new JRadioButton("TT");
-	JRadioButton scaleHOn3 = new JRadioButton("HOn3");
-	JRadioButton scaleOO = new JRadioButton("OO");
-	JRadioButton scaleHO = new JRadioButton("HO");
-	JRadioButton scaleSn3 = new JRadioButton("Sn3");
-	JRadioButton scaleS = new JRadioButton("S");
-	JRadioButton scaleOn3 = new JRadioButton("On3");
-	JRadioButton scaleO = new JRadioButton("O");
-	JRadioButton scaleG = new JRadioButton("G");
+	JRadioButton scaleZ = new JRadioButton("Z"); // NOI18N
+	JRadioButton scaleN = new JRadioButton("N"); // NOI18N
+	JRadioButton scaleTT = new JRadioButton("TT"); // NOI18N
+	JRadioButton scaleHOn3 = new JRadioButton("HOn3"); // NOI18N
+	JRadioButton scaleOO = new JRadioButton("OO"); // NOI18N
+	JRadioButton scaleHO = new JRadioButton("HO"); // NOI18N
+	JRadioButton scaleSn3 = new JRadioButton("Sn3"); // NOI18N
+	JRadioButton scaleS = new JRadioButton("S"); // NOI18N
+	JRadioButton scaleOn3 = new JRadioButton("On3"); // NOI18N
+	JRadioButton scaleO = new JRadioButton("O"); // NOI18N
+	JRadioButton scaleG = new JRadioButton("G"); // NOI18N
 
 	JRadioButton typeDesc = new JRadioButton(Bundle.getString("Descriptive"));
 	JRadioButton typeAAR = new JRadioButton(Bundle.getString("AAR"));
@@ -105,7 +105,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	JComboBox localComboBox = new JComboBox();
 	JComboBox terminateComboBox = new JComboBox();
 
-	protected static final String NEW_LINE = "\n";
+	protected static final String NEW_LINE = "\n"; // NOI18N
 
 	public OperationsSetupFrame() {
 		super(Bundle.getString("TitleOperationsSetup"));
@@ -372,12 +372,12 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		toolMenu.add(new RestoreFilesAction(Bundle.getString("Restore")));
 		toolMenu.add(new LoadDemoAction(Bundle.getString("LoadDemo")));
 		toolMenu.add(new ResetAction(Bundle.getString("ResetOperations")));
-		toolMenu.add(new ManageBackupsAction("Manage Auto Backups"));
+		toolMenu.add(new ManageBackupsAction(Bundle.getString("ManageAutoBackups")));
 
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
 		/*
 		 * all JMRI window position and size are now saved // set frame size and location for display if
@@ -470,14 +470,9 @@ public class OperationsSetupFrame extends OperationsFrame implements
 				backup.autoBackup();
 			} catch (Exception ex) {
 				UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
-						"Auto backup before changing Car types");
+						"Auto backup before changing Car types"); // NOI18N
 				new ExceptionDisplayFrame(context);
 			}
-
-			// if (!success) {
-			// log.error("Could not backup files");
-			// return;
-			// }
 
 			if (typeDesc.isSelected()) {
 				CarTypes.instance().changeDefaultNames(Setup.DESCRIPTIVE);
@@ -495,13 +490,14 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		Setup.setCloseWindowOnSaveEnabled(closeOnSaveCheckBox.isSelected());
 		Setup.setAutoSaveEnabled(autoSaveCheckBox.isSelected());
 		Setup.setAutoBackupEnabled(autoBackupCheckBox.isSelected());
-		// RFID enabled?
-		// Setup.setRfidEnabled(rfidCheckBox.isSelected());
+
 		// add panel name to setup
 		Setup.setPanelName(panelTextField.getText());
+		
 		// train Icon X&Y
 		Setup.setTrainIconCordEnabled(iconCheckBox.isSelected());
 		Setup.setTrainIconAppendEnabled(appendCheckBox.isSelected());
+		
 		// save train icon colors
 		Setup.setTrainIconColorNorth((String) northComboBox.getSelectedItem());
 		Setup.setTrainIconColorSouth((String) southComboBox.getSelectedItem());
@@ -591,8 +587,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 			if (sb.length() > 0) {
 				JOptionPane.showMessageDialog(null, sb.toString(),
 						Bundle.getString("YouNeedToAdjustRoutes"), JOptionPane.WARNING_MESSAGE);
-				if (JOptionPane.showConfirmDialog(null, "Change maximum train departure length to "
-						+ maxLength + "?", "Modify all routes?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getString("ChangeMaximumTrainDepartureLength"),
+						new Object[] { maxLength }), Bundle.getString("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					for (int i = 0; i < routes.size(); i++) {
 						Route r = rm.getRouteById(routes.get(i));
 						List<String> locations = r.getLocationsBySequenceList();
@@ -600,7 +596,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 							RouteLocation rl = r.getLocationById(locations.get(j));
 							if (rl.getMaxTrainLength() > maxLength) {
 								log.debug("Setting route (" + r.getName() + ") routeLocation ("
-										+ rl.getName() + ") max traim length to " + maxLength);
+										+ rl.getName() + ") max traim length to " + maxLength); // NOI18N
 								rl.setMaxTrainLength(maxLength);
 							}
 						}

@@ -201,7 +201,7 @@ public class OptionFrame extends OperationsFrame {
 		stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
 
 		// build menu
-		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true); // NOI18N
 
 		pack();
 		if (getWidth() < 450)

@@ -83,8 +83,8 @@ public class RestoreDialog extends JDialog {
 				JPanel panel = new JPanel();
 				panel.setAlignmentX(Component.LEFT_ALIGNMENT);
 				panel.setLayout(new FlowLayout(FlowLayout.LEFT));
-				panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"),
-						"From:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+				panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), // NOI18N
+						"From:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0))); // NOI18N
 
 				contentPanel.add(panel);
 				ButtonGroup fromGroup = new ButtonGroup();

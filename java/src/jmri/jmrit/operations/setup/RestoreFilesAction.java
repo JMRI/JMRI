@@ -109,7 +109,7 @@ public class RestoreFilesAction extends AbstractAction {
 			if (f.isDirectory())
 				return true;
 			String name = f.getName();
-			if (name.matches(".*\\.xml"))
+			if (name.matches(".*\\.xml")) // NOI18N
 				return true;
 			else
 				return false;

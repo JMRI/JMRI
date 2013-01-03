@@ -381,7 +381,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		toolMenu.add(new PrintMoreOptionAction());
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true); // NOI18N
 
 		pack();
 		setVisible(true);
@@ -563,13 +563,13 @@ public class PrintOptionFrame extends OperationsFrame {
 	/**
 	 * We always use the same file chooser in this class, so that the user's last-accessed directory remains available.
 	 */
-	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Images");
+	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getString("Images"));
 
 	private File selectFile() {
 		if (fc == null) {
 			log.error("Could not find user directory");
 		} else {
-			fc.setDialogTitle("Find desired image");
+			fc.setDialogTitle(Bundle.getString("FindDesiredImage"));
 			// when reusing the chooser, make sure new files are included
 			fc.rescanCurrentDirectory();
 		}

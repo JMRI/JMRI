@@ -91,7 +91,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		addButtonAction(saveButton);
 
 		//	build menu		
-		addHelpMenu("package.jmri.jmrit.operations.Operations_BuildReportDetails", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_BuildReportDetails", true); // NOI18N
 
 		pack();
 		setVisible(true);

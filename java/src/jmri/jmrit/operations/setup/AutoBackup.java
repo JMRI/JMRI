@@ -20,7 +20,7 @@ public class AutoBackup extends BackupBase {
 	 * to the given name.
 	 */
 	public AutoBackup() {
-		super("autoBackups");
+		super("autoBackups"); // NOI18N
 	}
 
 	/**

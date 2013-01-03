@@ -155,7 +155,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		String locId = sysList.get(row);
 		Route r = manager.getRouteById(locId);
 		if (r == null)
-			return "ERROR route unknown " + row;
+			return "ERROR route unknown " + row; // NOI18N
 		switch (col) {
 		case IDCOLUMN:
 			return r.getId();

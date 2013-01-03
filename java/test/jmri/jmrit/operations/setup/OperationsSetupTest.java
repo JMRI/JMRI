@@ -75,7 +75,6 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("Operations Setup Constant AAR", "ARR Codes", Setup.AAR);
 
 		Assert.assertEquals("Operations Setup Constant MONOSPACED", "Monospaced", Setup.MONOSPACED);
-		Assert.assertEquals("Operations Setup Constant SANSERIF", "SansSerif", Setup.SANSERIF);
 		Assert.assertEquals("Operations Setup Constant LENGTHABV", "'", Setup.LENGTHABV);
 
 		Assert.assertEquals("Operations Setup Constant BUILD_REPORT_MINIMAL", "1", Setup.BUILD_REPORT_MINIMAL);

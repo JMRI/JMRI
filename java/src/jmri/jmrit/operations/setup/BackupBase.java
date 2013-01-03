@@ -43,12 +43,12 @@ public abstract class BackupBase {
 	}
 
 	// These constitute the set of files for a complete backup set.
-	private String[] _backupSetFileNames = new String[] { "Operations.xml",
-			"OperationsCarRoster.xml", "OperationsEngineRoster.xml",
-			"OperationsLocationRoster.xml", "OperationsRouteRoster.xml",
-			"OperationsTrainRoster.xml" };
+	private String[] _backupSetFileNames = new String[] { "Operations.xml", // NOI18N
+			"OperationsCarRoster.xml", "OperationsEngineRoster.xml", // NOI18N
+			"OperationsLocationRoster.xml", "OperationsRouteRoster.xml", // NOI18N
+			"OperationsTrainRoster.xml" }; // NOI18N
 
-	private String _demoPanelFileName = "Operations Demo Panel.xml";
+	private String _demoPanelFileName = "Operations Demo Panel.xml"; // NOI18N
 
 	public String[] getBackupSetFileNames() {
 		return _backupSetFileNames.clone();
@@ -64,7 +64,7 @@ public abstract class BackupBase {
 		// A root directory name for the backups must be supplied, which will be
 		// from the derived class constructors.
 		if (rootName == null)
-			throw new IllegalArgumentException("Backup root name can't be null");
+			throw new IllegalArgumentException("Backup root name can't be null"); // NOI18N
 
 		_operationsRoot = new File(XmlFile.prefsDir(),
 				OperationsXml.getOperationsDirectoryName());
@@ -75,7 +75,7 @@ public abstract class BackupBase {
 		if (!_backupRoot.exists()) {
 			Boolean ok = _backupRoot.mkdirs();
 			if (!ok) {
-				throw new RuntimeException("Unable to make directory: "
+				throw new RuntimeException("Unable to make directory: " // NOI18N
 						+ _backupRoot.getAbsolutePath());
 			}
 		}
@@ -100,7 +100,7 @@ public abstract class BackupBase {
 	private void validateNotNullOrEmpty(String s) {
 		if (s == null || s.trim().length() == 0) {
 			throw new IllegalArgumentException(
-					"string cannot be null or empty.");
+					"string cannot be null or empty."); // NOI18N
 		}
 
 	}
@@ -215,8 +215,8 @@ public abstract class BackupBase {
 		if (!sourceDir.exists())
 			// This throws an exception, as the dir should
 			// exist.
-			throw new IOException("Backup Set source directory: "
-					+ sourceDir.getAbsolutePath() + " does not exist");
+			throw new IOException("Backup Set source directory: " // NOI18N
+					+ sourceDir.getAbsolutePath() + " does not exist"); // NOI18N
 
 		// See how many Operations files we have. If they are all there, carry
 		// on, if there are none, just return, any other number MAY be an error,
@@ -229,13 +229,13 @@ public abstract class BackupBase {
 
 		if (sourceCount == 0) {
 			log.debug("No source files found in " + sourceDir.getAbsolutePath()
-					+ ", so skipping copy.");
+					+ ", so skipping copy."); // NOI18N
 			return;
 		}
 
 		if (sourceCount != _backupSetFileNames.length) {
 			log.warn("Only " + sourceCount
-					+ " file(s) found in directory "
+					+ " file(s) found in directory " // NOI18N
 					+ sourceDir.getAbsolutePath());
 			// throw new IOException("Only " + sourceCount
 			// + " file(s) found in directory "
@@ -252,7 +252,7 @@ public abstract class BackupBase {
 				// This needs to use a better Exception class.....
 				throw new IOException(
 						destDir.getAbsolutePath()
-								+ " (Could not create all or part of the Backup Set path)");
+								+ " (Could not create all or part of the Backup Set path)"); // NOI18N
 			}
 		}
 
@@ -307,7 +307,7 @@ public abstract class BackupBase {
 	 * @throws Exception
 	 */
 	public void loadDemoFiles() throws IOException {
-		File fromDir = new File(XmlFile.xmlDir(), "demoOperations");
+		File fromDir = new File(XmlFile.xmlDir(), "demoOperations"); // NOI18N
 		copyBackupSet(fromDir, _operationsRoot);
 
 		// and the demo panel file
@@ -340,7 +340,7 @@ public abstract class BackupBase {
 		// Check for up to 100 backup file names to see if they already exist
 		for (int i = 0; i < 99; i++) {
 			// Create the trial name, then see if it already exists.
-			fullName = String.format("%s_%02d", baseName, i);
+			fullName = String.format("%s_%02d", baseName, i); // NOI18N
 					
 			boolean foundFileNameMatch = false;		
 			for (int j = 0; j < dirNames.length; j++) {
@@ -362,7 +362,7 @@ public abstract class BackupBase {
 
 			// Otherwise complain and keep trying...
 			log.debug("Operations backup directory: " + fullName
-					+ " already exists");
+					+ " already exists"); // NOI18N
 		}
 
 		// If we get here, we have tried all 100 variants without success. This
@@ -386,7 +386,7 @@ public abstract class BackupBase {
 		String[] operationFileNames = files.list();
 		for (int i = 0; i < operationFileNames.length; i++) {
 			// skip non-xml files
-			if (!operationFileNames[i].toUpperCase().endsWith(".XML"))
+			if (!operationFileNames[i].toUpperCase().endsWith(".XML")) // NOI18N
 				continue;
 			//
 			log.debug("deleting file: " + operationFileNames[i]);
@@ -448,7 +448,7 @@ public abstract class BackupBase {
 			if (!overwrite) {
 				if (new File(destFileName).exists()) {
 					throw new IOException(
-							"Destination file exists and overwrite is false.");
+							"Destination file exists and overwrite is false."); // NOI18N
 				}
 			}
 
@@ -471,7 +471,7 @@ public abstract class BackupBase {
 					source.close();
 				if (dest != null)
 					dest.close();
-				String msg = String.format("Error copying file: %s to: %s",
+				String msg = String.format("Error copying file: %s to: %s", // NOI18N
 						sourceFileName, destFileName);
 				throw new IOException(msg, ex);
 			}
@@ -486,7 +486,7 @@ public abstract class BackupBase {
 			Boolean ok = dst.setLastModified(src.lastModified());
 			if (!ok)
 				throw new RuntimeException(
-						"Failed to set modified time on file: "
+						"Failed to set modified time on file: " // NOI18N
 								+ dst.getAbsolutePath());
 		}
 	}
