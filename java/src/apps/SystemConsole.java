@@ -276,7 +276,7 @@ public final class SystemConsole extends JTextArea {
         JRadioButtonMenuItem rbMenuItem;
 
         // Define the colour scheme sub-menu
-        schemeMenu = new JMenu("Colour scheme");
+        schemeMenu = new JMenu(rbc.getString("ConsoleSchemeMenu"));
         schemeGroup = new ButtonGroup();
         for (final Scheme s: schemes) {
             rbMenuItem = new JRadioButtonMenuItem(s.description);
@@ -293,7 +293,7 @@ public final class SystemConsole extends JTextArea {
         popup.add(schemeMenu);
 
         // Define the wrap style sub-menu
-        wrapMenu = new JMenu("Wrap style");
+        wrapMenu = new JMenu(rbc.getString("ConsoleWrapStyleMenu"));
         wrapGroup = new ButtonGroup();
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleNone"));
         rbMenuItem.addActionListener(new ActionListener() {
