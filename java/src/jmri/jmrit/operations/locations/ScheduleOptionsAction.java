@@ -9,6 +9,7 @@ import javax.swing.*;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Action to launch schedule options.
@@ -112,6 +113,8 @@ class ScheduleOptionsFrame extends OperationsFrame {
 			else
 				_track.setAlternativeTrack(null);
 			OperationsXml.save();
+			if (Setup.isCloseWindowOnSaveEnabled())
+				dispose();
 		}
 	}
 
