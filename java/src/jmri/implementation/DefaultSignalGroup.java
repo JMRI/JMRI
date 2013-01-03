@@ -420,7 +420,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
     ArrayList <SignalHeadItem> _signalHeadItem = new ArrayList<SignalHeadItem>();
-    private static class SignalHeadItem {
+    private static class SignalHeadItem implements java.io.Serializable{
         SignalHeadItem(NamedBeanHandle<SignalHead> sh){
             namedHead = sh;
             if (namedHead.getBean().getClass().getName().contains("SingleTurnoutSignalHead")){
@@ -494,7 +494,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
         
         ArrayList <SignalTurnout> _signalTurnoutList = new ArrayList<SignalTurnout>();
-        private static class SignalTurnout {
+        private static class SignalTurnout implements java.io.Serializable {
             NamedBeanHandle<Turnout> _turnout;
             int _state;
 
@@ -578,7 +578,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
         
         ArrayList <SignalSensor> _signalSensorList = new ArrayList<SignalSensor>();
-        private static class SignalSensor {
+        private static class SignalSensor implements java.io.Serializable {
             NamedBeanHandle<Sensor> _Sensor;
             int _state;
            

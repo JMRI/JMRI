@@ -149,7 +149,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             log.error("No appearance map defined, unable to set appearance " + getDisplayName());
             return;
         }
-        if (map != null && map.getSignalSystem() !=null &&  map.getSignalSystem().checkAspect(aspect) && map.getAspectSettings(aspect)!=null)
+        if (map.getSignalSystem() !=null &&  map.getSignalSystem().checkAspect(aspect) && map.getAspectSettings(aspect)!=null)
             log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
         else if ((map.getAspectSettings(aspect)!=null) && (heads.size() > map.getAspectSettings(aspect).length))
             log.warn("setAppearance to \""+aspect+"\" finds "+heads.size()+" heads but only "+map.getAspectSettings(aspect).length+" settings");

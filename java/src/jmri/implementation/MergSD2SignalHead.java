@@ -90,6 +90,8 @@ public class MergSD2SignalHead extends DefaultSignalHead {
             case 4: if ((newAppearance == RED) || (newAppearance == YELLOW) || (newAppearance == GREEN) || (newAppearance == LUNAR))
                         valid=true;
                     break;
+            default : valid = false;
+                      break;
         }
         if ((oldAppearance != newAppearance) && (valid)){
             updateOutput();

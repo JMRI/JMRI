@@ -67,6 +67,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
                     element.addContent(addTurnoutElement(p.getInput2(), "input2"));
                     element.addContent(addTurnoutElement(p.getInput3(), "input3"));
                     break;
+        default : log.error("incorrect number of aspects " + aspects + " for Signal " + p.getDisplayName());
         }
         
         return element;
@@ -150,6 +151,7 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
                     input2 = loadTurnout(l.get(1));
                     input3 = loadTurnout(l.get(2));
                     break;
+            default : log.error("incorrect number of aspects " + aspects + " when loading Signal " + sys);
         }
         if (uname == null)
             h = new MergSD2SignalHead(sys, aspects, input1, input2, input3, feather, home);

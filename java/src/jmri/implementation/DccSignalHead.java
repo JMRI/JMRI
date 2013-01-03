@@ -126,6 +126,9 @@ public class DccSignalHead extends AbstractSignalHead {
           case SignalHead.FLASHRED:    aspect = 4 ; break;
           case SignalHead.FLASHYELLOW: aspect = 5 ; break;
           case SignalHead.FLASHGREEN:  aspect = 6 ; break;
+          default :                    aspect = 1;
+                                       log.error("Unknown appearance " + mAppearance);
+                                       break;
         }
       }
 

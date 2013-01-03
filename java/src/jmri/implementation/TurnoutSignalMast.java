@@ -140,7 +140,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
     
     public boolean resetPreviousStates() { return resetPreviousStates; }
     
-    static class TurnoutAspect{
+    static class TurnoutAspect implements java.io.Serializable{
         
         NamedBeanHandle<Turnout> namedTurnout;
         int state;
