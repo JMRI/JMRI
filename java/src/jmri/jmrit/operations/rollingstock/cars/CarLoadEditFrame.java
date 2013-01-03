@@ -41,10 +41,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 	JLabel quanity = new JLabel("0");
 
 	// major buttons
-	JButton addButton = new JButton(Bundle.getString("Add"));
-	JButton deleteButton = new JButton(Bundle.getString("Delete"));
-	JButton replaceButton = new JButton(Bundle.getString("Replace"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
+	JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+	JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// combo boxes
 	JComboBox comboBox;
@@ -66,7 +66,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
 		getContentPane().removeAll();
 
-		setTitle(MessageFormat.format(Bundle.getString("TitleCarEditLoad"), new Object[] { type }));
+		setTitle(MessageFormat.format(Bundle.getMessage("TitleCarEditLoad"), new Object[] { type }));
 
 		// track which combo box is being edited
 		_type = type;
@@ -81,7 +81,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		// load panel
 		JPanel pLoad = new JPanel();
 		pLoad.setLayout(new GridBagLayout());
-		pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Load")));
+		pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
 
 		// row 2
 		addItem(pLoad, addTextBox, 2, 2);
@@ -99,14 +99,14 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		JPanel pLoadType = new JPanel();
 		pLoadType.setLayout(new BoxLayout(pLoadType, BoxLayout.Y_AXIS));
 		pLoadType.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutLoadType")));
+				.getMessage("BorderLayoutLoadType")));
 		addItem(pLoadType, loadTypeComboBox, 0, 0);
 
 		// row 8
 		JPanel pPriority = new JPanel();
 		pPriority.setLayout(new BoxLayout(pPriority, BoxLayout.Y_AXIS));
 		pPriority.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutPriority")));
+				.getMessage("BorderLayoutPriority")));
 		addItem(pPriority, priorityComboBox, 0, 0);
 
 		// row 10
@@ -114,14 +114,14 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		JPanel pOptionalPickup = new JPanel();
 		pOptionalPickup.setLayout(new BoxLayout(pOptionalPickup, BoxLayout.Y_AXIS));
 		pOptionalPickup.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutOptionalPickup")));
+				.getMessage("BorderLayoutOptionalPickup")));
 		addItem(pOptionalPickup, pickupCommentTextField, 0, 0);
 
 		// row 12
 		JPanel pOptionalDrop = new JPanel();
 		pOptionalDrop.setLayout(new BoxLayout(pOptionalDrop, BoxLayout.Y_AXIS));
 		pOptionalDrop.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutOptionalDrop")));
+				.getMessage("BorderLayoutOptionalDrop")));
 		addItem(pOptionalDrop, dropCommentTextField, 0, 0);
 
 		// row 14
@@ -149,10 +149,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new CarLoadAttributeAction(Bundle.getString("CarQuanity"), this));
-		toolMenu.add(new PrintCarLoadsAction(Bundle.getString("MenuItemPreview"), true, this));
-		toolMenu.add(new PrintCarLoadsAction(Bundle.getString("MenuItemPrint"), false, this));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new CarLoadAttributeAction(Bundle.getMessage("CarQuanity"), this));
+		toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPreview"), true, this));
+		toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemPrint"), false, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		// add help menu to window
@@ -174,9 +174,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 				return;
 			if (addLoad.length() > Control.max_len_string_attibute) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getString("carAttribute"),
+						Bundle.getMessage("carAttribute"),
 						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(
-						Bundle.getString("canNotAdd"), new Object[] { Bundle.getString("Load") }),
+						Bundle.getMessage("canNotAdd"), new Object[] { Bundle.getMessage("Load") }),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -186,9 +186,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			String deleteLoad = (String) comboBox.getSelectedItem();
 			if (deleteLoad.equals(carLoads.getDefaultEmptyName())
 					|| deleteLoad.equals(carLoads.getDefaultLoadName())) {
-				JOptionPane.showMessageDialog(this, Bundle.getString("carLoadDefault"),
-						MessageFormat.format(Bundle.getString("canNotDelete"),
-								new Object[] { Bundle.getString("Load") }),
+				JOptionPane.showMessageDialog(this, Bundle.getMessage("carLoadDefault"),
+						MessageFormat.format(Bundle.getMessage("canNotDelete"),
+								new Object[] { Bundle.getMessage("Load") }),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -200,10 +200,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 				return;
 			if (newLoad.length() > Control.max_len_string_attibute) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getString("carAttribute"),
+						Bundle.getMessage("carAttribute"),
 						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(
-						Bundle.getString("canNotReplace"),
-						new Object[] { Bundle.getString("Load") }), JOptionPane.ERROR_MESSAGE);
+						Bundle.getMessage("canNotReplace"),
+						new Object[] { Bundle.getMessage("Load") }), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			String oldLoad = (String) comboBox.getSelectedItem();
@@ -211,17 +211,17 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			if (oldLoad.equals(carLoads.getDefaultEmptyName())) {
 				if (JOptionPane.showConfirmDialog(
 						this,
-						MessageFormat.format(Bundle.getString("replaceDefaultEmpty"), new Object[] {
-								oldLoad, newLoad }), Bundle.getString("replaceAll"),
+						MessageFormat.format(Bundle.getMessage("replaceDefaultEmpty"), new Object[] {
+								oldLoad, newLoad }), Bundle.getMessage("replaceAll"),
 						JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 					return;
 				}
 				// don't allow the default names for load and empty to be the same
 				if (newLoad.equals(carLoads.getDefaultEmptyName())
 						|| newLoad.equals(carLoads.getDefaultLoadName())) {
-					JOptionPane.showMessageDialog(this, Bundle.getString("carDefault"),
-							MessageFormat.format(Bundle.getString("canNotReplace"),
-									new Object[] { Bundle.getString("Load") }),
+					JOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"),
+							MessageFormat.format(Bundle.getMessage("canNotReplace"),
+									new Object[] { Bundle.getMessage("Load") }),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -232,17 +232,17 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			if (oldLoad.equals(carLoads.getDefaultLoadName())) {
 				if (JOptionPane.showConfirmDialog(
 						this,
-						MessageFormat.format(Bundle.getString("replaceDefaultLoad"), new Object[] {
-								oldLoad, newLoad }), Bundle.getString("replaceAll"),
+						MessageFormat.format(Bundle.getMessage("replaceDefaultLoad"), new Object[] {
+								oldLoad, newLoad }), Bundle.getMessage("replaceAll"),
 						JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 					return;
 				}
 				// don't allow the default names for load and empty to be the same
 				if (newLoad.equals(carLoads.getDefaultEmptyName())
 						|| newLoad.equals(carLoads.getDefaultLoadName())) {
-					JOptionPane.showMessageDialog(this, Bundle.getString("carDefault"),
-							MessageFormat.format(Bundle.getString("canNotReplace"),
-									new Object[] { Bundle.getString("Load") }),
+					JOptionPane.showMessageDialog(this, Bundle.getMessage("carDefault"),
+							MessageFormat.format(Bundle.getMessage("canNotReplace"),
+									new Object[] { Bundle.getMessage("Load") }),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -252,8 +252,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			}
 			if (JOptionPane.showConfirmDialog(
 					this,
-					MessageFormat.format(Bundle.getString("replaceMsg"), new Object[] { oldLoad,
-							newLoad }), Bundle.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[] { oldLoad,
+							newLoad }), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			addLoadToCombobox(_type, newLoad);

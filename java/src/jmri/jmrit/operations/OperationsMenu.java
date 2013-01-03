@@ -22,14 +22,14 @@ public class OperationsMenu extends JMenu {
     public OperationsMenu() {
         super();
 
-        setText(Bundle.getString("MenuOperations"));
+        setText(Bundle.getMessage("MenuOperations"));
         
-        add(new jmri.jmrit.operations.setup.OperationsSetupAction(Bundle.getString("MenuSetup")));
-        add(new jmri.jmrit.operations.locations.LocationsTableAction(Bundle.getString("MenuLocations")));
-        add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction(Bundle.getString("MenuCars")));
-        add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction(Bundle.getString("MenuEngines")));
-        add(new jmri.jmrit.operations.routes.RoutesTableAction(Bundle.getString("MenuRoutes")));
-        add(new jmri.jmrit.operations.trains.TrainsTableAction(Bundle.getString("MenuTrains")));
+        add(new jmri.jmrit.operations.setup.OperationsSetupAction(Bundle.getMessage("MenuSetup")));
+        add(new jmri.jmrit.operations.locations.LocationsTableAction(Bundle.getMessage("MenuLocations")));
+        add(new jmri.jmrit.operations.rollingstock.cars.CarsTableAction(Bundle.getMessage("MenuCars")));
+        add(new jmri.jmrit.operations.rollingstock.engines.EnginesTableAction(Bundle.getMessage("MenuEngines")));
+        add(new jmri.jmrit.operations.routes.RoutesTableAction(Bundle.getMessage("MenuRoutes")));
+        add(new jmri.jmrit.operations.trains.TrainsTableAction(Bundle.getMessage("MenuTrains")));
             
     }
 

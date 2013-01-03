@@ -19,13 +19,13 @@ import javax.swing.JPanel;
 public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
 	// check boxes
-	JCheckBox swapLoadsCheckBox = new JCheckBox(Bundle.getString("SwapCarLoads"));
-	JCheckBox emptyCheckBox = new JCheckBox(Bundle.getString("EmptyDefaultCarLoads"));
-	JCheckBox emptyCustomCheckBox = new JCheckBox(Bundle.getString("EmptyCarLoads"));
-	JCheckBox loadCheckBox = new JCheckBox(Bundle.getString("LoadCarLoads"));
-	JCheckBox loadAnyCheckBox = new JCheckBox(Bundle.getString("LoadAnyCarLoads"));
-	JCheckBox loadAnyStagingCheckBox = new JCheckBox(Bundle.getString("LoadsStaging"));
-	JCheckBox blockCarsCheckBox = new JCheckBox(Bundle.getString("BlockCars"));
+	JCheckBox swapLoadsCheckBox = new JCheckBox(Bundle.getMessage("SwapCarLoads"));
+	JCheckBox emptyCheckBox = new JCheckBox(Bundle.getMessage("EmptyDefaultCarLoads"));
+	JCheckBox emptyCustomCheckBox = new JCheckBox(Bundle.getMessage("EmptyCarLoads"));
+	JCheckBox loadCheckBox = new JCheckBox(Bundle.getMessage("LoadCarLoads"));
+	JCheckBox loadAnyCheckBox = new JCheckBox(Bundle.getMessage("LoadAnyCarLoads"));
+	JCheckBox loadAnyStagingCheckBox = new JCheckBox(Bundle.getMessage("LoadsStaging"));
+	JCheckBox blockCarsCheckBox = new JCheckBox(Bundle.getMessage("BlockCars"));
 
 	JPanel panelLoad = panelOpt4;
 
@@ -40,13 +40,13 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 
 		JPanel p1 = new JPanel();
 		p1.setLayout(new GridBagLayout());
-		p1.setBorder(BorderFactory.createTitledBorder(Bundle.getString("OptionalLoads")));
+		p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("OptionalLoads")));
 		addItemLeft(p1, swapLoadsCheckBox, 0, 0);
 		addItemLeft(p1, emptyCheckBox, 0, 1);
 
 		JPanel p2 = new JPanel();
 		p2.setLayout(new GridBagLayout());
-		p2.setBorder(BorderFactory.createTitledBorder(Bundle.getString("OptionalCustomLoads")));
+		p2.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("OptionalCustomLoads")));
 		addItemLeft(p2, emptyCustomCheckBox, 0, 0);
 		addItemLeft(p2, loadCheckBox, 0, 1);
 		addItemLeft(p2, loadAnyCheckBox, 0, 2);
@@ -54,12 +54,12 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 
 		JPanel p3 = new JPanel();
 		p3.setLayout(new GridBagLayout());
-		p3.setBorder(BorderFactory.createTitledBorder(Bundle.getString("OptionalBlocking")));
+		p3.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("OptionalBlocking")));
 		addItemLeft(p3, blockCarsCheckBox, 0, 0);
 
 		// load tool tips
-		loadCheckBox.setToolTipText(Bundle.getString("TipIgnoresAlternate"));
-		blockCarsCheckBox.setToolTipText(Bundle.getString("TipBlockByPickUp"));
+		loadCheckBox.setToolTipText(Bundle.getMessage("TipIgnoresAlternate"));
+		blockCarsCheckBox.setToolTipText(Bundle.getMessage("TipBlockByPickUp"));
 
 		panelLoad.add(p1);
 		panelLoad.add(p2);
@@ -71,16 +71,16 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Staging", true); // NOI18N
 
 		// override text strings for tracks
-		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainStaging")));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainStaging")));
 		paneCheckBoxes
-				.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TypesStaging")));
+				.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesStaging")));
 		dropPanel
-				.setBorder(BorderFactory.createTitledBorder(Bundle.getString("SelectTrainArrival")));
+				.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SelectTrainArrival")));
 		pickupPanel.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("SelectTrainDeparture")));
-		deleteTrackButton.setText(Bundle.getString("DeleteStaging"));
-		addTrackButton.setText(Bundle.getString("AddStaging"));
-		saveTrackButton.setText(Bundle.getString("SaveStaging"));
+				.getMessage("SelectTrainDeparture")));
+		deleteTrackButton.setText(Bundle.getMessage("DeleteStaging"));
+		addTrackButton.setText(Bundle.getMessage("AddStaging"));
+		saveTrackButton.setText(Bundle.getMessage("SaveStaging"));
 
 		// setup the check boxes
 		if (_track != null) {

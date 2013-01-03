@@ -66,7 +66,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 		// Set up the panels
 		JPanel pCarType = new JPanel();
 		pCarType.setLayout(new GridBagLayout());
-		pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Type")));
+		pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
 
 		addItem(pCarType, typeComboBox, 0, 0);
 		addItem(pCarType, carsComboBox, 1, 0);
@@ -83,7 +83,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 		pLocations.setLayout(new GridBagLayout());
 		JScrollPane locationPane = new JScrollPane(pLocations);
 		locationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		locationPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Route")));
+		locationPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Route")));
 		updateCarsComboBox();
 		updateRoute();
 
@@ -98,7 +98,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 		CarTypes.instance().addPropertyChangeListener(this);
 		if (train != null) {
 			train.addPropertyChangeListener(this);
-			setTitle(Bundle.getString("MenuItemShowCarTypes") + " " + train.getName());
+			setTitle(Bundle.getMessage("MenuItemShowCarTypes") + " " + train.getName());
 		}
 		// listen to all tracks and locations
 		addLocationAndTrackPropertyChange();
@@ -158,67 +158,67 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 				JLabel op = new JLabel();
 				addItemLeft(pLocations, op, 2, x++);
 				if (!train.acceptsTypeName(carType))
-					op.setText(Bundle.getString("X(TrainType)"));
+					op.setText(Bundle.getMessage("X(TrainType)"));
 				else if (car != null && !train.acceptsRoadName(car.getRoad()))
-					op.setText(Bundle.getString("X(TrainRoad)"));
+					op.setText(Bundle.getMessage("X(TrainRoad)"));
 				else if (car != null && !car.isCaboose()
 						&& !train.acceptsLoad(car.getLoad(), car.getType()))
-					op.setText(Bundle.getString("X(TrainLoad)"));
+					op.setText(Bundle.getMessage("X(TrainLoad)"));
 				else if (car != null && !train.acceptsBuiltDate(car.getBuilt()))
-					op.setText(Bundle.getString("X(TrainBuilt)"));
+					op.setText(Bundle.getMessage("X(TrainBuilt)"));
 				else if (car != null && !train.acceptsOwnerName(car.getOwner()))
-					op.setText(Bundle.getString("X(TrainOwner)"));
+					op.setText(Bundle.getMessage("X(TrainOwner)"));
 				else if (train.skipsLocation(rl.getId()))
-					op.setText(Bundle.getString("X(TrainSkips)"));
+					op.setText(Bundle.getMessage("X(TrainSkips)"));
 				else if (!rl.canDrop() && !rl.canPickup())
-					op.setText(Bundle.getString("X(Route)"));
+					op.setText(Bundle.getMessage("X(Route)"));
 				else if (rl.getMaxCarMoves() <= 0)
-					op.setText(Bundle.getString("X(RouteMoves)"));
+					op.setText(Bundle.getMessage("X(RouteMoves)"));
 				else if (!location.acceptsTypeName(carType))
-					op.setText(Bundle.getString("X(LocationType)"));
+					op.setText(Bundle.getMessage("X(LocationType)"));
 				// check route before checking train, check train calls check route
 				else if (!track.acceptsPickupRoute(route) && !track.acceptsDropRoute(route))
-					op.setText(Bundle.getString("X(TrackRoute)"));
+					op.setText(Bundle.getMessage("X(TrackRoute)"));
 				else if (!track.acceptsPickupTrain(train) && !track.acceptsDropTrain(train))
-					op.setText(Bundle.getString("X(TrackTrain)"));
+					op.setText(Bundle.getMessage("X(TrackTrain)"));
 				else if (!track.acceptsTypeName(carType))
-					op.setText(Bundle.getString("X(TrackType)"));
+					op.setText(Bundle.getMessage("X(TrackType)"));
 				else if (car != null && !track.acceptsRoadName(car.getRoad()))
-					op.setText(Bundle.getString("X(TrackRoad)"));
+					op.setText(Bundle.getMessage("X(TrackRoad)"));
 				else if (car != null && !track.acceptsLoad(car.getLoad(), car.getType()))
-					op.setText(Bundle.getString("X(TrackLoad)"));
+					op.setText(Bundle.getMessage("X(TrackLoad)"));
 				else if ((rl.getTrainDirection() & location.getTrainDirections()) == 0)
-					op.setText(Bundle.getString("X(DirLoc)"));
+					op.setText(Bundle.getMessage("X(DirLoc)"));
 				else if ((rl.getTrainDirection() & track.getTrainDirections()) == 0)
-					op.setText(Bundle.getString("X(DirTrk)"));
+					op.setText(Bundle.getMessage("X(DirTrk)"));
 				else if (!checkScheduleAttribute(TYPE, carType, null, track))
-					op.setText(Bundle.getString("X(ScheduleType)"));
+					op.setText(Bundle.getMessage("X(ScheduleType)"));
 				else if (!checkScheduleAttribute(LOAD, carType, car, track))
-					op.setText(Bundle.getString("X(ScheduleLoad)"));
+					op.setText(Bundle.getMessage("X(ScheduleLoad)"));
 				else if (!checkScheduleAttribute(ROAD, carType, car, track))
-					op.setText(Bundle.getString("X(ScheduleRoad)"));
+					op.setText(Bundle.getMessage("X(ScheduleRoad)"));
 				else if (!checkScheduleAttribute(TIMETABLE, carType, car, track))
-					op.setText(Bundle.getString("X(ScheduleTimeTable)"));
+					op.setText(Bundle.getMessage("X(ScheduleTimeTable)"));
 				else if (!checkScheduleAttribute(ALL, carType, car, track))
-					op.setText(Bundle.getString("X(Schedule)"));
+					op.setText(Bundle.getMessage("X(Schedule)"));
 				else if (!track.acceptsPickupTrain(train)) {
 					// can the train drop off car?
 					if (rl.canDrop() && track.acceptsDropTrain(train))
-						op.setText(Bundle.getString("DropOnly"));
+						op.setText(Bundle.getMessage("DropOnly"));
 					else
-						op.setText(Bundle.getString("X(TrainPickup)"));
+						op.setText(Bundle.getMessage("X(TrainPickup)"));
 				} else if (!track.acceptsDropTrain(train))
 					// can the train pick up car?
 					if (rl.canPickup() && track.acceptsPickupTrain(train))
-						op.setText(Bundle.getString("PickupOnly"));
+						op.setText(Bundle.getMessage("PickupOnly"));
 					else
-						op.setText(Bundle.getString("X(TrainDrop)"));
+						op.setText(Bundle.getMessage("X(TrainDrop)"));
 				else if (rl.canDrop() && rl.canPickup())
-					op.setText(Bundle.getString("OK"));
+					op.setText(Bundle.getMessage("OK"));
 				else if (rl.canDrop())
-					op.setText(Bundle.getString("DropOnly"));
+					op.setText(Bundle.getMessage("DropOnly"));
 				else if (rl.canPickup())
-					op.setText(Bundle.getString("PickupOnly"));
+					op.setText(Bundle.getMessage("PickupOnly"));
 				else
 					op.setText("X"); // default shouldn't occur
 			}

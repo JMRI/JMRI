@@ -42,9 +42,9 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 
 		super.initComponents();
 
-		setTitle(Bundle.getString("TitleSetCars"));
+		setTitle(Bundle.getMessage("TitleSetCars"));
 		// modify Save button text to "Change"
-		saveButton.setText(Bundle.getString("Change"));
+		saveButton.setText(Bundle.getMessage("Change"));
 		// disable edit load button if no cars selected
 		editLoadButton.setEnabled(false);
 		// show ignore checkboxes
@@ -85,8 +85,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 
 		int rows[] = _carsTable.getSelectedRows();
 		if (rows.length == 0)
-			JOptionPane.showMessageDialog(this, Bundle.getString("selectCars"),
-					Bundle.getString("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"),
+					Bundle.getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
 
 		for (int i = 0; i < rows.length; i++) {
 			Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[i]));
@@ -97,8 +97,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			if (i == 0 && car != _car) {
 				log.debug("Default car isn't the first one selected");
 				if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-						Bundle.getString("doYouWantToChange"), new Object[] { car.toString() }),
-						Bundle.getString("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						Bundle.getMessage("doYouWantToChange"), new Object[] { car.toString() }),
+						Bundle.getMessage("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					super.loadCar(car); // new default car
 					break; // done, don't modify any of the cars selected
 				}

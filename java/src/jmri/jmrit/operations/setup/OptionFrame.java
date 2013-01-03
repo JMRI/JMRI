@@ -29,35 +29,35 @@ public class OptionFrame extends OperationsFrame {
 	// labels
 
 	// major buttons
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// radio buttons
-	JRadioButton buildNormal = new JRadioButton(Bundle.getString("Normal"));
-	JRadioButton buildAggressive = new JRadioButton(Bundle.getString("Aggressive"));
+	JRadioButton buildNormal = new JRadioButton(Bundle.getMessage("Normal"));
+	JRadioButton buildAggressive = new JRadioButton(Bundle.getMessage("Aggressive"));
 
 	// check boxes
-	JCheckBox routerCheckBox = new JCheckBox(Bundle.getString("EnableCarRouting"));
-	JCheckBox valueCheckBox = new JCheckBox(Bundle.getString("EnableValue"));
-	JCheckBox rfidCheckBox = new JCheckBox(Bundle.getString("EnableRfid"));
-	JCheckBox carLoggerCheckBox = new JCheckBox(Bundle.getString("EnableCarLogging"));
-	JCheckBox engineLoggerCheckBox = new JCheckBox(Bundle.getString("EnableEngineLogging"));
-	JCheckBox trainLoggerCheckBox = new JCheckBox(Bundle.getString("EnableTrainLogging"));
+	JCheckBox routerCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRouting"));
+	JCheckBox valueCheckBox = new JCheckBox(Bundle.getMessage("EnableValue"));
+	JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
+	JCheckBox carLoggerCheckBox = new JCheckBox(Bundle.getMessage("EnableCarLogging"));
+	JCheckBox engineLoggerCheckBox = new JCheckBox(Bundle.getMessage("EnableEngineLogging"));
+	JCheckBox trainLoggerCheckBox = new JCheckBox(Bundle.getMessage("EnableTrainLogging"));
 
-	JCheckBox localInterchangeCheckBox = new JCheckBox(Bundle.getString("AllowLocalInterchange"));
-	JCheckBox localSidingCheckBox = new JCheckBox(Bundle.getString("AllowLocalSiding"));
-	JCheckBox localYardCheckBox = new JCheckBox(Bundle.getString("AllowLocalYard"));
+	JCheckBox localInterchangeCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalInterchange"));
+	JCheckBox localSidingCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalSiding"));
+	JCheckBox localYardCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalYard"));
 
-	JCheckBox trainIntoStagingCheckBox = new JCheckBox(Bundle.getString("TrainIntoStaging"));
-	JCheckBox stagingAvailCheckBox = new JCheckBox(Bundle.getString("StagingAvailable"));
-	JCheckBox stagingTurnCheckBox = new JCheckBox(Bundle.getString("AllowCarsToReturn"));
-	JCheckBox promptFromTrackStagingCheckBox = new JCheckBox(Bundle.getString("PromptFromStaging"));
-	JCheckBox promptToTrackStagingCheckBox = new JCheckBox(Bundle.getString("PromptToStaging"));
+	JCheckBox trainIntoStagingCheckBox = new JCheckBox(Bundle.getMessage("TrainIntoStaging"));
+	JCheckBox stagingAvailCheckBox = new JCheckBox(Bundle.getMessage("StagingAvailable"));
+	JCheckBox stagingTurnCheckBox = new JCheckBox(Bundle.getMessage("AllowCarsToReturn"));
+	JCheckBox promptFromTrackStagingCheckBox = new JCheckBox(Bundle.getMessage("PromptFromStaging"));
+	JCheckBox promptToTrackStagingCheckBox = new JCheckBox(Bundle.getMessage("PromptToStaging"));
 
-	JCheckBox generateCvsManifestCheckBox = new JCheckBox(Bundle.getString("GenerateCsvManifest"));
+	JCheckBox generateCvsManifestCheckBox = new JCheckBox(Bundle.getMessage("GenerateCsvManifest"));
 	JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(
-			Bundle.getString("GenerateCsvSwitchList"));
+			Bundle.getMessage("GenerateCsvSwitchList"));
 
-	JCheckBox enableVsdCheckBox = new JCheckBox(Bundle.getString("EnableVSD"));
+	JCheckBox enableVsdCheckBox = new JCheckBox(Bundle.getMessage("EnableVSD"));
 
 	// text field
 	JTextField rfidTextField = new JTextField(10);
@@ -66,7 +66,7 @@ public class OptionFrame extends OperationsFrame {
 	// combo boxes
 
 	public OptionFrame() {
-		super(Bundle.getString("TitleOptions"));
+		super(Bundle.getMessage("TitleOptions"));
 	}
 
 	public void initComponents() {
@@ -99,9 +99,9 @@ public class OptionFrame extends OperationsFrame {
 		valueTextField.setText(Setup.getValueLabel());
 
 		// add tool tips
-		saveButton.setToolTipText(Bundle.getString("SaveToolTip"));
-		rfidTextField.setToolTipText(Bundle.getString("EnterNameRfidTip"));
-		valueTextField.setToolTipText(Bundle.getString("EnterNameValueTip"));
+		saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
+		rfidTextField.setToolTipText(Bundle.getMessage("EnterNameRfidTip"));
+		valueTextField.setToolTipText(Bundle.getMessage("EnterNameValueTip"));
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -113,7 +113,7 @@ public class OptionFrame extends OperationsFrame {
 		JPanel pBuild = new JPanel();
 		pBuild.setLayout(new BoxLayout(pBuild, BoxLayout.Y_AXIS));
 		pBuild.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutBuildOptions")));
+				.getMessage("BorderLayoutBuildOptions")));
 
 		JPanel pOpt = new JPanel();
 		pOpt.setLayout(new GridBagLayout());
@@ -126,7 +126,7 @@ public class OptionFrame extends OperationsFrame {
 		JPanel pSwitcher = new JPanel();
 		pSwitcher.setLayout(new GridBagLayout());
 		pSwitcher.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutSwitcherService")));
+				.getMessage("BorderLayoutSwitcherService")));
 
 		addItemLeft(pSwitcher, localInterchangeCheckBox, 1, 1);
 		addItemLeft(pSwitcher, localSidingCheckBox, 1, 2);
@@ -136,7 +136,7 @@ public class OptionFrame extends OperationsFrame {
 		// Staging
 		JPanel pStaging = new JPanel();
 		pStaging.setLayout(new GridBagLayout());
-		pStaging.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutStaging")));
+		pStaging.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutStaging")));
 
 		addItemLeft(pStaging, trainIntoStagingCheckBox, 1, 4);
 		addItemLeft(pStaging, stagingAvailCheckBox, 1, 5);
@@ -149,21 +149,21 @@ public class OptionFrame extends OperationsFrame {
 		JPanel pRouter = new JPanel();
 		pRouter.setLayout(new GridBagLayout());
 		pRouter.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutRouterOptions")));
+				.getMessage("BorderLayoutRouterOptions")));
 		addItemLeft(pRouter, routerCheckBox, 1, 0);
 
 		// Logger panel
 		JPanel pLogger = new JPanel();
 		pLogger.setLayout(new GridBagLayout());
 		pLogger.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutLoggerOptions")));
+				.getMessage("BorderLayoutLoggerOptions")));
 		addItemLeft(pLogger, engineLoggerCheckBox, 1, 0);
 		addItemLeft(pLogger, carLoggerCheckBox, 1, 1);
 		addItemLeft(pLogger, trainLoggerCheckBox, 1, 2);
 
 		JPanel pOption = new JPanel();
 		pOption.setLayout(new GridBagLayout());
-		pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutOptions")));
+		pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptions")));
 		addItemLeft(pOption, generateCvsManifestCheckBox, 1, 0);
 		addItemLeft(pOption, generateCvsSwitchListCheckBox, 1, 1);
 		addItemLeft(pOption, valueCheckBox, 1, 2);
@@ -221,8 +221,8 @@ public class OptionFrame extends OperationsFrame {
 		// can't change the build option if there are trains built
 		if (TrainManager.instance().getAnyTrainBuilt()) {
 			setBuildOption(); // restore the correct setting
-			JOptionPane.showMessageDialog(this, Bundle.getString("CanNotChangeBuild"),
-					Bundle.getString("MustTerminateOrReset"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotChangeBuild"),
+					Bundle.getMessage("MustTerminateOrReset"), JOptionPane.ERROR_MESSAGE);
 		}
 		// disable staging option if normal mode
 		stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());

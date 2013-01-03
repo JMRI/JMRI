@@ -36,12 +36,12 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	JPanel pLocations;
 
 	// major buttons
-	JButton clearButton = new JButton(Bundle.getString("Clear"));
-	JButton setButton = new JButton(Bundle.getString("Select"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+	JButton setButton = new JButton(Bundle.getMessage("Select"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 	
 	// check boxes
-	JCheckBox copyCheckBox = new JCheckBox(Bundle.getString("Copy"));
+	JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("Copy"));
 	
 	// radio buttons
         
@@ -85,19 +85,19 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	    //      Set up the panels
     	JPanel pCarType = new JPanel();
     	pCarType.setLayout(new GridBagLayout());
-    	pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Type")));
+    	pCarType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
     	
     	addItem(pCarType, typeComboBox, 0,0);
     	addItem(pCarType, copyCheckBox, 1,0);
     	addItem(pCarType, textCarType, 2,0);
     	typeComboBox.setSelectedItem(carType);
-    	copyCheckBox.setToolTipText(Bundle.getString("TipCopyCarType"));
+    	copyCheckBox.setToolTipText(Bundle.getMessage("TipCopyCarType"));
 
     	pLocations = new JPanel();
     	pLocations.setLayout(new GridBagLayout());
     	JScrollPane locationPane = new JScrollPane(pLocations);
     	locationPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	locationPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Locations")));
+    	locationPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Locations")));
     	updateLocations();
     	
     	JPanel pButtons = new JPanel();
@@ -128,9 +128,9 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getString("MenuItemPrintByType"), new Frame(), false, this));
-		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getString("MenuItemPreviewByType"), new Frame(), true, this));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPrintByType"), new Frame(), false, this));
+		toolMenu.add(new PrintLocationsByCarTypesAction(Bundle.getMessage("MenuItemPreviewByType"), new Frame(), true, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_ModifyLocationsByCarType", true);	// NOI18N
@@ -139,9 +139,9 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		pack();
 		setSize(getWidth()+30, getHeight());
 		if (location != null)
-			setTitle(Bundle.getString("TitleModifyLocation"));
+			setTitle(Bundle.getMessage("TitleModifyLocation"));
 		else
-			setTitle(Bundle.getString("TitleModifyLocations"));
+			setTitle(Bundle.getMessage("TitleModifyLocations"));
 		setVisible(true);
 	}
 		
@@ -215,7 +215,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 			loc.addPropertyChangeListener(this);
 			JCheckBox cb = new JCheckBox(loc.getName());
 			cb.setName(loc.getId());
-			cb.setToolTipText(MessageFormat.format(Bundle.getString("TipLocCarType"),new Object[]{carType}));
+			cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipLocCarType"),new Object[]{carType}));
 			addCheckBoxAction(cb);
 			locationList.add(cb);
 			boolean locAcceptsType = loc.acceptsTypeName(carType);
@@ -227,7 +227,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				track.addPropertyChangeListener(this);
 				cb = new JCheckBox(track.getName());
 				cb.setName(track.getId());
-				cb.setToolTipText(MessageFormat.format(Bundle.getString("TipTrackCarType"),new Object[]{carType}));
+				cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrackCarType"),new Object[]{carType}));
 				addCheckBoxAction(cb);
 				trackList.add(cb);
 				cb.setSelected(track.acceptsTypeName(carType));

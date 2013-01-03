@@ -134,17 +134,17 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
     public String getColumnName(int col){
         switch (col) {
-        case IDCOLUMN: return Bundle.getString("Id");
-        case NAMECOLUMN: return Bundle.getString("TrackName");
-        case LENGTHCOLUMN: return Bundle.getString("Length");
-        case USEDLENGTHCOLUMN: return Bundle.getString("Used");
-        case RESERVEDCOLUMN: return Bundle.getString("Reserved");
-        case ENGINESCOLUMN: return Bundle.getString("Engines");
-        case CARSCOLUMN: return Bundle.getString("Cars");
-        case PICKUPSCOLUMN: return Bundle.getString("Pickup");
-        case DROPSCOLUMN: return Bundle.getString("Drop");
-        case POOLCOLUMN: return Bundle.getString("Pool");
-        case PLANPICKUPCOLUMN: return Bundle.getString("PlanPickUp");
+        case IDCOLUMN: return Bundle.getMessage("Id");
+        case NAMECOLUMN: return Bundle.getMessage("TrackName");
+        case LENGTHCOLUMN: return Bundle.getMessage("Length");
+        case USEDLENGTHCOLUMN: return Bundle.getMessage("Used");
+        case RESERVEDCOLUMN: return Bundle.getMessage("Reserved");
+        case ENGINESCOLUMN: return Bundle.getMessage("Engines");
+        case CARSCOLUMN: return Bundle.getMessage("Cars");
+        case PICKUPSCOLUMN: return Bundle.getMessage("Pickup");
+        case DROPSCOLUMN: return Bundle.getMessage("Drop");
+        case POOLCOLUMN: return Bundle.getMessage("Pool");
+        case PLANPICKUPCOLUMN: return Bundle.getMessage("PlanPickUp");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown"; // NOI18N
         }
@@ -207,7 +207,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         	if (track.getIgnoreUsedLengthPercentage() > 0)
         		return track.getIgnoreUsedLengthPercentage()+"%";
         	return "";
-        case EDITCOLUMN: return Bundle.getString("Edit");
+        case EDITCOLUMN: return Bundle.getMessage("Edit");
         default: return "unknown "+col; // NOI18N
         }
     }
@@ -233,7 +233,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		String tracksId = tracksList.get(row);
     	Track tracks = _location.getTrackById(tracksId);
     	tef.initComponents(_location, tracks);
-    	tef.setTitle(Bundle.getString("EditTrack"));
+    	tef.setTitle(Bundle.getMessage("EditTrack"));
     	focusEditFrame = true;
     }
 

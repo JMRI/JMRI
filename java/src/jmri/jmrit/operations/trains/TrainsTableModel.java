@@ -158,19 +158,19 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		return HIGHESTCOLUMN;
 	}
 
-	public static final String IDCOLUMNNAME = Bundle.getString("Id");
-	public static final String TIMECOLUMNNAME = Bundle.getString("Time");
-	public static final String BUILDBOXCOLUMNNAME = Bundle.getString("Build");
-	public static final String BUILDCOLUMNNAME = Bundle.getString("Function");
-	public static final String NAMECOLUMNNAME = Bundle.getString("Name");
-	public static final String DESCRIPTIONCOLUMNNAME = Bundle.getString("Description");
-	public static final String ROUTECOLUMNNAME = Bundle.getString("Route");
-	public static final String DEPARTSCOLUMNNAME = Bundle.getString("Departs");
-	public static final String CURRENTCOLUMNNAME = Bundle.getString("Current");
-	public static final String TERMINATESCOLUMNNAME = Bundle.getString("Terminates");
-	public static final String STATUSCOLUMNNAME = Bundle.getString("Status");
-	public static final String ACTIONCOLUMNNAME = Bundle.getString("Action");
-	public static final String EDITCOLUMNNAME = Bundle.getString("Edit");
+	public static final String IDCOLUMNNAME = Bundle.getMessage("Id");
+	public static final String TIMECOLUMNNAME = Bundle.getMessage("Time");
+	public static final String BUILDBOXCOLUMNNAME = Bundle.getMessage("Build");
+	public static final String BUILDCOLUMNNAME = Bundle.getMessage("Function");
+	public static final String NAMECOLUMNNAME = Bundle.getMessage("Name");
+	public static final String DESCRIPTIONCOLUMNNAME = Bundle.getMessage("Description");
+	public static final String ROUTECOLUMNNAME = Bundle.getMessage("Route");
+	public static final String DEPARTSCOLUMNNAME = Bundle.getMessage("Departs");
+	public static final String CURRENTCOLUMNNAME = Bundle.getMessage("Current");
+	public static final String TERMINATESCOLUMNNAME = Bundle.getMessage("Terminates");
+	public static final String STATUSCOLUMNNAME = Bundle.getMessage("Status");
+	public static final String ACTIONCOLUMNNAME = Bundle.getMessage("Action");
+	public static final String EDITCOLUMNNAME = Bundle.getMessage("Edit");
 
 	public String getColumnName(int col) {
 		switch (col) {
@@ -306,22 +306,22 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		case BUILDCOLUMN: {
 			if (train.isBuilt())
 				if (manager.isOpenFileEnabled())
-					return Bundle.getString("OpenFile");
+					return Bundle.getMessage("OpenFile");
 				else if (manager.isPrintPreviewEnabled())
-					return Bundle.getString("Preview");
+					return Bundle.getMessage("Preview");
 				else if (train.isPrinted())
-					return Bundle.getString("Printed");
+					return Bundle.getMessage("Printed");
 				else
-					return Bundle.getString("Print");
-			return Bundle.getString("Build");
+					return Bundle.getMessage("Print");
+			return Bundle.getMessage("Build");
 		}
 		case ACTIONCOLUMN: {
 			if (train.getBuildFailed())
-				return Bundle.getString("Report");
+				return Bundle.getMessage("Report");
 			return manager.getTrainsFrameTrainAction();
 		}
 		case EDITCOLUMN:
-			return Bundle.getString("Edit");
+			return Bundle.getMessage("Edit");
 		default:
 			return "unknown " + col;
 		}
@@ -357,7 +357,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		tef = new TrainEditFrame();
 		Train train = manager.getTrainById(sysList.get(row));
 		log.debug("Edit train (" + train.getName() + ")");
-		tef.setTitle(Bundle.getString("TitleTrainEdit"));
+		tef.setTitle(Bundle.getMessage("TitleTrainEdit"));
 		tef.initComponents(train);
 		focusTef = true;
 	}
@@ -399,20 +399,20 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 							.getDepartureTrack() != train.getTerminationTrack()))) {
 				log.debug("Train is departing staging that already has inbound cars");
 				JOptionPane.showMessageDialog(null, MessageFormat.format(
-						Bundle.getString("StagingTrackUsed"), new Object[] { train.getDepartureTrack()
-								.getName() }), Bundle.getString("CanNotResetTrain"),
+						Bundle.getMessage("StagingTrackUsed"), new Object[] { train.getDepartureTrack()
+								.getName() }), Bundle.getMessage("CanNotResetTrain"),
 						JOptionPane.INFORMATION_MESSAGE);
 			} else if (!train.reset())
 				JOptionPane.showMessageDialog(
 						null,
-						MessageFormat.format(Bundle.getString("TrainIsInRoute"),
+						MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
 								new Object[] { train.getTrainTerminatesName() }),
-						Bundle.getString("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
+						Bundle.getMessage("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
 		} else if (!train.isBuilt()) {
 			JOptionPane.showMessageDialog(
 					null,
-					MessageFormat.format(Bundle.getString("TrainNeedsBuild"),
-							new Object[] { train.getName() }), Bundle.getString("CanNotPerformAction"),
+					MessageFormat.format(Bundle.getMessage("TrainNeedsBuild"),
+							new Object[] { train.getName() }), Bundle.getMessage("CanNotPerformAction"),
 					JOptionPane.INFORMATION_MESSAGE);
 		} else if (train.isBuilt()
 				&& manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
@@ -425,9 +425,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 				log.debug("Terminate train (" + train.getName() + ")");
 			int status = JOptionPane.showConfirmDialog(
 					null,
-					MessageFormat.format(Bundle.getString("TerminateTrain"),
+					MessageFormat.format(Bundle.getMessage("TerminateTrain"),
 							new Object[] { train.getName(), train.getDescription() }),
-					MessageFormat.format(Bundle.getString("DoYouWantToTermiate"),
+					MessageFormat.format(Bundle.getMessage("DoYouWantToTermiate"),
 							new Object[] { train.getName() }), JOptionPane.YES_NO_OPTION);
 			if (status == JOptionPane.YES_OPTION)
 				train.terminate();

@@ -24,12 +24,12 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class EngineModels {
 
-	private static final String MODELS = Bundle.getString("engineDefaultModels");
+	private static final String MODELS = Bundle.getMessage("engineDefaultModels");
 	// Horsepower, length, and type have a one to one correspondence with the above MODELS
-	private static final String HORSEPOWER = Bundle.getString("engineModelHorsepowers");
-	private static final String ENGINELENGTHS = Bundle.getString("engineModelLengths");
-	private static final String ENGINETYPES = Bundle.getString("engineModelTypes");
-	private static final String ENGINEWEIGHTS = Bundle.getString("engineModelWeights");
+	private static final String HORSEPOWER = Bundle.getMessage("engineModelHorsepowers");
+	private static final String ENGINELENGTHS = Bundle.getMessage("engineModelLengths");
+	private static final String ENGINETYPES = Bundle.getMessage("engineModelTypes");
+	private static final String ENGINEWEIGHTS = Bundle.getMessage("engineModelWeights");
 
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels"; // NOI18N
 	public static final String ENGINEMODELS_NAME_CHANGED_PROPERTY = "EngineModelsName"; // NOI18N

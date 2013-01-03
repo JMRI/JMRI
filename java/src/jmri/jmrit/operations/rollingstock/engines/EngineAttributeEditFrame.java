@@ -57,7 +57,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 
 		getContentPane().removeAll();
 
-		setTitle(MessageFormat.format(Bundle.getString("TitleEngineEditAtrribute"),
+		setTitle(MessageFormat.format(Bundle.getMessage("TitleEngineEditAtrribute"),
 				new Object[] { comboboxName }));
 
 		// track which combo box is being edited
@@ -70,11 +70,11 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 
 		textAttribute.setText(comboboxName);
 
-		addButton.setText(Bundle.getString("Add"));
+		addButton.setText(Bundle.getMessage("Add"));
 		addButton.setVisible(true);
-		deleteButton.setText(Bundle.getString("Delete"));
+		deleteButton.setText(Bundle.getMessage("Delete"));
 		deleteButton.setVisible(true);
-		replaceButton.setText(Bundle.getString("Replace"));
+		replaceButton.setText(Bundle.getMessage("Replace"));
 		replaceButton.setVisible(true);
 
 		// row 1
@@ -114,9 +114,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 				return;
 			if (addItem.length() > Control.max_len_string_attibute) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getString("engineAttribute"),
+						Bundle.getMessage("engineAttribute"),
 						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(
-						Bundle.getString("canNotAdd"), new Object[] { _comboboxName }),
+						Bundle.getMessage("canNotAdd"), new Object[] { _comboboxName }),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -132,17 +132,17 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 				return;
 			if (newItem.length() > Control.max_len_string_attibute) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getString("engineAttribute"),
+						Bundle.getMessage("engineAttribute"),
 						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(
-						Bundle.getString("canNotReplace"), new Object[] { _comboboxName }),
+						Bundle.getMessage("canNotReplace"), new Object[] { _comboboxName }),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			String oldItem = (String) comboBox.getSelectedItem();
 			if (JOptionPane.showConfirmDialog(
 					this,
-					MessageFormat.format(Bundle.getString("replaceMsg"), new Object[] { oldItem,
-							newItem }), Bundle.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[] { oldItem,
+							newItem }), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			if (newItem.equals(oldItem))
@@ -197,8 +197,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 					addItem = Integer.toString(feet);
 				} catch (NumberFormatException e) {
 					log.error("can not convert from inches to feet");
-					JOptionPane.showMessageDialog(this, Bundle.getString("CanNotConvertFeet"),
-							Bundle.getString("ErrorEngineLength"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"),
+							Bundle.getMessage("ErrorEngineLength"), JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
@@ -210,8 +210,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 					addItem = Integer.toString(meter);
 				} catch (NumberFormatException e) {
 					log.error("Can not convert from cm to meters");
-					JOptionPane.showMessageDialog(this, Bundle.getString("CanNotConvertMeter"),
-							Bundle.getString("ErrorEngineLength"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"),
+							Bundle.getMessage("ErrorEngineLength"), JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
@@ -220,9 +220,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 				Integer.parseInt(addItem);
 				if (addItem.length() > Control.max_len_string_length_name) {
 					JOptionPane.showMessageDialog(this, MessageFormat.format(
-							Bundle.getString("engineAttribute"),
+							Bundle.getMessage("engineAttribute"),
 							new Object[] { Control.max_len_string_length_name }), MessageFormat
-							.format(Bundle.getString("canNotAdd"), new Object[] { _comboboxName }),
+							.format(Bundle.getMessage("canNotAdd"), new Object[] { _comboboxName }),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}

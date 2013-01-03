@@ -25,7 +25,7 @@ public class YardTableModel extends TrackTableModel {
 	public String getColumnName(int col) {
 		switch (col) {
 		case NAMECOLUMN:
-			return Bundle.getString("YardName");
+			return Bundle.getMessage("YardName");
 		}
 		return super.getColumnName(col);
 	}
@@ -39,7 +39,7 @@ public class YardTableModel extends TrackTableModel {
 		String yardId = tracksList.get(row);
 		Track yard = _location.getTrackById(yardId);
 		tef.initComponents(_location, yard);
-		tef.setTitle(Bundle.getString("EditYard"));
+		tef.setTitle(Bundle.getMessage("EditYard"));
 		focusEditFrame = true;
 	}
 

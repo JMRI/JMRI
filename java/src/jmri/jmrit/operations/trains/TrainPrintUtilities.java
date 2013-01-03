@@ -192,7 +192,7 @@ public class TrainPrintUtilities {
 		}
 		java.io.PrintWriter out;
 		File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(
-				Bundle.getString("Report") + " " + name);
+				Bundle.getMessage("Report") + " " + name);
 		try {
 			out = new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(
 					buildReport)), true);

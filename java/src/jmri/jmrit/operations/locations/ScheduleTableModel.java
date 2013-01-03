@@ -150,35 +150,35 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	public String getColumnName(int col) {
 		switch (col) {
 		case IDCOLUMN:
-			return Bundle.getString("Id");
+			return Bundle.getMessage("Id");
 		case CURRENTCOLUMN:
-			return Bundle.getString("Current");
+			return Bundle.getMessage("Current");
 		case TYPECOLUMN:
-			return Bundle.getString("Type");
+			return Bundle.getMessage("Type");
 		case DAYCOLUMN:
-			return Bundle.getString("Timetable");
+			return Bundle.getMessage("Timetable");
 		case ROADCOLUMN:
-			return Bundle.getString("Road");
+			return Bundle.getMessage("Road");
 		case LOADCOLUMN:
-			return Bundle.getString("Receive");
+			return Bundle.getMessage("Receive");
 		case SHIPCOLUMN:
-			return Bundle.getString("Ship");
+			return Bundle.getMessage("Ship");
 		case DESTCOLUMN:
-			return Bundle.getString("Destination");
+			return Bundle.getMessage("Destination");
 		case TRACKCOLUMN:
-			return Bundle.getString("Track");
+			return Bundle.getMessage("Track");
 		case COUNTCOLUMN:
 			if (_matchMode)
-				return Bundle.getString("Hits");
-			return Bundle.getString("Count");
+				return Bundle.getMessage("Hits");
+			return Bundle.getMessage("Count");
 		case WAITCOLUMN:
-			return Bundle.getString("Wait");
+			return Bundle.getMessage("Wait");
 		case UPCOLUMN:
-			return Bundle.getString("Up");
+			return Bundle.getMessage("Up");
 		case DOWNCOLUMN:
-			return Bundle.getString("Down");
+			return Bundle.getMessage("Down");
 		case DELETECOLUMN:
-			return Bundle.getString("Delete");
+			return Bundle.getMessage("Delete");
 		default:
 			return "unknown"; // NOI18N
 		}
@@ -270,11 +270,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		case WAITCOLUMN:
 			return si.getWait();
 		case UPCOLUMN:
-			return Bundle.getString("Up");
+			return Bundle.getMessage("Up");
 		case DOWNCOLUMN:
-			return Bundle.getString("Down");
+			return Bundle.getMessage("Down");
 		case DELETECOLUMN:
-			return Bundle.getString("Delete");
+			return Bundle.getMessage("Delete");
 		default:
 			return "unknown " + col; // NOI18N
 		}
@@ -339,7 +339,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			return si.getType();
 		else
 			return MessageFormat
-					.format(Bundle.getString("NotValid"), new Object[] { si.getType() });
+					.format(Bundle.getMessage("NotValid"), new Object[] { si.getType() });
 	}
 
 	private JComboBox getRoadComboBox(ScheduleItem si) {
@@ -357,7 +357,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		}
 		cb.setSelectedItem(si.getRoad());
 		if (!cb.getSelectedItem().equals(si.getRoad())) {
-			String notValid = MessageFormat.format(Bundle.getString("NotValid"),
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
 					new Object[] { si.getRoad() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
@@ -373,7 +373,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			cb.setSelectedItem(sch);
 		}
 		if (sch == null && !si.getTrainScheduleId().equals("")) {
-			String notValid = MessageFormat.format(Bundle.getString("NotValid"),
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
 					new Object[] { si.getTrainScheduleId() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
@@ -387,7 +387,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		filterLoads(si, cb); // remove loads not accepted by this track
 		cb.setSelectedItem(si.getLoad());
 		if (!cb.getSelectedItem().equals(si.getLoad())) {
-			String notValid = MessageFormat.format(Bundle.getString("NotValid"),
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
 					new Object[] { si.getLoad() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
@@ -400,7 +400,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		JComboBox cb = CarLoads.instance().getSelectComboBox(si.getType());
 		cb.setSelectedItem(si.getShip());
 		if (!cb.getSelectedItem().equals(si.getShip())) {
-			String notValid = MessageFormat.format(Bundle.getString("NotValid"),
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
 					new Object[] { si.getShip() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
@@ -414,7 +414,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		filterDestinations(cb, si.getType());
 		cb.setSelectedItem(si.getDestination());
 		if (si.getDestination() != null && !cb.getSelectedItem().equals(si.getDestination())) {
-			String notValid = MessageFormat.format(Bundle.getString("NotValid"),
+			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
 					new Object[] { si.getDestination() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
@@ -432,7 +432,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			cb.setSelectedItem(si.getDestinationTrack());
 			if (si.getDestinationTrack() != null
 					&& !cb.getSelectedItem().equals(si.getDestinationTrack())) {
-				String notValid = MessageFormat.format(Bundle.getString("NotValid"),
+				String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getDestinationTrack() });
 				cb.addItem(notValid);
 				cb.setSelectedItem(notValid);
@@ -528,7 +528,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		if (s.length() < 12)
 			return true;
 		String test = s.substring(0, 11);
-		if (test.equals(Bundle.getString("NotValid").substring(0, 11)))
+		if (test.equals(Bundle.getMessage("NotValid").substring(0, 11)))
 			return false;
 		return true;
 	}

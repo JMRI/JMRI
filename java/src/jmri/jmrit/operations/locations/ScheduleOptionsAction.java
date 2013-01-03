@@ -21,7 +21,7 @@ public class ScheduleOptionsAction extends AbstractAction {
 	private ScheduleEditFrame _sef;
 
 	public ScheduleOptionsAction(ScheduleEditFrame sef) {
-		super(Bundle.getString("MenuItemScheduleOptions"));
+		super(Bundle.getMessage("MenuItemScheduleOptions"));
 		_sef = sef;
 	}
 
@@ -42,7 +42,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
 	// radio buttons
 
 	// major buttons
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	Track _track;
 
@@ -58,16 +58,16 @@ class ScheduleOptionsFrame extends OperationsFrame {
 		// row 1
 		JPanel pFactor = new JPanel();
 		pFactor.setLayout(new GridBagLayout());
-		pFactor.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScheduleFactor")));
+		pFactor.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScheduleFactor")));
 		addItem(pFactor, factorTextField, 0, 0);
 
-		factorTextField.setToolTipText(Bundle.getString("TipScheduleFactor"));
+		factorTextField.setToolTipText(Bundle.getMessage("TipScheduleFactor"));
 		factorTextField.setText(Integer.toString(_track.getReservationFactor()));
 
 		// row 2
 		JPanel pAlternate = new JPanel();
 		pAlternate.setLayout(new GridBagLayout());
-		pAlternate.setBorder(BorderFactory.createTitledBorder(Bundle.getString("AlternateTrack")));
+		pAlternate.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AlternateTrack")));
 		addItem(pAlternate, trackBox, 0, 0);
 
 		_track.getLocation().updateComboBox(trackBox);
@@ -84,7 +84,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
 		getContentPane().add(pAlternate);
 		getContentPane().add(pControls);
 
-		setTitle(Bundle.getString("MenuItemScheduleOptions"));
+		setTitle(Bundle.getMessage("MenuItemScheduleOptions"));
 		pack();
 		if (getWidth() < 300 || getHeight() < 200)
 			setSize(300, 200);
@@ -97,13 +97,13 @@ class ScheduleOptionsFrame extends OperationsFrame {
 			try {
 				int factor = Integer.parseInt(factorTextField.getText());
 				if (factor < 0 || factor > 1000) {
-					JOptionPane.showMessageDialog(this, Bundle.getString("FactorMustBeNumber"),
-							Bundle.getString("ErrorFactor"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
+							Bundle.getMessage("ErrorFactor"), JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(this, Bundle.getString("FactorMustBeNumber"),
-						Bundle.getString("ErrorFactor"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, Bundle.getMessage("FactorMustBeNumber"),
+						Bundle.getMessage("ErrorFactor"), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			_track.setReservationFactor(Integer.parseInt(factorTextField.getText()));

@@ -36,9 +36,9 @@ class PoolTrackFrame extends OperationsFrame implements
 		java.beans.PropertyChangeListener {
 
 	// labels
-	JLabel name = new JLabel(Bundle.getString("Name"));
-	JLabel minimum = new JLabel(Bundle.getString("Minimum"));
-	JLabel length = new JLabel(Bundle.getString("Length"));
+	JLabel name = new JLabel(Bundle.getMessage("Name"));
+	JLabel minimum = new JLabel(Bundle.getMessage("Minimum"));
+	JLabel length = new JLabel(Bundle.getMessage("Length"));
 
 	// text field
 	JTextField trackPoolNameTextField = new JTextField(20);
@@ -48,8 +48,8 @@ class PoolTrackFrame extends OperationsFrame implements
 	JComboBox comboBoxPools = new JComboBox();
 
 	// major buttons
-	JButton addButton = new JButton(Bundle.getString("Add"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// pool status
 	JPanel poolStatus = new JPanel();
@@ -91,20 +91,20 @@ class PoolTrackFrame extends OperationsFrame implements
 		JPanel poolName = new JPanel();
 		poolName.setLayout(new GridBagLayout());
 		poolName.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("PoolName")));
+				.getMessage("PoolName")));
 		addItem(poolName, trackPoolNameTextField, 0, 0);
 		addItem(poolName, addButton, 1, 0);
 
 		JPanel selectPool = new JPanel();
 		selectPool.setLayout(new GridBagLayout());
 		selectPool.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("PoolSelect")));
+				.getMessage("PoolSelect")));
 		addItem(selectPool, comboBoxPools, 0, 0);
 
 		JPanel minLengthTrack = new JPanel();
 		minLengthTrack.setLayout(new GridBagLayout());
 		minLengthTrack.setBorder(BorderFactory.createTitledBorder(MessageFormat
-				.format(Bundle.getString("PoolTrackMinimum"),
+				.format(Bundle.getMessage("PoolTrackMinimum"),
 						new Object[] { _track.getName() })));
 		addItem(minLengthTrack, trackMinLengthTextField, 0, 0);
 
@@ -134,7 +134,7 @@ class PoolTrackFrame extends OperationsFrame implements
 
 		getContentPane().add(p1Pane);
 		getContentPane().add(p2Pane);
-		setTitle(Bundle.getString("MenuItemPoolTrack"));
+		setTitle(Bundle.getMessage("MenuItemPoolTrack"));
 
 		// load comboBox
 		updatePoolsComboBox();
@@ -190,20 +190,20 @@ class PoolTrackFrame extends OperationsFrame implements
 		JPanel poolName = new JPanel();
 		poolName.setLayout(new GridBagLayout());
 		poolName.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("PoolName")));
+				.getMessage("PoolName")));
 		addItem(poolName, trackPoolNameTextField, 0, 0);
 		addItem(poolName, addButton, 1, 0);
 
 		JPanel selectPool = new JPanel();
 		selectPool.setLayout(new GridBagLayout());
 		selectPool.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("PoolSelect")));
+				.getMessage("PoolSelect")));
 		addItem(selectPool, comboBoxPools, 0, 0);
 
 		JPanel minLengthTrack = new JPanel();
 		minLengthTrack.setLayout(new GridBagLayout());
 		minLengthTrack.setBorder(BorderFactory.createTitledBorder(MessageFormat
-				.format(Bundle.getString("PoolTrackMinimum"),
+				.format(Bundle.getMessage("PoolTrackMinimum"),
 						new Object[] { _track.getName() })));
 		addItem(minLengthTrack, trackMinLengthTextField, 0, 0);
 
@@ -233,7 +233,7 @@ class PoolTrackFrame extends OperationsFrame implements
 
 		getContentPane().add(p1Pane);
 		getContentPane().add(p2Pane);
-		setTitle(Bundle.getString("MenuItemPoolTrack"));
+		setTitle(Bundle.getMessage("MenuItemPoolTrack"));
 
 		// load comboBox
 		updatePoolsComboBox();
@@ -287,7 +287,7 @@ class PoolTrackFrame extends OperationsFrame implements
 				addItem(poolStatus, length, 2, i + 1);
 			}
 			// Summary
-			JLabel total = new JLabel(Bundle.getString("Totals"));
+			JLabel total = new JLabel(Bundle.getMessage("Totals"));
 			addItem(poolStatus, total, 0, tracks.size() + 1);
 			JLabel totalMin = new JLabel();
 			totalMin.setText(Integer.toString(totalMinLength));
@@ -298,7 +298,7 @@ class PoolTrackFrame extends OperationsFrame implements
 		}
 		poolStatus
 				.setBorder(BorderFactory.createTitledBorder(MessageFormat
-						.format(Bundle.getString("PoolTracks"),
+						.format(Bundle.getMessage("PoolTracks"),
 								new Object[] { poolName })));
 		poolStatus.repaint();
 		poolStatus.validate();
@@ -318,8 +318,8 @@ class PoolTrackFrame extends OperationsFrame implements
 						.parseInt(trackMinLengthTextField.getText()));
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this,
-						Bundle.getString("TrackMustBeNumber"),
-						Bundle.getString("ErrorTrackLength"),
+						Bundle.getMessage("TrackMustBeNumber"),
+						Bundle.getMessage("ErrorTrackLength"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}

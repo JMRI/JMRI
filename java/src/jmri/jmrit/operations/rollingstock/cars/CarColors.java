@@ -16,7 +16,7 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class CarColors {
 
-	private static final String COLORS = Bundle.getString("carColors");
+	private static final String COLORS = Bundle.getMessage("carColors");
 	public static final String CARCOLORS_CHANGED_PROPERTY = "CarColors";	// NOI18N
 	public static final String CARCOLORS_NAME_CHANGED_PROPERTY = "CarColorsName";	// NOI18N
 

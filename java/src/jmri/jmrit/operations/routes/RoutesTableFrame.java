@@ -33,18 +33,18 @@ public class RoutesTableFrame extends OperationsFrame {
 	RoutesTableModel routesModel = new RoutesTableModel();
 
 	// labels
-	JLabel textSort = new JLabel(Bundle.getString("SortBy"));
+	JLabel textSort = new JLabel(Bundle.getMessage("SortBy"));
 	JLabel textSep = new javax.swing.JLabel("          ");
 
 	// radio buttons
-	JRadioButton sortByName = new JRadioButton(Bundle.getString("Name"));
-	JRadioButton sortById = new JRadioButton(Bundle.getString("Id"));
+	JRadioButton sortByName = new JRadioButton(Bundle.getMessage("Name"));
+	JRadioButton sortById = new JRadioButton(Bundle.getMessage("Id"));
 
 	// major buttons
-	JButton addButton = new JButton(Bundle.getString("Add"));
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
 
 	public RoutesTableFrame() {
-		super(Bundle.getString("TitleRoutesTable"));
+		super(Bundle.getMessage("TitleRoutesTable"));
 		// general GUI config
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -81,11 +81,11 @@ public class RoutesTableFrame extends OperationsFrame {
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new RouteCopyAction(Bundle.getString("MenuItemCopy")));
-		toolMenu.add(new SetTrainIconPositionAction(Bundle.getString("MenuSetTrainIcon")));
-		toolMenu.add(new PrintRoutesAction(Bundle.getString("MenuItemPrint"), false));
-		toolMenu.add(new PrintRoutesAction(Bundle.getString("MenuItemPreview"), true));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy")));
+		toolMenu.add(new SetTrainIconPositionAction(Bundle.getMessage("MenuSetTrainIcon")));
+		toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPrint"), false));
+		toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPreview"), true));
 
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
@@ -122,7 +122,7 @@ public class RoutesTableFrame extends OperationsFrame {
 		if (ae.getSource() == addButton) {
 			RouteEditFrame f = new RouteEditFrame();
 			f.initComponents(null);
-			f.setTitle(Bundle.getString("TitleRouteAdd"));
+			f.setTitle(Bundle.getMessage("TitleRouteAdd"));
 			f.setVisible(true);
 		}
 	}

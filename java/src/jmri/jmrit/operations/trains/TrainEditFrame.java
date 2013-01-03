@@ -71,29 +71,29 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JScrollPane locationsPane;
 
 	// labels
-	JLabel textName = new JLabel(Bundle.getString("Name"));
-	JLabel textDescription = new JLabel(Bundle.getString("Description"));
+	JLabel textName = new JLabel(Bundle.getMessage("Name"));
+	JLabel textDescription = new JLabel(Bundle.getMessage("Description"));
 	JLabel textRouteStatus = new JLabel();
-	JLabel textModel = new JLabel(Bundle.getString("Model"));
-	JLabel textRoad2 = new JLabel(Bundle.getString("Road"));
-	JLabel textRoad3 = new JLabel(Bundle.getString("Road"));
-	JLabel textEngine = new JLabel(Bundle.getString("Engines"));
-	JLabel textComment = new JLabel(Bundle.getString("Comment"));
+	JLabel textModel = new JLabel(Bundle.getMessage("Model"));
+	JLabel textRoad2 = new JLabel(Bundle.getMessage("Road"));
+	JLabel textRoad3 = new JLabel(Bundle.getMessage("Road"));
+	JLabel textEngine = new JLabel(Bundle.getMessage("Engines"));
+	JLabel textComment = new JLabel(Bundle.getMessage("Comment"));
 
 	// major buttons
-	JButton editButton = new JButton(Bundle.getString("Edit"));
-	JButton clearButton = new JButton(Bundle.getString("Clear"));
-	JButton setButton = new JButton(Bundle.getString("Select"));
+	JButton editButton = new JButton(Bundle.getMessage("Edit"));
+	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+	JButton setButton = new JButton(Bundle.getMessage("Select"));
 	JButton JLabel = new JButton();
-	JButton resetButton = new JButton(Bundle.getString("ClearCars"));
-	JButton saveTrainButton = new JButton(Bundle.getString("SaveTrain"));
-	JButton deleteTrainButton = new JButton(Bundle.getString("DeleteTrain"));
-	JButton addTrainButton = new JButton(Bundle.getString("AddTrain"));
+	JButton resetButton = new JButton(Bundle.getMessage("ClearCars"));
+	JButton saveTrainButton = new JButton(Bundle.getMessage("SaveTrain"));
+	JButton deleteTrainButton = new JButton(Bundle.getMessage("DeleteTrain"));
+	JButton addTrainButton = new JButton(Bundle.getMessage("AddTrain"));
 
 	// radio buttons
-	JRadioButton noneRadioButton = new JRadioButton(Bundle.getString("None"));
-	JRadioButton cabooseRadioButton = new JRadioButton(Bundle.getString("Caboose"));
-	JRadioButton fredRadioButton = new JRadioButton(Bundle.getString("FRED"));
+	JRadioButton noneRadioButton = new JRadioButton(Bundle.getMessage("None"));
+	JRadioButton cabooseRadioButton = new JRadioButton(Bundle.getMessage("Caboose"));
+	JRadioButton fredRadioButton = new JRadioButton(Bundle.getMessage("FRED"));
 	ButtonGroup group = new ButtonGroup();
 
 	// text field
@@ -130,15 +130,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// Set up the jtable in a Scroll Pane..
 		locationsPane = new JScrollPane(locationPanelCheckBoxes);
 		locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		locationsPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Stops")));
+		locationsPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Stops")));
 
 		typeCarPane = new JScrollPane(typeCarPanelCheckBoxes);
-		typeCarPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TypesCar")));
+		typeCarPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesCar")));
 		typeCarPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		typeEnginePane = new JScrollPane(typeEnginePanelCheckBoxes);
 		typeEnginePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		typeEnginePane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TypesEngine")));
+		typeEnginePane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesEngine")));
 	}
 
 	public void initComponents(Train train) {
@@ -163,13 +163,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 1a
 		JPanel pName = new JPanel();
 		pName.setLayout(new GridBagLayout());
-		pName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Name")));
+		pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Name")));
 		addItem(pName, trainNameTextField, 0, 0);
 
 		// row 1b
 		JPanel pDesc = new JPanel();
 		pDesc.setLayout(new GridBagLayout());
-		pDesc.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Description")));
+		pDesc.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
 		addItem(pDesc, trainDescriptionTextField, 0, 0);
 
 		p1.add(pName);
@@ -181,7 +181,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 3 right
 		JPanel pdt = new JPanel();
 		pdt.setLayout(new GridBagLayout());
-		pdt.setBorder(BorderFactory.createTitledBorder(Bundle.getString("DepartTime")));
+		pdt.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DepartTime")));
 		// build hour and minute menus
 		for (int i = 0; i < 24; i++) {
 			if (i < 10)
@@ -207,7 +207,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// BUG! routeBox needs its own panel when resizing frame!
 		JPanel pr = new JPanel();
 		pr.setLayout(new GridBagLayout());
-		pr.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Route")));
+		pr.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Route")));
 		addItem(pr, routeBox, 0, 5);
 		addItem(pr, space4, 1, 5);
 		addItem(pr, editButton, 2, 5);
@@ -229,7 +229,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 9
 		JPanel trainReq = new JPanel();
 		trainReq.setLayout(new GridBagLayout());
-		trainReq.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainRequires")));
+		trainReq.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainRequires")));
 
 		for (int i = 0; i < Setup.getEngineSize() + 1; i++) {
 			numEnginesBox.addItem(Integer.toString(i));
@@ -242,13 +242,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		modelEngineBox.insertItemAt("", 0);
 		modelEngineBox.setSelectedIndex(0);
 		modelEngineBox.setMinimumSize(new Dimension(120, 20));
-		modelEngineBox.setToolTipText(Bundle.getString("ModelEngineTip"));
+		modelEngineBox.setToolTipText(Bundle.getMessage("ModelEngineTip"));
 		addItem(trainReq, modelEngineBox, 4, 1);
 		addItem(trainReq, textRoad2, 5, 1);
 		roadEngineBox.insertItemAt("", 0);
 		roadEngineBox.setSelectedIndex(0);
 		roadEngineBox.setMinimumSize(new Dimension(120, 20));
-		roadEngineBox.setToolTipText(Bundle.getString("RoadEngineTip"));
+		roadEngineBox.setToolTipText(Bundle.getMessage("RoadEngineTip"));
 		addItem(trainReq, roadEngineBox, 6, 1);
 
 		addItem(trainReq, noneRadioButton, 2, 2);
@@ -256,7 +256,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(trainReq, cabooseRadioButton, 4, 2);
 		addItem(trainReq, textRoad3, 5, 2);
 		roadCabooseBox.setMinimumSize(new Dimension(120, 20));
-		roadCabooseBox.setToolTipText(Bundle.getString("RoadCabooseTip"));
+		roadCabooseBox.setToolTipText(Bundle.getMessage("RoadCabooseTip"));
 		addItem(trainReq, roadCabooseBox, 6, 2);
 		group.add(noneRadioButton);
 		group.add(cabooseRadioButton);
@@ -265,7 +265,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// row 13 comment
 		JPanel pC = new JPanel();
-		pC.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Comment")));
+		pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
 		pC.setLayout(new GridBagLayout());
 		commentScroller.setMinimumSize(minScrollerDim);
 		addItem(pC, commentScroller, 1, 0);
@@ -301,7 +301,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(fredRadioButton);
 
 		// tool tips
-		resetButton.setToolTipText(Bundle.getString("TipTrainReset"));
+		resetButton.setToolTipText(Bundle.getMessage("TipTrainReset"));
 
 		if (_train != null) {
 			trainNameTextField.setText(_train.getName());
@@ -330,22 +330,22 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new TrainEditBuildOptionsAction(Bundle.getString("MenuItemBuildOptions"), this));
-		toolMenu.add(new TrainManifestOptionAction(Bundle.getString("MenuItemOptions"), this));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new TrainEditBuildOptionsAction(Bundle.getMessage("MenuItemBuildOptions"), this));
+		toolMenu.add(new TrainManifestOptionAction(Bundle.getMessage("MenuItemOptions"), this));
 		if (_train != null)
-			toolMenu.add(new TrainCopyAction(Bundle.getString("TitleTrainCopy"), _train.getName()));
-		toolMenu.add(new TrainScriptAction(Bundle.getString("MenuItemScripts"), this));
-		toolMenu.add(new TrainByCarTypeAction(Bundle.getString("MenuItemShowCarTypes"), this));
+			toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy"), _train.getName()));
+		toolMenu.add(new TrainScriptAction(Bundle.getMessage("MenuItemScripts"), this));
+		toolMenu.add(new TrainByCarTypeAction(Bundle.getMessage("MenuItemShowCarTypes"), this));
 		if (_train != null)
-			toolMenu.add(new TrainConductorAction(Bundle.getString("TitleTrainConductor"), _train));
-		toolMenu.add(new PrintTrainAction(Bundle.getString("MenuItemPrint"), new Frame(), false, this));
-		toolMenu.add(new PrintTrainAction(Bundle.getString("MenuItemPreview"), new Frame(), true, this));
-		toolMenu.add(new PrintTrainManifestAction(Bundle.getString("MenuItemPrintManifest"), false, this));
-		toolMenu.add(new PrintTrainManifestAction(Bundle.getString("MenuItemPreviewManifest"), true, this));
-		toolMenu.add(new PrintTrainBuildReportAction(Bundle.getString("MenuItemPrintBuildReport"), false,
+			toolMenu.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), _train));
+		toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
+		toolMenu.add(new PrintTrainAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
+		toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPrintManifest"), false, this));
+		toolMenu.add(new PrintTrainManifestAction(Bundle.getMessage("MenuItemPreviewManifest"), true, this));
+		toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPrintBuildReport"), false,
 				this));
-		toolMenu.add(new PrintTrainBuildReportAction(Bundle.getString("MenuItemPreviewBuildReport"), true,
+		toolMenu.add(new PrintTrainBuildReportAction(Bundle.getMessage("MenuItemPreviewBuildReport"), true,
 				this));
 
 		menuBar.add(toolMenu);
@@ -385,7 +385,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				saveNewTrain();
 			} else {
 				if (train != null && train != _train) {
-					reportTrainExists(Bundle.getString("save"));
+					reportTrainExists(Bundle.getMessage("save"));
 					return;
 				}
 				checkRoute(); // check to see if use supplied a route, just warn if no route
@@ -402,14 +402,14 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			if (!_train.reset()) {
 				JOptionPane.showMessageDialog(
 						this,
-						MessageFormat.format(Bundle.getString("TrainIsInRoute"),
+						MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
 								new Object[] { train.getTrainTerminatesName() }),
-						Bundle.getString("CanNotDeleteTrain"), JOptionPane.ERROR_MESSAGE);
+						Bundle.getMessage("CanNotDeleteTrain"), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			if (JOptionPane.showConfirmDialog(this,
-					MessageFormat.format(Bundle.getString("deleteMsg"), new Object[] { train.getName() }),
-					Bundle.getString("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					MessageFormat.format(Bundle.getMessage("deleteMsg"), new Object[] { train.getName() }),
+					Bundle.getMessage("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			routeBox.setSelectedItem("");
@@ -428,7 +428,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == addTrainButton) {
 			Train train = manager.getTrainByName(trainNameTextField.getText());
 			if (train != null) {
-				reportTrainExists(Bundle.getString("add"));
+				reportTrainExists(Bundle.getMessage("add"));
 				return;
 			}
 			saveNewTrain();
@@ -447,9 +447,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				if (!_train.reset())
 					JOptionPane.showMessageDialog(
 							this,
-							MessageFormat.format(Bundle.getString("TrainIsInRoute"),
+							MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
 									new Object[] { _train.getTrainTerminatesName() }),
-							Bundle.getString("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
+							Bundle.getMessage("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -464,7 +464,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	private void saveNewTrain() {
-		if (!checkName(Bundle.getString("add")))
+		if (!checkName(Bundle.getMessage("add")))
 			return;
 		Train train = manager.newTrain(trainNameTextField.getText());
 		_train = train;
@@ -479,13 +479,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	private void saveTrain() {
-		if (!checkName(Bundle.getString("save")))
+		if (!checkName(Bundle.getMessage("save")))
 			return;
 		if (!checkModel())
 			return;
 		if (numEnginesBox.getSelectedItem().equals(Train.AUTO)
 				&& !_train.getNumberEngines().equals(Train.AUTO)) {
-			JOptionPane.showMessageDialog(this, Bundle.getString("AutoEngines"),
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("AutoEngines"),
 					"Feature still under development!", JOptionPane.INFORMATION_MESSAGE);
 		}
 		_train.setDepartureTime((String) hourBox.getSelectedItem(),
@@ -519,15 +519,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		String trainName = trainNameTextField.getText().trim();
 		if (trainName.equals("")) {
 			log.debug("Must enter a train name");
-			JOptionPane.showMessageDialog(this, Bundle.getString("MustEnterName"),
-					MessageFormat.format(Bundle.getString("CanNot"), new Object[] { s }),
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
+					MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (trainName.length() > Control.max_len_string_train_name) {
-			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getString("TrainNameLess"),
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainNameLess"),
 					new Object[] { Control.max_len_string_train_name + 1 }), MessageFormat.format(
-					Bundle.getString("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
+					Bundle.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (trainName.contains(".") || trainName.contains("<") || trainName.contains(">")
@@ -535,9 +535,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				|| trainName.contains("/") || trainName.contains("|") || trainName.contains("?")
 				|| trainName.contains("*")) {
 			log.error("Train name must not contain reserved characters");
-			JOptionPane.showMessageDialog(this, Bundle.getString("TrainNameResChar") + newLine
-					+ Bundle.getString("ReservedChar"),
-					MessageFormat.format(Bundle.getString("CanNot"), new Object[] { s }),
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameResChar") + newLine
+					+ Bundle.getMessage("ReservedChar"),
+					MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -552,8 +552,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		String type = EngineModels.instance().getModelType(model);
 		if (!_train.acceptsTypeName(type)) {
 			JOptionPane.showMessageDialog(this, MessageFormat.format(
-					Bundle.getString("TrainModelService"), new Object[] { model, type }), MessageFormat
-					.format(Bundle.getString("CanNot"), new Object[] { Bundle.getString("save") }),
+					Bundle.getMessage("TrainModelService"), new Object[] { model, type }), MessageFormat
+					.format(Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("save") }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -561,8 +561,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			log.debug("No locos available that match the model selected!");
 			JOptionPane.showMessageDialog(
 					this,
-					MessageFormat.format(Bundle.getString("NoLocosModel"), new Object[] { model }),
-					MessageFormat.format(Bundle.getString("TrainWillNotBuild"),
+					MessageFormat.format(Bundle.getMessage("NoLocosModel"), new Object[] { model }),
+					MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"),
 							new Object[] { _train.getName() }), JOptionPane.WARNING_MESSAGE);
 		}
 		return true;
@@ -570,8 +570,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private boolean checkRoute() {
 		if (_train.getRoute() == null) {
-			JOptionPane.showMessageDialog(this, Bundle.getString("TrainNeedsRoute"),
-					Bundle.getString("TrainNoRoute"), JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNeedsRoute"),
+					Bundle.getMessage("TrainNoRoute"), JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		return true;
@@ -580,8 +580,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void reportTrainExists(String s) {
 		log.info("Can not " + s + ", train already exists");
-		JOptionPane.showMessageDialog(this, Bundle.getString("TrainNameExists"),
-				MessageFormat.format(Bundle.getString("CanNot"), new Object[] { s }),
+		JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"),
+				MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }),
 				JOptionPane.ERROR_MESSAGE);
 	}
 

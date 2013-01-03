@@ -16,7 +16,7 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class EngineTypes {
 
-	private static final String TYPES = Bundle.getString("engineDefaultTypes");
+	private static final String TYPES = Bundle.getMessage("engineDefaultTypes");
 
 	// for property change
 	public static final String ENGINETYPES_LENGTH_CHANGED_PROPERTY = "EngineTypesLength"; // NOI18N

@@ -32,14 +32,14 @@ public class SchedulesTableFrame extends OperationsFrame {
 	javax.swing.JLabel textSep = new javax.swing.JLabel();
 
 	// radio buttons
-	javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(Bundle.getString("Name"));
-	javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getString("Id"));
+	javax.swing.JRadioButton sortByName = new javax.swing.JRadioButton(Bundle.getMessage("Name"));
+	javax.swing.JRadioButton sortById = new javax.swing.JRadioButton(Bundle.getMessage("Id"));
 
 	// major buttons
 	// javax.swing.JButton addButton = new javax.swing.JButton();
 
 	public SchedulesTableFrame() {
-		super(Bundle.getString("TitleSchedulesTable"));
+		super(Bundle.getMessage("TitleSchedulesTable"));
 		// general GUI config
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -56,7 +56,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 		JPanel controlPanel = new JPanel();
 		controlPanel.setLayout(new FlowLayout());
 
-		textSort.setText(Bundle.getString("SortBy"));
+		textSort.setText(Bundle.getMessage("SortBy"));
 		controlPanel.add(textSort);
 		controlPanel.add(sortByName);
 		sortByName.setSelected(true);
@@ -65,7 +65,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 		controlPanel.add(textSep);
 
 		// TODO allow user to add schedule to a spur
-		// addButton.setText(Bundle.getString("Add"));
+		// addButton.setText(Bundle.getMessage("Add"));
 		// addButton.setVisible(true);
 		// controlPanel.add (addButton);
 		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
@@ -80,7 +80,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu("Tools");
-		toolMenu.add(new SchedulesByLoadAction(Bundle.getString("MenuItemShowSchedulesByLoad")));
+		toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
@@ -110,7 +110,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 	// log.debug("add schedule button activated");
 	// if (ae.getSource() == addButton){
 	// ScheduleEditFrame f = new ScheduleEditFrame();
-	// f.setTitle(MessageFormat.format(Bundle.getString("TitleScheduleAdd"), new Object[]{"Track Name"}));
+	// f.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleAdd"), new Object[]{"Track Name"}));
 	// f.initComponents(null, null, null);
 	// }
 	// }

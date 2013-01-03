@@ -40,7 +40,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 	// check boxes
 
 	// major buttons
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// combo boxes
 	javax.swing.JComboBox locationBox = LocationManager.instance().getComboBox();
@@ -49,7 +49,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 	PhysicalLocationPanel physicalLocation;
 
 	public SetPhysicalLocationFrame(Location l) {
-		super(Bundle.getString("MenuSetPhysicalLocation"));
+		super(Bundle.getMessage("MenuSetPhysicalLocation"));
 
 		// Store the location (null if called from the list view)
 		_location = l;
@@ -58,15 +58,15 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// set tool tips
-		saveButton.setToolTipText(Bundle.getString("TipSaveButton"));
+		saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
 
 		// Set up the panels
 		JPanel pLocation = new JPanel();
-		pLocation.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Location")));
+		pLocation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
 		pLocation.add(locationBox);
 
-		physicalLocation = new PhysicalLocationPanel(Bundle.getString("PhysicalLocation"));
-		physicalLocation.setToolTipText(Bundle.getString("PhysicalLocationToolTip"));
+		physicalLocation = new PhysicalLocationPanel(Bundle.getMessage("PhysicalLocation"));
+		physicalLocation.setToolTipText(Bundle.getMessage("PhysicalLocationToolTip"));
 		physicalLocation.setVisible(true);
 
 		JPanel pControl = new JPanel();
@@ -100,8 +100,8 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		// check to see if a location has been selected
 		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
-			JOptionPane.showMessageDialog(null, Bundle.getString("SelectLocationToEdit"),
-					Bundle.getString("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("SelectLocationToEdit"),
+					Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		Location l = (Location) locationBox.getSelectedItem();
@@ -109,8 +109,8 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 			return;
 		if (ae.getSource() == saveButton) {
 			int value = JOptionPane.showConfirmDialog(null, MessageFormat.format(
-					Bundle.getString("UpdatePhysicalLocation"), new Object[] { l.getName() }),
-					Bundle.getString("UpdateDefaults"), JOptionPane.YES_NO_OPTION);
+					Bundle.getMessage("UpdatePhysicalLocation"), new Object[] { l.getName() }),
+					Bundle.getMessage("UpdateDefaults"), JOptionPane.YES_NO_OPTION);
 			if (value == JOptionPane.YES_OPTION)
 				saveSpinnerValues(l);
 			OperationsXml.save();

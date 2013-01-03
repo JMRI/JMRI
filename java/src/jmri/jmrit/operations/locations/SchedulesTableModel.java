@@ -115,13 +115,13 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     public String getColumnName(int col) {
         switch (col) {
-        case IDCOLUMN: return Bundle.getString("Id");
-        case NAMECOLUMN: return Bundle.getString("Name");
-        case SCH_STATUSCOLUMN: return Bundle.getString("Status");
-        case SIDINGSCOLUMN: return Bundle.getString("Sidings");
-        case STATUSCOLUMN: return Bundle.getString("StatusSiding");
-        case EDITCOLUMN: return Bundle.getString("Edit");
-        case DELETECOLUMN: return Bundle.getString("Delete");
+        case IDCOLUMN: return Bundle.getMessage("Id");
+        case NAMECOLUMN: return Bundle.getMessage("Name");
+        case SCH_STATUSCOLUMN: return Bundle.getMessage("Status");
+        case SIDINGSCOLUMN: return Bundle.getMessage("Sidings");
+        case STATUSCOLUMN: return Bundle.getMessage("StatusSiding");
+        case EDITCOLUMN: return Bundle.getMessage("Edit");
+        case DELETECOLUMN: return Bundle.getMessage("Delete");
         default: return "unknown"; // NOI18N
         }
     }
@@ -178,8 +178,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         	return box;
         }
         case STATUSCOLUMN: return getSidingStatus(row);
-        case EDITCOLUMN: return Bundle.getString("Edit");
-        case DELETECOLUMN: return Bundle.getString("Delete");
+        case EDITCOLUMN: return Bundle.getMessage("Edit");
+        case DELETECOLUMN: return Bundle.getMessage("Delete");
         default: return "unknown "+col; // NOI18N
         }
     }
@@ -208,13 +208,13 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	if (ltp == null){
     		log.debug("Need location track pair");
 			JOptionPane.showMessageDialog(null,
-					MessageFormat.format(Bundle.getString("AssignSchedule"),new Object[]{s.getName()}),
-					MessageFormat.format(Bundle.getString("CanNotSchedule"),new Object[]{Bundle.getString("Edit")}),
+					MessageFormat.format(Bundle.getMessage("AssignSchedule"),new Object[]{s.getName()}),
+					MessageFormat.format(Bundle.getMessage("CanNotSchedule"),new Object[]{Bundle.getMessage("Edit")}),
 					JOptionPane.ERROR_MESSAGE);
     		return;
     	}
        	sef = new ScheduleEditFrame();
-    	sef.setTitle(MessageFormat.format(Bundle.getString("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
+    	sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"), new Object[]{ltp.getTrack().getName()}));
     	sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
     	focusSef = true;
     }
@@ -223,8 +223,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	log.debug("Delete schedule");
     	Schedule s = manager.getScheduleById(sysList.get(row));
     	if (JOptionPane.showConfirmDialog(null,
-    			MessageFormat.format(Bundle.getString("DoYouWantToDeleteSchedule"),new Object[]{s.getName()}),
-    			Bundle.getString("DeleteSchedule?"),
+    			MessageFormat.format(Bundle.getMessage("DoYouWantToDeleteSchedule"),new Object[]{s.getName()}),
+    			Bundle.getMessage("DeleteSchedule?"),
     			JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
     		manager.deregister(s);
     		OperationsXml.save();
@@ -259,9 +259,9 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
            	LocationTrackPair ltp = (LocationTrackPair)box.getItemAt(i);
            	String status = ltp.getTrack().checkScheduleValid();
            	if (!status.equals(""))
-           		return Bundle.getString("Error");
+           		return Bundle.getMessage("Error");
        	}
-       	return Bundle.getString("Okay");
+       	return Bundle.getMessage("Okay");
     }
     
     private String getSidingStatus(int row){
@@ -271,7 +271,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     	String status = ltp.getTrack().checkScheduleValid();
     	if (!status.equals(""))
     		return status;
-    	return Bundle.getString("Okay");
+    	return Bundle.getMessage("Okay");
     }
     
     private void removePropertyChangeSchedules() {

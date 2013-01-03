@@ -19,9 +19,9 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 	JComboBox comboBox;
     
     // major buttons
-    JButton addButton = new JButton(Bundle.getString("Add"));
-    JButton deleteButton = new JButton(Bundle.getString("Delete"));
-    JButton replaceButton = new JButton(Bundle.getString("Replace"));
+    JButton addButton = new JButton(Bundle.getMessage("Add"));
+    JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
+    JButton replaceButton = new JButton(Bundle.getMessage("Replace"));
     
     TrainScheduleManager trainScheduleManager = TrainScheduleManager.instance();
 	
@@ -51,7 +51,7 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
         addButtonAction(deleteButton);
 		addButtonAction(replaceButton);
 		
-		setTitle(Bundle.getString("MenuItemEditSchedule"));
+		setTitle(Bundle.getMessage("MenuItemEditSchedule"));
 		
 		pack();
 	   	if ((getWidth()<225)) 

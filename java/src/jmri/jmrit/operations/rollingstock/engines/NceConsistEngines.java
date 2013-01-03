@@ -73,12 +73,12 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 	// we use a thread so the status frame will work!
 	public void run() {
 		if (tc == null) {
-			JOptionPane.showMessageDialog(null, Bundle.getString("NceSynchronizationFailed"),
-					Bundle.getString("NceConsist"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("NceSynchronizationFailed"),
+					Bundle.getMessage("NceConsist"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		if (JOptionPane.showConfirmDialog(null, Bundle.getString("SynchronizeWithNce"),
-				Bundle.getString("NceConsist"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+		if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("SynchronizeWithNce"),
+				Bundle.getMessage("NceConsist"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 			return;
 		}
 		// reset
@@ -88,14 +88,14 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 
 		// create a status frame
 		JPanel ps = new JPanel();
-		jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getString("ReadingNceConsistMemory"));
+		jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getMessage("ReadingNceConsistMemory"));
 		fstatus.setLocationRelativeTo(null);
 		fstatus.setSize(300, 100);
 
 		ps.add(textConsist);
 		ps.add(indexNumber);
 		fstatus.getContentPane().add(ps);
-		textConsist.setText(Bundle.getString("ReadNumber"));
+		textConsist.setText(Bundle.getMessage("ReadNumber"));
 		textConsist.setVisible(true);
 		indexNumber.setVisible(true);
 		fstatus.setVisible(true);
@@ -154,10 +154,10 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 		}
 
 		if (syncOK) {
-			JOptionPane.showMessageDialog(null, Bundle.getString("SuccessfulSynchronization"), Bundle.getString("NceConsist"),
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("SuccessfulSynchronization"), Bundle.getMessage("NceConsist"),
 					JOptionPane.INFORMATION_MESSAGE);
 		} else {
-			JOptionPane.showMessageDialog(null, Bundle.getString("SynchronizationFailed"), Bundle.getString("NceConsist"),
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("SynchronizationFailed"), Bundle.getMessage("NceConsist"),
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -181,9 +181,9 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 						log.warn("Engine " + engNum + " needs lead engine "
 								+ getEngineNumberFromArray(consistNum, 0, 2) + " for consist " // NOI18N
 								+ consistNum);
-						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getString("NceConsistNeedsLeadEngine"),
+						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("NceConsistNeedsLeadEngine"),
 								new Object[] {engNum, getEngineNumberFromArray(consistNum, 0, 2), consistNum}),
-								Bundle.getString("NceConsist"), JOptionPane.ERROR_MESSAGE);
+								Bundle.getMessage("NceConsist"), JOptionPane.ERROR_MESSAGE);
 						syncOK = false;
 					}
 				}
@@ -191,8 +191,8 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 					log.warn("Engine " + engNum + " not found in operations for NCE consist "
 							+ consistNum);
 					if (consists.contains(Integer.toString(consistNum))) {
-						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getString("NceConsistMissingEngineNumber"),
-								new Object[] {engNum, consistNum}), Bundle.getString("NceConsist"),
+						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("NceConsistMissingEngineNumber"),
+								new Object[] {engNum, consistNum}), Bundle.getMessage("NceConsist"),
 								JOptionPane.ERROR_MESSAGE);
 						syncOK = false;
 					}

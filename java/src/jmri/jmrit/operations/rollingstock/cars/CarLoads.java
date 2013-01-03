@@ -21,8 +21,8 @@ import jmri.jmrit.operations.setup.Control;
 public class CarLoads {
 
 	protected Hashtable<String, List<CarLoad>> list = new Hashtable<String, List<CarLoad>>();
-	protected String _emptyName = Bundle.getString("EmptyCar");
-	protected String _loadName = Bundle.getString("LoadedCar");
+	protected String _emptyName = Bundle.getMessage("EmptyCar");
+	protected String _loadName = Bundle.getMessage("LoadedCar");
 
 	// for property change
 	public static final String LOAD_CHANGED_PROPERTY = "CarLoads Load"; // NOI18N

@@ -29,7 +29,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements
 	Engine _engine;
 
 	public EngineSetFrame() {
-		super(Bundle.getString("TitleEngineSet"));
+		super(Bundle.getMessage("TitleEngineSet"));
 	}
 
 	public void initComponents() {
@@ -66,8 +66,8 @@ public class EngineSetFrame extends RollingStockSetFrame implements
 		checkTrain(_engine);
 		// is this engine part of a consist?
 		if (_engine.getConsist() != null) {
-			if (JOptionPane.showConfirmDialog(this, Bundle.getString("engineInConsist"),
-					Bundle.getString("enginePartConsist"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("engineInConsist"),
+					Bundle.getMessage("enginePartConsist"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				// convert cars list to rolling stock list
 				List<RollingStock> list = _engine.getConsist().getGroup();
 				if (!updateGroup(list))

@@ -78,38 +78,38 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	// labels
 	JLabel trainName = new JLabel();
 	JLabel trainDescription = new JLabel();
-	JLabel before = new JLabel(Bundle.getString("Before"));
-	JLabel after = new JLabel(Bundle.getString("After"));
+	JLabel before = new JLabel(Bundle.getMessage("Before"));
+	JLabel after = new JLabel(Bundle.getMessage("After"));
 
 	// major buttons
-	JButton addRoadButton = new JButton(Bundle.getString("AddRoad"));
-	JButton deleteRoadButton = new JButton(Bundle.getString("DeleteRoad"));
+	JButton addRoadButton = new JButton(Bundle.getMessage("AddRoad"));
+	JButton deleteRoadButton = new JButton(Bundle.getMessage("DeleteRoad"));
 	
-	JButton addLoadButton = new JButton(Bundle.getString("AddLoad"));
-	JButton deleteLoadButton = new JButton(Bundle.getString("DeleteLoad"));
-	JButton deleteAllLoadsButton = new JButton(Bundle.getString("DeleteAllLoads"));
+	JButton addLoadButton = new JButton(Bundle.getMessage("AddLoad"));
+	JButton deleteLoadButton = new JButton(Bundle.getMessage("DeleteLoad"));
+	JButton deleteAllLoadsButton = new JButton(Bundle.getMessage("DeleteAllLoads"));
 	
-	JButton addOwnerButton = new JButton(Bundle.getString("AddOwner"));
-	JButton deleteOwnerButton = new JButton(Bundle.getString("DeleteOwner"));	
-	JButton saveTrainButton = new JButton(Bundle.getString("SaveTrain"));
+	JButton addOwnerButton = new JButton(Bundle.getMessage("AddOwner"));
+	JButton deleteOwnerButton = new JButton(Bundle.getMessage("DeleteOwner"));	
+	JButton saveTrainButton = new JButton(Bundle.getMessage("SaveTrain"));
 
 	// radio buttons    
-    JRadioButton roadNameAll = new JRadioButton(Bundle.getString("AcceptAll"));
-    JRadioButton roadNameInclude = new JRadioButton(Bundle.getString("AcceptOnly"));
-    JRadioButton roadNameExclude = new JRadioButton(Bundle.getString("Exclude"));
+    JRadioButton roadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
+    JRadioButton roadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
+    JRadioButton roadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
     
-    JRadioButton loadNameAll = new JRadioButton(Bundle.getString("AcceptAll"));
-    JRadioButton loadNameInclude = new JRadioButton(Bundle.getString("AcceptOnly"));
-    JRadioButton loadNameExclude = new JRadioButton(Bundle.getString("Exclude"));
+    JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
+    JRadioButton loadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
+    JRadioButton loadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
     
-    JRadioButton ownerNameAll = new JRadioButton(Bundle.getString("AcceptAll"));
-    JRadioButton ownerNameInclude = new JRadioButton(Bundle.getString("AcceptOnly"));
-    JRadioButton ownerNameExclude = new JRadioButton(Bundle.getString("Exclude"));
+    JRadioButton ownerNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
+    JRadioButton ownerNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
+    JRadioButton ownerNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
     
-    JRadioButton builtDateAll = new JRadioButton(Bundle.getString("AcceptAll"));
-    JRadioButton builtDateAfter = new JRadioButton(Bundle.getString("After"));
-    JRadioButton builtDateBefore = new JRadioButton(Bundle.getString("Before"));
-    JRadioButton builtDateRange = new JRadioButton(Bundle.getString("Range"));
+    JRadioButton builtDateAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
+    JRadioButton builtDateAfter = new JRadioButton(Bundle.getMessage("After"));
+    JRadioButton builtDateBefore = new JRadioButton(Bundle.getMessage("Before"));
+    JRadioButton builtDateRange = new JRadioButton(Bundle.getMessage("Range"));
     
     ButtonGroup roadGroup = new ButtonGroup();
     ButtonGroup loadGroup = new ButtonGroup();
@@ -117,36 +117,36 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     ButtonGroup builtGroup = new ButtonGroup();
     
 	// train requirements 1st set
-    JRadioButton none1 = new JRadioButton(Bundle.getString("None"));
-    JRadioButton change1Engine = new JRadioButton(Bundle.getString("EngineChange"));
-    JRadioButton modify1Caboose = new JRadioButton(Bundle.getString("ChangeCaboose"));
-    JRadioButton helper1Service = new JRadioButton(Bundle.getString("HelperService"));
-    JRadioButton remove1Caboose = new JRadioButton(Bundle.getString("RemoveCaboose"));
-    JRadioButton keep1Caboose = new JRadioButton(Bundle.getString("KeepCaboose"));
-    JRadioButton change1Caboose = new JRadioButton(Bundle.getString("ChangeCaboose"));
+    JRadioButton none1 = new JRadioButton(Bundle.getMessage("None"));
+    JRadioButton change1Engine = new JRadioButton(Bundle.getMessage("EngineChange"));
+    JRadioButton modify1Caboose = new JRadioButton(Bundle.getMessage("ChangeCaboose"));
+    JRadioButton helper1Service = new JRadioButton(Bundle.getMessage("HelperService"));
+    JRadioButton remove1Caboose = new JRadioButton(Bundle.getMessage("RemoveCaboose"));
+    JRadioButton keep1Caboose = new JRadioButton(Bundle.getMessage("KeepCaboose"));
+    JRadioButton change1Caboose = new JRadioButton(Bundle.getMessage("ChangeCaboose"));
     
     ButtonGroup trainReq1Group = new ButtonGroup();
     ButtonGroup cabooseOption1Group = new ButtonGroup();
     
 	// train requirements 2nd set
-    JRadioButton none2 = new JRadioButton(Bundle.getString("None"));
-    JRadioButton change2Engine = new JRadioButton(Bundle.getString("EngineChange"));
-    JRadioButton modify2Caboose = new JRadioButton(Bundle.getString("ChangeCaboose"));
-    JRadioButton helper2Service = new JRadioButton(Bundle.getString("HelperService"));
-    JRadioButton remove2Caboose = new JRadioButton(Bundle.getString("RemoveCaboose"));
-    JRadioButton keep2Caboose = new JRadioButton(Bundle.getString("KeepCaboose"));
-    JRadioButton change2Caboose = new JRadioButton(Bundle.getString("ChangeCaboose"));
+    JRadioButton none2 = new JRadioButton(Bundle.getMessage("None"));
+    JRadioButton change2Engine = new JRadioButton(Bundle.getMessage("EngineChange"));
+    JRadioButton modify2Caboose = new JRadioButton(Bundle.getMessage("ChangeCaboose"));
+    JRadioButton helper2Service = new JRadioButton(Bundle.getMessage("HelperService"));
+    JRadioButton remove2Caboose = new JRadioButton(Bundle.getMessage("RemoveCaboose"));
+    JRadioButton keep2Caboose = new JRadioButton(Bundle.getMessage("KeepCaboose"));
+    JRadioButton change2Caboose = new JRadioButton(Bundle.getMessage("ChangeCaboose"));
 
     ButtonGroup trainReq2Group = new ButtonGroup();
     ButtonGroup cabooseOption2Group = new ButtonGroup();
     
     // check boxes
-    JCheckBox buildNormalCheckBox = new JCheckBox(Bundle.getString("NormalModeWhenBuilding"));
+    JCheckBox buildNormalCheckBox = new JCheckBox(Bundle.getMessage("NormalModeWhenBuilding"));
     JCheckBox sendToTerminalCheckBox = new JCheckBox();
-    JCheckBox returnStagingCheckBox = new JCheckBox(Bundle.getString("AllowCarsToReturn"));
-    JCheckBox allowLocalMovesCheckBox = new JCheckBox(Bundle.getString("AllowLocalMoves"));
-    JCheckBox allowThroughCarsCheckBox = new JCheckBox(Bundle.getString("AllowThroughCars"));
-    JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getString("TypeAndLoad"));
+    JCheckBox returnStagingCheckBox = new JCheckBox(Bundle.getMessage("AllowCarsToReturn"));
+    JCheckBox allowLocalMovesCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalMoves"));
+    JCheckBox allowThroughCarsCheckBox = new JCheckBox(Bundle.getMessage("AllowThroughCars"));
+    JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
 	
 	// text field
     JTextField builtAfterTextField = new JTextField(10);
@@ -177,7 +177,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	public static final String DISPOSE = "dispose" ;
 
 	public TrainEditBuildOptionsFrame() {
-		super(Bundle.getString("MenuItemBuildOptions"));
+		super(Bundle.getMessage("MenuItemBuildOptions"));
  	}
 
 	public void initComponents(TrainEditFrame parent) {
@@ -185,27 +185,27 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	// Set up the jtable in a Scroll Pane..
       	roadPane = new JScrollPane(panelRoadNames);
     	roadPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	roadPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("RoadsTrain")));
+    	roadPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadsTrain")));
     	
       	loadPane = new JScrollPane(panelLoadNames);
       	loadPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	loadPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("LoadsTrain")));
+      	loadPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadsTrain")));
       	
       	ownerPane = new JScrollPane(panelOwnerNames);
       	ownerPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	ownerPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("OwnersTrain")));
+      	ownerPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("OwnersTrain")));
       	
       	builtPane = new JScrollPane(panelBuilt);
       	builtPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	builtPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BuiltTrain")));
+      	builtPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BuiltTrain")));
       	
       	trainReq1Pane = new JScrollPane(panelTrainReq1);
       	trainReq1Pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	trainReq1Pane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainRequires")));
+      	trainReq1Pane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainRequires")));
       	
       	trainReq2Pane = new JScrollPane(panelTrainReq2);
       	trainReq2Pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	trainReq2Pane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainRequires")));
+      	trainReq2Pane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainRequires")));
       	
 		parent.setChildFrame(this);
 		_train = parent._train;
@@ -224,13 +224,13 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		// row 1a
        	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
-    	pName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Name")));
+    	pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Name")));
     	addItem(pName, trainName, 0, 0);
 
 		// row 1b
        	JPanel pDesc = new JPanel();
     	pDesc.setLayout(new GridBagLayout());
-    	pDesc.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Description")));
+    	pDesc.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
     	addItem(pDesc, trainDescription, 0, 0);
 		
     	p1.add(pName);
@@ -239,7 +239,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	// row 2
     	JPanel pOption = new JPanel();
     	pOption.setLayout(new GridBagLayout());
-    	pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Options")));
+    	pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
     	addItemLeft(pOption, buildNormalCheckBox, 0, 0);
     	addItemLeft(pOption, sendToTerminalCheckBox, 1, 0);
     	addItemLeft(pOption, returnStagingCheckBox, 0, 1);
@@ -268,8 +268,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		
 		// row 9
 		panelBuilt.setLayout(new GridBagLayout());
-		builtAfterTextField.setToolTipText(Bundle.getString("EnterYearTip"));
-		builtBeforeTextField.setToolTipText(Bundle.getString("EnterYearTip"));
+		builtAfterTextField.setToolTipText(Bundle.getMessage("EnterYearTip"));
+		builtBeforeTextField.setToolTipText(Bundle.getMessage("EnterYearTip"));
 		addItem(panelBuilt, builtDateAll, 0, 0);
 		addItem(panelBuilt, builtDateAfter, 1, 0);
 		addItem(panelBuilt, builtDateBefore, 2, 0);
@@ -308,18 +308,18 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	modelEngine1Box.insertItemAt("",0);
     	modelEngine1Box.setSelectedIndex(0);
     	modelEngine1Box.setMinimumSize(new Dimension(120,20));
-    	modelEngine1Box.setToolTipText(Bundle.getString("ModelEngineTip"));
+    	modelEngine1Box.setToolTipText(Bundle.getMessage("ModelEngineTip"));
     	roadEngine1Box.insertItemAt("",0);
     	roadEngine1Box.setSelectedIndex(0);
     	roadEngine1Box.setMinimumSize(new Dimension(120,20));
-    	roadEngine1Box.setToolTipText(Bundle.getString("RoadEngineTip"));
+    	roadEngine1Box.setToolTipText(Bundle.getMessage("RoadEngineTip"));
     	panelTrainReq1.add(engine1Option);
     	
     	// caboose options
     	engine1caboose.setLayout(new GridBagLayout());
-    	engine1caboose.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ChangeCaboose")));
+    	engine1caboose.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ChangeCaboose")));
     	roadCaboose1Box.setMinimumSize(new Dimension(120,20));
-    	roadCaboose1Box.setToolTipText(Bundle.getString("RoadCabooseTip"));
+    	roadCaboose1Box.setToolTipText(Bundle.getMessage("RoadCabooseTip"));
        	panelTrainReq1.add(engine1caboose);
     	
        	cabooseOption1Group.add(remove1Caboose);
@@ -327,7 +327,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	cabooseOption1Group.add(change1Caboose);
     	
     	// drop engine panel
-    	addItem(engine1DropOption, new JLabel(Bundle.getString("DropEnginesAt")), 0 , 0);
+    	addItem(engine1DropOption, new JLabel(Bundle.getMessage("DropEnginesAt")), 0 , 0);
     	addItem(engine1DropOption, routeDrop1Box, 1, 0);
     	panelTrainReq1.add(engine1DropOption);
 		
@@ -356,18 +356,18 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	modelEngine2Box.insertItemAt("",0);
     	modelEngine2Box.setSelectedIndex(0);
     	modelEngine2Box.setMinimumSize(new Dimension(120,20));
-    	modelEngine2Box.setToolTipText(Bundle.getString("ModelEngineTip"));
+    	modelEngine2Box.setToolTipText(Bundle.getMessage("ModelEngineTip"));
     	roadEngine2Box.insertItemAt("",0);
     	roadEngine2Box.setSelectedIndex(0);
     	roadEngine2Box.setMinimumSize(new Dimension(120,20));
-    	roadEngine2Box.setToolTipText(Bundle.getString("RoadEngineTip"));
+    	roadEngine2Box.setToolTipText(Bundle.getMessage("RoadEngineTip"));
     	panelTrainReq2.add(engine2Option);
     	
     	// caboose options
     	engine2caboose.setLayout(new GridBagLayout());
-    	engine2caboose.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ChangeCaboose")));
+    	engine2caboose.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ChangeCaboose")));
     	roadCaboose2Box.setMinimumSize(new Dimension(120,20));
-    	roadCaboose2Box.setToolTipText(Bundle.getString("RoadCabooseTip"));
+    	roadCaboose2Box.setToolTipText(Bundle.getMessage("RoadCabooseTip"));
        	panelTrainReq2.add(engine2caboose);
     	
        	cabooseOption2Group.add(remove2Caboose);
@@ -375,7 +375,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	cabooseOption2Group.add(change2Caboose);
     	
     	// drop engine panel
-    	addItem(engine2DropOption, new JLabel(Bundle.getString("DropEnginesAt")), 0 , 0);
+    	addItem(engine2DropOption, new JLabel(Bundle.getMessage("DropEnginesAt")), 0 , 0);
     	addItem(engine2DropOption, routeDrop2Box, 1, 0);
     	panelTrainReq2.add(engine2DropOption);
 		
@@ -448,7 +448,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			returnStagingCheckBox.setSelected(_train.isAllowReturnToStagingEnabled());
 			allowLocalMovesCheckBox.setSelected(_train.isAllowLocalMovesEnabled());
 			allowThroughCarsCheckBox.setSelected(_train.isAllowThroughCarsEnabled());
-			sendToTerminalCheckBox.setText(MessageFormat.format(Bundle.getString("SendToTerminal"),new Object[] {_train.getTrainTerminatesName()}));
+			sendToTerminalCheckBox.setText(MessageFormat.format(Bundle.getMessage("SendToTerminal"),new Object[] {_train.getTrainTerminatesName()}));
 			builtAfterTextField.setText(_train.getBuiltStartYear());
 			builtBeforeTextField.setText(_train.getBuiltEndYear());
 			setBuiltRadioButton();
@@ -875,23 +875,23 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			roadCaboose1Box.setSelectedItem(_train.getSecondLegCabooseRoad());
 			// adjust radio button text
 			if ((_train.getRequirements() & Train.CABOOSE)>0){
-				change1Caboose.setText(Bundle.getString("ChangeCaboose"));
+				change1Caboose.setText(Bundle.getMessage("ChangeCaboose"));
 				remove1Caboose.setEnabled(true);
 			} else {
-				change1Caboose.setText(Bundle.getString("AddCaboose"));
+				change1Caboose.setText(Bundle.getMessage("AddCaboose"));
 				remove1Caboose.setEnabled(false);
 			}
 		} 
 		engine1Option.setVisible(change1Engine.isSelected() || helper1Service.isSelected());
 		engine1caboose.setVisible(change1Engine.isSelected() || modify1Caboose.isSelected());
 		engine1DropOption.setVisible(helper1Service.isSelected());
-		engine1Option.setBorder(BorderFactory.createTitledBorder(Bundle.getString("EngineChange")));
+		engine1Option.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("EngineChange")));
 		if (change1Engine.isSelected() || helper1Service.isSelected())
 			createEngine1Panel();
 		if (change1Engine.isSelected() || modify1Caboose.isSelected())
 			createCaboose1Panel(modify1Caboose.isSelected());
 		if (helper1Service.isSelected())
-			engine1Option.setBorder(BorderFactory.createTitledBorder(Bundle.getString("AddHelpers")));
+			engine1Option.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AddHelpers")));
 		validate();
 	}
 	
@@ -924,23 +924,23 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			// adjust radio button text
 			if (((_train.getRequirements() & Train.CABOOSE)>0 || change1Caboose.isSelected())
 					&& !remove1Caboose.isSelected()){
-				change2Caboose.setText(Bundle.getString("ChangeCaboose"));
+				change2Caboose.setText(Bundle.getMessage("ChangeCaboose"));
 				remove2Caboose.setEnabled(true);
 			} else {
-				change2Caboose.setText(Bundle.getString("AddCaboose"));
+				change2Caboose.setText(Bundle.getMessage("AddCaboose"));
 				remove2Caboose.setEnabled(false);
 			}
 		} 
 		engine2Option.setVisible(change2Engine.isSelected() || helper2Service.isSelected());
 		engine2caboose.setVisible(change2Engine.isSelected() || modify2Caboose.isSelected());
 		engine2DropOption.setVisible(helper2Service.isSelected());
-		engine2Option.setBorder(BorderFactory.createTitledBorder(Bundle.getString("EngineChange")));
+		engine2Option.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("EngineChange")));
 		if (change2Engine.isSelected() || helper2Service.isSelected())
 			createEngine2Panel();
 		if (change2Engine.isSelected() || modify2Caboose.isSelected())
 			createCaboose2Panel(modify2Caboose.isSelected());
 		if (helper2Service.isSelected())
-			engine2Option.setBorder(BorderFactory.createTitledBorder(Bundle.getString("AddHelpers")));
+			engine2Option.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AddHelpers")));
 		validate();
 	}
 	
@@ -1010,14 +1010,14 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if ((!none1.isSelected() && (routePickup1Box.getSelectedItem() == null || routePickup1Box.getSelectedItem().equals("")))
 				|| (!none2.isSelected() && (routePickup2Box.getSelectedItem() == null || routePickup2Box.getSelectedItem().equals("")))){
 			JOptionPane.showMessageDialog(this,
-					Bundle.getString("SelectLocationEngChange"), Bundle.getString("CanNotSave"),
+					Bundle.getMessage("SelectLocationEngChange"), Bundle.getMessage("CanNotSave"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if ((helper1Service.isSelected() && (routeDrop1Box.getSelectedItem() == null || routeDrop1Box.getSelectedItem().equals("")))
 				|| (helper2Service.isSelected() && (routeDrop2Box.getSelectedItem() == null || routeDrop2Box.getSelectedItem().equals("")))){
 			JOptionPane.showMessageDialog(this,
-					Bundle.getString("SelectLocationEndHelper"), Bundle.getString("CanNotSave"),
+					Bundle.getMessage("SelectLocationEndHelper"), Bundle.getMessage("CanNotSave"),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -1125,25 +1125,25 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	
 	private void createEngine1Panel(){
 		engine1Option.removeAll();
-		addItem (engine1Option, new JLabel(Bundle.getString("ChangeEnginesAt")), 0, 0);
+		addItem (engine1Option, new JLabel(Bundle.getMessage("ChangeEnginesAt")), 0, 0);
 		addItem (engine1Option, routePickup1Box, 1, 0);
-    	addItem (engine1Option, new JLabel(Bundle.getString("Engines")), 2, 0);
+    	addItem (engine1Option, new JLabel(Bundle.getMessage("Engines")), 2, 0);
     	addItem (engine1Option, numEngines1Box, 3, 0);
-    	addItem (engine1Option, new JLabel(Bundle.getString("Model")), 4, 0);
+    	addItem (engine1Option, new JLabel(Bundle.getMessage("Model")), 4, 0);
     	addItem (engine1Option, modelEngine1Box, 5, 0);
-    	addItem (engine1Option, new JLabel(Bundle.getString("Road")), 6, 0);
+    	addItem (engine1Option, new JLabel(Bundle.getMessage("Road")), 6, 0);
     	addItem (engine1Option, roadEngine1Box, 7, 0);
 	}
 	
 	private void createEngine2Panel(){
 		engine2Option.removeAll();
-		addItem (engine2Option, new JLabel(Bundle.getString("ChangeEnginesAt")), 0, 0);
+		addItem (engine2Option, new JLabel(Bundle.getMessage("ChangeEnginesAt")), 0, 0);
 		addItem (engine2Option, routePickup2Box, 1, 0);
-    	addItem (engine2Option, new JLabel(Bundle.getString("Engines")), 2, 0);
+    	addItem (engine2Option, new JLabel(Bundle.getMessage("Engines")), 2, 0);
     	addItem (engine2Option, numEngines2Box, 3, 0);
-    	addItem (engine2Option, new JLabel(Bundle.getString("Model")), 4, 0);
+    	addItem (engine2Option, new JLabel(Bundle.getMessage("Model")), 4, 0);
     	addItem (engine2Option, modelEngine2Box, 5, 0);
-    	addItem (engine2Option, new JLabel(Bundle.getString("Road")), 6, 0);
+    	addItem (engine2Option, new JLabel(Bundle.getMessage("Road")), 6, 0);
     	addItem (engine2Option, roadEngine2Box, 7, 0);
 	}
 	
@@ -1151,10 +1151,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		engine1caboose.removeAll();
     	addItem (engine1caboose, remove1Caboose, 2, 6);
     	addItem (engine1caboose, change1Caboose, 4, 6);
-     	addItem (engine1caboose, new JLabel(Bundle.getString("Road")), 5, 6);
+     	addItem (engine1caboose, new JLabel(Bundle.getMessage("Road")), 5, 6);
      	addItem (engine1caboose, roadCaboose1Box, 6, 6);
      	if (withCombox){
-     		addItem(engine1caboose, new JLabel(Bundle.getString("ChangeEnginesAt")), 0, 6);
+     		addItem(engine1caboose, new JLabel(Bundle.getMessage("ChangeEnginesAt")), 0, 6);
      		addItem (engine1caboose, routePickup1Box, 1, 6);
      	} else {
      		addItem (engine1caboose, keep1Caboose, 3, 6);
@@ -1165,10 +1165,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		engine2caboose.removeAll();
     	addItem (engine2caboose, remove2Caboose, 2, 6);
     	addItem (engine2caboose, change2Caboose, 4, 6);
-     	addItem (engine2caboose, new JLabel(Bundle.getString("Road")), 5, 6);
+     	addItem (engine2caboose, new JLabel(Bundle.getMessage("Road")), 5, 6);
      	addItem (engine2caboose, roadCaboose2Box, 6, 6);
      	if (withCombox){
-     		addItem(engine2caboose, new JLabel(Bundle.getString("ChangeEnginesAt")), 0, 6);
+     		addItem(engine2caboose, new JLabel(Bundle.getMessage("ChangeEnginesAt")), 0, 6);
      		addItem (engine2caboose, routePickup2Box, 1, 6);
      	} else {
      		addItem (engine2caboose, keep2Caboose, 3, 6);
@@ -1183,8 +1183,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if(_train.acceptsTypeName(type))
 			return true;
 		JOptionPane.showMessageDialog(this,
-				MessageFormat.format(Bundle.getString("TrainModelService"), new Object[] {model, type}), MessageFormat.format(Bundle.getString("CanNot"),
-						new Object[] {Bundle.getString("save")}),
+				MessageFormat.format(Bundle.getMessage("TrainModelService"), new Object[] {model, type}), MessageFormat.format(Bundle.getMessage("CanNot"),
+						new Object[] {Bundle.getMessage("save")}),
 				JOptionPane.ERROR_MESSAGE);
 		return false;
 	}

@@ -23,7 +23,7 @@ public class CarsSetFrameAction extends AbstractAction {
 	}
 
 	public CarsSetFrameAction(JTable carsTable) {
-		this(Bundle.getString("TitleSetCars"));
+		this(Bundle.getMessage("TitleSetCars"));
 		_carsTable = carsTable;
 	}
 

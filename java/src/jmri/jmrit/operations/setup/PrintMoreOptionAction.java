@@ -17,7 +17,7 @@ import javax.swing.AbstractAction;
 public class PrintMoreOptionAction extends AbstractAction {
 	
     public PrintMoreOptionAction() {
-    	this (Bundle.getString("TitlePrintMoreOptions"));
+    	this (Bundle.getMessage("TitlePrintMoreOptions"));
     }
 	
 	public PrintMoreOptionAction(String s) {

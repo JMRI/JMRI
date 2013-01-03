@@ -19,9 +19,9 @@ import jmri.jmrit.roster.RosterEntry;
 public class ImportRosterEngines extends Thread {
 		
 	EngineManager manager = EngineManager.instance();
-	private static String defaultEngineLength = Bundle.getString("engineDefaultLength");
-	private static String defaultEngineType = Bundle.getString("engineDefaultType");
-	private static String defaultEngineHp = Bundle.getString("engineDefaultHp");
+	private static String defaultEngineLength = Bundle.getMessage("engineDefaultLength");
+	private static String defaultEngineType = Bundle.getMessage("engineDefaultType");
+	private static String defaultEngineHp = Bundle.getMessage("engineDefaultHp");
 	
 	javax.swing.JLabel textEngine = new javax.swing.JLabel();
 	javax.swing.JLabel textId = new javax.swing.JLabel();
@@ -31,14 +31,14 @@ public class ImportRosterEngines extends Thread {
 		
 		// create a status frame
 	   	JPanel ps = new JPanel();
-	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getString("TitleImportEngines"));
+	   	jmri.util.JmriJFrame fstatus = new jmri.util.JmriJFrame(Bundle.getMessage("TitleImportEngines"));
 	   	fstatus.setLocationRelativeTo(null);
 	   	fstatus.setSize (200,100);
 
 	   	ps.add (textEngine);
 	   	ps.add(textId);
 	   	fstatus.getContentPane().add (ps);
-		textEngine.setText(Bundle.getString("AddEngine"));
+		textEngine.setText(Bundle.getMessage("AddEngine"));
         textEngine.setVisible(true);
         textId.setVisible(true);
 		fstatus.setVisible (true);
@@ -88,12 +88,12 @@ public class ImportRosterEngines extends Thread {
 
 		if (enginesAdded>0) {
 			JOptionPane.showMessageDialog(null, 
-					MessageFormat.format(Bundle.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
-					Bundle.getString("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
+					MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"),new Object[]{enginesAdded}),
+					Bundle.getMessage("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null,
-					MessageFormat.format(Bundle.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
-					Bundle.getString("ImportFailed"), JOptionPane.ERROR_MESSAGE);
+					MessageFormat.format(Bundle.getMessage("ImportEnginesAdded"),new Object[]{enginesAdded}),
+					Bundle.getMessage("ImportFailed"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

@@ -25,7 +25,7 @@ public class ChangeTracksTypeAction extends AbstractAction {
 	private LocationEditFrame _lef;
 	
 	public ChangeTracksTypeAction(LocationEditFrame lef){
-		super(Bundle.getString("MenuItemChangeTrackType"));
+		super(Bundle.getMessage("MenuItemChangeTrackType"));
 		_lef = lef;
 	}
 	
@@ -38,13 +38,13 @@ public class ChangeTracksTypeAction extends AbstractAction {
 class ChangeTracksFrame extends OperationsFrame{
 		
 	// radio buttons
-    JRadioButton sidingRadioButton = new JRadioButton(Bundle.getString("Siding"));
-    JRadioButton yardRadioButton = new JRadioButton(Bundle.getString("Yard"));
-    JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getString("Interchange"));
-    JRadioButton stagingRadioButton = new JRadioButton(Bundle.getString("Staging")); 
+    JRadioButton sidingRadioButton = new JRadioButton(Bundle.getMessage("Siding"));
+    JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yard"));
+    JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getMessage("Interchange"));
+    JRadioButton stagingRadioButton = new JRadioButton(Bundle.getMessage("Staging")); 
     
     // major buttons
-    JButton saveButton = new JButton(Bundle.getString("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("Save"));
     
     private LocationEditFrame _lef;
     private Location _location;
@@ -66,7 +66,7 @@ class ChangeTracksFrame extends OperationsFrame{
 	   	// row 1a
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
-    	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getString("TrackType"),new Object[]{_location.getName()})));
+    	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("TrackType"),new Object[]{_location.getName()})));
     	addItem(p1, sidingRadioButton, 0, 0);
     	addItem(p1, yardRadioButton, 1, 0);
     	addItem(p1, interchangeRadioButton, 2, 0);
@@ -84,7 +84,7 @@ class ChangeTracksFrame extends OperationsFrame{
     	addButtonAction(saveButton);
     	
     	getContentPane().add(p1);
-    	setTitle(Bundle.getString("MenuItemChangeTrackType"));
+    	setTitle(Bundle.getMessage("MenuItemChangeTrackType"));
     	pack();
     	if (getWidth() < 250)
     		setSize(getWidth()+100, getHeight());

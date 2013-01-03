@@ -16,7 +16,7 @@ import javax.swing.AbstractAction;
 public class BuildReportOptionAction extends AbstractAction {
 
 	public BuildReportOptionAction() {
-		this(Bundle.getString("TitleBuildReportOptions"));
+		this(Bundle.getMessage("TitleBuildReportOptions"));
 	}
 
 	public BuildReportOptionAction(String s) {

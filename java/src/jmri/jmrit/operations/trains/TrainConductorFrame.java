@@ -67,10 +67,10 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	JLabel textStatus = new JLabel();
 
 	// major buttons
-	JButton moveButton = new JButton(Bundle.getString("Move"));
-	JButton selectButton = new JButton(Bundle.getString("Select"));
-	JButton clearButton = new JButton(Bundle.getString("Clear"));
-	JButton setButton = new JButton(Bundle.getString("Set"));
+	JButton moveButton = new JButton(Bundle.getMessage("Move"));
+	JButton selectButton = new JButton(Bundle.getMessage("Select"));
+	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+	JButton setButton = new JButton(Bundle.getMessage("Set"));
 
 	// radio buttons
 	
@@ -104,21 +104,21 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 	    
        	locoPane = new JScrollPane(pLocos);
-       	locoPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Engines")));
+       	locoPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Engines")));
        	locoPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 	    
        	pickupPane = new JScrollPane(pPickups);
-       	pickupPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Pickup")));
+       	pickupPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Pickup")));
        	pickupPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
        	pickupPane.setPreferredSize(new Dimension(200, 300));
        	
       	setoutPane = new JScrollPane(pSetouts);
-      	setoutPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("SetOut")));
+      	setoutPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SetOut")));
       	setoutPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
       	setoutPane.setPreferredSize(new Dimension(200, 300));
       	
       	movePane = new JScrollPane(pMoves);
-      	movePane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("LocalMoves")));
+      	movePane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocalMoves")));
       	movePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 	    //      Set up the panels
@@ -136,17 +136,17 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	
 		// row 2a (train name)
        	JPanel pTrainName = new JPanel();
-       	pTrainName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Train")));
+       	pTrainName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Train")));
        	pTrainName.add(textTrainName);
        	
 		// row 2b (train description)
        	JPanel pTrainDescription = new JPanel();
-       	pTrainDescription.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Description")));
+       	pTrainDescription.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
        	pTrainDescription.add(textTrainDescription);
        	
 		// row 2c (railroad name)
        	JPanel pRailRoadName = new JPanel();
-       	pRailRoadName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("RailroadName")));
+       	pRailRoadName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RailroadName")));
        	pRailRoadName.add(textRailRoadName);
        	
        	textRailRoadName.setText(Setup.getRailroadName());
@@ -157,7 +157,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	
        	// row 4 (train comment)
        	JPanel pTrainComment = new JPanel();
-       	pTrainComment.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainComment")));
+       	pTrainComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainComment")));
        	pTrainComment.add(textTrainComment);
        	
        	// row 6
@@ -166,11 +166,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	
        	// row 6a (train route comment)
        	JPanel pTrainRouteComment = new JPanel();
-       	pTrainRouteComment.setBorder(BorderFactory.createTitledBorder(Bundle.getString("RouteComment")));
+       	pTrainRouteComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteComment")));
        	pTrainRouteComment.add(textTrainRouteComment);
        		
        	// row 6b (train route location comment)
-       	pTrainRouteLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getString("RouteLocationComment")));
+       	pTrainRouteLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteLocationComment")));
        	pTrainRouteLocationComment.add(textTrainRouteLocationComment);
        	
        	pRow6.add(pTrainRouteComment);
@@ -186,12 +186,12 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	pLocationName.add(textLocationName);
        	
        	// row 10b (location comment)
-       	pLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getString("LocationComment")));
+       	pLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
        	pLocationComment.add(textLocationComment);
        	
       	// row 10c (next location name)
        	JPanel pNextLocationName = new JPanel();
-       	pNextLocationName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("NextLocation")));
+       	pNextLocationName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("NextLocation")));
        	pNextLocationName.add(textNextLocationName);
        	
        	pRow10.add(pLocationName);
@@ -218,7 +218,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	// row 14a
       	JPanel pWork = new JPanel();
       	pWork.setLayout(new GridBagLayout());
-      	pWork.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Work")));      	
+      	pWork.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Work")));      	
        	addItem(pWork, selectButton, 0, 0);
        	addItem(pWork, clearButton, 1, 0);
        	addItem(pWork, setButton, 2, 0);
@@ -226,7 +226,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	// row 14b
       	JPanel pButtons = new JPanel();
       	pButtons.setLayout(new GridBagLayout());
-      	pButtons.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Train")));
+      	pButtons.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Train")));
        	addItem(pButtons, moveButton, 1, 0);
        	
        	pRow14.add(pWork);
@@ -271,7 +271,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			if (!_train.getRailroadName().equals(""))
 				textRailRoadName.setText(_train.getRailroadName());
 			
-			setTitle(Bundle.getString("TitleTrainConductor") + " ("+_train.getName()+")");
+			setTitle(Bundle.getMessage("TitleTrainConductor") + " ("+_train.getName()+")");
 
 			// listen for train changes
 			_train.addPropertyChangeListener(this);
@@ -281,8 +281,8 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		if (_train != null){
-			JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-			toolMenu.add(new ShowCarsInTrainAction(Bundle.getString("MenuItemShowCarsInTrain"), _train));
+			JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+			toolMenu.add(new ShowCarsInTrainAction(Bundle.getMessage("MenuItemShowCarsInTrain"), _train));
 			menuBar.add(toolMenu);
 		}
 		setJMenuBar(menuBar);
@@ -317,7 +317,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
    		csf = new CarSetFrame();
 		csf.initComponents();
     	csf.loadCar(car);
-//    	csf.setTitle(Bundle.getString("TitleCarSet"));
+//    	csf.setTitle(Bundle.getMessage("TitleCarSet"));
     	csf.setVisible(true);
     	csf.setExtendedState(Frame.NORMAL);
 	}
@@ -484,7 +484,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				textStatus.setText(getStatus(rl));
 				check();
 			} else {
-				textStatus.setText(MessageFormat.format(Bundle.getString("TrainTerminatesIn"), new Object[] { _train.getTrainTerminatesName()}));
+				textStatus.setText(MessageFormat.format(Bundle.getMessage("TrainTerminatesIn"), new Object[] { _train.getTrainTerminatesName()}));
 				moveButton.setEnabled(false);
 				setButton.setEnabled(false);
 			}
@@ -506,7 +506,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	private JPanel addSet(Car car){
       	JPanel pSet = new JPanel();
       	pSet.setLayout(new GridBagLayout());							      	
-		JButton carSetButton = new JButton(Bundle.getString("Set"));
+		JButton carSetButton = new JButton(Bundle.getMessage("Set"));
 		carSetButton.setName(car.getId());
 		carSetButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -528,13 +528,13 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	
 	private void setButtonText(){
 		if (setMode)
-			setButton.setText(Bundle.getString("Done"));
+			setButton.setText(Bundle.getMessage("Done"));
 		else
-			setButton.setText(Bundle.getString("Set"));
+			setButton.setText(Bundle.getMessage("Set"));
 	}
 	
 	private String getStatus(RouteLocation rl){
-		return MessageFormat.format(Bundle.getString("TrainDepartsCars"),
+		return MessageFormat.format(Bundle.getMessage("TrainDepartsCars"),
 				new Object[] { rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
 			_train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
 

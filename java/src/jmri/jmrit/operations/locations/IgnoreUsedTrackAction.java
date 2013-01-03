@@ -22,7 +22,7 @@ public class IgnoreUsedTrackAction extends AbstractAction {
 	private IgnoreUsedTrackFrame _iutf;
 	
 	public IgnoreUsedTrackAction(TrackEditFrame tef){
-		super(Bundle.getString("MenuItemPlannedPickups"));
+		super(Bundle.getMessage("MenuItemPlannedPickups"));
 		_tef = tef;
 	}
 	
@@ -36,14 +36,14 @@ public class IgnoreUsedTrackAction extends AbstractAction {
 class IgnoreUsedTrackFrame extends OperationsFrame {
 		
 	// radio buttons
-	JRadioButton zeroPercent = new JRadioButton(Bundle.getString("Disabled"));
+	JRadioButton zeroPercent = new JRadioButton(Bundle.getMessage("Disabled"));
 	JRadioButton twentyfivePercent = new JRadioButton("25%");	// NOI18N
 	JRadioButton fiftyPercent = new JRadioButton("50%");		// NOI18N
 	JRadioButton seventyfivePercent = new JRadioButton("75%");	// NOI18N
 	JRadioButton hundredPercent = new JRadioButton("100%");		// NOI18N
     
     // major buttons
-    JButton saveButton = new JButton(Bundle.getString("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("Save"));
     
     private TrackEditFrame _tef;
     protected Track _track;
@@ -51,7 +51,7 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 	public IgnoreUsedTrackFrame(TrackEditFrame tef){
 		super();
 		
-		setTitle(Bundle.getString("MenuItemPlannedPickups"));
+		setTitle(Bundle.getMessage("MenuItemPlannedPickups"));
 			    
 	    _tef = tef;
 	    _track = _tef._track;
@@ -64,7 +64,7 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 	    
 	    JPanel p1 = new JPanel();
-	    p1.setBorder(BorderFactory.createTitledBorder(Bundle.getString("PrePlanedPickups")));
+	    p1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrePlanedPickups")));
 	    
 	    p1.add(zeroPercent);
 	    p1.add(twentyfivePercent);

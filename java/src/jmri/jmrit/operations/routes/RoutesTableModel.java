@@ -101,13 +101,13 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 	public String getColumnName(int col) {
 		switch (col) {
 		case IDCOLUMN:
-			return Bundle.getString("Id");
+			return Bundle.getMessage("Id");
 		case NAMECOLUMN:
-			return Bundle.getString("Name");
+			return Bundle.getMessage("Name");
 		case COMMENTCOLUMN:
-			return Bundle.getString("Comment");
+			return Bundle.getMessage("Comment");
 		case STATUSCOLUMN:
-			return Bundle.getString("Status");
+			return Bundle.getMessage("Status");
 		case EDITCOLUMN:
 			return ""; // edit column
 		default:
@@ -166,7 +166,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		case STATUSCOLUMN:
 			return r.getStatus();
 		case EDITCOLUMN:
-			return Bundle.getString("Edit");
+			return Bundle.getMessage("Edit");
 		default:
 			return "unknown " + col; // NOI18N
 		}
@@ -190,7 +190,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		if (ref != null)
 			ref.dispose();
 		ref = new RouteEditFrame();
-		ref.setTitle(Bundle.getString("TitleRouteEdit"));
+		ref.setTitle(Bundle.getMessage("TitleRouteEdit"));
 		Route route = manager.getRouteById(sysList.get(row));
 		ref.initComponents(route);
 		focusRef = true;

@@ -25,11 +25,11 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true); // NOI18N
 
 		// override text strings for tracks
-		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainYard")));
-		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TypesYard")));
-		deleteTrackButton.setText(Bundle.getString("DeleteYard"));
-		addTrackButton.setText(Bundle.getString("AddYard"));
-		saveTrackButton.setText(Bundle.getString("SaveYard"));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainYard")));
+		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesYard")));
+		deleteTrackButton.setText(Bundle.getMessage("DeleteYard"));
+		addTrackButton.setText(Bundle.getMessage("AddYard"));
+		saveTrackButton.setText(Bundle.getMessage("SaveYard"));
 		// finish
 		dropPanel.setVisible(false); // don't show drop and pick up panel
 		pickupPanel.setVisible(false);

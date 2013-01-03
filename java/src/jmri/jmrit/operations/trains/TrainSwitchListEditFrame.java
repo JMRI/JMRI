@@ -47,29 +47,29 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	JPanel locationPanelCheckBoxes = new JPanel();
 
 	// labels
-	JLabel textName = new JLabel(Bundle.getString("Location"));
-	JLabel textStatus = new JLabel(Bundle.getString("Status"));
-	JLabel textComment = new JLabel(Bundle.getString("Comment"));
-	JLabel textPrinter = new JLabel(Bundle.getString("Printer"));
+	JLabel textName = new JLabel(Bundle.getMessage("Location"));
+	JLabel textStatus = new JLabel(Bundle.getMessage("Status"));
+	JLabel textComment = new JLabel(Bundle.getMessage("Comment"));
+	JLabel textPrinter = new JLabel(Bundle.getMessage("Printer"));
 	JLabel space1 = new JLabel("        ");
 	JLabel space2 = new JLabel("        ");
 	JLabel space3 = new JLabel("        ");
 
 	// checkboxes
-	JCheckBox switchListRealTimeCheckBox = new JCheckBox(Bundle.getString("SwitchListRealTime"));
-	JCheckBox switchListAllTrainsCheckBox = new JCheckBox(Bundle.getString("SwitchListAllTrains"));
-	JCheckBox switchListPageCheckBox = new JCheckBox(Bundle.getString("SwitchListPage"));
+	JCheckBox switchListRealTimeCheckBox = new JCheckBox(Bundle.getMessage("SwitchListRealTime"));
+	JCheckBox switchListAllTrainsCheckBox = new JCheckBox(Bundle.getMessage("SwitchListAllTrains"));
+	JCheckBox switchListPageCheckBox = new JCheckBox(Bundle.getMessage("SwitchListPage"));
 
 	// major buttons
-	JButton clearButton = new JButton(Bundle.getString("Clear"));
-	JButton setButton = new JButton(Bundle.getString("Select"));
-	JButton printButton = new JButton(Bundle.getString("PrintSwitchLists"));
-	JButton previewButton = new JButton(Bundle.getString("PreviewSwitchLists"));
-	JButton changeButton = new JButton(Bundle.getString("PrintChanges"));
-	JButton csvGenerateButton = new JButton(Bundle.getString("CsvGenerate"));
-	JButton csvChangeButton = new JButton(Bundle.getString("CsvChanges"));
-	JButton updateButton = new JButton(Bundle.getString("Update"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+	JButton setButton = new JButton(Bundle.getMessage("Select"));
+	JButton printButton = new JButton(Bundle.getMessage("PrintSwitchLists"));
+	JButton previewButton = new JButton(Bundle.getMessage("PreviewSwitchLists"));
+	JButton changeButton = new JButton(Bundle.getMessage("PrintChanges"));
+	JButton csvGenerateButton = new JButton(Bundle.getMessage("CsvGenerate"));
+	JButton csvChangeButton = new JButton(Bundle.getMessage("CsvChanges"));
+	JButton updateButton = new JButton(Bundle.getMessage("Update"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// text field
 
@@ -88,11 +88,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// tool tips
-		switchListRealTimeCheckBox.setToolTipText(Bundle.getString("RealTimeTip"));
-		switchListAllTrainsCheckBox.setToolTipText(Bundle.getString("AllTrainsTip"));
-		switchListPageCheckBox.setToolTipText(Bundle.getString("PageTrainTip"));
-		csvChangeButton.setToolTipText(Bundle.getString("CsvChangesTip"));
-		changeButton.setToolTipText(Bundle.getString("PrintChangesTip"));
+		switchListRealTimeCheckBox.setToolTipText(Bundle.getMessage("RealTimeTip"));
+		switchListAllTrainsCheckBox.setToolTipText(Bundle.getMessage("AllTrainsTip"));
+		switchListPageCheckBox.setToolTipText(Bundle.getMessage("PageTrainTip"));
+		csvChangeButton.setToolTipText(Bundle.getMessage("CsvChangesTip"));
+		changeButton.setToolTipText(Bundle.getMessage("PrintChangesTip"));
 
 		switchPane = new JScrollPane(locationPanelCheckBoxes);
 		switchPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -114,7 +114,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		JPanel pSwitchListOptions = new JPanel();
 		pSwitchListOptions.setLayout(new GridBagLayout());
 		pSwitchListOptions.setBorder(BorderFactory
-				.createTitledBorder(Bundle.getString("BorderLayoutSwitchListOptions")));
+				.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListOptions")));
 		addItem(pSwitchListOptions, switchListAllTrainsCheckBox, 1, 0);
 		addItem(pSwitchListOptions, switchListPageCheckBox, 2, 0);
 		addItem(pSwitchListOptions, switchListRealTimeCheckBox, 3, 0);
@@ -173,7 +173,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			setSize(400, getHeight());
 		if (getHeight() < 300)
 			setSize(getWidth(), 300);
-		setTitle(Bundle.getString("TitleSwitchLists"));
+		setTitle(Bundle.getMessage("TitleSwitchLists"));
 		setVisible(true);
 	}
 
@@ -347,9 +347,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			JLabel status = new JLabel(l.getStatus());
 			addItem(locationPanelCheckBoxes, status, 2, y);
 
-			JButton button = new JButton(Bundle.getString("Add"));
+			JButton button = new JButton(Bundle.getMessage("Add"));
 			if (!l.getSwitchListComment().equals(""))
-				button.setText(Bundle.getString("Edit"));
+				button.setText(Bundle.getMessage("Edit"));
 			button.setName(l.getName());
 			addCommentButtonAction(button);
 			addItem(locationPanelCheckBoxes, button, 4, y);
@@ -474,7 +474,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
 				JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		Dimension minScrollerDim = new Dimension(1200, 500);
-		JButton saveButton = new JButton(Bundle.getString("Save"));
+		JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 		Location _location;
 
@@ -489,7 +489,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 			JPanel pC = new JPanel();
-			pC.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Comment")));
+			pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
 			pC.setLayout(new GridBagLayout());
 			commentScroller.setMinimumSize(minScrollerDim);
 			addItem(pC, commentScroller, 1, 0);

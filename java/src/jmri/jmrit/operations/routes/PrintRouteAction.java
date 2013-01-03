@@ -56,7 +56,7 @@ public class PrintRouteAction  extends AbstractAction {
     	// obtain a HardcopyWriter to do this
     	HardcopyWriter writer = null;
     	try {
-    		writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getString("TitleRoute"), new Object[] {route.getName()}), 10, .5, .5, .5, .5, isPreview);
+    		writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getMessage("TitleRoute"), new Object[] {route.getName()}), 10, .5, .5, .5, .5, isPreview);
     	} catch (HardcopyWriter.PrintCanceledException ex) {
     		log.debug("Print cancelled");
     		return;
@@ -69,16 +69,16 @@ public class PrintRouteAction  extends AbstractAction {
     protected void printRoute(HardcopyWriter writer, Route route) {
     	try {
     		writer.write(route.getComment()+NEW_LINE);
-        	String s = Bundle.getString("Location") 
-        	+ TAB +"    " + Bundle.getString("Direction") 
-        	+ " " + Bundle.getString("MaxMoves") 
-        	+ " " + Bundle.getString("Pickups")
-        	+ " " + Bundle.getString("Drops")
-        	+ " " + Bundle.getString("Wait")
-        	+ TAB + Bundle.getString("Length")     	
-        	+ TAB + Bundle.getString("Grade")
-        	+ TAB + Bundle.getString("X")
-        	+ "    " + Bundle.getString("Y")
+        	String s = Bundle.getMessage("Location") 
+        	+ TAB +"    " + Bundle.getMessage("Direction") 
+        	+ " " + Bundle.getMessage("MaxMoves") 
+        	+ " " + Bundle.getMessage("Pickups")
+        	+ " " + Bundle.getMessage("Drops")
+        	+ " " + Bundle.getMessage("Wait")
+        	+ TAB + Bundle.getMessage("Length")     	
+        	+ TAB + Bundle.getMessage("Grade")
+        	+ TAB + Bundle.getMessage("X")
+        	+ "    " + Bundle.getMessage("Y")
         	+ NEW_LINE;
         	writer.write(s);
     		List<String> locations = route.getLocationsBySequenceList();
@@ -96,8 +96,8 @@ public class PrintRouteAction  extends AbstractAction {
     			s = name 
     			+ TAB + rl.getTrainDirectionString() 
     			+ TAB + rl.getMaxCarMoves()
-    			+ TAB + (rl.canPickup()?Bundle.getString("yes"):Bundle.getString("no"))
-    			+ TAB + (rl.canDrop()?Bundle.getString("yes"):Bundle.getString("no"))
+    			+ TAB + (rl.canPickup()?Bundle.getMessage("yes"):Bundle.getMessage("no"))
+    			+ TAB + (rl.canDrop()?Bundle.getMessage("yes"):Bundle.getMessage("no"))
     			+ TAB + rl.getWait()
     			+ TAB + rl.getMaxTrainLength()
     			+ TAB + rl.getGrade()
@@ -106,9 +106,9 @@ public class PrintRouteAction  extends AbstractAction {
     			+ NEW_LINE;
     			writer.write(s);		
     		}
-    		s = NEW_LINE + Bundle.getString("Location") 
-        	+ TAB + Bundle.getString("DepartTime") 
-        	+ TAB + Bundle.getString("Comment")
+    		s = NEW_LINE + Bundle.getMessage("Location") 
+        	+ TAB + Bundle.getMessage("DepartTime") 
+        	+ TAB + Bundle.getMessage("Comment")
         	+ NEW_LINE;
     		writer.write(s);
     		for (int i=0; i<locations.size(); i++){

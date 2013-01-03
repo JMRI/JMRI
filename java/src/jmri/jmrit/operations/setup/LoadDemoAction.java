@@ -32,14 +32,14 @@ public class LoadDemoAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
-			if (JOptionPane.showConfirmDialog(null, Bundle.getString("OperationsFilesModified"),
-					Bundle.getString("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("OperationsFilesModified"),
+					Bundle.getMessage("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
 		}
 
-		int results = JOptionPane.showConfirmDialog(null, Bundle.getString("AreYouSureDemoFiles"),
-				Bundle.getString("LoadDemo"), JOptionPane.OK_CANCEL_OPTION);
+		int results = JOptionPane.showConfirmDialog(null, Bundle.getMessage("AreYouSureDemoFiles"),
+				Bundle.getMessage("LoadDemo"), JOptionPane.OK_CANCEL_OPTION);
 		if (results != JOptionPane.OK_OPTION)
 			return;
 
@@ -62,8 +62,8 @@ public class LoadDemoAction extends AbstractAction {
 				log.debug("Unable to deregister Train Dirty Task");
 			}
 
-			JOptionPane.showMessageDialog(null, Bundle.getString("YouMustRestartAfterLoadDemo"),
-					Bundle.getString("LoadDemoSuccessful"), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterLoadDemo"),
+					Bundle.getMessage("LoadDemoSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
 			Apps.handleRestart();
 

@@ -42,11 +42,11 @@ public class TrainsScriptFrame extends OperationsFrame {
 	// labels
 
 	// major buttons
-	JButton addStartUpScriptButton = new JButton(Bundle.getString("AddScript"));
-	JButton addShutDownScriptButton = new JButton(Bundle.getString("AddScript"));
-	JButton runStartUpScriptButton = new JButton(Bundle.getString("RunScripts"));
-	JButton runShutDownScriptButton = new JButton(Bundle.getString("RunScripts"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton addStartUpScriptButton = new JButton(Bundle.getMessage("AddScript"));
+	JButton addShutDownScriptButton = new JButton(Bundle.getMessage("AddScript"));
+	JButton runStartUpScriptButton = new JButton(Bundle.getMessage("RunScripts"));
+	JButton runShutDownScriptButton = new JButton(Bundle.getMessage("RunScripts"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	public TrainsScriptFrame() {
 		super();
@@ -57,13 +57,13 @@ public class TrainsScriptFrame extends OperationsFrame {
 		startUpScriptPane = new JScrollPane(pStartUpScript);
 		startUpScriptPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		startUpScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScriptsStartUp")));
+		startUpScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsStartUp")));
 
 		shutDownScriptPane = new JScrollPane(pShutDownScript);
 		shutDownScriptPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		shutDownScriptPane
-				.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScriptsShutDown")));
+				.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsShutDown")));
 
 		// remember who called us
 
@@ -115,7 +115,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 		if (scripts.size() > 0)
 			addItem(pStartUpScript, runStartUpScriptButton, 1, 0);
 		for (int i = 0; i < scripts.size(); i++) {
-			JButton removeStartUpScripts = new JButton(Bundle.getString("RemoveScript"));
+			JButton removeStartUpScripts = new JButton(Bundle.getMessage("RemoveScript"));
 			removeStartUpScripts.setName(scripts.get(i));
 			removeStartUpScripts.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -139,7 +139,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 		if (scripts.size() > 0)
 			addItem(pShutDownScript, runShutDownScriptButton, 1, 0);
 		for (int i = 0; i < scripts.size(); i++) {
-			JButton removeShutDownScripts = new JButton(Bundle.getString("RemoveScript"));
+			JButton removeShutDownScripts = new JButton(Bundle.getMessage("RemoveScript"));
 			removeShutDownScripts.setName(scripts.get(i));
 			removeShutDownScripts.addActionListener(new java.awt.event.ActionListener() {
 				public void actionPerformed(java.awt.event.ActionEvent e) {

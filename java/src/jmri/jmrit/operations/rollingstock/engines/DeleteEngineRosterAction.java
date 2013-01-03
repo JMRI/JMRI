@@ -23,8 +23,8 @@ public class DeleteEngineRosterAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		if (JOptionPane.showConfirmDialog(null, Bundle.getString("engineSureDelete"),
-				Bundle.getString("engineDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+		if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("engineSureDelete"),
+				Bundle.getMessage("engineDeleteAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
 			log.debug("removing all engines from roster");
 			manager.deleteAll();
 		}

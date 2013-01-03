@@ -38,19 +38,19 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	// labels
 
 	// major buttons
-	JButton addTypeButton = new JButton(Bundle.getString("AddType"));
-	JButton saveScheduleButton = new JButton(Bundle.getString("SaveSchedule"));
-	JButton deleteScheduleButton = new JButton(Bundle.getString("DeleteSchedule"));
-	JButton addScheduleButton = new JButton(Bundle.getString("AddSchedule"));
+	JButton addTypeButton = new JButton(Bundle.getMessage("AddType"));
+	JButton saveScheduleButton = new JButton(Bundle.getMessage("SaveSchedule"));
+	JButton deleteScheduleButton = new JButton(Bundle.getMessage("DeleteSchedule"));
+	JButton addScheduleButton = new JButton(Bundle.getMessage("AddSchedule"));
 
 	// check boxes
 	JCheckBox checkBox;
 
 	// radio buttons
-	JRadioButton addLocAtTop = new JRadioButton(Bundle.getString("Top"));
-	JRadioButton addLocAtBottom = new JRadioButton(Bundle.getString("Bottom"));
-	JRadioButton sequentialRadioButton = new JRadioButton(Bundle.getString("Sequential"));
-	JRadioButton matchRadioButton = new JRadioButton(Bundle.getString("Match"));
+	JRadioButton addLocAtTop = new JRadioButton(Bundle.getMessage("Top"));
+	JRadioButton addLocAtBottom = new JRadioButton(Bundle.getMessage("Bottom"));
+	JRadioButton sequentialRadioButton = new JRadioButton(Bundle.getMessage("Sequential"));
+	JRadioButton matchRadioButton = new JRadioButton(Bundle.getMessage("Match"));
 
 	// text field
 	JTextField scheduleNameTextField = new JTextField(20);
@@ -60,7 +60,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	JComboBox typeBox = new JComboBox();
 
 	public static final int MAX_NAME_LENGTH = 25;
-	public static final String NAME = Bundle.getString("Name");
+	public static final String NAME = Bundle.getMessage("Name");
 	public static final String DISPOSE = "dispose"; // NOI18N
 
 	public ScheduleEditFrame() {
@@ -104,24 +104,24 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		// row 1a name
 		JPanel pName = new JPanel();
 		pName.setLayout(new GridBagLayout());
-		pName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Name")));
+		pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Name")));
 		addItem(pName, scheduleNameTextField, 0, 0);
 
 		// row 1b comment
 		JPanel pC = new JPanel();
 		pC.setLayout(new GridBagLayout());
-		pC.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Comment")));
+		pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
 		addItem(pC, commentTextField, 0, 0);
 
 		// row 1c mode
 		JPanel pMode = new JPanel();
 		pMode.setLayout(new GridBagLayout());
-		pMode.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScheduleMode")));
+		pMode.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScheduleMode")));
 		addItem(pMode, sequentialRadioButton, 0, 0);
 		addItem(pMode, matchRadioButton, 1, 0);
 
-		sequentialRadioButton.setToolTipText(Bundle.getString("TipSequential"));
-		matchRadioButton.setToolTipText(Bundle.getString("TipMatch"));
+		sequentialRadioButton.setToolTipText(Bundle.getMessage("TipSequential"));
+		matchRadioButton.setToolTipText(Bundle.getMessage("TipMatch"));
 		ButtonGroup modeGroup = new ButtonGroup();
 		modeGroup.add(sequentialRadioButton);
 		modeGroup.add(matchRadioButton);
@@ -137,7 +137,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		// row 2
 		JPanel p3 = new JPanel();
 		p3.setLayout(new GridBagLayout());
-		p3.setBorder(BorderFactory.createTitledBorder(Bundle.getString("AddItem")));
+		p3.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AddItem")));
 		addItem(p3, typeBox, 0, 1);
 		addItem(p3, addTypeButton, 1, 1);
 		addItem(p3, addLocAtTop, 2, 1);
@@ -212,7 +212,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 				saveNewSchedule();
 			} else {
 				if (schedule != null && schedule != _schedule) {
-					reportScheduleExists(Bundle.getString("save"));
+					reportScheduleExists(Bundle.getMessage("save"));
 					return;
 				}
 				saveSchedule();
@@ -223,9 +223,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		if (ae.getSource() == deleteScheduleButton) {
 			log.debug("schedule delete button activated");
 			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-					Bundle.getString("DoYouWantToDeleteSchedule"),
+					Bundle.getMessage("DoYouWantToDeleteSchedule"),
 					new Object[] { scheduleNameTextField.getText() }), Bundle
-					.getString("DeleteSchedule?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					.getMessage("DeleteSchedule?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			Schedule schedule = manager.getScheduleByName(scheduleNameTextField.getText());
@@ -245,7 +245,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		if (ae.getSource() == addScheduleButton) {
 			Schedule schedule = manager.getScheduleByName(scheduleNameTextField.getText());
 			if (schedule != null) {
-				reportScheduleExists(Bundle.getString("add"));
+				reportScheduleExists(Bundle.getMessage("add"));
 				return;
 			}
 			saveNewSchedule();
@@ -269,7 +269,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 
 	private void saveNewSchedule() {
-		if (!checkName(Bundle.getString("add")))
+		if (!checkName(Bundle.getMessage("add")))
 			return;
 		Schedule schedule = manager.newSchedule(scheduleNameTextField.getText());
 		scheduleModel.initTable(this, scheduleTable, schedule, _location, _track);
@@ -280,7 +280,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 
 	private void saveSchedule() {
-		if (!checkName(Bundle.getString("save")))
+		if (!checkName(Bundle.getMessage("save")))
 			return;
 		_schedule.setName(scheduleNameTextField.getText());
 		_schedule.setComment(commentTextField.getText());
@@ -322,9 +322,9 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		if (scheduleNameTextField.getText().length() > MAX_NAME_LENGTH) {
 			log.error("Schedule name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this, MessageFormat.format(
-					Bundle.getString("ScheduleNameLengthMax"),
+					Bundle.getMessage("ScheduleNameLengthMax"),
 					new Object[] { Integer.toString(MAX_NAME_LENGTH + 1) }), MessageFormat.format(
-					Bundle.getString("CanNotSchedule"), new Object[] { s }),
+					Bundle.getMessage("CanNotSchedule"), new Object[] { s }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -333,8 +333,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
 	private void reportScheduleExists(String s) {
 		log.info("Can not " + s + ", schedule already exists");
-		JOptionPane.showMessageDialog(this, Bundle.getString("ReportExists"),
-				MessageFormat.format(Bundle.getString("CanNotSchedule"), new Object[] { s }),
+		JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
+				MessageFormat.format(Bundle.getMessage("CanNotSchedule"), new Object[] { s }),
 				JOptionPane.ERROR_MESSAGE);
 	}
 

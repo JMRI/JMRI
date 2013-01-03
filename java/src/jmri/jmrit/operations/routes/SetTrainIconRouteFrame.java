@@ -47,11 +47,11 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 	// check boxes
 
 	// major buttons
-	JButton previousButton = new JButton(Bundle.getString("Previous"));
-	JButton nextButton = new JButton(Bundle.getString("Next"));
-	JButton placeButton = new JButton(Bundle.getString("PlaceTestIcon"));
-	JButton applyButton = new JButton(Bundle.getString("Apply"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton previousButton = new JButton(Bundle.getMessage("Previous"));
+	JButton nextButton = new JButton(Bundle.getMessage("Next"));
+	JButton placeButton = new JButton(Bundle.getMessage("PlaceTestIcon"));
+	JButton applyButton = new JButton(Bundle.getMessage("Apply"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 		
 	// combo boxes
 	
@@ -68,7 +68,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 	TrainIcon _tIon;
     
     public SetTrainIconRouteFrame(String routeName) {
-        super(Bundle.getString("MenuSetTrainIcon"));
+        super(Bundle.getMessage("MenuSetTrainIcon"));
         
         // create route
         if (routeName == null)
@@ -81,13 +81,13 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
         // set tool tips
-        placeButton.setToolTipText(Bundle.getString("TipPlaceButton") +" "+ Setup.getPanelName());
-        applyButton.setToolTipText(Bundle.getString("TipApplyButton"));
-        saveButton.setToolTipText(Bundle.getString("TipSaveButton"));
+        placeButton.setToolTipText(Bundle.getMessage("TipPlaceButton") +" "+ Setup.getPanelName());
+        applyButton.setToolTipText(Bundle.getMessage("TipApplyButton"));
+        saveButton.setToolTipText(Bundle.getMessage("TipSaveButton"));
 	    
         //      Set up the panels      
         JPanel pRoute = new JPanel();
-        pRoute.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Route")+" "+_route.getName()));
+        pRoute.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Route")+" "+_route.getName()));
         pRoute.setLayout(new GridBagLayout());
         addItem(pRoute, previousButton, 0, 0);
         addItem(pRoute, routeLocationName, 1, 0);
@@ -95,7 +95,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
         
         JPanel pSpin = new JPanel();
         pSpin.setLayout(new GridBagLayout());
-        pSpin.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainIcon")));
+        pSpin.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainIcon")));
         addItem(pSpin, textX, 0, 0);
         addItem(pSpin, spinTrainIconX, 1, 0);
         addItem(pSpin, textY, 2, 0);
@@ -153,8 +153,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     	if (ae.getSource() == applyButton){
     		if (value != JOptionPane.YES_OPTION){
     			value = JOptionPane.showConfirmDialog(null,
-    					MessageFormat.format(Bundle.getString("UpdateTrainIconRoute"), new Object[]{_route.getName()}),
-    					Bundle.getString("DoYouWantThisRoute"), 
+    					MessageFormat.format(Bundle.getMessage("UpdateTrainIconRoute"), new Object[]{_route.getName()}),
+    					Bundle.getMessage("DoYouWantThisRoute"), 
     					JOptionPane.YES_NO_OPTION);
     		}
     		if (value == JOptionPane.YES_OPTION)
@@ -187,8 +187,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 	private void placeTestIcons(){
 		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
 		if (editor == null) {
-			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getString("LoadPanel"), new Object[]{Setup.getPanelName()}),
-					Bundle.getString("PanelNotFound"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("LoadPanel"), new Object[]{Setup.getPanelName()}),
+					Bundle.getMessage("PanelNotFound"), JOptionPane.ERROR_MESSAGE);
 		} else {
 			if (_tIon != null)
 				_tIon.remove();

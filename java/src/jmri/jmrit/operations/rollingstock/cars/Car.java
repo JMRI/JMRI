@@ -56,9 +56,9 @@ public class Car extends RollingStock {
 	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Car return when empty changed"; // NOI18N
 	
 	// return status when placing cars at a location or destination
-	public static final String SCHEDULE = Bundle.getString("schedule");
-	public static final String CUSTOM = Bundle.getString("custom");
-	public static final String CAPACITY = Bundle.getString("capacity");
+	public static final String SCHEDULE = Bundle.getMessage("schedule");
+	public static final String CUSTOM = Bundle.getMessage("custom");
+	public static final String CAPACITY = Bundle.getMessage("capacity");
 	
 	public Car(){
 		
@@ -451,7 +451,7 @@ public class Car extends RollingStock {
 			else if (!track.getLocType().equals(Track.SIDING))
 				return Track.OKAY;
 			else
-				return MessageFormat.format(Bundle.getString("CarHasA"),new Object[]{CUSTOM, Track.LOAD, getLoad()});
+				return MessageFormat.format(Bundle.getMessage("CarHasA"),new Object[]{CUSTOM, Track.LOAD, getLoad()});
 		}
 		// only spurs can have a schedule
 		if (!track.getLocType().equals(Track.SIDING))
@@ -498,23 +498,23 @@ public class Car extends RollingStock {
 					.getScheduleById(si.getTrainScheduleId());
 			if (sch != null)
 				return SCHEDULE + " (" + track.getScheduleName()
-						+ ") "+Bundle.getString("requestCarOnly")+" (" + sch.getName() + ")";
+						+ ") "+Bundle.getMessage("requestCarOnly")+" (" + sch.getName() + ")";
 		}
 		// Check for correct car type, road, load
 		if (!getType().equals(si.getType())) {
 			return SCHEDULE + " (" + track.getScheduleName() + ") "
-					+ Bundle.getString("requestCar") + " " + Track.TYPE + " ("
+					+ Bundle.getMessage("requestCar") + " " + Track.TYPE + " ("
 					+ si.getType() + ")";
 		}
 		if (!si.getRoad().equals("") && !getRoad().equals(si.getRoad())) {
 			return SCHEDULE + " (" + track.getScheduleName() + ") "
-					+ Bundle.getString("requestCar") + " " + Track.TYPE + " ("
+					+ Bundle.getMessage("requestCar") + " " + Track.TYPE + " ("
 					+ si.getType() + ") " + Track.ROAD + " ("
 					+ si.getRoad() + ")";
 		}
 		if (!si.getLoad().equals("") && !getLoad().equals(si.getLoad())) {
 			return SCHEDULE + " (" + track.getScheduleName() + ") "
-					+ Bundle.getString("requestCar") + " " + Track.TYPE	+ " (" 
+					+ Bundle.getMessage("requestCar") + " " + Track.TYPE	+ " (" 
 					+ si.getType() + ") " + Track.LOAD + " ("
 					+ si.getLoad() + ")";
 		}

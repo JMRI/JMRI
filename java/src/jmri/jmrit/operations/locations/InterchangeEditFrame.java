@@ -28,12 +28,12 @@ public class InterchangeEditFrame extends TrackEditFrame implements
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true); // NOI18N
 
 		// override text strings for tracks
-		// panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainInterchange")));
+		// panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainInterchange")));
 		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("TypesInterchange")));
-		// deleteTrackButton.setText(Bundle.getString("DeleteInterchange"));
-		addTrackButton.setText(Bundle.getString("AddInterchange"));
-		saveTrackButton.setText(Bundle.getString("SaveInterchange"));
+				.getMessage("TypesInterchange")));
+		// deleteTrackButton.setText(Bundle.getMessage("DeleteInterchange"));
+		addTrackButton.setText(Bundle.getMessage("AddInterchange"));
+		saveTrackButton.setText(Bundle.getMessage("SaveInterchange"));
 
 		// finish
 		packFrame();

@@ -63,10 +63,10 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	// Switch list status
 	public static final String UNKNOWN = "";
-	public static final String PRINTED = Bundle.getString("Printed");
-	public static final String CSV_GENERATED = Bundle.getString("CsvGenerated");
-	public static final String MODIFIED = Bundle.getString("Modified");
-	public static final String UPDATED = Bundle.getString("Updated");
+	public static final String PRINTED = Bundle.getMessage("Printed");
+	public static final String CSV_GENERATED = Bundle.getMessage("CsvGenerated");
+	public static final String MODIFIED = Bundle.getMessage("Modified");
+	public static final String UPDATED = Bundle.getMessage("Updated");
 	
 	// Switch list states
 	public static final int SW_CREATE = 0;		// create new switch list

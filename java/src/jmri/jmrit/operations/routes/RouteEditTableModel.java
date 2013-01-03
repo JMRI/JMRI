@@ -141,39 +141,39 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	public String getColumnName(int col) {
 		switch (col) {
 		case IDCOLUMN:
-			return Bundle.getString("Id");
+			return Bundle.getMessage("Id");
 		case NAMECOLUMN:
-			return Bundle.getString("Location");
+			return Bundle.getMessage("Location");
 		case TRAINCOLUMN:
-			return Bundle.getString("TrainDirection");
+			return Bundle.getMessage("TrainDirection");
 		case MAXMOVESCOLUMN:
-			return Bundle.getString("MaxMoves");
+			return Bundle.getMessage("MaxMoves");
 		case PICKUPCOLUMN:
-			return Bundle.getString("Pickups");
+			return Bundle.getMessage("Pickups");
 		case DROPCOLUMN:
-			return Bundle.getString("Drops");
+			return Bundle.getMessage("Drops");
 		case WAITCOLUMN: {
 			if (_showWait)
-				return Bundle.getString("Wait");
+				return Bundle.getMessage("Wait");
 			else
-				return Bundle.getString("Time");
+				return Bundle.getMessage("Time");
 		}
 		case MAXLENGTHCOLUMN:
-			return Bundle.getString("MaxLength");
+			return Bundle.getMessage("MaxLength");
 		case GRADE:
-			return Bundle.getString("Grade");
+			return Bundle.getMessage("Grade");
 		case TRAINICONX:
-			return Bundle.getString("X");
+			return Bundle.getMessage("X");
 		case TRAINICONY:
-			return Bundle.getString("Y");
+			return Bundle.getMessage("Y");
 		case COMMENTCOLUMN:
-			return Bundle.getString("Comment");
+			return Bundle.getMessage("Comment");
 		case UPCOLUMN:
-			return Bundle.getString("Up");
+			return Bundle.getMessage("Up");
 		case DOWNCOLUMN:
-			return Bundle.getString("Down");
+			return Bundle.getMessage("Down");
 		case DELETECOLUMN:
-			return Bundle.getString("Delete");
+			return Bundle.getMessage("Delete");
 		default:
 			return "unknown"; // NOI18N
 		}
@@ -261,12 +261,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return Integer.toString(rl.getMaxCarMoves());
 		case PICKUPCOLUMN: {
 			JComboBox cb = getYesNoComboBox();
-			cb.setSelectedItem(rl.canPickup() ? Bundle.getString("yes") : Bundle.getString("no"));
+			cb.setSelectedItem(rl.canPickup() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
 		case DROPCOLUMN: {
 			JComboBox cb = getYesNoComboBox();
-			cb.setSelectedItem(rl.canDrop() ? Bundle.getString("yes") : Bundle.getString("no"));
+			cb.setSelectedItem(rl.canDrop() ? Bundle.getMessage("yes") : Bundle.getMessage("no"));
 			return cb;
 		}
 		case WAITCOLUMN: {
@@ -288,16 +288,16 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			return Integer.toString(rl.getTrainIconY());
 		case COMMENTCOLUMN: {
 			if (rl.getComment().equals(""))
-				return Bundle.getString("Add");
+				return Bundle.getMessage("Add");
 			else
-				return Bundle.getString("Edit");
+				return Bundle.getMessage("Edit");
 		}
 		case UPCOLUMN:
-			return Bundle.getString("Up");
+			return Bundle.getMessage("Up");
 		case DOWNCOLUMN:
-			return Bundle.getString("Down");
+			return Bundle.getMessage("Down");
 		case DELETECOLUMN:
-			return Bundle.getString("Delete");
+			return Bundle.getMessage("Delete");
 		default:
 			return "unknown " + col; // NOI18N
 		}
@@ -405,21 +405,21 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			rl.setMaxCarMoves(moves);
 		} else {
 			log.error("Location moves can not exceed 100");
-			JOptionPane.showMessageDialog(null, Bundle.getString("MaximumLocationMoves"),
-					Bundle.getString("CanNotChangeMoves"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaximumLocationMoves"),
+					Bundle.getMessage("CanNotChangeMoves"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
 	private void setDrop(Object value, int row) {
 		RouteLocation rl = _route.getLocationById(list.get(row));
 		rl.setCanDrop(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle
-				.getString("yes")));
+				.getMessage("yes")));
 	}
 
 	private void setPickup(Object value, int row) {
 		RouteLocation rl = _route.getLocationById(list.get(row));
 		rl.setCanPickup(((String) ((JComboBox) value).getSelectedItem()).equals(Bundle
-				.getString("yes")));
+				.getMessage("yes")));
 	}
 
 	private int _maxTrainLength = Setup.getTrainLength();
@@ -435,8 +435,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			wait = Integer.parseInt(value.toString());
 		} catch (NumberFormatException e) {
 			log.error("Location wait must be a number");
-			JOptionPane.showMessageDialog(null, Bundle.getString("EnterWaitTimeMinutes"),
-					Bundle.getString("WaitTimeNotValid"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("EnterWaitTimeMinutes"),
+					Bundle.getMessage("WaitTimeNotValid"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		rl.setWait(wait);
@@ -466,9 +466,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		} else {
 			log.error("Maximum departure length can not exceed maximum train length");
 			JOptionPane.showMessageDialog(null, MessageFormat.format(
-					Bundle.getString("DepartureLengthNotExceed"),
+					Bundle.getMessage("DepartureLengthNotExceed"),
 					new Object[] { length, Setup.getTrainLength() }), Bundle
-					.getString("CanNotChangeMaxLength"), JOptionPane.ERROR_MESSAGE);
+					.getMessage("CanNotChangeMaxLength"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -485,8 +485,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			rl.setGrade(grade);
 		} else {
 			log.error("Maximum grade is 6 percent");
-			JOptionPane.showMessageDialog(null, Bundle.getString("MaxGrade"),
-					Bundle.getString("CanNotChangeGrade"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaxGrade"),
+					Bundle.getMessage("CanNotChangeGrade"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
@@ -519,8 +519,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		RouteLocation rl = _route.getLocationById(list.get(row));
 		Object comment = JOptionPane.showInputDialog(
 				null,
-				Bundle.getString("Comment"),
-				MessageFormat.format(Bundle.getString("EnterCommentLocation"),
+				Bundle.getMessage("Comment"),
+				MessageFormat.format(Bundle.getMessage("EnterCommentLocation"),
 						new Object[] { rl.getName() }), JOptionPane.PLAIN_MESSAGE, null, null,
 				rl.getComment());
 		if (comment == null)
@@ -530,8 +530,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	private JComboBox getYesNoComboBox() {
 		JComboBox cb = new JComboBox();
-		cb.addItem(Bundle.getString("yes"));
-		cb.addItem(Bundle.getString("no"));
+		cb.addItem(Bundle.getMessage("yes"));
+		cb.addItem(Bundle.getMessage("no"));
 		return cb;
 	}
 

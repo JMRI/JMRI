@@ -121,8 +121,8 @@ public class ExportCars extends XmlFile {
 		fileOut.flush();
 		fileOut.close();
 		log.info("Exported " + carList.size() + " cars to file " + defaultOperationsFilename());
-		JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getString("ExportedCarsToFile"), new Object[] {carList.size(),
-				defaultOperationsFilename()}), Bundle.getString("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("ExportedCarsToFile"), new Object[] {carList.size(),
+				defaultOperationsFilename()}), Bundle.getMessage("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	// Operation files always use the same directory

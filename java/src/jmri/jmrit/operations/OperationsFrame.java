@@ -313,8 +313,8 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	protected synchronized void createShutDownTask(){
 		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
 			trainDirtyTask = new SwingShutDownTask(
-					"Operations Train Window Check", Bundle.getString("PromptQuitWindowNotWritten"),	// NOI18N
-					Bundle.getString("PromptSaveQuit"), this) {
+					"Operations Train Window Check", Bundle.getMessage("PromptQuitWindowNotWritten"),	// NOI18N
+					Bundle.getMessage("PromptSaveQuit"), this) {
 				public boolean checkPromptNeeded() {
 					return !OperationsXml.areFilesDirty();
 				}

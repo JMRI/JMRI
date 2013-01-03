@@ -22,11 +22,11 @@ import jmri.jmrit.operations.OperationsFrame;
 public class PrintMoreOptionFrame extends OperationsFrame {
 
 	// labels
-	JLabel textBuildReport = new JLabel(Bundle.getString("BuildReport"));
+	JLabel textBuildReport = new JLabel(Bundle.getMessage("BuildReport"));
 	JLabel logoURL = new JLabel("");
 
 	// major buttons
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// radio buttons
 
@@ -40,7 +40,7 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 	// combo boxes
 
 	public PrintMoreOptionFrame() {
-		super(Bundle.getString("TitlePrintMoreOptions"));
+		super(Bundle.getMessage("TitlePrintMoreOptions"));
 	}
 
 	public void initComponents() {
@@ -53,7 +53,7 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
 
 		JPanel pTab = new JPanel();
-		pTab.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutTab")));
+		pTab.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutTab")));
 		pTab.add(tabTextField);
 
 		tabTextField.setText(Integer.toString(Setup.getTabLength()));
@@ -61,7 +61,7 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 		p1.add(pTab);
 
 		// add tool tips
-		saveButton.setToolTipText(Bundle.getString("SaveToolTip"));
+		saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
 
 		// row 11
 		JPanel pControl = new JPanel();

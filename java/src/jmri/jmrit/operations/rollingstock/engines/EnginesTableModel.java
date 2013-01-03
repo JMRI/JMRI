@@ -244,39 +244,39 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	public String getColumnName(int col) {
 		switch (col) {
 		case NUMCOLUMN:
-			return Bundle.getString("Number");
+			return Bundle.getMessage("Number");
 		case ROADCOLUMN:
-			return Bundle.getString("Road");
+			return Bundle.getMessage("Road");
 		case MODELCOLUMN:
-			return Bundle.getString("Model");
+			return Bundle.getMessage("Model");
 		case TYPECOLUMN:
-			return Bundle.getString("Type");
+			return Bundle.getMessage("Type");
 		case LENGTHCOLUMN:
-			return Bundle.getString("Len");
+			return Bundle.getMessage("Len");
 		case CONSISTCOLUMN:
-			return Bundle.getString("Consist");
+			return Bundle.getMessage("Consist");
 		case LOCATIONCOLUMN:
-			return Bundle.getString("Location");
+			return Bundle.getMessage("Location");
 		case DESTINATIONCOLUMN:
-			return Bundle.getString("Destination");
+			return Bundle.getMessage("Destination");
 		case TRAINCOLUMN:
-			return Bundle.getString("Train");
+			return Bundle.getMessage("Train");
 		case MOVESCOLUMN: {
 			if (showMoveCol == SHOWBUILT)
-				return Bundle.getString("Built");
+				return Bundle.getMessage("Built");
 			else if (showMoveCol == SHOWOWNER)
-				return Bundle.getString("Owner");
+				return Bundle.getMessage("Owner");
 			else if (showMoveCol == SHOWVALUE)
 				return Setup.getValueLabel();
 			else if (showMoveCol == SHOWRFID)
 				return Setup.getRfidLabel();
 			else
-				return Bundle.getString("Moves");
+				return Bundle.getMessage("Moves");
 		}
 		case SETCOLUMN:
-			return Bundle.getString("Set");
+			return Bundle.getMessage("Set");
 		case EDITCOLUMN:
-			return Bundle.getString("Edit");
+			return Bundle.getMessage("Edit");
 		default:
 			return "unknown"; // NOI18N
 		}
@@ -390,9 +390,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 				return eng.getMoves();
 		}
 		case SETCOLUMN:
-			return Bundle.getString("Set");
+			return Bundle.getMessage("Set");
 		case EDITCOLUMN:
-			return Bundle.getString("Edit");
+			return Bundle.getMessage("Edit");
 		default:
 			return "unknown " + col; // NOI18N
 		}
@@ -412,7 +412,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			if (esf != null)
 				esf.dispose();
 			esf = new EngineSetFrame();
-//			esf.setTitle(Bundle.getString("TitleEngineSet"));
+//			esf.setTitle(Bundle.getMessage("TitleEngineSet"));
 			esf.initComponents();
 			esf.loadEngine(engine);
 			esf.setVisible(true);
@@ -426,7 +426,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			eef = new EngineEditFrame();
 			eef.initComponents();
 			eef.loadEngine(engine);
-			eef.setTitle(Bundle.getString("TitleEngineEdit"));
+			eef.setTitle(Bundle.getMessage("TitleEngineEdit"));
 			eef.setVisible(true);
 			eef.setExtendedState(java.awt.Frame.NORMAL);
 			focusEef = true;

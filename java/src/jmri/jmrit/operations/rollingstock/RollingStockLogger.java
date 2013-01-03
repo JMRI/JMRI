@@ -98,12 +98,12 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	}
 
 	private String getHeader() {
-		String header = Bundle.getString("Number") + DEL + Bundle.getString("Road") + DEL
-				+ Bundle.getString("Type") + DEL + Bundle.getString("Load") + DEL
-				+ Bundle.getString("Location") + DEL + Bundle.getString("Track") + DEL
-				+ Bundle.getString("FinalDestination") + DEL + Bundle.getString("Track") + DEL
-				+ Bundle.getString("Train") + DEL + Bundle.getString("Moves") + DEL
-				+ Bundle.getString("DateAndTime");
+		String header = Bundle.getMessage("Number") + DEL + Bundle.getMessage("Road") + DEL
+				+ Bundle.getMessage("Type") + DEL + Bundle.getMessage("Load") + DEL
+				+ Bundle.getMessage("Location") + DEL + Bundle.getMessage("Track") + DEL
+				+ Bundle.getMessage("FinalDestination") + DEL + Bundle.getMessage("Track") + DEL
+				+ Bundle.getMessage("Train") + DEL + Bundle.getMessage("Moves") + DEL
+				+ Bundle.getMessage("DateAndTime");
 		return header;
 	}
 

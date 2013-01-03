@@ -16,7 +16,7 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class CarLengths implements java.beans.PropertyChangeListener {
 
-	private static final String LENGTHS = Bundle.getString("carLengths");
+	private static final String LENGTHS = Bundle.getMessage("carLengths");
 	public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths";	// NOI18N
 	public static final String CARLENGTHS_NAME_CHANGED_PROPERTY = "CarLengthsName";	// NOI18N
 

@@ -52,39 +52,39 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
 	// labels
 	JLabel numCars = new JLabel();
-	JLabel textCars = new JLabel(Bundle.getString("cars"));
+	JLabel textCars = new JLabel(Bundle.getMessage("cars"));
 	JLabel textSep1 = new JLabel("      ");
 
 	// radio buttons
 
-	JRadioButton sortByNumber = new JRadioButton(Bundle.getString("Number"));
-	JRadioButton sortByRoad = new JRadioButton(Bundle.getString("Road"));
-	JRadioButton sortByType = new JRadioButton(Bundle.getString("Type"));
-	JRadioButton sortByColor = new JRadioButton(Bundle.getString("Color"));
-	JRadioButton sortByLoad = new JRadioButton(Bundle.getString("Load"));
-	JRadioButton sortByKernel = new JRadioButton(Bundle.getString("Kernel"));
-	JRadioButton sortByLocation = new JRadioButton(Bundle.getString("Location"));
-	JRadioButton sortByDestination = new JRadioButton(Bundle.getString("Destination"));
-	JRadioButton sortByFinalDestination = new JRadioButton(Bundle.getString("FD"));
-	JRadioButton sortByRwe = new JRadioButton(Bundle.getString("RWE"));
-	JRadioButton sortByTrain = new JRadioButton(Bundle.getString("Train"));
-	JRadioButton sortByMoves = new JRadioButton(Bundle.getString("Moves"));
-	JRadioButton sortByBuilt = new JRadioButton(Bundle.getString("Built"));
-	JRadioButton sortByOwner = new JRadioButton(Bundle.getString("Owner"));
+	JRadioButton sortByNumber = new JRadioButton(Bundle.getMessage("Number"));
+	JRadioButton sortByRoad = new JRadioButton(Bundle.getMessage("Road"));
+	JRadioButton sortByType = new JRadioButton(Bundle.getMessage("Type"));
+	JRadioButton sortByColor = new JRadioButton(Bundle.getMessage("Color"));
+	JRadioButton sortByLoad = new JRadioButton(Bundle.getMessage("Load"));
+	JRadioButton sortByKernel = new JRadioButton(Bundle.getMessage("Kernel"));
+	JRadioButton sortByLocation = new JRadioButton(Bundle.getMessage("Location"));
+	JRadioButton sortByDestination = new JRadioButton(Bundle.getMessage("Destination"));
+	JRadioButton sortByFinalDestination = new JRadioButton(Bundle.getMessage("FD"));
+	JRadioButton sortByRwe = new JRadioButton(Bundle.getMessage("RWE"));
+	JRadioButton sortByTrain = new JRadioButton(Bundle.getMessage("Train"));
+	JRadioButton sortByMoves = new JRadioButton(Bundle.getMessage("Moves"));
+	JRadioButton sortByBuilt = new JRadioButton(Bundle.getMessage("Built"));
+	JRadioButton sortByOwner = new JRadioButton(Bundle.getMessage("Owner"));
 	JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
 	JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
-	JRadioButton sortByWait = new JRadioButton(Bundle.getString("Wait"));
+	JRadioButton sortByWait = new JRadioButton(Bundle.getMessage("Wait"));
 	ButtonGroup group = new ButtonGroup();
 
 	// major buttons
-	JButton addButton = new JButton(Bundle.getString("Add"));
-	JButton findButton = new JButton(Bundle.getString("Find"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
+	JButton findButton = new JButton(Bundle.getMessage("Find"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	JTextField findCarTextBox = new JTextField(6);
 
 	public CarsTableFrame(boolean showAllCars, String locationName, String trackName) {
-		super(Bundle.getString("TitleCarsTable"));
+		super(Bundle.getMessage("TitleCarsTable"));
 		this.showAllCars = showAllCars;
 		this.locationName = locationName;
 		this.trackName = trackName;
@@ -108,7 +108,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
 		// row 1
 		JPanel cp1 = new JPanel();
-		cp1.setBorder(BorderFactory.createTitledBorder(Bundle.getString("SortBy")));
+		cp1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SortBy")));
 		cp1.add(sortByNumber);
 		cp1.add(sortByRoad);
 		cp1.add(sortByType);
@@ -157,8 +157,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		// row 2
 		JPanel cp2 = new JPanel();
 		cp2.setBorder(BorderFactory.createTitledBorder(""));
-		findButton.setToolTipText(Bundle.getString("findCar"));
-		findCarTextBox.setToolTipText(Bundle.getString("findCar"));
+		findButton.setToolTipText(Bundle.getMessage("findCar"));
+		findCarTextBox.setToolTipText(Bundle.getMessage("findCar"));
 
 		cp2.add(numCars);
 		cp2.add(textCars);
@@ -229,7 +229,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		if (!showAllCars) {
 			sortByLocation.doClick();
 			if (locationName != null) {
-				String title = Bundle.getString("TitleCarsTable") + " " + locationName;
+				String title = Bundle.getMessage("TitleCarsTable") + " " + locationName;
 				if (trackName != null) {
 					title = title + " " + trackName;
 				}
@@ -239,8 +239,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new CarRosterMenu(Bundle.getString("TitleCarRoster"), CarRosterMenu.MAINMENU, this));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new CarRosterMenu(Bundle.getMessage("TitleCarRoster"), CarRosterMenu.MAINMENU, this));
 		toolMenu.add(new ModifyLocationsAction());
 		toolMenu.add(new TrainsByCarTypeAction());
 		toolMenu.add(new CarsSetFrameAction(carsTable));
@@ -328,9 +328,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			int rowindex = carsModel.findCarByRoadNumber(findCarTextBox.getText());
 			if (rowindex < 0) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getString("carWithRoadNumNotFound"),
+						Bundle.getMessage("carWithRoadNumNotFound"),
 						new Object[] { findCarTextBox.getText() }), Bundle
-						.getString("carCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
+						.getMessage("carCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}
 			// clear any sorts by column
@@ -343,7 +343,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 				f.dispose();
 			f = new CarEditFrame();
 			f.initComponents();
-			f.setTitle(Bundle.getString("TitleCarAdd"));
+			f.setTitle(Bundle.getMessage("TitleCarAdd"));
 		}
 		if (ae.getSource() == saveButton) {
 			if (carsTable.isEditing()) {

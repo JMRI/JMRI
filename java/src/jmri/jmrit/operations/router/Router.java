@@ -30,11 +30,11 @@ public class Router extends TrainCommon {
 	private List<Track> lastLocationTracks = new ArrayList<Track>();
 	private List<Track> otherLocationTracks = new ArrayList<Track>();
 
-	private static final String STATUS_NOT_THIS_TRAIN = Bundle.getString("RouterTrain"); // report that train can not
+	private static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain"); // report that train can not
 																							// move car
-	private static final String STATUS_NOT_ABLE = Bundle.getString("RouterNotAble");
+	private static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
 	private static final String STATUS_CAR_AT_DESINATION = Bundle
-			.getString("RouterCarAtDestination");
+			.getMessage("RouterCarAtDestination");
 
 	private String _status = "";
 	private Train _train = null;
@@ -105,7 +105,7 @@ public class Router extends TrainCommon {
 			// log.info("Next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+"+) failed for car ("+car.toString()+") due to "+_status);
 			addLine(buildReport,
 					SEVEN,
-					MessageFormat.format(Bundle.getString("RouterNextDestFailed"),
+					MessageFormat.format(Bundle.getMessage("RouterNextDestFailed"),
 							new Object[] { car.getNextDestinationName(),
 									car.getNextDestTrackName(), car.toString(), _status }));
 			return false;
@@ -124,18 +124,18 @@ public class Router extends TrainCommon {
 			boolean trainServicesCar = false;
 			if (_train != null && (trainServicesCar = _train.servicesCar(clone))) {
 				addLine(buildReport, SEVEN, MessageFormat.format(
-						Bundle.getString("RouterCarSingleTrain"),
+						Bundle.getMessage("RouterCarSingleTrain"),
 						new Object[] { car.toString(), clone.getDestinationName(),
 								clone.getDestinationTrackName(), _train.getName() }));
 			} else
 				addLine(buildReport, SEVEN, MessageFormat.format(
-						Bundle.getString("RouterCarSingleTrain"), new Object[] { car.toString(),
+						Bundle.getMessage("RouterCarSingleTrain"), new Object[] { car.toString(),
 								clone.getDestinationName(), clone.getDestinationTrackName(),
 								testTrain.getName() }));
 			// now check to see if specific train can service car directly
 			if (_train != null && !trainServicesCar) {
 				addLine(buildReport, SEVEN, MessageFormat.format(
-						Bundle.getString("TrainDoesNotServiceCar"),
+						Bundle.getMessage("TrainDoesNotServiceCar"),
 						new Object[] {
 								_train.getName(),
 								car.toString(),
@@ -147,7 +147,7 @@ public class Router extends TrainCommon {
 			_status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
 			if (!_status.equals(Track.OKAY)) {
 				addLine(buildReport, SEVEN, MessageFormat.format(
-						Bundle.getString("RouterCanNotDeliverCar"), new Object[] { car.toString(),
+						Bundle.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
 								clone.getDestinationName(), clone.getDestinationTrackName(),
 								_status }));
 				// check to see if an alternative track was specified
@@ -159,7 +159,7 @@ public class Router extends TrainCommon {
 					if (status.equals(Track.OKAY)) {
 						if (_train == null || _train.servicesCar(car)) {
 							addLine(buildReport, SEVEN, MessageFormat.format(
-									Bundle.getString("RouterSendCarToAlternative"), new Object[] {
+									Bundle.getMessage("RouterSendCarToAlternative"), new Object[] {
 											car.toString(),
 											clone.getDestinationTrack().getAlternativeTrack()
 													.getName(), clone.getDestination().getName() }));
@@ -167,7 +167,7 @@ public class Router extends TrainCommon {
 						}
 						addLine(buildReport, SEVEN,
 								MessageFormat.format(
-										Bundle.getString("RouterNotSendCarToAlternative"),
+										Bundle.getMessage("RouterNotSendCarToAlternative"),
 										new Object[] {
 												_train.getName(),
 												car.toString(),
@@ -176,7 +176,7 @@ public class Router extends TrainCommon {
 												clone.getDestination().getName() }));
 					} else {
 						addLine(buildReport, SEVEN,
-								MessageFormat.format(Bundle.getString("RouterAlternateFailed"),
+								MessageFormat.format(Bundle.getMessage("RouterAlternateFailed"),
 										new Object[] {
 												clone.getDestinationTrack().getAlternativeTrack()
 														.getName(), status }));
@@ -187,7 +187,7 @@ public class Router extends TrainCommon {
 						&& car.getLocation() != clone.getDestination()) {
 					// log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
 					addLine(buildReport, SEVEN, MessageFormat.format(
-							Bundle.getString("RouterSidingFull"),
+							Bundle.getMessage("RouterSidingFull"),
 							new Object[] { clone.getDestinationTrackName(),
 									clone.getDestinationName() }));
 					Location dest = clone.getDestination();
@@ -205,7 +205,7 @@ public class Router extends TrainCommon {
 							}
 							addLine(buildReport, SEVEN,
 									MessageFormat.format(
-											Bundle.getString("RouterSendCarToYard"),
+											Bundle.getMessage("RouterSendCarToYard"),
 											new Object[] { car.toString(), track.getName(),
 													dest.getName() }));
 							return true;
@@ -360,14 +360,14 @@ public class Router extends TrainCommon {
 						}
 						if (status.equals(Track.OKAY) && firstTrain != null) {
 							addLine(_buildReport, SEVEN, MessageFormat.format(
-									Bundle.getString("RouterRoute2ForCar"),
+									Bundle.getMessage("RouterRoute2ForCar"),
 									new Object[] { car.toString(), car.getLocationName(),
 											testCar.getDestinationName(),
 											car.getNextDestinationName() }));
 							// only set car's destination if specific train can service car
 							if (_train != null && !_train.servicesCar(testCar)) {
 								addLine(_buildReport, SEVEN, MessageFormat.format(
-										Bundle.getString("TrainDoesNotServiceCar"),
+										Bundle.getMessage("TrainDoesNotServiceCar"),
 										new Object[] {
 												_train.getName(),
 												car.toString(),
@@ -503,7 +503,7 @@ public class Router extends TrainCommon {
 						log.debug("Found 3 train route, setting car destination ("
 								+ testCar.getLocationName() + ", " + testCar.getTrackName() + ")");
 						addLine(_buildReport, SEVEN, MessageFormat.format(
-								Bundle.getString("RouterRoute3ForCar"),
+								Bundle.getMessage("RouterRoute3ForCar"),
 								new Object[] { car.toString(), car.getLocationName(),
 										testCar.getLocationName(), testCar.getDestinationName(),
 										car.getNextDestinationName() }));
@@ -514,7 +514,7 @@ public class Router extends TrainCommon {
 						if (_train != null && !_train.servicesCar(ts2)) {
 							addLine(_buildReport, SEVEN,
 									MessageFormat.format(
-											Bundle.getString("TrainDoesNotServiceCar"),
+											Bundle.getMessage("TrainDoesNotServiceCar"),
 											new Object[] {
 													_train.getName(),
 													car.toString(),
@@ -563,7 +563,7 @@ public class Router extends TrainCommon {
 										+ " to " + testCar.getDestinationName() + ", " // NOI18N
 										+ testCar.getDestinationTrackName());
 								addLine(_buildReport, SEVEN, MessageFormat.format(
-										Bundle.getString("RouterRoute4ForCar"),
+										Bundle.getMessage("RouterRoute4ForCar"),
 										new Object[] { car.toString(), car.getLocationName(),
 												fltp.getLocation(), mltp.getLocation().getName(),
 												lltp.getLocation().getName(),
@@ -574,7 +574,7 @@ public class Router extends TrainCommon {
 								ts2.setDestinationTrack(fltp);
 								if (_train != null && !_train.servicesCar(ts2)) {
 									addLine(_buildReport, SEVEN, MessageFormat.format(
-											Bundle.getString("TrainDoesNotServiceCar"),
+											Bundle.getMessage("TrainDoesNotServiceCar"),
 											new Object[] {
 													_train.getName(),
 													car.toString(),
@@ -647,7 +647,7 @@ public class Router extends TrainCommon {
 												+ testCar.getDestinationName() + ", "
 												+ testCar.getDestinationTrackName());
 										addLine(_buildReport, SEVEN, MessageFormat.format(
-												Bundle.getString("RouterRoute5ForCar"),
+												Bundle.getMessage("RouterRoute5ForCar"),
 												new Object[] { car.toString(),
 														car.getLocationName(),
 														fltp.getLocation().getName(),
@@ -663,7 +663,7 @@ public class Router extends TrainCommon {
 											addLine(_buildReport,
 													SEVEN,
 													MessageFormat.format(
-															Bundle.getString("TrainDoesNotServiceCar"),
+															Bundle.getMessage("TrainDoesNotServiceCar"),
 															new Object[] {
 																	_train.getName(),
 																	car.toString(),

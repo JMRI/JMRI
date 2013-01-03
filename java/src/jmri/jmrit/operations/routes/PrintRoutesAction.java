@@ -28,7 +28,7 @@ public class PrintRoutesAction extends PrintRouteAction {
 		HardcopyWriter writer = null;
 		try {
 			writer = new HardcopyWriter(mFrame, MessageFormat.format(
-					Bundle.getString("TitleRoutesTable"), new Object[] {}), 10, .5, .5, .5, .5,
+					Bundle.getMessage("TitleRoutesTable"), new Object[] {}), 10, .5, .5, .5, .5,
 					isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");

@@ -8,11 +8,11 @@ package jmri.jmrit.operations.rollingstock.cars;
  */
 public class CarLoad {
 
-	public static final String PRIORITY_LOW = Bundle.getString("PriorityLow");
-	public static final String PRIORITY_HIGH = Bundle.getString("PriorityHigh");
+	public static final String PRIORITY_LOW = Bundle.getMessage("PriorityLow");
+	public static final String PRIORITY_HIGH = Bundle.getMessage("PriorityHigh");
 
-	public static final String LOAD_TYPE_EMPTY = Bundle.getString("EmptyTypeName");
-	public static final String LOAD_TYPE_LOAD = Bundle.getString("LoadTypeName");
+	public static final String LOAD_TYPE_EMPTY = Bundle.getMessage("EmptyTypeName");
+	public static final String LOAD_TYPE_LOAD = Bundle.getMessage("LoadTypeName");
 
 	public static final String SPLIT_CHAR = " & "; // used to combine car type and load in tracks and trains
 

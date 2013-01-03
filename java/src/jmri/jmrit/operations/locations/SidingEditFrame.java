@@ -23,9 +23,9 @@ import jmri.jmrit.operations.setup.Control;
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
 	// labels, buttons, etc. for spurs
-	JLabel textSchedule = new JLabel(Bundle.getString("DeliverySchedule"));
+	JLabel textSchedule = new JLabel(Bundle.getMessage("DeliverySchedule"));
 	JLabel textSchError = new JLabel();
-	JButton editScheduleButton = new JButton(Bundle.getString("Edit"));
+	JButton editScheduleButton = new JButton(Bundle.getMessage("Edit"));
 	JComboBox comboBoxSchedules = ScheduleManager.instance().getComboBox();
 
 	JPanel panelSchedule = panelOpt4;
@@ -40,7 +40,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		// setup the optional panel with schedule stuff
 		panelSchedule.setLayout(new GridBagLayout());
 		panelSchedule.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("DeliverySchedule")));
+				.getMessage("DeliverySchedule")));
 		addItem(panelSchedule, comboBoxSchedules, 0, 0);
 		addItem(panelSchedule, editScheduleButton, 1, 0);
 		addItem(panelSchedule, textSchError, 2, 0);
@@ -53,11 +53,11 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Sidings", true); // NOI18N
 
 		// override text strings for tracks
-		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TrainSiding")));
-		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TypesSiding")));
-		deleteTrackButton.setText(Bundle.getString("DeleteSiding"));
-		addTrackButton.setText(Bundle.getString("AddSiding"));
-		saveTrackButton.setText(Bundle.getString("SaveSiding"));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainSiding")));
+		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesSiding")));
+		deleteTrackButton.setText(Bundle.getMessage("DeleteSiding"));
+		addTrackButton.setText(Bundle.getMessage("AddSiding"));
+		saveTrackButton.setText(Bundle.getMessage("SaveSiding"));
 
 		// Select the spur's Schedule
 		updateScheduleComboBox();
@@ -89,11 +89,11 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		Object selected = comboBoxSchedules.getSelectedItem();
 		if (selected != null && !selected.equals("")) {
 			Schedule schedule = (Schedule) selected;
-			sef.setTitle(MessageFormat.format(Bundle.getString("TitleScheduleEdit"),
+			sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
 					new Object[] { _track.getName() }));
 			sef.initComponents(schedule, _location, _track);
 		} else {
-			sef.setTitle(MessageFormat.format(Bundle.getString("TitleScheduleAdd"),
+			sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleAdd"),
 					new Object[] { _track.getName() }));
 			sef.initComponents(null, _location, _track);
 		}

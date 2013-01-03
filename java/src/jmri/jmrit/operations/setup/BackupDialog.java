@@ -54,7 +54,7 @@ public class BackupDialog extends JDialog {
 	private void initComponents() {
 		setModalityType(ModalityType.DOCUMENT_MODAL);
 		setModal(true);
-		setTitle(Bundle.getString("BackupDialog.this.title"));
+		setTitle(Bundle.getMessage("BackupDialog.this.title"));
 		setBounds(100, 100, 395, 199);
 		getContentPane().setLayout(new BorderLayout());
 		{
@@ -70,7 +70,7 @@ public class BackupDialog extends JDialog {
 			getContentPane().add(contentPanel, BorderLayout.CENTER);
 			{
 				captionLabel = new JLabel(
-						Bundle.getString("BackupDialog.nameLabel.text"));
+						Bundle.getMessage("BackupDialog.nameLabel.text"));
 				GridBagConstraints gbc_captionLabel = new GridBagConstraints();
 				gbc_captionLabel.anchor = GridBagConstraints.WEST;
 				gbc_captionLabel.insets = new Insets(0, 0, 5, 0);
@@ -112,7 +112,7 @@ public class BackupDialog extends JDialog {
 				setNameTextField.setColumns(10);
 			}
 			{
-				infoLabel1 = new JLabel(Bundle.getString("BackupDialog.notesLabel1.text"));
+				infoLabel1 = new JLabel(Bundle.getMessage("BackupDialog.notesLabel1.text"));
 				GridBagConstraints gbc_infoLabel1 = new GridBagConstraints();
 				gbc_infoLabel1.insets = new Insets(0, 0, 5, 0);
 				gbc_infoLabel1.anchor = GridBagConstraints.NORTHWEST;
@@ -121,7 +121,7 @@ public class BackupDialog extends JDialog {
 				contentPanel.add(infoLabel1, gbc_infoLabel1);
 			}
 			{
-				infoLabel2 = new JLabel(Bundle.getString("BackupDialog.notesLabel2.text"));
+				infoLabel2 = new JLabel(Bundle.getMessage("BackupDialog.notesLabel2.text"));
 				GridBagConstraints gbc_infoLabel2 = new GridBagConstraints();
 				gbc_infoLabel2.anchor = GridBagConstraints.WEST;
 				gbc_infoLabel2.gridx = 0;
@@ -135,7 +135,7 @@ public class BackupDialog extends JDialog {
 			buttonPane.setLayout(fl_buttonPane);
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				backupButton = new JButton(Bundle.getString("BackupDialog.backupButton.text"));
+				backupButton = new JButton(Bundle.getMessage("BackupDialog.backupButton.text"));
 				backupButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						do_backupButton_actionPerformed(e);
@@ -145,7 +145,7 @@ public class BackupDialog extends JDialog {
 				getRootPane().setDefaultButton(backupButton);
 			}
 			{
-				JButton cancelButton = new JButton(Bundle.getString("BackupDialog.cancelButton.text"));
+				JButton cancelButton = new JButton(Bundle.getMessage("BackupDialog.cancelButton.text"));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						do_cancelButton_actionPerformed(arg0);
@@ -156,7 +156,7 @@ public class BackupDialog extends JDialog {
 			}
 // Help button isn't used yet
 //			{
-//				helpButton = new JButton(Bundle.getString("BackupDialog.helpButton.text"));
+//				helpButton = new JButton(Bundle.getMessage("BackupDialog.helpButton.text"));
 //				helpButton.addActionListener(new ActionListener() {
 //					public void actionPerformed(ActionEvent e) {
 //						do_helpButton_actionPerformed(e);
@@ -182,8 +182,8 @@ public class BackupDialog extends JDialog {
 				if (JOptionPane
 						.showConfirmDialog(
 								this,
-								Bundle.getString("OperationsFilesModified"),
-								Bundle.getString("SaveOperationFiles"),
+								Bundle.getMessage("OperationsFilesModified"),
+								Bundle.getMessage("SaveOperationFiles"),
 								JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					OperationsXml.save();
 				}
@@ -192,9 +192,9 @@ public class BackupDialog extends JDialog {
 			// check to see if directory already exists
 			if (backup.checkIfBackupSetExists(setName)) {
 				int result = JOptionPane.showConfirmDialog(this, MessageFormat
-						.format(Bundle.getString("DirectoryAreadyExists"),
+						.format(Bundle.getMessage("DirectoryAreadyExists"),
 								new Object[] { setName }),
-								Bundle.getString("OverwriteBackupDirectory"),
+								Bundle.getMessage("OverwriteBackupDirectory"),
 						JOptionPane.OK_CANCEL_OPTION);
 
 				if (result != JOptionPane.OK_OPTION) {

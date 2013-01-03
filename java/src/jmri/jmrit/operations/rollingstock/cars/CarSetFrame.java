@@ -43,15 +43,15 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	JComboBox loadComboBox = CarLoads.instance().getComboBox(null);
 	
 	// buttons
-	JButton editLoadButton = new JButton(Bundle.getString("Edit"));	
+	JButton editLoadButton = new JButton(Bundle.getMessage("Edit"));	
 	
 	// check boxes
-	protected JCheckBox ignoreLoadCheckBox = new JCheckBox(Bundle.getString("Ignore"));
+	protected JCheckBox ignoreLoadCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
 	
 	CarLoadEditFrame lef = null;
 		
 	public CarSetFrame() {
-		super(Bundle.getString("TitleCarSet"));
+		super(Bundle.getMessage("TitleCarSet"));
 	}
 
 	public void initComponents() {
@@ -67,7 +67,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		// add load fields
 		JPanel pLoad = new JPanel();
 		pLoad.setLayout(new GridBagLayout());
-		pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Load")));
+		pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
 		addItem(pLoad, ignoreLoadCheckBox, 1, 0);
 		addItem(pLoad, loadComboBox, 2, 0);
 		addItem(pLoad, editLoadButton, 3, 0);
@@ -171,8 +171,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				String status = car.testDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
 				if (!status.equals(Track.OKAY)){
 					JOptionPane.showMessageDialog(this,
-							MessageFormat.format(Bundle.getString("rsCanNotFinalMsg"), new Object[]{car.toString(), status}),
-							Bundle.getString("rsCanNotFinal"),
+							MessageFormat.format(Bundle.getMessage("rsCanNotFinalMsg"), new Object[]{car.toString(), status}),
+							Bundle.getMessage("rsCanNotFinal"),
 							JOptionPane.WARNING_MESSAGE);
 				}
 				car.setNextDestination((Location) finalDestinationBox.getSelectedItem());
@@ -209,8 +209,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 					String status = car.testDestination((Location) destReturnWhenEmptyBox.getSelectedItem(), (Track)trackReturnWhenEmptyBox.getSelectedItem());
 					if (!status.equals(Track.OKAY)){
 						JOptionPane.showMessageDialog(this,
-								MessageFormat.format(Bundle.getString("rsCanNotRWEMsg"), new Object[]{car.toString(), status}),
-								Bundle.getString("rsCanNotRWE"),
+								MessageFormat.format(Bundle.getMessage("rsCanNotRWEMsg"), new Object[]{car.toString(), status}),
+								Bundle.getMessage("rsCanNotRWE"),
 								JOptionPane.WARNING_MESSAGE);
 					}
 					car.setReturnWhenEmptyDestTrack((Track)trackReturnWhenEmptyBox.getSelectedItem());
@@ -262,15 +262,15 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			Train train = car.getTrain();		
 			if (!train.acceptsLoad(car.getLoad(), car.getType())){
 				JOptionPane.showMessageDialog(this,
-						MessageFormat.format(Bundle.getString("carTrainNotServLoad"), new Object[]{car.getLoad(), train.getName()}),
-						Bundle.getString("rsNotMove"),
+						MessageFormat.format(Bundle.getMessage("carTrainNotServLoad"), new Object[]{car.getLoad(), train.getName()}),
+						Bundle.getMessage("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
 			if (car.getLocation()!=null && car.getDestination()!=null && !train.servicesCar(car)){
 				JOptionPane.showMessageDialog(this, 
-						MessageFormat.format(Bundle.getString("carTrainNotService"), new Object[] {train.getName()}),
-						Bundle.getString("rsNotMove"),
+						MessageFormat.format(Bundle.getMessage("carTrainNotService"), new Object[] {train.getName()}),
+						Bundle.getMessage("rsNotMove"),
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
@@ -279,8 +279,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		// is this car part of a kernel?
 		if (car.getKernel() != null){
 			if (JOptionPane.showConfirmDialog(this,
-					Bundle.getString("carInKernel"),
-					Bundle.getString("carPartKernel"),
+					Bundle.getMessage("carInKernel"),
+					Bundle.getMessage("carPartKernel"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				List<RollingStock> list = car.getKernel().getGroup();
 				if (!updateGroup(list))

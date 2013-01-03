@@ -25,7 +25,7 @@ public class StagingTableModel extends TrackTableModel {
 	public String getColumnName(int col) {
 		switch (col) {
 		case NAMECOLUMN:
-			return Bundle.getString("StagingName");
+			return Bundle.getMessage("StagingName");
 		}
 		return super.getColumnName(col);
 	}
@@ -39,7 +39,7 @@ public class StagingTableModel extends TrackTableModel {
 		String stagingId = tracksList.get(row);
 		Track staging = _location.getTrackById(stagingId);
 		tef.initComponents(_location, staging);
-		tef.setTitle(Bundle.getString("EditStaging"));
+		tef.setTitle(Bundle.getMessage("EditStaging"));
 		focusEditFrame = true;
 	}
 

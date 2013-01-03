@@ -16,7 +16,7 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class CarRoads {
 
-	private static final String ROADS = Bundle.getString("carRoadNames");
+	private static final String ROADS = Bundle.getMessage("carRoadNames");
 	public static final String CARROADS_LENGTH_CHANGED_PROPERTY = "CarRoads Length"; // NOI18N
 	public static final String CARROADS_NAME_CHANGED_PROPERTY = "CarRoads Name"; // NOI18N
 

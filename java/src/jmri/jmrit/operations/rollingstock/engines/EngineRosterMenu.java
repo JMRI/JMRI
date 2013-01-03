@@ -52,28 +52,28 @@ public class EngineRosterMenu extends JMenu {
 		// create the menu
 
 		AbstractAction importRosterAction = new ImportRosterEngineAction(
-				Bundle.getString("MenuItemImportRoster"), pWho);
+				Bundle.getMessage("MenuItemImportRoster"), pWho);
 		importRosterAction.setEnabled(false);
 		AbstractAction exportAction = new ExportEngineRosterAction(
-				Bundle.getString("MenuItemExport"), pWho);
+				Bundle.getMessage("MenuItemExport"), pWho);
 		exportAction.setEnabled(false);
-		AbstractAction importAction = new ImportEngineAction(Bundle.getString("MenuItemImport"),
+		AbstractAction importAction = new ImportEngineAction(Bundle.getMessage("MenuItemImport"),
 				pWho);
 		importAction.setEnabled(false);
 		AbstractAction deleteAction = new DeleteEngineRosterAction(
-				Bundle.getString("MenuItemDelete"), pWho);
+				Bundle.getMessage("MenuItemDelete"), pWho);
 		deleteAction.setEnabled(false);
 		AbstractAction resetMovesAction = new ResetEngineMovesAction(
-				Bundle.getString("MenuItemResetMoves"), pWho);
+				Bundle.getMessage("MenuItemResetMoves"), pWho);
 		resetMovesAction.setEnabled(false);
 
 		// Need a frame here, but are not passed one
 		Frame newFrame = new Frame();
-		AbstractAction printAction = new PrintEngineRosterAction(Bundle.getString("MenuItemPrint"),
+		AbstractAction printAction = new PrintEngineRosterAction(Bundle.getMessage("MenuItemPrint"),
 				newFrame, false, pWho);
 		printAction.setEnabled(false);
 		AbstractAction previewAction = new PrintEngineRosterAction(
-				Bundle.getString("MenuItemPreview"), newFrame, true, pWho);
+				Bundle.getMessage("MenuItemPreview"), newFrame, true, pWho);
 		printAction.setEnabled(false);
 		add(importRosterAction);
 		add(importAction);

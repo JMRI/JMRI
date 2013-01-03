@@ -99,13 +99,13 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     public String getColumnName(int col) {
         switch (col) {
-        case IDCOLUMN: return Bundle.getString("Id");
-        case NAMECOLUMN: return Bundle.getString("Name");
-        case LENGTHCOLUMN: return Bundle.getString("Length");
-        case USEDLENGTHCOLUMN: return Bundle.getString("Used");
-        case ROLLINGSTOCK: return Bundle.getString("RollingStock");
-        case PICKUPS: return Bundle.getString("Pickup");
-        case DROPS: return Bundle.getString("Drop");
+        case IDCOLUMN: return Bundle.getMessage("Id");
+        case NAMECOLUMN: return Bundle.getMessage("Name");
+        case LENGTHCOLUMN: return Bundle.getMessage("Length");
+        case USEDLENGTHCOLUMN: return Bundle.getMessage("Used");
+        case ROLLINGSTOCK: return Bundle.getMessage("RollingStock");
+        case PICKUPS: return Bundle.getMessage("Pickup");
+        case DROPS: return Bundle.getMessage("Drop");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";	// NOI18N
         }
@@ -157,7 +157,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case ROLLINGSTOCK: return Integer.toString(l.getNumberRS());
         case PICKUPS: return Integer.toString(l.getPickupRS());
         case DROPS: return Integer.toString(l.getDropRS());
-        case EDITCOLUMN: return Bundle.getString("Edit");
+        case EDITCOLUMN: return Bundle.getMessage("Edit");
         default: return "unknown "+col;	// NOI18N
         }
     }
@@ -179,7 +179,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     		lef.dispose();
     	lef = new LocationEditFrame();
     	Location loc = manager.getLocationById(sysList.get(row));
-     	lef.setTitle(Bundle.getString("TitleLocationEdit"));
+     	lef.setTitle(Bundle.getMessage("TitleLocationEdit"));
     	lef.initComponents(loc);
     	focusLef = true;
    }

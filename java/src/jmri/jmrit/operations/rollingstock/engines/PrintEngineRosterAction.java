@@ -55,7 +55,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 		// obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		try {
-			writer = new HardcopyWriter(mFrame, Bundle.getString("TitleEngineRoster"), 10, .5, .5,
+			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleEngineRoster"), 10, .5, .5,
 					.5, .5, isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -78,19 +78,19 @@ public class PrintEngineRosterAction extends AbstractAction {
 		List<String> engines = panel.getSortByList();
 		try {
 			// header
-			String s = Bundle.getString("Number")
+			String s = Bundle.getMessage("Number")
 					+ TAB
-					+ Bundle.getString("Road")
+					+ Bundle.getMessage("Road")
 					+ TAB
-					+ Bundle.getString("Model")
+					+ Bundle.getMessage("Model")
 					+ TAB
 					+ "     "
-					+ Bundle.getString("Type")
+					+ Bundle.getMessage("Type")
 					+ "      "
-					+ Bundle.getString("Length")
+					+ Bundle.getMessage("Length")
 					+ " "
-					+ (panel.sortByConsist.isSelected() ? Bundle.getString("Consist") + "     "
-							: Bundle.getString("Owner"))
+					+ (panel.sortByConsist.isSelected() ? Bundle.getMessage("Consist") + "     "
+							: Bundle.getMessage("Owner"))
 					+ (panel.sortByValue.isSelected() ? " "
 							+ padAttribute(Setup.getValueLabel(), Control.max_len_string_attibute)
 							: "")
@@ -98,7 +98,7 @@ public class PrintEngineRosterAction extends AbstractAction {
 							+ padAttribute(Setup.getRfidLabel(), Control.max_len_string_attibute)
 							: "")
 					+ ((!panel.sortByValue.isSelected() && !panel.sortByRfid.isSelected()) ? " "
-							+ Bundle.getString("Built") : "") + " " + Bundle.getString("Location")
+							+ Bundle.getMessage("Built") : "") + " " + Bundle.getMessage("Location")
 					+ NEW_LINE;
 			writer.write(s);
 			for (int i = 0; i < engines.size(); i++) {

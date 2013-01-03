@@ -85,48 +85,48 @@ public class Setup {
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
 	
-	public static final String EAST_DIR = Bundle.getString("East");
-	public static final String WEST_DIR = Bundle.getString("West");
-	public static final String NORTH_DIR = Bundle.getString("North");
-	public static final String SOUTH_DIR = Bundle.getString("South");
+	public static final String EAST_DIR = Bundle.getMessage("East");
+	public static final String WEST_DIR = Bundle.getMessage("West");
+	public static final String NORTH_DIR = Bundle.getMessage("North");
+	public static final String SOUTH_DIR = Bundle.getMessage("South");
 	
 	public static final String DESCRIPTIVE = "Descriptive";  // NOI18N Car types
 	public static final String AAR = "ARR Codes";  // NOI18N Car types
 	
 	public static final String MONOSPACED = "Monospaced"; // NOI18N printer fonts
 	
-	public static final String PORTRAIT = Bundle.getString("Portrait");
-	public static final String LANDSCAPE = Bundle.getString("Landscape");
-	public static final String HANDHELD	= Bundle.getString("HandHeld");
+	public static final String PORTRAIT = Bundle.getMessage("Portrait");
+	public static final String LANDSCAPE = Bundle.getMessage("Landscape");
+	public static final String HANDHELD	= Bundle.getMessage("HandHeld");
 	
-	public static final String LENGTHABV =Bundle.getString("LengthSymbol");
+	public static final String LENGTHABV =Bundle.getMessage("LengthSymbol");
 	
 	public static final String BUILD_REPORT_MINIMAL = "1";
 	public static final String BUILD_REPORT_NORMAL = "3";
 	public static final String BUILD_REPORT_DETAILED = "5";
 	public static final String BUILD_REPORT_VERY_DETAILED = "7";
 	
-	public static final String ROAD = Bundle.getString("Road");		// the supported message format options
-	public static final String NUMBER = Bundle.getString("Number");
-	public static final String TYPE = Bundle.getString("Type");
-	public static final String MODEL = Bundle.getString("Model");
-	public static final String LENGTH = Bundle.getString("Length");
-	public static final String LOAD = Bundle.getString("Load");
-	public static final String COLOR = Bundle.getString("Color");
-	public static final String DESTINATION = Bundle.getString("Destination");
-	public static final String DEST_TRACK = Bundle.getString("DestAndTrack");
-	public static final String FINAL_DEST = Bundle.getString("FinalDestination");
-	public static final String LOCATION = Bundle.getString("Location");
-	public static final String CONSIST = Bundle.getString("Consist");
-	public static final String KERNEL = Bundle.getString("Kernel");
-	public static final String OWNER = Bundle.getString("Owner");
-	public static final String RWE = Bundle.getString("RWE");
-	public static final String COMMENT = Bundle.getString("Comment");
-	public static final String DROP_COMMENT = Bundle.getString("DropComment");
-	public static final String PICKUP_COMMENT = Bundle.getString("PickupComment");
-	public static final String HAZARDOUS = Bundle.getString("Hazardous");
+	public static final String ROAD = Bundle.getMessage("Road");		// the supported message format options
+	public static final String NUMBER = Bundle.getMessage("Number");
+	public static final String TYPE = Bundle.getMessage("Type");
+	public static final String MODEL = Bundle.getMessage("Model");
+	public static final String LENGTH = Bundle.getMessage("Length");
+	public static final String LOAD = Bundle.getMessage("Load");
+	public static final String COLOR = Bundle.getMessage("Color");
+	public static final String DESTINATION = Bundle.getMessage("Destination");
+	public static final String DEST_TRACK = Bundle.getMessage("DestAndTrack");
+	public static final String FINAL_DEST = Bundle.getMessage("FinalDestination");
+	public static final String LOCATION = Bundle.getMessage("Location");
+	public static final String CONSIST = Bundle.getMessage("Consist");
+	public static final String KERNEL = Bundle.getMessage("Kernel");
+	public static final String OWNER = Bundle.getMessage("Owner");
+	public static final String RWE = Bundle.getMessage("RWE");
+	public static final String COMMENT = Bundle.getMessage("Comment");
+	public static final String DROP_COMMENT = Bundle.getMessage("DropComment");
+	public static final String PICKUP_COMMENT = Bundle.getMessage("PickupComment");
+	public static final String HAZARDOUS = Bundle.getMessage("Hazardous");
 	public static final String NONE = " ";				// none has be a character or a space
-	public static final String TAB = Bundle.getString("Tab");	// used to tab out in tabular mode
+	public static final String TAB = Bundle.getMessage("Tab");	// used to tab out in tabular mode
 	public static final String BOX = " [ ] "; // NOI18N
 	
 	// these are for the utility printing when using tabs
@@ -139,14 +139,14 @@ public class Setup {
 	public static final String NO_DEST_TRACK = "NO_DEST_TRACK"; // NOI18N
 	public static final String NO_LOCATION = "NO_LOCATION"; // NOI18N
 	
-	public static final String BLACK = Bundle.getString("Black");	// the supported pick up and set out colors
-	public static final String BLUE = Bundle.getString("Blue");
-	public static final String GREEN = Bundle.getString("Green");
-	public static final String RED = Bundle.getString("Red");
+	public static final String BLACK = Bundle.getMessage("Black");	// the supported pick up and set out colors
+	public static final String BLUE = Bundle.getMessage("Blue");
+	public static final String GREEN = Bundle.getMessage("Green");
+	public static final String RED = Bundle.getMessage("Red");
 	
 	// Unit of Length
-	public static final String FEET = Bundle.getString("Feet");
-	public static final String METER = Bundle.getString("Meter");
+	public static final String FEET = Bundle.getMessage("Feet");
+	public static final String METER = Bundle.getMessage("Meter");
 	
 	private static int scale = HO_SCALE;	// Default scale	
 	private static int ratio = HO_RATIO;
@@ -176,16 +176,16 @@ public class Setup {
 	private static String[] switchListDropCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION, COMMENT, DROP_COMMENT};
 	private static String[] switchListLocalMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, DESTINATION, COMMENT};
 	private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
-	private static String pickupEnginePrefix = BOX + Bundle.getString("PickUpPrefix");
-	private static String dropEnginePrefix = BOX + Bundle.getString("SetOutPrefix");
-	private static String pickupCarPrefix = BOX + Bundle.getString("PickUpPrefix");
-	private static String dropCarPrefix = BOX + Bundle.getString("SetOutPrefix");
-	private static String localPrefix = BOX + Bundle.getString("LocalCarPrefix");
-	private static String switchListPickupCarPrefix = BOX + Bundle.getString("PickUpPrefix");
-	private static String switchListDropCarPrefix = BOX + Bundle.getString("SetOutPrefix");
-	private static String switchListLocalPrefix = BOX + Bundle.getString("LocalCarPrefix");	
-	private static String miaComment = Bundle.getString("misplacedCars");
-	private static String hazardousMsg = "("+Bundle.getString("Hazardous")+")";
+	private static String pickupEnginePrefix = BOX + Bundle.getMessage("PickUpPrefix");
+	private static String dropEnginePrefix = BOX + Bundle.getMessage("SetOutPrefix");
+	private static String pickupCarPrefix = BOX + Bundle.getMessage("PickUpPrefix");
+	private static String dropCarPrefix = BOX + Bundle.getMessage("SetOutPrefix");
+	private static String localPrefix = BOX + Bundle.getMessage("LocalCarPrefix");
+	private static String switchListPickupCarPrefix = BOX + Bundle.getMessage("PickUpPrefix");
+	private static String switchListDropCarPrefix = BOX + Bundle.getMessage("SetOutPrefix");
+	private static String switchListLocalPrefix = BOX + Bundle.getMessage("LocalCarPrefix");	
+	private static String miaComment = Bundle.getMessage("misplacedCars");
+	private static String hazardousMsg = "("+Bundle.getMessage("Hazardous")+")";
 	private static String logoURL ="";
 	private static String panelName ="Panel"; // NOI18N
 	private static String buildReportLevel = BUILD_REPORT_VERY_DETAILED;	
@@ -220,9 +220,9 @@ public class Setup {
 	private static boolean autoSave = true;				//when true, automatically save files if modified
 	private static boolean autoBackup = true;			//when true, automatically backup files
 	private static boolean enableValue = false;			//when true show value fields for rolling stock
-	private static String labelValue = Bundle.getString("Value");
+	private static String labelValue = Bundle.getMessage("Value");
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
-	private static String labelRfid = Bundle.getString("RFID");
+	private static String labelRfid = Bundle.getMessage("RFID");
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
 	private static boolean forwardToYardEnabled = true;	//when true forward car to yard if track is full

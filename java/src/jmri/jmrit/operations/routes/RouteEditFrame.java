@@ -37,21 +37,21 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	RouteLocation _routeLocation = null;
 
 	// major buttons
-	JButton addLocationButton = new JButton(Bundle.getString("AddLocation"));
-	JButton saveRouteButton = new JButton(Bundle.getString("SaveRoute"));
-	JButton deleteRouteButton = new JButton(Bundle.getString("DeleteRoute"));
-	JButton addRouteButton = new JButton(Bundle.getString("AddRoute"));
+	JButton addLocationButton = new JButton(Bundle.getMessage("AddLocation"));
+	JButton saveRouteButton = new JButton(Bundle.getMessage("SaveRoute"));
+	JButton deleteRouteButton = new JButton(Bundle.getMessage("DeleteRoute"));
+	JButton addRouteButton = new JButton(Bundle.getMessage("AddRoute"));
 
 	// check boxes
 	JCheckBox checkBox;
 
 	// radio buttons
-	JRadioButton addLocAtTop = new JRadioButton(Bundle.getString("Top"));
-	JRadioButton addLocAtBottom = new JRadioButton(Bundle.getString("Bottom"));
+	JRadioButton addLocAtTop = new JRadioButton(Bundle.getMessage("Top"));
+	JRadioButton addLocAtBottom = new JRadioButton(Bundle.getMessage("Bottom"));
 	ButtonGroup group = new ButtonGroup();
 
-	JRadioButton showWait = new JRadioButton(Bundle.getString("Wait"));
-	JRadioButton showDepartTime = new JRadioButton(Bundle.getString("DepartTime"));
+	JRadioButton showWait = new JRadioButton(Bundle.getMessage("Wait"));
+	JRadioButton showDepartTime = new JRadioButton(Bundle.getMessage("DepartTime"));
 	ButtonGroup groupTime = new ButtonGroup();
 
 	// text field
@@ -61,7 +61,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	// combo boxes
 	JComboBox locationBox = LocationManager.instance().getComboBox();
 
-	public static final String NAME = Bundle.getString("Name");
+	public static final String NAME = Bundle.getMessage("Name");
 	public static final String DISPOSE = "dispose"; // NOI18N
 
 	public RouteEditFrame() {
@@ -105,13 +105,13 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// name panel
 		JPanel pName = new JPanel();
 		pName.setLayout(new GridBagLayout());
-		pName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Name")));
+		pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Name")));
 		addItem(pName, routeNameTextField, 0, 0);
 
 		// comment panel
 		JPanel pComment = new JPanel();
 		pComment.setLayout(new GridBagLayout());
-		pComment.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Comment")));
+		pComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
 		addItem(pComment, commentTextField, 0, 0);
 
 		p1.add(pName);
@@ -123,7 +123,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// location panel
 		JPanel pLoc = new JPanel();
 		pLoc.setLayout(new GridBagLayout());
-		pLoc.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Location")));
+		pLoc.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
 		addItem(pLoc, locationBox, 0, 1);
 		addItem(pLoc, addLocationButton, 1, 1);
 		addItem(pLoc, addLocAtTop, 2, 1);
@@ -135,7 +135,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// Wait or Depart Time panel
 		JPanel pWait = new JPanel();
 		pWait.setLayout(new GridBagLayout());
-		pWait.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Display")));
+		pWait.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Display")));
 		addItem(pWait, showWait, 0, 1);
 		addItem(pWait, showDepartTime, 1, 1);
 		groupTime.add(showWait);
@@ -170,12 +170,12 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new RouteCopyAction(Bundle.getString("MenuItemCopy"), routeName));
-		toolMenu.add(new SetTrainIconRouteAction(Bundle.getString("MenuSetTrainIconRoute"),
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy"), routeName));
+		toolMenu.add(new SetTrainIconRouteAction(Bundle.getMessage("MenuSetTrainIconRoute"),
 				routeName));
-		toolMenu.add(new PrintRouteAction(Bundle.getString("MenuItemPrint"), false, _route));
-		toolMenu.add(new PrintRouteAction(Bundle.getString("MenuItemPreview"), true, _route));
+		toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPrint"), false, _route));
+		toolMenu.add(new PrintRouteAction(Bundle.getMessage("MenuItemPreview"), true, _route));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true); // NOI18N
@@ -210,7 +210,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 				saveNewRoute();
 			} else {
 				if (route != null && route != _route) {
-					reportRouteExists(Bundle.getString("save"));
+					reportRouteExists(Bundle.getMessage("save"));
 					return;
 				}
 				saveRoute();
@@ -221,9 +221,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == deleteRouteButton) {
 			log.debug("route delete button activated");
 			if (JOptionPane.showConfirmDialog(this,
-					MessageFormat.format(Bundle.getString("AreYouSure?"),
+					MessageFormat.format(Bundle.getMessage("AreYouSure?"),
 							new Object[] { routeNameTextField.getText() }), Bundle
-							.getString("DeleteRoute?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+							.getMessage("DeleteRoute?"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			Route route = manager.getRouteByName(routeNameTextField.getText());
@@ -241,7 +241,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == addRouteButton) {
 			Route route = manager.getRouteByName(routeNameTextField.getText());
 			if (route != null) {
-				reportRouteExists(Bundle.getString("add"));
+				reportRouteExists(Bundle.getMessage("add"));
 				return;
 			}
 			saveNewRoute();
@@ -271,7 +271,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	private void saveNewRoute() {
-		if (!checkName(Bundle.getString("add")))
+		if (!checkName(Bundle.getMessage("add")))
 			return;
 		Route route = manager.newRoute(routeNameTextField.getText());
 		routeModel.initTable(this, routeTable, route);
@@ -282,7 +282,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	private void saveRoute() {
-		if (!checkName(Bundle.getString("save")))
+		if (!checkName(Bundle.getMessage("save")))
 			return;
 		_route.setName(routeNameTextField.getText());
 		_route.setComment(commentTextField.getText());
@@ -305,17 +305,17 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	private boolean checkName(String s) {
 		if (routeNameTextField.getText().trim().equals("")) {
 			log.debug("Must enter a name for the route");
-			JOptionPane.showMessageDialog(this, Bundle.getString("MustEnterName"),
-					MessageFormat.format(Bundle.getString("CanNotRoute"), new Object[] { s }),
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
+					MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (routeNameTextField.getText().length() > Control.max_len_string_route_name) {
 			JOptionPane
 					.showMessageDialog(this, MessageFormat.format(
-							Bundle.getString("RouteNameLess"),
+							Bundle.getMessage("RouteNameLess"),
 							new Object[] { Control.max_len_string_route_name + 1 }), MessageFormat
-							.format(Bundle.getString("CanNotRoute"), new Object[] { s }),
+							.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
 							JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -324,8 +324,8 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void reportRouteExists(String s) {
 		log.info("Can not " + s + ", route already exists");
-		JOptionPane.showMessageDialog(this, Bundle.getString("ReportExists"),
-				MessageFormat.format(Bundle.getString("CanNotRoute"), new Object[] { s }),
+		JOptionPane.showMessageDialog(this, Bundle.getMessage("ReportExists"),
+				MessageFormat.format(Bundle.getMessage("CanNotRoute"), new Object[] { s }),
 				JOptionPane.ERROR_MESSAGE);
 	}
 

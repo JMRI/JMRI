@@ -23,8 +23,8 @@ public class ResetCarMovesAction extends AbstractAction {
 	}
 
 	public void actionPerformed(ActionEvent ae) {
-		if (JOptionPane.showConfirmDialog(null, Bundle.getString("carSureResetMoves"),
-				Bundle.getString("carResetMovesAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
+		if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("carSureResetMoves"),
+				Bundle.getMessage("carResetMovesAll"), JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION) {
 			log.debug("Reset moves for all cars in roster");
 			manager.resetMoves();
 		}

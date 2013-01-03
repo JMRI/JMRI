@@ -51,26 +51,26 @@ public class CarRosterMenu extends JMenu {
 
 		// create the menu
 
-		AbstractAction importAction = new ImportCarRosterAction(Bundle.getString("MenuItemImport"),
+		AbstractAction importAction = new ImportCarRosterAction(Bundle.getMessage("MenuItemImport"),
 				pWho);
 		importAction.setEnabled(false);
-		AbstractAction exportAction = new ExportCarRosterAction(Bundle.getString("MenuItemExport"),
+		AbstractAction exportAction = new ExportCarRosterAction(Bundle.getMessage("MenuItemExport"),
 				pWho);
 		exportAction.setEnabled(false);
-		AbstractAction deleteAction = new DeleteCarRosterAction(Bundle.getString("MenuItemDelete"),
+		AbstractAction deleteAction = new DeleteCarRosterAction(Bundle.getMessage("MenuItemDelete"),
 				pWho);
 		deleteAction.setEnabled(false);
 		AbstractAction resetMovesAction = new ResetCarMovesAction(
-				Bundle.getString("MenuItemResetMoves"), pWho);
+				Bundle.getMessage("MenuItemResetMoves"), pWho);
 		resetMovesAction.setEnabled(false);
 
 		// Need a frame here, but are not passed one
 		Frame newFrame = new Frame();
-		AbstractAction printAction = new PrintCarRosterAction(Bundle.getString("MenuItemPrint"),
+		AbstractAction printAction = new PrintCarRosterAction(Bundle.getMessage("MenuItemPrint"),
 				newFrame, false, pWho);
 		printAction.setEnabled(false);
 		AbstractAction previewAction = new PrintCarRosterAction(
-				Bundle.getString("MenuItemPreview"), newFrame, true, pWho);
+				Bundle.getMessage("MenuItemPreview"), newFrame, true, pWho);
 		previewAction.setEnabled(false);
 		add(importAction);
 		add(exportAction);

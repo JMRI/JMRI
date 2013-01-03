@@ -149,39 +149,39 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	public String getSortByName() {
 		switch (_sort) {
 		case SORTBYNUMBER:
-			return Bundle.getString("Number");
+			return Bundle.getMessage("Number");
 		case SORTBYROAD:
-			return Bundle.getString("Road");
+			return Bundle.getMessage("Road");
 		case SORTBYTYPE:
-			return Bundle.getString("Type");
+			return Bundle.getMessage("Type");
 		case SORTBYCOLOR:
-			return Bundle.getString("Color");
+			return Bundle.getMessage("Color");
 		case SORTBYLOAD:
-			return Bundle.getString("Load");
+			return Bundle.getMessage("Load");
 		case SORTBYKERNEL:
-			return Bundle.getString("Kernel");
+			return Bundle.getMessage("Kernel");
 		case SORTBYLOCATION:
-			return Bundle.getString("Location");
+			return Bundle.getMessage("Location");
 		case SORTBYDESTINATION:
-			return Bundle.getString("Destination");
+			return Bundle.getMessage("Destination");
 		case SORTBYTRAIN:
-			return Bundle.getString("Train");
+			return Bundle.getMessage("Train");
 		case SORTBYFINALDESTINATION:
-			return Bundle.getString("FinalDestination");
+			return Bundle.getMessage("FinalDestination");
 		case SORTBYRWE:
-			return Bundle.getString("ReturnWhenEmpty");
+			return Bundle.getMessage("ReturnWhenEmpty");
 		case SORTBYMOVES:
-			return Bundle.getString("Moves");
+			return Bundle.getMessage("Moves");
 		case SORTBYBUILT:
-			return Bundle.getString("Built");
+			return Bundle.getMessage("Built");
 		case SORTBYOWNER:
-			return Bundle.getString("Owner");
+			return Bundle.getMessage("Owner");
 		case SORTBYVALUE:
 			return Setup.getValueLabel();
 		case SORTBYRFID:
 			return Setup.getRfidLabel();
 		case SORTBYWAIT:
-			return Bundle.getString("Wait");
+			return Bundle.getMessage("Wait");
 		default:
 			return "Error";	// NOI18N
 		}
@@ -357,51 +357,51 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	public String getColumnName(int col) {
 		switch (col) {
 		case NUMCOLUMN:
-			return Bundle.getString("Number");
+			return Bundle.getMessage("Number");
 		case ROADCOLUMN:
-			return Bundle.getString("Road");
+			return Bundle.getMessage("Road");
 		case COLORCOLUMN: {
 			if (showColor)
-				return Bundle.getString("Color");
+				return Bundle.getMessage("Color");
 			else
-				return Bundle.getString("Load");
+				return Bundle.getMessage("Load");
 		}
 		case TYPECOLUMN:
-			return Bundle.getString("Type");
+			return Bundle.getMessage("Type");
 		case LENGTHCOLUMN:
-			return Bundle.getString("Len");
+			return Bundle.getMessage("Len");
 		case KERNELCOLUMN:
-			return Bundle.getString("Kernel");
+			return Bundle.getMessage("Kernel");
 		case LOCATIONCOLUMN:
-			return Bundle.getString("Location");
+			return Bundle.getMessage("Location");
 		case DESTINATIONCOLUMN: {
 			if (showDest == SHOWFD)
-				return Bundle.getString("FinalDestination");
+				return Bundle.getMessage("FinalDestination");
 			else if (showDest == SHOWDEST)
-				return Bundle.getString("Destination");
+				return Bundle.getMessage("Destination");
 			else
-				return Bundle.getString("ReturnWhenEmpty");
+				return Bundle.getMessage("ReturnWhenEmpty");
 		}
 		case TRAINCOLUMN:
-			return Bundle.getString("Train");
+			return Bundle.getMessage("Train");
 		case MOVESCOLUMN: {
 			if (showMoveCol == SHOWBUILT)
-				return Bundle.getString("Built");
+				return Bundle.getMessage("Built");
 			else if (showMoveCol == SHOWOWNER)
-				return Bundle.getString("Owner");
+				return Bundle.getMessage("Owner");
 			else if (showMoveCol == SHOWVALUE)
 				return Setup.getValueLabel();
 			else if (showMoveCol == SHOWRFID)
 				return Setup.getRfidLabel();
 			else if (showMoveCol == SHOWWAIT)
-				return Bundle.getString("Wait");
+				return Bundle.getMessage("Wait");
 			else
-				return Bundle.getString("Moves");
+				return Bundle.getMessage("Moves");
 		}
 		case SETCOLUMN:
-			return Bundle.getString("Set");
+			return Bundle.getMessage("Set");
 		case EDITCOLUMN:
-			return Bundle.getString("Edit");
+			return Bundle.getMessage("Edit");
 		default:
 			return "unknown";	// NOI18N
 		}
@@ -476,7 +476,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			if (showColor)
 				return c.getColor();
 			else if (c.getPriority().equals(CarLoad.PRIORITY_HIGH))
-				return c.getLoad() + " " + Bundle.getString("(P)");
+				return c.getLoad() + " " + Bundle.getMessage("(P)");
 			else
 				return c.getLoad();
 		}
@@ -484,15 +484,15 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			return c.getLength();
 		case TYPECOLUMN: {
 			if (c.isCaboose())
-				return c.getType() + " " + Bundle.getString("(C)");
+				return c.getType() + " " + Bundle.getMessage("(C)");
 			else if (c.hasFred())
-				return c.getType() + " " + Bundle.getString("(F)");
+				return c.getType() + " " + Bundle.getMessage("(F)");
 			else if (c.isPassenger())
-				return c.getType() + " " + Bundle.getString("(P)");
+				return c.getType() + " " + Bundle.getMessage("(P)");
 			else if (c.isUtility())
-				return c.getType() + " " + Bundle.getString("(U)");
+				return c.getType() + " " + Bundle.getMessage("(U)");
 			else if (c.isHazardous())
-				return c.getType() + " " + Bundle.getString("(H)");
+				return c.getType() + " " + Bundle.getMessage("(H)");
 			else
 				return c.getType();
 		}
@@ -542,9 +542,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 				return c.getMoves();
 		}
 		case SETCOLUMN:
-			return Bundle.getString("Set");
+			return Bundle.getMessage("Set");
 		case EDITCOLUMN:
-			return Bundle.getString("Edit");
+			return Bundle.getMessage("Edit");
 
 		default:
 			return "unknown " + col;	// NOI18N
@@ -564,7 +564,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			if (csf != null)
 				csf.dispose();
 			csf = new CarSetFrame();
-//			csf.setTitle(Bundle.getString("TitleCarSet"));
+//			csf.setTitle(Bundle.getMessage("TitleCarSet"));
 			csf.initComponents();
 			csf.loadCar(car);
 			csf.setVisible(true);
@@ -578,7 +578,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			cef = new CarEditFrame();
 			cef.initComponents();
 			cef.loadCar(car);
-			cef.setTitle(Bundle.getString("TitleCarEdit"));
+			cef.setTitle(Bundle.getMessage("TitleCarEdit"));
 			cef.setExtendedState(Frame.NORMAL);
 			focusCef = true;
 			break;

@@ -48,10 +48,10 @@ public class TrainManifest extends TrainCommon {
 			newLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
 		newLine(fileOut,
-				MessageFormat.format(Bundle.getString("ManifestForTrain"), new Object[] { train.getName(),
+				MessageFormat.format(Bundle.getMessage("ManifestForTrain"), new Object[] { train.getName(),
 						train.getDescription() }));
 
-		String valid = MessageFormat.format(Bundle.getString("Valid"), new Object[] { getDate() });
+		String valid = MessageFormat.format(Bundle.getMessage("Valid"), new Object[] { getDate() });
 
 		if (Setup.isPrintTimetableNameEnabled()) {
 			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
@@ -97,31 +97,31 @@ public class TrainManifest extends TrainCommon {
 						newLine(fileOut);
 					newWork = true;
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-					String workAt = MessageFormat.format(Bundle.getString("ScheduledWorkAt"),
+					String workAt = MessageFormat.format(Bundle.getMessage("ScheduledWorkAt"),
 							new Object[] { routeLocationName });
 					if (!train.isShowArrivalAndDepartureTimesEnabled()) {
 						newLine(fileOut, workAt);
 					} else if (r == 0) {
 						newLine(fileOut,
 								workAt
-										+ MessageFormat.format(Bundle.getString("departureTime"),
+										+ MessageFormat.format(Bundle.getMessage("departureTime"),
 												new Object[] { train.getFormatedDepartureTime() }));
 					} else if (!rl.getDepartureTime().equals("")) {
 						newLine(fileOut,
 								workAt
-										+ MessageFormat.format(Bundle.getString("departureTime"),
+										+ MessageFormat.format(Bundle.getMessage("departureTime"),
 												new Object[] { rl.getFormatedDepartureTime() }));
 					} else if (Setup.isUseDepartureTimeEnabled() && r != routeList.size() - 1) {
 						newLine(fileOut,
 								workAt
 										+ MessageFormat
-												.format(Bundle.getString("departureTime"),
+												.format(Bundle.getMessage("departureTime"),
 														new Object[] { train
 																.getExpectedDepartureTime(rl) }));
 					} else if (!expectedArrivalTime.equals("-1")) {
 						newLine(fileOut,
 								workAt
-										+ MessageFormat.format(Bundle.getString("estimatedArrival"),
+										+ MessageFormat.format(Bundle.getMessage("estimatedArrival"),
 												new Object[] { expectedArrivalTime }));
 					} else {
 						newLine(fileOut, workAt);
@@ -142,7 +142,7 @@ public class TrainManifest extends TrainCommon {
 					printChange(fileOut, rl, train.getSecondLegOptions());
 				if (rl == train.getSecondLegEndLocation()
 						&& train.getSecondLegOptions() == Train.HELPER_ENGINES)
-					newLine(fileOut, MessageFormat.format(Bundle.getString("RemoveHelpersAt"),
+					newLine(fileOut, MessageFormat.format(Bundle.getMessage("RemoveHelpersAt"),
 							new Object[] { splitString(rl.getName()) }));
 			}
 			if (train.getThirdLegOptions() != Train.NONE) {
@@ -150,7 +150,7 @@ public class TrainManifest extends TrainCommon {
 					printChange(fileOut, rl, train.getThirdLegOptions());
 				if (rl == train.getThirdLegEndLocation()
 						&& train.getThirdLegOptions() == Train.HELPER_ENGINES)
-					newLine(fileOut, MessageFormat.format(Bundle.getString("RemoveHelpersAt"),
+					newLine(fileOut, MessageFormat.format(Bundle.getMessage("RemoveHelpersAt"),
 							new Object[] { splitString(rl.getName()) }));
 			}
 
@@ -170,7 +170,7 @@ public class TrainManifest extends TrainCommon {
 					if (newWork) {
 						// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
 						String trainDeparts = MessageFormat.format(
-								Bundle.getString("TrainDepartsCars"),
+								Bundle.getMessage("TrainDepartsCars"),
 								new Object[] { routeLocationName, rl.getTrainDirectionString(),
 										cars, train.getTrainLength(rl),
 										Setup.getLengthUnit().toLowerCase(),
@@ -178,7 +178,7 @@ public class TrainManifest extends TrainCommon {
 						// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet, 3000 tons
 						if (Setup.isPrintLoadsAndEmptiesEnabled())
 							trainDeparts = MessageFormat.format(
-									Bundle.getString("TrainDepartsLoads"),
+									Bundle.getMessage("TrainDepartsLoads"),
 									new Object[] { routeLocationName, rl.getTrainDirectionString(),
 											cars - emptyCars, emptyCars, train.getTrainLength(rl),
 											Setup.getLengthUnit().toLowerCase(),
@@ -188,7 +188,7 @@ public class TrainManifest extends TrainCommon {
 						newLine(fileOut);
 					} else {
 						// no work at this location
-						String s = MessageFormat.format(Bundle.getString("NoScheduledWorkAt"),
+						String s = MessageFormat.format(Bundle.getMessage("NoScheduledWorkAt"),
 								new Object[] { routeLocationName });
 						// if a route comment, then only use location name and route comment, useful for passenger
 						// trains
@@ -200,17 +200,17 @@ public class TrainManifest extends TrainCommon {
 						if (train.isShowArrivalAndDepartureTimesEnabled()) {
 							if (r == 0)
 								s = s
-										+ MessageFormat.format(Bundle.getString("departureTime"),
+										+ MessageFormat.format(Bundle.getMessage("departureTime"),
 												new Object[] { train.getDepartureTime() });
 							else if (!rl.getDepartureTime().equals(""))
 								s = s
-										+ MessageFormat.format(Bundle.getString("departureTime"),
+										+ MessageFormat.format(Bundle.getMessage("departureTime"),
 												new Object[] { rl.getFormatedDepartureTime() });
 							else if (Setup.isUseDepartureTimeEnabled()
 									&& !rl.getComment().equals("") && r != routeList.size() - 1)
 								s = s
 										+ MessageFormat
-												.format(Bundle.getString("departureTime"),
+												.format(Bundle.getMessage("departureTime"),
 														new Object[] { train
 																.getExpectedDepartureTime(rl) });
 						}
@@ -218,7 +218,7 @@ public class TrainManifest extends TrainCommon {
 					}
 				}
 			} else {
-				newLine(fileOut, MessageFormat.format(Bundle.getString("TrainTerminatesIn"),
+				newLine(fileOut, MessageFormat.format(Bundle.getMessage("TrainTerminatesIn"),
 						new Object[] { routeLocationName }));
 			}
 			previousRouteLocationName = routeLocationName;
@@ -366,19 +366,19 @@ public class TrainManifest extends TrainCommon {
 	private void printChange(PrintWriter fileOut, RouteLocation rl, int legOptions) {
 		if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)
 			newLine(fileOut,
-					MessageFormat.format(Bundle.getString("AddHelpersAt"),
+					MessageFormat.format(Bundle.getMessage("AddHelpersAt"),
 							new Object[] { splitString(rl.getName()) }));
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES
 				&& ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE || (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE))
-			newLine(fileOut, MessageFormat.format(Bundle.getString("EngineAndCabooseChangeAt"),
+			newLine(fileOut, MessageFormat.format(Bundle.getMessage("EngineAndCabooseChangeAt"),
 					new Object[] { splitString(rl.getName()) }));
 		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
 			newLine(fileOut,
-					MessageFormat.format(Bundle.getString("EngineChangeAt"),
+					MessageFormat.format(Bundle.getMessage("EngineChangeAt"),
 							new Object[] { splitString(rl.getName()) }));
 		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
 				|| (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
-			newLine(fileOut, MessageFormat.format(Bundle.getString("CabooseChangeAt"),
+			newLine(fileOut, MessageFormat.format(Bundle.getMessage("CabooseChangeAt"),
 					new Object[] { splitString(rl.getName()) }));
 	}
 

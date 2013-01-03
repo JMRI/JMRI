@@ -33,22 +33,22 @@ public class PrintTrainManifestAction extends AbstractAction {
 		if (train == null)
 			return;
 		if (!train.isBuilt()) {
-			String printOrPreview = Bundle.getString("print");
+			String printOrPreview = Bundle.getMessage("print");
 			if (isPreview)
-				printOrPreview = Bundle.getString("preview");
-			String string = MessageFormat.format(Bundle.getString("DoYouWantToPrintPreviousManifest"),
+				printOrPreview = Bundle.getMessage("preview");
+			String string = MessageFormat.format(Bundle.getMessage("DoYouWantToPrintPreviousManifest"),
 					new Object[] { printOrPreview, train.getName() });
 			int results = JOptionPane.showConfirmDialog(null, string, MessageFormat.format(
-					Bundle.getString("PrintPreviousManifest"), new Object[] { printOrPreview }),
+					Bundle.getMessage("PrintPreviousManifest"), new Object[] { printOrPreview }),
 					JOptionPane.YES_NO_OPTION);
 			if (results != JOptionPane.YES_OPTION)
 				return;
 		}
 		if (!train.printManifest(isPreview)) {
-			String string = MessageFormat.format(Bundle.getString("NeedToBuildTrainBeforePrinting"),
+			String string = MessageFormat.format(Bundle.getMessage("NeedToBuildTrainBeforePrinting"),
 					new Object[] { train.getName() });
 			JOptionPane.showMessageDialog(null, string, MessageFormat.format(
-					Bundle.getString("CanNotPrintManifest"), new Object[] { Bundle.getString("print") }),
+					Bundle.getMessage("CanNotPrintManifest"), new Object[] { Bundle.getMessage("print") }),
 					JOptionPane.ERROR_MESSAGE);
 			return;
 		}

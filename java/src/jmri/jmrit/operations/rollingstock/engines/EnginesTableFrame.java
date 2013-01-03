@@ -51,29 +51,29 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	JLabel textSep1 = new JLabel("          ");
 
 	// radio buttons
-	JRadioButton sortByNumber = new JRadioButton(Bundle.getString("Number"));
-	JRadioButton sortByRoad = new JRadioButton(Bundle.getString("Road"));
-	JRadioButton sortByModel = new JRadioButton(Bundle.getString("Model"));
-	JRadioButton sortByConsist = new JRadioButton(Bundle.getString("Consist"));
-	JRadioButton sortByLocation = new JRadioButton(Bundle.getString("Location"));
-	JRadioButton sortByDestination = new JRadioButton(Bundle.getString("Destination"));
-	JRadioButton sortByTrain = new JRadioButton(Bundle.getString("Train"));
-	JRadioButton sortByMoves = new JRadioButton(Bundle.getString("Moves"));
-	JRadioButton sortByBuilt = new JRadioButton(Bundle.getString("Built"));
-	JRadioButton sortByOwner = new JRadioButton(Bundle.getString("Owner"));
+	JRadioButton sortByNumber = new JRadioButton(Bundle.getMessage("Number"));
+	JRadioButton sortByRoad = new JRadioButton(Bundle.getMessage("Road"));
+	JRadioButton sortByModel = new JRadioButton(Bundle.getMessage("Model"));
+	JRadioButton sortByConsist = new JRadioButton(Bundle.getMessage("Consist"));
+	JRadioButton sortByLocation = new JRadioButton(Bundle.getMessage("Location"));
+	JRadioButton sortByDestination = new JRadioButton(Bundle.getMessage("Destination"));
+	JRadioButton sortByTrain = new JRadioButton(Bundle.getMessage("Train"));
+	JRadioButton sortByMoves = new JRadioButton(Bundle.getMessage("Moves"));
+	JRadioButton sortByBuilt = new JRadioButton(Bundle.getMessage("Built"));
+	JRadioButton sortByOwner = new JRadioButton(Bundle.getMessage("Owner"));
 	JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
 	JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
 	ButtonGroup group = new ButtonGroup();
 
 	// major buttons
-	JButton addButton = new JButton(Bundle.getString("Add"));
-	JButton findButton = new JButton(Bundle.getString("Find"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
+	JButton findButton = new JButton(Bundle.getMessage("Find"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	JTextField findEngineTextBox = new JTextField(6);
 
 	public EnginesTableFrame() {
-		super(Bundle.getString("TitleEnginesTable"));
+		super(Bundle.getMessage("TitleEnginesTable"));
 		// general GUI config
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -90,13 +90,13 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		// load the number of engines and listen for changes
 		numEngines.setText(Integer.toString(engineManager.getNumEntries()));
 		engineManager.addPropertyChangeListener(this);
-		textEngines.setText(Bundle.getString("engines"));
+		textEngines.setText(Bundle.getMessage("engines"));
 
 		// Set up the control panel
 
 		// row 1
 		JPanel cp1 = new JPanel();
-		cp1.setBorder(BorderFactory.createTitledBorder(Bundle.getString("SortBy")));
+		cp1.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SortBy")));
 
 		cp1.add(sortByNumber);
 		cp1.add(sortByRoad);
@@ -127,8 +127,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		// row 2
 		JPanel cp2 = new JPanel();
 		cp2.setBorder(BorderFactory.createTitledBorder(""));
-		findButton.setToolTipText(Bundle.getString("findEngine"));
-		findEngineTextBox.setToolTipText(Bundle.getString("findEngine"));
+		findButton.setToolTipText(Bundle.getMessage("findEngine"));
+		findEngineTextBox.setToolTipText(Bundle.getMessage("findEngine"));
 
 		cp2.add(numEngines);
 		cp2.add(textEngines);
@@ -187,9 +187,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new EngineRosterMenu(Bundle.getString("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
-		toolMenu.add(new NceConsistEngineAction(Bundle.getString("MenuItemNceSync"), this));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new EngineRosterMenu(Bundle.getMessage("TitleEngineRoster"), EngineRosterMenu.MAINMENU, this));
+		toolMenu.add(new NceConsistEngineAction(Bundle.getMessage("MenuItemNceSync"), this));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);
@@ -259,9 +259,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			int rowindex = enginesModel.findEngineByRoadNumber(findEngineTextBox.getText());
 			if (rowindex < 0) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getString("engineWithRoadNumNotFound"),
+						Bundle.getMessage("engineWithRoadNumNotFound"),
 						new Object[] { findEngineTextBox.getText() }), Bundle
-						.getString("engineCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
+						.getMessage("engineCouldNotFind"), JOptionPane.INFORMATION_MESSAGE);
 				return;
 
 			}
@@ -275,7 +275,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 				f.dispose();
 			f = new EngineEditFrame();
 			f.initComponents();
-			f.setTitle(Bundle.getString("TitleEngineAdd"));
+			f.setTitle(Bundle.getMessage("TitleEngineAdd"));
 			f.setVisible(true);
 		}
 		if (ae.getSource() == saveButton) {

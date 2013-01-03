@@ -48,18 +48,18 @@ import jmri.util.com.sun.TableSorter;
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-	// public static final String NAME = Bundle.getString("Name"); // Sort by choices
-	// public static final String TIME = Bundle.getString("Time");
-	// public static final String DEPARTS = Bundle.getString("Departs");
-	// public static final String TERMINATES = Bundle.getString("Terminates");
-	// public static final String ROUTE = Bundle.getString("Route");
-	// public static final String STATUS = Bundle.getString("Status");
-	// public static final String ID = Bundle.getString("Id");
+	// public static final String NAME = Bundle.getMessage("Name"); // Sort by choices
+	// public static final String TIME = Bundle.getMessage("Time");
+	// public static final String DEPARTS = Bundle.getMessage("Departs");
+	// public static final String TERMINATES = Bundle.getMessage("Terminates");
+	// public static final String ROUTE = Bundle.getMessage("Route");
+	// public static final String STATUS = Bundle.getMessage("Status");
+	// public static final String ID = Bundle.getMessage("Id");
 
-	public static final String MOVE = Bundle.getString("Move");
-	public static final String TERMINATE = Bundle.getString("Terminate");
-	public static final String RESET = Bundle.getString("Reset");
-	public static final String CONDUCTOR = Bundle.getString("Conductor");
+	public static final String MOVE = Bundle.getMessage("Move");
+	public static final String TERMINATE = Bundle.getMessage("Terminate");
+	public static final String RESET = Bundle.getMessage("Reset");
+	public static final String CONDUCTOR = Bundle.getMessage("Conductor");
 
 	CarManagerXml carManagerXml = CarManagerXml.instance(); // load cars
 	EngineManagerXml engineManagerXml = EngineManagerXml.instance(); // load engines
@@ -73,8 +73,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	JScrollPane trainsPane;
 
 	// radio buttons
-	JRadioButton showTime = new JRadioButton(Bundle.getString("Time"));
-	JRadioButton showId = new JRadioButton(Bundle.getString("Id"));
+	JRadioButton showTime = new JRadioButton(Bundle.getMessage("Time"));
+	JRadioButton showId = new JRadioButton(Bundle.getMessage("Id"));
 
 	JRadioButton moveRB = new JRadioButton(MOVE);
 	JRadioButton terminateRB = new JRadioButton(TERMINATE);
@@ -82,20 +82,20 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	JRadioButton conductorRB = new JRadioButton(CONDUCTOR);
 
 	// major buttons
-	JButton addButton = new JButton(Bundle.getString("Add"));
-	JButton buildButton = new JButton(Bundle.getString("Build"));
-	JButton printButton = new JButton(Bundle.getString("Print"));
-	JButton openFileButton = new JButton(Bundle.getString("OpenFile"));
-	JButton printSwitchButton = new JButton(Bundle.getString("SwitchLists"));
-	JButton terminateButton = new JButton(Bundle.getString("Terminate"));
-	JButton saveButton = new JButton(Bundle.getString("SaveBuilds"));
+	JButton addButton = new JButton(Bundle.getMessage("Add"));
+	JButton buildButton = new JButton(Bundle.getMessage("Build"));
+	JButton printButton = new JButton(Bundle.getMessage("Print"));
+	JButton openFileButton = new JButton(Bundle.getMessage("OpenFile"));
+	JButton printSwitchButton = new JButton(Bundle.getMessage("SwitchLists"));
+	JButton terminateButton = new JButton(Bundle.getMessage("Terminate"));
+	JButton saveButton = new JButton(Bundle.getMessage("SaveBuilds"));
 
 	// check boxes
-	JCheckBox buildMsgBox = new JCheckBox(Bundle.getString("BuildMessages"));
-	JCheckBox buildReportBox = new JCheckBox(Bundle.getString("BuildReport"));
-	JCheckBox printPreviewBox = new JCheckBox(Bundle.getString("Preview"));
-	JCheckBox openFileBox = new JCheckBox(Bundle.getString("OpenFile"));
-	JCheckBox showAllBox = new JCheckBox(Bundle.getString("ShowAllTrains"));
+	JCheckBox buildMsgBox = new JCheckBox(Bundle.getMessage("BuildMessages"));
+	JCheckBox buildReportBox = new JCheckBox(Bundle.getMessage("BuildReport"));
+	JCheckBox printPreviewBox = new JCheckBox(Bundle.getMessage("Preview"));
+	JCheckBox openFileBox = new JCheckBox(Bundle.getMessage("OpenFile"));
+	JCheckBox showAllBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
 
 	public TrainsTableFrame() {
 		super();
@@ -124,12 +124,12 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		cp1.setLayout(new BoxLayout(cp1, BoxLayout.X_AXIS));
 
 		JPanel show = new JPanel();
-		show.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ShowClickToSort")));
+		show.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ShowClickToSort")));
 		show.add(showTime);
 		show.add(showId);
 
 		JPanel messages = new JPanel();
-		messages.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Options")));
+		messages.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
 		messages.add(showAllBox);
 		messages.add(buildMsgBox);
 		messages.add(buildReportBox);
@@ -137,7 +137,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		messages.add(openFileBox);
 
 		JPanel action = new JPanel();
-		action.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Action")));
+		action.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Action")));
 		action.add(moveRB);
 		action.add(conductorRB);
 		action.add(terminateRB);
@@ -148,21 +148,21 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		cp1.add(action);
 
 		// tool tips, see setPrintButtonText() for more tool tips
-		addButton.setToolTipText(Bundle.getString("AddTrain"));
-		buildButton.setToolTipText(Bundle.getString("BuildSelectedTip"));
-		printSwitchButton.setToolTipText(Bundle.getString("PreviewPrintSwitchLists"));
+		addButton.setToolTipText(Bundle.getMessage("AddTrain"));
+		buildButton.setToolTipText(Bundle.getMessage("BuildSelectedTip"));
+		printSwitchButton.setToolTipText(Bundle.getMessage("PreviewPrintSwitchLists"));
 
-		terminateButton.setToolTipText(Bundle.getString("TerminateSelectedTip"));
-		saveButton.setToolTipText(Bundle.getString("SaveBuildsTip"));
-		openFileButton.setToolTipText(Bundle.getString("OpenFileButtonTip"));
-		buildMsgBox.setToolTipText(Bundle.getString("BuildMessagesTip"));
-		printPreviewBox.setToolTipText(Bundle.getString("PreviewTip"));
-		openFileBox.setToolTipText(Bundle.getString("OpenFileTip"));
-		showAllBox.setToolTipText(Bundle.getString("ShowAllTrainsTip"));
+		terminateButton.setToolTipText(Bundle.getMessage("TerminateSelectedTip"));
+		saveButton.setToolTipText(Bundle.getMessage("SaveBuildsTip"));
+		openFileButton.setToolTipText(Bundle.getMessage("OpenFileButtonTip"));
+		buildMsgBox.setToolTipText(Bundle.getMessage("BuildMessagesTip"));
+		printPreviewBox.setToolTipText(Bundle.getMessage("PreviewTip"));
+		openFileBox.setToolTipText(Bundle.getMessage("OpenFileTip"));
+		showAllBox.setToolTipText(Bundle.getMessage("ShowAllTrainsTip"));
 
-		moveRB.setToolTipText(Bundle.getString("MoveTip"));
-		terminateRB.setToolTipText(Bundle.getString("TerminateTip"));
-		resetRB.setToolTipText(Bundle.getString("ResetTip"));
+		moveRB.setToolTipText(Bundle.getMessage("MoveTip"));
+		terminateRB.setToolTipText(Bundle.getMessage("TerminateTip"));
+		resetRB.setToolTipText(Bundle.getMessage("ResetTip"));
 
 		// row 2
 		JPanel cp2 = new JPanel();
@@ -241,16 +241,16 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new OptionAction(Bundle.getString("TitleOptions")));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new OptionAction(Bundle.getMessage("TitleOptions")));
 		toolMenu.add(new PrintOptionAction());
 		toolMenu.add(new BuildReportOptionAction());
-		toolMenu.add(new TrainsByCarTypeAction(Bundle.getString("TitleModifyTrains")));
-		toolMenu.add(new TrainsScheduleAction(Bundle.getString("TitleTimeTableTrains")));
-		toolMenu.add(new TrainCopyAction(Bundle.getString("TitleTrainCopy")));
-		toolMenu.add(new TrainsScriptAction(Bundle.getString("MenuItemScripts"), this));
-		toolMenu.add(new PrintTrainsAction(Bundle.getString("MenuItemPrint"), new Frame(), false, this));
-		toolMenu.add(new PrintTrainsAction(Bundle.getString("MenuItemPreview"), new Frame(), true, this));
+		toolMenu.add(new TrainsByCarTypeAction(Bundle.getMessage("TitleModifyTrains")));
+		toolMenu.add(new TrainsScheduleAction(Bundle.getMessage("TitleTimeTableTrains")));
+		toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy")));
+		toolMenu.add(new TrainsScriptAction(Bundle.getMessage("MenuItemScripts"), this));
+		toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
+		toolMenu.add(new PrintTrainsAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
 
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
@@ -299,7 +299,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		// log.debug("train button activated");
 		if (ae.getSource() == addButton) {
 			TrainEditFrame f = new TrainEditFrame();
-			f.setTitle(Bundle.getString("TitleTrainAdd"));
+			f.setTitle(Bundle.getMessage("TitleTrainAdd"));
 			f.initComponents(null);
 		}
 		if (ae.getSource() == buildButton) {
@@ -319,13 +319,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 				if (train.isBuildEnabled() && !train.printManifestIfBuilt()
 						&& trainManager.isBuildMessagesEnabled()) {
 					JOptionPane.showMessageDialog(null, MessageFormat.format(
-							Bundle.getString("NeedToBuildBeforePrinting"), new Object[] {
+							Bundle.getMessage("NeedToBuildBeforePrinting"), new Object[] {
 									train.getName(),
-									(trainManager.isPrintPreviewEnabled() ? Bundle.getString("preview")
-											: Bundle.getString("print")) }), MessageFormat.format(
-							Bundle.getString("CanNotPrintManifest"), new Object[] { trainManager
-									.isPrintPreviewEnabled() ? Bundle.getString("preview")
-									: Bundle.getString("print") }), JOptionPane.ERROR_MESSAGE);
+									(trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+											: Bundle.getMessage("print")) }), MessageFormat.format(
+							Bundle.getMessage("CanNotPrintManifest"), new Object[] { trainManager
+									.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+									: Bundle.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
@@ -342,17 +342,17 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 								.showMessageDialog(
 										null,
 										MessageFormat
-												.format(Bundle.getString("NeedToBuildBeforeOpenFile"),
+												.format(Bundle.getMessage("NeedToBuildBeforeOpenFile"),
 														new Object[] {
 																train.getName(),
 																(trainManager
-																		.isPrintPreviewEnabled() ? Bundle.getString("preview")
-																		: Bundle.getString("print")) }),
+																		.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+																		: Bundle.getMessage("print")) }),
 										MessageFormat
-												.format(Bundle.getString("CanNotPrintManifest"),
+												.format(Bundle.getMessage("CanNotPrintManifest"),
 														new Object[] { trainManager
-																.isPrintPreviewEnabled() ? Bundle.getString("preview")
-																: Bundle.getString("print") }),
+																.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
+																: Bundle.getMessage("print") }),
 										JOptionPane.ERROR_MESSAGE);
 					} else {
 						//train.openFile();
@@ -384,8 +384,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 				} else if (train.isBuildEnabled() && train.isBuilt() && !train.isPrinted()) {
 					int status = JOptionPane.showConfirmDialog(
 							null,
-							Bundle.getString("WarningTrainManifestNotPrinted"),
-							MessageFormat.format(Bundle.getString("TerminateTrain"),
+							Bundle.getMessage("WarningTrainManifestNotPrinted"),
+							MessageFormat.format(Bundle.getMessage("TerminateTrain"),
 									new Object[] { train.getName(), train.getDescription() }),
 							JOptionPane.YES_NO_OPTION);
 					if (status == JOptionPane.YES_OPTION)
@@ -455,13 +455,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	// Modifies button text and tool tips
 	private void setPrintButtonText() {
 		if (printPreviewBox.isSelected()) {
-			printButton.setText(Bundle.getString("Preview"));
-			printButton.setToolTipText(Bundle.getString("PreviewSelectedTip"));
-			buildReportBox.setToolTipText(Bundle.getString("BuildReportPreviewTip"));
+			printButton.setText(Bundle.getMessage("Preview"));
+			printButton.setToolTipText(Bundle.getMessage("PreviewSelectedTip"));
+			buildReportBox.setToolTipText(Bundle.getMessage("BuildReportPreviewTip"));
 		} else {
-			printButton.setText(Bundle.getString("Print"));
-			printButton.setToolTipText(Bundle.getString("PrintSelectedTip"));
-			buildReportBox.setToolTipText(Bundle.getString("BuildReportPrintTip"));
+			printButton.setText(Bundle.getMessage("Print"));
+			printButton.setToolTipText(Bundle.getMessage("PrintSelectedTip"));
+			buildReportBox.setToolTipText(Bundle.getMessage("BuildReportPrintTip"));
 		}
 	}
 
@@ -494,7 +494,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	}
 
 	private void updateTitle() {
-		String title = Bundle.getString("TitleTrainsTable");
+		String title = Bundle.getMessage("TitleTrainsTable");
 		TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
 				trainManager.getTrainScheduleActiveId());
 		if (sch != null)
@@ -551,8 +551,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		if (OperationsXml.areFilesDirty()) {
 			int result = javax.swing.JOptionPane.showOptionDialog(
 					this,
-					Bundle.getString("PromptQuitWindowNotWritten"),
-					Bundle.getString("PromptSaveQuit"),
+					Bundle.getMessage("PromptQuitWindowNotWritten"),
+					Bundle.getMessage("PromptSaveQuit"),
 					javax.swing.JOptionPane.YES_NO_OPTION,
 					javax.swing.JOptionPane.WARNING_MESSAGE,
 					null, // icon

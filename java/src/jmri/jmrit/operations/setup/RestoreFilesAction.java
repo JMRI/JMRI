@@ -43,8 +43,8 @@ public class RestoreFilesAction extends AbstractAction {
 			if (JOptionPane
 					.showConfirmDialog(
 							null,
-							Bundle.getString("OperationsFilesModified"),
-							Bundle.getString("SaveOperationFiles"),
+							Bundle.getMessage("OperationsFilesModified"),
+							Bundle.getMessage("SaveOperationFiles"),
 							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
@@ -78,8 +78,8 @@ public class RestoreFilesAction extends AbstractAction {
 			backup.restoreFilesFromDirectory(directory);
 
 			JOptionPane.showMessageDialog(null,
-					Bundle.getString("YouMustRestartAfterRestore"),
-					Bundle.getString("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
+					Bundle.getMessage("YouMustRestartAfterRestore"),
+					Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
 			// now deregister shut down task
 			// If Trains window was opened, then task is active
@@ -116,7 +116,7 @@ public class RestoreFilesAction extends AbstractAction {
 		}
 
 		public String getDescription() {
-			return Bundle.getString("BackupFolders");
+			return Bundle.getMessage("BackupFolders");
 		}
 	}
 

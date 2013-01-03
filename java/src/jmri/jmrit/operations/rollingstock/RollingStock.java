@@ -66,8 +66,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
 	// the draw bar length must only be calculated once at startup
 	public static final int COUPLER = Setup.getLengthUnit().equals(Setup.FEET) ? Integer
-			.parseInt(Bundle.getString("DrawBarLengthFeet")) : Integer.parseInt(Bundle
-			.getString("DrawBarLengthMeter")); // draw bar length between rolling stocks
+			.parseInt(Bundle.getMessage("DrawBarLengthFeet")) : Integer.parseInt(Bundle
+			.getMessage("DrawBarLengthMeter")); // draw bar length between rolling stocks
 
 	LocationManager locationManager = LocationManager.instance();
 

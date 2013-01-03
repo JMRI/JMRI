@@ -21,7 +21,7 @@ public class ShowCarsByLocationAction extends AbstractAction {
 	}
 
 	public ShowCarsByLocationAction(boolean showAllCars, String locationName, String trackName) {
-		this(Bundle.getString("MenuItemShowCars"));
+		this(Bundle.getMessage("MenuItemShowCars"));
 		this.showAllCars = showAllCars;
 		this.locationName = locationName;
 		this.trackName = trackName;

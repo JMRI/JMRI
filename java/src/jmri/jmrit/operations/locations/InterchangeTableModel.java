@@ -25,7 +25,7 @@ public class InterchangeTableModel extends TrackTableModel {
 	public String getColumnName(int col) {
 		switch (col) {
 		case NAMECOLUMN:
-			return Bundle.getString("InterchangeName");
+			return Bundle.getMessage("InterchangeName");
 		}
 		return super.getColumnName(col);
 	}
@@ -39,7 +39,7 @@ public class InterchangeTableModel extends TrackTableModel {
 		String interchangeId = tracksList.get(row);
 		Track interchange = _location.getTrackById(interchangeId);
 		tef.initComponents(_location, interchange);
-		tef.setTitle(Bundle.getString("EditInterchange"));
+		tef.setTitle(Bundle.getMessage("EditInterchange"));
 		focusEditFrame = true;
 	}
 

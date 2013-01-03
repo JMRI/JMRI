@@ -24,7 +24,7 @@ public class ModifyLocationsAction extends AbstractAction {
 	}
 
 	public ModifyLocationsAction() {
-		super(Bundle.getString("TitleModifyLocations"));
+		super(Bundle.getMessage("TitleModifyLocations"));
 	}
 
 	Location l;

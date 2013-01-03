@@ -33,7 +33,7 @@ public class TrainsScriptAction extends AbstractAction {
 		f.setLocation(frame.getLocation());
 		f.initComponents();
 		f.setExtendedState(Frame.NORMAL);
-		f.setTitle(Bundle.getString("MenuItemScripts"));
+		f.setTitle(Bundle.getMessage("MenuItemScripts"));
 	}
 }
 

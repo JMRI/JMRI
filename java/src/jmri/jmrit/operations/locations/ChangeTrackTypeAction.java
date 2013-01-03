@@ -23,7 +23,7 @@ public class ChangeTrackTypeAction extends AbstractAction {
 	private TrackEditFrame _tef;
 	
 	public ChangeTrackTypeAction(TrackEditFrame tef){
-		super(Bundle.getString("MenuItemChangeTrackType"));
+		super(Bundle.getMessage("MenuItemChangeTrackType"));
 		_tef = tef;
 	}
 	
@@ -36,13 +36,13 @@ public class ChangeTrackTypeAction extends AbstractAction {
 class ChangeTrackFrame extends OperationsFrame{
 		
 	// radio buttons
-    JRadioButton sidingRadioButton = new JRadioButton(Bundle.getString("Siding"));
-    JRadioButton yardRadioButton = new JRadioButton(Bundle.getString("Yard"));
-    JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getString("Interchange"));
+    JRadioButton sidingRadioButton = new JRadioButton(Bundle.getMessage("Siding"));
+    JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yard"));
+    JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getMessage("Interchange"));
     ButtonGroup group = new ButtonGroup();
     
     // major buttons
-    JButton saveButton = new JButton(Bundle.getString("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("Save"));
     
     private TrackEditFrame _tef;
     String _trackType ="";
@@ -64,7 +64,7 @@ class ChangeTrackFrame extends OperationsFrame{
 	   	// row 1a
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
-    	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getString("TrackType"),new Object[]{trackName})));
+    	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("TrackType"),new Object[]{trackName})));
     	addItem(p1, sidingRadioButton, 0, 0);
     	addItem(p1, yardRadioButton, 1, 0);
     	addItem(p1, interchangeRadioButton, 2, 0);
@@ -87,7 +87,7 @@ class ChangeTrackFrame extends OperationsFrame{
     	addButtonAction(saveButton);
     	
     	getContentPane().add(p1);
-    	setTitle(Bundle.getString("MenuItemChangeTrackType"));
+    	setTitle(Bundle.getMessage("MenuItemChangeTrackType"));
     	pack();
     	if (getWidth() < 250)
     		setSize(getWidth()+100, getHeight());

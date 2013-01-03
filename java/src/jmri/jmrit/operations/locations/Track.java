@@ -79,9 +79,9 @@ public class Track {
 
 	// order cars are serviced
 	protected String _order = NORMAL;
-	public static final String NORMAL = Bundle.getString("Normal");
-	public static final String FIFO = Bundle.getString("FIFO");
-	public static final String LIFO = Bundle.getString("LIFO");
+	public static final String NORMAL = Bundle.getMessage("Normal");
+	public static final String FIFO = Bundle.getMessage("FIFO");
+	public static final String LIFO = Bundle.getMessage("LIFO");
 
 	// the four types of tracks
 	public static final String STAGING = "Staging";
@@ -96,14 +96,14 @@ public class Track {
 	public static final int SOUTH = 8;
 
 	// how roads are serviced by this track
-	public static final String ALLROADS = Bundle.getString("All"); // track accepts all roads
-	public static final String INCLUDEROADS = Bundle.getString("Include"); // track accepts only certain roads
-	public static final String EXCLUDEROADS = Bundle.getString("Exclude"); // track does not accept certain roads
+	public static final String ALLROADS = Bundle.getMessage("All"); // track accepts all roads
+	public static final String INCLUDEROADS = Bundle.getMessage("Include"); // track accepts only certain roads
+	public static final String EXCLUDEROADS = Bundle.getMessage("Exclude"); // track does not accept certain roads
 
 	// load options
-	public static final String ALLLOADS = Bundle.getString("All"); // track services all loads
-	public static final String INCLUDELOADS = Bundle.getString("Include");
-	public static final String EXCLUDELOADS = Bundle.getString("Exclude");
+	public static final String ALLLOADS = Bundle.getMessage("All"); // track services all loads
+	public static final String INCLUDELOADS = Bundle.getMessage("Include");
+	public static final String EXCLUDELOADS = Bundle.getMessage("Exclude");
 
 	// schedule modes
 	public static final int SEQUENTIAL = 0;
@@ -114,11 +114,11 @@ public class Track {
 	protected int _minimumLength = 0;
 
 	// return status when checking rolling stock
-	public static final String OKAY = Bundle.getString("okay");
-	public static final String LENGTH = Bundle.getString("length");
-	public static final String TYPE = Bundle.getString("type");
-	public static final String ROAD = Bundle.getString("road");
-	public static final String LOAD = Bundle.getString("load");
+	public static final String OKAY = Bundle.getMessage("okay");
+	public static final String LENGTH = Bundle.getMessage("length");
+	public static final String TYPE = Bundle.getMessage("type");
+	public static final String ROAD = Bundle.getMessage("road");
+	public static final String LOAD = Bundle.getMessage("load");
 
 	// For property change
 	public static final String TYPES_CHANGED_PROPERTY = "trackRollingStockTypes"; // NOI18N
@@ -1207,61 +1207,61 @@ public class Track {
 			return status;
 		Schedule schedule = getSchedule();
 		if (schedule == null)
-			return MessageFormat.format(Bundle.getString("CanNotFindSchedule"),
+			return MessageFormat.format(Bundle.getMessage("CanNotFindSchedule"),
 					new Object[] { getScheduleId() });
 		List<String> scheduleItems = schedule.getItemsBySequenceList();
 		if (scheduleItems.size() == 0) {
-			return Bundle.getString("empty");
+			return Bundle.getMessage("empty");
 		}
 		for (int i = 0; i < scheduleItems.size(); i++) {
 			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
 			// check train schedule
 			if (!si.getTrainScheduleId().equals("")
 					&& TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId()) == null) {
-				status = MessageFormat.format(Bundle.getString("NotValid"),
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getTrainScheduleId() });
 				break;
 			}
 			if (!_location.acceptsTypeName(si.getType())) {
-				status = MessageFormat.format(Bundle.getString("NotValid"),
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getType() });
 				break;
 			}
 			if (!acceptsTypeName(si.getType())) {
-				status = MessageFormat.format(Bundle.getString("NotValid"),
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getType() });
 				break;
 			}
 			if (!si.getRoad().equals("") && !acceptsRoadName(si.getRoad())) {
-				status = MessageFormat.format(Bundle.getString("NotValid"),
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getRoad() });
 				break;
 			}
 			if (!si.getRoad().equals("") && !CarRoads.instance().containsName(si.getRoad())) {
-				status = MessageFormat.format(Bundle.getString("NotValid"),
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getRoad() });
 				break;
 			}
 			// check loads
 			if (!si.getLoad().equals("") && !acceptsLoad(si.getLoad(), si.getType())) {
-				status = MessageFormat.format(Bundle.getString("NotValid"),
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getLoad() });
 				break;
 			}
 			List<String> loads = CarLoads.instance().getNames(si.getType());
 			if (!si.getLoad().equals("") && !loads.contains(si.getLoad())) {
-				status = MessageFormat.format(Bundle.getString("NotValid"),
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getLoad() });
 				break;
 			}
 			if (!si.getShip().equals("") && !loads.contains(si.getShip())) {
-				status = MessageFormat.format(Bundle.getString("NotValid"),
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getShip() });
 				break;
 			}
 			// check destination
 			if (si.getDestination() != null && !si.getDestination().acceptsTypeName(si.getType())) {
-				status = MessageFormat.format(Bundle.getString("NotValid"),
+				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getDestination() });
 				break;
 			}
@@ -1269,25 +1269,25 @@ public class Track {
 			if (si.getDestination() != null && si.getDestinationTrack() != null) {
 				if (!si.getDestinationTrack().acceptsTypeName(si.getType())) {
 					status = MessageFormat.format(
-							Bundle.getString("NotValid"),
+							Bundle.getMessage("NotValid"),
 							new Object[] { si.getDestinationTrack() + " ("
-									+ Bundle.getString("Type") + ")" });
+									+ Bundle.getMessage("Type") + ")" });
 					break;
 				}
 				if (!si.getRoad().equals("")
 						&& !si.getDestinationTrack().acceptsRoadName(si.getRoad())) {
 					status = MessageFormat.format(
-							Bundle.getString("NotValid"),
+							Bundle.getMessage("NotValid"),
 							new Object[] { si.getDestinationTrack() + " ("
-									+ Bundle.getString("Road") + ")" });
+									+ Bundle.getMessage("Road") + ")" });
 					break;
 				}
 				if (!si.getShip().equals("")
 						&& !si.getDestinationTrack().acceptsLoad(si.getShip(), si.getType())) {
 					status = MessageFormat.format(
-							Bundle.getString("NotValid"),
+							Bundle.getMessage("NotValid"),
 							new Object[] { si.getDestinationTrack() + " ("
-									+ Bundle.getString("Load") + ")" });
+									+ Bundle.getMessage("Load") + ")" });
 					break;
 				}
 			}

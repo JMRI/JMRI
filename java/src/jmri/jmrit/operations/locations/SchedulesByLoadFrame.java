@@ -51,11 +51,11 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
 
 		JPanel type = new JPanel();
-		type.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Type")));
+		type.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
 		type.add(typesComboBox);
 
 		JPanel load = new JPanel();
-		load.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Load")));
+		load.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
 		load.add(loadsComboBox);
 
 		p1.add(type);
@@ -65,7 +65,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		locationsPanel.setLayout(new GridBagLayout());
 		JScrollPane locationsPane = new JScrollPane(locationsPanel);
 		locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		locationsPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Locations")));
+		locationsPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Locations")));
 
 		getContentPane().add(p1);
 		getContentPane().add(locationsPane);
@@ -80,10 +80,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new PrintCarLoadsAction(Bundle.getString("MenuItemCarLoadsPreview"), true,
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemCarLoadsPreview"), true,
 				this));
-		toolMenu.add(new PrintCarLoadsAction(Bundle.getString("MenuItemCarLoadsPrint"), false, this));
+		toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemCarLoadsPrint"), false, this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N
@@ -91,7 +91,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		// select first item to load contents
 		typesComboBox.setSelectedIndex(0);
 
-		setTitle(Bundle.getString("MenuItemShowSchedulesByLoad"));
+		setTitle(Bundle.getMessage("MenuItemShowSchedulesByLoad"));
 		pack();
 		if (getWidth() < 750)
 			setSize(750, getHeight());
@@ -119,10 +119,10 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		log.debug("Update locations for type " + type + " load " + load);
 		locationsPanel.removeAll();
 		int x = 0;
-		addItemLeft(locationsPanel, new JLabel(Bundle.getString("trackSchedule")), 1, x);
-		addItemLeft(locationsPanel, new JLabel(Bundle.getString("receiveTypeLoad")), 2, x);
-		addItemLeft(locationsPanel, new JLabel(Bundle.getString("shipLoad")), 3, x);
-		addItemLeft(locationsPanel, new JLabel(Bundle.getString("destinationTrack")), 4, x++);
+		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("trackSchedule")), 1, x);
+		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("receiveTypeLoad")), 2, x);
+		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("shipLoad")), 3, x);
+		addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("destinationTrack")), 4, x++);
 		List<String> locations = locationManager.getLocationsByIdList();
 		for (int i = 0; i < locations.size(); i++) {
 			Location l = locationManager.getLocationById(locations.get(i));
@@ -166,9 +166,9 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 								else
 									s = s + ",";
 								s = s + ", " + item.getLoad();
-								addItemLeft(locationsPanel, new JLabel(Bundle.getString("Receive")
+								addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive")
 										+ " (" + s + ")"), 2, x);
-								addItemLeft(locationsPanel, new JLabel(Bundle.getString("Ship")
+								addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship")
 										+ " (" + item.getShip() + ")"), 3, x++);
 								if (item.getDestination() != null)
 									addItemLeft(

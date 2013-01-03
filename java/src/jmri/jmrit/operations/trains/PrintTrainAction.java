@@ -55,7 +55,7 @@ public class PrintTrainAction extends AbstractAction {
 		// obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		try {
-			writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getString("TitleTrain"),
+			writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getMessage("TitleTrain"),
 					new Object[] { train.getName() }), 10, .5, .5, .5, .5, isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -63,19 +63,19 @@ public class PrintTrainAction extends AbstractAction {
 		}
 
 		try {
-			String s = Bundle.getString("Name") + ": " + train.getName() + newLine;
+			String s = Bundle.getMessage("Name") + ": " + train.getName() + newLine;
 			writer.write(s, 0, s.length());
-			s = Bundle.getString("Description") + ": " + train.getDescription() + newLine;
+			s = Bundle.getMessage("Description") + ": " + train.getDescription() + newLine;
 			writer.write(s, 0, s.length());
-			s = Bundle.getString("Departs") + ": " + train.getTrainDepartsName() + newLine;
+			s = Bundle.getMessage("Departs") + ": " + train.getTrainDepartsName() + newLine;
 			writer.write(s, 0, s.length());
-			s = Bundle.getString("DepartTime") + ": " + train.getDepartureTime() + newLine;
+			s = Bundle.getMessage("DepartTime") + ": " + train.getDepartureTime() + newLine;
 			writer.write(s, 0, s.length());
-			s = Bundle.getString("Terminates") + ": " + train.getTrainTerminatesName() + newLine;
+			s = Bundle.getMessage("Terminates") + ": " + train.getTrainTerminatesName() + newLine;
 			writer.write(s, 0, s.length());
 			s = newLine;
 			writer.write(s, 0, s.length());
-			s = Bundle.getString("Route") + ": " + train.getTrainRouteName() + newLine;
+			s = Bundle.getMessage("Route") + ": " + train.getTrainRouteName() + newLine;
 			writer.write(s, 0, s.length());
 			Route route = train.getRoute();
 			if (route != null) {
@@ -87,7 +87,7 @@ public class PrintTrainAction extends AbstractAction {
 				}
 			}
 			if (!train.getComment().equals("")) {
-				s = Bundle.getString("Comment") + ": " + train.getComment() + newLine;
+				s = Bundle.getMessage("Comment") + ": " + train.getComment() + newLine;
 				writer.write(s);
 			}
 

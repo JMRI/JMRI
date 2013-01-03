@@ -51,7 +51,7 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		// obtain a HardcopyWriter
 		try {
-			writer = new HardcopyWriter(mFrame, Bundle.getString("TitleTrainsByType"), 10, .5, .5, .5, .5,
+			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleTrainsByType"), 10, .5, .5, .5, .5,
 					isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -67,8 +67,8 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 		
 		try {
 			// title line
-			String s = Bundle.getString("Type") + tab + Bundle.getString("Trains")
-					+ "\t\t\t  " + Bundle.getString("Description") + newLine;
+			String s = Bundle.getMessage("Type") + tab + Bundle.getMessage("Trains")
+					+ "\t\t\t  " + Bundle.getMessage("Description") + newLine;
 			writer.write(s);
 			// car types
 			for (int t = 0; t < carTypes.length; t++) {

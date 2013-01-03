@@ -61,7 +61,7 @@ public class RestoreDialog extends JDialog {
 	private void initComponents() {
 		setModalityType(ModalityType.DOCUMENT_MODAL);
 		setModal(true);
-		setTitle(Bundle.getString("RestoreDialog.this.title"));
+		setTitle(Bundle.getMessage("RestoreDialog.this.title"));
 		setBounds(100, 100, 378, 251);
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -75,7 +75,7 @@ public class RestoreDialog extends JDialog {
 			mainPanel.add(contentPanel, BorderLayout.NORTH);
 
 			{
-				JLabel captionLabel = new JLabel(Bundle.getString("RestoreDialog.label.text"));
+				JLabel captionLabel = new JLabel(Bundle.getMessage("RestoreDialog.label.text"));
 				captionLabel.setBorder(new EmptyBorder(5, 0, 5, 0));
 				contentPanel.add(captionLabel);
 			}
@@ -90,7 +90,7 @@ public class RestoreDialog extends JDialog {
 				ButtonGroup fromGroup = new ButtonGroup();
 
 				{
-					automaticBackupsRadioButton = new JRadioButton(Bundle.getString("RestoreDialog.radioButton.autoBackup"));
+					automaticBackupsRadioButton = new JRadioButton(Bundle.getMessage("RestoreDialog.radioButton.autoBackup"));
 					automaticBackupsRadioButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							do_automaticBackupsRadioButton_actionPerformed(e);
@@ -100,7 +100,7 @@ public class RestoreDialog extends JDialog {
 					fromGroup.add(automaticBackupsRadioButton);
 				}
 				{
-					defaultBackupsRadioButton = new JRadioButton(Bundle.getString("RestoreDialog.radioButton.defaultBackup"));
+					defaultBackupsRadioButton = new JRadioButton(Bundle.getMessage("RestoreDialog.radioButton.defaultBackup"));
 					defaultBackupsRadioButton.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							do_defaultBackupsRadioButton_actionPerformed(e);
@@ -112,7 +112,7 @@ public class RestoreDialog extends JDialog {
 			}
 
 			{
-				newLabelLabel = new JLabel(Bundle.getString("RestoreDialog.label2.text"));
+				newLabelLabel = new JLabel(Bundle.getMessage("RestoreDialog.label2.text"));
 				newLabelLabel.setBorder(new EmptyBorder(10, 0, 5, 0));
 				contentPanel.add(newLabelLabel);
 			}
@@ -134,7 +134,7 @@ public class RestoreDialog extends JDialog {
 			buttonPane.setLayout(fl_buttonPane);
 			mainPanel.add(buttonPane, BorderLayout.SOUTH);
 			{
-				restoreButton = new JButton(Bundle.getString("RestoreDialog.retoreButton.text"));
+				restoreButton = new JButton(Bundle.getMessage("RestoreDialog.retoreButton.text"));
 				restoreButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						do_restoreButton_actionPerformed(e);
@@ -143,7 +143,7 @@ public class RestoreDialog extends JDialog {
 				buttonPane.add(restoreButton);
 			}
 			{
-				JButton cancelButton = new JButton(Bundle.getString("BackupDialog.cancelButton.text"));
+				JButton cancelButton = new JButton(Bundle.getMessage("BackupDialog.cancelButton.text"));
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						do_cancelButton_actionPerformed(arg0);
@@ -210,8 +210,8 @@ public class RestoreDialog extends JDialog {
 
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
-			if (JOptionPane.showConfirmDialog(this, Bundle.getString("OperationsFilesModified"),
-					Bundle.getString("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("OperationsFilesModified"),
+					Bundle.getMessage("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
 		}
@@ -242,8 +242,8 @@ public class RestoreDialog extends JDialog {
 				log.debug("Unable to deregister Train Dirty Task");
 			}
 
-			JOptionPane.showMessageDialog(this, Bundle.getString("YouMustRestartAfterRestore"),
-					Bundle.getString("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("YouMustRestartAfterRestore"),
+					Bundle.getMessage("RestoreSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 			dispose();
 
 			Apps.handleRestart();

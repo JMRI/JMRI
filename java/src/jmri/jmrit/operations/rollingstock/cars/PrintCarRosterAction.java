@@ -71,7 +71,7 @@ public class PrintCarRosterAction extends AbstractAction {
 		// obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		try {
-			writer = new HardcopyWriter(mFrame, Bundle.getString("TitleCarRoster"), 10, .5, .5, .5,
+			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarRoster"), 10, .5, .5, .5,
 					.5, isPreview, "", landscape, true);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -186,31 +186,31 @@ public class PrintCarRosterAction extends AbstractAction {
 	}
 
 	private void printTitleLine(HardcopyWriter writer) throws IOException {
-		String s = Bundle.getString("Number")
+		String s = Bundle.getMessage("Number")
 				+ "  "
-				+ padAttribute(Bundle.getString("Road"), CarRoads.instance().getCurMaxNameLength())
-				+ padAttribute(Bundle.getString("Type"), CarTypes.instance().getCurMaxNameLength())
-				+ (printCarLength.isSelected() ? Bundle.getString("Len") + "  " : "")
+				+ padAttribute(Bundle.getMessage("Road"), CarRoads.instance().getCurMaxNameLength())
+				+ padAttribute(Bundle.getMessage("Type"), CarTypes.instance().getCurMaxNameLength())
+				+ (printCarLength.isSelected() ? Bundle.getMessage("Len") + "  " : "")
 				+ (printCarWeight.isSelected() ? "     " : "")
-				+ (printCarColor.isSelected() ? padAttribute(Bundle.getString("Color"), CarColors
+				+ (printCarColor.isSelected() ? padAttribute(Bundle.getMessage("Color"), CarColors
 						.instance().getCurMaxNameLength()) : "")
-				+ (printCarLoad.isSelected() ? padAttribute(Bundle.getString("Load"), CarLoads
+				+ (printCarLoad.isSelected() ? padAttribute(Bundle.getMessage("Load"), CarLoads
 						.instance().getCurMaxNameLength()) : "")
 				+ (printCarKernel.isSelected() ? padAttribute(("Kernel"),
 						Control.max_len_string_attibute) : "")
-				+ (printCarOwner.isSelected() ? padAttribute(Bundle.getString("Owner"), ownerMaxLen)
+				+ (printCarOwner.isSelected() ? padAttribute(Bundle.getMessage("Owner"), ownerMaxLen)
 						: "")
-				+ (printCarBuilt.isSelected() ? Bundle.getString("Built") + " " : "")
+				+ (printCarBuilt.isSelected() ? Bundle.getMessage("Built") + " " : "")
 				+ (printCarValue.isSelected() ? Setup.getValueLabel() + "        " : "")
 				+ (printCarRfid.isSelected() ? Setup.getRfidLabel() + "        " : "")
-				+ (printCarLocation.isSelected() ? padAttribute(Bundle.getString("Location"),
+				+ (printCarLocation.isSelected() ? padAttribute(Bundle.getMessage("Location"),
 						Control.max_len_string_location_name + Control.max_len_string_track_name
 								/ 2) : "")
-				+ (printCarTrain.isSelected() ? padAttribute(Bundle.getString("Train"),
+				+ (printCarTrain.isSelected() ? padAttribute(Bundle.getMessage("Train"),
 						Control.max_len_string_train_name / 2) : "")
-				+ (printCarDestination.isSelected() ? padAttribute(Bundle.getString("Destination"),
+				+ (printCarDestination.isSelected() ? padAttribute(Bundle.getMessage("Destination"),
 						Control.max_len_string_location_name) : "")
-				+ (printCarComment.isSelected() ? Bundle.getString("Comment") : "");
+				+ (printCarComment.isSelected() ? Bundle.getMessage("Comment") : "");
 		if (s.length() > numberCharPerLine)
 			s = s.substring(0, numberCharPerLine);
 		writer.write(s + NEW_LINE);
@@ -229,26 +229,26 @@ public class PrintCarRosterAction extends AbstractAction {
 
 	JComboBox manifestOrientationComboBox = Setup.getOrientationComboBox();
 
-	JCheckBox printCarsWithLocation = new JCheckBox(Bundle.getString("PrintCarsWithLocation"));
-	JCheckBox printCarLength = new JCheckBox(Bundle.getString("PrintCarLength"));
-	JCheckBox printCarWeight = new JCheckBox(Bundle.getString("PrintCarWeight"));
-	JCheckBox printCarColor = new JCheckBox(Bundle.getString("PrintCarColor"));
-	JCheckBox printCarOwner = new JCheckBox(Bundle.getString("PrintCarOwner"));
-	JCheckBox printCarBuilt = new JCheckBox(Bundle.getString("PrintCarBuilt"));
-	JCheckBox printCarLoad = new JCheckBox(Bundle.getString("PrintCarLoad"));
-	JCheckBox printCarKernel = new JCheckBox(Bundle.getString("PrintKernel"));
-	JCheckBox printCarValue = new JCheckBox(MessageFormat.format(Bundle.getString("PrintCar"),
+	JCheckBox printCarsWithLocation = new JCheckBox(Bundle.getMessage("PrintCarsWithLocation"));
+	JCheckBox printCarLength = new JCheckBox(Bundle.getMessage("PrintCarLength"));
+	JCheckBox printCarWeight = new JCheckBox(Bundle.getMessage("PrintCarWeight"));
+	JCheckBox printCarColor = new JCheckBox(Bundle.getMessage("PrintCarColor"));
+	JCheckBox printCarOwner = new JCheckBox(Bundle.getMessage("PrintCarOwner"));
+	JCheckBox printCarBuilt = new JCheckBox(Bundle.getMessage("PrintCarBuilt"));
+	JCheckBox printCarLoad = new JCheckBox(Bundle.getMessage("PrintCarLoad"));
+	JCheckBox printCarKernel = new JCheckBox(Bundle.getMessage("PrintKernel"));
+	JCheckBox printCarValue = new JCheckBox(MessageFormat.format(Bundle.getMessage("PrintCar"),
 			new Object[] { Setup.getValueLabel() }));
-	JCheckBox printCarRfid = new JCheckBox(MessageFormat.format(Bundle.getString("PrintCar"),
+	JCheckBox printCarRfid = new JCheckBox(MessageFormat.format(Bundle.getMessage("PrintCar"),
 			new Object[] { Setup.getRfidLabel() }));
-	JCheckBox printCarLocation = new JCheckBox(Bundle.getString("PrintCarLocation"));
-	JCheckBox printCarTrain = new JCheckBox(Bundle.getString("PrintCarTrain"));
-	JCheckBox printCarDestination = new JCheckBox(Bundle.getString("PrintCarDestination"));
-	JCheckBox printCarComment = new JCheckBox(Bundle.getString("PrintCarComment"));
-	JCheckBox printSpace = new JCheckBox(Bundle.getString("PrintSpace"));
-	JCheckBox printPage = new JCheckBox(Bundle.getString("PrintPage"));
+	JCheckBox printCarLocation = new JCheckBox(Bundle.getMessage("PrintCarLocation"));
+	JCheckBox printCarTrain = new JCheckBox(Bundle.getMessage("PrintCarTrain"));
+	JCheckBox printCarDestination = new JCheckBox(Bundle.getMessage("PrintCarDestination"));
+	JCheckBox printCarComment = new JCheckBox(Bundle.getMessage("PrintCarComment"));
+	JCheckBox printSpace = new JCheckBox(Bundle.getMessage("PrintSpace"));
+	JCheckBox printPage = new JCheckBox(Bundle.getMessage("PrintPage"));
 
-	JButton okayButton = new JButton(Bundle.getString("ButtonOkay"));
+	JButton okayButton = new JButton(Bundle.getMessage("ButtonOkay"));
 
 	static final String NEW_LINE = "\n"; // NOI18N
 
@@ -260,17 +260,17 @@ public class PrintCarRosterAction extends AbstractAction {
 			this.pcr = pcr;
 			// create panel
 			JPanel pSortBy = new JPanel();
-			pSortBy.setBorder(BorderFactory.createTitledBorder(Bundle.getString("SortBy")));
+			pSortBy.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SortBy")));
 			pSortBy.add(sort);
 
 			JPanel pOrientation = new JPanel();
 			pOrientation.setBorder(BorderFactory.createTitledBorder(Bundle
-					.getString("BorderLayoutOrientation")));
+					.getMessage("BorderLayoutOrientation")));
 			pOrientation.add(manifestOrientationComboBox);
 
 			JPanel pPanel = new JPanel();
 			pPanel.setLayout(new GridBagLayout());
-			pPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getString("PrintOptions")));
+			pPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrintOptions")));
 			addItemLeft(pPanel, printCarsWithLocation, 0, 0);
 			addItemLeft(pPanel, printCarLength, 0, 1);
 			addItemLeft(pPanel, printCarWeight, 0, 2);
@@ -309,8 +309,8 @@ public class PrintCarRosterAction extends AbstractAction {
 			printPage.setSelected(false);
 
 			// add tool tips
-			printSpace.setToolTipText(Bundle.getString("TipSelectSortByLoc"));
-			printPage.setToolTipText(Bundle.getString("TipSelectSortByLoc"));
+			printSpace.setToolTipText(Bundle.getMessage("TipSelectSortByLoc"));
+			printPage.setToolTipText(Bundle.getMessage("TipSelectSortByLoc"));
 
 			JPanel pButtons = new JPanel();
 			pButtons.setLayout(new GridBagLayout());
@@ -330,9 +330,9 @@ public class PrintCarRosterAction extends AbstractAction {
 
 		public void initComponents() {
 			if (isPreview)
-				cpof.setTitle(Bundle.getString("MenuItemPreview"));
+				cpof.setTitle(Bundle.getMessage("MenuItemPreview"));
 			else
-				cpof.setTitle(Bundle.getString("MenuItemPrint"));
+				cpof.setTitle(Bundle.getMessage("MenuItemPrint"));
 			sort.setText(panel.carsModel.getSortByName());
 			cars = panel.getSortByList();
 			printSpace.setEnabled(panel.sortByLocation.isSelected());

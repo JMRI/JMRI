@@ -43,18 +43,18 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 	// labels
 
-	JLabel textIconNorth = new JLabel(Bundle.getString("IconNorth"));
-	JLabel textIconSouth = new JLabel(Bundle.getString("IconSouth"));
-	JLabel textIconEast = new JLabel(Bundle.getString("IconEast"));
-	JLabel textIconWest = new JLabel(Bundle.getString("IconWest"));
-	JLabel textIconLocal = new JLabel(Bundle.getString("IconLocal"));
-	JLabel textIconTerminate = new JLabel(Bundle.getString("IconTerminate"));
-	// JLabel textComment = new JLabel(Bundle.getString("Comment"));
+	JLabel textIconNorth = new JLabel(Bundle.getMessage("IconNorth"));
+	JLabel textIconSouth = new JLabel(Bundle.getMessage("IconSouth"));
+	JLabel textIconEast = new JLabel(Bundle.getMessage("IconEast"));
+	JLabel textIconWest = new JLabel(Bundle.getMessage("IconWest"));
+	JLabel textIconLocal = new JLabel(Bundle.getMessage("IconLocal"));
+	JLabel textIconTerminate = new JLabel(Bundle.getMessage("IconTerminate"));
+	// JLabel textComment = new JLabel(Bundle.getMessage("Comment"));
 
 	// major buttons
-	JButton backupButton = new JButton(Bundle.getString("Backup"));
-	JButton restoreButton = new JButton(Bundle.getString("Restore"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton backupButton = new JButton(Bundle.getMessage("Backup"));
+	JButton restoreButton = new JButton(Bundle.getMessage("Restore"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// radio buttons
 	JRadioButton scaleZ = new JRadioButton("Z"); // NOI18N
@@ -69,22 +69,22 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	JRadioButton scaleO = new JRadioButton("O"); // NOI18N
 	JRadioButton scaleG = new JRadioButton("G"); // NOI18N
 
-	JRadioButton typeDesc = new JRadioButton(Bundle.getString("Descriptive"));
-	JRadioButton typeAAR = new JRadioButton(Bundle.getString("AAR"));
+	JRadioButton typeDesc = new JRadioButton(Bundle.getMessage("Descriptive"));
+	JRadioButton typeAAR = new JRadioButton(Bundle.getMessage("AAR"));
 
-	JRadioButton feetUnit = new JRadioButton(Bundle.getString("Feet"));
-	JRadioButton meterUnit = new JRadioButton(Bundle.getString("Meter"));
+	JRadioButton feetUnit = new JRadioButton(Bundle.getMessage("Feet"));
+	JRadioButton meterUnit = new JRadioButton(Bundle.getMessage("Meter"));
 
 	// check boxes
-	JCheckBox eastCheckBox = new JCheckBox(Bundle.getString("eastwest"));
-	JCheckBox northCheckBox = new JCheckBox(Bundle.getString("northsouth"));
-	JCheckBox mainMenuCheckBox = new JCheckBox(Bundle.getString("MainMenu"));
-	JCheckBox closeOnSaveCheckBox = new JCheckBox(Bundle.getString("CloseOnSave"));
-	JCheckBox autoSaveCheckBox = new JCheckBox(Bundle.getString("AutoSave"));
-	JCheckBox autoBackupCheckBox = new JCheckBox(Bundle.getString("AutoBackup"));
-	JCheckBox iconCheckBox = new JCheckBox(Bundle.getString("trainIcon"));
-	JCheckBox appendCheckBox = new JCheckBox(Bundle.getString("trainIconAppend"));
-	// JCheckBox rfidCheckBox = new JCheckBox(Bundle.getString("EnableRfid"));
+	JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("eastwest"));
+	JCheckBox northCheckBox = new JCheckBox(Bundle.getMessage("northsouth"));
+	JCheckBox mainMenuCheckBox = new JCheckBox(Bundle.getMessage("MainMenu"));
+	JCheckBox closeOnSaveCheckBox = new JCheckBox(Bundle.getMessage("CloseOnSave"));
+	JCheckBox autoSaveCheckBox = new JCheckBox(Bundle.getMessage("AutoSave"));
+	JCheckBox autoBackupCheckBox = new JCheckBox(Bundle.getMessage("AutoBackup"));
+	JCheckBox iconCheckBox = new JCheckBox(Bundle.getMessage("trainIcon"));
+	JCheckBox appendCheckBox = new JCheckBox(Bundle.getMessage("trainIconAppend"));
+	// JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
 
 	// text field
 	// JTextField ownerTextField = new JTextField(10);
@@ -108,7 +108,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	protected static final String NEW_LINE = "\n"; // NOI18N
 
 	public OperationsSetupFrame() {
-		super(Bundle.getString("TitleOperationsSetup"));
+		super(Bundle.getMessage("TitleOperationsSetup"));
 	}
 
 	public void initComponents() {
@@ -137,11 +137,11 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		appendCheckBox.setSelected(Setup.isTrainIconAppendEnabled());
 
 		// add tool tips
-		backupButton.setToolTipText(Bundle.getString("BackupToolTip"));
-		restoreButton.setToolTipText(Bundle.getString("RestoreToolTip"));
-		saveButton.setToolTipText(Bundle.getString("SaveToolTip"));
-		panelTextField.setToolTipText(Bundle.getString("EnterPanelName"));
-		yearTextField.setToolTipText(Bundle.getString("EnterYearModeled"));
+		backupButton.setToolTipText(Bundle.getMessage("BackupToolTip"));
+		restoreButton.setToolTipText(Bundle.getMessage("RestoreToolTip"));
+		saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
+		panelTextField.setToolTipText(Bundle.getMessage("EnterPanelName"));
+		yearTextField.setToolTipText(Bundle.getMessage("EnterYearModeled"));
 
 		// Layout the panel by rows
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -156,14 +156,14 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		JPanel pRailroadName = new JPanel();
 		pRailroadName.setLayout(new GridBagLayout());
-		pRailroadName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("RailroadName")));
+		pRailroadName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RailroadName")));
 		addItem(pRailroadName, railroadNameTextField, 0, 0);
 		p1.add(pRailroadName);
 
 		// row 1b
 		JPanel pTrainDir = new JPanel();
 		pTrainDir.setLayout(new GridBagLayout());
-		pTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getString("direction")));
+		pTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("direction")));
 		addItemLeft(pTrainDir, northCheckBox, 1, 2);
 		addItemLeft(pTrainDir, eastCheckBox, 2, 2);
 		p1.add(pTrainDir);
@@ -175,13 +175,13 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		p3.setLayout(new BoxLayout(p3, BoxLayout.X_AXIS));
 
 		JPanel pTrainLength = new JPanel();
-		pTrainLength.setBorder(BorderFactory.createTitledBorder(Bundle.getString("MaxLength")));
+		pTrainLength.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("MaxLength")));
 		addItem(pTrainLength, maxLengthTextField, 0, 0);
 		p3.add(pTrainLength);
 
 		// row 3b
 		JPanel pMaxEngine = new JPanel();
-		pMaxEngine.setBorder(BorderFactory.createTitledBorder(Bundle.getString("MaxEngine")));
+		pMaxEngine.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("MaxEngine")));
 		addItem(pMaxEngine, maxEngineSizeTextField, 0, 0);
 		p3.add(pMaxEngine);
 
@@ -190,19 +190,19 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		p5.setLayout(new BoxLayout(p5, BoxLayout.X_AXIS));
 
 		JPanel pSwitchTime = new JPanel();
-		pSwitchTime.setBorder(BorderFactory.createTitledBorder(Bundle.getString("MoveTime")));
+		pSwitchTime.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("MoveTime")));
 		addItem(pSwitchTime, switchTimeTextField, 0, 0);
 		p3.add(pSwitchTime);
 
 		// row 3d
 		JPanel pTravelTime = new JPanel();
-		pTravelTime.setBorder(BorderFactory.createTitledBorder(Bundle.getString("TravelTime")));
+		pTravelTime.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TravelTime")));
 		addItem(pTravelTime, travelTimeTextField, 0, 0);
 		p3.add(pTravelTime);
 
 		// row 2
 		JPanel pScale = new JPanel();
-		pScale.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Scale")));
+		pScale.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Scale")));
 
 		ButtonGroup scaleGroup = new ButtonGroup();
 		scaleGroup.add(scaleZ);
@@ -235,7 +235,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		p9.setLayout(new BoxLayout(p9, BoxLayout.X_AXIS));
 
 		JPanel pCarTypeButtons = new JPanel();
-		pCarTypeButtons.setBorder(BorderFactory.createTitledBorder(Bundle.getString("CarTypes")));
+		pCarTypeButtons.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("CarTypes")));
 		ButtonGroup carTypeGroup = new ButtonGroup();
 		carTypeGroup.add(typeDesc);
 		carTypeGroup.add(typeAAR);
@@ -246,7 +246,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		// row 4b
 		JPanel pLengthUnit = new JPanel();
-		pLengthUnit.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutLength")));
+		pLengthUnit.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutLength")));
 		ButtonGroup lengthUnitGroup = new ButtonGroup();
 		lengthUnitGroup.add(feetUnit);
 		lengthUnitGroup.add(meterUnit);
@@ -258,7 +258,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		// row 4c
 		JPanel pYearModeled = new JPanel();
 		pYearModeled.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutYearModeled")));
+				.getMessage("BorderLayoutYearModeled")));
 		pYearModeled.add(yearTextField);
 
 		p9.add(pYearModeled);
@@ -266,7 +266,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		// Option panel
 		JPanel options = new JPanel();
 		options.setLayout(new GridBagLayout());
-		options.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutOptions")));
+		options.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptions")));
 		addItem(options, mainMenuCheckBox, 0, 0);
 		addItem(options, closeOnSaveCheckBox, 1, 0);
 		addItem(options, autoSaveCheckBox, 2, 0);
@@ -286,7 +286,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		pIcon.setLayout(new BoxLayout(pIcon, BoxLayout.Y_AXIS));
 		JScrollPane pIconPane = new JScrollPane(pIcon);
 		pIconPane.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutPanelOptions")));
+				.getMessage("BorderLayoutPanelOptions")));
 
 		// row 1 Icon panel
 		JPanel p1Icon = new JPanel();
@@ -295,14 +295,14 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		JPanel pPanelName = new JPanel();
 		pPanelName.setLayout(new GridBagLayout());
 		pPanelName
-				.setBorder(BorderFactory.createTitledBorder(Bundle.getString("BorderLayoutPanelName")));
+				.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutPanelName")));
 		addItem(pPanelName, panelTextField, 0, 0);
 		p1Icon.add(pPanelName);
 
 		JPanel pIconControl = new JPanel();
 		pIconControl.setLayout(new GridBagLayout());
 		pIconControl.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutIconOptions")));
+				.getMessage("BorderLayoutIconOptions")));
 		addItem(pIconControl, appendCheckBox, 0, 0);
 		addItem(pIconControl, iconCheckBox, 1, 0);
 		p1Icon.add(pIconControl);
@@ -312,7 +312,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		JPanel pIconColors = new JPanel();
 		pIconColors.setLayout(new GridBagLayout());
 		pIconColors.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getString("BorderLayoutIconColors")));
+				.getMessage("BorderLayoutIconColors")));
 
 		addItem(pIconColors, textIconNorth, 0, 4);
 		addItemLeft(pIconColors, northComboBox, 1, 4);
@@ -364,15 +364,15 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new OptionAction(Bundle.getString("TitleOptions")));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new OptionAction(Bundle.getMessage("TitleOptions")));
 		toolMenu.add(new PrintOptionAction());
 		toolMenu.add(new BuildReportOptionAction());
-		toolMenu.add(new BackupFilesAction(Bundle.getString("Backup")));
-		toolMenu.add(new RestoreFilesAction(Bundle.getString("Restore")));
-		toolMenu.add(new LoadDemoAction(Bundle.getString("LoadDemo")));
-		toolMenu.add(new ResetAction(Bundle.getString("ResetOperations")));
-		toolMenu.add(new ManageBackupsAction(Bundle.getString("ManageAutoBackups")));
+		toolMenu.add(new BackupFilesAction(Bundle.getMessage("Backup")));
+		toolMenu.add(new RestoreFilesAction(Bundle.getMessage("Restore")));
+		toolMenu.add(new LoadDemoAction(Bundle.getMessage("LoadDemo")));
+		toolMenu.add(new ResetAction(Bundle.getMessage("ResetOperations")));
+		toolMenu.add(new ManageBackupsAction(Bundle.getMessage("ManageAutoBackups")));
 
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
@@ -410,8 +410,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 	private void save() {
 		/*
 		 * String addOwner = ownerTextField.getText(); if (addOwner.length() > Control.max_len_string_attibute) {
-		 * JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getString("OwnerText"), new Object[] { Integer
-		 * .toString(Control.max_len_string_attibute) }), Bundle.getString("CanNotAddOwner"), JOptionPane.ERROR_MESSAGE);
+		 * JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("OwnerText"), new Object[] { Integer
+		 * .toString(Control.max_len_string_attibute) }), Bundle.getMessage("CanNotAddOwner"), JOptionPane.ERROR_MESSAGE);
 		 * return; }
 		 */
 
@@ -419,32 +419,32 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		try {
 			Integer.parseInt(maxLengthTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, Bundle.getString("MaxLength"),
-					Bundle.getString("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("MaxLength"),
+					Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		try {
 			Integer.parseInt(maxEngineSizeTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, Bundle.getString("MaxEngine"),
-					Bundle.getString("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("MaxEngine"),
+					Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		try {
 			Integer.parseInt(switchTimeTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, Bundle.getString("MoveTime"),
-					Bundle.getString("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("MoveTime"),
+					Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
 		try {
 			Integer.parseInt(travelTimeTextField.getText());
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(this, Bundle.getString("TravelTime"),
-					Bundle.getString("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("TravelTime"),
+					Bundle.getMessage("CanNotAcceptNumber"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 
@@ -569,7 +569,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 				for (int j = 0; j < locations.size(); j++) {
 					RouteLocation rl = r.getLocationById(locations.get(j));
 					if (rl.getMaxTrainLength() > maxLength) {
-						String s = MessageFormat.format(Bundle.getString("RouteMaxLengthExceeds"),
+						String s = MessageFormat.format(Bundle.getMessage("RouteMaxLengthExceeds"),
 								new Object[] { r.getName(), rl.getName(), rl.getMaxTrainLength(),
 										maxLength });
 						log.info(s);
@@ -580,15 +580,15 @@ public class OperationsSetupFrame extends OperationsFrame implements
 				}
 				// maximum of 20 route warnings
 				if (count > 20) {
-					sb.append(Bundle.getString("More") + NEW_LINE);
+					sb.append(Bundle.getMessage("More") + NEW_LINE);
 					break;
 				}
 			}
 			if (sb.length() > 0) {
 				JOptionPane.showMessageDialog(null, sb.toString(),
-						Bundle.getString("YouNeedToAdjustRoutes"), JOptionPane.WARNING_MESSAGE);
-				if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getString("ChangeMaximumTrainDepartureLength"),
-						new Object[] { maxLength }), Bundle.getString("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						Bundle.getMessage("YouNeedToAdjustRoutes"), JOptionPane.WARNING_MESSAGE);
+				if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("ChangeMaximumTrainDepartureLength"),
+						new Object[] { maxLength }), Bundle.getMessage("ModifyAllRoutes"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					for (int i = 0; i < routes.size(); i++) {
 						Route r = rm.getRouteById(routes.get(i));
 						List<String> locations = r.getLocationsBySequenceList();

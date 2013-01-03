@@ -38,8 +38,8 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
 	public static SwingShutDownTask trainDirtyTask;
 
-	public static final String NAME = Bundle.getString("Name"); // Sort by choices
-	public static final String TIME = Bundle.getString("Time");
+	public static final String NAME = Bundle.getMessage("Name"); // Sort by choices
+	public static final String TIME = Bundle.getMessage("Time");
 
 	TrainManager trainManager = TrainManager.instance();
 	TrainScheduleManager scheduleManager = TrainScheduleManager.instance();
@@ -50,21 +50,21 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	JScrollPane trainsPane;
 
 	// labels
-	JLabel textSort = new JLabel(Bundle.getString("SortBy"));
+	JLabel textSort = new JLabel(Bundle.getMessage("SortBy"));
 
 	// radio buttons
 	JRadioButton sortByName = new JRadioButton(NAME);
 	JRadioButton sortByTime = new JRadioButton(TIME);
-	JRadioButton noneButton = new JRadioButton(Bundle.getString("None"));
+	JRadioButton noneButton = new JRadioButton(Bundle.getMessage("None"));
 
 	// radio button groups
 	ButtonGroup schGroup = new ButtonGroup();
 
 	// major buttons
-	JButton selectButton = new JButton(Bundle.getString("Select"));
-	JButton clearButton = new JButton(Bundle.getString("Clear"));
-	JButton applyButton = new JButton(Bundle.getString("Apply"));
-	JButton saveButton = new JButton(Bundle.getString("Save"));
+	JButton selectButton = new JButton(Bundle.getMessage("Select"));
+	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
+	JButton applyButton = new JButton(Bundle.getMessage("Apply"));
+	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 
 	// check boxes
 
@@ -95,12 +95,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
 		// row 1
 		JPanel sortBy = new JPanel();
-		sortBy.setBorder(BorderFactory.createTitledBorder(Bundle.getString("SortBy")));
+		sortBy.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SortBy")));
 		sortBy.add(sortByTime);
 		sortBy.add(sortByName);
 
 		// row 2
-		schedule.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Active")));
+		schedule.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Active")));
 		updateControlPanel();
 
 		cp1.add(sortBy);
@@ -114,10 +114,10 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 		cp3.add(saveButton);
 
 		// tool tips
-		selectButton.setToolTipText(Bundle.getString("SelectAllButtonTip"));
-		clearButton.setToolTipText(Bundle.getString("ClearAllButtonTip"));
-		applyButton.setToolTipText(Bundle.getString("ApplyButtonTip"));
-		saveButton.setToolTipText(Bundle.getString("SaveButtonTip"));
+		selectButton.setToolTipText(Bundle.getMessage("SelectAllButtonTip"));
+		clearButton.setToolTipText(Bundle.getMessage("ClearAllButtonTip"));
+		applyButton.setToolTipText(Bundle.getMessage("ApplyButtonTip"));
+		saveButton.setToolTipText(Bundle.getMessage("SaveButtonTip"));
 
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();
@@ -152,7 +152,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
 		toolMenu.add(new TrainsScheduleEditAction());
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
@@ -160,7 +160,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Timetable", true);
 		
-		setTitle(Bundle.getString("TitleTimeTableTrains"));
+		setTitle(Bundle.getMessage("TitleTimeTableTrains"));
 
 		pack();
 

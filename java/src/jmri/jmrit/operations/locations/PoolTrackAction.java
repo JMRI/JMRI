@@ -19,7 +19,7 @@ public class PoolTrackAction extends AbstractAction {
 	private PoolTrackFrame _ptf;
 
 	public PoolTrackAction(TrackEditFrame tef) {
-		super(Bundle.getString("MenuItemPoolTrack"));
+		super(Bundle.getMessage("MenuItemPoolTrack"));
 		_tef = tef;
 	}
 

@@ -17,10 +17,10 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class CarTypes {
 
-	private static final String TYPES = Bundle.getString("carTypeNames");
-	private static final String CONVERTTYPES = Bundle.getString("carTypeConvert"); // Used to convert from ARR to
+	private static final String TYPES = Bundle.getMessage("carTypeNames");
+	private static final String CONVERTTYPES = Bundle.getMessage("carTypeConvert"); // Used to convert from ARR to
 																					// Descriptive
-	private static final String ARRTYPES = Bundle.getString("carTypeARR");
+	private static final String ARRTYPES = Bundle.getMessage("carTypeARR");
 	// for property change
 	public static final String CARTYPES_LENGTH_CHANGED_PROPERTY = "CarTypes Length"; // NOI18N
 	public static final String CARTYPES_NAME_CHANGED_PROPERTY = "CarTypes Name"; // NOI18N

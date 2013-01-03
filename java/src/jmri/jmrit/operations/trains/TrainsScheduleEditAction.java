@@ -16,7 +16,7 @@ import javax.swing.*;
 public class TrainsScheduleEditAction extends AbstractAction {
 	
 	public TrainsScheduleEditAction(){
-		super(Bundle.getString("MenuItemEditSchedule"));
+		super(Bundle.getMessage("MenuItemEditSchedule"));
 	}
 	
 	 public void actionPerformed(ActionEvent e) {

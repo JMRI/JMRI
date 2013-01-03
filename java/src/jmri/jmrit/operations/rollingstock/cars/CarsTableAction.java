@@ -19,7 +19,7 @@ public class CarsTableAction extends AbstractAction {
 	}
 
 	public CarsTableAction() {
-		this(Bundle.getString("TitleCarsTable"));
+		this(Bundle.getMessage("TitleCarsTable"));
 	}
 
 	public void actionPerformed(ActionEvent e) {

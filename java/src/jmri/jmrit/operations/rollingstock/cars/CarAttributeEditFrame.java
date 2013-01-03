@@ -68,7 +68,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 
 		getContentPane().removeAll();
 
-		setTitle(MessageFormat.format(Bundle.getString("TitleCarEditAtrribute"),
+		setTitle(MessageFormat.format(Bundle.getMessage("TitleCarEditAtrribute"),
 				new Object[] { comboboxName }));
 
 		// track which combo box is being edited
@@ -81,11 +81,11 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 
 		textAttribute.setText(comboboxName);
 
-		addButton.setText(Bundle.getString("Add"));
+		addButton.setText(Bundle.getMessage("Add"));
 		addButton.setVisible(true);
-		deleteButton.setText(Bundle.getString("Delete"));
+		deleteButton.setText(Bundle.getMessage("Delete"));
 		deleteButton.setVisible(true);
-		replaceButton.setText(Bundle.getString("Replace"));
+		replaceButton.setText(Bundle.getMessage("Replace"));
 		replaceButton.setVisible(true);
 
 		quanity.setVisible(showQuanity);
@@ -113,9 +113,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(Bundle.getString("Tools"));
-		toolMenu.add(new CarAttributeAction(Bundle.getString("CarQuanity"), this));
-		toolMenu.add(new CarDeleteAttributeAction(Bundle.getString("DeleteUnusedAttributes"), this));
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new CarAttributeAction(Bundle.getMessage("CarQuanity"), this));
+		toolMenu.add(new CarDeleteAttributeAction(Bundle.getMessage("DeleteUnusedAttributes"), this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		// add help menu to window
@@ -142,9 +142,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 				item = addItem.split("-");
 			if (item[0].length() > Control.max_len_string_attibute) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getString("carAttribute"),
+						Bundle.getMessage("carAttribute"),
 						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(
-						Bundle.getString("canNotAdd"), new Object[] { _comboboxName }),
+						Bundle.getMessage("canNotAdd"), new Object[] { _comboboxName }),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
@@ -162,17 +162,17 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 				item = newItem.split("-");
 			if (item[0].length() > Control.max_len_string_attibute) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getString("carAttribute"),
+						Bundle.getMessage("carAttribute"),
 						new Object[] { Control.max_len_string_attibute }), MessageFormat.format(
-						Bundle.getString("canNotReplace"), new Object[] { _comboboxName }),
+						Bundle.getMessage("canNotReplace"), new Object[] { _comboboxName }),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			String oldItem = (String) comboBox.getSelectedItem();
 			if (JOptionPane.showConfirmDialog(
 					this,
-					MessageFormat.format(Bundle.getString("replaceMsg"), new Object[] { oldItem,
-							newItem }), Bundle.getString("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+					MessageFormat.format(Bundle.getMessage("replaceMsg"), new Object[] { oldItem,
+							newItem }), Bundle.getMessage("replaceAll"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			if (newItem.equals(oldItem))
@@ -228,22 +228,22 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 		if (_comboboxName == CarEditFrame.TYPE) {
 			CarTypes.instance().addName(addItem);
 			if (showDialogBox) {
-				int results = JOptionPane.showOptionDialog(this, Bundle.getString("AddNewCarType"),
-						Bundle.getString("ModifyLocations"), JOptionPane.YES_NO_CANCEL_OPTION,
+				int results = JOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"),
+						Bundle.getMessage("ModifyLocations"), JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.QUESTION_MESSAGE, null,
-						new Object[] { Bundle.getString("ButtonYes"), Bundle.getString("ButtonNo"),
-								Bundle.getString("ButtonDontShow") }, Bundle.getString("ButtonNo"));
+						new Object[] { Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+								Bundle.getMessage("ButtonDontShow") }, Bundle.getMessage("ButtonNo"));
 				if (results == JOptionPane.YES_OPTION) {
 					LocationsByCarTypeFrame lf = new LocationsByCarTypeFrame();
 					lf.initComponents(addItem);
 				}
 				if (results == JOptionPane.CANCEL_OPTION)
 					showDialogBox = false;
-				results = JOptionPane.showOptionDialog(this, Bundle.getString("AddNewCarType"),
-						Bundle.getString("ModifyTrains"), JOptionPane.YES_NO_CANCEL_OPTION,
+				results = JOptionPane.showOptionDialog(this, Bundle.getMessage("AddNewCarType"),
+						Bundle.getMessage("ModifyTrains"), JOptionPane.YES_NO_CANCEL_OPTION,
 						JOptionPane.QUESTION_MESSAGE, null,
-						new Object[] { Bundle.getString("ButtonYes"), Bundle.getString("ButtonNo"),
-								Bundle.getString("ButtonDontShow") }, Bundle.getString("ButtonNo"));
+						new Object[] { Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+								Bundle.getMessage("ButtonDontShow") }, Bundle.getMessage("ButtonNo"));
 				if (results == JOptionPane.YES_OPTION) {
 					TrainsByCarTypeFrame lf = new TrainsByCarTypeFrame();
 					lf.initComponents(addItem);
@@ -265,8 +265,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 					addItem = Integer.toString(feet);
 				} catch (NumberFormatException e) {
 					log.error("can not convert from inches to feet");
-					JOptionPane.showMessageDialog(this, Bundle.getString("CanNotConvertFeet"),
-							Bundle.getString("ErrorCarLength"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertFeet"),
+							Bundle.getMessage("ErrorCarLength"), JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
@@ -278,8 +278,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 					addItem = Integer.toString(meter);
 				} catch (NumberFormatException e) {
 					log.error("Can not convert from cm to meters");
-					JOptionPane.showMessageDialog(this, Bundle.getString("CanNotConvertMeter"),
-							Bundle.getString("ErrorCarLength"), JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotConvertMeter"),
+							Bundle.getMessage("ErrorCarLength"), JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 			}
@@ -288,9 +288,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 				Integer.parseInt(addItem);
 				if (addItem.length() > Control.max_len_string_length_name) {
 					JOptionPane.showMessageDialog(this, MessageFormat.format(
-							Bundle.getString("carAttribute"),
+							Bundle.getMessage("carAttribute"),
 							new Object[] { Control.max_len_string_length_name }), MessageFormat
-							.format(Bundle.getString("canNotAdd"), new Object[] { _comboboxName }),
+							.format(Bundle.getMessage("canNotAdd"), new Object[] { _comboboxName }),
 							JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -430,11 +430,11 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 			// confirm that attribute is to be deleted
 			if (!cancel) {
 				int results = JOptionPane.showOptionDialog(null, MessageFormat.format(
-						Bundle.getString("ConfirmDeleteAttribute"), new Object[] { _comboboxName,
-								item }), Bundle.getString("DeleteAttribute?"),
+						Bundle.getMessage("ConfirmDeleteAttribute"), new Object[] { _comboboxName,
+								item }), Bundle.getMessage("DeleteAttribute?"),
 						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-						new Object[] { Bundle.getString("ButtonYes"), Bundle.getString("ButtonNo"),
-								Bundle.getString("ButtonCancel") }, Bundle.getString("ButtonYes"));
+						new Object[] { Bundle.getMessage("ButtonYes"), Bundle.getMessage("ButtonNo"),
+								Bundle.getMessage("ButtonCancel") }, Bundle.getMessage("ButtonYes"));
 				if (results == JOptionPane.YES_OPTION)
 					deleteItemFromCombobox((String) comboBox.getSelectedItem());
 				if (results == JOptionPane.CANCEL_OPTION || results == JOptionPane.CLOSED_OPTION)

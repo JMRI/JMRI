@@ -121,9 +121,9 @@ public class ExportEngines extends XmlFile {
 		log.info("Exported "+engineList.size()+" engines to file "+defaultOperationsFilename());
 		JOptionPane.showMessageDialog(
 				null,
-				MessageFormat.format(Bundle.getString("ExportedEnginesToFile"), new Object[] {
+				MessageFormat.format(Bundle.getMessage("ExportedEnginesToFile"), new Object[] {
 						engineList.size(), defaultOperationsFilename() }),
-				Bundle.getString("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
+				Bundle.getMessage("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
     }
     
     // Operation files always use the same directory

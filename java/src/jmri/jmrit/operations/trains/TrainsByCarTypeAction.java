@@ -19,7 +19,7 @@ public class TrainsByCarTypeAction extends AbstractAction {
     }
     
     public TrainsByCarTypeAction(){
-    	super(Bundle.getString("TitleModifyTrains"));
+    	super(Bundle.getMessage("TitleModifyTrains"));
     }
 
     TrainsByCarTypeFrame f = null;

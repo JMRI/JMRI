@@ -123,13 +123,13 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		case IDCOLUMN:
 			synchronized (this) {
 				if (_sort == SORTBYID)
-					return Bundle.getString("Id");
-				return Bundle.getString("Time");
+					return Bundle.getMessage("Id");
+				return Bundle.getMessage("Time");
 			}
 		case NAMECOLUMN:
-			return Bundle.getString("Name");
+			return Bundle.getMessage("Name");
 		case DESCRIPTIONCOLUMN:
-			return Bundle.getString("Description");
+			return Bundle.getMessage("Description");
 		}
 		TrainSchedule ts = getSchedule(col);
 		if (ts != null) {

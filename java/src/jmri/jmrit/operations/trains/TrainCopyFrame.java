@@ -23,14 +23,14 @@ public class TrainCopyFrame extends OperationsFrame {
 	TrainManager trainManager = TrainManager.instance();
 
 	// labels
-	javax.swing.JLabel textCopyTrain = new javax.swing.JLabel(Bundle.getString("SelectTrain"));
-	javax.swing.JLabel textTrainName = new javax.swing.JLabel(Bundle.getString("Name"));
+	javax.swing.JLabel textCopyTrain = new javax.swing.JLabel(Bundle.getMessage("SelectTrain"));
+	javax.swing.JLabel textTrainName = new javax.swing.JLabel(Bundle.getMessage("Name"));
 
 	// text field
 	javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(20);
 
 	// major buttons
-	javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getString("Copy"));
+	javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));
 
 	// combo boxes
 	javax.swing.JComboBox trainBox = TrainManager.instance().getComboBox();
@@ -67,7 +67,7 @@ public class TrainCopyFrame extends OperationsFrame {
 		if (getHeight() < 150)
 			setSize(getWidth(), 150);
 		
-		setTitle(Bundle.getString("TitleTrainCopy"));
+		setTitle(Bundle.getMessage("TitleTrainCopy"));
 
 		// setup buttons
 		addButtonAction(copyButton);
@@ -103,20 +103,20 @@ public class TrainCopyFrame extends OperationsFrame {
 
 			TrainEditFrame f = new TrainEditFrame();
 			f.initComponents(newTrain);
-			f.setTitle(Bundle.getString("TitleTrainEdit"));
+			f.setTitle(Bundle.getMessage("TitleTrainEdit"));
 			f.setVisible(true);
 		}
 	}
 
 	private void reportTrainExists() {
-		JOptionPane.showMessageDialog(this, Bundle.getString("TrainNameExists"),
-				MessageFormat.format(Bundle.getString("CanNotTrain"), new Object[] { Bundle.getString("copy") }),
+		JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"),
+				MessageFormat.format(Bundle.getMessage("CanNotTrain"), new Object[] { Bundle.getMessage("copy") }),
 				JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void reportTrainDoesNotExist() {
-		JOptionPane.showMessageDialog(this, Bundle.getString("SelectTrain"),
-				MessageFormat.format(Bundle.getString("CanNotTrain"), new Object[] { Bundle.getString("copy") }),
+		JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectTrain"),
+				MessageFormat.format(Bundle.getMessage("CanNotTrain"), new Object[] { Bundle.getMessage("copy") }),
 				JOptionPane.ERROR_MESSAGE);
 	}
 
@@ -126,15 +126,15 @@ public class TrainCopyFrame extends OperationsFrame {
 	 */
 	private boolean checkName() {
 		if (trainNameTextField.getText().trim().equals("")) {
-			JOptionPane.showMessageDialog(this, Bundle.getString("EnterTrainName"), MessageFormat.format(
-					Bundle.getString("CanNotTrain"), new Object[] { Bundle.getString("copy") }),
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("EnterTrainName"), MessageFormat.format(
+					Bundle.getMessage("CanNotTrain"), new Object[] { Bundle.getMessage("copy") }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (trainNameTextField.getText().length() > Control.max_len_string_train_name) {
-			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getString("TrainNameLess"),
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainNameLess"),
 					new Object[] { Control.max_len_string_train_name + 1 }), MessageFormat.format(
-					Bundle.getString("CanNot"), new Object[] { Bundle.getString("copy") }),
+					Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("copy") }),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

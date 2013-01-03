@@ -34,8 +34,8 @@ public class BackupFilesAction extends AbstractAction {
 		// check to see if files are dirty
 		if (OperationsXml.areFilesDirty()) {
 			if (JOptionPane.showConfirmDialog(null,
-					Bundle.getString("OperationsFilesModified"),
-					Bundle.getString("SaveOperationFiles"),
+					Bundle.getMessage("OperationsFilesModified"),
+					Bundle.getMessage("SaveOperationFiles"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				OperationsXml.save();
 			}
@@ -77,7 +77,7 @@ public class BackupFilesAction extends AbstractAction {
 		}
 
 		public String getDescription() {
-			return Bundle.getString("BackupFolders");
+			return Bundle.getMessage("BackupFolders");
 		}
 	}
 

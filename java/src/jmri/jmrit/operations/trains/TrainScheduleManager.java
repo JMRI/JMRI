@@ -282,13 +282,13 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     
     private void createDefaultSchedules(){
     	log.debug("creating default schedules");
-    	newSchedule(Bundle.getString("Sunday"));
-    	newSchedule(Bundle.getString("Monday"));
-    	newSchedule(Bundle.getString("Tuesday"));
-    	newSchedule(Bundle.getString("Wednesday"));
-    	newSchedule(Bundle.getString("Thursday"));
-    	newSchedule(Bundle.getString("Friday"));
-		newSchedule(Bundle.getString("Saturday"));
+    	newSchedule(Bundle.getMessage("Sunday"));
+    	newSchedule(Bundle.getMessage("Monday"));
+    	newSchedule(Bundle.getMessage("Tuesday"));
+    	newSchedule(Bundle.getMessage("Wednesday"));
+    	newSchedule(Bundle.getMessage("Thursday"));
+    	newSchedule(Bundle.getMessage("Friday"));
+		newSchedule(Bundle.getMessage("Saturday"));
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {

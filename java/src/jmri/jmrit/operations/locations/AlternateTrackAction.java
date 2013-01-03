@@ -21,7 +21,7 @@ public class AlternateTrackAction extends AbstractAction {
 	private TrackEditFrame _tef;
 	
 	public AlternateTrackAction(TrackEditFrame tef){
-		super(Bundle.getString("AlternateTrack"));
+		super(Bundle.getMessage("AlternateTrack"));
 		_tef = tef;
 	}
 	
@@ -39,7 +39,7 @@ class AlternateTrackFrame extends OperationsFrame{
 	// radio buttons
 	
     // major buttons
-    JButton saveButton = new JButton(Bundle.getString("Save"));
+    JButton saveButton = new JButton(Bundle.getMessage("Save"));
     
     Track _track;
 	
@@ -72,7 +72,7 @@ class AlternateTrackFrame extends OperationsFrame{
     	getContentPane().add(pAlternate);
     	getContentPane().add(pControls);
     	
-    	setTitle(Bundle.getString("AlternateTrack"));
+    	setTitle(Bundle.getMessage("AlternateTrack"));
     	pack();
     	if (getWidth() < 300 || getHeight() < 100)
     		setSize(300, 100);

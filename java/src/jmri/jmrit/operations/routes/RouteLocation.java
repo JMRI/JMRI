@@ -45,7 +45,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public static final String SOUTH_DIR = Setup.SOUTH_DIR;
 	
 	public static final String DISPOSE = "dispose"; // NOI18N
-	public static final String DELETED = Bundle.getString("locationDeleted");
+	public static final String DELETED = Bundle.getMessage("locationDeleted");
 	
 	public static final String DROP_CHANGED_PROPERTY = "dropChange"; // NOI18N
 	public static final String PICKUP_CHANGED_PROPERTY = "pickupChange"; // NOI18N

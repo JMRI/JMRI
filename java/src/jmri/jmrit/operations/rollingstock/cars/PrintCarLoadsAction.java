@@ -63,7 +63,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 			HardcopyWriter writer = null;
 			Frame mFrame = new Frame();
 			try {
-				writer = new HardcopyWriter(mFrame, Bundle.getString("TitleCarLoads"), 10, .5, .5,
+				writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarLoads"), 10, .5, .5,
 						.5, .5, isPreview);
 			} catch (HardcopyWriter.PrintCanceledException ex) {
 				log.debug("Print cancelled");
@@ -74,10 +74,10 @@ public class PrintCarLoadsAction extends AbstractAction {
 			CarLoads carLoads = CarLoads.instance();
 			Hashtable<String, List<CarLoad>> list = carLoads.getList();
 			try {
-				String s = Bundle.getString("Type") + TAB + Bundle.getString("Load") + TAB
-						+ Bundle.getString("BorderLayoutPriority") + "  "
-						+ Bundle.getString("LoadPickupMessage") + "  "
-						+ Bundle.getString("LoadDropMessage") + NEW_LINE;
+				String s = Bundle.getMessage("Type") + TAB + Bundle.getMessage("Load") + TAB
+						+ Bundle.getMessage("BorderLayoutPriority") + "  "
+						+ Bundle.getMessage("LoadPickupMessage") + "  "
+						+ Bundle.getMessage("LoadDropMessage") + NEW_LINE;
 				writer.write(s);
 				Enumeration<String> en = list.keys();
 				while (en.hasMoreElements()) {

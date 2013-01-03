@@ -49,7 +49,7 @@ public class PrintTrainsAction extends AbstractAction {
 		// obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		try {
-			writer = new HardcopyWriter(mFrame, Bundle.getString("TitleTrainsTable"), 10, .5, .5, .5, .5,
+			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleTrainsTable"), 10, .5, .5, .5, .5,
 					isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
@@ -62,9 +62,9 @@ public class PrintTrainsAction extends AbstractAction {
 		String tab = "\t";
 
 		try {
-			String s = Bundle.getString("Name") + tab + tab + Bundle.getString("Description") + tab
-					+ Bundle.getString("Route") + tab + tab + Bundle.getString("Departs") + tab + tab
-					+ Bundle.getString("Time") + "  " + Bundle.getString("Terminates") + tab + newLine;
+			String s = Bundle.getMessage("Name") + tab + tab + Bundle.getMessage("Description") + tab
+					+ Bundle.getMessage("Route") + tab + tab + Bundle.getMessage("Departs") + tab + tab
+					+ Bundle.getMessage("Time") + "  " + Bundle.getMessage("Terminates") + tab + newLine;
 			writer.write(s, 0, s.length());
 			for (int i = 0; i < trains.size(); i++) {
 				Train train = manager.getTrainById(trains.get(i));

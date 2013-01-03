@@ -96,10 +96,10 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 	}
 
 	private String getHeader() {
-		String header = Bundle.getString("Name") + del + Bundle.getString("Description") + del
-				+ Bundle.getString("Current") + del + Bundle.getString("NextLocation") + del
-				+ Bundle.getString("Status") + del + Bundle.getString("BuildMessages") + del
-				+ Bundle.getString("DateAndTime");
+		String header = Bundle.getMessage("Name") + del + Bundle.getMessage("Description") + del
+				+ Bundle.getMessage("Current") + del + Bundle.getMessage("NextLocation") + del
+				+ Bundle.getMessage("Status") + del + Bundle.getMessage("BuildMessages") + del
+				+ Bundle.getMessage("DateAndTime");
 		return header;
 	}
 

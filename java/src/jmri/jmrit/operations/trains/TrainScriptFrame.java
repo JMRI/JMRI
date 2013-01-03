@@ -55,17 +55,17 @@ public class TrainScriptFrame extends OperationsFrame {
 	JLabel trainDescription = new JLabel();
 
 	// major buttons
-	JButton addBuildScriptButton = new JButton(Bundle.getString("AddScript"));
-	JButton addAfterBuildScriptButton = new JButton(Bundle.getString("AddScript"));
-	JButton addMoveScriptButton = new JButton(Bundle.getString("AddScript"));
-	JButton addTerminationScriptButton = new JButton(Bundle.getString("AddScript"));
+	JButton addBuildScriptButton = new JButton(Bundle.getMessage("AddScript"));
+	JButton addAfterBuildScriptButton = new JButton(Bundle.getMessage("AddScript"));
+	JButton addMoveScriptButton = new JButton(Bundle.getMessage("AddScript"));
+	JButton addTerminationScriptButton = new JButton(Bundle.getMessage("AddScript"));
 	
-	JButton runBuildScriptButton = new JButton(Bundle.getString("RunScripts"));
-	JButton runAfterBuildScriptButton = new JButton(Bundle.getString("RunScripts"));
-	JButton runMoveScriptButton = new JButton(Bundle.getString("RunScripts"));
-	JButton runTerminationScriptButton = new JButton(Bundle.getString("RunScripts"));
+	JButton runBuildScriptButton = new JButton(Bundle.getMessage("RunScripts"));
+	JButton runAfterBuildScriptButton = new JButton(Bundle.getMessage("RunScripts"));
+	JButton runMoveScriptButton = new JButton(Bundle.getMessage("RunScripts"));
+	JButton runTerminationScriptButton = new JButton(Bundle.getMessage("RunScripts"));
 	
-	JButton saveTrainButton = new JButton(Bundle.getString("SaveTrain"));
+	JButton saveTrainButton = new JButton(Bundle.getMessage("SaveTrain"));
 
 	public TrainScriptFrame() {
 		super();
@@ -75,19 +75,19 @@ public class TrainScriptFrame extends OperationsFrame {
     	// Set up script options in a Scroll Pane..
      	buildScriptPane = new JScrollPane(pBuildScript);
       	buildScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	buildScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScriptsBeforeBuild")));
+      	buildScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsBeforeBuild")));
       	
      	afterBuildScriptPane = new JScrollPane(pAfterBuildScript);
       	afterBuildScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	afterBuildScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScriptsAfterBuild")));
+      	afterBuildScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsAfterBuild")));
 
      	moveScriptPane = new JScrollPane(pMoveScript);
       	moveScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	moveScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScriptsWhenMoved")));
+      	moveScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsWhenMoved")));
  
       	terminationScriptPane = new JScrollPane(pTerminationScript);
       	terminationScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	terminationScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getString("ScriptsWhenTerminated")));  	
+      	terminationScriptPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsWhenTerminated")));  	
 
 		// remember who called us
 		parent.setChildFrame(this);
@@ -106,13 +106,13 @@ public class TrainScriptFrame extends OperationsFrame {
 		// row 1a
        	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
-    	pName.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Name")));
+    	pName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Name")));
     	addItem(pName, trainName, 0, 0);
 
 		// row 1b
        	JPanel pDesc = new JPanel();
     	pDesc.setLayout(new GridBagLayout());
-    	pDesc.setBorder(BorderFactory.createTitledBorder(Bundle.getString("Description")));
+    	pDesc.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
     	addItem(pDesc, trainDescription, 0, 0);
 		
     	p1.add(pName);
@@ -175,7 +175,7 @@ public class TrainScriptFrame extends OperationsFrame {
     		if (scripts.size()>0)
     			addItem(pBuildScript, runBuildScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeBuildScripts = new JButton(Bundle.getString("RemoveScript"));
+    			JButton removeBuildScripts = new JButton(Bundle.getMessage("RemoveScript"));
     			removeBuildScripts.setName(scripts.get(i));
     			removeBuildScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -201,7 +201,7 @@ public class TrainScriptFrame extends OperationsFrame {
     		if (scripts.size()>0)
     			addItem(pAfterBuildScript, runAfterBuildScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeAfterBuildScripts = new JButton(Bundle.getString("RemoveScript"));
+    			JButton removeAfterBuildScripts = new JButton(Bundle.getMessage("RemoveScript"));
     			removeAfterBuildScripts.setName(scripts.get(i));
     			removeAfterBuildScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -227,7 +227,7 @@ public class TrainScriptFrame extends OperationsFrame {
       		if (scripts.size()>0)
     			addItem(pMoveScript, runMoveScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-    			JButton removeMoveScripts = new JButton(Bundle.getString("RemoveScript"));
+    			JButton removeMoveScripts = new JButton(Bundle.getMessage("RemoveScript"));
     			removeMoveScripts.setName(scripts.get(i));
     			removeMoveScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -253,7 +253,7 @@ public class TrainScriptFrame extends OperationsFrame {
       		if (scripts.size()>0)
     			addItem(pTerminationScript, runTerminationScriptButton, 1, 0);
     		for (int i=0; i<scripts.size(); i++){
-				JButton removeTerminationScripts = new JButton(Bundle.getString("RemoveScript"));
+				JButton removeTerminationScripts = new JButton(Bundle.getMessage("RemoveScript"));
     			removeTerminationScripts.setName(scripts.get(i));
        			removeTerminationScripts.addActionListener(new java.awt.event.ActionListener() {
     				public void actionPerformed(java.awt.event.ActionEvent e) {

@@ -25,7 +25,7 @@ public class SidingTableModel extends TrackTableModel {
 	public String getColumnName(int col) {
 		switch (col) {
 		case NAMECOLUMN:
-			return Bundle.getString("SidingName");
+			return Bundle.getMessage("SidingName");
 		}
 		return super.getColumnName(col);
 	}
@@ -39,7 +39,7 @@ public class SidingTableModel extends TrackTableModel {
 		String sidingId = tracksList.get(row);
 		Track siding = _location.getTrackById(sidingId);
 		tef.initComponents(_location, siding);
-		tef.setTitle(Bundle.getString("EditSiding"));
+		tef.setTitle(Bundle.getMessage("EditSiding"));
 		focusEditFrame = true;
 	}
 
