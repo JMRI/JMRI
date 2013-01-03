@@ -2,9 +2,18 @@
 
 package jmri.util;
 
-import java.awt.*;
-import java.io.*;
-import java.util.*;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.HeadlessException;
+import java.awt.Insets;
+import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
 
 /**
  * This class attempts to retrieve the screen insets for all
@@ -23,13 +32,13 @@ import java.util.*;
  */
 public class JmriInsets {
 
-    private static final String DESKTOP_ENVIRONMENTS = "kdesktop|gnome-panel|xfce|darwin|icewm";
+    private static final String DESKTOP_ENVIRONMENTS = "kdesktop|gnome-panel|xfce|darwin|icewm"; //NOI18N
     
-    private static final String GNOME_CONFIG = "%gconf.xml";
-    private static final String GNOME_PANEL = "_panel_screen";
-    private static final String GNOME_ROOT = System.getProperty("user.home") + "/.gconf/apps/panel/toplevels/";
+    private static final String GNOME_CONFIG = "%gconf.xml"; //NOI18N
+    private static final String GNOME_PANEL = "_panel_screen"; //NOI18N
+    private static final String GNOME_ROOT = System.getProperty("user.home") + "/.gconf/apps/panel/toplevels/"; //NOI18N
     
-    private static final String KDE_CONFIG = System.getProperty("user.home") + "/.kde/share/config/kickerrc";
+    private static final String KDE_CONFIG = System.getProperty("user.home") + "/.kde/share/config/kickerrc"; //NOI18N
     
     //private static final String XFCE_CONFIG = System.getProperty("user.home") + "/.config/xfce4/mcs_settings/panel.xml";
     
@@ -64,19 +73,19 @@ public class JmriInsets {
      */
     private static int getLinuxWindowManager(){
         if(!SystemType.isWindows() &&
-           !OS_NAME.toLowerCase().startsWith("mac")) {
+           !OS_NAME.toLowerCase().startsWith("mac")) { //NOI18N
             try {
-                Process p = Runtime.getRuntime().exec("ps ax");
+                Process p = Runtime.getRuntime().exec("ps ax"); //NOI18N
                 BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 
                 try {
-                    java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|"));
+                    java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|")); //NOI18N
                     
                     String line = r.readLine();
                     while (line != null) {
                         for (int i=0; i < desktopList.size(); i++) {
                             String s = desktopList.get(i).toString();
-                            if(line.contains(s) && !line.contains("grep"))
+                            if(line.contains(s) && !line.contains("grep")) //NOI18N
                                 return desktopList.indexOf(s);
                         }
                         line = r.readLine();
@@ -112,9 +121,9 @@ public class JmriInsets {
         int[] i = {0, 0, 0, 0, 0};         // Left, Right, Top, Bottom, Null
         
         /* Needs to be fixed. Doesn't know the difference between CustomSize and Size */
-        int iniCustomSize = getKdeINI("General", "CustomSize");
-        int iniSize = getKdeINI("General", "Size");
-        int iniPosition = getKdeINI("General", "Position");
+        int iniCustomSize = getKdeINI("General", "CustomSize"); //NOI18N
+        int iniSize = getKdeINI("General", "Size"); //NOI18N
+        int iniPosition = getKdeINI("General", "Position"); //NOI18N
         int position = iniPosition==-1?3:iniPosition;
         int size = (iniCustomSize==-1 || iniSize!=4)?iniSize:iniCustomSize;
         size = size<24?sizes[size]:size;
@@ -137,13 +146,13 @@ public class JmriInsets {
                 if(val == -1)
                     {//Skip
                     } 
-                else if (folder.startsWith("top" + GNOME_PANEL))
+                else if (folder.startsWith("top" + GNOME_PANEL)) //NOI18N
                     n = Math.max(val, n);
-                else if (folder.startsWith("bottom" + GNOME_PANEL))
+                else if (folder.startsWith("bottom" + GNOME_PANEL)) //NOI18N
                     s = Math.max(val, s);
-                else if (folder.startsWith("right" + GNOME_PANEL))
+                else if (folder.startsWith("right" + GNOME_PANEL)) //NOI18N
                     e = Math.max(val, e);
-                else if (folder.startsWith("left" + GNOME_PANEL))
+                else if (folder.startsWith("left" + GNOME_PANEL)) //NOI18N
                     w = Math.max(val, w);
             }
         }
@@ -180,8 +189,8 @@ public class JmriInsets {
      * Write log entry for any OS that we don't yet now how to handle.
      */
     private static Insets getDefaultInsets() {
-        if(!OS_NAME.toLowerCase().startsWith("windows")&&
-           !OS_NAME.toLowerCase().startsWith("mac"))
+        if(!OS_NAME.toLowerCase().startsWith("windows")&& //NOI18N
+           !OS_NAME.toLowerCase().startsWith("mac")) //NOI18N
             // MS Windows & Mac OS will always end-up here, so no need to log.
             return getDefaultInsets(false);
         else
@@ -220,7 +229,7 @@ public class JmriInsets {
             BufferedReader buffer = new BufferedReader(reader);
             String temp = buffer.readLine();
             while(temp != null) {
-                if(temp.contains("<entry name=\"size\"")) {
+                if(temp.contains("<entry name=\"size\"")) { //NOI18N
                     found = true;
                     break;
                 }
