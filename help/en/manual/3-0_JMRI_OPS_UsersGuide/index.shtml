@@ -160,7 +160,7 @@
               <li><a href="Ops_Trains_BuildOptions.shtml">Build Options</a></li>
               <li><a href="Ops_PrintOptions.shtml">Print Options</a></li>
               <li><a href="Ops_TrainsModify.shtml">Modify Trains by Car Type</a></li>
-              <li>Timetable</li>
+              <li><strong><a href="Ops_Trains_Timetable.shtml">Timetable</a></strong></li>
               <li>Copy Train</li>
               <li>Scripts</li>
               <li>Print</li>
