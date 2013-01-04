@@ -55,7 +55,7 @@ public class HelpUtil {
             log.warn("help initialization not completed");
             return null;  // initialization failed
         }
-        JMenu helpMenu = new JMenu(java.util.ResourceBundle.getBundle("jmri/util/UtilBundle").getString("HELP"));
+        JMenu helpMenu = new JMenu(Bundle.getMessage("HELP"));
         JMenuItem item = makeHelpMenuItem(ref);
         if (item == null) {
             log.error("Can't make help menu item for "+ref);

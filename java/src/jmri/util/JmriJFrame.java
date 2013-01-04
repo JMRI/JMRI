@@ -634,16 +634,15 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="LI_LAZY_INIT_STATIC", justification="modified is only on Swing thread")
     protected void handleModified() {
         if (getModifiedFlag()) {
-            if (rb == null) rb = java.util.ResourceBundle.getBundle("jmri.util.UtilBundle");
             this.setVisible(true);
             int result = javax.swing.JOptionPane.showOptionDialog(this,
-                rb.getString("WarnChangedMsg"),
-                rb.getString("WarnChangedTitle"),
+                Bundle.getMessage("WarnChangedMsg"),
+                Bundle.getMessage("WarnChangedTitle"),
                 javax.swing.JOptionPane.YES_NO_OPTION,
                 javax.swing.JOptionPane.WARNING_MESSAGE,
                 null, // icon
-                new String[]{rb.getString("WarnYesSave"),rb.getString("WarnNoClose")},
-                rb.getString("WarnYesSave")
+                new String[]{Bundle.getMessage("WarnYesSave"),Bundle.getMessage("WarnNoClose")},
+                Bundle.getMessage("WarnYesSave")
             );
             if (result == javax.swing.JOptionPane.YES_OPTION) {
                 // user wants to save
@@ -651,7 +650,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             }
         }
     }
-    static java.util.ResourceBundle rb = null; 
     protected void storeValues() {
         log.error("default storeValues does nothing for "+getTitle());
     }

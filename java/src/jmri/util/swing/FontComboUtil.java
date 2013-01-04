@@ -9,7 +9,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.font.FontRenderContext;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -43,8 +42,6 @@ import javax.swing.UIManager;
  * @since       2.13.1
  */
 public class FontComboUtil {
-
-    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.util.swing.UtilBundle");
 
     public static final int ALL = 0;
     public static final int MONOSPACED = 1;
@@ -289,7 +286,7 @@ public class FontComboUtil {
                 name.setFont(list.getFont());
                 if (isSymbolFont(family)) {
                     preview.setFont(list.getFont());
-                    preview.setText(family + " " + rb.getString("FontSymbol"));
+                    preview.setText(family + " " + Bundle.getMessage("FontSymbol"));
                 } else {
                     preview.setFont(new Font(family, Font.PLAIN, size==0?list.getFont().getSize():size));
                 }

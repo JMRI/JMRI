@@ -32,9 +32,7 @@ public class BeanSelectCreatePanel extends JPanel{
     JComboBox prefixBox = new JComboBox();
     jmri.UserPreferencesManager p;
     String systemSelectionCombo = this.getClass().getName()+".SystemSelected";
-    
-    static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.util.UtilBundle");
-    
+        
     /**
     * Create a JPanel, that provides the option to the user to either select an 
     * already created bean, or to create one on the fly.
@@ -44,8 +42,8 @@ public class BeanSelectCreatePanel extends JPanel{
         _manager = manager;
         _defaultSelect = defaultSelect;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        existingItem = new JRadioButton(rb.getString("UseExisting"), true);
-        newItem = new JRadioButton(rb.getString("CreateNew"));
+        existingItem = new JRadioButton(Bundle.getMessage("UseExisting"), true);
+        newItem = new JRadioButton(Bundle.getMessage("CreateNew"));
         existingItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 update();

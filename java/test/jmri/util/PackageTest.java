@@ -27,6 +27,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.UtilTest");   // no tests in this class itself
 
+        suite.addTest(BundleTest.suite());
         suite.addTest(FileUtilTest.suite());
         suite.addTest(JUnitAppenderTest.suite());
         suite.addTest(NamedBeanHandleTest.suite());
