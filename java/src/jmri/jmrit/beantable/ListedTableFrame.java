@@ -34,7 +34,6 @@ import javax.swing.*;
 public class ListedTableFrame extends BeanTableFrame {
     
     
-    protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     ActionJList actionList;
     
     public boolean isMultipleInstances() { return true; }
