@@ -44,7 +44,7 @@ public class FileHelper {
 
 	/**
 	 * Returns a File reference to the Operations main directory.  
-	 * @return
+	 * @return file
 	 */
 	public static File getOperationsDirectory() {
 		return new File(XmlFile.prefsDir(),
@@ -65,7 +65,7 @@ public class FileHelper {
 	 * 
 	 * @param subDir
 	 * @param fileName
-	 * @return
+	 * @return file
 	 */
 	public static File getOperationsSubFile(String subDir, String fileName) {
 		File operations = getOperationsDirectory();

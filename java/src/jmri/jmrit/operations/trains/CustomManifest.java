@@ -38,7 +38,7 @@ public class CustomManifest {
 	/**
 	 * Adds one CSV file path to the collection of files to be processed.
 	 * 
-	 * @param csvPath
+	 * @param csvFile
 	 */
 	public void addCVSFile(File csvFile) {
 		// Ignore null files...
