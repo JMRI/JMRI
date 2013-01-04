@@ -131,7 +131,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     ProgDebugger programmer = new ProgDebugger();
     String programmer1 = Bundle.getMessage("Comprehensive");
     String programmer2 = Bundle.getMessage("Basic");
-    java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3Bundle");
+    java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
     //current selected loco
     RosterEntry re;
     JTextPane roadName = new JTextPane();
