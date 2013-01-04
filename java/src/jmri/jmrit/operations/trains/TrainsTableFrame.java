@@ -257,7 +257,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		setJMenuBar(menuBar);
 
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
 
 		pack();
 
@@ -309,7 +309,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 					buildTrains();
 				}
 			});
-			build.setName("Build Trains");
+			build.setName("Build Trains"); // NOI18N
 			build.start();
 		}
 		if (ae.getSource() == printButton) {
@@ -558,9 +558,9 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 					null, // icon
 					new String[] {
 							ResourceBundle.getBundle("jmri.util.UtilBundle").getString(
-									"WarnYesSave"),
+									"WarnYesSave"), // NOI18N
 							ResourceBundle.getBundle("jmri.util.UtilBundle").getString(
-									"WarnNoClose") },
+									"WarnNoClose") }, // NOI18N
 					ResourceBundle.getBundle("jmri.util.UtilBundle").getString("WarnYesSave"));
 			if (result == javax.swing.JOptionPane.NO_OPTION) {
 				return;
@@ -578,7 +578,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(TrainManager.ACTIVE_TRAIN_SCHEDULE_ID))
 			updateTitle();
 		if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY)

@@ -118,7 +118,7 @@ public class TrainManifest extends TrainCommon {
 												.format(Bundle.getMessage("departureTime"),
 														new Object[] { train
 																.getExpectedDepartureTime(rl) }));
-					} else if (!expectedArrivalTime.equals("-1")) {
+					} else if (!expectedArrivalTime.equals("-1")) {// NOI18N
 						newLine(fileOut,
 								workAt
 										+ MessageFormat.format(Bundle.getMessage("estimatedArrival"),

@@ -52,14 +52,14 @@ public class TrainManagerXml extends OperationsXml {
 			file = new File(name);
 		}
 		// create root element
-		Element root = new Element("operations-config");
-		Document doc = newDocument(root, dtdLocation + "operations-trains.dtd");
+		Element root = new Element("operations-config"); // NOI18N
+		Document doc = newDocument(root, dtdLocation + "operations-trains.dtd"); // NOI18N
 
 		// add XSLT processing instruction
 		java.util.Map<String, String> m = new java.util.HashMap<String, String>();
-		m.put("type", "text/xsl");
-		m.put("href", xsltLocation + "operations-trains.xsl");
-		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+		m.put("type", "text/xsl"); // NOI18N
+		m.put("href", xsltLocation + "operations-trains.xsl"); // NOI18N
+		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
 		doc.addContent(0, p);
 
 		// Inspect the comment to change any \n characters to <?p?> processor
@@ -70,7 +70,7 @@ public class TrainManagerXml extends OperationsXml {
 		root.addContent(manager.store());
 		root.addContent(TrainScheduleManager.instance().store());
 		Element values;
-		root.addContent(values = new Element("trains"));
+		root.addContent(values = new Element(Xml.TRAINS));
 		// add entries
 		for (int i = 0; i < trainList.size(); i++) {
 			String trainId = trainList.get(i);
@@ -119,9 +119,9 @@ public class TrainManagerXml extends OperationsXml {
 
 		TrainScheduleManager.instance().load(root);
 
-		if (root.getChild("trains") != null) {
+		if (root.getChild(Xml.TRAINS) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild("trains").getChildren("train");
+			List<Element> l = root.getChild(Xml.TRAINS).getChildren(Xml.TRAIN);
 			if (log.isDebugEnabled())
 				log.debug("readFile sees " + l.size() + " trains");
 			for (int i = 0; i < l.size(); i++) {
@@ -167,7 +167,7 @@ public class TrainManagerXml extends OperationsXml {
 
 	public String defaultBuildReportFilename(String name) {
 		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
-				+ "buildstatus" + File.separator + BuildReportFileName + name + fileType;
+				+ "buildstatus" + File.separator + BuildReportFileName + name + fileType;	// NOI18N
 	}
 
 	public void setBuildReportName(String name) {
@@ -176,8 +176,8 @@ public class TrainManagerXml extends OperationsXml {
 
 	private String BuildReportFileName = "train (";
 	private String ManifestFileName = "train (";
-	private String fileType = ").txt";
-	private String fileTypeCsv = ").csv";
+	private String fileType = ").txt";	// NOI18N
+	private String fileTypeCsv = ").csv";	// NOI18N
 
 	/**
 	 * Store the train's manifest
@@ -193,7 +193,7 @@ public class TrainManagerXml extends OperationsXml {
 
 	public String defaultManifestFilename(String name) {
 		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
-				+ "manifests" + File.separator + ManifestFileName + name + fileType;
+				+ "manifests" + File.separator + ManifestFileName + name + fileType;// NOI18N
 	}
 
 	public File getTrainCsvManifestFile(String name) {
@@ -241,7 +241,7 @@ public class TrainManagerXml extends OperationsXml {
 
 	public String defaultCsvSwitchListName(String name) {
 		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
-				+ "csvSwitchLists" + File.separator + SwitchListFileName + name + fileTypeCsv;
+				+ "csvSwitchLists" + File.separator + SwitchListFileName + name + fileTypeCsv;// NOI18N
 	}
 
 	public void setTrainSwitchListName(String name) {
@@ -258,7 +258,7 @@ public class TrainManagerXml extends OperationsXml {
 		return operationsFileName;
 	}
 
-	private String operationsFileName = "OperationsTrainRoster.xml";
+	private String operationsFileName = "OperationsTrainRoster.xml";// NOI18N
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainManagerXml.class
 			.getName());

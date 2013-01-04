@@ -43,9 +43,9 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		}
 		// build header
 		addLine(fileOut, HEADER);
-		addLine(fileOut, RN+"\""+Setup.getRailroadName()+"\"");
+		addLine(fileOut, RN+ESC+Setup.getRailroadName()+ESC);
 
-		addLine(fileOut, LN+"\""+splitString(location.getName())+"\"");
+		addLine(fileOut, LN+ESC+splitString(location.getName())+ESC);
 		addLine(fileOut, VT+getDate());
 		
 		// get a list of trains
@@ -73,7 +73,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 				RouteLocation rl = route.getLocationById(routeList.get(r));
 				if (splitString(rl.getName()).equals(splitString(location.getName()))){
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-					if (expectedArrivalTime.equals("-1")){
+					if (expectedArrivalTime.equals("-1")){ // NOI18N
 						trainDone = true;
 					}
 					// First time a train stops at a location provide:
@@ -97,10 +97,10 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 							addLine(fileOut, DL+splitString(splitString(train.getTrainDepartsName())));
 							addLine(fileOut, DT+train.getDepartureTime());
 							if (r == 0 && routeList.size()>1)
-								addLine(fileOut, TD+splitString(rl.getName())+del+rl.getTrainDirectionString());
+								addLine(fileOut, TD+splitString(rl.getName())+DEL+rl.getTrainDirectionString());
 							if (r != 0){
 								addLine(fileOut, ETA+expectedArrivalTime);
-								addLine(fileOut, TA+splitString(rl.getName())+del+rl.getTrainDirectionString());
+								addLine(fileOut, TA+splitString(rl.getName())+DEL+rl.getTrainDirectionString());
 							}
 						}
 						if (r == routeList.size()-1)
@@ -122,7 +122,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 							} else {						
 								addLine(fileOut, ETA+expectedArrivalTime);
 							}
-							addLine(fileOut, TA+splitString(rl.getName())+del+rl.getTrainDirectionString());
+							addLine(fileOut, TA+splitString(rl.getName())+DEL+rl.getTrainDirectionString());
 							if (r == routeList.size()-1)
 								addLine(fileOut, TT+splitString(rl.getName()));
 						} else {

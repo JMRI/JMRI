@@ -23,7 +23,9 @@ import java.util.List;
  */
 public class PrintTrainsAction extends AbstractAction {
 
-	String newLine = "\n";
+	static final String NEW_LINE = "\n"; // NOI18N
+	static final String TAB = "\t"; // NOI18N
+
 	TrainManager manager = TrainManager.instance();
 	public static final int MAX_NAME_LENGTH = 15;
 
@@ -59,12 +61,11 @@ public class PrintTrainsAction extends AbstractAction {
 		// Loop through the Roster, printing as needed
 
 		List<String> trains = panel.getSortByList();
-		String tab = "\t";
 
 		try {
-			String s = Bundle.getMessage("Name") + tab + tab + Bundle.getMessage("Description") + tab
-					+ Bundle.getMessage("Route") + tab + tab + Bundle.getMessage("Departs") + tab + tab
-					+ Bundle.getMessage("Time") + "  " + Bundle.getMessage("Terminates") + tab + newLine;
+			String s = Bundle.getMessage("Name") + TAB + TAB + Bundle.getMessage("Description") + TAB
+					+ Bundle.getMessage("Route") + TAB + TAB + Bundle.getMessage("Departs") + TAB + TAB
+					+ Bundle.getMessage("Time") + "  " + Bundle.getMessage("Terminates") + TAB + NEW_LINE;
 			writer.write(s, 0, s.length());
 			for (int i = 0; i < trains.size(); i++) {
 				Train train = manager.getTrainById(trains.get(i));
@@ -80,7 +81,7 @@ public class PrintTrainsAction extends AbstractAction {
 				terminates = truncate(terminates);
 
 				s = name + " " + desc + " " + route + " " + departs + " "
-						+ train.getDepartureTime() + " " + terminates + newLine;
+						+ train.getDepartureTime() + " " + terminates + NEW_LINE;
 				writer.write(s, 0, s.length());
 			}
 

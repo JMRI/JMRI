@@ -117,7 +117,7 @@ public class TrainIcon extends LocoIcon {
 			String current = "     ";
 			RouteLocation rl = route.getLocationById(routeList.get(r));
 			if (train.getCurrentLocation() == rl)
-				current = "-> ";
+				current = "-> "; // NOI18N
 			for (int j=0; j<carList.size(); j++){
 				Car car = carManager.getById(carList.get(j));
 				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){

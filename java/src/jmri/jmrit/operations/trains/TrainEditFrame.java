@@ -53,7 +53,7 @@ import jmri.jmrit.operations.setup.Setup;
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-	static final String newLine = "\n";
+	static final String NEW_LINE = "\n"; // NOI18N
 	
 	TrainManager manager;
 	TrainManagerXml managerXml;
@@ -123,7 +123,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JComboBox modelEngineBox = EngineModels.instance().getComboBox();
 	JComboBox numEnginesBox = new JComboBox();
 
-	public static final String DISPOSE = "dispose";
+	public static final String DISPOSE = "dispose"; // NOI18N
 
 	public TrainEditFrame() {
 		super();
@@ -350,7 +350,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
 
 		// load route location checkboxes
 		updateLocationCheckboxes();
@@ -530,12 +530,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 					Bundle.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (trainName.contains(".") || trainName.contains("<") || trainName.contains(">")
-				|| trainName.contains(":") || trainName.contains("\"") || trainName.contains("\\")
-				|| trainName.contains("/") || trainName.contains("|") || trainName.contains("?")
-				|| trainName.contains("*")) {
+		if (trainName.contains(".") || trainName.contains("<") || trainName.contains(">") // NOI18N
+				|| trainName.contains(":") || trainName.contains("\"") || trainName.contains("\\") // NOI18N
+				|| trainName.contains("/") || trainName.contains("|") || trainName.contains("?") // NOI18N
+				|| trainName.contains("*")) { // NOI18N
 			log.error("Train name must not contain reserved characters");
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameResChar") + newLine
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameResChar") + NEW_LINE
 					+ Bundle.getMessage("ReservedChar"),
 					MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }),
 					JOptionPane.ERROR_MESSAGE);
@@ -865,13 +865,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (selected != null && !selected.equals("")) {
 			Route route = (Route) selected;
 			ref.setTitle(ResourceBundle.getBundle(
-					"jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString(
-					"TitleRouteEdit"));
+					"jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString( // NOI18N
+					"TitleRouteEdit")); // NOI18N
 			ref.initComponents(route);
 		} else {
 			ref.setTitle(ResourceBundle.getBundle(
-					"jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString(
-					"TitleRouteAdd"));
+					"jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString( // NOI18N
+					"TitleRouteAdd")); // NOI18N
 			ref.initComponents(null);
 		}
 	}
@@ -940,7 +940,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)) {
 			updateCarTypeCheckboxes();

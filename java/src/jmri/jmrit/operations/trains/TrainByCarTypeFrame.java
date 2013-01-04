@@ -152,7 +152,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 				// is the car at this location and track?
 				if (car != null && location.equals(car.getLocation())
 						&& track.equals(car.getTrack())) {
-					JLabel here = new JLabel("  -->");
+					JLabel here = new JLabel("  -->"); // NOI18N
 					addItemLeft(pLocations, here, 0, x);
 				}
 				JLabel op = new JLabel();
@@ -227,11 +227,11 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 		repaint();
 	}
 
-	private static final String ROAD = "road";
-	private static final String LOAD = "load";
-	private static final String TIMETABLE = "timetable";
-	private static final String TYPE = "type";
-	private static final String ALL = "all";
+	private static final String ROAD = "road"; // NOI18N
+	private static final String LOAD = "load"; // NOI18N
+	private static final String TIMETABLE = "timetable"; // NOI18N
+	private static final String TYPE = "type"; // NOI18N
+	private static final String ALL = "all"; // NOI18N
 
 	private boolean checkScheduleAttribute(String attribute, String carType, Car car, Track track) {
 		Schedule schedule = track.getSchedule();

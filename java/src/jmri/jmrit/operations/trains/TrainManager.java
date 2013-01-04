@@ -42,11 +42,11 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	protected List<String> _shutDownScripts = new ArrayList<String>(); // list of script pathnames to run at shut down
 
 	// property changes
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
-	public static final String PRINTPREVIEW_CHANGED_PROPERTY = "TrainsPrintPreview";
-	public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile";
-	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction";
-	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId";
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength"; // NOI18N
+	public static final String PRINTPREVIEW_CHANGED_PROPERTY = "TrainsPrintPreview"; // NOI18N
+	public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile"; // NOI18N
+	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
+	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
 
 	public TrainManager() {
 	}
@@ -80,7 +80,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setBuildMessagesEnabled(boolean enable) {
 		boolean old = _buildMessages;
 		_buildMessages = enable;
-		firePropertyChange("BuildMessagesEnabled", enable, old);
+		firePropertyChange("BuildMessagesEnabled", enable, old); // NOI18N
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setBuildReportEnabled(boolean enable) {
 		boolean old = _buildReport;
 		_buildReport = enable;
-		firePropertyChange("BuildReportEnabled", enable, old);
+		firePropertyChange("BuildReportEnabled", enable, old); // NOI18N
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setOpenFileEnabled(boolean enable) {
 		boolean old = _openFile;
 		_openFile = enable;
-		firePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true"
+		firePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
 				: "false");
 	}
 
@@ -123,8 +123,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setPrintPreviewEnabled(boolean enable) {
 		boolean old = _printPreview;
 		_printPreview = enable;
-		firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old ? "Preview" : "Print",
-				enable ? "Preview" : "Print");
+		firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old ? "Preview" : "Print", // NOI18N
+				enable ? "Preview" : "Print"); // NOI18N
 	}
 
 	public String getTrainsFrameTrainAction() {
@@ -175,12 +175,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void addStartUpScript(String pathname) {
 		_startUpScripts.add(pathname);
-		firePropertyChange("addStartUpScript", pathname, null);
+		firePropertyChange("addStartUpScript", pathname, null); // NOI18N
 	}
 
 	public void deleteStartUpScript(String pathname) {
 		_startUpScripts.remove(pathname);
-		firePropertyChange("deleteStartUpScript", null, pathname);
+		firePropertyChange("deleteStartUpScript", null, pathname); // NOI18N
 	}
 
 	/**
@@ -208,12 +208,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void addShutDownScript(String pathname) {
 		_shutDownScripts.add(pathname);
-		firePropertyChange("addShutDownScript", pathname, null);
+		firePropertyChange("addShutDownScript", pathname, null); // NOI18N
 	}
 
 	public void deleteShutDownScript(String pathname) {
 		_shutDownScripts.remove(pathname);
-		firePropertyChange("deleteShutDownScript", null, pathname);
+		firePropertyChange("deleteShutDownScript", null, pathname); // NOI18N
 	}
 
 	/**
@@ -492,7 +492,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		case GET_TRAIN_ID:
 			return Integer.parseInt(train.getId());
 		default:
-			return "unknown";
+			return "unknown"; // NOI18N
 		}
 	}
 

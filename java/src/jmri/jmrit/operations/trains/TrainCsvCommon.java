@@ -16,150 +16,151 @@ import jmri.jmrit.operations.routes.RouteLocation;
  */
 public class TrainCsvCommon extends TrainCommon {
 	
-	protected final static String del = ","; 	// delimiter
+	protected final static String DEL = ","; 	// delimiter
+	protected final static String ESC = "\"";	// escape
 	
-	protected final static String HEADER = "Operator"+del+"Description"+del+"Parameters";
+	protected final static String HEADER = "Operator"+DEL+"Description"+DEL+"Parameters";
 	
-	protected final static String AH = "AH"+del+"Add Helpers";
-	protected final static String AT = "AT"+del+"Arrival Time"+del;
-	protected final static String CC = "CC"+del+"Change Locos and Caboose";
-	protected final static String CL = "CL"+del+"Change Locos";
-	protected final static String DT = "DT"+del+"Departure Time"+del;
-	protected final static String DTR = "DTR"+del+"Departure Time Route"+del;
-	protected final static String EDT = "EDT"+del+"Estimated Departure Time"+del;
-	protected final static String LC = "LC"+del+"Location Comment"+del;
-	protected final static String LN = "LN"+del+"Location Name"+del;
-	protected final static String LOGO = "LOGO"+del+"Logo file path"+del;
-	protected final static String NW = "NW"+del+"No Work";
-	protected final static String PC = "PC"+del+"Pick up car";
-	protected final static String PL = "PL"+del+"Pick up loco";
-	protected final static String RC = "RC"+del+"Route Comment"+del;
-	protected final static String RLC = "RLC"+del+"Route Location Comment"+del;
-	protected final static String RH = "RH"+del+"Remove Helpers";
-	protected final static String RN = "RN"+del+"Railroad Name"+del;
-	protected final static String SC = "SC"+del+"Set out car";
-	protected final static String SL = "SL"+del+"Set out loco";
-	protected final static String TC = "TC"+del+"Train Comment"+del;
-	protected final static String TD = "TD"+del+"Train Departs"+del;
-	protected final static String TL = "TL"+del+"Train Length Empties Cars"+del;
-	protected final static String TM = "TM"+del+"Train Manifest Description"+del;
-	protected final static String TN = "TN"+del+"Train Name"+del;
-	protected final static String TRUN = "TRUN"+del+"Truncate";
-	protected final static String TW = "TW"+del+"Train Weight"+del;
-	protected final static String TT = "TT"+del+"Train Terminates"+del;
-	protected final static String VT = "VT"+del+"Valid"+del;
+	protected final static String AH = "AH"+DEL+"Add Helpers";
+	protected final static String AT = "AT"+DEL+"Arrival Time"+DEL;
+	protected final static String CC = "CC"+DEL+"Change Locos and Caboose";
+	protected final static String CL = "CL"+DEL+"Change Locos";
+	protected final static String DT = "DT"+DEL+"Departure Time"+DEL;
+	protected final static String DTR = "DTR"+DEL+"Departure Time Route"+DEL;
+	protected final static String EDT = "EDT"+DEL+"Estimated Departure Time"+DEL;
+	protected final static String LC = "LC"+DEL+"Location Comment"+DEL;
+	protected final static String LN = "LN"+DEL+"Location Name"+DEL;
+	protected final static String LOGO = "LOGO"+DEL+"Logo file path"+DEL;
+	protected final static String NW = "NW"+DEL+"No Work";
+	protected final static String PC = "PC"+DEL+"Pick up car";
+	protected final static String PL = "PL"+DEL+"Pick up loco";
+	protected final static String RC = "RC"+DEL+"Route Comment"+DEL;
+	protected final static String RLC = "RLC"+DEL+"Route Location Comment"+DEL;
+	protected final static String RH = "RH"+DEL+"Remove Helpers";
+	protected final static String RN = "RN"+DEL+"Railroad Name"+DEL;
+	protected final static String SC = "SC"+DEL+"Set out car";
+	protected final static String SL = "SL"+DEL+"Set out loco";
+	protected final static String TC = "TC"+DEL+"Train Comment"+DEL;
+	protected final static String TD = "TD"+DEL+"Train Departs"+DEL;
+	protected final static String TL = "TL"+DEL+"Train Length Empties Cars"+DEL;
+	protected final static String TM = "TM"+DEL+"Train Manifest Description"+DEL;
+	protected final static String TN = "TN"+DEL+"Train Name"+DEL;
+	protected final static String TRUN = "TRUN"+DEL+"Truncate";
+	protected final static String TW = "TW"+DEL+"Train Weight"+DEL;
+	protected final static String TT = "TT"+DEL+"Train Terminates"+DEL;
+	protected final static String VT = "VT"+DEL+"Valid"+DEL;
 	
 	// switch list specific operators
-	protected final static String DL = "DL"+del+"Departure Location Name"+del;
-	protected final static String ETA = "ETA"+del+"Expected Time Arrival"+del;
-	protected final static String ETE = "ETE"+del+"Estimated Time Enroute"+del;
-	protected final static String NCPU = "NCPU"+del+"No Car Pick Up";
-	protected final static String NCSO = "NCSO"+del+"No Car Set Out";
-	protected final static String TA = "TA"+del+"Train Arrives"+del;
-	protected final static String TDC = "TDC"+del+"Train changes direction, departs"+del;
-	protected final static String TIR = "TIR"+del+"Train In Route";
-	protected final static String TDONE = "TDONE"+del+"Train has already serviced this location";	
-	protected final static String VN = "VN"+del+"Visit Number"+del;
+	protected final static String DL = "DL"+DEL+"Departure Location Name"+DEL;
+	protected final static String ETA = "ETA"+DEL+"Expected Time Arrival"+DEL;
+	protected final static String ETE = "ETE"+DEL+"Estimated Time Enroute"+DEL;
+	protected final static String NCPU = "NCPU"+DEL+"No Car Pick Up";
+	protected final static String NCSO = "NCSO"+DEL+"No Car Set Out";
+	protected final static String TA = "TA"+DEL+"Train Arrives"+DEL;
+	protected final static String TDC = "TDC"+DEL+"Train changes direction, departs"+DEL;
+	protected final static String TIR = "TIR"+DEL+"Train In Route";
+	protected final static String TDONE = "TDONE"+DEL+"Train has already serviced this location";	
+	protected final static String VN = "VN"+DEL+"Visit Number"+DEL;
 	
 	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation){
 		// check for delimiter in names
       	String carType = car.getType();
-    	if (carType.contains(del)){
+    	if (carType.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in type field: "+carType);
-    		carType = "\""+carType+"\"";
+    		carType = ESC+carType+ESC;
     	}
        	String carLocationName = car.getLocationName();
-    	if (carLocationName.contains(del)){
+    	if (carLocationName.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in location field: "+carLocationName);
-    		carLocationName = "\""+carLocationName+"\"";
+    		carLocationName = ESC+carLocationName+ESC;
     	}
     	String carTrackName = car.getTrackName();
-    	if (carTrackName.contains(del)){
+    	if (carTrackName.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in track field: "+carTrackName);
-    		carTrackName = "\""+carTrackName+"\"";
+    		carTrackName = ESC+carTrackName+ESC;
     	}
        	String carDestName = car.getDestinationName();
-    	if (carDestName.contains(del)){
+    	if (carDestName.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in destination field: "+carDestName);
-    		carDestName = "\""+carDestName+"\"";
+    		carDestName = ESC+carDestName+ESC;
     	}
     	String carDestTrackName = car.getDestinationTrackName();
-    	if (carDestTrackName.contains(del)){
+    	if (carDestTrackName.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in destination track field: "+carDestTrackName);
-    		carDestTrackName = "\""+carDestTrackName+"\"";
+    		carDestTrackName = ESC+carDestTrackName+ESC;
     	}
     	String carRWEDestName = car.getReturnWhenEmptyDestinationName();
-      	if (carRWEDestName.contains(del)){
+      	if (carRWEDestName.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in RWE destination field: "+carRWEDestName);
-    		carRWEDestName = "\""+carRWEDestName+"\"";
+    		carRWEDestName = ESC+carRWEDestName+ESC;
     	}
        	String carRWETrackName = car.getReturnWhenEmptyDestTrackName();
-      	if (carRWETrackName.contains(del)){
+      	if (carRWETrackName.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in RWE destination track field: "+carRWETrackName);
-    		carRWETrackName = "\""+carRWETrackName+"\"";
+    		carRWETrackName = ESC+carRWETrackName+ESC;
     	}
 
 		addLine(fileOut, operation 
-				+del+car.getRoad()
-				+del+car.getNumber()
-				+del+carType
-				+del+car.getLength()
-				+del+car.getLoad()
-				+del+car.getColor()								
-				+del+carLocationName
-				+del+carTrackName
-				+del+carDestName
-				+del+carDestTrackName
-				+del+car.getOwner()
-				+del+car.getKernelName()
-				+del+car.getComment()
-				+del+car.getPickupComment()
-				+del+car.getDropComment()
-				+del+(car.isCaboose()?"C":"")
-				+del+(car.hasFred()?"F":"")
-				+del+(car.isHazardous()?"H":"")
-				+del+car.getRfid()
-				+del+carRWEDestName
-				+del+carRWETrackName);
+				+DEL+car.getRoad()
+				+DEL+car.getNumber()
+				+DEL+carType
+				+DEL+car.getLength()
+				+DEL+car.getLoad()
+				+DEL+car.getColor()								
+				+DEL+carLocationName
+				+DEL+carTrackName
+				+DEL+carDestName
+				+DEL+carDestTrackName
+				+DEL+car.getOwner()
+				+DEL+car.getKernelName()
+				+DEL+car.getComment()
+				+DEL+car.getPickupComment()
+				+DEL+car.getDropComment()
+				+DEL+(car.isCaboose()?"C":"")
+				+DEL+(car.hasFred()?"F":"")
+				+DEL+(car.isHazardous()?"H":"")
+				+DEL+car.getRfid()
+				+DEL+carRWEDestName
+				+DEL+carRWETrackName);
 	}
 	
 	protected void fileOutCsvEngine(PrintWriter fileOut, Engine engine, String operation){	
 		// check for delimiter in names
 		String engineLocationName = engine.getLocationName();
-		if (engineLocationName.contains(del)){
+		if (engineLocationName.contains(DEL)){
 			log.debug("Engine ("+engine.toString()+") has delimiter in location field: "+engineLocationName);
-			engineLocationName = "\""+engine.getLocationName()+"\"";
+			engineLocationName = ESC+engine.getLocationName()+ESC;
 		}
 		String engineTrackName = engine.getTrackName();
-		if (engineTrackName.contains(del)){
+		if (engineTrackName.contains(DEL)){
 			log.debug("Engine ("+engine.toString()+") has delimiter in track field: "+engineTrackName);
-			engineTrackName = "\""+engine.getTrackName()+"\"";
+			engineTrackName = ESC+engine.getTrackName()+ESC;
 		}
 		String engineDestName = engine.getDestinationName();
-		if (engineDestName.contains(del)){
+		if (engineDestName.contains(DEL)){
 			log.debug("Engine ("+engine.toString()+") has delimiter in destination field: "+engineDestName);
-			engineDestName = "\""+engine.getDestinationName()+"\"";
+			engineDestName = ESC+engine.getDestinationName()+ESC;
 		}
 		String engineDestTrackName = engine.getDestinationTrackName();
-		if (engineDestTrackName.contains(del)){
+		if (engineDestTrackName.contains(DEL)){
 			log.debug("Engine ("+engine.toString()+") has delimiter in destination track field: "+engineDestTrackName);
-			engineDestTrackName = "\""+engine.getDestinationTrackName()+"\"";
+			engineDestTrackName = ESC+engine.getDestinationTrackName()+ESC;
 		}
 		addLine(fileOut, operation
-				+del+engine.getRoad()
-				+del+engine.getNumber()
-				+del+engine.getModel()						
-				+del+engine.getLength()
-				+del+engine.getType()
-				+del+engine.getHp()								
-				+del+engineLocationName
-				+del+engineTrackName
-				+del+engineDestName
-				+del+engineDestTrackName
-				+del+engine.getOwner()
-				+del+engine.getConsistName()
-				+del+engine.getComment()
-				+del+engine.getRfid());
+				+DEL+engine.getRoad()
+				+DEL+engine.getNumber()
+				+DEL+engine.getModel()						
+				+DEL+engine.getLength()
+				+DEL+engine.getType()
+				+DEL+engine.getHp()								
+				+DEL+engineLocationName
+				+DEL+engineTrackName
+				+DEL+engineDestName
+				+DEL+engineDestTrackName
+				+DEL+engine.getOwner()
+				+DEL+engine.getConsistName()
+				+DEL+engine.getComment()
+				+DEL+engine.getRfid());
 	}
 	
 	protected void engineCsvChange(PrintWriter fileOut, RouteLocation rl, int legOptions){

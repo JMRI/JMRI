@@ -224,7 +224,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 	public void propertyChange(java.beans.PropertyChangeEvent e){
 		//if (Control.showProperty && log.isDebugEnabled()) 
 		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
-				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)){
 			// Move property change to end of list so car updates happen before this window determines train length, etc.
 			_train.removePropertyChangeListener(this);

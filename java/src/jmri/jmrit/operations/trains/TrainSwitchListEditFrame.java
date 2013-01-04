@@ -166,7 +166,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		addCheckBoxAction(switchListPageCheckBox);
 
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_SwitchList", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_SwitchList", true); // NOI18N
 		// set frame size and train for display
 		pack();
 		if (getWidth() < 400)
@@ -452,7 +452,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) {
 			changeLocationCheckboxes(e);
 			enableChangeButtons();

@@ -150,7 +150,7 @@ public class TrainSwitchLists extends TrainCommon {
 				RouteLocation rl = route.getLocationById(routeList.get(r));
 				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
-					if (expectedArrivalTime.equals("-1")) {
+					if (expectedArrivalTime.equals("-1")) { // NOI18N
 						trainDone = true;
 					}
 					if (stops > 1) {
@@ -159,7 +159,7 @@ public class TrainSwitchLists extends TrainCommon {
 						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))) {
 							newLine(fileOut);
 							if (train.isTrainInRoute()) {
-								if (expectedArrivalTime.equals("-1"))
+								if (expectedArrivalTime.equals("-1")) // NOI18N
 									newLine(fileOut, MessageFormat.format(
 											Bundle.getMessage("VisitNumberDone"), new Object[] { stops,
 													train.getIconName() }));

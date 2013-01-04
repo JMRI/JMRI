@@ -891,7 +891,7 @@ public class TrainBuilder extends TrainCommon {
 									engine.getConsist().getSize() }));
 					if (engine.getConsist().getSize() == numberOfEngines) {
 						log.debug("Consist (" + engine.getConsist().getName()
-								+ ") has the required number of engines");
+								+ ") has the required number of engines"); // NOI18N
 					} else if (numberOfEngines != 0) {
 						// log.debug("Consist ("+engine.getConsist().getName()+") doesn't have the required number of engines");
 						addLine(buildReport, SEVEN, MessageFormat.format(
@@ -1502,7 +1502,7 @@ public class TrainBuilder extends TrainCommon {
 								- (numCarsFromStaging + departStageTrack.getNumberEngines())) }));
 			}
 			log.debug("Staging departure track (" + departStageTrack.getName() + ") has "
-					+ numCarsFromStaging + " cars and " + numOfBlocks.size() + " blocks");
+					+ numCarsFromStaging + " cars and " + numOfBlocks.size() + " blocks"); // NOI18N
 		}
 
 		// show how many cars were found
@@ -1969,7 +1969,7 @@ public class TrainBuilder extends TrainCommon {
 						if (!checkCarForDestinationAndTrack(car, rl, routeIndex)
 								&& car.getTrack() != departStageTrack) {
 							log.debug("Removing car (" + car.toString()
-									+ ") from list, no car destination");
+									+ ") from list, no car destination"); // NOI18N
 							carList.remove(car.getId());
 							carIndex--;
 							addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
@@ -2767,15 +2767,15 @@ public class TrainBuilder extends TrainCommon {
 							new Object[] { track.getScheduleItemId(), track.getScheduleName(),
 									track.getName(), track.getLocation().getName() }));
 				log.debug("Track (" + track.getName() + ") has schedule ("
-						+ track.getScheduleName() + ") item id (" + si.getId()
-						+ ") requesting type (" + si.getType() + ") " + "load (" + si.getLoad()
-						+ ") next dest (" + si.getDestinationName() + ") track ("
+						+ track.getScheduleName() + ") item id (" + si.getId() // NOI18N
+						+ ") requesting type (" + si.getType() + ") " + "load (" + si.getLoad() // NOI18N
+						+ ") next dest (" + si.getDestinationName() + ") track (" // NOI18N
 						+ si.getDestinationTrackName() + ")");
 				if (!train.isAllowLocalMovesEnabled()
 						&& splitString(car.getLocationName()).equals(
 								splitString(track.getLocation().getName()))) {
 					log.debug("Skipping track (" + track.getName()
-							+ "), it would require a local move");
+							+ "), it would require a local move"); // NOI18N
 					continue;
 				}
 				if (!train.isAllowThroughCarsEnabled()
@@ -2788,7 +2788,7 @@ public class TrainBuilder extends TrainCommon {
 						&& splitString(track.getLocation().getName()).equals(
 								splitString(terminateLocation.getName()))) {
 					log.debug("Skipping track (" + track.getName()
-							+ "), through cars not allowed to terminal ("
+							+ "), through cars not allowed to terminal (" // NOI18N
 							+ terminateLocation.getName() + ")");
 					continue;
 				}
@@ -2849,9 +2849,9 @@ public class TrainBuilder extends TrainCommon {
 				|| !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 				|| car.getDestination() != null || car.getNextDestination() != null) {
 			log.debug("No load search for car (" + car.toString()
-					+ ") isAddLoadsAnySidingEnabled: "
-					+ (car.getTrack().isAddLoadsAnySidingEnabled() ? "true" : "false")
-					+ ", car load: (" + car.getLoad() + ")");
+					+ ") isAddLoadsAnySidingEnabled: " // NOI18N
+					+ (car.getTrack().isAddLoadsAnySidingEnabled() ? "true" : "false") // NOI18N
+					+ ", car load: (" + car.getLoad() + ")"); // NOI18N
 			return false; // no load generated for this car
 		}
 		addLine(buildReport,
@@ -2940,9 +2940,9 @@ public class TrainBuilder extends TrainCommon {
 				|| !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 				|| car.getDestination() != null || car.getNextDestination() != null) {
 			log.debug("No load search for car (" + car.toString()
-					+ ") isAddCustomLoadsAnyStagingTrackEnabled: "
-					+ (car.getTrack().isAddLoadsAnySidingEnabled() ? "true" : "false")
-					+ ", car load: (" + car.getLoad() + ")");
+					+ ") isAddCustomLoadsAnyStagingTrackEnabled: " // NOI18N
+					+ (car.getTrack().isAddLoadsAnySidingEnabled() ? "true" : "false") // NOI18N
+					+ ", car load: (" + car.getLoad() + ")"); // NOI18N
 			return false;
 		}
 		// first try this train's termination track if one exists
@@ -2950,7 +2950,7 @@ public class TrainBuilder extends TrainCommon {
 				&& generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack))
 			return true;
 		List<Track> tracks = locationManager.getTracks(Track.STAGING);
-		log.debug("Found " + tracks.size() + " staging tracks");
+		log.debug("Found " + tracks.size() + " staging tracks for load generation");
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
 			log.debug("Staging track (" + track.getLocation().getName() + ", " + track.getName()
@@ -2968,11 +2968,11 @@ public class TrainBuilder extends TrainCommon {
 					// car.setTrain(train); // reset will now return the car's load to default empty
 					return true;
 				} else {
-					addLine(buildReport,
-							SEVEN,
-							"Staging track (" + track.getLocation().getName() + ", "
-									+ track.getName() + ") not reachable with custom load ("
-									+ car.getLoad() + ")");
+					addLine(buildReport, SEVEN,
+							MessageFormat.format(
+									Bundle.getMessage("buildStagingTrackNotReachable"),
+									new Object[] { track.getLocation().getName(), track.getName(),
+											car.getLoad() }));
 					// return car to original state
 					car.setLoad(CarLoads.instance().getDefaultEmptyName());
 					car.setLoadGeneratedFromStaging(false);
@@ -3037,12 +3037,12 @@ public class TrainBuilder extends TrainCommon {
 				|| si.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 				|| si.getLoad().equals(CarLoads.instance().getDefaultLoadName())) {
 			log.debug("Not using track (" + track.getName() + ") schedule request type ("
-					+ si.getType() + ") road (" + si.getRoad() + ") load (" + si.getLoad() + ")");
+					+ si.getType() + ") road (" + si.getRoad() + ") load (" + si.getLoad() + ")"); // NOI18N
 			return null;
 		}
 		if (!si.getRoad().equals("") && !car.getRoad().equals(si.getRoad())) {
 			log.debug("Not using track (" + track.getName() + ") schedule request type ("
-					+ si.getType() + ") road (" + si.getRoad() + ") load (" + si.getLoad() + ")");
+					+ si.getType() + ") road (" + si.getRoad() + ") load (" + si.getLoad() + ")"); // NOI18N
 			return null;
 		}
 		if (!train.acceptsLoad(si.getLoad(), si.getType())) {
@@ -3098,14 +3098,14 @@ public class TrainBuilder extends TrainCommon {
 		if (car.getTrack().getServiceOrder().equals(Track.NORMAL))
 			return car;
 		log.debug("Get " + car.getTrack().getServiceOrder() + " car (" + car.toString() + ") from "
-				+ car.getTrack().getLocType() + " (" + car.getTrackName() + "), order: "
+				+ car.getTrack().getLocType() + " (" + car.getTrackName() + "), order: " // NOI18N
 				+ car.getOrder());
 		Car bestCar = car;
 		for (int i = carIndex + 1; i < carList.size(); i++) {
 			Car testCar = carManager.getById(carList.get(i));
 			if (testCar.getTrack() == car.getTrack()) {
 				log.debug(car.getTrack().getLocType() + " car (" + testCar.toString()
-						+ ") has order: " + testCar.getOrder());
+						+ ") has order: " + testCar.getOrder()); // NOI18N
 				if (car.getTrack().getServiceOrder().equals(Track.FIFO)
 						&& bestCar.getOrder() > testCar.getOrder()
 						&& bestCar.getPriority().equals(testCar.getPriority()))
@@ -3600,8 +3600,8 @@ public class TrainBuilder extends TrainCommon {
 						boolean carAdded = addCarToTrain(car, rl, rld, testTrack); // should always be true
 						if (!carAdded)
 							log.error("Couldn't add car " + car.toString() + " to train ("
-									+ train.getName() + "), location (" + rl.getName()
-									+ ") destination (" + rld.getName() + ")");
+									+ train.getName() + "), location (" + rl.getName() // NOI18N
+									+ ") destination (" + rld.getName() + ")"); // NOI18N
 						return carAdded; // done, no build errors
 					}
 					// is the destination a spur with a Schedule?
@@ -3646,8 +3646,8 @@ public class TrainBuilder extends TrainCommon {
 								boolean carAdded = addCarToTrain(car, rl, rld, testTrack); // should always be true
 								if (!carAdded)
 									log.error("Couldn't add car " + car.toString() + " to train ("
-											+ train.getName() + "), location (" + rl.getName()
-											+ ") destination (" + rld.getName() + ")");
+											+ train.getName() + "), location (" + rl.getName() // NOI18N
+											+ ") destination (" + rld.getName() + ")"); // NOI18N
 								return carAdded; // done, no build errors
 							}
 						}
@@ -3701,7 +3701,7 @@ public class TrainBuilder extends TrainCommon {
 				// check for programming error
 				if (trackTemp == null) {
 					// The following code should not be executed
-					throw new BuildFailedException("Build Failure, trackTemp is null!");
+					throw new BuildFailedException("Build Failure, trackTemp is null!"); // NOI18N
 				}
 				addLine(buildReport,
 						THREE,
@@ -3732,7 +3732,7 @@ public class TrainBuilder extends TrainCommon {
 					// bias cars with default loads to a track with a schedule
 					if (!trackTemp.getScheduleId().equals("")) {
 						log.debug("Track (" + trackTemp.getName() + ") has schedule ("
-								+ trackTemp.getScheduleName() + ") adjust nextRatio = "
+								+ trackTemp.getScheduleName() + ") adjust nextRatio = " // NOI18N
 								+ Double.toString(nextRatio));
 						nextRatio = nextRatio * nextRatio;
 					}
@@ -3745,7 +3745,7 @@ public class TrainBuilder extends TrainCommon {
 								&& (rle.getMaxCarMoves() - rle.getCarMoves() > 0) && rle.canDrop()
 								&& checkDropTrainDirection(car, rle, trackTemp)) {
 							log.debug("Found an earlier drop for car (" + car.toString()
-									+ ") destination (" + rle.getName() + ")");
+									+ ") destination (" + rle.getName() + ")"); // NOI18N
 							nextCarMoves = rle.getCarMoves();
 							nextRatio = nextCarMoves / rle.getMaxCarMoves();
 							rld = rle; // set car drop to earlier stop
@@ -3913,8 +3913,8 @@ public class TrainBuilder extends TrainCommon {
 					|| !car.getNextDestinationName().equals(car.getDestinationName()))
 				continue;
 			log.debug("Car (" + car.toString() + ") destination track ("
-					+ car.getDestinationTrackName() + ") has next destination track ("
-					+ car.getNextDestTrackName() + ") location (" + car.getDestinationName() + ")");
+					+ car.getDestinationTrackName() + ") has next destination track (" // NOI18N
+					+ car.getNextDestTrackName() + ") location (" + car.getDestinationName() + ")"); // NOI18N
 			if (car.testDestination(car.getNextDestination(), car.getNextDestTrack()).equals(
 					Track.OKAY)) {
 				Track alternate = car.getNextDestTrack().getAlternativeTrack();
@@ -3922,7 +3922,7 @@ public class TrainBuilder extends TrainCommon {
 						&& car.getDestinationTrack() == alternate) {
 					log.debug("Car (" + car.toString() + ") alternate track ("
 							+ car.getDestinationTrackName()
-							+ ") can be redirected to next destination track ("
+							+ ") can be redirected to next destination track (" // NOI18N
 							+ car.getNextDestTrackName() + ")");
 					addLine(buildReport, FIVE, MessageFormat.format(
 							Bundle.getMessage("buildRedirectFromAlternate"),
@@ -4010,8 +4010,8 @@ public class TrainBuilder extends TrainCommon {
 
 class BuildFailedException extends Exception {
 
-	public final static String NORMAL = "normal";
-	public final static String STAGING = "staging";
+	public final static String NORMAL = "normal"; // NOI18N
+	public final static String STAGING = "staging"; // NOI18N
 	private String type = NORMAL;
 
 	public BuildFailedException(String s, String type) {

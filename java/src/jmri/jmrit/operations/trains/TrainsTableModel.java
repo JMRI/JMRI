@@ -203,7 +203,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		case EDITCOLUMN:
 			return EDITCOLUMNNAME;
 		default:
-			return "unknown";
+			return "unknown"; // NOI18N
 		}
 	}
 
@@ -265,10 +265,10 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			tcf = null;
 		}
 		if (row >= sysList.size())
-			return "ERROR row " + row;
+			return "ERROR row " + row; // NOI18N
 		Train train = manager.getTrainById(sysList.get(row));
 		if (train == null)
-			return "ERROR train unknown " + row;
+			return "ERROR train unknown " + row; // NOI18N
 		switch (col) {
 		case IDCOLUMN: {
 			if (_sort == SORTBYID) {
@@ -323,7 +323,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		case EDITCOLUMN:
 			return Bundle.getMessage("Edit");
 		default:
-			return "unknown " + col;
+			return "unknown " + col; // NOI18N
 		}
 	}
 
@@ -458,7 +458,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
 			_frame.setModifiedFlag(true);

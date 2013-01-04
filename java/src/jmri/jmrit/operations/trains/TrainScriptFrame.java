@@ -160,7 +160,7 @@ public class TrainScriptFrame extends OperationsFrame {
 		} else {
 			enableButtons(false);
 		}
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true); // NOI18N
 		packFrame();
 	}
 	

@@ -15,8 +15,8 @@ import org.jdom.Element;
  */
 public class TrainSchedule {
 
-	public static final String NAME_CHANGED_PROPERTY = "trainScheduleName";
-	public static final String SCHEDULE_CHANGED_PROPERTY = "trainScheduleChanged";
+	public static final String NAME_CHANGED_PROPERTY = "trainScheduleName"; // NOI18N
+	public static final String SCHEDULE_CHANGED_PROPERTY = "trainScheduleChanged"; // NOI18N
 
 	protected String _id = "";
 	protected String _name = "";
@@ -54,7 +54,7 @@ public class TrainSchedule {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment))
-			firePropertyChange("AddTrainScheduleComment", old, comment);
+			firePropertyChange("AddTrainScheduleComment", old, comment); // NOI18N
 	}
 
 	public String getComment() {
@@ -87,13 +87,13 @@ public class TrainSchedule {
 	public TrainSchedule(Element e) {
 		// if (log.isDebugEnabled()) log.debug("ctor from element "+e);
 		org.jdom.Attribute a;
-		if ((a = e.getAttribute("id")) != null)
+		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
 			log.warn("no id attribute in schedule element when reading operations");
-		if ((a = e.getAttribute("name")) != null)
+		if ((a = e.getAttribute(Xml.NAME)) != null)
 			_name = a.getValue();
-		if ((a = e.getAttribute("comment")) != null)
+		if ((a = e.getAttribute(Xml.COMMENT)) != null)
 			_comment = a.getValue();
 		if ((a = e.getAttribute("trainIds")) != null) {
 			String ids = a.getValue();
@@ -114,10 +114,10 @@ public class TrainSchedule {
 	 */
 	public Element store() {
 		Element e = new org.jdom.Element("schedule");
-		e.setAttribute("id", getId());
-		e.setAttribute("name", getName());
+		e.setAttribute(Xml.ID, getId());
+		e.setAttribute(Xml.NAME, getName());
 		if (!getComment().equals(""))
-			e.setAttribute("comment", getComment());
+			e.setAttribute(Xml.COMMENT, getComment());
 		// store train ids
 		StringBuilder buf = new StringBuilder();
 		for (int i = 0; i < _trainIds.size(); i++) {
@@ -130,7 +130,7 @@ public class TrainSchedule {
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("schedule (" + getName() + ") sees property change: " + e.getPropertyName()
-					+ " from (" + e.getSource() + ") old: " + e.getOldValue() + " new: "
+					+ " from (" + e.getSource() + ") old: " + e.getOldValue() + " new: " // NOI18N
 					+ e.getNewValue());
 	}
 

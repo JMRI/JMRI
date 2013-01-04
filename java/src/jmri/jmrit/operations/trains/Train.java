@@ -260,7 +260,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			hour = _departureTime.get(Calendar.HOUR);
 			if (hour == 0)
 				hour = 12;
-			am_pm = (_departureTime.get(Calendar.AM_PM)== Calendar.AM)? " AM":" PM"; // NOI18N
+			am_pm = (_departureTime.get(Calendar.AM_PM)== Calendar.AM)? " "+ Bundle.getMessage("AM"):" "+ Bundle.getMessage("PM");
 		}
 		int minute = _departureTime.get(Calendar.MINUTE);
 		String h = Integer.toString(hour);
@@ -420,10 +420,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		//AM_PM field
 		String am_pm = "";
 		if (Setup.is12hrFormatEnabled()){
-			am_pm = " AM"; // NOI18N
+			am_pm = " "+ Bundle.getMessage("AM");
 			if  (hours >= 12){
 				hours = hours - 12;
-				am_pm = " PM"; // NOI18N
+				am_pm = " "+ Bundle.getMessage("PM");
 			}
 			if (hours == 0)
 				hours = 12;
@@ -2564,7 +2564,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		CarOwners.instance().removePropertyChangeListener(this);
 		EngineModels.instance().removePropertyChangeListener(this);
 			
-    	setDirtyAndFirePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
+    	setDirtyAndFirePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose"); // NOI18N
     }
     
    /**
@@ -2578,26 +2578,26 @@ public class Train implements java.beans.PropertyChangeListener {
     	if ((a = e.getAttribute(Xml.ID)) != null )  _id = a.getValue();
     	else log.warn("no id attribute in train element when reading operations");
     	if ((a = e.getAttribute(Xml.NAME)) != null )  _name = a.getValue();
-    	if ((a = e.getAttribute("description")) != null )  _description = a.getValue();
+    	if ((a = e.getAttribute(Xml.DESCRIPTION)) != null )  _description = a.getValue();
     	// create the train calendar
     	_departureTime = Calendar.getInstance();
-    	_departureTime.set(2008,10,29,12,00);
-    	if ((a = e.getAttribute("departHour")) != null ){
+    	_departureTime.set(2008,10,29,12,00);	// The first release date for JMRI operations
+    	if ((a = e.getAttribute(Xml.DEPART_HOUR)) != null ){
     		String hour = a.getValue();
-    		if ((a = e.getAttribute("departMinute")) != null ){
+    		if ((a = e.getAttribute(Xml.DEPART_MINUTE)) != null ){
     			String minute = a.getValue();
     			setDepartureTime(hour, minute);
     		}
     	}
     	// new format for train's route added in 2.99.7
-    	Element route = e.getChild("route");
+    	Element route = e.getChild(Xml.ROUTE);
     	if (route != null){
     		if ((a = route.getAttribute(Xml.ID)) != null ) {
     			setRoute(RouteManager.instance().getRouteById(a.getValue()));
     		}
-    		if (route.getChild("skips") != null){
+    		if (route.getChild(Xml.SKIPS) != null){
     			@SuppressWarnings("unchecked")
-    			List<Element> skips = route.getChild("skips").getChildren("location");
+    			List<Element> skips = route.getChild(Xml.SKIPS).getChildren(Xml.LOCATION);
     			String[] locs = new String[skips.size()];
     			for (int i=0; i<skips.size(); i++){
     				Element loc = skips.get(i);
@@ -2610,36 +2610,36 @@ public class Train implements java.beans.PropertyChangeListener {
     	} else {  		
     		// old format 
     		// try and first get the route by id then by name
-    		if ((a = e.getAttribute("routeId")) != null ) {
+    		if ((a = e.getAttribute(Xml.ROUTE_ID)) != null ) {
     			setRoute(RouteManager.instance().getRouteById(a.getValue()));
-    		} else if ((a = e.getAttribute("route")) != null ) {
+    		} else if ((a = e.getAttribute(Xml.ROUTE)) != null ) {
     			setRoute(RouteManager.instance().getRouteByName(a.getValue()));
     		}
-    		if ((a = e.getAttribute("skip")) != null ) {
+    		if ((a = e.getAttribute(Xml.SKIP)) != null ) {
     			String locationIds = a.getValue();
-    			String[] locs = locationIds.split("%%");
+    			String[] locs = locationIds.split("%%"); // NOI18N
     			//        	if (log.isDebugEnabled()) log.debug("Train skips : "+locationIds);
     			setTrainSkipsLocations(locs);
     		}
     	}
     	// new way of reading car types using elements
-      	if (e.getChild("types") != null){
+      	if (e.getChild(Xml.TYPES) != null){
     		@SuppressWarnings("unchecked")
-    		List<Element> carTypes = e.getChild("types").getChildren("carType");
+    		List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(Xml.CAR_TYPE);
     		String[] types = new String[carTypes.size()];
     		for (int i=0; i<carTypes.size(); i++){
     			Element type = carTypes.get(i);
-    			if ((a = type.getAttribute("name")) != null ){
+    			if ((a = type.getAttribute(Xml.NAME)) != null ){
     				types[i] = a.getValue();
     			}
     		}
     		setTypeNames(types);
     		@SuppressWarnings("unchecked")
-       		List<Element> locoTypes = e.getChild("types").getChildren("locoType");
+       		List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(Xml.LOCO_TYPE);
     		types = new String[locoTypes.size()];
     		for (int i=0; i<locoTypes.size(); i++){
     			Element type = locoTypes.get(i);
-    			if ((a = type.getAttribute("name")) != null ){
+    			if ((a = type.getAttribute(Xml.NAME)) != null ){
     				types[i] = a.getValue();
     			}
     		}
@@ -2647,21 +2647,21 @@ public class Train implements java.beans.PropertyChangeListener {
       	}
     	// old way of reading car types up to version 2.99.6
     	// TODO remove backward compatibility
-      	else if ((a = e.getAttribute("carTypes")) != null ) {
+      	else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null ) {
     		String names = a.getValue();
-    		String[] types = names.split("%%");
+    		String[] types = names.split("%%"); // NOI18N
     		//        	if (log.isDebugEnabled()) log.debug("Car types: "+names);
     		setTypeNames(types);
     	}
-    	if ((a = e.getAttribute("carRoadOperation")) != null )  _roadOption = a.getValue();
+    	if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null )  _roadOption = a.getValue();
        	// new way of reading car roads using elements
-      	if (e.getChild("carRoads") != null){
+      	if (e.getChild(Xml.CAR_ROADS) != null){
     		@SuppressWarnings("unchecked")
-    		List<Element> carRoads = e.getChild("carRoads").getChildren("carRoad");
+    		List<Element> carRoads = e.getChild(Xml.CAR_ROADS).getChildren(Xml.CAR_ROAD);
     		String[] roads = new String[carRoads.size()];
     		for (int i=0; i<carRoads.size(); i++){
     			Element road = carRoads.get(i);
-    			if ((a = road.getAttribute("name")) != null ){
+    			if ((a = road.getAttribute(Xml.NAME)) != null ){
     				roads[i] = a.getValue();
     			}
     		}
@@ -2669,25 +2669,25 @@ public class Train implements java.beans.PropertyChangeListener {
       	} 
     	// old way of reading car roads up to version 2.99.6
     	// TODO remove backward compatibility
-      	else if ((a = e.getAttribute("carRoads")) != null ) {
+      	else if ((a = e.getAttribute(Xml.CAR_ROADS)) != null ) {
     		String names = a.getValue();
-    		String[] roads = names.split("%%");
+    		String[] roads = names.split("%%"); // NOI18N
     		if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
     		setRoadNames(roads);
     	}
  
-    	if ((a = e.getAttribute("carLoadOption")) != null )  _loadOption = a.getValue();
-    	if ((a = e.getAttribute("carOwnerOption")) != null )  _ownerOption = a.getValue();
-    	if ((a = e.getAttribute("builtStartYear")) != null )  _builtStartYear = a.getValue();
-    	if ((a = e.getAttribute("builtEndYear")) != null )  _builtEndYear = a.getValue();
+    	if ((a = e.getAttribute(Xml.CAR_LOAD_OPTION)) != null )  _loadOption = a.getValue();
+    	if ((a = e.getAttribute(Xml.CAR_OWNER_OPTION)) != null )  _ownerOption = a.getValue();
+    	if ((a = e.getAttribute(Xml.BUILT_START_YEAR)) != null )  _builtStartYear = a.getValue();
+    	if ((a = e.getAttribute(Xml.BUILT_END_YEAR)) != null )  _builtEndYear = a.getValue();
     	// new way of reading car loads using elements
-      	if (e.getChild("carLoads") != null){
+      	if (e.getChild(Xml.CAR_LOADS) != null){
     		@SuppressWarnings("unchecked")
-    		List<Element> carLoads = e.getChild("carLoads").getChildren("carLoad");
+    		List<Element> carLoads = e.getChild(Xml.CAR_LOADS).getChildren(Xml.CAR_LOAD);
     		String[] loads = new String[carLoads.size()];
     		for (int i=0; i<carLoads.size(); i++){
     			Element load = carLoads.get(i);
-    			if ((a = load.getAttribute("name")) != null ){
+    			if ((a = load.getAttribute(Xml.NAME)) != null ){
     				loads[i] = a.getValue();
     			}
     		}
@@ -2695,20 +2695,20 @@ public class Train implements java.beans.PropertyChangeListener {
       	}
     	// old way of reading car loads up to version 2.99.6
     	// TODO remove backward compatibility
-      	else if ((a = e.getAttribute("carLoads")) != null ) {
+      	else if ((a = e.getAttribute(Xml.CAR_LOADS)) != null ) {
     		String names = a.getValue();
-    		String[] loads = names.split("%%");
+    		String[] loads = names.split("%%"); // NOI18N
     		if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getLoadOption()+  " car loads: "+ names);
     		setLoadNames(loads);
     	}
        	// new way of reading car owners using elements
-      	if (e.getChild("carOwners") != null){
+      	if (e.getChild(Xml.CAR_OWNERS) != null){
     		@SuppressWarnings("unchecked")
-    		List<Element> carOwners = e.getChild("carOwners").getChildren("carOwner");
+    		List<Element> carOwners = e.getChild(Xml.CAR_OWNERS).getChildren(Xml.CAR_OWNER);
     		String[] owners = new String[carOwners.size()];
     		for (int i=0; i<carOwners.size(); i++){
     			Element owner = carOwners.get(i);
-    			if ((a = owner.getAttribute("name")) != null ){
+    			if ((a = owner.getAttribute(Xml.NAME)) != null ){
     				owners[i] = a.getValue();
     			}
     		}
@@ -2716,90 +2716,90 @@ public class Train implements java.beans.PropertyChangeListener {
       	}
     	// old way of reading car owners up to version 2.99.6
     	// TODO remove backward compatibility
-      	else if ((a = e.getAttribute("carOwners")) != null ) {
+      	else if ((a = e.getAttribute(Xml.CAR_OWNERS)) != null ) {
     		String names = a.getValue();
-    		String[] owners = names.split("%%");
+    		String[] owners = names.split("%%"); // NOI18N
     		if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getOwnerOption()+  " car owners: "+ names);
     		setOwnerNames(owners);
     	}
 
-    	if ((a = e.getAttribute("numberEngines")) != null)
+    	if ((a = e.getAttribute(Xml.NUMBER_ENGINES)) != null)
     		_numberEngines = a.getValue();
-    	if ((a = e.getAttribute("leg2Engines")) != null)
+    	if ((a = e.getAttribute(Xml.LEG2_ENGINES)) != null)
     		_leg2Engines = a.getValue();
-    	if ((a = e.getAttribute("leg3Engines")) != null)
+    	if ((a = e.getAttribute(Xml.LEG3_ENGINES)) != null)
     		_leg3Engines = a.getValue();
-    	if ((a = e.getAttribute("engineRoad")) != null)
+    	if ((a = e.getAttribute(Xml.ENGINE_ROAD)) != null)
     		_engineRoad = a.getValue();
-    	if ((a = e.getAttribute("leg2Road")) != null)
+    	if ((a = e.getAttribute(Xml.LEG2_ROAD)) != null)
     		_leg2Road = a.getValue();
-    	if ((a = e.getAttribute("leg3Road")) != null)
+    	if ((a = e.getAttribute(Xml.LEG3_ROAD)) != null)
     		_leg3Road = a.getValue();
-    	if ((a = e.getAttribute("engineModel")) != null)
+    	if ((a = e.getAttribute(Xml.ENGINE_MODEL)) != null)
     		_engineModel = a.getValue();
-    	if ((a = e.getAttribute("leg2Model")) != null)
+    	if ((a = e.getAttribute(Xml.LEG2_MODEL)) != null)
     		_leg2Model = a.getValue();
-    	if ((a = e.getAttribute("leg3Model")) != null)
+    	if ((a = e.getAttribute(Xml.LEG3_MODEL)) != null)
     		_leg3Model = a.getValue();
-    	if ((a = e.getAttribute("requires")) != null)
+    	if ((a = e.getAttribute(Xml.REQUIRES)) != null)
     		_requires = Integer.parseInt(a.getValue());
-    	if ((a = e.getAttribute("cabooseRoad")) != null)
+    	if ((a = e.getAttribute(Xml.CABOOSE_ROAD)) != null)
     		_cabooseRoad = a.getValue();
-    	if ((a = e.getAttribute("leg2CabooseRoad")) != null)
+    	if ((a = e.getAttribute(Xml.LEG2_CABOOSE_ROAD)) != null)
     		_leg2CabooseRoad = a.getValue();
-    	if ((a = e.getAttribute("leg3CabooseRoad")) != null)
+    	if ((a = e.getAttribute(Xml.LEG3_CABOOSE_ROAD)) != null)
     		_leg3CabooseRoad = a.getValue();
-    	if ((a = e.getAttribute("leg2Options")) != null)
+    	if ((a = e.getAttribute(Xml.LEG2_OPTIONS)) != null)
     		_leg2Options = Integer.parseInt(a.getValue());
-    	if ((a = e.getAttribute("leg3Options")) != null)
+    	if ((a = e.getAttribute(Xml.LEG3_OPTIONS)) != null)
     		_leg3Options = Integer.parseInt(a.getValue());
-    	if ((a = e.getAttribute("buildNormal")) != null)
-    		_buildNormal = a.getValue().equals("true");
-    	if ((a = e.getAttribute("toTerminal")) != null)
-    		_sendToTerminal = a.getValue().equals("true");
-       	if ((a = e.getAttribute("allowLocalMoves")) != null)
-    		_allowLocalMoves = a.getValue().equals("true");
-       	if ((a = e.getAttribute("allowThroughCars")) != null)
-    		_allowThroughCars = a.getValue().equals("true");
-    	if ((a = e.getAttribute("allowReturn")) != null)
-    		_allowCarsReturnStaging = a.getValue().equals("true");
-    	if ((a = e.getAttribute("built")) != null)
-    		_built = a.getValue().equals("true");
-    	if ((a = e.getAttribute("build")) != null)
-    		_build = a.getValue().equals("true");
-    	if ((a = e.getAttribute("buildFailed")) != null)
-    		_buildFailed = a.getValue().equals("true");
-    	if ((a = e.getAttribute("buildFailedMessage")) != null)
+    	if ((a = e.getAttribute(Xml.BUILD_NORMAL)) != null)
+    		_buildNormal = a.getValue().equals(Xml.TRUE);
+    	if ((a = e.getAttribute(Xml.TO_TERMINAL)) != null)
+    		_sendToTerminal = a.getValue().equals(Xml.TRUE);
+       	if ((a = e.getAttribute(Xml.ALLOW_LOCAL_MOVES)) != null)
+    		_allowLocalMoves = a.getValue().equals(Xml.TRUE);
+       	if ((a = e.getAttribute(Xml.ALLOW_THROUGH_CARS)) != null)
+    		_allowThroughCars = a.getValue().equals(Xml.TRUE);
+    	if ((a = e.getAttribute(Xml.ALLOW_RETURN)) != null)
+    		_allowCarsReturnStaging = a.getValue().equals(Xml.TRUE);
+    	if ((a = e.getAttribute(Xml.BUILT)) != null)
+    		_built = a.getValue().equals(Xml.TRUE);
+    	if ((a = e.getAttribute(Xml.BUILD)) != null)
+    		_build = a.getValue().equals(Xml.TRUE);
+    	if ((a = e.getAttribute(Xml.BUILD_FAILED)) != null)
+    		_buildFailed = a.getValue().equals(Xml.TRUE);
+    	if ((a = e.getAttribute(Xml.BUILD_FAILED_MESSAGE)) != null)
     		_buildFailedMessage = a.getValue();
-    	if ((a = e.getAttribute("printed")) != null)
-    		_printed = a.getValue().equals("true");
-    	if ((a = e.getAttribute("modified")) != null)
-    		_modified = a.getValue().equals("true");    	
-    	if ((a = e.getAttribute("switchListStatus")) != null)
+    	if ((a = e.getAttribute(Xml.PRINTED)) != null)
+    		_printed = a.getValue().equals(Xml.TRUE);
+    	if ((a = e.getAttribute(Xml.MODIFIED)) != null)
+    		_modified = a.getValue().equals(Xml.TRUE);    	
+    	if ((a = e.getAttribute(Xml.SWITCH_LIST_STATUS)) != null)
     		_switchListStatus = a.getValue();
-    	if ((a = e.getAttribute("leadEngine")) != null)
+    	if ((a = e.getAttribute(Xml.LEAD_ENGINE)) != null)
     		_leadEngineId = a.getValue();
-    	if ((a = e.getAttribute("status")) != null )  _status = a.getValue();
-    	if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
+    	if ((a = e.getAttribute(Xml.STATUS)) != null )  _status = a.getValue();
+    	if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = a.getValue();
     	if (_route != null){
-    		if ((a = e.getAttribute("current")) != null) 		
+    		if ((a = e.getAttribute(Xml.CURRENT)) != null) 		
     			_current = _route.getLocationById(a.getValue());
-    		if ((a = e.getAttribute("leg2Start")) != null) 		
+    		if ((a = e.getAttribute(Xml.LEG2_START)) != null) 		
     			_leg2Start = _route.getLocationById(a.getValue());
-    		if ((a = e.getAttribute("leg3Start")) != null) 		
+    		if ((a = e.getAttribute(Xml.LEG3_START)) != null) 		
     			_leg3Start = _route.getLocationById(a.getValue());
-       		if ((a = e.getAttribute("leg2End")) != null) 		
+       		if ((a = e.getAttribute(Xml.LEG2_END)) != null) 		
     			_end2Leg = _route.getLocationById(a.getValue());
-    		if ((a = e.getAttribute("leg3End")) != null) 		
+    		if ((a = e.getAttribute(Xml.LEG3_END)) != null) 		
     			_leg3End = _route.getLocationById(a.getValue());
-    		if ((a = e.getAttribute("departureTrack")) != null) {
+    		if ((a = e.getAttribute(Xml.DEPARTURE_TRACK)) != null) {
     			Location location = LocationManager.instance().getLocationByName(getTrainDepartsName());
     			if (location != null)
     				_departureTrack = location.getTrackById(a.getValue());
     			else
     				log.error("Departure location not found for track "+a.getValue());
     		}
-    		if ((a = e.getAttribute("terminationTrack")) != null) {
+    		if ((a = e.getAttribute(Xml.TERMINATION_TRACK)) != null) {
     			Location location = LocationManager.instance().getLocationByName(getTrainTerminatesName());
     			if (location != null)
     				_terminationTrack = location.getTrackById(a.getValue());
@@ -2809,53 +2809,53 @@ public class Train implements java.beans.PropertyChangeListener {
     	}
 
     	// check for scripts
-    	if (e.getChild("scripts") != null){
+    	if (e.getChild(Xml.SCRIPTS) != null){
     		@SuppressWarnings("unchecked")
-    		List<Element> lb = e.getChild("scripts").getChildren("build");
+    		List<Element> lb = e.getChild(Xml.SCRIPTS).getChildren(Xml.BUILD);
     		for (int i=0; i<lb.size(); i++){
     			Element es = lb.get(i);
-    			if ((a = es.getAttribute("name")) != null ){
+    			if ((a = es.getAttribute(Xml.NAME)) != null ){
     				addBuildScript(a.getValue());
     			}
     		}
        		@SuppressWarnings("unchecked")
-    		List<Element> lab = e.getChild("scripts").getChildren("afterBuild");
+    		List<Element> lab = e.getChild(Xml.SCRIPTS).getChildren(Xml.AFTER_BUILD);
     		for (int i=0; i<lab.size(); i++){
     			Element es = lab.get(i);
-    			if ((a = es.getAttribute("name")) != null ){
+    			if ((a = es.getAttribute(Xml.NAME)) != null ){
     				addAfterBuildScript(a.getValue());
     			}
     		}
     		@SuppressWarnings("unchecked")
-    		List<Element> lm = e.getChild("scripts").getChildren("move");
+    		List<Element> lm = e.getChild(Xml.SCRIPTS).getChildren(Xml.MOVE);
     		for (int i=0; i<lm.size(); i++){
     			Element es = lm.get(i);
-    			if ((a = es.getAttribute("name")) != null ){
+    			if ((a = es.getAttribute(Xml.NAME)) != null ){
     				addMoveScript(a.getValue());
     			}
     		}
     		@SuppressWarnings("unchecked")
-    		List<Element> lt = e.getChild("scripts").getChildren("terminate");
+    		List<Element> lt = e.getChild(Xml.SCRIPTS).getChildren(Xml.TERMINATE);
     		for (int i=0; i<lt.size(); i++){
     			Element es = lt.get(i);
-    			if ((a = es.getAttribute("name")) != null ){
+    			if ((a = es.getAttribute(Xml.NAME)) != null ){
     				addTerminationScript(a.getValue());
     			}
     		}
     	}
     	// check for optional railroad name and logo
-        if ((e.getChild("railRoad") != null) && 
-        		(a = e.getChild("railRoad").getAttribute("name"))!= null){
+        if ((e.getChild(Xml.RAIL_ROAD) != null) && 
+        		(a = e.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME))!= null){
         	String name = a.getValue();
            	setRailroadName(name);
     	}
-        if ((e.getChild("manifestLogo") != null)){ 
-        	if((a = e.getChild("manifestLogo").getAttribute("name"))!= null){
+        if ((e.getChild(Xml.MANIFEST_LOGO) != null)){ 
+        	if((a = e.getChild(Xml.MANIFEST_LOGO).getAttribute(Xml.NAME))!= null){
         		setManifestLogoURL(a.getValue());
         	}
     	}
-        if ((a = e.getAttribute("showTimes")) != null)
-        	_showTimes = a.getValue().equals("true");
+        if ((a = e.getAttribute(Xml.SHOW_TIMES)) != null)
+        	_showTimes = a.getValue().equals(Xml.TRUE);
         
     	addPropertyChangeListerners();
     }
@@ -2874,33 +2874,33 @@ public class Train implements java.beans.PropertyChangeListener {
      * @return Contents in a JDOM Element
      */
     public Element store() {
-        Element e = new Element("train");
-        e.setAttribute("id", getId());
-        e.setAttribute("name", getName());
-        e.setAttribute("description", getDescription());
-        e.setAttribute("departHour", getDepartureTimeHour());
-        e.setAttribute("departMinute", getDepartureTimeMinute());
-        Element eRoute = new Element("route");
+        Element e = new Element(Xml.TRAIN);
+        e.setAttribute(Xml.ID, getId());
+        e.setAttribute(Xml.NAME, getName());
+        e.setAttribute(Xml.DESCRIPTION, getDescription());
+        e.setAttribute(Xml.DEPART_HOUR, getDepartureTimeHour());
+        e.setAttribute(Xml.DEPART_MINUTE, getDepartureTimeMinute());
+        Element eRoute = new Element(Xml.ROUTE);
         if (getRoute() != null){
         	// old format
         	// TODO remove backward compatible save
-        	e.setAttribute("route", getRoute().getName());
-        	e.setAttribute("routeId", getRoute().getId());
+        	e.setAttribute(Xml.ROUTE, getRoute().getName());
+        	e.setAttribute(Xml.ROUTE_ID, getRoute().getId());
         	// new format
-        	eRoute.setAttribute("name", getRoute().getName());
-           	eRoute.setAttribute("id", getRoute().getId());
+        	eRoute.setAttribute(Xml.NAME, getRoute().getName());
+           	eRoute.setAttribute(Xml.ID, getRoute().getId());
            	e.addContent(eRoute);
            	// build list of locations that this train skips
             // new format
            	String[] locationIds = getTrainSkipsLocations();
             if (locationIds.length > 0){
-            	Element eSkips = new Element("skips");
+            	Element eSkips = new Element(Xml.SKIPS);
             	for (int i=0; i<locationIds.length; i++){
-            		Element eLoc = new Element("location");
+            		Element eLoc = new Element(Xml.LOCATION);
             		RouteLocation rl = getRoute().getLocationById(locationIds[i]);
             		if (rl != null) {
-            			eLoc.setAttribute("name", getRoute().getLocationById(locationIds[i]).getName());
-            			eLoc.setAttribute("id", locationIds[i]);
+            			eLoc.setAttribute(Xml.NAME, getRoute().getLocationById(locationIds[i]).getName());
+            			eLoc.setAttribute(Xml.ID, locationIds[i]);
                        	eSkips.addContent(eLoc);
             		}
                 } 
@@ -2913,43 +2913,43 @@ public class Train implements java.beans.PropertyChangeListener {
         	String[] locationIds = getTrainSkipsLocations();
         	StringBuffer buf = new StringBuffer();
         	for (int i=0; i<locationIds.length; i++){
-        		buf.append(locationIds[i]+"%%");
+        		buf.append(locationIds[i]+"%%"); // NOI18N
         	}
-        	e.setAttribute("skip", buf.toString());
+        	e.setAttribute(Xml.SKIP, buf.toString());
         }
         if (getCurrentLocation() != null)
-        	e.setAttribute("current", getCurrentLocation().getId());
+        	e.setAttribute(Xml.CURRENT, getCurrentLocation().getId());
         if (getDepartureTrack() != null)
-        	e.setAttribute("departureTrack", getDepartureTrack().getId());
+        	e.setAttribute(Xml.DEPARTURE_TRACK, getDepartureTrack().getId());
         if (getTerminationTrack() != null)
-        	e.setAttribute("terminationTrack", getTerminationTrack().getId());
-    	e.setAttribute("carRoadOperation", getRoadOption());
-    	e.setAttribute("carLoadOption", getLoadOption());	
-    	e.setAttribute("carOwnerOption", getOwnerOption());	
-    	e.setAttribute("builtStartYear", getBuiltStartYear());
-    	e.setAttribute("builtEndYear", getBuiltEndYear());	
-        e.setAttribute("numberEngines", getNumberEngines());
-        e.setAttribute("engineRoad", getEngineRoad());
-        e.setAttribute("engineModel", getEngineModel());
-        e.setAttribute("requires", Integer.toString(getRequirements()));
-        e.setAttribute("cabooseRoad", getCabooseRoad());
-        e.setAttribute("buildNormal", isBuildTrainNormalEnabled()?"true":"false");
-        e.setAttribute("toTerminal", isSendCarsToTerminalEnabled()?"true":"false");
-        e.setAttribute("allowLocalMoves", isAllowLocalMovesEnabled()?"true":"false");
-        e.setAttribute("allowReturn", isAllowReturnToStagingEnabled()?"true":"false");
-        e.setAttribute("allowThroughCars", isAllowThroughCarsEnabled()?"true":"false");
-        e.setAttribute("built", isBuilt()?"true":"false");
-        e.setAttribute("build", isBuildEnabled()?"true":"false");
-        e.setAttribute("buildFailed", getBuildFailed()?"true":"false");
-        e.setAttribute("buildFailedMessage", getBuildFailedMessage());
-        e.setAttribute("printed", isPrinted()?"true":"false");
-        e.setAttribute("modified", isModified()?"true":"false");
-        e.setAttribute("switchListStatus", getSwitchListStatus());
+        	e.setAttribute(Xml.TERMINATION_TRACK, getTerminationTrack().getId());
+    	e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption());	// misspelled should have been option not operation
+    	e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());	
+    	e.setAttribute(Xml.CAR_OWNER_OPTION, getOwnerOption());	
+    	e.setAttribute(Xml.BUILT_START_YEAR, getBuiltStartYear());
+    	e.setAttribute(Xml.BUILT_END_YEAR, getBuiltEndYear());	
+        e.setAttribute(Xml.NUMBER_ENGINES, getNumberEngines());
+        e.setAttribute(Xml.ENGINE_ROAD, getEngineRoad());
+        e.setAttribute(Xml.ENGINE_MODEL, getEngineModel());
+        e.setAttribute(Xml.REQUIRES, Integer.toString(getRequirements()));
+        e.setAttribute(Xml.CABOOSE_ROAD, getCabooseRoad());
+        e.setAttribute(Xml.BUILD_NORMAL, isBuildTrainNormalEnabled()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.TO_TERMINAL, isSendCarsToTerminalEnabled()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.ALLOW_LOCAL_MOVES, isAllowLocalMovesEnabled()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.ALLOW_RETURN, isAllowReturnToStagingEnabled()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.ALLOW_THROUGH_CARS, isAllowThroughCarsEnabled()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.BUILT, isBuilt()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.BUILD, isBuildEnabled()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.BUILD_FAILED, getBuildFailed()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.BUILD_FAILED_MESSAGE, getBuildFailedMessage());
+        e.setAttribute(Xml.PRINTED, isPrinted()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.MODIFIED, isModified()?Xml.TRUE:Xml.FALSE);
+        e.setAttribute(Xml.SWITCH_LIST_STATUS, getSwitchListStatus());
         if(getLeadEngine()!= null)
-        	e.setAttribute("leadEngine", getLeadEngine().getId());
-        e.setAttribute("status", getStatus());
-        e.setAttribute("comment", getComment());
-        e.setAttribute("showTimes", isShowArrivalAndDepartureTimesEnabled()?"true":"false");
+        	e.setAttribute(Xml.LEAD_ENGINE, getLeadEngine().getId());
+        e.setAttribute(Xml.STATUS, getStatus());
+        e.setAttribute(Xml.COMMENT, getComment());
+        e.setAttribute(Xml.SHOW_TIMES, isShowArrivalAndDepartureTimesEnabled()?Xml.TRUE:Xml.FALSE);
         // build list of car types for this train
         String[] types = getTypeNames();
         //  Old way of saving car types
@@ -2958,22 +2958,22 @@ public class Train implements java.beans.PropertyChangeListener {
         	for (int i=0; i<types.length; i++){
         		// remove types that have been deleted by user
         		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
-        			buf.append(types[i]+"%%");
+        			buf.append(types[i]+"%%"); // NOI18N
         	}
-        	e.setAttribute("carTypes", buf.toString());
+        	e.setAttribute(Xml.CAR_TYPES, buf.toString());
         }
         // new way of saving car types
-        Element eTypes = new Element("types");
+        Element eTypes = new Element(Xml.TYPES);
         for (int i=0; i<types.length; i++){
        		// don't save types that have been deleted by user
        		if (EngineTypes.instance().containsName(types[i])){
-    			Element eType = new Element("locoType");
-    			eType.setAttribute("name", types[i]);
+    			Element eType = new Element(Xml.LOCO_TYPE);
+    			eType.setAttribute(Xml.NAME, types[i]);
     			eTypes.addContent(eType);
     		} 	
        		else if (CarTypes.instance().containsName(types[i])){
-    			Element eType = new Element("carType");
-    			eType.setAttribute("name", types[i]);
+    			Element eType = new Element(Xml.CAR_TYPE);
+    			eType.setAttribute(Xml.NAME, types[i]);
     			eTypes.addContent(eType);
     		} 			
         }
@@ -2985,15 +2985,15 @@ public class Train implements java.beans.PropertyChangeListener {
         	if (Control.backwardCompatible){
         		StringBuffer buf = new StringBuffer();
         		for (int i=0; i<roads.length; i++){
-        			buf.append(roads[i]+"%%");
+        			buf.append(roads[i]+"%%"); // NOI18N
         		}
-        		e.setAttribute("carRoads", buf.toString());
+        		e.setAttribute(Xml.CAR_ROADS, buf.toString());
         	}
         	// new way of saving road names
-        	Element eRoads = new Element("carRoads");
+        	Element eRoads = new Element(Xml.CAR_ROADS);
            	for (int i=0; i<roads.length; i++){
-    			Element eRoad = new Element("carRoad");
-    			eRoad.setAttribute("name", roads[i]);
+    			Element eRoad = new Element(Xml.CAR_ROAD);
+    			eRoad.setAttribute(Xml.NAME, roads[i]);
     			eRoads.addContent(eRoad);
         	}
            	e.addContent(eRoads);
@@ -3005,15 +3005,15 @@ public class Train implements java.beans.PropertyChangeListener {
         	if (Control.backwardCompatible){
         		StringBuffer buf = new StringBuffer();
         		for (int i=0; i<loads.length; i++){
-        			buf.append(loads[i]+"%%");
+        			buf.append(loads[i]+"%%"); // NOI18N
         		}
-        		e.setAttribute("carLoads", buf.toString());
+        		e.setAttribute(Xml.CAR_LOADS, buf.toString());
         	}
         	// new way of saving car loads
-           	Element eLoads = new Element("carLoads");
+           	Element eLoads = new Element(Xml.CAR_LOADS);
            	for (int i=0; i<loads.length; i++){
-    			Element eLoad = new Element("carLoad");
-    			eLoad.setAttribute("name", loads[i]);
+    			Element eLoad = new Element(Xml.CAR_LOAD);
+    			eLoad.setAttribute(Xml.NAME, loads[i]);
     			eLoads.addContent(eLoad);
         	}
            	e.addContent(eLoads);
@@ -3025,85 +3025,85 @@ public class Train implements java.beans.PropertyChangeListener {
         	if (Control.backwardCompatible){
         		StringBuffer buf = new StringBuffer();
         		for (int i=0; i<owners.length; i++){
-        			buf.append(owners[i]+"%%");
+        			buf.append(owners[i]+"%%"); // NOI18N
         		}
-        		e.setAttribute("carOwners", buf.toString());
+        		e.setAttribute(Xml.CAR_OWNERS, buf.toString());
         	}
         	// new way of saving car owners
-           	Element eOwners = new Element("carOwners");
+           	Element eOwners = new Element(Xml.CAR_OWNERS);
            	for (int i=0; i<owners.length; i++){
-    			Element eOwner = new Element("carOwner");
-    			eOwner.setAttribute("name", owners[i]);
+    			Element eOwner = new Element(Xml.CAR_OWNER);
+    			eOwner.setAttribute(Xml.NAME, owners[i]);
     			eOwners.addContent(eOwner);
         	}
            	e.addContent(eOwners);
         }
         // save list of scripts for this train
         if (getBuildScripts().size()>0 || getAfterBuildScripts().size()>0 || getMoveScripts().size()>0 || getTerminationScripts().size()>0){
-        	Element es = new Element("scripts");
+        	Element es = new Element(Xml.SCRIPTS);
         	if (getBuildScripts().size()>0){ 
         		for (int i=0; i<getBuildScripts().size(); i++){
-        			Element em = new Element("build");
-        			em.setAttribute("name", getBuildScripts().get(i));
+        			Element em = new Element(Xml.BUILD);
+        			em.setAttribute(Xml.NAME, getBuildScripts().get(i));
         			es.addContent(em);
         		}
         	}
         	if (getAfterBuildScripts().size()>0){ 
         		for (int i=0; i<getAfterBuildScripts().size(); i++){
-        			Element em = new Element("afterBuild");
-        			em.setAttribute("name", getAfterBuildScripts().get(i));
+        			Element em = new Element(Xml.AFTER_BUILD);
+        			em.setAttribute(Xml.NAME, getAfterBuildScripts().get(i));
         			es.addContent(em);
         		}
         	}
         	if (getMoveScripts().size()>0){ 
         		for (int i=0; i<getMoveScripts().size(); i++){
-        			Element em = new Element("move");
-        			em.setAttribute("name", getMoveScripts().get(i));
+        			Element em = new Element(Xml.MOVE);
+        			em.setAttribute(Xml.NAME, getMoveScripts().get(i));
         			es.addContent(em);
         		}
         	}
         	// save list of termination scripts for this train
         	if (getTerminationScripts().size()>0){
         		for (int i=0; i<getTerminationScripts().size(); i++){
-        			Element et = new Element("terminate");
-        			et.setAttribute("name", getTerminationScripts().get(i));
+        			Element et = new Element(Xml.TERMINATE);
+        			et.setAttribute(Xml.NAME, getTerminationScripts().get(i));
         			es.addContent(et);
         		}
         	}
         	e.addContent(es);
         }
         if (!getRailroadName().equals("")){
-        	Element r = new Element("railRoad");
-        	r.setAttribute("name", getRailroadName());
+        	Element r = new Element(Xml.RAIL_ROAD);
+        	r.setAttribute(Xml.NAME, getRailroadName());
         	e.addContent(r);
         }
         if (!getManifestLogoURL().equals("")){
-        	Element l = new Element("manifestLogo");
-        	l.setAttribute("name", getManifestLogoURL());
+        	Element l = new Element(Xml.MANIFEST_LOGO);
+        	l.setAttribute(Xml.NAME, getManifestLogoURL());
         	e.addContent(l);
         }
         
         if (getSecondLegOptions() != Train.NONE){
-        	e.setAttribute("leg2Options", Integer.toString(getSecondLegOptions()));
-        	e.setAttribute("leg2Engines", getSecondLegNumberEngines());
-        	e.setAttribute("leg2Road", getSecondLegEngineRoad());
-        	e.setAttribute("leg2Model", getSecondLegEngineModel());
-        	e.setAttribute("leg2CabooseRoad", getSecondLegCabooseRoad());
+        	e.setAttribute(Xml.LEG2_OPTIONS, Integer.toString(getSecondLegOptions()));
+        	e.setAttribute(Xml.LEG2_ENGINES, getSecondLegNumberEngines());
+        	e.setAttribute(Xml.LEG2_ROAD, getSecondLegEngineRoad());
+        	e.setAttribute(Xml.LEG2_MODEL, getSecondLegEngineModel());
+        	e.setAttribute(Xml.LEG2_CABOOSE_ROAD, getSecondLegCabooseRoad());
            	if (getSecondLegStartLocation() != null)
-        		e.setAttribute("leg2Start", getSecondLegStartLocation().getId());
+        		e.setAttribute(Xml.LEG2_START, getSecondLegStartLocation().getId());
            	if (getSecondLegEndLocation() != null)
-        		e.setAttribute("leg2End", getSecondLegEndLocation().getId());
+        		e.setAttribute(Xml.LEG2_END, getSecondLegEndLocation().getId());
         }
         if (getThirdLegOptions() != Train.NONE){
-        	e.setAttribute("leg3Options", Integer.toString(getThirdLegOptions()));
-        	e.setAttribute("leg3Engines", getThirdLegNumberEngines());
-        	e.setAttribute("leg3Road", getThirdLegEngineRoad());
-        	e.setAttribute("leg3Model", getThirdLegEngineModel());
-        	e.setAttribute("leg3CabooseRoad", getThirdLegCabooseRoad());
+        	e.setAttribute(Xml.LEG3_OPTIONS, Integer.toString(getThirdLegOptions()));
+        	e.setAttribute(Xml.LEG3_ENGINES, getThirdLegNumberEngines());
+        	e.setAttribute(Xml.LEG3_ROAD, getThirdLegEngineRoad());
+        	e.setAttribute(Xml.LEG3_MODEL, getThirdLegEngineModel());
+        	e.setAttribute(Xml.LEG3_CABOOSE_ROAD, getThirdLegCabooseRoad());
         	if (getThirdLegStartLocation() != null)
-        		e.setAttribute("leg3Start", getThirdLegStartLocation().getId());
+        		e.setAttribute(Xml.LEG3_START, getThirdLegStartLocation().getId());
           	if (getThirdLegEndLocation() != null)
-        		e.setAttribute("leg3End", getThirdLegEndLocation().getId());
+        		e.setAttribute(Xml.LEG3_END, getThirdLegEndLocation().getId());
         }
         return e;
     }
@@ -3111,7 +3111,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled())
     		log.debug("train (" + getName() + ") sees property change: "
-    				+ e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+    				+ e.getPropertyName() + " old: " + e.getOldValue() + " new: " // NOI18N
     				+ e.getNewValue());
     	if (e.getPropertyName().equals(Route.DISPOSE)){
     		setRoute(null);
