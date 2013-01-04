@@ -182,7 +182,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         }
 		
 		// create the new LayoutSlip
-        LayoutSlip l = new LayoutSlip(name,new Point2D.Double(x,y),p,type);
+        LayoutSlip l = new LayoutSlip(name,new Point2D.Double(x,y), 0.0, p,type);
 
 		// get remaining attributes
 		Attribute a = element.getAttribute("blockname");

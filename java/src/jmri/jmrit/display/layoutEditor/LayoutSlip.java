@@ -58,26 +58,23 @@ public class LayoutSlip extends LayoutTurnout
     final public static int STATE_AD = 0x06;
     final public static int STATE_BC = 0x08;
     
-    private Point2D center = new Point2D.Double(50.0,50.0);
-	private Point2D dispA = new Point2D.Double(-20.0,0.0);
-	private Point2D dispB = new Point2D.Double(-14.0,14.0);
-    
     public int currentState = UNKNOWN;
     
     private String turnoutBName="";
     private NamedBeanHandle<Turnout> namedTurnoutB = null;
     private java.beans.PropertyChangeListener mTurnoutListener = null;
-	
-    
 	/** 
 	 * constructor method
 	 */  
-	public LayoutSlip(String id, Point2D c, LayoutEditor myPanel, int type) {
+	public LayoutSlip(String id, Point2D c, double rot, LayoutEditor myPanel, int type) {
 		instance = this;
 		layoutEditor = myPanel;
 		ident = id;
 		center = c;
+        dispC = new Point2D.Double(-20.0,0.0);
+        dispB = new Point2D.Double(-14.0,14.0);
         setTurnoutType(type);
+        rotateCoords(rot);
     }
     
     public void setTurnoutType(int slipType){
@@ -231,8 +228,8 @@ public class LayoutSlip extends LayoutTurnout
 
 	public Point2D getCoordsCenter() {return center;}
 	public Point2D getCoordsA() {
-		double x = center.getX() + dispA.getX();
-		double y = center.getY() + dispA.getY();
+		double x = center.getX() + dispC.getX();
+		double y = center.getY() + dispC.getY();
 		return new Point2D.Double(x,y);
 	}
 	public Point2D getCoordsB() {
@@ -241,8 +238,8 @@ public class LayoutSlip extends LayoutTurnout
 		return new Point2D.Double(x,y);
 	}
 	public Point2D getCoordsC() {
-		double x = center.getX() - dispA.getX();
-		double y = center.getY() - dispA.getY();
+		double x = center.getX() - dispC.getX();
+		double y = center.getY() - dispC.getY();
 		return new Point2D.Double(x,y);
 	}
 	public Point2D getCoordsD() {
@@ -378,7 +375,7 @@ public class LayoutSlip extends LayoutTurnout
 	public void setCoordsA(Point2D p) {
 		double x = center.getX() - p.getX();
 		double y = center.getY() - p.getY();
-		dispA = new Point2D.Double(-x,-y);
+		dispC = new Point2D.Double(-x,-y);
 	}
 	public void setCoordsB(Point2D p) {
 		double x = center.getX() - p.getX();
@@ -388,7 +385,7 @@ public class LayoutSlip extends LayoutTurnout
 	public void setCoordsC(Point2D p) {
 		double x = center.getX() - p.getX();
 		double y = center.getY() - p.getY();
-		dispA = new Point2D.Double(x,y);
+		dispC = new Point2D.Double(x,y);
 	}
 	public void setCoordsD(Point2D p) {
 		double x = center.getX() - p.getX();
@@ -399,9 +396,9 @@ public class LayoutSlip extends LayoutTurnout
 		Point2D pt = new Point2D.Double(round(center.getX()*xFactor),
 										round(center.getY()*yFactor));
 		center = pt;
-		pt = new Point2D.Double(round(dispA.getX()*xFactor),
-										round(dispA.getY()*yFactor));
-		dispA = pt;
+		pt = new Point2D.Double(round(dispC.getX()*xFactor),
+										round(dispC.getY()*yFactor));
+		dispC = pt;
 		pt = new Point2D.Double(round(dispB.getX()*xFactor),
 										round(dispB.getY()*yFactor));
 		dispB = pt;
@@ -470,6 +467,42 @@ public class LayoutSlip extends LayoutTurnout
                         }
                     }
                 });
+            if ( (connectA==null) && (connectB==null) &&
+                        (connectC==null) && (connectD==null) ) {
+                JMenuItem rotateItem = new JMenuItem(rb.getString("Rotate")+"...");
+                popup.add(rotateItem);
+                rotateItem.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent event) {
+                        boolean entering = true;
+                        boolean error = false;
+                        String newAngle = "";
+                        while (entering) {
+                            // prompt for rotation angle
+                            error = false;
+                            newAngle = JOptionPane.showInputDialog(layoutEditor, 
+                                                rb.getString("EnterRotation")+" :");
+                            if (newAngle.length()<1) return;  // cancelled
+                            double rot = 0.0;
+                            try {
+                                rot = Double.parseDouble(newAngle);
+                            }
+                            catch (Exception e) {
+                                JOptionPane.showMessageDialog(layoutEditor,rb.getString("Error3")+
+                                    " "+e,rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+                                error = true;
+                                newAngle = "";
+                            }
+                            if (!error) {
+                                entering = false;
+                                if (rot!=0.0) {
+                                   rotateCoords(rot);
+                                   layoutEditor.redrawPanel();
+                                }
+                            }
+                        }
+                    }
+                });
+            }
             if (blockAssigned) {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
                     public void actionPerformed(ActionEvent e) {

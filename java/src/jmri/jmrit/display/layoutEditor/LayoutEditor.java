@@ -407,21 +407,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         ActionListener selectionListAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 Component[] extra = extraTurnoutPanel.getComponents();
-                Component[] rotate = rotationPanel.getComponents();
                 if (layoutSingleSlipBox.isSelected() || layoutDoubleSlipBox.isSelected()){
                     for (Component item: extra) {
                          item.setEnabled(true);
-                    }
-                    for (Component item: rotate) {
-                         item.setEnabled(false);
                     }
                 }
                 else {
                     for (Component item: extra) {
                          item.setEnabled(false);
-                    }
-                    for (Component item: rotate) {
-                         item.setEnabled(true);
                     }
                 }
             }
@@ -4813,7 +4806,22 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
      * Add a LayoutSlip
      */
     public void addLayoutSlip(int type) {
-		numLayoutSlips ++;
+        double rot = 0.0;
+		String s = rotationField.getText().trim();
+		if (s.length()<1) {
+			rot = 0.0;
+		}
+		else {
+			try {
+				rot = Double.parseDouble(s);
+			}
+			catch (Exception e) {
+				JOptionPane.showMessageDialog(this, rb.getString("Error3")+" "+
+						e,rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}
+        numLayoutSlips ++;
 		// get unique name
 		String name = "";
 		boolean duplicate = true;
@@ -4823,7 +4831,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			if (duplicate) numLayoutSlips ++;
 		}
 		// create object
-		LayoutSlip o = new LayoutSlip(name,currentPoint,this, type);
+		LayoutSlip o = new LayoutSlip(name,currentPoint, rot, this, type);
         slipList.add(o);
         setDirty(true);
         

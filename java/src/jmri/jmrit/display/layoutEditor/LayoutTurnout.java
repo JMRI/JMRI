@@ -249,7 +249,7 @@ public class LayoutTurnout
 		return i;
 	}
 		
-	private void rotateCoords(double rot) {
+	protected void rotateCoords(double rot) {
 		// rotate coordinates
 		double sineAng = Math.sin(rot*Math.PI/180.0);
 		double cosineAng = Math.cos(rot*Math.PI/180.0);
