@@ -18,9 +18,6 @@ import java.util.Vector;
  * @version	$Revision: 21889 $
  */
 public class MergNetworkDriverAdapter extends NetworkDriverAdapter {
-
-    //This should all probably be updated to use the AbstractNetworkPortContoller
-    protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
     
     public MergNetworkDriverAdapter() {
         super();

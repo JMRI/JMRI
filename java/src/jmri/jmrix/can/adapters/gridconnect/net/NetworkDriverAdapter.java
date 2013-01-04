@@ -20,7 +20,6 @@ import java.util.Vector;
  */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortController {
 
-    //This should all probably be updated to use the AbstractNetworkPortContoller
     protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
     
     public NetworkDriverAdapter() {
@@ -63,25 +62,10 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
         // do central protocol-specific configuration    
         adaptermemo.configureManagers();
     }
-
+    @Override
     public boolean status() {return opened;}
 
-    // private control members
-    private boolean opened = false;
-    
-    public Vector<String> getPortNames() {
-        log.error("Unexpected call to getPortNames");
-        return null;
-    }
-    public String openPort(String portName, String appName)  {
-        log.error("Unexpected call to openPort");
-        return null;
-    }
-    public String[] validBaudRates() {
-        log.error("Unexpected call to validBaudRates");
-        return null;
-    }
-    
+    @Override
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();

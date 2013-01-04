@@ -307,7 +307,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     
     int teststatus = 0;
     
-    void findDecoderAddress(){
+    synchronized void findDecoderAddress(){
         teststatus = 1;
         readCV(29);
     }
@@ -322,7 +322,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     int longAddress;
     int address;
     
-    public void programmingOpReply(int value, int status) {
+    synchronized public void programmingOpReply(int value, int status) {
         switch(teststatus){
             case 1 : 
                      teststatus = 2;
@@ -501,7 +501,9 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     
     void saveRosterEntry(){
         if(rosterIdField.getText().equals(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"))){
-            JOptionPane.showMessageDialog(progPane, jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("PromptFillInID"));
+            synchronized(this){
+                JOptionPane.showMessageDialog(progPane, jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("PromptFillInID"));
+            }
             return;
         }
         if(checkDuplicate())
@@ -510,8 +512,10 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         re.setDecoderFamily(decoderFile.getFamily());
         re.setDecoderModel(decoderFile.getModel());
         re.setId(rosterIdField.getText());
-        re.setDccAddress(""+address);
-        re.setLongAddress(!shortAddr);
+        synchronized(this){
+            re.setDccAddress(""+address);
+            re.setLongAddress(!shortAddr);
+        }
         re.ensureFilenameExists();
         synchronized(this){
             re.writeFile(cvModel, iCvModel, variableModel );
@@ -551,7 +555,9 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             bottom.remove(writeChangesButton);
             writeAllButton.setText(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ButtonWrite"));
             readAllButton.setText(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ButtonRead"));
-            bottom.add(saveBasicRoster);
+            synchronized(this){
+                bottom.add(saveBasicRoster);
+            }
             bottom.revalidate();
             readAllButton.removeItemListener(l2);
             readAllButton.addItemListener(l2 = new ItemListener() {
