@@ -31,7 +31,8 @@ public class CustomManifest {
 
 		// Delete it if it exists
 		if (csvNamesFile.exists())
-			csvNamesFile.delete();
+			if (!csvNamesFile.delete())
+				log.warn("Not able to delete csv file!");
 	}
 
 	/**
@@ -39,7 +40,7 @@ public class CustomManifest {
 	 * 
 	 * @param csvPath
 	 */
-	public void AddCVSFile(File csvFile) {
+	public void addCVSFile(File csvFile) {
 		// Ignore null files...
 		if (csvFile == null)
 			return;
@@ -56,7 +57,7 @@ public class CustomManifest {
 	 * Processes the CSV files using a Custom external program that reads the
 	 * file of file names.
 	 */
-	public void Process() {
+	public void process() {
 
 		// Set our application name and any arguments
 		// These will come from some user changeable settings mechanism later...
@@ -101,4 +102,6 @@ public class CustomManifest {
 		}
 
 	}
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CustomManifest.class
+			.getName());
 }

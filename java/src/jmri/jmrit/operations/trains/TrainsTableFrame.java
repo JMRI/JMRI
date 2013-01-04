@@ -361,13 +361,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 						File csvFile = train.createCSVManifestFile();
 						
 						// Add it to our collection to be processed.
-						customManifest.AddCVSFile(csvFile);						
+						customManifest.addCVSFile(csvFile);						
 					}
 				}
 			}
 			
 			// Now run the user specified custom Manifest processor program
-			customManifest.Process();
+			customManifest.process();
 		}
 		if (ae.getSource() == printSwitchButton) {
 			if (tslef != null)
