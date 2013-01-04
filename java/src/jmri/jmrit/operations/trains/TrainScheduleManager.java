@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  */
 public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; 
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "trainScheduleListLength";  // NOI18N
     
 	public TrainScheduleManager() {
 		
@@ -256,7 +256,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
      * @return Contents in a JDOM Element
      */
     public Element store() {
-    	Element values = new Element("schedules");
+    	Element values = new Element(Xml.SCHEDULES);
 		// add entries
     	List<String> schedules = getSchedulesByIdList();
 		for (int i=0; i<schedules.size(); i++) {
@@ -269,10 +269,10 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     
     public void load (Element values) {
     	if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-    	Element e = values.getChild("schedules");
+    	Element e = values.getChild(Xml.SCHEDULES);
     	if (e != null){
            	@SuppressWarnings("unchecked")
-            List<Element> l = values.getChild("schedules").getChildren("schedule");
+            List<Element> l = values.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
             if (log.isDebugEnabled()) log.debug("TrainScheduleManager sees "+l.size()+" train schedules");
             for (int i=0; i<l.size(); i++) {
                 register(new TrainSchedule(l.get(i)));

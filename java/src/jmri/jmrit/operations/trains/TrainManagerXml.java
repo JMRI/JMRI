@@ -112,8 +112,8 @@ public class TrainManagerXml extends OperationsXml {
 		}
 		// if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 
-		if (root.getChild("options") != null) {
-			Element e = root.getChild("options");
+		if (root.getChild(Xml.OPTIONS) != null) {
+			Element e = root.getChild(Xml.OPTIONS);
 			manager.options(e);
 		}
 
@@ -207,7 +207,7 @@ public class TrainManagerXml extends OperationsXml {
 
 	public String defaultCsvManifestFilename(String name) {
 		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
-				+ "csvManifests" + File.separator + ManifestFileName + name + fileTypeCsv;
+				+ "csvManifests" + File.separator + ManifestFileName + name + fileTypeCsv; // NOI18N
 	}
 
 	/**
@@ -224,7 +224,7 @@ public class TrainManagerXml extends OperationsXml {
 
 	public String defaultSwitchListName(String name) {
 		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
-				+ "switchLists" + File.separator + SwitchListFileName + name + fileType;
+				+ "switchLists" + File.separator + SwitchListFileName + name + fileType; // NOI18N
 	}
 
 	/**

@@ -96,7 +96,30 @@ public class Xml {
 	static final String MANIFEST_LOGO = "manifestLogo"; // NOI18N
 	static final String SHOW_TIMES = "showTimes"; // NOI18N
 	
+	// TrainManager.java
+	static final String OPTIONS = "options"; // NOI18N
+	static final String TRAIN_OPTIONS = "trainOptions"; // NOI18N
+	static final String BUILD_MESSAGES = "buildMessages"; // NOI18N
+	static final String BUILD_REPORT = "buildReport"; // NOI18N
+	static final String PRINT_PREVIEW = "printPreview"; // NOI18N
+	static final String OPEN_FILE = "openFile"; // NOI18N
+	static final String TRAIN_ACTION = "trainAction"; // NOI18N
+	
+	static final String COLUMN_WIDTHS = "columnWidths"; // NOI18N TODO This here is for backwards compatibility, remove after next major release
+	
+	static final String TRAIN_SCHEDULE_OPTIONS = "trainScheduleOptions"; // NOI18N
+	static final String ACTIVE_ID = "activeId"; // NOI18N
+	static final String START_UP = "startUp"; // NOI18N
+	static final String SHUT_DOWN = "shutDown"; // NOI18N
+
 	// TrainManagerXml.java
 	static final String TRAINS = "trains"; // NOI18N
+	
+	// TrainSchedule.java
+	static final String SCHEDULE = "schedule"; // NOI18N
+	static final String TRAIN_IDS = "trainIds"; // NOI18N
+	
+	// TrainScheduleManager.java
+	static final String SCHEDULES = "schedules"; // NOI18N
 	
 }

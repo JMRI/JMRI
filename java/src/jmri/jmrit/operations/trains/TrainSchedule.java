@@ -95,7 +95,7 @@ public class TrainSchedule {
 			_name = a.getValue();
 		if ((a = e.getAttribute(Xml.COMMENT)) != null)
 			_comment = a.getValue();
-		if ((a = e.getAttribute("trainIds")) != null) {
+		if ((a = e.getAttribute(Xml.TRAIN_IDS)) != null) {
 			String ids = a.getValue();
 			String[] trainIds = ids.split(",");
 			for (int i = 0; i < trainIds.length; i++) {
@@ -113,7 +113,7 @@ public class TrainSchedule {
 	 * @return Contents in a JDOM Element
 	 */
 	public Element store() {
-		Element e = new org.jdom.Element("schedule");
+		Element e = new org.jdom.Element(Xml.SCHEDULE);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.NAME, getName());
 		if (!getComment().equals(""))
@@ -123,7 +123,7 @@ public class TrainSchedule {
 		for (int i = 0; i < _trainIds.size(); i++) {
 			buf.append(_trainIds.get(i) + ",");
 		}
-		e.setAttribute("trainIds", buf.toString());
+		e.setAttribute(Xml.TRAIN_IDS, buf.toString());
 		return e;
 	}
 
