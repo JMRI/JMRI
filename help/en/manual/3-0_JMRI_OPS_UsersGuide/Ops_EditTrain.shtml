@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright ($Author: dat7719 $) 2009 -->
 <!-- $Id: Ops_AddTrain.shtml 18290 2011-08-25 09:06:42Z dat7719 $ -->
-<title>Operations-Add Train</title>
+<title>Operations-Edit Train</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -22,7 +22,7 @@
 
 <a NAME="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Add Train<br>
+<h1>Edit Train<br>
 </h1>
 
 <div align=right>
@@ -31,19 +31,19 @@
 </div>
 
 <hr>
-<p>The Add Train window is opened from the 
-  Trains Window.</p>
+<p>The Edit Train window is opened from the 
+  Trains Window using Edit button for any train in the list.</p>
 <blockquote>
-  <p><img src="images/Ops_AddTrain.png" width="675" height="869" alt="add trains"></p>
+  <p><img src="images/Ops_EditTrain.png" width="675" height="869" alt="edit"></p>
   <p>Menu bar<br>
   </p>
-  <p><img src="images/Ops_AddTrainMenu.png" width="219" height="105" alt="menu"></p>
+  <p><img src="images/Ops_EditTrainMenu.png" width="255" height="140"></p>
   <p><strong>Tools</strong><br>
   </p>
 </blockquote>
 <table width="90%" border="0" cellspacing="1" cellpadding="2" >
   <tr>
-    <td width="28%" rowspan="10" valign="top"><img src="images/Ops_AddTrainTools.png" width="217" height="303" alt="Tools"></td>
+    <td width="28%" rowspan="10" valign="top"><img src="images/Ops_EditTrainTools.png" width="224" height="350"></td>
     <td width="72%"><strong>Options</strong><br>
     <img src="images/Ops_AddTrainOption.png" width="305" height="162" alt="option"></td>
   </tr>
@@ -55,7 +55,7 @@
   </tr>
   <tr>
     <td height="137"><strong>Show Car Types Serviced</strong><br>
-    <img src="images/Ops_CarsServiced.png" width="400" height="105" alt="cars"></td>
+    <img src="images/Ops_CarsServiced.01.png" width="405" height="273"> <br></td>
   </tr>
   <tr>
     <td><strong>Print <br>
@@ -66,16 +66,16 @@
     <img src="images/Ops_TrainPreview.png" width="644" height="252" alt="preview"></td>
   </tr>
   <tr>
-    <td><strong>Print Manifest</strong> -- </td>
+    <td><strong><a href="Ops_ManifestPrint.shtml">Print Manifest</a></strong></td>
   </tr>
   <tr>
-    <td><strong>Preview Manifest</strong> --</td>
+    <td><strong><a href="Ops_ManifestPreview.shtml">Preview Manifest</a></strong></td>
   </tr>
   <tr>
-    <td><strong>Print Build Report</strong> --</td>
+    <td><strong><a href="Ops_BuildReportPrint.shtml">Print Build Report</a></strong></td>
   </tr>
   <tr>
-    <td><strong>Preview Build Report</strong> --</td>
+    <td><strong><a href="Ops_BuildReportPreveiw.shtml">Preview Build Report</a></strong></td>
   </tr>
 </table>
 <p>In the body of the window</p>
@@ -138,7 +138,7 @@ route that  this train will travel. </p>
 </table>
 <p>
   <input type="submit" name="button7" id="button7" value="Reset Train">
-allows you to remove locomotives and cars that have  been assigned to a train. Useful when you want to try various build  options and don't what to physically move locomotive and cars on the  railroad. </p>
+allows you to remove locomotives and cars that have  been assigned to a train. Useful when you want to try various build  options and don't want to physically move locomotive and cars on the  railroad. </p>
 <p>
  Press 
    <input type="submit" name="button8" id="button8" value="Save Train">

@@ -25,7 +25,8 @@
 <h1>Operations Print Options</h1>
 
 <div align=right>
-<p><a href="Ops_Settings.shtml">Back</a></p>
+<p><a href="Ops_Settings.shtml">Back to Settings</a></p>
+<p><a href="Ops_Trains.shtml">Back to Trains</a></p>
 </div>
 
 <hr>
@@ -134,7 +135,8 @@ Very Detailed -- setting produces the most  pages, and will show why cars are no
 <hr>
 
 <div align=right>
-<p><a href="Ops_Settings.shtml">Back</a><a href="index.shtml#Main"></a></p>
+<p><a href="Ops_Settings.shtml">Back to Settings</a></p>
+<p><a href="Ops_Trains.shtml">Back to Trains</a><a href="index.shtml#Main"></a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

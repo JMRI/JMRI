@@ -33,7 +33,7 @@
 <p>The <strong>Options</strong> window is opened from the <strong>Trains</strong> window <strong>Tools</strong> menu.</p>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="57%" valign="top"><img src="images/Ops_TrainsOptions.png" width="460" height="672"></td>
+    <td width="57%" valign="top"><img src="images/Ops_Trains_BuildOptions.png" width="477" height="657" alt="options"></td>
     <td width="43%" valign="top"><p>Standard JMRI&reg; <strong>Window</strong> and <strong>Help</strong> menus</p>
     <p><strong>Build Options</strong><br>
       <input name="radio" type="radio" id="radio" value="radio" checked>
@@ -56,6 +56,9 @@ Note that once you've built a train, the build option can not be changed until a
       <input type="checkbox" name="checkbox3" id="checkbox3">
       <strong>Prompt for Departure Track from Staging</strong><br>
     If selected the program ask you which track should depart from staging during the train build. Note that the program will only prompt you if there are two or more trains available in staging that meet the train's requirements.</p>
+    <p>
+      <input type="checkbox" name="checkbox5" id="checkbox5">
+    Make departure track available after train is built</p>
     <p>
       <input type="checkbox" name="checkbox4" id="checkbox4">
       <strong>Prompt for Arrival Track into Staging</strong><br>

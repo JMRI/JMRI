@@ -29,15 +29,15 @@
 </div>
 
 <hr>
-<p>The <strong>Trains</strong> window opens which allows you to build trains to run on your layout. This window is selected from the JMRI main page from <strong>Tools--&gt;Operations--&gt;Trains </strong>menu or if enabled <strong>Operations--&gt;Trains</strong> menu.</p>
+<p>The <strong>Trains</strong> window opens which allows you to build trains to run on your layout. This window is selected from the DecoderPro&reg; or PanelPro&reg; main page from <strong>Tools--&gt;Operations--&gt;Trains </strong>menu or if enabled <strong>Operations--&gt;Trains</strong> menu.</p>
 <p>At the bottom of the window is a series of buttons, at this time press
   <input type="submit" name="button" id="button" value="Add">
 to open the <a href="Ops_AddTrain.shtml"><strong>Add Train </strong></a>window. </p>
-<p><img src="images/Ops_Trains.png" width="800" height="257" alt="trains"></p>
+<p><img src="images/Ops_Trains.png" width="899" height="317" alt="trains"></p>
 <h3>Menu Bar</h3>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="15%" valign="top"><img src="images/Ops_TrainsMenu.png" width="254" height="281" alt="menu"></td>
+    <td width="15%" valign="top"><img src="images/Ops_TrainsMenu.png" width="265" height="274" alt="menu"></td>
     <td width="85%" align="left" valign="top"><ul>
       <li><strong>Tools</strong>
 <ul>
@@ -81,181 +81,72 @@ to open the <a href="Ops_AddTrain.shtml"><strong>Add Train </strong></a>window. 
   </li>
 </ul>
       </li>
+      <li><strong>Operations</strong> -- (Same as Main DecoderPro&reg; menu)</li>
       <li><strong>Windows</strong> -- standard JMRI&reg; format.</li>
       <li><strong>Help</strong> -- standard JMRI&reg; format.</li>
     </ul></td>
   </tr>
 </table>
 <p>The main body displays the list of all the trains that have been built. Each train has a Preview, Move and Edit button associated with it.<br>
-  <img src="images/Ops_Trains_train.png" width="899" height="62" alt="train"><br>
-  <a name="preview"></a>
-  <input type="button" name="button5" id="button5" value="Preview">
-  opens the <strong><a href="#PrintPreview">Print Preview</a></strong> window showing the trains Manifest.<br>
-  <input type="button" name="button6" id="button6" value="Move">
-   Each time pressed advances one location on the trains route until it will be finally terminated.<br>
-  <input type="button" name="button7" id="button7" value="Edit"> 
-Opens the <strong><a href="Ops_AddTrain.shtml">Edit Train</a></strong> window which is basically the same as the <strong>Add Train</strong> window <br>
+  <br>
+<img src="images/Ops_Trains_train.png" width="899" height="141" alt="trains"><strong>Time or Id </strong>(depends upon show option at bottom of window) column shows the departure time of the train<br>
+<strong>Build</strong> column is checked to include in current build<br>
+<strong>Funcion</strong> column, <a name="preview"></a>Click on the Build button and  Preview button is displayed in Function, click on function button and it 
+  opens the <strong><a href="Ops_ManifestPreview.shtml">Print Preview</a></strong> window showing the trains Manifest.<br>
+  <strong>Name</strong> column shows train name<br>
+  <strong>Description</strong> column describes the trains routing<br>
+  <strong>Route</strong> column shows actual train route<br>
+  <strong>Departs</strong> column shows location of departure<br>
+  <strong>Terminates</strong> column shows the terminal location<br>
+  <strong>Current</strong> column shows current location<br>
+  <strong>Status</strong> column shows status of train<br>
+  <strong>Action</strong> column shows move button, 
+
+  Each time pressed advances one location on the trains route until it will be finally terminated.<br>
+  <strong>Edit</strong> column contains the Edit button which 
+opens the <strong><a href="Ops_EditTrain.shtml">Edit Train</a></strong> window </p>
+<p>At the bottom of the Trains window</p>
+<p><img src="images/Ops_TrainsButtons.png" width="898" height="144" alt="bottom"><strong>Show </strong>selects if time or Id is shown in first column.<br>
+(click on column header for sort by sequence)</p>
+<p><br>
+  <strong>Options </strong>(selects the options desired for the train list)<strong><br>
+  <input name="checkbox" type="checkbox" id="checkbox" checked>
+  Show All
+<input name="checkbox2" type="checkbox" id="checkbox2" checked>
+  Messages
+<input type="checkbox" name="checkbox3" id="checkbox3">
+  Build Reports
+<input name="checkbox4" type="checkbox" id="checkbox4" checked>
+  Preview Manifests </strong><br>
 </p>
-<p><img src="images/Ops_TrainsOptions.png" width="897" height="131" alt="options"></p>
-<p><strong>Sort by</strong> (sets the sort sequence for the train list<br>
-  <input name="radio2" type="radio" id="radio2" value="radio2" checked>
-  <strong>Time
-<input name="radio" type="radio" id="radio" value="radio"> 
-Name (default) 
-Route 
-<input type="radio" name="radio3" id="radio3" value="radio3"> 
-Departs 
-<input type="radio" name="radio4" id="radio4" value="radio4"> 
-Terminates 
-<input type="radio" name="radio5" id="radio5" value="radio5"> 
-Status 
-<input type="radio" name="radio6" id="radio6" value="radio6"> 
-Id</strong></p>
-<p><strong>Options </strong>(selects the options desired for the train list)<strong><br>
-  <input name="checkbox" type="checkbox" id="checkbox" checked> 
-  Show All 
-  <input name="checkbox2" type="checkbox" id="checkbox2" checked> 
-  Messages 
-  <input type="checkbox" name="checkbox3" id="checkbox3"> 
-  Build Reports 
-  <input name="checkbox4" type="checkbox" id="checkbox4" checked> 
-  Preview Manifests
-</strong></p>
 <p><strong>Action<br>
-  <input name="radio7" type="radio" id="radio7" value="radio7" checked> 
-  Move 
-  <input type="radio" name="radio8" id="radio8" value="radio8"> 
-  Terminate 
-  <input type="radio" name="radio9" id="radio9" value="radio9"> 
-  Reset
-</strong><br>
-</p>
-<p><img src="images/Ops_TrainsButtons.png" width="609" height="81" alt="buttons"><br>
+    <input name="radio7" type="radio" id="radio7" value="radio7" checked>
+Move
+<input type="radio" name="radio" id="radio" value="radio">
+Conductor
+<input type="radio" name="radio8" id="radio8" value="radio8">
+Terminate
+<input type="radio" name="radio9" id="radio9" value="radio9">
+Reset </strong></p>
+<p>
   <input type="button" name="button8" id="button8" value="Add">
    opens the <strong><a href="Ops_AddTrain.shtml">Add Train </a></strong>window<br>
   <a name="buildbtn"></a>
   <input type="button" name="button9" id="button9" value="Build">
-  the selected train is<strong><a href="#Build"> built </a></strong>and the button changes to <strong>Print Preview</strong> when competed, messages may be displayed if build can not be completed.<br>
+  the selected train is<strong><a href="Ops_TrainsBuild.shtml"> build </a></strong>and the <strong>Function</strong> column button changes to <strong> Preview</strong> when competed, messages may be displayed if build can not be completed.<br>
   <input type="button" name="button10" id="button10" value="Preview">
-  shows the manifest in <strong><a href="#PrintPreview">Preview </a></strong>window<br>
+  shows the manifest in <strong><a href="Ops_ManifestPreview.shtml">Preview </a></strong>window<br>
   <a name="switch"></a>
   <input type="button" name="button11" id="button11" value="Switch Lists">
-  opens the<strong><a href="#switchList">Switch Lists by Location</a></strong>window<br>
+  opens the <strong><a href="Ops_TrainsBuild.shtml">Switch Lists by Location </a></strong>window</p>
+<p><br>
   <input type="button" name="button12" id="button12" value="Terminate">
-  terminates selected train.<br>
+  terminates all trains that have a build<br>
   <input type="button" name="button13" id="button13" value="Save Builds"> 
-  saves the builds to disk
-</p>
-<hr/>
-<a name="PrintPreview"></a>Train Manifest Print Preview<br>
-<img src="images/Ops_TrainsPrintPreview.png" width="800" height="1027" alt="print preview"><br>
-<a href="#preview"><strong>Back</strong></a>
-<hr/>
-<p><a name="switchList"></a><strong>Switch Lists by Location</strong></p>
-<p>A switch list shows the work required to service all of the trains visiting that location. Normally a switch list is given to the person in charge of a yard or a location with many spurs or industries.</p>
-<p>To Preview or Print Switch Lists, select the location(s) and set printer, then press 
-  <input type="button" name="button14" id="button14" value="Preview Switch Lists">
-  or 
-  <input type="button" name="button15" id="button15" value="Print Switch Lists">
-  </p>
-<p>
-  <input type="button" name="button16" id="button16" value="Save">
-  will store your selections.<br>
-  <br>
-<img src="images/Ops_TrainsSwitchList.png" width="482" height="382" alt="switch List"></p>
-<p>Preview or Printed Switch List</p>
-<p><img src="images/Ops_TrainsPreviewSwitchList.png" width="724" height="375" alt="preview switch list"></p>
-<p><strong><a href="#switch">Back</a></strong></p>
-<hr/>
-<h3><a name="Build"></a>Building Trains</h3>
-<p>To build one train, press
-  <input type="submit" name="button17" id="button17" value="Build">
-  in the row for the desired  train in the <strong>Trains</strong> window. After the train is built
-  <input type="submit" name="button17" id="button18" value="Build">
-  changes to
-  <input type="submit" name="button18" id="button19" value="Print"> 
-  or 
-  <input type="button" name="button52" id="button52" value="Preview">
-  .
-</p>
-<p><img src="images/Ops_TrainsBuild01.png" width="929" height="139" alt="Build Train"></p>
-<p>If you want to review how the train was built,  select the
-  <input name="checkbox5" type="checkbox" id="checkbox5" checked>
-  <strong>Build Reports</strong> before pressing
-  <input type="submit" name="button19" id="button20" value="Preview">
-  for the desired train. If the
-  <input name="checkbox5" type="checkbox" id="checkbox6" checked>
-  <strong>Preview Manifest </strong>is  selected, the program will generate the build report and manifest and  present them in preview windows.</p>
-<p><img src="images/Ops_TrainsBuild02.png" width="322" height="146" alt="Build Train"></p>
-<p> If you want to build several trains  without having to press individual buttons for each train, select the  trains that you want built in the <strong>Build</strong> column
-  <input name="checkbox5" type="checkbox" id="checkbox7" checked>
-  and press
-  <input type="submit" name="button20" id="button21" value="Build">
-  found at the  bottom of the trains panel. The program will then build manifests for  all of the selected trains. </p>
-<p>If a train fails to build, the
-  <input type="submit" name="button21" id="button22" value="Move">
-  will change its text  to
-  <input type="submit" name="button22" id="button23" value="Report">
-  . Pressing
-  <input type="submit" name="button23" id="button24" value="Report">
-  will print or preview the build report  for this train. Whenever a train fails to build, a build failure message  will appear. If you want to disable this feature deselect the checkbox
-  <input type="checkbox" name="checkbox5" id="checkbox8">
-  <strong>Build Messages</strong>.</p>
-<p>With
-  <input name="checkbox5" type="checkbox" id="checkbox9" checked>
-  <strong>Preview Manifest</strong> press
-  <input type="submit" name="button24" id="button25" value="Preview">
-  and the Train Manifest is displayed using your system printer's preview window.</p>
-<p><img src="images/Ops_TrainManifest.png" width="668" height="553" alt="manifest"></p>
-<p>With
-  <input name="checkbox6" type="checkbox" id="checkbox10" checked>
-  <strong>Preview Manifest</strong>,
-  <input name="checkbox7" type="checkbox" id="checkbox11" checked>
-  <strong> Build Reports</strong> and
-  <input name="checkbox8" type="checkbox" id="checkbox12" checked>
-  <strong>Build Messages</strong> selected,
-  press
-  <input type="submit" name="button25" id="button26" value="Preview">
-and all the Reports and Train Manifest are previewed, then you may print the desired reports or manifest using your system print dialog.</p>
-<p><img src="images/Ops_TrainBuildRpt.png" width="650" height="588" alt="Buid Report"></p>
-<h4>Problems Building Trains</h4>
-<p>If you have a problem building a train you can select the
-  <input name="checkbox9" type="checkbox" id="checkbox13" checked>
-  <strong>Build  Reports </strong>checkbox at the bottom of the train panel. When a build fails  for any reason and the
-  <input name="checkbox10" type="checkbox" id="checkbox14" checked>
-  <strong>Build  Reports</strong> checkbox is selected, the program  will send a report to your printer if the
-  <input name="checkbox11" type="checkbox" id="checkbox15">
-  <strong>Preview Manifests</strong> isn't  selected; or to a preview window if the
-  <input name="checkbox12" type="checkbox" id="checkbox16" checked>
-  <strong>Preview Manifests</strong> is selected.  The build report can print out different levels of detail, from minimal  to very detailed. See the Settings section <a href="Ops_PrintOptions.shtml">Build  Report Details</a> for more information on how to change the build report  detail level.</p>
-<p>The program now confirms during the build that all of the cars in a kernal have the same departure location and track.</p>
-<p>The program will wait for the scripts to complete prior to building a train.</p>
-<h4>Building Multiple Trains for a Session</h4>
-<p>Most operating sessions require more than one train to keep your  operators busy. The correct way to do this is to build and print all of  the trains needed before terminating them. So if you need a dozen trains  for a session, you must build twelve trains before you terminate any one  train. Terminating a train tells the program that the engines and cars  in that particular train have been delivered to their final locations  and can be used again when building new trains. So always build all,  print all, THEN terminate each train after completing its run! It is  okay to build all trains, print all train, and then use the
-  <input type="submit" name="button37" id="button45" value="Save Builds">
-  and shut down the program. Later you can restart the  program and terminate the trains that completed their runs. </p>
-<p>The correct time to terminate a train is when the train actually  arrives at its destination. Terminating a train before it completes it  run means that the operation database believes that the engines and cars  have been delivered. It is better to build and print twelve trains and  then later find out that only nine trains completed their runs. You  would then terminate nine trains, and leave the other three for next  time. Or if you wish you could reset any trains that didn't depart from  their terminal. Reseting trains really isn't necessary, the trains that  didn't run during this session could run the during the next session. </p>
-<p>An alternate method is to build, print, and use the
-  <input type="submit" name="button39" id="button46" value="Move">
-  for each train to track the actual movement of the trains during your  session. As long as the trains on your layout match the locations in the  program you can build a new train. </p>
-<h4>Moving Trains</h4>
-<p>After providing your operators with a printed manifest or location  switch list, you must keep the program database synchronized with the  actual movement of trains on your layout. This is done by the
-  <input type="submit" name="button38" id="button47" value="Move">
-  located on the far right of the train menu. Pressing the
-  <input type="submit" name="button40" id="button48" value="Move">
-  will cause the train to depart its current location move to the  next location in the route. The engines and cars assigned to the train  will travel to the next location on the railroad. At each location, cars  can be picked up or dropped off. You can also move a train by selecting  the train's icon and selecting
-  <input type="submit" name="button41" id="button49" value="Move">
-  from the icon's popup menu. Each  press of the
-  <input type="submit" name="button42" id="button50" value="Move">
-  moves the train closer to its terminal  location. When the train arrives at the last location in the route, the  last press of the
-  <input type="submit" name="button43" id="button51" value="Move">
-  will terminate the train. Once a train  is terminated, you can build it again. </p>
-<p>Each time an engine or car is moved a count associated with them  is incremented. The program uses this to determine which cars haven't  moved recently and tries to select cars with the least number of moves  when building new trains. Each time a location has a car picked up or  dropped, the program increments a count associated with that location.  The program tries to move cars to locations that have experienced the  least number of car operations.</p>
-<p><strong><a href="#buildbtn">Back</a></strong></p>
-<hr/>
+  saves the builds to disk</p>
 <p>&nbsp;</p>
 <div align=right>
-<p><a href="Ops_Routes.shtml">Previous | </a><a href="Ops_TripThruOperations.shtml">Next</a></p>
+  <p><a href="Ops_Routes.shtml">Previous | </a><a href="Ops_TripThruOperations.shtml">Next</a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 

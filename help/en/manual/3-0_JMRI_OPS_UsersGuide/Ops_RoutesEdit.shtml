@@ -22,20 +22,19 @@
 
 <a NAME="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Routes Window</h1>
+<h1>Edit Route Window</h1>
 
 <div align=right>
-<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Trains.shtml">Next</a></p>
+<p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
 <hr>
-<p>A route is a list of locations that a train will visit. Later you can  decide if the train stops at a location for work. Routes can be point to  point or out and back. The current Routes are shown in the <strong>Routes</strong> window with their status, i.e. Orphan means it has not been assigned to a train.</p>
-<p><img src="images/Ops_Routes.png" width="730" height="310" alt="routes"></p>
-<p>Panel showing possible routes that are in the Routes table.</p>
+<p>Panel showing possible routes that are available on your railroad. We are going to edit the Bakerfield to Fremont Route..</p>
 <p><img src="images/Ops_DemoPanel.png" width="800" height="220" alt="panel"></p>
+<p><img src="images/Ops_RouteEdit.png" width="800" height="390" alt="route edit"></p>
 <h4>Menu Bar</h4>
-<p><img src="images/Ops_RoutesMenu.png" width="277" height="111" alt="routes menu"></p>
+<p><img src="images/Ops_RouteEditMenu.png" width="280" height="140" alt="menu"></p>
 <h3><strong>Tools</strong></h3>
 <ul>
   <li><strong>Copy Route</strong> opens the <strong>Route Copy</strong> dialog. This allows you to copy an existing route.</li>
@@ -43,7 +42,7 @@
 <blockquote>
   <table width="90%" border="0" cellspacing="1" cellpadding="2">
     <tr>
-      <td  valign="top" width="42%"><img src="images/Ops_RoutesCopy.png" width="400" height="150" alt="routes copy"></td>
+      <td  valign="top" width="42%"><img src="images/Ops_RouteEditCopy.png" width="400" height="150" alt="copy"></td>
       <td width="58%" align="left" valign="top"><p>Type the <strong>New Route Name</strong>        
         <input type="text" name="textfield" id="textfield">
         </p>
@@ -65,24 +64,18 @@
     This tool is used to set the default X and Y coordinates of your train icons for each location. The tool allows you to specify the icon coordinates based on the trains direction. You can also update all of your existing routes and locations with these new coordinates. As an alternative, you can use a route's  <strong>Tools--&gt;Set Train Icon Coordinates for this Route</strong> to create coordinates unique to a specific route.<br>
     <table width="90%" border="0" cellspacing="1" cellpadding="2">
       <tr>
-        <td width="53%" valign="top"><img src="images/Ops_Routes_SetTrainIcons.png" width="350" height="294" alt="Set Icons"></td>
-        <td v valign="top"width="47%"><p><strong>Location</strong><br>
-          Select location from 
-          <select name="select2" id="select2">
-            <option>Bakerfield</option>
-          </select>
-        </p>
-        <p><strong>Set Eastbound Train Icon Coordinates<br>
-          <br>
-          Set Westbound Train Icon Coordinates
-        </strong><br>
+        <td width="53%" valign="top"><img src="images/Ops_RouteEditIcons.png" width="300" height="250" alt="icons"></td>
+        <td v valign="top"width="47%"><p><strong>Route (route name) Bksfld-Frmnt</strong><br>
+          <strong><br>
+          Set Train Icon Coordinates
+          </strong><br>
         <br>
         Set the X, Y coordinates where you want the icon located at the selected location,</p>
         <p>
           <input type="button" name="button3" id="button3" value="Place Test Icons">
           check location on your layout<br>
-          <input type="button" name="button4" id="button4" value="Update Routes">
-          update the routes with icon data<br>
+          <input type="button" name="button4" id="button4" value="Apply">
+update the routes with icon data<br>
           <input type="button" name="button5" id="button5" value="Save">
 saves the icon data in the Routes files<br>
         </p></td>
@@ -92,33 +85,61 @@ saves the icon data in the Routes files<br>
   <li><strong>Print</strong></li>
 </ul>
 <blockquote>
-  <p><img src="images/Ops_RoutesPrint.png" width="800" height="358" alt="print"></p>
+  <p><img src="images/Ops_RouteEditPrint.png" width="893" height="399" alt="print"></p>
 </blockquote>
 <ul>
-  <li><strong>Preview</strong> </li>
+  <li><strong>Preview</strong> 
+    <blockquote>
+      <p><img src="images/Ops_RouteEditPreview.png" width="655" height="346" alt="route preview"></p>
+    </blockquote>
+  </li>
 </ul>
-<p><strong>Operations</strong> (Same as Main Operations menu)<br>
-</p>
+<blockquote>
+  <p><br>
+  </p>
+</blockquote>
 <p><strong>Window </strong>-- Standard JMRI&reg; window menu.</p>
 <p><strong>Help</strong> -- Standard JMRI&reg; Help menu.</p>
-<h4>Route List - middle of window</h4>
-<p>Lists routes <strong>Id, Name, Comment, Status </strong>and 
-  <input type="button" name="button6" id="button6" value="Edit">
-<a href="Ops_RoutesEdit.shtml"><strong>Edit Route</strong></a></p>
+<h4>Route Table - The stops and location on the route</h4>
+<p><img src="images/Ops_RouteEditDetail.png" width="800" height="83" alt="detail"></p>
+<p>Location -- as defined in locations<br>
+  Train Direction -- change using drop-down list.<br>
+  Moves -- number of moves required for route<br>
+Pick ups? -- change using drop-down list.<br>
+Set outs? -- change using drop-down list<br>
+Wait -- Time to wait<br>
+Max Length -- Length of  spur<br>
+Grade -- Percent of grade at location<br>
+X --  Coordinate<br>
+Y-- Coordinate
+<br>
+Comment -- Add if desired<br>
+Up -- Change  position in the route. move up the list. moves one position each click<br>
+Down -- Change position in the route
+move down the list, moves one position each click<br>
+Delete -- Deletes the location from the route.
+<br>
+</p>
 <h4>Bottom of window</h4>
-<p><strong>Sort by 
-  <input name="radio" type="radio" id="radio" value="radio" checked>
-  Name
-  <input type="radio" name="radio2" id="radio2" value="radio2"> 
-  Id
-</strong>establishes the sort order of the routes.</p>
+<p><strong>Add Location button --</strong>add the location to the route<strong><br>
+  <input type="radio" name="radio" id="radio" value="radio">
+Add location at start</strong> -- add the location to the start of the route<br>
+<input name="radio2" type="radio" id="radio2" value="radio2" checked> 
+<strong>Add location at end </strong>-- add the location to the end of the route </p>
+<p>Display</p>
 <p>
-  <input type="submit" name="button2" id="button2" value="Add"> 
-opens the <a href="Ops_AddRoutes.shtml"><strong>Add Routes</strong></a> window to allow you to add routes to your Operations data base. </p>
+  <input name="radio3" type="radio" id="radio3" value="radio3" checked> 
+  <strong>Wait<br>
+  <input type="radio" name="radio4" id="radio4" value="radio4">
+  Departure Time
+</strong></p>
+<p><strong>Delete Route</strong> button -- deletes the route</p>
+<p><strong>Add Route</strong> button -- adds route, greyed out</p>
+<p><strong>Save Route</strong> -- saves the route file after editing.</p>
 <hr>
 
 <div align=right>
-<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Trains.shtml">Next</a></p>
+<p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 

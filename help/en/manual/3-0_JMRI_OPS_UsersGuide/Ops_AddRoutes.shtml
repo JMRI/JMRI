@@ -22,47 +22,78 @@
 <a NAME="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Add Route Window<br>
-  Edit Route Window
 </h1>
 
 <div align=right>
-<p><a href="Ops_Engines.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
+<p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
 <hr>
 <p>The <strong>Add Route</strong> Window opens and now you can add a route to your Operations data base.</p>
-<p>The Edit Route Window opens and allows you to edit one of the routes. only Title bar is different</p>
-<p><img src="images/Ops_AddTrainEditRoute.png" width="1035" height="159" alt="edit route"></p>
 <p><img src="images/Ops_AddRoute.png" width="900" height="239" alt="add route"></p>
 <h4>Menu Bar<br>
-<img src="images/Ops_AddRoute_menu.png" width="328" height="189" alt="route menu"></h4>
+<img src="images/Ops_AddRoute_menu.png" width="343" height="194" alt="add route menu"></h4>
 <h4><strong>Tools</strong></h4>
 <ul>
-  <li><strong>Print --</strong> Prints your Routes.</li>
-  <li><strong>Preview</strong> -- Lets you preview the Routes prior to printing.</li>
-  <li><strong>Copy Route</strong><br>
-    <table width="90%" border="0" cellspacing="1" cellpadding="2">
-      <tr>
-        <td width="60%" valign="top"><img src="images/Ops_AddRoute_Copy.png" width="400" height="150" alt="add route copy"></td>
-        <td width="40%" valign="top"><p>type <strong>New Route Name </strong>          
-          <input name="textfield2" type="text" id="textfield2" size="8">
-        </p>
+  <li><strong>Copy Route</strong></li>
+</ul>
+<blockquote>
+  <table width="90%" border="0" cellspacing="1" cellpadding="2">
+    <tr>
+      <td width="60%" valign="top"><img src="images/Ops_AddRoute_Copy.png" width="400" height="150" alt="add route copy"></td>
+      <td width="40%" valign="top"><p>type <strong>New Route Name </strong>
+        <input name="textfield2" type="text" id="textfield2" size="8">
+      </p>
         <p><strong>Select Route to Copy</strong>
-<select name="select2" id="select2">
-</select>
+          <select name="select2" id="select2">
+          </select>
         </p>
         <p>
-           <input type="checkbox" name="checkbox" id="checkbox">
-           <strong>        Invert&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
-<input type="button" name="button8" id="button8" value="Copy">
+          <input type="checkbox" name="checkbox" id="checkbox">
+          <strong> Invert&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>
+          <input type="button" name="button8" id="button8" value="Copy">
         </p></td>
-      </tr>
-    </table>
-  </li>
-  <li><strong>Set Train Icons Coordinates for this Route</strong><br>
+    </tr>
+  </table>
+</blockquote>
+<ul>
+  <li><strong>Set Train Icons Coordinates for this Route</strong></li>
+</ul>
+<blockquote>
+  <table width="90%" border="0" cellspacing="1" cellpadding="2">
+    <tr>
+      <td width="53%" valign="top"><img src="images/Ops_RouteEditIcons.png" width="300" height="250" alt="icons"></td>
+      <td v valign="top"width="47%"><p><strong>Route (route name) Bksfld-Frmnt</strong><br>
+        <strong><br>
+          Set Train Icon Coordinates </strong><br>
+        <br>
+        Set the X, Y coordinates where you want the icon located at the selected location,</p>
+        <p>
+          <input type="button" name="button12" id="button12" value="Place Test Icons">
+          check location on your layout<br>
+          <input type="button" name="button12" id="button13" value="Apply">
+          update the routes with icon data<br>
+          <input type="button" name="button12" id="button14" value="Save">
+          saves the icon data in the Routes files<br>
+        </p></td>
+    </tr>
+  </table>
+</blockquote>
+<ul>
+  <li><strong>Print --</strong> Prints your Routes.</li>
+</ul>
+<blockquote>
+  <p><img src="images/Ops_RoutesPrint.png" width="800" height="358" alt="print"></p>
+</blockquote>
+<ul>
+  <li><strong>Preview</strong> -- Lets you preview the Routes prior to printing.
+    <blockquote>
+      <p><img src="images/Ops_RoutesPreview.png" width="657" height="352" alt="preview"></p>
+    </blockquote>
   </li>
 </ul>
+<p><strong>Operations</strong> (Same as Main Operations menu)</p>
 <p><strong>Window</strong>-- Standard DecoderPro&reg; window menu.</p>
 <p><strong>Help</strong> -- Standard DecoderPro&reg; window menu.</p>
 <p>Now to add a route:</p>
@@ -86,7 +117,7 @@ located at the left bottom side of the window. </p>
 </p>
 <p>Press 
   <input type="submit" name="button2" id="button2" value="Add Location">
-.Updated Add Route window will be displayed with all the attributes required active.</p>
+.Updated Add Route window will be displayed with all the attributes required active. Repeat until all stops are entered for the route.</p>
 <p><img src="images/Ops_AddRoute02.png" width="900" height="239" alt="add route"></p>
 <p> Now build your route by selecting the next location the train  will visit, select all locations that the train will pass through even  if the train will not work the location. This way your train's engineer  will know when reading his manifest the towns he will be traveling  through. Each time you add a location to the route, the table shows the  order in which the train will visit. You can move a location up or down  in the sequence if needed. </p>
 <p>We will now add all the locations to the route. Now make sure that 
@@ -123,7 +154,7 @@ pressed.</p>
 <p><img src="images/Ops_Routes01.png" width="730" height="310" alt="routes"></p>
 <p>Note that you may press 
   <input type="submit" name="button6" id="button6" value="Edit"> 
-on any route and the <strong>Edit Route</strong> window opens which is identical to the <strong>Add Route</strong> window except for title</p>
+on any route and the <strong><a href="Ops_RoutesEdit.shtml">Edit Route </a></strong>window opens which is similar to the <strong>Add Route</strong> window.</p>
 <p>You may now press 
   <input type="submit" name="button7" id="button7" value="Add"> 
   to add another route, repeating the process just completed.
@@ -132,7 +163,7 @@ on any route and the <strong>Edit Route</strong> window opens which is identical
 <hr>
 
 <div align=right>
-<p><a href="Ops_Engines.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
+<p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
