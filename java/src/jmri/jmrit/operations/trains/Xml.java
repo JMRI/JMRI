@@ -28,7 +28,7 @@ public class Xml {
 	static final String ROUTE_ID = "routeId"; // NOI18N old format
 	static final String SKIP = "skip"; // NOI18N
 	static final String CAR_TYPES = "carTypes"; // NOI18N
-	static final String TYPES = "Types"; // NOI18N
+	static final String TYPES = "types"; // NOI18N
 	static final String CAR_TYPE = "carType"; // NOI18N
 	static final String LOCO_TYPE = "locoType"; // NOI18N
 	static final String CAR_ROAD_OPERATION = "carRoadOperation"; // NOI18N	should have been option not operation
