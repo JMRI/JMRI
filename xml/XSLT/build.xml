@@ -23,6 +23,8 @@
   Provides build services for JMRI web pages
   </description>
 
+  <property name="jmri.copyright.year" value="1997-2013"/>
+
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>
   <property name="toDTD" value="DTD"/>
@@ -112,6 +114,7 @@
     		in="pages/decoderIndex.xml"
     		out="pages/decodersizes.csv"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
     <xslt  basedir="${target}"
     		destdir="${target}"
@@ -119,18 +122,20 @@
     		in="pages/decoderIndex.xml"
     		out="pages/decoderpower.csv"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
 
   <target name="alldecodercsv" depends="init, copyDTD, copyXML" 
   			description="create CSV file listing CVs available on all decoders">
-    <style  basedir="${target}"
+    <xslt  basedir="${target}"
     		destdir="${target}"
     		style="CSVsummary.xsl"
     		in="pages/decoderIndex.xml"
     		out="pages/cvsummary.csv"
     	>
-	</style>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
+	</xslt>
   </target>
   
   <target name="reservedcsv" depends="init, copyDTD, copyXML" 
@@ -146,6 +151,7 @@
     		in="pages/decoderIndex.xml"
     		out="pages/reservedCVs.csv"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
   
@@ -157,6 +163,7 @@
     		style="DecoderModelIndex.xsl"
     		includes="decoderIndex.xml"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
   
@@ -170,6 +177,7 @@
     		in="pages/decoderIndex.xml"
     		out="pages/mfgIndex.html"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
   
@@ -185,6 +193,7 @@
     		in="pages/decoderIndex.xml"
     		out="pages/CVSummary.html"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
  <target name="selection" depends="init, copyDTD, copyXML" 
@@ -195,6 +204,7 @@
     		in="pages/decoderIndex.xml"
     		out="pages/SelectionGuide.html"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
   
@@ -207,6 +217,7 @@
     		includes="*.xml"
     		excludes="decoderIndex.xml, names.html"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
   
@@ -219,6 +230,7 @@
     		in="pages/decoderIndex.xml"
     		out="pages/DecoderId.html"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
   
@@ -231,6 +243,7 @@
     		includes="*.xml"
     		excludes="decoderIndex.xml, names.html, interestingCVs.xml"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
   
@@ -243,6 +256,7 @@
     		in="pages/TCS_A1.xml"
     		out="pages/testweb.html"
     	>
+      <param name="JmriCopyrightYear" expression="${jmri.copyright.year}"/>
 	</xslt>
   </target>
   
