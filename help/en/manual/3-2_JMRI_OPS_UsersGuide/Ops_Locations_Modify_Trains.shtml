@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: zoo $) 2009 -->
+<!-- $Id: Ops_Locations.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
+<title>Operations-Locations</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Operations Modify Trains by Car Type Window</h1>
+<p>&nbsp;</p>
+
+
+<hr>
+<p><a name="top"></a></p>
+<table width="93%" border="1" cellspacing="1" cellpadding="2">
+  <tr>
+    <td width="38%" rowspan="6" valign="top"><img src="images/Ops_Location_Modify_Trains.png" width="300" height="356" alt="modify trains"></td>
+    <td width="37%"><img src="images/Ops_ModifyTrainsbyCarType.png" width="309" height="121" alt="menu"></td>
+    <td width="25%">&nbsp;</td>
+  </tr>
+  <tr>
+    <td width="37%" rowspan="2" valign="top"><strong>Tools</strong></td>
+    <td><strong><a href="#print">Print Trins by Car Types</a></strong></td>
+  </tr>
+  <tr>
+    <td><strong><a href="#preview">Preview Trains by Car Types</a></strong></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><strong>Type </strong></p>
+    <p><strong>Select from drop-down list.</strong></p></td>
+    <td valign="top"><img src="images/Ops_ModifyTrains_Type.png" width="297" height="208" alt="type"></td>
+  </tr>
+  <tr>
+    <td valign="top"><p><strong>Trains</strong></p>
+    <p><strong>Check the desired Trains.</strong></p></td>
+    <td><strong><img src="images/Ops_ModifyTrains_Trains.png" width="312" height="243" alt="trains"></strong></td>
+  </tr>
+  <tr>
+    <td height="105" valign="top"><img src="images/Ops_ModifyTrains_buttons.png" width="337" height="82" alt="buttons"></td>
+    <td valign="top"><p><strong>Clear all</strong> button Clears all selections</p>
+    <p><strong>Select all</strong> button Selects all the items.</p>
+    <p><strong>Save</strong> button Saves to your car roster</p></td>
+  </tr>
+</table>
+<p><a name="print"></a>Sample Print out using system printer.</p>
+<p><img src="images/Ops_Print_TrainbyCarTypes.png" width="723" height="392" alt="print"></p>
+<p><a href="#top"><strong>Back</strong></a></p>
+<p><a name="preview"></a>Sample Preview in System Printer.</p>
+<p><img src="images/Ops_Preview_TrainsbyCars.png" width="675" height="360" alt="preview"></p>
+<p><strong><a href="#Top">Back</a></strong></p>
+<hr>
+<!--#include virtual="/Footer" -->
+</body>
+</html>
