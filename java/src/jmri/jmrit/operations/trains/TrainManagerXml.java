@@ -174,8 +174,8 @@ public class TrainManagerXml extends OperationsXml {
 		BuildReportFileName = name;
 	}
 
-	private String BuildReportFileName = "train (";
-	private String ManifestFileName = "train (";
+	private String BuildReportFileName = Bundle.getMessage("train")+" (";
+	private String ManifestFileName = Bundle.getMessage("train")+" (";
 	private String fileType = ").txt";	// NOI18N
 	private String fileTypeCsv = ").csv";	// NOI18N
 
@@ -248,7 +248,7 @@ public class TrainManagerXml extends OperationsXml {
 		SwitchListFileName = name;
 	}
 
-	private String SwitchListFileName = "location (";
+	private String SwitchListFileName = Bundle.getMessage("location")+" (";
 
 	public void setOperationsFileName(String name) {
 		operationsFileName = name;

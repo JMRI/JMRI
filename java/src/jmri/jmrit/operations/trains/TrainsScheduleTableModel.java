@@ -135,7 +135,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		if (ts != null) {
 			return ts.getName();
 		}
-		return "unknown";
+		return "unknown"; // NOI18N
 	}
 
 	public Class<?> getColumnClass(int col) {
@@ -166,10 +166,10 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 
 	public synchronized Object getValueAt(int row, int col) {
 		if (row >= sysList.size())
-			return "ERROR row " + row;
+			return "ERROR row " + row; // NOI18N
 		Train train = trainManager.getTrainById(sysList.get(row));
 		if (train == null)
-			return "ERROR train unknown " + row;
+			return "ERROR train unknown " + row; // NOI18N
 		switch (col) {
 		case IDCOLUMN: {
 			if (_sort == SORTBYID) {
@@ -186,7 +186,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		if (ts != null) {
 			return ts.containsTrainId(train.getId());
 		}
-		return "unknown " + col;
+		return "unknown " + col; // NOI18N
 	}
 
 	public synchronized void setValueAt(Object value, int row, int col) {
@@ -208,7 +208,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)) {
 			updateList();
