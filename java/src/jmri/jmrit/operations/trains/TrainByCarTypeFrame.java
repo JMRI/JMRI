@@ -366,7 +366,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getSource().equals(car) || e.getSource().equals(train))
 			updateRoute();
 		if (e.getSource().getClass().equals(Track.class)

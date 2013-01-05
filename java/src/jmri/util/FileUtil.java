@@ -36,8 +36,6 @@ public class FileUtil {
     static private String programPath = null;
     static private String homePath = System.getProperty("user.home") + File.separator;
     
-    static private Boolean logged = false;
-
     /**
      * Find the resource file corresponding to a name. There are five cases:
      * <UL> <LI> Starts with "resource:", treat the rest as a pathname relative
