@@ -1,6 +1,6 @@
 
 <!-- Ant build.xml file for JMRI development                                -->
-<!-- Bob Jacobsen, Copyright 2002-2012                                      -->
+<!-- Bob Jacobsen, Copyright 2002-2013                                      -->
 
 <!-- Revision $Revision$ -->
 
@@ -26,7 +26,7 @@
     Provides build services for JMRI libraries and applications
     </description>
 
-    <property name="jmri.copyright.year" value="1997-2012"/>
+    <property name="jmri.copyright.year" value="1997-2013"/>
 
     <property environment="env"/>
 
@@ -942,7 +942,7 @@
             <classpath refid="compile.class.path"/>
             <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
             </doctitle>
-            <bottom><![CDATA[<i>Copyright &copy; 1997 - 2012 JMRI Community.
+            <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by:
@@ -1011,7 +1011,7 @@
             <classpath refid="compile.class.path"/>
             <doctitle><![CDATA[<h1>JMRI Library API</h1>]]>
             </doctitle>
-            <bottom><![CDATA[<i>Copyright &copy; 1997 - 2012 JMRI Community.
+            <bottom><![CDATA[<i>Copyright &copy; ${jmri.copyright.year} JMRI Community.
                     <br>JMRI, DecoderPro, PanelPro, SoundPro, DispatcherPro and associated logos are our trademarks.</i>
                        <br><a href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</a>
                        <br>Site hosted by:

@@ -18,15 +18,11 @@ If you're building locally:
 ================================================================================
 First, we merge in as much tentative content as possible to the SVN trunk.
 
-( ) If it's a new year, update copyright dates (done for 2010):
-    * build.xml (3) in the javadoc instructions and as a property value (jmri.copyright.years)
+( ) If it's a new year, update copyright dates (done for 2012):
+    * build.xml (3) in the jmri.copyright.years property value
     * site/Copyright.html (3 places)
-    * xml/XSLT masters and stylesheets
+    * xml/XSLT/build.xml in the property value, index.html, CSVindex.html
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
-    * Windows installer script
-        bbedit scripts/WinInstallFiles/InstallJMRI.nsi
-    * Linux & Mac OS X startup script
-        bbedit scripts/AppScriptTemplate
 
 ( ) Bring in all possible sf.net patches, including decoders
 
