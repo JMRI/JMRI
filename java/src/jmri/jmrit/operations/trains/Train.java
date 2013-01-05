@@ -134,7 +134,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String DEPARTURETIME_CHANGED_PROPERTY = "TrainDepartureTime"; // NOI18N
 	public static final String TRAIN_LOCATION_CHANGED_PROPERTY = "TrainLocation"; // NOI18N
 	public static final String TRAIN_ROUTE_CHANGED_PROPERTY = "TrainRoute"; // NOI18N
-	public static final String TRAIN_REQUIREMENTS_CHANGED_PROPERTY = "TrainRequires"; // NOI18N
+	public static final String TRAIN_REQUIREMENTS_CHANGED_PROPERTY = "TrainRequirements"; // NOI18N
 	public static final String TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY = "TrainMoveComplete"; // NOI18N
 	
 	
