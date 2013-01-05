@@ -36,8 +36,8 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainCommon {
 
 	private static final String LENGTHABV = Setup.LENGTHABV;
-	protected static final String TAB = "    ";
-	protected static final String NEW_LINE = "\n";
+	protected static final String TAB = "    "; // NOI18N
+	protected static final String NEW_LINE = "\n"; // NOI18N
 	protected static final String SPACE = " ";
 	private static final boolean pickup = true;
 	private static final boolean local = true;
@@ -493,7 +493,7 @@ public class TrainCommon {
 		// AM_PM field
 		String AM_PM = "";
 		if (Setup.is12hrFormatEnabled()) {
-			AM_PM = (calendar.get(Calendar.AM_PM) == Calendar.AM) ? "AM" : "PM";
+			AM_PM = (calendar.get(Calendar.AM_PM) == Calendar.AM) ? Bundle.getMessage("AM") : Bundle.getMessage("PM");
 		}
 
 		// Java 1.6 methods calendar.getDisplayName(Calendar.MONTH,
@@ -524,7 +524,7 @@ public class TrainCommon {
 			pagesize = new Dimension(206, 792);
 		// Metrics don't always work for the various font names, so use
 		// Monospaced
-		Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize());
+		Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize()); // NOI18N
 		JLabel label = new JLabel();
 		FontMetrics metrics = label.getFontMetrics(font);
 		int charwidth = metrics.charWidth('m');

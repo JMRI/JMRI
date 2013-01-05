@@ -42,11 +42,11 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	protected List<String> _shutDownScripts = new ArrayList<String>(); // list of script pathnames to run at shut down
 
 	// property changes
-	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
-	public static final String PRINTPREVIEW_CHANGED_PROPERTY = "TrainsPrintPreview";
-	public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile";
-	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction";
-	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId";
+	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength"; // NOI18N
+	public static final String PRINTPREVIEW_CHANGED_PROPERTY = "TrainsPrintPreview"; // NOI18N
+	public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile"; // NOI18N
+	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
+	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
 
 	public TrainManager() {
 	}
@@ -80,7 +80,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setBuildMessagesEnabled(boolean enable) {
 		boolean old = _buildMessages;
 		_buildMessages = enable;
-		firePropertyChange("BuildMessagesEnabled", enable, old);
+		firePropertyChange("BuildMessagesEnabled", enable, old); // NOI18N
 	}
 
 	/**
@@ -94,7 +94,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setBuildReportEnabled(boolean enable) {
 		boolean old = _buildReport;
 		_buildReport = enable;
-		firePropertyChange("BuildReportEnabled", enable, old);
+		firePropertyChange("BuildReportEnabled", enable, old); // NOI18N
 	}
 
 	/**
@@ -108,8 +108,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setOpenFileEnabled(boolean enable) {
 		boolean old = _openFile;
 		_openFile = enable;
-		firePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true"
-				: "false");
+		firePropertyChange(OPEN_FILE_CHANGED_PROPERTY, old ? "true" : "false", enable ? "true" // NOI18N
+				: "false"); // NOI18N
 	}
 
 	/**
@@ -123,8 +123,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void setPrintPreviewEnabled(boolean enable) {
 		boolean old = _printPreview;
 		_printPreview = enable;
-		firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old ? "Preview" : "Print",
-				enable ? "Preview" : "Print");
+		firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old ? "Preview" : "Print", // NOI18N
+				enable ? "Preview" : "Print"); // NOI18N
 	}
 
 	public String getTrainsFrameTrainAction() {
@@ -175,12 +175,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void addStartUpScript(String pathname) {
 		_startUpScripts.add(pathname);
-		firePropertyChange("addStartUpScript", pathname, null);
+		firePropertyChange("addStartUpScript", pathname, null); // NOI18N
 	}
 
 	public void deleteStartUpScript(String pathname) {
 		_startUpScripts.remove(pathname);
-		firePropertyChange("deleteStartUpScript", null, pathname);
+		firePropertyChange("deleteStartUpScript", null, pathname); // NOI18N
 	}
 
 	/**
@@ -208,12 +208,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void addShutDownScript(String pathname) {
 		_shutDownScripts.add(pathname);
-		firePropertyChange("addShutDownScript", pathname, null);
+		firePropertyChange("addShutDownScript", pathname, null); // NOI18N
 	}
 
 	public void deleteShutDownScript(String pathname) {
 		_shutDownScripts.remove(pathname);
-		firePropertyChange("deleteShutDownScript", null, pathname);
+		firePropertyChange("deleteShutDownScript", null, pathname); // NOI18N
 	}
 
 	/**
@@ -492,7 +492,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		case GET_TRAIN_ID:
 			return Integer.parseInt(train.getId());
 		default:
-			return "unknown";
+			return "unknown"; // NOI18N
 		}
 	}
 
@@ -628,22 +628,22 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void options(Element values) {
 		if (log.isDebugEnabled())
 			log.debug("ctor from element " + values);
-		Element e = values.getChild("trainOptions");
+		Element e = values.getChild(Xml.TRAIN_OPTIONS);
 		org.jdom.Attribute a;
 		if (e != null) {
-			if ((a = e.getAttribute("buildMessages")) != null)
-				_buildMessages = a.getValue().equals("true");
-			if ((a = e.getAttribute("buildReport")) != null)
-				_buildReport = a.getValue().equals("true");
-			if ((a = e.getAttribute("printPreview")) != null)
-				_printPreview = a.getValue().equals("true");
-			if ((a = e.getAttribute("openFile")) != null)
-				_openFile = a.getValue().equals("true");
-			if ((a = e.getAttribute("trainAction")) != null)
+			if ((a = e.getAttribute(Xml.BUILD_MESSAGES)) != null)
+				_buildMessages = a.getValue().equals(Xml.TRUE);
+			if ((a = e.getAttribute(Xml.BUILD_REPORT)) != null)
+				_buildReport = a.getValue().equals(Xml.TRUE);
+			if ((a = e.getAttribute(Xml.PRINT_PREVIEW)) != null)
+				_printPreview = a.getValue().equals(Xml.TRUE);
+			if ((a = e.getAttribute(Xml.OPEN_FILE)) != null)
+				_openFile = a.getValue().equals(Xml.TRUE);
+			if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null)
 				_trainAction = a.getValue();
 
 			// TODO This here is for backwards compatibility, remove after next major release
-			if ((a = e.getAttribute("columnWidths")) != null) {
+			if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
 				String[] widths = a.getValue().split(" ");
 				for (int i = 0; i < widths.length; i++) {
 					try {
@@ -655,13 +655,13 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			}
 		}
 
-		e = values.getChild("trainScheduleOptions");
+		e = values.getChild(Xml.TRAIN_SCHEDULE_OPTIONS);
 		if (e != null) {
-			if ((a = e.getAttribute("activeId")) != null) {
+			if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
 				_trainScheduleActiveId = a.getValue();
 			}
 			// TODO This here is for backwards compatibility, remove after next major release
-			if ((a = e.getAttribute("columnWidths")) != null) {
+			if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
 				String[] widths = a.getValue().split(" ");
 				_tableScheduleColumnWidths = new int[widths.length];
 				for (int i = 0; i < widths.length; i++) {
@@ -674,20 +674,20 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			}
 		}
 		// check for scripts
-		if (values.getChild("scripts") != null) {
+		if (values.getChild(Xml.SCRIPTS) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> lm = values.getChild("scripts").getChildren("startUp");
+			List<Element> lm = values.getChild(Xml.SCRIPTS).getChildren(Xml.START_UP);
 			for (int i = 0; i < lm.size(); i++) {
 				Element es = lm.get(i);
-				if ((a = es.getAttribute("name")) != null) {
+				if ((a = es.getAttribute(Xml.NAME)) != null) {
 					addStartUpScript(a.getValue());
 				}
 			}
 			@SuppressWarnings("unchecked")
-			List<Element> lt = values.getChild("scripts").getChildren("shutDown");
+			List<Element> lt = values.getChild(Xml.SCRIPTS).getChildren(Xml.SHUT_DOWN);
 			for (int i = 0; i < lt.size(); i++) {
 				Element es = lt.get(i);
-				if ((a = es.getAttribute("name")) != null) {
+				if ((a = es.getAttribute(Xml.NAME)) != null) {
 					addShutDownScript(a.getValue());
 				}
 			}
@@ -701,31 +701,31 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * @return Contents in a JDOM Element
 	 */
 	public Element store() {
-		Element values = new Element("options");
-		Element e = new Element("trainOptions");
-		e.setAttribute("buildMessages", isBuildMessagesEnabled() ? "true" : "false");
-		e.setAttribute("buildReport", isBuildReportEnabled() ? "true" : "false");
-		e.setAttribute("printPreview", isPrintPreviewEnabled() ? "true" : "false");
-		e.setAttribute("openFile", isOpenFileEnabled() ? "true" : "false");
-		e.setAttribute("trainAction", getTrainsFrameTrainAction());
+		Element values = new Element(Xml.OPTIONS);
+		Element e = new Element(Xml.TRAIN_OPTIONS);
+		e.setAttribute(Xml.BUILD_MESSAGES, isBuildMessagesEnabled() ? Xml.TRUE : Xml.FALSE);
+		e.setAttribute(Xml.BUILD_REPORT, isBuildReportEnabled() ? Xml.TRUE : Xml.FALSE);
+		e.setAttribute(Xml.PRINT_PREVIEW, isPrintPreviewEnabled() ? Xml.TRUE : Xml.FALSE);
+		e.setAttribute(Xml.OPEN_FILE, isOpenFileEnabled() ? Xml.TRUE : Xml.FALSE);
+		e.setAttribute(Xml.TRAIN_ACTION, getTrainsFrameTrainAction());
 		values.addContent(e);
 		// now save train schedule options
-		e = new Element("trainScheduleOptions");
-		e.setAttribute("activeId", getTrainScheduleActiveId());
+		e = new Element(Xml.TRAIN_SCHEDULE_OPTIONS);
+		e.setAttribute(Xml.ACTIVE_ID, getTrainScheduleActiveId());
 		values.addContent(e);
 
 		// save list of move scripts for this train
 		if (getStartUpScripts().size() > 0 || getShutDownScripts().size() > 0) {
-			Element es = new Element("scripts");
+			Element es = new Element(Xml.SCRIPTS);
 			for (int i = 0; i < getStartUpScripts().size(); i++) {
-				Element em = new Element("startUp");
-				em.setAttribute("name", getStartUpScripts().get(i));
+				Element em = new Element(Xml.START_UP);
+				em.setAttribute(Xml.NAME, getStartUpScripts().get(i));
 				es.addContent(em);
 			}
 			// save list of termination scripts for this train
 			for (int i = 0; i < getShutDownScripts().size(); i++) {
-				Element et = new Element("shutDown");
-				et.setAttribute("name", getShutDownScripts().get(i));
+				Element et = new Element(Xml.SHUT_DOWN);
+				et.setAttribute(Xml.NAME, getShutDownScripts().get(i));
 				es.addContent(et);
 			}
 			values.addContent(es);
@@ -739,7 +739,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 */
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug("TrainManager sees property change: " + e.getPropertyName() + " old: "
-				+ e.getOldValue() + " new " + e.getNewValue());
+				+ e.getOldValue() + " new " + e.getNewValue()); // NOI18N
 		// TODO use listener to determine if load name has changed
 		// if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
 		// replaceLoad((String)e.getOldValue(), (String)e.getNewValue());

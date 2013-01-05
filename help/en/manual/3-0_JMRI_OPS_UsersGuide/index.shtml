@@ -23,7 +23,7 @@
 <a NAME="Top"></a>
 <h1>JMRI&reg; v3.0 Operations User's Guide</h1>
 <h1>&nbsp;</h1>
-<h3>In work 12/28/2012</h3>
+<h3>1/5/2013</h3>
 <p>&nbsp;</p>
 <p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
 <p><strong>The programming of Digital
@@ -171,7 +171,7 @@
       </li>
     </ul>
   </li>
-  <li></li>
+  <li><strong><a href="Ops_TripThruOperations.shtml">A Tripp Through Operations</a></strong></li>
 </ul>
 <table width="90%" border="1" align="center" cellpadding="2" cellspacing="1">
 <caption>
@@ -185,7 +185,7 @@
   </tr>
   <tr>
     <td align="left" valign="top">3.0</td>
-    <td align="left" valign="top">x/x/2012</td>
+    <td align="left" valign="top">1/5/2013</td>
     <td align="left" valign="top">Dale A. Tripp<br>
       Bruce Shanks</td>
     <td align="left" valign="top">Updated from JMRI 2.14.1 and removed from DecoderPro&reg; as separate Guide</td>

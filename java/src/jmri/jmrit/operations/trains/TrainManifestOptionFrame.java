@@ -115,7 +115,7 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		}
 
 		//	build menu		
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainManifestOptions", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainManifestOptions", true);// NOI18N
 
 		pack();
 		if (getWidth()<400 )
@@ -139,13 +139,13 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 	 * We always use the same file chooser in this class, so that the user's
 	 * last-accessed directory remains available.
 	 */
-	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Images");
+	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("Images"));
 
 	private File selectFile() {
 		if (fc==null) {
 			log.error("Could not find user directory");
 		} else {
-			fc.setDialogTitle("Find desired image");
+			fc.setDialogTitle(Bundle.getMessage("FindDesiredImage"));
 			// when reusing the chooser, make sure new files are included
 			fc.rescanCurrentDirectory();
 		}

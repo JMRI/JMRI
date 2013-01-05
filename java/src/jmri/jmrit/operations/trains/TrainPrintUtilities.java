@@ -26,6 +26,8 @@ import jmri.util.davidflanagan.HardcopyWriter;
  * 
  */
 public class TrainPrintUtilities {
+	
+	static final String NEW_LINE = "\n";	// NOI18N
 
 	/**
 	 * Print or preview a train manifest, build report, or switch list.
@@ -96,7 +98,6 @@ public class TrainPrintUtilities {
 			log.debug("Build file doesn't exist");
 			return;
 		}
-		String newLine = "\n";
 		String line = " ";
 
 		if (!isBuildReport && (!logoURL.equals(""))) {
@@ -148,7 +149,7 @@ public class TrainPrintUtilities {
 				}
 				if (c != null) {
 					try {
-						writer.write(c, line + newLine);
+						writer.write(c, line + NEW_LINE);
 						continue;
 					} catch (IOException e) {
 						log.debug("Print write color failed");
@@ -157,7 +158,7 @@ public class TrainPrintUtilities {
 				}
 			}
 			try {
-				writer.write(line + newLine);
+				writer.write(line + NEW_LINE);
 			} catch (IOException e) {
 				log.debug("Print write failed");
 				break;
@@ -230,7 +231,7 @@ public class TrainPrintUtilities {
 	 * Removes the print levels from the build report
 	 */
 	private static String filterBuildReport(String line, boolean indent) {
-		String[] inputLine = line.split("\\s+");
+		String[] inputLine = line.split("\\s+");	// NOI18N
 		if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")
 				|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
 				|| inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
@@ -281,7 +282,7 @@ public class TrainPrintUtilities {
 			return buf.toString();
 		} else {
 			log.debug("ERROR first characters of build report not valid (" + line + ")");
-			return "ERROR " + line;
+			return "ERROR " + line;	// NOI18N
 		}
 	}
 

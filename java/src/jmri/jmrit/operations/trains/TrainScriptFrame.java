@@ -160,7 +160,7 @@ public class TrainScriptFrame extends OperationsFrame {
 		} else {
 			enableButtons(false);
 		}
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true); // NOI18N
 		packFrame();
 	}
 	
@@ -378,13 +378,13 @@ public class TrainScriptFrame extends OperationsFrame {
 	 * We always use the same file chooser in this class, so that
 	 * the user's last-accessed directory remains available.
 	 */
-	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Python script files", "py");
+	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser(Bundle.getMessage("PythonScriptFiles"), "py"); // NOI18N
 
 	private File selectFile() {
 		if (fc==null) {
         	log.error("Could not find user directory");
         } else {
-            fc.setDialogTitle("Find desired script file");
+            fc.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
             // when reusing the chooser, make sure new files are included
             fc.rescanCurrentDirectory();
         }

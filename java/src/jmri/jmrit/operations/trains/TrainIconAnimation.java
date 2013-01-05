@@ -21,7 +21,7 @@ public class TrainIconAnimation extends Thread {
 		_trainIcon = trainIcon;
 		_rl = rl;
 		_previous = previous;
-		setName("TrainIconAnimation");
+		setName("TrainIconAnimation"); // NOI18N
 	}
 
 	public void run() {

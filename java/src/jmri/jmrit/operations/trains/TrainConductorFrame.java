@@ -286,7 +286,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			menuBar.add(toolMenu);
 		}
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
 		
 		packFrame();
     	setVisible(true);
@@ -569,7 +569,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	public void propertyChange(java.beans.PropertyChangeEvent e){
 		//if (Control.showProperty && log.isDebugEnabled()) 
 		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
-				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY))
 			clearAndUpdate();
 		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)){

@@ -47,12 +47,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		}
 		// build header
 		addLine(fileOut, HEADER);
-		if (!train.getRailroadName().equals(""))
-			addLine(fileOut, RN+"\""+train.getRailroadName()+"\"");
-		else
-			addLine(fileOut, RN+"\""+Setup.getRailroadName()+"\"");
+		addLine(fileOut, RN+ESC+Setup.getRailroadName()+ESC);
 		addLine(fileOut, TN+train.getName());
-		addLine(fileOut, TM+"\""+train.getDescription()+"\"");
+		addLine(fileOut, TM+ESC+train.getDescription()+ESC);
 		// add logo
 		String logoURL = Setup.getManifestLogoURL();
 		if (!train.getManifestLogoURL().equals(""))
@@ -62,12 +59,12 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		addLine(fileOut, VT+getDate());
 		// train comment can have multiple lines
 		if (!train.getComment().equals("")){
-			String[] comments = train.getComment().split("\n");
+			String[] comments = train.getComment().split("\n"); // NOI18N
 			for (int i=0; i<comments.length; i++)
-				addLine(fileOut, TC+"\""+comments[i]+"\"");							
+				addLine(fileOut, TC+ESC+comments[i]+ESC);							
 		}
 		if (Setup.isPrintRouteCommentsEnabled())
-			addLine(fileOut, RC+"\""+train.getRoute().getComment()+"\"");
+			addLine(fileOut, RC+ESC+train.getRoute().getComment()+ESC);
 
 		// get engine and car lists
 		List<String> engineList = engineManager.getByTrainList(train);			
@@ -83,9 +80,9 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			// print info only if new location
 			String routeLocationName = splitString(rl.getName());
 			String locationName = routeLocationName;
-			if (locationName.contains(del)){
+			if (locationName.contains(DEL)){
 				log.debug("location name has delimiter: "+locationName);
-				locationName = "\""+routeLocationName+"\"";
+				locationName = ESC+routeLocationName+ESC;
 			}
 			if (!routeLocationName.equals(previousRouteLocationName)){
 				addLine(fileOut, LN+locationName);
@@ -102,16 +99,16 @@ public class TrainCsvManifest extends TrainCsvCommon {
 				// add location comment
 				if (Setup.isPrintLocationCommentsEnabled() && !loc.getComment().equals("")){					
 					// location comment can have multiple lines
-					String[] comments = loc.getComment().split("\n");
+					String[] comments = loc.getComment().split("\n"); // NOI18N
 					for (int i=0; i<comments.length; i++)
-						addLine(fileOut, LC+"\""+comments[i]+"\"");							
+						addLine(fileOut, LC+ESC+comments[i]+ESC);							
 				}
 				if (Setup.isTruncateManifestEnabled() && loc.isSwitchListEnabled())
 					addLine(fileOut, TRUN);
 			}
 			// add route comment
 			if (!rl.getComment().equals("")){
-				addLine(fileOut, RLC+"\""+rl.getComment()+"\"");
+				addLine(fileOut, RLC+ESC+rl.getComment()+ESC);
 			}			
 			// engine change or helper service?
 			if (train.getSecondLegOptions() != Train.NONE){
@@ -172,8 +169,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
 				String nextRouteLocationName = splitString(rlNext.getName());
 				if (!routeLocationName.equals(nextRouteLocationName)){
 					if (newWork){
-						addLine(fileOut, TD+locationName+del+rl.getTrainDirectionString());
-						addLine(fileOut, TL+train.getTrainLength(rl)+del+emptyCars+del+cars);
+						addLine(fileOut, TD+locationName+DEL+rl.getTrainDirectionString());
+						addLine(fileOut, TL+train.getTrainLength(rl)+DEL+emptyCars+DEL+cars);
 						addLine(fileOut, TW+train.getTrainWeight(rl));
 						newWork = false;
 					} else {

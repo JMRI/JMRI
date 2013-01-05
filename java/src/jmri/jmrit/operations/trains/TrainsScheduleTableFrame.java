@@ -158,7 +158,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 		setJMenuBar(menuBar);
 
 		// add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Timetable", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_Timetable", true); // NOI18N
 		
 		setTitle(Bundle.getMessage("TitleTimeTableTrains"));
 
@@ -321,7 +321,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	public void propertyChange(PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue());
+					+ " new: " + e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
 			updateControlPanel();

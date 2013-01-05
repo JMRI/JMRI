@@ -7,7 +7,7 @@
 <!-- This made from the readme2html.xsl file of TestXSLT 2.7 -->
 
 
-<!-- This file is part of JMRI.  Copyright 2007-2011.                            -->
+<!-- This file is part of JMRI.  Copyright 2007-2013.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->

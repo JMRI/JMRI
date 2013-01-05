@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
+import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.JMenu;
@@ -48,17 +49,17 @@ public class TrainIcon extends LocoIcon {
 			popup.add(new TrainConductorAction(Bundle.getMessage("TitleTrainConductor"), train));
 			popup.add(new ShowCarsInTrainAction(Bundle.getMessage("MenuItemShowCarsInTrain"), train));
             if (!isEditable()) {
-                popup.add(new AbstractAction("Set X&Y") {
+                popup.add(new AbstractAction(Bundle.getMessage("SetX&Y")) {
                     public void actionPerformed(ActionEvent e) {
                         if(!train.setTrainIconCoordinates())
-                            JOptionPane.showMessageDialog(null, "See Operations -> Settings to enable Set X&Y",
-                                    "Set X&Y is disabled",
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("SeeOperationsSettings"),
+                            		Bundle.getMessage("SetX&YisDisabled"),
                                     JOptionPane.ERROR_MESSAGE);
                     }
                 });
             }
 		}
-		popup.add(new ThrottleAction("Throttle")); 
+		popup.add(new ThrottleAction(Bundle.getMessage("Throttle"))); 
 		popup.add(makeLocoIconMenu());
         if (!isEditable()) {
             getEditor().setRemoveMenu(this, popup);
@@ -93,7 +94,7 @@ public class TrainIcon extends LocoIcon {
 		if (getConsistNumber() > 0){
 			tf.getAddressPanel().setAddress(getConsistNumber(), false);	// use consist address
 			if (JOptionPane.showConfirmDialog(null,
-					"Send function commands to lead loco?", "Consist Throttle",
+					Bundle.getMessage("SendFunctionCommands"), Bundle.getMessage("ConsistThrottle"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				tf.getAddressPanel().setRosterEntry(entry);			 	// use lead loco address
 			}			
@@ -117,7 +118,7 @@ public class TrainIcon extends LocoIcon {
 			String current = "     ";
 			RouteLocation rl = route.getLocationById(routeList.get(r));
 			if (train.getCurrentLocation() == rl)
-				current = "-> ";
+				current = "-> "; // NOI18N
 			for (int j=0; j<carList.size(); j++){
 				Car car = carManager.getById(carList.get(j));
 				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
@@ -186,7 +187,8 @@ public class TrainIcon extends LocoIcon {
 							train.move();
 						}else if (nextRl == _rl){
 							if (JOptionPane.showConfirmDialog(null,
-									"Move train to "+_rl.getName()+"?", "Move Train "+train.getIconName()+"?",
+									MessageFormat.format(Bundle.getMessage("MoveTrainTo"), new Object [] { _rl.getName() }),
+									MessageFormat.format(Bundle.getMessage("MoveTrain"), new Object [] { train.getIconName() }),
 									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 								while (train.getCurrentLocation() != _rl){
 									train.move();

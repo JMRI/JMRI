@@ -26,7 +26,9 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 
 	File _fileLogger;
 	private boolean _trainLog = false; // when true logging train movements
-	private final String del = ","; // delimiter
+	static final String DEL = ","; // delimiter
+	static final String ESC = "\"";  // NOI18N escape
+	
 
 	public TrainLogger() {
 	}
@@ -88,17 +90,17 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 		// create train file if needed
 		createFile();
 		// Note that train status can contain a comma
-		String line = train.getName() + del + "\"" + train.getDescription() + "\"" + del + "\""
-				+ train.getCurrentLocationName() + "\"" + del + "\"" + train.getNextLocationName()
-				+ "\"" + del + "\"" + train.getStatus() + "\"" + del + "\""
-				+ train.getBuildFailedMessage() + "\"" + del + getTime();
+		String line = train.getName() + DEL + ESC + train.getDescription() + ESC + DEL + ESC
+				+ train.getCurrentLocationName() + ESC + DEL + ESC + train.getNextLocationName()
+				+ ESC + DEL + ESC + train.getStatus() + ESC + DEL + ESC
+				+ train.getBuildFailedMessage() + ESC + DEL + getTime();
 		fileOut(line);
 	}
 
 	private String getHeader() {
-		String header = Bundle.getMessage("Name") + del + Bundle.getMessage("Description") + del
-				+ Bundle.getMessage("Current") + del + Bundle.getMessage("NextLocation") + del
-				+ Bundle.getMessage("Status") + del + Bundle.getMessage("BuildMessages") + del
+		String header = Bundle.getMessage("Name") + DEL + Bundle.getMessage("Description") + DEL
+				+ Bundle.getMessage("Current") + DEL + Bundle.getMessage("NextLocation") + DEL
+				+ Bundle.getMessage("Status") + DEL + Bundle.getMessage("BuildMessages") + DEL
 				+ Bundle.getMessage("DateAndTime");
 		return header;
 	}
@@ -184,7 +186,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 
 	private String operationsDirectory = OperationsSetupXml.getFileLocation()
 			+ OperationsSetupXml.getOperationsDirectoryName();
-	private String loggingDirectory = operationsDirectory + File.separator + "logger";
+	private String loggingDirectory = operationsDirectory + File.separator + "logger"; // NOI18N
 
 	public String getDirectoryName() {
 		return loggingDirectory;
@@ -198,7 +200,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 
 	public String getFileName() {
 		if (fileName == null)
-			fileName = "Trains_" + getDate() + ".csv";
+			fileName = Bundle.getMessage("Trains")+ "_" + getDate() + ".csv"; // NOI18N
 		return fileName;
 	}
 

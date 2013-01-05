@@ -260,11 +260,11 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public String getFormatedDepartureTime(){
 		if (getDepartureTime().equals("") || !Setup.is12hrFormatEnabled())
 			return _departureTime;
-		String AM_PM = " AM"; // NOI18N
+		String AM_PM = " "+Bundle.getMessage("AM");
 		String[] time = getDepartureTime().split(":");
 		int hour = Integer.parseInt(time[0]);
 		if (hour >= 12){
-			AM_PM = " PM"; // NOI18N
+			AM_PM = " "+Bundle.getMessage("PM");
 			hour = hour - 12;
 		}
 		if (hour == 0)

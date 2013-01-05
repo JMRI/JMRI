@@ -26,7 +26,8 @@ import jmri.jmrit.operations.routes.RouteLocation;
  */
 public class PrintTrainAction extends AbstractAction {
 
-	String newLine = "\n";
+	static final String NEW_LINE = "\n"; // NOI18N
+	static final String TAB = "\t"; // NOI18N
 	public static final int MAX_NAME_LENGTH = 15;
 
 	public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview, Frame frame) {
@@ -63,31 +64,31 @@ public class PrintTrainAction extends AbstractAction {
 		}
 
 		try {
-			String s = Bundle.getMessage("Name") + ": " + train.getName() + newLine;
+			String s = Bundle.getMessage("Name") + ": " + train.getName() + NEW_LINE;
 			writer.write(s, 0, s.length());
-			s = Bundle.getMessage("Description") + ": " + train.getDescription() + newLine;
+			s = Bundle.getMessage("Description") + ": " + train.getDescription() + NEW_LINE;
 			writer.write(s, 0, s.length());
-			s = Bundle.getMessage("Departs") + ": " + train.getTrainDepartsName() + newLine;
+			s = Bundle.getMessage("Departs") + ": " + train.getTrainDepartsName() + NEW_LINE;
 			writer.write(s, 0, s.length());
-			s = Bundle.getMessage("DepartTime") + ": " + train.getDepartureTime() + newLine;
+			s = Bundle.getMessage("DepartTime") + ": " + train.getDepartureTime() + NEW_LINE;
 			writer.write(s, 0, s.length());
-			s = Bundle.getMessage("Terminates") + ": " + train.getTrainTerminatesName() + newLine;
+			s = Bundle.getMessage("Terminates") + ": " + train.getTrainTerminatesName() + NEW_LINE;
 			writer.write(s, 0, s.length());
-			s = newLine;
+			s = NEW_LINE;
 			writer.write(s, 0, s.length());
-			s = Bundle.getMessage("Route") + ": " + train.getTrainRouteName() + newLine;
+			s = Bundle.getMessage("Route") + ": " + train.getTrainRouteName() + NEW_LINE;
 			writer.write(s, 0, s.length());
 			Route route = train.getRoute();
 			if (route != null) {
 				List<String> locations = route.getLocationsBySequenceList();
 				for (int i = 0; i < locations.size(); i++) {
 					RouteLocation rl = route.getLocationById(locations.get(i));
-					s = "\t" + rl.getName() + newLine;
+					s = TAB + rl.getName() + NEW_LINE;
 					writer.write(s, 0, s.length());
 				}
 			}
 			if (!train.getComment().equals("")) {
-				s = Bundle.getMessage("Comment") + ": " + train.getComment() + newLine;
+				s = Bundle.getMessage("Comment") + ": " + train.getComment() + NEW_LINE;
 				writer.write(s);
 			}
 

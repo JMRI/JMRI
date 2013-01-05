@@ -28,23 +28,23 @@ public class TrainIconXml extends LocoIconXml {
 		TrainIcon p = (TrainIcon)o;
 		if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
-		Element element = new Element("trainicon");
-		element.setAttribute("train", p.getTrain().getId());
-		element.setAttribute("trainName", p.getTrain().getName());
+		Element element = new Element(Xml.TRAINICON);
+		element.setAttribute(Xml.TRAIN, p.getTrain().getId());
+		element.setAttribute(Xml.TRAIN_NAME, p.getTrain().getName());
 		storeCommonAttributes(p, element);
 
 		// include contents
-		if (p.getUnRotatedText()!=null) element.setAttribute("text", p.getUnRotatedText());
+		if (p.getUnRotatedText()!=null) element.setAttribute(Xml.TEXT, p.getUnRotatedText());
 		storeTextInfo(p, element);
-		element.setAttribute("icon", "yes");
-		element.setAttribute("dockX", ""+p.getDockX());
-		element.setAttribute("dockY", ""+p.getDockY());
+		element.setAttribute(Xml.ICON, Xml.YES);
+		element.setAttribute(Xml.DOCK_X, ""+p.getDockX());
+		element.setAttribute(Xml.DOCK_Y, ""+p.getDockY());
 //		element.setAttribute("iconId", p.getIconId());
-		element.addContent(storeIcon("icon", (NamedIcon)p.getIcon()));
+		element.addContent(storeIcon(Xml.ICON, (NamedIcon)p.getIcon()));
 		RosterEntry entry = p.getRosterEntry();
-		if (entry != null) element.setAttribute("rosterentry", entry.getId());
+		if (entry != null) element.setAttribute(Xml.ROSTERENTRY, entry.getId());
 
-		element.setAttribute("class", this.getClass().getName());
+		element.setAttribute(Xml.CLASS, this.getClass().getName());
 
 		return element;
 	}

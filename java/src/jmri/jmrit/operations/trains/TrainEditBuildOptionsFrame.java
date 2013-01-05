@@ -174,7 +174,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	JComboBox modelEngine2Box = EngineModels.instance().getComboBox();
 	JComboBox numEngines2Box = new JComboBox();
 
-	public static final String DISPOSE = "dispose" ;
+	public static final String DISPOSE = "dispose" ; // NOI18N
 
 	public TrainEditBuildOptionsFrame() {
 		super(Bundle.getMessage("MenuItemBuildOptions"));
@@ -466,7 +466,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		} else {
 			enableButtons(false);
 		}
-		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainBuildOptions", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainBuildOptions", true); // NOI18N
 		updateRoadNames();
 		updateTypeComboBoxes();
 		updateLoadComboBoxes();
@@ -1216,7 +1216,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()
-				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
 			updateRoadComboBoxes();
 			updateRoadNames();
