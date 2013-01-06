@@ -360,8 +360,21 @@
                     </xs:element>
                   </xs:sequence>
                   <xs:attribute name="entries" type="xs:int" default="28" />
-                  <xs:attribute name="min" type="xs:int" default="0"/>
-                  <xs:attribute name="max" type="xs:int" default="255"/>
+                  <xs:attribute name="min" type="xs:int" default="0">
+                    <xs:annotation><xs:documentation>
+                    Smallest allowable value for the CVs in the table
+                    </xs:documentation></xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="max" type="xs:int" default="255">
+                    <xs:annotation><xs:documentation>
+                    Largest allowable value for the CVs in the table
+                    </xs:documentation></xs:annotation>
+                  </xs:attribute>
+                  <xs:attribute name="mfx" type="trueFalseType" default="false">
+                    <xs:annotation><xs:documentation>
+                    False, the default, is a NMRA speed table; true is a MFX speed table ala Markin, with fixed end points.
+                    </xs:documentation></xs:annotation>
+                  </xs:attribute>
                   <xs:attribute name="comment" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
