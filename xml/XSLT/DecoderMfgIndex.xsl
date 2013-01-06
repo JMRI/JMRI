@@ -16,7 +16,14 @@
 <!-- for more details.                                                      -->
  
 <xsl:stylesheet	version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-      <xsl:param name="JmriCopyrightYear"/>
+      <xsl:param name="JmriCopyrightYear">
+        2000 -
+            <script language="JavaScript" type="text/javascript">
+                now = new Date
+                theYear=now.getFullYear()
+                document.write(theYear)
+            </script>
+      </xsl:param>
 
 <!-- Need to instruct the XSLT processor to use HTML output rules.
      See http://www.w3.org/TR/xslt#output for more details

@@ -25,6 +25,8 @@
   <version author="Dave Heap" version="5" lastUpdated="20120917"/>
   <!-- ver6 fixed incorrect PI & SI in all indexed CVs -->
   <version author="Dave Heap" version="6" lastUpdated="20121230"/>
+  <!-- ver7 added support for new mfx&reg; speed table -->
+  <version author="Dave Heap" version="7" lastUpdated="20130105"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54400">
@@ -299,11 +301,11 @@
         <decVal/>
         <label>Vmid</label>
       </variable>
-      <variable label="Decoder Version " CV="7" readOnly="no" item="Decoder Version">
+      <variable label="Decoder Version " CV="7" readOnly="yes" item="Decoder Version">
         <decVal/>
         <label>Decoder Version </label>
       </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="no" default="151" item="Manufacturer">
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
@@ -458,7 +460,7 @@
             <choice>Reverse</choice>
           </enumChoice>
         </enumVal>
-        <label>Normal Sirection of Motion</label>
+        <label>Normal Direction of Motion</label>
       </variable>
       <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="0">
         <enumVal>
@@ -630,10 +632,7 @@
         <label>Forward Trim</label>
         <comment>Range 0-255</comment>
       </variable>
-      <variable label="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/esu/mfxSpeedTable.xml"/>
       <variable label="Reverse Trim" CV="95" default="128" comment="Range 0-255">
         <decVal/>
         <label>Reverse Trim</label>

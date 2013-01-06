@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -27,7 +28,7 @@ public class PrintTrainsAction extends AbstractAction {
 	static final String TAB = "\t"; // NOI18N
 
 	TrainManager manager = TrainManager.instance();
-	public static final int MAX_NAME_LENGTH = 15;
+	public static final int MAX_NAME_LENGTH = Control.max_len_string_train_name - 10;
 
 	public PrintTrainsAction(String actionName, Frame frame, boolean preview, Component pWho) {
 		super(actionName);

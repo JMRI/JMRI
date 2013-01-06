@@ -59,7 +59,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	// combo boxes
 	JComboBox typeBox = new JComboBox();
 
-	public static final int MAX_NAME_LENGTH = 25;
+	public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 	public static final String NAME = Bundle.getMessage("Name");
 	public static final String DISPOSE = "dispose"; // NOI18N
 

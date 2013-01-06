@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.util.List;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 
 
 /**
@@ -30,7 +31,7 @@ public class PrintRouteAction  extends AbstractAction {
 	
 	static final String NEW_LINE = "\n"; // NOI18N
 	static final String TAB = "\t"; // NOI18N
-	private static final int MAX_NAME_LENGTH = 20;
+	private static final int MAX_NAME_LENGTH = Control.max_len_string_location_name - 5;
 
     public PrintRouteAction(String actionName, boolean preview, Route route) {
         super(actionName);

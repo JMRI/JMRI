@@ -64,6 +64,7 @@ import javax.swing.event.ChangeListener;
  * be removed.
  *<P>
  * @author	Bob Jacobsen, Alex Shepherd   Copyright (C) 2001, 2004
+ * @author  Dave Heap           Copyright (C) 2012 Added support for Marklin mfx style speed table
  * @version	$Revision$
  *
  */
@@ -74,6 +75,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     int _min;
     int _max;
     int _range;
+    boolean mfx;
 
     List<JCheckBox> stepCheckBoxes;
     
@@ -83,13 +85,14 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     public SpeedTableVarValue(String name, String comment, String cvName,
                               boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
                               int cvNum, String mask, int minVal, int maxVal,
-                              Vector<CvValue> v, JLabel status, String stdname, int entries) {
+                              Vector<CvValue> v, JLabel status, String stdname, int entries, boolean mfxFlag) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
 
         nValues = entries;
         _min = minVal;
         _max = maxVal;
         _range = maxVal-minVal;
+        mfx = mfxFlag;
 
         models = new BoundedRangeModel[nValues];
         
@@ -160,7 +163,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         _cvVector.elementAt(getCvNum()+i).setValue(value);
         // if programming, that's it
         if (isReading || isWriting) return;
-        else {
+        else if (!(mfx && (i == 0 || i == (nValues-1)))) {
             forceMonotonic(i, value);
             matchPoints(i);
         }
@@ -261,6 +264,22 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         // no match, so don't adjust
         return;
     }
+    
+    /**
+     * Enforce mfx bounds conditions. 
+     *
+     */
+    void enforceEndPointsMfx() {
+        if (mfx) {
+            if (_cvVector.elementAt(getCvNum()+0).getValue() != _min) {
+                _cvVector.elementAt(getCvNum()+0).setValue(_min);
+            }
+            if (_cvVector.elementAt(getCvNum()+nValues-1).getValue() != _max) {
+                _cvVector.elementAt(getCvNum()+nValues-1).setValue(_max);
+            }
+        }
+    }
+
     public int getState()  {
         int i;
         for (i=0; i<nValues; i++)
@@ -349,6 +368,11 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                                 +" "+(i+1)+" CV "+(getCvNum()+i));
             ((JComponent)v).setBorder(null);  // pack tighter
             
+            if (mfx && (i == 0 || i == (nValues-1))) {
+                ((JTextField)v).setEditable(false); // disable field editing
+                s.setEnabled(false);    // disable slider adjustment
+            }
+            
             g.setConstraints(v, cs);
 
             if (i==0 && log.isDebugEnabled()) log.debug("Font size "+v.getFont().getSize());
@@ -366,6 +390,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
             g.setConstraints(b, cs);
             j.add(b, cs);
+            
+            enforceEndPointsMfx();
         }
 
         // add control buttons
@@ -419,10 +445,67 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         cs.gridwidth = GridBagConstraints.RELATIVE;
         g.setConstraints(k, cs);
 
+		// add Vstart & Vhigh if applicable
+		JPanel l = new JPanel();
+
+		int ThisCV;
+		CvValue cv;
+		Component v;
+		int currentState;
+		int currentValue;
+		DecVariableValue decVal;
+		JLabel label;
+		String padding = "                                                    ";
+
+		if (mfx) {
+			ThisCV = 2;
+			cv = _cvVector.elementAt(ThisCV);
+			currentState = cv.getState();
+			currentValue = cv.getValue();
+			decVal = new DecVariableValue("CV"+ThisCV,"","", false, false, false, false,
+														   ThisCV, "VVVVVVVV", _min, _max,
+														   _cvVector, _status, "");
+			decVal.setValue(currentValue);
+			decVal.setState(currentState);
+			v = decVal.getCommonRep();
+			((JTextField)v).setToolTipText("Sets the starting voltage at throttle speed step 1."+" CV "+ThisCV);
+			l.add ( v );
+			
+			label = new JLabel("Vstart");
+			l.add ( label );
+			
+			// because DGH hasn't yet mastered GridBagLayout 
+			label = new JLabel(padding);
+			l.add ( label );
+			label = new JLabel(padding);
+			l.add ( label );
+			label = new JLabel(padding);
+			l.add ( label );
+			
+			label = new JLabel("Vhigh");
+			l.add ( label );
+						
+			ThisCV = 5;
+			cv = _cvVector.elementAt(ThisCV);
+			currentState = cv.getState();
+			currentValue = cv.getValue();
+			decVal = new DecVariableValue("CV"+ThisCV,"","", false, false, false, false,
+														   ThisCV, "VVVVVVVV", _min, _max,
+														   _cvVector, _status, "");
+			decVal.setValue(currentValue);
+			decVal.setState(currentState);
+			v = decVal.getCommonRep();
+			((JTextField)v).setToolTipText("Sets the maximum voltage at full throttle."+" CV "+ThisCV);
+			l.add ( v );
+		}
+			
+
+
         JPanel val = new JPanel();
         val.setLayout(new BorderLayout());
-        val.add(j, BorderLayout.CENTER);
-        val.add(k, BorderLayout.SOUTH);
+        val.add(j, BorderLayout.NORTH);
+        val.add(k, BorderLayout.CENTER);
+        if (mfx) {val.add(l, BorderLayout.SOUTH);}
 
         updateRepresentation(val);
         return val;
@@ -461,6 +544,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = first+i*(last-first)/(nValues-1);
             _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
+        enforceEndPointsMfx();
     }
 
     /**
@@ -481,6 +565,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = (int)(Math.floor(first*Math.exp(step*i)));
             _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
+        enforceEndPointsMfx();
     }
 
     /**
@@ -503,6 +588,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = (int)(Math.floor(previous));
             _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
+        enforceEndPointsMfx();
     }
 
     /**
@@ -513,6 +599,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = _cvVector.elementAt(getCvNum()+i+1).getValue();
             _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
+        enforceEndPointsMfx();
     }
 
     /**
@@ -523,6 +610,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             int value = _cvVector.elementAt(getCvNum()+i-1).getValue();
             _cvVector.elementAt(getCvNum()+i).setValue(value);
         }
+        enforceEndPointsMfx();
     }
 
     /**
@@ -713,7 +801,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
                     break;
                 }
             }
-        }
+        enforceEndPointsMfx();
+       }
     }
 
     /* Internal class extends a JSlider so that its color is consistent with
