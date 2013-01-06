@@ -28,7 +28,6 @@ public class PrintTrainAction extends AbstractAction {
 
 	static final String NEW_LINE = "\n"; // NOI18N
 	static final String TAB = "\t"; // NOI18N
-	public static final int MAX_NAME_LENGTH = 15;
 
 	public PrintTrainAction(String actionName, Frame mFrame, boolean isPreview, Frame frame) {
 		super(actionName);

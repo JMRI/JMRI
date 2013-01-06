@@ -10,6 +10,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -40,7 +41,7 @@ public class PrintLocationsAction extends AbstractAction {
 	static final String TAB = "\t"; // NOI18N
 	static final String SPACE = "   ";
 
-	static final int MAX_NAME_LENGTH = 25;
+	static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
 
 	LocationManager manager = LocationManager.instance();
 
@@ -230,7 +231,7 @@ public class PrintLocationsAction extends AbstractAction {
 
 	private void printSchedulesSelected() throws IOException {
 		List<String> locations = manager.getLocationsByNameList();
-		String s = Bundle.getMessage("Schedules") + TAB + TAB + Bundle.getMessage("Location") + " - "
+		String s = padOutString(Bundle.getMessage("Schedules"), MAX_NAME_LENGTH) + " " + Bundle.getMessage("Location") + " - "
 				+ Bundle.getMessage("SidingName") + NEW_LINE;
 		writer.write(s);
 		ScheduleManager sm = ScheduleManager.instance();
@@ -243,16 +244,11 @@ public class PrintLocationsAction extends AbstractAction {
 				for (int k = 0; k < sidings.size(); k++) {
 					Track siding = location.getTrackById(sidings.get(k));
 					if (siding.getScheduleId().equals(schedule.getId())) {
-						String name = schedule.getName();
 						// pad out schedule name
-						StringBuffer buf = new StringBuffer(name);
-						for (int n = name.length(); n < MAX_NAME_LENGTH; n++) {
-							buf.append(" ");
-						}
-						s = buf.toString() + " " + location.getName() + " - " + siding.getName();
+						s = padOutString(schedule.getName(), MAX_NAME_LENGTH) + " " + location.getName() + " - " + siding.getName();
 						String status = siding.checkScheduleValid();
 						if (!status.equals("")) {
-							buf = new StringBuffer(s);
+							StringBuffer buf = new StringBuffer(s);
 							for (int m = s.length(); m < 63; m++) {
 								buf.append(" ");
 							}
@@ -263,6 +259,27 @@ public class PrintLocationsAction extends AbstractAction {
 						}
 						s = s + NEW_LINE;
 						writer.write(s);
+						// show the schedule's mode
+						String mode = Bundle.getMessage("Sequential");
+						if (siding.getScheduleMode() == Track.MATCH)
+							mode = Bundle.getMessage("Match");
+						s = padOutString("", MAX_NAME_LENGTH)+ SPACE
+								+ Bundle.getMessage("ScheduleMode") + ": " + mode  + NEW_LINE;
+						writer.write(s);
+						// show alternate track if there's one
+						if (siding.getAlternativeTrack() != null) {
+							s = padOutString("", MAX_NAME_LENGTH)+ SPACE
+									+ MessageFormat.format(Bundle.getMessage("AlternateTrackName"), new Object[] { siding
+											.getAlternativeTrack().getName() }) + NEW_LINE;
+							writer.write(s);
+						}
+						// show custom loads from staging if not 100%
+						if (siding.getReservationFactor() != 100) {
+							s = padOutString("", MAX_NAME_LENGTH)+ SPACE
+									+ MessageFormat.format(Bundle.getMessage("PercentageStaging"), new Object[] { siding
+											.getReservationFactor() }) + NEW_LINE;
+							writer.write(s);
+						}
 					}
 				}
 			}
@@ -572,7 +589,6 @@ public class PrintLocationsAction extends AbstractAction {
 		}
 		StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("LoadsServicedTrack") + NEW_LINE
 				+ TAB + TAB);
-
 		int charCount = 0;
 		String[] carLoads = track.getLoadNames();
 		for (int i = 0; i < carLoads.length; i++) {
@@ -583,28 +599,6 @@ public class PrintLocationsAction extends AbstractAction {
 			}
 			buf.append(carLoads[i] + ", ");
 		}
-
-		// int charCount = 0;
-		// String[] cTypes = CarTypes.instance().getNames();
-		// List<String> serviceLoads = new ArrayList<String>();
-		// for (int i = 0; i < cTypes.length; i++) {
-		// if (track.acceptsTypeName(cTypes[i])) {
-		// List<String> loads = CarLoads.instance().getNames(cTypes[i]);
-		// for (int j = 0; j < loads.size(); j++) {
-		// if (track.acceptsLoadName(loads.get(j))) {
-		// if (!serviceLoads.contains(loads.get(j))) {
-		// serviceLoads.add(loads.get(j));
-		// charCount += loads.get(j).length() + 2;
-		// if (charCount > characters) {
-		// buf.append(NEW_LINE + TAB + TAB);
-		// charCount = loads.get(j).length() + 2;
-		// }
-		// buf.append(loads.get(j) + ", ");
-		// }
-		// }
-		// }
-		// }
-		// }
 		if (buf.length() > 2)
 			buf.setLength(buf.length() - 2); // remove trailing separators
 		buf.append(NEW_LINE);
@@ -740,6 +734,14 @@ public class PrintLocationsAction extends AbstractAction {
 					+ TAB
 					+ MessageFormat.format(Bundle.getMessage("PercentageStaging"), new Object[] { track
 							.getReservationFactor() }) + NEW_LINE);
+		return buf.toString();
+	}
+	
+	private String padOutString(String s, int length) {
+		StringBuffer buf = new StringBuffer(s);
+		for (int n = s.length(); n < length; n++) {
+			buf.append(" ");
+		}
 		return buf.toString();
 	}
 
