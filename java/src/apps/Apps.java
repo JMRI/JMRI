@@ -613,13 +613,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         	name = conn.getManufacturer();
     	if (ConnectionStatus.instance().isConnectionOk(conn.getInfo())){
     		cs.setForeground(Color.black);
-    		String cf = MessageFormat.format(rb.getString("ConnectionSucceeded"),
-					new Object[] {name, conn.name(), conn.getInfo()});
+    		String cf = Bundle.getMessage("ConnectionSucceeded", name, conn.name(), conn.getInfo());
 			cs.setText(cf);
 		} else {
 			cs.setForeground(Color.red);
-			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] {name, conn.name(), conn.getInfo()});
+			String cf = Bundle.getMessage("ConnectionFailed", name, conn.name(), conn.getInfo());
 			cf = cf.toUpperCase();
 			cs.setText(cf);
 		}
