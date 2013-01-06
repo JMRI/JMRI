@@ -93,7 +93,13 @@ public abstract class XmlFile {
      */
     public Element rootFromFile(File file) throws org.jdom.JDOMException, java.io.IOException {
         if (log.isDebugEnabled()) log.debug("reading xml from file: " + file.getPath());
-        return getRoot(verify, new FileInputStream(file));
+        
+        FileInputStream fs = new FileInputStream(file);
+        try {
+            return getRoot(verify, fs);
+        } finally { 
+            fs.close(); 
+        }
     }
 
     /**
