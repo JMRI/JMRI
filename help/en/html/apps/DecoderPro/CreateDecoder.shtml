@@ -280,8 +280,8 @@ this from another file, or from this example:</p>
 </p>
 
 <li><p>If your decoder supports it, you can enter a 'speedTableVal'
-element for the speed table.  The only attribute is "entries",
-which can be either "28", "14" or some other value.  Example:</p>
+element for the speed table.  Optional attributes are:  "entries", "min", "max" and
+"mfx" (when true enables the M&auml;rklin mfx&reg; style speed table).  Example:</p>
 
 <p class=example>
 &lt;variable name=&quot;Speed Table&quot; CV=&quot;67&quot;&gt;<BR>

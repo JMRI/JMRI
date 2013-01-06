@@ -19,7 +19,9 @@
   <!--version 3 - fix mfg name - jake -->
   <!--version 4 - changed numerious variable "items" so that Comprehensive programmer will work
          in place of MFG specific programmer, also added CV55, numFns to 8. wsthompson,@earthlink.net -->
-  <decoder>
+    <!-- ver5 added support for new mfx&reg; speed table -->
+  <version author="Dave Heap" version="5" lastUpdated="20130105"/>
+<decoder>
     <family name="ESU LokPilot Silent BEMF decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21">
       <model model="ESU_LokPilotDCC" numOuts="6" numFns="8" nmraWarrant="yes">
         <output name="1" label="Front Lights"/>
@@ -794,10 +796,7 @@
         </enumVal>
         <label>Emergency Stop</label>
       </variable>
-      <variable label="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/esu/mfxSpeedTable.xml"/>
     </variables>
   </decoder>
   <pane name="ESU">

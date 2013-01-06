@@ -23,6 +23,7 @@ import jmri.util.jdom.LocaleSelector;
  * @author      Bob Jacobsen        Copyright (C) 2001, 2006, 2010
  * @author      Howard G. Penny     Copyright (C) 2005
  * @author      Daniel Boudreau     Copyright (C) 2007
+ * @author      Dave Heap           Copyright (C) 2012 Added support for Marklin mfx style speed table
  * @version     $Revision$
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
@@ -688,11 +689,19 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
             }
         } catch (org.jdom.DataConversionException e1) {
         }
+        Attribute ESUAttr = child.getAttribute("mfx");
+		boolean mfxFlag = false;
+        try {
+            if (ESUAttr != null) {
+                mfxFlag = ESUAttr.getBooleanValue();
+            }
+        } catch (org.jdom.DataConversionException e1) {
+        }
         // ensure all CVs exist
         for (int i = 0; i < entries; i++) {
             _cvModel.addCV("" + (CV + i), readOnly, infoOnly, writeOnly);
         }
-        v = new SpeedTableVarValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries);
+        v = new SpeedTableVarValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries, mfxFlag);
         return v;
     }
 

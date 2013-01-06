@@ -24,6 +24,8 @@
   <!-- index page number 16.3 for CVs 257 - 512 Function Mapping F6 forward - F13 reverse -->
   <!-- ver1 new file -->
   <version author="Jos Wils" version="1" lastUpdated="20110523"/>
+  <!-- ver2 added support for new mfx&reg; speed table -->
+  <version author="Dave Heap" version="2" lastUpdated="20130105"/>
   <decoder>
     <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH">
       <model model="LokPilot V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
@@ -410,10 +412,7 @@
         <label>BEMF Dynamic Drive Control'</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable label="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/esu/mfxSpeedTable.xml"/>
       <variable label="Reverse Trim" CV="95" default="128" comment="Range 0-255">
         <decVal/>
         <label>Reverse Trim</label>
