@@ -482,7 +482,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         private Color _highlightColor = new Color(204, 207, 88);
         private Color _selectGroupColor = new Color(204, 207, 88);
         private Color _selectRectColor = Color.red;
-        private Stroke _selectRectStroke = DASHED_LINE;
+        private transient Stroke _selectRectStroke = DASHED_LINE;
         public void setHighlightColor(Color color) {
              _highlightColor = color;
         }
