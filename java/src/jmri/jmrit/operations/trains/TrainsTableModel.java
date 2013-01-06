@@ -387,16 +387,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			if (log.isDebugEnabled())
 				log.debug("Reset train (" + train.getName() + ")");
 			// check to see if departure track was reused
-			if (Setup.isStagingTrackImmediatelyAvail()
-					&& !train.isTrainInRoute()
-					&& train.getDepartureTrack() != null
-					&& train.getDepartureTrack().getLocType().equals(Track.STAGING)
-					&& (train.getDepartureTrack().getNumberRS() != train.getDepartureTrack()
-							.getPickupRS()
-							|| (train.getDepartureTrack().getDropRS() > 0 && train
-									.getTerminationTrack() == null) || (train.getDepartureTrack()
-							.getDropRS() > 0 && train.getTerminationTrack() != null && train
-							.getDepartureTrack() != train.getTerminationTrack()))) {
+			if (checkDepartureTrack(train) ) {
 				log.debug("Train is departing staging that already has inbound cars");
 				JOptionPane.showMessageDialog(null, MessageFormat.format(
 						Bundle.getMessage("StagingTrackUsed"), new Object[] { train.getDepartureTrack()
@@ -437,6 +428,19 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 				log.debug("Enable conductor for train (" + train.getName() + ")");
 			lauchConductor(train);
 		}
+	}
+	
+	/*
+	 * Check to see if the departure track in staging has been taken by another train.
+	 * return true if track has been allocated to another train.
+	 */
+	private boolean checkDepartureTrack(Train train) {
+		return (Setup.isStagingTrackImmediatelyAvail() 
+				&& !train.isTrainInRoute()
+				&& train.getDepartureTrack() != null
+				&& train.getDepartureTrack().getLocType().equals(Track.STAGING)
+				&& train.getDepartureTrack() != train.getTerminationTrack()
+				&& train.getDepartureTrack().getDropRS() > 0 );
 	}
 
 	TrainConductorFrame tcf = null;
