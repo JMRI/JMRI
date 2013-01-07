@@ -130,6 +130,16 @@ public class Bundle {
     protected jmri.Bundle getBundle() { return b; }
     
     // Can get pathname of ctor class (to auto-generate BundleName) via getClass().getPackage()
+    
+    // This code was used in DefaultSignalAppearanceMap to cache a local bundle name via weak reference
+    //        if (rbr == null) rbr = new java.lang.ref.SoftReference<ResourceBundle>(
+    //                                   ResourceBundle.getBundle("jmri.NamedBeanBundle"));
+    //        ResourceBundle rb = rbr.get();
+    //        if (rb == null) {
+    //           log.error("Failed to load defaults because of missing bundle");
+    //           return;
+    //        }
+
 }
 
 /* @(#)Bundle.java */
