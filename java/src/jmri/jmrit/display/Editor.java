@@ -98,7 +98,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     final public static int SCROLL_HORIZONTAL = 2;
     final public static int SCROLL_VERTICAL   = 3;
 
-    static final public ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     public static final String POSITIONABLE_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
@@ -220,25 +219,25 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         CatalogPanel  _catalog;
         String _badUrl;
         UrlErrorDialog(String msg, String url) {
-            super(_targetFrame, rb.getString("BadIcon"), true);
+            super(_targetFrame, Bundle.getMessage("BadIcon"), true);
             _badUrl = url;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.add(new JLabel(java.text.MessageFormat.format(rb.getString("IconUrlError"), msg)));
-            panel.add(new JLabel(rb.getString("UrlErrorPrompt1")));
+            panel.add(new JLabel(java.text.MessageFormat.format(Bundle.getMessage("IconUrlError"), msg)));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt1")));
             panel.add(javax.swing.Box.createVerticalStrut(10));
-            panel.add(new JLabel(rb.getString("UrlErrorPrompt2")));
-            panel.add(new JLabel(rb.getString("UrlErrorPrompt3")));
-            panel.add(new JLabel(rb.getString("UrlErrorPrompt4")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt2")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt3")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt4")));
             _urlField = new JTextField(url);
             _urlField.setDragEnabled(true);
             _urlField.setTransferHandler(new jmri.util.DnDStringImportHandler());
             panel.add(_urlField);
             panel.add(makeDoneButtonPanel());
-            _urlField.setToolTipText(rb.getString("TooltipFixUrl"));
-            panel.setToolTipText(rb.getString("TooltipFixUrl"));
+            _urlField.setToolTipText(Bundle.getMessage("TooltipFixUrl"));
+            panel.setToolTipText(Bundle.getMessage("TooltipFixUrl"));
             _catalog = CatalogPanel.makeDefaultCatalog();
-            _catalog.setToolTipText(rb.getString("ToolTipDragIconToText"));
+            _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIconToText"));
             panel.add(_catalog);
             setContentPane(panel);
             setLocation(200, 100);
@@ -248,7 +247,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         protected JPanel makeDoneButtonPanel() {
             JPanel panel0 = new JPanel();
             panel0.setLayout(new FlowLayout());
-            JButton doneButton = new JButton(rb.getString("ButtonContinue"));
+            JButton doneButton = new JButton(Bundle.getMessage("ButtonContinue"));
             doneButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         _newIcon = NamedIcon.getIconByName(_urlField.getText());
@@ -258,10 +257,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                         dispose();
                     }
             });
-            doneButton.setToolTipText(rb.getString("TooltipContinue"));
+            doneButton.setToolTipText(Bundle.getMessage("TooltipContinue"));
             panel0.add(doneButton);
 
-            JButton deleteButton = new JButton(rb.getString("ButtonDeleteIcon"));
+            JButton deleteButton = new JButton(Bundle.getMessage("ButtonDeleteIcon"));
             deleteButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         _delete = true;
@@ -269,9 +268,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     }
             });
             panel0.add(deleteButton);
-            deleteButton.setToolTipText(rb.getString("TooltipDelete"));
+            deleteButton.setToolTipText(Bundle.getMessage("TooltipDelete"));
 
-            JButton cancelButton = new JButton(rb.getString("ButtonIgnore"));
+            JButton cancelButton = new JButton(Bundle.getMessage("ButtonIgnore"));
             cancelButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         _ignore = true;
@@ -279,7 +278,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     }
             });
             panel0.add(cancelButton);
-            cancelButton.setToolTipText(rb.getString("TooltipIgnore"));
+            cancelButton.setToolTipText(Bundle.getMessage("TooltipIgnore"));
             return panel0;
         }
     }
@@ -806,20 +805,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 			String name = "Panel";
             String message = null;
             if(save) {
-                message = rb.getString("Reminder1")+" "+rb.getString("Reminder2")+
-								"\n"+rb.getString("Reminder3");
+                message = Bundle.getMessage("Reminder1")+" "+Bundle.getMessage("Reminder2")+
+								"\n"+Bundle.getMessage("Reminder3");
             } else {
-                message = rb.getString("PanelCloseQuestion") +"\n" +
-                                rb.getString("PanelCloseHelp");
+                message = Bundle.getMessage("PanelCloseQuestion") +"\n" +
+                                Bundle.getMessage("PanelCloseHelp");
             }
 			if (_targetPanel.getTopLevelAncestor() != null)
 				name = ((JFrame) _targetPanel.getTopLevelAncestor()).getTitle();
 			int selectedValue = JOptionPane.showOptionDialog(_targetPanel, 
 					java.text.MessageFormat.format(message, 
-							new Object[] { name }), rb.getString("ReminderTitle"),
+							new Object[] { name }), Bundle.getMessage("ReminderTitle"),
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
-							null, new Object[] { rb.getString("ButtonHide"), rb.getString("ButtonDelete"),
-				            rb.getString("ButtonDontShow") }, rb.getString("ButtonHide"));
+							null, new Object[] { Bundle.getMessage("ButtonHide"), Bundle.getMessage("ButtonDelete"),
+				            Bundle.getMessage("ButtonDontShow") }, Bundle.getMessage("ButtonHide"));
             switch (selectedValue) {
                 case 0:
                     _targetFrame.setVisible(false);   // doesn't remove the editor!
@@ -900,7 +899,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * Add a checkbox to lock the position of the Positionable item
     */
     public void setPositionableMenu(Positionable p, JPopupMenu popup) {
-        JCheckBoxMenuItem lockItem = new JCheckBoxMenuItem(rb.getString("LockPosition"));
+        JCheckBoxMenuItem lockItem = new JCheckBoxMenuItem(Bundle.getMessage("LockPosition"));
         lockItem.setSelected(!p.isPositionable());
         lockItem.addActionListener(new ActionListener(){
             Positionable comp;
@@ -924,7 +923,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     */
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         //if (showCoordinates()) {
-            JMenu edit = new JMenu(rb.getString("EditLocation"));
+            JMenu edit = new JMenu(Bundle.getMessage("EditLocation"));
             if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth()==0)) {
                 MemoryIcon pm = (MemoryIcon) p;
                 edit.add("x= " + pm.getOriginalX());
@@ -947,23 +946,23 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     */
     public boolean setShowAlignmentMenu(Positionable p, JPopupMenu popup) {
         if (showAlignPopup(p)) {
-            JMenu edit = new JMenu(rb.getString("EditAlignment"));
-            edit.add(new AbstractAction(rb.getString("AlignX")) {
+            JMenu edit = new JMenu(Bundle.getMessage("EditAlignment"));
+            edit.add(new AbstractAction(Bundle.getMessage("AlignX")) {
                 public void actionPerformed(ActionEvent e) {
                     alignGroup(true,false);
                 }
             });
-            edit.add(new AbstractAction(rb.getString("AlignY")) {
+            edit.add(new AbstractAction(Bundle.getMessage("AlignY")) {
                 public void actionPerformed(ActionEvent e) {
                     alignGroup(false,false);
                 }
             });
-            edit.add(new AbstractAction(rb.getString("AlignXFirst")) {
+            edit.add(new AbstractAction(Bundle.getMessage("AlignXFirst")) {
                 public void actionPerformed(ActionEvent e) {
                     alignGroup(true,true);
                 }
             });
-            edit.add(new AbstractAction(rb.getString("AlignYFirst")) {
+            edit.add(new AbstractAction(Bundle.getMessage("AlignYFirst")) {
                 public void actionPerformed(ActionEvent e) {
                     alignGroup(false,true);
                 }
@@ -979,7 +978,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * dialog memu item to edit it.
     */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
-        JMenu edit = new JMenu(rb.getString("EditLevel"));
+        JMenu edit = new JMenu(Bundle.getMessage("EditLevel"));
         edit.add("level= " + p.getDisplayLevel());
         edit.add(CoordinateEdit.getLevelEditAction(p));
         popup.add(edit);
@@ -992,7 +991,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (p.getDisplayLevel() == BKG || p instanceof PositionableShape) {
             return;
         }
-        JCheckBoxMenuItem hideItem = new JCheckBoxMenuItem(rb.getString("SetHidden"));
+        JCheckBoxMenuItem hideItem = new JCheckBoxMenuItem(Bundle.getMessage("SetHidden"));
         hideItem.setSelected(p.isHidden());
         hideItem.addActionListener(new ActionListener(){
             Positionable comp;
@@ -1018,8 +1017,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (p.getDisplayLevel() == BKG) {
             return;
         }
-        JMenu edit = new JMenu(rb.getString("EditTooltip"));
-        JCheckBoxMenuItem showTooltipItem = new JCheckBoxMenuItem(rb.getString("ShowTooltip"));
+        JMenu edit = new JMenu(Bundle.getMessage("EditTooltip"));
+        JCheckBoxMenuItem showTooltipItem = new JCheckBoxMenuItem(Bundle.getMessage("ShowTooltip"));
         showTooltipItem.setSelected(p.showTooltip());
         showTooltipItem.addActionListener(new ActionListener(){
             Positionable comp;
@@ -1042,7 +1041,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * Add an action to remove the Positionable item.
     */
     public void setRemoveMenu(Positionable p, JPopupMenu popup) {
-        popup.add(new AbstractAction(rb.getString("Remove")) {
+        popup.add(new AbstractAction(Bundle.getMessage("Remove")) {
             Positionable comp;
             public void actionPerformed(ActionEvent e) { 
                 comp.remove();
@@ -1061,9 +1060,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected void locoMarkerFromRoster() {
         final JmriJFrame locoRosterFrame = new JmriJFrame();
         locoRosterFrame.getContentPane().setLayout(new FlowLayout());
-        locoRosterFrame.setTitle(rb.getString("LocoFromRoster"));
+        locoRosterFrame.setTitle(Bundle.getMessage("LocoFromRoster"));
         javax.swing.JLabel mtext = new javax.swing.JLabel();
-        mtext.setText(rb.getString("SelectLoco")+":");
+        mtext.setText(Bundle.getMessage("SelectLoco")+":");
         locoRosterFrame.getContentPane().add(mtext);
         final RosterEntrySelectorPanel rosterBox = new RosterEntrySelectorPanel();
         rosterBox.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener() {
@@ -1110,16 +1109,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected void locoMarkerFromInput() {
         final JmriJFrame locoFrame = new JmriJFrame();
         locoFrame.getContentPane().setLayout(new FlowLayout());
-        locoFrame.setTitle(rb.getString("EnterLocoMarker"));
+        locoFrame.setTitle(Bundle.getMessage("EnterLocoMarker"));
         javax.swing.JLabel textId = new javax.swing.JLabel();
-        textId.setText(rb.getString("LocoID")+":");
+        textId.setText(Bundle.getMessage("LocoID")+":");
         locoFrame.getContentPane().add(textId);
         final javax.swing.JTextField locoId = new javax.swing.JTextField(7);
         locoFrame.getContentPane().add(locoId);
         locoId.setText("");
-        locoId.setToolTipText(rb.getString("EnterLocoID"));
+        locoId.setToolTipText(Bundle.getMessage("EnterLocoID"));
         javax.swing.JButton okay = new javax.swing.JButton();
-        okay.setText(rb.getString("OK"));
+        okay.setText(Bundle.getMessage("OK"));
         okay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 String nameID = locoId.getText();
@@ -1127,8 +1126,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     addLocoIcon(nameID.trim());
                 }
                 else {
-                    JOptionPane.showMessageDialog(locoFrame,rb.getString("ErrorEnterLocoID"),
-                                    rb.getString("errorTitle"),JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(locoFrame,Bundle.getMessage("ErrorEnterLocoID"),
+                                    Bundle.getMessage("errorTitle"),JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -1321,7 +1320,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Add a label to the target
      */
     protected void addTextEditor() {
-        String newLabel = JOptionPane.showInputDialog(this, rb.getString("PromptNewLabel"));
+        String newLabel = JOptionPane.showInputDialog(this, Bundle.getMessage("PromptNewLabel"));
         if (newLabel==null) return;  // canceled
         PositionableLabel l = addLabel(newLabel);
         // always allow new items to be moved
@@ -1495,8 +1494,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected void addMemoryEditor() {
         IconAdder editor = new IconAdder("Memory") {
-                JButton bSpin = new JButton(rb.getString("AddSpinner"));
-                JButton bBox = new JButton(rb.getString("AddInputBox"));
+                JButton bSpin = new JButton(Bundle.getMessage("AddSpinner"));
+                JButton bBox = new JButton(Bundle.getMessage("AddInputBox"));
                 JSpinner spinner = new JSpinner(_spinCols);
                 protected void addAdditionalButtons(JPanel p) {
                 	bSpin.addActionListener( new ActionListener() {
@@ -1514,7 +1513,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setColumns(2);
                     spinner.setMaximumSize(spinner.getPreferredSize());
                     JPanel p2 = new JPanel();
-                    p2.add(new JLabel(rb.getString("NumColsLabel")));
+                    p2.add(new JLabel(Bundle.getMessage("NumColsLabel")));
                     p2.add(spinner);
                     p1.add(p2);
                     p1.add(bBox);
@@ -1955,8 +1954,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_targetPanel.getTopLevelAncestor()!=null) {
             name=((JFrame)_targetPanel.getTopLevelAncestor()).getTitle();
         }
-        if (name==null || name.equals("")) super.setTitle(rb.getString("LabelEditor"));
-        else super.setTitle(name+" "+rb.getString("LabelEditor"));
+        if (name==null || name.equals("")) super.setTitle(Bundle.getMessage("LabelEditor"));
+        else super.setTitle(name+" "+Bundle.getMessage("LabelEditor"));
         Iterator <JFrameItem> iter = _iconEditorFrame.values().iterator();
         while (iter.hasNext()) {
             JFrameItem frame = iter.next();
@@ -1973,21 +1972,21 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             if (add) {
-                txt = java.text.MessageFormat.format(rb.getString("addItenToPanel"), rb.getString(name));
+                txt = java.text.MessageFormat.format(Bundle.getMessage("addItenToPanel"), Bundle.getMessage(name));
             } else {
-                txt = java.text.MessageFormat.format(rb.getString("editItenInPanel"), rb.getString(name));
+                txt = java.text.MessageFormat.format(Bundle.getMessage("editItenInPanel"), Bundle.getMessage(name));
             }
             p.add(new JLabel(txt));
             if (table) {
-                txt = java.text.MessageFormat.format(rb.getString("TableSelect"), rb.getString(name), 
-                                     (add ? rb.getString("ButtonAddIcon") : rb.getString("ButtonUpdateIcon")));
+                txt = java.text.MessageFormat.format(Bundle.getMessage("TableSelect"), Bundle.getMessage(name), 
+                                     (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
             } else {
                 if ("MultiSensor".equals(name)) {
-                    txt = java.text.MessageFormat.format(rb.getString("SelectMultiSensor"), 
-                                         (add ? rb.getString("ButtonAddIcon") : rb.getString("ButtonUpdateIcon")));
+                    txt = java.text.MessageFormat.format(Bundle.getMessage("SelectMultiSensor"), 
+                                         (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
                 } else {
-                    txt = java.text.MessageFormat.format(rb.getString("IconSelect"), rb.getString(name), 
-                                         (add ? rb.getString("ButtonAddIcon") : rb.getString("ButtonUpdateIcon")));
+                    txt = java.text.MessageFormat.format(Bundle.getMessage("IconSelect"), Bundle.getMessage(name), 
+                                         (add ? Bundle.getMessage("ButtonAddIcon") : Bundle.getMessage("ButtonUpdateIcon")));
                 }
             }
             p.add(new JLabel(txt));
@@ -1995,10 +1994,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             frame.getContentPane().add(editor);
 
             JMenuBar menuBar = new JMenuBar();
-            JMenu findIcon = new JMenu(rb.getString("findIconMenu"));
+            JMenu findIcon = new JMenu(Bundle.getMessage("findIconMenu"));
             menuBar.add(findIcon);
 
-            JMenuItem editItem = new JMenuItem(rb.getString("editIndexMenu"));
+            JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
             editItem.addActionListener(new ActionListener() {
                     Editor editor;
                     public void actionPerformed(ActionEvent e) {
@@ -2014,7 +2013,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             findIcon.add(editItem);
             findIcon.addSeparator();
             
-            JMenuItem searchItem = new JMenuItem(rb.getString("searchFSMenu"));
+            JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
             searchItem.addActionListener(new ActionListener() {
                     IconAdder ea;
                     public void actionPerformed(ActionEvent e) {
@@ -2051,10 +2050,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             log.error("No icon editor specified for "+name);
         }
         if (add) {
-            txt = java.text.MessageFormat.format(rb.getString("AddItem"), rb.getString(name));
+            txt = java.text.MessageFormat.format(Bundle.getMessage("AddItem"), Bundle.getMessage(name));
             _iconEditorFrame.put(name, frame);
         } else {
-            txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString(name));
+            txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage(name));
         }
         frame.setTitle(txt+" ("+getTitle()+")");
         frame.pack();
@@ -2088,11 +2087,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_debug) log.debug("deletePanel");
 		// verify deletion
 		int selectedValue = JOptionPane.showOptionDialog(_targetPanel,
-				rb.getString("QuestionA")+"\n"+rb.getString("QuestionB"),
-				rb.getString("DeleteVerifyTitle"),JOptionPane.YES_NO_OPTION,
+				Bundle.getMessage("QuestionA")+"\n"+Bundle.getMessage("QuestionB"),
+				Bundle.getMessage("DeleteVerifyTitle"),JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE,null,
-				new Object[]{rb.getString("ButtonYesDelete"),rb.getString("ButtonNoCancel")},
-				rb.getString("ButtonNoCancel"));
+				new Object[]{Bundle.getMessage("ButtonYesDelete"),Bundle.getMessage("ButtonNoCancel")},
+				Bundle.getMessage("ButtonNoCancel"));
         // return without deleting if "No" response
 		return (selectedValue == JOptionPane.YES_OPTION);
     }
@@ -2345,7 +2344,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (p.getPopupUtility()==null) {
             return false;
         }
-        popup.add(new AbstractAction(rb.getString("TextAttributes")){
+        popup.add(new AbstractAction(Bundle.getMessage("TextAttributes")){
         	Positionable comp;
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 new TextAttrDialog(comp);
@@ -2362,7 +2361,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     	Positionable _pos;
         jmri.jmrit.display.palette.DecoratorPanel _decorator;
         TextAttrDialog(Positionable p) {
-            super(_targetFrame, rb.getString("TextAttributes"), true);
+            super(_targetFrame, Bundle.getMessage("TextAttributes"), true);
             _pos = p;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -2378,7 +2377,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         protected JPanel makeDoneButtonPanel() {
             JPanel panel0 = new JPanel();
             panel0.setLayout(new FlowLayout());
-            JButton doneButton = new JButton(rb.getString("Done"));
+            JButton doneButton = new JButton(Bundle.getMessage("Done"));
             doneButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
@@ -2393,7 +2392,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             });
             panel0.add(doneButton);
 
-            JButton cancelButton = new JButton(rb.getString("Cancel"));
+            JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
             cancelButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         dispose();

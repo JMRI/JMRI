@@ -88,14 +88,14 @@ public class SlipIconAdder extends IconAdder {
         super.reset();
     }
     
-    JRadioButton doubleSlipButton = new JRadioButton(rb.getString("DoubleSlip"));
-    JRadioButton singleSlipButton = new JRadioButton(rb.getString("SingleSlip"));
-    JRadioButton threeWayButton = new JRadioButton(rb.getString("ThreeWay"));
-    JRadioButton scissorButton = new JRadioButton(rb.getString("Scissor"));
+    JRadioButton doubleSlipButton = new JRadioButton(Bundle.getMessage("DoubleSlip"));
+    JRadioButton singleSlipButton = new JRadioButton(Bundle.getMessage("SingleSlip"));
+    JRadioButton threeWayButton = new JRadioButton(Bundle.getMessage("ThreeWay"));
+    JRadioButton scissorButton = new JRadioButton(Bundle.getMessage("Scissor"));
     
-    JRadioButton singleDirection = new JRadioButton(rb.getString("SingleSlipRoute"));
-    JRadioButton lowerWestToLowerEastButton = new JRadioButton(rb.getString("LowerWestToLowerEast"));
-    JRadioButton upperWestToUpperEastButton = new JRadioButton(rb.getString("UpperWestToUpperEast"));
+    JRadioButton singleDirection = new JRadioButton(Bundle.getMessage("SingleSlipRoute"));
+    JRadioButton lowerWestToLowerEastButton = new JRadioButton(Bundle.getMessage("LowerWestToLowerEast"));
+    JRadioButton upperWestToUpperEastButton = new JRadioButton(Bundle.getMessage("UpperWestToUpperEast"));
 
     
     /**
@@ -152,8 +152,8 @@ public class SlipIconAdder extends IconAdder {
             ButtonGroup group = new ButtonGroup();
             group.add(lowerWestToLowerEastButton);
             group.add(upperWestToUpperEastButton);
-            lowerWestToLowerEastButton.setText(rb.getString("LowerWestToLowerEast"));
-            upperWestToUpperEastButton.setText(rb.getString("UpperWestToUpperEast"));            
+            lowerWestToLowerEastButton.setText(Bundle.getMessage("LowerWestToLowerEast"));
+            upperWestToUpperEastButton.setText(Bundle.getMessage("UpperWestToUpperEast"));            
             JPanel _buttonSlipPanel = new JPanel();
             _buttonSlipPanel.add(lowerWestToLowerEastButton);
             _buttonSlipPanel.add(upperWestToUpperEastButton);
@@ -170,8 +170,8 @@ public class SlipIconAdder extends IconAdder {
             });
         } else if (getTurnoutType()==0x04){
             ButtonGroup group = new ButtonGroup();
-            lowerWestToLowerEastButton.setText(rb.getString("ToLower"));
-            upperWestToUpperEastButton.setText(rb.getString("ToUpper"));
+            lowerWestToLowerEastButton.setText(Bundle.getMessage("ToLower"));
+            upperWestToUpperEastButton.setText(Bundle.getMessage("ToUpper"));
             group.add(lowerWestToLowerEastButton);
             group.add(upperWestToUpperEastButton);
             JPanel _buttonSlipPanel = new JPanel();
@@ -220,34 +220,34 @@ public class SlipIconAdder extends IconAdder {
             NamedBeanHandle<Turnout> turnout;
             if (i==0){
                 if (doubleSlip==0x04){
-                    label = rb.getString("FirstTurnout"); 
+                    label = Bundle.getMessage("FirstTurnout"); 
                 } else if (doubleSlip==0x08) {
                     if (lowerWestToLowerEastButton.isSelected())
-                        label = rb.getString("UpperWestTurnout");
+                        label = Bundle.getMessage("UpperWestTurnout");
                     else
-                        label = rb.getString("RHCrossing");
+                        label = Bundle.getMessage("RHCrossing");
                 } else {
-                    label = rb.getString("WestTurnout"); 
+                    label = Bundle.getMessage("WestTurnout"); 
                 }
                 key = "west";                
             } else if (i==1){
                 key = "east";
                 if (doubleSlip==0x04){
-                    label = rb.getString("SecondTurnout");
+                    label = Bundle.getMessage("SecondTurnout");
                 } else if (doubleSlip==0x08) {
                     if (lowerWestToLowerEastButton.isSelected())
-                        label = rb.getString("UpperEastTurnout");
+                        label = Bundle.getMessage("UpperEastTurnout");
                     else
-                        label = rb.getString("LHCrossing");
+                        label = Bundle.getMessage("LHCrossing");
                 } else {
-                    label = rb.getString("EastTurnout"); 
+                    label = Bundle.getMessage("EastTurnout"); 
                 }
             } else if (i==2){
                 key = "lowerwest";
-                label = rb.getString("LowerWestTurnout");
+                label = Bundle.getMessage("LowerWestTurnout");
             } else {
                 key = "lowereast";
-                label = rb.getString("LowerEastTurnout");
+                label = Bundle.getMessage("LowerEastTurnout");
             }
             
             turnout = _turnoutMap.get(key);
@@ -258,7 +258,7 @@ public class SlipIconAdder extends IconAdder {
             p4.add(new JLabel(label));
             p3.add(p4);
             p4 = new JPanel();
-            String name = rb.getString("notSet");
+            String name = Bundle.getMessage("notSet");
             java.awt.Color color = java.awt.Color.RED;
             if (turnout != null) {
                 name = turnout.getName();
@@ -482,7 +482,7 @@ public class SlipIconAdder extends IconAdder {
             //checkIconSizes();
         } else {
             _addButton.setEnabled(false);
-            _addButton.setToolTipText(rb.getString("ToolTipAssignTurnouts"));
+            _addButton.setToolTipText(Bundle.getMessage("ToolTipAssignTurnouts"));
         }
     }
 
@@ -563,9 +563,9 @@ public class SlipIconAdder extends IconAdder {
         while (iter.hasNext()) {
             if (name.equals(iter.next().getName())) {
                 JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                                               rb.getString("DupTurnoutName"), 
+                                               Bundle.getMessage("DupTurnoutName"), 
                                                new Object[] {name}),
-                                               rb.getString("errorTitle"), 
+                                               Bundle.getMessage("errorTitle"), 
                                                JOptionPane.ERROR_MESSAGE);
                 return false;
             }

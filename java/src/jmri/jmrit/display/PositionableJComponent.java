@@ -6,8 +6,6 @@ package jmri.jmrit.display;
 //import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 
-import java.util.ResourceBundle;
-
 import javax.swing.*;
 
 /**
@@ -17,8 +15,6 @@ import javax.swing.*;
  * @version $Revision$
  */
 public class PositionableJComponent extends JComponent implements Positionable {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
    	protected Editor _editor = null;
     protected boolean debug = false;

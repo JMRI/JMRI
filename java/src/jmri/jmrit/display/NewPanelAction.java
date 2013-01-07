@@ -7,8 +7,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 
-import java.util.ResourceBundle;
-
 /**
  * Start a Panel Editor or a Layout Editor for a new Panel.
  * <P>
@@ -21,27 +19,23 @@ import java.util.ResourceBundle;
  */
 public class NewPanelAction extends AbstractAction {
 
-    static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-
     public NewPanelAction(String s) {
         super(s);
     }
 
     public NewPanelAction() {
-        this(
-            java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle")
-                .getString("MenuItemNew"));
+        this(Bundle.getMessage("MenuItemNew"));
     }
 
     public void actionPerformed(ActionEvent e) {
 		// allow user to choose a panel editor
 		int response = JOptionPane.showOptionDialog(null,
-					rbx.getString("ChoiceText1")+"\n"+rbx.getString("ChoiceText2")+"\n"+
-					rbx.getString("ChoiceText3"), rbx.getString("ChooseEditor"),
+					Bundle.getMessage("ChoiceText1")+"\n"+Bundle.getMessage("ChoiceText2")+"\n"+
+					Bundle.getMessage("ChoiceText3"), Bundle.getMessage("ChooseEditor"),
 					JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,
-					new Object[]{rbx.getString("Cancel"),rbx.getString("LayoutEditor"),
-					rbx.getString("PanelEditor")},
-					rbx.getString("PanelEditor"));
+					new Object[]{Bundle.getMessage("Cancel"),Bundle.getMessage("LayoutEditor"),
+					Bundle.getMessage("PanelEditor")},
+					Bundle.getMessage("PanelEditor"));
 		if (response == 1) {
             new jmri.jmrit.display.layoutEditor.LayoutEditorAction().actionPerformed(null);
 		}

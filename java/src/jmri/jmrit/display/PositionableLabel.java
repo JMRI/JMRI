@@ -37,7 +37,6 @@ import javax.swing.JPopupMenu;
 
 public class PositionableLabel extends JLabel implements Positionable {
 
-    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     protected Editor _editor;
@@ -393,7 +392,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
 
         if (isIcon() && _displayLevel > Editor.BKG) {
-            popup.add(new AbstractAction(rb.getString("Rotate")) {
+            popup.add(new AbstractAction(Bundle.getMessage("Rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     rotateOrthogonal();
                 }
@@ -417,7 +416,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     IconAdder _iconEditor;
     public boolean setEditIconMenu(JPopupMenu popup) {
         if (_icon && !_text) {
-            String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Icon"));
+            String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Icon"));
             popup.add(new AbstractAction(txt) {
                     public void actionPerformed(ActionEvent e) {
                         edit();
@@ -530,7 +529,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     JCheckBoxMenuItem disableItem = null;
     public boolean setDisableControlMenu(JPopupMenu popup) {
         if (_control) {
-            disableItem = new JCheckBoxMenuItem(rb.getString("Disable"));
+            disableItem = new JCheckBoxMenuItem(Bundle.getMessage("Disable"));
             disableItem.setSelected(!_controlling);
             popup.add(disableItem);
             disableItem.addActionListener(new ActionListener(){

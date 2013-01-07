@@ -5,7 +5,6 @@ package jmri.jmrit.display;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -24,8 +23,6 @@ import jmri.util.JmriJFrame;
 
 public class SlipTurnoutTextEdit extends JmriJFrame 
 {
-
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
 	SlipTurnoutIcon pl; 	// layout positional label tracked by this frame
 	static final String INIT = null;
@@ -69,40 +66,40 @@ public class SlipTurnoutTextEdit extends JmriJFrame
         
 		// the following code sets the frame's initial state
 		
-		lableName.setText(rb.getString("Name")+": ");
+		lableName.setText(Bundle.getMessage("Name")+": ");
 		lableName.setVisible(true);
 		
 		nameText.setText(name);
 		nameText.setVisible(true);
         
-		textLWUE.setText(rb.getString("UpperWestToLowerEast") + " = " + pl.getUWLEText());
+		textLWUE.setText(Bundle.getMessage("UpperWestToLowerEast") + " = " + pl.getUWLEText());
 		textLWUE.setVisible(true);
-		textUWLE.setText(rb.getString("LowerWestToUpperEast") + " = " + pl.getLWUEText());
+		textUWLE.setText(Bundle.getMessage("LowerWestToUpperEast") + " = " + pl.getLWUEText());
 		textUWLE.setVisible(true);
-        textLWLE.setText(rb.getString("LowerWestToLowerEast") + " = " + pl.getLWLEText());
-		textUWUE.setText(rb.getString("UpperWestToUpperEast") + " = " + pl.getUWUEText());
+        textLWLE.setText(Bundle.getMessage("LowerWestToLowerEast") + " = " + pl.getLWLEText());
+		textUWUE.setText(Bundle.getMessage("UpperWestToUpperEast") + " = " + pl.getUWUEText());
 
 		UWLETextField.setText(pl.getUWLEText());
-		UWLETextField.setToolTipText(rb.getString("EnterUWLEToolTip"));
+		UWLETextField.setToolTipText(Bundle.getMessage("EnterUWLEToolTip"));
 		UWLETextField.setMaximumSize(new Dimension(
 				UWLETextField.getMaximumSize().width, UWLETextField
 						.getPreferredSize().height));
         
 
 		LWUETextField.setText(pl.getLWUEText());
-		LWUETextField.setToolTipText(rb.getString("EnterLWUEToolTip"));
+		LWUETextField.setToolTipText(Bundle.getMessage("EnterLWUEToolTip"));
 		LWUETextField.setMaximumSize(new Dimension(
 				LWUETextField.getMaximumSize().width, LWUETextField
 						.getPreferredSize().height));
                         
         LWLETextField.setText(pl.getLWLEText());
-		LWLETextField.setToolTipText(rb.getString("EnterLWLEToolTip"));
+		LWLETextField.setToolTipText(Bundle.getMessage("EnterLWLEToolTip"));
 		LWLETextField.setMaximumSize(new Dimension(
 				LWLETextField.getMaximumSize().width, LWLETextField
 						.getPreferredSize().height));
                         
         UWUETextField.setText(pl.getUWUEText());
-        UWUETextField.setToolTipText(rb.getString("EnterUWUEToolTip"));
+        UWUETextField.setToolTipText(Bundle.getMessage("EnterUWUEToolTip"));
 		UWUETextField.setMaximumSize(new Dimension(
 				UWUETextField.getMaximumSize().width, UWUETextField
 						.getPreferredSize().height));
@@ -115,12 +112,12 @@ public class SlipTurnoutTextEdit extends JmriJFrame
             LWLETextField.setVisible(true);
             textUWUE.setVisible(false);
             UWUETextField.setVisible(false);
-            textLWUE.setText(rb.getString("Upper") + " = " + pl.getLWUEText());
-            textUWLE.setText(rb.getString("Middle") + " = " + pl.getUWLEText());
-            textLWLE.setText(rb.getString("Lower") + " = " + pl.getLWLEText());
-            LWLETextField.setToolTipText(rb.getString("EnterLowerToolTip"));
-            UWLETextField.setToolTipText(rb.getString("EnterMiddleToolTip"));
-            LWUETextField.setToolTipText(rb.getString("EnterUpperToolTip"));
+            textLWUE.setText(Bundle.getMessage("Upper") + " = " + pl.getLWUEText());
+            textUWLE.setText(Bundle.getMessage("Middle") + " = " + pl.getUWLEText());
+            textLWLE.setText(Bundle.getMessage("Lower") + " = " + pl.getLWLEText());
+            LWLETextField.setToolTipText(Bundle.getMessage("EnterLowerToolTip"));
+            UWLETextField.setToolTipText(Bundle.getMessage("EnterMiddleToolTip"));
+            LWUETextField.setToolTipText(Bundle.getMessage("EnterUpperToolTip"));
         } else {
             if(l.getSingleSlipRoute()) {
                 textUWUE.setVisible(true);
@@ -135,15 +132,15 @@ public class SlipTurnoutTextEdit extends JmriJFrame
             }
         }
         
-		okButton.setText(rb.getString("Set"));
+		okButton.setText(Bundle.getMessage("Set"));
 		okButton.setVisible(true);
-		okButton.setToolTipText(rb.getString("SetButtonToolTip"));
+		okButton.setToolTipText(Bundle.getMessage("SetButtonToolTip"));
 
-		cancelButton.setText(rb.getString("Cancel"));
+		cancelButton.setText(Bundle.getMessage("Cancel"));
 		cancelButton.setVisible(true);
-		cancelButton.setToolTipText(rb.getString("CancelButtonToolTip"));
+		cancelButton.setToolTipText(Bundle.getMessage("CancelButtonToolTip"));
 
-		setTitle(rb.getString("SetTurnoutText"));
+		setTitle(Bundle.getMessage("SetTurnoutText"));
 		getContentPane().setLayout(new GridBagLayout());
 		
 		setSize(250, 220);
@@ -200,17 +197,17 @@ public class SlipTurnoutTextEdit extends JmriJFrame
             pl.setLWUEText(LWUETextField.getText());
             pl.setLWLEText(LWLETextField.getText());
             pl.setUWUEText(UWUETextField.getText());
-            textLWUE.setText(rb.getString("LowerWestToUpperEast") + " = " + pl.getLWUEText());
-            textUWLE.setText(rb.getString("UpperWestToLowerEast") + " = " + pl.getUWLEText());
-            textLWLE.setText(rb.getString("LowerWestToLowerEast") + " = " + pl.getLWLEText());
-            textUWUE.setText(rb.getString("UpperWestToUpperEast") + " = " + pl.getUWUEText());
+            textLWUE.setText(Bundle.getMessage("LowerWestToUpperEast") + " = " + pl.getLWUEText());
+            textUWLE.setText(Bundle.getMessage("UpperWestToLowerEast") + " = " + pl.getUWLEText());
+            textLWLE.setText(Bundle.getMessage("LowerWestToLowerEast") + " = " + pl.getLWLEText());
+            textUWUE.setText(Bundle.getMessage("UpperWestToUpperEast") + " = " + pl.getUWUEText());
             if (pl.getTurnoutType()==SlipTurnoutIcon.THREEWAY){
-                textLWUE.setText(rb.getString("Upper") + " = " + pl.getLWUEText());
-                textUWLE.setText(rb.getString("Middle") + " = " + pl.getUWLEText());
-                textLWLE.setText(rb.getString("Lower") + " = " + pl.getLWLEText());
-                /*textLWUE.setText(rb.getString("Upper") + " = " + pl.getLWLEText());
-                textUWLE.setText(rb.getString("Middle") + " = " + pl.getLWUEText());
-                textLWLE.setText(rb.getString("Lower") + " = " + pl.getLWLEText());*/
+                textLWUE.setText(Bundle.getMessage("Upper") + " = " + pl.getLWUEText());
+                textUWLE.setText(Bundle.getMessage("Middle") + " = " + pl.getUWLEText());
+                textLWLE.setText(Bundle.getMessage("Lower") + " = " + pl.getLWLEText());
+                /*textLWUE.setText(Bundle.getMessage("Upper") + " = " + pl.getLWLEText());
+                textUWLE.setText(Bundle.getMessage("Middle") + " = " + pl.getLWUEText());
+                textLWLE.setText(Bundle.getMessage("Lower") + " = " + pl.getLWLEText());*/
             }
 		}
 		if (ae.getSource() == cancelButton) {

@@ -42,9 +42,6 @@ import javax.swing.*;
 
 public class MemoryIconCoordinateEdit extends CoordinateEdit {
 
-    static final java.util.ResourceBundle rb = 
-                java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-
 	MemoryIcon pl; 			// positional label tracked by this frame
 	int oldX;
 	int oldY;
@@ -57,11 +54,11 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
     }
     
     public static AbstractAction getCoordinateEditAction(final MemoryIcon pos) {
-        return new AbstractAction(rb.getString("SetXY")) {
+        return new AbstractAction(Bundle.getMessage("SetXY")) {
                 public void actionPerformed(ActionEvent e) {
                     MemoryIconCoordinateEdit f = new MemoryIconCoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetXY"), pos, true);
+                    f.init(Bundle.getMessage("SetXY"), pos, true);
                     f.initSetXY();
                     f.setVisible(true);	
                     f.setLocationRelativeTo(pos);

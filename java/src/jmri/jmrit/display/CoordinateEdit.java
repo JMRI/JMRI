@@ -45,9 +45,6 @@ import jmri.util.JmriJFrame;
 
 public class CoordinateEdit extends JmriJFrame {
 
-    static final java.util.ResourceBundle rb = 
-                java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-
 	Positionable pl; 			// positional label tracked by this frame
 	int oldX;
 	int oldY;
@@ -72,11 +69,11 @@ public class CoordinateEdit extends JmriJFrame {
     javax.swing.JSpinner spinY;
 
     public static AbstractAction getCoordinateEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("SetXY")) {
+        return new AbstractAction(Bundle.getMessage("SetXY")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetXY"), pos, true);
+                    f.init(Bundle.getMessage("SetXY"), pos, true);
                     f.initSetXY();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -86,11 +83,11 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getLevelEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("SetLevel")) {
+        return new AbstractAction(Bundle.getMessage("SetLevel")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetLevel"), pos, true);
+                    f.init(Bundle.getMessage("SetLevel"), pos, true);
                     f.initSetLevel();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -100,11 +97,11 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getTooltipEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("SetTooltip")) {
+        return new AbstractAction(Bundle.getMessage("SetTooltip")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetTooltip"), pos, true);
+                    f.init(Bundle.getMessage("SetTooltip"), pos, true);
                     f.initSetTip();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -114,11 +111,11 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
     
     public static AbstractAction getBorderEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("SetBorderSize")) {
+        return new AbstractAction(Bundle.getMessage("SetBorderSize")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetBorderSize"), pos, true);
+                    f.init(Bundle.getMessage("SetBorderSize"), pos, true);
                     f.initBorder();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -128,11 +125,11 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getMarginEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("SetMarginSize")) {
+        return new AbstractAction(Bundle.getMessage("SetMarginSize")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetMarginSize"), pos, true);
+                    f.init(Bundle.getMessage("SetMarginSize"), pos, true);
                     f.initMargin();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -142,11 +139,11 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getFixedSizeEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("SetFixedSize")) {
+        return new AbstractAction(Bundle.getMessage("SetFixedSize")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("SetFixedSize"), pos, true);
+                    f.init(Bundle.getMessage("SetFixedSize"), pos, true);
                     f.initFixedSize();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -156,11 +153,11 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getRotateEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("rotate")) {
+        return new AbstractAction(Bundle.getMessage("rotate")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("rotate"), pos, true);
+                    f.init(Bundle.getMessage("rotate"), pos, true);
                     f.initRotate();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -170,11 +167,11 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getScaleEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("scale")) {
+        return new AbstractAction(Bundle.getMessage("scale")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("scale"), pos, true);
+                    f.init(Bundle.getMessage("scale"), pos, true);
                     f.initScale();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -184,11 +181,11 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getTextEditAction(final Positionable pos, final String title) {
-        return new AbstractAction(rb.getString(title)) {
+        return new AbstractAction(Bundle.getMessage(title)) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString(title), pos, false);
+                    f.init(Bundle.getMessage(title), pos, false);
                     f.initText();
                     f.setVisible(true);	
                     f.setLocationRelativeTo((Component)pos);
@@ -198,11 +195,11 @@ public class CoordinateEdit extends JmriJFrame {
     //////////////////////////////////////////////////////////////
 
     public static AbstractAction getZoomEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("Zoom")) {
+        return new AbstractAction(Bundle.getMessage("Zoom")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("Zoom"), pos, false);
+                    f.init(Bundle.getMessage("Zoom"), pos, false);
                     f.initZoom();
                     f.setVisible(true);	
                     //f.setLocation(100,100);
@@ -213,11 +210,11 @@ public class CoordinateEdit extends JmriJFrame {
     ////////////////////////////////////////////////////////////// 
 
     public static AbstractAction getNameEditAction(final Positionable pos) {
-        return new AbstractAction(rb.getString("renamePanelMenu")) {
+        return new AbstractAction(Bundle.getMessage("renamePanelMenu")) {
                 public void actionPerformed(ActionEvent e) {
                     CoordinateEdit f = new CoordinateEdit();
                     f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
-                    f.init(rb.getString("renamePanelMenu"), pos, false);
+                    f.init(Bundle.getMessage("renamePanelMenu"), pos, false);
                     f.initSetName();
                     f.setVisible(true);	
                     //f.setLocation(100,100);
@@ -238,13 +235,13 @@ public class CoordinateEdit extends JmriJFrame {
 	public void init(String title, Positionable pos, boolean showName) {
         pl = pos;
         if (showName) {
-            nameText.setText(java.text.MessageFormat.format(rb.getString("namelabel"), pos.getNameString()));
+            nameText.setText(java.text.MessageFormat.format(Bundle.getMessage("namelabel"), pos.getNameString()));
             nameText.setVisible(true);
         }
-		okButton.setText(rb.getString("Set"));
+		okButton.setText(Bundle.getMessage("Set"));
 		okButton.setVisible(true);
 
-		cancelButton.setText(rb.getString("Cancel"));
+		cancelButton.setText(Bundle.getMessage("Cancel"));
 		cancelButton.setVisible(true);
 
         Dimension dim = (new JButton("XXXXXXXX")).getPreferredSize();
@@ -464,13 +461,13 @@ public class CoordinateEdit extends JmriJFrame {
         SpinnerNumberModel model = new SpinnerNumberModel(0,0,1000,1);
         spinX = new javax.swing.JSpinner(model);
         spinX.setValue(Integer.valueOf(util.getFixedHeight()));
-        spinX.setToolTipText(rb.getString("FixedSizeHeight"));
+        spinX.setToolTipText(Bundle.getMessage("FixedSizeHeight"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         model = new javax.swing.SpinnerNumberModel(0,0,1000,1);
         spinY = new javax.swing.JSpinner(model);
         spinY.setValue(Integer.valueOf(util.getFixedWidth()));
-        spinY.setToolTipText(rb.getString("FixedSizeWidth"));
+        spinY.setToolTipText(Bundle.getMessage("FixedSizeWidth"));
         spinY.setMaximumSize(new Dimension(
 				spinY.getMaximumSize().width, spinY.getPreferredSize().height));
 
@@ -503,14 +500,14 @@ public class CoordinateEdit extends JmriJFrame {
 
         textX = new javax.swing.JLabel();
         int deg = oldX;
-		textX.setText(java.text.MessageFormat.format(rb.getString("Angle"), deg));
+		textX.setText(java.text.MessageFormat.format(Bundle.getMessage("Angle"), deg));
 		textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(0,-360,360,1);
         spinX = new javax.swing.JSpinner(model);
 //        spinX.setValue(Integer.valueOf(((NamedIcon)pLabel.getIcon()).getDegrees()));
         spinX.setValue(deg);
-        spinX.setToolTipText(rb.getString("enterDegrees"));
+        spinX.setToolTipText(Bundle.getMessage("enterDegrees"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
 
@@ -522,7 +519,7 @@ public class CoordinateEdit extends JmriJFrame {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
                 int k = ((Number)spinX.getValue()).intValue();
                 pl.getEditor().setSelectionsRotation(k, pl);
-                textX.setText(java.text.MessageFormat.format(rb.getString("Angle"), k));
+                textX.setText(java.text.MessageFormat.format(Bundle.getMessage("Angle"), k));
                 dispose();
 			}
 		});
@@ -539,7 +536,7 @@ public class CoordinateEdit extends JmriJFrame {
         oldD = pl.getScale();
 
         textX = new javax.swing.JLabel();
-		textX.setText(java.text.MessageFormat.format(rb.getString("Scale"), oldD*100));
+		textX.setText(java.text.MessageFormat.format(Bundle.getMessage("Scale"), oldD*100));
 		textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(100.0,10.0,5000.0,1.0);
@@ -547,7 +544,7 @@ public class CoordinateEdit extends JmriJFrame {
         if (log.isDebugEnabled()) { log.debug("scale%= "+(int)Math.round(oldD*100));
         }
         spinX.setValue((int)Math.round(oldD*100));
-        spinX.setToolTipText(rb.getString("enterScale"));
+        spinX.setToolTipText(Bundle.getMessage("enterScale"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
 
@@ -559,7 +556,7 @@ public class CoordinateEdit extends JmriJFrame {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
                 double s = ((Number)spinX.getValue()).doubleValue()/100;
                 pl.getEditor().setSelectionsScale(s, pl);
-                textX.setText(java.text.MessageFormat.format(rb.getString("Scale"), pl.getScale()*100));
+                textX.setText(java.text.MessageFormat.format(Bundle.getMessage("Scale"), pl.getScale()*100));
                 dispose();
 			}
 		});
@@ -615,14 +612,14 @@ public class CoordinateEdit extends JmriJFrame {
         oldD = pl.getScale();
 
         textX = new javax.swing.JLabel();
-		textX.setText(java.text.MessageFormat.format(rb.getString("Scale"), oldD*100));
+		textX.setText(java.text.MessageFormat.format(Bundle.getMessage("Scale"), oldD*100));
 		textX.setVisible(true);
 
         SpinnerNumberModel model = new SpinnerNumberModel(100.0,1.0,5000.0,1.0);
         spinX = new javax.swing.JSpinner(model);
         if (log.isDebugEnabled()) { log.debug("scale%= "+(int)Math.round(oldD*100));
         }
-        spinX.setToolTipText(rb.getString("enterZoom"));
+        spinX.setToolTipText(Bundle.getMessage("enterZoom"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
 
@@ -635,7 +632,7 @@ public class CoordinateEdit extends JmriJFrame {
                 double s = ((Number)spinX.getValue()).doubleValue()/100;
                 pl.setScale(s);
                 pl.getEditor().setPaintScale(s);
-                textX.setText(java.text.MessageFormat.format(rb.getString("Scale"), pl.getScale()*100));
+                textX.setText(java.text.MessageFormat.format(Bundle.getMessage("Scale"), pl.getScale()*100));
                 dispose();
 			}
 		});
@@ -652,12 +649,12 @@ public class CoordinateEdit extends JmriJFrame {
         oldStr = pl.getEditor().getName();
 
         textX = new javax.swing.JLabel();
-		textX.setText(java.text.MessageFormat.format(rb.getString("namelabel"), oldStr));
+		textX.setText(java.text.MessageFormat.format(Bundle.getMessage("namelabel"), oldStr));
 		textX.setVisible(true);
 
         xTextField = new javax.swing.JTextField(15);
 		xTextField.setText(oldStr);
-		xTextField.setToolTipText(rb.getString("PromptNewName"));
+		xTextField.setToolTipText(Bundle.getMessage("PromptNewName"));
 //		xTextField.setMaximumSize(new Dimension(1000, xTextField.getPreferredSize().height));
 //				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
 
@@ -671,7 +668,7 @@ public class CoordinateEdit extends JmriJFrame {
                 Editor ed = pl.getEditor();
                 ed.setName(t);
                 ed.setTitle();
-                textX.setText(java.text.MessageFormat.format(rb.getString("namelabel"), t));
+                textX.setText(java.text.MessageFormat.format(Bundle.getMessage("namelabel"), t));
                 dispose();
 			}
 		});

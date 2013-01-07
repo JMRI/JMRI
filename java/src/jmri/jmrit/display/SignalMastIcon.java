@@ -102,9 +102,9 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         }
         if(error){
             JOptionPane.showMessageDialog(_editor.getTargetFrame(), 
-                java.text.MessageFormat.format(rb.getString("SignalMastIconLoadError"),
+                java.text.MessageFormat.format(Bundle.getMessage("SignalMastIconLoadError"),
 				new Object[]{mMast.getDisplayName()}), 
-                rb.getString("SignalMastIconLoadErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                Bundle.getMessage("SignalMastIconLoadErrorTitle"), JOptionPane.ERROR_MESSAGE);
         }
         //Add in specific appearances for dark and held
         loadIcons("$dark");
@@ -171,7 +171,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     
     public String getNameString() {
         String name;
-        if (mMast == null) name = rb.getString("NotConnected");
+        if (mMast == null) name = Bundle.getMessage("NotConnected");
         else if (mMast.getUserName() == null)
             name = mMast.getSystemName();
         else
@@ -185,10 +185,10 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
             
-            JMenu clickMenu = new JMenu(rb.getString("WhenClicked"));
+            JMenu clickMenu = new JMenu(Bundle.getMessage("WhenClicked"));
             ButtonGroup clickButtonGroup = new ButtonGroup();
             JRadioButtonMenuItem r;
-            r = new JRadioButtonMenuItem(rb.getString("ChangeAspect"));
+            r = new JRadioButtonMenuItem(Bundle.getMessage("ChangeAspect"));
             r.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) { setClickMode(0); }
             });
@@ -197,7 +197,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             else r.setSelected(false);
             clickMenu.add(r);
                         
-            r = new JRadioButtonMenuItem(rb.getString("AlternateLit"));
+            r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateLit"));
             r.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) { setClickMode(1); }
             });
@@ -205,7 +205,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             if (clickMode == 1)  r.setSelected(true);
             else r.setSelected(false);
             clickMenu.add(r);
-            r = new JRadioButtonMenuItem(rb.getString("AlternateHeld"));
+            r = new JRadioButtonMenuItem(Bundle.getMessage("AlternateHeld"));
             r.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) { setClickMode(2); }
             });
@@ -217,7 +217,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
             
             java.util.Enumeration<String> en = mMast.getSignalSystem().getImageTypeList();
             if(en.hasMoreElements()){
-                JMenu iconSetMenu = new JMenu(rb.getString("SignalMastIconSet"));
+                JMenu iconSetMenu = new JMenu(Bundle.getMessage("SignalMastIconSet"));
                 ButtonGroup iconTypeGroup = new ButtonGroup();
                 setImageTypeList(iconTypeGroup, iconSetMenu, "default");
                 while (en.hasMoreElements()){
@@ -225,8 +225,8 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 }
                 popup.add(iconSetMenu);
             }
-            popup.add(new jmri.jmrit.signalling.SignallingSourceAction(rb.getString("SignalMastLogic"), mMast));
-            JMenu aspect = new JMenu(rb.getString("ChangeAspect"));
+            popup.add(new jmri.jmrit.signalling.SignallingSourceAction(Bundle.getMessage("SignalMastLogic"), mMast));
+            JMenu aspect = new JMenu(Bundle.getMessage("ChangeAspect"));
             final java.util.Vector <String> aspects = mMast.getValidAspects();
             for (int i=0; i<aspects.size(); i++){
                 final int index = i;
@@ -272,7 +272,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     SignalMastItemPanel _itemPanel;
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalMast"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalMast"));
         popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     editItem();
@@ -282,7 +282,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     }
     
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalMast")));
+        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("SignalMast")));
         _itemPanel = new SignalMastItemPanel(_paletteFrame, "SignalMast", getFamily(),
                                        PickListModel.signalMastPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -387,11 +387,11 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         }
         if (isText()){
             if (mMast.getHeld()) {
-                if (isText()) super.setText(rb.getString("Held"));
+                if (isText()) super.setText(Bundle.getMessage("Held"));
                 return;
             }
             else if (getLitMode() && !getSignalMast().getLit()){
-                super.setText(rb.getString("Dark"));
+                super.setText(Bundle.getMessage("Dark"));
                 return;
             }
             super.setText(state);

@@ -1,7 +1,6 @@
 package jmri.jmrit.display;
 
 import java.awt.*;
-import java.util.ResourceBundle;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -20,8 +19,6 @@ import java.awt.event.FocusListener;
 
 
 public class PositionablePropertiesUtil {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     
     Frame mFrame = null;
     protected Positionable _parent;
