@@ -271,12 +271,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		autoReturnWhenEmptyTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
 		autoTrainCheckBox.setToolTipText(Bundle.getMessage("TipAutoTrain"));
 		
-		ignoreStatusCheckBox.setToolTipText(getRb().getString("TipIgnore"));
-		ignoreLocationCheckBox.setToolTipText(getRb().getString("TipIgnore"));
-		ignoreRWECheckBox.setToolTipText(getRb().getString("TipIgnore"));
-		ignoreDestinationCheckBox.setToolTipText(getRb().getString("TipIgnore"));
-		ignoreFinalDestinationCheckBox.setToolTipText(getRb().getString("TipIgnore"));
-		ignoreTrainCheckBox.setToolTipText(getRb().getString("TipIgnore"));
+		ignoreStatusCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
+		ignoreLocationCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
+		ignoreRWECheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
+		ignoreDestinationCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
+		ignoreFinalDestinationCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
+		ignoreTrainCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
 
 		//	 get notified if combo box gets modified
 		LocationManager.instance().addPropertyChangeListener(this);
