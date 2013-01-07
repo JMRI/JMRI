@@ -22,8 +22,6 @@ import jmri.Manager;
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
-    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
     public ProxyTurnoutManager() {
     	super();
     }
