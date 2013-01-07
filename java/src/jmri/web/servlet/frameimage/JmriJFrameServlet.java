@@ -386,7 +386,6 @@ public class JmriJFrameServlet extends HttpServlet {
                 if (key.contains("?")) {
                     // the key is combined
                     coords[0] = key.substring(key.indexOf("?"));
-                    key.substring(key.indexOf("?"));
                     key = key.substring(0, key.indexOf("?") - 1);
                     parameters.put(key, value);
                 } else {
