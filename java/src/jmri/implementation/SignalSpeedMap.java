@@ -4,7 +4,6 @@ package jmri.implementation;
 
 import java.util.Hashtable;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import java.io.File;
 
@@ -27,8 +26,6 @@ public class SignalSpeedMap {
     static private boolean _percentNormal;
     static private int _sStepDelay;
     static private int _numSteps;
-
-    final static private ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     static public SignalSpeedMap getMap() {
         if (_map == null) {
@@ -109,8 +106,8 @@ public class SignalSpeedMap {
             for (int i = 0; i < l.size(); i++) {
                 String name = l.get(i).getName();
                 String speed = l.get(i).getText();
-                _headTable.put(rb.getString(name), speed);
-                if (log.isDebugEnabled()) log.debug("Add "+name+"="+rb.getString(name)+", "+speed+" to AppearanceSpeed Table");
+                _headTable.put(Bundle.getMessage(name), speed);
+                if (log.isDebugEnabled()) log.debug("Add "+name+"="+Bundle.getMessage(name)+", "+speed+" to AppearanceSpeed Table");
             }
         } catch (org.jdom.JDOMException e) {
             log.error("error reading file \""+file.getName()+"\" due to: "+e);

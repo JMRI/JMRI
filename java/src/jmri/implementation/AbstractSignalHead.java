@@ -2,8 +2,8 @@
 
 package jmri.implementation;
 
-import java.util.ResourceBundle;
 import jmri.*;
+
  /**
  * Abstract class providing the basic logic of the SignalHead interface.
  * <p>
@@ -22,9 +22,6 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     public AbstractSignalHead(String systemName) {
         super(systemName);
     }
-
-	static final ResourceBundle rbx = ResourceBundle
-			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     public String getAppearanceName(int appearance) {
         String ret = jmri.util.StringUtil.getNameFromState(
@@ -100,7 +97,6 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 		else return ("");
     }
     
-    private static final ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
     private static final  int[] validStates = new int[]{
         DARK, 
         RED, 
@@ -113,15 +109,15 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         FLASHLUNAR
     };
    private static final String[] validStateNames = new String[]{
-        rb.getString("SignalHeadStateDark"),
-        rb.getString("SignalHeadStateRed"),
-        rb.getString("SignalHeadStateYellow"),
-        rb.getString("SignalHeadStateGreen"),
-        rb.getString("SignalHeadStateLunar"),
-        rb.getString("SignalHeadStateFlashingRed"),
-        rb.getString("SignalHeadStateFlashingYellow"),
-        rb.getString("SignalHeadStateFlashingGreen"),
-        rb.getString("SignalHeadStateFlashingLunar"),
+        Bundle.getMessage("SignalHeadStateDark"),
+        Bundle.getMessage("SignalHeadStateRed"),
+        Bundle.getMessage("SignalHeadStateYellow"),
+        Bundle.getMessage("SignalHeadStateGreen"),
+        Bundle.getMessage("SignalHeadStateLunar"),
+        Bundle.getMessage("SignalHeadStateFlashingRed"),
+        Bundle.getMessage("SignalHeadStateFlashingYellow"),
+        Bundle.getMessage("SignalHeadStateFlashingGreen"),
+        Bundle.getMessage("SignalHeadStateFlashingLunar"),
     };
     
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy

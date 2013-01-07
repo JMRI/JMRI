@@ -6,7 +6,6 @@ import jmri.jmrit.Sound;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.Warrant;
 import java.awt.event.ActionListener;
-import java.util.ResourceBundle;
 import javax.swing.Timer;
 /**
  * ConditionalAction.java
@@ -38,8 +37,7 @@ public class DefaultConditionalAction implements ConditionalAction {
     private boolean _timerActive = false; 
     private Sound _sound = null;
 
-	static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
-	static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
+	static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     
     public DefaultConditionalAction() {
@@ -540,31 +538,31 @@ public class DefaultConditionalAction implements ConditionalAction {
         else if (str.equals(rbx.getString("TurnoutLock"))) {
             return Turnout.LOCKED;
         }
-        else if (str.equals(rbean.getString("SignalHeadStateRed"))) {
+        else if (str.equals(Bundle.getMessage("SignalHeadStateRed"))) {
             return SignalHead.RED;
         }
-        else if (str.equals(rbean.getString("SignalHeadStateYellow"))) {
+        else if (str.equals(Bundle.getMessage("SignalHeadStateYellow"))) {
             return SignalHead.YELLOW;
         }
-        else if (str.equals(rbean.getString("SignalHeadStateGreen"))) {
+        else if (str.equals(Bundle.getMessage("SignalHeadStateGreen"))) {
             return SignalHead.GREEN;
         }
-        else if (str.equals(rbean.getString("SignalHeadStateDark"))) {
+        else if (str.equals(Bundle.getMessage("SignalHeadStateDark"))) {
             return SignalHead.DARK;
         }
-        else if (str.equals(rbean.getString("SignalHeadStateFlashingRed"))) {
+        else if (str.equals(Bundle.getMessage("SignalHeadStateFlashingRed"))) {
             return SignalHead.FLASHRED;
         }
-        else if (str.equals(rbean.getString("SignalHeadStateFlashingYellow"))) {
+        else if (str.equals(Bundle.getMessage("SignalHeadStateFlashingYellow"))) {
             return SignalHead.FLASHYELLOW;
         }
-        else if (str.equals(rbean.getString("SignalHeadStateFlashingGreen"))) {
+        else if (str.equals(Bundle.getMessage("SignalHeadStateFlashingGreen"))) {
             return SignalHead.FLASHGREEN;
         }
-        else if (str.equals(rbean.getString("SignalHeadStateLunar"))) {
+        else if (str.equals(Bundle.getMessage("SignalHeadStateLunar"))) {
             return SignalHead.LUNAR;
         }
-        else if (str.equals(rbean.getString("SignalHeadStateFlashingLunar"))) {
+        else if (str.equals(Bundle.getMessage("SignalHeadStateFlashingLunar"))) {
             return SignalHead.FLASHLUNAR;
         }
         else if (str.equals(rbx.getString("AudioSourcePlay"))) {

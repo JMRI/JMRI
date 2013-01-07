@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.BitSet;
 import java.util.Date;
-import java.util.ResourceBundle;
 import java.beans.PropertyChangeEvent;
 
 import java.awt.event.ActionListener;
@@ -50,8 +49,7 @@ public class DefaultConditional extends AbstractNamedBean
 
     public static final boolean PARKS_DEBUG = false;
 
-	static final ResourceBundle rbx = ResourceBundle
-			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+	static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
 
     public DefaultConditional(String systemName, String userName) {
         super(systemName, userName);

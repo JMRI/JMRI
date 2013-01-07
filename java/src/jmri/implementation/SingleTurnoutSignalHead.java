@@ -166,33 +166,31 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
         return validStateName;
     }
 
-    final static private java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
     @SuppressWarnings("fallthrough")
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
     private String getSignalColour(int mAppearance){
         switch(mAppearance){
             case SignalHead.RED:
-                    return  rb.getString("SignalHeadStateRed");
+                    return  Bundle.getMessage("SignalHeadStateRed");
         	case SignalHead.FLASHRED:
-                    return rb.getString("SignalHeadStateFlashingRed");
+                    return Bundle.getMessage("SignalHeadStateFlashingRed");
         	case SignalHead.YELLOW:
-                    return rb.getString("SignalHeadStateYellow");
+                    return Bundle.getMessage("SignalHeadStateYellow");
         	case SignalHead.FLASHYELLOW:
-                    return rb.getString("SignalHeadStateFlashingYellow");
+                    return Bundle.getMessage("SignalHeadStateFlashingYellow");
         	case SignalHead.GREEN:
-                    return rb.getString("SignalHeadStateGreen");
+                    return Bundle.getMessage("SignalHeadStateGreen");
         	case SignalHead.FLASHGREEN:
-                    return rb.getString("SignalHeadStateFlashingGreen");
+                    return Bundle.getMessage("SignalHeadStateFlashingGreen");
             case SignalHead.LUNAR:
-                    return rb.getString("SignalHeadStateLunar");
+                    return Bundle.getMessage("SignalHeadStateLunar");
             case SignalHead.FLASHLUNAR:
-                    return rb.getString("SignalHeadStateFlashingLunar");
+                    return Bundle.getMessage("SignalHeadStateFlashingLunar");
         	default:
                     log.warn("Unexpected appearance: "+mAppearance);
                 // go dark by falling through
         	case SignalHead.DARK:
-                    return  rb.getString("SignalHeadStateDark");
+                    return  Bundle.getMessage("SignalHeadStateDark");
         }
     }
 
