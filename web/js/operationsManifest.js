@@ -10,7 +10,7 @@ var $getTrainData = function($trainId){
 };
 
 //process the json data defining a train into an online manifest
-//  output some header info, then loop through routelocations.  for each, 
+//  output some header info, then loop through locations.  for each, 
 //  output loco pickups, then car actions, then loco setouts
 //  all elements have css classes to facilitate later formatting and presentation options
 var $buildManifest = function($r, $s, $x){
@@ -22,54 +22,54 @@ var $buildManifest = function($r, $s, $x){
 	if ($train.comment !== "") {
 		$h += "<span class='comment'> - " + $train.comment+"</span>";
 	}
-	$.each($train.routeLocations, function(i, $rl) {  //output each route location for this train
+	$.each($train.locations, function(i, $rl) {  //output each route location for this train
 		$pickups = 0;
 		$setouts = 0;
 		$moves = 0;
 		$hl = "";  //use for car list, so parent can indicate count
 		$.each($train.engines, function(j, $e) {  //loop thru enginelist to find any engine pickups
-			if ($rl.id == $e.locationId) {
+			if ($rl.id == $e.location) {
 				$hl += "  <li class='car engine pickup'><span class='action'>Pick up</span> " +
 				"<span class='roadNumber'>" + $e.road + " " + $e.number + "</span> " +
 				"<span class='model hideable'>" + $e.model + "</span> from " +
-				"<span class='trackName'>" + $e.trackName + "</span></li>";
+				"<span class='trackName'>" + $e.locationTrack + "</span></li>";
 				$pickups++;
 			}
 		});
 		$.each($train.cars, function(j, $c) {  //loop thru carlist to find work for this location
-			if ($rl.id == $c.locationId && $rl.id == $c.destinationId) { //local move
+			if ($rl.id == $c.location && $rl.id == $c.destination) { //local move
 				$hl += "  <li class='car move'><span class='action'>Move</span> "+
 				"<span class='roadNumber'>"+$c.road+" "+$c.number+"</span> "+
 				"<span class='description hideable'>"+$c.type+" "+$c.length+"' "+$c.color+" "+"</span> "+
 				"<span class='load hideable'>"+escapeHtml($c.load)+"</span> from "+
-				"<span class='trackName'>"+$c.trackName + "</span> to <span class='trackName'>" + $c.destinationTrackName + "</span></li>";
+				"<span class='trackName'>"+$c.locationTrack + "</span> to <span class='trackName'>" + $c.destinationTrack + "</span></li>";
 				$moves++;
-			} else if ($rl.id == $c.locationId) { //pickup
+			} else if ($rl.id == $c.location) { //pickup
 				$hl += "  <li class='car pickup'><span class='action'>Pick up</span> "+
 				"<span class='roadNumber'>"+$c.road+" "+$c.number+"</span> "+
 				"<span class='description hideable'>"+$c.type+" "+$c.length+"' "+$c.color+" "+"</span> "+
 				"<span class='load hideable'>"+escapeHtml($c.load)+"</span> from "+
-				"<span class='trackName'>"+$c.trackName+ "</span></li>";
+				"<span class='trackName'>"+$c.locationTrack+ "</span></li>";
 				$pickups++;
-			} else if ($rl.id == $c.destinationId) { //setout
+			} else if ($rl.id == $c.destination) { //setout
 				$hl += "  <li class='car setout'><span class='action'>Set out</span> "+
 				"<span class='roadNumber'>"+$c.road+" "+$c.number+"</span> "+
 				"<span class='description hideable'>"+$c.type+" "+$c.length+"' "+$c.color+" "+"</span> "+
 				"<span class='load hideable'>"+escapeHtml($c.load)+"</span> to "+
-				"<span class='trackName'>"+$c.destinationTrackName+ "</span></li>";
+				"<span class='trackName'>"+$c.destinationTrack+ "</span></li>";
 				$setouts++;
 			}
 		});
 		$.each($train.engines, function(j, $e) {  //loop thru enginelist to find any engine setouts
-			if ($rl.id == $e.destinationId) {
+			if ($rl.id == $e.destination) {
 				$hl += "  <li class='car engine setout'><span class='action'>Set out</span> " +
 				"<span class='roadNumber'>" + $e.road + " " + $e.number + "</span> " +
 				"<span class='model hideable'>" + $e.model + "</span> " +
-				"<span class='trackName'>to " + $e.trackName + "</span></li>";
+				"<span class='trackName'>to " + $e.destinationTrack + "</span></li>";
 				$setouts++;
 			}
 		});
-		$h += "  <li class='location'>" + $rl.location + " (" + $rl.expectedArrivalTime + ") "; 
+		$h += "  <li class='location'>" + $rl.name + " (" + $rl.expectedArrivalTime + ") "; 
 
 		if ($pickups==0 && $moves==0 && $setouts==0) {
 			$h += "No work ";

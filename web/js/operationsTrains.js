@@ -21,7 +21,7 @@ var $showTrainList = function(){
 					$h += "<td>" + $train.route + "</td>";
 					$h += "<td>" + $train.trainDepartsName + "</td>";
 					$h += "<td>" + $train.trainTerminatesName + "</td>";
-					$h += "<td>" + $train.currentLocationName + "</td>";
+					$h += "<td>" + $train.location + "</td>";
 					$h += "<td>" + $train.status + "</td>";
 					$h += "<td><a href='/web/operationsConductor.html?trainid=" + $train.id + "'>Conductor</td>";
 					$h += "<td><a href='/json/train/" + $train.id + "'>" + $train.id + "</td>";

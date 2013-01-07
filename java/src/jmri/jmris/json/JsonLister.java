@@ -515,7 +515,6 @@ public class JsonLister {
             data.put(STATUS, train.getStatus());
             data.put(LENGTH, train.getTrainLength());
             data.put(WEIGHT, train.getTrainWeight());
-            data.put(CARS, train.getNumberCarsInTrain());
             if (train.getLeadEngine() != null) {
                 data.put(LEAD_ENGINE, train.getLeadEngine().toString());
             }
