@@ -270,6 +270,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		autoFinalDestTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
 		autoReturnWhenEmptyTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
 		autoTrainCheckBox.setToolTipText(Bundle.getMessage("TipAutoTrain"));
+		locationUnknownCheckBox.setToolTipText(Bundle.getMessage("TipLocationUnknown"));
 		
 		ignoreStatusCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
 		ignoreLocationCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
