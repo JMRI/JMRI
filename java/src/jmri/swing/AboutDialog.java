@@ -5,10 +5,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Locale;
-import java.util.ResourceBundle;
 import javax.swing.*;
 import jmri.Application;
 import jmri.Version;
@@ -23,7 +21,6 @@ import jmri.jmrix.ConnectionConfig;
 public class AboutDialog extends JDialog {
 
     ConnectionConfig[] connection = {null, null, null, null};
-    final protected static ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
 
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.
     public AboutDialog(JFrame frame, boolean modal) {
@@ -84,12 +81,11 @@ public class AboutDialog extends JDialog {
         }
         pane1.add(Box.createRigidArea(new Dimension(0, 15)));
 
-        pane1.add(new JLabel(MessageFormat.format(rb.getString("DefaultVersionCredit"),
-                new Object[]{Version.name()})));
+        pane1.add(new JLabel(Bundle.getMessage("DefaultVersionCredit", Version.name())));
         pane1.add(new JLabel(Version.getCopyright()));
-        pane1.add(new JLabel(MessageFormat.format(rb.getString("JavaVersionCredit"),
-                new Object[]{System.getProperty("java.version", "<unknown>"),
-                    Locale.getDefault().toString()})));
+        pane1.add(new JLabel(Bundle.getMessage("JavaVersionCredit", 
+                System.getProperty("java.version", "<unknown>"),
+                Locale.getDefault().toString())));
         pane1.setAlignmentX(Component.CENTER_ALIGNMENT);
         return pane1;
     }
