@@ -1029,9 +1029,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         ArrayList<NamedBeanSetting> userSetMasts = new ArrayList<NamedBeanSetting>(0);
         Hashtable<SignalMast, String> autoMasts = new Hashtable<SignalMast, String>(0);
         ArrayList<NamedBeanSetting> userSetSensors = new ArrayList<NamedBeanSetting>(0);
-        //Blocks is used for user defined blocks between two signalmasts
-        Hashtable<Block, Integer> blocks = new Hashtable<Block, Integer>(0);
-        //ArrayList<NamedBeanSetting> userSetBlocks = new ArrayList<NamedBeanSetting>(0);
+        ArrayList<NamedBeanSetting> userSetBlocks = new ArrayList<NamedBeanSetting>(0);
         boolean turnoutThrown = false;
         boolean permissiveBlock = false;
         boolean disposed = false;
@@ -1133,12 +1131,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             lockTurnouts = lock;
         }
         
-        int getBlockState(Block block){
-            if(blocks==null)
-                return -1;
-            return blocks.get(block);
-        }
-        
         void setTurnouts(Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts){
             if (this.userSetTurnouts!=null){
                 for(NamedBeanSetting nbh:userSetTurnouts){
@@ -1224,20 +1216,23 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
          */
         void setBlocks(Hashtable<Block, Integer> blocks){
             log.debug(destination.getDisplayName() + " Set blocks called");
-            if (this.blocks!=null){
-                Enumeration<Block> keys = this.blocks.keys();
-                while ( keys.hasMoreElements() )
-                {
-                   Block key = keys.nextElement();
-                   key.removePropertyChangeListener(propertyBlockListener);
+            if (this.userSetBlocks!=null){
+                for(NamedBeanSetting nbh:userSetBlocks){
+                    nbh.getBean().removePropertyChangeListener(propertyBlockListener);
                 }
-                //minimumBlockSpeed = 0;
             }
             destMastInit = false;
+
             if(blocks==null){
-                this.blocks = new Hashtable<Block, Integer>(0);
+                userSetBlocks = new ArrayList<NamedBeanSetting>(0);
             } else {
-                this.blocks=blocks;
+                Enumeration<Block> e = blocks.keys();
+                while(e.hasMoreElements()){
+                    Block blk = e.nextElement();
+                    NamedBeanHandle nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(blk.getDisplayName(), blk);
+                    NamedBeanSetting nbs = new NamedBeanSetting(nbh, blocks.get(blk));
+                    userSetBlocks.add(nbs);
+                }
             }
             firePropertyChange("blocks", null, this.destination);
         }
@@ -1395,9 +1390,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
 
         ArrayList<Block> getBlocks(){
             ArrayList<Block> out = new ArrayList<Block>();
-            Enumeration<Block> en = blocks.keys();
-            while (en.hasMoreElements()) {
-                out.add(en.nextElement());
+            for(NamedBeanSetting nbh:userSetBlocks){
+                out.add((Block)nbh.getBean());
             }
             return out;
         }
@@ -1475,7 +1469,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         boolean isBlockIncluded(Block block){
-            return blocks.containsKey(block);
+            for(NamedBeanSetting nbh:userSetBlocks){
+                if (nbh.getBean().equals(block))
+                    return true;
+            }
+            return false;
         }
         
         boolean isAutoBlockIncluded(LayoutBlock block){
@@ -1489,10 +1487,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         boolean isBlockIncluded(LayoutBlock block){
-            if(block!=null)
-                return blocks.containsKey(block.getBlock());
+            for(NamedBeanSetting nbh:userSetBlocks){
+                if (nbh.getBean().equals(block.getBlock()))
+                    return true;
+            }
             return false;
-        }
+         }
         
         boolean isTurnoutIncluded(Turnout turnout){
             for(NamedBeanSetting nbh:userSetTurnouts){
@@ -1524,6 +1524,15 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             return autoBlocks.get(block);
         }
 
+        int getBlockState(Block block){
+            if(userSetBlocks==null)
+                return -1;
+            for(NamedBeanSetting nbh:userSetBlocks){
+                if (nbh.getBean().equals(block))
+                    return nbh.getSetting();
+            }
+            return -1;
+        }
         /*boolean isBlockManualAssigned(Block block){
             return true;
         }*/
@@ -1704,15 +1713,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
 
             Set<Block> blockAutoKeys = autoBlocks.keySet();
-
             for(Block key:blockAutoKeys)
             {
                if(log.isDebugEnabled())
                     log.debug(key.getDisplayName() + " " + key.getState() + " " + autoBlocks.get(key));
                if (key.getState()!=autoBlocks.get(key)){
-                    if (blocks.containsKey(key)){
-                        if(blocks.get(key)!=0x03) {
-                            if(key.getState()!=blocks.get(key)){
+                    if (isBlockIncluded(key)){
+                        if(getBlockState(key)!=0x03) {
+                            if(key.getState()!=getBlockState(key)){
                                 if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
                                     permissiveBlock=true;
                                 } else {
@@ -1730,12 +1738,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                }
             }
 
-            Enumeration<Block> blockKeys = blocks.keys();
-            while ( blockKeys.hasMoreElements() )
-            {
-                Block key = blockKeys.nextElement();
-                if(blocks.get(key)!=0x03){
-                    if (key.getState()!=blocks.get(key)) {
+            for(NamedBeanSetting nbh:userSetBlocks){
+                Block key = (Block)nbh.getBean();
+                if(nbh.getSetting()!=0x03){
+                    if (key.getState()!=nbh.getSetting()) {
                         if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
                             permissiveBlock=true;
                         } else {
@@ -1816,19 +1822,12 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         if(key.getAspect().equals(getSignalMastState(key))){
                             routeclear = false;
                         }                    
-                    } 
-                    /*if (masts.containsKey(key)){
-                        if(!key.getAspect().equals(masts.get(key))){
-                            routeclear = false;
-                        }
-                    } */else {
+                    } else {
                         routeclear = false;
                     }
                 }
             }
 
-            //mastKeys = masts.keys();
-            //while ( mastKeys.hasMoreElements() )
             for(NamedBeanSetting nbh:userSetMasts){
                 SignalMast key = (SignalMast) nbh.getBean();
                 key.addPropertyChangeListener(propertySignalMastListener);
@@ -1850,8 +1849,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                //log.debug(destination.getDisplayName() + " auto block add list " + key.getDisplayName());
                key.addPropertyChangeListener(propertyBlockListener);
                if (key.getState()!=autoBlocks.get(key)){
-                    if (blocks.containsKey(key)){
-                        if(key.getState()!=blocks.get(key)){
+                    if (isBlockIncluded(key)){
+                        if(key.getState()!=getBlockState(key)){
                             if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
                                 permissiveBlock=true;
                             } else {
@@ -1868,12 +1867,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
             }
             
-            Enumeration<Block> blockKeys = blocks.keys();
-            while ( blockKeys.hasMoreElements() )
-            {
-               Block key = blockKeys.nextElement();
+            for(NamedBeanSetting nbh:userSetBlocks){
+                Block key = (Block) nbh.getBean();
                key.addPropertyChangeListener(propertyBlockListener);
-               if (key.getState()!=blocks.get(key)){
+               if (key.getState()!=getBlockState(key)){
                     if(key.getState()==Block.OCCUPIED && key.getPermissiveWorking()){
                         permissiveBlock=true;
                     } else {
@@ -2099,11 +2096,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             ArrayList<jmri.SignalMastLogic> smlList = InstanceManager.signalMastLogicManagerInstance().getLogicsByDestination(destination);
             ArrayList<Block> allBlock = new ArrayList<Block>();
             
-            Enumeration<Block> keys = blocks.keys();
-            while ( keys.hasMoreElements() )
-            {
-                Block key = keys.nextElement();
-                allBlock.add(key);
+            for(NamedBeanSetting nbh:userSetBlocks){
+                allBlock.add((Block)nbh.getBean());
             }
             
             Set<Block> blockKeys = autoBlocks.keySet();
@@ -2112,7 +2106,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if(!allBlock.contains(key))
                     allBlock.add(key);
             }
-             Hashtable<SignalMast, String> masts;
+            Hashtable<SignalMast, String> masts;
             if(sml!=null){
                 masts = autoMasts;
                 if(sml.areBlocksIncluded(allBlock)){
@@ -2276,12 +2270,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             }
             
             Set<Block> autoBlockKeys = autoBlocks.keySet();
-            //while ( blockKeys.hasMoreElements() )
             for(Block key:autoBlockKeys)
             {
-               //Block key = blockKeys.nextElement();
                log.debug(destination.getDisplayName() + " auto block add list " + key.getDisplayName());
-               if(!blocks.containsKey(key)){
+               if(!isBlockIncluded(key)){
                    if (((key.getSpeedLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getSpeedLimit()!=-1)){
                        minimumBlockSpeed=key.getSpeedLimit();
                        if(log.isDebugEnabled())
@@ -2289,10 +2281,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     }
                 }
             }
-            Enumeration<Block> blockKeys = blocks.keys();
-            while ( blockKeys.hasMoreElements() )
-            {
-               Block key = blockKeys.nextElement();
+            for(NamedBeanSetting nbh:userSetBlocks){
+               Block key = (Block)nbh.getBean();
                if (((key.getSpeedLimit()<minimumBlockSpeed) || (minimumBlockSpeed==0)) && (key.getSpeedLimit()!=-1)){
                    if(log.isDebugEnabled())
                         log.debug(destination.getDisplayName() + " block " + key.getDisplayName() + " set speed to " + minimumBlockSpeed);
@@ -2381,10 +2371,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if (e.getPropertyName().equals("state")) {
                     int now = ((Integer) e.getNewValue()).intValue();
                     if(log.isDebugEnabled()){
-                        log.debug(blocks.containsKey(block));
+                        log.debug(isBlockIncluded(block));
                         log.debug(autoBlocks.containsKey(block));
                     }
-                    if (blocks.containsKey(block)){
+                    if (isBlockIncluded(block)){
                         if(log.isDebugEnabled()){
                             log.debug(destination.getDisplayName() + " in manual block");
                             log.debug(getBlockState(block) + "  " + now);
@@ -2584,7 +2574,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         while (en.hasMoreElements()) {
             SignalMast dm = en.nextElement();
             destList.get(dm).dispose();
-            //InstanceManager.signalMastLogicManagerInstance().removeDestinationMastToLogic(this, dm);
         }
     }
     
