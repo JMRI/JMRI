@@ -2,14 +2,18 @@
 
 package jmri.jmrit.roster.swing;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ResourceBundle;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.roster.RosterIconFactory;
+import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.XTableColumnModel;
+import org.apache.log4j.Logger;
 
 /**
  * Table data model for display of Roster variable values.
@@ -26,8 +30,6 @@ import jmri.util.swing.XTableColumnModel;
  */
 public class RosterTableModel extends DefaultTableModel implements PropertyChangeListener {
 
-    final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-    
     public static final int IDCOL = 0;
     static final int ADDRESSCOL = 1;
     static final int ICONCOL = 2;
@@ -55,12 +57,12 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         Roster.instance().addPropertyChangeListener(this);
     }
     
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("add")) {
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("add")) { // NOI18N
             fireTableDataChanged();
-        } else if (e.getPropertyName().equals("remove")) {
+        } else if (e.getPropertyName().equals("remove")) { // NOI18N
             fireTableDataChanged();
-        } else if (e.getPropertyName().equals("saved")) {
+        } else if (e.getPropertyName().equals("saved")) { // NOI18N
             //TODO This really needs to do something like find the index of the roster entry here
             if(e.getSource() instanceof RosterEntry){
                 int row = Roster.instance().getGroupIndex(rosterGroup, (RosterEntry)e.getSource());
@@ -68,9 +70,9 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             } else {
                 fireTableDataChanged();
             }
-        } else if (e.getPropertyName().equals("selectedRosterGroup")) {
+        } else if (e.getPropertyName().equals(RosterGroupSelector.selectedRosterGroupProperty)) {
             setRosterGroup((e.getNewValue() != null) ? e.getNewValue().toString() : null);
-        } else if (e.getPropertyName().startsWith("attribute") && e.getSource() instanceof RosterEntry){
+        } else if (e.getPropertyName().startsWith("attribute") && e.getSource() instanceof RosterEntry){ // NOI18N
             int row = Roster.instance().getGroupIndex(rosterGroup, (RosterEntry)e.getSource());
             fireTableRowsUpdated(row, row);
         }
@@ -99,17 +101,17 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     @Override
     public String getColumnName(int col) {
         switch (col) {
-            case IDCOL:         return rb.getString("FieldID");
-            case ADDRESSCOL:    return rb.getString("FieldDCCAddress");
-            case DECODERCOL:    return rb.getString("FieldDecoderModel");
-            case MODELCOL:      return rb.getString("FieldModel");
-            case ROADNAMECOL:   return rb.getString("FieldRoadName");
-            case ROADNUMBERCOL: return rb.getString("FieldRoadNumber");
-            case MFGCOL:        return rb.getString("FieldManufacturer");
-            case ICONCOL:       return rb.getString("FieldIcon");
-            case OWNERCOL:      return rb.getString("FieldOwner");
-            case DATEUPDATECOL: return rb.getString("FieldDateUpdated");
-            case PROTOCOL:      return rb.getString("FieldProtocol");
+            case IDCOL:         return Bundle.getMessage("FieldID");
+            case ADDRESSCOL:    return Bundle.getMessage("FieldDCCAddress");
+            case DECODERCOL:    return Bundle.getMessage("FieldDecoderModel");
+            case MODELCOL:      return Bundle.getMessage("FieldModel");
+            case ROADNAMECOL:   return Bundle.getMessage("FieldRoadName");
+            case ROADNUMBERCOL: return Bundle.getMessage("FieldRoadNumber");
+            case MFGCOL:        return Bundle.getMessage("FieldManufacturer");
+            case ICONCOL:       return Bundle.getMessage("FieldIcon");
+            case OWNERCOL:      return Bundle.getMessage("FieldOwner");
+            case DATEUPDATECOL: return Bundle.getMessage("FieldDateUpdated");
+            case PROTOCOL:      return Bundle.getMessage("FieldProtocol");
             default : break;
         }
         if(_tcm!=null){
@@ -118,7 +120,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
                 return (String)tc.getHeaderValue();
             }
         }
-        return "<UNKNOWN>";
+        return "<UNKNOWN>"; // NOI18N
     }
     
     @Override
@@ -147,12 +149,12 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         return editable;
     }
     
-    jmri.jmrit.roster.RosterIconFactory iconFactory = null;
+    RosterIconFactory iconFactory = null;
     
     ImageIcon getIcon(RosterEntry re) {
         // defer image handling to RosterIconFactory
         if (iconFactory == null)
-            iconFactory = new jmri.jmrit.roster.RosterIconFactory(Math.max(19, new javax.swing.JLabel(getColumnName(0)).getPreferredSize().height));
+            iconFactory = new RosterIconFactory(Math.max(19, new JLabel(getColumnName(0)).getPreferredSize().height));
         return iconFactory.getIcon(re);
     }
     
@@ -180,7 +182,7 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
             case PROTOCOL:      return re.getProtocolAsString();
             default:            break;
         }
-        String value = re.getAttribute(getColumnName(col).replaceAll("\\s", ""));
+        String value = re.getAttribute(getColumnName(col).replaceAll("\\s", "")); // NOI18N
         if(value!=null)
             return value;
         return "";
@@ -227,14 +229,14 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
 
     public int getPreferredWidth(int column) {
         int retval = 20; // always take some width
-        retval = Math.max(retval, new javax.swing.JLabel(getColumnName(column)).getPreferredSize().width+15);  // leave room for sorter arrow
+        retval = Math.max(retval, new JLabel(getColumnName(column)).getPreferredSize().width+15);  // leave room for sorter arrow
         for (int row = 0 ; row < getRowCount(); row++) {
             if (getColumnClass(column).equals(String.class)){
-                retval = Math.max(retval, new javax.swing.JLabel(getValueAt(row, column).toString()).getPreferredSize().width);
+                retval = Math.max(retval, new JLabel(getValueAt(row, column).toString()).getPreferredSize().width);
             } else if (getColumnClass(column).equals(Integer.class))
-                retval = Math.max(retval, new javax.swing.JLabel(getValueAt(row, column).toString()).getPreferredSize().width);
+                retval = Math.max(retval, new JLabel(getValueAt(row, column).toString()).getPreferredSize().width);
             else if (getColumnClass(column).equals(ImageIcon.class))
-                retval = Math.max(retval, new javax.swing.JLabel((ImageIcon)getValueAt(row, column)).getPreferredSize().width);
+                retval = Math.max(retval, new JLabel((ImageIcon)getValueAt(row, column)).getPreferredSize().width);
         }    
         return retval+5;
     }
@@ -258,5 +260,5 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     public void dispose() {
     }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterTableModel.class.getName());
+    static final Logger log = Logger.getLogger(RosterTableModel.class.getName());
 }
