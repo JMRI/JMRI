@@ -2,14 +2,14 @@
 
 package jmri.jmrit.roster.swing;
 
-import jmri.jmrit.roster.*;
-import javax.swing.ImageIcon;
-
-import javax.swing.table.TableColumn;
-import jmri.util.swing.XTableColumnModel;
-
 import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
+import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.util.swing.XTableColumnModel;
 
 /**
  * Table data model for display of Roster variable values.
@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * @version             $Revision$
  * @since 2.7.5
  */
-public class RosterTableModel extends javax.swing.table.DefaultTableModel implements PropertyChangeListener {
+public class RosterTableModel extends DefaultTableModel implements PropertyChangeListener {
 
     final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
     
@@ -250,6 +250,10 @@ public class RosterTableModel extends javax.swing.table.DefaultTableModel implem
         fireTableDataChanged();
     }
 
+    public final String getRosterGroup() {
+        return this.rosterGroup;
+    }
+    
     // drop listeners
     public void dispose() {
     }
