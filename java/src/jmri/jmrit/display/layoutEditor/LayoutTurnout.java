@@ -1465,6 +1465,13 @@ public class LayoutTurnout
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
+                    } else if (block!=blockB){
+                        try {
+                            boundaryBetween[0]=(block.getDisplayName()+ " - " + blockB.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection A doesn't contain a layout block");
+                        }
                     }
                 }
                 
@@ -1478,6 +1485,14 @@ public class LayoutTurnout
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection B doesn't contain a layout block");
                         }
+                    } else if (block!=blockB){
+                        //This is an interal block on the turnout
+                        try {
+                            boundaryBetween[1]=(blockB.getDisplayName()+ " - " + block.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection A doesn't contain a layout block");
+                        }
                     }
                 }
                 if (connectC instanceof TrackSegment){
@@ -1489,6 +1504,14 @@ public class LayoutTurnout
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection C doesn't contain a layout block");
                         }
+                    } else if (blockC!=blockD){
+                        //This is an interal block on the turnout
+                        try {
+                            boundaryBetween[2]=(blockC.getDisplayName()+ " - " + blockD.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection A doesn't contain a layout block");
+                        }
                     }
                 }
                 if (connectD instanceof TrackSegment){
@@ -1499,6 +1522,14 @@ public class LayoutTurnout
                         } catch (java.lang.NullPointerException e){
                             //Can be considered normal if tracksegement hasn't yet been allocated a block
                             log.debug("TrackSegement at connection C doesn't contain a layout block");
+                        }
+                    } else if (blockC!=blockD){
+                        //This is an interal block on the turnout
+                        try {
+                            boundaryBetween[3]=(blockD.getDisplayName()+ " - " + blockC.getDisplayName());
+                        } catch (java.lang.NullPointerException e){
+                            //Can be considered normal if tracksegement hasn't yet been allocated a block
+                            log.debug("TrackSegement at connection A doesn't contain a layout block");
                         }
                     }
                 }
