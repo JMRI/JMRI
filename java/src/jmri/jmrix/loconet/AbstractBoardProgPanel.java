@@ -49,7 +49,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
         implements LocoNetListener {
 
     JPanel contents = new JPanel();
-    java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.AbstractBoardProgPanel");
+    java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetBundle");
 
     public JToggleButton readAllButton  = null;
     public JToggleButton writeAllButton = null;
