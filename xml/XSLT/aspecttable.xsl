@@ -178,6 +178,18 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
  Reference: <xsl:apply-templates/><br/>
 </xsl:template>
 
+<xsl:template match="speed" >
+ Speed:  <xsl:apply-templates/><br/>
+</xsl:template>
+
+<xsl:template match="speed2" >
+ Speed2: <xsl:apply-templates/><br/>
+</xsl:template>
+
+<xsl:template match="route" >
+ Route:  <xsl:apply-templates/><br/>
+</xsl:template>
+
 <xsl:template match="description" >
  Description: <xsl:apply-templates/><br/>
 </xsl:template>
