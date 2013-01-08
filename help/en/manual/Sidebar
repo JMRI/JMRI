@@ -8,111 +8,46 @@
     <div style="text-align: center"><strong>The JMRI Manual</strong></div>
 
     <div style="text-align: right">
-      <a href="../pdf/jmri_Man_2_14.pdf"> Download</a>
+      <dd>
+      <ul>
+      <li><a href="../pdf/jmri_Man_2_14.pdf"> Download JMRI Guide 2.12</a></li>
+      <li><a href="pdf/DP3_Man_2_14.pdf">Download DP3 2.14</a></li>
+      <li><a href="pdf/DP_man_3-0.pdf">Download  DP Guide 3.0</a></li>
+      <li><a href="pdf/DP3_Man_3-0.pdf">Download DP3 Guide</a></li>
+      <li><a href="pdf/JMRI_3-0 Operations_Users Guide.pdf">Download JMRI Ops Guide 3.0</a></li>
+      </ul>
+      </dd>
     </div>
 
 <dl><!-- main table of contents -->
 
-<dt><a href="Getting_Started.shtml">Getting Started</a></dt>
+ <div style="text-align: center"><strong>JMRI® User's Guides</strong></div>
+
+<dt>JMRI® Version 2.12</dt>
     <dd>
     <ul>
-    <li><a href="Getting_Started.shtml#What is DCC">What is DCC?</a>
-    <li><a href="Getting_Started.shtml#DCC systems">What DCC systems will DecoderPro&reg; work with?</a></dt>
-    <li><a href="Getting_Started.shtml#DCC Hardware">What hardware do I need?</a>
-    <li><a href="Getting_Started.shtml#Start">How do I start the program?</a>
-    <li><a href="Getting_Started.shtml#Preferences">How do I set up my preferences?</a>
+    <li><a href="JMRI_2-12_Manual/index.shtml">JMRI® Guide 2.12</a></li>
+
     </ul>
     </dd>
     
-<dt><a NAME="Setting up"></a><a href="Basic_Programming.shtml#Top">Using DecoderPro</a>&reg;</dt>
+<dt>JMRI® Version 2.14</dt>
     <dd>
     <ul>
-    <li><a href="Basic_Programming.shtml#Setting Up">How do I set up to program a decoder?</a>
-    <li><a href="Basic_Programming.shtml#Programming Modes">What are the Programming Modes?</a>
+    <li><a href="JMRI_2-14_manual/index.shtml">JMRI® Guide 2.14.1</a></li>
+    <li><a href="DP3_2-14_manual/index.shtml">DecoderPro3® 2.14</a></li>
     </ul>
     </dd>
     
-<dt><a href="Basic_Programming.shtml#Top">DecoderPro&reg; Programming Modes</a></dt>
+<dt>JMRI® Version 3.0</dt>
     <dd>
     <ul>
-    <li><a href="Simple_Programmer.shtml">Single CV Programmer</a></li>
-    <li><a href="Basic_Programming.shtml#ServiceMode">Service Mode Programmer</a></li>
-    <li><a href="Basic_Programming.shtml#OpsMode">Ops Mode Programming</a></li>
-    <li><a href="Multi_Decoder_Control.shtml">Multi Decoder Control (Programming)</a></li>
+    <li><a href="3-0_DecoderPro/index.shtml">DecoderPro® 3.0</a></li>
+    <li><a href="3-0_DecoderPro3/index.shtml">DecoderPro3® 3.0</a></li>
+    <li><a href="3-0_JMRI_OPS_UsersGuide/index.shtml">JMRI® Operations 3.0</a></li>
     </ul>
     </dd>
 
-<dt><a href="Basic_Programming.shtml#Basic Programmer">The Basic Programmer</a></dt>
-    <dd>
-    <ul>
-    <li><a href="Basic_Programming.shtml#Roster">Entering locomotives in the "Roster"</a></li>
-    <li><a href="Basic_Programming.shtml#Basic 2">The basic programmer</a></li>
-    <li><a href="Basic_Programming.shtml#Read Data">Reading the data from the decoder</a></li>
-    <li><a href="Basic_Programming.shtml#Enter/Edit data">Entering and editing new data</a></li>
-    <li><a href="Basic_Programming.shtml#Write Data">Writing the new data to the decoder</a></li>
-    <li><a href="Basic_Programming.shtml#Save Data">Saving the new data to a file</a></li>
-    <li><a href="Basic_Programming.shtml#Do More">What if I need to do more?</a></li>
-    </ul>
-
-<dt><a NAME="Advanced Programmer"></a>The Comprehensive Programmer</dt>
-    <dd>
-    <ul>
-    <li><a href="Comp_Setup_Roster.shtml">Set-up and Roster Panes</a></li>
-    <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
-    <li><a href="Comp_Motor.shtml">Motor Control Pane</a></li>
-    <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
-    <li><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></li>
-    <li><a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
-    <li><a href="Comp_FunctionLabel.shtml">Function Labels Pane</a></li>
-    <li><a href="Comp_LightFX.shtml">Lights Pane</a></li>
-    <li><a href="Comp_Consist.shtml">Consisting Pane</a></li>
-    <li><a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
-    <li><a href="Comp_Analog.shtml">Analog Controls Pane</a></li>
-    <li><a href="Comp_SoundFX.shtml">Sound Pane</a></li>
-    <li><a href="Comp_SoundLevels.shtml"> Sound Levels Pane</a></li>
-    <li><a href="Comp_GlobalCVs.shtml">Global CV Pane</a></li>
-    <li><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></li>
-    <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
-    </ul>
-    </dd>
-
-<dt><a name="Main"></a>DecoderPro&reg; Main Window</dt>
-    <dd>
-    <ul>
-      <li><a href="Main_Main.shtml">Main Window</a></li>
-      <li><a href="Main_Menu.shtml">Menu Overview</a></li>
-      <li><a href="Main_File.shtml">File Menu</a></li>
-      <li><a href="Main_Edit.shtml">Edit Menu</a></li>
-      <li><a href="Main_Tool.shtml">Tools Menu</a></li>
-      <li><a href="Main_Roster.shtml">Roster Menu</a></li>
-      <li><a href="Main_Panels.shtml">Panels Menu</a></li>
-      <li><a href="Main_Menu.shtml#System">System dependent menu </a></li>
-      <li><a href="Main_Debug.shtml">Debug Menu</a></li>
-      <li><a href="Main_Window.shtml">Window Menu</a></li>
-      <li><a href="Main_Help.shtml">Help Menu</a></li>
-    </ul>
-    </dd>
-
-
-<dt><a NAME="DecoderDefinition"></a>Creating a Decoder Definition </dt>
-    <dd>
-    <ul>
-    <li><a href="Dcode_Start.shtml">Getting Started</a></li>
-    <li><a href="Dcode_Format.shtml">Format</a></li>
-    <li><a href="Dcode_Testing.shtml">Testing</a></li>
-    <li><a href="Dcode_Submit.shtml">Submitting to JMRI</a></li>
-    </ul>
-    </dd>
-
-<dt><a name="Error"></a>Error Messages</dt>
-    <dd>
-    <ul>
-      <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>
-    </ul>
-    </dd>
-
-
-
-</dl>
+/dl>
 </div>
 <!-- /Sidebar -->
