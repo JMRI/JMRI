@@ -559,6 +559,7 @@
           <xs:attribute name="default" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute ref="xml:base" />
         </xs:complexType>
       </xs:element>
       <xs:element name="ifactReset" minOccurs="0" maxOccurs="unbounded" >
@@ -571,9 +572,11 @@
           <xs:attribute name="default" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute ref="xml:base" />
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute ref="xml:base" />
   </xs:complexType>
 
   <xs:complexType name="PaneType">
@@ -586,7 +589,9 @@
     </xs:sequence>
     <xs:attribute name="name" type="xs:string"/>
     <xs:attribute name="nameFmt" type="xs:string"/>
+    <xs:attribute ref="xml:base" />
   </xs:complexType>
+
   <xs:complexType name="PaneRowType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
@@ -598,6 +603,7 @@
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="PaneColumnType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
@@ -609,6 +615,7 @@
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="LabelType">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
@@ -617,6 +624,7 @@
     </xs:sequence>
     <xs:attribute name="label" type="xs:string"/>
   </xs:complexType>
+
   <xs:complexType name="DisplayType">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
