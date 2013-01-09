@@ -41,7 +41,7 @@
     <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
     <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
     <li><a href="Programmer_OpsMode.shtml">Ops Mode Programming</a></li>
-    <li><a href="Programmer_Multi_Decoder.shtml">Multi Decoder Control (Programming)</a></li>
+   
     </ul>
    
 <div style="text-align: center"><strong>The Basic Programmer</strong></div>    
@@ -90,7 +90,7 @@
 <div style="text-align: center"><strong>DecoderPro3® Main Window</strong></div>    
 
     <ul>
-      <li><a href="dp3_menubar.html">Menubar</a></li>
+      <li><a href="dp3_menubar.shtml">Menubar</a></li>
       <li><a href="dp3_toobar.shtml">Toolbar</a></li>
       <li><a href="dp3_rosterTable.shtml">Roster Table</a></li>
       <li><a href="dp3_decoderInfo.shtml">Decoder Information</a></li>
