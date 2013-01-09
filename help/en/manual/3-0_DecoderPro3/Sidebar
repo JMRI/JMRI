@@ -91,7 +91,7 @@
 <div style="text-align: center"><strong>DecoderPro3® Main Window</strong></div>    
 
     <ul>
-      <li><a href="dp3_menubar.html">Menubar</a></li>
+      <li><a href="dp3_menubar.shtml">Menu Bar</a></li>
       <li><a href="dp3_toobar.shtml">Toolbar</a></li>
       <li><a href="dp3_rosterTable.shtml">Roster Table</a></li>
       <li><a href="dp3_decoderInfo.shtml">Decoder Information</a></li>
