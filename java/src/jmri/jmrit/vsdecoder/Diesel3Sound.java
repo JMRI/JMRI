@@ -31,6 +31,7 @@ import jmri.AudioManager;
 import jmri.AudioException;
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.audio.AudioBuffer;
+import jmri.jmrit.audio.JoalAudioBuffer;
 
 
 // Usage:
@@ -205,9 +206,14 @@ class Diesel3Sound extends EngineSound {
 	    int j = 0;
 	    for (Element fe : elist) {
 		fn = fe.getText();
-		AudioBuffer b = D3Notch.getBuffer(vf, fn, "Engine_n" + i + "_" + j, "Engine_" + i + "_" + j);
-		log.debug("Buffer created: " + b + " name: " + b.getSystemName());
-		sb.addLoopBuffer(b);
+		//AudioBuffer b = D3Notch.getBuffer(vf, fn, "Engine_n" + i + "_" + j, "Engine_" + i + "_" + j);
+		//log.debug("Buffer created: " + b + " name: " + b.getSystemName());
+		//sb.addLoopBuffer(b);
+		List<AudioBuffer> l = D3Notch.getBufferList(vf, fn,  "Engine_n" + i + "_" + j, "Engine_" + i + "_" + j);
+		log.debug("Buffers Created: ");
+		for (AudioBuffer b : l)
+		    log.debug("\tSubBuffer: " + b.getSystemName());
+		sb.addLoopBuffers(l);
 		j++;
 	    }
 	    //log.debug("Notch: " + nn + " File: " + fn);
@@ -307,6 +313,7 @@ class D3Notch {
     public void setAccelBuffer(AudioBuffer b) { accel_buf = b; }
     public void setDecelBuffer(AudioBuffer b) { decel_buf = b; }
     public void addLoopBuffer(AudioBuffer b) { loop_bufs.add(b); }
+    public void addLoopBuffers(List<AudioBuffer> l) { loop_bufs.addAll(l); }
     public void setLoopBuffers(List<AudioBuffer> l) { loop_bufs = l; }
     public void clearLoopBuffers() { loop_bufs.clear(); }
     public AudioBuffer nextLoopBuffer() { return(loop_bufs.get(incLoopIndex())); }
@@ -348,6 +355,26 @@ class D3Notch {
 	}
     }
 
+    static public List<AudioBuffer> getBufferList(VSDFile vf, String filename, String sname, String uname) {
+	List<AudioBuffer> buflist = null;
+	if (vf == null) {
+	    // Need to fix this.
+	    //buf.setURL(vsd_file_base + filename);
+	    log.debug("No VSD File");
+	    return(null);
+	} else {
+	    java.io.InputStream ins = vf.getInputStream(filename);
+	    if (ins != null) {
+		//buflist = AudioUtil.getSplitInputStream(VSDSound.BufSysNamePrefix+filename, ins, 250, 100);
+		buflist = AudioUtil.getAudioBufferList(VSDSound.BufSysNamePrefix+filename, ins, 250, 100);
+	    }
+	    else {
+		log.debug("Input Stream failed");
+		return(null);
+	    }
+	    return(buflist);
+	}
+    }
     static public AudioBuffer getBuffer(VSDFile vf, String filename, String sname, String uname) {
 	AudioBuffer buf = null;
 	AudioManager am = jmri.InstanceManager.audioManagerInstance();
@@ -390,6 +417,8 @@ class D3LoopThread extends Thread {
     D3Notch _notch;
     SoundBite _sound;
     float _throttle;
+
+    public static final int SLEEP_INTERVAL = 50;
 
     public D3LoopThread(Diesel3Sound p) {
 	super();
@@ -499,7 +528,7 @@ class D3LoopThread extends Thread {
 			//return;
 		    }
 		}
-		sleep(100);
+		sleep(SLEEP_INTERVAL);
 	    }
 	    // Note: if (is_running == false) we'll exit the endless while and the Thread will die.
 	    return;
