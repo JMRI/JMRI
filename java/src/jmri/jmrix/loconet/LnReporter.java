@@ -141,6 +141,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
     //
     // NOTE: This code is dependent on the transpondingReport() and lissyReport() methods above.  If they change, the regex here must change.
     private Matcher parseReport(String rep) {
+	if (rep == null) return(null);
 	Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
 	Matcher m = ln_p.matcher(rep);
 	return(m);
@@ -152,7 +153,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
 	// Extract the number from the head of the report string
 	log.debug("report string: " + rep);
 	Matcher m = this.parseReport(rep);
-	if (m.find()) {
+	if ((m!= null) && m.find()) {
 	    log.debug("Parsed address: " + m.group(1));
 	    return(new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
 	} else {
