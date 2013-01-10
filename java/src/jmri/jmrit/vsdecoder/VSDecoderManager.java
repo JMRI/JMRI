@@ -95,7 +95,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 	// Get preferences
 	String dirname = XmlFile.prefsDir()+ "vsdecoder" +File.separator; // NOI18N
 	XmlFile.ensurePrefsPresent(dirname);
-	vsdecoderPrefs = new VSDecoderPreferences(dirname+ Bundle.getString("VSDPreferencesFileName"));
+	vsdecoderPrefs = new VSDecoderPreferences(dirname+ Bundle.getMessage("VSDPreferencesFileName"));
 	// Listen to ReporterManager for Report List changes
 	setupReporterManagerListener();
 	// Get a Listener (the only one for now)
@@ -116,7 +116,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     private void buildVSDecoderPreferencesFrame() {
-	vsdecoderPreferencesFrame = new JmriJFrame(Bundle.getString("FieldVSDecoderPreferencesFrameTitle"));
+	vsdecoderPreferencesFrame = new JmriJFrame(Bundle.getMessage("FieldVSDecoderPreferencesFrameTitle"));
 	VSDecoderPreferencesPane tpP = new VSDecoderPreferencesPane(vsdecoderPrefs);
 	vsdecoderPreferencesFrame.add(tpP);
 	tpP.setContainer(vsdecoderPreferencesFrame);
@@ -543,29 +543,48 @@ public class VSDecoderManager implements PropertyChangeListener {
 	// get the location of the event source, and update the decoder's location.
 	@SuppressWarnings("cast") // NOI18N
 	String eventName = (String)event.getPropertyName();
-	if ((event.getSource() instanceof PhysicalLocationReporter) && eventName.equals("state")) { // NOI18N
+	if (event.getSource() instanceof PhysicalLocationReporter) {
 	    Block blk = (Block) event.getSource();
-	    // Need to decide which reporter it is, so we can use different methods
-	    // to extract the address and the location.
 	    String repVal = null;
-	    if ((Integer)event.getNewValue() == Block.OCCUPIED) {
-		// Get this Block's Reporter's current/last report value.  need to fix this - it could be
-		/// an idtag type reporter.
-		if (blk.isReportingCurrent())
-		    repVal = (String)blk.getReporter().getCurrentReport();
-		else
-		    repVal = (String)blk.getReporter().getLastReport();
-		if (repVal == null) {
-		    log.warn("Report from Block " + blk.getUserName() + " Reporter " + blk.getReporter().getSystemName() + " is null!");
+	    // Depending on the type of Block Event, extract the needed report info from
+	    // the appropriate place...
+	    // "state" => Get loco address from Block's Reporter if present
+	    // "value" => Get loco address from event's newValue.
+	    if (eventName.equals("state")) { // NOI18N
+		// Need to decide which reporter it is, so we can use different methods
+		// to extract the address and the location.
+		if ((Integer)event.getNewValue() == Block.OCCUPIED) {
+		    // Get this Block's Reporter's current/last report value.  need to fix this - it could be
+		    /// an idtag type reporter.
+		    if (blk.getReporter() == null) {
+			log.debug("Block " + blk.getSystemName() + " has no reporter!  Skipping state-type report.");
+			return;
+		    }
+		    if (blk.isReportingCurrent())
+			repVal = (String)blk.getReporter().getCurrentReport();
+		    else
+			repVal = (String)blk.getReporter().getLastReport();
+		} else {
+		    log.debug("Ignoring report. not an OCCUPIED event.");
+		    return;
 		}
-		// Set the decoder's position.
-		setDecoderPositionByAddr(blk.getLocoAddress(repVal), blk.getPhysicalLocation()); 
+	    } else if (eventName.equals("value")) {
+		if (event.getNewValue() instanceof String)
+		    repVal = event.getNewValue().toString();
+		// Else it will still be null from the declaration/assignment above.
 	    } else {
-		log.debug("Ignoring report. not an entry event.");
+		log.debug("Not a supported Block event type.  Ignoring.");
 		return;
+	    }  // Type of eventName.
+	    // Set the decoder's position.
+	    if (repVal == null) {
+		log.warn("Report from Block " + blk.getUserName() + " is null!");
 	    }
+	    if (blk.getDirection(repVal) == PhysicalLocationReporter.Direction.ENTER)
+		setDecoderPositionByAddr(blk.getLocoAddress(repVal), blk.getPhysicalLocation()); 
+	    return;
 	} else {
-	    log.debug("Reporter doesn't support physical location reporting or isn't reporting new info.");
+	    log.debug("Reporter doesn't support physical location reporting.");
 	}  // Reporting object implements PhysicalLocationReporter
 	return;
     }
