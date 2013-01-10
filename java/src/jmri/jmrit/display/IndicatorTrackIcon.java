@@ -53,7 +53,8 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     public Positionable deepClone() {
-        IndicatorTrackIcon pos = new IndicatorTrackIcon(_editor);        
+        IndicatorTrackIcon pos = new IndicatorTrackIcon(_editor);
+        _namedIcon = _iconMap.get(getStatus());
         return finishClone(pos);
     }
 
@@ -241,9 +242,9 @@ public class IndicatorTrackIcon extends PositionableIcon
 	 */
     void displayState(String status) {
     	if (log.isDebugEnabled()) log.debug(getNameString() +" displayStatus "+_status);
-        NamedIcon icon = getIcon(status);
-        if (icon!=null) {
-            super.setIcon(icon);
+        _namedIcon = getIcon(status);
+        if (_namedIcon!=null) {
+            super.setIcon(_namedIcon);
         }
         updateSize();
     }
