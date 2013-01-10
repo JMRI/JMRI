@@ -19,7 +19,6 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -414,7 +413,6 @@ class LocationTableModel extends AbstractTableModel {
 
 /** Private class for use as TableModel for Listener Locations */
 class ListenerTableModel extends AbstractTableModel {
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
     // These get internationalized at runtime in the constructor below.
     private String[] columnNames = new String[7];

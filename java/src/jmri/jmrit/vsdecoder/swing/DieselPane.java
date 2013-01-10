@@ -78,15 +78,15 @@ public class DieselPane extends EnginePane {
 	
 	//Set up the throttle spinner
 	throttle_spinner = new JSpinner(new SpinnerNumberModel(THROTTLE_INIT, THROTTLE_MIN, THROTTLE_MAX, 1));
-	throttle_spinner.setToolTipText(Bundle.getString("ToolTipDP_ThrottleSpinner"));
+	throttle_spinner.setToolTipText(Bundle.getMessage("ToolTipDP_ThrottleSpinner"));
 	throttle_spinner.setEnabled(false);
 
 	this.add(throttle_spinner);
 
 	// Setup the start button
 	start_button = new JToggleButton();
-	start_button.setText(Bundle.getString("ButtonEngineStart"));
-	start_button.setToolTipText(Bundle.getString("ToolTipDP_StartButton"));
+	start_button.setText(Bundle.getMessage("ButtonEngineStart"));
+	start_button.setToolTipText(Bundle.getMessage("ToolTipDP_StartButton"));
 	start_button.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {
 		    startButtonChange(e);
