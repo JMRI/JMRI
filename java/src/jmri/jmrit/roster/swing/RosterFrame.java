@@ -34,6 +34,8 @@ import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
+import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.TransferHandler;
@@ -750,14 +752,62 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     void handleQuit(WindowEvent e) {
         if (e != null && openWindowInstances == 1) {
-            if (JOptionPane.showConfirmDialog(null, rb.getString("MessageLongCloseWarning"), rb.getString("MessageShortCloseWarning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            final String rememberWindowClose = this.getClass().getName() + ".closeDP3prompt";
+            if(!p.getSimplePreferenceState(rememberWindowClose)){
+                final JDialog dialog = new JDialog();
+                dialog.setTitle(rb.getString("MessageShortCloseWarning"));
+                dialog.setLocationRelativeTo(e.getWindow());
+                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
+                JPanel container = new JPanel();
+                container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+
+                JLabel question = new JLabel(rb.getString("MessageLongCloseWarning"));
+                question.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.add(question);
+                
+                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
+                remember.setFont(remember.getFont().deriveFont(10f));
+                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+                JButton yesButton = new JButton("Yes");
+                JButton noButton = new JButton("No");
+                JPanel button = new JPanel();
+                button.setAlignmentX(Component.CENTER_ALIGNMENT);
+                button.add(yesButton);
+                button.add(noButton);
+                container.add(button);
+                
+                noButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        dialog.dispose();
+                    }
+                });
+                
+                yesButton.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        if(remember.isSelected()) {
+                           p.setSimplePreferenceState(rememberWindowClose, true);
+                           //p.setMultipleChoiceOption(getWindowFrameRef(), "closeDP3warning", 0x02);
+                        }
+                        AppsBase.handleQuit();
+                    }
+                });
+                container.add(remember);
+                container.setAlignmentX(Component.CENTER_ALIGNMENT);
+                container.setAlignmentY(Component.CENTER_ALIGNMENT);
+                dialog.getContentPane().add(container);
+                dialog.pack();
+                dialog.setModal(true);
+                dialog.setVisible(true);
+            } else {
                 AppsBase.handleQuit();
             }
         } else {
             AppsBase.handleQuit();
         }
     }
-
+    
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
         try {
             // create menu and standard items
