@@ -235,6 +235,28 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         return(this.processBuffer());
     }
 
+    @Override
+    public boolean loadBuffer(ByteBuffer b, int format, int freq) {
+	if (!_initialised) {
+	    return false;
+	}
+	
+        // Reset buffer state
+        // Use internal methods to postpone loop buffer generation
+        setStartLoopPoint(0, false);
+        setEndLoopPoint(0, false);
+        this.setState(STATE_EMPTY);
+
+	// Load the buffer data.
+	_data[0] = b;
+	_format[0] = format;
+	_freq[0] = freq;
+	_size[0] = b.limit();
+
+	return(this.processBuffer());
+
+    }
+
     private boolean processBuffer() {
         // Processing steps common to both loadBuffer(InputStream) and loadBuffer()
 
@@ -345,6 +367,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) log.debug("Cleanup JoalAudioBuffer (" + this.getSystemName() + ")");
         this.dispose();
     }
+
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JoalAudioBuffer.class.getName());
 

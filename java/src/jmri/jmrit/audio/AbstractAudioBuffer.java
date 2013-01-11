@@ -5,6 +5,7 @@ package jmri.jmrit.audio;
 import jmri.implementation.AbstractAudio;
 import jmri.util.FileUtil;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 
 /**
  * Base implementation of the AudioBuffer class.
@@ -127,7 +128,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
         if (log.isDebugEnabled())
             log.debug("Set inputstream of Buffer " + this.getSystemName() + " to stream");
     }
-    
+
     @Override
     public int getFrameSize() {
         switch (this.getFormat()) {
@@ -177,6 +178,11 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
     @Override
     public void setStartLoopPoint(long startLoopPoint) {
         this.setStartLoopPoint(startLoopPoint, true);
+    }
+
+    // Can be made abstract later.
+    public boolean loadBuffer(ByteBuffer b, int format, int frequency) {
+	return(false);
     }
 
     /**
