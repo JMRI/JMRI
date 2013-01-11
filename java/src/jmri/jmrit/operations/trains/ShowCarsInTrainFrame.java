@@ -221,17 +221,12 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 		super.dispose();
 	}
 
-	public void propertyChange(java.beans.PropertyChangeEvent e){
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		//if (Control.showProperty && log.isDebugEnabled()) 
 		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue()); // NOI18N
-		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)){
-			// Move property change to end of list so car updates happen before this window determines train length, etc.
-			_train.removePropertyChangeListener(this);
-			_train.addPropertyChangeListener(this);
-			update();
-		}
-		if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY) 
+				|| e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY))
 			update();
 	}
 
