@@ -36,21 +36,69 @@
 <ul>
   <li><strong>New Throttle...</strong></li>
   <blockquote>
-    <p>Opens another copy of the throttle.</p>
+    <p>Opens new copy of the throttle</p>
   </blockquote>
-  <li><strong>Load Throttle</strong>
+  <li><strong>Open Throttle</strong>
     <blockquote>
-      <p>Opens the Open dialog to allow you to select the desired Throttle XML file</p>
+      <p><img src="images/ThrottleOpen.png" width="508" height="360" alt="open throttle"></p>
+      <p>Select a saved throttle XML: file.</p>
     </blockquote>
   </li>
-  <li><strong>Save Current Throttle</strong></li>
-<blockquote>
-    <p>Save the displayed throttle to its designated file name</p>
-  </blockquote>
+  <li><strong>Save Current Throttle</strong>
+    <blockquote>
+      <p>Save a throttle file that has been opened and modified</p>
+</blockquote>
+  </li>
   <li><strong>Save Current Throttle As...</strong></li>
+<blockquote>
+    <p><img src="images/ThrottleSaveCurrenAs.png" width="508" height="360" alt="save current"></p>
+  </blockquote>
+</ul>
+<ul>
   <blockquote>
     <p>Opens the Save dialog to allow you to save the Throttle XML file in the location you select and using the name you specify</p>
   </blockquote>
+</ul>
+<blockquote>
+  <hr>
+</blockquote>
+<ul>
+  <li>Open Throttles Layout...
+    <blockquote>
+      <p>Opens Throttle layout that you select.</p>
+    </blockquote>
+  </li>
+
+  <li>Save Throttles Layout...
+    <blockquote>
+      <p>Save Throttles Layout to file in Throttle Folder</p>
+    </blockquote>
+  </li>
+</ul>
+<blockquote>
+  <hr>
+</blockquote>
+<ul>
+  <li>Load Default Throttles Layout
+    <blockquote>
+      <p>Load the default throttle layout from Throttle Folder</p>
+    </blockquote>
+  </li>
+
+  <li>Save As Default Throttles Layout
+    <blockquote>
+      <p>Save as the default throttle layout from Throttle Folder</p>
+    </blockquote>
+  </li>
+</ul>
+<blockquote>
+  <hr>
+</blockquote>
+<ul><li><a name="Wi"></a>Start <a href="WiThrottle.shtml">WiThrottle</a>
+<blockquote>
+      <p><img src="images/ThrottleWi.png" width="331" height="271" alt="Wi throttle"></p>
+    </blockquote>
+  </li>
 </ul>
 <h3><strong>Edit</strong>
 </h3>
@@ -64,6 +112,7 @@
   <blockquote>
     <p><img src="images/Main_Throttle_menu_UpdateRoster.png" width="361" height="121" alt="Update Roster"></p>
   </blockquote>
+  <li><strong><a href="Start_Preferences.shtml#Throttle">Throttle Prefereces</a></strong></li>
 </ul>
 <h3><strong>View
     </strong></h3>
@@ -92,7 +141,7 @@
     <p>We have no need for the  speed control pane and only need three function buttons for this  &ldquo;Throttle&rdquo;.&nbsp; <br>
       With  a whole passenger train equipped like this, lots of screen space can be  conserved by using the throttle set-up files to optimize the <strong>Throttle</strong> windows.  Then you could turn off the lights in the kitchen and lower the lights in the  dining area so the passengers can enjoy the sunset as they transit the Rockies  enjoying the beautiful sunset sipping Cognac&hellip;. but I digress.&nbsp; You get the idea.</p>
   </blockquote>
-  <li><strong>Reset All Function Buttons</strong></li>
+  <li><strong>Reset  Function Buttons</strong></li>
   <blockquote>
     <p>Resets all the Function buttons to the default settings, 
       <input type="button" name="button14" id="button14" value="F1">
@@ -100,16 +149,26 @@
       <input type="button" name="button15" id="button15" value="F2">
     , etc.</p>
   </blockquote>
-  <li><strong>Get all throttle components in bounds</strong><br>
+  <li><strong>Get all current throttle components in bounds</strong><br>
     <img src="images/separator.png" width="340" height="4" alt="separator">
     <blockquote>
       <p>Returns all the throttle panels to the throttle frame.</p>
     </blockquote>
   </li>
   <li><strong>Switch Throttle frame view mode</strong><br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Toggles the Throttle frames on/off</li>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Toggles the Throttle frames on/off
+  <blockquote>
+    <p>Frames on.</p>
+    <p><img src="images/Throttle_FrameMode.png" width="318" height="313" alt="frames"></p>
+    <p>Frames off</p>
+    <p><img src="images/Throttle_FrameModeOff.png" width="318" height="313" alt="frame off"></p>
+  </blockquote>
+  </li>
+</ul>
+<p>&nbsp;</p>
+<ul>
   <li><strong>Show/Hide Throttles list window<br>
-&nbsp;&nbsp;&nbsp;&nbsp; </strong> Toggles the<a href="dp3_Main_Throttle_List.shtml"><strong> Local JMRI throttles</strong></a> list window on or off<br>
+    &nbsp;&nbsp;&nbsp;&nbsp; </strong> Toggles the<a href="dp3_Main_Throttle_List.shtml"><strong> Local JMRI throttles</strong></a> list window on or off<br>
   </li>
 </ul>
 <h3><strong>Power</strong> (<em>track power control, if supported by your system)</em> </h3>

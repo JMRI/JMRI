@@ -25,7 +25,7 @@
 <h1>Settings Menu - Roster Groups</h1>
 
 <div align=right>
-  <p><a href="dp3_menubar.html">Back to Menubar</a><a href="#"></a></p>
+  <p><a href="dp3_menubar.shtml">Back to Menubar</a><a href="#"></a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
@@ -171,37 +171,9 @@ if you do not want to complete the action</p>
               Deletes the selected roster group as active </p></td>
         </tr>
       </table>
-      <p>You may also delete roster groups by selecting group in the Roster Group panel then pressing the - button.</p>
+      <p>You may also delete roster groups by selecting group in the Roster Group panel then pressing the - button.    </p>
     </blockquote>
-  <h3><a name="active"></a><strong>Set Active Roster Group</strong> </h3>
-  </blockquote>
-  <blockquote>
-    <ul>
-      <blockquote>
-        <p>Opens the <strong>Active Roster group</strong> dialog. &nbsp;Once the associations have been made, then you  can select the Active Roster Group.</p>
-      </blockquote>
-    </ul>
-    <blockquote>
-      <ul>
-        <table width="96%" border="0" align="center" cellpadding="2" cellspacing="1">
-          <tr>
-            <td width="34%" align="left" valign="top"><img src="images/dp3_settings_rosterGroup_setActive.png" width="359" height="149" alt="active"></td>
-            <td width="66%" align="left" valign="top"><p>The Global Roster Group all rosters entries is the current active group.  You may select one of the Roster Groups to be active
-              <select name="select" id="select">
-                <option>Santa Fe</option>
-              </select>
-            </p>
-              <p>
-                <input type="submit" name="button3" id="button3" value="Cancel">
-                if you do not want to set an active roster Group</p>
-              <p>
-                <input type="submit" name="button3" id="button4" value="OK">
-                Sets the selected roster group as active</p></td>
-          </tr>
-        </table>
-      </ul>
-      <p>A group may also be set Active by selection in the Roster  Group pane.</p>
-</blockquote>
+    <blockquote>&nbsp;</blockquote>
   </blockquote>
 </ul>
 <h3> <a name="table"></a>Roster Group Table Association</h3>
@@ -226,7 +198,7 @@ if you do not want to complete the action</p>
 </p>
 <p>To diassociate a roster entry to a Roster Group, open Roster Group Table and uncheck roster selection and save new Group by closing the Roster Group Table.</p>
 <div align=right>
-  <p><a href="dp3_menubar.html">Back to Menubar</a></p>
+  <p><a href="dp3_menubar.shtml">Back to Menubar</a></p>
   <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 

@@ -178,22 +178,35 @@
       <ul>
         <li><strong>Programming Track</strong><br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selects the <strong><a href="Programmer_ServiceMode.shtml">Service Mode </a></strong>(Programming Track )</li>
+      </ul>
+      <blockquote>
+        <p><img src="images/Program_Select01.png" width="243" height="224" alt="program track"></p>
+      </blockquote>
+      <ul>
         <li><strong>Programming on Main</strong><br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selects the <a href="Programmer_OpsMode.shtml"><strong>Operations Mode</strong></a> (Program on Main) </li>
+      </ul>
+      <blockquote>
+        <p><img src="images/Program_Select02.png" width="238" height="243" alt="main"></p>
+      </blockquote>
+      <ul>
         <li><strong>Edit Only</strong><br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selects Edit Mode that allows you to edit locomotive roster without changing the program</li>
       </ul>
     </li>
-    <li><a href="dp3_settings_rosterGroups.html#create"><strong>Create Roster Group</strong></a></li>
-    <li><a href="dp3_settings_rosterGroups.html#Rename"><strong>Rename Roster Group</strong></a></li>
-    <li><strong><a href="dp3_settings_rosterGroups.html#Duplicate">Duplicate Roster Group</a></strong></li>
-    <li><strong><a href="dp3_settings_rosterGroups.html#delete">Delete Roster Group</a></strong></li>
+    <blockquote>
+      <p><img src="images/Program_Select03.png" width="244" height="231" alt="edit"></p>
+    </blockquote>
+    <li><a href="dp3_settings_rosterGroups.shtml#create"><strong>Create Roster Group</strong></a></li>
+    <li><a href="dp3_settings_rosterGroups.shtml#Rename"><strong>Rename Roster Group</strong></a></li>
+    <li><strong><a href="dp3_settings_rosterGroups.shtml#Duplicate">Duplicate Roster Group</a></strong></li>
+    <li><strong><a href="dp3_settings_rosterGroups.shtml#delete">Delete Roster Group</a></strong></li>
   </ul>
   <blockquote>
     <p><img src="images/separator.png" width="340" height="4" alt="s"> </p>
   </blockquote>
   <ul>
-    <li><strong><a href="dp3_settings_rosterGroups.html#table">Roster Group Table Association</a><a href="dp3_settings_rosterGroups.html#table"></a></strong></li>
+    <li><strong><a href="dp3_settings_rosterGroups.shtml#table">Roster Group Table Association</a><a href="dp3_settings_rosterGroups.html#table"></a></strong></li>
   </ul>
 </ul>
 <ul>
@@ -234,7 +247,7 @@
       <br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="images/Main_04_PwrCntr.png" width="207" height="114" alt="power"></li>
     <li><strong><a href="dp3_Main_Speedometer.shtml">Speedometer</a></strong></li>
-    <li><a href="Programmer_SingleCV.shtml"><strong>Single CV Programmer</strong></a><br>
+    <li><a name="Single"></a><a href="Programmer_SingleCV.shtml"><strong>Single CV Programmer</strong></a><br>
       <br>
       <img src="images/separator.png" width="340" height="4" alt="s"></li>
     <li>Start WiThrottle Server<br>
@@ -311,7 +324,7 @@
   <ul>
     <li>About DecoderPro3<br>
       <br>
-    <img src="images/dp3_About.png" width="242" height="317" alt="DP3 about">    </li>
+    <img src="images/dp3_About.png" width="255" height="333" alt="about"></li>
   </ul>
 </ul>
 <div align=right><a href="dp3_Main_Main.shtml">Main Window</a> </div>

@@ -34,40 +34,48 @@
 <hr>
 <h3>&nbsp;</h3>
 <p>
-Decoder Pro3&reg; will work with the following DCC systems:
+Decoder Pro3&reg; will work with the following DCC systems (Select in <a href="Start_Preferences.shtml"><strong>Preferences</strong></a>):
 <ul>
 <li>Atlas</li>
+<li>Bachrus</li>
 <li>C/MRI</li>
 <li>CTI Electronics Acela</li>
 <li>CVP Products Easy DCC</li>
 <li>DCC Specialties</li>
+<li>DCC4PC</li>
 <li>Digitrax (Loconet)
   <ul>
     <li>Digitrax PR3 interface</li>
     <li>RR-CirKits LocoBuffer-USB</li>
     <li>LocoBuffer-II (LocoBuffer)</li>
     <li>MS100 interface</li>
-  </ul>
+    </ul>
 </li>
+<li>Easy DCC</li>
 <li>ESU</li>
 <li>Fleischmann</li>
 <li>Hornby</li>
+<li>JMRI (Network)</li>
 <li>Lenz</li>
 <li>Lionel TMCC</li>
 <li>Maple Systems</li>
+<li>Marklin</li>
 <li>MERG CBUS</li>
-<li>NAC Services</li>
 <li>NCE</li>
+<li>NAC Services</li>
 <li>Oak Tree Systems</li>
+<li>Open LCB</li>
+<li>Powerline</li>
 <li>Pro Trak Grapevine</li>
 <li>QSI Solutions</li>
-<li>PI Engineering RailDriver</li>
+<li>RFID</li>
 <li>Roco</li>
-<li>SPROG II</li>
+<li>SPROG DCC</li>
 <li>SRCP</li>
+<li>Tarns</li>
+<li>Track Tronics</li>
 <li>Uhlenbrock</li>
 <li>Wangrow</li>
-<li>X10</li>
 <li>Zimo</li>
 <li>ZTC Controls</li>
 </ul>

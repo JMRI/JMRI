@@ -20,9 +20,9 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1>DecoderPro3&reg; Version 3.0</h1>
+<h1>DecoderPro3&reg; Version 3.2</h1>
 
-<h3>Revised 8/4/2012</h3>
+<h3>Revised in work 1/10/2013</h3>
 
 <p>&nbsp;
 </p>
@@ -32,13 +32,10 @@ DecoderPro3
 &reg; can  run on any computer system that will run Java 1.6.0 or later, whether it is  Macintosh, Windows, or Linux based. It does require that Java be installed on  the computer. You can get Java as a free (but very large...) download at:
 <p><a href="http://java.sun.com/getjava/" target="_blank">http://java.sun.com/getjava/</a>
 <p>Note: All screen shots in this manual are from a Windows machine using the   "Metal" User Interface option   . While your screens will probably differ  in some layout details, they will be essentially the same. All   programming examples shown are with Digitrax PR3(MS100 mode) connected   to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive   samples will be Digitrax, except for sound examples.
-<p>Note: This entire manual has been updated to   correspond to JMRI&reg; 3.0 DecoderPro3&reg; only, and the SHTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
+<p>Note: This entire manual has been updated to   correspond to JMRI&reg; 3.2 DecoderPro3&reg; only, and the SHTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
 <p>
   <a name="index"></a>
-<div align="right">
-<h2>Download Print version of Manual (pdf format)
-</h2>
-<p><strong>manual version 3.0</strong></div>
+<div align="right"></div>
 
 <h1>Table of Contents</h1>
 <h4><a name="Installing"></a>Installing JMRI</h4>

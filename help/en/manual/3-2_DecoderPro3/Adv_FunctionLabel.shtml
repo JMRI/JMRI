@@ -30,12 +30,12 @@
 
 <hr>
 <p>This pane is opened from the <strong>Labels &amp; Media</strong> button the DecoderPro3 main window or from the <strong>Actions</strong> menu.</p>
-<p><img src="images/Adv_03_FunctionLabels.png" width="800" height="693" alt="Function Label pane"></p>
-<p>This  pane is more than a scratch pad to keep track of what happens when function  buttons are pushed.&nbsp; It also interacts  with the <a href="Main_Throttle.shtml">JMRI throttle</a>. 
+<p><img src="images/Adv_03_FunctionLabels.png" width="900" height="682" alt="function labels"></p>
+<p>This  pane is more than a scratch pad to keep track of what happens when function  buttons are pushed.&nbsp; It also interacts  with the <a href="Throttle.shtml">JMRI throttle</a>. 
 <p wrap="">The <strong>Function Label</strong>s Tab makes settings for the Software Throttles within JMRI.  Primarily the on-screen throttles, but some of the settings are mirrored on smart-phones (iPhone/Android) using the WiThrottle interface.</p>
 <p>When you  use the roster pull-down on the JMRI throttle to select a loco from your  roster, the function buttons will be marked with the descriptions you have  entered for those functions in this pane. </p>
 <p>In this example, the Function keys on the Throttle will be labeled for the FP-45 with Tsunami OEM Sound decoder with sounds and lighting functions.</p>
-<p><img src="images/Adv_03_FunctionOnThrottle.png" width="531" height="523" alt="throttle functiosn">
+<p><img src="images/Adv_03_FunctionOnThrottle.png" width="531" height="523" alt="throttle functions">
 <p>Using the checkboxes,	space holders and the radio button to the right of each function may be set to:
 <table width="80%" border="1" cellspacing="1" cellpadding="2">
   <tr>
@@ -58,7 +58,7 @@
   </tr>
 </table>
 <p>You may drag and drop icons into the off or on space holder here or in the Throttle Function pane properties.
-<p>You  may also edit the function button text in the <strong><a href="dp3_Main_Throttle.shtml">JMRI Throttle</a></strong> and save those changes to the selected Roster entry. To use these changed entries in the future, make  sure you click on the
+<p>You  may also edit the function button text in the <strong><a href="Throttle.shtml">JMRI Throttle</a></strong> and save those changes to the selected Roster entry. To use these changed entries in the future, make  sure you click on the
   <input type="submit" name="button" id="button" value="Save to Roster"> 
   to save these values into the Roster entry that is in use.
 <hr>
