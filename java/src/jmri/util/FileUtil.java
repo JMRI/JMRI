@@ -11,18 +11,25 @@ import org.apache.log4j.Logger;
  * Common utility methods for working with Files. <P> We needed a place to
  * refactor common File-processing idioms in JMRI code, so this class was
  * created. It's more of a library of procedures than a real class, as (so far)
- * all of the operations have needed no state information. <P> In particular,
- * this is intended to provide Java 2 functionality on a Java 1.1.8 system, or
- * at least try to fake it.
+ * all of the operations have needed no state information.
  *
  * @author Bob Jacobsen Copyright 2003, 2005, 2006
- * @author Randall Wood Copyright 2012
+ * @author Randall Wood Copyright 2012, 2013
  * @version $Revision$
  */
 public class FileUtil {
 
+    /**
+     * Portable reference to items in the JMRI program directory
+     */
     static public final String PROGRAM = "program:";
+    /**
+     * Portable reference to items in the JMRI user's preferences directory
+     */
     static public final String PREFERENCES = "preference:";
+    /**
+     * Portable reference to the user's home directory
+     */
     static public final String HOME = "home:";
     @Deprecated
     static public final String RESOURCE = "resource:";
@@ -32,10 +39,15 @@ public class FileUtil {
      * The portable file path component separator
      */
     static public final char SEPARATOR = '/';
-
+    /*
+     * JMRI program path, defaults to directory JMRI is executed from
+     */
     static private String programPath = null;
+    /*
+     * User's home directory
+     */
     static private String homePath = System.getProperty("user.home") + File.separator;
-    
+
     /**
      * Find the resource file corresponding to a name. There are five cases:
      * <UL> <LI> Starts with "resource:", treat the rest as a pathname relative
@@ -227,31 +239,71 @@ public class FileUtil {
         }
     }
 
+    /**
+     * Get the user's home directory.
+     * 
+     * @return User's home directory as a String
+     */
     static public String getHomePath() {
         return homePath;
     }
 
+    /**
+     * Get the JMRI preferences directory.
+     * 
+     * @return JMRI preferences directory as a String
+     */
     static public String getPreferencesPath() {
         return XmlFile.userFileLocationDefault();
     }
 
+    /**
+     * Get the JMRI program directory.
+     * 
+     * @return JMRI program directory as a String.
+     */
     static public String getProgramPath() {
         if (programPath == null) {
-            try {
-                programPath = (new File(".")).getCanonicalPath() + File.separator;
-            } catch (IOException ex) {
-                log.error("Unable to get JMRI program directory.", ex);
-            }
+            FileUtil.setProgramPath(".");
         }
         return programPath;
     }
 
+    /**
+     * Set the JMRI program directory.
+     * 
+     * Convenience method that calls {@link FileUtil#setProgramPath(java.io.File) 
+     * with the passed in path.
+     * 
+     * @param path
+     */
+    static public void setProgramPath(String path) {
+        FileUtil.setProgramPath(new File(path));
+    }
+
+    /**
+     * Set the JMRI program directory.
+     * 
+     * If set, allows JMRI to be loaded from locations other than the
+     * directory containing JMRI resources. This must be set very early in the 
+     * process of loading JMRI (prior to loading any Manager classes) to be
+     * meaningfully used.
+     * 
+     * @param path 
+     */
+    static public void setProgramPath(File path) {
+        try {
+            programPath = (path).getCanonicalPath() + File.separator;
+        } catch (IOException ex) {
+            log.error("Unable to get JMRI program directory.", ex);
+        }
+    }
+    
     static public void logFilePaths() {
         log.info("File path " + FileUtil.PROGRAM + " is " + FileUtil.getProgramPath());
         log.info("File path " + FileUtil.PREFERENCES + " is " + FileUtil.getPreferencesPath());
         log.info("File path " + FileUtil.HOME + " is " + FileUtil.getHomePath());
     }
-
     // initialize logging
     static private Logger log = Logger.getLogger(FileUtil.class.getName());
 }
