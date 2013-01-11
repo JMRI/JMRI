@@ -39,7 +39,7 @@ a decoder?</h1>
 <p>DecoderPro3 by its self may program DCC decoders and also use the other JMRI tools to manually operte your trains from the computer interface. These include throttle control and power control of your layout if your DCC system allows them..</p>
 <p>The DecoderPro3 window is divided into five main section from top to bottom.</p>
 <div align="center"><img src="images/start_dp_main01.png" width="999" height="388" alt="start screen"></div>
-<p>1. <strong><a href="dp3_menubar.html">The Menu Bar</a></strong>.<br>
+<p>1. <strong><a href="dp3_menubar.shtml">The Menu Bar</a></strong>.<br>
 2. <strong><a href="dp3_toobar.shtml">The Tool Bar</a></strong><br>
 3. <a href="dp3_rosterTable.shtml"><strong>The Roster Table</strong></a> a list of all the decoders in your roster that are part of the active roster group. To set-up a roster group in addition to the default group of <strong>All Entries</strong> see <strong><a href="dp3_settings_rosterGroups.html">Settings for Roster groups.</a></strong>.<br>
 4.<strong><a href="dp3_decoderInfo.shtml"> The Decoder Information Area</a></strong>.  Show information about any selected locomotive in the roster list.<br>
