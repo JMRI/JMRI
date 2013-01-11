@@ -3,6 +3,10 @@ package jmri.jmrit.operations.locations;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jdom.Attribute;
+import org.jdom.Element;
+
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -44,6 +48,10 @@ public class Track {
 	protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
 	protected int _moves = 0; // count of the drops since creation
 	protected String _comment = "";
+	
+	protected String _commentPickup = "";
+	protected String _commentSetout = "";
+	protected String _commentBoth = "";
 
 	protected String _loadOption = ALLLOADS; // track load restrictions
 
@@ -501,11 +509,45 @@ public class Track {
 	public void setComment(String comment) {
 		String old = _comment;
 		_comment = comment;
-		setDirtyAndFirePropertyChange("trackComment", old, comment); // NOI18N
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange("trackComment", old, comment); // NOI18N
 	}
 
 	public String getComment() {
 		return _comment;
+	}
+	
+	public void setCommentPickup(String comment) {
+		String old = _commentPickup;
+		_commentPickup = comment;
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange("trackCommentPickup", old, comment); // NOI18N
+	}
+
+	public String getCommentPickup() {
+		return _commentPickup;
+	}
+	
+	public void setCommentSetout(String comment) {
+		String old = _commentSetout;
+		_commentSetout = comment;
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange("trackCommentSetout", old, comment); // NOI18N
+	}
+
+	public String getCommentSetout() {
+		return _commentSetout;
+	}
+	
+	public void setCommentBoth(String comment) {
+		String old = _commentBoth;
+		_commentBoth = comment;
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
+	}
+
+	public String getCommentBoth() {
+		return _commentBoth;
 	}
 
 	List<String> _typeList = new ArrayList<String>();
@@ -1450,10 +1492,10 @@ public class Track {
 	 */
 	private boolean debugFlag = false;
 
-	public Track(org.jdom.Element e, Location location) {
+	public Track(Element e, Location location) {
 		// if (log.isDebugEnabled()) log.debug("ctor from element "+e);
 		_location = location;
-		org.jdom.Attribute a;
+		Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
@@ -1541,6 +1583,21 @@ public class Track {
 		}
 		if ((a = e.getAttribute(Xml.IGNORE_USED_PERCENTAGE)) != null)
 			_ignoreUsedLengthPercentage = Integer.parseInt(a.getValue());
+		
+		if (e.getChild(Xml.COMMENTS) != null) {
+			if (e.getChild(Xml.COMMENTS).getChild(Xml.BOTH) != null &&
+					( a = e.getChild(Xml.COMMENTS).getChild(Xml.BOTH).getAttribute(Xml.COMMENT)) != null) {
+				_commentBoth = a.getValue();
+			}
+			if (e.getChild(Xml.COMMENTS).getChild(Xml.PICKUP) != null &&
+					( a = e.getChild(Xml.COMMENTS).getChild(Xml.PICKUP).getAttribute(Xml.COMMENT)) != null) {
+				_commentPickup = a.getValue();
+			}
+			if (e.getChild(Xml.COMMENTS).getChild(Xml.SETOUT) != null &&
+					( a = e.getChild(Xml.COMMENTS).getChild(Xml.SETOUT).getAttribute(Xml.COMMENT)) != null) {
+				_commentSetout = a.getValue();
+			}
+		}
 	}
 
 	/**
@@ -1549,8 +1606,8 @@ public class Track {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public org.jdom.Element store() {
-		org.jdom.Element e = new org.jdom.Element(Xml.TRACK);
+	public Element store() {
+		Element e = new Element(Xml.TRACK);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.NAME, getName());
 		e.setAttribute(Xml.LOC_TYPE, getLocType());
@@ -1625,6 +1682,20 @@ public class Track {
 		if (getIgnoreUsedLengthPercentage() > 0)
 			e.setAttribute(Xml.IGNORE_USED_PERCENTAGE,
 					Integer.toString(getIgnoreUsedLengthPercentage()));
+		
+		if (!getCommentBoth().equals("") || !getCommentPickup().equals("") || !getCommentSetout().equals("")) {
+			Element comments = new Element(Xml.COMMENTS);
+			Element both = new Element(Xml.BOTH);
+			Element pickup = new Element(Xml.PICKUP);
+			Element setout = new Element(Xml.SETOUT);
+			comments.addContent(both);
+			comments.addContent(pickup);
+			comments.addContent(setout);
+			both.setAttribute(Xml.COMMENT, getCommentBoth());
+			pickup.setAttribute(Xml.COMMENT, getCommentPickup());
+			setout.setAttribute(Xml.COMMENT, getCommentSetout());
+			e.addContent(comments);
+		}
 
 		return e;
 	}

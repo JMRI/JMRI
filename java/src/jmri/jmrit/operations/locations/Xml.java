@@ -56,7 +56,6 @@ public class Xml {
 	static final String HITS = "hits"; // NOI18N
 
 	// Track.java
-	
 	static final String LOC_TYPE = "locType"; // NOI18N
 	static final String LENGTH = "length"; // NOI18N
 	static final String MOVES = "moves"; // NOI18N
@@ -68,6 +67,10 @@ public class Xml {
 	static final String DROP_OPTION = "dropOption"; // NOI18N
 	static final String PICKUP_IDS = "pickupIds"; // NOI18N
 	static final String PICKUP_OPTION = "pickupOption"; // NOI18N
+	static final String COMMENTS = "comments"; // NOI18N
+	static final String BOTH = "both"; // NOI18N
+	static final String PICKUP = "pickup"; // NOI18N
+	static final String SETOUT = "setout"; // NOI18N	
 
 	static final String SCHEDULE_ID = "scheduleId"; // NOI18N
 	static final String ITEM_ID = "itemId"; // NOI18N

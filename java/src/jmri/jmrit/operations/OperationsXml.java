@@ -55,7 +55,7 @@ public class OperationsXml extends XmlFile {
 						log.error("Directory wasn't created");
 				}
 				if (file.createNewFile())
-					log.debug("File created");
+					log.debug("File created "+fullPathName);
 			} else {
 				file = new File(fullPathName);
 			}

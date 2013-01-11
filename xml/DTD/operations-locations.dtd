@@ -20,7 +20,11 @@
 
 <!ELEMENT locations (location)*>
 <!ELEMENT location (track)*>
-<!ELEMENT track EMPTY>
+<!ELEMENT track (comments)*>
+<!ELEMENT comments (both | pickup | setout)*>
+<!ELEMENT both EMPTY>
+<!ELEMENT pickup EMPTY>
+<!ELEMENT setout EMPTY>
 
 <!ELEMENT schedules (schedule)*>
 <!ELEMENT schedule (item)*>
@@ -75,6 +79,10 @@
 <!ATTLIST track comment			CDATA #IMPLIED>
 <!ATTLIST track blockOptions	CDATA #IMPLIED>
 <!ATTLIST track ignoreUsedPercentage	CDATA #IMPLIED>
+
+<!ATTLIST both comment			CDATA #IMPLIED>
+<!ATTLIST pickup comment		CDATA #IMPLIED>
+<!ATTLIST setout comment		CDATA #IMPLIED>
 
 <!ATTLIST schedule id			CDATA #REQUIRED>      
 <!ATTLIST schedule name			CDATA #IMPLIED>
