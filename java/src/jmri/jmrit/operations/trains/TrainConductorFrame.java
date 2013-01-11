@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Conductor Frame.  Shows work at one location at a time.
  * 
- * @author Dan Boudreau Copyright (C) 2011
+ * @author Dan Boudreau Copyright (C) 2011, 2013
  * @version $Revision: 18630 $
  */
 
@@ -79,7 +79,8 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	// combo boxes
 	
 	// panels
-	JPanel pLocos = new JPanel();
+	JPanel pPickupLocos = new JPanel();
+	JPanel pSetoutLocos = new JPanel();
 	JPanel pPickups = new JPanel();
 	JPanel pSetouts = new JPanel();
 	JPanel pMoves = new JPanel();
@@ -103,10 +104,15 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 	    
-       	locoPane = new JScrollPane(pLocos);
+	    JPanel p = new JPanel();
+	    p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+	    p.add(pPickupLocos);
+	    p.add(pSetoutLocos);
+   
+       	locoPane = new JScrollPane(p);
        	locoPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Engines")));
        	locoPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-	    
+       	
        	pickupPane = new JScrollPane(pPickups);
        	pickupPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Pickup")));
        	pickupPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -122,7 +128,8 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
       	movePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 	    //      Set up the panels
-      	pLocos.setLayout(new BoxLayout(pLocos,BoxLayout.Y_AXIS));
+      	pPickupLocos.setLayout(new BoxLayout(pPickupLocos,BoxLayout.Y_AXIS));
+      	pSetoutLocos.setLayout(new BoxLayout(pSetoutLocos,BoxLayout.Y_AXIS));
        	pPickups.setLayout(new BoxLayout(pPickups,BoxLayout.Y_AXIS));
        	pSetouts.setLayout(new BoxLayout(pSetouts,BoxLayout.Y_AXIS));
        	pMoves.setLayout(new BoxLayout(pMoves,BoxLayout.Y_AXIS));
@@ -364,7 +371,8 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		log.debug("update, setMode "+setMode);
 		removePropertyChangeListerners();
 		if (_train != null && _train.getRoute() != null){
-			pLocos.removeAll();
+			pPickupLocos.removeAll();
+			pSetoutLocos.removeAll();
 			pPickups.removeAll();
 			pSetouts.removeAll();
 			pMoves.removeAll();
@@ -392,7 +400,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 						engine.addPropertyChangeListener(this);
 						JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
 						setCheckBoxFont(checkBox);
-						pLocos.add(checkBox);
+						pPickupLocos.add(checkBox);
 					}
 					if (engine.getRouteDestination() == rl && engine.getTrackName().equals("")){
 						locoPane.setVisible(true);
@@ -400,7 +408,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 						engine.addPropertyChangeListener(this);
 						JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
 						setCheckBoxFont(checkBox);
-						pLocos.add(checkBox);
+						pSetoutLocos.add(checkBox);
 					}
 				}
 				// now update the car pick ups and set outs
@@ -488,12 +496,14 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				moveButton.setEnabled(false);
 				setButton.setEnabled(false);
 			}
-			pLocos.repaint();
+			pPickupLocos.repaint();
+			pSetoutLocos.repaint();
 			pPickups.repaint();
 			pSetouts.repaint();
 			pMoves.repaint();
 			
-			pLocos.validate();
+			pPickupLocos.validate();
+			pSetoutLocos.validate();
 			pPickups.validate();
 			pSetouts.validate();
 			pMoves.validate();
