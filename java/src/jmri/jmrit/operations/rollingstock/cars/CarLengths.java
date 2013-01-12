@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Element;
+
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -146,6 +148,31 @@ public class CarLengths implements java.beans.PropertyChangeListener {
 		} else {
 			return maxNameLength;
 		}
+	}
+	
+	/**
+	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
+	 * operations-cars.dtd.
+	 * 
+	 * @return Contents in a JDOM Element
+	 */
+	public Element store() {
+		Element values = new Element(Xml.CAR_LENGTHS);
+		String[]lengths = getNames();
+		for (int i=0; i<lengths.length; i++){
+			String lengthNames = lengths[i]+"%%"; // NOI18N
+			values.addContent(lengthNames);
+		}
+		return values;
+	}
+	
+	public void load(Element root) {
+        if (root.getChild(Xml.CAR_LENGTHS)!= null){
+        	String names = root.getChildText(Xml.CAR_LENGTHS);
+        	String[] lengths = names.split("%%"); // NOI18N
+        	if (log.isDebugEnabled()) log.debug("car lengths: "+names);
+        	setNames(lengths);
+        }
 	}
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

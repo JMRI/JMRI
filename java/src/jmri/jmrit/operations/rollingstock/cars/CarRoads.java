@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Element;
+
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -127,6 +129,31 @@ public class CarRoads {
 		} else {
 			return maxNameLength;
 		}
+	}
+	
+	/**
+	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
+	 * operations-cars.dtd.
+	 * 
+	 * @return Contents in a JDOM Element
+	 */
+	public Element store() {
+        Element values = new Element(Xml.ROAD_NAMES);
+        String[]roads = getNames();
+        for (int i=0; i<roads.length; i++){
+        	String roadNames = roads[i]+"%%"; // NOI18N
+        	values.addContent(roadNames);
+        }
+        return values;
+	}
+	
+	public void load(Element root) {
+        if (root.getChild(Xml.ROAD_NAMES)!= null){
+        	String names = root.getChildText(Xml.ROAD_NAMES);
+        	String[] roads = names.split("%%"); // NOI18N
+        	if (log.isDebugEnabled()) log.debug("road names: "+names);
+        	setNames(roads);
+        }
 	}
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

@@ -362,10 +362,13 @@ public class CarManager extends RollingStockManager{
    	_carsTableColumnWidths = tableColumnWidths;
    }
    	
-	public void options (Element values) {
-		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
+	public void options (Element root) {
+		if (root.getChild(Xml.OPTIONS) != null)
+			return;
+		Element options = root.getChild(Xml.OPTIONS);
+		if (log.isDebugEnabled()) log.debug("ctor from element "+options);
 		// get Cars Table Frame attributes
-		Element e = values.getChild(Xml.CARS_OPTIONS);
+		Element e = options.getChild(Xml.CARS_OPTIONS);
 		if (e != null){
 			org.jdom.Attribute a;
 			// backwards compatible TODO remove in 2013 after production release

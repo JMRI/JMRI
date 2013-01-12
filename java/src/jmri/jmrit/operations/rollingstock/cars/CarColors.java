@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Element;
+
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -125,6 +127,31 @@ public class CarColors {
 			return length;
 		} else {
 			return maxNameLength;
+		}
+	}
+	
+	/**
+	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
+	 * operations-cars.dtd.
+	 * 
+	 * @return Contents in a JDOM Element
+	 */
+	public Element store() {
+        Element values = new Element(Xml.CAR_COLORS);
+        String[]colors = getNames();
+        for (int i=0; i<colors.length; i++){
+        	String colorNames = colors[i]+"%%"; // NOI18N
+        	values.addContent(colorNames);
+        }
+        return values;
+	}
+	
+	public void load(Element root) {
+		if (root.getChild(Xml.CAR_COLORS)!= null){
+			String names = root.getChildText(Xml.CAR_COLORS);
+			String[] colors = names.split("%%"); // NOI18N
+			if (log.isDebugEnabled()) log.debug("car colors: "+names);
+			setNames(colors);
 		}
 	}
 

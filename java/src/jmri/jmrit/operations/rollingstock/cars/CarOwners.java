@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Element;
+
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -118,6 +120,31 @@ public class CarOwners {
     		return maxNameLength;
     	}
     }
+    
+	/**
+	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
+	 * operations-cars.dtd.
+	 * 
+	 * @return Contents in a JDOM Element
+	 */
+	public Element store() {
+        Element values = new Element(Xml.CAR_OWNERS);
+        String[]owners = getNames();
+        for (int i=0; i<owners.length; i++){
+        	String ownerNames = owners[i]+"%%"; // NOI18N
+        	values.addContent(ownerNames);
+        }
+        return values;
+	}
+	
+	public void load(Element root) {
+        if (root.getChild(Xml.CAR_OWNERS)!= null){
+        	String names = root.getChildText(Xml.CAR_OWNERS);
+        	String[] owners = names.split("%%"); // NOI18N
+        	if (log.isDebugEnabled()) log.debug("car owners: "+names);
+        	setNames(owners);
+        }
+	}
         
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
