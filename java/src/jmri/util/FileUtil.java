@@ -2,7 +2,10 @@
 package jmri.util;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.regex.Matcher;
 import jmri.jmrit.XmlFile;
 import org.apache.log4j.Logger;
@@ -241,7 +244,7 @@ public class FileUtil {
 
     /**
      * Get the user's home directory.
-     * 
+     *
      * @return User's home directory as a String
      */
     static public String getHomePath() {
@@ -250,7 +253,7 @@ public class FileUtil {
 
     /**
      * Get the JMRI preferences directory.
-     * 
+     *
      * @return JMRI preferences directory as a String
      */
     static public String getPreferencesPath() {
@@ -259,7 +262,7 @@ public class FileUtil {
 
     /**
      * Get the JMRI program directory.
-     * 
+     *
      * @return JMRI program directory as a String.
      */
     static public String getProgramPath() {
@@ -271,10 +274,10 @@ public class FileUtil {
 
     /**
      * Set the JMRI program directory.
-     * 
-     * Convenience method that calls {@link FileUtil#setProgramPath(java.io.File) 
+     *
+     * Convenience method that calls {@link FileUtil#setProgramPath(java.io.File)
      * with the passed in path.
-     * 
+     *
      * @param path
      */
     static public void setProgramPath(String path) {
@@ -283,13 +286,13 @@ public class FileUtil {
 
     /**
      * Set the JMRI program directory.
-     * 
-     * If set, allows JMRI to be loaded from locations other than the
-     * directory containing JMRI resources. This must be set very early in the 
-     * process of loading JMRI (prior to loading any Manager classes) to be
-     * meaningfully used.
-     * 
-     * @param path 
+     *
+     * If set, allows JMRI to be loaded from locations other than the directory
+     * containing JMRI resources. This must be set very early in the process of
+     * loading JMRI (prior to loading any other JMRI code) to be meaningfully
+     * used.
+     *
+     * @param path
      */
     static public void setProgramPath(File path) {
         try {
@@ -297,6 +300,46 @@ public class FileUtil {
         } catch (IOException ex) {
             log.error("Unable to get JMRI program directory.", ex);
         }
+    }
+
+    /**
+     * Search for a file or JAR resource by name and return the
+     * {@link java.io.InputStream} for that file.
+     * <p>
+     * Search order is:<ol>
+     * <li>As a {@link java.io.File} in the user preferences directory</li>
+     * <li>As a file in the current working directory (usually, but not always the JMRI distribution directory)</li>
+     * <li>As a file in the JMRI distribution directory</li>
+     * <li>As a resource in jmri.jar</li>
+     * </ol>
+     *
+     * @param path The relative path of the file or resource.
+     * @return InputStream or null.
+     */
+    static public InputStream findFileAsInputStream(String path) {
+        // attempt to return path from preferences directory
+        File file = new File(FileUtil.getPreferencesPath() + path);
+        try {
+            return new FileInputStream(file);
+        } catch (FileNotFoundException ex) {
+            // ignore error
+        }
+        // attempt to return path from current working directory
+        file = new File(path);
+        try {
+            return new FileInputStream(file);
+        } catch (FileNotFoundException ex) {
+            // ignore error
+        }
+        // attempt to return path from JMRI distribution directory
+        file = new File(FileUtil.getProgramPath() + path);
+        try {
+            return new FileInputStream(file);
+        } catch (FileNotFoundException ex) {
+            // ignore error
+        }
+        // return path if in jmri.jar or null
+        return FileUtil.class.getClassLoader().getResourceAsStream(path);
     }
     
     static public void logFilePaths() {
