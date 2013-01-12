@@ -120,7 +120,7 @@ public class OperationsXml extends XmlFile {
 	 * @param comment standard string
 	 * @return string converted to xml format.
 	 */
-    public String convertToXmlComment(String comment){
+    public static String convertToXmlComment(String comment){
     	StringBuffer buf = new StringBuffer();
         for (int k = 0; k < comment.length(); k++) {
             if (comment.startsWith("\n", k)) {	// NOI18N
@@ -142,7 +142,7 @@ public class OperationsXml extends XmlFile {
 	 * @param comment input xml comment string
 	 * @return output string converted to standard format
 	 */
-    public String convertFromXmlComment(String comment){
+    public static String convertFromXmlComment(String comment){
     	StringBuffer buf = new StringBuffer();
     	for (int k = 0; k < comment.length(); k++) {
     		if (comment.startsWith("<?p?>", k)) {	// NOI18N

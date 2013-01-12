@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -361,28 +362,59 @@ public class CarManager extends RollingStockManager{
    public void setCarsFrameTableColumnWidths(int[] tableColumnWidths){
    	_carsTableColumnWidths = tableColumnWidths;
    }
-   	
-	public void options (Element root) {
-		if (root.getChild(Xml.OPTIONS) != null)
-			return;
-		Element options = root.getChild(Xml.OPTIONS);
-		if (log.isDebugEnabled()) log.debug("ctor from element "+options);
-		// get Cars Table Frame attributes
-		Element e = options.getChild(Xml.CARS_OPTIONS);
-		if (e != null){
-			org.jdom.Attribute a;
-			// backwards compatible TODO remove in 2013 after production release
-	  		if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null){
-             	String[] widths = a.getValue().split(" ");
-             	for (int i=0; i<widths.length; i++){
-             		try{
-             			_carsTableColumnWidths[i] = Integer.parseInt(widths[i]);
-             		} catch (NumberFormatException ee){
-             			log.error("Number format exception when reading trains column widths");
-             		}
-             	}
-    		}
+   
+	public void load(Element root) {
+		if (root.getChild(Xml.KERNELS) != null) {
+			String names = root.getChildText(Xml.KERNELS);
+			if (!names.equals("")) {
+				String[] kernelNames = names.split("%%"); // NOI18N
+				if (log.isDebugEnabled())
+					log.debug("kernels: " + names);
+				for (int i = 0; i < kernelNames.length; i++) {
+					newKernel(kernelNames[i]);
+				}
+			}
 		}
+
+		if (root.getChild(Xml.OPTIONS) != null) {
+			Element options = root.getChild(Xml.OPTIONS);
+			if (log.isDebugEnabled())
+				log.debug("ctor from element " + options);
+			// get Cars Table Frame attributes
+			Element e = options.getChild(Xml.CARS_OPTIONS);
+			if (e != null) {
+				org.jdom.Attribute a;
+				// backwards compatible TODO remove in 2013 after production release
+				if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
+					String[] widths = a.getValue().split(" ");
+					for (int i = 0; i < widths.length; i++) {
+						try {
+							_carsTableColumnWidths[i] = Integer.parseInt(widths[i]);
+						} catch (NumberFormatException ee) {
+							log.error("Number format exception when reading trains column widths");
+						}
+					}
+				}
+			}
+		}
+		
+        if (root.getChild(Xml.CARS) != null) {
+        	@SuppressWarnings("unchecked")
+            List<Element> l = root.getChild(Xml.CARS).getChildren(Xml.CAR);
+            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" cars");
+            for (int i=0; i<l.size(); i++) {
+                register(new Car(l.get(i)));
+            }
+
+            //Scan the object to check the Comment and Decoder Comment fields for
+            //any <?p?> processor directives and change them to back \n characters
+            List<String> carList = getList();
+            for (int i = 0; i < carList.size(); i++) {
+                //Get a RosterEntry object for this index
+	        	Car c = getById(carList.get(i));
+	        	c.setComment(OperationsXml.convertFromXmlComment(c.getComment()));
+            }
+        }
 	}
 
 	   /**
@@ -390,10 +422,31 @@ public class CarManager extends RollingStockManager{
      * detailed DTD in operations-cars.dtd.
      * @return Contents in a JDOM Element
      */
-    public Element store() {
-    	Element values = new Element(Xml.OPTIONS);
+    public void store(Element root) {
+    	root.addContent(new Element(Xml.OPTIONS));
     	// nothing to save!
-        return values;
+        Element values;
+        root.addContent(values = new Element(Xml.KERNELS));
+        List<String> kernels = getKernelNameList();
+        for (int i=0; i<kernels.size(); i++){
+        	String kernelNames = kernels.get(i)+"%%"; // NOI18N
+        	values.addContent(kernelNames);
+        }
+        
+        root.addContent(values = new Element(Xml.CARS));
+        // add entries
+        List<String> carList = getList();
+        for (int i=0; i<carList.size(); i++) {
+        	Car c = getById(carList.get(i));
+        	c.setComment(OperationsXml.convertToXmlComment(c.getComment()));
+            values.addContent(c.store());
+        }
+        
+        //restore the RosterEntry object to its normal \n state.
+        for (int i=0; i<carList.size(); i++){
+        	Car c = getById(carList.get(i));
+        	c.setComment(OperationsXml.convertFromXmlComment(c.getComment()));
+        }
     }
     
     protected void firePropertyChange(String p, Object old, Object n){
