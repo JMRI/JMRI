@@ -897,9 +897,9 @@
             description="create working jar file with current contents"
             depends="debug, rmic, manifest-file">
         <jar jarfile="${jartarget}/jmri.jar"
-            basedir="${target}"
-            manifest="${javadir}/manifest"
-            compress="true"/>  <!-- compress="true" is default -->
+             basedir="${target}"
+             manifest="${javadir}/manifest"
+             compress="true"/>  <!-- compress="true" is default -->
         <!-- Starting with JMRI 1.9, building the JAR index crashes.  -->
         <!-- This appears to be due to a problem with compression in  -->
         <!-- one of the referenced jar files, but we don't know which -->
@@ -908,6 +908,18 @@
         <!-- </exec>                                    -->
     </target>
 
+    <target name="jar-resources"
+            description="package all resources as a jar file"
+            depends="debug, rmic, manifest-file">
+        <jar jarfile="${jartarget}/jmri.jar"
+             basedir="${target}"
+             manifest="${javadir}/manifest"
+             compress="true">
+            <fileset dir="."
+                     includes="xml/,resources/,help/,web/,jython/"
+                     excludes="help/en/manual/**" />
+        </jar>
+    </target>
 
     <target name="javadoc" depends="init, jjdoc, compile-generated-source" description="create JavaDocs">
         <javadoc packagenames="jmri.*, apps.*"
