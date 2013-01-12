@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.setup.Control;
@@ -137,18 +138,44 @@ public class CarRoads {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public Element store() {
-        Element values = new Element(Xml.ROAD_NAMES);
-        String[]roads = getNames();
-        for (int i=0; i<roads.length; i++){
-        	String roadNames = roads[i]+"%%"; // NOI18N
-        	values.addContent(roadNames);
+	public void store(Element root) {      
+		String[]names = getNames();
+		if (Control.backwardCompatible) {
+			Element values = new Element(Xml.ROAD_NAMES);
+			for (int i=0; i<names.length; i++){
+				String roadNames = names[i]+"%%"; // NOI18N
+				values.addContent(roadNames);
+			}
+			root.addContent(values);
+		}
+        // new format using elements
+        Element roads = new Element(Xml.ROADS);
+        for (int i=0; i<names.length; i++){
+        	Element road = new Element(Xml.ROAD);
+        	road.setAttribute(new Attribute(Xml.NAME, names[i]));
+        	roads.addContent(road);
         }
-        return values;
+        root.addContent(roads);
 	}
 	
 	public void load(Element root) {
-        if (root.getChild(Xml.ROAD_NAMES)!= null){
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.ROADS)!= null){
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.ROADS).getChildren(Xml.ROAD);
+			if (log.isDebugEnabled()) log.debug("Car roads sees "+l.size()+" roads");
+			Attribute a;
+			String[] roads = new String[l.size()];
+			for (int i=0; i<l.size(); i++) {
+				Element road = l.get(i);
+				if ((a = road.getAttribute(Xml.NAME)) != null) {
+					roads[i] = a.getValue();
+				}
+			}
+			setNames(roads);
+		}
+		// old format
+		else if (root.getChild(Xml.ROAD_NAMES)!= null){
         	String names = root.getChildText(Xml.ROAD_NAMES);
         	String[] roads = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("road names: "+names);

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.setup.Control;
@@ -136,18 +137,44 @@ public class CarColors {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public Element store() {
-        Element values = new Element(Xml.CAR_COLORS);
-        String[]colors = getNames();
-        for (int i=0; i<colors.length; i++){
-        	String colorNames = colors[i]+"%%"; // NOI18N
-        	values.addContent(colorNames);
+	public void store(Element root) {	
+		String[]names = getNames();
+		if (Control.backwardCompatible) {
+			Element values = new Element(Xml.CAR_COLORS);
+			for (int i=0; i<names.length; i++){
+				String colorNames = names[i]+"%%"; // NOI18N
+				values.addContent(colorNames);
+			}
+			root.addContent(values);
+		}
+        // new format using elements
+        Element colors = new Element(Xml.COLORS);
+        for (int i=0; i<names.length; i++){
+        	Element color = new Element(Xml.COLOR);
+        	color.setAttribute(new Attribute(Xml.NAME, names[i]));
+        	colors.addContent(color);
         }
-        return values;
+        root.addContent(colors);
 	}
 	
 	public void load(Element root) {
-		if (root.getChild(Xml.CAR_COLORS)!= null){
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.COLORS)!= null){
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.COLORS).getChildren(Xml.COLOR);
+			if (log.isDebugEnabled()) log.debug("CarColors sees "+l.size()+" colors");
+			Attribute a;
+			String[] colors = new String[l.size()];
+			for (int i=0; i<l.size(); i++) {
+				Element color = l.get(i);
+				if ((a = color.getAttribute(Xml.NAME)) != null) {
+					colors[i] = a.getValue();
+				}
+			}
+			setNames(colors);
+		}
+		// old format
+		else if (root.getChild(Xml.CAR_COLORS)!= null){
 			String names = root.getChildText(Xml.CAR_COLORS);
 			String[] colors = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled()) log.debug("car colors: "+names);

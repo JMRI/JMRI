@@ -62,11 +62,11 @@ public class CarManagerXml extends OperationsXml {
 	        doc.addContent(0,p);
 	        
 	        // note all comments line feeds have been changed to processor directives
-	        root.addContent(CarRoads.instance().store());        
-	        root.addContent(CarTypes.instance().store());
-	        root.addContent(CarColors.instance().store());
-	        root.addContent(CarLengths.instance().store());
-	        root.addContent(CarOwners.instance().store());
+	        CarRoads.instance().store(root);        
+	        CarTypes.instance().store(root);
+	        CarColors.instance().store(root);
+	        CarLengths.instance().store(root);
+	        CarOwners.instance().store(root);
 	        root.addContent(CarLoads.instance().store());
 	        CarManager.instance().store(root);
 

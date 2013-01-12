@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.setup.Control;
@@ -156,18 +157,44 @@ public class CarLengths implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public Element store() {
-		Element values = new Element(Xml.CAR_LENGTHS);
-		String[]lengths = getNames();
-		for (int i=0; i<lengths.length; i++){
-			String lengthNames = lengths[i]+"%%"; // NOI18N
-			values.addContent(lengthNames);
+	public void store(Element root) {		
+		String[]names = getNames();
+		if (Control.backwardCompatible) {
+			Element values = new Element(Xml.CAR_LENGTHS);
+			for (int i=0; i<names.length; i++){
+				String lengthNames = names[i]+"%%"; // NOI18N
+				values.addContent(lengthNames);
+			}
+			root.addContent(values);
 		}
-		return values;
+		// new format using elements
+		Element lengths = new Element(Xml.LENGTHS);
+		for (int i=0; i<names.length; i++){
+			Element length = new Element(Xml.LENGTH);
+			length.setAttribute(new Attribute(Xml.VALUE, names[i]));
+			lengths.addContent(length);
+		}
+		root.addContent(lengths);
 	}
 	
 	public void load(Element root) {
-        if (root.getChild(Xml.CAR_LENGTHS)!= null){
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.LENGTHS)!= null){
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.LENGTHS).getChildren(Xml.LENGTH);
+			if (log.isDebugEnabled()) log.debug("CarLengths sees "+l.size()+" lengths");
+			Attribute a;
+			String[] lengths = new String[l.size()];
+			for (int i=0; i<l.size(); i++) {
+				Element length = l.get(i);
+				if ((a = length.getAttribute(Xml.VALUE)) != null) {
+					lengths[i] = a.getValue();
+				}
+			}
+			setNames(lengths);
+		}
+		// old format
+		else if (root.getChild(Xml.CAR_LENGTHS)!= null){
         	String names = root.getChildText(Xml.CAR_LENGTHS);
         	String[] lengths = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("car lengths: "+names);

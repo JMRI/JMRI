@@ -18,6 +18,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 
@@ -364,7 +365,21 @@ public class CarManager extends RollingStockManager{
    }
    
 	public void load(Element root) {
-		if (root.getChild(Xml.KERNELS) != null) {
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.NEW_KERNELS)!= null) {
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.NEW_KERNELS).getChildren(Xml.KERNEL);
+			if (log.isDebugEnabled()) log.debug("Car manager sees "+l.size()+" kernels");
+			Attribute a;
+			for (int i=0; i<l.size(); i++) {
+				Element kernel = l.get(i);
+				if ((a = kernel.getAttribute(Xml.NAME)) != null) {
+					newKernel(a.getValue());
+				}
+			}
+		}
+		// old format
+		else if (root.getChild(Xml.KERNELS) != null) {
 			String names = root.getChildText(Xml.KERNELS);
 			if (!names.equals("")) {
 				String[] kernelNames = names.split("%%"); // NOI18N
@@ -423,16 +438,25 @@ public class CarManager extends RollingStockManager{
      * @return Contents in a JDOM Element
      */
     public void store(Element root) {
-    	root.addContent(new Element(Xml.OPTIONS));
-    	// nothing to save!
-        Element values;
-        root.addContent(values = new Element(Xml.KERNELS));
-        List<String> kernels = getKernelNameList();
-        for (int i=0; i<kernels.size(); i++){
-        	String kernelNames = kernels.get(i)+"%%"; // NOI18N
-        	values.addContent(kernelNames);
+    	root.addContent(new Element(Xml.OPTIONS));     	// nothing to save under options
+
+    	Element values;  
+    	List<String> names = getKernelNameList();
+    	if (Control.backwardCompatible) {
+    		root.addContent(values = new Element(Xml.KERNELS));
+    		for (int i=0; i<names.size(); i++){
+    			String kernelNames = names.get(i)+"%%"; // NOI18N
+    			values.addContent(kernelNames);
+    		}
+    	}
+        // new format using elements
+        Element kernels = new Element(Xml.NEW_KERNELS);
+        for (int i=0; i<names.size(); i++){
+        	Element kernel = new Element(Xml.KERNEL);
+        	kernel.setAttribute(new Attribute(Xml.NAME, names.get(i)));
+        	kernels.addContent(kernel);
         }
-        
+        root.addContent(kernels);
         root.addContent(values = new Element(Xml.CARS));
         // add entries
         List<String> carList = getList();

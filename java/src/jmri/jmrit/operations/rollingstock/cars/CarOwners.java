@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.setup.Control;
@@ -127,18 +128,44 @@ public class CarOwners {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public Element store() {
-        Element values = new Element(Xml.CAR_OWNERS);
-        String[]owners = getNames();
-        for (int i=0; i<owners.length; i++){
-        	String ownerNames = owners[i]+"%%"; // NOI18N
-        	values.addContent(ownerNames);
+	public void store(Element root) {       
+        String[]names = getNames();
+        if (Control.backwardCompatible) {
+        	Element values = new Element(Xml.CAR_OWNERS);
+        	for (int i=0; i<names.length; i++){
+        		String ownerNames = names[i]+"%%"; // NOI18N
+        		values.addContent(ownerNames);
+        	}
+        	root.addContent(values);
         }
-        return values;
+        // new format using elements
+        Element owners = new Element(Xml.OWNERS);
+        for (int i=0; i<names.length; i++){
+        	Element owner = new Element(Xml.OWNER);
+        	owner.setAttribute(new Attribute(Xml.NAME, names[i]));
+        	owners.addContent(owner);
+        }
+        root.addContent(owners);
 	}
 	
 	public void load(Element root) {
-        if (root.getChild(Xml.CAR_OWNERS)!= null){
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.OWNERS)!= null){
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.OWNERS).getChildren(Xml.OWNER);
+			if (log.isDebugEnabled()) log.debug("Car owners sees "+l.size()+" owners");
+			Attribute a;
+			String[] owners = new String[l.size()];
+			for (int i=0; i<l.size(); i++) {
+				Element owner = l.get(i);
+				if ((a = owner.getAttribute(Xml.NAME)) != null) {
+					owners[i] = a.getValue();
+				}
+			}
+			setNames(owners);
+		}
+		// old format
+		else if (root.getChild(Xml.CAR_OWNERS)!= null){
         	String names = root.getChildText(Xml.CAR_OWNERS);
         	String[] owners = names.split("%%"); // NOI18N
         	if (log.isDebugEnabled()) log.debug("car owners: "+names);
