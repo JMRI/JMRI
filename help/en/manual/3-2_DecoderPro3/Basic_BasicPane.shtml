@@ -82,11 +82,12 @@ to  write the new values in the decoder. </p>
 </p>
 <p> Now that we have entered the Roster data and set thedesired address, lets return to DecoderPro3 Main window by closing the Programming window.</p>
 <p>Notice that we now have a list of all the locomotives programmed so far that are in our roster.</p>
-<p><img src="images/Main_01b_main.png" width="999" height="388" alt="main page"></p>
+<p><img src="images/Main_01b_main.png" width="899" height="358" alt="main"></p>
 <p><a name="DoMore"></a>What we&rsquo;ve done so far is what is available  in the Basic mode of programming in DecoderPro3. Which is basicallly put Locomotive in the roster and assign an address.&nbsp; A good place to start for new folks or at a  club.&nbsp; It&rsquo;s hard to go wrong, but you can  change the loco address and add it the roster, which are the two most often  needed actions with programming. <br>
   <br>
   The classic DecoderPro offered a number of  modes, most of which were often redundant and confusing showing how the user  could edit the underlying file to make special application programming modes. The  Comprehensive Programmer was the most popular for a long time until Advanced  came along with added features.&nbsp; So now they&rsquo;ve  been combined in DecoderPro3. Thus the Comprehensive Programmer  with added Advanced features is the only other programmer that DecoderPro3 offers. <br>
   Since we&rsquo;ve already covered <strong>Basic</strong>,  let's explore the DecoderPro3 <a href="Comp_Setup_Roster.shtml">Comprehensive  Programmer</a>! </p>
+<p>Select locomotive that you want to program in Comprehensive Programmer, then double click on selection to open Programmer.</p>
 <p>At the bottom of the window is the  <a href="RosterMedia.shtml">Labels &amp; Media</a> and<a href="dp3_Main_Throttle.shtml">Throttle</a> buttons. Use these buttons to set up the Icon photos for  your roster entries and to set-up the Function Labels on the software throttle included in JMRI.&nbsp; Click the links that we&rsquo;ve included  and take a look.</p>
 <p>&nbsp;</p>
 <div align="right">

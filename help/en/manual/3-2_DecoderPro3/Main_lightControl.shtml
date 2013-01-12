@@ -25,7 +25,7 @@
 
 <div align=right>
 <p><a href="Main_Tool.shtml#Light">Back </a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a><a href="index.shtml#Main"></a></p>
 </div>
 
 <hr>
@@ -58,7 +58,7 @@
 
 <div align=right>
 <p><a href="Main_Tool.shtml#Light">Back </a></p>
-<p><a href="index.shtml#Main">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a><a href="index.shtml#Main"></a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

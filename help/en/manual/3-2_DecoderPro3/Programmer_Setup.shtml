@@ -90,7 +90,7 @@ a decoder?</h1>
 <img src="images/dp3_createnewloco.png" width="556" height="594" alt="create new loco"></p>
 <p>As in the screen below several possible decoders will probably be highlighted. This happens because the decoders are electrically the same but are packaged differently to fit the locomotives that they are used in. If you know which decoder is in use, then select that one. If not, in most cases any of the highlighted decoders will work, and you should select the one with the least letters at the end, since  letters are often used to denote locomotive specific variations.</p>
 <p>I know that this decoder is Athern FP-45 facctory installed decoder  in nscale. So I will select that decoder.</p>
-<p><img src="images/dp3_createnewloco_type.png" width="556" height="594" alt="decoder type"></p>
+<p><img src="images/dp3_createnewloco_type.png" width="556" height="594" alt="new loco"></p>
 <p>Note that we have selected a decoder, which is highlighted. Also the<strong> Open Programmer</strong> button is activated to allow us to enter the programmer and the Pr<strong>ogrammer format</strong> may be set to  <strong>Basic </strong>or<strong> Comprehensive </strong>using drop down list.. As a beginner you may select <strong>Basic,</strong> or if experienced select <strong>Comprehensive.</strong></p>
 <p><img src="images/dp3_createnewloco_decoder.png" width="556" height="594" alt="decoder"></p>
 <p>Click on the <strong>Open Programmer</strong> button and the<strong> Roster Entry</strong> Pane will open for the Selected Programmer. Go to the next page</p>

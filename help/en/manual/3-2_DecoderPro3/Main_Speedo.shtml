@@ -23,25 +23,22 @@ DecoderPro&reg; Main Window
 <div id="mainContent">
 
 <h1>DecoderPro&reg; Main Window</h1>
-<h1>Powerline Menu</h1>
+<h1>Bachrus Speedo</h1>
 
 <div align=right>
-<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a></p>
 </div>
-
-<hr>
-<p><strong>Communications Monitor</strong></p>
-<p>Opens the <a href="Main_Monitor_Window.shtml">Communications Monitor Window</a> 
-and automatically displays the information that is being sent and  received on the 
-communications link between your computer and your DCC  system.</p>
-<p><strong>Send Command</strong></p>
-<p>Opens the <strong>Send power line device command</strong> prompt to allow you to 
-type in a <strong>Command </strong>and 
-<input type="button" name="button" id="button" value="Send">
-it to the powerline device. </p>
-<p><img src="images/Main_PowerControl_01.png" alt="Send Command" width="325" height="143"></p>
+<h4>Speedo Console</h4>
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p><img src="images/BackrusSpeedo.png" width="414" height="314" alt="speedo"></p>
+      <p>Setup Speedo using the controls on the console.</p>
+    </blockquote>
+  </blockquote>
+</blockquote>
 <div align=right>
-<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
+  <p><a href="dp3_menubar.shtml">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

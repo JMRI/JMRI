@@ -25,7 +25,7 @@
 <h1>Print/Preview Roster Entry</h1>
 
 <div align=right>
-<p><a href="dp3_menubar.html">Back </a> </div>
+<p><a href="dp3_menubar.shtml">Back </a> </div>
 
 <hr>
 <p><br>
@@ -42,7 +42,7 @@ The <strong>Select Items to Print</strong> is opened from the DecoderPro3 Main W
 <p><img src="images/dp3_printPreview.png" width="665" height="744" alt="preview"></p>
 <hr>
 <div align=right>
-<p><a href="dp3_menubar.html">Back</a> </div>
+<p><a href="dp3_menubar.shtml">Back</a> </div>
 
 <!--#include virtual="/Footer" -->
 </body>
