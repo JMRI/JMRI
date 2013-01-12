@@ -3099,7 +3099,9 @@ public class Train implements java.beans.PropertyChangeListener {
 			e.setAttribute(Xml.DEPARTURE_TRACK, getDepartureTrack().getId());
 		if (getTerminationTrack() != null)
 			e.setAttribute(Xml.TERMINATION_TRACK, getTerminationTrack().getId());
-		e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption()); // misspelled should have been option not operation
+		if (Control.backwardCompatible)
+			e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption()); // misspelled should have been option not operation
+		e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
 		e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
 		e.setAttribute(Xml.CAR_OWNER_OPTION, getOwnerOption());
 		e.setAttribute(Xml.BUILT_START_YEAR, getBuiltStartYear());

@@ -17,6 +17,9 @@ public class Xml {
 	static final String COMMENT = "comment"; // NOI18N
 	static final String SCHEDULE = "schedule"; // NOI18N
 	static final String TRACK = "track"; // NOI18N
+	static final String TYPES = "types"; // NOI18N
+	static final String LOCO_TYPE = "locoType"; // NOI18N
+	static final String CAR_TYPE = "carType"; // NOI18N
 	
 	static final String TRUE = "true"; // NOI18N
 	static final String FALSE = "false"; // NOI18N
@@ -60,12 +63,17 @@ public class Xml {
 	static final String LENGTH = "length"; // NOI18N
 	static final String MOVES = "moves"; // NOI18N
 	static final String CAR_ROAD_OPERATION = "carRoadOperation"; // NOI18N misspelled should have been carRoadOption
+	static final String CAR_ROAD_OPTION = "carRoadOption"; // NOI18N
 	static final String CAR_ROADS = "carRoads"; // NOI18N
+	static final String CAR_ROAD = "carRoad"; // NOI18N
 	static final String CAR_LOAD_OPTION = "carLoadOption"; // NOI18N
 	static final String CAR_LOADS = "carLoads"; // NOI18N
+	static final String CAR_LOAD = "carLoad"; // NOI18N
 	static final String DROP_IDS = "dropIds"; // NOI18N
+	static final String DROP_ID = "dropId"; // NOI18N
 	static final String DROP_OPTION = "dropOption"; // NOI18N
 	static final String PICKUP_IDS = "pickupIds"; // NOI18N
+	static final String PICKUP_ID = "pickupId"; // NOI18N
 	static final String PICKUP_OPTION = "pickupOption"; // NOI18N
 	static final String COMMENTS = "comments"; // NOI18N
 	static final String BOTH = "both"; // NOI18N
