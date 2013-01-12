@@ -3,22 +3,21 @@
 package jmri.jmrit;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.io.IOException;
-
 import java.net.URL;
-
 import java.util.Calendar;
 import java.util.List;
 import jmri.util.FileUtil;
 import jmri.util.SystemType;
 import org.jdom.Comment;
-import org.jdom.Document;
 import org.jdom.DocType;
+import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
@@ -61,24 +60,29 @@ public abstract class XmlFile {
     public static final String xsltLocation = "/xml/XSLT/";
     
     /**
-     * Read the contents of an XML file from its filename.  
-     * The name is expanded by the {@link #findFile}
-     * routine.
+     * Read the contents of an XML file from its filename. The name is expanded
+     * by the {@link #findFile} routine. If the file is not found, attempts to
+     * read the XML file from a JAR resource.
+     *
      * @param name Filename, as needed by {@link #findFile}
      * @throws org.jdom.JDOMException
      * @throws java.io.FileNotFoundException
      * @return null if not found, else root element of located file
      */
-    public Element rootFromName(String name) throws org.jdom.JDOMException, java.io.IOException {
-
+    public Element rootFromName(String name) throws JDOMException, IOException {
         File fp = findFile(name);
-        if (fp != null) {
-            if (log.isDebugEnabled()) log.debug("readFile: "+name+" from "+fp.getAbsolutePath());
+        if (fp != null && fp.exists() && fp.canRead()) {
+            if (log.isDebugEnabled()) {
+                log.debug("readFile: " + name + " from " + fp.getAbsolutePath());
+            }
             return rootFromFile(fp);
         }
-        else {
-            log.warn("Did not find file "+name+" in "+prefsDir()+" or "+xmlDir());
-            return null;
+        URL resource = this.getClass().getClassLoader().getResource(name);
+        if (resource != null) {
+            return this.rootFromURL(resource);
+        } else {
+            log.warn("Did not find file or resource " + name);
+            throw new FileNotFoundException("Did not find file or resource " + name);
         }
     }
 
@@ -105,17 +109,20 @@ public abstract class XmlFile {
         }
     }
 
-    /* should probably be merged with rootFromName, separate for testing */
-    public Element rootFromPath(String path) throws JDOMException, IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("reading xml from path: " + path);
-        }
-        URL resource = this.getClass().getClassLoader().getResource(path);
-        if (resource != null) {
-            return this.rootFromURL(resource);
-        } else {
-            return this.rootFromName(path);
-        }
+    /**
+     * Read an {@link java.io.InputStream} as XML, and return the root object.
+     *
+     * Multiple methods are tried to locate the DTD needed to do this.
+     * Exceptions are only thrown when local recovery is impossible.
+     *
+     * @throws org.jdom.JDOMException only when all methods have failed
+     * @throws java.io.FileNotFoundException
+     * @param stream InputStream to be parsed.
+     * @return root element from the file. This should never be null, as an
+     *          exception should be thrown if anything goes wrong.
+     */
+    public Element rootFromInputStream(InputStream stream) throws JDOMException, IOException {
+        return getRoot(verify, stream);
     }
     
     /**
@@ -215,7 +222,9 @@ public abstract class XmlFile {
      * search rule:
      * <OL>
      * <LI>Look in user preferences directory, located by {@link #prefsDir}
-     * <LI>Look in program directory, located by {@link #xmlDir}
+     * <li>Look in current working directory (usually the JMRI distribution directory)
+     * <li>Look in program directory, located by {@link jmri.util.FileUtil#getProgramPath()}
+     * <LI>Look in XML directory, located by {@link #xmlDir}
      * <LI>Check for absolute name.
      * </OL>
      * @param name Filename perhaps containing
@@ -228,6 +237,10 @@ public abstract class XmlFile {
             return fp;
         }
         fp = new File(name);
+        if (fp.exists()) {
+            return fp;
+        }
+        fp = new File(FileUtil.getProgramPath() + name);
         if (fp.exists()) {
             return fp;
         }
