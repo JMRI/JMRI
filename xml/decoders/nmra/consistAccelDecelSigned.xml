@@ -41,24 +41,36 @@
   </revhistory>
   <variable label="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
     <decVal max="127"/>
+    <label xml:lang="it">Aggiustamento Accellerazione Consist</label>
     <label xml:lang="fr">Consist Acceleration Adjustment(fr)</label>
   </variable>
   <variable label="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
     <enumVal>
-      <enumChoice choice="Adjustment Added"/>
-      <enumChoice choice="Adjustment Subtracted"/>
+      <enumChoice choice="Adjustment Added">
+        <choice xml:lang="it">Fattore Aggiunto</choice>
+      </enumChoice>
+      <enumChoice choice="Adjustment Subtracted">
+        <choice xml:lang="it">Fattore Sottratto</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Segno Aggiustamento Accellerazione Consist</label>
     <label xml:lang="fr">Consist Acceleration Adjustment Sign(fr)</label>
   </variable>
   <variable label="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
     <decVal max="127"/>
+    <label xml:lang="it">Aggiustamento Decellerazione Consist</label>
     <label xml:lang="fr">Consist Deceleration Adjustment(fr)</label>
   </variable>
   <variable label="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
     <enumVal>
-      <enumChoice choice="Adjustment Added"/>
-      <enumChoice choice="Adjustment Subtracted"/>
+      <enumChoice choice="Adjustment Added">
+        <choice xml:lang="it">Fattore Aggiunto</choice>
+      </enumChoice>
+      <enumChoice choice="Adjustment Subtracted">
+        <choice xml:lang="it">Fattore Aggiunto</choice>
+      </enumChoice>
     </enumVal>
     <label xml:lang="fr">Consist Deceleration Adjustment Sign(fr)</label>
+    <label xml:lang="it">Segno Aggiustamento Decellerazione Consist</label>
   </variable>
 </variables>

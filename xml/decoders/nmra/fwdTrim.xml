@@ -41,7 +41,9 @@
   </revhistory>
   <variable label="Forward Trim" item="Forward Trim" CV="66" comment="Range 0-255">
     <decVal/>
+    <label xml:lang="it">Correzione Velocità Avanti</label>
     <label xml:lang="fr">Correction vitesse avant</label>
+    <comment xml:lang="it">Valore 0-255(</comment>
     <comment xml:lang="fr">Valeur 0-255(</comment>
   </variable>
 </variables>

@@ -41,7 +41,7 @@
   </revhistory>
   <variable label="Decoder Lock ID number" item="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
     <decVal/>
+    <label xml:lang="it">ID Codice Blocco Decoder</label>
     <label xml:lang="fr">Decoder Lock ID number(fr)</label>
-    <label xml:lang="it">Numero ID per Lock Decoder</label>
   </variable>
 </variables>

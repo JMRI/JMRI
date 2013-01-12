@@ -41,7 +41,9 @@
   </revhistory>
   <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
     <shortAddressVal/>
+    <comment xml:lang="it">Indirizzo Primario(</comment>
     <label xml:lang="fr">Adresse d&#xE9;codeur</label>
+    <comment xml:lang="it">Indirizzo Corto</comment>
     <comment xml:lang="fr">Adresse courte</comment>
   </variable>
 </variables>

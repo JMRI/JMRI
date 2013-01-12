@@ -5,10 +5,12 @@
 <enumVal>
   <enumChoice choice="Yes">
     <choice>Yes</choice>
+    <choice xml:lang="it">Si</choice>
     <choice xml:lang="fr">Oui</choice>
   </enumChoice>
   <enumChoice choice="No">
     <choice>No</choice>
+    <choice xml:lang="it">No</choice>
     <choice xml:lang="fr">Non</choice>
   </enumChoice>
 </enumVal>

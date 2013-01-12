@@ -4,9 +4,11 @@
 <!-- $Id$ -->
 <enumVal>
   <enumChoice choice="forward">
+    <choice xml:lang="it">avanti</choice>
     <choice>forward</choice>
   </enumChoice>
   <enumChoice choice="reverse">
+    <choice xml:lang="it">indietro</choice>
     <choice>reverse</choice>
   </enumChoice>
 </enumVal>

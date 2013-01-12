@@ -4,9 +4,11 @@
 <!-- $Id$ -->
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
+            <choice xml:lang="it">Indirizzo Loco da sola</choice>
             <choice>Locomotive Address Only</choice>
           </enumChoice>
           <enumChoice choice="Respond to Consist Address">
+            <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
             <choice>Respond to Consist Address</choice>
           </enumChoice>
         </enumVal>

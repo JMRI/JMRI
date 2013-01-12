@@ -41,72 +41,122 @@
   </revhistory>
   <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+       <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+      <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F1</label>
     <label xml:lang="fr">Adresse UM active pour F1</label>
   </variable>
   <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F2</label>
     <label xml:lang="fr">Adresse UM active pour F2</label>
   </variable>
   <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F3</label>
     <label xml:lang="fr">Adresse UM active pour F3</label>
   </variable>
   <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F4</label>
     <label xml:lang="fr">Adresse UM active pour F4</label>
   </variable>
   <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F5</label>
     <label xml:lang="fr">Adresse UM active pour F5</label>
   </variable>
   <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F6</label>
     <label xml:lang="fr">Adresse UM active pour F6</label>
   </variable>
   <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F7</label>
     <label xml:lang="fr">Adresse UM active pour F7</label>
   </variable>
   <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per F8</label>
     <label xml:lang="fr">Adresse UM active pour F8</label>
   </variable>
   <variable label="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per FL in Avanti</label>
     <label xml:lang="fr">Adresse UM active pour FL en avant</label>
   </variable>
   <variable label="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX">
     <enumVal>
-      <enumChoice choice="Locomotive Address Only"/>
-      <enumChoice choice="Respond to Consist Address"/>
+      <enumChoice choice="Locomotive Address Only">
+        <choice xml:lang="it">Indirizzo Loco da Sola</choice>
+      </enumChoice>
+      <enumChoice choice="Respond to Consist Address">
+        <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Indirizzo Consist Attivo per FL in Indietro</label>
     <label xml:lang="fr">Adresse UM active pour FL en arr</label>
   </variable>
 </variables>

@@ -41,18 +41,26 @@
   </revhistory>
   <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
     <shortAddressVal/>
+    <label xml:lang="it">Indirizzo Primario</label>
     <label xml:lang="fr">Adresse d&#xE9;codeur</label>
+    <comment xml:lang="it">Indirizzo Corto</comment>
     <comment xml:lang="fr">Adresse courte</comment>
   </variable>
   <variable label="Extended Address" CV="17" item="Long Address">
     <longAddressVal/>
+    <label xml:lang="it">Indirizzo Esteso</label>
     <label xml:lang="fr">Adresse longue</label>
   </variable>
   <variable label="Address Format" CV="29" mask="XXVXXXXX">
     <enumVal>
-      <enumChoice choice="One byte (short) address"/>
-      <enumChoice choice="Two byte (extended) address"/>
+      <enumChoice choice="One byte (short) address">
+        <choice xml:lang="it">1 byte (ind.Corto)</choice>
+      </enumChoice>
+      <enumChoice choice="Two byte (extended) address">
+        <choice xml:lang="it">2 byte (ind.Esteso)</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">Formato Indirizzo</label>
     <label xml:lang="fr">Config &#xE9;tendue</label>
   </variable>
 </variables>

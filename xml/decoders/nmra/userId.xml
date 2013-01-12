@@ -41,10 +41,12 @@
   </revhistory>
   <variable label="User Id #1" item="User Id #1" CV="105">
     <decVal/>
+    <label xml:lang="it">Id Utente #1</label>
     <label xml:lang="fr">User Id #1(fr)</label>
   </variable>
   <variable label="User Id #2" item="User Id #2" CV="106">
     <decVal/>
+    <label xml:lang="it">Id Utente #2</label>
     <label xml:lang="fr">User Id #2(fr)</label>
   </variable>
 </variables>

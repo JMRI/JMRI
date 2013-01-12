@@ -5,8 +5,10 @@
         <ienumVal>
           <ienumChoice choice="No">
             <choice>No</choice>
+            <choice xml:lang="it">No</choice>
           </ienumChoice>
           <ienumChoice choice="Yes">
             <choice>Yes</choice>
+            <choice xml:lang="it">Si</choice>
           </ienumChoice>
         </ienumVal>

@@ -41,6 +41,7 @@
   </revhistory>
   <variable label="Kick Start" item="Kick Start" CV="65">
     <decVal/>
+    <label xml:lang="it">Forza Avviamento</label>
     <label xml:lang="fr">Kick Start(fr)</label>
   </variable>
 </variables>

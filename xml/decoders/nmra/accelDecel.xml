@@ -41,10 +41,12 @@
   </revhistory>
   <variable label="Acceleration Rate" CV="3" item="Accel">
     <decVal max="31"/>
+    <label xml:lang="it">Accellerazione</label>
     <label xml:lang="fr">Accel&#xE9;ration</label>
   </variable>
   <variable label="Deceleration Rate" CV="4" item="Decel">
     <decVal max="31"/>
+    <label xml:lang="it">Decellerazione</label>
     <label xml:lang="fr">D&#xE9;c&#xE9;leration</label>
   </variable>
 </variables>
