@@ -2,11 +2,9 @@
 
 package jmri.implementation;
 
+import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
-
-import java.io.File;
-
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
@@ -37,17 +35,13 @@ public class SignalSpeedMap {
     static void loadMap() {
         _map = new SignalSpeedMap();
 
-        File file = new File("xml"+File.separator
-                                +"signals"+File.separator
-                                +"signalSpeeds.xml");
-        if (!file.exists()) {
-            log.error("signalSpeeds file doesn't exist: "+file.getPath());
-            throw new IllegalArgumentException("signalSpeeds file doesn't exist: "+file.getPath());
-        }
+        String path = "xml" + File.separator
+                + "signals" + File.separator
+                + "signalSpeeds.xml";
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
         Element root;
         try {
-            root = xf.rootFromFile(file);
+            root = xf.rootFromName(path);
             Element e = root.getChild("interpretation");
             String sval = e.getText().toUpperCase();
             if (sval.equals("PERCENTNORMAL")) {
@@ -110,9 +104,12 @@ public class SignalSpeedMap {
                 if (log.isDebugEnabled()) log.debug("Add "+name+"="+Bundle.getMessage(name)+", "+speed+" to AppearanceSpeed Table");
             }
         } catch (org.jdom.JDOMException e) {
-            log.error("error reading file \""+file.getName()+"\" due to: "+e);
+            log.error("error reading file \"" + path + "\" due to: " + e);
+        } catch (java.io.FileNotFoundException e) {
+                log.error("signalSpeeds file (" + path + ") doesn't exist in XmlFile search path.");
+                throw new IllegalArgumentException("signalSpeeds file (" + path + ") doesn't exist in XmlFile search path.");
         } catch (java.io.IOException ioe) {
-            log.error("error reading file \""+file.getName()+"\" due to: "+ioe);
+            log.error("error reading file \"" + path + "\" due to: " + ioe);
         }
     }
 
