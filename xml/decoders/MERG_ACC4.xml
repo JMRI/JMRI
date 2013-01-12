@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id$ -->
+<!-- $Id: MERG_ACC4.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="ncliffe" version="4b" lastUpdated="20090330"/>
   <!--  Version 4b (beta) by Nigel Cliffe    -->

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Mistral_GOLD_V6.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <!--      V6 includes Analog function mapping   -->
 <!--      Consist Management , sound panel      -->
 <!--      and default functions label                       -->

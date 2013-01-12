@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- $Id$ -->
+<!-- $Id: Digitrax_Basic.xml 22115 2012-12-30 02:15:20Z jacobsen $ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="phil.grainger@ca.com" version="9" lastUpdated="20050112"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="11" lastUpdated="20080412"/>
