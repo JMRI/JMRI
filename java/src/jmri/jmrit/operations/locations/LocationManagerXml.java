@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.locations;
 
 import java.io.File;
-import java.util.List;
-
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
@@ -57,27 +55,9 @@ public class LocationManagerXml extends OperationsXml {
 		m.put("href", xsltLocation + "operations-locations.xsl"); // NOI18N
 		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
 		doc.addContent(0, p);
-
-		LocationManager manager = LocationManager.instance();
-		Element values;
-		root.addContent(values = new Element("locations")); // NOI18N
-		// add entries
-		List<String> locationList = manager.getLocationsByIdList();
-		for (int i = 0; i < locationList.size(); i++) {
-			String locationId = locationList.get(i);
-			Location loc = manager.getLocationById(locationId);
-			values.addContent(loc.store());
-		}
-
-		root.addContent(values = new Element("schedules")); // NOI18N
-		// add entries
-		ScheduleManager scheduleManager = ScheduleManager.instance();
-		List<String> scheduleList = scheduleManager.getSchedulesByIdList();
-		for (int i = 0; i < scheduleList.size(); i++) {
-			String scheduleId = scheduleList.get(i);
-			Schedule sch = scheduleManager.getScheduleById(scheduleId);
-			values.addContent(sch.store());
-		}
+		
+		LocationManager.instance().store(root);
+		ScheduleManager.instance().store(root);
 
 		writeXML(file, doc);
 
@@ -88,7 +68,6 @@ public class LocationManagerXml extends OperationsXml {
 	/**
 	 * Read the contents of a roster XML file into this object. Note that this does not clear any existing entries.
 	 */
-	@SuppressWarnings("unchecked")
 	public void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
 		// suppress rootFromName(name) warning message by checking to see if file exists
 		if (findFile(name) == null) {
@@ -101,33 +80,10 @@ public class LocationManagerXml extends OperationsXml {
 			log.debug(name + " file could not be read");
 			return;
 		}
+		
+		LocationManager.instance().load(root);
+		ScheduleManager.instance().load(root);
 
-		LocationManager manager = LocationManager.instance();
-
-		// decode type, invoke proper processing routine if a decoder file
-		if (root.getChild("locations") != null) { // NOI18N
-
-			List<Element> l = root.getChild("locations").getChildren("location"); // NOI18N
-			if (log.isDebugEnabled())
-				log.debug("readFile sees " + l.size() + " locations");
-			for (int i = 0; i < l.size(); i++) {
-				manager.register(new Location(l.get(i)));
-			}
-		} else {
-			log.error("Unrecognized operations location file contents in file: " + name);
-		}
-
-		// load schedules
-		ScheduleManager scheduleManager = ScheduleManager.instance();
-		if (root.getChild("schedules") != null) { // NOI18N
-
-			List<Element> l = root.getChild("schedules").getChildren("schedule"); // NOI18N
-			if (log.isDebugEnabled())
-				log.debug("readFile sees " + l.size() + " schedules");
-			for (int i = 0; i < l.size(); i++) {
-				scheduleManager.register(new Schedule(l.get(i)));
-			}
-		}
 		setDirty(false);
 		log.debug("Locations have been loaded!");
 	}

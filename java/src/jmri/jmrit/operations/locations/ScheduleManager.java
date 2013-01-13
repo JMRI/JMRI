@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Element;
+
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -320,6 +322,30 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 			}
     	}
     	return box;
+	}
+	
+	public void load(Element root) {
+		if (root.getChild(Xml.SCHEDULES) != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
+			if (log.isDebugEnabled())
+				log.debug("readFile sees " + l.size() + " schedules");
+			for (int i = 0; i < l.size(); i++) {
+				register(new Schedule(l.get(i)));
+			}
+		}
+	}
+	
+	public void store(Element root) {
+		Element values;
+		root.addContent(values = new Element(Xml.SCHEDULES));
+		// add entries
+		List<String> scheduleList = getSchedulesByIdList();
+		for (int i = 0; i < scheduleList.size(); i++) {
+			String scheduleId = scheduleList.get(i);
+			Schedule sch = getScheduleById(scheduleId);
+			values.addContent(sch.store());
+		}
 	}
 	
 	/**

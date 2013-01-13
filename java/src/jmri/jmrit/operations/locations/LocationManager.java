@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Element;
+
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -337,6 +339,30 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 					}
 				}
 			}
+		}
+	}
+	
+	public void load(Element root) {
+		if (root.getChild("locations") != null) { // NOI18N
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild("locations").getChildren("location"); // NOI18N
+			if (log.isDebugEnabled())
+				log.debug("readFile sees " + l.size() + " locations");
+			for (int i = 0; i < l.size(); i++) {
+				register(new Location(l.get(i)));
+			}
+		} 
+	}
+	
+	public void store(Element root) {
+		Element values;
+		root.addContent(values = new Element("locations")); // NOI18N
+		// add entries
+		List<String> locationList = getLocationsByIdList();
+		for (int i = 0; i < locationList.size(); i++) {
+			String locationId = locationList.get(i);
+			Location loc = getLocationById(locationId);
+			values.addContent(loc.store());
 		}
 	}
 
