@@ -69,7 +69,7 @@ public class Control {
 	public static int max_len_string_route_name = 25;
 	
 	// Backward compatibility for xml saves (pre 2013 releases)
-	// TODO turn backward compatibility to false in 2013
+	// TODO turn backward compatibility to false in 2014
 	public static boolean backwardCompatible = true;
 	
     // must synchronize changes with operation-config.dtd
@@ -79,8 +79,11 @@ public class Control {
     	Element e = new Element(Xml.CONTROL);
     	// backward compatibility
     	e.addContent(values = new Element(Xml.BACKWARD_COMPATIBILITY));
-    	// TODO Enable saving the compatibility attribute in 2013
-    	//values.setAttribute("saveUsingPre_2013_Format", backwardCompatible?"true":"false");
+    	// TODO Enable saving the compatibility attribute in 2014
+    	//values.setAttribute(Xml.SAVE_USING_PRE_2013_FORMAT, backwardCompatible?Xml.TRUE:Xml.FALSE);
+    	// for now we'll only store false if user overrode
+    	if (!backwardCompatible)
+    		values.setAttribute(Xml.SAVE_USING_PRE_2013_FORMAT, Xml.FALSE);
     	// maximum string lengths
     	e.addContent(values = new Element(Xml.MAXIMUM_STRING_LENGTHS));
     	values.addContent(length = new Element(Xml.MAX_LEN_STRING_ATTRIBUTE));
@@ -113,7 +116,7 @@ public class Control {
         Element backwardCompatibility = control.getChild(Xml.BACKWARD_COMPATIBILITY);
         if (backwardCompatibility != null){
         	Attribute format;
-            if ((format = backwardCompatibility.getAttribute(Xml.SAVE_USING_PRE_2012_FORMAT)) != null){
+            if ((format = backwardCompatibility.getAttribute(Xml.SAVE_USING_PRE_2013_FORMAT)) != null){
             	backwardCompatible = format.getValue().equals(Xml.TRUE);
             }
         }

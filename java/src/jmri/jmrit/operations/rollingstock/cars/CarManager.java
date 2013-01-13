@@ -425,9 +425,8 @@ public class CarManager extends RollingStockManager{
             //any <?p?> processor directives and change them to back \n characters
             List<String> carList = getList();
             for (int i = 0; i < carList.size(); i++) {
-                //Get a RosterEntry object for this index
-	        	Car c = getById(carList.get(i));
-	        	c.setComment(OperationsXml.convertFromXmlComment(c.getComment()));
+	        	Car car = getById(carList.get(i));
+	        	car.setComment(OperationsXml.convertFromXmlComment(car.getComment()));
             }
         }
 	}

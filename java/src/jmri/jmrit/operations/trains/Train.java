@@ -2811,14 +2811,16 @@ public class Train implements java.beans.PropertyChangeListener {
 			setTypeNames(types);
 		}
 		// old way of reading car types up to version 2.99.6
-		// TODO remove backward compatibility
 		else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
 			String names = a.getValue();
 			String[] types = names.split("%%"); // NOI18N
 			// if (log.isDebugEnabled()) log.debug("Car types: "+names);
 			setTypeNames(types);
 		}
+		// old misspelled format
 		if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null)
+			_roadOption = a.getValue();
+		if ((a = e.getAttribute(Xml.CAR_ROAD_OPTION)) != null)
 			_roadOption = a.getValue();
 		// new way of reading car roads using elements
 		if (e.getChild(Xml.CAR_ROADS) != null) {
@@ -2834,7 +2836,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			setRoadNames(roads);
 		}
 		// old way of reading car roads up to version 2.99.6
-		// TODO remove backward compatibility
 		else if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
 			String names = a.getValue();
 			String[] roads = names.split("%%"); // NOI18N
@@ -2865,7 +2866,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			setLoadNames(loads);
 		}
 		// old way of reading car loads up to version 2.99.6
-		// TODO remove backward compatibility
 		else if ((a = e.getAttribute(Xml.CAR_LOADS)) != null) {
 			String names = a.getValue();
 			String[] loads = names.split("%%"); // NOI18N
@@ -2887,7 +2887,6 @@ public class Train implements java.beans.PropertyChangeListener {
 			setOwnerNames(owners);
 		}
 		// old way of reading car owners up to version 2.99.6
-		// TODO remove backward compatibility
 		else if ((a = e.getAttribute(Xml.CAR_OWNERS)) != null) {
 			String names = a.getValue();
 			String[] owners = names.split("%%"); // NOI18N
@@ -3059,7 +3058,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		Element eRoute = new Element(Xml.ROUTE);
 		if (getRoute() != null) {
 			// old format
-			// TODO remove backward compatible save
 			e.setAttribute(Xml.ROUTE, getRoute().getName());
 			e.setAttribute(Xml.ROUTE_ID, getRoute().getId());
 			// new format
