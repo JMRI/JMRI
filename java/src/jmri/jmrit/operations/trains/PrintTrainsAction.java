@@ -31,13 +31,7 @@ public class PrintTrainsAction extends PrintTrainAction {
 
 	public PrintTrainsAction(String actionName, Frame mframe, boolean preview, Frame frame) {
 		super(actionName, mframe, preview, frame);
-		panel = (TrainsTableFrame) frame;
 	}
-
-	/**
-	 * Variable to set whether this is to be printed or previewed
-	 */
-	TrainsTableFrame panel;
 
 	public void actionPerformed(ActionEvent e) {
 
@@ -51,6 +45,7 @@ public class PrintTrainsAction extends PrintTrainAction {
 			return;
 		}
 		
+		TrainsTableFrame panel = (TrainsTableFrame) frame;
 		List<String> trains = panel.getSortByList();
 		
 		printSummaryTrains(writer, trains);
