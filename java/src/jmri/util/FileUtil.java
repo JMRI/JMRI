@@ -6,6 +6,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.regex.Matcher;
 import jmri.jmrit.XmlFile;
 import org.apache.log4j.Logger;
@@ -136,8 +140,8 @@ public class FileUtil {
                 log.debug("load from user preferences file: " + filename);
             }
             return filename.replace(SEPARATOR, File.separatorChar);
-        } // must just be a (hopefully) valid name
-        else {
+        } else {
+            // must just be a (hopefully) valid name
             return pName.replace(SEPARATOR, File.separatorChar);
         }
     }
@@ -303,15 +307,23 @@ public class FileUtil {
     }
 
     /**
+     * Get the URL of a portable filename if it can be located using
+     * {@link #findFileAsURL(java.lang.String)}
+     *
+     * @param path
+     * @return
+     */
+    static public URL findExternalFilename(String path) {
+        return FileUtil.findFileAsURL(FileUtil.getExternalFilename(path));
+    }
+
+    /**
      * Search for a file or JAR resource by name and return the
-     * {@link java.io.InputStream} for that file.
-     * <p>
-     * Search order is:<ol>
+     * {@link java.io.InputStream} for that file. <p> Search order is:<ol>
      * <li>As a {@link java.io.File} in the user preferences directory</li>
-     * <li>As a file in the current working directory (usually, but not always the JMRI distribution directory)</li>
-     * <li>As a file in the JMRI distribution directory</li>
-     * <li>As a resource in jmri.jar</li>
-     * </ol>
+     * <li>As a File in the current working directory (usually, but not always
+     * the JMRI distribution directory)</li> <li>As a File in the JMRI
+     * distribution directory</li> <li>As a resource in jmri.jar</li> </ol>
      *
      * @param path The relative path of the file or resource.
      * @return InputStream or null.
@@ -341,7 +353,59 @@ public class FileUtil {
         // return path if in jmri.jar or null
         return FileUtil.class.getClassLoader().getResourceAsStream(path);
     }
-    
+
+    /**
+     * Search for a file or JAR resource by name and return the
+     * {@link java.net.URL} for that file. <p> Search order is:<ol> <li>As a
+     * {@link java.io.File} in the user preferences directory</li> <li>As a File
+     * in the current working directory (usually, but not always the JMRI
+     * distribution directory)</li> <li>As a File in the JMRI distribution
+     * directory</li> <li>As a resource in jmri.jar</li> </ol>
+     *
+     * @param path The relative path of the file or resource.
+     * @return The URL or null.
+     */
+    static public URL findFileAsURL(String path) {
+        try {
+            // attempt to return path from preferences directory
+            File file = new File(FileUtil.getPreferencesPath() + path);
+            if (file.exists()) {
+                return file.toURI().toURL();
+            }
+            // attempt to return path from current working directory
+            file = new File(path);
+            if (file.exists()) {
+                return file.toURI().toURL();
+            }
+            // attempt to return path from JMRI distribution directory
+            file = new File(FileUtil.getProgramPath() + path);
+            if (file.exists()) {
+                return file.toURI().toURL();
+            }
+        } catch (MalformedURLException ex) {
+            log.warn("Unable to get URL for " + path);
+            return null;
+        }
+        // return path if in jmri.jar or null
+        return FileUtil.class.getClassLoader().getResource(path);
+    }
+
+    /**
+     * Return the {@link java.net.URI} for a given URL
+     *
+     * @param url
+     * @return a URI or null if the conversion would have caused a
+     * {@link java.net.URISyntaxException}
+     */
+    static public URI getURIforURL(URL url) {
+        try {
+            return url.toURI();
+        } catch (URISyntaxException ex) {
+            log.error("Unable to get URI from URL", ex);
+            return null;
+        }
+    }
+
     static public void logFilePaths() {
         log.info("File path " + FileUtil.PROGRAM + " is " + FileUtil.getProgramPath());
         log.info("File path " + FileUtil.PREFERENCES + " is " + FileUtil.getPreferencesPath());
