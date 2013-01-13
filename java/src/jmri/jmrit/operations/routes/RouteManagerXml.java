@@ -64,17 +64,10 @@ public class RouteManagerXml extends OperationsXml {
 		List<String> routeList = manager.getRoutesByIdList();
 		for (int i=0; i<routeList.size(); i++) {
 			Route route = manager.getRouteById(routeList.get(i));
-			route.setComment(convertToXmlComment(route.getComment()));
 			values.addContent(route.store());
 		}
 		writeXML(file, doc);
 
-		//Now that the roster has been rewritten in file form we need to
-		//restore the comment fields. 
-		for (int i=0; i<routeList.size(); i++){
-			Route route = manager.getRouteById(routeList.get(i));
-			route.setComment(convertFromXmlComment(route.getComment()));
-		}
 		// done - route file now stored, so can't be dirty
 		setDirty(false);
 	}
@@ -106,14 +99,6 @@ public class RouteManagerXml extends OperationsXml {
             if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" routes");
             for (int i=0; i<l.size(); i++) {
                 manager.register(new Route(l.get(i)));
-            }
-
-			// Scan the object to check the comment fields for any <?p?>
-			// processor directives and change them to back \n characters
-            List<String> routeList = manager.getRoutesByIdList();
-            for (int i = 0; i < routeList.size(); i++) {
-	        	Route route = manager.getRouteById(routeList.get(i));
-	        	route.setComment(convertFromXmlComment(route.getComment()));
             }
         }
         else {

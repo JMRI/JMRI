@@ -66,8 +66,6 @@ public class LocationManagerXml extends OperationsXml {
 		for (int i = 0; i < locationList.size(); i++) {
 			String locationId = locationList.get(i);
 			Location loc = manager.getLocationById(locationId);
-			loc.setComment(convertToXmlComment(loc.getComment()));
-			loc.setSwitchListComment(convertToXmlComment(loc.getSwitchListComment()));
 			values.addContent(loc.store());
 		}
 
@@ -78,26 +76,11 @@ public class LocationManagerXml extends OperationsXml {
 		for (int i = 0; i < scheduleList.size(); i++) {
 			String scheduleId = scheduleList.get(i);
 			Schedule sch = scheduleManager.getScheduleById(scheduleId);
-			sch.setComment(convertToXmlComment(sch.getComment()));
 			values.addContent(sch.store());
 		}
 
 		writeXML(file, doc);
 
-		// Now that the roster has been rewritten in file form we need to
-		// restore the RosterEntry object to its normal \n state for the
-		// comment fields.
-		for (int i = 0; i < locationList.size(); i++) {
-			String locationId = locationList.get(i);
-			Location loc = manager.getLocationById(locationId);
-			loc.setComment(convertFromXmlComment(loc.getComment()));
-			loc.setSwitchListComment(convertFromXmlComment(loc.getSwitchListComment()));
-		}
-		for (int i = 0; i < scheduleList.size(); i++) {
-			String scheduleId = scheduleList.get(i);
-			Schedule sch = scheduleManager.getScheduleById(scheduleId);
-			sch.setComment(convertFromXmlComment(sch.getComment()));
-		}
 		// done - location file now stored, so can't be dirty
 		setDirty(false);
 	}
@@ -130,15 +113,6 @@ public class LocationManagerXml extends OperationsXml {
 			for (int i = 0; i < l.size(); i++) {
 				manager.register(new Location(l.get(i)));
 			}
-
-			List<String> locationList = manager.getLocationsByIdList();
-			// Scan the object to check the comments for
-			// any <?p?> processor directives and change them to back \n characters
-			for (int i = 0; i < locationList.size(); i++) {
-				Location loc = manager.getLocationById(locationList.get(i));
-				loc.setComment(convertFromXmlComment(loc.getComment()));
-				loc.setSwitchListComment(convertFromXmlComment(loc.getSwitchListComment()));
-			}
 		} else {
 			log.error("Unrecognized operations location file contents in file: " + name);
 		}
@@ -152,14 +126,6 @@ public class LocationManagerXml extends OperationsXml {
 				log.debug("readFile sees " + l.size() + " schedules");
 			for (int i = 0; i < l.size(); i++) {
 				scheduleManager.register(new Schedule(l.get(i)));
-			}
-
-			List<String> scheduleList = scheduleManager.getSchedulesByIdList();
-			// Scan the object to check the Comment and Decoder Comment fields for
-			// any <?p?> processor directives and change them to back \n characters
-			for (int i = 0; i < scheduleList.size(); i++) {
-				Schedule sch = scheduleManager.getScheduleById(scheduleList.get(i));
-				sch.setComment(convertFromXmlComment(sch.getComment()));
 			}
 		}
 		setDirty(false);

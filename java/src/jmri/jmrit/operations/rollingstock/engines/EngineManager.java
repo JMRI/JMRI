@@ -12,7 +12,6 @@ import javax.swing.JComboBox;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -279,14 +278,6 @@ public class EngineManager extends RollingStockManager{
             for (int i=0; i<l.size(); i++) {
                 register(new Engine(l.get(i)));
             }
-
-            List<String> engineList = getByRoadNameList();
-            //Scan the object to check the Comment and Decoder Comment fields for
-            //any <?p?> processor directives and change them to back \n characters
-            for (int i = 0; i < engineList.size(); i++) {
-            	Engine eng = getById(engineList.get(i));
-            	eng.setComment(OperationsXml.convertFromXmlComment(eng.getComment()));
-            }
         }
 	}
 
@@ -320,15 +311,9 @@ public class EngineManager extends RollingStockManager{
 		// add entries
 		List<String> engineList = getByRoadNameList();
 		for (int i=0; i<engineList.size(); i++) {
-			Engine e = getById(engineList.get(i));
-			e.setComment(OperationsXml.convertToXmlComment(e.getComment()));
-			values.addContent(e.store());
+			Engine eng = getById(engineList.get(i));
+			values.addContent(eng.store());
 		}		
-		//restore the normal \n state for the comment fields
-		for (int i=0; i<engineList.size(); i++){
-			Engine e = getById(engineList.get(i));
-			e.setComment(OperationsXml.convertToXmlComment(e.getComment()));
-		}
     }
     
     protected void firePropertyChange(String p, Object old, Object n){

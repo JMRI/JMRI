@@ -75,18 +75,10 @@ public class TrainManagerXml extends OperationsXml {
 		for (int i = 0; i < trainList.size(); i++) {
 			String trainId = trainList.get(i);
 			Train train = manager.getTrainById(trainId);
-			train.setComment(convertToXmlComment(train.getComment()));
 			values.addContent(train.store());
 		}
 		writeXML(file, doc);
 
-		// Now that the roster has been rewritten in file form we need to
-		// restore the RosterEntry object to its normal \n state for the
-		// comment fields.
-		for (int i = 0; i < trainList.size(); i++) {
-			Train train = manager.getTrainById(trainList.get(i));
-			train.setComment(convertFromXmlComment(train.getComment()));
-		}
 		// done - train file now stored, so can't be dirty
 		setDirty(false);
 	}
@@ -132,11 +124,9 @@ public class TrainManagerXml extends OperationsXml {
 
 			List<String> trainList = manager.getTrainsByIdList();
 
-			// load train icon if needed, and convert comments
+			// load train icon if needed
 			for (int i = 0; i < trainList.size(); i++) {
-				// Get a RosterEntry object for this index
 				Train train = manager.getTrainById(trainList.get(i));
-				train.setComment(convertFromXmlComment(train.getComment()));
 				train.loadTrainIcon();
 			}
 			// loading complete run startup scripts

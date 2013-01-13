@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -420,14 +419,6 @@ public class CarManager extends RollingStockManager{
             for (int i=0; i<l.size(); i++) {
                 register(new Car(l.get(i)));
             }
-
-            //Scan the object to check the Comment and Decoder Comment fields for
-            //any <?p?> processor directives and change them to back \n characters
-            List<String> carList = getList();
-            for (int i = 0; i < carList.size(); i++) {
-	        	Car car = getById(carList.get(i));
-	        	car.setComment(OperationsXml.convertFromXmlComment(car.getComment()));
-            }
         }
 	}
 
@@ -460,15 +451,8 @@ public class CarManager extends RollingStockManager{
         // add entries
         List<String> carList = getList();
         for (int i=0; i<carList.size(); i++) {
-        	Car c = getById(carList.get(i));
-        	c.setComment(OperationsXml.convertToXmlComment(c.getComment()));
-            values.addContent(c.store());
-        }
-        
-        //restore the RosterEntry object to its normal \n state.
-        for (int i=0; i<carList.size(); i++){
-        	Car c = getById(carList.get(i));
-        	c.setComment(OperationsXml.convertFromXmlComment(c.getComment()));
+        	Car car = getById(carList.get(i));
+            values.addContent(car.store());
         }
     }
     
