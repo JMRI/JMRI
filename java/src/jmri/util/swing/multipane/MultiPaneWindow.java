@@ -3,11 +3,8 @@
 package jmri.util.swing.multipane;
 
 import java.awt.*;
-import java.io.File;
-
 import javax.swing.*;
 import javax.swing.tree.*;
-
 import jmri.util.swing.*;
 
 /**
@@ -23,7 +20,7 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
     /**
      * Create and initialize a multi-pane GUI window.
      */
-    public MultiPaneWindow(String name, File treeFile, File menubarFile, File toolbarFile) {
+    public MultiPaneWindow(String name, String treeFile, String menubarFile, String toolbarFile) {
         super(name);
         buildGUI(treeFile, menubarFile, toolbarFile);
         pack();
@@ -46,7 +43,7 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
     
     PanedInterface rightTopWI;
     
-    protected void buildGUI(File treeFile, File menubarFile, File toolbarFile) {
+    protected void buildGUI(String treeFile, String menubarFile, String toolbarFile) {
         configureFrame();
         configureNavTreePane(treeFile);
         addMainMenuBar(menubarFile);
@@ -73,11 +70,11 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
         add(leftRightSplitPane, BorderLayout.CENTER);
     }
     
-    protected void configureNavTreePane(File treeFile) {
+    protected void configureNavTreePane(String treeFile) {
         leftRightSplitPane.setLeftComponent(makeNavTreePane(treeFile));
     }
         
-    protected JScrollPane makeNavTreePane(File treeFile) {
+    protected JScrollPane makeNavTreePane(String treeFile) {
         final JTree tree;
         TreeNode topNode;
         
@@ -113,13 +110,13 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
         return treeView;
     }
     
-    protected TreeNode makeNavTreeTopNode(File treeFile, PanedInterface rightTopWI) {
+    protected TreeNode makeNavTreeTopNode(String treeFile, PanedInterface rightTopWI) {
         return JTreeUtil.loadTree(treeFile, rightTopWI, null);  // no context
     }
     
     public void resetRightToPreferredSizes() { rightUpDownSplitPane.resetToPreferredSizes(); }
     
-    protected void addMainMenuBar(File menuFile) {
+    protected void addMainMenuBar(String menuFile) {
         JMenuBar menuBar = new JMenuBar();
         
         JMenu[] menus = JMenuUtil.loadMenu(menuFile, rightTopWI, null);
@@ -129,7 +126,7 @@ public class MultiPaneWindow extends jmri.util.JmriJFrame {
         setJMenuBar(menuBar);
     }
 
-    protected void addMainToolBar(File toolBarFile) {
+    protected void addMainToolBar(String toolBarFile) {
           
         JToolBar toolBar = JToolBarUtil.loadToolBar(toolBarFile, rightTopWI, null);
 

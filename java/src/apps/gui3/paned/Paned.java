@@ -2,10 +2,9 @@
 
 package apps.gui3.paned;
 
-import jmri.util.swing.multipane.MultiPaneWindow;
-import java.io.File;
 import java.util.ResourceBundle;
 import jmri.Application;
+import jmri.util.swing.multipane.MultiPaneWindow;
 
 /**
  * The JMRI application for developing the 3rd GUI
@@ -39,9 +38,9 @@ public class Paned extends apps.gui3.Apps3 {
     protected void createMainFrame() {
         // create and populate main window
         mainFrame = new MultiPaneWindow(Application.getApplicationName(),
-                new File("xml/config/apps/demo/Gui3LeftTree.xml"), 
-    	        new File("xml/config/apps/demo/Gui3Menus.xml"), 
-    	        new File("xml/config/apps/demo/Gui3MainToolBar.xml"));
+                "xml/config/apps/demo/Gui3LeftTree.xml", 
+    	        "xml/config/apps/demo/Gui3Menus.xml", 
+    	        "xml/config/apps/demo/Gui3MainToolBar.xml");
     }
     
     // Main entry point

@@ -114,11 +114,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     public RosterFrame(String name) {
         this(name,
-                new File("xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml"),
-                new File("xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml"));
+                "xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml",
+                "xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml");
     }
 
-    public RosterFrame(String name, File menubarFile, File toolbarFile) {
+    public RosterFrame(String name, String menubarFile, String toolbarFile) {
         super(name, menubarFile, toolbarFile);
         this.allowInFrameServlet = false;
         this.setBaseTitle(name);

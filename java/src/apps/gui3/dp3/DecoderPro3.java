@@ -4,8 +4,8 @@ package apps.gui3.dp3;
 import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.util.FileUtil;
 
 /**
  * The JMRI application for developing the DecoderPro 3 GUI <P>
@@ -23,25 +23,27 @@ import jmri.jmrit.decoderdefn.DecoderIndexFile;
  */
 public class DecoderPro3 extends apps.gui3.Apps3 {
 
-    private static File menuFile = null;
-    private static File toolbarFile = null;
+    private static String menuFile = null;
+    private static String toolbarFile = null;
     private static String applicationName = "DecoderPro 3";
 
     public DecoderPro3(String[] args) {
         super(applicationName, "DecoderProConfig3.xml", args);
     }
     
-    public synchronized static File getMenuFile() {
+    public synchronized static String getMenuFile() {
         if (menuFile == null) {
-            menuFile = new File("dp3/Gui3Menus.xml");
+            menuFile = "dp3/Gui3Menus.xml";
+            File file = new File(menuFile);
             // decide whether name is absolute or relative
-            if (!menuFile.isAbsolute()) {
+            if (!file.isAbsolute()) {
                 // must be relative, but we want it to
                 // be relative to the preferences directory
-                menuFile = new File(XmlFile.prefsDir() + "dp3/Gui3Menus.xml");
+                menuFile = FileUtil.getPreferencesPath() + "dp3/Gui3Menus.xml";
+                file = new File(menuFile);
             }
-            if (!menuFile.exists()) {
-                menuFile = new File("xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml");
+            if (!file.exists()) {
+                menuFile = "xml/config/parts/jmri/jmrit/roster/swing/RosterFrameMenu.xml";
             } else {
                 log.info("Found user created menu structure this will be used instead of the system default");
             }
@@ -49,17 +51,19 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         return menuFile;
     }
 
-    public synchronized static File getToolbarFile() {
+    public synchronized static String getToolbarFile() {
         if (toolbarFile == null) {
-            toolbarFile = new File("dp3/Gui3MainToolBar.xml");
+            toolbarFile = "dp3/Gui3MainToolBar.xml";
+            File file = new File(toolbarFile);
             // decide whether name is absolute or relative
-            if (!toolbarFile.isAbsolute()) {
+            if (!file.isAbsolute()) {
                 // must be relative, but we want it to
                 // be relative to the preferences directory
-                toolbarFile = new File(XmlFile.prefsDir() + "dp3/Gui3MainToolBar.xml");
+                toolbarFile = FileUtil.getPreferencesPath() + "dp3/Gui3MainToolBar.xml";
+                file = new File(toolbarFile);
             }
-            if (!toolbarFile.exists()) {
-                toolbarFile = new File("xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml");
+            if (!file.exists()) {
+                toolbarFile = "xml/config/parts/jmri/jmrit/roster/swing/RosterFrameToolBar.xml";
             } else {
                 log.info("Found user created toolbar structure this will be used instead of the system default");
             }
