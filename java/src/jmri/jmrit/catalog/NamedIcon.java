@@ -1,19 +1,18 @@
 package jmri.jmrit.catalog;
 
 import java.awt.Component;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.MediaTracker;
+import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
-import java.io.File;
 import java.net.URL;
-import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.awt.RenderingHints;
-import java.awt.Graphics2D;
-
 import javax.swing.ImageIcon;
+import jmri.util.FileUtil;
 
 /**
  * Extend an ImageIcon to remember the name from which it was created
@@ -66,15 +65,17 @@ public class NamedIcon extends ImageIcon {
      * @param pName Human-readable name for the icon
      */
     public NamedIcon(String pUrl, String pName) {
-        super(jmri.util.FileUtil.getExternalFilename(pUrl));
-    	File fp = new File(jmri.util.FileUtil.getExternalFilename(pUrl));
-    	if (!fp.exists()){
-    		log.warn("Could not load image from "+pUrl);
-    	}
+        super(FileUtil.findExternalFilename(pUrl));
+        URL u = FileUtil.findExternalFilename(pUrl);
+        if (u == null) {
+            log.warn("Could not load image from " + pUrl + " (file does not exist)");
+        }
         mDefaultImage = getImage();
-        if (mDefaultImage == null) log.warn("Could not load image from "+pUrl);
+        if (mDefaultImage == null) {
+            log.warn("Could not load image from " + pUrl + " (image is null)");
+        }
         mName = pName;
-        mURL = jmri.util.FileUtil.getPortableFilename(pUrl);
+        mURL = FileUtil.getPortableFilename(pUrl);
         mRotation = 0;
     }
 
@@ -105,8 +106,8 @@ public class NamedIcon extends ImageIcon {
         if (pName == null || pName.length() == 0) {
             return null;
         }
-        java.io.File file = new java.io.File(jmri.util.FileUtil.getExternalFilename(pName));
-        if (!file.exists()) {
+        URL u = FileUtil.findExternalFilename(pName);
+        if (u == null) {
             return null;
         }
         return new NamedIcon(pName, pName);
