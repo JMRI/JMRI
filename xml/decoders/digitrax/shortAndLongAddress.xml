@@ -42,10 +42,11 @@
   <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
     <shortAddressVal/>
     <label xml:lang="it">Indirizzo Primario</label>
-    <comment xml:lang="it">Indirizzo Corto</comment>
     <label>Primary Address</label>
+    <comment xml:lang="it">Indirizzo Corto</comment>
     <comment>Short address</comment>
   </variable>
+
   <variable label="Long Address" CV="17" item="Extended Address">
     <longAddressVal/>
     <label xml:lang="it">Indirizzo Esteso</label>
