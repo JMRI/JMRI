@@ -27,7 +27,6 @@ public class ProgDefault {
 
     static public String[] findListOfProgFiles() {
         // create an array of file names from prefs/programmers, count entries
-        int i;
         int np = 0;
         String[] sp = {};
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir() + "programmers");
