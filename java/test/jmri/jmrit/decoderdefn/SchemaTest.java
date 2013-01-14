@@ -19,6 +19,14 @@ public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
         validate(new java.io.File("java/test/jmri/jmrit/decoderdefn/QSI_Diesel_Ver7.xml"));
     }
 
+    public void testDigitraxPart() {
+        validate(new java.io.File("xml/decoders/digitrax/consistAddrDirection.xml"));
+    }
+
+    public void testLenzPart() {
+        validate(new java.io.File("xml/decoders/lenz/braking_cv51.xml"));
+    }
+
     public void testValidateQualifier() {
         validate(new java.io.File("java/test/jmri/jmrit/decoderdefn/DecoderWithQualifier.xml"));
     }
