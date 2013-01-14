@@ -472,7 +472,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 //log.debug("The last command was accepted by the ecos");
                 String[] msgDetails = m.getContents();
                 for (String line: msgDetails) {
-                    if (line.contains("speed")){
+                    if (line.contains("speed") && !line.contains("speedstep")){
                         Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))) ) ;
                         super.setSpeedSetting(newSpeed);
                     }
