@@ -205,52 +205,8 @@
         </enumVal>
         <label>Motor Drive Frequency</label>
       </variable>
-      <variable label="Constant Braking Distance" CV="51" mask="XXXXXXXV" item="Constant Braking" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Constant Braking Distance</label>
-      </variable>
-      <variable label="Automatic Braking Control" CV="51" mask="XXXXXXVX" item="ABC" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Automatic Braking Control</label>
-      </variable>
-      <variable label="ABC direction dependancy" CV="51" mask="XXXXXVXX" item="ABC Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>ABC direction dependancy</label>
-      </variable>
-      <variable label="Push-Pull without Stop" CV="51" mask="XXXXVXXX" item="Push-Pull w/o Stop" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Push-Pull without Stop</label>
-      </variable>
-      <variable label="Push-Pull with Stop" CV="51" mask="XXXVXXXX" item="Push-Pull w Stop" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Push-Pull with Stop</label>
-      </variable>
-      <variable label="Stop on DC (RailCom off only)" CV="51" mask="XXVXXXXX" item="Stop on DC" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Stop on DC (RailCom off only)</label>
-      </variable>
-      <variable label="Braking Distance in Constant Mode (0-255)" CV="52" item="Braking Distance" default="50" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Braking Distance in Constant Mode (0-255)</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="Slow approach speed with ABC (0-255)" CV="53" item="ABC Approach Speed" default="48" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Slow approach speed with ABC (0-255)</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="Push-Pull stop time (0-255 seconds) " CV="54" item="Push-Pull Stop Time" default="4" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Push-Pull stop time (0-255 seconds) </label>
-        <comment>Range 0-255</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
       <variable label="Dimming Intensity, Outputs A and C (0-255)" CV="55" item="Global lighting option 1" default="255" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
         <decVal min="0" max="255"/>
         <label>Dimming Intensity, Outputs A and C (0-255)</label>
@@ -259,102 +215,9 @@
         <decVal min="0" max="255"/>
         <label>Dimming Intensity, Outputs B and D (0-255)</label>
       </variable>
-      <variable label="Enable dimming with F1" CV="57" mask="XXXXXXXV" tooltip="Toggle light dimming 'on' using F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F1</label>
-      </variable>
-      <variable label="Enable dimming with F2" CV="57" mask="XXXXXXVX" tooltip="Toggle light dimming 'on' using F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F2</label>
-      </variable>
-      <variable label="Enable dimming with F3" CV="57" mask="XXXXXVXX" tooltip="Toggle light dimming 'on' using F3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F3</label>
-      </variable>
-      <variable label="Enable dimming with F4" CV="57" mask="XXXXVXXX" tooltip="Toggle light dimming 'on' using F4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F4</label>
-      </variable>
-      <variable label="Enable dimming with F5" CV="57" mask="XXXVXXXX" tooltip="Toggle light dimming 'on' using F5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F5</label>
-      </variable>
-      <variable label="Enable dimming with F6" CV="57" mask="XXVXXXXX" tooltip="Toggle light dimming 'on' using F6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F6</label>
-      </variable>
-      <variable label="Enable dimming with F7" CV="57" mask="XVXXXXXX" tooltip="Toggle light dimming 'on' using F7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F7</label>
-      </variable>
-      <variable label="Enable dimming with F8" CV="57" mask="VXXXXXXX" tooltip="Toggle light dimming 'on' using F8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F8</label>
-      </variable>
-      <variable label="Enable Low Speed with F1" CV="58" mask="XXXXXXXV" tooltip="Toggle low speed switching gear 'on' using F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F1</label>
-      </variable>
-      <variable label="Enable Low Speed with F2" CV="58" mask="XXXXXXVX" tooltip="Toggle low speed switching gear 'on' using F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F2</label>
-      </variable>
-      <variable label="Enable Low Speed with F3" CV="58" mask="XXXXXVXX" default="1" tooltip="Toggle low speed switching gear 'on' using F3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F3</label>
-      </variable>
-      <variable label="Enable Low Speed with F4" CV="58" mask="XXXXVXXX" tooltip="Toggle low speed switching gear 'on' using F4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F4</label>
-      </variable>
-      <variable label="Enable Low Speed with F5" CV="58" mask="XXXVXXXX" tooltip="Toggle low speed switching gear 'on' using F5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F5</label>
-      </variable>
-      <variable label="Enable Low Speed with F6" CV="58" mask="XXVXXXXX" tooltip="Toggle low speed switching gear 'on' using F6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F6</label>
-      </variable>
-      <variable label="Enable Low Speed with F7" CV="58" mask="XVXXXXXX" tooltip="Toggle low speed switching gear 'on' using F7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F7</label>
-      </variable>
-      <variable label="Enable Low Speed with F8" CV="58" mask="VXXXXXXX" tooltip="Toggle low speed switching gear 'on' using F8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F8</label>
-      </variable>
-      <variable label="Disable momentum with F1" CV="59" mask="XXXXXXXV" tooltip="Toggle acceleration and deceleration delays 'off' using F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F1</label>
-      </variable>
-      <variable label="Disable momentum with F2" CV="59" mask="XXXXXXVX" tooltip="Toggle acceleration and deceleration delays 'off' using F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F2</label>
-      </variable>
-      <variable label="Disable momentum with F3" CV="59" mask="XXXXXVXX" tooltip="Toggle acceleration and deceleration delays 'off' using F3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F3</label>
-      </variable>
-      <variable label="Disable momentum with F4" CV="59" mask="XXXXVXXX" default="1" tooltip="Toggle acceleration and deceleration delays 'off' using F4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F4</label>
-      </variable>
-      <variable label="Disable momentum with F5" CV="59" mask="XXXVXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F5</label>
-      </variable>
-      <variable label="Disable momentum with F6" CV="59" mask="XXVXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F6</label>
-      </variable>
-      <variable label="Disable momentum with F7" CV="59" mask="XVXXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F7</label>
-      </variable>
-      <variable label="Disable momentum with F8" CV="59" mask="VXXXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F8</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/fn_ctrl_57_59.xml"/>
+
       <variable label="Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) " CV="60" item="Lighting effects A/B" default="0" comment="Range 0-44">
         <decVal min="0" max="44"/>
         <label>Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) </label>
