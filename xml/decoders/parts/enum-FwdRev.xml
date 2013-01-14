@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<<<<<<< .mine
+<!-- $Id: enum-FwdRev.xml 22114 2012-12-30 02:14:28Z jacobsen $ -->
+=======
 <!-- $Id: enum-FwdRev.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+>>>>>>> .r22386
 <enumVal>
   <enumChoice choice="forward">
-    <choice xml:lang="it">avanti</choice>
     <choice>forward</choice>
+    <choice xml:lang="it">avanti</choice>
   </enumChoice>
   <enumChoice choice="reverse">
-    <choice xml:lang="it">indietro</choice>
     <choice>reverse</choice>
+    <choice xml:lang="it">indietro</choice>
   </enumChoice>
 </enumVal>

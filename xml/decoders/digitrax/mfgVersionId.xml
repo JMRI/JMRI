@@ -42,9 +42,11 @@
   <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
     <decVal/>
     <label>Version ID</label>
+    <label xml:lang="it">ID Versione</label>
   </variable>
   <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
     <decVal/>
     <label>Manufacturer ID</label>
+    <label xml:lang="it">ID Costruttore</label>
   </variable>
 </variables>

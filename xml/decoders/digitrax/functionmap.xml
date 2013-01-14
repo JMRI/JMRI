@@ -47,8 +47,11 @@
   <variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
     <enumVal>
       <enumChoice choice="No"/>
-      <enumChoice choice="Yes"/>
+      <enumChoice choice="Yes">
+        <choice xml:lang="it">Si</choice>
+      </enumChoice>
     </enumVal>
+    <label xml:lang="it">FL(f) Uscita 1</label>
   </variable>
   <variable label="FL(f) controls output 2" CV="33" mask="XXXXXXVX" minOut="2">
     <enumVal>

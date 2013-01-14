@@ -42,6 +42,8 @@
   <variable label="Motor Drive Frequency" CV="9" item="Total PWM Period" default="0" comment="00 is fastest, 255 is slowest">
     <decVal/>
     <label>Motor Drive Frequency</label>
+    <label xml:lang="it">Frequenza pilotaggio Motore</label>
     <comment>00 is fastest, 255 is slowest</comment>
+    <comment xml:lang="it">00= massima, 255= minima</comment>
   </variable>
 </variables>

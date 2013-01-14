@@ -1,14 +1,18 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2012 All rights reserved -->
+<<<<<<< .mine
+<!-- $Id: enum-LocoAddrConsistAddr.xml 22120 2012-12-30 02:57:22Z jacobsen $ -->
+=======
 <!-- $Id: enum-LocoAddrConsistAddr.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+>>>>>>> .r22386
         <enumVal>
           <enumChoice choice="Locomotive Address Only">
-            <choice xml:lang="it">Indirizzo Loco da sola</choice>
             <choice>Locomotive Address Only</choice>
+            <choice xml:lang="it">Risponde a Indirizzo Loco</choice>
           </enumChoice>
           <enumChoice choice="Respond to Consist Address">
-            <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
             <choice>Respond to Consist Address</choice>
+            <choice xml:lang="it">Risponde a Indirizzo Consist</choice>
           </enumChoice>
         </enumVal>

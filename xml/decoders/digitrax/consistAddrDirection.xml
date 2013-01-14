@@ -42,9 +42,11 @@
   <variable label="Advanced Consist address" CV="19" item="Consist Address" mask="XVVVVVVV" default="0">
     <decVal max="127"/>
     <label>Advanced Consist address</label>
+    <label xml:lang="it">Indirizzo Consist Avanzati</label>
   </variable>
   <variable label="Advanced Consist direction" CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
     <label>Advanced Consist direction</label>
+    <label xml:lang="it">Direzione Consist Avanzati</label>
   </variable>
 </variables>

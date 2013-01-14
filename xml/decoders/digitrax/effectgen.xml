@@ -44,50 +44,66 @@
   </revhistory>
   <enumChoice choice="Normal function of lead">
     <choice>Normal function of lead</choice>
+    <choice xml:lang="it">Funzione Normale</choice>
   </enumChoice>
   <enumChoice choice="Random flicker">
     <choice>Random flicker</choice>
+    <choice xml:lang="it">Lampeggio Casuale</choice>
   </enumChoice>
   <enumChoice choice="Mars light">
     <choice>Mars light</choice>
+    <choice xml:lang="it">Mars light</choice>
   </enumChoice>
   <enumChoice choice="Flashing head light">
     <choice>Flashing head light</choice>
+    <choice xml:lang="it">Luce frontale Lampeggiante</choice>
   </enumChoice>
   <enumChoice choice="Single pulse strobe">
     <choice>Single pulse strobe</choice>
+    <choice xml:lang="it">Strobe Singolo Impulso</choice>
   </enumChoice>
   <enumChoice choice="Double pulse strobe">
     <choice>Double pulse strobe</choice>
+    <choice xml:lang="it">Strobe Doppio Impulso</choice>
   </enumChoice>
   <enumChoice choice="Rotary beacon simulation">
     <choice>Rotary beacon simulation</choice>
+    <choice xml:lang="it">Simulazione Faro Rotante</choice>
   </enumChoice>
   <enumChoice choice="Gyralite">
     <choice>Gyralite</choice>
+    <choice xml:lang="it">Gyralite</choice>
   </enumChoice>
   <enumChoice choice="Rule 17 dimmable headlight">
     <choice>Rule 17 dimmable headlight</choice>
+    <choice xml:lang="it">Luce Frontale regolabile a Norma 17</choice>
   </enumChoice>
   <enumChoice choice="FRED end of train light">
     <choice>FRED end of train light</choice>
+    <choice xml:lang="it">FRED Luce fine treno</choice>
   </enumChoice>
   <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
     <choice>Right ditch light; when F2 on, flashes alternately</choice>
+    <choice xml:lang="it">Luce di destra, quando F2=on, lampeggia</choice>
   </enumChoice>
   <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
     <choice>Left ditch light; when F2 on, flashes alternately</choice>
+    <choice xml:lang="it">Luce di sinistra, quando F2=on, lampeggia</choice>
   </enumChoice>
   <enumChoice choice="Reserved (0x0C)">
     <choice>Reserved (0x0C)</choice>
+    <choice xml:lang="it">Riservata (0x0C)</choice>
   </enumChoice>
   <enumChoice choice="Reserved (0x0D)">
     <choice>Reserved (0x0D)</choice>
+    <choice xml:lang="it">Riservata (0x0D)</choice>
   </enumChoice>
   <enumChoice choice="Reserved (0x0E)">
     <choice>Reserved (0x0E)</choice>
+    <choice xml:lang="it">Riservata (0x0E)</choice>
   </enumChoice>
   <enumChoice choice="Reserved (0x0F)">
     <choice>Reserved (0x0F)</choice>
+    <choice xml:lang="it">Riservata (0x0F)</choice>
   </enumChoice>
 </enumVal>
