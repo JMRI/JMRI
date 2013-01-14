@@ -125,7 +125,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// row 1a
 		JPanel pRs = new JPanel();
 		pRs.setLayout(new GridBagLayout());
-		pRs.setBorder(BorderFactory.createTitledBorder(getRb().getString("RollingStockType")));
+		pRs.setBorder(BorderFactory.createTitledBorder(getRb().getString("rsType")));
 		addItem(pRs, textRoad, 1, 0);
 		pRow1.add(pRs);
 		
@@ -265,11 +265,11 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		autoTrainCheckBox.setSelected(autoTrainCheckBoxSelected);
 		
 		// add tool tips
-		autoTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
-		autoDestinationTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
-		autoFinalDestTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
-		autoReturnWhenEmptyTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
-		autoTrainCheckBox.setToolTipText(Bundle.getMessage("TipAutoTrain"));
+		autoTrackCheckBox.setToolTipText(getRb().getString("rsTipAutoTrack"));
+		autoDestinationTrackCheckBox.setToolTipText(getRb().getString("rsTipAutoTrack"));
+		autoFinalDestTrackCheckBox.setToolTipText(getRb().getString("rsTipAutoTrack"));
+		autoReturnWhenEmptyTrackCheckBox.setToolTipText(getRb().getString("rsTipAutoTrack"));
+		autoTrainCheckBox.setToolTipText(Bundle.getMessage("rsTipAutoTrain"));
 		locationUnknownCheckBox.setToolTipText(Bundle.getMessage("TipLocationUnknown"));
 		
 		ignoreStatusCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
@@ -302,7 +302,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			if (_rs.getRouteDestination() != null)
 				log.debug("rs has a destination "+_rs.getRouteDestination().getName());
 			JOptionPane.showMessageDialog(this,
-					getRb().getString("pressSaveWill"),	getRb().getString("rsInRoute"),
+					getRb().getString("rsPressSaveWill"),	getRb().getString("rsInRoute"),
 					JOptionPane.WARNING_MESSAGE);
 		}
 		_rs.addPropertyChangeListener(this);
