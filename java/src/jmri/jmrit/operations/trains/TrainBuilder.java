@@ -1774,8 +1774,8 @@ public class TrainBuilder extends TrainCommon {
 					}
 					addLine(buildReport, FIVE, MessageFormat.format(Bundle
 							.getMessage("buildCarRoutingBegins"), new Object[] { car.toString(),
-							car.getLocationName(),
-							(car.getNextDestinationName() + ", " + car.getNextDestTrackName()) }));
+							car.getLocationName(), car.getTrackName(),
+							car.getNextDestinationName(), car.getNextDestTrackName() }));
 					if (!Router.instance().setDestination(car, train, buildReport)) {
 						addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("buildNotAbleToSetDestination"), new Object[] { car.toString(),
