@@ -10,6 +10,8 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.security.CodeSource;
+import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import jmri.jmrit.XmlFile;
 import org.apache.log4j.Logger;
@@ -54,6 +56,10 @@ public class FileUtil {
      * User's home directory
      */
     static private String homePath = System.getProperty("user.home") + File.separator;
+    /*
+     * path to jmri.jar
+     */
+    static private String jarPath = null;
 
     /**
      * Find the resource file corresponding to a name. There are five cases:
@@ -402,6 +408,28 @@ public class FileUtil {
             return url.toURI();
         } catch (URISyntaxException ex) {
             log.error("Unable to get URI from URL", ex);
+            return null;
+        }
+    }
+
+    /**
+     * Get the JMRI distribution jar file.
+     * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
+     */
+    static public JarFile jmriJarFile() {
+        if (jarPath == null) {
+            CodeSource sc = FileUtil.class.getProtectionDomain().getCodeSource();
+            if (sc != null) {
+                jarPath = sc.getLocation().toString();
+                // 9 = length of jar:file:
+                jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
+                log.debug("jmri.jar path is " + jarPath);
+            }
+        }
+        try {
+            return new JarFile(jarPath);
+        } catch (IOException ex) {
+            log.error("Unable to open jmri.jar", ex);
             return null;
         }
     }
