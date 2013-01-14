@@ -1018,16 +1018,5 @@ nmraWarrant="yes" nmraWarrantStart="200604"
       </row>
     </column>
   </pane>
-  <pane name="SUSI">
-    <column>
-      <row>
-        <column>
-          <label label="              S.U.S.I. Variables"/>
-          <label label=" "/>
-          <display item="SUSI Indicator"/>
-          <display item="SUSI transport"/>
-        </column>
-      </row>
-    </column>
-  </pane>
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneSUSI.xml"/>
 </decoder-config>
