@@ -361,9 +361,9 @@ public class Router extends TrainCommon {
 						if (status.equals(Track.OKAY) && firstTrain != null) {
 							addLine(_buildReport, SEVEN, MessageFormat.format(
 									Bundle.getMessage("RouterRoute2ForCar"),
-									new Object[] { car.toString(), car.getLocationName(),
-											testCar.getDestinationName(),
-											car.getNextDestinationName() }));
+									new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),
+											testCar.getDestinationName(), testCar.getDestinationTrackName(),
+											car.getNextDestinationName(), car.getNextDestTrackName() }));
 							// only set car's destination if specific train can service car
 							if (_train != null && !_train.servicesCar(testCar)) {
 								addLine(_buildReport, SEVEN, MessageFormat.format(
@@ -451,7 +451,7 @@ public class Router extends TrainCommon {
 						boolean match = false;
 						for (int k = 0; k < lastLocationTracks.size(); k++) {
 							Track ltp = lastLocationTracks.get(k);
-							if (ltp.getLocation().equals(location)) {
+							if (ltp.getLocation().equals(location) && ltp.equals(track)) {
 								match = true;
 								break;
 							}
@@ -504,9 +504,10 @@ public class Router extends TrainCommon {
 								+ testCar.getLocationName() + ", " + testCar.getTrackName() + ")");
 						addLine(_buildReport, SEVEN, MessageFormat.format(
 								Bundle.getMessage("RouterRoute3ForCar"),
-								new Object[] { car.toString(), car.getLocationName(),
-										testCar.getLocationName(), testCar.getDestinationName(),
-										car.getNextDestinationName() }));
+								new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),
+										testCar.getLocationName(), testCar.getTrackName(), 
+										testCar.getDestinationName(), testCar.getDestinationTrackName(),
+										car.getNextDestinationName(), car.getNextDestTrackName() }));
 						// only set car's destination if specific train can service car
 						Car ts2 = clone(car);
 						ts2.setDestination(fltp.getLocation());
@@ -564,10 +565,11 @@ public class Router extends TrainCommon {
 										+ testCar.getDestinationTrackName());
 								addLine(_buildReport, SEVEN, MessageFormat.format(
 										Bundle.getMessage("RouterRoute4ForCar"),
-										new Object[] { car.toString(), car.getLocationName(),
-												fltp.getLocation(), mltp.getLocation().getName(),
-												lltp.getLocation().getName(),
-												car.getNextDestinationName() }));
+										new Object[] { car.toString(), car.getLocationName(), car.getTrackName(),
+												fltp.getLocation(), fltp.getName(), 
+												mltp.getLocation().getName(), mltp.getName(),
+												lltp.getLocation().getName(), lltp.getName(),
+												car.getNextDestinationName(), car.getNextDestTrackName() }));
 								// only set car's destination if specific train can service car
 								Car ts2 = clone(car);
 								ts2.setDestination(fltp.getLocation());
@@ -649,12 +651,12 @@ public class Router extends TrainCommon {
 										addLine(_buildReport, SEVEN, MessageFormat.format(
 												Bundle.getMessage("RouterRoute5ForCar"),
 												new Object[] { car.toString(),
-														car.getLocationName(),
-														fltp.getLocation().getName(),
-														mltp1.getLocation().getName(),
-														mltp2.getLocation().getName(),
-														lltp.getLocation().getName(),
-														car.getNextDestinationName() }));
+														car.getLocationName(), car.getTrackName(),
+														fltp.getLocation().getName(), fltp.getName(),
+														mltp1.getLocation().getName(), mltp1.getName(),
+														mltp2.getLocation().getName(), mltp2.getName(),
+														lltp.getLocation().getName(), lltp.getName(),
+														car.getNextDestinationName(), car.getNextDestTrackName() }));
 										// only set car's destination if specific train can service car
 										Car ts2 = clone(car);
 										ts2.setDestination(fltp.getLocation());
