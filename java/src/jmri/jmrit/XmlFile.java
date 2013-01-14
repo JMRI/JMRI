@@ -81,6 +81,9 @@ public abstract class XmlFile {
         if (resource != null) {
             return this.rootFromURL(resource);
         } else {
+            if (!name.startsWith("xml")) {
+                return this.rootFromName("xml" + File.separator + name);
+            }
             log.warn("Did not find file or resource " + name);
             throw new FileNotFoundException("Did not find file or resource " + name);
         }
