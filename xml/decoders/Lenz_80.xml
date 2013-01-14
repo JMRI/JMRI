@@ -326,14 +326,9 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="User Identification #1 (0-255)" CV="105" item="User Id #1">
-        <decVal min="0" max="255"/>
-        <label>User Identification #1 (0-255)</label>
-      </variable>
-      <variable label="User Identification #2 (0-255)" CV="106" item="User Id #2">
-        <decVal min="0" max="255"/>
-        <label>User Identification #2 (0-255)</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+
       <variable label="Decoder Software Version (read only): " CV="128" readOnly="yes" item="Decoder Software Version" default="01">
         <decVal/>
         <label>Decoder Software Version (read only): </label>

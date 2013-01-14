@@ -114,40 +114,10 @@
         </enumVal>
         <label>Speed Table Selection</label>
       </variable>
-      <variable label="Light short-circuit" CV="30" mask="XXXXXXXV" item="Light Short">
-        <enumVal>
-          <enumChoice choice="Okay">
-            <choice>Okay</choice>
-          </enumChoice>
-          <enumChoice choice="Fault">
-            <choice>Fault</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Light short-circuit</label>
-      </variable>
-      <variable label="Overheating" CV="30" mask="XXXXXXVX" item="Overheating" default="0">
-        <enumVal>
-          <enumChoice choice="Okay">
-            <choice>Okay</choice>
-          </enumChoice>
-          <enumChoice choice="Fault">
-            <choice>Fault</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Overheating</label>
-      </variable>
-      <variable label="Motor short-circuit" CV="30" mask="XXXXXVXX" item="Motor Short" default="0">
-        <enumVal>
-          <enumChoice choice="Okay">
-            <choice>Okay</choice>
-          </enumChoice>
-          <enumChoice choice="Fault">
-            <choice>Fault</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Motor short-circuit</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>
+
       <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
         <enumVal>
           <enumChoice choice="0 ">
@@ -301,16 +271,9 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="User Identification #1" CV="105" item="User Id #1" default="255" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>User Identification #1</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="User Identification #2" CV="106" item="User Id #2" default="255" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>User Identification #2</label>
-        <comment>Range 0-255</comment>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+
       <variable label="Motor timeout on loss of DCC" CV="112" tooltip="Duration of motor timeout t = value * 16 ms" item="Motor Timeout" default="16" comment="Range 0-255">
         <decVal min="0" max="255"/>
         <label>Motor timeout on loss of DCC</label>
