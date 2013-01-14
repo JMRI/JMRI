@@ -173,14 +173,14 @@ public class TabbedPreferences extends AppConfigBase {
 		initalisationState = INITIALISING;
 
 		deleteConnectionIconRollOver = new ImageIcon(
-				FileUtil.getExternalFilename("program:resources/icons/misc/gui3/Delete16x16.png"));
+				FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Delete16x16.png"));
 		deleteConnectionIcon = new ImageIcon(
-				FileUtil.getExternalFilename("program:resources/icons/misc/gui3/Delete-bw16x16.png"));
+				FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Delete-bw16x16.png"));
 		deleteConnectionButtonSize = new Dimension(
 				deleteConnectionIcon.getIconWidth() + 2,
 				deleteConnectionIcon.getIconHeight() + 2);
 		addConnectionIcon = new ImageIcon(
-				FileUtil.getExternalFilename("program:resources/icons/misc/gui3/Add16x16.png"));
+				FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Add16x16.png"));
 
 		throttlePreferences = new ThrottlesPreferencesPane();
 		withrottlePrefsPanel = new WiThrottlePrefsPanel();
@@ -202,7 +202,7 @@ public class TabbedPreferences extends AppConfigBase {
 		save = new JButton(
 				rb.getString("ButtonSave"),
 				new ImageIcon(
-						FileUtil.getExternalFilename("program:resources/icons/misc/gui3/SaveIcon.png")));
+						FileUtil.findExternalFilename("program:resources/icons/misc/gui3/SaveIcon.png")));
 		save.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				invokeSaveOptions();
