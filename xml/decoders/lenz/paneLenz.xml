@@ -12,7 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane name="Lenz" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -40,5 +40,113 @@
     </revision>
   </revhistory>
 
-
-</variables>
+    <column>
+      <row>
+        <column>
+          <label label="RailCom Configuration">
+            <label>RailCom Configuration</label>
+          </label>
+          <display item="RailCom Address"/>
+          <display item="RailCom Data"/>
+          <display item="RailCom Command"/>
+          <display item="Enable RailCom"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Fault Indication">
+            <label>Fault Indication</label>
+          </label>
+          <display item="Light Short"/>
+          <display item="Overheating"/>
+          <display item="Motor Short"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Motor Configuration">
+            <label>Motor Configuration</label>
+          </label>
+          <display item="Motor type"/>
+          <display item="EMF Switch"/>
+          <display item="BEMF Control"/>
+          <display item="Motor Frequency"/>
+          <display item="Minimum PWM Value"/>
+          <display item="Motor Duty Cycle"/>
+          <display item="Motor Timeout"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+        <column>
+          <label label="           ">
+            <label>           </label>
+          </label>
+        </column>
+        <column>
+          <label label="Braking Configuration">
+            <label>Braking Configuration</label>
+          </label>
+          <display item="Constant Braking"/>
+          <display item="ABC"/>
+          <display item="ABC Direction"/>
+          <display item="Push-Pull w/o Stop"/>
+          <display item="Push-Pull w Stop"/>
+          <display item="Stop on DC"/>
+          <display item="Braking Distance"/>
+          <display item="ABC Approach Speed"/>
+          <display item="Push-Pull Stop Time"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Tip: Constant Braking only works when momementum is enabled, and when not in switching gear">
+            <label>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <separator/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Decoder Software Version"/>
+        </column>
+      </row>
+    </column>
+    <name>Lenz</name>
+  </pane>

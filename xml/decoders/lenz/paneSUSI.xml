@@ -12,7 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane name="SUSI" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -39,6 +39,20 @@
       <revremark>Revision in original Lenz_Gold.xml file</revremark>
     </revision>
   </revhistory>
-
-
-</variables>
+  
+    <column>
+      <row>
+        <column>
+          <label label="              S.U.S.I. Variables">
+            <label>              S.U.S.I. Variables</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="SUSI Indicator"/>
+          <display item="SUSI transport"/>
+        </column>
+      </row>
+    </column>
+    <name>SUSI</name>
+</pane>

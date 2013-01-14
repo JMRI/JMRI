@@ -12,7 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane name="Lenz Lighting" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -40,5 +40,321 @@
     </revision>
   </revhistory>
 
-
-</variables>
+    <column>
+      <row>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.">
+            <label>The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.</label>
+          </label>
+          <label label="The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.">
+            <label>The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <separator/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.">
+            <label>Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <separator/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="The following lighting effects are">
+            <label>The following lighting effects are</label>
+          </label>
+          <label label="available for outputs A and B">
+            <label>available for outputs A and B</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="No effect    ">
+            <label>No effect    </label>
+          </label>
+          <label label="Mars light   ">
+            <label>Mars light   </label>
+          </label>
+          <label label="Gyra light   ">
+            <label>Gyra light   </label>
+          </label>
+          <label label="Strobe       ">
+            <label>Strobe       </label>
+          </label>
+          <label label="Double Strobe">
+            <label>Double Strobe</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+        <column>
+          <label label="        ">
+            <label>        </label>
+          </label>
+        </column>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Output B">
+            <label>Output B</label>
+          </label>
+          <label label=" (Tens)">
+            <label> (Tens)</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="   0">
+            <label>   0</label>
+          </label>
+          <label label="   1">
+            <label>   1</label>
+          </label>
+          <label label="   2">
+            <label>   2</label>
+          </label>
+          <label label="   3">
+            <label>   3</label>
+          </label>
+          <label label="   4">
+            <label>   4</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+        <column>
+          <label label="        ">
+            <label>        </label>
+          </label>
+        </column>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Output A">
+            <label>Output A</label>
+          </label>
+          <label label=" (Ones)">
+            <label> (Ones)</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="   0">
+            <label>   0</label>
+          </label>
+          <label label="   1">
+            <label>   1</label>
+          </label>
+          <label label="   2">
+            <label>   2</label>
+          </label>
+          <label label="   3">
+            <label>   3</label>
+          </label>
+          <label label="   4">
+            <label>   4</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+        <column>
+          <label label="                                                          ">
+            <label>                                                          </label>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Lighting effects A/B"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <separator/>
+        </column>
+      </row>
+      <row>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="The following lighting effects are">
+            <label>The following lighting effects are</label>
+          </label>
+          <label label="available for output D">
+            <label>available for output D</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="No effect                      ">
+            <label>No effect                      </label>
+          </label>
+          <label label="Flashing with output C         ">
+            <label>Flashing with output C         </label>
+          </label>
+          <label label="Flashing alternate to output C ">
+            <label>Flashing alternate to output C </label>
+          </label>
+          <label label="Flickering type 2 (less smooth)">
+            <label>Flickering type 2 (less smooth)</label>
+          </label>
+          <label label="Flickering type 3 (excitedly)  ">
+            <label>Flickering type 3 (excitedly)  </label>
+          </label>
+          <label label="Dimming enabled                ">
+            <label>Dimming enabled                </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+        <column>
+          <label label="        ">
+            <label>        </label>
+          </label>
+        </column>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Output D">
+            <label>Output D</label>
+          </label>
+          <label label=" (Tens)">
+            <label> (Tens)</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="   0">
+            <label>   0</label>
+          </label>
+          <label label="   1">
+            <label>   1</label>
+          </label>
+          <label label="   2">
+            <label>   2</label>
+          </label>
+          <label label="   3">
+            <label>   3</label>
+          </label>
+          <label label="   4">
+            <label>   4</label>
+          </label>
+          <label label="   5">
+            <label>   5</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+        <column>
+          <label label="        ">
+            <label>        </label>
+          </label>
+        </column>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="Output C">
+            <label>Output C</label>
+          </label>
+          <label label=" (Ones)">
+            <label> (Ones)</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="   0">
+            <label>   0</label>
+          </label>
+          <label label="   1">
+            <label>   1</label>
+          </label>
+          <label label="   2">
+            <label>   2</label>
+          </label>
+          <label label="   3">
+            <label>   3</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+        <column>
+          <label label="        ">
+            <label>        </label>
+          </label>
+        </column>
+        <column>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="The following lighting effects are">
+            <label>The following lighting effects are</label>
+          </label>
+          <label label="available for output C">
+            <label>available for output C</label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label="No effect                 ">
+            <label>No effect                 </label>
+          </label>
+          <label label="Flashing                  ">
+            <label>Flashing                  </label>
+          </label>
+          <label label="Flickering type 1 (smooth)">
+            <label>Flickering type 1 (smooth)</label>
+          </label>
+          <label label="Dimming enabled           ">
+            <label>Dimming enabled           </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+      </row>
+      <row>
+        <column>
+          <display item="Lighting effects C/D"/>
+          <label label=" ">
+            <label> </label>
+          </label>
+        </column>
+      </row>
+    </column>
+    <name>Lenz Lighting</name>
+  </pane>
