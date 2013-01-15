@@ -24,7 +24,10 @@ public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
     }
 
     public void testLenzPart() {
+        validate(new java.io.File("xml/decoders/lenz/functionmap.xml"));
         validate(new java.io.File("xml/decoders/lenz/braking_cv51.xml"));
+        validate(new java.io.File("xml/decoders/lenz/abc_cv51.xml"));
+        validate(new java.io.File("xml/decoders/Lenz_Plus_2010.xml"));
     }
 
     public void testValidateQualifier() {
