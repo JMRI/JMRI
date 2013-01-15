@@ -59,7 +59,7 @@ import jmri.jmrit.vsdecoder.SoundEvent;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
 import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
-import jmri.jmrit.vsdecoder.VSDecoderPreferencesAction;
+
 
 @SuppressWarnings("serial")
 public class VSDManagerFrame extends JmriJFrame {
@@ -295,7 +295,7 @@ public class VSDManagerFrame extends JmriJFrame {
 
 	JMenu editMenu = new JMenu(rb.getString("VSDecoderEditMenu"));
 	editMenu.setMnemonic(Mnemonics.get("EditMenu"));
-	editMenu.add(new VSDecoderPreferencesAction(rb.getString("VSDecoderEditMenuPreferences")));
+	editMenu.add(new VSDPreferencesAction(rb.getString("VSDecoderEditMenuPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load

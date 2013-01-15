@@ -1,4 +1,4 @@
-package jmri.jmrit.vsdecoder;
+package jmri.jmrit.vsdecoder.swing;
 
 /*
  * <hr>
@@ -19,43 +19,53 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import java.util.ResourceBundle;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import javax.swing.BorderFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.awt.Dimension;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-//import jmri.jmrit.vsdecoder.swing.Vector3dPanel;
-//import jmri.jmrit.vsdecoder.swing.Vector2dPanel;
-import jmri.jmrit.vsdecoder.listener.ListeningSpot;
+import jmri.util.JmriJFrame;
+import jmri.jmrit.vsdecoder.VSDecoderPreferences;
+import jmri.jmrit.vsdecoder.VSDecoderManager;
 
-/**
- *
- * @author lionel
- * Modified for VSDecoder by twindad
- */
-public class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
+
+@SuppressWarnings("serial")
+public class VSDPreferencesAction extends AbstractAction {
+    /**
+     * Constructor
+     * @param s Name for the action.
+     */
+    public VSDPreferencesAction(String s) {
+        super(s);
+    }
+    
+    public VSDPreferencesAction() {
+	  this("VSDecoder preferences");         
+    }
+    
+	public void actionPerformed(ActionEvent e) {
+	JmriJFrame f = new JmriJFrame(Bundle.getMessage("FieldVSDecoderPreferencesFrameTitle"));
+	VSDecoderPreferencesPane tpP = new VSDecoderPreferencesPane(VSDecoderManager.instance().getVSDecoderPreferences());
+	f.add(tpP);
+	tpP.setContainer(f);
+	f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	f.pack();
+	f.setVisible(true);
+	f.requestFocus();	    
+	}
+}
+
+class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
     private static final long serialVersionUID = -5473594799045080011L;
 	
-    private static final ResourceBundle vsdecoderBundle = VSDecoderBundle.bundle();
-
     private javax.swing.JCheckBox cbAutoStartEngine;
     private javax.swing.JCheckBox cbAutoLoadVSDFile;
     private javax.swing.JTextField  tfDefaultVSDFilePath;
     private javax.swing.JTextField  tfDefaultVSDFileName;
     private javax.swing.JLabel labelDefaultVSDFilePath;
     private javax.swing.JLabel labelDefaultVSDFileName;
-    //private jmri.util.PhysicalLocationPanel listenerPos;
-    //private Vector3dPanel listenerPos;
-    //private Vector2dPanel listenerOtn;
     private javax.swing.JRadioButton audioModeRoomButton;
     private javax.swing.JRadioButton audioModeHeadphoneButton;
     private javax.swing.ButtonGroup audioModeGroup;
@@ -94,10 +104,8 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
 	JPanel prefsPane = new JPanel();
 	JPanel controlPane = new JPanel();
 
-	//this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	this.setLayout(new GridBagLayout());
 	this.setBorder(BorderFactory.createEmptyBorder());
-	
 	
         jbCancel = new javax.swing.JButton();
         jbSave = new javax.swing.JButton();
@@ -112,18 +120,6 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
 	labelDefaultVSDFilePath = new javax.swing.JLabel();
 	labelDefaultVSDFileName = new javax.swing.JLabel();
 
-	//listenerPos = new Vector3dPanel("X", "Y", "Z", 0.0d, -1000.0d, 1000.0d, 1.0d);
-	JPanel lpPanel = new JPanel();
-	lpPanel.setLayout(new BoxLayout(lpPanel, BoxLayout.LINE_AXIS));
-	lpPanel.add(new JLabel("Listener Position:"));
-	//lpPanel.add(listenerPos);
-
-	//listenerOtn = new Vector2dPanel("Bearing", "Azimuth", 0.0d, 0.0d, 360.0d, 1.0d);
-	JPanel loPanel = new JPanel();
-	loPanel.setLayout(new BoxLayout(loPanel, BoxLayout.LINE_AXIS));
-	loPanel.add(new JLabel("Listener Orientation:"));
-	//loPanel.add(listenerOtn);
-
 	// Audio Mode
 	audioModeRoomButton = new JRadioButton("Room Ambient");
 	audioModeHeadphoneButton = new JRadioButton("Headphones");
@@ -137,13 +133,13 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
 	amPanel.add(audioModeHeadphoneButton);
 
 	// Get label strings from the resource bundle and assign it.
-	cbAutoStartEngine.setText(vsdecoderBundle.getString("AutoStartEngine"));
-	cbAutoLoadVSDFile.setText(vsdecoderBundle.getString("AutoLoadVSDFile"));
+	cbAutoStartEngine.setText(Bundle.getMessage("AutoStartEngine"));
+	cbAutoLoadVSDFile.setText(Bundle.getMessage("AutoLoadVSDFile"));
 	tfDefaultVSDFilePath.setColumns(50);
 	tfDefaultVSDFilePath.setColumns(50);
-	labelDefaultVSDFilePath.setText(vsdecoderBundle.getString("DefaultVSDFilePath"));
-	labelDefaultVSDFileName.setText(vsdecoderBundle.getString("DefaultVSDFileName"));
-        labelApplyWarning.setText(vsdecoderBundle.getString("ExVSDecoderLabelApplyWarning"));
+	labelDefaultVSDFilePath.setText(Bundle.getMessage("DefaultVSDFilePath"));
+	labelDefaultVSDFileName.setText(Bundle.getMessage("DefaultVSDFileName"));
+        labelApplyWarning.setText(Bundle.getMessage("ExVSDecoderLabelApplyWarning"));
 
 	// Set action listener to check consistency when the user makes changes.
         java.awt.event.ActionListener al = new java.awt.event.ActionListener() {
@@ -157,7 +153,7 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
         tfDefaultVSDFileName.addActionListener(al);
 
 	// Set action listeners for save / cancel / reset buttons
-        jbSave.setText(vsdecoderBundle.getString("VSDecoderPrefsSave"));
+        jbSave.setText(Bundle.getMessage("VSDecoderPrefsSave"));
         jbSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbSaveActionPerformed(evt);
@@ -165,14 +161,14 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
         });
         jbSave.setVisible(false);
         
-        jbCancel.setText(vsdecoderBundle.getString("VSDecoderPrefsReset"));
+        jbCancel.setText(Bundle.getMessage("VSDecoderPrefsReset"));
         jbCancel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbCancelActionPerformed(evt);
             }
         });
        
-        jbApply.setText(vsdecoderBundle.getString("VSDecoderPrefsApply"));
+        jbApply.setText(Bundle.getMessage("VSDecoderPrefsApply"));
         jbApply.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jbApplyActionPerformed(evt);
@@ -181,12 +177,8 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
         
         prefsPane.setLayout(new GridBagLayout());
 	prefsPane.setBorder(BorderFactory.createEmptyBorder());
-	//prefsPane.setMinimumSize(new Dimension(450, 250));
-	//controlPane.setMinimumSize(new Dimension(450, 75));
 	controlPane.setLayout(new GridBagLayout());
 	controlPane.setBorder(BorderFactory.createEmptyBorder());
-	//setMinimumSize(new Dimension(600, 1000));
-	//setPreferredSize(new Dimension(600, 1000));
         
         prefsPane.add(cbAutoStartEngine, setConstraints(new Insets(2,10,2,2), 0, 0, 2, GridBagConstraints.NONE)); //1
         prefsPane.add(cbAutoLoadVSDFile, setConstraints(new Insets(2,10,2,2), 0, 1, 2, GridBagConstraints.NONE)); //2
@@ -194,8 +186,6 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
         prefsPane.add(tfDefaultVSDFileName, setConstraints(new Insets(2,10,2,2), 1, 3, 2, GridBagConstraints.HORIZONTAL)); //4
         prefsPane.add(labelDefaultVSDFilePath, setConstraints(new Insets(2,10,2,2), 0, 2, 1, GridBagConstraints.NONE)); //5
         prefsPane.add(labelDefaultVSDFileName, setConstraints(new Insets(2,10,2,2), 0, 3, 1, GridBagConstraints.NONE)); //6
-	prefsPane.add(lpPanel, setConstraints(new Insets(2,10,2,2), 0, 4, 2, GridBagConstraints.HORIZONTAL)); //17
-	prefsPane.add(loPanel, setConstraints(new Insets(2,10,2,2), 0, 5, 2, GridBagConstraints.HORIZONTAL)); //17
 	prefsPane.add(amPanel, setConstraints(new Insets(2,10,2,2), 0, 6, 2, GridBagConstraints.HORIZONTAL));
 
 	
@@ -207,11 +197,6 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
 	this.add(prefsPane, setConstraints(new Insets(2,2,2,2), 0, 0, 1, GridBagConstraints.NONE ));
 	this.add(controlPane, setConstraints(new Insets(2,2,2,2), 0, 1, 1, GridBagConstraints.NONE ));
 
-	//this.setMinimumSize(new Dimension(Math.max(prefsPane.getPreferredSize().getWidth(), controlPane.getWidth())+20, prefsPane.getHeight()+controlPane.getHeight()+20));
-	//this.setPreferredSize(new Dimension(Math.max(prefsPane.getPreferredSize().getWidth(), controlPane.getPreferredSize().getWidth())+40, 
-	//				    prefsPane.getPreferredSize().getHeight()+controlPane.getPreferredSize().getHeight()+40));
-	//this.setMinimumSize(new Dimension(800,600));
-	this.setPreferredSize(new Dimension(800,600));
 	this.setVisible(true);
     }
 
@@ -230,9 +215,6 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
 	    audioModeRoomButton.setSelected(true);
 	    break;
 	}
-	//tfListenerPosX.setText("" + tp.getListenerPosition().getX());
-	//tfListenerPosY.setText("" + tp.getListenerPosition().getY());
-	//tfListenerPosZ.setText("" + tp.getListenerPosition().getY());
     }
     
     private VSDecoderPreferences getVSDecoderPreferences()
@@ -242,7 +224,7 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
     	tp.setAutoLoadDefaultVSDFile(cbAutoLoadVSDFile.isSelected() );
     	tp.setDefaultVSDFilePath(tfDefaultVSDFilePath.getText() );
     	tp.setDefaultVSDFileName(tfDefaultVSDFileName.getText());
-	//tp.setListenerPosition(new ListeningSpot("Listener", listenerPos.getValue()));
+	tp.setListenerPosition(VSDecoderManager.instance().getVSDecoderPreferences().getListenerPosition());
 	if (audioModeRoomButton.isSelected())
 	    tp.setAudioMode(VSDecoderPreferences.AudioMode.ROOM_AMBIENT);
 	else if (audioModeHeadphoneButton.isSelected())
@@ -297,20 +279,20 @@ public class VSDecoderPreferencesPane extends javax.swing.JPanel implements Prop
     	}
     }
 
-	public void setContainer(JFrame f) {
-		m_container = f;
+    public void setContainer(JFrame f) {
+	m_container = f;
         jbSave.setVisible(true);
-        jbCancel.setText(vsdecoderBundle.getString("VSDecoderPrefsCancel"));
+        jbCancel.setText(Bundle.getMessage("VSDecoderPrefsCancel"));
+    }
+    
+    public void propertyChange(PropertyChangeEvent evt) {
+	if ((evt == null) || (evt.getPropertyName() == null)) return;
+	if (evt.getPropertyName().compareTo("VSDecoderPreferences") == 0) {
+	    if ((evt.getNewValue() == null) || (! (evt.getNewValue() instanceof VSDecoderPreferences))) return;
+	    setComponents((VSDecoderPreferences)evt.getNewValue());
+	    checkConsistency();
 	}
-	
-	public void propertyChange(PropertyChangeEvent evt) {
-		if ((evt == null) || (evt.getPropertyName() == null)) return;
-		if (evt.getPropertyName().compareTo("VSDecoderPreferences") == 0) {
-			if ((evt.getNewValue() == null) || (! (evt.getNewValue() instanceof VSDecoderPreferences))) return;
-			setComponents((VSDecoderPreferences)evt.getNewValue());
-			checkConsistency();
-		}
-	}
+    }
 
     // Unused - yet.
     //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPreferencesPane.class.getName());

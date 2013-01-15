@@ -71,7 +71,6 @@ public class VSDecoderManager implements PropertyChangeListener {
     private static VSDecoderManagerThread thread = null; // thread for running the manager
 
     private VSDecoderPreferences vsdecoderPrefs; // local pointer to the preferences object
-    private JmriJFrame vsdecoderPreferencesFrame; // Frame for holding the preferences GUI  (do we need this?)
 
     private JmriJFrame managerFrame = null;
 
@@ -113,24 +112,6 @@ public class VSDecoderManager implements PropertyChangeListener {
 
     public VSDecoderPreferences getVSDecoderPreferences() {
 	return(vsdecoderPrefs);
-    }
-
-    private void buildVSDecoderPreferencesFrame() {
-	vsdecoderPreferencesFrame = new JmriJFrame(Bundle.getMessage("FieldVSDecoderPreferencesFrameTitle"));
-	VSDecoderPreferencesPane tpP = new VSDecoderPreferencesPane(vsdecoderPrefs);
-	vsdecoderPreferencesFrame.add(tpP);
-	tpP.setContainer(vsdecoderPreferencesFrame);
-	vsdecoderPreferencesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-	vsdecoderPreferencesFrame.pack();
-    }
-
-    public void showVSDecoderPreferences() {
-	if (vsdecoderPreferencesFrame == null) {
-	    buildVSDecoderPreferencesFrame();
-	}
-	vsdecoderPreferencesFrame.pack();
-	vsdecoderPreferencesFrame.setVisible(true);
-	vsdecoderPreferencesFrame.requestFocus();
     }
 	
     public JmriJFrame provideManagerFrame() {

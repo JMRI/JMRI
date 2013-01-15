@@ -43,14 +43,10 @@ public class DebugMenu extends JMenu {
             new jmri.util.swing.sdi.JmriJFrameInterface(),
             "jmri.jmrit.log.Log4JTreePane"));
         add(new JSeparator());
-	JMenu vsdMenu = new JMenu(Bundle.getMessage("VSDMenuItem"));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("VSDecoderManagerAction"), true));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getMessage("VSDecoderLocationManager"), null));
-	JMenu oldVsdMenu = new JMenu(Bundle.getMessage("OldVSDInterfaceMenuItem"));
-	oldVsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("OldVSDecoderWindow"), false));
-	oldVsdMenu.add(new jmri.jmrit.beantable.SetPhysicalLocationAction(Bundle.getMessage("OldSetReporterLocationsAction"), null));
-	oldVsdMenu.setEnabled(false);
-	vsdMenu.add(oldVsdMenu);
+	JMenu vsdMenu = new JMenu(Bundle.getMessage("MenuItemVSDecoder"));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("MenuItemVSDecoderManager"), true));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getMessage("MenuItemVSDecoderLocationManager"), null));
+	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.VSDPreferencesAction(Bundle.getMessage("MenuItemVSDecoderPreferences")));
 	add(vsdMenu);
 
 

@@ -69,5 +69,6 @@ public class VSDOptionsDialog extends JDialog {
 	dispose();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDOptionsDialog.class.getName());
+    // Log not used... yet...
+    //    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDOptionsDialog.class.getName());
 }

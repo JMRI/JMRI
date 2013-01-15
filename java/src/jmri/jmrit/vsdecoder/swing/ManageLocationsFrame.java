@@ -38,7 +38,6 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
 import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
-import jmri.jmrit.vsdecoder.VSDecoderPreferencesAction;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.ReporterManager;
 import jmri.Reporter;
@@ -254,7 +253,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
 
 	JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-	editMenu.add(new VSDecoderPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
+	editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load
