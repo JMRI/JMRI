@@ -110,6 +110,15 @@
     </xs:annotation>
   </xs:element>
 
+  <xs:element name="pane" type="PaneType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "pane" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
 
   <xs:complexType name="FamilyType">
     <xs:sequence>
@@ -590,6 +599,27 @@
 
   <xs:complexType name="PaneType">
     <xs:sequence>
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) providing copyright information in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+        
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+        
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+
       <xs:choice>
         <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded"/>
