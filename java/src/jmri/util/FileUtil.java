@@ -1,6 +1,7 @@
 // FileUtil.java
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -333,7 +334,7 @@ public class FileUtil {
      * @see #findURL(java.lang.String, java.lang.String[]) 
      */
     static public InputStream findInputStream(String path) {
-        return FileUtil.findInputStream(path, (String[]) null);
+        return FileUtil.findInputStream(path, new String[] {});
     }
 
     /**
@@ -348,7 +349,7 @@ public class FileUtil {
      * @see #findURL(java.lang.String) 
      * @see #findURL(java.lang.String, java.lang.String[]) 
      */
-    static public InputStream findInputStream(String path, String... searchPaths) {
+    static public InputStream findInputStream(String path, @NonNull String... searchPaths) {
         URL file = FileUtil.findURL(path, searchPaths);
         if (file != null) {
             try {
@@ -372,7 +373,7 @@ public class FileUtil {
      * @see #findURL(java.lang.String, java.lang.String[]);
      */
     static public URL findURL(String path) {
-        return FileUtil.findURL(path, (String[]) null);
+        return FileUtil.findURL(path, new String[] {});
     }
 
     /**
@@ -392,7 +393,10 @@ public class FileUtil {
      * @see #findInputStream(java.lang.String, java.lang.String[]) 
      * @see #findURL(java.lang.String) 
      */
-    static public URL findURL(String path, String... searchPaths) {
+    static public URL findURL(String path, @NonNull String... searchPaths) {
+        if (log.isDebugEnabled()) {
+            log.debug("Attempting to find " + path + " in " + searchPaths.toString());
+        }
         try {
             // attempt to return path from preferences directory
             File file = new File(FileUtil.getPreferencesPath() + path);
@@ -415,13 +419,16 @@ public class FileUtil {
         }
         // return path if in jmri.jar or null
         URL resource = FileUtil.class.getClassLoader().getResource(path);
-        if (resource == null) {
+        if (resource == null && searchPaths != null) {
             for (String searchPath : searchPaths) {
                 resource = FileUtil.findURL(searchPath + File.separator + path);
                 if (resource != null) {
                     return resource;
                 }
             }
+        }
+        if (resource == null) {
+            log.warn("Unable to find " + path);
         }
         return resource;
     }
