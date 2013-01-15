@@ -61,18 +61,9 @@
         <comment>Range 0-63</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <variable label="Ch. 1 for Address" CV="28" mask="XXXXXXXV" item="RailCom Address" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Ch. 1 for Address</label>
-      </variable>
-      <variable label="Ch. 2 for Data" CV="28" mask="XXXXXXVX" item="RailCom Data" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Ch. 2 for Data</label>
-      </variable>
-      <variable label="Ch. 1 for Command Ack." CV="28" mask="XXXXXVXX" item="RailCom Command" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Ch. 1 for Command Ack.</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/railcom_cv28_29.xml"/>
+
       <variable label="Locomotive Direction in Forward" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
         <enumVal>
           <enumChoice choice="Normal">
@@ -98,10 +89,6 @@
       <variable label="Loco can operate on conventional DC" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Loco can operate on conventional DC</label>
-      </variable>
-      <variable label="Enable RailCom" CV="29" mask="XXXXVXXX" item="Enable RailCom" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable RailCom</label>
       </variable>
       <variable label="Speed Table Selection" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
@@ -188,85 +175,8 @@
 
       <xi:include href="http://jmri.org/xml/decoders/lenz/fn_ctrl_57_59.xml"/>
 
-      <variable label="Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) " CV="60" item="Lighting effects A/B" default="0" comment="Range 0-44">
-        <decVal min="0" max="44"/>
-        <label>Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) </label>
-        <comment>Range 0-44</comment>
-      </variable>
-      <variable label="Toggle effect (outputs A/B) with F1" CV="61" mask="XXXXXXXV" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs A/B) with F1</label>
-      </variable>
-      <variable label="Toggle effect (outputs A/B) with F2" CV="61" mask="XXXXXXVX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs A/B) with F2</label>
-      </variable>
-      <variable label="Toggle effect (outputs A/B) with F3" CV="61" mask="XXXXXVXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs A/B) with F3</label>
-      </variable>
-      <variable label="Toggle effect (outputs A/B) with F4" CV="61" mask="XXXXVXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs A/B) with F4</label>
-      </variable>
-      <variable label="Toggle effect (outputs A/B) with F5" CV="61" mask="XXXVXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs A/B) with F5</label>
-      </variable>
-      <variable label="Toggle effect (outputs A/B) with F6" CV="61" mask="XXVXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs A/B) with F6</label>
-      </variable>
-      <variable label="Toggle effect (outputs A/B) with F7" CV="61" mask="XVXXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs A/B) with F7</label>
-      </variable>
-      <variable label="Toggle effect (outputs A/B) with F8" CV="61" mask="VXXXXXXX" tooltip="Toggle Lighting Effect for outputs A and B 'off' using F8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs A/B) with F8</label>
-      </variable>
-      <variable label="Enter the value corresponding to the desired lighting effect for D/C outputs (0-53) " CV="62" minOut="4" item="Lighting effects C/D" default="0" comment="Range 0-53">
-        <decVal min="0" max="53"/>
-        <label>Enter the value corresponding to the desired lighting effect for D/C outputs (0-53) </label>
-        <comment>Range 0-53</comment>
-      </variable>
-      <variable label="Flashing frequency for outputs C and D (255 = .13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)" CV="63" minOut="4" tooltip="Flashing rate, default = 1 sec, f= 1/(.03* 1 + value))" item="Function 3 options" default="32" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Flashing frequency for outputs C and D (255 = .13 Hz, 32 = 1 Hz, 15 = 2 Hz, 0 = 33 Hz)</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="Toggle effect (outputs C/D) with F1" CV="64" mask="XXXXXXXV" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs C/D) with F1</label>
-      </variable>
-      <variable label="Toggle effect (outputs C/D) with F2" CV="64" mask="XXXXXXVX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs C/D) with F2</label>
-      </variable>
-      <variable label="Toggle effect (outputs C/D) with F3" CV="64" mask="XXXXXVXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs C/D) with F3</label>
-      </variable>
-      <variable label="Toggle effect (outputs C/D) with F4" CV="64" mask="XXXXVXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs C/D) with F4</label>
-      </variable>
-      <variable label="Toggle effect (outputs C/D) with F5" CV="64" mask="XXXVXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs C/D) with F5</label>
-      </variable>
-      <variable label="Toggle effect (outputs C/D) with F6" CV="64" mask="XXVXXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs C/D) with F6</label>
-      </variable>
-      <variable label="Toggle effect (outputs C/D) with F7" CV="64" mask="XVXXXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs C/D) with F7</label>
-      </variable>
-      <variable label="Toggle effect (outputs C/D) with F8" CV="64" mask="VXXXXXXX" minOut="4" tooltip="Toggle Lighting Effect for outputs C and D 'off' using F8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Toggle effect (outputs C/D) with F8</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/lighting_cv60_cv64.xml"/>
+
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
