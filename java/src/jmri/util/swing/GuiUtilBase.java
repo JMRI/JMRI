@@ -36,7 +36,7 @@ public class GuiUtilBase {
         }
 
         if (child.getChild("icon") != null) {
-            icon = new ImageIcon(FileUtil.findFileAsURL(child.getChild("icon").getText()));
+            icon = new ImageIcon(FileUtil.findURL(child.getChild("icon").getText()));
         }
         //This bit does not size very well, but it works for now.
         if(child.getChild("option") !=null){

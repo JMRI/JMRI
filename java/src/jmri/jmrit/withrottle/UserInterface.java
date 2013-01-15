@@ -148,7 +148,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         panel.add(vLabel, con);
 */
         JLabel icon;
-        java.net.URL imageURL = FileUtil.findFileAsURL("resources/IconForWiThrottle.gif");
+        java.net.URL imageURL = FileUtil.findURL("resources/IconForWiThrottle.gif");
 
         if (imageURL != null) {
             ImageIcon image = new ImageIcon(imageURL);

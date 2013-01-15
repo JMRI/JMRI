@@ -51,7 +51,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 if (log.isDebugEnabled()) {
                     log.debug("http finds filename: " + filename);
                 }
-                stream = FileUtil.findFileAsInputStream(filename);
+                stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
                     return new InputSource(stream);
                 } else {
@@ -63,7 +63,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 // type 1
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
                 if (log.isDebugEnabled()) log.debug("starts with ../DTD finds filename: "+filename);
-                stream = FileUtil.findFileAsInputStream(filename);
+                stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
                     return new InputSource(stream);
                 } else {
@@ -74,7 +74,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 // type 2
                 String filename = "xml"+File.separator+"DTD"+File.separator+path;
                 if (log.isDebugEnabled()) log.debug("doesn't contain / finds filename: "+filename);
-                stream = FileUtil.findFileAsInputStream(filename);
+                stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
                     return new InputSource(stream);
                 } else {
@@ -86,7 +86,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     // still looking for a local file, this must be absolute or full relative path
                     if (log.isDebugEnabled()) log.debug("scheme file finds path: "+path);
                     // now we see if we've got a valid path
-                    stream = FileUtil.findFileAsInputStream(path);
+                    stream = FileUtil.findInputStream(path);
                     if (stream != null) {
                         if (log.isDebugEnabled()) {
                             log.debug("file exists, used");
@@ -128,7 +128,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                                     + path.substring(path.lastIndexOf(realSeparator), path.length());
                             path = modifiedPath;
                         }
-                        stream = FileUtil.findFileAsInputStream(path);
+                        stream = FileUtil.findInputStream(path);
                         if (log.isDebugEnabled()) {
                             log.debug("attempting : " + path);
                         }

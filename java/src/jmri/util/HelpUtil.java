@@ -153,14 +153,14 @@ public class HelpUtil {
                 Locale locale = Locale.getDefault();
                 String language = locale.getLanguage();
                 String helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
-                URL hsURL = FileUtil.findFileAsURL(helpsetName);
+                URL hsURL = FileUtil.findURL(helpsetName);
                 if (hsURL != null) {
                     log.debug("JavaHelp using "+helpsetName);
                 } else {
                     log.warn("JavaHelp: File "+helpsetName+" not found, dropping to default");
                     language = "en";
                     helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
-                    hsURL = FileUtil.findFileAsURL(helpsetName);
+                    hsURL = FileUtil.findURL(helpsetName);
                 }
                 try {
                     globalHelpSet = new HelpSet(null, hsURL);

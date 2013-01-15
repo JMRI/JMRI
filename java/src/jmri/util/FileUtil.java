@@ -2,8 +2,6 @@
 package jmri.util;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -314,50 +312,67 @@ public class FileUtil {
 
     /**
      * Get the URL of a portable filename if it can be located using
-     * {@link #findFileAsURL(java.lang.String)}
+     * {@link #findURL(java.lang.String)}
      *
      * @param path
      * @return
      */
     static public URL findExternalFilename(String path) {
-        return FileUtil.findFileAsURL(FileUtil.getExternalFilename(path));
+        return FileUtil.findURL(FileUtil.getExternalFilename(path));
     }
 
     /**
      * Search for a file or JAR resource by name and return the
-     * {@link java.io.InputStream} for that file. <p> Search order is:<ol>
-     * <li>As a {@link java.io.File} in the user preferences directory</li>
-     * <li>As a File in the current working directory (usually, but not always
-     * the JMRI distribution directory)</li> <li>As a File in the JMRI
-     * distribution directory</li> <li>As a resource in jmri.jar</li> </ol>
+     * {@link java.io.InputStream} for that file. Search order is defined by
+     * {@link #findURL(java.lang.String, java.lang.String[])}.
      *
      * @param path The relative path of the file or resource.
      * @return InputStream or null.
+     * @see #findInputStream(java.lang.String, java.lang.String[]) 
+     * @see #findURL(java.lang.String) 
+     * @see #findURL(java.lang.String, java.lang.String[]) 
      */
-    static public InputStream findFileAsInputStream(String path) {
-        // attempt to return path from preferences directory
-        File file = new File(FileUtil.getPreferencesPath() + path);
-        try {
-            return new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            // ignore error
+    static public InputStream findInputStream(String path) {
+        return FileUtil.findInputStream(path, (String[]) null);
+    }
+
+    /**
+     * Search for a file or JAR resource by name and return the
+     * {@link java.io.InputStream} for that file. Search order is defined by
+     * {@link #findURL(java.lang.String, java.lang.String[])}.
+     *
+     * @param path The relative path of the file or resource.
+     * @param searchPaths a list of paths to search for the path in
+     * @return InputStream or null.
+     * @see #findInputStream(java.lang.String, java.lang.String[]) 
+     * @see #findURL(java.lang.String) 
+     * @see #findURL(java.lang.String, java.lang.String[]) 
+     */
+    static public InputStream findInputStream(String path, String... searchPaths) {
+        URL file = FileUtil.findURL(path, searchPaths);
+        if (file != null) {
+            try {
+                return file.openStream();
+            } catch (IOException ex) {
+                log.error(ex.getLocalizedMessage(), ex);
+            }
         }
-        // attempt to return path from current working directory
-        file = new File(path);
-        try {
-            return new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            // ignore error
-        }
-        // attempt to return path from JMRI distribution directory
-        file = new File(FileUtil.getProgramPath() + path);
-        try {
-            return new FileInputStream(file);
-        } catch (FileNotFoundException ex) {
-            // ignore error
-        }
-        // return path if in jmri.jar or null
-        return FileUtil.class.getClassLoader().getResourceAsStream(path);
+        return null;
+    }
+
+    /**
+     * Search for a file or JAR resource by name and return the
+     * {@link java.net.URL} for that file. Search order is defined by
+     * {@link #findURL(java.lang.String, java.lang.String[])}.
+     *
+     * @param path The relative path of the file or resource.
+     * @return The URL or null.
+     * @see #findInputStream(java.lang.String) 
+     * @see #findInputStream(java.lang.String, java.lang.String[]) 
+     * @see #findURL(java.lang.String, java.lang.String[]);
+     */
+    static public URL findURL(String path) {
+        return FileUtil.findURL(path, (String[]) null);
     }
 
     /**
@@ -366,12 +381,18 @@ public class FileUtil {
      * {@link java.io.File} in the user preferences directory</li> <li>As a File
      * in the current working directory (usually, but not always the JMRI
      * distribution directory)</li> <li>As a File in the JMRI distribution
-     * directory</li> <li>As a resource in jmri.jar</li> </ol>
+     * directory</li> <li>As a resource in jmri.jar</li> <li>For any provided
+     * searchPaths, iterate over the searchPaths by prepending each searchPath
+     * to the path and following the above search order.</li></ol>
      *
-     * @param path The relative path of the file or resource.
-     * @return The URL or null.
+     * @param path The relative path of the file or resource
+     * @param searchPaths a list of paths to search for the path in
+     * @return The URL or null
+     * @see #findInputStream(java.lang.String) 
+     * @see #findInputStream(java.lang.String, java.lang.String[]) 
+     * @see #findURL(java.lang.String) 
      */
-    static public URL findFileAsURL(String path) {
+    static public URL findURL(String path, String... searchPaths) {
         try {
             // attempt to return path from preferences directory
             File file = new File(FileUtil.getPreferencesPath() + path);
@@ -393,7 +414,16 @@ public class FileUtil {
             return null;
         }
         // return path if in jmri.jar or null
-        return FileUtil.class.getClassLoader().getResource(path);
+        URL resource = FileUtil.class.getClassLoader().getResource(path);
+        if (resource == null) {
+            for (String searchPath : searchPaths) {
+                resource = FileUtil.findURL(searchPath + File.separator + path);
+                if (resource != null) {
+                    return resource;
+                }
+            }
+        }
+        return resource;
     }
 
     /**
@@ -403,7 +433,7 @@ public class FileUtil {
      * @return a URI or null if the conversion would have caused a
      * {@link java.net.URISyntaxException}
      */
-    static public URI getURIforURL(URL url) {
+    static public URI urlToURI(URL url) {
         try {
             return url.toURI();
         } catch (URISyntaxException ex) {
@@ -414,6 +444,7 @@ public class FileUtil {
 
     /**
      * Get the JMRI distribution jar file.
+     *
      * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
      */
     static public JarFile jmriJarFile() {
