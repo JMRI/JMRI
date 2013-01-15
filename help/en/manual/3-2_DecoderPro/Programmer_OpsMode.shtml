@@ -28,7 +28,7 @@
 <h1>Ops Mode Programming</h1>
 
 <div align=right>
-<p><a href="index.shtml">Back to Index</a></p>
+<p><a href="index.shtml#Basic Programmer">Back to Index</a></p>
 </div>
 
 
@@ -36,7 +36,7 @@
 <p><b>Operations Mode (Main Track) Programmer</b> - 
     or  <strong>Programming on the main(POM)</strong>.&nbsp; Opens the <strong>Operations Mode (Main Track)</strong> windowThis  lets you program a specific decoder on the layout, even while it is 
 operating. However, because it addresses a specific  decoder address, some  decoders will not allow you to change the  decoder's address using this method!</p>
-<p><img src="images/Ops_Mode_setup.png" alt="Ops Mode setup window" border="5" class="BOXIT"></p>
+<p><img src="images/Programmer_Ops.png" width="424" height="167" alt="Ops programmer"></p>
 <p>Some  command stations will only &quot;broadcast&quot; programming commands,  which can mean every locomotive on 
        the layout gets the same programming! The same is true if  you try to program a loco with address zero (or forget to enter an address when  you start). &nbsp;If in doubt, check  your documentation. </p>
 <blockquote>  

@@ -32,7 +32,7 @@ Error Messages
 <hr>
 <p>Various things can go wrong when JMRI tries to work  with your DCC command station to program a DCC decoder.  
 This page lists the error message that can result, and   describes what they mean.</p>
-<h4><a href="../html/Errors.shtml">JMRI Error Codes</a></h4>
+<h4><a href="http://jmri.org/help/en/html/Errors.shtml">JMRI Error Codes</a></h4>
 
 <dl>
  

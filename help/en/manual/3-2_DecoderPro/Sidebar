@@ -13,48 +13,56 @@
 
 <dl><!-- main table of contents -->
 
-<dt><a href="Getting_Started.shtml">Getting Started</a></dt>
-    <dd>
+	<dd>
     <ul>
-    <li><a href="Getting_Started.shtml#What is DCC">What is DCC?</a>
-    <li><a href="Getting_Started.shtml#DCC systems">What DCC systems will DecoderPro&reg; work with?</a></dt>
-    <li><a href="Getting_Started.shtml#DCC Hardware">What hardware do I need?</a>
-    <li><a href="Getting_Started.shtml#Start">How do I start the program?</a>
-    <li><a href="Getting_Started.shtml#Preferences">How do I set up my preferences?</a>
-    </ul>
-    </dd>
-    
-<dt><a NAME="Setting up"></a><a href="Basic_Programming.shtml#Top">Using DecoderPro</a>&reg;</dt>
-    <dd>
-    <ul>
-    <li><a href="Basic_Programming.shtml#Setting Up">How do I set up to program a decoder?</a>
-    <li><a href="Basic_Programming.shtml#Programming Modes">What are the Programming Modes?</a>
-    </ul>
-    </dd>
-    
-<dt><a href="Basic_Programming.shtml#Top">DecoderPro&reg; Programming Modes</a></dt>
-    <dd>
-    <ul>
-    <li><a href="Simple_Programmer.shtml">Single CV Programmer</a></li>
-    <li><a href="Basic_Programming.shtml#ServiceMode">Service Mode Programmer</a></li>
-    <li><a href="Basic_Programming.shtml#OpsMode">Ops Mode Programming</a></li>
-    <li><a href="Multi_Decoder_Control.shtml">Multi Decoder Control (Programming)</a></li>
+    <li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
+    <li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI Software</a></li>
     </ul>
     </dd>
 
-<dt><a href="Basic_Programming.shtml#Basic Programmer">The Basic Programmer</a></dt>
+<dt>Getting Started</dt>
     <dd>
     <ul>
-    <li><a href="Basic_Programming.shtml#Roster">Entering locomotives in the "Roster"</a></li>
-    <li><a href="Basic_Programming.shtml#Basic 2">The basic programmer</a></li>
-    <li><a href="Basic_Programming.shtml#Read Data">Reading the data from the decoder</a></li>
-    <li><a href="Basic_Programming.shtml#Enter/Edit data">Entering and editing new data</a></li>
-    <li><a href="Basic_Programming.shtml#Write Data">Writing the new data to the decoder</a></li>
-    <li><a href="Basic_Programming.shtml#Save Data">Saving the new data to a file</a></li>
-    <li><a href="Basic_Programming.shtml#Do More">What if I need to do more?</a></li>
+    <li><a href="Start_DCC.shtml">What is DCC?</a></li>
+    <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg; work with?</a></li>
+    <li><a href="Start_DCC_Hardware.shtml">What hardware do I need?</a></li>
+    <li><a href="Start_DecoderPro.shtml">How do I start the program?</a></li>
+    <li><a href="Start_Preferences.shtml">How do I set up my preferences?</a></li>
     </ul>
+    </dd>
+    
+<dt>Using DecoderPro®</dt>
+    <dd>
+    <ul>
+    <li><a href="Programmer_Setup.shtml">How do I set up to program a decoder?</a></li>
+    <li><a href="Programmer_Start.shtml">What are the Programming Modes?</a></li>
+    </ul>
+    </dd>
+    
+<dt>DecoderPro® Programming Modes</dt>
+    <dd>
+    <ul>
+    <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
+    <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
+    <li><a href="Programmer_OpsMode.shtml">Ops Mode Programming</a></li>
+    <li><a href="Programmer_Multi_Decoder.shtml">Multi Decoder Control (Programming)</a></li>
+    </ul>
+    </dd>
 
-<dt><a NAME="Advanced Programmer"></a>The Comprehensive Programmer</dt>
+<dt>The Basic Programmer</dt>
+    <dd>
+    <ul>
+    <li><a href="Basic_Start.shtml">Entering locomotives in the "Roster"</a></li>
+    <li><a href="Basic_BasicPane.shtml">The basic programmer</a></li>
+    <li><a href="Basic_BasicPane.shtml">Reading the data from the decoder</a></li>
+    <li><a href="Basic_BasicPane.shtml">Entering and editing new data</a></li>
+    <li><a href="Basic_BasicPane.shtml">Writing the new data to the decoder</a></li>
+    <li><a href="Basic_BasicPane.shtml">Saving the new data to a file</a></li>
+    <li><a href="Basic_BasicPane.shtml#Do More">What if I need to do more?</a></li>
+    </ul>
+    </dd>
+    
+<dt>The Comprehensive Programmer</dt>
     <dd>
     <ul>
     <li><a href="Comp_Setup_Roster.shtml">Set-up and Roster Panes</a></li>
@@ -63,7 +71,30 @@
     <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
     <li><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></li>
     <li><a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
-    <li><a href="Comp_FunctionLabel.shtml">Function Labels Pane</a></li>
+    
+    <li><a href="Comp_LightFX.shtml">Lights Pane</a></li>
+    <li><a href="Comp_Consist.shtml">Consisting Pane</a></li>
+    <li><a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
+    <li><a href="Comp_Analog.shtml">Analog Controls Pane</a></li>
+    <li><a href="Comp_SoundFX.shtml">Sound Pane</a></li>
+    <li><a href="Comp_SoundLevels.shtml"> Sound Levels Pane</a></li>
+    <li><a href="Comp_GlobalCVs.shtml">Global CV Pane</a></li>
+    <li><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></li>
+    <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
+    </ul>
+    </dd>
+<dt>The Advanced Programmer</dt>
+    <dd>
+    <ul>
+    <li><a href="Adv_start.shtml">Starting Advanced Programmer</a></li>
+    <li><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></li>
+    <li><a href="Adv_RosterMedia.shtml">Roster Media</a></li>
+    <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
+    <li><a href="Comp_Motor.shtml">Motor Control Pane</a></li>
+    <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
+    <li><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></li>
+    <li><a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
+    
     <li><a href="Comp_LightFX.shtml">Lights Pane</a></li>
     <li><a href="Comp_Consist.shtml">Consisting Pane</a></li>
     <li><a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
@@ -92,6 +123,8 @@
       <li><a href="Main_Help.shtml">Help Menu</a></li>
     </ul>
     </dd>
+    
+
 
 
 <dt><a NAME="DecoderDefinition"></a>Creating a Decoder Definition </dt>
