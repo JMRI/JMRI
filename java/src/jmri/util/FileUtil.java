@@ -10,6 +10,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.security.CodeSource;
+import java.util.Arrays;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import jmri.jmrit.XmlFile;
@@ -395,7 +396,7 @@ public class FileUtil {
      */
     static public URL findURL(String path, @NonNull String... searchPaths) {
         if (log.isDebugEnabled()) {
-            log.debug("Attempting to find " + path + " in " + searchPaths.toString());
+            log.debug("Attempting to find " + path + " in " + Arrays.toString(searchPaths));
         }
         try {
             // attempt to return path from preferences directory
@@ -414,7 +415,7 @@ public class FileUtil {
                 return file.toURI().toURL();
             }
         } catch (MalformedURLException ex) {
-            log.warn("Unable to get URL for " + path);
+            log.warn("Unable to get URL for " + path, ex);
             return null;
         }
         // return path if in jmri.jar or null
@@ -427,8 +428,8 @@ public class FileUtil {
                 }
             }
         }
-        if (resource == null) {
-            log.warn("Unable to find " + path);
+        if (resource == null && log.isDebugEnabled()) {
+            log.debug("Unable to to get URL for " + path);
         }
         return resource;
     }
