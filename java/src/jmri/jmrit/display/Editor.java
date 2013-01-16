@@ -2236,9 +2236,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         ArrayList <Positionable> selections = new ArrayList <Positionable>();
         for (int i=0; i<_contents.size(); i++) {
             Positionable p = _contents.get(i);
-            if (p instanceof PositionableShape && !event.isShiftDown()) {
-            	continue;
-            }
+//            if (p instanceof PositionableShape && !event.isShiftDown()) {
+//            	continue;
+//            }
             rect= p.getBounds(rect);
             //if (_debug && !_dragging) log.debug("getSelectedItems: rect= ("+rect.x+","+rect.y+
             //                      ") width= "+rect.width+", height= "+rect.height+
