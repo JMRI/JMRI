@@ -663,7 +663,7 @@ public class Router extends TrainCommon {
 				if (firstTrain != null) {
 					if (debugFlag)
 						log.debug("Train (" + firstTrain.getName() + ") can service car ("
-								+ car.toString() + ") from " + track.getLocType()
+								+ car.toString() + ") from " + track.getLocType()	// NOI18N
 								+ " (" // NOI18N
 								+ testCar.getLocationName() + ", " + testCar.getTrackName()	// NOI18N
 								+ ") to next destination (" + testCar.getDestinationName() // NOI18N
