@@ -2561,9 +2561,17 @@ public class TrainBuilder extends TrainCommon {
 				String status = car.testDestination(track.getLocation(), track);
 				if (!status.equals(Track.OKAY)) {
 					// if the track has an alternate track don't abort if the issue was space
-					if (!status.contains(Track.LENGTH) || track.getAlternativeTrack() == null) {
+					if (!status.contains(Track.LENGTH) || track.getAlternativeTrack() == null)
+						continue;
+					// the issue was length, change car length to zero by removing coupler length
+					String carLength = car.getLength();
+					// Try again, but with a zero car length
+					car.setLength(Integer.toString(-Car.COUPLER));
+					String statusZeroCarLength = car.testDestination(track.getLocation(), track);
+					car.setLength(carLength);	// restore	
+					if (!statusZeroCarLength.equals(Track.OKAY)) {
 					log.debug("Can't send car to track (" + track.getLocation().getName() + ", "
-							+ track.getName() + ") due to " + status);	// NOI18N
+							+ track.getName() + ") due to " + statusZeroCarLength);	// NOI18N
 					continue;
 					}
 				}
