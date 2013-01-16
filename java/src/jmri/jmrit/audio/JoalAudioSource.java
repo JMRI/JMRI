@@ -5,6 +5,7 @@ package jmri.jmrit.audio;
 import javax.vecmath.Vector3f;
 import net.java.games.joal.AL;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * JOAL implementation of the Audio Source sub-class.
@@ -156,31 +157,32 @@ public class JoalAudioSource extends AbstractAudioSource {
      * @return True if successfully queued.
      */
     @Override
-    public boolean queueAudioBuffers(List<AudioBuffer> audioBuffers) {
+    public boolean queueAudioBuffers(Queue<AudioBuffer> audioBuffers) {
         // First check we've been initialised
         if (!_initialised) {
             return false;
         }
         
 	// Make an int[] of the buffer ids
-	int[] bids = new int[audioBuffers.size()];
+	int[] bids = new int[1];
 	int i = 0;
-	for (AudioBuffer b : audioBuffers) {
-	    bids[i] = ((JoalAudioBuffer)b).getDataStorageBuffer()[0];
+	// While the list isn't empty, pop elements and process.
+	AudioBuffer b;
+	while ((b = audioBuffers.poll()) != null) {
+	    bids[0] = ((JoalAudioBuffer)b).getDataStorageBuffer()[0];
+	    al.alSourceQueueBuffers(_source[0], 1, bids, 0);
 	    if (log.isDebugEnabled()) log.debug("Queueing Buffer [" + i + "] " + b.getSystemName());
 	    i++;
+	    if (JoalAudioFactory.checkALError()) {
+		log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + b.getDisplayName() +") etc.");
+		return false;
+	    }
 	}
 
         // Bind this AudioSource to the specified AudioBuffer
-	al.alSourceQueueBuffers(_source[0], bids.length, bids, 0);
+	//al.alSourceQueueBuffers(_source[0], bids.length, bids, 0);
         //al.alSourcei(_source[0], AL.AL_BUFFER, ((JoalAudioBuffer)audioBuffer).getDataStorageBuffer()[0]);
-        if (JoalAudioFactory.checkALError()) {
-            log.warn("Error queueing JoalSource (" + this.getSystemName() + ") to AudioBuffers (" + audioBuffers.get(0).getDisplayName() +") etc.");
-            return false;
-        }
         
-        if (log.isDebugEnabled()) log.debug("Queue JoalAudioBuffer (" + audioBuffers.get(0).getSystemName() +
-                                            ") (etc) to JoalAudioSource (" + this.getSystemName() + ")");
         return true;
     }
 

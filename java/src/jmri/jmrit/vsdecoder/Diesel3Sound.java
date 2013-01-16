@@ -193,6 +193,12 @@ class Diesel3Sound extends EngineSound {
 	_soundName = this.getName() + ":" + e.getAttributeValue("name");
 	log.debug("Diesel3: name: " + this.getName() + " soundName " + _soundName);
 	notch_sounds = new HashMap<Integer, D3Notch>();
+	String in = e.getChildText("idle-notch");
+	Integer idle_notch = null;
+	if (in != null)
+	    idle_notch = Integer.parseInt(in);
+	else 
+	    log.warn("No Idle Notch Specified!");
 
 	// Get the notch sounds
 	Iterator<Element> itr =  (e.getChildren("notch-sound")).iterator();
@@ -202,6 +208,7 @@ class Diesel3Sound extends EngineSound {
 	    sb = new D3Notch();
 	    int nn = Integer.parseInt(el.getChildText("notch"));
 	    sb.setNotch(nn);
+	    if (nn == idle_notch) { sb.setIdleNotch(true); log.debug("This Notch (" + nn + ") is Idle."); }
 	    List<Element> elist = el.getChildren("file");
 	    int j = 0;
 	    for (Element fe : elist) {
@@ -269,6 +276,7 @@ class D3Notch {
     private float accel_limit, decel_limit;
     private int loop_index;
     private List<AudioBuffer> loop_bufs = new ArrayList<AudioBuffer>();
+    private Boolean is_idle;
 
     public D3Notch() {
 	this(1, 1, 1, null, null, null);
@@ -300,6 +308,7 @@ class D3Notch {
     public List<AudioBuffer> getLoopBuffers() { return(loop_bufs); }
     public AudioBuffer getLoopBuffer(int idx) { return(loop_bufs.get(idx)); }
     public long getLoopBufferLength(int idx) { return(SoundBite.calcLength(loop_bufs.get(idx))); }
+    public Boolean isIdleNotch() { return(is_idle); }
 
     public void setNextNotch(int n) { next_notch = n; }
     public void setNextNotch(String s) { next_notch = setIntegerFromString(s); }
@@ -317,6 +326,7 @@ class D3Notch {
     public void setLoopBuffers(List<AudioBuffer> l) { loop_bufs = l; }
     public void clearLoopBuffers() { loop_bufs.clear(); }
     public AudioBuffer nextLoopBuffer() { return(loop_bufs.get(incLoopIndex())); }
+    public void setIdleNotch(Boolean i) { is_idle = i; }
 
     public int loopIndex() { return(loop_index); }
     public int incLoopIndex() {
@@ -478,7 +488,7 @@ class D3LoopThread extends Thread {
 	}
 	// Only queue the start buffer if we know we're in the idle notch.
 	// This is indicated by prevNotch == self.
-	if (_notch.getNotch() == _notch.getPrevNotch()) {
+	if (_notch.isIdleNotch()) {
 	    _sound.queueBuffer(start_buf);
 	} else {
 	    _sound.queueBuffer(_notch.nextLoopBuffer());
