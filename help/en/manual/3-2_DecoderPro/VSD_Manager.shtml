@@ -42,11 +42,10 @@ controls required are at the user's fingertips.
 VSDecoder Manager" from the Debug menu.  A simple window will appear,
 with a blank panel, a volume/mute control, and an "Add Decoder"
 button.</p>
-<img src="images/VSD_Manager01.png" alt="Empty VSDecoder Manager"
-width="530" height="150" border="4">
+<p><img src="images/VSD_Manager01.png" width="489" height="173"></p>
 <p>To create a new VSDecoder, click "Add Decoder".  This will open a
-Configuration Dialog ("Config Dialog") where you can choose a
-locomotive and a sound profile.  Once you close the Config Dialog, a
+  Configuration Dialog ("Config Dialog") where you can choose a
+  locomotive and a sound profile.  Once you close the Config Dialog, a
 new Control Panel will be added to the VSDecoder Manager window.</p>
 <p>Each time you add a VSDecoder, a new Control Panel will be added to
 the main window.  You can remove Control Panels by clicking the

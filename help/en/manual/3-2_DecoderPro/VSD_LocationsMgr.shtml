@@ -174,8 +174,7 @@ following.</p>
 the train, then select the train in the locomotive's VSDecoder Options
 pane.  When you <em>MOVE</em> the train in Operations, the sound will
 move to the next location on the Route.</p>
-<p>For more information on Operations, see the <a href="./Ops_Start.shtml">Operations section</a> of
-the Manual.</p>
+<p>For more information on Operations, see the JMRI&reg; Operations User's Guide</p>
 
 <p><em>Note:</em> Operations Locations following is temporarily
 disabled in JMRI 3.1.6 but will be re-enabled in 3.1.7.
