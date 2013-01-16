@@ -190,15 +190,17 @@ class Diesel3Sound extends EngineSound {
 	super.setXml(e, vf);
 	
 	//log.debug("Diesel EngineSound: " + e.getAttribute("name").getValue());
-	_soundName = this.getName() + ":" + e.getAttributeValue("name");
+	_soundName = this.getName() + ":LoopSound";
 	log.debug("Diesel3: name: " + this.getName() + " soundName " + _soundName);
 	notch_sounds = new HashMap<Integer, D3Notch>();
 	String in = e.getChildText("idle-notch");
 	Integer idle_notch = null;
-	if (in != null)
+	if (in != null) {
 	    idle_notch = Integer.parseInt(in);
-	else 
+	} else { 
+	    // leave idle_notch null for now. We'll use it at the end to trigger a "grandfathering" action
 	    log.warn("No Idle Notch Specified!");
+	}
 
 	// Get the notch sounds
 	Iterator<Element> itr =  (e.getChildren("notch-sound")).iterator();
@@ -258,6 +260,22 @@ class Diesel3Sound extends EngineSound {
 	    fn = el.getChild("file").getValue();
 	    //log.debug("Shutdown sound: " + fn);
 	    stop_buffer = D3Notch.getBuffer(vf, fn, "Engine_shutdown", "Engine_Shutdown");
+	}
+
+	// Handle "grandfathering the idle notch indication
+	// If the VSD designer did not explicitly designate an idle notch...
+	// Find the Notch with the lowest notch number, and make it the idle notch.
+	// If there's a tie, this will take the first value, but the notches /should/
+	// all have unique notch numbers.
+	if (idle_notch == null) {
+	    D3Notch min_notch = notch_sounds.get(0);
+	    // No, this is not a terribly efficient "min" operation.  But that's oK.
+	    for (D3Notch n : notch_sounds.values()) { 
+		if (n.getNotch() < min_notch.getNotch())
+		    min_notch = n;
+	    }
+	    log.debug("No Idle Notch Specified.  Choosing Notch (" + min_notch.getNotch() + ") to be the Idle Notch.");
+	    min_notch.setIdleNotch(true);
 	}
 
 	// Kick-start the loop thread.
