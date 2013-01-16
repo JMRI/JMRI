@@ -208,9 +208,9 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         }
         int row = _table.getSelectedRow();
         if (log.isDebugEnabled()) log.debug("getNamedBean: from table \""+_itemType+ "\" at row "+row);
-        if (row<0) {
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("noRowSelected"), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+        if (row<0) { 
+//        	JOptionPane.showMessageDialog(null, ItemPalette.rbp.getString("noRowSelected"), 
+//        				ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
         return _model.getBeanAt(row);
