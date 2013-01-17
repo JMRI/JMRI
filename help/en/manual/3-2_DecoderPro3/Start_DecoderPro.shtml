@@ -47,7 +47,15 @@ can do this fairly quickly, but older ones will feel like they're taking
 forever. Be patient - it will come up eventually! Even on older computers, once the program is up the response time is quite good.
 <p>If this is the first time you have run the program after you installed the software, the <a href="Start_Preferences.shtml">Preferences</a> screen will  come up automatically to allow  you to set up the system for your particular configuration.&nbsp; Also if you change  your system configuration, or if you have your laptop away from the railroad,  but you want to play with JMRI there is a simulator mode you may want to  try.&nbsp; &nbsp;So click next, and we&rsquo;ll have a look at  preferences.
 <p>Alternately. DecoderPro3 may be opened from DecoderPro Roster Menu
-<p><img src="images/Splash_Screen.png" width="496" height="308" alt="splash">
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <p>
+        <img src="images/Splash_Screen.png" width="496" height="308" alt="splash">
+      </p>
+    </blockquote>
+  </blockquote>
+</blockquote>
 <hr>
 <div align=right>
 <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">| Next</a>

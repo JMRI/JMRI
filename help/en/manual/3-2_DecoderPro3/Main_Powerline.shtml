@@ -26,7 +26,7 @@ DecoderPro&reg; Main Window
 <h1>Powerline Menu</h1>
 
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
 </div>
 
 <hr>
@@ -41,7 +41,7 @@ type in a <strong>Command </strong>and
 it to the powerline device. </p>
 <p><img src="images/Main_PowerControl_01.png" alt="Send Command" width="325" height="143"></p>
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

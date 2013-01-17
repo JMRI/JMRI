@@ -11,7 +11,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- $Id$ -->
+<!-- $Id: Digitrax_xearly.xml 22115 2012-12-30 02:15:20Z jacobsen $ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="jake@physics.berkeley.edu" version="5" lastUpdated="20021016"/>
   <!-- Represent DH120 decoder, which is identical to -->

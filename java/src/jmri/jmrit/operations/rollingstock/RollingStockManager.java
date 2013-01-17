@@ -331,7 +331,9 @@ public class RollingStockManager {
      * @return list of RollingStock ids ordered by trains
      */
     public List<String> getByTrainList() {
-    	return getByList(getByLocationList(), BY_TRAIN);
+    	List<String> byDest = getByList(getByIdList(), BY_DESTINATION);
+    	List<String> byLoc = getByList(byDest, BY_LOCATION);
+    	return getByList(byLoc, BY_TRAIN);
     }
     
     /**

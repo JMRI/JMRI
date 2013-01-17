@@ -25,7 +25,7 @@
 <h1>Panels Menu </h1>
 
 <div align=right>
-<p><a href="Main_Roster.shtml">Previous | </a><a href="Main_Operations.shtml">Next</a></p>
+<p><a href="Main_Roster.shtml">Previous | </a><a href="Main_Debug.shtml">Next</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
@@ -34,7 +34,7 @@
   is <strong>PanelPro</strong>, which is software that allows you draw a track diagram and then interface the items in that diagram to the electronic hardware on the real layout so
   that the hardware can be operated via the JMRI Interface.  
   For a tutorial on how to work with PanelPro go to 
-  <a href="http://jmri.org/community/clinics/NMRA2008/LayoutEditorClinic2008/LayoutEditorClinic.pdf" target="_blank">PanelPro Layout Editor Tutorial</a> and <a href="http://www.rr-cirkits.com/Clinics/Clinics.shtml" target="_blank">PanelPro Clinic (</a>pdf and flash video files). The subject of 
+  <a href="http://jmri.org/community/clinics/NMRA2008/LayoutEditorClinic2008/LayoutEditorClinic.pdf" target="_blank">PanelPro Layout Editor Tutorial</a>. The subject of 
   panels is included here only show what is available in the DecoderPro menus with a brief illustration/description of what these menu 
   selections access.  They are covered here because  there is a Panels menu on the 
 DecoderPro main window that allows access to some of the PanelPro functions.</p>
@@ -80,7 +80,7 @@ DecoderPro main window that allows access to some of the PanelPro functions.</p>
   <p>Displays the <strong>Script Entry</strong> window, in which you may enter scripted function and click on the <strong>Execute</strong> button to execute the script.</p>
 </blockquote>
 <div align=right>
-  <p><a href="Main_Debug.shtml"></a><a href="Main_Roster.shtml">Previous | </a><a href="Main_Operations.shtml">Next</a></p>
+  <p><a href="Main_Debug.shtml"></a><a href="Main_Roster.shtml">Previous | </a><a href="Main_Debug.shtml">Next</a></p>
   <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 <hr>

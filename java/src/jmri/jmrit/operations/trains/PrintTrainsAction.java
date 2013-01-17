@@ -8,8 +8,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-import javax.swing.*;
-
 import java.util.List;
 
 /**
@@ -22,30 +20,18 @@ import java.util.List;
  * @author Daniel Boudreau Copyright (C) 2009
  * @version $Revision$
  */
-public class PrintTrainsAction extends AbstractAction {
+public class PrintTrainsAction extends PrintTrainAction {
 
 	static final String NEW_LINE = "\n"; // NOI18N
 	static final String TAB = "\t"; // NOI18N
+	static final Character FORM_FEED = '\f'; // NOI18N
 
 	TrainManager manager = TrainManager.instance();
 	public static final int MAX_NAME_LENGTH = Control.max_len_string_train_name - 10;
 
-	public PrintTrainsAction(String actionName, Frame frame, boolean preview, Component pWho) {
-		super(actionName);
-		mFrame = frame;
-		isPreview = preview;
-		panel = (TrainsTableFrame) pWho;
+	public PrintTrainsAction(String actionName, Frame mframe, boolean preview, Frame frame) {
+		super(actionName, mframe, preview, frame);
 	}
-
-	/**
-	 * Frame hosting the printing
-	 */
-	Frame mFrame;
-	/**
-	 * Variable to set whether this is to be printed or previewed
-	 */
-	boolean isPreview;
-	TrainsTableFrame panel;
 
 	public void actionPerformed(ActionEvent e) {
 
@@ -58,11 +44,39 @@ public class PrintTrainsAction extends AbstractAction {
 			log.debug("Print cancelled");
 			return;
 		}
-
-		// Loop through the Roster, printing as needed
-
+		
+		TrainsTableFrame panel = (TrainsTableFrame) frame;
 		List<String> trains = panel.getSortByList();
-
+		
+		printSummaryTrains(writer, trains);
+		
+		try {
+			
+			writer.write(FORM_FEED);	// new page 
+			int numberOfLines = writer.getLinesPerPage();
+			
+			// now do the details for each train
+			for (int i = 0; i < trains.size(); i++) {
+				Train train = manager.getTrainById(trains.get(i));
+				if (train.getRoute() != null) {
+					List<String> route = train.getRoute().getLocationsBySequenceList();
+					// determine if another detailed summary can fit on the same page
+					if (numberOfLines - writer.getCurrentLineNumber() < route.size() + NUMBER_OF_HEADER_LINES)
+						writer.write(FORM_FEED);
+					else if (writer.getCurrentLineNumber() > 0)
+						writer.write(NEW_LINE);
+					printTrain(writer, train);
+				}
+			}
+		} catch (IOException e1) {
+			log.error("Exception in print train details");
+		}
+		
+		// and force completion of the printing
+		writer.close();
+	}
+	
+	protected void printSummaryTrains(HardcopyWriter writer, List<String> trains) {
 		try {
 			String s = Bundle.getMessage("Name") + TAB + TAB + Bundle.getMessage("Description") + TAB
 					+ Bundle.getMessage("Route") + TAB + TAB + Bundle.getMessage("Departs") + TAB + TAB
@@ -85,11 +99,9 @@ public class PrintTrainsAction extends AbstractAction {
 						+ train.getDepartureTime() + " " + terminates + NEW_LINE;
 				writer.write(s, 0, s.length());
 			}
-
-			// and force completion of the printing
-			writer.close();
+			
 		} catch (IOException we) {
-			log.error("Error printing ConsistRosterEntry: " + e);
+			log.error("Error printing trains summary");
 		}
 	}
 

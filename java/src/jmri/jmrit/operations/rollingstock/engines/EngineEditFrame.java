@@ -57,7 +57,6 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
 	JButton saveButton = new JButton(Bundle.getMessage("Save"));
 	JButton deleteButton = new JButton(Bundle.getMessage("Delete"));
-	JButton copyButton = new JButton(Bundle.getMessage("Copy"));
 	JButton addButton = new JButton(Bundle.getMessage("Add"));
 
 	// check boxes
@@ -244,7 +243,6 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
 		addButtonAction(deleteButton);
 		addButtonAction(addButton);
-		addButtonAction(copyButton);
 		addButtonAction(saveButton);
 		addButtonAction(fillWeightButton);
 

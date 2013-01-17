@@ -34,7 +34,7 @@
   <blockquote>
     <p>The <strong>Roster Groups</strong> function  allows you to take your entire roster and categorize it.&nbsp; At home you might want to break it down by  diesel vs. steam, or by railroad.&nbsp; At a  club it would be handy to have categories by member name in addition to any  other category you might think of.&nbsp; A  roster entry can be associated with more than one group.&nbsp; Again in a club environment, a roster entry  could be associated with the Steam, Union Pacific and John Member groups all at  the same time. There is always one group  present and it is called Global.&nbsp; All the  roster entries are in the Global Group.&nbsp; <br>
     </p>
-    <p><img src="images/Main_RosterMenu08.png" width="534" height="363" alt="Roster Group"></p>
+    <p><img src="images/Main_RosterMenu08.png" width="497" height="363" alt="roster group"></p>
   </blockquote>
 </ul>
 <blockquote>
@@ -63,47 +63,24 @@
     </table>
   </blockquote>
   <ul>
-    <li><strong>Set Active Roster Group</strong></li>
-  </ul>
-  <blockquote>
-    <p>Opens the <strong>Select roster group</strong> dialog. &nbsp;Once the associations have been made, then you  can select the Active Roster Group.</p>
-  </blockquote>
-  <table width="87%" border="0" align="center" cellpadding="2" cellspacing="1">
-    <tr>
-      <td width="34%" align="left" valign="top"><img src="images/Main_RosterGroup02.png" width="284" height="222" alt="Set Active Roster Group"></td>
-      <td width="66%" align="left" valign="top"><p>The Global Roster Group all rosters entries is the current active group.  You may select one of the Roster Groups to be active
-        <select name="select" id="select">
-          <option>Santa Fe</option>
-        </select>
-      </p>
-      <p> 
-          <input type="submit" name="button3" id="button3" value="Cancel">
-if you do not want to set an active roster Group</p>
-      <p>
-        <input type="submit" name="button3" id="button4" value="OK">
-      Sets the selected roster group as active</p></td>
-    </tr>
-  </table>
-  <p>&nbsp;</p>
-  <ul>
     <li><strong>Delete Roster Group</strong></li>
   </ul>
   <blockquote>
     <p>Opens the Delete roster group entry. This does not delete individual roster entries.</p>
     <table width="90%" border="0" align="center" cellpadding="2" cellspacing="1">
       <tr>
-        <td width="45%" align="left" valign="top"><img src="images/Main_RosterGroup03.png" width="377" height="129" alt="Roster Group"></td>
+        <td width="45%" align="left" valign="top"><img src="images/Main_RosterGroup03.png" width="315" height="149"></td>
         <td width="55%" align="left" valign="top"><p>Select the Group Roster that you want to delete 
-            <select name="select2" id="select2">
-              <option>Southern Pacific</option>
-            </select>
+          <select name="select2" id="select2">
+            <option>Southern Pacific</option>
+          </select>
         </p>
-        <p>
-          <input type="submit" name="button4" id="button5" value="Cancel">
-if you do not want to delete a roster Group</p>
-        <p>
-          <input type="submit" name="button4" id="button6" value="OK">
-        Deletes the selected roster group as active </p></td>
+          <p>
+            <input type="submit" name="button4" id="button5" value="Cancel">
+            if you do not want to delete a roster Group</p>
+          <p>
+            <input type="submit" name="button4" id="button6" value="OK">
+            Deletes the selected roster group as active </p></td>
       </tr>
     </table>
   </blockquote>
@@ -135,14 +112,14 @@ if you do not want to delete a roster Group</p>
     <p>In the right column, Add to... select the entries that you wish to add to the Roster Group, click individually to select a single item, hold the shift key down to select a range of items, hold the CNTRL key down to randomly select items. Close the Table and the entries will be added to the group.</p>
   </blockquote>
   <ul>
-    <li><strong>Associate Roster Entry to Group</strong></li>
+    <li><strong>Add Roster Entry to Group</strong></li>
   </ul>
   <blockquote>
     <p>Opens the <strong>Associate Roster Entry</strong> dialog with Group which allow you to select individual items.</p>
   </blockquote>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="51%"><img src="images/Main_RosterGroup05.png" width="464" height="260" alt="Associate Roster"></td>
+    <td width="51%"><img src="images/Main_RosterGroup05.png" width="357" height="264"></td>
     <td width="49%" align="left" valign="top"><p>Select the Roster Group 
       <select name="select4" id="select4">
         <option>AMTRAK</option>
@@ -173,15 +150,15 @@ if you do not want to associate an engine to a roster Group</p>
 <h4><a href="Main_Roster.shtml"></a><a href="#"></a></h4>
 <ul>
   <ul>
-    <li><strong>Disassociation of Roster Entry to Group</strong><br>
+    <li><strong>Remove Roster Entry to Group</strong><br>
     </li>
   </ul>
   <blockquote>
-    <p>Opens the <strong>DisAssociate Loco from Group</strong> dialog.</p>
+    <p>Opens the <strong>Remove Loco from Group</strong> dialog.</p>
     <p>&nbsp;</p>
     <table width="90%" border="0" align="center" cellpadding="2" cellspacing="1">
       <tr>
-        <td width="53%" align="left" valign="top"><img src="images/Main_RosterGroup06.png" width="442" height="108" alt="Disassociation"></td>
+        <td width="53%" align="left" valign="top"><img src="images/Main_RosterGroup06.png" width="358" height="115"></td>
         <td width="47%" align="left" valign="top"><p><strong>Select theGroup</strong>
           <select name="select6" id="select6">
             <option>Santa Fe</option>

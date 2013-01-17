@@ -40,6 +40,7 @@
       <h4>Slider 100% to 100%<br>
         through 0%</h4></td>
     <td align="left" valign="top"><p>After you have established an address for the throttle, you should be able to run the train on your layout. The Control panel is used to control the speed and direction on your locomotive when the throttle is used to operate on a layout.</p>
+      <p>Right click on the panel and &quot;Properties&quot; is displayed. You can now select the type of slider you want to control your train.</p>
       <p>The throttle slider controls the speed and indicates the percentage of power from <strong>Stop</strong> to <strong>100%</strong>. Use mouse to drag the slider to the desired speed</p>
       <p>Alternately, the slider may be set to STOP in the middle and move to + 100% or to -100% to control locomotive speed.</p>
       <p>In the Step mode the up and down arrows control the speed one step at a time, or you may enter a number into the text box area between 0 and the max step indicated.</p>
@@ -56,7 +57,8 @@
       </strong> stops the locomotive smoothly using any momentum setting programmed into the decoder..</p></td>
   </tr>
   <tr>
-    <td colspan="3"><img src="images/Main_Throttle_Control_edit.png" width="383" height="196" alt="control edit"></td>
+    <td colspan="3"><p><img src="images/Main_Throttle_Control_edit.png" width="383" height="196" alt="control edit"></p>
+    <p>Properties window.</p></td>
     <td width="47%" align="left" valign="top">Control Panel Properties may be set by right clicking on the Throttle Control Panel(Speed),  the <strong>Edit Speed Control Panel </strong>dialog is displayed. This allows you to select either of the two slider or step speed control
       <p>
         <input name="radio3" type="radio" id="radio3" value="radio3" checked>

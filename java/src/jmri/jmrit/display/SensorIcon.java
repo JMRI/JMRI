@@ -160,28 +160,28 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                         unknownText=userName;
                 } else {
                     if (activeText==null)
-                        activeText=rb.getString("SensorActive");
+                        activeText=Bundle.getMessage("SensorActive");
                     if (inactiveText==null)
-                        inactiveText = rb.getString("SensorInactive");
+                        inactiveText = Bundle.getMessage("SensorInactive");
                     if (inconsistentText==null)
-                        inconsistentText=rb.getString("Inconsistent");
+                        inconsistentText=Bundle.getMessage("Inconsistent");
                     if (unknownText==null)
-                        unknownText=rb.getString("Unknown");
+                        unknownText=Bundle.getMessage("Unknown");
                 }
             }
             if (activeText==null) {
-                activeText=rb.getString("SensorActive");
+                activeText=Bundle.getMessage("SensorActive");
                 textColorActive=Color.red;
             }
             if (inactiveText==null) {
-                inactiveText = rb.getString("SensorInactive");
+                inactiveText = Bundle.getMessage("SensorInactive");
                 textColorInActive=Color.yellow;
             }
-                //inactiveText = rb.getString("SensorInactive");
+                //inactiveText = Bundle.getMessage("SensorInactive");
             if (inconsistentText==null)
-                inconsistentText=rb.getString("Inconsistent");
+                inconsistentText=Bundle.getMessage("Inconsistent");
             if (unknownText==null)
-                unknownText=rb.getString("Unknown");
+                unknownText=Bundle.getMessage("Unknown");
             if (textColorActive==null)
                 textColorActive=Color.red;
             if (textColorInActive==null)
@@ -284,7 +284,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     @Override
     public String getNameString() {
         String name;
-        if (namedSensor == null) name = rb.getString("NotConnected");
+        if (namedSensor == null) name = Bundle.getMessage("NotConnected");
         else if (getSensor().getUserName()==null)
             name = getSensor().getSystemName();
         else
@@ -292,7 +292,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         return name;
     }
 
-    JCheckBoxMenuItem  momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
+    JCheckBoxMenuItem  momentaryItem = new JCheckBoxMenuItem(Bundle.getMessage("Momentary"));
     /**
      * Pop-up just displays the sensor name
      */
@@ -300,13 +300,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
             if(isIcon()){
-                popup.add(new AbstractAction(rb.getString("ChangeToText")) {
+                popup.add(new AbstractAction(Bundle.getMessage("ChangeToText")) {
                     public void actionPerformed(ActionEvent e) {
                         changeLayoutSensorType();
                     }
                 });
             } else {
-                popup.add(new AbstractAction(rb.getString("ChangeToIcon")) {
+                popup.add(new AbstractAction(Bundle.getMessage("ChangeToIcon")) {
                     public void actionPerformed(ActionEvent e) {
                         changeLayoutSensorType();
                     }
@@ -335,18 +335,18 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         if (isIcon()) {
             popup.add(CoordinateEdit.getTextEditAction(this, "OverlayText"));
         } else {
-            popup.add(new AbstractAction(rb.getString("SetSensorText")) {
+            popup.add(new AbstractAction(Bundle.getMessage("SetSensorText")) {
                 public void actionPerformed(ActionEvent e) {
                     String name = getNameString();
                     sensorTextEdit(name);
                 }
             });
             if (isText() && !isIcon()) {
-                JMenu stateColor = new JMenu(rb.getString("StateColors"));
-                    stateColor.add(stateMenu(rb.getString("Unknown"), UNKOWN_FONT_COLOR)); //Unknown
-                    stateColor.add(stateMenu(rb.getString("SensorActive"), ACTIVE_FONT_COLOR)); //Active
-                    stateColor.add(stateMenu(rb.getString("SensorInactive"), INACTIVE_FONT_COLOR)); //Inactive
-                    stateColor.add(stateMenu(rb.getString("Inconsistent"), INCONSISTENT_FONT_COLOR)); //Inconsistent
+                JMenu stateColor = new JMenu(Bundle.getMessage("StateColors"));
+                    stateColor.add(stateMenu(Bundle.getMessage("Unknown"), UNKOWN_FONT_COLOR)); //Unknown
+                    stateColor.add(stateMenu(Bundle.getMessage("SensorActive"), ACTIVE_FONT_COLOR)); //Active
+                    stateColor.add(stateMenu(Bundle.getMessage("SensorInactive"), INACTIVE_FONT_COLOR)); //Inactive
+                    stateColor.add(stateMenu(Bundle.getMessage("Inconsistent"), INCONSISTENT_FONT_COLOR)); //Inconsistent
                 popup.add(stateColor);
             }
         }
@@ -412,7 +412,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Sensor"));
         popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     editItem();
@@ -422,7 +422,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
     
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor")));
+        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Sensor")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
                                        PickListModel.sensorPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -476,7 +476,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     @Override
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Sensor"));
         popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -768,10 +768,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     JMenu stateMenu(final String name, int state) {
         JMenu menu = new JMenu(name);
-        JMenu colorMenu = new JMenu(rb.getString("FontColor"));
+        JMenu colorMenu = new JMenu(Bundle.getMessage("FontColor"));
         getPopupUtility().makeColorMenu(colorMenu, state);
         menu.add(colorMenu);
-        colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
+        colorMenu = new JMenu(Bundle.getMessage("FontBackgroundColor"));
         getPopupUtility().makeColorMenu(colorMenu, state+1);
         menu.add(colorMenu);
         return menu;
@@ -885,22 +885,22 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         @SuppressWarnings("fallthrough")
         protected void makeColorMenu(JMenu colorMenu, int type) {
             ButtonGroup buttonGrp = new ButtonGroup();
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Black"), Color.black, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("DarkGray"),Color.darkGray, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Gray"),Color.gray, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("LightGray"),Color.lightGray, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("White"),Color.white, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Red"),Color.red, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Orange"),Color.orange, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Yellow"),Color.yellow, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Green"),Color.green, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Blue"),Color.blue, type);
-            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Magenta"),Color.magenta, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Black"), Color.black, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("DarkGray"),Color.darkGray, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Gray"),Color.gray, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("LightGray"),Color.lightGray, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("White"),Color.white, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Red"),Color.red, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Orange"),Color.orange, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Yellow"),Color.yellow, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Green"),Color.green, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"),Color.blue, type);
+            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"),Color.magenta, type);
             switch(type){
                 case UNKOWN_BACKGROUND_COLOR :
                 case ACTIVE_BACKGROUND_COLOR :
                 case INACTIVE_BACKGROUND_COLOR :
-                case INCONSISTENT_BACKGROUND_COLOR : addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Clear"), null, type);
+                case INCONSISTENT_BACKGROUND_COLOR : addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
             }
         }
         

@@ -89,23 +89,16 @@ public class ManageLocationsAction extends AbstractAction {
 	    i = 0;
 	    for (String s : blockNameArray) {
 		Block b = bmgr.getByDisplayName(s);
-		if (b instanceof PhysicalLocationReporter) {
-		    blockMap.put(s, ((PhysicalLocationReporter)b).getPhysicalLocation());
-		    PhysicalLocation p = ((PhysicalLocationReporter)b).getPhysicalLocation();
-		    blockTable[i][0] = s;
-		    blockTable[i][1] = new Boolean(true);
-		    blockTable[i][2] = p.getX();
-		    blockTable[i][3] = p.getY();
-		    blockTable[i][4] = p.getZ();
-		    blockTable[i][5] = new Boolean(p.isTunnel());
-		} else {
-		    blockTable[i][0] = s;
-		    blockTable[i][1] = new Boolean(false);
-		    blockTable[i][2] = new Float(0.0f);
-		    blockTable[i][3] = new Float(0.0f);
-		    blockTable[i][4] = new Float(0.0f);
-		    blockTable[i][5] = new Boolean(false);
-		}
+		// NOTE: Unlike Reporters, all Blocks are (now) PhysicalLocationReporters, so no need to do a check here.
+		// We'll keep the explicit cast for now, but it's not actually necessary.
+		blockMap.put(s, ((PhysicalLocationReporter)b).getPhysicalLocation());
+		PhysicalLocation p = ((PhysicalLocationReporter)b).getPhysicalLocation();
+		blockTable[i][0] = s;
+		blockTable[i][1] = new Boolean(true);
+		blockTable[i][2] = p.getX();
+		blockTable[i][3] = p.getY();
+		blockTable[i][4] = p.getZ();
+		blockTable[i][5] = new Boolean(p.isTunnel());
 		i++;
 	    }
 

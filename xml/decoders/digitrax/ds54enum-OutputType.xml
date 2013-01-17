@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: ds54enum-OutputType.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +15,7 @@
 <!-- no need to translate the following, as it generally only appears -->
 <!-- in the function map selection pane -->
 <!-- differs from 0NMRA.xml version only in default values -->
-<enumVal>
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -44,122 +44,162 @@
   </revhistory>
   <enumChoice choice="0.125sec retriggerable pulse">
     <choice>0.125sec retriggerable pulse</choice>
+    <choice xml:lang="it">0.125sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.25sec retriggerable pulse">
     <choice>0.25sec retriggerable pulse</choice>
+    <choice xml:lang="it">0.25sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.35sec retriggerable pulse">
     <choice>0.35sec retriggerable pulse</choice>
+    <choice xml:lang="it">0.35sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.5sec retriggerable pulse">
     <choice>0.5sec retriggerable pulse</choice>
+    <choice xml:lang="it">0.5sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.625sec retriggerable pulse">
     <choice>0.625sec retriggerable pulse</choice>
+    <choice xml:lang="it">0.625sec impulso retriggherabile</choice>
   </enumChoice>
   <enumChoice choice="0.75sec retriggerable pulse">
     <choice>0.75sec retriggerable pulse</choice>
+    <choice xml:lang="it">0.75sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.9sec retriggerable pulse">
     <choice>0.9sec retriggerable pulse</choice>
+    <choice xml:lang="it">0.9sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="1 sec retriggerable pulse">
     <choice>1 sec retriggerable pulse</choice>
+    <choice xml:lang="it">1 sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="2 sec retriggerable pulse">
     <choice>2 sec retriggerable pulse</choice>
+    <choice xml:lang="it">2 sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="3 sec retriggerable pulse">
     <choice>3 sec retriggerable pulse</choice>
+    <choice xml:lang="it">3 sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="4 sec retriggerable pulse">
     <choice>4 sec retriggerable pulse</choice>
+    <choice xml:lang="it">4 sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="5 sec retriggerable pulse">
     <choice>5 sec retriggerable pulse</choice>
+    <choice xml:lang="it">5 sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="6 sec retriggerable pulse">
     <choice>6 sec retriggerable pulse</choice>
+    <choice xml:lang="it">6 sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="7.5 sec retriggerable pulse">
     <choice>7.5 sec retriggerable pulse</choice>
+    <choice xml:lang="it">7.5 sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="10 sec retriggerable pulse">
     <choice>10 sec retriggerable pulse</choice>
+    <choice xml:lang="it">10 sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="12 sec retriggerable pulse">
     <choice>12 sec retriggerable pulse</choice>
+    <choice xml:lang="it">12 sec impulso retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.125sec non-retriggerable pulse">
     <choice>0.125sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">0.125 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.25sec non-retriggerable pulse">
     <choice>0.25sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">0.25 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.35sec non-retriggerable pulse">
     <choice>0.35sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">0.35 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.5sec non-retriggerable pulse">
     <choice>0.5sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">0.5 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.625sec non-retriggerable pulse">
     <choice>0.625sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">0.625 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.75sec non-retriggerable pulse">
     <choice>0.75sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">0.75 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="0.9sec non-retriggerable pulse">
     <choice>0.9sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">0.9 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="1 sec non-retriggerable pulse">
     <choice>1 sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">1 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="2 sec non-retriggerable pulse">
     <choice>2 sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">2 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="3 sec non-retriggerable pulse">
     <choice>3 sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">3 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="4 sec non-retriggerable pulse">
     <choice>4 sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">4 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="5 sec non-retriggerable pulse">
     <choice>5 sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">5 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="6 sec non-retriggerable pulse">
     <choice>6 sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">6 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="7.5 sec non-retriggerable pulse">
     <choice>7.5 sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">7.5 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="10 sec non-retriggerable pulse">
     <choice>10 sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">10 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="12 sec non-retriggerable pulse">
     <choice>12 sec non-retriggerable pulse</choice>
+    <choice xml:lang="it">12 sec impulso non retriggerabile</choice>
   </enumChoice>
   <enumChoice choice="static">
     <choice>static</choice>
+    <choice xml:lang="it">statico</choice>
   </enumChoice>
   <enumChoice choice="0.125sec blink">
     <choice>0.125sec blink</choice>
+    <choice xml:lang="it">0.125sec lampeggiante</choice>
   </enumChoice>
   <enumChoice choice="0.25sec blink">
     <choice>0.25sec blink</choice>
+    <choice xml:lang="it">0.25sec lampeggiante</choice>
   </enumChoice>
   <enumChoice choice="0.5sec blink">
     <choice>0.5sec blink</choice>
+    <choice xml:lang="it">0.5sec lampeggiante</choice>
   </enumChoice>
   <enumChoice choice="1 sec blink">
     <choice>1 sec blink</choice>
+    <choice xml:lang="it">1 sec lampeggiante</choice>
   </enumChoice>
   <enumChoice choice="2 sec blink">
     <choice>2 sec blink</choice>
+    <choice xml:lang="it">2 sec lampeggiante</choice>
   </enumChoice>
   <enumChoice choice="4 sec blink">
     <choice>4 sec blink</choice>
+    <choice xml:lang="it">4 sec lampeggiante</choice>
   </enumChoice>
   <enumChoice choice="8 sec blink">
     <choice>8 sec blink</choice>
+    <choice xml:lang="it">8 sec lampeggiante</choice>
   </enumChoice>
 </enumVal>

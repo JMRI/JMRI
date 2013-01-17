@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.setup.Control;
@@ -489,7 +490,9 @@ public class CarLoads {
 	}
 
 	public void load(Element e) {
-		org.jdom.Attribute a;
+		if (e.getChild(Xml.LOADS) == null)
+		return;
+		Attribute a;
 		Element defaults = e.getChild(Xml.LOADS).getChild(Xml.DEFAULTS);
 		if (defaults != null) {
 			if ((a = defaults.getAttribute(Xml.LOAD)) != null) {

@@ -7,6 +7,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.audio.DefaultAudioManager;
+import jmri.jmrit.vsdecoder.VSDecoderManager;
 import apps.gui3.TabbedPreferences;
 
 import java.beans.PropertyChangeEvent;
@@ -325,7 +326,12 @@ public class InstanceManager {
     static public RosterIconFactory rosterIconFactoryInstance()  { 
     	if (instance().rosterIconFactory == null) instance().rosterIconFactory = RosterIconFactory.instance();
     	return instance().rosterIconFactory; 
-    }    
+    }
+
+    static public VSDecoderManager vsdecoderManagerInstance() {
+	if (instance().vsdecoderManager == null) instance().vsdecoderManager = VSDecoderManager.instance();
+	return instance().vsdecoderManager;
+    }
 
     static private InstanceManager instance() {
         if (root==null){
@@ -515,7 +521,9 @@ public class InstanceManager {
 	private MemoryManager memoryManager = null;
 	
 	private RosterIconFactory rosterIconFactory = null;
-    
+
+    private VSDecoderManager vsdecoderManager = null;
+
     public static synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);

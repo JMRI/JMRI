@@ -7,6 +7,9 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
+import org.jdom.Element;
+
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -186,6 +189,57 @@ public class EngineModels {
 			setModelLength(models[i], lengths[i]);
 			setModelType(models[i], types[i]);
 			setModelWeight(models[i], weights[i]);
+		}
+	}
+	
+	/**
+	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
+	 * operations-engines.dtd.
+	 * 
+	 * @return Contents in a JDOM Element
+	 */
+	public void store(Element root) {
+		String[]names = getNames();
+		if (Control.backwardCompatible) {
+			Element values = new Element(Xml.ENGINE_MODELS);
+			for (int i=0; i<names.length; i++){
+				String typeNames = names[i]+"%%"; // NOI18N
+				values.addContent(typeNames);
+			}
+			root.addContent(values);
+		}
+		// new format using elements
+		Element types = new Element(Xml.MODELS);
+		for (int i=0; i<names.length; i++){
+			Element type = new Element(Xml.MODEL);
+			type.setAttribute(new Attribute(Xml.NAME, names[i]));
+			types.addContent(type);
+		}
+		root.addContent(types);
+	}
+	
+	public void load(Element root) {
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.MODELS)!= null){
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.MODELS).getChildren(Xml.MODEL);
+			if (log.isDebugEnabled()) log.debug("Engine models sees "+l.size()+" models");
+			Attribute a;
+			String[] types = new String[l.size()];
+			for (int i=0; i<l.size(); i++) {
+				Element type = l.get(i);
+				if ((a = type.getAttribute(Xml.NAME)) != null) {
+					types[i] = a.getValue();
+				}
+			}
+			setNames(types);
+		}
+		// old format
+		else if (root.getChild(Xml.ENGINE_MODELS)!= null){
+			String names = root.getChildText(Xml.ENGINE_MODELS);
+			String[] types = names.split("%%"); // NOI18N
+			if (log.isDebugEnabled()) log.debug("engine models: "+names);
+			setNames(types);
 		}
 	}
 

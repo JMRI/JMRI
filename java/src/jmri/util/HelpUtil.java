@@ -153,17 +153,16 @@ public class HelpUtil {
                 Locale locale = Locale.getDefault();
                 String language = locale.getLanguage();
                 String helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
-                File file = new File(helpsetName);
-                if (file.isFile()) {
+                URL hsURL = FileUtil.findURL(helpsetName);
+                if (hsURL != null) {
                     log.debug("JavaHelp using "+helpsetName);
                 } else {
-                    System.out.println("JavaHelp: File "+helpsetName+" not found, dropping to default");
+                    log.warn("JavaHelp: File "+helpsetName+" not found, dropping to default");
                     language = "en";
                     helpsetName = "help/"+language+"/JmriHelp_"+language+".hs";
+                    hsURL = FileUtil.findURL(helpsetName);
                 }
-                URL hsURL;
                 try {
-                    hsURL = new URL("file:"+helpsetName);
                     globalHelpSet = new HelpSet(null, hsURL);
                 } catch (java.lang.NoClassDefFoundError ee) {
                     log.debug("classpath="+System.getProperty("java.class.path","<unknown>"));

@@ -2,7 +2,6 @@
 
 package jmri.implementation;
 
-import java.util.ResourceBundle;
 import java.util.Hashtable;
 import java.util.Enumeration;
 
@@ -86,24 +85,22 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     public void loadDefaults() {
         
-        ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
         log.debug("start loadDefaults");
         
         String aspect;
-        String key = rb.getString("SignalAspectKey");
+        String key = Bundle.getMessage("SignalAspectKey");
         String value;
         
-        aspect = rb.getString("SignalAspectDefaultRed");
-        value = rb.getString("SignalAspect_"+key+"_"+aspect);
+        aspect = Bundle.getMessage("SignalAspectDefaultRed");
+        value = Bundle.getMessage("SignalAspect_"+key+"_"+aspect);
         setProperty(aspect, key, value);
 
-        aspect = rb.getString("SignalAspectDefaultYellow");
-        value = rb.getString("SignalAspect_"+key+"_"+aspect);
+        aspect = Bundle.getMessage("SignalAspectDefaultYellow");
+        value = Bundle.getMessage("SignalAspect_"+key+"_"+aspect);
         setProperty(aspect, key, value);
 
-        aspect = rb.getString("SignalAspectDefaultGreen");
-        value = rb.getString("SignalAspect_"+key+"_"+aspect);
+        aspect = Bundle.getMessage("SignalAspectDefaultGreen");
+        value = Bundle.getMessage("SignalAspect_"+key+"_"+aspect);
         setProperty(aspect, key, value);
 
     }

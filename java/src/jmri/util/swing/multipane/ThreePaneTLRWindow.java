@@ -3,10 +3,7 @@
 package jmri.util.swing.multipane;
 
 import java.awt.*;
-import java.io.File;
-
 import javax.swing.*;
-
 import jmri.util.swing.*;
 
 /**
@@ -24,7 +21,7 @@ public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
     /**
      * Create and initialize a multi-pane GUI window.
      */
-    public ThreePaneTLRWindow(String name, File menubarFile, File toolbarFile) {
+    public ThreePaneTLRWindow(String name, String menubarFile, String toolbarFile) {
         super(name);
         buildGUI(menubarFile, toolbarFile);
         pack();
@@ -50,7 +47,7 @@ public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
     
     WindowInterface rightTopWI;
     
-    protected void buildGUI(File menubarFile, File toolbarFile) {
+    protected void buildGUI(String menubarFile, String toolbarFile) {
         configureFrame();
         addMainMenuBar(menubarFile);
         addMainToolBar(toolbarFile);
@@ -80,7 +77,7 @@ public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
                 
     public void resetRightToPreferredSizes() { leftRightSplitPane.resetToPreferredSizes(); }
     
-    protected void addMainMenuBar(File menuFile) {
+    protected void addMainMenuBar(String menuFile) {
         if (menuFile == null) return;
         JMenuBar menuBar = new JMenuBar();
         
@@ -91,7 +88,7 @@ public class ThreePaneTLRWindow extends jmri.util.JmriJFrame {
         setJMenuBar(menuBar);
     }
 
-    protected void addMainToolBar(File toolBarFile) {
+    protected void addMainToolBar(String toolBarFile) {
         if (toolBarFile == null) return;
           
         JToolBar toolBar = JToolBarUtil.loadToolBar(toolBarFile, rightTopWI, null);

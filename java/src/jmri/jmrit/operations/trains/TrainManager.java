@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -624,72 +625,82 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 		return newTrain;
 	}
+	
+	public void load (Element root) {	
+		if (root.getChild(Xml.OPTIONS) != null) {
+			Element options = root.getChild(Xml.OPTIONS);
+			Element e = options.getChild(Xml.TRAIN_OPTIONS);
+			Attribute a;
+			if (e != null) {
+				if ((a = e.getAttribute(Xml.BUILD_MESSAGES)) != null)
+					_buildMessages = a.getValue().equals(Xml.TRUE);
+				if ((a = e.getAttribute(Xml.BUILD_REPORT)) != null)
+					_buildReport = a.getValue().equals(Xml.TRUE);
+				if ((a = e.getAttribute(Xml.PRINT_PREVIEW)) != null)
+					_printPreview = a.getValue().equals(Xml.TRUE);
+				if ((a = e.getAttribute(Xml.OPEN_FILE)) != null)
+					_openFile = a.getValue().equals(Xml.TRUE);
+				if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null)
+					_trainAction = a.getValue();
 
-	public void options(Element values) {
-		if (log.isDebugEnabled())
-			log.debug("ctor from element " + values);
-		Element e = values.getChild(Xml.TRAIN_OPTIONS);
-		org.jdom.Attribute a;
-		if (e != null) {
-			if ((a = e.getAttribute(Xml.BUILD_MESSAGES)) != null)
-				_buildMessages = a.getValue().equals(Xml.TRUE);
-			if ((a = e.getAttribute(Xml.BUILD_REPORT)) != null)
-				_buildReport = a.getValue().equals(Xml.TRUE);
-			if ((a = e.getAttribute(Xml.PRINT_PREVIEW)) != null)
-				_printPreview = a.getValue().equals(Xml.TRUE);
-			if ((a = e.getAttribute(Xml.OPEN_FILE)) != null)
-				_openFile = a.getValue().equals(Xml.TRUE);
-			if ((a = e.getAttribute(Xml.TRAIN_ACTION)) != null)
-				_trainAction = a.getValue();
+				// TODO This here is for backwards compatibility, remove after next major release
+				if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
+					String[] widths = a.getValue().split(" ");
+					for (int i = 0; i < widths.length; i++) {
+						try {
+							_tableColumnWidths[i] = Integer.parseInt(widths[i]);
+						} catch (NumberFormatException ee) {
+							log.error("Number format exception when reading trains column widths");
+						}
+					}
+				}
+			}
 
-			// TODO This here is for backwards compatibility, remove after next major release
-			if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
-				String[] widths = a.getValue().split(" ");
-				for (int i = 0; i < widths.length; i++) {
-					try {
-						_tableColumnWidths[i] = Integer.parseInt(widths[i]);
-					} catch (NumberFormatException ee) {
-						log.error("Number format exception when reading trains column widths");
+			e = options.getChild(Xml.TRAIN_SCHEDULE_OPTIONS);
+			if (e != null) {
+				if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
+					_trainScheduleActiveId = a.getValue();
+				}
+				// TODO This here is for backwards compatibility, remove after next major release
+				if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
+					String[] widths = a.getValue().split(" ");
+					_tableScheduleColumnWidths = new int[widths.length];
+					for (int i = 0; i < widths.length; i++) {
+						try {
+							_tableScheduleColumnWidths[i] = Integer.parseInt(widths[i]);
+						} catch (NumberFormatException ee) {
+							log.error("Number format exception when reading trains column widths");
+						}
+					}
+				}
+			}
+			// check for scripts
+			if (options.getChild(Xml.SCRIPTS) != null) {
+				@SuppressWarnings("unchecked")
+				List<Element> lm = options.getChild(Xml.SCRIPTS).getChildren(Xml.START_UP);
+				for (int i = 0; i < lm.size(); i++) {
+					Element es = lm.get(i);
+					if ((a = es.getAttribute(Xml.NAME)) != null) {
+						addStartUpScript(a.getValue());
+					}
+				}
+				@SuppressWarnings("unchecked")
+				List<Element> lt = options.getChild(Xml.SCRIPTS).getChildren(Xml.SHUT_DOWN);
+				for (int i = 0; i < lt.size(); i++) {
+					Element es = lt.get(i);
+					if ((a = es.getAttribute(Xml.NAME)) != null) {
+						addShutDownScript(a.getValue());
 					}
 				}
 			}
 		}
-
-		e = values.getChild(Xml.TRAIN_SCHEDULE_OPTIONS);
-		if (e != null) {
-			if ((a = e.getAttribute(Xml.ACTIVE_ID)) != null) {
-				_trainScheduleActiveId = a.getValue();
-			}
-			// TODO This here is for backwards compatibility, remove after next major release
-			if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
-				String[] widths = a.getValue().split(" ");
-				_tableScheduleColumnWidths = new int[widths.length];
-				for (int i = 0; i < widths.length; i++) {
-					try {
-						_tableScheduleColumnWidths[i] = Integer.parseInt(widths[i]);
-					} catch (NumberFormatException ee) {
-						log.error("Number format exception when reading trains column widths");
-					}
-				}
-			}
-		}
-		// check for scripts
-		if (values.getChild(Xml.SCRIPTS) != null) {
+		if (root.getChild(Xml.TRAINS) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> lm = values.getChild(Xml.SCRIPTS).getChildren(Xml.START_UP);
-			for (int i = 0; i < lm.size(); i++) {
-				Element es = lm.get(i);
-				if ((a = es.getAttribute(Xml.NAME)) != null) {
-					addStartUpScript(a.getValue());
-				}
-			}
-			@SuppressWarnings("unchecked")
-			List<Element> lt = values.getChild(Xml.SCRIPTS).getChildren(Xml.SHUT_DOWN);
-			for (int i = 0; i < lt.size(); i++) {
-				Element es = lt.get(i);
-				if ((a = es.getAttribute(Xml.NAME)) != null) {
-					addShutDownScript(a.getValue());
-				}
+			List<Element> l = root.getChild(Xml.TRAINS).getChildren(Xml.TRAIN);
+			if (log.isDebugEnabled())
+				log.debug("readFile sees " + l.size() + " trains");
+			for (int i = 0; i < l.size(); i++) {
+				register(new Train(l.get(i)));
 			}
 		}
 	}
@@ -700,7 +711,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public Element store() {
+	public void store(Element root) {
 		Element values = new Element(Xml.OPTIONS);
 		Element e = new Element(Xml.TRAIN_OPTIONS);
 		e.setAttribute(Xml.BUILD_MESSAGES, isBuildMessagesEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -730,7 +741,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			}
 			values.addContent(es);
 		}
-		return values;
+		root.addContent(values);
+
+		root.addContent(values = new Element(Xml.TRAINS));
+		// add entries
+		List<String> trainList = getTrainsByIdList();
+		for (int i = 0; i < trainList.size(); i++) {
+			String trainId = trainList.get(i);
+			Train train = getTrainById(trainId);
+			values.addContent(train.store());
+		}
 	}
 
 	/**

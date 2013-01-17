@@ -17,6 +17,7 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 
@@ -361,25 +362,64 @@ public class CarManager extends RollingStockManager{
    public void setCarsFrameTableColumnWidths(int[] tableColumnWidths){
    	_carsTableColumnWidths = tableColumnWidths;
    }
-   	
-	public void options (Element values) {
-		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-		// get Cars Table Frame attributes
-		Element e = values.getChild(Xml.CARS_OPTIONS);
-		if (e != null){
-			org.jdom.Attribute a;
-			// backwards compatible TODO remove in 2013 after production release
-	  		if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null){
-             	String[] widths = a.getValue().split(" ");
-             	for (int i=0; i<widths.length; i++){
-             		try{
-             			_carsTableColumnWidths[i] = Integer.parseInt(widths[i]);
-             		} catch (NumberFormatException ee){
-             			log.error("Number format exception when reading trains column widths");
-             		}
-             	}
-    		}
+   
+	public void load(Element root) {
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.NEW_KERNELS)!= null) {
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.NEW_KERNELS).getChildren(Xml.KERNEL);
+			if (log.isDebugEnabled()) log.debug("Car manager sees "+l.size()+" kernels");
+			Attribute a;
+			for (int i=0; i<l.size(); i++) {
+				Element kernel = l.get(i);
+				if ((a = kernel.getAttribute(Xml.NAME)) != null) {
+					newKernel(a.getValue());
+				}
+			}
 		}
+		// old format
+		else if (root.getChild(Xml.KERNELS) != null) {
+			String names = root.getChildText(Xml.KERNELS);
+			if (!names.equals("")) {
+				String[] kernelNames = names.split("%%"); // NOI18N
+				if (log.isDebugEnabled())
+					log.debug("kernels: " + names);
+				for (int i = 0; i < kernelNames.length; i++) {
+					newKernel(kernelNames[i]);
+				}
+			}
+		}
+
+		if (root.getChild(Xml.OPTIONS) != null) {
+			Element options = root.getChild(Xml.OPTIONS);
+			if (log.isDebugEnabled())
+				log.debug("ctor from element " + options);
+			// get Cars Table Frame attributes
+			Element e = options.getChild(Xml.CARS_OPTIONS);
+			if (e != null) {
+				org.jdom.Attribute a;
+				// backwards compatible TODO remove in 2013 after production release
+				if ((a = e.getAttribute(Xml.COLUMN_WIDTHS)) != null) {
+					String[] widths = a.getValue().split(" ");
+					for (int i = 0; i < widths.length; i++) {
+						try {
+							_carsTableColumnWidths[i] = Integer.parseInt(widths[i]);
+						} catch (NumberFormatException ee) {
+							log.error("Number format exception when reading trains column widths");
+						}
+					}
+				}
+			}
+		}
+		
+        if (root.getChild(Xml.CARS) != null) {
+        	@SuppressWarnings("unchecked")
+            List<Element> l = root.getChild(Xml.CARS).getChildren(Xml.CAR);
+            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" cars");
+            for (int i=0; i<l.size(); i++) {
+                register(new Car(l.get(i)));
+            }
+        }
 	}
 
 	   /**
@@ -387,10 +427,33 @@ public class CarManager extends RollingStockManager{
      * detailed DTD in operations-cars.dtd.
      * @return Contents in a JDOM Element
      */
-    public Element store() {
-    	Element values = new Element(Xml.OPTIONS);
-    	// nothing to save!
-        return values;
+    public void store(Element root) {
+    	root.addContent(new Element(Xml.OPTIONS));     	// nothing to save under options
+
+    	Element values;  
+    	List<String> names = getKernelNameList();
+    	if (Control.backwardCompatible) {
+    		root.addContent(values = new Element(Xml.KERNELS));
+    		for (int i=0; i<names.size(); i++){
+    			String kernelNames = names.get(i)+"%%"; // NOI18N
+    			values.addContent(kernelNames);
+    		}
+    	}
+        // new format using elements
+        Element kernels = new Element(Xml.NEW_KERNELS);
+        for (int i=0; i<names.size(); i++){
+        	Element kernel = new Element(Xml.KERNEL);
+        	kernel.setAttribute(new Attribute(Xml.NAME, names.get(i)));
+        	kernels.addContent(kernel);
+        }
+        root.addContent(kernels);
+        root.addContent(values = new Element(Xml.CARS));
+        // add entries
+        List<String> carList = getList();
+        for (int i=0; i<carList.size(); i++) {
+        	Car car = getById(carList.get(i));
+            values.addContent(car.store());
+        }
     }
     
     protected void firePropertyChange(String p, Object old, Object n){

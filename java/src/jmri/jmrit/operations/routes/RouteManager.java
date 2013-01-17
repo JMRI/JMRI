@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import org.jdom.Element;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
@@ -300,6 +302,28 @@ public class RouteManager {
      * @return Number of routes
      */
     public int numEntries() { return _routeHashTable.size(); }
+    
+    public void load(Element root) {
+        // decode type, invoke proper processing routine if a decoder file
+        if (root.getChild(Xml.ROUTES) != null) {
+        	@SuppressWarnings("unchecked")
+            List<Element> l = root.getChild(Xml.ROUTES).getChildren(Xml.ROUTE);
+            if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" routes");
+            for (int i=0; i<l.size(); i++) {
+                register(new Route(l.get(i)));
+            }
+        }
+    }
+    
+    public void store(Element root) {
+		Element values = new Element(Xml.ROUTES);
+		root.addContent(values);
+		List<String> routeList = getRoutesByIdList();
+		for (int i=0; i<routeList.size(); i++) {
+			Route route = getRouteById(routeList.get(i));
+			values.addContent(route.store());
+		}
+    }
     
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     

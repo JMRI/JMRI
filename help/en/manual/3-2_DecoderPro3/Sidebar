@@ -8,7 +8,7 @@
     <div style="text-align: center"><strong>DecoderPro3® Manual</strong></div>
 
     <div style="text-align: right">
-       <a href="../pdf/DP3_Man_2_14.pdf"> Download</a>
+       <a href="pdf/DP3_Man_3-2.pdf">Download</a>
     </div>
 
 <dl><!-- main table of contents -->
@@ -16,7 +16,7 @@
  
  <ul>
 	<li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
-    <li><a href="Installing_JMRI.shtml#instalJMRI">Installing JMRI Software</a></li>
+    <li><a href="Installing_JMRI.shtml#InstalJMRI">Installing JMRI Software</a></li>
      
 <div style="text-align: center"><strong>Getting Started</strong></div>
     
@@ -41,7 +41,7 @@
     <li><a href="Programmer_SingleCV.shtml">Single CV Programmer</a></li>
     <li><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></li>
     <li><a href="Programmer_OpsMode.shtml">Ops Mode Programming</a></li>
-    <li><a href="Programmer_Multi_Decoder.shtml">Multi Decoder Control (Programming)</a></li>
+ 
     </ul>
    
 <div style="text-align: center"><strong>The Basic Programmer</strong></div>    
@@ -60,8 +60,8 @@
 
     <ul>
     <li><a href="Comp_Setup_Roster.shtml">Set-up and Roster Panes</a></li>
-     <li><a href="Comp_FunctionLabel.shtml">Function Labels Pane</a></li>
-     <li><a href="RosterMedia.shtml">Roster Media</a></li>
+     
+     
     <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
     <li><a href="Comp_Motor.shtml">Motor Control Pane</a></li>
     <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
@@ -78,11 +78,20 @@
     <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
     </ul>
     </dd>
+    
+ <div style="text-align: center"><strong>Function Labels and Roster Media</strong></div> 
+	   <dd>
+       <ul>
+        <li><a href="Comp_FunctionLabel.shtml">Function Labels Pane</a></li>
+        <li><a href="RosterMedia.shtml">Roster Media</a></li>
+        </ul>
+        </dd>
+
 
 <div style="text-align: center"><strong>DecoderPro3® Main Window</strong></div>    
 
     <ul>
-      <li><a href="dp3_menubar.html">Menubar</a></li>
+      <li><a href="dp3_menubar.shtml">Menu Bar</a></li>
       <li><a href="dp3_toobar.shtml">Toolbar</a></li>
       <li><a href="dp3_rosterTable.shtml">Roster Table</a></li>
       <li><a href="dp3_decoderInfo.shtml">Decoder Information</a></li>

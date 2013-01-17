@@ -134,7 +134,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
 
     public String getNameString() {
         String name;
-        if (namedMemory == null) name = rb.getString("NotConnected");
+        if (namedMemory == null) name = Bundle.getMessage("NotConnected");
         else if (getMemory().getUserName()!=null)
             name = getMemory().getUserName()+" ("+getMemory().getSystemName()+")";
         else
@@ -147,7 +147,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     boolean selectable = false;
 */    
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
         popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();

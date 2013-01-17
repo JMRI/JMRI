@@ -250,6 +250,7 @@ class LocoFile extends XmlFile {
             Document doc = newDocument(pRootElement, dtdLocation+"locomotive-config.dtd");
 
             // Update the locomotive.id element
+            if (log.isDebugEnabled()) log.debug("pEntry: "+pEntry);
             pRootElement.getChild("locomotive").getAttribute("id").setValue(pEntry.getId());
 
             writeXML(pFile, doc);

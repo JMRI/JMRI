@@ -27,7 +27,7 @@ CMRI Menu
 <h1>CMRI Menu</h1>
 
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a></p>
 </div>
 
 <hr>
@@ -67,7 +67,7 @@ CMRI Menu
 <p align="center">&nbsp;</p>
 <hr>
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

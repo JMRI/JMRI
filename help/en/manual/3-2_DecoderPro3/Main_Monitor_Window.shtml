@@ -25,7 +25,7 @@ DecoderPro&reg; Main Window
 <h1>Communications Monitor Window</h1>
 
 <div align=right>
-<p><a href="index.shtml#Main">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a><a href="index.shtml#Main"></a></p>
 </div>
 
 <hr>
@@ -56,10 +56,8 @@ DecoderPro&reg; Main Window
 <p>Type your message in the Add Messge text box, then clidk on the <strong>Add Message</strong> button to add your message to the log file.</p>
 <p align="left">&nbsp;</p>
 <hr>
-
-<div align=right>
-<p><a href="index.shtml#Main">Back to Index</a></p>
-</div>
+<a href="dp3_menubar.shtml">Back to Index</a>
+<div align=right> </div>
 
 <!--#include virtual="/Footer" -->
 </body>

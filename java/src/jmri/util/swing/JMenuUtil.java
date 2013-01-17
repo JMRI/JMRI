@@ -23,8 +23,8 @@ import jmri.util.jdom.LocaleSelector;
 
 public class JMenuUtil extends GuiUtilBase {
 
-    static public JMenu[] loadMenu(File file, WindowInterface wi, Object context) {
-        Element root = rootFromFile(file);
+    static public JMenu[] loadMenu(String path, WindowInterface wi, Object context) {
+        Element root = rootFromName(path);
 
         int n = root.getChildren("node").size();
         JMenu[] retval = new JMenu[n];

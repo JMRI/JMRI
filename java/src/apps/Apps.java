@@ -556,8 +556,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
 
     protected String line1() {
-        return MessageFormat.format(rb.getString("DefaultVersionCredit"),
-                                new Object[]{jmri.Version.name()});
+        return Bundle.getMessage("DefaultVersionCredit", jmri.Version.name());
     }
     protected String line2() {
         return "http://jmri.org/";
@@ -630,9 +629,9 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         return " ";
     }
     protected String line9() {
-        return MessageFormat.format(rb.getString("JavaVersionCredit"),
-                                new Object[]{System.getProperty("java.version","<unknown>"),
-                                            Locale.getDefault().toString()});
+        return Bundle.getMessage("JavaVersionCredit", 
+                System.getProperty("java.version","<unknown>"),
+                Locale.getDefault().toString());
     }
 
     protected String logo() {

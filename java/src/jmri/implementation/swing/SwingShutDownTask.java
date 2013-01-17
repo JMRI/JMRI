@@ -3,7 +3,6 @@
 package jmri.implementation.swing;
 
 import jmri.implementation.AbstractShutDownTask;
-import java.util.ResourceBundle;
 import java.awt.Component;
 import javax.swing.JOptionPane;
 
@@ -26,8 +25,6 @@ import javax.swing.JOptionPane;
  * @version $Revision$
  */
 public class SwingShutDownTask extends AbstractShutDownTask {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.implementation.swing.MessageBundle");
     
     /** 
      * Constructor specifies the warning message
@@ -53,15 +50,15 @@ public class SwingShutDownTask extends AbstractShutDownTask {
         while (!checkPromptNeeded()) {
             // issue prompt
             Object[] possibleValues;
-            if (action!=null) possibleValues = new Object[] {rb.getString("ButtonContinue"), 
-                                       rb.getString("ButtonAbort"), 
+            if (action!=null) possibleValues = new Object[] {Bundle.getMessage("ButtonContinue"), 
+                                       Bundle.getMessage("ButtonAbort"), 
                                        action};
-            else possibleValues = new Object[] {rb.getString("ButtonContinue"), 
-                                       rb.getString("ButtonAbort")}; 
+            else possibleValues = new Object[] {Bundle.getMessage("ButtonContinue"), 
+                                       Bundle.getMessage("ButtonAbort")}; 
 
             int selectedValue = JOptionPane.showOptionDialog(component,
                                                              warning,
-                                                             rb.getString("ShutDownWarningTitle"),
+                                                             Bundle.getMessage("ShutDownWarningTitle"),
                                                              JOptionPane.DEFAULT_OPTION,
                                                              JOptionPane.WARNING_MESSAGE, null,
                                                              possibleValues, possibleValues[possibleValues.length-1]);

@@ -23,7 +23,7 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
     /**
      * Create and initialize a multi-pane GUI window.
      */
-    public MdiMainFrame(String name, File treeFile, File menubarFile, File toolbarFile) {
+    public MdiMainFrame(String name, String treeFile, String menubarFile, String toolbarFile) {
         super(name);
         configureFrame(treeFile);
         addMainMenuBar(menubarFile);
@@ -37,7 +37,7 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
 
     JmriJInternalFrameInterface rightWI;
     
-    protected void configureFrame(File treeFile) {
+    protected void configureFrame(String treeFile) {
         desktop = new JDesktopPane();                
         desktop.setBorder(BorderFactory.createLineBorder(Color.black));
         
@@ -48,7 +48,7 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
         add(leftRightSplitPane, BorderLayout.CENTER);
     }
         
-    protected JScrollPane makeLeftTree(File treeFile) {
+    protected JScrollPane makeLeftTree(String treeFile) {
         final JTree tree;
         TreeNode topNode;
         
@@ -84,7 +84,7 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
         return treeView;
     }
         
-    protected void addMainMenuBar(File menuFile) {
+    protected void addMainMenuBar(String menuFile) {
         JMenuBar menuBar = new JMenuBar();
         
         JMenu[] menus = JMenuUtil.loadMenu(menuFile, rightWI, null); // no central context
@@ -94,7 +94,7 @@ public class MdiMainFrame extends jmri.util.JmriJFrame {
         setJMenuBar(menuBar);
     }
 
-    protected void addMainToolBar(File toolBarFile) {
+    protected void addMainToolBar(String toolBarFile) {
           
         JToolBar toolBar = JToolBarUtil.loadToolBar(toolBarFile, rightWI, null);  // no context
 

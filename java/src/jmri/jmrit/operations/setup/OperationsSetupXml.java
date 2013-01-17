@@ -62,15 +62,13 @@ public class OperationsSetupXml extends OperationsXml {
 	        m.put("href", xsltLocation+"operations-config.xsl"); // NOI18N
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
 	        doc.addContent(0,p);
-
-	        Setup.setMiaComment(convertToXmlComment(Setup.getMiaComment()));	        
+     
 	        // add top-level elements	        
 	        root.addContent(Setup.store());
 	        // add control elements
 	        root.addContent(Control.store());
 
 	        writeXML(file, doc);	        
-	        Setup.setMiaComment(convertFromXmlComment(Setup.getMiaComment()));
 
 	        // done, so can't be dirty
 	        setDirty(false);
@@ -89,7 +87,6 @@ public class OperationsSetupXml extends OperationsXml {
 			return;
 		}
 		Setup.load(root);		
-        Setup.setMiaComment(convertFromXmlComment(Setup.getMiaComment()));
         // load control settings
         Control.load(root);
 	}

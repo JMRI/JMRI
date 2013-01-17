@@ -622,7 +622,9 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         }
         
         public void dispose(){
-            bottom.remove(saveBasicRoster);
+            synchronized(this){
+                bottom.remove(saveBasicRoster);
+            }
             super.dispose();
         }
     

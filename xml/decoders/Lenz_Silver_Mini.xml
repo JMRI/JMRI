@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: Lenz_Silver_Mini.xml 22121 2012-12-30 02:57:59Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -86,40 +86,10 @@
         </enumVal>
         <label>Speed Table Selection</label>
       </variable>
-      <variable label="Light short-circuit" CV="30" mask="XXXXXXXV" item="Light Short">
-        <enumVal>
-          <enumChoice choice="Okay">
-            <choice>Okay</choice>
-          </enumChoice>
-          <enumChoice choice="Fault">
-            <choice>Fault</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Light short-circuit</label>
-      </variable>
-      <variable label="Overheating" CV="30" mask="XXXXXXVX" item="Overheating" default="0">
-        <enumVal>
-          <enumChoice choice="Okay">
-            <choice>Okay</choice>
-          </enumChoice>
-          <enumChoice choice="Fault">
-            <choice>Fault</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Overheating</label>
-      </variable>
-      <variable label="Motor short-circuit" CV="30" mask="XXXXXVXX" item="Motor Short" default="0">
-        <enumVal>
-          <enumChoice choice="Okay">
-            <choice>Okay</choice>
-          </enumChoice>
-          <enumChoice choice="Fault">
-            <choice>Fault</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Motor short-circuit</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/protection_cv30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/lenz/functionmap.xml"/>
+
       <variable label="Motor Type(0-5)" CV="50" mask="XXXXVVVV" item="Motor type" default="0" comment="Range 0-5">
         <enumVal>
           <enumChoice choice="0 ">
@@ -177,52 +147,10 @@
         </enumVal>
         <label>Motor Drive Frequency</label>
       </variable>
-      <variable label="Constant Braking Distance" CV="51" mask="XXXXXXXV" item="Constant Braking" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Constant Braking Distance</label>
-      </variable>
-      <variable label="Automatic Braking Control" CV="51" mask="XXXXXXVX" item="ABC" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Automatic Braking Control</label>
-      </variable>
-      <variable label="ABC direction dependancy" CV="51" mask="XXXXXVXX" item="ABC Direction" default="0">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>ABC direction dependancy</label>
-      </variable>
-      <variable label="Push-Pull without Stop" CV="51" mask="XXXXVXXX" item="Push-Pull w/o Stop" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Push-Pull without Stop</label>
-      </variable>
-      <variable label="Push-Pull with Stop" CV="51" mask="XXXVXXXX" item="Push-Pull w Stop" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Push-Pull with Stop</label>
-      </variable>
-      <variable label="Stop on DC" CV="51" mask="XXVXXXXX" item="Stop on DC" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Stop on DC</label>
-      </variable>
-      <variable label="Braking Distance in Constant Mode (0-255)" CV="52" item="Braking Distance" default="50" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Braking Distance in Constant Mode (0-255)</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="Slow approach speed with ABC (0-255)" CV="53" item="ABC Approach Speed" default="48" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Slow approach speed with ABC (0-255)</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable label="Push-Pull stop time (0-255 seconds) " CV="54" item="Push-Pull Stop Time" default="4" comment="Range 0-255">
-        <decVal min="0" max="255"/>
-        <label>Push-Pull stop time (0-255 seconds) </label>
-        <comment>Range 0-255</comment>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/braking_cv51.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/lenz/abc_cv51.xml"/>
+
       <variable label="Dimming Intensity, Output A (0-255)" CV="55" item="Global lighting option 1" default="255" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
         <decVal min="0" max="255"/>
         <label>Dimming Intensity, Output A (0-255)</label>
@@ -231,102 +159,9 @@
         <decVal min="0" max="255"/>
         <label>Dimming Intensity, Output B (0-255)</label>
       </variable>
-      <variable label="Enable dimming with F1" CV="57" mask="XXXXXXXV" tooltip="Toggle light dimming 'on' using F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F1</label>
-      </variable>
-      <variable label="Enable dimming with F2" CV="57" mask="XXXXXXVX" tooltip="Toggle light dimming 'on' using F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F2</label>
-      </variable>
-      <variable label="Enable dimming with F3" CV="57" mask="XXXXXVXX" tooltip="Toggle light dimming 'on' using F3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F3</label>
-      </variable>
-      <variable label="Enable dimming with F4" CV="57" mask="XXXXVXXX" tooltip="Toggle light dimming 'on' using F4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F4</label>
-      </variable>
-      <variable label="Enable dimming with F5" CV="57" mask="XXXVXXXX" tooltip="Toggle light dimming 'on' using F5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F5</label>
-      </variable>
-      <variable label="Enable dimming with F6" CV="57" mask="XXVXXXXX" tooltip="Toggle light dimming 'on' using F6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F6</label>
-      </variable>
-      <variable label="Enable dimming with F7" CV="57" mask="XVXXXXXX" tooltip="Toggle light dimming 'on' using F7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F7</label>
-      </variable>
-      <variable label="Enable dimming with F8" CV="57" mask="VXXXXXXX" tooltip="Toggle light dimming 'on' using F8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable dimming with F8</label>
-      </variable>
-      <variable label="Enable Low Speed with F1" CV="58" mask="XXXXXXXV" tooltip="Toggle low speed switching gear 'on' using F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F1</label>
-      </variable>
-      <variable label="Enable Low Speed with F2" CV="58" mask="XXXXXXVX" tooltip="Toggle low speed switching gear 'on' using F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F2</label>
-      </variable>
-      <variable label="Enable Low Speed with F3" CV="58" mask="XXXXXVXX" default="1" tooltip="Toggle low speed switching gear 'on' using F3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F3</label>
-      </variable>
-      <variable label="Enable Low Speed with F4" CV="58" mask="XXXXVXXX" tooltip="Toggle low speed switching gear 'on' using F4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F4</label>
-      </variable>
-      <variable label="Enable Low Speed with F5" CV="58" mask="XXXVXXXX" tooltip="Toggle low speed switching gear 'on' using F5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F5</label>
-      </variable>
-      <variable label="Enable Low Speed with F6" CV="58" mask="XXVXXXXX" tooltip="Toggle low speed switching gear 'on' using F6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F6</label>
-      </variable>
-      <variable label="Enable Low Speed with F7" CV="58" mask="XVXXXXXX" tooltip="Toggle low speed switching gear 'on' using F7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F7</label>
-      </variable>
-      <variable label="Enable Low Speed with F8" CV="58" mask="VXXXXXXX" tooltip="Toggle low speed switching gear 'on' using F8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Enable Low Speed with F8</label>
-      </variable>
-      <variable label="Disable momentum with F1" CV="59" mask="XXXXXXXV" tooltip="Toggle acceleration and deceleration delays 'off' using F1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F1</label>
-      </variable>
-      <variable label="Disable momentum with F2" CV="59" mask="XXXXXXVX" tooltip="Toggle acceleration and deceleration delays 'off' using F2">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F2</label>
-      </variable>
-      <variable label="Disable momentum with F3" CV="59" mask="XXXXXVXX" tooltip="Toggle acceleration and deceleration delays 'off' using F3">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F3</label>
-      </variable>
-      <variable label="Disable momentum with F4" CV="59" mask="XXXXVXXX" default="1" tooltip="Toggle acceleration and deceleration delays 'off' using F4">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F4</label>
-      </variable>
-      <variable label="Disable momentum with F5" CV="59" mask="XXXVXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F5">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F5</label>
-      </variable>
-      <variable label="Disable momentum with F6" CV="59" mask="XXVXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F6">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F6</label>
-      </variable>
-      <variable label="Disable momentum with F7" CV="59" mask="XVXXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F7">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F7</label>
-      </variable>
-      <variable label="Disable momentum with F8" CV="59" mask="VXXXXXXX" tooltip="Toggle acceleration and deceleration delays 'off' using F8">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-        <label>Disable momentum with F8</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/lenz/fn_ctrl_57_59.xml"/>
+
       <variable label="Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) " CV="60" item="Lighting effects A/B" default="0" comment="Range 0-44">
         <decVal min="0" max="44"/>
         <label>Enter the value corresponding to the desired lighting effect for B/A outputs (0-44) </label>
@@ -397,136 +232,9 @@
       <factReset label="Reset All CVs" CV="8" default="33"/>
     </resets>
   </decoder>
-  <pane name="Lenz Function Map">
-    <column>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Select which function">
-            <label>Select which function</label>
-          </label>
-          <label label="disables momentum:">
-            <label>disables momentum:</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Disable momentum with F1" format="checkbox"/>
-          <display item="Disable momentum with F2" format="checkbox"/>
-          <display item="Disable momentum with F3" format="checkbox"/>
-          <display item="Disable momentum with F4" format="checkbox"/>
-          <display item="Disable momentum with F5" format="checkbox"/>
-          <display item="Disable momentum with F6" format="checkbox"/>
-          <display item="Disable momentum with F7" format="checkbox"/>
-          <display item="Disable momentum with F8" format="checkbox"/>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Select which function">
-            <label>Select which function</label>
-          </label>
-          <label label="enables switching gear:">
-            <label>enables switching gear:</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Enable Low Speed with F1" format="checkbox"/>
-          <display item="Enable Low Speed with F2" format="checkbox"/>
-          <display item="Enable Low Speed with F3" format="checkbox"/>
-          <display item="Enable Low Speed with F4" format="checkbox"/>
-          <display item="Enable Low Speed with F5" format="checkbox"/>
-          <display item="Enable Low Speed with F6" format="checkbox"/>
-          <display item="Enable Low Speed with F7" format="checkbox"/>
-          <display item="Enable Low Speed with F8" format="checkbox"/>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Select which function enables">
-            <label>Select which function enables</label>
-          </label>
-          <label label="light dimming for A and B outputs:">
-            <label>light dimming for A and B outputs:</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Enable dimming with F1" format="checkbox"/>
-          <display item="Enable dimming with F2" format="checkbox"/>
-          <display item="Enable dimming with F3" format="checkbox"/>
-          <display item="Enable dimming with F4" format="checkbox"/>
-          <display item="Enable dimming with F5" format="checkbox"/>
-          <display item="Enable dimming with F6" format="checkbox"/>
-          <display item="Enable dimming with F7" format="checkbox"/>
-          <display item="Enable dimming with F8" format="checkbox"/>
-        </column>
-      </row>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Select which function toggles">
-            <label>Select which function toggles</label>
-          </label>
-          <label label="lighting effects on/off for outputs A and B:">
-            <label>lighting effects on/off for outputs A and B:</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <display item="Toggle effect (outputs A/B) with F1" format="checkbox"/>
-          <display item="Toggle effect (outputs A/B) with F2" format="checkbox"/>
-          <display item="Toggle effect (outputs A/B) with F3" format="checkbox"/>
-          <display item="Toggle effect (outputs A/B) with F4" format="checkbox"/>
-          <display item="Toggle effect (outputs A/B) with F5" format="checkbox"/>
-          <display item="Toggle effect (outputs A/B) with F6" format="checkbox"/>
-          <display item="Toggle effect (outputs A/B) with F7" format="checkbox"/>
-          <display item="Toggle effect (outputs A/B) with F8" format="checkbox"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-					
-			</column>
-      </row>
-    </column>
-    <name>Lenz Function Map</name>
-  </pane>
+
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
+
   <pane name="Lenz">
     <column>
       <row>
@@ -603,162 +311,7 @@
     </column>
     <name>Lenz</name>
   </pane>
-  <pane name="Lenz Lighting">
-    <column>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.">
-            <label>The CV values on this page are unique in that each CV represents the lighting selection for two different outputs.</label>
-          </label>
-          <label label="The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.">
-            <label>The tens digit of the value corresponds to one output, and the ones digit corresponds to the other output.</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <separator/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.">
-            <label>Example:  A value of 23 below results in a Gyra light at output B and a strobe at output A.</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <separator/>
-        </column>
-      </row>
-      <row>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="The following lighting effects are">
-            <label>The following lighting effects are</label>
-          </label>
-          <label label="available for outputs A and B">
-            <label>available for outputs A and B</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="No effect    ">
-            <label>No effect    </label>
-          </label>
-          <label label="Mars light   ">
-            <label>Mars light   </label>
-          </label>
-          <label label="Gyra light   ">
-            <label>Gyra light   </label>
-          </label>
-          <label label="Strobe       ">
-            <label>Strobe       </label>
-          </label>
-          <label label="Double Strobe">
-            <label>Double Strobe</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Output B">
-            <label>Output B</label>
-          </label>
-          <label label=" (Tens)">
-            <label> (Tens)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="   0">
-            <label>   0</label>
-          </label>
-          <label label="   1">
-            <label>   1</label>
-          </label>
-          <label label="   2">
-            <label>   2</label>
-          </label>
-          <label label="   3">
-            <label>   3</label>
-          </label>
-          <label label="   4">
-            <label>   4</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="        ">
-            <label>        </label>
-          </label>
-        </column>
-        <column>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="Output A">
-            <label>Output A</label>
-          </label>
-          <label label=" (Ones)">
-            <label> (Ones)</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <label label="   0">
-            <label>   0</label>
-          </label>
-          <label label="   1">
-            <label>   1</label>
-          </label>
-          <label label="   2">
-            <label>   2</label>
-          </label>
-          <label label="   3">
-            <label>   3</label>
-          </label>
-          <label label="   4">
-            <label>   4</label>
-          </label>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="                                                          ">
-            <label>                                                          </label>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
-          <display item="Lighting effects A/B"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <separator/>
-        </column>
-      </row>
-      <row>				
-		</row>
-      <row>	
-		</row>
-    </column>
-    <name>Lenz Lighting</name>
-  </pane>
+
+  <xi:include href="http://jmri.org/xml/decoders/lenz/paneLighting.xml"/>
+
 </decoder-config>

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: revTrim.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,7 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
     <holder>JMRI</holder>
@@ -41,7 +41,9 @@
   </revhistory>
   <variable label="Reverse Trim" item="Reverse Trim" CV="95" comment="Range 0-255">
     <decVal/>
+    <label xml:lang="it">Correzione Velocità Indietro</label>
     <label xml:lang="fr">Correction vitesse arri&#xE8;re</label>
+    <comment xml:lang="it">Valore 0-255(</comment>
     <comment xml:lang="fr">Valeur 0-255(</comment>
   </variable>
 </variables>

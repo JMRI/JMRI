@@ -26,7 +26,7 @@ DecoderPro&reg; Main Window
 <h1>SECSI Menu</h1>
 
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
 </div>
 
 <hr>
@@ -46,7 +46,7 @@ DecoderPro&reg; Main Window
   </table>
 </blockquote>
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

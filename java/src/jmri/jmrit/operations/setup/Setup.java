@@ -90,10 +90,10 @@ public class Setup {
 	public static final String NORTH_DIR = Bundle.getMessage("North");
 	public static final String SOUTH_DIR = Bundle.getMessage("South");
 	
-	public static final String DESCRIPTIVE = "Descriptive";  // NOI18N Car types
-	public static final String AAR = "ARR Codes";  // NOI18N Car types
+	public static final String DESCRIPTIVE = Bundle.getMessage("Descriptive");  // Car types
+	public static final String AAR = Bundle.getMessage("ArrCodes");  // Car types
 	
-	public static final String MONOSPACED = "Monospaced"; // NOI18N printer fonts
+	public static final String MONOSPACED = Bundle.getMessage("Monospaced"); // default printer font
 	
 	public static final String PORTRAIT = Bundle.getMessage("Portrait");
 	public static final String LANDSCAPE = Bundle.getMessage("Landscape");

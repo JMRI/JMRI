@@ -101,6 +101,50 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="variables" type="VariablesType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "variables" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:element name="pane" type="PaneType">
+    <xs:annotation>
+      <xs:documentation>
+      Provides a base element that can be used in "pane" fragment files, those
+      little files that are XIncluded into primary decoder files.
+      </xs:documentation>
+    </xs:annotation>
+  </xs:element>
+
+              <xs:element name="enumVal" >
+                <xs:annotation><xs:documentation>
+                A fixed set of choices is defined, each corresponding to a specific value
+                </xs:documentation></xs:annotation>
+                <xs:complexType>
+                  <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
+                    <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element name="enumChoice" >
+                      <xs:complexType>
+                        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                          <xs:annotation><xs:documentation>Provide an internationalized choice text</xs:documentation></xs:annotation>
+                          <xs:element name="choice" minOccurs="0" maxOccurs="unbounded" />
+                        </xs:sequence>
+                        <xs:attribute name="choice" type="xs:string" use="required"/>
+                        <xs:attribute name="value" type="xs:int" />
+                        <xs:attribute name="comment" type="xs:string"/>
+                      </xs:complexType>
+                    </xs:element>
+                  </xs:sequence>
+                  <xs:attribute ref="xml:base" />
+                  <xs:attribute name="comment" type="xs:string"/>
+                </xs:complexType>
+              </xs:element>
+
 
   <xs:complexType name="FamilyType">
     <xs:sequence>
@@ -559,6 +603,7 @@
           <xs:attribute name="default" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute ref="xml:base" />
         </xs:complexType>
       </xs:element>
       <xs:element name="ifactReset" minOccurs="0" maxOccurs="unbounded" >
@@ -571,13 +616,36 @@
           <xs:attribute name="default" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute ref="xml:base" />
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute ref="xml:base" />
   </xs:complexType>
 
   <xs:complexType name="PaneType">
     <xs:sequence>
+      <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) providing copyright information in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+        
+      <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the authors in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+        
+      <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
+          <xs:annotation><xs:documentation>
+          DocBook element(s) describing the revision history in standard form.
+          For use in subfiles.
+          </xs:documentation></xs:annotation>
+      </xs:element>
+
       <xs:choice>
         <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded"/>
@@ -586,7 +654,9 @@
     </xs:sequence>
     <xs:attribute name="name" type="xs:string"/>
     <xs:attribute name="nameFmt" type="xs:string"/>
+    <xs:attribute ref="xml:base" />
   </xs:complexType>
+
   <xs:complexType name="PaneRowType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded" />
@@ -598,6 +668,7 @@
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="PaneColumnType">
     <xs:sequence minOccurs="1" maxOccurs="unbounded">
       <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
@@ -609,6 +680,7 @@
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
+
   <xs:complexType name="LabelType">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
@@ -617,6 +689,7 @@
     </xs:sequence>
     <xs:attribute name="label" type="xs:string"/>
   </xs:complexType>
+
   <xs:complexType name="DisplayType">
     <xs:sequence minOccurs="0" maxOccurs="unbounded">
       <xs:element name="label" minOccurs="0" maxOccurs="unbounded">

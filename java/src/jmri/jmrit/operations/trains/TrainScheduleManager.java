@@ -255,7 +255,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
      * detailed DTD in operations-trains.dtd.
      * @return Contents in a JDOM Element
      */
-    public Element store() {
+    public void store(Element root) {
     	Element values = new Element(Xml.SCHEDULES);
 		// add entries
     	List<String> schedules = getSchedulesByIdList();
@@ -264,15 +264,14 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 			TrainSchedule sch = getScheduleById(id);
 			values.addContent(sch.store());
 		}
-    	return values;
+    	root.addContent(values);
     }
     
-    public void load (Element values) {
-    	if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-    	Element e = values.getChild(Xml.SCHEDULES);
+    public void load (Element root) {
+    	Element e = root.getChild(Xml.SCHEDULES);
     	if (e != null){
            	@SuppressWarnings("unchecked")
-            List<Element> l = values.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
+            List<Element> l = root.getChild(Xml.SCHEDULES).getChildren(Xml.SCHEDULE);
             if (log.isDebugEnabled()) log.debug("TrainScheduleManager sees "+l.size()+" train schedules");
             for (int i=0; i<l.size(); i++) {
                 register(new TrainSchedule(l.get(i)));

@@ -25,8 +25,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager
     }
     //protected int xmlorder = 20;
 
-    final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
     public char typeLetter() { return 'T'; }
 
     public Turnout provideTurnout(String name) {
@@ -113,14 +111,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager
 	 * Allows text other than "CLOSED" to be use with certain hardware system 
 	 * to represent the Turnout.CLOSED state.
 	 */
-	public String getClosedText() { return rbt.getString("TurnoutStateClosed"); }
+	public String getClosedText() { return Bundle.getMessage("TurnoutStateClosed"); }
 	
 	/**
 	 * Get text to be used for the Turnout.THROWN state in user communication.
 	 * Allows text other than "THROWN" to be use with certain hardware system 
 	 * to represent the Turnout.THROWN state.
 	 */
-	public String getThrownText() { return rbt.getString("TurnoutStateThrown"); }
+	public String getThrownText() { return Bundle.getMessage("TurnoutStateThrown"); }
 	
 	/**
 	 * Get from the user, the number of addressed bits used to control a turnout. 

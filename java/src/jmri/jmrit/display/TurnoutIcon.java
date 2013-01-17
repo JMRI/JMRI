@@ -202,7 +202,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
     public String getNameString() {
         String name;
-        if (namedTurnout == null) name = rb.getString("NotConnected");
+        if (namedTurnout == null) name = Bundle.getMessage("NotConnected");
         else if (getTurnout().getUserName()!=null)
             name = getTurnout().getUserName()+" ("+getTurnout().getSystemName()+")";
         else
@@ -233,7 +233,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
 
     javax.swing.JCheckBoxMenuItem tristateItem = null;
     void addTristateEntry(JPopupMenu popup) {
-    	tristateItem = new javax.swing.JCheckBoxMenuItem(rb.getString("Tristate"));
+    	tristateItem = new javax.swing.JCheckBoxMenuItem(Bundle.getMessage("Tristate"));
     	tristateItem.setSelected(getTristate());
         popup.add(tristateItem);
         tristateItem.addActionListener(new ActionListener(){
@@ -298,7 +298,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     TableItemPanel _itemPanel;
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     editItem();
@@ -308,7 +308,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout")));
+        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Turnout", _iconFamily,
                                        PickListModel.turnoutPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -361,7 +361,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Turnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();

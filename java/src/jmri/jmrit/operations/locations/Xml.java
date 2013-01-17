@@ -17,6 +17,9 @@ public class Xml {
 	static final String COMMENT = "comment"; // NOI18N
 	static final String SCHEDULE = "schedule"; // NOI18N
 	static final String TRACK = "track"; // NOI18N
+	static final String TYPES = "types"; // NOI18N
+	static final String LOCO_TYPE = "locoType"; // NOI18N
+	static final String CAR_TYPE = "carType"; // NOI18N
 	
 	static final String TRUE = "true"; // NOI18N
 	static final String FALSE = "false"; // NOI18N
@@ -40,7 +43,10 @@ public class Xml {
 	static final String PHYSICAL_LOCATION = "physicalLocation"; // NOI18N
 	static final String SWITCH_LIST_COMMENT = "switchListComment"; // NOI18N
 	static final String SECONDARY = "secondary"; // NOI18N early version of operations called tracks "secondary"
-
+	
+	// SccheduleManager.java
+	static final String SCHEDULES = "schedules"; // NOI18N
+	
 	// ScheduleItem.java
 	static final String ITEM = "item"; // NOI18N
 	static final String SEQUENCE_ID = "sequenceId"; // NOI18N
@@ -56,18 +62,26 @@ public class Xml {
 	static final String HITS = "hits"; // NOI18N
 
 	// Track.java
-	
 	static final String LOC_TYPE = "locType"; // NOI18N
 	static final String LENGTH = "length"; // NOI18N
 	static final String MOVES = "moves"; // NOI18N
 	static final String CAR_ROAD_OPERATION = "carRoadOperation"; // NOI18N misspelled should have been carRoadOption
+	static final String CAR_ROAD_OPTION = "carRoadOption"; // NOI18N
 	static final String CAR_ROADS = "carRoads"; // NOI18N
+	static final String CAR_ROAD = "carRoad"; // NOI18N
 	static final String CAR_LOAD_OPTION = "carLoadOption"; // NOI18N
 	static final String CAR_LOADS = "carLoads"; // NOI18N
+	static final String CAR_LOAD = "carLoad"; // NOI18N
 	static final String DROP_IDS = "dropIds"; // NOI18N
+	static final String DROP_ID = "dropId"; // NOI18N
 	static final String DROP_OPTION = "dropOption"; // NOI18N
 	static final String PICKUP_IDS = "pickupIds"; // NOI18N
+	static final String PICKUP_ID = "pickupId"; // NOI18N
 	static final String PICKUP_OPTION = "pickupOption"; // NOI18N
+	static final String COMMENTS = "comments"; // NOI18N
+	static final String BOTH = "both"; // NOI18N
+	static final String PICKUP = "pickup"; // NOI18N
+	static final String SETOUT = "setout"; // NOI18N	
 
 	static final String SCHEDULE_ID = "scheduleId"; // NOI18N
 	static final String ITEM_ID = "itemId"; // NOI18N

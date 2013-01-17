@@ -153,7 +153,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     public String getNameString() {
         String name = "";
         if ((entries == null) || (entries.size() < 1)) 
-            name = rb.getString("NotConnected");
+            name = Bundle.getMessage("NotConnected");
         else {
             name = entries.get(0).namedSensor.getName();
             for (int i = 1; i<entries.size(); i++) {
@@ -201,7 +201,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         displayState();
     }
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     editItem();
@@ -213,7 +213,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     MultiSensorItemPanel _itemPanel;
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor")));
+        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor")));
         _itemPanel = new MultiSensorItemPanel(_paletteFrame, "MultiSensor", _iconFamily,
                                        PickListModel.multiSensorPickModelInstance(), _editor);
         ActionListener updateAction = new ActionListener() {
@@ -247,7 +247,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             JOptionPane.showMessageDialog(_paletteFrame, 
                     java.text.MessageFormat.format(
                         ItemPalette.rbp.getString("NeedPosition"), positions.length), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (iconMap!=null) {
@@ -273,7 +273,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
         
     public boolean setEditIconMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("MultiSensor"));
         popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -342,17 +342,17 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
 
             switch (state) {
             case Sensor.ACTIVE:
-                if (isText()) super.setText(rb.getString("Active"));
+                if (isText()) super.setText(Bundle.getMessage("Active"));
                 if (isIcon()) super.setIcon(e.icon);
                 foundActive = true;
                 displaying = i;
                 break;  // look at the next ones too
             case Sensor.UNKNOWN:
-                if (isText()) super.setText(rb.getString("UnKnown"));
+                if (isText()) super.setText(Bundle.getMessage("UnKnown"));
                 if (isIcon()) super.setIcon(unknown);
                 return;  // this trumps all others
             case Sensor.INCONSISTENT:
-                if (isText()) super.setText(rb.getString("Inconsistent"));
+                if (isText()) super.setText(Bundle.getMessage("Inconsistent"));
                 if (isIcon()) super.setIcon(inconsistent);
                 break;
             default:
@@ -362,7 +362,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         // loop has gotten to here
         if (foundActive) return;  // set active
         // only case left is all inactive
-        if (isText()) super.setText(rb.getString("Inactive"));
+        if (isText()) super.setText(Bundle.getMessage("Inactive"));
         if (isIcon()) super.setIcon(inactive);     
         return;
     }    

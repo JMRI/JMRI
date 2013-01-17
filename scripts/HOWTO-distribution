@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision$) 
+distribution.  ($Revision$)
 
 If you're building locally:
     You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)

@@ -1273,8 +1273,8 @@ public class LayoutBlockManager extends AbstractManager {
 		LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
 		LayoutBlock pLayoutBlock = getByUserName(protectedBlock.getUserName());
 		if ( (fLayoutBlock==null) || (pLayoutBlock==null) ) {
-			if (fLayoutBlock==null) log.error("Block "+facingBlock.getSystemName()+"is not on a Layout Editor panel.");
-			if (pLayoutBlock==null) log.error("Block "+protectedBlock.getSystemName()+"is not on a Layout Editor panel.");
+			if (fLayoutBlock==null) log.error("Block "+facingBlock.getSystemName()+" is not on a Layout Editor panel.");
+			if (pLayoutBlock==null) log.error("Block "+protectedBlock.getSystemName()+" is not on a Layout Editor panel.");
 			return null;
 		}
 		// input has corresponding LayoutBlocks - does it correspond to a block boundary?
@@ -1296,7 +1296,7 @@ public class LayoutBlockManager extends AbstractManager {
 			}
 			i ++;
 		}
-		if (lc==null) {
+        if (lc==null) {
 			log.error("Block "+facingBlock.getSystemName()+" is not connected to Block "+protectedBlock.getSystemName());
 			return null;
 		}
@@ -1306,8 +1306,28 @@ public class LayoutBlockManager extends AbstractManager {
 		TrackSegment tr = lc.getTrackSegment();
         int cType = lc.getConnectedType();
         if(connected==null){
+            if(lc.getXover()!=null){
+                if(lc.getXoverBoundaryType()==LayoutConnectivity.XOVER_BOUNDARY_AB) {
+                    if(fLayoutBlock==lc.getXover().getLayoutBlock()){
+                        cType=LayoutEditor.TURNOUT_A;
+                    } else {
+                        cType=LayoutEditor.TURNOUT_B;
+                    }
+                    connected = lc.getXover();
+                }
+                else if(lc.getXoverBoundaryType()==LayoutConnectivity.XOVER_BOUNDARY_CD){
+                    if(fLayoutBlock==lc.getXover().getLayoutBlockC()){
+                        cType=LayoutEditor.TURNOUT_C;
+                    } else {
+                        cType=LayoutEditor.TURNOUT_D;
+                    }
+                    connected = lc.getXover();
+                }
+            }
+        }
+        if (connected == null) {
             log.error("No connectivity object found between Blocks "+facingBlock.getSystemName()+
-										", "+protectedBlock.getSystemName()  + " " + cType);
+                                        ", "+protectedBlock.getSystemName()  + " " + cType);
             return null;
         }
         if (cType==LayoutEditor.TRACK) {
@@ -1465,6 +1485,26 @@ public class LayoutBlockManager extends AbstractManager {
         Object connected = lc.getConnectedObject();
 		TrackSegment tr = lc.getTrackSegment();
         int cType = lc.getConnectedType();
+        if(connected==null){
+            if(lc.getXover()!=null){
+                if(lc.getXoverBoundaryType()==LayoutConnectivity.XOVER_BOUNDARY_AB) {
+                    if(fLayoutBlock==lc.getXover().getLayoutBlock()){
+                        cType=LayoutEditor.TURNOUT_A;
+                    } else {
+                        cType=LayoutEditor.TURNOUT_B;
+                    }
+                    connected = lc.getXover();
+                }
+                else if(lc.getXoverBoundaryType()==LayoutConnectivity.XOVER_BOUNDARY_CD){
+                    if(fLayoutBlock==lc.getXover().getLayoutBlockC()){
+                        cType=LayoutEditor.TURNOUT_C;
+                    } else {
+                        cType=LayoutEditor.TURNOUT_D;
+                    }
+                    connected = lc.getXover();
+                }
+            }
+        }
         if(connected==null){
             log.error("No connectivity object found between Blocks "+facingBlock.getSystemName()+
 										", "+protectedBlock.getSystemName()  + " " + cType);
@@ -1679,12 +1719,49 @@ public class LayoutBlockManager extends AbstractManager {
         LayoutTurnout t = panel.findLayoutTurnoutBySignalMast(signalMastName);
         if(t!=null){
             if(t.getSignalAMast().equals(signalMastName)){
+                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockB()!=null){
+                    if(t.getConnectA()!=null && t.getConnectA() instanceof TrackSegment){
+                        if(((TrackSegment)t.getConnectA()).getLayoutBlock()==t.getLayoutBlock()){
+                            if(t.getLayoutBlock()!=t.getLayoutBlockB()){
+                                return t.getLayoutBlockB();
+                            }
+                        }
+                    }
+                }
+                //This is only valid where the block boundary is external to the mast
                 return t.getLayoutBlock();
             } else if (t.getSignalBMast().equals(signalMastName)) {
+                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlock()!=null){
+                    if(t.getConnectB()!=null && t.getConnectB() instanceof TrackSegment){
+                        if(((TrackSegment)t.getConnectB()).getLayoutBlock()==t.getLayoutBlockB()){
+                            if(t.getLayoutBlock()!=t.getLayoutBlockB()){
+                                return t.getLayoutBlock();
+                            }
+                        }
+                    }
+                }
                 return t.getLayoutBlockB();
             } else if (t.getSignalCMast().equals(signalMastName)) {
+                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockD()!=null){
+                    if(t.getConnectC()!=null && t.getConnectC() instanceof TrackSegment){
+                        if(((TrackSegment)t.getConnectC()).getLayoutBlock()==t.getLayoutBlockC()){
+                            if(t.getLayoutBlockC()!=t.getLayoutBlockD()){
+                                return t.getLayoutBlockD();
+                            }
+                        }
+                    }
+                }
                 return t.getLayoutBlockC();
             } else {
+                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockC()!=null){
+                    if(t.getConnectD()!=null && t.getConnectD() instanceof TrackSegment){
+                        if(((TrackSegment)t.getConnectD()).getLayoutBlock()==t.getLayoutBlockD()){
+                            if(t.getLayoutBlockC()!=t.getLayoutBlockD()){
+                                return t.getLayoutBlockC();
+                            }
+                        }
+                    }
+                }
                 return t.getLayoutBlockD();
             }
         }
@@ -1865,12 +1942,48 @@ public class LayoutBlockManager extends AbstractManager {
         LayoutTurnout t = panel.findLayoutTurnoutBySensor(sensorName);
         if(t!=null){
             if(t.getSensorA().equals(sensorName)){
+                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockB()!=null){
+                    if(t.getConnectA()!=null && t.getConnectA() instanceof TrackSegment){
+                        if(((TrackSegment)t.getConnectA()).getLayoutBlock()==t.getLayoutBlock()){
+                            if(t.getLayoutBlock()!=t.getLayoutBlockB()){
+                                return t.getLayoutBlockB();
+                            }
+                        }
+                    }
+                }
                 return t.getLayoutBlock();
             } else if (t.getSensorB().equals(sensorName)) {
+                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlock()!=null){
+                    if(t.getConnectB()!=null && t.getConnectB() instanceof TrackSegment){
+                        if(((TrackSegment)t.getConnectB()).getLayoutBlock()==t.getLayoutBlockB()){
+                            if(t.getLayoutBlock()!=t.getLayoutBlockB()){
+                                return t.getLayoutBlock();
+                            }
+                        }
+                    }
+                }
                 return t.getLayoutBlockB();
             } else if (t.getSensorC().equals(sensorName)) {
+                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockD()!=null){
+                    if(t.getConnectC()!=null && t.getConnectC() instanceof TrackSegment){
+                        if(((TrackSegment)t.getConnectC()).getLayoutBlock()==t.getLayoutBlockC()){
+                            if(t.getLayoutBlockC()!=t.getLayoutBlockD()){
+                                return t.getLayoutBlockD();
+                            }
+                        }
+                    }
+                }
                 return t.getLayoutBlockC();
             } else {
+                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockC()!=null){
+                    if(t.getConnectD()!=null && t.getConnectD() instanceof TrackSegment){
+                        if(((TrackSegment)t.getConnectD()).getLayoutBlock()==t.getLayoutBlockD()){
+                            if(t.getLayoutBlockC()!=t.getLayoutBlockD()){
+                                return t.getLayoutBlockC();
+                            }
+                        }
+                    }
+                }
                 return t.getLayoutBlockD();
             }
         }

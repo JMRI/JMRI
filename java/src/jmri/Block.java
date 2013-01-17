@@ -2,6 +2,8 @@ package jmri;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 import jmri.util.PhysicalLocation;
 
 /**
@@ -541,11 +543,9 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 
     // Methods to implmement PhysicalLocationReporter Interface
     //
-    // For now (maybe forever) we defer to the Block's associated Reporter.
-    // A Block without a Reporter that is also a PhysicalLocationReporter is
-    // essentially a mis-use of the protocol.  The option is open, though for a subclass
-    // of Block to override these functions, or to add more code later that doesn't defer
-    // to the Reporter, if it makes sense to do so.
+    // If we have a Reporter that is also a PhysicalLocationReporter,
+    // we will defer to that Reporter's methods.
+    // Else we will assume a LocoNet style message to be parsed.
 
     /** Parse a given string and return the LocoAddress value that is presumed stored
      * within it based on this object's protocol.
@@ -558,13 +558,26 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      */
     public LocoAddress getLocoAddress(String rep) {
 	// Defer parsing to our associated Reporter if we can.
+	if (rep == null) { 
+	    log.warn("String input is null!");
+	    return(null);
+	}
 	if ((this.getReporter() != null) && (this.getReporter() instanceof PhysicalLocationReporter)) {
 	    return(((PhysicalLocationReporter)this.getReporter()).getLocoAddress(rep));
 	} else {
-	    // We shouldn't get here.  
-	    return(null);
+	    // Assume a LocoNet-style report.  This is (nascent) support for handling of Faller cars
+	    // for Dave Merrill's project.
+	    log.debug("report string: " + rep);
+	    // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+	    Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+	    Matcher m = ln_p.matcher(rep);
+	    if ((m != null) && m.find()) {
+		log.debug("Parsed address: " + m.group(1));
+		return(new DccLocoAddress(Integer.parseInt(m.group(1)), LocoAddress.Protocol.DCC));
+	    } else {
+		return(null);
+	    }
 	}
-
     }
      
     /** Parses out a (possibly old) LnReporter-generated report string to extract the direction from
@@ -577,14 +590,33 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      *         that is not also a PhysicalLocationReporter
      */
     public PhysicalLocationReporter.Direction getDirection(String rep) {
+	if (rep == null) { 
+	    log.warn("String input is null!");
+	    return(null);
+	}
 	// Defer parsing to our associated Reporter if we can.
 	if ((this.getReporter() != null) && (this.getReporter() instanceof PhysicalLocationReporter)) {
 	    return(((PhysicalLocationReporter)this.getReporter()).getDirection(rep));
 	} else {
-	    // We shouldn't get here.
-	    return(null);
+	    log.debug("report string: " + rep);
+	    // NOTE: This pattern is based on the one defined in jmri.jmrix.loconet.LnReporter
+	    Pattern ln_p = Pattern.compile("(\\d+) (enter|exits|seen)\\s*(northbound|southbound)?");  // Match a number followed by the word "enter".  This is the LocoNet pattern.
+	    Matcher m = ln_p.matcher(rep);
+	    if (m.find()) {
+		log.debug("Parsed direction: " + m.group(2));
+		if (m.group(2).equals("enter")) {
+		    // LocoNet Enter message
+		    return(PhysicalLocationReporter.Direction.ENTER);
+		} else if (m.group(2).equals("seen")) {
+		    // Lissy message.  Treat them all as "entry" messages.
+		    return(PhysicalLocationReporter.Direction.ENTER);
+		} else {
+		    return(PhysicalLocationReporter.Direction.EXIT);
+		}
+	    } else {
+		return(PhysicalLocationReporter.Direction.UNKNOWN);
+	    }
 	}
-
     }
 
     /** Return this Block's physical location, if it exists.

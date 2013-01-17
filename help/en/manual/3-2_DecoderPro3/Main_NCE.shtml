@@ -25,7 +25,7 @@
 <h1>NCE Menu</h1>
 
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
 </div>
 
 <hr>
@@ -108,7 +108,7 @@
 </div>
 <p align="left">&nbsp;</p>
 <div align=right>
-<p><a href="Main_Menu.shtml#System">Back to Index</a></p>
+<p><a href="dp3_menubar.shtml">Back to Index</a><a href="Main_Menu.shtml#System"></a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

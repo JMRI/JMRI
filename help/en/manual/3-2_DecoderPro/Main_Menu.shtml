@@ -114,16 +114,8 @@
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>
 </blockquote>
 <ul>
-  <li><strong><a href="Ops_Start.shtml">Operations</a> <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings)
-    <ul>
-      <li><a href="Ops_Settings.shtml">Settings</a></li>
-      <li><a href="Ops_Locations.shtml">Locations</a></li>
-      <li><a href="Ops_Cars.shtml">Cars</a></li>
-      <li><a href="Ops_Engines.shtml">Locomotives</a></li>
-      <li><a href="Ops_Routes.shtml">Routes</a></li>
-      <li><a href="Ops_Trains.shtml">Trains</a></li>
-    </ul>
-    <p><img src="images/separator.png" alt="" width="340" height="4"></p>
+  <li><strong>Operations <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings)(Covered in Operations Program User's Guide)
+<p><img src="images/separator.png" alt="" width="340" height="4"></p>
     <ul>
       <li><strong>Start JMRI Web Server </strong></li>
     </ul>
@@ -139,7 +131,9 @@
   <li><strong>Export Entry...</strong></li>
   <li><strong>Delete Entry...</strong></li>
   <li><strong>Print Summary...</strong></li>
-  <li><strong>Print Preview Summary...</strong></li>
+  <li><strong>Print Preview Summary...</strong><br>
+  <img src="images/separator.png" width="340" height="4">  </li>
+  <li><strong>Export Complete Roster...</strong></li>
 </ul>
 <blockquote>
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>
@@ -160,17 +154,9 @@
 </ul>
 <h4><a href="Main_Panels.shtml">Panels</a></h4>
 <p>Beyond the scope of this manual, primarily for use in connection with PanelPro</p>
-<p><strong><a href="Ops_Start.shtml">Operations</a> <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings) </p>
-<ul>
-  <li><a href="Ops_Settings.shtml">Settings</a></li>
-  <li><a href="Ops_Locations.shtml">Locations</a></li>
-  <li><a href="Ops_Cars.shtml">Cars</a></li>
-  <li><a href="Ops_Engines.shtml">Locomotives</a></li>
-  <li><a href="Ops_Routes.shtml">Routes</a></li>
-  <li><a href="Ops_Trains.shtml">Trains</a></li>
-</ul>
+<p><strong>Operations <img src="images/arrow.gif" width="20" height="9" alt="aroww"></strong>(on menu bar only if checked in the Operations Settings) (Covered in Operations Program User's Guide)</p>
 <h4><span class="style1"><a name="System"></a>System</span><br>
-  <span class="ACCENT">(This menu name will depend upon the system that you selected in Preferences. The options are listed. If (none) is selected in Preferences this menu will not be displayed.)</span></h4>
+  <span class="ACCENT">(This menu name will depend upon the system that you selected in Preferences. The options are listed. If (none) is selected in Preferences this menu will not be displayed.)</span> We are using Digtrax and LocoNet in this User's Guide.</h4>
 <ul>
   <li><a href="Main_acela.shtml">Acela</a></li>
   <li><a href="Main_CMRI.shtml">CMRI</a></li>
@@ -194,7 +180,7 @@
   <li><strong>Memory Usage Monitor</strong></li>
 </ul>
 <blockquote>
-  <p><img src="images/separator.png" alt="" width="340" height="4"><img src="images/separator.png" alt="" width="340" height="4"></p>
+  <p><img src="images/separator.png" alt="" width="340" height="4"></p>
 </blockquote>
 <ul>
   <li><strong>Import Decoder File</strong></li>
@@ -224,17 +210,25 @@
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>
 </blockquote>
 <ul>
-  <li><strong>Virtual Sound Decoder</strong>  
-    <p><img src="images/separator.png" alt="" width="340" height="4"></p>
+  <li><strong>Virtual Sound Decoder</strong>
+    <ul>
+      <li><strong>VS Decoder Manager</strong></li>
+      <li><strong>Manage VSD Locations</strong></li>
+      <li>Old VSD Interface</li>
+    </ul>
   </li>
+</ul>
+<p><img src="images/separator.png" alt="" width="340" height="4"> </p>
+<ul>
   <li><strong>PRICOM <img src="images/arrow.gif" width="20" height="9" alt="arrow"></strong>
     <ul>
-      <li>PRICOM Pocket Tester&raquo;
+      <li><strong>PRICOM Pocket Tester&raquo;
+        </strong>
         <ul>
-          <li>Connect</li>
+          <li><strong>Connect</strong></li>
         </ul>
       </li>
-      <li>PRICOM Flash Updater</li>
+      <li><strong>PRICOM Flash Updater</strong></li>
     </ul>
     <p><img src="images/separator.png" alt="" width="340" height="4"></p>
   </li>
@@ -251,7 +245,7 @@
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>
 </blockquote>
 <ul>
-  <li><a href="http://jmri.org/help/en/html/web/MiniServer.shtml">Start JMRI Web Server</a></li>
+  <li><strong>Start JMRI Web Server</strong></li>
 </ul>
 <blockquote>
   <p><img src="images/separator.png" alt="" width="340" height="4"></p>

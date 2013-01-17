@@ -168,7 +168,7 @@
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
 <h3><strong>USS CTC Tool</strong> <img src="images/arrow.gif" alt="arrow" width="20" height="9">(advanced users, beyond the scope of this manual)</h3>
 <p><img src="images/separator.png" alt="sep" width="340" height="4"></p>
-<h3><a name="Ops"></a><a href="Ops_Start.shtml"><strong>Operations</strong></a><strong><img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong></h3>
+<h3><a name="Ops"></a><strong>Operations<img src="images/arrow.gif" alt="arrow" width="20" height="9"></strong> (See the JMRI&reg; Operations User's Guide )</h3>
 <ul>
   <li><strong>Settings</strong></li>
   <li><strong>Locations</strong></li>

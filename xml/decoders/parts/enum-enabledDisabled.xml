@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
-<enumVal>
+<!-- $Id: enum-enabledDisabled.xml 22113 2012-12-30 02:14:11Z jacobsen $ -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Enabled">
     <choice xml:lang="fr">Enabled(fr)</choice>
     <choice xml:lang="it">Abilitato</choice>

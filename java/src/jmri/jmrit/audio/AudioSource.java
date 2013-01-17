@@ -5,6 +5,7 @@ package jmri.jmrit.audio;
 import jmri.Audio;
 import javax.vecmath.Vector3f;
 import java.util.List;
+import java.util.Queue;
 
 
 /**
@@ -249,7 +250,7 @@ public interface AudioSource extends Audio {
      * </ul>
      * @param audioBuffers the AudioBuffer object to enqueue to this AudioSource
      */
-    public boolean queueBuffers(List<AudioBuffer> audioBuffers);
+    public boolean queueBuffers(Queue<AudioBuffer> audioBuffers);
 
     public boolean queueBuffer(AudioBuffer audioBuffer);
 

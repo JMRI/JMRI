@@ -1,7 +1,6 @@
 // DecoderPro3Window.java
 package apps.gui3.dp3;
 
-import java.io.File;
 import jmri.Application;
 import jmri.jmrit.roster.swing.RosterFrame;
 
@@ -20,7 +19,7 @@ public class DecoderPro3Window extends RosterFrame {
     /**
      * Loads Decoder Pro 3 with specific menu and toolbar files
      */
-    public DecoderPro3Window(File menuFile, File toolbarFile) {
+    public DecoderPro3Window(String menuFile, String toolbarFile) {
         super(Application.getApplicationName(),
                 menuFile,
                 toolbarFile);

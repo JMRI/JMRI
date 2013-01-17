@@ -610,7 +610,10 @@ public class Car extends RollingStock {
 			searchSchedule(track);
 		ScheduleItem currentSi = track.getCurrentScheduleItem();
 		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") item id: "+track.getScheduleItemId()+" mode: "+track.getScheduleMode());
-		if (currentSi != null && getType().equals(currentSi.getType()) 
+		if (currentSi != null
+				&& (currentSi.getTrainScheduleId().equals("") 
+						|| TrainManager.instance().getTrainScheduleActiveId().equals(currentSi.getTrainScheduleId()))
+				&& getType().equals(currentSi.getType()) 
 				&& (currentSi.getRoad().equals("") || getRoad().equals(currentSi.getRoad()))
 				&& (currentSi.getLoad().equals("") || getLoad().equals(currentSi.getLoad()))){
 			loadNext(currentSi);

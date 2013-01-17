@@ -22,7 +22,6 @@ import jmri.jmrit.catalog.*;
  */
 public class AnalogClock2Display extends PositionableJComponent {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     Timebase clock;
     double rate;
     double minuteAngle;

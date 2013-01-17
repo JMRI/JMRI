@@ -4,8 +4,6 @@ package jmri.swing;
 import java.awt.Color;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.text.MessageFormat;
-import java.util.ResourceBundle;
 import javax.swing.JLabel;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionStatus;

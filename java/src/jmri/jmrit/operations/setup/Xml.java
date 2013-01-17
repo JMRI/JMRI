@@ -22,7 +22,7 @@ public class Xml {
 	// Control.java
 	static final String CONTROL = "control"; // NOI18N
 	static final String BACKWARD_COMPATIBILITY = "backwardCompatibility"; // NOI18N
-	static final String SAVE_USING_PRE_2012_FORMAT = "saveUsingPre_2013_Format"; // NOI18N
+	static final String SAVE_USING_PRE_2013_FORMAT = "saveUsingPre_2013_Format"; // NOI18N
 	static final String LENGTH = "length"; // NOI18N
 	static final String MAXIMUM_STRING_LENGTHS = "maximumStringLengths"; // NOI18N
 	static final String MAX_LEN_STRING_ATTRIBUTE = "max_len_string_attibute"; // NOI18N

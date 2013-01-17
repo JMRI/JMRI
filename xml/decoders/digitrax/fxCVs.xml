@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: fxCVs.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,7 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
     <holder>JMRI</holder>
@@ -42,65 +42,81 @@
   <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Forward light F0F effect generated</label>
+    <label xml:lang="it">Luce anteriore effetto F0F</label>
   </variable>
   <variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX" item="Function F0F behavior">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Forward light F0F behavior</label>
+    <label xml:lang="it">Luce anteriore funzionamento F0F</label>
   </variable>
   <variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Reverse light F0R effect generated</label>
+    <label xml:lang="it">Luce anteriore effetto F0R</label>
   </variable>
   <variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX" item="Function F0R behavior">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Reverse light F0R behavior</label>
+    <label xml:lang="it">Luce anteriore funzionamento F0R</label>
   </variable>
   <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minOut="3">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Function 1 effect generated</label>
+    <label xml:lang="it">Effetti generati Funzione 1</label>
   </variable>
   <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" minOut="3">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Function 1 behavior</label>
+    <label xml:lang="it">Funzionamento Funzione 1</label>
   </variable>
   <variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV" minOut="4">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Function 2 effect generated</label>
+    <label xml:lang="it">Effetti generati Funzione 2</label>
   </variable>
   <variable label="Function 2 behavior" CV="52" mask="VVVVXXXX" minOut="4">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Function 2 behavior</label>
+    <label xml:lang="it">Funzionamento Funzione 2</label>
   </variable>
   <variable label="Function 3 effect generated" CV="113" mask="XXXXVVVV" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Function 3 effect generated</label>
+    <label xml:lang="it">Effetti generati Funzione 13</label>
   </variable>
   <variable label="Function 3 behavior" CV="113" mask="VVVVXXXX" minOut="5">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Function 3 behavior</label>
+    <label xml:lang="it">Funzionamento Funzione 3</label>
   </variable>
   <variable label="Function 4 effect generated" CV="114" mask="XXXXVVVV" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Function 4 effect generated</label>
+    <label xml:lang="it">Effetti generati Funzione 4</label>
   </variable>
   <variable label="Function 4 behavior" CV="114" mask="VVVVXXXX" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Function 4 behavior</label>
+    <label xml:lang="it">Funzionamento Funzione 4</label>
   </variable>
   <variable label="Function 5 effect generated" CV="115" mask="XXXXVVVV" minOut="7">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Function 5 effect generated</label>
+    <label xml:lang="it">Effetti generati Funzione 5</label>
   </variable>
   <variable label="Function 5 behavior" CV="115" mask="VVVVXXXX" minOut="7">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Function 5 behavior</label>
+    <label xml:lang="it">Funzionamento Funzione 5</label>
   </variable>
   <variable label="Function 6 effect generated" CV="116" mask="XXXXVVVV" minOut="8">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
     <label>Function 6 effect generated</label>
+    <label xml:lang="it">Effetti generati Funzione 6</label>
   </variable>
   <variable label="Function 6 behavior" CV="116" mask="VVVVXXXX" minOut="8">
     <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
     <label>Function 6 behavior</label>
+    <label xml:lang="it">Funzionamento Funzione 6</label>
   </variable>
 </variables>

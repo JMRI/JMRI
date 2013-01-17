@@ -153,7 +153,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public void setId(String s) {
         String oldID = _id;
         _id = s;
-        if (! oldID.equals(s)) {
+        if (oldID == null || ! oldID.equals(s)) {
             Roster.instance().entryIdChanged(this);
             firePropertyChange("id", oldID, s);
         }

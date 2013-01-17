@@ -55,7 +55,7 @@ public class OperationsXml extends XmlFile {
 						log.error("Directory wasn't created");
 				}
 				if (file.createNewFile())
-					log.debug("File created");
+					log.debug("File created "+fullPathName);
 			} else {
 				file = new File(fullPathName);
 			}
@@ -120,7 +120,8 @@ public class OperationsXml extends XmlFile {
 	 * @param comment standard string
 	 * @return string converted to xml format.
 	 */
-    public String convertToXmlComment(String comment){
+    @Deprecated
+    public static String convertToXmlComment(String comment){
     	StringBuffer buf = new StringBuffer();
         for (int k = 0; k < comment.length(); k++) {
             if (comment.startsWith("\n", k)) {	// NOI18N
@@ -142,7 +143,8 @@ public class OperationsXml extends XmlFile {
 	 * @param comment input xml comment string
 	 * @return output string converted to standard format
 	 */
-    public String convertFromXmlComment(String comment){
+    @Deprecated
+    public static String convertFromXmlComment(String comment){
     	StringBuffer buf = new StringBuffer();
     	for (int k = 0; k < comment.length(); k++) {
     		if (comment.startsWith("<?p?>", k)) {	// NOI18N

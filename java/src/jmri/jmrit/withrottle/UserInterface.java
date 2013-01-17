@@ -46,6 +46,7 @@ import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.jmrit.throttle.LargePowerManagerButton;
 import jmri.jmrit.throttle.StopAllButton;
+import jmri.util.FileUtil;
 
 
 //	listen() has to run in a separate thread.
@@ -147,7 +148,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         panel.add(vLabel, con);
 */
         JLabel icon;
-        java.net.URL imageURL = ClassLoader.getSystemResource("resources/IconForWiThrottle.gif");
+        java.net.URL imageURL = FileUtil.findURL("resources/IconForWiThrottle.gif");
 
         if (imageURL != null) {
             ImageIcon image = new ImageIcon(imageURL);

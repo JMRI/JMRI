@@ -1,0 +1,127 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Ops_Routes.shtml 18388 2011-09-07 09:24:59Z dat7719 $ -->
+<title>Operations-Routes</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Operations Routes Window</h1>
+
+<div align=right>
+<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Trains.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<hr>
+<p>A route is a list of locations that a train will visit. Later you can  decide if the train stops at a location for work. Routes can be point to  point or out and back. The current Routes are shown in the <strong>Routes</strong> window with their status, i.e. Orphan means it has not been assigned to a train.</p>
+<p><img src="images/Ops_Routes.png" width="730" height="310" alt="routes"></p>
+<p>Panel showing possible routes that are in the Routes table.</p>
+<p><img src="images/Ops_DemoPanel.png" width="800" height="220" alt="panel"></p>
+<h4>Menu Bar</h4>
+<p><img src="images/Ops_RoutesMenu.png" width="277" height="111" alt="routes menu"></p>
+<h3><strong>Tools</strong></h3>
+<ul>
+  <li><strong>Copy Route</strong> opens the <strong>Route Copy</strong> dialog. This allows you to copy an existing route.</li>
+</ul>
+<blockquote>
+  <table width="90%" border="0" cellspacing="1" cellpadding="2">
+    <tr>
+      <td  valign="top" width="42%"><img src="images/Ops_RoutesCopy.png" width="400" height="150" alt="routes copy"></td>
+      <td width="58%" align="left" valign="top"><p>Type the <strong>New Route Name</strong>        
+        <input type="text" name="textfield" id="textfield">
+        </p>
+        <p><strong>Select Route to Copy</strong>
+  <select name="select" id="select">
+  </select>
+        this route will be copied and saved with the new name.</p>
+        <p>
+          <input type="checkbox" name="checkbox" id="checkbox">
+        <strong>      Invert </strong>will reverse the sequence of the route when copied.</p>
+        <p>
+          <input type="submit" name="button" id="button" value="Copy">
+      press to copy the route into your Route file.</p></td>
+    </tr>
+  </table>
+</blockquote>
+<ul>
+  <li><strong>Set Train Icons Coordinates</strong><br>
+    This tool is used to set the default X and Y coordinates of your train icons for each location. The tool allows you to specify the icon coordinates based on the trains direction. You can also update all of your existing routes and locations with these new coordinates. As an alternative, you can use a route's  <strong>Tools--&gt;Set Train Icon Coordinates for this Route</strong> to create coordinates unique to a specific route.<br>
+    <table width="90%" border="0" cellspacing="1" cellpadding="2">
+      <tr>
+        <td width="53%" valign="top"><img src="images/Ops_Routes_SetTrainIcons.png" width="350" height="294" alt="Set Icons"></td>
+        <td v valign="top"width="47%"><p><strong>Location</strong><br>
+          Select location from 
+          <select name="select2" id="select2">
+            <option>Bakerfield</option>
+          </select>
+        </p>
+        <p><strong>Set Eastbound Train Icon Coordinates<br>
+          <br>
+          Set Westbound Train Icon Coordinates
+        </strong><br>
+        <br>
+        Set the X, Y coordinates where you want the icon located at the selected location,</p>
+        <p>
+          <input type="button" name="button3" id="button3" value="Place Test Icons">
+          check location on your layout<br>
+          <input type="button" name="button4" id="button4" value="Update Routes">
+          update the routes with icon data<br>
+          <input type="button" name="button5" id="button5" value="Save">
+saves the icon data in the Routes files<br>
+        </p></td>
+      </tr>
+    </table>
+  </li>
+  <li><strong>Print</strong></li>
+</ul>
+<blockquote>
+  <p><img src="images/Ops_RoutesPrint.png" width="800" height="358" alt="print"></p>
+</blockquote>
+<ul>
+  <li><strong>Preview</strong> </li>
+</ul>
+<p><strong>Operations</strong> (Same as Main Operations menu)<br>
+</p>
+<p><strong>Window </strong>-- Standard JMRI&reg; window menu.</p>
+<p><strong>Help</strong> -- Standard JMRI&reg; Help menu.</p>
+<h4>Route List - middle of window</h4>
+<p>Lists routes <strong>Id, Name, Comment, Status </strong>and 
+  <input type="button" name="button6" id="button6" value="Edit">
+<a href="Ops_RoutesEdit.shtml"><strong>Edit Route</strong></a></p>
+<h4>Bottom of window</h4>
+<p><strong>Sort by 
+  <input name="radio" type="radio" id="radio" value="radio" checked>
+  Name
+  <input type="radio" name="radio2" id="radio2" value="radio2"> 
+  Id
+</strong>establishes the sort order of the routes.</p>
+<p>
+  <input type="submit" name="button2" id="button2" value="Add"> 
+opens the <a href="Ops_AddRoutes.shtml"><strong>Add Routes</strong></a> window to allow you to add routes to your Operations data base. </p>
+<hr>
+
+<div align=right>
+<p><a href="Ops_Engines.shtml">Previous </a> | <a href="Ops_Trains.shtml">Next</a></p>
+<p><a href="index.shtml#Operations">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

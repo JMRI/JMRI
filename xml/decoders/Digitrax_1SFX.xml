@@ -54,22 +54,26 @@
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="16">
         <decVal/>
         <label>Version ID</label>
+        <label xml:lang="it">ID Versione</label>
       </variable>
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
         <decVal/>
         <label>Manufacturer ID</label>
+        <label xml:lang="it">ID Costruttore</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/motorDriveFreq.xml"/>
       <variable label="Sound Time Out" CV="11" tooltip="Sound stays on after loco is de-selected" item="Sound Option 5" default="6">
         <enumVal>
           <enumChoice choice="Yes" value="0">
             <choice>Yes</choice>
+            <choice xml:lang="it">Si</choice>
           </enumChoice>
           <enumChoice choice="No" value="6">
             <choice>No</choice>
           </enumChoice>
         </enumVal>
         <label>Sound Time Out</label>
+        <label xml:lang="it">Durata Suono</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
@@ -78,9 +82,11 @@
         <enumVal>
           <enumChoice choice="forward">
             <choice>forward</choice>
+            <choice xml:lang="it">avanti</choice>
           </enumChoice>
           <enumChoice choice="reverse">
             <choice>reverse</choice>
+            <choice xml:lang="it">indietro</choice>
           </enumChoice>
         </enumVal>
         <label>Normal direction of motion</label>
@@ -95,101 +101,129 @@
           </enumChoice>
         </enumVal>
         <label>Speed steps</label>
+        <label xml:lang="it">Step Velocità</label>
       </variable>
       <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
+        <label xml:lang="it">Conversione Analogica</label>
       </variable>
       <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
+            <choice xml:lang="it">Usa Vstart, Vmid, Vhigh</choice>
           </enumChoice>
           <enumChoice choice="Use Table">
             <choice>Use Table</choice>
+            <choice xml:lang="it">Usa Tabella</choice>
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
+        <label xml:lang="it">Usa Tabella Velocità</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/functionmap.xml"/>
       <!-- The following code sets the Con-con Zephyr N scale decoder to defaults as programmed by Con-cor, not Digitrax  -->
       <variable label="F1 controls output 3" CV="35" mask="XXXXXVXX" minOut="3" minFn="1" default="0" include="1446">
         <enumVal>
           <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
+          <enumChoice choice="Yes">
+          <choice>Yes</choice>
+          <choice xml:lang="it">Si</choice>
+          </enumChoice>
         </enumVal>
       </variable>
       <variable label="F3 controls output 3" CV="37" mask="XXXXXVXX" minOut="3" minFn="3" default="1" include="1446">
         <enumVal>
           <enumChoice choice="No"/>
-          <enumChoice choice="Yes"/>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+            <choice xml:lang="it">Si</choice>
+          </enumChoice>
         </enumVal>
       </variable>
       <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Forward light F0F effect generated</label>
+        <label xml:lang="it">Luci di testa F0F effetti generati</label>
       </variable>
       <variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX" item="Function F0F behavior">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Forward light F0F behavior</label>
+        <label xml:lang="it">Luci di testa, comportamento F0F</label>
       </variable>
       <variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Reverse light F0R effect generated</label>
+        <label xml:lang="it">Luci di coda F0R effetti generati</label>
       </variable>
       <variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX" item="Function F0R behavior">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Reverse light F0R behavior</label>
+        <label xml:lang="it">Luci di coda, comportamento F0R</label>
       </variable>
       <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 1 effect generated</label>
+        <label xml:lang="it">Funzione 1 effetti generati</label>
       </variable>
       <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" minOut="3">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 1 behavior</label>
+        <label xml:lang="it">Funzione 1 comportamento</label>
       </variable>
       <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" default="2" minOut="3" include="1446">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 1 effect generated</label>
+        <label xml:lang="it">Funzione 1 effetti generati</label>
       </variable>
       <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" default="2" minOut="3" include="1446">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 1 behavior</label>
+        <label xml:lang="it">Funzione 1 comportamento</label>
       </variable>
       <variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 2 effect generated</label>
+        <label xml:lang="it">Funzione 2 effetti generati</label>
       </variable>
       <variable label="Function 2 behavior" CV="52" mask="VVVVXXXX" minOut="4">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 2 behavior</label>
+        <label xml:lang="it">Funzione 2 comportamento</label>
       </variable>
       <variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" tooltip="When enabled, F6 reduces top speed">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="it">Disabilitata</choice>
           </enumChoice>
           <enumChoice choice="Enabled">
             <choice>Enabled</choice>
+            <choice xml:lang="it">Abilitata</choice>
           </enumChoice>
         </enumVal>
         <label>Switching speed enabled by F6</label>
+        <label xml:lang="it">Abilita velocità di Manovra con F6</label>
       </variable>
       <variable label="Torque compensation" CV="54" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Torque compensation</label>
+        <label xml:lang="it">Coppia di compensazione</label>
       </variable>
       <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Decoder Lock Feature</label>
+        <label xml:lang="it">Funzione di Blocco decore</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
       <!-- Sound options -->
       <variable label="Master Volume" CV="58" item="Sound Setting 1" tooltip="CV 58" default="9" comment="0-15, use about 4-8">
         <decVal max="15"/>
         <label>Master Volume</label>
+        <label xml:lang="it">Volume principale</label>
         <comment>0-15, use about 4-8</comment>
+        <comment xml:lang="it">0-15, usabile circa da 4 a 8</comment>
       </variable>
       <variable label="Locomotive Sound Option" CV="60" default="0" item="Sound Option 1" include="1446,1645">
         <enumVal>
@@ -203,61 +237,78 @@
           <enumChoice choice="MP54"/>
         </enumVal>
         <label>Steam/Diesel Option</label>
+        <label xml:lang="it">Opzioni Vapore-Diesel</label>
       </variable>
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
+        <label xml:lang="it">Funzione Transponding</label>
       </variable>
       <variable label="Split field motor" CV="61" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="Normal DC motor">
             <choice>Normal DC motor</choice>
+            <choice xml:lang="it">Tipo Motore DC</choice>
           </enumChoice>
           <enumChoice choice="Split field/AC motor">
             <choice>Split field/AC motor</choice>
+            <choice xml:lang="it">Tipo Motore AC</choice>
           </enumChoice>
         </enumVal>
         <label>Split field motor</label>
+        <label xml:lang="it">Pilotaggio Motore in AC</label>
       </variable>
       <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Vstart/Vmid/Vfull in 128 step mode</label>
+        <label xml:lang="it">Vstart/Vmid/Vfull in modo 128 step</label>
       </variable>
       <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Short-circuit protection</label>
+        <label xml:lang="it">Protezione Corto-circuito</label>
         <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
+        <comment xml:lang="it">Funzione non documentata, richiesta occasionalmente dal supporto tecnico Digitraxx</comment>
       </variable>
       <variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
         <decVal max="15"/>
         <label>Lamp keep-alive voltage</label>
+        <label xml:lang="it">Tensione mantenimento Lampade</label>
         <comment>0 is no keep-alive, use with LEDs</comment>
+        <comment xml:lang="it">0=nessuna, usare con i LED</comment>
       </variable>
       <variable label="FX rate adjust" CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
         <decVal max="15"/>
         <label>FX rate adjust</label>
+        <label xml:lang="it">Aggiustamento FX</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+        <comment xml:lang="it">0=veloce, 15= lento, 4 raccomandato per iniziare</comment>
       </variable>
       <variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
         <decVal/>
         <label>Ditch light hold-over time</label>
+        <label xml:lang="it">Tempo di carica Luci Ditch</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
+        <comment xml:lang="it">0=nessuno, 40 realistico (5sec), 255= circa 20 sec.</comment>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
+        <label xml:lang="it">Tabella Velocità</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
       <variable label="User Private ID #1" CV="105" item="User Id #1" default="252" include="1646">
         <decVal/>
         <label>User Private ID #1</label>
+        <label xml:lang="it">ID Utente privato</label>
       </variable>
       <variable label="User Private ID #2" CV="106" item="User Id #2" default="35" include="1646">
         <decVal/>
         <label>User Private ID #2</label>
+        <label xml:lang="it">ID#2 Utente privato</label>
       </variable>
       <variable label="Function 3 effect generated" CV="113" mask="XXXXVVVV" minOut="5">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
@@ -271,169 +322,212 @@
       <variable label="Function 3 effect generated" CV="113" mask="XXXXVVVV" default="2" minOut="5" include="1645">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 3 effect generated</label>
+        <label xml:lang="it">Effetti generati Funzione 3</label>
       </variable>
       <variable label="Function 3 behavior" CV="113" mask="VVVVXXXX" default="2" minOut="5" include="1645">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 3 behavior</label>
+        <label xml:lang="it">Funzionamento Funzione 3</label>
       </variable>
       <variable label="Function 4 effect generated" CV="114" mask="XXXXVVVV" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 4 effect generated</label>
+        <label xml:lang="it">Effetti generati Funzione 4</label>
       </variable>
       <variable label="Function 4 behavior" CV="114" mask="VVVVXXXX" minOut="6">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 4 behavior</label>
+        <label xml:lang="it">Funzionamento Funzione 4</label>
       </variable>
       <variable label="Function 5 effect generated" CV="115" mask="XXXXVVVV" minOut="7">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 5 effect generated</label>
+        <label xml:lang="it">Effetti generati Funzione 4</label>
       </variable>
       <variable label="Function 5 behavior" CV="115" mask="VVVVXXXX" minOut="7">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 5 behavior</label>
+        <label xml:lang="it">Funzionamento Funzione 5</label>
       </variable>
       <variable label="Function 6 effect generated" CV="116" mask="XXXXVVVV" minOut="8">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 6 effect generated</label>
+        <label xml:lang="it">Effetti generati Funzione 6</label>
       </variable>
       <variable label="Function 6 behavior" CV="116" mask="VVVVXXXX" minOut="8">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/functionbehavior.xml"/>
         <label>Function 6 behavior</label>
+        <label xml:lang="it">Funzionamento Funzione 6</label>
       </variable>
       <!-- Sound options -->
       <variable label="Notch Rate" CV="132" tooltip="CV 132" item="Sound Setting 2" default="127">
         <decVal/>
         <label>Notch Rate</label>
+        <label xml:lang="it">Tasso di Notch</label>
       </variable>
       <variable label="Notch Rate" CV="132" tooltip="CV 132" item="Sound Setting 2" default="64" include="1646">
         <decVal/>
         <label>Notch Rate</label>
+        <label xml:lang="it">Tasso di Notch</label>
       </variable>
       <variable label="Volume When Muted" CV="135" tooltip="CV 135" item="Sound Setting 3">
         <decVal/>
         <label>Volume When Muted</label>
+        <label xml:lang="it">Volume quando silenziato</label>
       </variable>
       <variable label="Prime Mover/Chuff Volume" CV="140" tooltip="CV 140" item="Sound Setting 4" default="60" include="1446,1645">
         <decVal max="64"/>
         <label>Prime Mover/Chuff Volume</label>
+        <label xml:lang="it">Volume motore principale/Chuff</label>
       </variable>
       <variable label="Motor/Track Volume (1=Off)" CV="140" tooltip="CV 140" item="Sound Setting 4" default="64" include="1646">
         <decVal max="64"/>
         <label>Motor/Track Volume</label>
+        <label xml:lang="it">Volume motore/Rotaie</label>
       </variable>
       <variable label="Bell Volume" CV="141" tooltip="CV 141" item="Sound Setting 5" default="25" include="1446,1645">
         <decVal max="64"/>
         <label>Bell Volume</label>
+        <label xml:lang="it">Volume Campana</label>
       </variable>
       <variable label="Whistle Volume (1=Off)" CV="141" tooltip="CV 141" item="Sound Setting 5" default="64" include="1646">
         <decVal max="64"/>
         <label>Whistle Volume</label>
+        <label xml:lang="it">Volume Fischio</label>
       </variable>
       <variable label="Horn/Whistle Volume" CV="142" tooltip="CV 142" item="Sound Setting 6" default="60" include="1446,1645">
         <decVal max="64"/>
         <label>Horn/Whistle Volume</label>
+        <label xml:lang="it">Volume Tromba/Fischio</label>
       </variable>
       <variable label="Crossing Bell Volume (1=Off)" CV="142" tooltip="CV 142" item="Sound Setting 6" default="64" include="1646">
         <decVal max="64"/>
         <label>Crossing Bell Volume</label>
+        <label xml:lang="it">Volume Campana in Incrocio</label>
       </variable>
       <variable label="Air Features Volume" CV="143" tooltip="CV 143" item="Sound Setting 7" default="30" include="1446,1645">
         <decVal max="64"/>
         <label>Air Features Volume</label>
+        <label xml:lang="it">Volume Aria Compressa</label>
       </variable>
       <variable label="Compressor Volume (1=Off)" CV="143" tooltip="CV 143" item="Sound Setting 7" default="45" include="1646">
         <decVal max="64"/>
         <label>Compressor Volume</label>
+        <label xml:lang="it">Volume Compressore</label>
       </variable>
       <variable label="Dynamic Brake Volume" CV="144" tooltip="CV 144" item="Sound Setting 8" default="55" include="1446,1645">
         <decVal max="64"/>
         <label>Dynamic Brake Volume</label>
+        <label xml:lang="it">Volume frenata dinamica</label>
       </variable>
       <variable label="Voice Alert Sounds Volume (1=Off)" CV="144" tooltip="CV 144" item="Sound Setting 8" default="64" include="1646">
         <decVal max="64"/>
         <label>Voice Alert Sounds</label>
+        <label xml:lang="it">Volume segnalazione a Voce</label>
       </variable>
       <variable label="Misc Volumes (reserved)" CV="145" tooltip="CV 145" item="Sound Setting 9" default="15" include="1446,1645">
         <decVal max="64"/>
         <label>Misc Volumes (reserved)</label>
+        <label xml:lang="it">Volume vari (riservata)</label>
       </variable>
       <variable label="Track Squeal Volume (1=Off)" CV="145" tooltip="CV 145" item="Sound Setting 9" default="64" include="1646">
         <decVal max="64"/>
         <label>Track Squeal Volume</label>
+        <label xml:lang="it">Volume Stridore Rotaie</label>
       </variable>
       <variable label="Bell Ring Rate" CV="146" tooltip="CV 146" item="Sound Setting 10" comment="24msec counts" default="9" include="1446,1645">
         <decVal max="100"/>
         <label>Bell Ring Rate</label>
+        <label xml:lang="it">Frequenza Campana</label>
         <comment>24msec counts</comment>
+        <comment xml:lang="it">in passi da 24msec</comment>
       </variable>
       <variable label="Time Between Cycles (60=2min)" CV="146" tooltip="CV 146" item="Sound Setting 10" comment="2 sec counts" default="60" include="1646">
         <decVal max="64"/>
         <label>Time Between Cycles</label>
+        <label xml:lang="it">tempo tra i Cicli</label>
         <comment>24msec counts</comment>
       </variable>
       <variable label="Air Drier Rate" CV="147" tooltip="CV 147" item="Sound Setting 11" default="50" include="1446,1645">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
+        <label xml:lang="it">Frequenza Compressore</label>
       </variable>
       <variable label="Compressor Running Time (10=20 Seconds)" CV="147" tooltip="CV 147" item="Sound Setting 11" default="10" include="1646">
         <decVal max="64"/>
         <label>Compressor Running Time</label>
+        <label xml:lang="it">Tempo Attività Compressore</label>
       </variable>
       <variable label="Compressor Run/Popoff Rate" CV="148" tooltip="CV 148" item="Sound Setting 12" default="30" include="1446,1645">
         <decVal/>
         <label>Compressor Run/Popoff Rate</label>
+        <label xml:lang="it">Frequenza compressore Run/Popoff</label>
       </variable>
       <variable label="Compressor On Time" CV="149" tooltip="CV 149" item="Sound Setting 13" default="20" include="1446,1645">
         <decVal/>
         <label>Compressor On Time</label>
+        <label xml:lang="it">Tempo accensione Compressore</label>
       </variable>
       <variable label="Horn Selector" CV="150" item="Sound Option 2" include="1446,1645">
         <enumVal>
           <enumChoice choice="Standard Horn">
             <choice>Standard Horn</choice>
+            <choice xml:lang="it">Tromba Standard</choice>
           </enumChoice>
           <enumChoice choice="Playable Horn">
             <choice>Playable Horn</choice>
+            <choice xml:lang="it">Tromba Modulabile</choice>
           </enumChoice>
           <enumChoice choice="Alternate Horn">
             <choice>Alternate Horn</choice>
+            <choice xml:lang="it">Tromba Alternativa</choice>
           </enumChoice>
         </enumVal>
         <label>Horn Selector</label>
+        <label xml:lang="it">Selezione tromba</label>
       </variable>
       <variable label="Peak Speed for Auto coupler/brake on dir change" CV="151" item="Sound Option 3" default="48">
         <decVal max="64"/>
         <label>Peak Speed for Auto coupler/brake on dir change</label>
+        <label xml:lang="it">Velocità picco per freni/aggancio automatico per cambio direzione</label>
       </variable>
       <variable label="Sound Project Author ID" CV="152" default="221" include="1446,1645">
         <decVal/>
         <label>Sound Project Author ID</label>
+        <label xml:lang="it">ID autore progetto Suono</label>
       </variable>
       <variable label="Sound Project Author ID" CV="152" default="252" include="1646">
         <decVal/>
         <label>Sound Project Author ID</label>
+        <label xml:lang="it">ID autore progetto Suono</label>
       </variable>
       <variable label="Sound Project ID" CV="153" default="5" include="1446,1645">
         <decVal/>
         <label>Sound Project ID</label>
+        <label xml:lang="it">ID progetto Suono</label>
       </variable>
       <variable label="Sound Project ID" CV="153" default="8" include="1646">
         <decVal/>
         <label>Sound Project ID</label>
+        <label xml:lang="it">ID progetto Suono</label>
       </variable>
       <variable label="Notching Mode" CV="155" item="Sound Option 4" tooltip="Not supported on early EVO">
         <enumVal>
           <enumChoice choice="Automatic">
             <choice>Automatic</choice>
+            <choice xml:lang="it">Automatico</choice>
           </enumChoice>
           <enumChoice choice="Semi-Automatic">
             <choice>Semi-Automatic</choice>
+            <choice xml:lang="it">Semi automatico</choice>
           </enumChoice>
           <enumChoice choice="Manual">
             <choice>Manual</choice>
+            <choice xml:lang="it">Manuale</choice>
           </enumChoice>
         </enumVal>
         <label>Notching Mode</label>
+        <label xml:lang="it">Modalità Notch</label>
       </variable>
       <variable label="Horn Delay Rate" CV="156" item="Sound Setting 17" default="10" include="1446,1645">
         <decVal/>

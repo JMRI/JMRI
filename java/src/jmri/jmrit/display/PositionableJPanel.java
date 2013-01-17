@@ -2,8 +2,6 @@
 
 package jmri.jmrit.display;
 
-import java.util.ResourceBundle;
-
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
@@ -17,8 +15,6 @@ import javax.swing.*;
  * @version $Revision$
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
    	protected Editor _editor = null;
     protected boolean debug = false;

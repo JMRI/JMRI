@@ -82,9 +82,9 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     private void init(Editor editor) {
         JMenuBar menuBar = new JMenuBar();
-        JMenu findIcon = new JMenu(IconAdder.rb.getString("MenuFile"));
+        JMenu findIcon = new JMenu(ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle").getString("MenuFile"));
         menuBar.add(findIcon);
-        JMenuItem storeItem = new JMenuItem(IconAdder.rb.getString("MIStoreImageIndex"));
+        JMenuItem storeItem = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle").getString("MIStoreImageIndex"));
         findIcon.add(storeItem);
         storeItem.addActionListener(new ActionListener() {
                 Editor panelEd;

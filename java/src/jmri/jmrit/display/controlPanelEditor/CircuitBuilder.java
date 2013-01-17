@@ -269,7 +269,7 @@ public class CircuitBuilder  {
         }
         if (!WarrantTableAction.showPathPortalErrors()) {
 	        JOptionPane.showMessageDialog(_editCircuitFrame,
-                    rbcp.getString("blocksEtcOK"), Editor.rb.getString("OK"),
+                    rbcp.getString("blocksEtcOK"), Bundle.getMessage("OK"),
 					javax.swing.JOptionPane.INFORMATION_MESSAGE);
         }
     }
@@ -446,7 +446,7 @@ public class CircuitBuilder  {
         if (_editCircuitFrame!=null || _editPathsFrame!=null || _editPortalFrame!=null) {
 			// Already editing a circuit, ask for completion of that edit
 	        JOptionPane.showMessageDialog(_editCircuitFrame,
-                    rbcp.getString("AlreadyEditing"), Editor.rb.getString("errorTitle"),
+                    rbcp.getString("AlreadyEditing"), Bundle.getMessage("errorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);
             if (_editPathsFrame!=null) {
                 _editPathsFrame.toFront();
@@ -533,9 +533,9 @@ public class CircuitBuilder  {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(new JLabel(Editor.rb.getString("SystemName")), c);
+        p.add(new JLabel(Bundle.getMessage("SystemName")), c);
         c.gridy = 1;
-        p.add(new JLabel(Editor.rb.getString("UserName")),c);
+        p.add(new JLabel(Bundle.getMessage("UserName")),c);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -1019,7 +1019,7 @@ public class CircuitBuilder  {
     private void makePalettteFrame(String title) {
     	jmri.jmrit.display.palette.ItemPalette.loadIcons();
     	_convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
-        		Editor.rb.getString("EditItem"), Editor.rb.getString(title)), true);
+        		Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
     	_convertFrame = new convertFrame(_convertDialog);
 
         _convertDialog.setLocationRelativeTo(_editor);

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: cv29analog.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,7 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2010</year>
     <holder>JMRI</holder>
@@ -43,15 +43,18 @@
     <enumVal>
       <enumChoice choice="NMRA Digital only">
         <choice>NMRA Digital only</choice>
+        <choice xml:lang="it">Solo NMRA Digitale</choice>
         <choice xml:lang="fr">NMRA Digital only (fr)</choice>
         <choice xml:lang="ca">NMRA Digital only (ca)</choice>
       </enumChoice>
       <enumChoice choice="DC conversion enabled">
         <choice>DC conversion enabled</choice>
+        <choice xml:lang="it">Converiosne Analogica Abilitata</choice>
         <choice xml:lang="fr">DC conversion enabled (fr)</choice>
         <choice xml:lang="ca">DC conversion enabled (ca)</choice>
       </enumChoice>
     </enumVal>
+    <label xml:lang="it">Conversione Alimentazione</label>
     <label xml:lang="fr">Power Source Conversion(fr)</label>
     <label xml:lang="ca">Power Source Conversion(ca)</label>
   </variable>

@@ -517,11 +517,6 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	}
 
 	private String RsTestDestination(Location destination, Track track) {
-		if (destination != null && !destination.acceptsTypeName(getType())) {
-			log.debug("Can't set (" + toString() + ") type (" + getType() + ") at destination ("
-					+ destination.getName() + ") wrong type"); // NOI18N
-			return Track.TYPE + " (" + getType() + ")";
-		}
 		if (destination != null && !destination.isTrackAtLocation(track))
 			return ERROR_TRACK;
 		if (destination == null || track == null)

@@ -62,31 +62,11 @@ public class TrainManagerXml extends OperationsXml {
 		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
 		doc.addContent(0, p);
 
-		// Inspect the comment to change any \n characters to <?p?> processor
-		TrainManager manager = TrainManager.instance();
-		List<String> trainList = manager.getTrainsByIdList();
+		TrainManager.instance().store(root);
+		TrainScheduleManager.instance().store(root);
 
-		// add top-level elements
-		root.addContent(manager.store());
-		root.addContent(TrainScheduleManager.instance().store());
-		Element values;
-		root.addContent(values = new Element(Xml.TRAINS));
-		// add entries
-		for (int i = 0; i < trainList.size(); i++) {
-			String trainId = trainList.get(i);
-			Train train = manager.getTrainById(trainId);
-			train.setComment(convertToXmlComment(train.getComment()));
-			values.addContent(train.store());
-		}
 		writeXML(file, doc);
 
-		// Now that the roster has been rewritten in file form we need to
-		// restore the RosterEntry object to its normal \n state for the
-		// comment fields.
-		for (int i = 0; i < trainList.size(); i++) {
-			Train train = manager.getTrainById(trainList.get(i));
-			train.setComment(convertFromXmlComment(train.getComment()));
-		}
 		// done - train file now stored, so can't be dirty
 		setDirty(false);
 	}
@@ -95,8 +75,6 @@ public class TrainManagerXml extends OperationsXml {
 	 * Read the contents of a roster XML file into this object. Note that this does not clear any existing entries.
 	 */
 	public void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
-
-		TrainManager manager = TrainManager.instance();
 
 		// suppress rootFromName(name) warning message by checking to see if file exists
 		if (findFile(name) == null) {
@@ -110,40 +88,22 @@ public class TrainManagerXml extends OperationsXml {
 			log.debug(name + " file could not be read");
 			return;
 		}
-		// if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 
-		if (root.getChild(Xml.OPTIONS) != null) {
-			Element e = root.getChild(Xml.OPTIONS);
-			manager.options(e);
-		}
-
+		TrainManager.instance().load(root);
 		TrainScheduleManager.instance().load(root);
 
-		if (root.getChild(Xml.TRAINS) != null) {
-			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild(Xml.TRAINS).getChildren(Xml.TRAIN);
-			if (log.isDebugEnabled())
-				log.debug("readFile sees " + l.size() + " trains");
-			for (int i = 0; i < l.size(); i++) {
-				manager.register(new Train(l.get(i)));
-			}
+		fileLoaded = true; // set flag
+		TrainManager manager = TrainManager.instance();
 
-			fileLoaded = true; // set flag
-
-			List<String> trainList = manager.getTrainsByIdList();
-
-			// load train icon if needed, and convert comments
-			for (int i = 0; i < trainList.size(); i++) {
-				// Get a RosterEntry object for this index
-				Train train = manager.getTrainById(trainList.get(i));
-				train.setComment(convertFromXmlComment(train.getComment()));
-				train.loadTrainIcon();
-			}
-			// loading complete run startup scripts
-			manager.runStartUpScripts();
-		} else {
-			log.error("Unrecognized operations train file contents in file: " + name);
+		// load train icon if needed
+		List<String> trainList = manager.getTrainsByIdList();
+		for (int i = 0; i < trainList.size(); i++) {
+			Train train = manager.getTrainById(trainList.get(i));
+			train.loadTrainIcon();
 		}
+		// loading complete run startup scripts
+		manager.runStartUpScripts();
+
 		log.debug("Trains have been loaded!");
 		TrainLogger.instance().enableTrainLogging(Setup.isTrainLoggerEnabled());
 		setDirty(false); // clear dirty flag
@@ -154,7 +114,7 @@ public class TrainManagerXml extends OperationsXml {
 	}
 
 	/**
-	 * Store the train's build status
+	 * Store the train's build report
 	 */
 	public File createTrainBuildReportFile(String name) {
 		return createFile(defaultBuildReportFilename(name), false); // don't backup

@@ -3,8 +3,13 @@ package jmri.jmrit.operations.locations;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jdom.Attribute;
+import org.jdom.Element;
+
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
+
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -14,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -44,6 +50,10 @@ public class Track {
 	protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
 	protected int _moves = 0; // count of the drops since creation
 	protected String _comment = "";
+	
+	protected String _commentPickup = "";
+	protected String _commentSetout = "";
+	protected String _commentBoth = "";
 
 	protected String _loadOption = ALLLOADS; // track load restrictions
 
@@ -74,6 +84,7 @@ public class Track {
 	private static final int EMPTY_GENERIC_LOADS = 16;
 	private static final int GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK = 32;
 
+	// block options
 	protected int _blockOptions = 0;
 	private static final int BLOCK_CARS = 1;
 
@@ -309,26 +320,25 @@ public class Track {
 	}
 
 	/**
-	 * Used to determine if there's space available at this track for the car. Considers cars currently placed on the
-	 * track and cars in route to this track. Ignores car pick ups. Used to prevent overloading the track with cars from
-	 * staging.
+	 * Used to determine if there's space available at this track for the car. Considers cars in route to this track.
+	 * Used to prevent overloading the track with cars from staging or cars with custom loads.
 	 * 
 	 * @param car
 	 *            The car to be set out.
 	 * @return true if space available.
 	 */
 	public boolean isSpaceAvailable(Car car) {
-		int length = Integer.parseInt(car.getLength()) + RollingStock.COUPLER;
+		int carLength = Integer.parseInt(car.getLength()) + RollingStock.COUPLER;
 		if (car.getKernel() != null)
-			length = car.getKernel().getLength();
-		int reservationFactor = getReservationFactor();
+			carLength = car.getKernel().getLength();
 		// ignore reservation factor unless car is departing staging
-		if (car.getTrack() != null && !car.getTrack().getLocType().equals(Track.STAGING))
-			reservationFactor = 100; // ignore, track isn't staging
-		if (getLength() * reservationFactor / 100 - (getReservedInRoute() + length) >= 0)
-			return true;
-		else
-			return false;
+		if (car.getTrack() != null && car.getTrack().getLocType().equals(Track.STAGING))
+			return (getLength() * getReservationFactor() / 100 - (getReservedInRoute() + carLength) >= 0);
+		// if there's alternate, include that length in the calculation
+		int trackLength = getLength();
+		if (getAlternativeTrack() != null)
+			trackLength = trackLength + getAlternativeTrack().getLength();
+		return (trackLength - (getReservedInRoute() + carLength) >= 0);
 	}
 
 	public void setUsedLength(int length) {
@@ -501,11 +511,45 @@ public class Track {
 	public void setComment(String comment) {
 		String old = _comment;
 		_comment = comment;
-		setDirtyAndFirePropertyChange("trackComment", old, comment); // NOI18N
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange("trackComment", old, comment); // NOI18N
 	}
 
 	public String getComment() {
 		return _comment;
+	}
+	
+	public void setCommentPickup(String comment) {
+		String old = _commentPickup;
+		_commentPickup = comment;
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange("trackCommentPickup", old, comment); // NOI18N
+	}
+
+	public String getCommentPickup() {
+		return _commentPickup;
+	}
+	
+	public void setCommentSetout(String comment) {
+		String old = _commentSetout;
+		_commentSetout = comment;
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange("trackCommentSetout", old, comment); // NOI18N
+	}
+
+	public String getCommentSetout() {
+		return _commentSetout;
+	}
+	
+	public void setCommentBoth(String comment) {
+		String old = _commentBoth;
+		_commentBoth = comment;
+		if (!old.equals(comment))
+			setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
+	}
+
+	public String getCommentBoth() {
+		return _commentBoth;
 	}
 
 	List<String> _typeList = new ArrayList<String>();
@@ -801,10 +845,10 @@ public class Track {
 	}
 
 	private void setDropIds(String[] ids) {
-		if (ids.length == 0)
-			return;
-		for (int i = 0; i < ids.length; i++)
-			_dropList.add(ids[i]);
+		for (int i = 0; i < ids.length; i++) {
+			if (ids[i] != null)
+				_dropList.add(ids[i]);
+		}
 	}
 
 	public void addDropId(String id) {
@@ -869,10 +913,10 @@ public class Track {
 	}
 
 	private void setPickupIds(String[] ids) {
-		if (ids.length == 0)
-			return;
-		for (int i = 0; i < ids.length; i++)
-			_pickupList.add(ids[i]);
+		for (int i = 0; i < ids.length; i++) {
+			if (ids[i] != null)
+				_pickupList.add(ids[i]);
+		}
 	}
 
 	/**
@@ -1450,10 +1494,9 @@ public class Track {
 	 */
 	private boolean debugFlag = false;
 
-	public Track(org.jdom.Element e, Location location) {
-		// if (log.isDebugEnabled()) log.debug("ctor from element "+e);
+	public Track(Element e, Location location) {
 		_location = location;
-		org.jdom.Attribute a;
+		Attribute a;
 		if ((a = e.getAttribute(Xml.ID)) != null)
 			_id = a.getValue();
 		else
@@ -1470,7 +1513,31 @@ public class Track {
 			_trainDir = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute(Xml.COMMENT)) != null)
 			_comment = a.getValue();
-		if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
+		// new way of reading car types using elements added in 3.3.1
+		if (e.getChild(Xml.TYPES) != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(Xml.CAR_TYPE);
+			String[] types = new String[carTypes.size()];
+			for (int i = 0; i < carTypes.size(); i++) {
+				Element type = carTypes.get(i);
+				if ((a = type.getAttribute(Xml.NAME)) != null) {
+					types[i] = a.getValue();
+				}
+			}
+			setTypeNames(types);
+			@SuppressWarnings("unchecked")
+			List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(Xml.LOCO_TYPE);
+			types = new String[locoTypes.size()];
+			for (int i = 0; i < locoTypes.size(); i++) {
+				Element type = locoTypes.get(i);
+				if ((a = type.getAttribute(Xml.NAME)) != null) {
+					types[i] = a.getValue();
+				}
+			}
+			setTypeNames(types);
+		}
+		// old way of reading car types up to version 3.2
+		else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
 			String names = a.getValue();
 			String[] types = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled() && debugFlag)
@@ -1479,14 +1546,42 @@ public class Track {
 		}
 		if ((a = e.getAttribute(Xml.CAR_LOAD_OPTION)) != null)
 			_loadOption = a.getValue();
-		if ((a = e.getAttribute(Xml.CAR_LOADS)) != null) {
+		// new way of reading car loads using elements
+		if (e.getChild(Xml.CAR_LOADS) != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> carLoads = e.getChild(Xml.CAR_LOADS).getChildren(Xml.CAR_LOAD);
+			String[] loads = new String[carLoads.size()];
+			for (int i = 0; i < carLoads.size(); i++) {
+				Element load = carLoads.get(i);
+				if ((a = load.getAttribute(Xml.NAME)) != null) {
+					loads[i] = a.getValue();
+				}
+			}
+			setLoadNames(loads);
+		}
+		// old way of reading car loads up to version 3.2
+		else if ((a = e.getAttribute(Xml.CAR_LOADS)) != null) {
 			String names = a.getValue();
 			String[] loads = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled())
 				log.debug("Track (" + getName() + ") " + getLoadOption() + " car loads: " + names);
 			setLoadNames(loads);
 		}
-		if ((a = e.getAttribute(Xml.DROP_IDS)) != null) {
+		// new way of reading drop ids using elements
+		if (e.getChild(Xml.DROP_IDS) != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> dropIds = e.getChild(Xml.DROP_IDS).getChildren(Xml.DROP_ID);
+			String[] ids = new String[dropIds.size()];
+			for (int i = 0; i < dropIds.size(); i++) {
+				Element dropId = dropIds.get(i);
+				if ((a = dropId.getAttribute(Xml.ID)) != null) {
+					ids[i] = a.getValue();
+				}
+			}
+			setDropIds(ids);
+		}
+		// old way of reading drop ids up to version 3.2
+		else if ((a = e.getAttribute(Xml.DROP_IDS)) != null) {
 			String names = a.getValue();
 			String[] ids = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled() && debugFlag)
@@ -1495,7 +1590,22 @@ public class Track {
 		}
 		if ((a = e.getAttribute(Xml.DROP_OPTION)) != null)
 			_dropOption = a.getValue();
-		if ((a = e.getAttribute(Xml.PICKUP_IDS)) != null) {
+		
+		// new way of reading pick up ids using elements
+		if (e.getChild(Xml.PICKUP_IDS) != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> pickupIds = e.getChild(Xml.PICKUP_IDS).getChildren(Xml.PICKUP_ID);
+			String[] ids = new String[pickupIds.size()];
+			for (int i = 0; i < pickupIds.size(); i++) {
+				Element pickupId = pickupIds.get(i);
+				if ((a = pickupId.getAttribute(Xml.ID)) != null) {
+					ids[i] = a.getValue();
+				}
+			}
+			setPickupIds(ids);
+		}
+		// old way of reading pick up ids up to version 3.2
+		else if ((a = e.getAttribute(Xml.PICKUP_IDS)) != null) {
 			String names = a.getValue();
 			String[] ids = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled() && debugFlag)
@@ -1504,15 +1614,33 @@ public class Track {
 		}
 		if ((a = e.getAttribute(Xml.PICKUP_OPTION)) != null)
 			_pickupOption = a.getValue();
-		if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
+		
+		// new way of reading car roads using elements
+		if (e.getChild(Xml.CAR_ROADS) != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> carRoads = e.getChild(Xml.CAR_ROADS).getChildren(Xml.CAR_ROAD);
+			String[] roads = new String[carRoads.size()];
+			for (int i = 0; i < carRoads.size(); i++) {
+				Element road = carRoads.get(i);
+				if ((a = road.getAttribute(Xml.NAME)) != null) {
+					roads[i] = a.getValue();
+				}
+			}
+			setRoadNames(roads);
+		}
+		// old way of reading car roads up to version 3.2
+		else if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
 			String names = a.getValue();
 			String[] roads = names.split("%%"); // NOI18N
 			if (log.isDebugEnabled() && debugFlag)
 				log.debug("track (" + getName() + ") " + getRoadOption() + " car roads: " + names);
 			setRoadNames(roads);
 		}
-		if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null)
+		if ((a = e.getAttribute(Xml.CAR_ROAD_OPTION)) != null)
 			_roadOption = a.getValue();
+		else if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null)
+			_roadOption = a.getValue();
+		
 		if ((a = e.getAttribute(Xml.SCHEDULE)) != null)
 			_scheduleName = a.getValue();
 		if ((a = e.getAttribute(Xml.SCHEDULE_ID)) != null)
@@ -1541,6 +1669,21 @@ public class Track {
 		}
 		if ((a = e.getAttribute(Xml.IGNORE_USED_PERCENTAGE)) != null)
 			_ignoreUsedLengthPercentage = Integer.parseInt(a.getValue());
+		
+		if (e.getChild(Xml.COMMENTS) != null) {
+			if (e.getChild(Xml.COMMENTS).getChild(Xml.BOTH) != null &&
+					( a = e.getChild(Xml.COMMENTS).getChild(Xml.BOTH).getAttribute(Xml.COMMENT)) != null) {
+				_commentBoth = a.getValue();
+			}
+			if (e.getChild(Xml.COMMENTS).getChild(Xml.PICKUP) != null &&
+					( a = e.getChild(Xml.COMMENTS).getChild(Xml.PICKUP).getAttribute(Xml.COMMENT)) != null) {
+				_commentPickup = a.getValue();
+			}
+			if (e.getChild(Xml.COMMENTS).getChild(Xml.SETOUT) != null &&
+					( a = e.getChild(Xml.COMMENTS).getChild(Xml.SETOUT).getAttribute(Xml.COMMENT)) != null) {
+				_commentSetout = a.getValue();
+			}
+		}
 	}
 
 	/**
@@ -1549,8 +1692,8 @@ public class Track {
 	 * 
 	 * @return Contents in a JDOM Element
 	 */
-	public org.jdom.Element store() {
-		org.jdom.Element e = new org.jdom.Element(Xml.TRACK);
+	public Element store() {
+		Element e = new Element(Xml.TRACK);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.NAME, getName());
 		e.setAttribute(Xml.LOC_TYPE, getLocType());
@@ -1559,48 +1702,119 @@ public class Track {
 		e.setAttribute(Xml.MOVES, Integer.toString(getMoves() - getDropRS()));
 		// build list of car types for this track
 		String[] types = getTypeNames();
-		StringBuffer buf = new StringBuffer();
+	       // Old way of saving car types
+        if (Control.backwardCompatible) {
+        	StringBuffer buf = new StringBuffer();
+        	for (int i = 0; i < types.length; i++) {
+        		// remove types that have been deleted by user
+        		if (CarTypes.instance().containsName(types[i])
+        				|| EngineTypes.instance().containsName(types[i]))
+        			buf.append(types[i] + "%%"); // NOI18N
+        	}
+        	e.setAttribute(Xml.CAR_TYPES, buf.toString());
+        }
+		// new way of saving car types using elements
+		Element eTypes = new Element(Xml.TYPES);
 		for (int i = 0; i < types.length; i++) {
-			// remove types that have been deleted by user
-			if (CarTypes.instance().containsName(types[i])
-					|| EngineTypes.instance().containsName(types[i]))
-				buf.append(types[i] + "%%"); // NOI18N
+			// don't save types that have been deleted by user
+			if (EngineTypes.instance().containsName(types[i])) {
+				Element eType = new Element(Xml.LOCO_TYPE);
+				eType.setAttribute(Xml.NAME, types[i]);
+				eTypes.addContent(eType);
+			} else if (CarTypes.instance().containsName(types[i])) {
+				Element eType = new Element(Xml.CAR_TYPE);
+				eType.setAttribute(Xml.NAME, types[i]);
+				eTypes.addContent(eType);
+			}
 		}
-		e.setAttribute(Xml.CAR_TYPES, buf.toString());
-		e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption());
+		e.addContent(eTypes);
+ 
+		if (Control.backwardCompatible)
+			e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption());
+		e.setAttribute(Xml.CAR_ROAD_OPTION, getRoadOption());
 		// build list of car roads for this track
-		String[] roads = getRoadNames();
-		buf = new StringBuffer();
-		for (int i = 0; i < roads.length; i++) {
-			buf.append(roads[i] + "%%"); // NOI18N
+		if (!getRoadOption().equals(ALLROADS)) {
+			String[] roads = getRoadNames();
+			if (Control.backwardCompatible) {
+				StringBuffer buf = new StringBuffer();
+				for (int i = 0; i < roads.length; i++) {
+					buf.append(roads[i] + "%%"); // NOI18N
+				}
+				e.setAttribute(Xml.CAR_ROADS, buf.toString());
+			}
+			// new way of saving road names
+			Element eRoads = new Element(Xml.CAR_ROADS);
+			for (int i = 0; i < roads.length; i++) {
+				Element eRoad = new Element(Xml.CAR_ROAD);
+				eRoad.setAttribute(Xml.NAME, roads[i]);
+				eRoads.addContent(eRoad);
+			}
+			e.addContent(eRoads);
 		}
-		e.setAttribute(Xml.CAR_ROADS, buf.toString());
+		
 		e.setAttribute(Xml.CAR_LOAD_OPTION, getLoadOption());
 		// save list of car loads for this track
 		if (!getLoadOption().equals(ALLLOADS)) {
 			String[] loads = getLoadNames();
-			buf = new StringBuffer();
-			for (int i = 0; i < loads.length; i++) {
-				buf.append(loads[i] + "%%"); // NOI18N
+			if (Control.backwardCompatible) {
+				StringBuffer buf = new StringBuffer();
+				for (int i = 0; i < loads.length; i++) {
+					buf.append(loads[i] + "%%"); // NOI18N
+				}
+				e.setAttribute(Xml.CAR_LOADS, buf.toString());
 			}
-			e.setAttribute(Xml.CAR_LOADS, buf.toString());
+			// new way of saving car loads using elements
+			Element eLoads = new Element(Xml.CAR_LOADS);
+			for (int i = 0; i < loads.length; i++) {
+				Element eLoad = new Element(Xml.CAR_LOAD);
+				eLoad.setAttribute(Xml.NAME, loads[i]);
+				eLoads.addContent(eLoad);
+			}
+			e.addContent(eLoads);
 		}
+		
 		e.setAttribute(Xml.DROP_OPTION, getDropOption());
-		// build list of drop ids for this track
-		String[] dropIds = getDropIds();
-		buf = new StringBuffer();
-		for (int i = 0; i < dropIds.length; i++) {
-			buf.append(dropIds[i] + "%%"); // NOI18N
+		if (!getDropOption().equals(ANY)) {
+			// build list of drop ids for this track
+			String[] dropIds = getDropIds();		
+			if (Control.backwardCompatible) {
+				StringBuffer buf = new StringBuffer();
+				for (int i = 0; i < dropIds.length; i++) {
+					buf.append(dropIds[i] + "%%"); // NOI18N
+				}
+				e.setAttribute(Xml.DROP_IDS, buf.toString());
+			}
+			// new way of saving drop ids using elements
+			Element eDropIds = new Element(Xml.DROP_IDS);
+			for (int i = 0; i < dropIds.length; i++) {
+				Element eDropId = new Element(Xml.DROP_ID);
+				eDropId.setAttribute(Xml.ID, dropIds[i]);
+				eDropIds.addContent(eDropId);
+			}
+			e.addContent(eDropIds);
 		}
-		e.setAttribute(Xml.DROP_IDS, buf.toString());
+		
 		e.setAttribute(Xml.PICKUP_OPTION, getPickupOption());
-		// build list of pickup ids for this track
-		String[] pickupIds = getPickupIds();
-		buf = new StringBuffer();
-		for (int i = 0; i < pickupIds.length; i++) {
-			buf.append(pickupIds[i] + "%%"); // NOI18N
+		if (!getPickupOption().equals(ANY)) {
+			// build list of pickup ids for this track
+			String[] pickupIds = getPickupIds();
+			if (Control.backwardCompatible) {
+				StringBuffer buf = new StringBuffer();
+				for (int i = 0; i < pickupIds.length; i++) {
+					buf.append(pickupIds[i] + "%%"); // NOI18N
+				}
+				e.setAttribute(Xml.PICKUP_IDS, buf.toString());
+			}
+			// new way of saving pick up ids using elements
+			Element ePickupIds = new Element(Xml.PICKUP_IDS);
+			for (int i = 0; i < pickupIds.length; i++) {
+				Element ePickupId = new Element(Xml.PICKUP_ID);
+				ePickupId.setAttribute(Xml.ID, pickupIds[i]);
+				ePickupIds.addContent(ePickupId);
+			}
+			e.addContent(ePickupIds);
 		}
-		e.setAttribute(Xml.PICKUP_IDS, buf.toString());
+		
 		if (getSchedule() != null) {
 			e.setAttribute(Xml.SCHEDULE, getScheduleName());
 			e.setAttribute(Xml.SCHEDULE_ID, getScheduleId());
@@ -1625,6 +1839,20 @@ public class Track {
 		if (getIgnoreUsedLengthPercentage() > 0)
 			e.setAttribute(Xml.IGNORE_USED_PERCENTAGE,
 					Integer.toString(getIgnoreUsedLengthPercentage()));
+		// save manifest track comments if they exist
+		if (!getCommentBoth().equals("") || !getCommentPickup().equals("") || !getCommentSetout().equals("")) {
+			Element comments = new Element(Xml.COMMENTS);
+			Element both = new Element(Xml.BOTH);
+			Element pickup = new Element(Xml.PICKUP);
+			Element setout = new Element(Xml.SETOUT);
+			comments.addContent(both);
+			comments.addContent(pickup);
+			comments.addContent(setout);
+			both.setAttribute(Xml.COMMENT, getCommentBoth());
+			pickup.setAttribute(Xml.COMMENT, getCommentPickup());
+			setout.setAttribute(Xml.COMMENT, getCommentSetout());
+			e.addContent(comments);
+		}
 
 		return e;
 	}

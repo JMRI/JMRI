@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.Enumeration;
 import javax.swing.SwingUtilities;
 import jmri.Application;
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandleManager;
@@ -16,13 +17,22 @@ import jmri.implementation.AbstractShutDownTask;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
+import jmri.jmrit.signalling.EntryExitPairs;
+import jmri.managers.DefaultIdTagManager;
 import jmri.managers.DefaultShutDownManager;
 import jmri.managers.DefaultUserMessagePreferences;
 import jmri.util.FileUtil;
 import jmri.util.Log4JUtil;
+import jmri.util.PythonInterp;
 import jmri.util.exceptionhandler.AwtHandler;
 import jmri.util.exceptionhandler.UncaughtExceptionHandler;
+import org.apache.log4j.Appender;
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+import org.apache.log4j.RollingFileAppender;
 
 /**
  * Base class for the core of JMRI applications. <p> This provides a non-GUI
@@ -110,7 +120,7 @@ public abstract class AppsBase {
 
                 public void run() {
                     try {
-                        jmri.InstanceManager.tabbedPreferencesInstance().init();
+                        InstanceManager.tabbedPreferencesInstance().init();
                     } catch (Exception ex) {
                         log.error(ex.toString());
                     }
@@ -124,7 +134,7 @@ public abstract class AppsBase {
 
             public void run() {
                 try {
-                    jmri.util.PythonInterp.getPythonInterpreter();
+                    PythonInterp.getPythonInterpreter();
                 } catch (Exception ex) {
                     log.error("Error in trying to initialize python interpreter " + ex.toString());
                 }
@@ -135,7 +145,7 @@ public abstract class AppsBase {
     }
 
     protected void installConfigurationManager() {
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        ConfigXmlManager cm = new ConfigXmlManager();
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         InstanceManager.setConfigureManager(cm);
         cm.setPrefsLocation(new File(getConfigFileName()));
@@ -164,10 +174,10 @@ public abstract class AppsBase {
         InstanceManager.store(new NamedBeanHandleManager(), NamedBeanHandleManager.class);
 
         // Install an IdTag manager
-        jmri.InstanceManager.store(new jmri.managers.DefaultIdTagManager(), jmri.IdTagManager.class);
+        InstanceManager.store(new DefaultIdTagManager(), IdTagManager.class);
 
         //Install Entry Exit Pairs Manager
-        jmri.InstanceManager.store(new jmri.jmrit.signalling.EntryExitPairs(), jmri.jmrit.signalling.EntryExitPairs.class);
+        InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
 
     }
 
@@ -286,7 +296,7 @@ public abstract class AppsBase {
     static protected void setConfigFilename(String def, String[] args) {
         // save the configuration filename if present on the command line
 
-        if (args.length >= 1 && args[0] != null && !args[0].contains("=")) {
+        if (args.length >= 1 && args[0] != null && !args[0].equals("") && !args[0].contains("=")) {
             def = args[0];
             log.debug("Config file was specified as: " + args[0]);
         }
@@ -338,20 +348,24 @@ public abstract class AppsBase {
 
         log4JSetUp = true;
         // initialize log4j - from logging control file (lcf) only
-        // if can find it!
-        String logFile = "default.lcf";
+        // if it can be found:
+        // first look in program launch directory
+        // second look in JMRI distribution directory
+        String logFile = "default.lcf"; // NOI18N
         try {
-            if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure(logFile);
+            if (new File(logFile).canRead()) {
+                PropertyConfigurator.configure(logFile);
+            } else if (new File(FileUtil.getProgramPath() + logFile).canRead()) {
+                PropertyConfigurator.configure(FileUtil.getProgramPath() + logFile);
             } else {
-                org.apache.log4j.BasicConfigurator.configure();
-                org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.WARN);
+                BasicConfigurator.configure();
+                Logger.getRootLogger().setLevel(Level.WARN);
             }
         } catch (java.lang.NoSuchMethodError e) {
             log.error("Exception starting logging: " + e);
         }
         // install default exception handlers
-        System.setProperty("sun.awt.exception.handler", AwtHandler.class.getName());
+        System.setProperty("sun.awt.exception.handler", AwtHandler.class.getName()); // NOI18N
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
 
         // first log entry
@@ -362,11 +376,11 @@ public abstract class AppsBase {
         Enumeration<Logger> e = Logger.getRootLogger().getAllAppenders();
 
         while (e.hasMoreElements()) {
-            org.apache.log4j.Appender a = (org.apache.log4j.Appender) e.nextElement();
-            if (a instanceof org.apache.log4j.RollingFileAppender) {
-                log.info("This log is stored in file: " + ((org.apache.log4j.RollingFileAppender) a).getFile());
-            } else if (a instanceof org.apache.log4j.FileAppender) {
-                log.info("This log is stored in file: " + ((org.apache.log4j.FileAppender) a).getFile());
+            Appender a = (Appender) e.nextElement();
+            if (a instanceof RollingFileAppender) {
+                log.info("This log is stored in file: " + ((RollingFileAppender) a).getFile());
+            } else if (a instanceof FileAppender) {
+                log.info("This log is stored in file: " + ((FileAppender) a).getFile());
             }
         }
     }

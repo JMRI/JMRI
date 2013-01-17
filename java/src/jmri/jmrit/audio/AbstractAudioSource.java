@@ -9,7 +9,8 @@ import jmri.InstanceManager;
 import javax.vecmath.Vector3f;
 import jmri.implementation.AbstractAudio;
 import java.util.List;
-import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
 
 /**
  * Base implementation of the AudioSource class.
@@ -62,7 +63,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private boolean _queued           = false;
     private AudioBuffer _buffer;
 //    private AudioSourceDelayThread asdt = null;
-    private List<AudioBuffer> pendingBufferQueue = new ArrayList<AudioBuffer>();
+    private LinkedList<AudioBuffer> pendingBufferQueue = new LinkedList<AudioBuffer>();
 
     private static final AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
 
@@ -93,17 +94,17 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     }
 
     @Override
-    public boolean queueBuffers(List<AudioBuffer> audioBuffers) {
+    public boolean queueBuffers(Queue<AudioBuffer> audioBuffers) {
 	// Note: Cannot queue buffers to a Source that has a bound buffer.
 	if (!_bound) {
-	    this.pendingBufferQueue = audioBuffers;
+	    this.pendingBufferQueue = new LinkedList(audioBuffers);
 	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
 	    activeAudioFactory.getCommandThread().interrupt();
 	    if (log.isDebugEnabled())
-		log.debug("Queued Buffer " + audioBuffers.get(0).getSystemName() + " to Source " + this.getSystemName());
+		log.debug("Queued Buffer " + audioBuffers.peek().getSystemName() + " to Source " + this.getSystemName());
 	    return(true);
 	} else {
-	    log.error("Attempted to queue buffers " + audioBuffers.get(0).getSystemName() + " (etc) to Bound Source " + this.getSystemName());
+	    log.error("Attempted to queue buffers " + audioBuffers.peek().getSystemName() + " (etc) to Bound Source " + this.getSystemName());
 	    return(false);
 	}
     }
@@ -111,7 +112,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     @Override
     public boolean queueBuffer(AudioBuffer audioBuffer) {
 	if (!_bound) {
-	    this.pendingBufferQueue.clear();
+	    //this.pendingBufferQueue.clear();
 	    this.pendingBufferQueue.add(audioBuffer);
 	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
 	    activeAudioFactory.getCommandThread().interrupt();
@@ -141,7 +142,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 	}
     }
 
-    public List<AudioBuffer> getQueuedBuffers() {
+    public Queue<AudioBuffer> getQueuedBuffers() {
 	return(this.pendingBufferQueue);
     }
 
@@ -560,7 +561,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
     // Probably aught to be abstract, but I don't want to force the non-JOAL Source
     // types to implement this (yet).  So default to failing.
-    public boolean queueAudioBuffers(List<AudioBuffer> audioBuffers) {
+    public boolean queueAudioBuffers(Queue<AudioBuffer> audioBuffers) {
 	log.debug("Abstract queueAudioBuffers() called.");
 	return(false);
     }

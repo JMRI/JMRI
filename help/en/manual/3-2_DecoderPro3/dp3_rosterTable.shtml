@@ -33,14 +33,14 @@ DecoderPro&reg; Main Window
 <hr>
 <p>The Roster Table in the main body of DecoderPro3&reg; displays all of the locomotives in your roster or selected roster groups.<br>
 <strong>SORT </strong>by any column by clicking on the column header. Roster above is sorted by DCC addresses.</p>
-<p><img src="images/dp3_rosterTable.png" width="900" height="401" alt="roster table"></p>
+<p><img src="images/dp3_rosterTable.png" width="900" height="141" alt="table"></p>
 <p>Hide/show any column by right clicking anywhere in the Roster header and checking columns to be displayed and unchecking columns to hide.</p>
-<p><img src="images/dp3_rosterTable01.png" width="737" height="292" alt="hide/show column"></p>
+<p><img src="images/dp3_rosterTable01.png" width="418" height="322" alt="table"></p>
 <p>With columns hidden.<br>
-  <br>
-<img src="images/dp3_rosterTable02.png" width="711" height="310" alt="roster table hide"></p>
+  <img src="images/dp3_rosterTable02.png" width="495" height="376" alt="table"><br>
+</p>
 <p>Selecting Actions using Context menu (Right Click ) on locomotive selected. Select the action you would like to perform.</p>
-<p><img src="images/dp3_rosterTable03.png" width="584" height="309" alt="table context"></p>
+<p><img src="images/dp3_rosterTable03.png" width="483" height="303" alt="table3"></p>
 <p>Double Click on Selected locomotive and Programming Window will open.</p>
 <p>Editing column of a Roster Entry in the table. select locomotive then click on column that you want to edit. Type your change.</p>
 <p>The following columns may be edited.<br>

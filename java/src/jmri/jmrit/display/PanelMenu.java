@@ -2,9 +2,6 @@
 
 package jmri.jmrit.display;
 
-import java.util.ResourceBundle;
-
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -30,33 +27,31 @@ public class PanelMenu extends JMenu {
      */
     private PanelMenu() {
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-
-        this.setText(rb.getString("MenuPanels"));
+        this.setText(Bundle.getMessage("MenuPanels"));
 
         // new panel is a submenu
 		//add(new jmri.jmrit.display.NewPanelAction());
-        JMenu newPanel = new JMenu(rb.getString("MenuItemNew"));
-        newPanel.add(new jmri.jmrit.display.panelEditor.PanelEditorAction(rb.getString("PanelEditor")));
-        newPanel.add(new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction(rb.getString("ControlPanelEditor")));
-        newPanel.add(new jmri.jmrit.display.layoutEditor.LayoutEditorAction(rb.getString("LayoutEditor")));
+        JMenu newPanel = new JMenu(Bundle.getMessage("MenuItemNew"));
+        newPanel.add(new jmri.jmrit.display.panelEditor.PanelEditorAction(Bundle.getMessage("PanelEditor")));
+        newPanel.add(new jmri.jmrit.display.controlPanelEditor.ControlPanelEditorAction(Bundle.getMessage("ControlPanelEditor")));
+        newPanel.add(new jmri.jmrit.display.layoutEditor.LayoutEditorAction(Bundle.getMessage("LayoutEditor")));
         add(newPanel);
         
-        add(new jmri.configurexml.LoadXmlUserAction(rb.getString("MenuItemLoad")));
-        add(new jmri.configurexml.StoreXmlUserAction(rb.getString("MenuItemStore")));
-        add(new jmri.jmrit.revhistory.swing.FileHistoryAction(rb.getString("MenuItemShowHistory")));
+        add(new jmri.configurexml.LoadXmlUserAction(Bundle.getMessage("MenuItemLoad")));
+        add(new jmri.configurexml.StoreXmlUserAction(Bundle.getMessage("MenuItemStore")));
+        add(new jmri.jmrit.revhistory.swing.FileHistoryAction(Bundle.getMessage("MenuItemShowHistory")));
         add(new JSeparator());
-		panelsSubMenu = new JMenu(rb.getString("MenuShowPanel"));
+		panelsSubMenu = new JMenu(Bundle.getMessage("MenuShowPanel"));
                 // Add the 'No Panels' item to the sub-menu
-                noPanelsItem = new JMenuItem(rb.getString("MenuItemNoPanels"));
+                noPanelsItem = new JMenuItem(Bundle.getMessage("MenuItemNoPanels"));
                 noPanelsItem.setEnabled(false);
                 panelsSubMenu.add(noPanelsItem);
 		add(panelsSubMenu);
         add(new JSeparator());
-        add(new jmri.jmrit.jython.RunJythonScript(rb.getString("MenuItemScript")));
-        add(new jmri.jmrit.automat.monitor.AutomatTableAction(rb.getString("MenuItemMonitor")));
-        add(new jmri.jmrit.jython.JythonWindow(rb.getString("MenuItemScriptLog")));
-        add(new jmri.jmrit.jython.InputWindowAction(rb.getString("MenuItemScriptInput")));
+        add(new jmri.jmrit.jython.RunJythonScript(Bundle.getMessage("MenuItemScript")));
+        add(new jmri.jmrit.automat.monitor.AutomatTableAction(Bundle.getMessage("MenuItemMonitor")));
+        add(new jmri.jmrit.jython.JythonWindow(Bundle.getMessage("MenuItemScriptLog")));
+        add(new jmri.jmrit.jython.InputWindowAction(Bundle.getMessage("MenuItemScriptInput")));
     }
 	
 	// operational variables

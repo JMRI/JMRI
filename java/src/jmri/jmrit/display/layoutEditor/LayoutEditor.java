@@ -2651,6 +2651,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                             break;
                         }
                     }
+                    for (int i = 0; i<turntableList.size();i++) {
+                        LayoutTurntable x = turntableList.get(i);
+                        for (int k = 0; k<x.getNumberRays(); k++) {
+                            if (x.getRayConnectOrdered(k)!=null) {
+                                // check the A connection point
+                                Point2D pt = x.getRayCoordsOrdered(k);
+                                Rectangle2D r = new Rectangle2D.Double(
+                                        pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
+                                if (r.contains(dLoc)) {
+                                    // mouse was pressed on this connection point
+                                    selectedObject = x;
+                                    selectedPointType = TURNTABLE_RAY_OFFSET+x.getRayIndex(k);
+                                    break;
+                                }
+                            }
+                        }
+                    }
 				}
 				// initialize starting selection - cancel any previous selection rectangle
 				selectionActive = true;
@@ -2693,6 +2710,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					break;
 				}
 			}
+            for (int i = 0; i<turntableList.size();i++) {
+                LayoutTurntable x = turntableList.get(i);
+                for (int k = 0; k<x.getNumberRays(); k++) {
+                    if (x.getRayConnectOrdered(k)!=null) {
+                        // check the A connection point
+                        Point2D pt = x.getRayCoordsOrdered(k);
+                        Rectangle2D r = new Rectangle2D.Double(
+                                pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
+                        if (r.contains(dLoc)) {
+                            // mouse was pressed on this connection point
+                            selectedObject = x;
+                            selectedPointType = TURNTABLE_RAY_OFFSET+x.getRayIndex(k);
+                            break;
+                        }
+                    }
+                }
+            }
 		}
 		else if ( (event.isMetaDown() || event.isAltDown()) &&
 							(!event.isShiftDown()) && (!event.isControlDown()) ) {
@@ -2995,7 +3029,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				}
 				for (int k = 0; k<x.getNumberRays(); k++) {
 					if (!requireUnconnected || (x.getRayConnectOrdered(k)==null)) {
-						// check the A connection point
 						Point2D pt = x.getRayCoordsOrdered(k);
 						Rectangle2D r = new Rectangle2D.Double(
 								pt.getX() - SIZE,pt.getY() - SIZE,SIZE2,SIZE2);
@@ -3359,6 +3392,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                 LayoutSlip t = (LayoutSlip)selectedObject;
                 t.toggleState();
 			}
+            else if ( ( selectedObject!=null) && (selectedPointType>=TURNTABLE_RAY_OFFSET) && 
+					allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) && 
+						(!event.isShiftDown()) && (!event.isControlDown()) ) {
+				// controlling layout, in edit mode
+                LayoutTurntable t =  (LayoutTurntable)selectedObject;
+                t.setPosition(selectedPointType-TURNTABLE_RAY_OFFSET);
+			}
 			if ( (trackBox.isSelected()) && (beginObject!=null) && (foundObject!=null) ) {
 				// user let up shift key before releasing the mouse when creating a track segment
 				setCursor(Cursor.getDefaultCursor());
@@ -3384,6 +3424,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 			LayoutSlip t = (LayoutSlip)selectedObject;
 			t.toggleState();
 		}
+        else if ( ( selectedObject!=null) && (selectedPointType>=TURNTABLE_RAY_OFFSET) && 
+				allControlling() && (!event.isMetaDown()) && (!event.isAltDown()) && (!event.isPopupTrigger()) && 
+					(!event.isShiftDown()) && (!delayedPopupTrigger) ) {
+                LayoutTurntable t =  (LayoutTurntable)selectedObject;
+                t.setPosition(selectedPointType-TURNTABLE_RAY_OFFSET);
+        }
 		// check if requesting marker popup out of edit mode
 		else if ( (event.isPopupTrigger() || delayedPopupTrigger) && (!isDragging) ) {
 			LocoIcon lo = checkMarkers(dLoc);
@@ -3459,6 +3505,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					break;
                 default: break;
 			}
+            if(foundPointType>=TURNTABLE_RAY_OFFSET){
+                LayoutTurntable t = (LayoutTurntable)foundObject;
+                if(t.isTurnoutControlled()){
+                    ((LayoutTurntable)foundObject).showRayPopUp(event, foundPointType-TURNTABLE_RAY_OFFSET);
+                }
+            }
 		}
 		else {
 			TrackSegment tr = checkTrackSegments(dLoc);
@@ -7429,6 +7481,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 						pt.getX()-((pt.getX()-c.getX())*0.2),
 							pt.getY()-((pt.getY()-c.getY())*0.2)), pt));
 			}
+            if(x.isTurnoutControlled() && x.getPosition()!=-1){
+                Point2D pt = x.getRayCoordsIndexed(x.getPosition());
+                g2.draw(new Line2D.Double(new Point2D.Double(
+						pt.getX()-((pt.getX()-c.getX())*1.8/*2*/),
+							pt.getY()-((pt.getY()-c.getY())*1.8/**2*/)), pt));
+            }
 		}
 	}
 	

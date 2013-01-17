@@ -838,7 +838,31 @@ public class Location implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = a.getValue();
         if ((a = e.getAttribute(Xml.SWITCH_LIST_COMMENT)) != null )  _switchListComment = a.getValue();
         if ((a = e.getAttribute(Xml.PHYSICAL_LOCATION)) != null) _physicalLocation = PhysicalLocation.parse(a.getValue());
-        if ((a = e.getAttribute(Xml.CAR_TYPES)) != null ) {
+		// new way of reading car types using elements added in 3.3.1
+		if (e.getChild(Xml.TYPES) != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(Xml.CAR_TYPE);
+			String[] types = new String[carTypes.size()];
+			for (int i = 0; i < carTypes.size(); i++) {
+				Element type = carTypes.get(i);
+				if ((a = type.getAttribute(Xml.NAME)) != null) {
+					types[i] = a.getValue();
+				}
+			}
+			setTypeNames(types);
+			@SuppressWarnings("unchecked")
+			List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(Xml.LOCO_TYPE);
+			types = new String[locoTypes.size()];
+			for (int i = 0; i < locoTypes.size(); i++) {
+				Element type = locoTypes.get(i);
+				if ((a = type.getAttribute(Xml.NAME)) != null) {
+					types[i] = a.getValue();
+				}
+			}
+			setTypeNames(types);
+		}
+		// old way of reading car types up to version 2.99.6
+		else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null ) {
         	String names = a.getValue();
         	String[] Types = names.split("%%");	// NOI18N
         	//if (log.isDebugEnabled()) log.debug("rolling stock types: "+names);
@@ -898,16 +922,31 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         // build list of rolling stock types for this location
         String[] types = getTypeNames();
-        CarTypes ct = CarTypes.instance();
-        EngineTypes et = EngineTypes.instance();
-        StringBuffer buf = new StringBuffer();
-        for (int i=0; i<types.length; i++){
-    		// remove types that have been deleted by user
-    		if (ct.containsName(types[i]) || et.containsName(types[i]))
-    			buf.append(types[i]+"%%");	// NOI18N
+        // Old way of saving car types
+        if (Control.backwardCompatible) {
+        	StringBuffer buf = new StringBuffer();
+        	for (int i=0; i<types.length; i++){
+        		// remove types that have been deleted by user
+        		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
+        			buf.append(types[i]+"%%");	// NOI18N
+        	}
+        	e.setAttribute(Xml.CAR_TYPES, buf.toString());
         }
-        e.setAttribute(Xml.CAR_TYPES, buf.toString());
-
+		// new way of saving car types
+		Element eTypes = new Element(Xml.TYPES);
+		for (int i = 0; i < types.length; i++) {
+			// don't save types that have been deleted by user
+			if (EngineTypes.instance().containsName(types[i])) {
+				Element eType = new Element(Xml.LOCO_TYPE);
+				eType.setAttribute(Xml.NAME, types[i]);
+				eTypes.addContent(eType);
+			} else if (CarTypes.instance().containsName(types[i])) {
+				Element eType = new Element(Xml.CAR_TYPE);
+				eType.setAttribute(Xml.NAME, types[i]);
+				eTypes.addContent(eType);
+			}
+		}
+		e.addContent(eTypes);
         if (_physicalLocation != null)
         	e.setAttribute(Xml.PHYSICAL_LOCATION, _physicalLocation.toString());
 

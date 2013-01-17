@@ -19,7 +19,6 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -39,7 +38,6 @@ import jmri.jmrit.vsdecoder.VSDecoderManager;
 import jmri.jmrit.vsdecoder.LoadVSDFileAction;
 import jmri.jmrit.vsdecoder.StoreXmlVSDecoderAction;
 import jmri.jmrit.vsdecoder.LoadXmlVSDecoderAction;
-import jmri.jmrit.vsdecoder.VSDecoderPreferencesAction;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.ReporterManager;
 import jmri.Reporter;
@@ -255,7 +253,7 @@ public class ManageLocationsFrame extends JmriJFrame {
         fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
 
 	JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-	editMenu.add(new VSDecoderPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
+	editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load
@@ -414,7 +412,6 @@ class LocationTableModel extends AbstractTableModel {
 
 /** Private class for use as TableModel for Listener Locations */
 class ListenerTableModel extends AbstractTableModel {
-    private static final ResourceBundle rb = VSDSwingBundle.bundle();
 
     // These get internationalized at runtime in the constructor below.
     private String[] columnNames = new String[7];

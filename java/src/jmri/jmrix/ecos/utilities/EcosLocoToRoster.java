@@ -498,7 +498,7 @@ public class EcosLocoToRoster implements EcosListener {
     DefaultTreeModel dModel;
     DefaultMutableTreeNode dRoot;
     TreeSelectionListener dListener;
-    
+    //@TODO this could do with being re-written so that it reuses the combined loco select tree code
     protected JPanel layoutDecoderSelection() {
         
         JPanel pane1a = new JPanel();

@@ -104,8 +104,7 @@ But you  say...&quot;I want to change more than what's shown on the Basic decode
 <p>First of all eliminate the Manufacturer  specific programmers (unless of course you have a <strong>Zimo</strong> or <strong>ESU</strong> system).&nbsp; </p>
 <p>We can also eliminate the <strong>Tutorial</strong> and <strong>Custom</strong> programmers. They were put in to show folks that want to <strong>write their own</strong>&nbsp; programmer (not you right?) 
 all the possible ways to gather input and to have a common  starting point in the roster pane. 
-Now if you wish to pursue writing a custom programmer go to this 
-<a href="../html/apps/DecoderPro/Programmer.shtml" target="_blank"><strong>site</strong></a>.</p>
+Now if you wish to pursue writing a custom programmer go to jmri&reg; website.</p>
 <p>If you have need for a special situation programmer  you might want to look at <strong>Sample Club</strong> or <strong>TrainShowBasic</strong> to see what panes can  be taken out of Comprehensive to make an intermediate complexity, special  purpose programmer.&nbsp; Again, how to do this  is a subject for another manual.</p>
 <p>And that leaves us with the <strong>Advanced</strong> and <strong>Registers</strong> programmers.&nbsp; The <strong>Advanced</strong> programmer has a couple of  sophisticated features added on top of the <strong>Comprehensive</strong> programmer and a name  was needed.&nbsp; Well, why not call it  <strong>Advanced</strong>? We&rsquo;ll cover the additional features once we get through with  <strong>Comprehensive</strong>.<br>
   So what about the  <strong>Registers</strong> programmer?&nbsp; If you have an old or  bargain basement decoder that only programs using registers, then of course  you&rsquo;ll be interested in <strong>Registers.</strong><br>

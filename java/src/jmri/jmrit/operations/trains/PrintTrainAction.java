@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.trains;
 
 import jmri.util.davidflanagan.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.IOException;
@@ -61,7 +62,17 @@ public class PrintTrainAction extends AbstractAction {
 			log.debug("Print cancelled");
 			return;
 		}
+		
+		printTrain(writer, train);
+		
+		// and force completion of the printing
+		writer.close();
+	}
+	
+	// 7 lines of header and another 3 lines for possible comments
+	protected static final int NUMBER_OF_HEADER_LINES = 10;
 
+	protected void printTrain(HardcopyWriter writer, Train train) {
 		try {
 			String s = Bundle.getMessage("Name") + ": " + train.getName() + NEW_LINE;
 			writer.write(s, 0, s.length());
@@ -91,10 +102,8 @@ public class PrintTrainAction extends AbstractAction {
 				writer.write(s);
 			}
 
-			// and force completion of the printing
-			writer.close();
 		} catch (IOException we) {
-			log.error("Error printing ConsistRosterEntry: " + e);
+			log.error("Error printing train report");
 		}
 	}
 

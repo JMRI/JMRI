@@ -94,7 +94,7 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
     /**
      * Captive class to track changes
      */
-    class SelectionButton extends JRadioButton {
+    static class SelectionButton extends JRadioButton {
         SelectionButton(String name, Class<?> managerClass) {
             super();
             this.managerClass = managerClass;

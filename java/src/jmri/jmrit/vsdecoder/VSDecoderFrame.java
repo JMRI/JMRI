@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import java.awt.Dimension;
+import jmri.jmrit.vsdecoder.swing.VSDPreferencesAction;
 
 @SuppressWarnings("serial")
 class VSDecoderFrame extends JmriJFrame {
@@ -64,7 +65,7 @@ class VSDecoderFrame extends JmriJFrame {
         fileMenu.add(new LoadVSDFileAction(vsdBundle.getString("VSDecoderFileMenuLoadVSDFile" )));
         fileMenu.add(new StoreXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuSaveProfile" )));
         fileMenu.add(new LoadXmlVSDecoderAction(vsdBundle.getString("VSDecoderFileMenuLoadProfile")));
-	fileMenu.add(new VSDecoderPreferencesAction(vsdBundle.getString("VSDecoderFileMenuPreferences")));
+	fileMenu.add(new VSDPreferencesAction(vsdBundle.getString("VSDecoderFileMenuPreferences")));
 
 	fileMenu.getItem(1).setEnabled(false); // disable XML store
 	fileMenu.getItem(2).setEnabled(false); // disable XML load

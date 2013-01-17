@@ -137,7 +137,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
 
     public String getNameString() {
         String name;
-        if (namedMemory == null) name = rb.getString("NotConnected");
+        if (namedMemory == null) name = Bundle.getMessage("NotConnected");
         else if (getMemory().getUserName()!=null)
             name = getMemory().getUserName()+" ("+getMemory().getSystemName()+")";
         else
@@ -152,7 +152,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     }
 
     public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Memory"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("Memory"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
@@ -175,7 +175,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                     JPanel p2 = new JPanel();
                     //p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
                     //p2.setLayout(new FlowLayout(FlowLayout.TRAILING));
-                    p2.add(new JLabel(rb.getString("NumColsLabel")));
+                    p2.add(new JLabel(Bundle.getMessage("NumColsLabel")));
                     p2.add(spinner);
                     p.add(p2);
                     p.setVisible(true);

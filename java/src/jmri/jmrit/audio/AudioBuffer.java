@@ -4,6 +4,7 @@ package jmri.jmrit.audio;
 
 import jmri.Audio;
 import java.io.InputStream;
+import java.nio.ByteBuffer;
 
 
 /**
@@ -296,6 +297,7 @@ public interface AudioBuffer extends Audio {
      */
     public boolean isStreamedForced();
 
+    public boolean loadBuffer(ByteBuffer b, int format, int frequency);
 }
 
 /* @(#)AudioBuffer.java */

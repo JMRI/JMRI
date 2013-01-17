@@ -86,8 +86,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		addCheckBoxAction(ignoreLoadCheckBox);
 		
 		// tool tips
-		ignoreLoadCheckBox.setToolTipText(getRb().getString("TipIgnore"));
-		outOfServiceCheckBox.setToolTipText(getRb().getString("TipCarOutOfService"));
+		ignoreLoadCheckBox.setToolTipText(Bundle.getMessage("TipIgnore"));
+		outOfServiceCheckBox.setToolTipText(Bundle.getMessage("TipCarOutOfService"));
 		
 		// get notified if combo box gets modified
 		CarLoads.instance().addPropertyChangeListener(this);
@@ -163,8 +163,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				if (finalDestTrack != null && car.getNextDestTrack() != finalDestTrack && finalDestTrack.getLocType().equals(Track.STAGING)){
 					log.debug ("Destination track ("+finalDestTrack.getName()+") is staging");
 					JOptionPane.showMessageDialog(this,
-							getRb().getString("rsDoNotSelectStaging"),
-							getRb().getString("rsCanNotFinal"),
+							Bundle.getMessage("rsDoNotSelectStaging"),
+							Bundle.getMessage("rsCanNotFinal"),
 							JOptionPane.ERROR_MESSAGE);
 					return false;
 				}	
@@ -201,8 +201,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 					if (rwe != null && rwe.getLocType().equals(Track.STAGING)){
 						log.debug ("Return when empty track ("+rwe.getName()+") is staging");
 						JOptionPane.showMessageDialog(this,
-								getRb().getString("rsDoNotSelectStaging"),
-								getRb().getString("rsCanNotRWE"),
+								Bundle.getMessage("rsDoNotSelectStaging"),
+								Bundle.getMessage("rsCanNotRWE"),
 								JOptionPane.ERROR_MESSAGE);
 						return false;
 					}
@@ -226,14 +226,14 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			Track track = (Track)trackLocationBox.getSelectedItem();
 			if (track.getSchedule() != null){
 				if (JOptionPane.showConfirmDialog(this,
-						MessageFormat.format(getRb().getString("rsDoYouWantSchedule"),new Object[]{car.toString()}),
-						MessageFormat.format(getRb().getString("rsSpurHasSchedule"),new Object[]{track.getName(), track.getScheduleName()}),					
+						MessageFormat.format(Bundle.getMessage("rsDoYouWantSchedule"),new Object[]{car.toString()}),
+						MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"),new Object[]{track.getName(), track.getScheduleName()}),					
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 					String results = car.testSchedule(track);
 					if (!results.equals(Track.OKAY)){
 						JOptionPane.showMessageDialog(this,
-								MessageFormat.format(getRb().getString("rsNotAbleToApplySchedule"),new Object[]{results}),
-								getRb().getString("rsApplyingScheduleFailed"),
+								MessageFormat.format(Bundle.getMessage("rsNotAbleToApplySchedule"),new Object[]{results}),
+								Bundle.getMessage("rsApplyingScheduleFailed"),
 								JOptionPane.ERROR_MESSAGE);
 						// restore previous location and track so we'll ask to test schedule again
 						if (saveTrack != null)

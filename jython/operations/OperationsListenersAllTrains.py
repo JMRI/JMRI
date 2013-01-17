@@ -29,7 +29,8 @@ class MyListener(java.beans.PropertyChangeListener):
     train = tm.getTrainById(trainId)
     if (train.isBuilt() == True):
     	print "Train", train.getName(), "is built"
-        if (event.propertyName == jmri.jmrit.operations.trains.Train.TRAIN_LOCATION_CHANGED_PROPERTY):
+        # the train move complete property change was added in jmri version 3.2
+        if (event.propertyName == jmri.jmrit.operations.trains.Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY):
             print "Cars in train:", train.getNumberCarsInTrain()
             print "Train length:", train.getTrainLength()
             print "Train weight:", train.getTrainWeight()
@@ -39,10 +40,6 @@ class MyListener(java.beans.PropertyChangeListener):
     # determine using property change if train has just been built
     if (event.propertyName == jmri.jmrit.operations.trains.Train.BUILT_CHANGED_PROPERTY and event.newValue == "true"):
         print "Train", train.getName(), "built status changed to true"
-        # fix an issue with this scripts property change listener being ahead of the cars in operations
-        train.removePropertyChangeListener(self)
-        train.addPropertyChangeListener(MyListener())
-    
 
 class listenAllTrains(jmri.jmrit.automat.AbstractAutomaton) :      
   def init(self):

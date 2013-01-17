@@ -53,7 +53,8 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     public Positionable deepClone() {
-        IndicatorTrackIcon pos = new IndicatorTrackIcon(_editor);        
+        IndicatorTrackIcon pos = new IndicatorTrackIcon(_editor);
+        _namedIcon = _iconMap.get(getStatus());
         return finishClone(pos);
     }
 
@@ -241,15 +242,15 @@ public class IndicatorTrackIcon extends PositionableIcon
 	 */
     void displayState(String status) {
     	if (log.isDebugEnabled()) log.debug(getNameString() +" displayStatus "+_status);
-        NamedIcon icon = getIcon(status);
-        if (icon!=null) {
-            super.setIcon(icon);
+        _namedIcon = getIcon(status);
+        if (_namedIcon!=null) {
+            super.setIcon(_namedIcon);
         }
         updateSize();
     }
 
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTrack"));
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTrack"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     editItem();
@@ -259,7 +260,7 @@ public class IndicatorTrackIcon extends PositionableIcon
     }
 
     protected void editItem() {
-        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTrack")));
+        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("IndicatorTrack")));
         _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
 
         ActionListener updateAction = new ActionListener() {

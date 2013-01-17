@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import org.jdom.Attribute;
+import org.jdom.Element;
+
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -202,6 +205,57 @@ public class CarTypes {
 			return length;
 		} else {
 			return maxNameLengthSubType;
+		}
+	}
+	
+	/**
+	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
+	 * operations-cars.dtd.
+	 * 
+	 * @return Contents in a JDOM Element
+	 */
+	public void store(Element root) {
+		String[]names = getNames();
+		if (Control.backwardCompatible) {
+			Element values = new Element(Xml.CAR_TYPES);
+			for (int i=0; i<names.length; i++){
+				String typeNames = names[i]+"%%"; // NOI18N
+				values.addContent(typeNames);
+			}
+			root.addContent(values);
+		}
+		// new format using elements
+		Element types = new Element(Xml.TYPES);
+		for (int i=0; i<names.length; i++){
+			Element type = new Element(Xml.TYPE);
+			type.setAttribute(new Attribute(Xml.NAME, names[i]));
+			types.addContent(type);
+		}
+		root.addContent(types);
+	}
+	
+	public void load(Element root) {
+		// new format using elements starting version 3.3.1
+		if (root.getChild(Xml.TYPES)!= null){
+			@SuppressWarnings("unchecked")
+			List<Element> l = root.getChild(Xml.TYPES).getChildren(Xml.TYPE);
+			if (log.isDebugEnabled()) log.debug("Car types sees "+l.size()+" types");
+			Attribute a;
+			String[] types = new String[l.size()];
+			for (int i=0; i<l.size(); i++) {
+				Element type = l.get(i);
+				if ((a = type.getAttribute(Xml.NAME)) != null) {
+					types[i] = a.getValue();
+				}
+			}
+			setNames(types);
+		}
+		// old format
+		else if (root.getChild(Xml.CAR_TYPES)!= null){
+			String names = root.getChildText(Xml.CAR_TYPES);
+			String[] types = names.split("%%"); // NOI18N
+			if (log.isDebugEnabled()) log.debug("car types: "+names);
+			setNames(types);
 		}
 	}
 

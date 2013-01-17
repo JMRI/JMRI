@@ -1,8 +1,17 @@
 // FileUtil.java
 package jmri.util;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.security.CodeSource;
+import java.util.Arrays;
+import java.util.jar.JarFile;
 import java.util.regex.Matcher;
 import jmri.jmrit.XmlFile;
 import org.apache.log4j.Logger;
@@ -11,18 +20,25 @@ import org.apache.log4j.Logger;
  * Common utility methods for working with Files. <P> We needed a place to
  * refactor common File-processing idioms in JMRI code, so this class was
  * created. It's more of a library of procedures than a real class, as (so far)
- * all of the operations have needed no state information. <P> In particular,
- * this is intended to provide Java 2 functionality on a Java 1.1.8 system, or
- * at least try to fake it.
+ * all of the operations have needed no state information.
  *
  * @author Bob Jacobsen Copyright 2003, 2005, 2006
- * @author Randall Wood Copyright 2012
+ * @author Randall Wood Copyright 2012, 2013
  * @version $Revision$
  */
 public class FileUtil {
 
+    /**
+     * Portable reference to items in the JMRI program directory
+     */
     static public final String PROGRAM = "program:";
+    /**
+     * Portable reference to items in the JMRI user's preferences directory
+     */
     static public final String PREFERENCES = "preference:";
+    /**
+     * Portable reference to the user's home directory
+     */
     static public final String HOME = "home:";
     @Deprecated
     static public final String RESOURCE = "resource:";
@@ -32,10 +48,21 @@ public class FileUtil {
      * The portable file path component separator
      */
     static public final char SEPARATOR = '/';
-
+    /*
+     * JMRI program path, defaults to directory JMRI is executed from
+     */
     static private String programPath = null;
+    /*
+     * User's home directory
+     */
     static private String homePath = System.getProperty("user.home") + File.separator;
-    
+    /*
+     * path to jmri.jar
+     */
+    static private String jarPath = null;
+    // initialize logging
+    static private Logger log = Logger.getLogger(FileUtil.class.getName());
+
     /**
      * Find the resource file corresponding to a name. There are five cases:
      * <UL> <LI> Starts with "resource:", treat the rest as a pathname relative
@@ -99,7 +126,7 @@ public class FileUtil {
             }
             // assume this is a relative path from the
             // preferences directory
-            filename = FileUtil.getPreferencesPath() + "resources" + File.separator + filename;
+            filename = FileUtil.getUserFilesPath() + "resources" + File.separator + filename;
             if (log.isDebugEnabled()) {
                 log.debug("load from user preferences file: " + filename);
             }
@@ -121,8 +148,8 @@ public class FileUtil {
                 log.debug("load from user preferences file: " + filename);
             }
             return filename.replace(SEPARATOR, File.separatorChar);
-        } // must just be a (hopefully) valid name
-        else {
+        } else {
+            // must just be a (hopefully) valid name
             return pName.replace(SEPARATOR, File.separatorChar);
         }
     }
@@ -147,7 +174,7 @@ public class FileUtil {
             if (new File(path.substring(PREFERENCES.length())).isAbsolute()) {
                 path = path.substring(PREFERENCES.length());
             } else {
-                path = path.replaceFirst(PREFERENCES, Matcher.quoteReplacement(FileUtil.getPreferencesPath()));
+                path = path.replaceFirst(PREFERENCES, Matcher.quoteReplacement(FileUtil.getUserFilesPath()));
             }
         } else if (path.startsWith(HOME)) {
             if (new File(path.substring(HOME.length())).isAbsolute()) {
@@ -186,8 +213,8 @@ public class FileUtil {
         String filename = file.getAbsolutePath();
 
         // compare full path name to see if same as preferences
-        if (filename.startsWith(getPreferencesPath())) {
-            return PREFERENCES + filename.substring(getPreferencesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+        if (filename.startsWith(getUserFilesPath())) {
+            return PREFERENCES + filename.substring(getUserFilesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
 
         // now check for relative to program dir
@@ -227,31 +254,231 @@ public class FileUtil {
         }
     }
 
+    /**
+     * Get the user's home directory.
+     *
+     * @return User's home directory as a String
+     */
     static public String getHomePath() {
         return homePath;
     }
 
-    static public String getPreferencesPath() {
+    /**
+     * Get the user's files directory. If not set by the user, this is the same
+     * as the preferences path.
+     *
+     * @return User's files directory as a String
+     */
+    static public String getUserFilesPath() {
         return XmlFile.userFileLocationDefault();
     }
 
+    /**
+     * Get the JMRI program directory.
+     *
+     * @return JMRI program directory as a String.
+     */
     static public String getProgramPath() {
         if (programPath == null) {
-            try {
-                programPath = (new File(".")).getCanonicalPath() + File.separator;
-            } catch (IOException ex) {
-                log.error("Unable to get JMRI program directory.", ex);
-            }
+            FileUtil.setProgramPath(".");
         }
         return programPath;
     }
 
-    static public void logFilePaths() {
-        log.info("File path " + FileUtil.PROGRAM + " is " + FileUtil.getProgramPath());
-        log.info("File path " + FileUtil.PREFERENCES + " is " + FileUtil.getPreferencesPath());
-        log.info("File path " + FileUtil.HOME + " is " + FileUtil.getHomePath());
+    /**
+     * Set the JMRI program directory.
+     *
+     * Convenience method that calls {@link FileUtil#setProgramPath(java.io.File)
+     * with the passed in path.
+     *
+     * @param path
+     */
+    static public void setProgramPath(String path) {
+        FileUtil.setProgramPath(new File(path));
     }
 
-    // initialize logging
-    static private Logger log = Logger.getLogger(FileUtil.class.getName());
+    /**
+     * Set the JMRI program directory.
+     *
+     * If set, allows JMRI to be loaded from locations other than the directory
+     * containing JMRI resources. This must be set very early in the process of
+     * loading JMRI (prior to loading any other JMRI code) to be meaningfully
+     * used.
+     *
+     * @param path
+     */
+    static public void setProgramPath(File path) {
+        try {
+            programPath = (path).getCanonicalPath() + File.separator;
+        } catch (IOException ex) {
+            log.error("Unable to get JMRI program directory.", ex);
+        }
+    }
+
+    /**
+     * Get the URL of a portable filename if it can be located using
+     * {@link #findURL(java.lang.String)}
+     *
+     * @param path
+     * @return
+     */
+    static public URL findExternalFilename(String path) {
+        return FileUtil.findURL(FileUtil.getExternalFilename(path));
+    }
+
+    /**
+     * Search for a file or JAR resource by name and return the
+     * {@link java.io.InputStream} for that file. Search order is defined by
+     * {@link #findURL(java.lang.String, java.lang.String[])}.
+     *
+     * @param path The relative path of the file or resource.
+     * @return InputStream or null.
+     * @see #findInputStream(java.lang.String, java.lang.String[])
+     * @see #findURL(java.lang.String)
+     * @see #findURL(java.lang.String, java.lang.String[])
+     */
+    static public InputStream findInputStream(String path) {
+        return FileUtil.findInputStream(path, new String[]{});
+    }
+
+    /**
+     * Search for a file or JAR resource by name and return the
+     * {@link java.io.InputStream} for that file. Search order is defined by
+     * {@link #findURL(java.lang.String, java.lang.String[])}.
+     *
+     * @param path The relative path of the file or resource.
+     * @param searchPaths a list of paths to search for the path in
+     * @return InputStream or null.
+     * @see #findInputStream(java.lang.String, java.lang.String[])
+     * @see #findURL(java.lang.String)
+     * @see #findURL(java.lang.String, java.lang.String[])
+     */
+    static public InputStream findInputStream(String path, @NonNull String... searchPaths) {
+        URL file = FileUtil.findURL(path, searchPaths);
+        if (file != null) {
+            try {
+                return file.openStream();
+            } catch (IOException ex) {
+                log.error(ex.getLocalizedMessage(), ex);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Search for a file or JAR resource by name and return the
+     * {@link java.net.URL} for that file. Search order is defined by
+     * {@link #findURL(java.lang.String, java.lang.String[])}.
+     *
+     * @param path The relative path of the file or resource.
+     * @return The URL or null.
+     * @see #findInputStream(java.lang.String)
+     * @see #findInputStream(java.lang.String, java.lang.String[])
+     * @see #findURL(java.lang.String, java.lang.String[]);
+     */
+    static public URL findURL(String path) {
+        return FileUtil.findURL(path, new String[]{});
+    }
+
+    /**
+     * Search for a file or JAR resource by name and return the
+     * {@link java.net.URL} for that file. <p> Search order is:<ol> <li>As a
+     * {@link java.io.File} in the user preferences directory</li> <li>As a File
+     * in the current working directory (usually, but not always the JMRI
+     * distribution directory)</li> <li>As a File in the JMRI distribution
+     * directory</li> <li>As a resource in jmri.jar</li> <li>For any provided
+     * searchPaths, iterate over the searchPaths by prepending each searchPath
+     * to the path and following the above search order.</li></ol>
+     *
+     * @param path The relative path of the file or resource
+     * @param searchPaths a list of paths to search for the path in
+     * @return The URL or null
+     * @see #findInputStream(java.lang.String)
+     * @see #findInputStream(java.lang.String, java.lang.String[])
+     * @see #findURL(java.lang.String)
+     */
+    static public URL findURL(String path, @NonNull String... searchPaths) {
+        if (log.isDebugEnabled()) {
+            log.debug("Attempting to find " + path + " in " + Arrays.toString(searchPaths));
+        }
+        try {
+            // attempt to return path from preferences directory
+            File file = new File(FileUtil.getUserFilesPath() + path);
+            if (file.exists()) {
+                return file.toURI().toURL();
+            }
+            // attempt to return path from current working directory
+            file = new File(path);
+            if (file.exists()) {
+                return file.toURI().toURL();
+            }
+            // attempt to return path from JMRI distribution directory
+            file = new File(FileUtil.getProgramPath() + path);
+            if (file.exists()) {
+                return file.toURI().toURL();
+            }
+        } catch (MalformedURLException ex) {
+            log.warn("Unable to get URL for " + path, ex);
+            return null;
+        }
+        // return path if in jmri.jar or null
+        URL resource = FileUtil.class.getClassLoader().getResource(path);
+        if (resource == null && searchPaths != null) {
+            for (String searchPath : searchPaths) {
+                resource = FileUtil.findURL(searchPath + File.separator + path);
+                if (resource != null) {
+                    return resource;
+                }
+            }
+        }
+        if (resource == null && log.isDebugEnabled()) {
+            log.debug("Unable to to get URL for " + path);
+        }
+        return resource;
+    }
+
+    /**
+     * Return the {@link java.net.URI} for a given URL
+     *
+     * @param url
+     * @return a URI or null if the conversion would have caused a
+     * {@link java.net.URISyntaxException}
+     */
+    static public URI urlToURI(URL url) {
+        try {
+            return url.toURI();
+        } catch (URISyntaxException ex) {
+            log.error("Unable to get URI from URL", ex);
+            return null;
+        }
+    }
+
+    /**
+     * Get the JMRI distribution jar file.
+     *
+     * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
+     */
+    static public JarFile jmriJarFile() {
+        if (jarPath == null) {
+            CodeSource sc = FileUtil.class.getProtectionDomain().getCodeSource();
+            if (sc != null) {
+                jarPath = sc.getLocation().toString();
+                // 9 = length of jar:file:
+                jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
+                log.debug("jmri.jar path is " + jarPath);
+            }
+        }
+        try {
+            return new JarFile(jarPath);
+        } catch (IOException ex) {
+            log.error("Unable to open jmri.jar", ex);
+            return null;
+        }
+    }
+
+    static public void logFilePaths() {
+        log.info("File path " + FileUtil.PROGRAM + " is " + FileUtil.getProgramPath());
+        log.info("File path " + FileUtil.PREFERENCES + " is " + FileUtil.getUserFilesPath());
+        log.info("File path " + FileUtil.HOME + " is " + FileUtil.getHomePath());
+    }
 }

@@ -2,7 +2,6 @@
 
 package jmri.implementation;
 
-import java.util.ResourceBundle;
 import java.util.List;
 
 import java.io.File;
@@ -281,28 +280,19 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             = new java.util.Hashtable<String, String[]>();
 
     public void loadDefaults() {
-        
-        if (rbr == null) rbr = new java.lang.ref.SoftReference<ResourceBundle>(
-                                                    java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle"));
-
-        ResourceBundle rb = rbr.get();
-        if (rb == null) {
-            log.error("Failed to load defaults because of missing bundle");
-            return;
-        }
-        
+                
         log.debug("start loadDefaults");
         
         String ra;
-        ra = rb.getString("SignalAspectDefaultRed");
+        ra = Bundle.getMessage("SignalAspectDefaultRed");
         if (ra!=null) addAspect(ra, new int[]{SignalHead.RED});
         else log.error("no default red aspect");
 
-        ra = rb.getString("SignalAspectDefaultYellow");
+        ra = Bundle.getMessage("SignalAspectDefaultYellow");
         if (ra!=null) addAspect(ra, new int[]{SignalHead.YELLOW});
         else log.error("no default yellow aspect");
 
-        ra = rb.getString("SignalAspectDefaultGreen");
+        ra = Bundle.getMessage("SignalAspectDefaultGreen");
         if (ra!=null) addAspect(ra, new int[]{SignalHead.GREEN});
         else log.error("no default green aspect");
     }
@@ -367,7 +357,6 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         return table.get(aspect);
     }
 
-    static private java.lang.ref.SoftReference<ResourceBundle> rbr;
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalAppearanceMap.class.getName());
 }

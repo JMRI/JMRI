@@ -44,14 +44,14 @@ public class VSDOptionsDialog extends JDialog {
 	this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.PAGE_AXIS));
 
 	JLabel x = new JLabel();
-	x.setText(Bundle.getString("FieldSelectTrain"));
+	x.setText(Bundle.getMessage("FieldSelectTrain"));
 	this.add(x);
 	opsTrainComboBox = TrainManager.instance().getComboBox();
 	this.add(opsTrainComboBox);
 
-	JButton closeButton = new JButton(Bundle.getString("ButtonOK"));
+	JButton closeButton = new JButton(Bundle.getMessage("ButtonOK"));
 	closeButton.setEnabled(true);
-	closeButton.setToolTipText(Bundle.getString("ToolTipCloseDialog"));
+	closeButton.setToolTipText(Bundle.getMessage("ToolTipCloseDialog"));
 	closeButton.addActionListener(new java.awt.event.ActionListener() {
 		public void actionPerformed(java.awt.event.ActionEvent e) {
 		    closeButtonActionPerformed(e);
@@ -69,5 +69,6 @@ public class VSDOptionsDialog extends JDialog {
 	dispose();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDOptionsDialog.class.getName());
+    // Log not used... yet...
+    //    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDOptionsDialog.class.getName());
 }

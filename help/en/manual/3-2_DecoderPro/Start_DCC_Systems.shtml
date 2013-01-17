@@ -28,7 +28,7 @@
 
 <div align=right>
 <p><a href="Basic_Programming.shtml"> </a><a href="Start_DCC.shtml">Previous</a> <a href="Start_DCC_Hardware.shtml">| Next</a>
-<p><a href="index.shtml#Getting Started">Back to Index</a>
+<p><a href="index.shtml#GettingStarted">Back to Index</a>
 </div>
 
 <hr>
@@ -79,11 +79,11 @@ Depending on the specifics of your system and computer, some type of hardware
 interface may be required.
 
   <br>
-<a href="http://jmri.org/help/en/html/hardware/index.shtml" target="_blank">JMRI Hardware Support</a>
+<a href="http://jmri.org/help/en/html/hardware/index.shtml" target="_blank">JMRI&reg; Hardware Support</a>
 <hr>
 <div align=right>
 <p><a href="Start_DCC.shtml">Previous</a> <a href="Start_DCC_Hardware.shtml">| Next</a>
-<p><a href="index.shtml#Getting Started">Back to Index</a> </div>
+<p><a href="index.shtml#GettingStarted">Back to Index</a> </div>
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -3,8 +3,8 @@
  *    Retrieves panel xml from JMRI and builds panel client-side from that xml, including
  *    click functions.  Sends and listens for changes to panel elements using the xmlio server.
  *    If no parm passed, page will list links to available panels.
- *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.  There are 
- *    3 "widgetFamily"s: text, icon and drawn.  States are handled by storing members 
+ *  Approach:  Read panel's xml and create widget objects in the browser with all needed attributes.   
+ *    There are 3 "widgetFamily"s: text, icon and drawn.  States are handled by storing members 
  *    iconX, textX, cssX where X is the state.  The corresponding members are "shown" whenever the state changes.
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The xmlio element name is used to send changes to xmlio server and to listen for changes made elsewhere.
@@ -19,16 +19,14 @@
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
  *  TODO: research movement of locoicons
- *  TODO: finish layoutturntable (draw rays) (see Mtn RR)
+ *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
  *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: diagnose and correct the small position issues visible with footscray
- *  TODO: diagnose and correct the hover dislocation on images (or turn it off)
- *  TODO: verify that assuming same rotation and scale for all icons in a "set" is OK
+ *  TODO: diagnose and correct the hover dislocation on rotated images (or turn it off)
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
- *  TODO: handle remaining drawn widgets, such as double-crossovers
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
  *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images
@@ -795,18 +793,23 @@ function $drawTurnout($widget) {
 		}
 		$drawLine(ax, ay, cenx, ceny, $color, $width); //A to center (incoming)
 	// xover A--B
-	//       D--C
-	} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER) {
+	//         D--C
+	} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==DOUBLE_XOVER) {
 		if ($widget.state == CLOSED || $widget.state == THROWN) {
 			$drawLine(ax, ay, bx, by, erase, $width); //erase A to B
 			$drawLine(dx, dy, cx, cy, erase, $width); //erase D to C
 			$drawLine(abx, aby, dcx, dcy, erase, $width); //erase midAB to midDC
 			$drawLine(abx, aby, dcx, dcy, erase, $width); //erase midAB to midDC
+			$drawLine(ax, ay, cx, cy, erase, $width); //erase A to C
+			$drawLine(dx, dy, bx, by, erase, $width); //erase D to B
 			if ($widget.state == $widget.continuing) {
 				$drawLine(ax, ay, bx, by, $color, $width); //A to B
 				$drawLine(dx, dy, cx, cy, $color, $width); //D to C
 			} else {
-				if ($widget.type==RH_XOVER) {
+				if ($widget.type==DOUBLE_XOVER) {
+					$drawLine(ax, ay, cx, cy, $color, $width); //A to C
+					$drawLine(dx, dy, bx, by, $color, $width); //D to B
+				} else if ($widget.type==RH_XOVER) {
 					$drawLine(ax, ay, abx, aby, $color, $width); //A to midAB
 					$drawLine(abx, aby, dcx, dcy, $color, $width); //midAB to midDC
 					$drawLine(dcx, dcy, cx, cy, $color, $width); //midDC to C
@@ -842,7 +845,7 @@ if ($widget.type==LH_TURNOUT||$widget.type==RH_TURNOUT||$widget.type==WYE_TURNOU
 	$t['x'] = $widget.xcen - ($widget.xb - $widget.xcen);
 	$t['y'] = $widget.ycen - ($widget.yb - $widget.ycen);
 	$gPts[$t.ident] = $t;
-} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==WYE_XOVER) {
+} else if ($widget.type==LH_XOVER||$widget.type==RH_XOVER||$widget.type==DOUBLE_XOVER) {
 	$t = [];
 	$t['ident'] = $widget.ident+PT_A;  //calculate and store A endpoint (mirror of C for these)
 	$t['x'] = $widget.xcen - ($widget.xc - $widget.xcen);

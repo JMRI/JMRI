@@ -25,7 +25,7 @@
 <h1>Menu Bar - Turnout Control Panel</h1>
 
 <div align=right>
-<p><a href="Main_Tool.shtml#Turnout">Back</a></p>
+<p><a href="dp3_menubar.shtml">Back</a></p>
 <p><a href="dp3_menubar.html">Back to Index</a></p>
 </div>
 
@@ -65,7 +65,7 @@ will only change the state of the internal turnout and will not change a turnout
 <hr>
 
 <div align=right>
-<p><a href="dp3_menubar.html">Back</a></p>
+<p><a href="dp3_menubar.shtml">Back</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 

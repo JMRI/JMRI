@@ -648,7 +648,7 @@ public class PrintLocationsAction extends AbstractAction {
 				Route route = RouteManager.instance().getRouteById(ids[i]);
 				if (route == null) {
 					log.info("Could not find a route for id: " + ids[i] + " location ("
-							+ track.getLocation().getName() + ") track (" + track.getName() + ")");
+							+ track.getLocation().getName() + ") track (" + track.getName() + ")"); // NOI18N
 					continue;
 				}
 				charCount += route.getName().length() + 2;
@@ -699,7 +699,7 @@ public class PrintLocationsAction extends AbstractAction {
 				Route route = RouteManager.instance().getRouteById(ids[i]);
 				if (route == null) {
 					log.info("Could not find a route for id: " + ids[i] + " location ("
-							+ track.getLocation().getName() + ") track (" + track.getName() + ")");
+							+ track.getLocation().getName() + ") track (" + track.getName() + ")"); // NOI18N
 					continue;
 				}
 				charCount += route.getName().length() + 2;
