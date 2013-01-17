@@ -320,26 +320,25 @@ public class Track {
 	}
 
 	/**
-	 * Used to determine if there's space available at this track for the car. Considers cars currently placed on the
-	 * track and cars in route to this track. Ignores car pick ups. Used to prevent overloading the track with cars from
-	 * staging.
+	 * Used to determine if there's space available at this track for the car. Considers cars in route to this track.
+	 * Used to prevent overloading the track with cars from staging or cars with custom loads.
 	 * 
 	 * @param car
 	 *            The car to be set out.
 	 * @return true if space available.
 	 */
 	public boolean isSpaceAvailable(Car car) {
-		int length = Integer.parseInt(car.getLength()) + RollingStock.COUPLER;
+		int carLength = Integer.parseInt(car.getLength()) + RollingStock.COUPLER;
 		if (car.getKernel() != null)
-			length = car.getKernel().getLength();
-		int reservationFactor = getReservationFactor();
+			carLength = car.getKernel().getLength();
 		// ignore reservation factor unless car is departing staging
-		if (car.getTrack() != null && !car.getTrack().getLocType().equals(Track.STAGING))
-			reservationFactor = 100; // ignore, track isn't staging
-		if (getLength() * reservationFactor / 100 - (getReservedInRoute() + length) >= 0)
-			return true;
-		else
-			return false;
+		if (car.getTrack() != null && car.getTrack().getLocType().equals(Track.STAGING))
+			return (getLength() * getReservationFactor() / 100 - (getReservedInRoute() + carLength) >= 0);
+		// if there's alternate, include that length in the calculation
+		int trackLength = getLength();
+		if (getAlternativeTrack() != null)
+			trackLength = trackLength + getAlternativeTrack().getLength();
+		return (trackLength - (getReservedInRoute() + carLength) >= 0);
 	}
 
 	public void setUsedLength(int length) {

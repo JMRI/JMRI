@@ -232,6 +232,8 @@ public class TrainPrintUtilities {
 	 */
 	private static String filterBuildReport(String line, boolean indent) {
 		String[] inputLine = line.split("\\s+");	// NOI18N
+		if (inputLine.length == 0)
+			return "";
 		if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")
 				|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
 				|| inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
