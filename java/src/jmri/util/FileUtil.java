@@ -60,6 +60,8 @@ public class FileUtil {
      * path to jmri.jar
      */
     static private String jarPath = null;
+    // initialize logging
+    static private Logger log = Logger.getLogger(FileUtil.class.getName());
 
     /**
      * Find the resource file corresponding to a name. There are five cases:
@@ -479,6 +481,4 @@ public class FileUtil {
         log.info("File path " + FileUtil.PREFERENCES + " is " + FileUtil.getUserFilesPath());
         log.info("File path " + FileUtil.HOME + " is " + FileUtil.getHomePath());
     }
-    // initialize logging
-    static private Logger log = Logger.getLogger(FileUtil.class.getName());
 }
