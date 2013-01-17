@@ -124,7 +124,7 @@ public class FileUtil {
             }
             // assume this is a relative path from the
             // preferences directory
-            filename = FileUtil.getPreferencesPath() + "resources" + File.separator + filename;
+            filename = FileUtil.getUserFilesPath() + "resources" + File.separator + filename;
             if (log.isDebugEnabled()) {
                 log.debug("load from user preferences file: " + filename);
             }
@@ -172,7 +172,7 @@ public class FileUtil {
             if (new File(path.substring(PREFERENCES.length())).isAbsolute()) {
                 path = path.substring(PREFERENCES.length());
             } else {
-                path = path.replaceFirst(PREFERENCES, Matcher.quoteReplacement(FileUtil.getPreferencesPath()));
+                path = path.replaceFirst(PREFERENCES, Matcher.quoteReplacement(FileUtil.getUserFilesPath()));
             }
         } else if (path.startsWith(HOME)) {
             if (new File(path.substring(HOME.length())).isAbsolute()) {
@@ -211,8 +211,8 @@ public class FileUtil {
         String filename = file.getAbsolutePath();
 
         // compare full path name to see if same as preferences
-        if (filename.startsWith(getPreferencesPath())) {
-            return PREFERENCES + filename.substring(getPreferencesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
+        if (filename.startsWith(getUserFilesPath())) {
+            return PREFERENCES + filename.substring(getUserFilesPath().length(), filename.length()).replace(File.separatorChar, SEPARATOR);
         }
 
         // now check for relative to program dir
@@ -262,11 +262,12 @@ public class FileUtil {
     }
 
     /**
-     * Get the JMRI preferences directory.
+     * Get the user's files directory. If not set by the user, this is the same
+     * as the preferences path.
      *
-     * @return JMRI preferences directory as a String
+     * @return User's files directory as a String
      */
-    static public String getPreferencesPath() {
+    static public String getUserFilesPath() {
         return XmlFile.userFileLocationDefault();
     }
 
@@ -330,12 +331,12 @@ public class FileUtil {
      *
      * @param path The relative path of the file or resource.
      * @return InputStream or null.
-     * @see #findInputStream(java.lang.String, java.lang.String[]) 
-     * @see #findURL(java.lang.String) 
-     * @see #findURL(java.lang.String, java.lang.String[]) 
+     * @see #findInputStream(java.lang.String, java.lang.String[])
+     * @see #findURL(java.lang.String)
+     * @see #findURL(java.lang.String, java.lang.String[])
      */
     static public InputStream findInputStream(String path) {
-        return FileUtil.findInputStream(path, new String[] {});
+        return FileUtil.findInputStream(path, new String[]{});
     }
 
     /**
@@ -346,9 +347,9 @@ public class FileUtil {
      * @param path The relative path of the file or resource.
      * @param searchPaths a list of paths to search for the path in
      * @return InputStream or null.
-     * @see #findInputStream(java.lang.String, java.lang.String[]) 
-     * @see #findURL(java.lang.String) 
-     * @see #findURL(java.lang.String, java.lang.String[]) 
+     * @see #findInputStream(java.lang.String, java.lang.String[])
+     * @see #findURL(java.lang.String)
+     * @see #findURL(java.lang.String, java.lang.String[])
      */
     static public InputStream findInputStream(String path, @NonNull String... searchPaths) {
         URL file = FileUtil.findURL(path, searchPaths);
@@ -369,12 +370,12 @@ public class FileUtil {
      *
      * @param path The relative path of the file or resource.
      * @return The URL or null.
-     * @see #findInputStream(java.lang.String) 
-     * @see #findInputStream(java.lang.String, java.lang.String[]) 
+     * @see #findInputStream(java.lang.String)
+     * @see #findInputStream(java.lang.String, java.lang.String[])
      * @see #findURL(java.lang.String, java.lang.String[]);
      */
     static public URL findURL(String path) {
-        return FileUtil.findURL(path, new String[] {});
+        return FileUtil.findURL(path, new String[]{});
     }
 
     /**
@@ -390,9 +391,9 @@ public class FileUtil {
      * @param path The relative path of the file or resource
      * @param searchPaths a list of paths to search for the path in
      * @return The URL or null
-     * @see #findInputStream(java.lang.String) 
-     * @see #findInputStream(java.lang.String, java.lang.String[]) 
-     * @see #findURL(java.lang.String) 
+     * @see #findInputStream(java.lang.String)
+     * @see #findInputStream(java.lang.String, java.lang.String[])
+     * @see #findURL(java.lang.String)
      */
     static public URL findURL(String path, @NonNull String... searchPaths) {
         if (log.isDebugEnabled()) {
@@ -400,7 +401,7 @@ public class FileUtil {
         }
         try {
             // attempt to return path from preferences directory
-            File file = new File(FileUtil.getPreferencesPath() + path);
+            File file = new File(FileUtil.getUserFilesPath() + path);
             if (file.exists()) {
                 return file.toURI().toURL();
             }
@@ -475,7 +476,7 @@ public class FileUtil {
 
     static public void logFilePaths() {
         log.info("File path " + FileUtil.PROGRAM + " is " + FileUtil.getProgramPath());
-        log.info("File path " + FileUtil.PREFERENCES + " is " + FileUtil.getPreferencesPath());
+        log.info("File path " + FileUtil.PREFERENCES + " is " + FileUtil.getUserFilesPath());
         log.info("File path " + FileUtil.HOME + " is " + FileUtil.getHomePath());
     }
     // initialize logging

@@ -39,7 +39,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
             if (!file.isAbsolute()) {
                 // must be relative, but we want it to
                 // be relative to the preferences directory
-                menuFile = FileUtil.getPreferencesPath() + "dp3/Gui3Menus.xml";
+                menuFile = FileUtil.getUserFilesPath() + "dp3/Gui3Menus.xml";
                 file = new File(menuFile);
             }
             if (!file.exists()) {
@@ -59,7 +59,7 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
             if (!file.isAbsolute()) {
                 // must be relative, but we want it to
                 // be relative to the preferences directory
-                toolbarFile = FileUtil.getPreferencesPath() + "dp3/Gui3MainToolBar.xml";
+                toolbarFile = FileUtil.getUserFilesPath() + "dp3/Gui3MainToolBar.xml";
                 file = new File(toolbarFile);
             }
             if (!file.exists()) {
