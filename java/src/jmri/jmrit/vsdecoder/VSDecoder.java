@@ -35,6 +35,7 @@ import java.beans.PropertyChangeListener;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.Audio;
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -133,6 +134,16 @@ public class VSDecoder implements PropertyChangeListener {
 	// our own setAddress() to register the throttle listener
 	this.setAddress(config.getLocoAddress());
 	this.enable();
+
+	if (log.isDebugEnabled()) {
+	    log.debug("VSDecoder Init Complete.  Audio Objects Created:");
+	    for (String s : InstanceManager.audioManagerInstance().getSystemNameList(Audio.SOURCE)) {
+		log.debug("\tSource: " + s);
+	    }
+	    for (String s : InstanceManager.audioManagerInstance().getSystemNameList(Audio.BUFFER)) {
+		log.debug("\tBuffer: " + s);
+	    }
+	}
     }
 
     /**
