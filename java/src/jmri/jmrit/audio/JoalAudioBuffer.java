@@ -8,6 +8,7 @@ import net.java.games.joal.AL;
 import net.java.games.joal.ALException;
 import net.java.games.joal.util.ALut;
 import java.io.InputStream;
+import java.util.HashMap;
 
 /**
  * JOAL implementation of the Audio Buffer sub-class.
@@ -351,7 +352,11 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     
     @Override
     public long getLength() {
-        return (long) this._size[0] / this.getFrameSize();
+	if (this.getFrameSize() == 0) {
+	    return(0);
+	} else {
+	    return (long) this._size[0] / this.getFrameSize();
+	}
     }
     
     @Override
