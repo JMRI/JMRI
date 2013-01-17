@@ -24,9 +24,9 @@
 <h1>JMRI&reg; User's Guides</h1>
 <table border="0">
 	<tr>
-    <td width="142"><strong>JMRI&reg; Version 2.12 </strong></td>
-    <td width="259">&nbsp;</td>
-    <td width="311">&nbsp;</td>
+    <td width="200"><strong>JMRI&reg; Version 2.12 </strong></td>
+    <td width="300">&nbsp;</td>
+    <td width="400">&nbsp;</td>
     </tr>
 	<tr>
 	  <td>&nbsp;</td>
@@ -71,7 +71,7 @@
 	<tr>
 	  <td>&nbsp;</td>
 	  <td><strong><a href="3-2_DecoderPro/index.shtml">DecoderPro&reg; 3.2  &nbsp;&nbsp;</a></strong></td>
-	  <td>&nbsp;</td>
+	  <td><strong><a href="pdf/DP_man_3-2.pdf">Download Printable Guide (pdf 3.5MB)</a></strong></td>
   </tr>
 	<tr>
 	  <td>&nbsp;</td>
