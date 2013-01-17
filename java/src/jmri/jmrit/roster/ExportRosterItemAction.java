@@ -80,6 +80,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         LocoFile newLocoFile = new LocoFile();
         // File fout = new File(mFullToFilename);
         mToEntry.setFileName(mToFilename);
+        mToEntry.setId(mFromEntry.getId());
         newLocoFile.writeFile(mToFile, lroot, mToEntry);
 
         return true;
