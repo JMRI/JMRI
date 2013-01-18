@@ -303,7 +303,7 @@
           </enumChoice>
         </enumVal>
         <label>Steam/Diesel Option</label>
-        <label xml:lang="it">Vapore-Diesel</label>
+        <label xml:lang="it">Opzioni Vapore-Diesel</label>
       </variable>
       <variable label="Locomotive Sound Option" CV="60" item="Sound Option 1" include="1442">
         <enumVal>
@@ -380,6 +380,7 @@
         <label>FX rate adjust</label>
         <label xml:lang="it">Aggiustamento FX</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+        <comment xml:lang="it">0=veloce, 15= lento, 4 raccomandato per iniziare</comment>
       </variable>
       <variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
         <decVal/>
@@ -508,7 +509,7 @@
       <variable label="Compressor On Time" CV="149" tooltip="CV 149" item="Sound Setting 13" default="20">
         <decVal/>
         <label>Compressor On Time</label>
-        <label xml:lang="it">tempo accensione Compressore</label>
+        <label xml:lang="it">Tempo accensione Compressore</label>
       </variable>
       <variable label="Horn Selector" CV="150" item="Sound Option 2" include="1443">
         <enumVal>
@@ -651,10 +652,11 @@
         <enumVal>
           <enumChoice choice="Automatic">
             <choice>Automatic</choice>
+            <choice xml:lang="it">Automatico</choice>
           </enumChoice>
           <enumChoice choice="Semi-Automatic">
             <choice>Semi-Automatic</choice>
-            <choice xml:lang="it">Semi automatica</choice>
+            <choice xml:lang="it">Semi automatico</choice>
           </enumChoice>
           <enumChoice choice="Manual">
             <choice>Manual</choice>
