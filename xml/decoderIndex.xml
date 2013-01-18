@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130105-2014-jake on Sat Jan 05 12:14:32 PST 2013 $Id$-->
-  <decoderIndex version="258">
+  <!--Written by JMRI version 20130118-0726-jake on Thu Jan 17 23:26:43 PST 2013 $Id$-->
+  <decoderIndex version="260">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -3921,6 +3921,12 @@
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="27" highVersionID="45" file="MRC_soundbrilliance1827.xml">
         <model model="Synch Diesel Sound 1827 - N - KATO PA1" numOuts="2" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes">
           <size length="74.5" width="14" height="3.8" units="mm" />
+        </model>
+      </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="19" highVersionID="19" file="MRC_soundbrilliance1869.xml">
+        <model model="Synch Steam Sound 1869" maxTotalCurrent="1.5A" extFnsMRC="yes">
+          <!-- note All functions are NMRA compatible -->
+          <size length="28" width="17" height="6.5" units="mm" />
         </model>
       </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" file="MRC_soundbrilliance1957.xml">
