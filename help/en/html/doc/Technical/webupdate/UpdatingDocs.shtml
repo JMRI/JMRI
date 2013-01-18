@@ -128,7 +128,7 @@ slideshow of them. You can tell it what file format you want the image files to
 be AND where you want them to be saved before you take the shot, and that makes
 it easier to work with them in a program like Paint or Photoshop.
 
-<h2 name="sizing">Sizing and Saving the Images</h2>
+<h2> <a name="sizing">Sizing and Saving the Images</h2>
 
 Any changes you make to your image should be done before you use Amaya to
 insert it into your document. Remember that if you change it, it needs to be
