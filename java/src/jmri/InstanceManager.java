@@ -103,6 +103,7 @@ public class InstanceManager {
      * @param type The class Object for the items to be removed.
      */
     static public <T> void reset(Class<T> type) {
+        if (managerLists == null) return;
         managerLists.put(type, null);
     }
     
@@ -113,6 +114,7 @@ public class InstanceManager {
      * @param type The class Object for the item's type.  
      */
     static public <T> void deregister(T item, Class<T> type){
+        if (managerLists == null) return;
         ArrayList<Object> l = managerLists.get(type);
         if(l!=null)
             l.remove(item);
@@ -128,6 +130,7 @@ public class InstanceManager {
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
+        if (managerLists == null) return null;
         ArrayList<Object> l = managerLists.get(type);
         if (l == null || l.size()<1) {
             // see if need to autocreate
