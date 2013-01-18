@@ -709,7 +709,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
 	 * operations-trains.dtd.
 	 * 
-	 * @return Contents in a JDOM Element
 	 */
 	public void store(Element root) {
 		Element values = new Element(Xml.OPTIONS);

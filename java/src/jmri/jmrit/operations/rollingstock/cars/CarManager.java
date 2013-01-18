@@ -425,7 +425,6 @@ public class CarManager extends RollingStockManager{
 	   /**
      * Create an XML element to represent this Entry. This member has to remain synchronized with the
      * detailed DTD in operations-cars.dtd.
-     * @return Contents in a JDOM Element
      */
     public void store(Element root) {
     	root.addContent(new Element(Xml.OPTIONS));     	// nothing to save under options
