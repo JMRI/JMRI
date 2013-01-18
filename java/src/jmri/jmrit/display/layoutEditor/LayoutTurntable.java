@@ -467,12 +467,14 @@ public class LayoutTurntable
             });
             turntableEditCancel.setToolTipText( rb.getString("CancelHint") );
             footerPane.add(panel5);
+            
             rayPanel = new JPanel();
             rayPanel.setLayout(new BoxLayout(rayPanel, BoxLayout.Y_AXIS));
             for(RayTrack ray: rayList){
                 rayPanel.add(ray.getPanel());
             }
-            contentPane.add(rayPanel, BorderLayout.CENTER);
+            JScrollPane rayScrollPane = new JScrollPane(rayPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+            contentPane.add(rayScrollPane, BorderLayout.CENTER);
         } else {
             updateRayPanel();
         }
@@ -692,8 +694,7 @@ public class LayoutTurntable
         private java.beans.PropertyChangeListener mTurnoutListener;
         
         public void setTurnout(String turnoutName, int state){
-            Turnout turnout = jmri.InstanceManager.turnoutManagerInstance().
-                getTurnout(turnoutName);
+            Turnout turnout = null;
             if(mTurnoutListener==null){
                 mTurnoutListener = new java.beans.PropertyChangeListener() {
                     public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -705,6 +706,10 @@ public class LayoutTurntable
                     }
                 };
             }
+            if(turnoutName!=null){
+                turnout = jmri.InstanceManager.turnoutManagerInstance().
+                    getTurnout(turnoutName);
+            }
             if(namedTurnout!=null && namedTurnout.getBean()!=turnout) {
                 namedTurnout.getBean().removePropertyChangeListener(mTurnoutListener);
             }
@@ -713,6 +718,8 @@ public class LayoutTurntable
                 turnout.addPropertyChangeListener(mTurnoutListener, turnoutName, "Layout Editor Turntable");
                 needsRedraw= true;
             }
+            if(turnout==null)
+                namedTurnout=null;
             
             if(this.turnoutState!=state){
                 this.turnoutState = state;
@@ -825,6 +832,13 @@ public class LayoutTurntable
         }
         
         void delete(){
+            int n = JOptionPane.showConfirmDialog(null,
+                rb.getString("Question7"),
+                rb.getString("WarningTitle"),
+                JOptionPane.YES_NO_OPTION);
+        	if (n==JOptionPane.NO_OPTION){
+                return;
+            }
             deleteRay(this);
         }
         

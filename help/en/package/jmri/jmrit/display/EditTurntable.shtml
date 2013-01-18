@@ -47,27 +47,38 @@ deletes the turntable and any track segments connected to it. Before a
 turntable is actually deleted, the program asks for verification of that
 action.</p>
 <p>
-The Edit Turntable dialog allows the radius of the turntable circle to be 
-changed, and provides for the addition and deletion of ray tracks. If 
-<b>Turntable Radius</b> is changed, the new radius is used after <b>Done</b> 
-is clicked.</p>
+<img src="images/EditTurntable.png" align="RIGHT">
+The Edit Turntable dialog allows the following
+<ul>
+<li>Radius of the turntable circle to be changed</li>
+<li>New Rays to be added</li>
+<li>Angles of Ray to be altered</li>
+<li>Rays to be removed</li>
+<li>Automation to be configured</li>
+</ul>
+
 <p>
-Ray tracks are identified by their angle. Ray track angles are measured from
-the vertical in a clockwise direction. So, thinking of an analog clock, an
-angle of 0 degrees is exactly vertical (the 12 o'clock position). Similarly 
-an angle of 90 degrees corresponds to the 3 o'clock position, 180 degrees to 
-6 o'clock, 270 degrees to 9 o'clock, and so on. Angles are always entered in 
-degrees.</p>
+Ray track angles are measured from the vertical in a clockwise direction. 
+So, thinking of an analog clock, an angle of 0 degrees is exactly vertical 
+(the 12 o'clock position). Similarly an angle of 90 degrees corresponds to 
+the 3 o'clock position, 180 degrees to 6 o'clock, 270 degrees to 9 o'clock, 
+and so on. Angles are always entered in degrees.</p>
 <p> 
 To add a ray track, enter the angle corresponding to it's desired position in 
 <b>Ray Track Angle</b>, and click <b>New Ray Track</b>. The turntable shows 
-the new ray track immediately. To delete a ray track, enter an angle close to 
-its current position in <b>Ray Track Angle</b>, and click <b>Delete Ray 
-Track</b>. The ray track, and any connected track segment are immediately 
-deleted from the panel. The ray track that is deleted is the one that is 
-closest to the entered angle. If no ray track is within 30 degrees of the 
-entered angle, an error message results, and no ray track is deleted.
+the new ray track immediately. To delete a ray track, find it in the connection
+list and press <b>Remove</b>. The ray track, and any connected track segment are
+ immediately deleted from the panel.
 <b>Caution: There is no undo for these operations.</b></p>
+<p><b>DCC Controlled Turntable</b><br>
+When this is selected it allows for control of turntables (and drivers) 
+that use DCC turnout addresses to set the turntable to various positions.
+Such examples are the LDT TT-DEC or Heljan DCC Turntable. 
+For each Ray, select or create the DCC turnout address and the position 
+required to set it.<br>
+To set the turntable to the desired position, simply click on the ray that you 
+wish the turntable to be aligned with.
+</p>
 <p>
 <b>Note:</b> An easy procedure is possible for accurately aligning ray track 
 connection points and end bumpers so that each track segment extends through 
