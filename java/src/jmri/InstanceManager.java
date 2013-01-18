@@ -20,24 +20,28 @@ import java.util.List;
 
 /**
  * Provides methods for locating various interface implementations.
- * These are the base of how JMRI objects are located.
- *<P>
- * To retrieve the default object of a specific type, do 
- * @{link    InstanceManager.getDefault(Class<T> type)   };
- * In other words, you ask for the default object of a particular type.
- * Multiple items can be held, and are retrieved as a list.
- *<p>
- * If a specific item is needed, e.g. one that has been constructed via
- * a complex process during startup, it should be installed with
- * @{link    InstanceManager#store(T item, Class<T> type)      };
- * If it's OK for the InstanceManager to create an object on first
- * request, have that object's class implement the 
- * @{link    InstanceManagerAutoDefault                        }
- * flag interface.
+ * These form the base for locating JMRI objects, including the key managers.
  *<p>
  * The structural goal is to have the jmri package not depend on the
  * lower jmri.jmrit and jmri.jmrix packages, with the implementations
  * still available at run-time through the InstanceManager.
+ *<p>
+ * To retrieve the default object of a specific type, do 
+ * {@link    InstanceManager#getDefault}
+ * where the argument is e.g. "SensorManager.class".
+ * In other words, you ask for the default object of a particular type.
+ *<p>
+ * Multiple items can be held, and are retrieved as a list with
+ * {@link    InstanceManager#getList}.
+ *<p>
+ * If a specific item is needed, e.g. one that has been constructed via
+ * a complex process during startup, it should be installed with
+ * {@link     InstanceManager#store}.
+ * If it's OK for the InstanceManager to create an object on first
+ * request, have that object's class implement the 
+ * {@link     InstanceManagerAutoDefault}
+ * flag interface. The InstanceManager will then construct a default
+ * object via the no-argument constructor when one is first needed.
  *
  * <hr>
  * This file is part of JMRI.
@@ -52,14 +56,21 @@ import java.util.List;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @author                      Matthew Harris copyright (c) 2009
+ * @author			Bob Jacobsen Copyright (C) 2001, 2008, 2013
+ * @author          Matthew Harris copyright (c) 2009
  * @version			$Revision$
  */
 public class InstanceManager {
 
     static private HashMap<Class<?>,ArrayList<Object>> managerLists;
     
+    /**
+     * Store an object of a particular type for later
+     * retrieval via {@link #getDefault} or {@link #getList}.
+     * @param item The object of type T to be stored
+     * @param type The class Object for the item's type.  This will be used
+     *               as the key to retrieve the object later.
+     */
     static public <T> void store(T item, Class<T> type) {
         ArrayList<Object> l = managerLists.get(type);
         if (l==null) {
@@ -69,28 +80,44 @@ public class InstanceManager {
         l.add(item);
     }
     
+    /**
+     * Retrieve a list of all objects of type T that were
+     * registered with {@link #store}.
+     * @param type The class Object for the items' type.
+     */
     static public <T> List<Object> getList(Class<T> type) {
         if (managerLists!=null)
             return managerLists.get(type);
         return null;
     }
     
+    /**
+     * Deregister all objects of a particular type.
+     * @param type The class Object for the items to be removed.
+     */
     static public <T> void reset(Class<T> type) {
         managerLists.put(type, null);
     }
     
-    static public <T> void deregister(T val, Class<T> type){
+    /**
+     * Remove an object of a particular type 
+     * that had earlier been registered with {@link #store}.
+     * @param item The object of type T to be deregistered
+     * @param type The class Object for the item's type.  
+     */
+    static public <T> void deregister(T item, Class<T> type){
         ArrayList<Object> l = managerLists.get(type);
         if(l!=null)
-            l.remove(val);
+            l.remove(item);
     }
 
     /**
-     * Get the first object of type T that was
-     * store(d). 
-     *
+     * Retrieve the last object of type T that was
+     * registered with {@link #store}.
+     * <p>
      * Someday, we may provide another way to set the default
-     * but for now it's the last one stored
+     * but for now it's the last one stored, see the
+     * {@link #setDefault} method.
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
@@ -118,10 +145,12 @@ public class InstanceManager {
     }
     
     /**
-     * Set an object of type T as the default for that type 
-     *
-     * Now, we do that moving the item to the front;
-     * see the getDefault() method
+     * Set an object of type T as the default for that type.
+     *<p>
+     * Also registers (stores) the object if not already present. 
+     *<p>
+     * Now, we do that moving the item to the back of the list;
+     * see the {@link #getDefault} method
      */
     static public <T> void setDefault(Class<T> type, T val) {
         List<Object> l = getList(type);
