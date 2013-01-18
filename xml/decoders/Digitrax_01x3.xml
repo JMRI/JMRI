@@ -425,12 +425,15 @@
         <enumVal>
           <enumChoice choice="forward">
             <choice>forward</choice>
+            <choice xml:lang="it">avanti</choice>
           </enumChoice>
           <enumChoice choice="reverse">
             <choice>reverse</choice>
+            <choice xml:lang="it">indietro</choice>
           </enumChoice>
         </enumVal>
         <label>Normal direction of motion</label>
+        <label xml:lang="it">Normale direzione di marcia</label>
       </variable>
       <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
@@ -442,81 +445,104 @@
           </enumChoice>
         </enumVal>
         <label>Speed steps</label>
+        <label xml:lang="it">Step velocità</label>
       </variable>
       <variable label="Analog conversion mode" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Analog conversion mode</label>
+        <label xml:lang="it">Modalità conversione Analogica</label>
       </variable>
       <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
+            <choice xml:lang="it">Usa Vstart, Vmid e Vhigh</choice>
           </enumChoice>
           <enumChoice choice="Use Table">
             <choice>Use Table</choice>
+            <choice xml:lang="it">usa Tabella</choice>
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
+        <label xml:lang="it">Usa Tabella velocità</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/fxCVs.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/bemf.xml"/>
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" tooltip="Activates Digitrax Transponding" item="Advanced Ack">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
+        <label xml:lang="it">Transponding Digitrax</label>
       </variable>
       <variable label="Split field motor" CV="61" mask="XXXXXVXX">
         <enumVal>
           <enumChoice choice="Normal DC motor">
             <choice>Normal DC motor</choice>
+            <choice xml:lang="it">Motore Normale in CC</choice>
           </enumChoice>
           <enumChoice choice="Split field/AC motor">
             <choice>Split field/AC motor</choice>
+            <choice xml:lang="it">Motore in AC</choice>
           </enumChoice>
         </enumVal>
         <label>Split field motor</label>
+        <label xml:lang="it">Motore in AC</label>
       </variable>
       <variable label="Vstart/Vmid/Vfull in 128 step mode" CV="61" mask="XXVXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Vstart/Vmid/Vfull in 128 step mode</label>
+        <label xml:lang="it">Vstart/Vmid/Vfull in modalità 128 step</label>
       </variable>
       <variable label="Short-circuit protection" CV="61" mask="XVXXXXXX" comment="Undocumented feature, occasionally requested by Digitrax tech support">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Short-circuit protection</label>
+        <label xml:lang="it">Protezione Corto-Circuito</label>
         <comment>Undocumented feature, occasionally requested by Digitrax tech support</comment>
+        <comment xml:lang="it">Funzionalità non documentata, talvolta richiesta dal supporto tecnico Digitrax</comment>
       </variable>
       <variable label="Lamp keep-alive voltage" CV="62" mask="VVVVXXXX" item="Global lighting option 1" comment="0 is no keep-alive, use with LEDs">
         <decVal max="15"/>
         <label>Lamp keep-alive voltage</label>
+        <label xml:lang="it">Tensione mantenimento Lampade</label>
         <comment>0 is no keep-alive, use with LEDs</comment>
+        <comment xml:lang="it">0=nessuna, usare con i LED</comment>
       </variable>
       <variable label="FX rate adjust" CV="62" mask="XXXXVVVV" item="Global lighting option 2" comment="0 is fast, 15 is slow, 4 is recommended for start">
         <decVal max="15"/>
         <label>FX rate adjust</label>
+        <label xml:lang="it">Aggiustamento FX</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+        <comment xml:lang="it">0=veloce, 15= lento, 4 raccomandato per iniziare</comment>
       </variable>
       <variable label="Ditch light hold-over time" CV="63" item="Global lighting option 3" comment="0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds">
         <decVal/>
         <label>Ditch light hold-over time</label>
+        <label xml:lang="it">Tempo di carica Luci Ditch</label>
         <comment>0 is none, 40 is realistic 5 seconds, 255 is about 20 seconds</comment>
+        <comment xml:lang="it">0=nessuno, 40 realistico (5sec), 255= circa 20 sec.</comment>
       </variable>
       <variable label="Switching speed enabled by F6" CV="54" mask="XXXXXXXV" tooltip="When enabled, F6 reduces top speed">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
+            <choice xml:lang="it">Disabilitata</choice>
           </enumChoice>
           <enumChoice choice="Enabled">
             <choice>Enabled</choice>
+            <choice xml:lang="it">Abilitata</choice>
           </enumChoice>
         </enumVal>
         <label>Switching speed enabled by F6</label>
+        <label xml:lang="it">Abilita velocità di Manovra con F6</label>
       </variable>
       <variable label="Torque compensation" CV="54" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Torque compensation</label>
+        <label xml:lang="it">Coppia di compensazione</label>
       </variable>
       <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Decoder Lock Feature</label>
+        <label xml:lang="it">Funzione di Blocco decore</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
@@ -524,6 +550,7 @@
       <variable label="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
+        <label xml:lang="it">Tabella Velocità</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/userId.xml"/>
