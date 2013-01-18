@@ -23,6 +23,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -292,6 +293,30 @@ public class TrainCommon {
 				&& splitString(car.getRouteLocation().getName()).equals(
 						splitString(car.getRouteDestination().getName())) && car.getTrack() != null)
 			return true;
+		// look for sequential locations
+		if (splitString(car.getRouteLocation().getName()).equals(splitString(car.getRouteDestination().getName()))
+				&& car.getTrain() != null && car.getTrain().getRoute() != null) {
+			Route route = car.getTrain().getRoute();
+			List<String> locations = route.getLocationsBySequenceList();
+			boolean foundRl = false;
+			for (int i=0; i < locations.size(); i++) {
+				RouteLocation rl = route.getLocationById(locations.get(i));
+				if (foundRl) {
+					if (splitString(car.getRouteDestination().getName()).equals(splitString(rl.getName()))) {
+						// user can specify the "same" location two more more times in a row
+						if (car.getRouteDestination() != rl)
+							continue;
+						else
+							return true;
+					} else {
+						return false;
+					}
+				}
+				if (car.getRouteLocation().equals(rl)) {
+					foundRl = true;					
+				}
+			}
+		}		
 		return false;
 	}
 

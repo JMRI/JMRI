@@ -1782,9 +1782,7 @@ public class TrainBuilder extends TrainCommon {
 						// did the router assign a destination?
 						if (!checkCarForDestinationAndTrack(car, rl, routeIndex)
 								&& car.getTrack() != departStageTrack) {
-							log.debug("Removing car (" + car.toString() + ") from list, no car destination"); // NOI18N
-							carList.remove(car.getId());
-							carIndex--;
+							log.debug("Skipping car (" + car.toString() + ") no car destination"); // NOI18N
 							addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 							continue;
 						}

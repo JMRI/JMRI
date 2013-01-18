@@ -11,6 +11,7 @@ import java.util.Date;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
+import jmri.Throttle;
 
 /**
  * An abstract implementation of DccThrottle.
@@ -452,7 +453,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f0 = f0;
         sendFunctionGroup1();
         if (old != this.f0)
-        	notifyPropertyChangeListener("F0", old, this.f0 );
+        	notifyPropertyChangeListener(Throttle.F0, old, this.f0 );
     }
 
     public void setF1(boolean f1) {
@@ -460,7 +461,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f1 = f1;
         sendFunctionGroup1();
         if (old != this.f1)
-        	notifyPropertyChangeListener("F1", old, this.f1 );
+        	notifyPropertyChangeListener(Throttle.F1, old, this.f1 );
     }
 
     public void setF2(boolean f2) {
@@ -468,7 +469,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f2 = f2;
         sendFunctionGroup1();
         if (old != this.f2)
-        	notifyPropertyChangeListener("F2", old, this.f2 );
+        	notifyPropertyChangeListener(Throttle.F2, old, this.f2 );
     }
 
     public void setF3(boolean f3) {
@@ -476,7 +477,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f3 = f3;
         sendFunctionGroup1();
         if (old != this.f3)
-        	notifyPropertyChangeListener("F3", old, this.f3 );
+        	notifyPropertyChangeListener(Throttle.F3, old, this.f3 );
     }
 
     public void setF4(boolean f4) {
@@ -484,7 +485,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f4 = f4;
         sendFunctionGroup1();
         if (old != this.f4)
-        	notifyPropertyChangeListener("F4", old, this.f4 );
+        	notifyPropertyChangeListener(Throttle.F4, old, this.f4 );
     }
 
     public void setF5(boolean f5) {
@@ -492,7 +493,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f5 = f5;
         sendFunctionGroup2();
         if (old != this.f5)
-        	notifyPropertyChangeListener("F5", old, this.f5 );
+        	notifyPropertyChangeListener(Throttle.F5, old, this.f5 );
     }
 
     public void setF6(boolean f6) {
@@ -500,7 +501,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f6 = f6;
         sendFunctionGroup2();
         if (old != this.f6)
-        	notifyPropertyChangeListener("F6", old, this.f6 );
+        	notifyPropertyChangeListener(Throttle.F6, old, this.f6 );
     }
 
     public void setF7(boolean f7) {
@@ -508,7 +509,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f7 = f7;
         sendFunctionGroup2();
         if (old != this.f7)
-        	notifyPropertyChangeListener("F7", old, this.f7 );
+        	notifyPropertyChangeListener(Throttle.F7, old, this.f7 );
     }
 
     public void setF8(boolean f8) {
@@ -516,7 +517,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f8 = f8;
         sendFunctionGroup2();
         if (old != this.f8)
-        	notifyPropertyChangeListener("F8", old, this.f8 );
+        	notifyPropertyChangeListener(Throttle.F8, old, this.f8 );
     }
 
     public void setF9(boolean f9) {
@@ -524,7 +525,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f9 = f9;
         sendFunctionGroup3();
         if (old != this.f9)
-        	notifyPropertyChangeListener("F9", old, this.f9 );
+        	notifyPropertyChangeListener(Throttle.F9, old, this.f9 );
     }
 
     public void setF10(boolean f10) {
@@ -532,7 +533,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f10 = f10;
         sendFunctionGroup3();
         if (old != this.f10)
-        	notifyPropertyChangeListener("F10", old, this.f10 );
+        	notifyPropertyChangeListener(Throttle.F10, old, this.f10 );
     }
 
     public void setF11(boolean f11) {
@@ -540,7 +541,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f11 = f11;
         sendFunctionGroup3();
         if (old != this.f11)
-        	notifyPropertyChangeListener("F11", old, this.f11 );
+        	notifyPropertyChangeListener(Throttle.F11, old, this.f11 );
     }
 
     public void setF12(boolean f12) {
@@ -548,7 +549,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f12 = f12;
         sendFunctionGroup3();
         if (old != this.f12)
-        	notifyPropertyChangeListener("F12", old, this.f12 );
+        	notifyPropertyChangeListener(Throttle.F12, old, this.f12 );
     }
     
     public void setF13(boolean f13) {
@@ -556,7 +557,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f13 = f13;
         sendFunctionGroup4();
         if (old != this.f13)
-        	notifyPropertyChangeListener("F13", old, this.f13 );
+        	notifyPropertyChangeListener(Throttle.F13, old, this.f13 );
     }
     
     public void setF14(boolean f14) {
@@ -564,7 +565,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f14 = f14;
         sendFunctionGroup4();
         if (old != this.f14)
-        	notifyPropertyChangeListener("F14", old, this.f14 );
+        	notifyPropertyChangeListener(Throttle.F14, old, this.f14 );
     }
     
     public void setF15(boolean f15) {
@@ -572,7 +573,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f15 = f15;
         sendFunctionGroup4();
         if (old != this.f15)
-        	notifyPropertyChangeListener("F15", old, this.f15 );
+        	notifyPropertyChangeListener(Throttle.F15, old, this.f15 );
     }
     
     public void setF16(boolean f16) {
@@ -580,7 +581,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f16 = f16;
         sendFunctionGroup4();
         if (old != this.f16)
-        	notifyPropertyChangeListener("F16", old, this.f16 );
+        	notifyPropertyChangeListener(Throttle.F16, old, this.f16 );
     }
     
     public void setF17(boolean f17) {
@@ -588,7 +589,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f17 = f17;
         sendFunctionGroup4();
         if (old != this.f17)
-        	notifyPropertyChangeListener("F17", old, this.f17 );
+        	notifyPropertyChangeListener(Throttle.F17, old, this.f17 );
     }
     
     public void setF18(boolean f18) {
@@ -596,7 +597,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f18 = f18;
         sendFunctionGroup4();
         if (old != this.f18)
-        	notifyPropertyChangeListener("F18", old, this.f18 );
+        	notifyPropertyChangeListener(Throttle.F18, old, this.f18 );
     }
     
     public void setF19(boolean f19) {
@@ -604,7 +605,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f19 = f19;
         sendFunctionGroup4();
         if (old != this.f19)
-        	notifyPropertyChangeListener("F19", old, this.f19 );
+        	notifyPropertyChangeListener(Throttle.F19, old, this.f19 );
     }
     
     public void setF20(boolean f20) {
@@ -612,7 +613,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f20 = f20;
         sendFunctionGroup4();
         if (old != this.f20)
-        	notifyPropertyChangeListener("F20", old, this.f20 );
+        	notifyPropertyChangeListener(Throttle.F20, old, this.f20 );
     }
     
     public void setF21(boolean f21) {
@@ -620,7 +621,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f21 = f21;
         sendFunctionGroup5();
         if (old != this.f21)
-        	notifyPropertyChangeListener("F21", old, this.f21 );
+        	notifyPropertyChangeListener(Throttle.F21, old, this.f21 );
     }
     
     public void setF22(boolean f22) {
@@ -628,7 +629,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f22 = f22;
         sendFunctionGroup5();
         if (old != this.f22)
-        	notifyPropertyChangeListener("F22", old, this.f22 );
+        	notifyPropertyChangeListener(Throttle.F22, old, this.f22 );
     }
     
     public void setF23(boolean f23) {
@@ -636,7 +637,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f23 = f23;
         sendFunctionGroup5();
         if (old != this.f23)
-        	notifyPropertyChangeListener("F23", old, this.f23 );
+        	notifyPropertyChangeListener(Throttle.F23, old, this.f23 );
     }
     
     public void setF24(boolean f24) {
@@ -644,7 +645,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f24 = f24;
         sendFunctionGroup5();
         if (old != this.f24)
-        	notifyPropertyChangeListener("F24", old, this.f24 );
+        	notifyPropertyChangeListener(Throttle.F24, old, this.f24 );
     }
     
     public void setF25(boolean f25) {
@@ -652,7 +653,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f25 = f25;
         sendFunctionGroup5();
         if (old != this.f25)
-        	notifyPropertyChangeListener("F25", old, this.f25 );
+        	notifyPropertyChangeListener(Throttle.F25, old, this.f25 );
     }
     
     public void setF26(boolean f26) {
@@ -660,7 +661,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f26 = f26;
         sendFunctionGroup5();
         if (old != this.f26)
-        	notifyPropertyChangeListener("F26", old, this.f26 );
+        	notifyPropertyChangeListener(Throttle.F26, old, this.f26 );
     }
     
     public void setF27(boolean f27) {
@@ -668,7 +669,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f27 = f27;
         sendFunctionGroup5();
         if (old != this.f27)
-        	notifyPropertyChangeListener("F27", old, this.f27 );
+        	notifyPropertyChangeListener(Throttle.F27, old, this.f27 );
     }
     
     public void setF28(boolean f28) {
@@ -676,7 +677,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f28 = f28;
         sendFunctionGroup5();
         if (old != this.f28)
-        	notifyPropertyChangeListener("F28", old, this.f28 );
+        	notifyPropertyChangeListener(Throttle.F28, old, this.f28 );
     }
 
 
@@ -783,7 +784,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f0Momentary = f0Momentary;
         sendMomentaryFunctionGroup1();
         if (old != this.f0Momentary)
-        	notifyPropertyChangeListener("F0Momentary", old, this.f0Momentary );
+        	notifyPropertyChangeListener(Throttle.F0Momentary, old, this.f0Momentary );
     }
 
     public void setF1Momentary(boolean f1Momentary) {
@@ -791,7 +792,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f1Momentary = f1Momentary;
         sendMomentaryFunctionGroup1();
         if (old != this.f1Momentary)
-        	notifyPropertyChangeListener("F1Momentary", old, this.f1Momentary );
+        	notifyPropertyChangeListener(Throttle.F1Momentary, old, this.f1Momentary );
     }
 
     public void setF2Momentary(boolean f2Momentary) {
@@ -799,7 +800,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f2Momentary = f2Momentary;
         sendMomentaryFunctionGroup1();
         if (old != this.f2Momentary)
-        	notifyPropertyChangeListener("F2Momentary", old, this.f2Momentary );
+        	notifyPropertyChangeListener(Throttle.F2Momentary, old, this.f2Momentary );
     }
 
     public void setF3Momentary(boolean f3Momentary) {
@@ -807,7 +808,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f3Momentary = f3Momentary;
         sendMomentaryFunctionGroup1();
         if (old != this.f3Momentary)
-        	notifyPropertyChangeListener("F3Momentary", old, this.f3Momentary );
+        	notifyPropertyChangeListener(Throttle.F3Momentary, old, this.f3Momentary );
     }
 
     public void setF4Momentary(boolean f4Momentary) {
@@ -815,7 +816,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f4Momentary = f4Momentary;
         sendMomentaryFunctionGroup1();
         if (old != this.f4Momentary)
-        	notifyPropertyChangeListener("F4Momentary", old, this.f4Momentary );
+        	notifyPropertyChangeListener(Throttle.F4Momentary, old, this.f4Momentary );
     }
 
     public void setF5Momentary(boolean f5Momentary) {
@@ -823,7 +824,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f5Momentary = f5Momentary;
         sendMomentaryFunctionGroup2();
         if (old != this.f5Momentary)
-        	notifyPropertyChangeListener("F5Momentary", old, this.f5Momentary );
+        	notifyPropertyChangeListener(Throttle.F5Momentary, old, this.f5Momentary );
     }
 
     public void setF6Momentary(boolean f6Momentary) {
@@ -831,7 +832,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f6Momentary = f6Momentary;
         sendMomentaryFunctionGroup2();
         if (old != this.f6Momentary)
-        	notifyPropertyChangeListener("F6Momentary", old, this.f6Momentary );
+        	notifyPropertyChangeListener(Throttle.F6Momentary, old, this.f6Momentary );
     }
 
     public void setF7Momentary(boolean f7Momentary) {
@@ -839,7 +840,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f7Momentary = f7Momentary;
         sendMomentaryFunctionGroup2();
         if (old != this.f7Momentary)
-        	notifyPropertyChangeListener("F7Momentary", old, this.f7Momentary );
+        	notifyPropertyChangeListener(Throttle.F7Momentary, old, this.f7Momentary );
     }
 
     public void setF8Momentary(boolean f8Momentary) {
@@ -847,7 +848,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f8Momentary = f8Momentary;
         sendMomentaryFunctionGroup2();
         if (old != this.f8Momentary)
-        	notifyPropertyChangeListener("F8Momentary", old, this.f8Momentary );
+        	notifyPropertyChangeListener(Throttle.F8Momentary, old, this.f8Momentary );
     }
 
     public void setF9Momentary(boolean f9Momentary) {
@@ -855,7 +856,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f9Momentary = f9Momentary;
         sendMomentaryFunctionGroup3();
         if (old != this.f9Momentary)
-        	notifyPropertyChangeListener("F9Momentary", old, this.f9Momentary );
+        	notifyPropertyChangeListener(Throttle.F9Momentary, old, this.f9Momentary );
     }
 
     public void setF10Momentary(boolean f10Momentary) {
@@ -863,7 +864,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f10Momentary = f10Momentary;
         sendMomentaryFunctionGroup3();
         if (old != this.f10Momentary)
-        	notifyPropertyChangeListener("F10Momentary", old, this.f10Momentary );
+        	notifyPropertyChangeListener(Throttle.F10Momentary, old, this.f10Momentary );
     }
 
     public void setF11Momentary(boolean f11Momentary) {
@@ -871,7 +872,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f11Momentary = f11Momentary;
         sendMomentaryFunctionGroup3();
         if (old != this.f11Momentary)
-        	notifyPropertyChangeListener("F11Momentary", old, this.f11Momentary );
+        	notifyPropertyChangeListener(Throttle.F11Momentary, old, this.f11Momentary );
     }
 
     public void setF12Momentary(boolean f12Momentary) {
@@ -879,7 +880,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f12Momentary = f12Momentary;
         sendMomentaryFunctionGroup3();
         if (old != this.f12Momentary)
-        	notifyPropertyChangeListener("F12Momentary", old, this.f12Momentary );
+        	notifyPropertyChangeListener(Throttle.F12Momentary, old, this.f12Momentary );
     }
 
     public void setF13Momentary(boolean f13Momentary) {
@@ -887,7 +888,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f13Momentary = f13Momentary;
         sendMomentaryFunctionGroup4();
         if (old != this.f13Momentary)
-        	notifyPropertyChangeListener("F13Momentary", old, this.f13Momentary );
+        	notifyPropertyChangeListener(Throttle.F13Momentary, old, this.f13Momentary );
     }
 
     public void setF14Momentary(boolean f14Momentary) {
@@ -895,7 +896,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f14Momentary = f14Momentary;
         sendMomentaryFunctionGroup4();
         if (old != this.f14Momentary)
-        	notifyPropertyChangeListener("F14Momentary", old, this.f14Momentary );
+        	notifyPropertyChangeListener(Throttle.F14Momentary, old, this.f14Momentary );
     }
 
     public void setF15Momentary(boolean f15Momentary) {
@@ -903,7 +904,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f15Momentary = f15Momentary;
         sendMomentaryFunctionGroup4();
         if (old != this.f15Momentary)
-        	notifyPropertyChangeListener("F15Momentary", old, this.f15Momentary );
+        	notifyPropertyChangeListener(Throttle.F15Momentary, old, this.f15Momentary );
     }
 
     public void setF16Momentary(boolean f16Momentary) {
@@ -911,7 +912,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f16Momentary = f16Momentary;
         sendMomentaryFunctionGroup4();
         if (old != this.f16Momentary)
-        	notifyPropertyChangeListener("F16Momentary", old, this.f16Momentary );
+        	notifyPropertyChangeListener(Throttle.F16Momentary, old, this.f16Momentary );
     }
 
     public void setF17Momentary(boolean f17Momentary) {
@@ -919,7 +920,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f17Momentary = f17Momentary;
         sendMomentaryFunctionGroup4();
         if (old != this.f17Momentary)
-        	notifyPropertyChangeListener("F17Momentary", old, this.f17Momentary );
+        	notifyPropertyChangeListener(Throttle.F17Momentary, old, this.f17Momentary );
     }
 
     public void setF18Momentary(boolean f18Momentary) {
@@ -927,7 +928,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f18Momentary = f18Momentary;
         sendMomentaryFunctionGroup4();
         if (old != this.f18Momentary)
-        	notifyPropertyChangeListener("F18Momentary", old, this.f18Momentary );
+        	notifyPropertyChangeListener(Throttle.F18Momentary, old, this.f18Momentary );
     }
 
     public void setF19Momentary(boolean f19Momentary) {
@@ -935,7 +936,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f19Momentary = f19Momentary;
         sendMomentaryFunctionGroup4();
         if (old != this.f19Momentary)
-        	notifyPropertyChangeListener("F19Momentary", old, this.f19Momentary );
+        	notifyPropertyChangeListener(Throttle.F19Momentary, old, this.f19Momentary );
     }
 
     public void setF20Momentary(boolean f20Momentary) {
@@ -943,7 +944,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f20Momentary = f20Momentary;
         sendMomentaryFunctionGroup4();
         if (old != this.f20Momentary)
-        	notifyPropertyChangeListener("F20Momentary", old, this.f20Momentary );
+        	notifyPropertyChangeListener(Throttle.F20Momentary, old, this.f20Momentary );
     }
 
     public void setF21Momentary(boolean f21Momentary) {
@@ -951,7 +952,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f21Momentary = f21Momentary;
         sendMomentaryFunctionGroup5();
         if (old != this.f21Momentary)
-        	notifyPropertyChangeListener("F21Momentary", old, this.f21Momentary );
+        	notifyPropertyChangeListener(Throttle.F21Momentary, old, this.f21Momentary );
     }
 
     public void setF22Momentary(boolean f22Momentary) {
@@ -959,7 +960,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f22Momentary = f22Momentary;
         sendMomentaryFunctionGroup5();
         if (old != this.f22Momentary)
-        	notifyPropertyChangeListener("F22Momentary", old, this.f22Momentary );
+        	notifyPropertyChangeListener(Throttle.F22Momentary, old, this.f22Momentary );
     }
 
     public void setF23Momentary(boolean f23Momentary) {
@@ -967,7 +968,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f23Momentary = f23Momentary;
         sendMomentaryFunctionGroup5();
         if (old != this.f23Momentary)
-        	notifyPropertyChangeListener("F23Momentary", old, this.f23Momentary );
+        	notifyPropertyChangeListener(Throttle.F23Momentary, old, this.f23Momentary );
     }
 
     public void setF24Momentary(boolean f24Momentary) {
@@ -975,7 +976,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f24Momentary = f24Momentary;
         sendMomentaryFunctionGroup5();
         if (old != this.f24Momentary)
-        	notifyPropertyChangeListener("F24Momentary", old, this.f24Momentary );
+        	notifyPropertyChangeListener(Throttle.F24Momentary, old, this.f24Momentary );
     }
 
     public void setF25Momentary(boolean f25Momentary) {
@@ -983,7 +984,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f25Momentary = f25Momentary;
         sendMomentaryFunctionGroup5();
         if (old != this.f25Momentary)
-        	notifyPropertyChangeListener("F25Momentary", old, this.f25Momentary );
+        	notifyPropertyChangeListener(Throttle.F25Momentary, old, this.f25Momentary );
     }
 
     public void setF26Momentary(boolean f26Momentary) {
@@ -991,7 +992,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f26Momentary = f26Momentary;
         sendMomentaryFunctionGroup5();
         if (old != this.f26Momentary)
-        	notifyPropertyChangeListener("F26Momentary", old, this.f26Momentary );
+        	notifyPropertyChangeListener(Throttle.F26Momentary, old, this.f26Momentary );
     }
 
     public void setF27Momentary(boolean f27Momentary) {
@@ -999,7 +1000,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f27Momentary = f27Momentary;
         sendMomentaryFunctionGroup5();
         if (old != this.f27Momentary)
-        	notifyPropertyChangeListener("F27Momentary", old, this.f27Momentary );
+        	notifyPropertyChangeListener(Throttle.F27Momentary, old, this.f27Momentary );
     }
 
     public void setF28Momentary(boolean f28Momentary) {
@@ -1007,7 +1008,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         this.f28Momentary = f28Momentary;
         sendMomentaryFunctionGroup5();
         if (old != this.f28Momentary)
-        	notifyPropertyChangeListener("F28Momentary", old, this.f28Momentary );
+        	notifyPropertyChangeListener(Throttle.F28Momentary, old, this.f28Momentary );
     }
 
     /**

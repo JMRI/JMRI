@@ -34,6 +34,71 @@ import java.util.Vector;
  */
 public interface Throttle {
 
+    /**
+     * Constants to represent the functions F0 through F28.
+     */
+    public static final String F0 = "F0"; // NOI18N
+    public static final String F1 = "F1"; // NOI18N
+    public static final String F2 = "F2"; // NOI18N
+    public static final String F3 = "F3"; // NOI18N
+    public static final String F4 = "F4"; // NOI18N
+    public static final String F5 = "F5"; // NOI18N
+    public static final String F6 = "F6"; // NOI18N
+    public static final String F7 = "F7"; // NOI18N
+    public static final String F8 = "F8"; // NOI18N
+    public static final String F9 = "F9"; // NOI18N
+    public static final String F10 = "F10"; // NOI18N
+    public static final String F11 = "F11"; // NOI18N
+    public static final String F12 = "F12"; // NOI18N
+    public static final String F13 = "F13"; // NOI18N
+    public static final String F14 = "F14"; // NOI18N
+    public static final String F15 = "F15"; // NOI18N
+    public static final String F16 = "F16"; // NOI18N
+    public static final String F17 = "F17"; // NOI18N
+    public static final String F18 = "F18"; // NOI18N
+    public static final String F19 = "F19"; // NOI18N
+    public static final String F20 = "F20"; // NOI18N
+    public static final String F21 = "F21"; // NOI18N
+    public static final String F22 = "F22"; // NOI18N
+    public static final String F23 = "F23"; // NOI18N
+    public static final String F24 = "F24"; // NOI18N
+    public static final String F25 = "F25"; // NOI18N
+    public static final String F26 = "F26"; // NOI18N
+    public static final String F27 = "F27"; // NOI18N
+    public static final String F28 = "F28"; // NOI18N
+    /**
+     * Constants to represent the functions F0 through F28.
+     */
+    public static final String F0Momentary = "F0Momentary"; // NOI18N
+    public static final String F1Momentary = "F1Momentary"; // NOI18N
+    public static final String F2Momentary = "F2Momentary"; // NOI18N
+    public static final String F3Momentary = "F3Momentary"; // NOI18N
+    public static final String F4Momentary = "F4Momentary"; // NOI18N
+    public static final String F5Momentary = "F5Momentary"; // NOI18N
+    public static final String F6Momentary = "F6Momentary"; // NOI18N
+    public static final String F7Momentary = "F7Momentary"; // NOI18N
+    public static final String F8Momentary = "F8Momentary"; // NOI18N
+    public static final String F9Momentary = "F9Momentary"; // NOI18N
+    public static final String F10Momentary = "F10Momentary"; // NOI18N
+    public static final String F11Momentary = "F11Momentary"; // NOI18N
+    public static final String F12Momentary = "F12Momentary"; // NOI18N
+    public static final String F13Momentary = "F13Momentary"; // NOI18N
+    public static final String F14Momentary = "F14Momentary"; // NOI18N
+    public static final String F15Momentary = "F15Momentary"; // NOI18N
+    public static final String F16Momentary = "F16Momentary"; // NOI18N
+    public static final String F17Momentary = "F17Momentary"; // NOI18N
+    public static final String F18Momentary = "F18Momentary"; // NOI18N
+    public static final String F19Momentary = "F19Momentary"; // NOI18N
+    public static final String F20Momentary = "F20Momentary"; // NOI18N
+    public static final String F21Momentary = "F21Momentary"; // NOI18N
+    public static final String F22Momentary = "F22Momentary"; // NOI18N
+    public static final String F23Momentary = "F23Momentary"; // NOI18N
+    public static final String F24Momentary = "F24Momentary"; // NOI18N
+    public static final String F25Momentary = "F25Momentary"; // NOI18N
+    public static final String F26Momentary = "F26Momentary"; // NOI18N
+    public static final String F27Momentary = "F27Momentary"; // NOI18N
+    public static final String F28Momentary = "F28Momentary"; // NOI18N
+    
     /** Speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
      * This is an bound property.
      */

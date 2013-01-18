@@ -6,6 +6,7 @@ import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
 import java.util.concurrent.LinkedBlockingQueue;
+import jmri.Throttle;
 
 /**
  * An implementation of DccThrottle with code specific to a
@@ -446,7 +447,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                     /* the address is in bytes 3 and 4*/
                     if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
                         if(isAvailable){
-			   //Set the Is available flag to "False"
+			   //Set the Is available flag to Throttle.False
                            log.info("Loco " +getDccAddress() + " In use by another device");
                            setIsAvailable(false);
                            // popup a message box that will trigger a status request
@@ -598,7 +599,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                 if(l.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
                     /* the address is in bytes 3 and 4*/
                     if(getDccAddressHigh()==l.getElement(2) && getDccAddressLow()==l.getElement(3)) {
-                        //Set the Is available flag to "False"
+                        //Set the Is available flag to Throttle.False
                         log.info("Loco "+ getDccAddress() + " In use by another device");
                         setIsAvailable(false);
                     }
@@ -807,51 +808,51 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	if(log.isDebugEnabled()) log.debug("Parsing Function F0-F12 status, function bytes: " +b3 +" and " +b4);
 	/* data byte 3 is the status of F0 F4 F3 F2 F1 */
 	if((b3 & 0x10)==0x10 && getF0()==false) {
-            notifyPropertyChangeListener("F0",
+            notifyPropertyChangeListener(Throttle.F0,
                                          Boolean.valueOf(this.f0),
                                          Boolean.valueOf(this.f0 = true));
 	} else if ((b3 &0x10)==0x00 && getF0()==true) {
-            notifyPropertyChangeListener("F0",
+            notifyPropertyChangeListener(Throttle.F0,
                                          Boolean.valueOf(this.f0),
                                          Boolean.valueOf(this.f0 = false));
 	}
         
 	if((b3 & 0x01)==0x01 && getF1()==false) {
-            notifyPropertyChangeListener("F1",
+            notifyPropertyChangeListener(Throttle.F1,
                                          Boolean.valueOf(this.f1),
                                          Boolean.valueOf(this.f1 = true));
 	} else if ((b3 &0x01)==0x00 && getF1()==true) {
-            notifyPropertyChangeListener("F1",
+            notifyPropertyChangeListener(Throttle.F1,
                                          Boolean.valueOf(this.f1),
                                          Boolean.valueOf(this.f1 = false));
 	}
         
 	if((b3 & 0x02)==0x02 && getF2()==false) {
-            notifyPropertyChangeListener("F2",
+            notifyPropertyChangeListener(Throttle.F2,
                                          Boolean.valueOf(this.f2),
                                          Boolean.valueOf(this.f2 = true));
 	} else if ((b3 &0x02)==0x00 && getF2()==true) {
-            notifyPropertyChangeListener("F2",
+            notifyPropertyChangeListener(Throttle.F2,
                                          Boolean.valueOf(this.f2),
                                          Boolean.valueOf(this.f2 = false));
 	}
 	
 	if((b3 & 0x04)==0x04 && getF3()==false) {
-            notifyPropertyChangeListener("F3",
+            notifyPropertyChangeListener(Throttle.F3,
                                          Boolean.valueOf(this.f3),
                                          Boolean.valueOf(this.f3 = true));
 	} else if ((b3 &0x04)==0x00 && getF3()==true) {
-            notifyPropertyChangeListener("F3",
+            notifyPropertyChangeListener(Throttle.F3,
                                          Boolean.valueOf(this.f3),
                                          Boolean.valueOf(this.f3 = false));
 	}
         
 	if((b3 & 0x08)==0x08 && getF4()==false) {
-            notifyPropertyChangeListener("F4",
+            notifyPropertyChangeListener(Throttle.F4,
                                          Boolean.valueOf(this.f4),
                                          Boolean.valueOf(this.f4 = true));
 	} else if ((b3 &0x08)==0x00 && getF4()==true) {
-            notifyPropertyChangeListener("F4",
+            notifyPropertyChangeListener(Throttle.F4,
                                          Boolean.valueOf(this.f4),
                                          Boolean.valueOf(this.f4 = false));
 	}
@@ -859,81 +860,81 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* data byte 4 is the status of F12 F11 F10 F9 F8 F7 F6 F5 */
         
 	if((b4 & 0x01)==0x01 && getF5()==false)	{
-            notifyPropertyChangeListener("F5",
+            notifyPropertyChangeListener(Throttle.F5,
                                          Boolean.valueOf(this.f5),
                                          Boolean.valueOf(this.f5 = true));
 	} else if ((b4 &0x01)==0x00 && getF5()==true) {
-            notifyPropertyChangeListener("F5",
+            notifyPropertyChangeListener(Throttle.F5,
                                          Boolean.valueOf(this.f5),
                                          Boolean.valueOf(this.f5 = false));
 	}
         
 	if((b4 & 0x02)==0x02 && getF6()==false) {
-            notifyPropertyChangeListener("F6",
+            notifyPropertyChangeListener(Throttle.F6,
                                          Boolean.valueOf(this.f6),
                                          Boolean.valueOf(this.f6 = true));
 	} else if ((b4 &0x02)==0x00 && getF6()==true) {
-            notifyPropertyChangeListener("F6",
+            notifyPropertyChangeListener(Throttle.F6,
                                          Boolean.valueOf(this.f6),
                                          Boolean.valueOf(this.f6 = false));
 	} 
         
 	if((b4 & 0x04)==0x04 && getF7()==false) {
-            notifyPropertyChangeListener("F7",
+            notifyPropertyChangeListener(Throttle.F7,
                                          Boolean.valueOf(this.f7),
                                          Boolean.valueOf(this.f7 = true));
 	} else if ((b4 &0x04)==0x00 && getF7()==true) {
-            notifyPropertyChangeListener("F7",
+            notifyPropertyChangeListener(Throttle.F7,
                                          Boolean.valueOf(this.f7),
                                          Boolean.valueOf(this.f7 = false));
 	}
         
 	if((b4 & 0x08)==0x08 && getF8()==false) {
-            notifyPropertyChangeListener("F8",
+            notifyPropertyChangeListener(Throttle.F8,
                                          Boolean.valueOf(this.f8),
                                          Boolean.valueOf(this.f8 = true));
 	} else if ((b4 &0x08)==0x00 && getF8()==true) {
-            notifyPropertyChangeListener("F8",
+            notifyPropertyChangeListener(Throttle.F8,
                                          Boolean.valueOf(this.f8),
                                          Boolean.valueOf(this.f8 = false));
 	}
         
 	if((b4 & 0x10)==0x10 && getF9()==false) {
-            notifyPropertyChangeListener("F9",
+            notifyPropertyChangeListener(Throttle.F9,
                                          Boolean.valueOf(this.f9),
                                          Boolean.valueOf(this.f9 = true));
 	} else if ((b4 &0x10)==0x00 && getF9()==true) {
-            notifyPropertyChangeListener("F9",
+            notifyPropertyChangeListener(Throttle.F9,
                                          Boolean.valueOf(this.f9),
                                          Boolean.valueOf(this.f9 = false));
 	}
         
 	if((b4 & 0x20)==0x20 && getF10()==false) {
-            notifyPropertyChangeListener("F10",
+            notifyPropertyChangeListener(Throttle.F10,
                                          Boolean.valueOf(this.f10),
                                          Boolean.valueOf(this.f10 = true));
 	} else if ((b4 &0x20)==0x00 && getF10()==true) {
-            notifyPropertyChangeListener("F10",
+            notifyPropertyChangeListener(Throttle.F10,
                                          Boolean.valueOf(this.f10),
                                          Boolean.valueOf(this.f10 = false));
 	}
         
 	if((b4 & 0x40)==0x40 && getF11()==false) {
-            notifyPropertyChangeListener("F11",
+            notifyPropertyChangeListener(Throttle.F11,
                                          Boolean.valueOf(this.f11),
                                          Boolean.valueOf(this.f11 = true));
 	} else if ((b4 &0x40)==0x00 && getF11()==true) {
-            notifyPropertyChangeListener("F11",
+            notifyPropertyChangeListener(Throttle.F11,
                                          Boolean.valueOf(this.f11),
                                          Boolean.valueOf(this.f11 = false));
 	}
         
 	if((b4 & 0x80)==0x80 && getF12()==false) {
-            notifyPropertyChangeListener("F12",
+            notifyPropertyChangeListener(Throttle.F12,
                                          Boolean.valueOf(this.f12),
                                          Boolean.valueOf(this.f12 = true));
 	} else if ((b4 &0x80)==0x00 && getF12()==true) {
-            notifyPropertyChangeListener("F12",
+            notifyPropertyChangeListener(Throttle.F12,
                                          Boolean.valueOf(this.f12),
                                          Boolean.valueOf(this.f12 = false));
 	}
@@ -944,162 +945,162 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	if(log.isDebugEnabled()) log.debug("Parsing Function F13-F28 status, function bytes: " +b3 +" and " +b4);
 	/* data byte 3 is the status of F20 F19 F18 F17 F16 F15 F14 F13 */
 	if((b3 & 0x01)==0x01 && getF13()==false) {
-            notifyPropertyChangeListener("F13",
+            notifyPropertyChangeListener(Throttle.F13,
                                          Boolean.valueOf(this.f13),
                                          Boolean.valueOf(this.f13 = true));
 	} else if ((b3 &0x01)==0x00 && getF13()==true) {
-            notifyPropertyChangeListener("F13",
+            notifyPropertyChangeListener(Throttle.F13,
                                          Boolean.valueOf(this.f13),
                                          Boolean.valueOf(this.f13 = false));
 	}
         
 	if((b3 & 0x02)==0x02 && getF14()==false) {
-            notifyPropertyChangeListener("F14",
+            notifyPropertyChangeListener(Throttle.F14,
                                          Boolean.valueOf(this.f14),
                                          Boolean.valueOf(this.f14 = true));
 	} else if ((b3 &0x02)==0x00 && getF14()==true) {
-            notifyPropertyChangeListener("F14",
+            notifyPropertyChangeListener(Throttle.F14,
                                          Boolean.valueOf(this.f14),
                                          Boolean.valueOf(this.f14 = false));
 	}
 	
 	if((b3 & 0x04)==0x04 && getF15()==false) {
-            notifyPropertyChangeListener("F15",
+            notifyPropertyChangeListener(Throttle.F15,
                                          Boolean.valueOf(this.f15),
                                          Boolean.valueOf(this.f15 = true));
 	} else if ((b3 &0x04)==0x00 && getF15()==true) {
-            notifyPropertyChangeListener("F15",
+            notifyPropertyChangeListener(Throttle.F15,
                                          Boolean.valueOf(this.f15),
                                          Boolean.valueOf(this.f15 = false));
 	}
         
 	if((b3 & 0x08)==0x08 && getF16()==false) {
-            notifyPropertyChangeListener("F16",
+            notifyPropertyChangeListener(Throttle.F16,
                                          Boolean.valueOf(this.f16),
                                          Boolean.valueOf(this.f16 = true));
 	} else if ((b3 &0x08)==0x00 && getF16()==true) {
-            notifyPropertyChangeListener("F16",
+            notifyPropertyChangeListener(Throttle.F16,
                                          Boolean.valueOf(this.f16),
                                          Boolean.valueOf(this.f16 = false));
 	}
 
 	if((b3 & 0x10)==0x10 && getF17()==false) {
-            notifyPropertyChangeListener("F17",
+            notifyPropertyChangeListener(Throttle.F17,
                                          Boolean.valueOf(this.f17),
                                          Boolean.valueOf(this.f17 = true));
 	} else if ((b3 &0x10)==0x00 && getF17()==true) {
-            notifyPropertyChangeListener("F17",
+            notifyPropertyChangeListener(Throttle.F17,
                                          Boolean.valueOf(this.f17),
                                          Boolean.valueOf(this.f17 = false));
 	}
         
 	if((b3 & 0x20)==0x20 && getF18()==false) {
-            notifyPropertyChangeListener("F18",
+            notifyPropertyChangeListener(Throttle.F18,
                                          Boolean.valueOf(this.f18),
                                          Boolean.valueOf(this.f18 = true));
 	} else if ((b3 &0x20)==0x00 && getF18()==true) {
-            notifyPropertyChangeListener("F18",
+            notifyPropertyChangeListener(Throttle.F18,
                                          Boolean.valueOf(this.f18),
                                          Boolean.valueOf(this.f18 = false));
 	}
 	
         if((b3 & 0x40)==0x40 && getF19()==false) {
-            notifyPropertyChangeListener("F19",
+            notifyPropertyChangeListener(Throttle.F19,
                                          Boolean.valueOf(this.f19),
                                          Boolean.valueOf(this.f19 = true));
 	} else if ((b3 &0x40)==0x00 && getF19()==true) {
-            notifyPropertyChangeListener("F19",
+            notifyPropertyChangeListener(Throttle.F19,
                                          Boolean.valueOf(this.f19),
                                          Boolean.valueOf(this.f19 = false));
 	}
         
         if((b3 & 0x80)==0x80 && getF20()==false) {
-            notifyPropertyChangeListener("F20",
+            notifyPropertyChangeListener(Throttle.F20,
                                          Boolean.valueOf(this.f20),
                                          Boolean.valueOf(this.f20 = true));
 	} else if ((b3 &0x80)==0x00 && getF20()==true) {
-            notifyPropertyChangeListener("F20",
+            notifyPropertyChangeListener(Throttle.F20,
                                          Boolean.valueOf(this.f20),
                                          Boolean.valueOf(this.f20 = false));
 	}
 	/* data byte 4 is the status of F28 F27 F26 F25 F24 F23 F22 F21 */
         
 	if((b4 & 0x01)==0x01 && getF21()==false)	{
-            notifyPropertyChangeListener("F21",
+            notifyPropertyChangeListener(Throttle.F21,
                                          Boolean.valueOf(this.f21),
                                          Boolean.valueOf(this.f21 = true));
 	} else if ((b4 &0x01)==0x00 && getF21()==true) {
-            notifyPropertyChangeListener("F21",
+            notifyPropertyChangeListener(Throttle.F21,
                                          Boolean.valueOf(this.f21),
                                          Boolean.valueOf(this.f21 = false));
 	}
         
 	if((b4 & 0x02)==0x02 && getF22()==false) {
-            notifyPropertyChangeListener("F22",
+            notifyPropertyChangeListener(Throttle.F22,
                                          Boolean.valueOf(this.f22),
                                          Boolean.valueOf(this.f22 = true));
 	} else if ((b4 &0x02)==0x00 && getF22()==true) {
-            notifyPropertyChangeListener("F22",
+            notifyPropertyChangeListener(Throttle.F22,
                                          Boolean.valueOf(this.f22),
                                          Boolean.valueOf(this.f22 = false));
 	} 
         
 	if((b4 & 0x04)==0x04 && getF23()==false) {
-            notifyPropertyChangeListener("F23",
+            notifyPropertyChangeListener(Throttle.F23,
                                          Boolean.valueOf(this.f23),
                                          Boolean.valueOf(this.f23 = true));
 	} else if ((b4 &0x04)==0x00 && getF23()==true) {
-            notifyPropertyChangeListener("F23",
+            notifyPropertyChangeListener(Throttle.F23,
                                          Boolean.valueOf(this.f23),
                                          Boolean.valueOf(this.f23 = false));
 	}
         
 	if((b4 & 0x08)==0x08 && getF24()==false) {
-            notifyPropertyChangeListener("F24",
+            notifyPropertyChangeListener(Throttle.F24,
                                          Boolean.valueOf(this.f24),
                                          Boolean.valueOf(this.f24 = true));
 	} else if ((b4 &0x08)==0x00 && getF24()==true) {
-            notifyPropertyChangeListener("F24",
+            notifyPropertyChangeListener(Throttle.F24,
                                          Boolean.valueOf(this.f24),
                                          Boolean.valueOf(this.f24 = false));
 	}
         
 	if((b4 & 0x10)==0x10 && getF25()==false) {
-            notifyPropertyChangeListener("F25",
+            notifyPropertyChangeListener(Throttle.F25,
                                          Boolean.valueOf(this.f25),
                                          Boolean.valueOf(this.f25 = true));
 	} else if ((b4 &0x10)==0x00 && getF25()==true) {
-            notifyPropertyChangeListener("F25",
+            notifyPropertyChangeListener(Throttle.F25,
                                          Boolean.valueOf(this.f25),
                                          Boolean.valueOf(this.f25 = false));
 	}
         
 	if((b4 & 0x20)==0x20 && getF26()==false) {
-            notifyPropertyChangeListener("F26",
+            notifyPropertyChangeListener(Throttle.F26,
                                          Boolean.valueOf(this.f26),
                                          Boolean.valueOf(this.f26 = true));
 	} else if ((b4 &0x20)==0x00 && getF26()==true) {
-            notifyPropertyChangeListener("F26",
+            notifyPropertyChangeListener(Throttle.F26,
                                          Boolean.valueOf(this.f26),
                                          Boolean.valueOf(this.f26 = false));
 	}
         
 	if((b4 & 0x40)==0x40 && getF27()==false) {
-            notifyPropertyChangeListener("F27",
+            notifyPropertyChangeListener(Throttle.F27,
                                          Boolean.valueOf(this.f27),
                                          Boolean.valueOf(this.f27 = true));
 	} else if ((b4 &0x40)==0x00 && getF27()==true) {
-            notifyPropertyChangeListener("F27",
+            notifyPropertyChangeListener(Throttle.F27,
                                          Boolean.valueOf(this.f27),
                                          Boolean.valueOf(this.f27 = false));
 	}
         
 	if((b4 & 0x80)==0x80 && getF28()==false) {
-            notifyPropertyChangeListener("F28",
+            notifyPropertyChangeListener(Throttle.F28,
                                          Boolean.valueOf(this.f28),
                                          Boolean.valueOf(this.f28 = true));
 	} else if ((b4 &0x80)==0x00 && getF28()==true) {
-            notifyPropertyChangeListener("F28",
+            notifyPropertyChangeListener(Throttle.F28,
                                          Boolean.valueOf(this.f28),
                                          Boolean.valueOf(this.f28 = false));
 	}
@@ -1110,51 +1111,51 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	if(log.isDebugEnabled()) log.debug("Parsing Function Momentary status, function bytes: " +b3 +" and " +b4);
 	/* data byte 3 is the momentary status of F0 F4 F3 F2 F1 */
 	if((b3 & 0x10)==0x10 && this.f0Momentary==false) {
-            notifyPropertyChangeListener("F0Momentary",
+            notifyPropertyChangeListener(Throttle.F0Momentary,
                                          Boolean.valueOf(this.f0Momentary),
                                          Boolean.valueOf(this.f0Momentary = true));
 	} else if ((b3 &0x10)==0x00 && this.f0Momentary==true) {
-            notifyPropertyChangeListener("F0Momentary",
+            notifyPropertyChangeListener(Throttle.F0Momentary,
                                          Boolean.valueOf(this.f0Momentary),
                                          Boolean.valueOf(this.f0Momentary = false));
 	}
         
 	if((b3 & 0x01)==0x01 && this.f1Momentary==false) {
-            notifyPropertyChangeListener("F1Momentary",
+            notifyPropertyChangeListener(Throttle.F1Momentary,
                                          Boolean.valueOf(this.f1Momentary),
                                          Boolean.valueOf(this.f1Momentary = true));
 	} else if ((b3 &0x01)==0x00 && this.f1Momentary==true) {
-            notifyPropertyChangeListener("F1Momentary",
+            notifyPropertyChangeListener(Throttle.F1Momentary,
                                          Boolean.valueOf(this.f1Momentary),
                                          Boolean.valueOf(this.f1Momentary = false));
 	}
         
 	if((b3 & 0x02)==0x02 && this.f2Momentary==false) {
-            notifyPropertyChangeListener("F2Momentary",
+            notifyPropertyChangeListener(Throttle.F2Momentary,
                                          Boolean.valueOf(this.f2Momentary),
                                          Boolean.valueOf(this.f2Momentary = true));
 	} else if ((b3 &0x02)==0x00 && this.f2Momentary==true) {
-            notifyPropertyChangeListener("F2Momentary",
+            notifyPropertyChangeListener(Throttle.F2Momentary,
                                          Boolean.valueOf(this.f2Momentary),
                                          Boolean.valueOf(this.f2Momentary = false));
 	}
 	
 	if((b3 & 0x04)==0x04 && this.f3Momentary==false) {
-            notifyPropertyChangeListener("F3Momentary",
+            notifyPropertyChangeListener(Throttle.F3Momentary,
                                          Boolean.valueOf(this.f3Momentary),
                                          Boolean.valueOf(this.f3Momentary = true));
 	} else if ((b3 &0x04)==0x00 && this.f3Momentary==true) {
-            notifyPropertyChangeListener("F3Momentary",
+            notifyPropertyChangeListener(Throttle.F3Momentary,
                                          Boolean.valueOf(this.f3Momentary),
                                          Boolean.valueOf(this.f3Momentary = false));
 	}
         
 	if((b3 & 0x08)==0x08 && this.f4Momentary==false) {
-            notifyPropertyChangeListener("F4Momentary",
+            notifyPropertyChangeListener(Throttle.F4Momentary,
                                          Boolean.valueOf(this.f4Momentary),
                                          Boolean.valueOf(this.f4Momentary = true));
 	} else if ((b3 &0x08)==0x00 && this.f4Momentary==true) {
-            notifyPropertyChangeListener("F4Momentary",
+            notifyPropertyChangeListener(Throttle.F4Momentary,
                                          Boolean.valueOf(this.f4Momentary),
                                          Boolean.valueOf(this.f4Momentary = false));
 	}
@@ -1162,81 +1163,81 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* data byte 4 is the momentary status of F12 F11 F10 F9 F8 F7 F6 F5 */
         
 	if((b4 & 0x01)==0x01 && this.f5Momentary==false)	{
-            notifyPropertyChangeListener("F5Momentary",
+            notifyPropertyChangeListener(Throttle.F5Momentary,
                                          Boolean.valueOf(this.f5Momentary),
                                          Boolean.valueOf(this.f5Momentary = true));
 	} else if ((b4 &0x01)==0x00 && this.f5Momentary==true) {
-            notifyPropertyChangeListener("F5Momentary",
+            notifyPropertyChangeListener(Throttle.F5Momentary,
                                          Boolean.valueOf(this.f5Momentary),
                                          Boolean.valueOf(this.f5Momentary = false));
 	}
         
 	if((b4 & 0x02)==0x02 && this.f6Momentary==false) {
-            notifyPropertyChangeListener("F6Momentary",
+            notifyPropertyChangeListener(Throttle.F6Momentary,
                                          Boolean.valueOf(this.f6Momentary),
                                          Boolean.valueOf(this.f6Momentary = true));
 	} else if ((b4 &0x02)==0x00 && this.f6Momentary==true) {
-            notifyPropertyChangeListener("F6Momentary",
+            notifyPropertyChangeListener(Throttle.F6Momentary,
                                          Boolean.valueOf(this.f6Momentary),
                                          Boolean.valueOf(this.f6Momentary = false));
 	} 
         
 	if((b4 & 0x04)==0x04 && this.f7Momentary==false) {
-            notifyPropertyChangeListener("F7Momentary",
+            notifyPropertyChangeListener(Throttle.F7Momentary,
                                          Boolean.valueOf(this.f7Momentary),
                                          Boolean.valueOf(this.f7Momentary = true));
 	} else if ((b4 &0x04)==0x00 && this.f7Momentary==true) {
-            notifyPropertyChangeListener("F7Momentary",
+            notifyPropertyChangeListener(Throttle.F7Momentary,
                                          Boolean.valueOf(this.f7Momentary),
                                          Boolean.valueOf(this.f7Momentary = false));
 	}
         
 	if((b4 & 0x08)==0x08 && this.f8Momentary==false) {
-            notifyPropertyChangeListener("F8Momentary",
+            notifyPropertyChangeListener(Throttle.F8Momentary,
                                          Boolean.valueOf(this.f8Momentary),
                                          Boolean.valueOf(this.f8Momentary = true));
 	} else if ((b4 &0x08)==0x00 && this.f8Momentary==true) {
-            notifyPropertyChangeListener("F8Momentary",
+            notifyPropertyChangeListener(Throttle.F8Momentary,
                                          Boolean.valueOf(this.f8Momentary),
                                          Boolean.valueOf(this.f8Momentary = false));
 	}
         
 	if((b4 & 0x10)==0x10 && this.f9Momentary==false) {
-            notifyPropertyChangeListener("F9Momentary",
+            notifyPropertyChangeListener(Throttle.F9Momentary,
                                          Boolean.valueOf(this.f9Momentary),
                                          Boolean.valueOf(this.f9Momentary = true));
 	} else if ((b4 &0x10)==0x00 && this.f9Momentary==true) {
-            notifyPropertyChangeListener("F9Momentary",
+            notifyPropertyChangeListener(Throttle.F9Momentary,
                                          Boolean.valueOf(this.f9Momentary),
                                          Boolean.valueOf(this.f9Momentary = false));
 	}
         
 	if((b4 & 0x20)==0x20 && this.f10Momentary==false) {
-            notifyPropertyChangeListener("F10Momentary",
+            notifyPropertyChangeListener(Throttle.F10Momentary,
                                          Boolean.valueOf(this.f10Momentary),
                                          Boolean.valueOf(this.f10Momentary = true));
 	} else if ((b4 &0x20)==0x00 && this.f10Momentary==true) {
-            notifyPropertyChangeListener("F10Momentary",
+            notifyPropertyChangeListener(Throttle.F10Momentary,
                                          Boolean.valueOf(this.f10Momentary),
                                          Boolean.valueOf(this.f10Momentary = false));
 	}
         
 	if((b4 & 0x40)==0x40 && this.f11Momentary==false) {
-            notifyPropertyChangeListener("F11Momentary",
+            notifyPropertyChangeListener(Throttle.F11Momentary,
                                          Boolean.valueOf(this.f11Momentary),
                                          Boolean.valueOf(this.f11Momentary = true));
 	} else if ((b4 &0x40)==0x00 && this.f11Momentary==true) {
-            notifyPropertyChangeListener("F11Momentary",
+            notifyPropertyChangeListener(Throttle.F11Momentary,
                                          Boolean.valueOf(this.f11Momentary),
                                          Boolean.valueOf(this.f11Momentary = false));
 	}
         
 	if((b4 & 0x80)==0x80 && this.f12Momentary==false) {
-            notifyPropertyChangeListener("F12Momentary",
+            notifyPropertyChangeListener(Throttle.F12Momentary,
                                          Boolean.valueOf(this.f12Momentary),
                                          Boolean.valueOf(this.f12Momentary = true));
 	} else if ((b4 &0x80)==0x00 && this.f12Momentary==true) {
-            notifyPropertyChangeListener("F12Momentary",
+            notifyPropertyChangeListener(Throttle.F12Momentary,
                                          Boolean.valueOf(this.f12Momentary),
                                          Boolean.valueOf(this.f12Momentary = false));
 	}
@@ -1248,81 +1249,81 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* data byte 3 is the momentary status of F20 F19 F17 F16 F15 F14 F13 */
         
 	if((b3 & 0x01)==0x01 && this.f13Momentary==false) {
-            notifyPropertyChangeListener("F13Momentary",
+            notifyPropertyChangeListener(Throttle.F13Momentary,
                                          Boolean.valueOf(this.f13Momentary),
                                          Boolean.valueOf(this.f13Momentary = true));
 	} else if ((b3 &0x01)==0x00 && this.f13Momentary==true) {
-            notifyPropertyChangeListener("F13Momentary",
+            notifyPropertyChangeListener(Throttle.F13Momentary,
                                          Boolean.valueOf(this.f13Momentary),
                                          Boolean.valueOf(this.f13Momentary = false));
 	}
         
 	if((b3 & 0x02)==0x02 && this.f2Momentary==false) {
-            notifyPropertyChangeListener("F14Momentary",
+            notifyPropertyChangeListener(Throttle.F14Momentary,
                                          Boolean.valueOf(this.f14Momentary),
                                          Boolean.valueOf(this.f14Momentary = true));
 	} else if ((b3 &0x02)==0x00 && this.f14Momentary==true) {
-            notifyPropertyChangeListener("F14Momentary",
+            notifyPropertyChangeListener(Throttle.F14Momentary,
                                          Boolean.valueOf(this.f14Momentary),
                                          Boolean.valueOf(this.f14Momentary = false));
 	}
 	
 	if((b3 & 0x04)==0x04 && this.f15Momentary==false) {
-            notifyPropertyChangeListener("F15Momentary",
+            notifyPropertyChangeListener(Throttle.F15Momentary,
                                          Boolean.valueOf(this.f15Momentary),
                                          Boolean.valueOf(this.f15Momentary = true));
 	} else if ((b3 &0x04)==0x00 && this.f15Momentary==true) {
-            notifyPropertyChangeListener("F15Momentary",
+            notifyPropertyChangeListener(Throttle.F15Momentary,
                                          Boolean.valueOf(this.f15Momentary),
                                          Boolean.valueOf(this.f15Momentary = false));
 	}
         
 	if((b3 & 0x08)==0x08 && this.f16Momentary==false) {
-            notifyPropertyChangeListener("F16Momentary",
+            notifyPropertyChangeListener(Throttle.F16Momentary,
                                          Boolean.valueOf(this.f16Momentary),
                                          Boolean.valueOf(this.f16Momentary = true));
 	} else if ((b3 &0x08)==0x00 && this.f16Momentary==true) {
-            notifyPropertyChangeListener("F16Momentary",
+            notifyPropertyChangeListener(Throttle.F16Momentary,
                                          Boolean.valueOf(this.f16Momentary),
                                          Boolean.valueOf(this.f16Momentary = false));
 	}
 	
         if((b3 & 0x10)==0x10 && this.f17Momentary==false) {
-            notifyPropertyChangeListener("F17Momentary",
+            notifyPropertyChangeListener(Throttle.F17Momentary,
                                          Boolean.valueOf(this.f17Momentary),
                                          Boolean.valueOf(this.f17Momentary = true));
 	} else if ((b3 &0x10)==0x00 && this.f17Momentary==true) {
-            notifyPropertyChangeListener("F17Momentary",
+            notifyPropertyChangeListener(Throttle.F17Momentary,
                                          Boolean.valueOf(this.f17Momentary),
                                          Boolean.valueOf(this.f17Momentary = false));
 	}
 
         if((b3 & 0x20)==0x20 && this.f18Momentary==false) {
-            notifyPropertyChangeListener("F18Momentary",
+            notifyPropertyChangeListener(Throttle.F18Momentary,
                                          Boolean.valueOf(this.f18Momentary),
                                          Boolean.valueOf(this.f18Momentary = true));
 	} else if ((b3 &0x20)==0x00 && this.f18Momentary==true) {
-            notifyPropertyChangeListener("F18Momentary",
+            notifyPropertyChangeListener(Throttle.F18Momentary,
                                          Boolean.valueOf(this.f18Momentary),
                                          Boolean.valueOf(this.f18Momentary = false));
 	}
 
         if((b3 & 0x40)==0x40 && this.f19Momentary==false) {
-            notifyPropertyChangeListener("F19Momentary",
+            notifyPropertyChangeListener(Throttle.F19Momentary,
                                          Boolean.valueOf(this.f19Momentary),
                                          Boolean.valueOf(this.f19Momentary = true));
 	} else if ((b3 &0x40)==0x00 && this.f19Momentary==true) {
-            notifyPropertyChangeListener("F19Momentary",
+            notifyPropertyChangeListener(Throttle.F19Momentary,
                                          Boolean.valueOf(this.f19Momentary),
                                          Boolean.valueOf(this.f19Momentary = false));
 	}
         
         if((b3 & 0x80)==0x80 && this.f20Momentary==false) {
-            notifyPropertyChangeListener("F20Momentary",
+            notifyPropertyChangeListener(Throttle.F20Momentary,
                                          Boolean.valueOf(this.f20Momentary),
                                          Boolean.valueOf(this.f20Momentary = true));
 	} else if ((b3 &0x80)==0x00 && this.f20Momentary==true) {
-            notifyPropertyChangeListener("F20Momentary",
+            notifyPropertyChangeListener(Throttle.F20Momentary,
                                          Boolean.valueOf(this.f20Momentary),
                                          Boolean.valueOf(this.f20Momentary = false));
 	}
@@ -1330,81 +1331,81 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	/* data byte 4 is the momentary status of F28 F27 F26 F25 F24 F23 F22 F21 */
         
 	if((b4 & 0x01)==0x01 && this.f21Momentary==false)	{
-            notifyPropertyChangeListener("F5Momentary",
+            notifyPropertyChangeListener(Throttle.F5Momentary,
                                          Boolean.valueOf(this.f21Momentary),
                                          Boolean.valueOf(this.f21Momentary = true));
 	} else if ((b4 &0x01)==0x00 && this.f21Momentary==true) {
-            notifyPropertyChangeListener("F21Momentary",
+            notifyPropertyChangeListener(Throttle.F21Momentary,
                                          Boolean.valueOf(this.f21Momentary),
                                          Boolean.valueOf(this.f21Momentary = false));
 	}
         
 	if((b4 & 0x02)==0x02 && this.f22Momentary==false) {
-            notifyPropertyChangeListener("F22Momentary",
+            notifyPropertyChangeListener(Throttle.F22Momentary,
                                          Boolean.valueOf(this.f22Momentary),
                                          Boolean.valueOf(this.f22Momentary = true));
 	} else if ((b4 &0x02)==0x00 && this.f22Momentary==true) {
-            notifyPropertyChangeListener("F22Momentary",
+            notifyPropertyChangeListener(Throttle.F22Momentary,
                                          Boolean.valueOf(this.f22Momentary),
                                          Boolean.valueOf(this.f22Momentary = false));
 	} 
         
 	if((b4 & 0x04)==0x04 && this.f23Momentary==false) {
-            notifyPropertyChangeListener("F23Momentary",
+            notifyPropertyChangeListener(Throttle.F23Momentary,
                                          Boolean.valueOf(this.f23Momentary),
                                          Boolean.valueOf(this.f23Momentary = true));
 	} else if ((b4 &0x04)==0x00 && this.f23Momentary==true) {
-            notifyPropertyChangeListener("F23Momentary",
+            notifyPropertyChangeListener(Throttle.F23Momentary,
                                          Boolean.valueOf(this.f23Momentary),
                                          Boolean.valueOf(this.f23Momentary = false));
 	}
         
 	if((b4 & 0x08)==0x08 && this.f24Momentary==false) {
-            notifyPropertyChangeListener("F24Momentary",
+            notifyPropertyChangeListener(Throttle.F24Momentary,
                                          Boolean.valueOf(this.f24Momentary),
                                          Boolean.valueOf(this.f24Momentary = true));
 	} else if ((b4 &0x08)==0x00 && this.f24Momentary==true) {
-            notifyPropertyChangeListener("F24Momentary",
+            notifyPropertyChangeListener(Throttle.F24Momentary,
                                          Boolean.valueOf(this.f24Momentary),
                                          Boolean.valueOf(this.f24Momentary = false));
 	}
         
 	if((b4 & 0x10)==0x10 && this.f25Momentary==false) {
-            notifyPropertyChangeListener("F25Momentary",
+            notifyPropertyChangeListener(Throttle.F25Momentary,
                                          Boolean.valueOf(this.f25Momentary),
                                          Boolean.valueOf(this.f25Momentary = true));
 	} else if ((b4 &0x10)==0x00 && this.f25Momentary==true) {
-            notifyPropertyChangeListener("F25Momentary",
+            notifyPropertyChangeListener(Throttle.F25Momentary,
                                          Boolean.valueOf(this.f25Momentary),
                                          Boolean.valueOf(this.f25Momentary = false));
 	}
         
 	if((b4 & 0x20)==0x20 && this.f26Momentary==false) {
-            notifyPropertyChangeListener("F26Momentary",
+            notifyPropertyChangeListener(Throttle.F26Momentary,
                                          Boolean.valueOf(this.f26Momentary),
                                          Boolean.valueOf(this.f26Momentary = true));
 	} else if ((b4 &0x20)==0x00 && this.f26Momentary==true) {
-            notifyPropertyChangeListener("F26Momentary",
+            notifyPropertyChangeListener(Throttle.F26Momentary,
                                          Boolean.valueOf(this.f26Momentary),
                                          Boolean.valueOf(this.f26Momentary = false));
 	}
         
 	if((b4 & 0x40)==0x40 && this.f27Momentary==false) {
-            notifyPropertyChangeListener("F27Momentary",
+            notifyPropertyChangeListener(Throttle.F27Momentary,
                                          Boolean.valueOf(this.f27Momentary),
                                          Boolean.valueOf(this.f27Momentary = true));
 	} else if ((b4 &0x40)==0x00 && this.f27Momentary==true) {
-            notifyPropertyChangeListener("F27Momentary",
+            notifyPropertyChangeListener(Throttle.F27Momentary,
                                          Boolean.valueOf(this.f27Momentary),
                                          Boolean.valueOf(this.f27Momentary = false));
 	}
         
 	if((b4 & 0x80)==0x80 && this.f28Momentary==false) {
-            notifyPropertyChangeListener("F28Momentary",
+            notifyPropertyChangeListener(Throttle.F28Momentary,
                                          Boolean.valueOf(this.f28Momentary),
                                          Boolean.valueOf(this.f28Momentary = true));
 	} else if ((b4 &0x80)==0x00 && this.f28Momentary==true) {
-            notifyPropertyChangeListener("F28Momentary",
+            notifyPropertyChangeListener(Throttle.F28Momentary,
                                          Boolean.valueOf(this.f28Momentary),
                                          Boolean.valueOf(this.f28Momentary = false));
 	}

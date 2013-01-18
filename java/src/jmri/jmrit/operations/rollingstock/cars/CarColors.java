@@ -135,7 +135,6 @@ public class CarColors {
 	 * Create an XML element to represent this Entry. This member has to remain synchronized with the detailed DTD in
 	 * operations-cars.dtd.
 	 * 
-	 * @return Contents in a JDOM Element
 	 */
 	public void store(Element root) {	
 		String[]names = getNames();

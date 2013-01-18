@@ -83,8 +83,19 @@ public class InstanceManager {
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
         List<Object> l = getList(type);
-        if (l == null) return null;
-        if (l.size()<1) return null;
+        if (l == null || l.size()<1) {
+            // see if need to autocreate
+            if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
+                try {
+                    return type.getConstructor((Class[])null).newInstance((Object[])null);
+                } catch (Exception e) {
+                    log.error("Exception creating default object", e);
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        }
         return (T)l.get(l.size()-1);
     }
     

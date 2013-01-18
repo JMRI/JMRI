@@ -14,7 +14,7 @@ import junit.framework.Assert;
  * @author			Bob Jacobsen
  * @version $Revision$
  */
-public class InstanceManagerTest extends TestCase {
+public class InstanceManagerTest extends TestCase implements InstanceManagerAutoDefault {
 
     public void testDefaultPowerManager() {
         PowerManager m = new PowerManagerScaffold();
@@ -106,6 +106,23 @@ public class InstanceManagerTest extends TestCase {
         m2 = InstanceManager.getDefault(PowerManager.class);
 
         Assert.assertEquals("retrieved second PowerManager", m1, m2);
+    }
+    
+    public static class OkAutoCreate implements InstanceManagerAutoDefault {
+        public OkAutoCreate() { System.out.println(); }
+    }
+
+    public void testAutoCreateOK() {
+    
+        OkAutoCreate obj = InstanceManager.getDefault(OkAutoCreate.class);
+        Assert.assertNotNull(obj);
+    }
+    
+    public class NoAutoCreate {}
+    
+    public void testAutoCreateNotOK() {
+        NoAutoCreate obj = InstanceManager.getDefault(NoAutoCreate.class);
+        Assert.assertNull(obj);
     }
     
     /**
