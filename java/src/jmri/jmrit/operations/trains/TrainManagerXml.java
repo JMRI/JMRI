@@ -3,7 +3,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.File;
-import java.util.List;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Control;
@@ -92,17 +91,13 @@ public class TrainManagerXml extends OperationsXml {
 		TrainManager.instance().load(root);
 		TrainScheduleManager.instance().load(root);
 
-		fileLoaded = true; // set flag
-		TrainManager manager = TrainManager.instance();
+		fileLoaded = true; // set flag trains are loaded
+		
+		// now load train icons on panels
+		TrainManager.instance().loadTrainIcons();
 
-		// load train icon if needed
-		List<String> trainList = manager.getTrainsByIdList();
-		for (int i = 0; i < trainList.size(); i++) {
-			Train train = manager.getTrainById(trainList.get(i));
-			train.loadTrainIcon();
-		}
 		// loading complete run startup scripts
-		manager.runStartUpScripts();
+		TrainManager.instance().runStartUpScripts();
 
 		log.debug("Trains have been loaded!");
 		TrainLogger.instance().enableTrainLogging(Setup.isTrainLoggerEnabled());

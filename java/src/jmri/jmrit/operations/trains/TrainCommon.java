@@ -69,7 +69,7 @@ public class TrainCommon {
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (int i = 0; i < format.length; i++) {
 			String s = getEngineAttribute(engine, format[i], pickup);
-			if (buf.length() + s.length() > lineLength(orientation)) {
+			if (buf.length() + s.length() > getLineLength(orientation)) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -93,7 +93,7 @@ public class TrainCommon {
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i = 0; i < format.length; i++) {
 			String s = getEngineAttribute(engine, format[i], !pickup);
-			if (buf.length() + s.length() > lineLength(orientation)) {
+			if (buf.length() + s.length() > getLineLength(orientation)) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -145,7 +145,7 @@ public class TrainCommon {
 			return; // print nothing local move, see dropCar
 		for (int i = 0; i < format.length; i++) {
 			String s = getCarAttribute(car, format[i], pickup, !local);
-			if (buf.length() + s.length() > lineLength(orientation)) {
+			if (buf.length() + s.length() > getLineLength(orientation)) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -215,7 +215,7 @@ public class TrainCommon {
 			boolean local, String orientation) {
 		for (int i = 0; i < format.length; i++) {
 			String s = getCarAttribute(car, format[i], !pickup, local);
-			if (buf.length() + s.length() > lineLength(orientation)) {
+			if (buf.length() + s.length() > getLineLength(orientation)) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -249,7 +249,12 @@ public class TrainCommon {
 		return buf.toString();
 	}
 
-	// writes string with level to console and file
+	/**
+	 * Writes a line to the build report file
+	 * @param file build report file
+	 * @param level print level
+	 * @param string string to write
+	 */
 	protected void addLine(PrintWriter file, String level, String string) {
 		if (log.isDebugEnabled())
 			log.debug(string);
@@ -260,8 +265,9 @@ public class TrainCommon {
 		}
 	}
 	
+	// only used by build report
 	private void printLine(PrintWriter file, String level, String string) {
-		int lineLengthMax = lineLength(Setup.PORTRAIT);
+		int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize());
 		if (string.length() > lineLengthMax) {
 			log.debug("String is too long for " + Setup.PORTRAIT);
 			String[] s = string.split(SPACE);
@@ -332,7 +338,7 @@ public class TrainCommon {
 	protected void newLine(PrintWriter file, String string, String orientation) {
 		String[] s = string.split(NEW_LINE);
 		for (int i = 0; i < s.length; i++) {
-			newLine(file, s[i], lineLength(orientation));
+			newLine(file, s[i], getLineLength(orientation));
 		}
 	}
 
@@ -543,8 +549,13 @@ public class TrainCommon {
 		}
 		return buf.toString();
 	}
-
-	protected int lineLength(String orientation) {
+	
+	// used by manifests
+	protected int getLineLength(String orientation) {
+		return getLineLength(orientation, Setup.getManifestFontSize());
+	}
+	
+	protected int getLineLength(String orientation, int fontSize) {
 		// page size has been adjusted to account for margins of .5
 		Dimension pagesize = new Dimension(540, 792); // Portrait
 		if (orientation.equals(Setup.LANDSCAPE))
@@ -553,7 +564,7 @@ public class TrainCommon {
 			pagesize = new Dimension(206, 792);
 		// Metrics don't always work for the various font names, so use
 		// Monospaced
-		Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize()); // NOI18N
+		Font font = new Font("Monospaced", Font.PLAIN, fontSize); // NOI18N
 		JLabel label = new JLabel();
 		FontMetrics metrics = label.getFontMetrics(font);
 		int charwidth = metrics.charWidth('m');

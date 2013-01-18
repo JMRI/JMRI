@@ -345,7 +345,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		// load font sizes 7 through 14
 		for (int i = 7; i < 15; i++)
 			fontSizeComboBox.addItem(i);
-		fontSizeComboBox.setSelectedItem(Setup.getFontSize());
+		fontSizeComboBox.setSelectedItem(Setup.getManifestFontSize());
 		loadFontComboBox();
 
 		// setup buttons
@@ -443,7 +443,7 @@ public class PrintOptionFrame extends OperationsFrame {
 			// font name
 			Setup.setFontName((String) fontComboBox.getSelectedItem());
 			// font size
-			Setup.setFontSize((Integer) fontSizeComboBox.getSelectedItem());
+			Setup.setManifestFontSize((Integer) fontSizeComboBox.getSelectedItem());
 			// page orientation
 			Setup.setManifestOrientation((String) manifestOrientationComboBox.getSelectedItem());
 			Setup.setSwitchListOrientation((String) switchListOrientationComboBox.getSelectedItem());

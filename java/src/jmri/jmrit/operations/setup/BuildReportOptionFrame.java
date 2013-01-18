@@ -8,8 +8,8 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.jmrit.operations.OperationsFrame;
 
@@ -22,9 +22,6 @@ import jmri.jmrit.operations.OperationsFrame;
  */
 
 public class BuildReportOptionFrame extends OperationsFrame{
-	
-	// labels
-	JLabel textBuildReport = new JLabel(Bundle.getMessage("BuildReport"));
 
 	// major buttons	
 	JButton saveButton = new JButton(Bundle.getMessage("Save"));
@@ -39,7 +36,8 @@ public class BuildReportOptionFrame extends OperationsFrame{
 	JCheckBox buildReportCheckBox = new JCheckBox(Bundle.getMessage("BuildReportEdit"));
 	JCheckBox buildReportIndentCheckBox = new JCheckBox(Bundle.getMessage("BuildReportIndent"));
 	
-	
+	// combo boxes
+	JComboBox fontSizeComboBox = new JComboBox();
 
 	public BuildReportOptionFrame() {
 		super(Bundle.getMessage("TitleBuildReportOptions"));
@@ -59,14 +57,24 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		JPanel pReport = new JPanel();
 		pReport.setLayout(new GridBagLayout());		
 		pReport.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutReportOptions")));
+		
 		// build report options
-		addItem (pReport, textBuildReport, 0, 0);
-		addItemLeft (pReport, buildReportMin, 1, 0);
-		addItemLeft (pReport, buildReportNor, 2, 0);
-		addItemLeft (pReport, buildReportMax, 3, 0);
-		addItemLeft (pReport, buildReportVD, 4, 0);
 		addItemWidth (pReport, buildReportCheckBox, 3, 1, 1);	
 		addItemWidth (pReport, buildReportIndentCheckBox, 3, 1, 2);
+
+		JPanel pFontSize = new JPanel();
+		pFontSize.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutFontSize")));
+		pFontSize.add(fontSizeComboBox);
+		
+		JPanel pLevel = new JPanel();
+		pLevel.setLayout(new GridBagLayout());
+		pLevel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BuildReport")));
+		
+		// build report level radio buttons
+		addItemLeft (pLevel, buildReportMin, 1, 0);
+		addItemLeft (pLevel, buildReportNor, 2, 0);
+		addItemLeft (pLevel, buildReportMax, 3, 0);
+		addItemLeft (pLevel, buildReportVD, 4, 0);
 
 		// controls
 		JPanel pControl = new JPanel();
@@ -75,6 +83,8 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		addItem(pControl, saveButton, 0, 0);
 		
 		getContentPane().add(pReport);
+		getContentPane().add(pLevel);
+		getContentPane().add(pFontSize);
 		getContentPane().add(pControl);
 		
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
@@ -88,6 +98,11 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		
 		setBuildReportRadioButton();
 		
+		// load font sizes 7 through 14
+		for (int i = 7; i < 15; i++)
+			fontSizeComboBox.addItem(i);
+		fontSizeComboBox.setSelectedItem(Setup.getBuildReportFontSize());
+		
 		addButtonAction(saveButton);
 
 		//	build menu		
@@ -100,6 +115,8 @@ public class BuildReportOptionFrame extends OperationsFrame{
 	// Add Remove Logo and Save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {		
 		if (ae.getSource() == saveButton){
+			// font size
+			Setup.setBuildReportFontSize((Integer) fontSizeComboBox.getSelectedItem());
 			// build report level
 			if (buildReportMin.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);

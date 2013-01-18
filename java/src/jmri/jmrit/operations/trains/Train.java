@@ -2276,7 +2276,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			TrainPrintUtilities.editReport(buildFile, getName());
 		else
 			TrainPrintUtilities.printReport(buildFile, MessageFormat.format(Bundle.getMessage("buildReport"),
-					new Object[] { getDescription() }), isPreview, "", true, "");
+					new Object[] { getDescription() }), isPreview, "", true, "", "", Setup.PORTRAIT, Setup.getBuildReportFontSize());
 		return true;
 	}
 
@@ -2353,7 +2353,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		Location departs = LocationManager.instance().getLocationByName(getTrainDepartsName());
 		String printerName = departs.getDefaultPrinterName();
 		TrainPrintUtilities.printReport(file, Bundle.getMessage("TrainManifest") + " " + getDescription(),
-				isPreview, Setup.getFontName(), false, logoURL, printerName, Setup.getManifestOrientation());
+				isPreview, Setup.getFontName(), false, logoURL, printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize());
 		if (!isPreview)
 			setPrinted(true);
 		return true;

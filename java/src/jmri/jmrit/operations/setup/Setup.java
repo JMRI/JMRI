@@ -161,7 +161,8 @@ public class Setup {
 	private static String carTypes = DESCRIPTIVE;
 	private static String ownerName ="";
 	private static String fontName = MONOSPACED;
-	private static int fontSize = 10;
+	private static int manifestFontSize = 10;
+	private static int buildReportFontSize = 10;
 	private static String manifestOrientation = PORTRAIT;
 	private static String switchListOrientation = PORTRAIT;
 	private static String pickupColor = BLACK;
@@ -764,12 +765,20 @@ public class Setup {
 		fontName = name;
 	}
 	
-	public static int getFontSize(){
-		return fontSize;
+	public static int getManifestFontSize(){
+		return manifestFontSize;
 	}
 	
-	public static void setFontSize(int size){
-		fontSize = size;
+	public static void setManifestFontSize(int size){
+		manifestFontSize = size;
+	}
+	
+	public static int getBuildReportFontSize(){
+		return buildReportFontSize;
+	}
+	
+	public static void setBuildReportFontSize(int size){
+		buildReportFontSize = size;
 	}
 	
 	public static String getManifestOrientation(){
@@ -1501,7 +1510,7 @@ public class Setup {
     	values.setAttribute(Xml.NAME, getFontName());
     	
        	e.addContent(values = new Element(Xml.FONT_SIZE));
-    	values.setAttribute(Xml.SIZE, Integer.toString(getFontSize()));
+    	values.setAttribute(Xml.SIZE, Integer.toString(getManifestFontSize()));
     	
        	e.addContent(values = new Element(Xml.PAGE_ORIENTATION));
     	values.setAttribute(Xml.MANIFEST, getManifestOrientation());
@@ -1548,6 +1557,7 @@ public class Setup {
     	values.setAttribute(Xml.LEVEL, getBuildReportLevel());
     	values.setAttribute(Xml.USE_EDITOR, isBuildReportEditorEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.INDENT, isBuildReportIndentEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.FONT_SIZE, Integer.toString(getBuildReportFontSize()));
     	
        	e.addContent(values = new Element(Xml.OWNER));
     	values.setAttribute(Xml.NAME, getOwnerName());
@@ -1865,7 +1875,7 @@ public class Setup {
         		&& (a = operations.getChild(Xml.FONT_SIZE).getAttribute(Xml.SIZE))!= null){
         	String size = a.getValue();
            	if (log.isDebugEnabled()) log.debug("fontsize: "+size);
-           	setFontSize(Integer.parseInt(size));
+           	setManifestFontSize(Integer.parseInt(size));
         }
         
         if ((operations.getChild(Xml.PAGE_ORIENTATION) != null)){
@@ -2009,6 +2019,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("build report indent: "+enable);
         		setBuildReportIndentEnabled(enable.equals(Xml.TRUE));
+        	}
+          	if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.FONT_SIZE)) != null) {
+        		String size = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("build font size: "+size);
+        		setBuildReportFontSize(Integer.parseInt(size));
         	}
         }
         if ((operations.getChild(Xml.OWNER) != null) 

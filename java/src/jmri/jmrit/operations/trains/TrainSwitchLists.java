@@ -362,7 +362,7 @@ public class TrainSwitchLists extends TrainCommon {
 			TrainPrintUtilities.printReport(buildFile,
 					Bundle.getMessage("SwitchList") + " " + location.getName(), isPreview,
 					Setup.getFontName(), false, Setup.getManifestLogoURL(),
-					location.getDefaultPrinterName(), Setup.getSwitchListOrientation());
+					location.getDefaultPrinterName(), Setup.getSwitchListOrientation(), Setup.getManifestFontSize());
 	}
 
 	/**

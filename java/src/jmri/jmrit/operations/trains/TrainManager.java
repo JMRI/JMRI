@@ -626,6 +626,17 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		return newTrain;
 	}
 	
+	/**
+	 * Loads train icons if needed
+	 */
+	public void loadTrainIcons() {
+		List<String> trainList = getTrainsByIdList();
+		for (int i = 0; i < trainList.size(); i++) {
+			Train train = getTrainById(trainList.get(i));
+			train.loadTrainIcon();
+		}
+	}
+	
 	public void load (Element root) {	
 		if (root.getChild(Xml.OPTIONS) != null) {
 			Element options = root.getChild(Xml.OPTIONS);

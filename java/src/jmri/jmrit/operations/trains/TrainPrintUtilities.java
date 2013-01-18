@@ -44,32 +44,13 @@ public class TrainPrintUtilities {
 	 *            true if build report
 	 * @param logoURL
 	 *            optional pathname for logo
-	 */
-	public static void printReport(File file, String name, boolean isPreview, String fontName,
-			boolean isBuildReport, String logoURL) {
-		printReport(file, name, isPreview, fontName, isBuildReport, logoURL, "", Setup.PORTRAIT);
-	}
-
-	/**
-	 * Print or preview a train manifest, build report, or switch list.
-	 * 
-	 * @param file
-	 *            File to be printed or previewed
-	 * @param name
-	 *            Title of document
-	 * @param isPreview
-	 *            true if preview
-	 * @param fontName
-	 *            optional font to use when printing document
-	 * @param isBuildReport
-	 *            true if build report
-	 * @param logoURL
-	 *            optional pathname for logo
 	 * @param printerName
 	 *            optional default printer name
+	 * @param orientation Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
+	 * @param fontSize font size
 	 */
 	public static void printReport(File file, String name, boolean isPreview, String fontName,
-			boolean isBuildReport, String logoURL, String printerName, String orientation) {
+			boolean isBuildReport, String logoURL, String printerName, String orientation, int fontSize) {
 		// obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		Frame mFrame = new Frame();
@@ -80,7 +61,7 @@ public class TrainPrintUtilities {
 		if (orientation.equals(Setup.HANDHELD))
 			printHeader = false;
 		try {
-			writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5,
+			writer = new HardcopyWriter(mFrame, name, fontSize, .5, .5, .5, .5,
 					isPreview, printerName, isLandScape, printHeader);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");
