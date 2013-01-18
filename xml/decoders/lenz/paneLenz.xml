@@ -45,6 +45,7 @@
         <column>
           <label label="RailCom Configuration">
             <label>RailCom Configuration</label>
+            <label xml:lang="it">Configurazione RailCom</label>
           </label>
           <display item="RailCom Address"/>
           <display item="RailCom Data"/>
@@ -55,6 +56,7 @@
           </label>
           <label label="Fault Indication">
             <label>Fault Indication</label>
+            <label xml:lang="it">Indicazione Guasti</label>
           </label>
           <display item="Light Short"/>
           <display item="Overheating"/>
@@ -64,6 +66,7 @@
           </label>
           <label label="Motor Configuration">
             <label>Motor Configuration</label>
+            <label xml:lang="it">Configurazione Motore</label>
           </label>
           <display item="Motor type"/>
           <display item="EMF Switch"/>
@@ -84,6 +87,7 @@
         <column>
           <label label="Braking Configuration">
             <label>Braking Configuration</label>
+            <label xml:lang="it">Configurazione Frenata</label>
           </label>
           <display item="Constant Braking"/>
           <display item="ABC"/>
@@ -136,6 +140,7 @@
           </label>
           <label label="Tip: Constant Braking only works when momementum is enabled, and when not in switching gear">
             <label>Tip: Constant Braking only works when momementum is enabled, and when not in switching gear</label>
+            <label xml:lang="it">La Frenata Costante funziona solo se è abilitata l'inerzia, e quando non in velocità da manovra</label>
           </label>
           <label label=" ">
             <label> </label>

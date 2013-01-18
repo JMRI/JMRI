@@ -51,9 +51,11 @@
           </label>
           <label label="Select which function">
             <label>Select which function</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
           </label>
           <label label="disables momentum:">
             <label>disables momentum:</label>
+            <label xml:lang="it">Disabilita l'Inerzia:</label>
           </label>
           <label label=" ">
             <label> </label>
@@ -81,9 +83,11 @@
           </label>
           <label label="Select which function">
             <label>Select which function</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
           </label>
           <label label="enables switching gear:">
             <label>enables switching gear:</label>
+            <label xml:lang="it">Abilita velocità da manovra:</label>
           </label>
           <label label=" ">
             <label> </label>
@@ -111,9 +115,11 @@
           </label>
           <label label="Select which function enables">
             <label>Select which function enables</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
           </label>
           <label label="light dimming for A and B outputs:">
             <label>light dimming for A and B outputs:</label>
+            <label xml:lang="it">attenua le luci per uscite A e B:</label>
           </label>
           <label label=" ">
             <label> </label>
@@ -138,9 +144,11 @@
           </label>
           <label label="Select which function toggles">
             <label>Select which function toggles</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
           </label>
           <label label="lighting effects on/off for outputs A and B:">
             <label>lighting effects on/off for outputs A and B:</label>
+            <label xml:lang="it">commuta on/off le uscite A e B:</label>
           </label>
           <label label=" ">
             <label> </label>
@@ -171,9 +179,11 @@
           </label>
           <label label="Select which function toggles">
             <label>Select which function toggles</label>
+            <label xml:lang="it">Seleziona quale Funzione</label>
           </label>
           <label label="lighting effects on/off for outputs C and D:">
             <label>lighting effects on/off for outputs C and D:</label>
+            <label xml:lang="it">commuta on/off le uscite C e D:</label>
           </label>
           <label label=" ">
             <label> </label>
@@ -193,4 +203,5 @@
       </row>
     </column>
     <name>Lenz Function Map</name>
+    <name xml:lang="it">Mappatura Funzioni Lenz</name>
 </pane>
