@@ -288,7 +288,7 @@ public class FileUtil {
     /**
      * Set the JMRI program directory.
      *
-     * Convenience method that calls {@link FileUtil#setProgramPath(java.io.File)
+     * Convenience method that calls {@link FileUtil#setProgramPath(java.io.File)}
      * with the passed in path.
      *
      * @param path
@@ -320,7 +320,6 @@ public class FileUtil {
      * {@link #findURL(java.lang.String)}
      *
      * @param path
-     * @return
      */
     static public URL findExternalFilename(String path) {
         return FileUtil.findURL(FileUtil.getExternalFilename(path));
@@ -374,7 +373,7 @@ public class FileUtil {
      * @return The URL or null.
      * @see #findInputStream(java.lang.String)
      * @see #findInputStream(java.lang.String, java.lang.String[])
-     * @see #findURL(java.lang.String, java.lang.String[]);
+     * @see #findURL(java.lang.String, java.lang.String[])
      */
     static public URL findURL(String path) {
         return FileUtil.findURL(path, new String[]{});
