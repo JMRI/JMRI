@@ -2,3 +2,7 @@
         <speedTableVal min="1" max="255" mfx="true"/>
         <label>Speed Table</label>
       </variable>
+      <variable item="Speed Table" label="Table sets Speed Curve shape between Vstart &amp; Vhigh.             (Tip: If speed matching, set Vstart &amp; Vhigh before any other points.)" CV="67">
+        <speedTableVal min="1" max="255" mfx="true"/>
+        <label>Speed Table</label>
+      </variable>
