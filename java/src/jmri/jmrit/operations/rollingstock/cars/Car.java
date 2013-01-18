@@ -423,6 +423,7 @@ public class Car extends RollingStock {
 	 * Used to determine if a car can be set out at a destination (location).
 	 * Track is optional.  In addition to all of the tests that testLocation
 	 * performs, spurs with schedules are also checked.
+	 * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK, CAPACITY, SCHEDULE, CUSTOM
 	 */
 	public String testDestination(Location destination, Track track) {
 		String status = super.testDestination(destination, track);

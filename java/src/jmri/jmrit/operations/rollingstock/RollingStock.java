@@ -517,6 +517,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	}
 
 	private String RsTestDestination(Location destination, Track track) {
+		// first perform a code check
 		if (destination != null && !destination.isTrackAtLocation(track))
 			return ERROR_TRACK;
 		if (destination == null || track == null)
@@ -638,6 +639,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	 *            the pick up location for this rolling stock.
 	 */
 	public void setRouteLocation(RouteLocation routeLocation) {
+		// a couple of error checks before setting the route location
 		if (_location == null && routeLocation != null) {
 			log.debug("WARNING rolling stock (" + toString()
 					+ ") does not have an assigned location"); // NOI18N

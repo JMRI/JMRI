@@ -771,6 +771,30 @@ public class Train implements java.beans.PropertyChangeListener {
 			types[i] = _typeList.get(i);
 		return types;
 	}
+	
+	protected String[] getCarTypeNames() {
+		List<String> list = new ArrayList<String>();
+		for (int i = 0; i < _typeList.size(); i++) {
+			if (CarTypes.instance().containsName(_typeList.get(i)))
+				list.add(_typeList.get(i));
+		}
+		String[] types = new String[list.size()];
+		for (int i = 0; i < list.size(); i++)
+			types[i] = list.get(i);
+		return types;
+	}
+	
+	protected String[] getLocoTypeNames() {
+		List<String> list = new ArrayList<String>();
+		for (int i = 0; i < _typeList.size(); i++) {
+			if (EngineTypes.instance().containsName(_typeList.get(i)))
+				list.add(_typeList.get(i));
+		}
+		String[] types = new String[list.size()];
+		for (int i = 0; i < list.size(); i++)
+			types[i] = list.get(i);
+		return types;
+	}
 
 	/**
 	 * Set the type of cars or engines this train will service, see types in Cars and Engines.
