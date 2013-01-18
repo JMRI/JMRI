@@ -20,6 +20,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 import javax.swing.JOptionPane;
+import jmri.Throttle;
 
 /**
  * Table data model for display of slot manager contents
@@ -108,15 +109,15 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         case CONSCOLUMN: return "Consisted";
         case DIRCOLUMN: return "Dir";
         case DISPCOLUMN: return "";     // no heading, as button is clear
-        case F0COLUMN: return "F0";
-        case F1COLUMN: return "F1";
-        case F2COLUMN: return "F2";
-        case F3COLUMN: return "F3";
-        case F4COLUMN: return "F4";
-        case F5COLUMN: return "F5";
-        case F6COLUMN: return "F6";
-        case F7COLUMN: return "F7";
-        case F8COLUMN: return "F8";
+        case F0COLUMN: return Throttle.F0;
+        case F1COLUMN: return Throttle.F1;
+        case F2COLUMN: return Throttle.F2;
+        case F3COLUMN: return Throttle.F3;
+        case F4COLUMN: return Throttle.F4;
+        case F5COLUMN: return Throttle.F5;
+        case F6COLUMN: return Throttle.F6;
+        case F7COLUMN: return Throttle.F7;
+        case F8COLUMN: return Throttle.F8;
         case THROTCOLUMN: return "Throttle ID";
         default: return "unknown";
         }
