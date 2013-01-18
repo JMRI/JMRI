@@ -223,7 +223,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Set the VSD File path for this VSDecoder to use
      *
      * @param p  (String) path to VSD File
-     * @return void
      */
     public void setVSDFilePath(String p) {
 	config.setVSDPath(p);
@@ -247,8 +246,7 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Add a listener for this object's events
      *
-     * @param (VSDecoderListener) listener handle
-     * @return void
+     * @param listener handle
      */
     public void addEventListener(VSDecoderListener listener) {
 	listenerList.add(VSDecoderListener.class, listener);
@@ -259,8 +257,7 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Remove a listener for this object's events
      *
-     * @param (VSDecoderListener) listener handle
-     * @return void
+     * @param listener handle
      */
     public void removeEventListener(VSDecoderListener listener) {
 	listenerList.remove(VSDecoderListener.class, listener);
@@ -278,8 +275,7 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Handle Window events from this VSDecoder's GUI window.
      *
-     * @param e  (java.awt.event.WindowEvent) the window event to handle
-     * @return void
+     * @param e the window event to handle
      */
     public void windowChange(java.awt.event.WindowEvent e) {
 	log.debug("decoder.windowChange() - " + e.toString());
@@ -296,7 +292,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Shut down this VSDecoder and all of its associated sounds.
      *
-     * @return void
      */
     public void shutdown() {
 	log.debug("Shutting down sounds...");
@@ -312,7 +307,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Handle the details of responding to a PropertyChangeEvent from a throttle.
      *
      * @param event (PropertyChangeEvent) Throttle event to respond to
-     * @return void
      */
     protected void throttlePropertyChange(PropertyChangeEvent event) {
 	//WARNING: FRAGILE CODE
@@ -365,7 +359,6 @@ public class VSDecoder implements PropertyChangeListener {
      * events from the throttle with this address.
      *
      * @param l  (LocoAddress) LocoAddress to be followed
-     * @return void
      */
     public void setAddress(LocoAddress l) {
 	// Hack for ThrottleManager Dcc dependency
@@ -408,7 +401,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Set the current master volume setting for this VSDecoder
      *
      * @param vol (float) volume level (0.0 - 1.0)
-     * @return void
      */
     public void setMasterVolume(float vol) {
 	log.debug("VSD: float volume = " + vol);
@@ -435,7 +427,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Mute or un-mute this VSDecoder
      *
      * @param m (boolean) true to mute, false to un-mute
-     * @return void
      */
     public void mute(boolean m) {
 	for (VSDSound vs : sound_list.values()) {
@@ -454,7 +445,6 @@ public class VSDecoder implements PropertyChangeListener {
      * USER's chosen origin) is always the OpenAL Context's origin.
      *
      * @param p (PhysicalLocation) location relative to the user's chosen Origin.
-     * @return void
      */
     public void setPosition(PhysicalLocation p) {
 	// Store the actual position relative to the user's Origin locally.
@@ -503,7 +493,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Respond to property change events from this VSDecoder's GUI
      *
      * @param evt (PropertyChangeEvent) event to respond to
-     * @return void
      */
     @SuppressWarnings("cast")
     public void propertyChange(PropertyChangeEvent evt) {
@@ -614,7 +603,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the bell sound on/off
      *
-     * @return void
      */
     public void toggleBell() {
 	VSDSound snd = sound_list.get("BELL");
@@ -629,7 +617,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the horn sound on/off
      *
-     * @return void
      */
     public void toggleHorn() {
 	VSDSound snd = sound_list.get("HORN");
@@ -644,7 +631,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the horn sound on
      *
-     * @return void
      */
     public void playHorn() {
 	VSDSound snd = sound_list.get("HORN");
@@ -656,7 +642,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the horn sound on (Short burst)
      *
-     * @return void
      */
     public void shortHorn() {
 	VSDSound snd = sound_list.get("HORN");
@@ -668,7 +653,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Turn the horn sound off
      *
-     * @return void
      */
     public void stopHorn() {
 	VSDSound snd = sound_list.get("HORN");
@@ -683,7 +667,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Set the profile name to the given string
      *
      * @param pn (String) : name of the profile to set
-     * @return void
      */
     public void setProfileName(String pn) {
 	config.setProfileName(pn);
@@ -705,7 +688,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Enable this VSDecoder
      *
-     * @return void
      */
     public void enable() {
 	enabled = true;
@@ -716,7 +698,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Disable this VSDecoder
      *
-     * @return void
      */
     public void disable() {
 	enabled = false;
@@ -751,7 +732,6 @@ public class VSDecoder implements PropertyChangeListener {
      * Set whether this is the default VSDecoder or not
      *
      * @param d (boolean) True to set this as the default, False if not.
-     * @return void
      */
     public void setDefault(boolean d) {
 	is_default = d;
@@ -818,7 +798,6 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * @param vf (VSDFile) : VSD File to pull the XML from
      * @param pn (String) : Parameter Name to find within the VSD File.
-     * @return void
      */
     @SuppressWarnings({"unchecked", "cast"})
     public void setXml(VSDFile vf, String pn) {
