@@ -19,13 +19,25 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Provides static members for locating various interface implementations.
+ * Provides methods for locating various interface implementations.
  * These are the base of how JMRI objects are located.
  *<P>
- * The implementations of these interfaces are specific to the layout hardware, etc.
- * During initialization, objects of the right type are created and registered
- * with the ImplementationManager class, so they can later be retrieved by
- * non-system-specific code.
+ * To retrieve the default object of a specific type, do 
+ * @{link    InstanceManager.getDefault(Class<T> type)   };
+ * In other words, you ask for the default object of a particular type.
+ * Multiple items can be held, and are retrieved as a list.
+ *<p>
+ * If a specific item is needed, e.g. one that has been constructed via
+ * a complex process during startup, it should be installed with
+ * @{link    InstanceManager#store(T item, Class<T> type)      };
+ * If it's OK for the InstanceManager to create an object on first
+ * request, have that object's class implement the 
+ * @{link    InstanceManagerAutoDefault                        }
+ * flag interface.
+ *<p>
+ * The structural goal is to have the jmri package not depend on the
+ * lower jmri.jmrit and jmri.jmrix packages, with the implementations
+ * still available at run-time through the InstanceManager.
  *
  * <hr>
  * This file is part of JMRI.
@@ -48,13 +60,13 @@ public class InstanceManager {
 
     static private HashMap<Class<?>,ArrayList<Object>> managerLists;
     
-    static public <T> void store(T val, Class<T> type) {
+    static public <T> void store(T item, Class<T> type) {
         ArrayList<Object> l = managerLists.get(type);
         if (l==null) {
             l = new ArrayList<Object>();
             managerLists.put(type, l);
         }
-        l.add(val);
+        l.add(item);
     }
     
     static public <T> List<Object> getList(Class<T> type) {
@@ -82,16 +94,22 @@ public class InstanceManager {
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
-        List<Object> l = getList(type);
+        ArrayList<Object> l = managerLists.get(type);
         if (l == null || l.size()<1) {
             // see if need to autocreate
             if (InstanceManagerAutoDefault.class.isAssignableFrom(type)) {
+                // yes, make sure list is present before creating object
+                if (l==null) {
+                    l = new ArrayList<Object>();
+                    managerLists.put(type, l);
+                }
                 try {
-                    return type.getConstructor((Class[])null).newInstance((Object[])null);
+                    l.add(type.getConstructor((Class[])null).newInstance((Object[])null));
                 } catch (Exception e) {
-                    log.error("Exception creating default object", e);
+                    log.error("Exception creating default object", e); // unexpected
                     return null;
                 }
+                return (T)l.get(l.size()-1);
             } else {
                 return null;
             }
