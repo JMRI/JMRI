@@ -44,7 +44,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     JScrollPane dataScroll;
     XTableColumnModel columnModel = new XTableColumnModel();
     private RosterGroupSelector rosterGroupSource = null;
-    protected ListSelectionListener tableSelectionListener;
+    protected transient ListSelectionListener tableSelectionListener;
     private RosterEntry[] selectedRosterEntries = null;
     private RosterEntry re = null;
 
