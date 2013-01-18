@@ -74,8 +74,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * @param savePosition - Set true to save the last known location
      */
     public JmriJFrame(boolean saveSize, boolean savePosition) {
-	    super();
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+	super();
         reuseFrameSavedPosition=savePosition;
         reuseFrameSavedSized=saveSize;
         addWindowListener(this);
@@ -136,21 +135,22 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
     
     void setFrameLocation(){
-        if ((p != null) && (p.isWindowPositionSaved(windowFrameRef))) {
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if ((prefsMgr != null) && (prefsMgr.isWindowPositionSaved(windowFrameRef))) {
             Dimension screen = getToolkit().getScreenSize();
-            if ((reuseFrameSavedPosition) && (!((p.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
-                (p.getWindowLocation(windowFrameRef).getY()>=screen.getHeight())))){
-                if (log.isDebugEnabled()) log.debug("setFrameLocation 1st clause sets location to "+p.getWindowLocation(windowFrameRef));
-                this.setLocation(p.getWindowLocation(windowFrameRef));
+            if ((reuseFrameSavedPosition) && (!((prefsMgr.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
+                (prefsMgr.getWindowLocation(windowFrameRef).getY()>=screen.getHeight())))){
+                if (log.isDebugEnabled()) log.debug("setFrameLocation 1st clause sets location to "+prefsMgr.getWindowLocation(windowFrameRef));
+                this.setLocation(prefsMgr.getWindowLocation(windowFrameRef));
             }
             /* Simple case that if either height or width are zero, then we should
             not set them */
-            if ((reuseFrameSavedSized) &&(!((p.getWindowSize(windowFrameRef).getWidth()==0.0) ||
-                (p.getWindowSize(windowFrameRef).getHeight()==0.0)))){
-                if (log.isDebugEnabled()) log.debug("setFrameLocation 2nd clause sets preferredSize to "+p.getWindowSize(windowFrameRef));
-                this.setPreferredSize(p.getWindowSize(windowFrameRef));
-                if (log.isDebugEnabled()) log.debug("setFrameLocation 2nd clause sets size to "+p.getWindowSize(windowFrameRef));
-                this.setSize(p.getWindowSize(windowFrameRef));
+            if ((reuseFrameSavedSized) &&(!((prefsMgr.getWindowSize(windowFrameRef).getWidth()==0.0) ||
+                (prefsMgr.getWindowSize(windowFrameRef).getHeight()==0.0)))){
+                if (log.isDebugEnabled()) log.debug("setFrameLocation 2nd clause sets preferredSize to "+prefsMgr.getWindowSize(windowFrameRef));
+                this.setPreferredSize(prefsMgr.getWindowSize(windowFrameRef));
+                if (log.isDebugEnabled()) log.debug("setFrameLocation 2nd clause sets size to "+prefsMgr.getWindowSize(windowFrameRef));
+                this.setSize(prefsMgr.getWindowSize(windowFrameRef));
             }
             
             /* We just check to make sure that having set the location
@@ -274,8 +274,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             frameOffSetx=f.getInsets().top/2;
         this.setLocation(frameOffSetx, frameOffSety);
     }
-    
-    transient jmri.UserPreferencesManager p;
     
     String windowFrameRef;
     
@@ -568,11 +566,12 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSavePosition(boolean save){
         reuseFrameSavedPosition=save;
-        if (p == null) {
-            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr == null) {
+            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         }
-        if (p != null) {
-            p.setSaveWindowLocation(windowFrameRef, save);
+        if (prefsMgr != null) {
+            prefsMgr.setSaveWindowLocation(windowFrameRef, save);
         } else {
             log.warn("setSavePosition() UserPreferencesManager() not initialised" );
         }
@@ -583,11 +582,12 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      */
     public void setSaveSize(boolean save){
         reuseFrameSavedSized=save;
-        if (p == null) {
-            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (prefsMgr == null) {
+            prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         }
-        if (p != null) {
-            p.setSaveWindowSize(windowFrameRef, save);
+        if (prefsMgr != null) {
+            prefsMgr.setSaveWindowSize(windowFrameRef, save);
         } else {
             log.warn("setSaveSize() UserPreferencesManager() not initialised" );
         }
@@ -597,9 +597,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * Returns if the frame Position is saved or not
      */
     public boolean getSavePosition(){
-        if (p == null) {
-            p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        }
         return reuseFrameSavedPosition;
     }
 

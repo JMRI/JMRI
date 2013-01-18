@@ -976,7 +976,12 @@ public class Track {
 		return _pickupList.contains(id);
 	}
 
-	// @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="BC_UNCONFIRMED_CAST")
+	
+	/**
+	 * Used to determine if track can service the rolling stock.
+	 * @param rs the car or loco to be tested
+	 * @return TYPE, ROAD, LENGTH, OKAY
+	 */
 	public String accepts(RollingStock rs) {
 		// first determine if rolling stock can be move to the new location
 		if (!acceptsTypeName(rs.getType())) {
@@ -999,6 +1004,7 @@ public class Track {
 			return LENGTH + " (" + rs.getLength() + ")";
 		}
 		// check for car in kernel
+		// @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="BC_UNCONFIRMED_CAST")
 		if (Car.class.isInstance(rs)) {
 			Car car = (Car) rs;
 			if (car.getKernel() != null && car.getKernel().isLead(car)) {
@@ -1022,6 +1028,7 @@ public class Track {
 			}
 		}
 		// check for loco in consist
+		// @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="BC_UNCONFIRMED_CAST")
 		if (Engine.class.isInstance(rs)) {
 			Engine eng = (Engine) rs;
 			if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
@@ -1056,6 +1063,7 @@ public class Track {
 								* getIgnoreUsedLengthPercentage() / 100))
 					return OKAY;
 			}
+			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last check.
 			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location ("
 					+ getLocation().getName() + ", " + getName() + ") no room!"); // NOI18N
 			return LENGTH + " (" + length + ")";

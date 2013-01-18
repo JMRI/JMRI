@@ -46,11 +46,6 @@ public class Bundle extends jmri.jmrit.vsdecoder.Bundle {
         return b.handleGetMessage(key);
     }
 
-    @Deprecated
-    static String getString(String key) {
-        return b.handleGetString(key);
-    }
-
     /**
      * Merges user data with a translated string for a given 
      * key from the package resource bundle or 
@@ -74,7 +69,7 @@ public class Bundle extends jmri.jmrit.vsdecoder.Bundle {
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
     @Override protected jmri.Bundle getBundle() { return b; }
-    @Override protected String retry(String key) { return super.getBundle().handleGetString(key); }
+    @Override protected String retry(String key) { return super.getBundle().handleGetMessage(key); }
 
 }
 

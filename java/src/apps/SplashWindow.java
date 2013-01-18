@@ -10,6 +10,7 @@ import java.awt.Toolkit;
 import java.io.File;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
@@ -21,7 +22,7 @@ import jmri.util.JmriJFrame;
  * @author  Dennis Miller Copyright 2007
  * @version     $Revision$
  */
-public class SplashWindow extends JmriJFrame {
+public class SplashWindow extends JFrame {
     Image splashIm;
     
     public SplashWindow() {

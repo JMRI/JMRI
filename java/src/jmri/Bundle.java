@@ -108,17 +108,9 @@ public class Bundle {
             return retry(key);
         }
     }
-    
-    /**
-     * @deprecated Use getMessage(String) instead
-     */
-    @Deprecated
-    public String handleGetString(String key) {
-        return handleGetMessage(key);
-    }
-    
+        
     public String handleGetMessage(String key, Object[] subs) {
-        return java.text.MessageFormat.format(handleGetString(key), subs);
+        return java.text.MessageFormat.format(handleGetMessage(key), subs);
     }
     
     // the following is different from the method in subclasses because

@@ -41,19 +41,6 @@ public class Bundle extends jmri.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static String getString(String key) {
-        return b.handleGetString(key);
-    }
-    /**
-     * Provides access to a string for a given 
-     * key from the package resource bundle or 
-     * parent.
-     *<p>
-     * Note that this is intentionally package-local
-     * access.
-     * @param key Bundle key to be translated
-     * @return Internationalized text
-     */
     static String getMessage(String key) {
         return b.handleGetMessage(key);
     }
@@ -75,7 +62,7 @@ public class Bundle extends jmri.Bundle {
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
     @Override protected jmri.Bundle getBundle() { return b; }
-    @Override protected String retry(String key) { return super.getBundle().handleGetString(key); }
+    @Override protected String retry(String key) { return super.getBundle().handleGetMessage(key); }
 
 }
 

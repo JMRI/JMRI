@@ -24,10 +24,8 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -37,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Builds a train and creates the train's manifest.
  * 
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013
  * @version $Revision$
  */
 public class TrainBuilder extends TrainCommon {
@@ -228,39 +226,21 @@ public class TrainBuilder extends TrainCommon {
 
 		// show road names that this train will service
 		if (!train.getRoadOption().equals(Train.ALLROADS)) {
-			String[] roads = train.getRoadNames();
-			StringBuffer sbuf = new StringBuffer("");
-			for (int i = 0; i < roads.length; i++) {
-				sbuf = sbuf.append(roads[i] + ", ");
-			}
-			if (sbuf.length() > 2)
-				sbuf.setLength(sbuf.length() - 2); // remove trailing separators
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainRoads"),
-					new Object[] { train.getName(), train.getRoadOption(), sbuf.toString() }));
+					new Object[] { train.getName(), train.getRoadOption(),
+							formatStringToCommaSeparated(train.getRoadNames()) }));
 		}
 		// show load names that this train will service
 		if (!train.getLoadOption().equals(Train.ALLLOADS)) {
-			String[] loads = train.getLoadNames();
-			StringBuffer sbuf = new StringBuffer("");
-			for (int i = 0; i < loads.length; i++) {
-				sbuf = sbuf.append(loads[i] + ", ");
-			}
-			if (sbuf.length() > 2)
-				sbuf.setLength(sbuf.length() - 2); // remove trailing separators
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainLoads"),
-					new Object[] { train.getName(), train.getLoadOption(), sbuf.toString() }));
+					new Object[] { train.getName(), train.getLoadOption(),
+							formatStringToCommaSeparated(train.getLoadNames()) }));
 		}
 		// show owner names that this train will service
 		if (!train.getOwnerOption().equals(Train.ALLOWNERS)) {
-			String[] owners = train.getOwnerNames();
-			StringBuffer sbuf = new StringBuffer("");
-			for (int i = 0; i < owners.length; i++) {
-				sbuf = sbuf.append(owners[i] + ", ");
-			}
-			if (sbuf.length() > 2)
-				sbuf.setLength(sbuf.length() - 2); // remove trailing separators
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainOwners"),
-					new Object[] { train.getName(), train.getOwnerOption(), sbuf.toString() }));
+					new Object[] { train.getName(), train.getOwnerOption(),
+							formatStringToCommaSeparated(train.getOwnerNames()) }));
 		}
 		// show built date serviced
 		if (!train.getBuiltStartYear().equals(""))
@@ -280,21 +260,7 @@ public class TrainBuilder extends TrainCommon {
 		if (reqNumEngines > 0) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle
 					.getMessage("buildTrainServicesEngineTypes"), new Object[] { train.getName() }));
-			String[] engineTypes = EngineTypes.instance().getNames();
-			StringBuffer sbuf = new StringBuffer("");
-			for (int i = 0; i < engineTypes.length; i++) {
-				if (train.acceptsTypeName(engineTypes[i]))
-					sbuf = sbuf.append(engineTypes[i] + ", ");
-				if (sbuf.length() > 77) {
-					addLine(buildReport, FIVE, sbuf.toString());
-					sbuf.delete(0, sbuf.length());
-				}
-			}
-			// remove trailing separators
-			if (sbuf.length() > 2) {
-				sbuf.setLength(sbuf.length() - 2);
-				addLine(buildReport, FIVE, sbuf.toString());
-			}
+			addLine(buildReport, FIVE, formatStringToCommaSeparated(train.getLocoTypeNames()));
 		}
 
 		// show engine requirements for this train
@@ -495,22 +461,8 @@ public class TrainBuilder extends TrainCommon {
 		// show car types that this train will service
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainServicesCarTypes"),
 				new Object[] { train.getName() }));
-		String[] carTypes = CarTypes.instance().getNames();
-		StringBuffer sbuf = new StringBuffer("");
-		for (int i = 0; i < carTypes.length; i++) {
-			if (train.acceptsTypeName(carTypes[i]))
-				sbuf = sbuf.append(carTypes[i] + ", ");
-			if (sbuf.length() > 77) {
-				addLine(buildReport, FIVE, sbuf.toString());
-				sbuf.delete(0, sbuf.length());
-			}
-		}
-		// remove trailing separators
-		if (sbuf.length() > 2) {
-			sbuf.setLength(sbuf.length() - 2);
-			addLine(buildReport, FIVE, sbuf.toString());
-		}
-
+		addLine(buildReport, FIVE, formatStringToCommaSeparated(train.getCarTypeNames()));
+		
 		// get list of cars for this route
 		carList = carManager.getAvailableTrainList(train);
 		// TODO: DAB this needs to be controlled by each train
@@ -1719,8 +1671,10 @@ public class TrainBuilder extends TrainCommon {
 				// is car departing staging and generate custom load?
 				if (!generateCarLoadFromStaging(car))
 					generateCarLoadStagingToStaging(car);
-				// does car have a custom load without a destination?
-				if (findNextDestinationForCarLoad(car)  && car.getDestination() == null && car.getTrack() != departStageTrack) {
+				// does car have a custom load without a destination?  
+				// If departing staging, a destination for this car is needed.
+				if (findNextDestinationForCarLoad(car) && car.getDestination() == null
+						&& car.getTrack() != departStageTrack) {
 					// done with this car, it has a custom load, and there are spurs/schedules, but no destination found
 					addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 					continue;
@@ -2501,10 +2455,12 @@ public class TrainBuilder extends TrainCommon {
 
 	/**
 	 * Find a next destination and track for a car with a custom load.  Car doesn't have
-	 * a destination or final destination.
+	 * a destination or final destination.  There's a check to see if there's a spur/
+	 * schedule for this car.  Returns true if a schedule was found.
 	 * 
 	 * @param car
 	 *            the car with the load
+	 * @return true if there's a schedule for this car and load
 	 * @throws BuildFailedException
 	 */
 	private boolean findNextDestinationForCarLoad(Car car) throws BuildFailedException {
@@ -2636,7 +2592,7 @@ public class TrainBuilder extends TrainCommon {
 				car.setNextDestination(track.getLocation());
 				car.setNextDestTrack(track);
 				// try routing car
-				if (Router.instance().setDestination(car, train, buildReport)) {
+				if (Router.instance().setDestination(car, train, buildReport) && car.getDestination() != null) {
 					// return car with this custom load and destination
 					addLine(buildReport, FIVE, MessageFormat.format(Bundle
 							.getMessage("buildCreateNewLoadForCar"), new Object[] { car.toString(),

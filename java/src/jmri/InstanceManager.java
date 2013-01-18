@@ -2,14 +2,6 @@
 
 package jmri;
 
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.WarrantManager;
-import jmri.jmrit.roster.RosterIconFactory;
-import jmri.jmrit.audio.DefaultAudioManager;
-import jmri.jmrit.vsdecoder.VSDecoderManager;
-import apps.gui3.TabbedPreferences;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
@@ -17,6 +9,17 @@ import java.util.Vector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+// Please don't add any more dependencies on other packages via import
+// statements.  Instead, add new items with the store/getDefault methods
+// described below.
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.jmrit.logix.OBlockManager;
+import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.roster.RosterIconFactory;
+import jmri.jmrit.audio.DefaultAudioManager;
+import jmri.jmrit.vsdecoder.VSDecoderManager;
+import apps.gui3.TabbedPreferences;
 
 /**
  * Provides methods for locating various interface implementations.
@@ -42,7 +45,11 @@ import java.util.List;
  * {@link     InstanceManagerAutoDefault}
  * flag interface. The InstanceManager will then construct a default
  * object via the no-argument constructor when one is first needed.
- *
+ *<p>
+ * For initialization of more complex objects, see the 
+ * {@link InstanceInitializer} mechanism and it's default implementation
+ * in {@link jmri.managers.DefaultInstanceInitializer}.
+ * 
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -96,6 +103,7 @@ public class InstanceManager {
      * @param type The class Object for the items to be removed.
      */
     static public <T> void reset(Class<T> type) {
+        if (managerLists == null) return;
         managerLists.put(type, null);
     }
     
@@ -106,6 +114,7 @@ public class InstanceManager {
      * @param type The class Object for the item's type.  
      */
     static public <T> void deregister(T item, Class<T> type){
+        if (managerLists == null) return;
         ArrayList<Object> l = managerLists.get(type);
         if(l!=null)
             l.remove(item);
@@ -121,6 +130,7 @@ public class InstanceManager {
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
+        if (managerLists == null) return null;
         ArrayList<Object> l = managerLists.get(type);
         if (l == null || l.size()<1) {
             // see if need to autocreate

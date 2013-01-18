@@ -668,6 +668,16 @@ public class TrainCommon {
 		}
 		return false;
 	}
+	
+	public static String formatStringToCommaSeparated(String[] string) {
+		StringBuffer sbuf = new StringBuffer("");
+		for (int i = 0; i < string.length; i++) {
+			sbuf = sbuf.append(string[i] + ", ");
+		}
+		if (sbuf.length() > 2)
+			sbuf.setLength(sbuf.length() - 2); // remove trailing separators
+		return sbuf.toString();
+	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainCommon.class
 			.getName());
