@@ -8,6 +8,7 @@ package jmri.util;
  *
  * @author Bob Jacobsen  Copyright 2006
  * @author Daniel Boudreau Copyright 2012 (add Unix)
+ * @auther Randall Wood Copyright 2013
  * @version $Revision$
  */
 
@@ -102,7 +103,9 @@ public class SystemType {
     }
 
     static void setType() {
-        if (isSet) return;
+        if (isSet) {
+            return;
+        }
         isSet = true;
         
         osName = System.getProperty("os.name");
@@ -120,7 +123,7 @@ public class SystemType {
         } else if (lowerCaseName.contains("windows")) {  // usually a suffix indicates flavor
             // Windows
             type = WINDOWS;
-        } else if (lowerCaseName.contains("nix") || lowerCaseName.contains("nux") || lowerCaseName.contains("aix")) {
+        } else if (lowerCaseName.contains("nix") || lowerCaseName.contains("nux") || lowerCaseName.contains("aix") || lowerCaseName.contains("solaris")) {
         	// Unix
         	type = UNIX;
         } else {

@@ -510,87 +510,14 @@ public abstract class XmlFile {
      * @return Pathname in local form, with a terminating separator
      */
     static public String prefsDir() {
-        if(userDirectory!=null)
+        if (userDirectory != null) {
             return userDirectory;
-        // check for jmri.prefsdir
-        String jmriPrefsDir = System.getProperty("jmri.prefsdir","");
-        if (jmriPrefsDir.length()>0) return jmriPrefsDir+File.separator;
-        
-        // not present, work through other choices
-        String userHome     = System.getProperty("user.home","");
-
-        // add a File.separator to userHome here, so can ignore whether its empty later on
-        if (!userHome.equals("")) userHome = userHome+File.separator;
-
-        String result;          // no value; that allows compiler to check completeness of algorithm
-
-        switch (SystemType.getType()) {
-            case SystemType.MACOSX:
-                // Mac OS X
-                result = userHome + "Library" + File.separator + "Preferences"
-                        + File.separator + "JMRI" + File.separator;
-                break;
-            case SystemType.LINUX:
-                // Linux, so use an invisible file
-                result = userHome + ".jmri" + File.separator;
-                break;
-            default:
-                // Could be Windows, other
-                result = userHome + "JMRI" + File.separator;
-                break;
         }
-
-        if (log.isDebugEnabled()) log.debug("prefsDir defined as \""+result+
-                                            "\" based on os.name=\""
-                                            +SystemType.getOSName()
-                                            +"\" user.home=\""
-                                            +userHome
-                                            +"\"");
-        return result;
+        return FileUtil.getPreferencesPath();
     }
     
- //
-    static public String configDir() {
-        // check for jmri.prefsdir
-        String jmriPrefsDir = System.getProperty("jmri.prefsdir","");
-        if (jmriPrefsDir.length()>0) return jmriPrefsDir+File.separator;
-        
-        // not present, work through other choices
-        String userHome     = System.getProperty("user.home","");
-		
-        // add a File.separator to userHome here, so can ignore whether its empty later on
-        if (!userHome.equals("")) userHome = userHome+File.separator;
-		
-        String result;          // no value; that allows compiler to check completeness of algorithm
-		
-        switch (SystemType.getType()) {
-            case SystemType.MACOSX:
-                // Mac OS X
-                result = userHome + "Library" + File.separator + "Preferences"
-				+ File.separator + "JMRI" + File.separator;
-                break;
-            case SystemType.LINUX:
-                // Linux, so use an invisible file
-                result = userHome + ".jmri" + File.separator;
-                break;
-            default:
-                // Could be Windows, other
-                result = userHome + "JMRI" + File.separator;
-                break;
-        }
-		
-        if (log.isDebugEnabled()) log.debug("configDir defined as \""+result+
-                                            "\" based on os.name=\""
-                                            +SystemType.getOSName()
-                                            +"\" user.home=\""
-                                            +userHome
-                                            +"\"");
-        return result;
-    }
-    
-	
-	static public String resourcesDir() {
-    	return XmlFile.prefsDir()+ "resources" +File.separator ;
+    static public String resourcesDir() {
+        return XmlFile.prefsDir() + "resources" + File.separator;
     }
     
     static boolean verify = false;
@@ -609,56 +536,16 @@ public abstract class XmlFile {
     static private String scriptsDirectory = null;
     
     static public String scriptsDir() {
-        if (scriptsDirectory!=null){
+        if (scriptsDirectory != null) {
             return scriptsDirectory;
         }
-        // check for jmri.prefsdir
-        String jmriScriptsDir = System.getProperty("user.dir")+java.io.File.separator+"jython";
-        if (jmriScriptsDir.length()>0) return jmriScriptsDir+File.separator;
-        
-        // not present, work through other choices
-        String osName       = SystemType.getOSName();
-        String mrjVersion   = System.getProperty("mrj.version","<unknown>");
-        String userHome     = System.getProperty("user.home","");
-
-        // add a File.separator to userHome here, so can ignore whether its empty later on
-        if (!userHome.equals("")) userHome = userHome+File.separator;
-
-        String result;          // no value; that allows compiler to check completeness of algorithm
-
-        if ( !mrjVersion.equals("<unknown>")) {
-            // Macintosh, test for OS X
-            if (SystemType.isMacOSX()) {
-                // Mac OS X
-                result = userHome+"Library"+File.separator+"Preferences"
-                    +File.separator+"JMRI"+File.separator;
-            } else {
-                // Mac Classic, by elimination. Check consistency of mrjVersion
-                // with that assumption
-                if (!(mrjVersion.charAt(0)=='2'))
-                    log.error("Decided Mac Classic, but mrj.version is \""
-                              +mrjVersion+"\" os.name is \""
-                              +osName+"\"");
-                // userHome is the overall preferences directory
-                result = userHome+"JMRI"+File.separator;
-            }
-        } else if (SystemType.isLinux()) {
-            // Linux, so use an invisible file
-            result = userHome+".jmri"+File.separator;
-        } else {
-            // Could be Windows, other
-            result = userHome+"JMRI"+File.separator;
+        // return default
+        String jmriScriptsDir = FileUtil.getProgramPath() + java.io.File.separator + "jython";
+        if (jmriScriptsDir.length() > 0) {
+            return jmriScriptsDir + File.separator;
         }
-
-        if (log.isDebugEnabled()) log.debug("prefsDir defined as \""+result+
-                                            "\" based on os.name=\""
-                                            +osName
-                                            +"\" mrj.version=\""
-                                            +mrjVersion
-                                            +"\" user.home=\""
-                                            +userHome
-                                            +"\"");
-        return result;
+        // if not present in JMRI distribution path, use the default preferences directory
+        return FileUtil.getPreferencesPath();
     }
     
     

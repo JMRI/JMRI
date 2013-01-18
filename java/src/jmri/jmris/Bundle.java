@@ -24,7 +24,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  */
 public class Bundle extends jmri.Bundle {
 
-    private final String name = "jmri.jmris.JmriServerBundle"; // NOI18N
+    private static final String name = "jmri.jmris.JmriServerBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly

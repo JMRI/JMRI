@@ -559,7 +559,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     /**
      * Handle changing/setting the address
      */
-    private void changeOfAddress() {
+    private synchronized void changeOfAddress() {
     	if (addrSelector.getAddress() != null) {
 	    	profileAddress = addrSelector.getAddress().getNumber();
 	    	profileIsLong = addrSelector.getAddress().isLongAddress();

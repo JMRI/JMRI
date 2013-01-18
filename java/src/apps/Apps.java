@@ -34,6 +34,10 @@ import java.util.ArrayList;
 
 import java.util.EventObject;
 import javax.swing.*;
+import java.awt.AWTEvent;
+import java.awt.Toolkit;
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.JTextComponent;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
 import jmri.plaf.macosx.QuitHandler;
@@ -274,7 +278,35 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         log.debug("Done with statusPanel, start buttonSpace");
         add(buttonSpace());
         add(_jynstrumentSpace);
+        long eventMask = AWTEvent.MOUSE_EVENT_MASK;
 
+        Toolkit.getDefaultToolkit().addAWTEventListener( new AWTEventListener()
+        {
+            public void eventDispatched(AWTEvent e)
+            {
+              if (e instanceof MouseEvent) {
+                MouseEvent  me=(MouseEvent)e;
+                if(me.isPopupTrigger() && me.getComponent() instanceof JTextComponent){
+                    final JTextComponent component = (JTextComponent)me.getComponent();  
+                    final JPopupMenu menu = new JPopupMenu();
+                    JMenuItem item;  
+                    item = new JMenuItem(new DefaultEditorKit.CopyAction());  
+                    item.setText("Copy");  
+                    item.setEnabled(component.getSelectionStart() != component.getSelectionEnd());  
+                    menu.add(item);  
+                    item = new JMenuItem(new DefaultEditorKit.CutAction());  
+                    item.setText("Cut");  
+                    item.setEnabled(component.isEditable() && component.getSelectionStart() != component.getSelectionEnd());  
+                    menu.add(item);  
+                    item = new JMenuItem(new DefaultEditorKit.PasteAction());  
+                    item.setText("Paste");  
+                    item.setEnabled(component.isEditable());  
+                    menu.add(item);  
+                    menu.show(me.getComponent(), me.getX(), me.getY());
+                }
+              } 
+            }
+        }, eventMask);
         log.debug("End constructor");
     }
     

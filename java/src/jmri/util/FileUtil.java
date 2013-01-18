@@ -29,45 +29,50 @@ import org.apache.log4j.Logger;
 public class FileUtil {
 
     /**
-     * Portable reference to items in the JMRI program directory
+     * Portable reference to items in the JMRI program directory.
      */
     static public final String PROGRAM = "program:";
     /**
-     * Portable reference to items in the JMRI user's preferences directory
+     * Portable reference to items in the JMRI user's preferences directory.
      */
     static public final String PREFERENCES = "preference:";
     /**
-     * Portable reference to the user's home directory
+     * Portable reference to the user's home directory.
      */
     static public final String HOME = "home:";
+    /**
+     * Replaced with {@link #PROGRAM}.
+     *
+     * @see #PROGRAM
+     * @deprecated
+     */
     @Deprecated
     static public final String RESOURCE = "resource:";
     @Deprecated
+    /**
+     * Replaced with {@link #PREFERENCES}.
+     *
+     * @see #PREFERENCES
+     */
     static public final String FILE = "file:";
     /**
-     * The portable file path component separator
+     * The portable file path component separator.
      */
     static public final char SEPARATOR = '/';
-    /*
-     * JMRI program path, defaults to directory JMRI is executed from
-     */
+    /* JMRI program path, defaults to directory JMRI is executed from */
     static private String programPath = null;
-    /*
-     * User's home directory
-     */
+    /* User's home directory */
     static private String homePath = System.getProperty("user.home") + File.separator;
-    /*
-     * path to jmri.jar
-     */
+    /* path to jmri.jar */
     static private String jarPath = null;
     // initialize logging
     static private Logger log = Logger.getLogger(FileUtil.class.getName());
 
     /**
-     * Find the resource file corresponding to a name. There are five cases:
-     * <UL> <LI> Starts with "resource:", treat the rest as a pathname relative
-     * to the program directory (deprecated; see "program:" below) <LI> Starts
-     * with "program:", treat the rest as a relative pathname below the program
+     * Get the resource file corresponding to a name. There are five cases: <UL>
+     * <LI> Starts with "resource:", treat the rest as a pathname relative to
+     * the program directory (deprecated; see "program:" below) <LI> Starts with
+     * "program:", treat the rest as a relative pathname below the program
      * directory <LI> Starts with "preference:", treat the rest as a relative
      * path below the preferences directory <LI> Starts with "home:", treat the
      * rest as a relative path below the user.home directory <LI> Starts with
@@ -76,8 +81,9 @@ public class FileUtil {
      * Otherwise, treat the name as a relative path below the program directory
      * </UL> In any case, absolute pathnames will work.
      *
-     * @param pName The name string, possibly starting with file: or resource:
-     * @return Absolute file name to use, or null.
+     * @param pName The name string, possibly starting with program:,
+     * preference:, home:, file: or resource:
+     * @return Absolute or relative file name to use, or null.
      * @since 2.7.2
      */
     static public String getExternalFilename(String pName) {
@@ -107,7 +113,7 @@ public class FileUtil {
             }
             // assume this is a relative path from the
             // preferences directory
-            filename = XmlFile.userFileLocationDefault() + filename;
+            filename = FileUtil.getUserFilesPath() + filename;
             if (log.isDebugEnabled()) {
                 log.debug("load from user preferences file: " + filename);
             }
@@ -274,6 +280,49 @@ public class FileUtil {
     }
 
     /**
+     * Get the preferences directory. This directory is set based on the OS and
+     * is not normally settable by the user. <ul><li>On Microsoft Windows
+     * systems, this is JMRI in the User's home directory.</li> <li>On OS X
+     * systems, this is Library/Preferences/JMRI in the User's home
+     * directory.</li> <li>On Linux, Solaris, and othe UNIXes, this is .jmri in
+     * the User's home directory.</li> <li>This can be overridden with by
+     * setting the jmri.prefsdir Java property when starting JMRI.</li></ul> Use
+     * {@link #getHomePath()} to get the User's home directory.
+     *
+     * @see #getHomePath()
+     * @return Path to the preferences directory.
+     */
+    static public String getPreferencesPath() {
+        // return jmri.prefsdir property if present
+        String jmriPrefsDir = System.getProperty("jmri.prefsdir", "");
+        if (jmriPrefsDir.length() > 0) {
+            return jmriPrefsDir + File.separator;
+        }
+        String result;
+        switch (SystemType.getType()) {
+            case SystemType.MACOSX:
+                // Mac OS X
+                result = FileUtil.getHomePath() + "Library" + File.separator + "Preferences"
+                        + File.separator + "JMRI" + File.separator;
+                break;
+            case SystemType.LINUX:
+            case SystemType.UNIX:
+                // Linux, so use an invisible file
+                result = FileUtil.getHomePath() + ".jmri" + File.separator;
+                break;
+            case SystemType.WINDOWS:
+            default:
+                // Could be Windows, other
+                result = FileUtil.getHomePath() + "JMRI" + File.separator;
+                break;
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("preferencesPath defined as \"" + result + "\" based on os.name=\"" + SystemType.getOSName() + "\"");
+        }
+        return result;
+    }
+
+    /**
      * Get the JMRI program directory.
      *
      * @return JMRI program directory as a String.
@@ -288,8 +337,8 @@ public class FileUtil {
     /**
      * Set the JMRI program directory.
      *
-     * Convenience method that calls {@link FileUtil#setProgramPath(java.io.File)
-     * with the passed in path.
+     * Convenience method that calls
+     * {@link FileUtil#setProgramPath(java.io.File)} with the passed in path.
      *
      * @param path
      */
@@ -320,7 +369,6 @@ public class FileUtil {
      * {@link #findURL(java.lang.String)}
      *
      * @param path
-     * @return
      */
     static public URL findExternalFilename(String path) {
         return FileUtil.findURL(FileUtil.getExternalFilename(path));
@@ -374,7 +422,7 @@ public class FileUtil {
      * @return The URL or null.
      * @see #findInputStream(java.lang.String)
      * @see #findInputStream(java.lang.String, java.lang.String[])
-     * @see #findURL(java.lang.String, java.lang.String[]);
+     * @see #findURL(java.lang.String, java.lang.String[])
      */
     static public URL findURL(String path) {
         return FileUtil.findURL(path, new String[]{});

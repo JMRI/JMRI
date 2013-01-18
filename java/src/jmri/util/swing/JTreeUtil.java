@@ -20,7 +20,7 @@ import org.jdom.*;
 public class JTreeUtil extends GuiUtilBase {
 
     /**
-     * @param file XML file to be read and processed
+     * @param name XML file to be read and processed
      * @param wi WindowInterface to be passed to the nodes in the tree
      * @param context Blind context Object passed to the nodes in the tree
      */

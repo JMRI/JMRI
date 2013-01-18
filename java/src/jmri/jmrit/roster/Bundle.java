@@ -25,7 +25,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  */
 public class Bundle extends jmri.jmrit.Bundle {
 
-    private final String name = "jmri.jmrit.roster.JmritRosterBundle"; // NOI18N
+    private final static String name = "jmri.jmrit.roster.JmritRosterBundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
