@@ -614,7 +614,6 @@ public class CircuitBuilder  {
                     retOK = true;
                 }            }
         }
-        _currentBlock = null;
         if (!retOK) {
             JOptionPane.showMessageDialog(_editor, rbcp.getString("createOBlock"), 
                     rbcp.getString("NeedDataTitle"), JOptionPane.INFORMATION_MESSAGE);

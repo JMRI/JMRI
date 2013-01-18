@@ -70,7 +70,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         JPanel panel = new JPanel();
 //        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(CircuitBuilder.makeTextBoxPanel(false, _blockState, "blockState", false, null));
-        _blockState.setPreferredSize(new Dimension(50, _blockState.getPreferredSize().height));
+        _blockState.setPreferredSize(new Dimension(150, _blockState.getPreferredSize().height));
         contentPane.add(panel);
 
         panel = new JPanel();
