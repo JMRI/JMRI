@@ -67,7 +67,7 @@ public class CbusOpCodes {
             return decode(msg);
         }
         
-        return new String("Bootloader Message Type: " + header);
+        return "Bootloader Message Type: " + header;
     }
 
     /**
