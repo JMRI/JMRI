@@ -13,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (options | engines | engineModels | engineTypes | engineLengths | consists)*>
+<!ELEMENT operations-config (options | engines | engineModels | engineTypes | engineLengths | consists
+| models | types | lengths | newConsists)*>
 
 <!ELEMENT engineModels (#PCDATA)>
 <!ELEMENT engineTypes (#PCDATA)>
@@ -60,4 +61,18 @@
 <!ATTLIST engine locUnknown				(true | false ) "false"> 
 <!ATTLIST engine outOfService			(true | false ) "false">
 
+<!ELEMENT models (model*)*>
+<!ELEMENT model EMPTY>
+<!ATTLIST model name					CDATA #IMPLIED> 
 
+<!ELEMENT types (type*)*>
+<!ELEMENT type EMPTY>
+<!ATTLIST type name						CDATA #IMPLIED> 
+
+<!ELEMENT lengths (length*)*>
+<!ELEMENT length EMPTY>
+<!ATTLIST length value					CDATA #IMPLIED> 
+
+<!ELEMENT newConsists (consist*)*>
+<!ELEMENT consist EMPTY>
+<!ATTLIST consist name					CDATA #IMPLIED> 

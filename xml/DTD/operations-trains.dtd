@@ -65,6 +65,7 @@
 <!ATTLIST train routeId				CDATA #IMPLIED> 
 <!ATTLIST train carTypes			CDATA #IMPLIED> 
 <!ATTLIST train carRoadOperation	CDATA #IMPLIED>
+<!ATTLIST train carRoadOption		CDATA #IMPLIED>
 <!ATTLIST train carRoads			CDATA #IMPLIED>
 <!ATTLIST train carLoadOption		CDATA #IMPLIED>
 <!ATTLIST train carLoads			CDATA #IMPLIED>

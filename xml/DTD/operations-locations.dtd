@@ -19,12 +19,9 @@
 <!ELEMENT locationEditOptions EMPTY>
 
 <!ELEMENT locations (location)*>
-<!ELEMENT location (track)*>
-<!ELEMENT track (comments)*>
-<!ELEMENT comments (both | pickup | setout)*>
-<!ELEMENT both EMPTY>
-<!ELEMENT pickup EMPTY>
-<!ELEMENT setout EMPTY>
+<!ELEMENT location (types | track)*>
+<!ELEMENT track (types | carLoads | dropIds | pickupIds | comments)*>
+
 
 <!ELEMENT schedules (schedule)*>
 <!ELEMENT schedule (item)*>
@@ -56,6 +53,7 @@
 <!ATTLIST track dir				CDATA #IMPLIED> 
 <!ATTLIST track carTypes		CDATA #IMPLIED> 
 <!ATTLIST track carRoadOperation	CDATA #IMPLIED> 
+<!ATTLIST track carRoadOption	CDATA #IMPLIED> 
 <!ATTLIST track carRoads		CDATA #IMPLIED>
 <!ATTLIST track carLoadOption	CDATA #IMPLIED> 
 <!ATTLIST track carLoads		CDATA #IMPLIED>
@@ -106,4 +104,27 @@
 <!ATTLIST locationEditOptions y		CDATA #IMPLIED> 
 <!ATTLIST locationEditOptions height	CDATA #IMPLIED> 
 <!ATTLIST locationEditOptions width	CDATA #IMPLIED> 
+
+<!ELEMENT types (carType | locoType*)*>
+<!ELEMENT carType EMPTY>
+<!ATTLIST carType name				CDATA #IMPLIED> 
+<!ELEMENT locoType EMPTY>
+<!ATTLIST locoType name				CDATA #IMPLIED> 
+
+<!ELEMENT carLoads (carLoad*)*>
+<!ELEMENT carLoad EMPTY>
+<!ATTLIST carLoad name				CDATA #IMPLIED> 
+
+<!ELEMENT dropIds (dropId*)*>
+<!ELEMENT dropId EMPTY>
+<!ATTLIST dropId id					CDATA #IMPLIED> 
+
+<!ELEMENT pickupIds (pickupId*)*>
+<!ELEMENT pickupId EMPTY>
+<!ATTLIST pickupId id					CDATA #IMPLIED> 
+
+<!ELEMENT comments (both | pickup | setout)*>
+<!ELEMENT both EMPTY>
+<!ELEMENT pickup EMPTY>
+<!ELEMENT setout EMPTY>
 

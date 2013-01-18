@@ -130,7 +130,9 @@
    
 <!ATTLIST buildReport level				CDATA #IMPLIED>    
 <!ATTLIST buildReport useEditor			(true | false ) "false">   
-<!ATTLIST buildReport indent			(true | false ) "true">                                
+<!ATTLIST buildReport indent			(true | false ) "true">  
+<!ATTLIST buildReport fontSize			CDATA #IMPLIED>   
+                              
 <!ATTLIST owner name					CDATA #IMPLIED>
 
 <!ATTLIST iconColor north				CDATA #IMPLIED>    
@@ -146,6 +148,8 @@
 <!ATTLIST setupFrameOptions width		CDATA #IMPLIED> 
 
 <!ATTLIST tab enabled					(true | false ) "false"> 
+<!ATTLIST tab length					CDATA #IMPLIED>
+
 <!ATTLIST manifest truncate				(true | false ) "false"> 
 <!ATTLIST manifest useDepartureTime		(true | false ) "false"> 
 <!ATTLIST manifest useEditor			(true | false ) "false"> 

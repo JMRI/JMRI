@@ -13,7 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (options | cars | roadNames | carTypes | carColors | carLengths | carOwners | kernels | loads)*>
+<!ELEMENT operations-config (options | cars | roadNames | carTypes | carColors | carLengths | carOwners | kernels | loads
+| roads | types | colors | lengths | owners | newKernels)*>
 
 <!ELEMENT roadNames (#PCDATA)>
 <!ELEMENT carTypes (#PCDATA)>
@@ -95,3 +96,26 @@
 <!ATTLIST carLoad pickupComment		CDATA #IMPLIED>
 <!ATTLIST carLoad dropComment		CDATA #IMPLIED>
 
+<!ELEMENT roads (road*)*>
+<!ELEMENT road EMPTY>
+<!ATTLIST road name					CDATA #IMPLIED> 
+
+<!ELEMENT types (type*)*>
+<!ELEMENT type EMPTY>
+<!ATTLIST type name					CDATA #IMPLIED> 
+
+<!ELEMENT colors (color*)*>
+<!ELEMENT color EMPTY>
+<!ATTLIST color name				CDATA #IMPLIED> 
+
+<!ELEMENT lengths (length*)*>
+<!ELEMENT length EMPTY>
+<!ATTLIST length value				CDATA #IMPLIED> 
+
+<!ELEMENT owners (owner*)*>
+<!ELEMENT owner EMPTY>
+<!ATTLIST owner name				CDATA #IMPLIED> 
+
+<!ELEMENT newKernels (kernel*)*>
+<!ELEMENT kernel EMPTY>
+<!ATTLIST kernel name				CDATA #IMPLIED> 
