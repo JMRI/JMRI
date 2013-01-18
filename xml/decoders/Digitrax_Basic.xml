@@ -460,7 +460,7 @@
           </enumChoice>
         </enumVal>
         <label>Function 2 behavior</label>
-        <label xml:lang="it">Comportamento Funzione 2)</label>
+        <label xml:lang="it">Comportamento Funzione 2</label>
       </variable>
       <variable label="Function 3 effect generated" CV="53" mask="XXXXVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>

@@ -114,8 +114,11 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
 
     public void testAutoCreateOK() {
     
-        OkAutoCreate obj = InstanceManager.getDefault(OkAutoCreate.class);
-        Assert.assertNotNull(obj);
+        OkAutoCreate obj1 = InstanceManager.getDefault(OkAutoCreate.class);
+        Assert.assertNotNull("Created object 1", obj1);
+        OkAutoCreate obj2 = InstanceManager.getDefault(OkAutoCreate.class);
+        Assert.assertNotNull("Created object 2", obj2);
+        Assert.assertTrue("same object", obj1 == obj2);
     }
     
     public class NoAutoCreate {}

@@ -51,7 +51,7 @@ public class DieselPane extends EnginePane {
 
     /** Constructor
      *
-     * @param String n : pane title
+     * @param  n pane title
      */
     public DieselPane(String n) {
 	super(n);
