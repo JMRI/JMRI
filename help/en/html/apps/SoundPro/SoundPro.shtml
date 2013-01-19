@@ -31,10 +31,11 @@ The SoundPro main window gives you access to all the
 capabilities of JMRI.
 
 <p>
+<p>
 Help on specific menus:
 <ul>
-<li>Edit - (<a href="../../../package\apps/TabbedPreferences.shtml">Preferences</a>)
-<li><a href="../../jmri/jmrit/ToolsMenu.shtml">Tools</a>
+<li>Edit - (<a href="../../../package/apps/TabbedPreferences.shtml">Preferences</a>)
+<li><a href="../../tools/Index.shtml">Tools</a>
 <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu">Roster</a>
 <li><a href="../../../html/tools/Audio.shtml">Audio</a>
 </ul>
