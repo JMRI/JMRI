@@ -74,7 +74,7 @@ what has not.
 <dt class=left>File contents: XML Header </dt>
 <dd>
 <p>You'll see something like this at the top of the file (the examples are from the <a
-HREF="../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml</a> file):
+HREF="../../../../../xml/decoders/Digitrax_1x2.xml">Digitrax_1x2.xml">Digitrax_1x2.xml</a> file):
 
 <p class=example>
 &lt;?xml version="1.0"?&gt;<BR>
