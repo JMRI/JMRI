@@ -516,10 +516,6 @@ public abstract class XmlFile {
         return FileUtil.getPreferencesPath();
     }
     
-    static public String resourcesDir() {
-        return XmlFile.prefsDir() + "resources" + File.separator;
-    }
-    
     static boolean verify = false;
     static boolean include = true;
     static public boolean getVerify() { return verify; }
