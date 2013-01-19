@@ -27,6 +27,7 @@ import java.awt.Cursor;
 import java.awt.Rectangle;
 
 import java.awt.event.ItemEvent;
+import jmri.util.FileUtil;
 
 /**
  * Frame providing a command station programmer from decoder definition files.
@@ -1234,7 +1235,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         Roster.writeRosterFile();
 
         // save date changed, update

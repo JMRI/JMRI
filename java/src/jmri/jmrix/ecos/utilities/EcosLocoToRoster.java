@@ -28,6 +28,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
+import jmri.util.FileUtil;
 
 public class EcosLocoToRoster implements EcosListener {
     
@@ -341,7 +342,7 @@ public class EcosLocoToRoster implements EcosListener {
 
         re.writeFile(null, null, null);
         
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         
         Roster.writeRosterFile();
         ecosManager.clearLocoToRoster();

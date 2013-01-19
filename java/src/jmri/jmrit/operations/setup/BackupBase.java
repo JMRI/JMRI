@@ -12,6 +12,7 @@ import java.util.Calendar;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.util.FileUtil;
 
 /**
  * Base class for backing up and restoring Operations working files. Derived
@@ -66,7 +67,7 @@ public abstract class BackupBase {
 		if (rootName == null)
 			throw new IllegalArgumentException("Backup root name can't be null"); // NOI18N
 
-		_operationsRoot = new File(XmlFile.prefsDir(),
+		_operationsRoot = new File(FileUtil.getUserFilesPath(),
 				OperationsXml.getOperationsDirectoryName());
 
 		_backupRoot = new File(_operationsRoot, rootName);

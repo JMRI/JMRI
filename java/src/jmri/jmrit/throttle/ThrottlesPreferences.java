@@ -10,6 +10,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 public class ThrottlesPreferences {
     private boolean _useExThrottle = true;	
@@ -28,7 +29,7 @@ public class ThrottlesPreferences {
 	private ArrayList<PropertyChangeListener> listeners;
     
     public ThrottlesPreferences(){
-		String dirname = XmlFile.prefsDir()+ "throttle" +File.separator;
+		String dirname = FileUtil.getUserFilesPath()+ "throttle" +File.separator;
 		XmlFile.ensurePrefsPresent(dirname);
         prefFile = dirname+ "ThrottlesPreferences.xml";
 		ThrottlesPrefsXml prefs = new ThrottlesPrefsXml();

@@ -10,6 +10,7 @@ import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
 import javax.swing.Action;
+import jmri.util.FileUtil;
 
 import org.jdom.Element;
 
@@ -63,7 +64,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
         // read the file for the "from" entry, create a new entry, write it out
 
         // ensure preferences will be found for read
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         // locate the file

@@ -8,6 +8,7 @@ import jmri.BlockManager;
 import jmri.Block;
 
 import java.util.List;
+import jmri.util.FileUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Attribute;
@@ -20,7 +21,7 @@ import org.jdom.Attribute;
  * @version     $Revision$
  */
 
-public class BlockValueFile extends jmri.jmrit.XmlFile {
+public class BlockValueFile extends XmlFile {
 	
 	public BlockValueFile () {
 		super();
@@ -29,7 +30,7 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 	
 	// operational variables
 	private BlockManager blockManager = null;
-	private static String defaultFileName = XmlFile.prefsDir()+"blockvalues.xml";
+	private static String defaultFileName = FileUtil.getUserFilesPath()+"blockvalues.xml";
 	private Document doc = null;
 	private Element root = null;
 	

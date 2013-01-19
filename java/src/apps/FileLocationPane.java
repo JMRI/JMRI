@@ -43,7 +43,7 @@ public class FileLocationPane extends JPanel {
     
     public static void save(){
         FileUtil.setScriptsPath(scriptLocation.getText());
-        jmri.jmrit.XmlFile.setUserFileLocationDefault(userLocation.getText());
+        FileUtil.setUserFilesPath(userLocation.getText());
         //jmri.jmrit.throttle.ThrottleFrame.setDefaultThrottleLocation(throttleLocation.getText());
     }
     

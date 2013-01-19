@@ -8,6 +8,7 @@ import java.io.File;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
+import jmri.util.FileUtil;
 
 import org.jdom.Element;
 
@@ -86,7 +87,7 @@ public class RecreateRosterAction extends JmriAbstractAction {
 
     String[] getFileNames() {
         // ensure preferences will be found for read
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         // create an array of file names from roster dir in preferences, count entries
@@ -104,7 +105,7 @@ public class RecreateRosterAction extends JmriAbstractAction {
                 }
             }
         } else {
-            log.warn(XmlFile.prefsDir()+"roster directory was missing, though tried to create it");
+            log.warn(FileUtil.getUserFilesPath()+"roster directory was missing, though tried to create it");
         }
 
         // Copy the entries to the final array

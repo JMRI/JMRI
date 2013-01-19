@@ -29,13 +29,13 @@ public class WebServerManager {
 
     private WebServerManager() {
         if (InstanceManager.getDefault(WebServerPreferences.class) == null) {
-            File webServerPrefsFile = new File(XmlFile.prefsDir() + "networkServices" + File.separator + "WebServerPreferences.xml"); // NOI18N
-            File miniServerPrefsFile = new File(XmlFile.prefsDir() + "miniserver" + File.separator + "MiniServerPreferences.xml"); // NOI18N
+            File webServerPrefsFile = new File(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"); // NOI18N
+            File miniServerPrefsFile = new File(FileUtil.getUserFilesPath() + "miniserver" + File.separator + "MiniServerPreferences.xml"); // NOI18N
             if (!webServerPrefsFile.exists() && miniServerPrefsFile.exists()) {
                 // import Mini Server preferences into Web Server preferences
                 preferencesFromMiniServerPreferences(miniServerPrefsFile, webServerPrefsFile);
             } else {
-                InstanceManager.store(new WebServerPreferences(XmlFile.prefsDir() + "networkServices" + File.separator + "WebServerPreferences.xml"), WebServerPreferences.class); // NOI18N
+                InstanceManager.store(new WebServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"), WebServerPreferences.class); // NOI18N
             }
             // disable during testing
             // this.removeV2Index();

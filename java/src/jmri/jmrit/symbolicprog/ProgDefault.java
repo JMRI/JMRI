@@ -29,14 +29,14 @@ public class ProgDefault {
         // create an array of file names from prefs/programmers, count entries
         int np = 0;
         String[] sp = {};
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir() + "programmers");
-        File fp = new File(XmlFile.prefsDir() + "programmers");
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath() + "programmers");
+        File fp = new File(FileUtil.getUserFilesPath() + "programmers");
         XmlFilenameFilter filter = new XmlFilenameFilter();
         if (fp.exists()) {
             sp = fp.list(filter);
             np = sp.length;
         } else {
-            log.warn(XmlFile.prefsDir() + "programmers was missing, though tried to create it");
+            log.warn(FileUtil.getUserFilesPath() + "programmers was missing, though tried to create it");
         }
         if (log.isDebugEnabled()) {
             log.debug("Got " + np + " programmers from " + fp.getPath());

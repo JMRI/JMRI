@@ -14,6 +14,7 @@ import javax.swing.*;
 import java.net.URL;
 
 import java.util.*;
+import jmri.util.FileUtil;
 import org.jdom.*;
 
 /**
@@ -83,11 +84,11 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         log.debug("["+temp.toString()+"]");
         
         // ensure directories exist
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+"decoders");
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+File.separator+"decoders");
 
         // output file
         File toFile = new File(
-                XmlFile.prefsDir()+File.separator
+                FileUtil.getUserFilesPath()+File.separator
                 +"decoders"+File.separator
                 +temp.getName()
             );

@@ -12,6 +12,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import javax.swing.*;
+import jmri.util.FileUtil;
 
 /**
  * Base class for GUI3 JMRI applications.
@@ -215,13 +216,13 @@ public class Apps3 {
             configFilename = "jmriprefs3.xml";
             log.debug("configure from default file "+configFilename);
         }
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         File file = new File(configFilename);
         // decide whether name is absolute or relative
         if (!file.isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
+            file = new File(FileUtil.getUserFilesPath()+configFilename);
         }
         try {
             configOK = InstanceManager.configureManagerInstance().load(file);
@@ -354,13 +355,13 @@ public class Apps3 {
         InstanceManager.configureManagerInstance().registerPref(guiPrefs);
 
         // write file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         // decide whether name is absolute or relative
         File file = new File(configFilename);
         if (!file.isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
+            file = new File(FileUtil.getUserFilesPath()+configFilename);
         }
 
         InstanceManager.configureManagerInstance().storePrefs(file);

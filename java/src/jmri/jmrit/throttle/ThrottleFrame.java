@@ -83,7 +83,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 
     public static String getDefaultThrottleFolder() {
         if (ThrottleFileLocation == null)
-            return XmlFile.prefsDir()+"throttle"+File.separator ;
+            return FileUtil.getUserFilesPath()+"throttle"+File.separator ;
         return ThrottleFileLocation;
     }
 

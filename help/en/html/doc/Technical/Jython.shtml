@@ -210,7 +210,7 @@ One way to do that is to load a configuration file, perhaps one
 you've created earlier via the JmriDemo preferences panel:
 <PRE>
   import java.io
-  configfile = java.io.File(jmri.jmrit.XmlFile.prefsDir()+"JmriDemoConfig2.xml")
+  configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"JmriDemoConfig2.xml")
   jmri.InstanceManager.setConfigureManager(jmri.configurexml.ConfigXmlManager())
   jmri.InstanceManager.configureManagerInstance().load(configfile)
 </PRE>

@@ -2,7 +2,7 @@ package jmri.jmris.json;
 
 import java.io.File;
 import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import org.apache.log4j.Logger;
 
 public class JsonServerManager {
@@ -14,7 +14,7 @@ public class JsonServerManager {
 
     private JsonServerManager() {
         if (InstanceManager.getDefault(JsonServerPreferences.class) == null) {
-            InstanceManager.store(new JsonServerPreferences(XmlFile.prefsDir() + "networkServices" + File.separator + "JsonServerPreferences.xml"), JsonServerPreferences.class); // NOI18N
+            InstanceManager.store(new JsonServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"), JsonServerPreferences.class); // NOI18N
         }
         preferences = InstanceManager.getDefault(JsonServerPreferences.class);
     }

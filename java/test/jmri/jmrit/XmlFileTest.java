@@ -79,7 +79,7 @@ public class XmlFileTest extends TestCase {
 
         // this test uses explicit filenames intentionally, to ensure that
         // the resulting files go into the test tree area.  This is not
-        // a test of prefsDir, and shouldn't use that.
+        // a test of the user's files directory, and shouldn't use that.
         XmlFile.ensurePrefsPresent("temp");
         XmlFile.ensurePrefsPresent("temp"+File.separator+"prefs");
         Assert.assertTrue("existing file ", x.checkFile("decoders"));  // should be in xml

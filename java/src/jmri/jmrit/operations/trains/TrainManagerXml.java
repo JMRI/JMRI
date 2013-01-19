@@ -4,10 +4,10 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.util.FileUtil;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -121,7 +121,7 @@ public class TrainManagerXml extends OperationsXml {
 	}
 
 	public String defaultBuildReportFilename(String name) {
-		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
+		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
 				+ "buildstatus" + File.separator + BuildReportFileName + name + fileType;	// NOI18N
 	}
 
@@ -147,7 +147,7 @@ public class TrainManagerXml extends OperationsXml {
 	}
 
 	public String defaultManifestFilename(String name) {
-		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
+		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
 				+ "manifests" + File.separator + ManifestFileName + name + fileType;// NOI18N
 	}
 
@@ -161,7 +161,7 @@ public class TrainManagerXml extends OperationsXml {
 	}
 
 	public String defaultCsvManifestFilename(String name) {
-		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
+		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
 				+ "csvManifests" + File.separator + ManifestFileName + name + fileTypeCsv; // NOI18N
 	}
 
@@ -178,7 +178,7 @@ public class TrainManagerXml extends OperationsXml {
 	}
 
 	public String defaultSwitchListName(String name) {
-		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
+		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
 				+ "switchLists" + File.separator + SwitchListFileName + name + fileType; // NOI18N
 	}
 
@@ -195,7 +195,7 @@ public class TrainManagerXml extends OperationsXml {
 	}
 
 	public String defaultCsvSwitchListName(String name) {
-		return XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName() + File.separator
+		return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
 				+ "csvSwitchLists" + File.separator + SwitchListFileName + name + fileTypeCsv;// NOI18N
 	}
 

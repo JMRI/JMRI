@@ -1,7 +1,7 @@
 package jmri.jmrit.withrottle;
 
 import java.io.File;
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
@@ -24,7 +24,7 @@ public class WiThrottleManager {
         turnoutController = new TurnoutController();
         routeController = new RouteController();
         if(jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class)==null){
-            jmri.InstanceManager.store(new jmri.jmrit.withrottle.WiThrottlePreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "WiThrottlePreferences.xml"), jmri.jmrit.withrottle.WiThrottlePreferences.class);
+            jmri.InstanceManager.store(new jmri.jmrit.withrottle.WiThrottlePreferences(FileUtil.getUserFilesPath()+ "throttle" +File.separator+ "WiThrottlePreferences.xml"), jmri.jmrit.withrottle.WiThrottlePreferences.class);
         }
         withrottlePreferences = jmri.InstanceManager.getDefault(jmri.jmrit.withrottle.WiThrottlePreferences.class);
     }

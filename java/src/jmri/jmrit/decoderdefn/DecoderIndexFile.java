@@ -15,6 +15,7 @@ import org.jdom.ProcessingInstruction;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import jmri.util.FileUtil;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -222,7 +223,7 @@ public class DecoderIndexFile extends XmlFile {
         log.info("update decoder index");
         // make sure we're using only the default manufacturer info
         // to keep from propagating wrong, old stuff
-        File oldfile = new File(XmlFile.prefsDir()+File.separator+"decoderIndex.xml");
+        File oldfile = new File(FileUtil.getUserFilesPath()+File.separator+"decoderIndex.xml");
         if (oldfile.exists()) {
             log.debug("remove existing user decoderIndex.xml file");
             if (!oldfile.delete())  // delete file, check for success
@@ -236,8 +237,8 @@ public class DecoderIndexFile extends XmlFile {
         ArrayList<String> al = new ArrayList<String>();
         String[] sp = null;
         int i=0;
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+DecoderFile.fileLocation);
-        File fp = new File(XmlFile.prefsDir()+DecoderFile.fileLocation);
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+DecoderFile.fileLocation);
+        File fp = new File(FileUtil.getUserFilesPath()+DecoderFile.fileLocation);
         if (fp.exists()) {
             sp = fp.list();
             for (i=0; i<sp.length; i++) {
@@ -245,7 +246,7 @@ public class DecoderIndexFile extends XmlFile {
                     al.add(sp[i]);
             }
         } else {
-            log.warn(XmlFile.prefsDir()+"decoders was missing, though tried to create it");
+            log.warn(FileUtil.getUserFilesPath()+"decoders was missing, though tried to create it");
         }
         // create an array of file names from xml/decoders, count entries
         String[] sx = (new File(XmlFile.xmlDir()+DecoderFile.fileLocation)).list();
@@ -416,7 +417,7 @@ public class DecoderIndexFile extends XmlFile {
     public void writeFile(String name, DecoderIndexFile oldIndex, String files[]) throws java.io.IOException {
         if (log.isDebugEnabled()) log.debug("writeFile "+name);
         // This is taken in large part from "Java and XML" page 368
-        File file = new File(prefsDir()+name);
+        File file = new File(FileUtil.getUserFilesPath() + name);
 
         // create root element and document
         Element root = new Element("decoderIndex-config");

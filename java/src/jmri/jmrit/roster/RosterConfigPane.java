@@ -56,7 +56,7 @@ public class RosterConfigPane extends JPanel {
         p.add(filename = new JLabel(Roster.getFileLocation()));
         // don't show default location, so it's not deemed a user selection
         // and saved
-        if (jmri.jmrit.XmlFile.prefsDir().equals(Roster.getFileLocation()))
+        if (FileUtil.getUserFilesPath().equals(Roster.getFileLocation()))
             filename.setText("");
         JButton b = new JButton(rb.getString("ButtonSetDots"));
 

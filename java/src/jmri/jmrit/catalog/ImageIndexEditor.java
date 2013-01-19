@@ -28,6 +28,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.XmlFile;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
+import jmri.util.FileUtil;
 
 /**
  * A JFrame for creating and editing an Image Index.  This is a singleton class.
@@ -250,7 +251,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         }
         _catalog.createNewBranch("IFJAR", "Program Directory", "resources");
         XmlFile.ensurePrefsPresent("resources");
-        _catalog.createNewBranch("IFPREF", "Preferences Directory", XmlFile.prefsDir()+"resources");
+        _catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath()+"resources");
         return _catalog;
     }
 

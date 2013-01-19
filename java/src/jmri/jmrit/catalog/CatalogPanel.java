@@ -51,6 +51,7 @@ import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 /**
  * Create a JPanel containing trees of resources to replace default icons.
@@ -603,7 +604,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");
         XmlFile.ensurePrefsPresent("resources");
-        catalog.createNewBranch("IFPREF", "Preferences Directory", XmlFile.prefsDir()+"resources");
+        catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath()+"resources");
         return catalog;
     }
 

@@ -33,6 +33,7 @@ import java.awt.Component;
 import java.util.HashMap;
 
 import jmri.Audio;
+import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
 /**
@@ -3043,7 +3044,7 @@ public class LogixTableAction extends AbstractTableAction {
         } else {
             log.warn("Unexpected actionType["+actionType+"] = "+DefaultConditionalAction.getActionTypeString(actionType));
             if (defaultFileChooser == null) {
-                defaultFileChooser = new JFileChooser(jmri.jmrit.XmlFile.prefsDir());
+                defaultFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
                 defaultFileChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
             }
             currentChooser = defaultFileChooser;

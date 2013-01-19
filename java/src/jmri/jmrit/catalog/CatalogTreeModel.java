@@ -7,6 +7,7 @@ import java.io.File;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import jmri.util.FileUtil;
 
 /**
  * TreeModel used by CatalogPane to create a tree of resources.
@@ -117,7 +118,7 @@ public class CatalogTreeModel extends DefaultTreeModel {
      * Starting point in the .jar file for the "icons" part of the tree
      */
     static final String resourceRoot = "resources";
-    static final String fileRoot = jmri.jmrit.XmlFile.prefsDir()+"resources";
+    static final String fileRoot = FileUtil.getUserFilesPath()+"resources";
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogTreeModel.class.getName());
 }

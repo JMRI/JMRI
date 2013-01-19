@@ -1,7 +1,6 @@
 package jmri.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.revhistory.FileHistory;
 
 import java.io.File;
@@ -12,6 +11,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import jmri.util.FileUtil;
 
 //import org.jdom.DocType;
 import org.jdom.Document;
@@ -437,7 +437,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     	return makeBackupFile(defaultBackupDirectory, file);
     }
     
-    String defaultBackupDirectory = XmlFile.prefsDir()+"backupPanels";
+    String defaultBackupDirectory = FileUtil.getUserFilesPath()+"backupPanels";
 
     static public Element elementFromObject(Object o) {
         String aName = adapterName(o);

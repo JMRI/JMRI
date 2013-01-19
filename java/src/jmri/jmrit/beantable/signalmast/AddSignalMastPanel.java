@@ -20,9 +20,9 @@ import jmri.util.ConnectionNameFromSystemName;
 import java.awt.event.*;
 import java.io.*;
 import java.util.*;
-import jmri.jmrit.XmlFile;
 
 import javax.swing.*;
+import jmri.util.FileUtil;
 
 import org.jdom.*;
 
@@ -404,7 +404,7 @@ public class AddSignalMastPanel extends JPanel {
         }
         
         try {
-            File[] apps = new File(XmlFile.prefsDir()+"resources"+File.separator
+            File[] apps = new File(FileUtil.getUserFilesPath()+"resources"+File.separator
                     +"signals"+File.separator+sigsysname).listFiles();
             if(apps!=null){
                 for (int j=0; j<apps.length; j++) {

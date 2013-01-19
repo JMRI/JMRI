@@ -13,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -725,7 +726,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * individual locomotive files.
      *
      * @param f Absolute pathname to use. A null or "" argument flags
-     * a return to the original default in prefsdir.
+     * a return to the original default in the user's files directory.
      */
     public static void setFileLocation(String f) {
         if (f!=null && !f.equals("")) {
@@ -736,8 +737,8 @@ public class Roster extends XmlFile implements RosterGroupSelector {
                 LocoFile.setFileLocation(f+File.separator+"roster");
         } else {
             if (log.isDebugEnabled()) log.debug("Roster location reset to default");
-            fileLocation = XmlFile.prefsDir();
-            LocoFile.setFileLocation(XmlFile.prefsDir()+File.separator+"roster"+File.separator);
+            fileLocation = FileUtil.getUserFilesPath();
+            LocoFile.setFileLocation(FileUtil.getUserFilesPath()+File.separator+"roster"+File.separator);
         }
         // and make sure next request gets the new one
         resetInstance();
@@ -746,11 +747,11 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     /**
      * Absolute path to roster file location.
      * <P>
-     * Default is in the prefsDir, but can be set to anything.
-     * @see XmlFile#prefsDir()
+     * Default is in the user's files directory, but can be set to anything.
+     * @see jmri.util.FileUtil#getUserFilesPath() 
      */
     public static String getFileLocation() { return fileLocation; }
-    private static String fileLocation  = XmlFile.prefsDir();
+    private static String fileLocation  = FileUtil.getUserFilesPath();
 
     public static void setRosterFileName(String name) { rosterFileName = name; }
     private static String rosterFileName = "roster.xml";

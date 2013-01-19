@@ -8,6 +8,7 @@ import jmri.Consist;
 import java.io.File;
 
 import java.util.ArrayList;
+import jmri.util.FileUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -20,7 +21,7 @@ import org.jdom.Element;
  * @version     $Revision$
  */
 
-public class ConsistFile extends jmri.jmrit.XmlFile {
+public class ConsistFile extends XmlFile {
 
        protected jmri.ConsistManager consistMan = null;   
 
@@ -295,7 +296,7 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
      * Defines the preferences subdirectory in which LocoFiles are kept
      * by default.
      */
-    static private String fileLocation = XmlFile.prefsDir()+File.separator+"roster"+File.separator+"consist";
+    static private String fileLocation = FileUtil.getUserFilesPath()+File.separator+"roster"+File.separator+"consist";
                                          
     
     static public String getFileLocation() { return fileLocation; }

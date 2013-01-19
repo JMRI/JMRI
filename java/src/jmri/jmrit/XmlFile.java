@@ -205,7 +205,7 @@ public abstract class XmlFile {
     protected boolean checkFile(String name) {
         File fp = new File(name);
         if (fp.exists()) return true;
-        fp = new File(prefsDir()+name);
+        fp = new File(FileUtil.getUserFilesPath()+name);
         if (fp.exists()) {
             return true;
         }
@@ -224,7 +224,7 @@ public abstract class XmlFile {
      * Return a File object for a name. This is here to implement the
      * search rule:
      * <OL>
-     * <LI>Look in user preferences directory, located by {@link #prefsDir}
+     * <LI>Look in user preferences directory, located by {@link jmri.util.FileUtil#getUserFilesPath()}
      * <li>Look in current working directory (usually the JMRI distribution directory)
      * <li>Look in program directory, located by {@link jmri.util.FileUtil#getProgramPath()}
      * <LI>Look in XML directory, located by {@link #xmlDir}
@@ -235,7 +235,7 @@ public abstract class XmlFile {
      * @return null if file found, otherwise the located File
      */
     protected File findFile(String name) {
-        File fp = new File(prefsDir() + name);
+        File fp = new File(FileUtil.getUserFilesPath() + name);
         if (fp.exists()) {
             return fp;
         }
@@ -487,34 +487,6 @@ public abstract class XmlFile {
     static public String xmlDir() {
         return FileUtil.getProgramPath() + "xml" + File.separator;
     }
-
-    public static void setUserFileLocationDefault(String userDir) {
-        jmri.jmrit.XmlFile.userDirectory=userDir;
-    }
-    
-    static private String userDirectory = null;
-    
-    /**
-     * Define the location of the preferences directory.  This is system-specific
-     * ( "{user.home}" is used to represent the directory pointed to by the
-     *  user.home system property):
-     * <DL>
-     * <DT>If the system property jmri.prefsdir is present, it's used as a path name
-     * <DT>Linux<DD>{user.home}/.jmri/
-     * <DT>Windows<DD>{user.home}\JMRI
-     * <DT>MacOS "Classic"<DD>{user.home}:JMRI
-     * <DT>Mac OS X<DD>{user.home}/Library/Preferences/JMRI
-     * <DT>Other<DD> In the JMRI folder/directory in the folder/directory
-     *                  referenced by {user.home}
-     * </DL>
-     * @return Pathname in local form, with a terminating separator
-     */
-    static public String prefsDir() {
-        if (userDirectory != null) {
-            return userDirectory;
-        }
-        return FileUtil.getPreferencesPath();
-    }
     
     static boolean verify = false;
     static boolean include = true;
@@ -531,7 +503,7 @@ public abstract class XmlFile {
      */
     public static javax.swing.JFileChooser userFileChooser(
             String filter, String suffix1, String suffix2) {
-        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(prefsDir());
+        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(FileUtil.getUserFilesPath());
         jmri.util.NoArchiveFileFilter filt = new jmri.util.NoArchiveFileFilter(filter);
         if (suffix1 != null) filt.addExtension(suffix1);
         if (suffix2 != null) filt.addExtension(suffix2);
@@ -540,7 +512,7 @@ public abstract class XmlFile {
     }
 
     public static javax.swing.JFileChooser userFileChooser() {
-        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(prefsDir());
+        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(FileUtil.getUserFilesPath());
         jmri.util.NoArchiveFileFilter filt = new jmri.util.NoArchiveFileFilter();
         fc.setFileFilter(filt);
         return fc;

@@ -56,10 +56,10 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         //FileUtil.setPythonScriptsPath(scriptLocation.getValue());
         /*Attribute userLocation = e.getAttribute("defaultUserLocation");
         if (userLocation!=null)
-            jmri.jmrit.XmlFile.setUserFileLocationDefault(userLocation.getValue());*/
+            FileUtil.setUserFilesPath(userLocation.getValue());*/
         value = loadUserLocations(e, "defaultUserLocation");
         if (value!=null)
-            jmri.jmrit.XmlFile.setUserFileLocationDefault(value);
+            FileUtil.setUserFilesPath(value);
         /*Attribute throttleLocation = e.getAttribute("defaultThrottleLocation");
         if (throttleLocation!=null)
             jmri.jmrit.throttle.ThrottleFrame.setDefaultThrottleLocation(userLocation.getValue());*/

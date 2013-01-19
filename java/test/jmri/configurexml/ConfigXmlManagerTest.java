@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import jmri.util.FileUtil;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -88,9 +89,9 @@ public class ConfigXmlManagerTest extends TestCase {
         Assert.assertTrue("dont find foo.biff", result==null);
 
         // make sure no test file exists in "layout"
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"layout");
-        File f = new File(XmlFile.prefsDir()+"layout"+File.separator+"testConfigXmlManagerTest.xml");
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"layout");
+        File f = new File(FileUtil.getUserFilesPath()+"layout"+File.separator+"testConfigXmlManagerTest.xml");
         f.delete();  // remove it if its there
 
         // if file is at top level, remove that too

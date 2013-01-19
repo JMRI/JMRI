@@ -22,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.Application;
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -743,7 +744,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
             return fileLocation;
         }
 
-        private static String fileLocation = XmlFile.prefsDir();
+        private static String fileLocation = FileUtil.getUserFilesPath();
 
     }
 

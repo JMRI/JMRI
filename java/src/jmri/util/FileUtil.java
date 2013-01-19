@@ -72,6 +72,8 @@ public class FileUtil {
     static private String jarPath = null;
     /* path to the jython scripts directory */
     static private String scriptsPath = null;
+    /* path to the user's files directory */
+    static private String userFilesPath = null;
     // initialize logging
     static private Logger log = Logger.getLogger(FileUtil.class.getName());
 
@@ -280,10 +282,21 @@ public class FileUtil {
      * Get the user's files directory. If not set by the user, this is the same
      * as the preferences path.
      *
+     * @see #getPreferencesPath()
      * @return User's files directory as a String
      */
     static public String getUserFilesPath() {
-        return XmlFile.prefsDir();
+        return (FileUtil.userFilesPath != null) ? FileUtil.userFilesPath : FileUtil.getPreferencesPath();
+    }
+
+    /**
+     * Set the user's files directory.
+     *
+     * @see #getUserFilesPath()
+     * @param path The path to the user's files directory
+     */
+    static public void setUserFilesPath(String path) {
+        FileUtil.userFilesPath = path;
     }
 
     /**
@@ -302,7 +315,7 @@ public class FileUtil {
     static public String getPreferencesPath() {
         // return jmri.prefsdir property if present
         String jmriPrefsDir = System.getProperty("jmri.prefsdir", ""); // NOI18N
-        if (jmriPrefsDir.length() > 0) {
+        if (!jmriPrefsDir.isEmpty()) {
             return jmriPrefsDir + File.separator;
         }
         String result;
@@ -422,7 +435,7 @@ public class FileUtil {
     static public String getUserResourcePath() {
         return FileUtil.getUserFilesPath() + File.separator + "resources"; // NOI18N
     }
-    
+
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.net.URL} for that file. Search order is defined by

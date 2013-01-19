@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.io.File;
 
 import javax.swing.tree.DefaultTreeModel;
+import jmri.util.FileUtil;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -32,7 +33,7 @@ import org.jdom.Attribute;
 public class DefaultCatalogTreeManagerXml extends XmlFile
                     /* extends jmri.configurexml.AbstractXmlAdapter */ {
 
-	private static String defaultFileName = XmlFile.prefsDir()+"catalogTrees.xml";
+    private static String defaultFileName = FileUtil.getUserFilesPath() + "catalogTrees.xml";
 
     public DefaultCatalogTreeManagerXml() {
     }

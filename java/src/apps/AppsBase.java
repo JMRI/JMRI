@@ -146,7 +146,7 @@ public abstract class AppsBase {
 
     protected void installConfigurationManager() {
         ConfigXmlManager cm = new ConfigXmlManager();
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         InstanceManager.setConfigureManager(cm);
         cm.setPrefsLocation(new File(getConfigFileName()));
         log.debug("config manager installed");
@@ -182,13 +182,13 @@ public abstract class AppsBase {
     }
 
     protected void setAndLoadPreferenceFile() {
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         final File file;
         // decide whether name is absolute or relative
         if (!new File(getConfigFileName()).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir() + getConfigFileName());
+            file = new File(FileUtil.getUserFilesPath() + getConfigFileName());
         } else {
             file = new File(getConfigFileName());
         }

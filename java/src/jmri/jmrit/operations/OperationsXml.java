@@ -11,6 +11,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.util.FileUtil;
 
 /**
  * Loads and stores the operation setup using xml files. 
@@ -107,11 +108,11 @@ public class OperationsXml extends XmlFile {
     /**
      * Absolute path to location of Operations files.
      * <P>
-     * Default is in the prefsDir, but can be set to anything.
-     * @see XmlFile#prefsDir()
+     * Default is in the user's files path, but can be set to anything.
+     * @see jmri.util.FileUtil#getUserFilesPath() 
      */
     public static String getFileLocation() { return fileLocation; }
-    private static String fileLocation = XmlFile.prefsDir();
+    private static String fileLocation = FileUtil.getUserFilesPath();
     
 	/**
 	 * Convert standard string to xml string one character at a time expect when

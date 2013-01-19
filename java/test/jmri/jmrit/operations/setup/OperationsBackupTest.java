@@ -14,6 +14,7 @@ import junit.framework.TestSuite;
 
 import java.util.Calendar;
 import java.util.Locale;
+import jmri.util.FileUtil;
 
 /**
  * Tests for the new Operations Setup Backup classes used for copying and
@@ -88,7 +89,7 @@ public class OperationsBackupTest extends TestCase {
 		// <user>/JMRI/Operations / JUnitTest / backups
 		// <user>/JMRI/Operations / JUnitTest / autoBackups
 
-		operationsRoot = new File(XmlFile.prefsDir(),
+		operationsRoot = new File(FileUtil.getUserFilesPath(),
 				OperationsXml.getOperationsDirectoryName());
 
 		autoBackupRoot = new File(operationsRoot, "autoBackups");
@@ -535,9 +536,9 @@ public class OperationsBackupTest extends TestCase {
 		Assert.assertNotNull("DEfault root must be set", root);
 		Assert.assertTrue("Default root dir must exist", root.exists());
 
-		String prefsDir = XmlFile.prefsDir();
+		String usersDir = FileUtil.getUserFilesPath();
 		String opsDirName = OperationsXml.getOperationsDirectoryName();
-		File opsRoot = new File(prefsDir, opsDirName);
+		File opsRoot = new File(usersDir, opsDirName);
 
 		File expectedRoot = new File(opsRoot, "backups");
 		Assert.assertEquals("Default root", expectedRoot, root);
@@ -709,9 +710,9 @@ public class OperationsBackupTest extends TestCase {
 		Assert.assertNotNull("Auto root must be set", root);
 		Assert.assertTrue("Auto root dir must exist", root.exists());
 
-		String prefsDir = XmlFile.prefsDir();
+		String usersDir = FileUtil.getUserFilesPath();
 		String opsDirName = OperationsXml.getOperationsDirectoryName();
-		File opsRoot = new File(prefsDir, opsDirName);
+		File opsRoot = new File(usersDir, opsDirName);
 
 		File expectedRoot = new File(opsRoot, "autoBackups");
 		Assert.assertEquals("Automatic root", expectedRoot, root);

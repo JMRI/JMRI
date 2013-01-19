@@ -99,7 +99,7 @@ public class FileUtilTest extends TestCase {
     // tests of external to internal mapping
     @SuppressWarnings("unused")
     public void testGetpfPreferenceF() throws IOException {
-        File f = new File(XmlFile.prefsDir() + "foo");
+        File f = new File(FileUtil.getUserFilesPath() + "foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:foo", name);
     }
@@ -111,7 +111,7 @@ public class FileUtilTest extends TestCase {
 
     @SuppressWarnings("unused")
     public void testGetpfResourceF() throws IOException {
-        File f = new File(XmlFile.prefsDir() + "resources" + File.separator + "foo");
+        File f = new File(FileUtil.getUserFilesPath() + "resources" + File.separator + "foo");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:resources/foo", name);
     }
@@ -123,7 +123,7 @@ public class FileUtilTest extends TestCase {
 
     @SuppressWarnings("unused")
     public void testGetpfPrefF() throws IOException {
-        File f = new File(XmlFile.prefsDir() + "resources" + File.separator + "icons");
+        File f = new File(FileUtil.getUserFilesPath() + "resources" + File.separator + "icons");
         String name = FileUtil.getPortableFilename(f);
         Assert.assertEquals("preference:resources/icons", name);
     }

@@ -3,12 +3,12 @@
 package jmri.jmrit.dispatcher;
 
 import jmri.Scale;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import java.io.File;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import jmri.util.FileUtil;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -51,7 +51,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 	
 	// operational variables
 	protected DispatcherFrame dispatcher = null;
-	private static String defaultFileName = XmlFile.prefsDir()+"dispatcheroptions.xml";
+	private static String defaultFileName = FileUtil.getUserFilesPath()+"dispatcheroptions.xml";
 	public static void setDefaultFileName(String testLocation){
 		defaultFileName = testLocation;
 	}

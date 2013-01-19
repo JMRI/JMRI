@@ -34,7 +34,6 @@ import jmri.DccLocoAddress;
 import jmri.util.swing.*;
 
 import java.io.File;
-import jmri.jmrit.XmlFile;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -47,6 +46,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.TitledBorder;
+import jmri.util.FileUtil;
 
 /**
  * Virtual Sound Decoder for playing sounds off of LocoNet messages.
@@ -123,7 +123,7 @@ public class VSDecoderPane extends JmriPanel {
      */
     public static String getDefaultVSDecoderFolder() {
         if (VSDecoderFileLocation == null)
-            return XmlFile.prefsDir()+"vsdecoder"+File.separator ;
+            return FileUtil.getUserFilesPath()+"vsdecoder"+File.separator ;
         return VSDecoderFileLocation;
     }
 

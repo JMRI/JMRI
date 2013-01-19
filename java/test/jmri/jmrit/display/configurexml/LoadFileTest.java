@@ -10,6 +10,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import jmri.InstanceManager;
+import jmri.util.FileUtil;
 
 /**
  * Test upper level loading of a file
@@ -32,8 +33,8 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
             .load(inFile);
     
         // store file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        java.io.File outFile = new java.io.File(XmlFile.prefsDir()+"temp/ScaledIconTest.xml");
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"temp");
+        File outFile = new File(FileUtil.getUserFilesPath()+"temp/ScaledIconTest.xml");
         InstanceManager.configureManagerInstance()
             .storeUser(outFile);
         

@@ -22,6 +22,7 @@ import java.lang.reflect.Method;
 
 import java.io.File;
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 
 
@@ -1308,7 +1309,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
             // must be relative, but we want it to 
             // be relative to the preferences directory
             userprefsfilename = "UserPrefs"+System.getProperty("org.jmri.Apps.configFilename");
-            file = new File(XmlFile.prefsDir()+userprefsfilename);
+            file = new File(FileUtil.getUserFilesPath()+userprefsfilename);
         } else {
             userprefsfilename="UserPrefs"+configFileName.getName();
             file = new File(configFileName.getParent()+File.separator+userprefsfilename);

@@ -125,7 +125,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         jmri.InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
 
         // find preference file and set location in configuration manager
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         // Needs to be declared final as we might need to
         // refer to this on the Swing thread
         final File file;
@@ -133,7 +133,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         if (!new File(configFilename).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
+            file = new File(FileUtil.getUserFilesPath()+configFilename);
         } else {
             file = new File(configFilename);
         }

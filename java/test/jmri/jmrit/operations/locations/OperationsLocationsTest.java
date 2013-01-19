@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.locations;
 
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -22,6 +21,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.util.FileUtil;
 
 /**
  * Tests for the Operations Locations class
@@ -1326,7 +1326,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Starting Number of Locations", 6, locationList.size());
 
 		//  Revert the main xml file back to the backup file.
-		LocationManagerXml.instance().revertBackupFile(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
+		LocationManagerXml.instance().revertBackupFile(FileUtil.getUserFilesPath()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
 		
 		//  Need to dispose of the LocationManager's list and hash table
 		manager.dispose();	
@@ -1350,7 +1350,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 
 		// Need to force a re-read of the xml file.
-		LocationManagerXml.instance().readFile(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
+		LocationManagerXml.instance().readFile(FileUtil.getUserFilesPath()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
 
 		// check options
 		/* all JMRI window position and size are now saved

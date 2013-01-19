@@ -25,11 +25,9 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.List;
 import java.util.Iterator;
-import java.util.ResourceBundle;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import javax.swing.JFrame;
 import org.jdom.Element;
 
 import jmri.jmrit.XmlFile;
@@ -45,6 +43,7 @@ import jmri.NamedBean;
 import jmri.jmrit.vsdecoder.listener.VSDListener;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
+import jmri.util.FileUtil;
 
 // VSDecoderFactory
 //
@@ -92,7 +91,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 	profiletable = new HashMap<String, String>();  // key = profile name, value = path
 	reportertable = new ArrayList<String>();
 	// Get preferences
-	String dirname = XmlFile.prefsDir()+ "vsdecoder" +File.separator; // NOI18N
+	String dirname = FileUtil.getUserFilesPath()+ "vsdecoder" +File.separator; // NOI18N
 	XmlFile.ensurePrefsPresent(dirname);
 	vsdecoderPrefs = new VSDecoderPreferences(dirname+ Bundle.getMessage("VSDPreferencesFileName"));
 	// Listen to ReporterManager for Report List changes

@@ -9,6 +9,7 @@ import jmri.JmriException;
 */
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.List;
@@ -21,6 +22,7 @@ import jmri.Path;
 import jmri.Sensor;
 
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -338,8 +340,8 @@ public class BlockManagerXmlTest extends LoadFileTestBase {
             .load(inFile);
     
         // store file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        java.io.File outFile = new java.io.File(XmlFile.prefsDir()+"temp/LoadBlockManagerFileTest.xml");
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"temp");
+        File outFile = new File(FileUtil.getUserFilesPath()+"temp/LoadBlockManagerFileTest.xml");
         InstanceManager.configureManagerInstance()
             .storeConfig(outFile);
         

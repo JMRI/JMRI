@@ -15,6 +15,7 @@ import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
@@ -457,7 +458,7 @@ public class DefaultIdTagManager extends AbstractManager
             return fileLocation;
         }
 
-        private static String fileLocation = XmlFile.prefsDir();
+        private static String fileLocation = FileUtil.getUserFilesPath();
 
         private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultIdTagManager.IdTagManagerXml.class.getName());
 

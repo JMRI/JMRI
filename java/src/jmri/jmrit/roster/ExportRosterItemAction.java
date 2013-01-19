@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Action;
+import jmri.util.FileUtil;
 
 import org.jdom.Element;
 
@@ -57,7 +58,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         // read the file for the "from" entry and write it out
 
         // ensure preferences will be found for read
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
 
         // locate the file

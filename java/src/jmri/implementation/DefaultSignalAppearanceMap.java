@@ -9,10 +9,9 @@ import java.util.Vector;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 
-import jmri.jmrit.XmlFile;
-
 import jmri.SignalHead;
 import jmri.SignalSystem;
+import jmri.util.FileUtil;
 
  /**
  * Default implementation of a basic signal head table.
@@ -47,7 +46,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             new DefaultSignalAppearanceMap("map:"+signalSystemName+":"+aspectMapName);
         maps.put("map:"+signalSystemName+":"+aspectMapName, map);
 
-        File file = new File(XmlFile.prefsDir()+java.io.File.separator
+        File file = new File(FileUtil.getUserFilesPath()+java.io.File.separator
                                 +"resources"+File.separator
                                 +"signals"+File.separator
                                 +signalSystemName+File.separator

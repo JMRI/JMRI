@@ -10,6 +10,7 @@ import java.io.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import jmri.util.FileUtil;
 
 import org.jdom.Element;
 
@@ -89,7 +90,7 @@ public class DefaultSignalSystemManager extends AbstractManager
             }
         }
         //Now get the user defined systems.
-        signalDir = new File(XmlFile.prefsDir()+
+        signalDir = new File(FileUtil.getUserFilesPath()+
             java.io.File.separator+"resources"+File.separator+"signals");
         if(!signalDir.exists()){
             log.info("User signal resource directory has not been created");
@@ -136,7 +137,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         }
 
         //if the file doesn't exist or fails the load from the default location then try the user directory
-        filename = XmlFile.prefsDir()+"resources"
+        filename = FileUtil.getUserFilesPath()+"resources"
                             +File.separator+"signals"
                             +File.separator+name
                             +File.separator+"aspects.xml";

@@ -5,6 +5,7 @@ import org.jdom.*;
 import java.util.*;
 
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 /**
  * Persist RPS polling information
@@ -135,8 +136,8 @@ public class PollingFile extends XmlFile {
     }
                 
     static public String defaultLocation() {
-        String location = XmlFile.prefsDir()+File.separator+"rps"+File.separator;
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
+        String location = FileUtil.getUserFilesPath()+File.separator+"rps"+File.separator;
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         XmlFile.ensurePrefsPresent(location);
         return location;
     }

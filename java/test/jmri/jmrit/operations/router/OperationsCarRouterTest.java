@@ -35,6 +35,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import jmri.util.FileUtil;
 
 /**
  * Tests for the Operations Router class
@@ -2464,7 +2465,7 @@ public class OperationsCarRouterTest extends TestCase {
 		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 		
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName());
+		XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+File.separator+OperationsSetupXml.getOperationsDirectoryName());
 
 		RouteManager.instance().dispose();
 	}

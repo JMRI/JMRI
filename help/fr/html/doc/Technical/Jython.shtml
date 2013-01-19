@@ -183,7 +183,7 @@ Pour rendre les classes JMRI disponible, vous avez à faire:
 Tel qu'il est actuellement mis en place, ceci n'exécute pas n'importe quel code d'initialisation pour commencer les connexions matérielles, etc. Une façon de faire est de charger un fichier de configuration, peut-être celui que vous avez créé précédemment via le panneau de préférences JmriDemo:
 <PRE>
   import java.io
-  configfile = java.io.File(jmri.jmrit.XmlFile.prefsDir()+"JmriDemoConfig2.xml")
+  configfile = java.io.File(jmri.util.FileUtil.getPreferencesPath()+"JmriDemoConfig2.xml")
   jmri.InstanceManager.setConfigureManager(jmri.configurexml.ConfigXmlManager())
   jmri.InstanceManager.configureManagerInstance().load(configfile)
 </PRE>

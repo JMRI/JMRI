@@ -4,8 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 
 /**
  * Helper class for working with Files and Paths.
@@ -47,7 +46,7 @@ public class FileHelper {
 	 * @return file
 	 */
 	public static File getOperationsDirectory() {
-		return new File(XmlFile.prefsDir(),
+		return new File(FileUtil.getUserFilesPath(),
 				OperationsXml.getOperationsDirectoryName());
 	}
 

@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import jmri.util.FileUtil;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -32,9 +33,9 @@ public class Pr1ImporterTest extends TestCase {
 
     public File makeTempFile(String contents) throws IOException {
         // create a file
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
-        File f = new java.io.File(XmlFile.prefsDir()+"temp"+File.separator+"Pr1Importer.test.xml");
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
+        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"temp");
+        File f = new java.io.File(FileUtil.getUserFilesPath()+"temp"+File.separator+"Pr1Importer.test.xml");
         // recreate it
         if (f.exists()) f.delete();
         PrintStream p = new PrintStream(new FileOutputStream(f));
