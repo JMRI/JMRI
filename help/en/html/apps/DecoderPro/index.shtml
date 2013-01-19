@@ -66,7 +66,7 @@ help if you'd like to try it on some other system. You need to have a
 serial port available, either on the computer itself, or via a 
 <A HREF="../../hardware/USBtoSerial.shtml">USB adapter</a>. 
 For more information, please see the
-<A HREF="http://jmri.sourceforge.net/download/index.html">download pages</a>.</p>
+<A HREF="http://jmri.sourceforge.net/download/index.shtml">download pages</a>.</p>
 
 <p>You also need to have a serial connection to your DCC system.
 For more information, please see the

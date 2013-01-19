@@ -47,7 +47,7 @@ DecoderPro, along with the known limitations.
 
 <dt class=left>Download and install JMRI
 </dt><dd class=first>The 
-<A HREF="http://jmri.sourceforge.net/download/index.html">download page</a>
+<A HREF="http://jmri.sourceforge.net/download/index.shtml">download page</a>
 on the main JMRI web site
 provides links to download various JMRI versions, along
 with links to release notes, etc.  We strongly recommend
@@ -64,7 +64,7 @@ download page.</P>
 <dt class=left>Start up and configure the program
 </dt><dd class=first>The install instructions
 reached through the 
-<A HREF="http://jmri.sourceforge.net/download/index.html">download page</a>
+<A HREF="http://jmri.sourceforge.net/download/index.shtml">download page</a>
 will have told you how to start up the program and configure 
 it.  When that's done, you should have a working DecoderPro
 installation.
