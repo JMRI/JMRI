@@ -56,7 +56,7 @@ of JMRI's OpenLCB support.
 
 <h2>Naming</h2>
 
-The <a href="../../../doc/Technical/Names.shtml">system letter</a> 
+The <a href="../../../html/doc/Technical/Names.shtml">system letter</a> 
 for OpenLCB connections is "M". OpenLCB 
 event and object names are 
 introduced below, with additional details and formats on a
