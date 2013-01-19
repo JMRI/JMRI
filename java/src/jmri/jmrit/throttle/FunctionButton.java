@@ -19,6 +19,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 
 import org.jdom.Element;
@@ -412,12 +413,12 @@ public class FunctionButton extends JToggleButton implements ActionListener
         me.setAttribute("isLockable", String.valueOf(this.getIsLockable()));
         me.setAttribute("isVisible", String.valueOf(this.getDisplay()));
         me.setAttribute("fontSize", String.valueOf(this.getFont().getSize()));
-        if ( this.getIconPath().startsWith(XmlFile.resourcesDir()))
-        	me.setAttribute("iconPath", this.getIconPath().substring( XmlFile.resourcesDir().length() ));
+        if ( this.getIconPath().startsWith(FileUtil.getUserResourcePath()))
+        	me.setAttribute("iconPath", this.getIconPath().substring( FileUtil.getUserResourcePath().length() ));
         else
         	me.setAttribute("iconPath", this.getIconPath());
-        if (this.getSelectedIconPath().startsWith(XmlFile.resourcesDir()))
-        	me.setAttribute("selectedIconPath", this.getSelectedIconPath().substring( XmlFile.resourcesDir().length() ));
+        if (this.getSelectedIconPath().startsWith(FileUtil.getUserResourcePath()))
+        	me.setAttribute("selectedIconPath", this.getSelectedIconPath().substring( FileUtil.getUserResourcePath().length() ));
         else
         	me.setAttribute("selectedIconPath", this.getSelectedIconPath());
         return me;
@@ -454,13 +455,13 @@ public class FunctionButton extends JToggleButton implements ActionListener
             	this.setVisible(false);
             this.setFont(new Font("Monospaced", Font.PLAIN, e.getAttribute("fontSize").getIntValue()));
             if ((e.getAttribute("iconPath")!=null) && (e.getAttribute("iconPath").getValue().length()>0))
-            	if (checkFile(XmlFile.resourcesDir()+e.getAttribute("iconPath").getValue()) )
-            		this.setIconPath(XmlFile.resourcesDir()+e.getAttribute("iconPath").getValue());
+            	if (checkFile(FileUtil.getUserResourcePath()+e.getAttribute("iconPath").getValue()) )
+            		this.setIconPath(FileUtil.getUserResourcePath()+e.getAttribute("iconPath").getValue());
             	else
             		this.setIconPath(e.getAttribute("iconPath").getValue());
             if ((e.getAttribute("selectedIconPath")!=null) && (e.getAttribute("selectedIconPath").getValue().length()>0))
-            	if (checkFile(XmlFile.resourcesDir()+e.getAttribute("selectedIconPath").getValue()))
-            		this.setSelectedIconPath(XmlFile.resourcesDir()+e.getAttribute("selectedIconPath").getValue());
+            	if (checkFile(FileUtil.getUserResourcePath()+e.getAttribute("selectedIconPath").getValue()))
+            		this.setSelectedIconPath(FileUtil.getUserResourcePath()+e.getAttribute("selectedIconPath").getValue());
             	else
             		this.setSelectedIconPath(e.getAttribute("selectedIconPath").getValue());
             updateLnF();

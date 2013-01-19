@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.swing.EditableResizableImagePanel;
 
@@ -113,7 +114,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             
             // add the function buttons
     		_imageFilePath[i] = new EditableResizableImagePanel(r.getFunctionImage(i), 20, 20);
-    		_imageFilePath[i].setDropFolder(XmlFile.resourcesDir());
+    		_imageFilePath[i].setDropFolder(FileUtil.getUserResourcePath());
     		_imageFilePath[i].setBackground(new Color(0,0,0,0));
     		_imageFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonRosterImageToolTip"));
     		_imageFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
@@ -121,7 +122,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             cL.gridx++;
             
     		_imagePressedFilePath[i] = new EditableResizableImagePanel(r.getFunctionSelectedImage(i), 20, 20);
-    		_imagePressedFilePath[i].setDropFolder(XmlFile.resourcesDir());
+    		_imagePressedFilePath[i].setDropFolder(FileUtil.getUserResourcePath());
     		_imagePressedFilePath[i].setBackground(new Color(0,0,0,0));
     		_imagePressedFilePath[i].setToolTipText(Bundle.getMessage("FunctionButtonPressedRosterImageToolTip"));
     		_imagePressedFilePath[i].setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));

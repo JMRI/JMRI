@@ -19,6 +19,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.jdom.Attribute;
 import org.jdom.Element;
@@ -86,8 +87,8 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     
     java.util.TreeMap<String,String> attributePairs;
     
-    protected String _imageFilePath = XmlFile.resourcesDir() ; // at DndImagePanel init will
-    protected String _iconFilePath = XmlFile.resourcesDir() ;  // force image copy to that folder
+    protected String _imageFilePath = FileUtil.getUserResourcePath() ; // at DndImagePanel init will
+    protected String _iconFilePath = FileUtil.getUserResourcePath() ;  // force image copy to that folder
     protected String _URL = "";
     
 	/**
@@ -386,8 +387,8 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         if ((a = e.getAttribute("dccAddress")) != null )  _dccAddress = a.getValue();
         
         // file path were saved without default xml config path 
-        if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = XmlFile.resourcesDir()+a.getValue();
-        if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = XmlFile.resourcesDir()+a.getValue();
+        if ((a = e.getAttribute("imageFilePath")) != null )  _imageFilePath = FileUtil.getUserResourcePath()+a.getValue();
+        if ((a = e.getAttribute("iconFilePath")) != null )  _iconFilePath = FileUtil.getUserResourcePath()+a.getValue();
         if ((a = e.getAttribute("URL")) != null )  _URL = a.getValue();
         if ((a = e.getAttribute("IsShuntingOn")) != null )  _isShuntingOn = a.getValue();
         if ((a = e.getAttribute("maxSpeed")) != null )  
@@ -467,9 +468,9 @@ public class RosterEntry implements jmri.BasicRosterEntry {
                     this.setFunctionLockable(num, lock.equals("true"));
                     Attribute a;
                     if ((a = fn.getAttribute("functionImage")) != null)
-                    	this.setFunctionImage(num, XmlFile.resourcesDir()+a.getValue());
+                    	this.setFunctionImage(num, FileUtil.getUserResourcePath()+a.getValue());
                     if ((a = fn.getAttribute("functionImageSelected")) != null)
-                    	this.setFunctionSelectedImage(num, XmlFile.resourcesDir()+a.getValue());              
+                    	this.setFunctionSelectedImage(num, FileUtil.getUserResourcePath()+a.getValue());              
                 }
             }
         }
@@ -523,7 +524,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public String getFunctionImage(int fn) {
     	if ((functionImages != null) && (functionImages[fn] != null))
     		return functionImages[fn];
-    	return XmlFile.resourcesDir() ; 
+    	return FileUtil.getUserResourcePath(); 
     }
     
     public void setFunctionSelectedImage(int fn, String s) {
@@ -535,7 +536,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     public String getFunctionSelectedImage(int fn) {
     	if ((functionSelectedImages != null) && (functionSelectedImages[fn] != null))
     		return functionSelectedImages[fn];
-    	return XmlFile.resourcesDir() ; 
+    	return FileUtil.getUserResourcePath(); 
     }
     /**
      * Define whether a specific function is lockable.
@@ -629,12 +630,12 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         e.setAttribute("maxSpeed", (Integer.valueOf(getMaxSpeedPCT()).toString()));
         // file path are saved without default xml config path
         try {
-        	e.setAttribute("imageFilePath", getImagePath().substring( XmlFile.resourcesDir().length() ));
+        	e.setAttribute("imageFilePath", getImagePath().substring( FileUtil.getUserResourcePath().length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
         	e.setAttribute("imageFilePath", "");
         }
         try {
-        e.setAttribute("iconFilePath", getIconPath().substring( XmlFile.resourcesDir().length() ));
+        e.setAttribute("iconFilePath", getIconPath().substring( FileUtil.getUserResourcePath().length() ));
         } catch (java.lang.StringIndexOutOfBoundsException ex) {
         	e.setAttribute("iconFilePath", "");
         }
@@ -669,14 +670,14 @@ public class RosterEntry implements jmri.BasicRosterEntry {
                         fne.setAttribute("lockable", lockable ? "true" : "false");
                         if ((functionImages!=null) && (functionImages[i]!=null)) {
                         	try {
-                        		fne.setAttribute("functionImage", functionImages[i].substring( XmlFile.resourcesDir().length() ));
+                        		fne.setAttribute("functionImage", functionImages[i].substring( FileUtil.getUserResourcePath().length() ));
                         	} catch (StringIndexOutOfBoundsException eob) {
                         		fne.setAttribute("functionImage", "");
                         	} 
                         }
                         if ((functionSelectedImages!=null) && (functionSelectedImages[i]!=null)) {
                         	try {
-                        		fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring( XmlFile.resourcesDir().length() ));
+                        		fne.setAttribute("functionImageSelected", functionSelectedImages[i].substring( FileUtil.getUserResourcePath().length() ));
                         	} catch (StringIndexOutOfBoundsException eob) {
                         		fne.setAttribute("functionImageSelected", "");
                         	} 

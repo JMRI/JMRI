@@ -31,15 +31,15 @@ public class FileUtil {
     /**
      * Portable reference to items in the JMRI program directory.
      */
-    static public final String PROGRAM = "program:";
+    static public final String PROGRAM = "program:"; // NOI18N
     /**
      * Portable reference to items in the JMRI user's preferences directory.
      */
-    static public final String PREFERENCES = "preference:";
+    static public final String PREFERENCES = "preference:"; // NOI18N
     /**
      * Portable reference to the user's home directory.
      */
-    static public final String HOME = "home:";
+    static public final String HOME = "home:"; // NOI18N
     /**
      * Replaced with {@link #PROGRAM}.
      *
@@ -47,22 +47,22 @@ public class FileUtil {
      * @deprecated
      */
     @Deprecated
-    static public final String RESOURCE = "resource:";
+    static public final String RESOURCE = "resource:"; // NOI18N
     @Deprecated
     /**
      * Replaced with {@link #PREFERENCES}.
      *
      * @see #PREFERENCES
      */
-    static public final String FILE = "file:";
+    static public final String FILE = "file:"; // NOI18N
     /**
      * The portable file path component separator.
      */
-    static public final char SEPARATOR = '/';
+    static public final char SEPARATOR = '/'; // NOI18N
     /*
      * User's home directory
      */
-    static private String homePath = System.getProperty("user.home") + File.separator;
+    static private String homePath = System.getProperty("user.home") + File.separator; // NOI18N
     /*
      * Settable directories
      */
@@ -139,7 +139,7 @@ public class FileUtil {
             }
             // assume this is a relative path from the
             // preferences directory
-            filename = FileUtil.getUserFilesPath() + "resources" + File.separator + filename;
+            filename = FileUtil.getUserFilesPath() + "resources" + File.separator + filename; // NOI18N
             if (log.isDebugEnabled()) {
                 log.debug("load from user preferences file: " + filename);
             }
@@ -301,7 +301,7 @@ public class FileUtil {
      */
     static public String getPreferencesPath() {
         // return jmri.prefsdir property if present
-        String jmriPrefsDir = System.getProperty("jmri.prefsdir", "");
+        String jmriPrefsDir = System.getProperty("jmri.prefsdir", ""); // NOI18N
         if (jmriPrefsDir.length() > 0) {
             return jmriPrefsDir + File.separator;
         }
@@ -309,18 +309,17 @@ public class FileUtil {
         switch (SystemType.getType()) {
             case SystemType.MACOSX:
                 // Mac OS X
-                result = FileUtil.getHomePath() + "Library" + File.separator + "Preferences"
-                        + File.separator + "JMRI" + File.separator;
+                result = FileUtil.getHomePath() + "Library" + File.separator + "Preferences" + File.separator + "JMRI" + File.separator; // NOI18N
                 break;
             case SystemType.LINUX:
             case SystemType.UNIX:
                 // Linux, so use an invisible file
-                result = FileUtil.getHomePath() + ".jmri" + File.separator;
+                result = FileUtil.getHomePath() + ".jmri" + File.separator; // NOI18N
                 break;
             case SystemType.WINDOWS:
             default:
                 // Could be Windows, other
-                result = FileUtil.getHomePath() + "JMRI" + File.separator;
+                result = FileUtil.getHomePath() + "JMRI" + File.separator; // NOI18N
                 break;
         }
         if (log.isDebugEnabled()) {
@@ -336,7 +335,7 @@ public class FileUtil {
      */
     static public String getProgramPath() {
         if (programPath == null) {
-            FileUtil.setProgramPath(".");
+            FileUtil.setProgramPath("."); // NOI18N
         }
         return programPath;
     }
@@ -420,6 +419,10 @@ public class FileUtil {
         return null;
     }
 
+    static public String getUserResourcePath() {
+        return FileUtil.getUserFilesPath() + File.separator + "resources"; // NOI18N
+    }
+    
     /**
      * Search for a file or JAR resource by name and return the
      * {@link java.net.URL} for that file. Search order is defined by

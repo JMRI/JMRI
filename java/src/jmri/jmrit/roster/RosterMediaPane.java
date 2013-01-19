@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
 
 /*
@@ -62,13 +63,13 @@ public class RosterMediaPane extends javax.swing.JPanel {
 
 	public RosterMediaPane(RosterEntry r) {
 		_imageFilePath = new EditableResizableImagePanel(r.getImagePath(), 320, 240);
-		_imageFilePath.setDropFolder(XmlFile.resourcesDir());
+		_imageFilePath.setDropFolder(FileUtil.getUserResourcePath());
 		_imageFilePath.setToolTipText(rb.getString("MediaRosterImageToolTip"));
 		_imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
 		_imageFPlabel.setText(rb.getString("MediaRosterImageLabel"));
 
 		_iconFilePath = new EditableResizableImagePanel(r.getIconPath(), 160, 120);
-		_iconFilePath.setDropFolder(XmlFile.resourcesDir());
+		_iconFilePath.setDropFolder(FileUtil.getUserResourcePath());
 		_iconFilePath.setToolTipText(rb.getString("MediaRosterIconToolTip"));
 		_iconFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
 		_iconFPlabel.setText(rb.getString("MediaRosterIconLabel"));

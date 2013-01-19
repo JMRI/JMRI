@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
 
 /**
@@ -113,14 +114,14 @@ public class FunctionButtonPropertyEditor extends JDialog
         constraints.gridy = 6;
         constraints.gridx = 0;
         _imageFilePath = new EditableResizableImagePanel("",BUT_IMG_SIZE,BUT_IMG_SIZE);
-		_imageFilePath.setDropFolder(XmlFile.resourcesDir());
+		_imageFilePath.setDropFolder(FileUtil.getUserResourcePath());
 		_imageFilePath.setBackground(new Color(0,0,0,0));
 		_imageFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
         propertyPanel.add(_imageFilePath, constraints);
         
         constraints.gridx = 1;
         _imagePressedFilePath = new EditableResizableImagePanel("",BUT_IMG_SIZE,BUT_IMG_SIZE);
-        _imagePressedFilePath.setDropFolder(XmlFile.resourcesDir());
+        _imagePressedFilePath.setDropFolder(FileUtil.getUserResourcePath());
         _imagePressedFilePath.setBackground(new Color(0,0,0,0));
         _imagePressedFilePath.setBorder(BorderFactory.createLineBorder(java.awt.Color.blue));
         propertyPanel.add(_imagePressedFilePath, constraints);
