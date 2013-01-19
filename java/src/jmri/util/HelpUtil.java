@@ -48,8 +48,6 @@ public class HelpUtil {
         return helpMenu;
     }
     
-    static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
-    
     static public JMenu makeHelpMenu(String ref, boolean direct) {
         if (!initOK()) {
             log.warn("help initialization not completed");
@@ -64,24 +62,24 @@ public class HelpUtil {
         helpMenu.add(item);
         
         if (direct) {
-            item = new JMenuItem(rb.getString("MenuItemHelp"));
+            item = new JMenuItem(Bundle.getMessage("MenuItemHelp"));
             globalHelpBroker.enableHelpOnButton(item, "index", null);
             helpMenu.add(item);
             
             // add standard items
-            JMenuItem license = new JMenuItem(rb.getString("MenuItemLicense"));
+            JMenuItem license = new JMenuItem(Bundle.getMessage("MenuItemLicense"));
             helpMenu.add(license);
             license.addActionListener(new apps.LicenseAction());
 
-            JMenuItem directories = new JMenuItem(rb.getString("MenuItemLocations"));
+            JMenuItem directories = new JMenuItem(Bundle.getMessage("MenuItemLocations"));
             helpMenu.add(directories);
             directories.addActionListener(new jmri.jmrit.XmlFileLocationAction());
     
-            JMenuItem context = new JMenuItem(rb.getString("MenuItemContext"));
+            JMenuItem context = new JMenuItem(Bundle.getMessage("MenuItemContext"));
             helpMenu.add(context);
             context.addActionListener(new apps.ReportContextAction());
 
-            JMenuItem console = new JMenuItem(rb.getString("MenuItemConsole"));
+            JMenuItem console = new JMenuItem(Bundle.getMessage("MenuItemConsole"));
             helpMenu.add(console);
             console.addActionListener(new apps.SystemConsoleAction());
 
@@ -104,7 +102,7 @@ public class HelpUtil {
             // Include About in Help menu if not on Mac OS X or not using Aqua Look and Feel
             if (!SystemType.isMacOSX() || !UIManager.getLookAndFeel().isNativeLookAndFeel()) {
                 helpMenu.addSeparator();
-                JMenuItem about = new JMenuItem(rb.getString("MenuItemAbout") + " " + jmri.Application.getApplicationName());
+                JMenuItem about = new JMenuItem(Bundle.getMessage("MenuItemAbout") + " " + jmri.Application.getApplicationName());
                 helpMenu.add(about);
                 about.addActionListener(new AboutAction());
             }
@@ -115,7 +113,7 @@ public class HelpUtil {
     static public JMenuItem makeHelpMenuItem(String ref) {
         if (!initOK()) return null;  // initialization failed
         
-        JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemWindowHelp"));
+        JMenuItem menuItem = new JMenuItem(Bundle.getMessage("MenuItemWindowHelp"));
         globalHelpBroker.enableHelpOnButton(menuItem, ref, null);
 
         // start help to see what happend
