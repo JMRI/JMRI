@@ -2370,12 +2370,12 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.warn("CSV manifest file missing for train " + getName());
 			return false;
 		}
-
-		// TrainUtilities.openDesktop(file);
+	
 		// Set up to process the CSV file by the external Manifest program
 		CustomManifest customManifest = new CustomManifest();
 		customManifest.addCVSFile(file);
-		customManifest.process();
+		if (!customManifest.process())
+			TrainUtilities.openDesktop(file);
 
 		return true;
 	}

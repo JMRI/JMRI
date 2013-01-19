@@ -332,36 +332,28 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		if (ae.getSource() == openFileButton) {
 			// Processes the CSV Manifest files using an external custom program.
 			CustomManifest customManifest = new CustomManifest();
- 
+
 			List<String> trains = getSortByList();
 			for (int i = 0; i < trains.size(); i++) {
 				Train train = trainManager.getTrainById(trains.get(i));
 				if (train.isBuildEnabled()) {
 					if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
-						JOptionPane
-								.showMessageDialog(
-										null,
-										MessageFormat
-												.format(Bundle.getMessage("NeedToBuildBeforeOpenFile"),
-														new Object[] {
-																train.getName(),
-																(trainManager
-																		.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-																		: Bundle.getMessage("print")) }),
-										MessageFormat
-												.format(Bundle.getMessage("CanNotPrintManifest"),
-														new Object[] { trainManager
-																.isPrintPreviewEnabled() ? Bundle.getMessage("preview")
-																: Bundle.getMessage("print") }),
-										JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+								.getMessage("NeedToBuildBeforeOpenFile"), new Object[] {
+								train.getName(),
+								(trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
+										.getMessage("print")) }), MessageFormat.format(Bundle
+								.getMessage("CanNotPrintManifest"), new Object[] { trainManager
+								.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
+								.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
 					} else {
-						//train.openFile();
-						
-						// Make sure our csv manifest file exists for this Train. 
+						// train.openFile();
+
+						// Make sure our csv manifest file exists for this Train.
 						File csvFile = train.createCSVManifestFile();
-						
+
 						// Add it to our collection to be processed.
-						customManifest.addCVSFile(csvFile);						
+						customManifest.addCVSFile(csvFile);
 					}
 				}
 			}
@@ -422,7 +414,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		for (int i = 0; i < sorter.getColumnCount(); i++) {
 			String name = sorter.getColumnName(i);
 			int status = sorter.getSortingStatus(i);
-			log.debug("Column " + name + " status " + status);
+			//log.debug("Column " + name + " status " + status);
 			if (status != TableSorter.NOT_SORTED && !name.equals("")) {
 				sortBy = name;
 				_status = status;

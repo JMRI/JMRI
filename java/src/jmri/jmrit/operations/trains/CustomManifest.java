@@ -57,7 +57,7 @@ public class CustomManifest {
 	 * Processes the CSV files using a Custom external program that reads the
 	 * file of file names.
 	 */
-	public void process() {
+	public boolean process() {
 
 		// Set our application name and any arguments
 		// These will come from some user changeable settings mechanism later...
@@ -74,7 +74,7 @@ public class CustomManifest {
 
 		// Only continue if we have some files to process.
 		if (fileCount == 0)
-			return;
+			return false;
 
 		// Build our command string out of these bits
 		// We need to use cmd and start to allow launching data files like
@@ -90,7 +90,13 @@ public class CustomManifest {
 							"Custom processing of manifest csv files is only supported on Windows at the moment.",
 							"Custom manifests not supported",
 							JOptionPane.ERROR_MESSAGE);
-			return;
+			return false;
+		}
+		
+		File file = new File(workingDir, mcAppName);
+		if (!file.exists()) {
+			log.debug("Can not find file "+mcAppName);
+			return false;
 		}
 
 		String cmd = "cmd /c start " + mcAppName + " " + mcAppArg;
@@ -100,7 +106,7 @@ public class CustomManifest {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		return true;
 	}
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CustomManifest.class
 			.getName());
