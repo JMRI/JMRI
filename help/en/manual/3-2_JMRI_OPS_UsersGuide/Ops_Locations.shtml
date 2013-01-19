@@ -27,13 +27,13 @@
 
 <div align=right>
 <p><a href="Ops_Settings.shtml">Previous </a> | <a href="Ops_Cars.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <hr>
 <p>The Operations Tool, Locations opens the Locations window as shown. Locations are places on your railroad that trains visit to pickup or  drop off cars and engines. Locations can be cities, towns, or just  places where trains need to work cars. To enter a new location press 
   <input type="submit" name="button9" id="button9" value="Add">
-, which will open the <strong>Add  Location </strong>window which we will discuss in a moment.&nbsp; But first let&rsquo;s discuss the &ldquo;Locations&rdquo;  window itself. </p>
+, which will open the<strong><a href="#addLoc">Add  Location</a></strong>window which we will discuss in a moment.&nbsp; But first let&rsquo;s discuss the &ldquo;Locations&rdquo;  window itself. </p>
 <p><img src="images/Ops_locations01.png" width="670" height="245" alt="ops locations"></p>
 <p><strong>menu bar</strong>
 </p>
@@ -56,21 +56,29 @@
     </li>
     <li><strong>Print
       </strong><br>
-      <img src="images/Ops_locations_print.png" width="195" height="158" alt="print"><br>
+      <img src="images/Ops_locations_print.png" width="195" height="179" alt="print"><br>
       Click on 
       <input type="button" name="button10" id="button10" value="Okay">
-      opens system printer dialog.<br>
+    opens system printer dialog.</li>
+  </ul>
+  <blockquote>
+    <p><img src="images/Ops_print_loc.png" width="718" height="608" alt="print location"><br>
       <br>
-    </li>
-  
+    </p>
+  </blockquote>
+  <ul>
+    
     <li>    <strong>Preview</strong><br>
       <img src="images/Ops_locations_print.png" width="195" height="158" alt="print"><br>
       Click 
       <input type="button" name="button11" id="button11" value="Okay"> 
-      opens the print previw window showing Location information.<br>
-      <br>
-    </li>
+    opens the print previw window showing Location information.</li>
   </ul>
+  <blockquote>
+    <p><img src="images/ops_PrintPreview_loc.png" width="675" height="537" alt="Location preview"><br>
+      <br>
+    </p>
+  </blockquote>
   <li><strong>Operations</strong>
   </li>
 </ul>
@@ -78,7 +86,7 @@
   <ul>
     <li><strong>Settings</strong>
       <blockquote>
-        <p>Opens <strong><a href="Ops_Settings.shtml">Operations Setting</a></strong> window.</p>
+        <p>Opens <strong><a href="Ops_Settings.shtml"> Setting</a></strong> window.</p>
       </blockquote>
     </li>
     <li><strong>Locations</strong></li>
@@ -115,6 +123,7 @@
   <input type="radio" name="radio2" id="radio2" value="radio2"> 
 Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>Sets the sort order for the locations</p>
 <p>
+  <a name="addLoc"></a>
   <input type="submit" name="button" id="button" value="Add"> 
 Press to add a location</p>
 <p>The <strong>Add Location</strong> window is opened. At this point only the  Location Name and the type operation at this location entries are active.</p>
@@ -128,7 +137,8 @@ The location name must be unique; the program  will not allow two locations with
 <blockquote>
   <p><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a></p>
   <p><strong><a href="Ops_Cars.shtml">Show Cars</a></strong></p>
-  <p><strong>Change Track Type</strong><br>
+  <p><strong>Change Track Type</strong></p>
+  <p><img src="images/Ops_location_ChangeTrackType.png" width="388" height="107" alt="track type"><br>
     <br>
     Press the 
     <input type="submit" name="button2" id="button2" value="Add Location">
@@ -191,7 +201,7 @@ to save your work. The program will create a  file (OperationsLocationRoster.xml
 
 <div align=right>
 <p><a href="Ops_Settings.shtml">Previous </a> | <a href="Ops_Cars.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

@@ -26,8 +26,7 @@
 <h1>What does Operations do?</h1>
 
 <div align=right>
-<p><a href="Ops_Settings.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
+<p><a href="index.shtml#startOps">Back to Index</a></p>
 </div>
 
 <hr>
@@ -38,14 +37,14 @@
 <p>The operations program provides a set of demo files to help introduce  you to the some of the features and capabilities of this program. </p>
 <table width="80%" border="1" cellspacing="1" cellpadding="2">
   <tr>
-    <td><img src="images/Ops_Start01.png" width="518" height="500" alt="ops start"></td>
-    <td valign="top"> <p><img src="images/Ops_Start02.png" width="496" height="308" alt="ops start"></p>
+    <td><img src="images/Ops_Start01.png" width="487" height="483" alt="start"></td>
+    <td valign="top"> <p><img src="images/Ops_Start02.png" width="496" height="282" alt="start"></p>
     <p>Load the demo files from the <strong>Tools</strong> menu in the Operations Settings window, select Load Demo Files, the demo files will load after you restart DecoderPro.</p></td>
   </tr>
 </table>
-<p><img src="images/Ops_Demo01.png" width="755" height="212" alt="demmo"></p>
+<p><img src="images/Ops_Demo01.png" width="788" height="253" alt="Demo"></p>
 <p>Selecting Load Demo Files closes DecoderPro&reg; and it must be restarted to open the Demo Railroad.</p>
-<p><img src="images/Ops_Demo02.png" width="756" height="180" alt="demo"></p>
+<p><img src="images/Ops_Demo02.png" width="796" height="151" alt="Demo"></p>
 <p> The program  will create a backup of your current configuration if you have one, and  then load the demo files. Restart JMRI to complete the demo load  process.&nbsp;&nbsp;To get rid of the demo files, use the <strong>Restore </strong>function in the <strong>Tools</strong> menu of the <strong>Operations Settings </strong>to reload the  first backup date, which is the blank entry form.</p>
 <p>The program also supplies a simple panel to show how the train  icons work. Load the panel before building the trains by selecting in  the main JMRI menu, "Panels-&gt;Open Panels .." a window should appear and  open the "operations" directory and then open the "Operations Demo  Panel" xml file.</p>
 <p><img src="images/Ops_DemoPanel.png" width="800" height="220" alt="Demo panel"> </p>
@@ -59,8 +58,7 @@
 <hr>
 
 <div align=right>
-<p><a href="Ops_Settings.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
+<p><a href="index.shtml#startOps">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

@@ -25,14 +25,14 @@
 
 <div align=right>
 <p><a href="Ops_Locations.shtml">back</a><a href="#"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <hr>
 <p>If you would like to see cars delivered in a particular sequence, or  with a specific load for delivery or shipping, the program allows you to  apply a schedule to a siding. This is an optional feature and shouldn't  be used until you become very familiar with how the program generates  manifests and switch lists. A schedule provides very fine control on the  order types of cars will be delivered to a siding. You can also specify  the road name for the type of car delivered. For example, if you wanted  two SP boxcars to be delivered followed by a tank car loaded with "Oil",  you can create a schedule that will do exactly that. </p>
 <h4>Creating a Schedule</h4>
 <p>First open the<a href="Ops_Locations.shtml"> Locations </a>panel.</p>
-<p><img src="images/Ops_Schedule01.png" width="670" height="317" alt="schedule"></p>
+<p><img src="images/Ops_locations01.png" width="670" height="245" alt="locations"></p>
 <p>Then press 
   <input type="submit" name="button" id="button" value="Edit"> 
 to the right of the location to open the <strong>Edit Location </strong>panel.</p>
@@ -86,7 +86,7 @@ and close the schedule panel when you are done. </p>
 
 <div align=right>
 <p><a href="Ops_Locations.shtml">back</a><a href="#"></a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

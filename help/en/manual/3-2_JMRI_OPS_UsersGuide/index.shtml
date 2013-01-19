@@ -21,7 +21,7 @@
 <div id="mainContent">
 
 <a NAME="Top"></a>
-<h1>JMRI&reg; v3.0 Operations User's Guide</h1>
+<h1>JMRI&reg; v3.2 Operations User's Guide</h1>
 <h1>&nbsp;</h1>
 <h3>1/5/2013</h3>
 <p>&nbsp;</p>
@@ -45,7 +45,7 @@
 <p>If  this is your first visit to our manual we suggest that you take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
   to get an overview of what we&rsquo;re about to cover..
 <p>Note: All screen shots in this manual are from a Windows machine using the   "Metal" User Interface option   . While your screens will probably differ  in some layout details, they will be essentially the same. All   programming examples shown are with Digitrax PR3(MS100 mode) connected   to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive   samples will be Digitrax, except for sound examples.
-<p>Note: This entire manual has been updated to   correspond to DecoderPro 3.0 and the HTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
+<p>Note: This entire manual has been updated to   correspond to DecoderPro 3.2 and the HTML verified using HTML4 and   Cascading Style Sheets. If the formatting looks odd, you probably need   to update your browser. </p>
 <h2>Table of Contents</h2>
 <h4><a name="Installing"></a>Installing JMRI</h4>
 <ul>
@@ -55,13 +55,19 @@
 <h4><a name="startOps"></a>Starting Operations Program</h4>
 <ul>
   <li>    <a href="Start_DecoderPro.shtml">Starting DecoderPro&reg; and Operations Program</a></li>
+  <li><a href="Start_Preferences.shtml">How do I set up my preferences?</a></li>
+  <li><a href="Ops_Start.shtml">What does Operations do?</a></li>
 </ul>
 <h4><a name="Main"></a>DecoderPro&reg; Main Window</h4>
 <ul>
   <li><a href="Main_Main.shtml">Main Window</a></li>
+  <li><a href="Main_Menu.shtml">Menu Overview</a></li>
   <li><a href="Main_Tool.shtml">Tools Menu</a>
     <ul>
-      <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li><a href="Ops_Settings.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">        
         <ul>
           <li><a href="Ops_Settings.shtml">Settings</a> </li>
           <li><a href="Ops_Locations.shtml">Locations</a> </li>
@@ -71,22 +77,30 @@
           <li><a href="Ops_Trains.shtml">Trains</a></li>
         </ul>
       </li>
+      <li></li>
+      <li></li>
+      <li></li>
     </ul>
   </li>
-  <li><a href="Ops_Start.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
+  <li><a href="Ops_Settings.shtml">Operations</a><img src="images/arrow.gif" width="20" height="9" alt="arrow">
     <ul>
       <li><a href="Ops_Settings.shtml">Settings</a>
         <ul>
           <li><strong>Tools</strong>
             <ul>
               <li><strong><a href="Ops_Settings.shtml#Options">Options</a></strong></li>
-              <li><strong><a href="Ops_PrintOptions.shtml">Print Options</a></strong></li>
+              <li><strong><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></strong></li>
+              <li>Build Report Options</li>
               <li>Backup</li>
               <li>Restore</li>
               <li>Load Demo Files</li>
               <li>Reset Database</li>
+              <li>Manage Auto Backups</li>
             </ul>
           </li>
+          <li><strong>Operations</strong></li>
+          <li><strong>Window</strong></li>
+          <li><strong>Help</strong></li>
         </ul>
       </li>
       <li><a href="Ops_Locations.shtml">Locations</a>
@@ -100,6 +114,9 @@
               <li>Preview</li>
             </ul>
           </li>
+          <li><strong>Operations</strong></li>
+          <li><strong>Window</strong></li>
+          <li><strong>Help</strong></li>
         </ul>
       </li>
       <li><a href="Ops_Cars.shtml">Cars</a>
@@ -120,25 +137,32 @@
               <li><a href="Ops_Locations_setCars.shtml">Set Cars</a></li>
             </ul>
           </li>
+          <li><strong>Operations</strong></li>
+          <li><strong>Window</strong></li>
+          <li><strong>Help</strong></li>
         </ul>
       </li>
       <li><a href="Ops_Engines.shtml">Locomotives</a>
         <ul>
           <li><strong>Tools</strong>
-<ul>
+            <ul>
               <li>Roster <img src="images/arrow.gif" width="20" height="9" alt="arrow">
                 <ul>
-                  <li>Import from JMRI Roster</li>
+                  <li>Import from JMRI roster</li>
                   <li>Import from file</li>
                   <li>Export to file</li>
-                  <li>Delete All Locomotives</li>
+                  <li>Delete all locomotives</li>
+                  <li>Reset move count all locomotives</li>
                   <li>Print</li>
                   <li>Preview</li>
                 </ul>
               </li>
-              <li>Synchonize with NCE Consists</li>
+              <li style="color:#999">Synchonize with NCE Consists</li>
             </ul>
           </li>
+          <li><strong>Operations</strong></li>
+          <li><strong>Window</strong></li>
+          <li><strong>Help</strong></li>
         </ul>
       </li>
       <li><a href="Ops_Routes.shtml">Routes</a>
@@ -151,14 +175,18 @@
               <li>Preview</li>
             </ul>
           </li>
+          <li><strong>Operations</strong></li>
+          <li><strong>Window</strong></li>
+          <li><strong>Help</strong></li>
         </ul>
       </li>
       <li><a href="Ops_Trains.shtml">Trains</a>
         <ul>
           <li><strong>Tools</strong>
             <ul>
-              <li><a href="Ops_Trains_BuildOptions.shtml">Build Options</a></li>
-              <li><a href="Ops_PrintOptions.shtml">Print Options</a></li>
+              <li><a href="Ops_Trains_BuildOptions.shtml">Options</a></li>
+              <li><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></li>
+              <li>Build Report Options</li>
               <li><a href="Ops_TrainsModify.shtml">Modify Trains by Car Type</a></li>
               <li><strong><a href="Ops_Trains_Timetable.shtml">Timetable</a></strong></li>
               <li>Copy Train</li>
@@ -167,6 +195,9 @@
               <li>Preview</li>
             </ul>
           </li>
+          <li><strong>Operations</strong></li>
+          <li><strong>Window</strong></li>
+          <li><strong>Help</strong></li>
         </ul>
       </li>
     </ul>
@@ -189,6 +220,12 @@
     <td align="left" valign="top">Dale A. Tripp<br>
       Bruce Shanks</td>
     <td align="left" valign="top">Updated from JMRI 2.14.1 and removed from DecoderPro&reg; as separate Guide</td>
+  </tr>
+  <tr>
+    <td align="left" valign="top">3.2</td>
+    <td align="left" valign="top">1/20/2013</td>
+    <td align="left" valign="top">Dale A. Tripp</td>
+    <td align="left" valign="top">Updated from Version 3.0</td>
   </tr>
 </table>
 <p>

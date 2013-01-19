@@ -25,34 +25,32 @@
 <h1>Operations Settings Window</h1>
 
 <div align=right>
-<p><a href="Ops_Start.shtml">Previous </a> | <a href="Ops_Locations.shtml">Next</a></p>
-<p><a href="index.shtml#Operations">Back to Index</a></p>
+<p><a href="Ops_Locations.shtml">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <hr>
 <h3>Menus</h3>
-<p><img src="images/Ops_Setting_tool_menu.png" width="900" height="199" alt="ops setting window"></p>
+<p><img src="images/Ops_Setting_tool_menu.png" width="791" height="239" alt="settings menu"></p>
 
 
 <h3>Tools</h3>
   <ul>
-    <li><strong name="OptionsMenu"><a name="OptionsMenu"></a>Options</strong></li>
-	    
-    Opens the<a href="#Options"> Options </a>Window           
-	    
-	    
-	    
-	    
-  <li><strong>Print Options</strong></li>
-    Opens the <a href="Ops_PrintOptions.shtml">Print Options </a>Window
-	    
-	    
-	    
+    <li><strong name="OptionsMenu"><a name="OptionsMenu"></a><a href="#Options">Options </a></strong>  </li>
+  </ul>
+  <ul>
+    <li><a href="Ops_PrintOptions.shtml"><strong>Manifest Print Options </strong></a>    </li>
+  </ul>
+  <ul>
+    <li><strong>Build Report Options</strong><br>
+      <br>
+    <img src="images/Ops_Setting_BuildReportOptions.png" width="436" height="156" alt="build report options">    <br>
+    Let's you select the amount of detail that you want in the build report.  Very Detailed produces the highest number of pages.  </li>
+  
     <li><strong>Backup</strong></li>
-    Opens the system <strong>Save </strong>dialog	  
-	    
+    Opens the system <strong>Save  backup </strong>dialog to backup <strong>folder </strong>
     <li><strong>Restore</strong></li>
-    Opens the system <strong>Open</strong> dialog
+    Opens the system <strong>Open</strong> backup file dialog from backup folder 
 	    
 	    
 	    
@@ -68,6 +66,9 @@
 	    
     <p>Opens the <strong>Reset Databases </strong>dialog box</p>
     <p><img src="images/Ops_Setting04.png" width="445" height="122" alt="reset database"></p>
+    <li><strong>Manage Auto Backups</strong><br>
+      <img src="images/Ops_Setting_ManageBackupSets.png" width="461" height="387" alt="auto backup">      <br>
+    </li>
   </ul>
 <h3>Operations</h3>
   <ul>
@@ -424,8 +425,8 @@ you would like the program to ask you which track a train should Arrive to stagi
   <p align="right"><a href="#OptionsMenu">Back</a></p>
   <div align=right>
     <div align=right>
-      <p><a href="Ops_Start.shtml">Previous </a> | <a href="Ops_Locations.shtml">Next</a></p>
-      <p><a href="index.shtml#Operations">Back to Index</a></p>
+      <p><a href="Ops_Locations.shtml">Next</a></p>
+      <p><a href="index.shtml#Main">Back to Index</a></p>
     </div>
     <p>.</p>
 </div>
