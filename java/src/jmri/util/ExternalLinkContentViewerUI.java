@@ -30,13 +30,17 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
     }
 
     public void hyperlinkUpdate(HyperlinkEvent he){
+        if (log.isDebugEnabled()) log.debug("event has type "+he.getEventType());
         if(he.getEventType()==HyperlinkEvent.EventType.ACTIVATED){
             try{
+                if (log.isDebugEnabled()) log.debug("event has URL  "+he.getURL());
                 URL u = he.getURL();
                 if(u.getProtocol().equalsIgnoreCase("mailto")||u.getProtocol().equalsIgnoreCase("http")
                         ||u.getProtocol().equalsIgnoreCase("ftp")
                      ){
-                    java.awt.Desktop.getDesktop().browse(new URI(u.toString()));
+                    URI uri = new URI(u.toString());
+                    log.debug("defer protocol "+u.getProtocol()+" to browser via "+uri);
+                    java.awt.Desktop.getDesktop().browse(uri);
                     return;
                 } else if ( u.getProtocol().equalsIgnoreCase("file") && (
                         u.getFile().endsWith("jpg")
@@ -44,7 +48,12 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
                         ||u.getFile().endsWith("xml")
                         ||u.getFile().endsWith("gif")) ) {
                     
-                    URI uri = new URI("file:"+System.getProperty("user.dir")+"/"+u.getFile());
+                    // following was 
+                    // ("file:"+System.getProperty("user.dir")+"/"+u.getFile()) 
+                    // but that duplicated the path information; JavaHelp seems to provide
+                    // full pathnames here.
+                    URI uri = new URI(u.toString());
+                    log.debug("defer content of "+u.getFile()+" to browser with "+uri);
                     java.awt.Desktop.getDesktop().browse(uri);
                     return;
                 } else if ( u.getProtocol().equalsIgnoreCase("file") ) {
@@ -53,13 +62,15 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
                     java.io.File file = new java.io.File(u.getFile());
                     if (!file.exists()) {
                         URI uri = new URI("http://jmri.org/"+u.getFile());
+                        log.debug("fallback to browser with "+uri);
                         java.awt.Desktop.getDesktop().browse(uri);                  
                     }
                 }
             }
-            catch(Throwable t){}
+            catch(Throwable t){log.error("Error processing request", t);}
         }
         super.hyperlinkUpdate(he);
     }
+    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ExternalLinkContentViewerUI.class.getName());
 }
 
