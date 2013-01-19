@@ -13,6 +13,7 @@ import java.awt.Font;
 import javax.swing.*;
 
 import java.io.*;
+import jmri.util.FileUtil;
 
 /**
  * Table data model for display of Cbus events
@@ -31,7 +32,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
 
     static public final int NUMCOLUMN = 6;
 
-    final JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    final JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
      /*
      * @deprecated 2.99.2
      */

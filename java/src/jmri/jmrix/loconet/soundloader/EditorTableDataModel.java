@@ -16,6 +16,7 @@ import java.awt.Font;
 
 import javax.swing.*;
 import javax.swing.table.TableCellEditor;
+import jmri.util.FileUtil;
 
 
 /**
@@ -201,7 +202,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     static JFileChooser chooser;  // shared across all uses
     
     void replWavButtonPressed(Object value, int row, int col) {
-        if (chooser == null) chooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+        if (chooser == null) chooser = new JFileChooser(FileUtil.getUserFilesPath());
         chooser.rescanCurrentDirectory();
         int retVal = chooser.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected

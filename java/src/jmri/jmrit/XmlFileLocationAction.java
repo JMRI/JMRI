@@ -35,7 +35,7 @@ public class XmlFileLocationAction extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent ev) {
 
-        final String user = XmlFile.userFileLocationDefault();
+        final String user = FileUtil.getUserFilesPath();
         final String roster = Roster.getFileLocation();
         final String config = FileUtil.getPreferencesPath();
         // final String configName = System.getProperty("org.jmri.Apps.configFilename");

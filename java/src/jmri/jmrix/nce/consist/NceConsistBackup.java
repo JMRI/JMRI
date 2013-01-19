@@ -12,6 +12,7 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
+import jmri.util.FileUtil;
 
 
 /**
@@ -68,7 +69,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	public void run() {
 
 		// get file to write to
-		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+		JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
 		fc.addChoosableFileFilter(new textFilter());
 		
 		File fs = new File ("NCE consist backup.txt");

@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.*;
+import jmri.util.FileUtil;
 
 import jmri.util.JmriJFrame;
 
@@ -82,7 +83,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     AbstractMonFrame self;
 
     // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
     public AbstractMonFrame() {
         super();

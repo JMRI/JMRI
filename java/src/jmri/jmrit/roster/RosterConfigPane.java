@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
+import jmri.util.FileUtil;
 
 /**
  * Provide GUI to configure Roster defaults.
@@ -32,7 +33,7 @@ public class RosterConfigPane extends JPanel {
     JPanel parent;
     
     public RosterConfigPane() {
-        fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+        fc = new JFileChooser(FileUtil.getUserFilesPath());
         // filter to only show the roster.xml file
         FileFilter filt = new FileFilter(){
             public boolean accept(File f) {

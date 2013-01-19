@@ -6,6 +6,7 @@ import jmri.jmrix.sprog.*;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 
 import javax.swing.*;
+import jmri.util.FileUtil;
 
 /**
  * Frame for SPROG firmware update utility. 
@@ -29,7 +30,7 @@ abstract public class SprogUpdateFrame
   protected SprogVersion sv;
 
   // to find and remember the hex file
-  final javax.swing.JFileChooser hexFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+  final javax.swing.JFileChooser hexFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
   JLabel statusBar = new JLabel();
 

@@ -276,7 +276,7 @@ public class FileUtil {
      * @return User's files directory as a String
      */
     static public String getUserFilesPath() {
-        return XmlFile.userFileLocationDefault();
+        return XmlFile.prefsDir();
     }
 
     /**

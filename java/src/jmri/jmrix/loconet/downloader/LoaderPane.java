@@ -12,6 +12,7 @@ import jmri.jmrix.loconet.*;
 import java.io.*;
 
 import jmri.jmrit.MemoryContents;
+import jmri.util.FileUtil;
 
 /**
  * Pane for downloading .hex files
@@ -291,7 +292,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     private void selectInputFile() {
         String name = inputFileName.getText();
         if (name.equals("")) {
-            name = jmri.jmrit.XmlFile.userFileLocationDefault();
+            name = FileUtil.getUserFilesPath();
         }
         if (chooser == null) {
             chooser = new JFileChooser(name);

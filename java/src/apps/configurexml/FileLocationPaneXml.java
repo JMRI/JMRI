@@ -3,6 +3,7 @@ package apps.configurexml;
 import apps.FileLocationPane;
 import org.jdom.Element;
 import java.util.List;
+import jmri.util.FileUtil;
 
 /**
  * Handle XML persistance of directory locations.
@@ -24,10 +25,10 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     public Element store(Object o) {
         Element e = new Element("fileLocations");
         /*e.setAttribute("defaultScriptLocation", jmri.jmrit.XmlFile.scriptsDir());
-        e.setAttribute("defaultUserLocation", jmri.jmrit.XmlFile.userFileLocationDefault());
+        e.setAttribute("defaultUserLocation", FileUtil.getUserFilesPath());
         e.setAttribute("defaultThrottleLocation", jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());*/
         storeLocation(e, "defaultScriptLocation", jmri.jmrit.XmlFile.scriptsDir());
-        storeLocation(e, "defaultUserLocation", jmri.jmrit.XmlFile.userFileLocationDefault());
+        storeLocation(e, "defaultUserLocation", FileUtil.getUserFilesPath());
         storeLocation(e, "defaultThrottleLocation", jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());
         e.setAttribute("class", this.getClass().getName());
         return e;

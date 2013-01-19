@@ -11,6 +11,7 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceTrafficController;
+import jmri.util.FileUtil;
 
 
 /**
@@ -83,7 +84,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 	public void run() {
 
 		// Get file to read from
-		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+		JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
 		fc.addChoosableFileFilter(new textFilter());
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)

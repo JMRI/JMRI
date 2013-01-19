@@ -6,6 +6,7 @@ import java.util.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
+import jmri.util.FileUtil;
 
 /**
  * Class to represent a dimensionless speed profile of a DCC decoder.
@@ -151,7 +152,7 @@ public class DccSpeedProfile {
     private static PrintWriter p = null;
 
     private static void openExportFile() {
-        JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+        JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
         String fileName = null;
         
         // get filename

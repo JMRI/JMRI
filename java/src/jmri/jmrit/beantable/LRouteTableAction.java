@@ -52,6 +52,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.TreeSet;
+import jmri.util.FileUtil;
 
 
 import jmri.util.JmriJFrame;
@@ -1330,7 +1331,7 @@ public class LRouteTableAction extends AbstractTableAction {
      */
     void setSoundPressed() {
         if (soundChooser == null) {
-            soundChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+            soundChooser = new JFileChooser(FileUtil.getUserFilesPath());
             soundChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
         }
         soundChooser.rescanCurrentDirectory();

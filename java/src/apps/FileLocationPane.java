@@ -7,6 +7,7 @@ import java.io.File;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
+import jmri.util.FileUtil;
 
 /**
  * Provide GUI to configure the Default File Locations
@@ -81,11 +82,11 @@ public class FileLocationPane extends JPanel {
         p.add(users);
         p.add(userLocation);
         userLocation.setColumns(30);
-        userLocation.setText(jmri.jmrit.XmlFile.userFileLocationDefault());
+        userLocation.setText(FileUtil.getUserFilesPath());
         
         JButton bUser = new JButton(rb.getString("ButtonSetDots"));
         final JFileChooser fcUser;
-        fcUser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+        fcUser = new JFileChooser(FileUtil.getUserFilesPath());
 
         fcUser.setDialogTitle(rb.getString("MessageSelectDirectory"));
         fcUser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);

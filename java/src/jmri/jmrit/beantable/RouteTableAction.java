@@ -31,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import jmri.util.FileUtil;
 
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriBeanComboBox;
@@ -996,7 +997,7 @@ public class RouteTableAction extends AbstractTableAction {
      */
     void setSoundPressed() {
         if (soundChooser == null) {
-            soundChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+            soundChooser = new JFileChooser(FileUtil.getUserFilesPath());
             soundChooser.setFileFilter(new jmri.util.NoArchiveFileFilter());
         }
         soundChooser.rescanCurrentDirectory();

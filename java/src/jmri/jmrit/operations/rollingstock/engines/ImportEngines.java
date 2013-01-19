@@ -16,6 +16,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
+import jmri.util.FileUtil;
 
 /**
  * This routine will import engines into the operation database.
@@ -40,7 +41,7 @@ public class ImportEngines extends Thread {
 	// we use a thread so the status frame will work!
 	public void run() {
 		// Get file to read from
-		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+		JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
 		fc.addChoosableFileFilter(new ImportFilter());
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)

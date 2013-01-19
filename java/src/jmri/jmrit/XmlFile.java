@@ -525,14 +525,6 @@ public abstract class XmlFile {
     static public boolean getVerify() { return verify; }
     static public void setVerify(boolean v) { verify = v; }
     
-    /**
-     * Provide default initial location for JFileChoosers
-     * to user files
-     */ 
-    public static String userFileLocationDefault() {
-        return jmri.jmrit.XmlFile.prefsDir();
-    }
-    
     static private String scriptsDirectory = null;
     
     static public String scriptsDir() {
@@ -540,7 +532,7 @@ public abstract class XmlFile {
             return scriptsDirectory;
         }
         // return default
-        String jmriScriptsDir = FileUtil.getProgramPath() + java.io.File.separator + "jython";
+        String jmriScriptsDir = FileUtil.getProgramPath() + File.separator + "jython";
         if (jmriScriptsDir.length() > 0) {
             return jmriScriptsDir + File.separator;
         }
@@ -567,7 +559,7 @@ public abstract class XmlFile {
      */
     public static javax.swing.JFileChooser userFileChooser(
             String filter, String suffix1, String suffix2) {
-        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(userFileLocationDefault());
+        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(prefsDir());
         jmri.util.NoArchiveFileFilter filt = new jmri.util.NoArchiveFileFilter(filter);
         if (suffix1 != null) filt.addExtension(suffix1);
         if (suffix2 != null) filt.addExtension(suffix2);
@@ -576,7 +568,7 @@ public abstract class XmlFile {
     }
 
     public static javax.swing.JFileChooser userFileChooser() {
-        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(userFileLocationDefault());
+        javax.swing.JFileChooser fc = new javax.swing.JFileChooser(prefsDir());
         jmri.util.NoArchiveFileFilter filt = new jmri.util.NoArchiveFileFilter();
         fc.setFileFilter(filt);
         return fc;

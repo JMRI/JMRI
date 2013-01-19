@@ -25,6 +25,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.BadLocationException;
+import jmri.util.FileUtil;
 
 import jmri.util.swing.JmriPanel;
 
@@ -83,7 +84,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
     AbstractMonPane self;
 
     // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
 
     @SuppressWarnings("LeakingThisInConstructor")
     public AbstractMonPane() {

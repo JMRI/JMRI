@@ -40,6 +40,7 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.util.FileUtil;
 
 /**
  * Frame for Cbus Console
@@ -103,7 +104,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     protected int i;
     
     // to find and remember the log file
-    final javax.swing.JFileChooser logFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    final javax.swing.JFileChooser logFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
     
     // members for handling the CBUS interface
     //CanMessage msg;
