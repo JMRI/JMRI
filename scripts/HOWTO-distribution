@@ -177,9 +177,6 @@ Final release steps:
         (the scp is needed even if on SF.net, so that the FRS system knows you've added something; using cp is NFG)
     (clean up and logout)
 
-    Wait until the downloads have propagated to the mirrors; check
-    by trying to download each file
-
 ( ) Create and upload the JavaDocs
     and XSLT'd decoder pages (you need to have Java 1.6 in ~/.ant/ant.conf)
 
@@ -191,11 +188,15 @@ Final release steps:
 
 ( ) Format the release note page, change date, etc
 
+( ) Wait until the downloads have propagated to the mirrors; check
+    by trying to download each file
+
 ( ) Commit release note files to the web site SVN directory
 
 ( ) Complete all the above before continuing
 
-( ) Update the web site front page and downloads page
+( ) Update the web site front page and downloads page:
+     index.html download/Sidebar download/index.shtml
 
 ( ) Update the "releaselist" file at the top of the web directory
 
@@ -204,7 +205,7 @@ Final release steps:
 
 ( ) Commit site
 
-( ) File copyright registration
+( ) For production releases, file copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
 
