@@ -27,7 +27,7 @@ import javax.swing.JOptionPane;
  * @author      Dave Duchamp Copyright (C) 2007
  * @version	$Revision$
  */
-public class LayoutBlockManager extends AbstractManager {
+public class LayoutBlockManager extends AbstractManager implements jmri.InstanceManagerAutoDefault {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 

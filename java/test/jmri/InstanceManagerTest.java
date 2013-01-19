@@ -7,6 +7,9 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.framework.Assert;
+import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
+import jmri.jmrit.logix.WarrantManager;
+import jmri.jmrit.logix.OBlockManager;
 
 /**
  * Test InstanceManager
@@ -157,6 +160,32 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         Assert.assertNotNull(InstanceManager.memoryManagerInstance() );
         Assert.assertNotNull(InstanceManager.audioManagerInstance() );
         Assert.assertNotNull(InstanceManager.rosterIconFactoryInstance() ); 
+    }
+    
+    //
+    // Tests of individual types, to make sure they
+    // properly create defaults
+    //
+    public void testLayoutBlockManager() {
+        LayoutBlockManager obj = InstanceManager.layoutBlockManagerInstance();
+        Assert.assertNotNull(obj);
+        Assert.assertEquals(obj, InstanceManager.layoutBlockManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(LayoutBlockManager.class));
+        Assert.assertEquals(obj, InstanceManager.layoutBlockManagerInstance());
+    }
+    public void testWarrantManager() {
+        WarrantManager obj = InstanceManager.warrantManagerInstance();
+        Assert.assertNotNull(obj);
+        Assert.assertEquals(obj, InstanceManager.warrantManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(WarrantManager.class));
+        Assert.assertEquals(obj, InstanceManager.warrantManagerInstance());
+    }
+    public void testOBlockManager() {
+        OBlockManager obj = InstanceManager.oBlockManagerInstance();
+        Assert.assertNotNull(obj);
+        Assert.assertEquals(obj, InstanceManager.oBlockManagerInstance());
+        Assert.assertEquals(obj, InstanceManager.getDefault(OBlockManager.class));
+        Assert.assertEquals(obj, InstanceManager.oBlockManagerInstance());
     }
     
 	// from here down is testing infrastructure

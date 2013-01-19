@@ -32,7 +32,7 @@ import jmri.managers.AbstractManager;
  * @version     $Revision$
  */
 public class OBlockManager extends AbstractManager
-    implements java.beans.PropertyChangeListener {
+    implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
     public OBlockManager() {
         super();

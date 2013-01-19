@@ -28,7 +28,7 @@ import jmri.managers.AbstractManager;
  * @version     $Revision$
  */
 public class WarrantManager extends AbstractManager
-    implements java.beans.PropertyChangeListener {
+    implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
     public WarrantManager() {
         super();

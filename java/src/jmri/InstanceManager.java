@@ -13,9 +13,6 @@ import java.util.List;
 // Please don't add any more dependencies on other packages via import
 // statements.  Instead, add new items with the store/getDefault methods
 // described below.
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
@@ -286,16 +283,20 @@ public class InstanceManager {
         return o;
     }
 
-    static public OBlockManager oBlockManagerInstance()  {
-        if (instance().oBlockManager != null) return instance().oBlockManager;
-        instance().oBlockManager = (OBlockManager)initializer.getDefault(OBlockManager.class);
-        return instance().oBlockManager;
+    /**
+     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
+     */
+    @Deprecated
+    static public jmri.jmrit.logix.OBlockManager oBlockManagerInstance()  {
+        return getDefault(jmri.jmrit.logix.OBlockManager.class);
     }
 
-    static public WarrantManager warrantManagerInstance()  {
-        if (instance().warrantManager != null) return instance().warrantManager;
-        instance().warrantManager = (WarrantManager)initializer.getDefault(WarrantManager.class);
-        return instance().warrantManager;
+    /**
+     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
+     */
+    @Deprecated
+    static public jmri.jmrit.logix.WarrantManager warrantManagerInstance()  {
+        return getDefault(jmri.jmrit.logix.WarrantManager.class);
     }
 
     static public SectionManager sectionManagerInstance()  {
@@ -326,10 +327,12 @@ public class InstanceManager {
         return r;
     }
 
-    static public LayoutBlockManager layoutBlockManagerInstance()  {
-        if (instance().layoutBlockManager != null) return instance().layoutBlockManager;
-        instance().layoutBlockManager = (LayoutBlockManager)initializer.getDefault(LayoutBlockManager.class);
-        return instance().layoutBlockManager;
+    /**
+     * @deprecated Since 3.3.1, use @{link #getDefault} directly.
+     */
+    @Deprecated
+    static public jmri.jmrit.display.layoutEditor.LayoutBlockManager layoutBlockManagerInstance()  {
+        return getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
     }
 
     static public ConditionalManager conditionalManagerInstance()  {
@@ -489,9 +492,6 @@ public class InstanceManager {
         signalHeadManager = p;
     }
 
-    private OBlockManager oBlockManager = null;
-    private WarrantManager warrantManager = null;
-	
     private SectionManager sectionManager = null;
 	
     private TransitManager transitManager = null;
@@ -504,14 +504,12 @@ public class InstanceManager {
         store(p, RouteManager.class);
     }
 
-    private LayoutBlockManager layoutBlockManager = null;
-    static public void setLayoutBlockManager(LayoutBlockManager p) {
-        instance().addLayoutBlockManager(p);
-    }
-    protected void addLayoutBlockManager(LayoutBlockManager p) {
-        if (p!=layoutBlockManager && layoutBlockManager!=null && log.isDebugEnabled()) log.debug("LayoutBlockManager instance is being replaced: "+p);
-        if (p!=layoutBlockManager && layoutBlockManager==null && log.isDebugEnabled()) log.debug("LayoutBlockManager instance is being installed: "+p);
-        layoutBlockManager = p;
+    /**
+     * @deprecated Since 3.3.1, use @{link #store} directly.
+     */
+    @Deprecated
+    static public void setLayoutBlockManager(jmri.jmrit.display.layoutEditor.LayoutBlockManager p) {
+        store(p, jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
     }
 
     private ConditionalManager conditionalManager = null;
