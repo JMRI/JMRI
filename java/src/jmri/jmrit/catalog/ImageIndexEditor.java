@@ -25,7 +25,6 @@ import jmri.CatalogTree;
 import jmri.util.JmriJFrame;
 import jmri.jmrit.display.IconAdder;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.XmlFile;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
@@ -250,8 +249,8 @@ public final class ImageIndexEditor extends JmriJFrame {
             }
         }
         _catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-        XmlFile.ensurePrefsPresent("resources");
-        _catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath()+"resources");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
+        _catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
         return _catalog;
     }
 

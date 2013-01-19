@@ -2,7 +2,6 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -58,8 +57,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         // read the file for the "from" entry and write it out
 
         // ensure preferences will be found for read
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        FileUtil.createDirectory(LocoFile.getFileLocation());
 
         // locate the file
         //File f = new File(mFullFromFilename);

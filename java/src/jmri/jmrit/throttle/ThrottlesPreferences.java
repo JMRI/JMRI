@@ -30,7 +30,7 @@ public class ThrottlesPreferences {
     
     public ThrottlesPreferences(){
 		String dirname = FileUtil.getUserFilesPath()+ "throttle" +File.separator;
-		XmlFile.ensurePrefsPresent(dirname);
+		FileUtil.createDirectory(dirname);
         prefFile = dirname+ "ThrottlesPreferences.xml";
 		ThrottlesPrefsXml prefs = new ThrottlesPrefsXml();
 		File file = new File(prefFile );

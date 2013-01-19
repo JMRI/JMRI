@@ -14,7 +14,6 @@ import jmri.UserPreferencesManager;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.implementation.AbstractShutDownTask;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.signalling.EntryExitPairs;
@@ -146,7 +145,7 @@ public abstract class AppsBase {
 
     protected void installConfigurationManager() {
         ConfigXmlManager cm = new ConfigXmlManager();
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         InstanceManager.setConfigureManager(cm);
         cm.setPrefsLocation(new File(getConfigFileName()));
         log.debug("config manager installed");
@@ -182,7 +181,7 @@ public abstract class AppsBase {
     }
 
     protected void setAndLoadPreferenceFile() {
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         final File file;
         // decide whether name is absolute or relative
         if (!new File(getConfigFileName()).isAbsolute()) {

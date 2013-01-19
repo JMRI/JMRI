@@ -136,9 +136,8 @@ public class PollingFile extends XmlFile {
     }
                 
     static public String defaultLocation() {
-        String location = FileUtil.getUserFilesPath()+File.separator+"rps"+File.separator;
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-        XmlFile.ensurePrefsPresent(location);
+        String location = FileUtil.getUserFilesPath()+"rps"+File.separator;
+        FileUtil.createDirectory(location);
         return location;
     }
     static public String defaultFilename() {

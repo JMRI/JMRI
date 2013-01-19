@@ -449,7 +449,6 @@ public class VSDConfigPanel extends JmriPanel {
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         Roster.writeRosterFile();
 
         return true;

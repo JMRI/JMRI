@@ -46,7 +46,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             new DefaultSignalAppearanceMap("map:"+signalSystemName+":"+aspectMapName);
         maps.put("map:"+signalSystemName+":"+aspectMapName, map);
 
-        File file = new File(FileUtil.getUserFilesPath()+java.io.File.separator
+        File file = new File(FileUtil.getUserFilesPath()
                                 +"resources"+File.separator
                                 +"signals"+File.separator
                                 +signalSystemName+File.separator

@@ -1,6 +1,5 @@
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -219,8 +218,7 @@ public class RosterEntryTest extends TestCase {
     }
 
     public void testEnsureFilenameExistsOld() throws IOException {
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        FileUtil.createDirectory(LocoFile.getFileLocation());
         RosterEntry r = new RosterEntry();
         Assert.assertEquals("initial filename ", null, r.getFileName());
         r.setId("test Roster Entry 123456789ABC");

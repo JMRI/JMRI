@@ -33,7 +33,7 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
             .load(inFile);
     
         // store file
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"temp");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
         File outFile = new File(FileUtil.getUserFilesPath()+"temp/ScaledIconTest.xml");
         InstanceManager.configureManagerInstance()
             .storeUser(outFile);

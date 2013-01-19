@@ -13,7 +13,6 @@ import java.security.CodeSource;
 import java.util.Arrays;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
-import jmri.jmrit.XmlFile;
 import org.apache.log4j.Logger;
 
 /**
@@ -296,6 +295,9 @@ public class FileUtil {
      * @param path The path to the user's files directory
      */
     static public void setUserFilesPath(String path) {
+        if (!path.substring(path.length() - 1).equals(File.separator)) {
+            path = path + File.separator;
+        }
         FileUtil.userFilesPath = path;
     }
 
@@ -433,7 +435,7 @@ public class FileUtil {
     }
 
     static public String getUserResourcePath() {
-        return FileUtil.getUserFilesPath() + File.separator + "resources"; // NOI18N
+        return FileUtil.getUserFilesPath() + "resources"; // NOI18N
     }
 
     /**
@@ -578,5 +580,21 @@ public class FileUtil {
      */
     public static void setScriptsPath(String path) {
         scriptsPath = path;
+    }
+
+    /**
+     * Create a directory if required. Any parent directories will also be
+     * created.
+     *
+     * @param path
+     */
+    public static void createDirectory(String path) {
+        File dir = new File(path);
+        if (!dir.exists()) {
+            log.warn("Creating directory: " + path);
+            if (!dir.mkdirs()) {
+                log.error("Failed to create directory: " + path);
+            }
+        }
     }
 }

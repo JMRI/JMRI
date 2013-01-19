@@ -2,7 +2,6 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -10,6 +9,7 @@ import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
 
 import javax.swing.Action;
+import jmri.util.FileUtil;
 
 import org.jdom.Element;
 
@@ -61,7 +61,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
         log.debug("doTransfer starts");
 
         // ensure preferences will be found
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        FileUtil.createDirectory(LocoFile.getFileLocation());
 
         // locate the file
         //File f = new File(mFullFromFilename);

@@ -7,7 +7,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Schedule;
@@ -2465,7 +2464,7 @@ public class OperationsCarRouterTest extends TestCase {
 		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 		
-		XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+File.separator+OperationsSetupXml.getOperationsDirectoryName());
+		FileUtil.createDirectory(FileUtil.getUserFilesPath()+OperationsSetupXml.getOperationsDirectoryName());
 
 		RouteManager.instance().dispose();
 	}

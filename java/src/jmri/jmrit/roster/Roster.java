@@ -738,7 +738,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         } else {
             if (log.isDebugEnabled()) log.debug("Roster location reset to default");
             fileLocation = FileUtil.getUserFilesPath();
-            LocoFile.setFileLocation(FileUtil.getUserFilesPath()+File.separator+"roster"+File.separator);
+            LocoFile.setFileLocation(FileUtil.getUserFilesPath()+"roster"+File.separator);
         }
         // and make sure next request gets the new one
         resetInstance();

@@ -2,7 +2,6 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -17,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import jmri.beans.Beans;
 import jmri.jmrit.roster.swing.RosterEntryComboBox;
+import jmri.util.FileUtil;
 
 /**
  * Remove a locomotive from the roster.
@@ -114,7 +114,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
             if (rosterGroup == null) {
                 try {
                     // ensure preferences will be found
-                    XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+                    FileUtil.createDirectory(LocoFile.getFileLocation());
 
                     // do backup
                     LocoFile df = new LocoFile();   // need a dummy object to do this operation in next line

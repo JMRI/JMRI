@@ -184,6 +184,8 @@ public abstract class XmlFile {
      * @param doc Document to be written out. This should never be null.
      */
     public void writeXML(File file, Document doc) throws java.io.IOException, java.io.FileNotFoundException {
+        // ensure parent directory exists
+        FileUtil.createDirectory(file.getParent());
         // write the result to selected file
         java.io.FileOutputStream o = new java.io.FileOutputStream(file);
         try {
@@ -414,19 +416,6 @@ public abstract class XmlFile {
 		String date = "" + now.get(Calendar.YEAR) + m + d + h + min + sec;
 		return date;
 	}
-
-    /**
-     * Ensure that a subdirectory is present; if not, create it.
-     * @param name Complete pathname of directory to be checked/created.
-     */
-    static public void ensurePrefsPresent(String name) {
-        File f = new File(name);
-        if (! f.exists()) {
-            log.warn("Creating a missing preferences directory: "+name);
-            if (!f.mkdirs())
-                log.error("Failed to make preferences directory: "+name);
-        }
-    }
 
     /**
      * Create the Document object to store a particular root Element.

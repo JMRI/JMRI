@@ -296,7 +296,7 @@ public class ConsistFile extends XmlFile {
      * Defines the preferences subdirectory in which LocoFiles are kept
      * by default.
      */
-    static private String fileLocation = FileUtil.getUserFilesPath()+File.separator+"roster"+File.separator+"consist";
+    static private String fileLocation = FileUtil.getUserFilesPath()+"roster"+File.separator+"consist";
                                          
     
     static public String getFileLocation() { return fileLocation; }

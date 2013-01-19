@@ -7,7 +7,6 @@ import jmri.JmriException;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.ConnectionConfig;
@@ -125,7 +124,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         jmri.InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
 
         // find preference file and set location in configuration manager
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         // Needs to be declared final as we might need to
         // refer to this on the Swing thread
         final File file;

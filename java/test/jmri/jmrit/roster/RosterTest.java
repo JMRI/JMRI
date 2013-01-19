@@ -2,7 +2,6 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -129,8 +128,7 @@ public class RosterTest extends TestCase {
         // the resulting files go into the test tree area.
 
         // create a file in "temp"
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"temp");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
         Roster.setFileLocation("temp");
         File f = new File(FileUtil.getUserFilesPath()+"temp"+File.separator+"roster.xml");
         // remove it if its there
@@ -147,7 +145,7 @@ public class RosterTest extends TestCase {
         // now do the backup
         Roster r = new Roster() {
                 public String backupFileName(String name)
-                { return FileUtil.getUserFilesPath()+File.separator+"temp"+File.separator+"rosterBackupTest"; }
+                { return FileUtil.getUserFilesPath()+"temp"+File.separator+"rosterBackupTest"; }
             };
         r.makeBackupFile("temp"+File.separator+"roster.xml");
 
@@ -245,8 +243,7 @@ public class RosterTest extends TestCase {
         // the resulting files go into the test tree area.
 
         // store files in "temp"
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"temp");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
         Roster.setFileLocation("temp"+File.separator);
         Roster.setRosterFileName("rosterTest.xml");
 

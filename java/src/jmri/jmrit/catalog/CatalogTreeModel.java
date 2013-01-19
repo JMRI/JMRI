@@ -36,7 +36,7 @@ public class CatalogTreeModel extends DefaultTreeModel {
         // we manually create the first node, rather than use
         // the routine, so we can name it.
         insertResourceNodes("resources", resourceRoot, dRoot);
-        XmlFile.ensurePrefsPresent("resources");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
         insertFileNodes("files", fileRoot, dRoot);
 
     }

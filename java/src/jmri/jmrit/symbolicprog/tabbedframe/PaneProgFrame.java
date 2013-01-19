@@ -1235,7 +1235,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         Roster.writeRosterFile();
 
         // save date changed, update

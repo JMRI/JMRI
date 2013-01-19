@@ -50,7 +50,6 @@ import java.util.ArrayList;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 
 /**
@@ -603,8 +602,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }
         }
         catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-        XmlFile.ensurePrefsPresent("resources");
-        catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath()+"resources");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "resources");
+        catalog.createNewBranch("IFPREF", "Preferences Directory", FileUtil.getUserFilesPath() + "resources");
         return catalog;
     }
 

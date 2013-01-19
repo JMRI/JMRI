@@ -340,7 +340,7 @@ public class BlockManagerXmlTest extends LoadFileTestBase {
             .load(inFile);
     
         // store file
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"temp");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
         File outFile = new File(FileUtil.getUserFilesPath()+"temp/LoadBlockManagerFileTest.xml");
         InstanceManager.configureManagerInstance()
             .storeConfig(outFile);

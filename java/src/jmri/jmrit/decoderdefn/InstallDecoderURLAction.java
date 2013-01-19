@@ -84,14 +84,10 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         log.debug("["+temp.toString()+"]");
         
         // ensure directories exist
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+File.separator+"decoders");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "decoders");
 
         // output file
-        File toFile = new File(
-                FileUtil.getUserFilesPath()+File.separator
-                +"decoders"+File.separator
-                +temp.getName()
-            );
+        File toFile = new File(FileUtil.getUserFilesPath() + "decoders" + File.separator + temp.getName());
         log.debug("["+toFile.toString()+"]");
                         
         // first do the copy, but not if source and output files are the same

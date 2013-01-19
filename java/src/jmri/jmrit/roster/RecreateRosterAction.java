@@ -2,7 +2,6 @@
 
 package jmri.jmrit.roster;
 
-import jmri.jmrit.XmlFile;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import jmri.util.swing.JmriAbstractAction;
@@ -87,14 +86,12 @@ public class RecreateRosterAction extends JmriAbstractAction {
 
     String[] getFileNames() {
         // ensure preferences will be found for read
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        FileUtil.createDirectory(LocoFile.getFileLocation());
 
         // create an array of file names from roster dir in preferences, count entries
         int i;
         int np = 0;
         String[] sp = null;
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
         if (log.isDebugEnabled()) log.debug("search directory "+LocoFile.getFileLocation());
         File fp = new File(LocoFile.getFileLocation());
         if (fp.exists()) {

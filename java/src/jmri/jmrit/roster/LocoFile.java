@@ -309,7 +309,7 @@ class LocoFile extends XmlFile {
      * Defines the preferences subdirectory in which LocoFiles are kept
      * by default.
      */
-    static private String fileLocation = FileUtil.getUserFilesPath()+File.separator+"roster"+File.separator;
+    static private String fileLocation = FileUtil.getUserFilesPath()+"roster"+File.separator;
 
     static public String getFileLocation() { return fileLocation; }
 

@@ -49,9 +49,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.XmlFile;
-import jmri.util.FileUtil;
-
 
 public class VSDConfigDialog extends JDialog {
 
@@ -485,7 +482,6 @@ public class VSDConfigDialog extends JDialog {
         variableModel.setFileDirty(false);
 
         // and store an updated roster file
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
         Roster.writeRosterFile();
 
         return true;

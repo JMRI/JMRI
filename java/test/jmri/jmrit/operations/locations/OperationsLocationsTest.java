@@ -1326,7 +1326,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Starting Number of Locations", 6, locationList.size());
 
 		//  Revert the main xml file back to the backup file.
-		LocationManagerXml.instance().revertBackupFile(FileUtil.getUserFilesPath()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
+		LocationManagerXml.instance().revertBackupFile(FileUtil.getUserFilesPath()+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
 		
 		//  Need to dispose of the LocationManager's list and hash table
 		manager.dispose();	
@@ -1350,7 +1350,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 
 		// Need to force a re-read of the xml file.
-		LocationManagerXml.instance().readFile(FileUtil.getUserFilesPath()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
+		LocationManagerXml.instance().readFile(FileUtil.getUserFilesPath()+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
 
 		// check options
 		/* all JMRI window position and size are now saved

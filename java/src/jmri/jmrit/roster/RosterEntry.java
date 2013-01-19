@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
@@ -785,7 +784,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         LocoFile df = new LocoFile();
 
         // do I/O
-        XmlFile.ensurePrefsPresent(LocoFile.getFileLocation());
+        FileUtil.createDirectory(LocoFile.getFileLocation());
 
         try {
             String fullFilename = LocoFile.getFileLocation()+getFileName();

@@ -2,7 +2,6 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -33,8 +32,7 @@ public class Pr1ImporterTest extends TestCase {
 
     public File makeTempFile(String contents) throws IOException {
         // create a file
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"temp");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"temp");
         File f = new java.io.File(FileUtil.getUserFilesPath()+"temp"+File.separator+"Pr1Importer.test.xml");
         // recreate it
         if (f.exists()) f.delete();

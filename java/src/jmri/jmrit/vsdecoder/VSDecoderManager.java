@@ -92,7 +92,8 @@ public class VSDecoderManager implements PropertyChangeListener {
 	reportertable = new ArrayList<String>();
 	// Get preferences
 	String dirname = FileUtil.getUserFilesPath()+ "vsdecoder" +File.separator; // NOI18N
-	XmlFile.ensurePrefsPresent(dirname);
+	FileUtil.createDirectory(dirname);
+        // TODO: turn file name into final string instead of storing in .properties file
 	vsdecoderPrefs = new VSDecoderPreferences(dirname+ Bundle.getMessage("VSDPreferencesFileName"));
 	// Listen to ReporterManager for Report List changes
 	setupReporterManagerListener();

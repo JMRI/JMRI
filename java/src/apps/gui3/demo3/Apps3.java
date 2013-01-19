@@ -3,7 +3,6 @@
 package apps.gui3.demo3;
 
 import jmri.*;
-import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
 
 import apps.GuiLafConfigPane;
@@ -216,7 +215,7 @@ public class Apps3 {
             configFilename = "jmriprefs3.xml";
             log.debug("configure from default file "+configFilename);
         }
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         File file = new File(configFilename);
         // decide whether name is absolute or relative
         if (!file.isAbsolute()) {
@@ -355,7 +354,7 @@ public class Apps3 {
         InstanceManager.configureManagerInstance().registerPref(guiPrefs);
 
         // write file
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         // decide whether name is absolute or relative
         File file = new File(configFilename);
         if (!file.isAbsolute()) {

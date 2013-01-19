@@ -1,7 +1,6 @@
 // TrainInfoFile.java
 package jmri.jmrit.dispatcher;
 
-import jmri.jmrit.XmlFile;
 import java.io.File;
 
 import java.util.ResourceBundle;
@@ -38,7 +37,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         super();
     }
     // operational variables
-    private String fileLocation = FileUtil.getUserFilesPath() + File.separator
+    private String fileLocation = FileUtil.getUserFilesPath()
             + "dispatcher" + File.separator + "traininfo" + File.separator;
 
     public void setFileLocation(String testLocation) {
@@ -266,12 +265,10 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
      */
     public String[] getTrainInfoFileNames() {
         // ensure preferences will be found for read
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-        XmlFile.ensurePrefsPresent(fileLocation);
+        FileUtil.createDirectory(fileLocation);
         // create an array of file names from roster dir in preferences, count entries
         int np = 0;
         String[] sp = null;
-        XmlFile.ensurePrefsPresent(fileLocation);
         if (log.isDebugEnabled()) {
             log.debug("directory of TrainInfoFiles - " + fileLocation);
         }

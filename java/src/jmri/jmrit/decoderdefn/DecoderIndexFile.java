@@ -223,7 +223,7 @@ public class DecoderIndexFile extends XmlFile {
         log.info("update decoder index");
         // make sure we're using only the default manufacturer info
         // to keep from propagating wrong, old stuff
-        File oldfile = new File(FileUtil.getUserFilesPath()+File.separator+"decoderIndex.xml");
+        File oldfile = new File(FileUtil.getUserFilesPath() + "decoderIndex.xml");
         if (oldfile.exists()) {
             log.debug("remove existing user decoderIndex.xml file");
             if (!oldfile.delete())  // delete file, check for success
@@ -237,8 +237,8 @@ public class DecoderIndexFile extends XmlFile {
         ArrayList<String> al = new ArrayList<String>();
         String[] sp = null;
         int i=0;
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+DecoderFile.fileLocation);
-        File fp = new File(FileUtil.getUserFilesPath()+DecoderFile.fileLocation);
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + DecoderFile.fileLocation);
+        File fp = new File(FileUtil.getUserFilesPath() + DecoderFile.fileLocation);
         if (fp.exists()) {
             sp = fp.list();
             for (i=0; i<sp.length; i++) {

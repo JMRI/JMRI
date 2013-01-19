@@ -89,8 +89,7 @@ public class ConfigXmlManagerTest extends TestCase {
         Assert.assertTrue("dont find foo.biff", result==null);
 
         // make sure no test file exists in "layout"
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-        XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"layout");
+        FileUtil.createDirectory(FileUtil.getUserFilesPath()+"layout");
         File f = new File(FileUtil.getUserFilesPath()+"layout"+File.separator+"testConfigXmlManagerTest.xml");
         f.delete();  // remove it if its there
 
