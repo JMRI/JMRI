@@ -134,6 +134,16 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         setFrameLocation();
     }
     
+    /**
+     * Remove this window from e.g. the Windows Menu
+     * by removing it from the list of active JmriJFrames
+     */ 
+    public void makePrivateWindow() {   
+        synchronized (list) {
+            list.remove(this);
+        }
+    }
+    
     void setFrameLocation(){
         jmri.UserPreferencesManager prefsMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if ((prefsMgr != null) && (prefsMgr.isWindowPositionSaved(windowFrameRef))) {
