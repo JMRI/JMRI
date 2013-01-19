@@ -123,7 +123,6 @@ from jmri import SignalHead
 from jmri import Turnout
 
 from jmri.jmrit import Sound
-from jmri.jmrit import XmlFile
 
 from jmri.jmrit.consisttool import ConsistToolFrame
 
@@ -136,6 +135,7 @@ from jmri.jmrit.operations.trains import TrainManager
 from jmri.jmrit.roster import Roster
 
 from jmri.util import JmriJFrame
+from jmri.util import FileUtil
 
 # Utility class for static methods ==============
 # Must be defined before being used!
@@ -6017,7 +6017,7 @@ class ADsettings :
     sectionTracking = False
     soundList = []
     defaultSounds = [1] * len(soundLabel)
-    soundRoot = XmlFile.userFileLocationDefault()
+    soundRoot = FileUtil.getUserFilesPath()
     soundDic = {}
     maintenanceTime = 0.
     maintenanceMiles = 0.
