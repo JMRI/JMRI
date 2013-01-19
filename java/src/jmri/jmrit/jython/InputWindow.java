@@ -19,6 +19,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.util.PythonInterp;
 import javax.swing.event.*;
+import jmri.util.FileUtil;
 
 /**
  * This Action runs creates a JFrame for sending input to the
@@ -224,7 +225,7 @@ public class InputWindow extends JPanel {
 
 
     void loadButtonPressed() {
-        JFileChooser userFileChooser = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
+        JFileChooser userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
 
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemLoad"));
@@ -241,7 +242,7 @@ public class InputWindow extends JPanel {
     }
 
     void storeButtonPressed() {
-        JFileChooser userFileChooser = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
+        JFileChooser userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
 
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemStore"));

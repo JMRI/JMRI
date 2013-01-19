@@ -8,6 +8,7 @@ import java.io.*;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
+import jmri.util.FileUtil;
 
 /**
  * This Action runs a script by invoking a Jython interpreter.
@@ -87,7 +88,7 @@ public class RunJythonScript extends JmriAbstractAction {
     File selectFile() {
         if (fci==null) {
             //fci = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"jython");
-            fci = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
+            fci = new JFileChooser(FileUtil.getScriptsPath());
             jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
             filt.addExtension("py");
             fci.setFileFilter(filt);

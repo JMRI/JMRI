@@ -59,12 +59,19 @@ public class FileUtil {
      * The portable file path component separator.
      */
     static public final char SEPARATOR = '/';
+    /*
+     * User's home directory
+     */
+    static private String homePath = System.getProperty("user.home") + File.separator;
+    /*
+     * Settable directories
+     */
     /* JMRI program path, defaults to directory JMRI is executed from */
     static private String programPath = null;
-    /* User's home directory */
-    static private String homePath = System.getProperty("user.home") + File.separator;
     /* path to jmri.jar */
     static private String jarPath = null;
+    /* path to the jython scripts directory */
+    static private String scriptsPath = null;
     // initialize logging
     static private Logger log = Logger.getLogger(FileUtil.class.getName());
 
@@ -528,5 +535,32 @@ public class FileUtil {
         log.info("File path " + FileUtil.PROGRAM + " is " + FileUtil.getProgramPath());
         log.info("File path " + FileUtil.PREFERENCES + " is " + FileUtil.getUserFilesPath());
         log.info("File path " + FileUtil.HOME + " is " + FileUtil.getHomePath());
+    }
+
+    /**
+     * Get the path to the scripts directory.
+     *
+     * @return the scriptsPath
+     */
+    public static String getScriptsPath() {
+        if (scriptsPath != null) {
+            return scriptsPath;
+        }
+        // scriptsPath not set by user, return default if it exists
+        File file = new File(FileUtil.getProgramPath() + File.separator + "jython"); // NOI18N
+        if (file.exists()) {
+            return file.getPath();
+        }
+        // if default does not exist, return user's files directory
+        return FileUtil.getUserFilesPath();
+    }
+
+    /**
+     * Set the path to python scripts.
+     *
+     * @param path the scriptsPath to set
+     */
+    public static void setScriptsPath(String path) {
+        scriptsPath = path;
     }
 }

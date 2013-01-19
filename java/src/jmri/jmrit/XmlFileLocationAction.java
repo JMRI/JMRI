@@ -39,7 +39,7 @@ public class XmlFileLocationAction extends AbstractAction {
         final String roster = Roster.getFileLocation();
         final String config = FileUtil.getPreferencesPath();
         // final String configName = System.getProperty("org.jmri.Apps.configFilename");
-        final String scripts = XmlFile.scriptsDir();
+        final String scripts = FileUtil.getScriptsPath();
         final String prog = System.getProperty("user.dir");
 
 

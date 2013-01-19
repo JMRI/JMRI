@@ -525,30 +525,6 @@ public abstract class XmlFile {
     static public boolean getVerify() { return verify; }
     static public void setVerify(boolean v) { verify = v; }
     
-    static private String scriptsDirectory = null;
-    
-    static public String scriptsDir() {
-        if (scriptsDirectory != null) {
-            return scriptsDirectory;
-        }
-        // return default
-        String jmriScriptsDir = FileUtil.getProgramPath() + File.separator + "jython";
-        if (jmriScriptsDir.length() > 0) {
-            return jmriScriptsDir + File.separator;
-        }
-        // if not present in JMRI distribution path, use the default preferences directory
-        return FileUtil.getPreferencesPath();
-    }
-    
-    
-        /**
-     * Provide default initial location for JFileChoosers
-     * to user files
-     */ 
-    public static void setScriptsFileLocationDefault(String scriptDir) {
-        jmri.jmrit.XmlFile.scriptsDirectory=scriptDir;
-    }
-    
     /**
      * Provide a JFileChooser initialized to the default
      * user location, and with a default filter.

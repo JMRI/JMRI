@@ -24,10 +24,10 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      */
     public Element store(Object o) {
         Element e = new Element("fileLocations");
-        /*e.setAttribute("defaultScriptLocation", jmri.jmrit.XmlFile.scriptsDir());
+        /*e.setAttribute("defaultScriptLocation", FileUtil.getPythonScriptsPath());
         e.setAttribute("defaultUserLocation", FileUtil.getUserFilesPath());
         e.setAttribute("defaultThrottleLocation", jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());*/
-        storeLocation(e, "defaultScriptLocation", jmri.jmrit.XmlFile.scriptsDir());
+        storeLocation(e, "defaultScriptLocation", FileUtil.getScriptsPath());
         storeLocation(e, "defaultUserLocation", FileUtil.getUserFilesPath());
         storeLocation(e, "defaultThrottleLocation", jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());
         e.setAttribute("class", this.getClass().getName());
@@ -48,11 +48,12 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     public boolean load(Element e) {
     	boolean result = true;
         String value = loadUserLocations(e, "defaultScriptLocation");
-        if (value!=null)
-            jmri.jmrit.XmlFile.setScriptsFileLocationDefault(value);
+        if (value!=null) {
+            FileUtil.setScriptsPath(value);
+        }
         //Attribute scriptLocation = e.getAttribute("defaultScriptLocation");
         //if (scriptLocation!=null)
-        //jmri.jmrit.XmlFile.setScriptsFileLocationDefault(scriptLocation.getValue());
+        //FileUtil.setPythonScriptsPath(scriptLocation.getValue());
         /*Attribute userLocation = e.getAttribute("defaultUserLocation");
         if (userLocation!=null)
             jmri.jmrit.XmlFile.setUserFileLocationDefault(userLocation.getValue());*/

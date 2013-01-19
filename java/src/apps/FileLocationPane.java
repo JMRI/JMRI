@@ -42,7 +42,7 @@ public class FileLocationPane extends JPanel {
     }
     
     public static void save(){
-        jmri.jmrit.XmlFile.setScriptsFileLocationDefault(scriptLocation.getText());
+        FileUtil.setScriptsPath(scriptLocation.getText());
         jmri.jmrit.XmlFile.setUserFileLocationDefault(userLocation.getText());
         //jmri.jmrit.throttle.ThrottleFrame.setDefaultThrottleLocation(throttleLocation.getText());
     }
@@ -50,7 +50,7 @@ public class FileLocationPane extends JPanel {
     private JPanel ScriptsLocation(){
         JButton bScript = new JButton(rb.getString("ButtonSetDots"));
         final JFileChooser fcScript;
-        fcScript = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
+        fcScript = new JFileChooser(FileUtil.getScriptsPath());
 
         fcScript.setDialogTitle(rb.getString("MessageSelectDirectory"));
         fcScript.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -72,7 +72,7 @@ public class FileLocationPane extends JPanel {
         p.add(scriptLocation);
         p.add(bScript);
         scriptLocation.setColumns(30);
-        scriptLocation.setText(jmri.jmrit.XmlFile.scriptsDir());
+        scriptLocation.setText(FileUtil.getScriptsPath());
         return p;
     }
     
