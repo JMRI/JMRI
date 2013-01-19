@@ -27,7 +27,7 @@
 	<!-- /Logo -->
 
 	<ul id="mainNav"> <!-- Top tool bar -->
-	   <li><a href="/download/"  title="Get the latest software">Download</a></li>
+	   <li><a href="/download/index.shtml"  title="Get the latest software">Download</a></li>
 	   <li><a href="/help/en/html/apps/index.shtml"      title="Learn about JMRI applications">Applications</a></li>
 	   <li><a href="/help/en/html/hardware/index.shtml"  title="What hardware does JMRI support">Hardware</a></li>
 	   <li><a href="/help/en/webtoc.shtml"   title="JMRI Help Screens">Help</a></li>
