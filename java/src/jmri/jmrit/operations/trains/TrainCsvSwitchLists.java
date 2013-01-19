@@ -46,6 +46,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		addLine(fileOut, RN+ESC+Setup.getRailroadName()+ESC);
 
 		addLine(fileOut, LN+ESC+splitString(location.getName())+ESC);
+		addLine(fileOut, PRNTR + ESC + location.getDefaultPrinterName() + ESC);
 		addLine(fileOut, VT+getDate());
 		
 		// get a list of trains

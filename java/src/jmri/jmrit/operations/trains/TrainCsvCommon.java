@@ -35,6 +35,7 @@ public class TrainCsvCommon extends TrainCommon {
 	protected final static String NW = "NW"+DEL+Bundle.getMessage("csvNoWork"); // NOI18N
 	protected final static String PC = "PC"+DEL+Bundle.getMessage("csvPickUpCar"); // NOI18N
 	protected final static String PL = "PL"+DEL+Bundle.getMessage("csvPickUpLoco"); // NOI18N
+	protected final static String PRNTR = "PRNTR"+DEL+Bundle.getMessage("csvPrinterName")+DEL; // NOI18N
 	protected final static String RC = "RC"+DEL+Bundle.getMessage("csvRouteComment")+DEL; // NOI18N
 	protected final static String RLC = "RLC"+DEL+Bundle.getMessage("csvRouteLocationComment")+DEL; // NOI18N
 	protected final static String RH = "RH"+DEL+Bundle.getMessage("csvRemoveHelpers"); // NOI18N

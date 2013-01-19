@@ -357,6 +357,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			JComboBox comboBox = TrainPrintUtilities.getPrinterJComboBox();
 			locationComboBoxes.add(comboBox);
 			comboBox.setSelectedItem(l.getDefaultPrinterName());
+			addComboBoxAction(comboBox);
 			addItem(locationPanelCheckBoxes, comboBox, 6, y++);
 
 		}
@@ -437,6 +438,11 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		log.debug("button action " + b.getName());
 		Location l = manager.getLocationByName(b.getName());
 		new TrainSwitchListCommentFrame(l);
+	}
+	
+	protected void comboBoxActionPerformed(ActionEvent ae) {
+		log.debug("combo box action");
+		saveButton.setEnabled(true);
 	}
 
 	public void dispose() {
