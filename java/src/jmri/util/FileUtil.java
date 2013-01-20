@@ -455,13 +455,15 @@ public class FileUtil {
 
     /**
      * Search for a file or JAR resource by name and return the
-     * {@link java.net.URL} for that file. <p> Search order is:<ol> <li>As a
-     * {@link java.io.File} in the user preferences directory</li> <li>As a File
-     * in the current working directory (usually, but not always the JMRI
-     * distribution directory)</li> <li>As a File in the JMRI distribution
-     * directory</li> <li>As a resource in jmri.jar</li> <li>For any provided
-     * searchPaths, iterate over the searchPaths by prepending each searchPath
-     * to the path and following the above search order.</li></ol>
+     * {@link java.net.URL} for that file. <p> Search order is:<ol><li>For any
+     * provided searchPaths, iterate over the searchPaths by prepending each
+     * searchPath to the path and following the following search order:</li>
+     * <ol><li>As a {@link java.io.File} in the user preferences directory</li>
+     * <li>As a File in the current working directory (usually, but not always
+     * the JMRI distribution directory)</li> <li>As a File in the JMRI
+     * distribution directory</li> <li>As a resource in jmri.jar</li></ol>
+     * <li>If the file or resource has not been found in the searchPaths, search
+     * in the four locations listed without prepending any path</li></ol>
      *
      * @param path The relative path of the file or resource
      * @param searchPaths a list of paths to search for the path in
@@ -473,6 +475,15 @@ public class FileUtil {
     static public URL findURL(String path, @NonNull String... searchPaths) {
         if (log.isDebugEnabled()) {
             log.debug("Attempting to find " + path + " in " + Arrays.toString(searchPaths));
+        }
+        URL resource;
+        if (searchPaths != null) {
+            for (String searchPath : searchPaths) {
+                resource = FileUtil.findURL(searchPath + File.separator + path);
+                if (resource != null) {
+                    return resource;
+                }
+            }
         }
         try {
             // attempt to return path from preferences directory
@@ -495,15 +506,7 @@ public class FileUtil {
             return null;
         }
         // return path if in jmri.jar or null
-        URL resource = FileUtil.class.getClassLoader().getResource(path);
-        if (resource == null && searchPaths != null) {
-            for (String searchPath : searchPaths) {
-                resource = FileUtil.findURL(searchPath + File.separator + path);
-                if (resource != null) {
-                    return resource;
-                }
-            }
-        }
+        resource = FileUtil.class.getClassLoader().getResource(path);
         if (resource == null && log.isDebugEnabled()) {
             log.debug("Unable to to get URL for " + path);
         }
@@ -522,6 +525,26 @@ public class FileUtil {
             return url.toURI();
         } catch (URISyntaxException ex) {
             log.error("Unable to get URI from URL", ex);
+            return null;
+        }
+    }
+
+    /**
+     * Return the {@link java.net.URL} for a given {@link java.io.File}. This
+     * method catches a {@link java.net.MalformedURLException} and returns null
+     * in its place, since we really do not expect a File object to ever give a
+     * malformed URL. This method exists solely so implementing classes do not
+     * need to catch that exception.
+     *
+     * @param file The File to convert.
+     * @return a URL or null if the conversion would have caused a
+     * MalformedURLException
+     */
+    static public URL fileToURL(File file) {
+        try {
+            return file.toURI().toURL();
+        } catch (MalformedURLException ex) {
+            log.error("Unable to get URL from file", ex);
             return null;
         }
     }
