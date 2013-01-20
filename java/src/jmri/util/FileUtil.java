@@ -295,7 +295,7 @@ public class FileUtil {
      * @param path The path to the user's files directory
      */
     static public void setUserFilesPath(String path) {
-        if (!path.substring(path.length() - 1).equals(File.separator)) {
+        if (!path.endsWith(File.separator)) {
             path = path + File.separator;
         }
         FileUtil.userFilesPath = path;
@@ -434,8 +434,13 @@ public class FileUtil {
         return null;
     }
 
+    /**
+     * Get the resources directory within the user's files directory.
+     * 
+     * @return path to [user's file]/resources/
+     */
     static public String getUserResourcePath() {
-        return FileUtil.getUserFilesPath() + "resources"; // NOI18N
+        return FileUtil.getUserFilesPath() + "resources" + File.separator; // NOI18N
     }
 
     /**
@@ -588,7 +593,7 @@ public class FileUtil {
             return scriptsPath;
         }
         // scriptsPath not set by user, return default if it exists
-        File file = new File(FileUtil.getProgramPath() + File.separator + "jython"); // NOI18N
+        File file = new File(FileUtil.getProgramPath() + File.separator + "jython" + File.separator); // NOI18N
         if (file.exists()) {
             return file.getPath();
         }
