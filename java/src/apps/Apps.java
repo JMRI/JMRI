@@ -35,6 +35,7 @@ import java.util.EventObject;
 import javax.swing.*;
 import java.awt.AWTEvent;
 import java.awt.Toolkit;
+import java.net.URL;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
 import jmri.plaf.macosx.Application;
@@ -124,7 +125,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         jmri.InstanceManager.store(new apps.CreateButtonModel(), apps.CreateButtonModel.class);
 
         // find preference file and set location in configuration manager
-        FileUtil.createDirectory(FileUtil.getUserFilesPath());
+        FileUtil.createDirectory(FileUtil.getPreferencesPath());
         // Needs to be declared final as we might need to
         // refer to this on the Swing thread
         final File file;
@@ -1013,15 +1014,16 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
 
     static protected void loadFile(String name){
-        File pFile = InstanceManager.configureManagerInstance().find(name);
-        if (pFile!=null)
+        URL pFile = InstanceManager.configureManagerInstance().find(name);
+        if (pFile!=null) {
             try {
                 InstanceManager.configureManagerInstance().load(pFile);
             } catch (JmriException e) {
                 log.error("Unhandled problem in loadFile: "+e);
             }
-        else
+        } else {
             log.warn("Could not find "+name+" config file");
+        }
 
     }
 

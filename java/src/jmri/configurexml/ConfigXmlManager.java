@@ -4,6 +4,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.revhistory.FileHistory;
 
 import java.io.File;
+import java.net.URL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -502,13 +503,14 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     public boolean load(File fi) throws JmriConfigureXmlException {
         return load(fi, false);
     }
-
+    public boolean load(URL url) throws JmriConfigureXmlException {
+        return load(url, false);
+    }
+    
     /**
-     * Load a file.
-     * <p>
-     * Handles problems locally to the extent that it can,
-     * by routing them to the creationErrorEncountered
-     * method.
+     * Load a file. <p> Handles problems locally to the extent that it can, by
+     * routing them to the creationErrorEncountered method.
+     *
      * @param fi file to load
      * @param registerDeferred true to register objects to defer
      * @return true if no problems during the load
@@ -516,8 +518,25 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
      * @since 2.11.2
      */
-    @SuppressWarnings("unchecked")
+    @Override
     public boolean load(File fi, boolean registerDeferred) throws JmriConfigureXmlException {
+        return this.load(FileUtil.fileToURL(fi), registerDeferred);
+    }
+
+    /**
+     * Load a file. <p> Handles problems locally to the extent that it can, by
+     * routing them to the creationErrorEncountered method.
+     *
+     * @param url URL of file to load
+     * @param registerDeferred true to register objects to defer
+     * @return true if no problems during the load
+     * @throws JmriConfigureXmlException
+     * @see jmri.configurexml.XmlAdapter#loadDeferred()
+     * @since 3.3.2
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public boolean load(URL url, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
         Element root = null;
         /* We will put all the elements into a load list, along with the load order
@@ -527,7 +546,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         Map<Element, Integer> loadlist = Collections.synchronizedMap(new LinkedHashMap<Element, Integer>());
         
         try{
-            root = super.rootFromFile(fi);
+            root = super.rootFromURL(url);
             // get the objects to load
             List<Element> items = root.getChildren();
             for (int i = 0; i<items.size(); i++) {
@@ -579,33 +598,31 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                             result = false;
                     }
                 } catch (Exception e) {
-                    creationErrorEncountered (adapter, "load("+fi.getName()+")",Level.ERROR,
-                                              "Unexpected error (Exception)",null,null,e);
-                   
+                    creationErrorEncountered(adapter, "load(" + url.getFile() + ")", Level.ERROR,
+                            "Unexpected error (Exception)", null, null, e);
+
                     result = false;  // keep going, but return false to signal problem
                 } catch (Throwable et) {
-                    creationErrorEncountered (adapter, "in load("+fi.getName()+")", Level.ERROR,
-                                              "Unexpected error (Throwable)",null,null,et);
+                    creationErrorEncountered(adapter, "in load(" + url.getFile() + ")", Level.ERROR,
+                            "Unexpected error (Throwable)", null, null, et);
 
                     result = false;  // keep going, but return false to signal problem
                 }
             }
-
-            
             
         } catch (java.io.FileNotFoundException e1) {
             // this returns false to indicate un-success, but not enough
             // of an error to require a message
-            creationErrorEncountered (null, "opening file "+fi.getName(), Level.ERROR,
-                                      "File not found", null,null,e1);
+            creationErrorEncountered(null, "opening file " + url.getFile(), Level.ERROR,
+                    "File not found", null, null, e1);
             result = false;
         } catch (org.jdom.JDOMException e) {
-            creationErrorEncountered (null, "parsing file "+fi.getName(), Level.ERROR,
-                                      "Parse error", null,null,e);
+            creationErrorEncountered(null, "parsing file " + url.getFile(), Level.ERROR,
+                    "Parse error", null, null, e);
             result = false;
         } catch (java.lang.Exception e) {
-            creationErrorEncountered (null, "loading from file "+fi.getName(), Level.ERROR,
-                                      "Unknown error (Exception)", null,null,e);
+            creationErrorEncountered(null, "loading from file " + url.getFile(), Level.ERROR,
+                    "Unknown error (Exception)", null, null, e);
             result = false;
         } finally {
             // no matter what, close error reporting
@@ -690,7 +707,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     included = jmri.jmrit.revhistory.configurexml.FileHistoryXml.loadFileHistory(filehistory);
                 }
             }
-            r.addOperation((result ? "Load OK":"Load with errors"), fi.getName(), included);
+            r.addOperation((result ? "Load OK":"Load with errors"), url.getFile(), included);
         } else {
             log.info("Not recording file history");
         }
@@ -704,7 +721,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
+    @Override
     public boolean loadDeferred(File fi) {
+        return this.loadDeferred(FileUtil.fileToURL(fi));
+    }
+    
+    @Override
+    public boolean loadDeferred(URL url) {
         boolean result = true;
         // Now process the load-later list
         log.debug("Start processing deferred load list (size): "+loadDeferredList.size());
@@ -722,12 +745,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     if (!loadStatus)
                         result = false;
                 } catch (Exception e) {
-                    creationErrorEncountered (adapter, "deferred load("+fi.getName()+")",Level.ERROR,
-                                              "Unexpected error (Exception)",null,null,e);
+                    creationErrorEncountered(adapter, "deferred load(" + url.getFile() + ")", Level.ERROR,
+                            "Unexpected error (Exception)", null, null, e);
                     result = false;  // keep going, but return false to signal problem
                 } catch (Throwable et) {
-                    creationErrorEncountered (adapter, "in deferred load("+fi.getName()+")", Level.ERROR,
-                                              "Unexpected error (Throwable)",null,null,et);
+                    creationErrorEncountered(adapter, "in deferred load(" + url.getFile() + ")", Level.ERROR,
+                            "Unexpected error (Throwable)", null, null, et);
                     result = false;  // keep going, but return false to signal problem
                 }
             }
@@ -751,22 +774,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * @param f Local filename, perhaps without path information
      * @return Corresponding File object
      */
-    public File find(String f) {
-        File result;
-        result = findFile(f);
-        if (result != null) {
-            log.debug("found at "+result.getAbsolutePath());
-            return result;
-        } else if ( null != (result = findFile(fileLocation+f) )) {
-            log.debug("found at "+result.getAbsolutePath());
-            return result;
-        } else if ((result = new File(f)).exists() ) {
-            log.debug("found at "+result.getAbsolutePath());
-            return result;
-        } else {
-            locateFileFailed(f);
-            return null;
+    @Override
+    public URL find(String f) {
+        URL u = FileUtil.findURL(f, "xml/layout", "xml"); // NOI18N
+        if (u == null) {
+            this.locateFileFailed(f);
         }
+        return u;
     }
 
     /**

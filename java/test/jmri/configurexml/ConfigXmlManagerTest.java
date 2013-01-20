@@ -2,12 +2,12 @@
 
 package jmri.configurexml;
 
-import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.net.URL;
 import jmri.util.FileUtil;
 
 import junit.framework.Assert;
@@ -84,7 +84,7 @@ public class ConfigXmlManagerTest extends TestCase {
                     // suppress warning during testing
                 }
             };
-        File result;
+        URL result;
         result = configxmlmanager.find("foo.biff");
         Assert.assertTrue("dont find foo.biff", result==null);
 
@@ -94,8 +94,8 @@ public class ConfigXmlManagerTest extends TestCase {
         f.delete();  // remove it if its there
 
         // if file is at top level, remove that too
-        result = new File("testConfigXmlManagerTest.xml");
-        if (result.exists()) result.delete();
+        f = new File("testConfigXmlManagerTest.xml");
+        if (f.exists()) f.delete();
 
         // check for not found if doesn't exist
         result = configxmlmanager.find("testConfigXmlManagerTest.xml");
