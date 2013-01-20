@@ -132,7 +132,8 @@
                       <xs:complexType>
                         <xs:sequence minOccurs="0" maxOccurs="unbounded">
                           <xs:annotation><xs:documentation>Provide an internationalized choice text</xs:documentation></xs:annotation>
-                          <xs:element name="choice" minOccurs="0" maxOccurs="unbounded" />
+                          <xs:element name="choice" minOccurs="1" maxOccurs="unbounded" />
+                          <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
                         </xs:sequence>
                         <xs:attribute name="choice" type="xs:string" use="required"/>
                         <xs:attribute name="value" type="xs:int" />
@@ -349,7 +350,8 @@
                       <xs:complexType>
                         <xs:sequence minOccurs="0" maxOccurs="unbounded">
                           <xs:annotation><xs:documentation>Provide an internationalized choice text</xs:documentation></xs:annotation>
-                          <xs:element name="choice" minOccurs="0" maxOccurs="unbounded" />
+                          <xs:element name="choice" minOccurs="1" maxOccurs="unbounded" />
+                          <xs:element name="comment" minOccurs="0" maxOccurs="unbounded" />
                         </xs:sequence>
                         <xs:attribute name="choice" type="xs:string" use="required"/>
                         <xs:attribute name="value" type="xs:int" />
@@ -358,7 +360,6 @@
                     </xs:element>
                   </xs:sequence>
                   <xs:attribute ref="xml:base" />
-                  <xs:attribute name="comment" type="xs:string"/>
                 </xs:complexType>
               </xs:element>
               <xs:element name="decVal" >
@@ -539,6 +540,7 @@
                         </xs:complexType>
                       </xs:element>
                     </xs:sequence>
+                    <xs:attribute ref="xml:base" />
                     <xs:attribute name="comment" type="xs:string"/>
                   </xs:complexType>
                 </xs:element>
