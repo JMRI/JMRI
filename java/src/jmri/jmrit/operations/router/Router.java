@@ -355,6 +355,7 @@ public class Router extends TrainCommon {
 						car.toString(),
 						(testCar.getDestinationName() + ", " + testCar
 								.getDestinationTrackName()) }));
+					_status = STATUS_NOT_THIS_TRAIN;
 					return true;	// found a route but it doesn't start with the specific train
 				}
 				// check to see if intermediate track is staging
@@ -462,6 +463,7 @@ public class Router extends TrainCommon {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("TrainDoesNotServiceCar"), new Object[] { _train.getName(),
 							car.toString(), (fltp.getLocation().getName() + ", " + fltp.getName()) }));
+						_status = STATUS_NOT_THIS_TRAIN;
 						return true;
 					}
 					_status = car.setDestination(testCar.getLocation(), testCar.getTrack());
@@ -520,6 +522,7 @@ public class Router extends TrainCommon {
 										.getMessage("TrainDoesNotServiceCar"), new Object[] {
 									_train.getName(), car.toString(),
 									(fltp.getLocation().getName() + ", " + fltp.getName()) }));
+								_status = STATUS_NOT_THIS_TRAIN;
 								return true;
 							}
 							// check to see if track is staging
@@ -606,6 +609,7 @@ public class Router extends TrainCommon {
 												.getMessage("TrainDoesNotServiceCar"), new Object[] {
 											_train.getName(), car.toString(),
 											(fltp.getLocation().getName() + ", " + fltp.getName()) }));
+										_status = STATUS_NOT_THIS_TRAIN;
 										return true;
 									}
 									// check to see if track is staging
