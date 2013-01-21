@@ -45,7 +45,7 @@
         </UL></LI>
         <LI><A href="#railsyncgen">LocoNet RailSync Signal "Generation"</A>
         <UL>
-            <LI><a href="#rspowersupply">RailSync power from a power supply</a></li>
+            <LI><a href="#rspowersupply">RailSync power from a DC power supply</a></li>
             <LI><A href="#rsfromdtcs">RailSync from a Digitrax command station</A></LI>
             <LI><A href="#rsfromnondtcs">RailSync from a non-Digitrax command station</A>
                 <ul>
@@ -132,8 +132,9 @@ useful.</p>
     <tr align="center"><td>Digitrax PR3 (in MS100 mode)</td><td>Optional</td><td></td>
         <td>Required, can provide</td><td></td>
     </tr>
-    <tr align="center"><td>LocoBuffer, RR-CirKits LocoBuffer-II/LocoBuffer-USB</td><td>Optional</td><td></td>
+    <tr align="center"><td>RR-CirKits LocoBuffer-II/LocoBuffer-USB</td><td>Optional</td><td>Required **</td>
         <td>Required, can provide</td><td></td>
+    <tr align="center"><td>LocoBuffer</td><td>Optional</td><td></td><td>Required, can provide</td><td></td>
     </tr>
     <tr><td colspan="5"><b>LocoNet Throttles</b></td></tr>
     <tr align="center"><td><b>Device</b></td><td><b>Slot Management</b></td><td><b>RailSync</b></td>
@@ -176,8 +177,21 @@ useful.</p>
     <tr align="center"><td>Logic Rail Technologies LocoNet Fast Clock</td><td></td><td></td>
         <td>Required</td><td>Required, can provide</td>
     </tr>
-    <tr align="center"></tr><td colspan="5">* Some circuitry may be required to 
-        generate the RailSync signals from a non-LocoNet booster.</td></tr>
+    <tr align="center"></tr><td colspan="5">
+        <p>* Some circuitry may be required to generate the RailSync signals from 
+            a non-LocoNet booster.  See 
+            <A href="#rsfromnondtcs">RailSync from a non-Digitrax command station</A>,
+            below.</p>
+        <p>** The LocoBuffer-II and LocoBuffer-USB computer interface devices 
+            must take power from the LocoNet RailSync wires to power the LocoNet 
+            side of their interface hardware, but do not require that the RailSync
+            wires have a copy of the DCC track signal.  A DC power supply, as shown
+            below in <a href="#rspowersupply">RailSync power from a DC power supply</a>,
+            is sufficient to meet the LocoBuffer-II and 
+            LocoBuffer-USB RailSync power needs.  If the RailSync wires do not
+            provide sufficient voltage and current, the LocoBuffer-II and 
+            LocoBuffer-USB devices will be unable to communicate with LocoNet.
+            </p></td></tr>
 </table>
     <H2><A name="dataterm">LocoNet Data Signal "Termination"</A></H2>
         <p>Technically, the term "termination" can be somewhat misleading.  For our purposes,
@@ -261,7 +275,7 @@ useful.</p>
             at 12VDC is sufficient.  In other cases, one or more LocoNet device 
             requires an accurate representation of the DCC track signal on the 
             standalone LocoNet cable.</p>        
-        <H3><a name="rspowersupply">RailSync power from a power supply</a></h3>
+        <H3><a name="rspowersupply">RailSync power from a DC power supply</a></h3>
             <p>For cases where the standalone LocoNet does need to provide power to 
             the RailSync lines but does <i>not</i> need to provide a low-power version
             of the DCC track signal, a simple power supply connected to the LocoNet
