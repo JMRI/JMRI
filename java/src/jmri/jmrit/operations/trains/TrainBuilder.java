@@ -2460,15 +2460,15 @@ public class TrainBuilder extends TrainCommon {
 	 * 
 	 * @param car
 	 *            the car with the load
-	 * @return true if there's a schedule for this car and load
+	 * @return true if there's a schedule that can be route to for this car and load
 	 * @throws BuildFailedException
 	 */
 	private boolean findNextDestinationForCarLoad(Car car) throws BuildFailedException {
-		boolean scheduleFound = false;
+		boolean routeToSpurFound = false;
 		if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 				|| car.getLoad().equals(CarLoads.instance().getDefaultLoadName())
 				|| car.getDestination() != null || car.getNextDestination() != null)
-			return scheduleFound;	// no schedule found for this car
+			return routeToSpurFound;	// no schedule found for this car
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchForSiding"),
 				new Object[] { car.toString(), car.getLoad(),
 						car.getLocationName() + ", " + car.getTrackName() }));
@@ -2502,13 +2502,14 @@ public class TrainBuilder extends TrainCommon {
 						|| getScheduleItem(car, track) == null)
 					continue;
 			}
-			scheduleFound = true;
+			
 			// check the number of in bound cars to this track
 			if (!track.isSpaceAvailable(car)) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
 						new Object[] { car.toString(), track.getLocation().getName(), track.getName(),
 								track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
 								track.getReservationFactor() }));
+				routeToSpurFound = true;	// if we don't find another spur, keep the car here for now
 				continue;
 			}
 			// try to send car to this spur
@@ -2518,26 +2519,26 @@ public class TrainBuilder extends TrainCommon {
 			car.setNextDestination(track.getLocation());
 			car.setNextDestTrack(track);
 			// test to see if destination is reachable by this train
-			if (Router.instance().setDestination(car, train, buildReport) && car.getDestination() != null) {
+			if (Router.instance().setDestination(car, train, buildReport)) 
+				routeToSpurFound = true;	// found a route to the spur 
+			if (car.getDestination() != null) {
 				// is car part of kernel?
 				car.updateKernel();
 				if (car.getDestination() != track.getLocation()) {
 					car.setScheduleId(track.getCurrentScheduleItem().getId());
 					track.bumpSchedule();
 				}
-				return scheduleFound; // done
-			} else {
-				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-						.getMessage("buildNotAbleToSetDestination"), new Object[] { car.toString(),
-					Router.instance().getStatus() }));
-				car.setNextDestination(null);
-				car.setNextDestTrack(null);
-				car.setDestination(null, null);
+				return routeToSpurFound; // done, car has a new destination
 			}
+			addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+					.getMessage("buildNotAbleToSetDestination"), new Object[] { car.toString(),
+				Router.instance().getStatus() }));
+			car.setNextDestination(null);
+			car.setNextDestTrack(null);
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCouldNotFindSiding"),
 				new Object[] { car.toString(), car.getLoad() }));
-		return scheduleFound; // done
+		return routeToSpurFound; // done
 	}
 
 	/**
@@ -2603,12 +2604,11 @@ public class TrainBuilder extends TrainCommon {
 					car.updateKernel();
 					track.bumpSchedule();
 					return true; // done, car now has a custom load
-				} else {
-					addLine(buildReport, SEVEN, MessageFormat.format(
-							Bundle.getMessage("buildCanNotRouteCar"), new Object[] { car.toString(),
-									si.getLoad(), track.getLocation().getName(), track.getName() }));
-					car.setDestination(null, null);
 				}
+				addLine(buildReport, SEVEN, MessageFormat.format(
+						Bundle.getMessage("buildCanNotRouteCar"), new Object[] { car.toString(),
+							si.getLoad(), track.getLocation().getName(), track.getName() }));
+				car.setDestination(null, null);
 				// restore load and next destination and track
 				car.setLoad(oldCarLoad);
 				car.setNextDestination(null);
@@ -2652,24 +2652,23 @@ public class TrainBuilder extends TrainCommon {
 			// find a staging track that isn't at the departure or terminal
 			if (track.getLocation() == departLocation || track.getLocation() == terminateLocation)
 				continue;
+			// the following method sets the load generated from staging boolean
 			if (generateLoadCarDepartingAndTerminatingIntoStaging(car, track)) {
 				// try sending car to this destination, but not staging track
 				car.setNextDestination(track.getLocation());
 				car.setNextDestTrack(null);
 				// test to see if destination is reachable by this train
 				if (Router.instance().setDestination(car, train, buildReport) && car.getDestination() != null) {
-					// car.setTrain(train); // reset will now return the car's load to default empty
-					return true;
-				} else {
-					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-							.getMessage("buildStagingTrackNotReachable"), new Object[] {
-							track.getLocation().getName(), track.getName(), car.getLoad() }));
-					// return car to original state
-					car.setLoad(CarLoads.instance().getDefaultEmptyName());
-					car.setLoadGeneratedFromStaging(false);
-					car.setNextDestination(null);
-					car.updateKernel();
+					return true;	// done, car has a custom load and a destination
 				}
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("buildStagingTrackNotReachable"), new Object[] {
+					track.getLocation().getName(), track.getName(), car.getLoad() }));
+				// return car to original state
+				car.setLoad(CarLoads.instance().getDefaultEmptyName());
+				car.setLoadGeneratedFromStaging(false);
+				car.setNextDestination(null);
+				car.updateKernel();
 			}
 		}
 		return false;
