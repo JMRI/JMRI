@@ -334,38 +334,9 @@
         </enumVal>
         <label>Power Source Conversion Type</label>
       </variable>
-      <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0" tooltip="Check to enable function F1 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F1</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0" tooltip="Check to enable function F2 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F2</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0" tooltip="Check to enable function F3 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F3</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0" tooltip="Check to enable function F4 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F4</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F5</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F6</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0" tooltip="Check to enable function F7 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F7</label>
-      </variable>
-      <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0" tooltip="Check to enable function F8 when the unit is operating in analog power mode">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>Analog Mode Function Status - F8</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
+
       <variable label="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="0" tooltip="Check to enable function F0(f) when the unit is operating in analog power mode">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Analog Mode Function Status - F0(f)</label>
@@ -420,192 +391,10 @@
         <label>Loco Direction In Consist</label>
         <comment>A consist address over 127 will also set this bit</comment>
       </variable>
-      <variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F1</label>
-      </variable>
-      <variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F2</label>
-      </variable>
-      <variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F3</label>
-      </variable>
-      <variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F4</label>
-      </variable>
-      <variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F5</label>
-      </variable>
-      <variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F6</label>
-      </variable>
-      <variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F7</label>
-      </variable>
-      <variable label="Consist Address Activation for F8" CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0" minFn="8">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F8</label>
-      </variable>
-      <variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="0">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F0(f) in Forward</label>
-      </variable>
-      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F0(r) in Reverse</label>
-      </variable>
-      <variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F9</label>
-      </variable>
-      <variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="0" minFn="10">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F10</label>
-      </variable>
-      <variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F11</label>
-      </variable>
-      <variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
-        <enumVal>
-          <enumChoice choice="Respond to locomotive address only">
-            <choice>Respond to locomotive address only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to consist address">
-            <choice>Respond to consist address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Address Activation for F12</label>
-      </variable>
-      <variable label="Consist Acceleration Rate (0-127)" CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" default="0" comment="Additional consist acceleration (combined with CV3)" tooltip="When loco is in a consist, it's base acceleration rate is modified by this amount">
-        <decVal max="127"/>
-        <label>Consist Acceleration Rate (0-127)</label>
-        <comment>Additional consist acceleration (combined with CV3)</comment>
-      </variable>
-      <variable label="Consist Acceleration Sign" CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign" default="0">
-        <enumVal>
-          <enumChoice choice="Add value to base acceleration rate (increases acceleration delay)">
-            <choice>Add value to base acceleration rate (increases acceleration delay)</choice>
-          </enumChoice>
-          <enumChoice choice="Subtract value from base acceleration rate (decreases acceleration delay)">
-            <choice>Subtract value from base acceleration rate (decreases acceleration delay)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Acceleration Sign</label>
-      </variable>
-      <variable label="Consist Braking Rate (0-127)" CV="24" mask="XVVVVVVV" item="Consist Deceleration Adjustment" default="0" comment="Additional consist braking (combined with CV4)" tooltip="When loco is in a consist, it's baseline braking rate is modified by this amount">
-        <decVal max="127"/>
-        <label>Consist Braking Rate (0-127)</label>
-        <comment>Additional consist braking (combined with CV4)</comment>
-      </variable>
-      <variable label="Consist Braking Sign" CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
-        <enumVal>
-          <enumChoice choice="Add value to baseline braking rate (increases braking delay)">
-            <choice>Add value to baseline braking rate (increases braking delay)</choice>
-          </enumChoice>
-          <enumChoice choice="Subtract value from baseline braking rate (decreases braking delay)">
-            <choice>Subtract value from baseline braking rate (decreases braking delay)</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Braking Sign</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
+
       <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
         <enumVal>
           <enumChoice choice="Disabled, Speed Curves not used">
@@ -750,6 +539,7 @@
         </enumVal>
         <label>Function Group 2 and 3 Exchange</label>
       </variable>
+
       <!-- Function Mapping follows -->
       <variable label="FL(f) controls Headlight" CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
@@ -1205,56 +995,7 @@
       </variable>
       <!-- Lighting Configuration follows -->
       <variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" item="Function F0F effect generated" default="15" tooltip="Determines the effect generated from the headlight">
-        <enumVal>
-          <enumChoice choice="On/Off">
-            <choice>On/Off</choice>
-          </enumChoice>
-          <enumChoice choice="Dimmable headlight">
-            <choice>Dimmable headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Pyle Gyralite">
-            <choice>Pyle Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Oscillating headlight">
-            <choice>Oscillating headlight</choice>
-          </enumChoice>
-          <enumChoice choice="Single flash strobe">
-            <choice>Single flash strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double flash strobe">
-            <choice>Double flash strobe</choice>
-          </enumChoice>
-          <enumChoice choice="D312 rotary beacon">
-            <choice>D312 rotary beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Prime Stratolite">
-            <choice>Prime Stratolite</choice>
-          </enumChoice>
-          <enumChoice choice="Type I ditch light">
-            <choice>Type I ditch light</choice>
-          </enumChoice>
-          <enumChoice choice="Type II ditch light">
-            <choice>Type II ditch light</choice>
-          </enumChoice>
-          <enumChoice choice="FRED (end of train flasher)">
-            <choice>FRED (end of train flasher)</choice>
-          </enumChoice>
-          <enumChoice choice="Engine exhaust flicker">
-            <choice>Engine exhaust flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Firebox flicker">
-            <choice>Firebox flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Smart firebox flicker">
-            <choice>Smart firebox flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Dyno-light">
-            <choice>Dyno-light</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUEffect.xml"/>
         <label>Headlight F0(f) Effect Selection</label>
       </variable>
       <variable label="Headlight F0(f) Phase Selection" CV="49" mask="XXXVXXXX" item="Function F0F options" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
@@ -1302,56 +1043,7 @@
         <label>Headlight F0(f) Light Type</label>
       </variable>
       <variable label="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" item="Function F0R effect generated" default="15" tooltip="Determines the effect generated from the backup light">
-        <enumVal>
-          <enumChoice choice="On/Off">
-            <choice>On/Off</choice>
-          </enumChoice>
-          <enumChoice choice="Dimmable backup light">
-            <choice>Dimmable backup light</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Pyle Gyralite">
-            <choice>Pyle Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Oscillating backup light">
-            <choice>Oscillating backup light</choice>
-          </enumChoice>
-          <enumChoice choice="Single flash strobe">
-            <choice>Single flash strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double flash strobe">
-            <choice>Double flash strobe</choice>
-          </enumChoice>
-          <enumChoice choice="D312 rotary beacon">
-            <choice>D312 rotary beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Prime Stratolite">
-            <choice>Prime Stratolite</choice>
-          </enumChoice>
-          <enumChoice choice="Type I ditch light">
-            <choice>Type I ditch light</choice>
-          </enumChoice>
-          <enumChoice choice="Type II ditch light">
-            <choice>Type II ditch light</choice>
-          </enumChoice>
-          <enumChoice choice="FRED (end of train flasher)">
-            <choice>FRED (end of train flasher)</choice>
-          </enumChoice>
-          <enumChoice choice="Engine exhaust flicker">
-            <choice>Engine exhaust flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Firebox flicker">
-            <choice>Firebox flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Smart firebox flicker">
-            <choice>Smart firebox flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Dyno-light">
-            <choice>Dyno-light</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUEffect.xml"/>
         <label>Backup Light F0(r) Effect Selection</label>
       </variable>
       <variable label="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" item="Function F0R options" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
@@ -1399,56 +1091,7 @@
         <label>Backup Light F0(r) Light Type</label>
       </variable>
       <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" item="Function 1 effect generated" default="1" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX5 light output">
-        <enumVal>
-          <enumChoice choice="On/Off">
-            <choice>On/Off</choice>
-          </enumChoice>
-          <enumChoice choice="Dimmable light">
-            <choice>Dimmable light</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Pyle Gyralite">
-            <choice>Pyle Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Oscillating light">
-            <choice>Oscillating light</choice>
-          </enumChoice>
-          <enumChoice choice="Single flash strobe">
-            <choice>Single flash strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double flash strobe">
-            <choice>Double flash strobe</choice>
-          </enumChoice>
-          <enumChoice choice="D312 rotary beacon">
-            <choice>D312 rotary beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Prime Stratolite">
-            <choice>Prime Stratolite</choice>
-          </enumChoice>
-          <enumChoice choice="Type I ditch light">
-            <choice>Type I ditch light</choice>
-          </enumChoice>
-          <enumChoice choice="Type II ditch light">
-            <choice>Type II ditch light</choice>
-          </enumChoice>
-          <enumChoice choice="FRED (end of train flasher)">
-            <choice>FRED (end of train flasher)</choice>
-          </enumChoice>
-          <enumChoice choice="Engine exhaust flicker">
-            <choice>Engine exhaust flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Firebox flicker">
-            <choice>Firebox flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Smart firebox flicker">
-            <choice>Smart firebox flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Dyno-light">
-            <choice>Dyno-light</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUEffect.xml"/>
         <label>FX5 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
@@ -1501,56 +1144,7 @@
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
       <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" item="Function 2 effect generated" default="1" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX6 light output">
-        <enumVal>
-          <enumChoice choice="On/Off">
-            <choice>On/Off</choice>
-          </enumChoice>
-          <enumChoice choice="Dimmable light">
-            <choice>Dimmable light</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Pyle Gyralite">
-            <choice>Pyle Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Oscillating light">
-            <choice>Oscillating light</choice>
-          </enumChoice>
-          <enumChoice choice="Single flash strobe">
-            <choice>Single flash strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double flash strobe">
-            <choice>Double flash strobe</choice>
-          </enumChoice>
-          <enumChoice choice="D312 rotary beacon">
-            <choice>D312 rotary beacon</choice>
-          </enumChoice>
-          <enumChoice choice="Prime Stratolite">
-            <choice>Prime Stratolite</choice>
-          </enumChoice>
-          <enumChoice choice="Type I ditch light">
-            <choice>Type I ditch light</choice>
-          </enumChoice>
-          <enumChoice choice="Type II ditch light">
-            <choice>Type II ditch light</choice>
-          </enumChoice>
-          <enumChoice choice="FRED (end of train flasher)">
-            <choice>FRED (end of train flasher)</choice>
-          </enumChoice>
-          <enumChoice choice="Engine exhaust flicker">
-            <choice>Engine exhaust flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Firebox flicker">
-            <choice>Firebox flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Smart firebox flicker">
-            <choice>Smart firebox flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Dyno-light">
-            <choice>Dyno-light</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUEffect.xml"/>
         <label>FX6 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
