@@ -127,15 +127,10 @@ public class PanelEditor extends Editor implements ItemListener {
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener(new ActionListener() {
-                PanelEditor panelEd;
                 public void actionPerformed(ActionEvent event) {
-					jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex(panelEd);
+					jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
                 }
-                ActionListener init(PanelEditor pe) {
-                    panelEd = pe;
-                    return this;
-                }
-            }.init(this));
+            });
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
         editItem.addActionListener(new ActionListener() {
                 PanelEditor panelEd;
@@ -348,15 +343,21 @@ public class PanelEditor extends Editor implements ItemListener {
 
         // when this window closes, set contents of target uneditable
         addWindowListener(new java.awt.event.WindowAdapter() {
-            PanelEditor panelEd;
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(panelEd);
+        	
+        	HashMap <String, JFrameItem> iconAdderFrames;
+        	public void windowClosing(java.awt.event.WindowEvent e) {
+                    jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+                    Iterator <JFrameItem>iter = iconAdderFrames.values().iterator();
+                    while (iter.hasNext()) {
+                    	JFrameItem frame = iter.next();
+                    	frame.dispose();
+                    }
                 }
-                java.awt.event.WindowAdapter init(PanelEditor pe) {
-                    panelEd = pe;
+        		WindowAdapter init(HashMap <String, JFrameItem> f) {
+                	iconAdderFrames = f;
                     return this;
                 }
-            }.init(this));
+            }.init(_iconEditorFrame));
         
         // and don't destroy the window
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);

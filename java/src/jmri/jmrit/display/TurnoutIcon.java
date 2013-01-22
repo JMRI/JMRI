@@ -352,7 +352,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
                 setIcon(entry.getKey(), newIcon);
             }
         }   // otherwise retain current map
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
+//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

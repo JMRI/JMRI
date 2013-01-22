@@ -298,18 +298,11 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
 //        long t = System.currentTimeMillis();
         loadIcons();
         addWindowListener(new java.awt.event.WindowAdapter() {
-                Editor editor;
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     closePanels(e);
-                    if (ImageIndexEditor.checkImageIndex(editor)) {
-                        storeIcons();   // write maps to tree
-                    }
+                    ImageIndexEditor.checkImageIndex();
                 }
-                java.awt.event.WindowAdapter init(Editor ed) {
-                    editor = ed;
-                    return this;
-                }
-        }.init(editor));
+        	});
         
         makeMenus(editor);
 

@@ -319,15 +319,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         JMenuItem storeIndexItem = new JMenuItem(Bundle.getMessage("MIStoreImageIndex"));
         _fileMenu.add(storeIndexItem);
         storeIndexItem.addActionListener(new ActionListener() {
-                ControlPanelEditor panelEd;
                 public void actionPerformed(ActionEvent event) {
-					jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex(panelEd);
+					jmri.jmrit.catalog.ImageIndexEditor.storeImageIndex();
                 }
-                ActionListener init(ControlPanelEditor pe) {
-                    panelEd = pe;
-                    return this;
-                }
-            }.init(this));
+            });
 
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("renamePanelMenu"));
         PositionableJComponent z = new PositionableJComponent(this);
@@ -355,6 +350,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         editItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					changeView("jmri.jmrit.display.panelEditor.PanelEditor");
+					_itemPalette.dispose();
                 }
             });
 
@@ -1122,7 +1118,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 	 *   time.  Deletion must be accomplished via the Delete this panel menu item.
      */
     protected void targetWindowClosingEvent(java.awt.event.WindowEvent e) {
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(this);
+        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         targetWindowClosing(true);
     }
 
@@ -1256,11 +1252,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 popup.addSeparator();
                 popupSet = false;
             }
-            if (event.isControlDown()) {
+            popupSet = p.setEditItemMenu(popup);    // ItemPalette Editor        
+/*            if (event.isControlDown()) {
                 popupSet = p.setEditIconMenu(popup);    // old IconEditor        
             } else {
                 popupSet = p.setEditItemMenu(popup);    // ItemPalette Editor        
-            }
+            }*/
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;

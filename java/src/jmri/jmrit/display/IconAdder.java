@@ -660,11 +660,31 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.pack();
     }
 
-    public void addTreeToCatalog(CatalogTree tree) {
-        if (_catalog != null) {
-            _catalog.addTree(tree);
+    /**
+     * If icons are changed, update global tree
+     */
+    private void updateCatalogTree() {
+        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        // unfiltered, xml-stored, default icon tree
+        CatalogTree tree = manager.getBySystemName("NXDI");
+        if (tree == null) {	// build a new Default Icons tree
+            tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
+        CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
+        Enumeration<CatalogTreeNode> e = root.children();
+        String name = _defaultIcons.toString();
+        while (e.hasMoreElements()) {
+            CatalogTreeNode nChild = e.nextElement();
+            if (name.equals(nChild.toString())) {
+                if (log.isDebugEnabled()) log.debug("Remove node "+nChild);
+                root.remove(nChild);
+                break;
+            }
+        }
+        root.add(_defaultIcons);
+        ImageIndexEditor.indexChanged(true);
     }
+
     private class IconButton extends DropButton {
         String key;
         IconButton(String label, Icon icon) {  // init icon passed to avoid ref before ctor complete
@@ -730,8 +750,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         _iconMap.put(key, button);
                         if (!_update){
                             _defaultIcons.deleteLeaf(key, oldIcon.getURL());
-                            _defaultIcons.addLeaf(key, newIcon.getURL());                        	
-                            ImageIndexEditor.indexChanged(true);
+                            _defaultIcons.addLeaf(key, newIcon.getURL());
+                            updateCatalogTree();
                         }
                         e.dropComplete(true);                       
                         if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+key+

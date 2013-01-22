@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.datatransfer.DataFlavor;
 
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -20,13 +19,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import jmri.implementation.swing.SwingShutDownTask;
 
-import jmri.CatalogTree;
 import jmri.util.JmriJFrame;
-import jmri.jmrit.display.IconAdder;
 import jmri.jmrit.display.Editor;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
+import jmri.ShutDownTask;
 import jmri.util.FileUtil;
 
 /**
@@ -58,6 +57,7 @@ public final class ImageIndexEditor extends JmriJFrame {
 
     static ImageIndexEditor _instance;
     static boolean  _indexChanged = false;
+    static ShutDownTask 	_shutDownTask;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.catalog.CatalogBundle");
 
     public static final String IconDataFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
@@ -87,15 +87,10 @@ public final class ImageIndexEditor extends JmriJFrame {
         JMenuItem storeItem = new JMenuItem(ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle").getString("MIStoreImageIndex"));
         findIcon.add(storeItem);
         storeItem.addActionListener(new ActionListener() {
-                Editor panelEd;
                 public void actionPerformed(ActionEvent event) {
-					storeImageIndex(panelEd);
+					storeImageIndex();
                 }
-                ActionListener init(Editor pe) {
-                    panelEd = pe;
-                    return this;
-                }
-        }.init(editor));
+        });
 
         findIcon.addSeparator();
         JMenuItem openItem = new JMenuItem(rb.getString("openDirMenu"));
@@ -151,23 +146,37 @@ public final class ImageIndexEditor extends JmriJFrame {
 
         // when this window closes, check for saving 
         addWindowListener(new java.awt.event.WindowAdapter() {
-            Editor panelEd;
             public void windowClosing(java.awt.event.WindowEvent e) {
                 DirectorySearcher.instance().close();
-                checkImageIndex(panelEd);
+                checkImageIndex();
             }
-            java.awt.event.WindowAdapter init(Editor pe) {
-                panelEd = pe;
-                return this;
-            }
-        }.init(editor));
+        });
         setLocation(10, 200);
         pack();
         setVisible(true);
     }
 
-    public static final synchronized void indexChanged (boolean changed) {
+    public static final synchronized void indexChanged(boolean changed) {
         _indexChanged = changed;
+        if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
+        	if (changed) {
+                if (_shutDownTask == null) {
+                	_shutDownTask = new SwingShutDownTask("DecoderPro Decoder Window Check", 
+                			rb.getString("SaveImageIndex"), 
+                			rb.getString("SaveAndQuit"), null)
+            		{
+                        public boolean checkPromptNeeded() {
+                            return !_indexChanged;
+                        }
+                        public boolean doPrompt() {
+                        	storeImageIndex();
+                            return true;
+                        }
+            		};
+                }
+                jmri.InstanceManager.shutDownManagerInstance().register(_shutDownTask);
+        	}        	
+        }
     }
     public static boolean isIndexChanged() {
         return _indexChanged;
@@ -176,13 +185,13 @@ public final class ImageIndexEditor extends JmriJFrame {
     /**
     *  Called from window close of Icon Editors
     */
-    public static boolean checkImageIndex(Editor editor) {
+    public static boolean checkImageIndex() {
         if (_indexChanged) {
             int result = JOptionPane.showConfirmDialog(null, rb.getString("SaveImageIndex"), 
                                           rb.getString("question"), JOptionPane.YES_NO_CANCEL_OPTION,
                                                        JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_OPTION) {
-                storeImageIndex(editor);
+                storeImageIndex();
                 return true;
             } else if (result == JOptionPane.NO_OPTION) {
                 indexChanged(false);
@@ -191,45 +200,13 @@ public final class ImageIndexEditor extends JmriJFrame {
         return false;
     }
 
-    public static void storeImageIndex(Editor editor) {
-        // build a new Default Icons tree
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
-        // unfiltered, xml-stored, default icon tree
-        CatalogTree tree = manager.getBySystemName("NXDI");
-        if (tree == null) {
-            tree = manager.newCatalogTree("NXDI", "Default Icons");
-        }
-        // Replace or add with latest branch from each IconAdder 
-        Iterator <IconAdder>iter = editor.getIconEditors().iterator();
-        CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
-        while (iter.hasNext()) {
-            IconAdder ed = iter.next();
-            CatalogTreeNode node = ed.getDefaultIconNode();
-            @SuppressWarnings("unchecked")
-            Enumeration<CatalogTreeNode> e = root.children();
-            String name = node.toString();
-            while (e.hasMoreElements()) {
-                CatalogTreeNode nChild = e.nextElement();
-                if (name.equals(nChild.toString())) {
-                    if (log.isDebugEnabled()) log.debug("Remove node "+nChild);
-                    root.remove(nChild);
-                    break;
-                }
-            }
-            root.add(node);
-            if (log.isDebugEnabled()) log.debug("Add node "+node);
-        }
-
+    public static void storeImageIndex() {
         jmri.jmrit.display.palette.ItemPalette.storeIcons();
 
         if (log.isDebugEnabled()) log.debug("Start writing CatalogTree info");
         try {
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().writeCatalogTrees();
             indexChanged(false);
-            tree = manager.getBySystemName("IXII");
-            if (tree != null) {
-                editor.addTreeToEditors(tree);
-            }
         } 
         //catch (org.jdom.JDOMException jde) { log.error("Exception writing CatalogTrees: "+jde); }                           
         catch (java.io.IOException ioe) { log.error("Exception writing CatalogTrees: "+ioe); }   

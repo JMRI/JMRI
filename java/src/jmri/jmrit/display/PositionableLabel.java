@@ -411,7 +411,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     public boolean setEditItemMenu(JPopupMenu popup) {
         return setEditIconMenu(popup);
     }
-
+   
+    /************ Methods for Item Popups in Panel editor *************************/
     JFrame _iconEditorFrame;
     IconAdder _iconEditor;
     public boolean setEditIconMenu(JPopupMenu popup) {
@@ -427,28 +428,9 @@ public class PositionableLabel extends JLabel implements Positionable {
         return false;
     }
 
-    jmri.util.JmriJFrame _paletteFrame;
-
-    protected void makePalettteFrame(String title) {
-    	jmri.jmrit.display.palette.ItemPalette.loadIcons();
-
-        _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
-        _paletteFrame.setLocationRelativeTo(this);
-        _paletteFrame.toFront();
-        _paletteFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            Editor editor;
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                if (ImageIndexEditor.checkImageIndex(editor)) {
-                	ItemPalette.storeIcons();   // write maps to tree
-                }
-            }
-            java.awt.event.WindowAdapter init(Editor ed) {
-                editor = ed;
-                return this;
-            }
-        }.init(_editor));
-    }
-
+    /**
+     * For item popups in Panel Editor
+     */
     protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
         if (editor!=null) {
             _iconEditor = editor;
@@ -491,6 +473,25 @@ public class PositionableLabel extends JLabel implements Positionable {
         _iconEditorFrame = null;
         _iconEditor = null;
         invalidate();
+    }
+
+    jmri.util.JmriJFrame _paletteFrame;
+
+    /************ Methods for Item Popups in Control Panel editor ********************/
+    /**
+     * For item popups in Control Panel Editor
+     */
+    protected void makePalettteFrame(String title) {
+    	jmri.jmrit.display.palette.ItemPalette.loadIcons();
+
+        _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
+        _paletteFrame.setLocationRelativeTo(this);
+        _paletteFrame.toFront();
+        _paletteFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+             public void windowClosing(java.awt.event.WindowEvent e) {
+                ImageIndexEditor.checkImageIndex();   // write maps to tree
+                }
+        });
     }
 
     /**

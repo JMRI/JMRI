@@ -456,7 +456,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
                 }
             }
         }   // otherwise retain current map
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
+//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _TOPanel.dispose();

@@ -374,7 +374,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
             setIcons(map2);
         }   // otherwise retain current map
         displayState(getSignalHead().getAppearance());
-        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(_editor);
+//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

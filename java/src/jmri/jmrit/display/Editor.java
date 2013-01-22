@@ -161,7 +161,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected boolean _pastePending = false;
 
     // map of icon editor frames (incl, icon editor) keyed by name
-    HashMap <String, JFrameItem> _iconEditorFrame = new HashMap <String, JFrameItem>();
+    protected HashMap <String, JFrameItem> _iconEditorFrame = new HashMap <String, JFrameItem>();
 
     public Editor() {
         _debug = log.isDebugEnabled();
@@ -1908,31 +1908,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /******************** end adding content *********************/
 
     /*********************** Icon Editors utils ****************************/
-    public List <IconAdder> getIconEditors() {
-        Iterator <JFrameItem> iter = _iconEditorFrame.values().iterator();
-        ArrayList <IconAdder> list = new ArrayList <IconAdder>();
-        while (iter.hasNext()) {
-            JFrameItem frame = iter.next();
-            IconAdder ed = frame.getEditor();
-            if (ed != null){
-                list.add(ed);
-            }
-        }
-        return list;
-    }
-
-    /**
-    * Called by ImageIndexEditor after it has stored new image files and 
-    * new default icons.
-    */
-    public void addTreeToEditors(CatalogTree tree) {
-        List <IconAdder> list = getIconEditors();
-        for (int i=0; i<list.size(); i++){
-            IconAdder ed = list.get(i);
-            ed.addTreeToCatalog(tree);
-            ed.initDefaultIcons();
-        }
-    }
     
     public static class JFrameItem extends JmriJFrame {
         IconAdder _editor;
@@ -2034,17 +2009,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             // when this window closes, check for saving 
             if (add) {
                 frame.addWindowListener(new java.awt.event.WindowAdapter() {
-                        Editor editor;
                         public void windowClosing(java.awt.event.WindowEvent e) {
-                            jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(editor);
+                            jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
                             setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
                             if (_debug) log.debug("windowClosing: HIDE "+toString());
                         }
-                        java.awt.event.WindowAdapter init(Editor ed) {
-                            editor = ed;
-                            return this;
-                        }
-                }.init(this));
+                });
             }
         } else {
             log.error("No icon editor specified for "+name);
