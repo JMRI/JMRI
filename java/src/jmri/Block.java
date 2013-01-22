@@ -541,6 +541,77 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         setState(OCCUPIED);
     }
 
+    /**
+     * Find which path this Block became Active, without actually
+     * modifying the state of this block.
+     *
+     * (this is largely a copy of the 'Search' part of the logic
+     * from goingActive())
+     */
+    public Path findFromPath() {
+        // index through the paths, counting
+        int count = 0;
+        Path next = null;
+        // get statuses of everything once
+        int currPathCnt = paths.size();
+        Path pList[] = new Path[currPathCnt];
+        boolean isSet[] = new boolean[currPathCnt];
+        Sensor pSensor[] = new Sensor[currPathCnt];
+        boolean isActive[] = new boolean[currPathCnt];
+        int pDir[] = new int[currPathCnt];
+        int pFromDir[] = new int[currPathCnt];
+        for (int i = 0; i < currPathCnt; i++) {
+	    pList[i] = paths.get(i);
+            isSet[i] = pList[i].checkPathSet();
+            Block b = pList[i].getBlock();
+            if (b != null) {
+                pSensor[i] = b.getSensor();
+                if (pSensor[i] != null) {
+                    isActive[i] = pSensor[i].getState() == Sensor.ACTIVE;
+                } else {
+                    isActive[i] = false;
+                }
+                pDir[i] = b.getDirection();
+            } else {
+                pSensor[i] = null;
+                isActive[i] = false;
+                pDir[i] = -1;
+            }
+            pFromDir[i] = pList[i].getFromBlockDirection();
+            if (isSet[i] && pSensor[i] != null && isActive[i]) {
+                count++;
+                next = pList[i];
+            }
+        }
+        // sort on number of neighbors
+        if ((count == 0) || (count == 1)){
+	    // do nothing.  OK to return null from this function.  "next" is already set.
+	} else {  
+	    // count > 1, check for one with proper direction
+            // this time, count ones with proper direction
+	    if (log.isDebugEnabled()) log.debug ("Block "+getSystemName()+"- count of active linked blocks = "+count);
+            next = null;
+            count = 0;
+            for (int i = 0; i < currPathCnt; i++) {
+                if (isSet[i] && pSensor[i] != null && isActive[i] && (pDir[i] == pFromDir[i])) {
+                    count++;
+                    next = pList[i];
+                } 
+            }
+            if (next == null)
+            	if (log.isDebugEnabled()) log.debug("next is null!");
+            if (next != null && count == 1) {
+                // found one block with proper direction, assume that
+            } else {
+                // no unique path with correct direction - this happens frequently from noise in block detectors!!
+                log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName());
+            }
+        }
+        // in any case, go OCCUPIED
+	if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+next.getBlock().getSystemName() + "(informational. No state change)");
+	return(next);
+    }
+
     // Methods to implmement PhysicalLocationReporter Interface
     //
     // If we have a Reporter that is also a PhysicalLocationReporter,
