@@ -84,6 +84,7 @@ public class ImportRosterItemAction extends AbstractRosterItemAction  {
 
         // set the filename from the ID
         mToEntry.setId(mToID);
+        mToEntry.setFileName(""); // to force recreation
         mToEntry.ensureFilenameExists();
 
         // transfer the contents to a new file
