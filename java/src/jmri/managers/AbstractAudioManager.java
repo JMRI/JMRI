@@ -52,12 +52,23 @@ public abstract class AbstractAudioManager extends AbstractManager
 
     @Override
     public Audio getBySystemName(String key) {
-        return (Audio)_tsys.get(key);
+        //return (Audio)_tsys.get(key);
+	Audio rv = (Audio)_tsys.get(key);
+	if (rv == null) { 
+	    rv = (Audio)_tsys.get(key.toUpperCase());
+	}
+	return(rv);
     }
 
     @Override
     public Audio getByUserName(String key) {
-        return key==null?null:(Audio)_tuser.get(key);
+        //return key==null?null:(Audio)_tuser.get(key);
+	if (key==null) 
+	    return(null);
+	Audio rv = (Audio)_tuser.get(key);
+	if (rv == null)
+	    rv = this.getBySystemName(key);
+	return(rv);
     }
 
     @Override
@@ -90,6 +101,7 @@ public abstract class AbstractAudioManager extends AbstractManager
         if ( (userName!=null) && ((s = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName)!=s)
                 log.error("inconsistent user ("+userName+") and system name ("+systemName+") results; userName related to ("+s.getSystemName()+")");
+	    log.debug("Found existing Audio (" + s.getSystemName() + "). Returning existing (1).");
             return s;
         }
         if ( (s = getBySystemName(systemName)) != null) {
@@ -97,9 +109,11 @@ public abstract class AbstractAudioManager extends AbstractManager
                 s.setUserName(userName);
             else if (userName != null) log.warn("Found audio via system name ("+systemName
                                     +") with non-null user name ("+userName+")"); // NOI18N
+	    log.debug("Found existing Audio (" + s.getSystemName() + "). Returning existing (2).");
             return s;
         }
 
+	log.debug("Existing audio not found. Creating new. (" + systemName + ")");
         // doesn't exist, make a new one
         s = createNewAudio(systemName, userName);
 
