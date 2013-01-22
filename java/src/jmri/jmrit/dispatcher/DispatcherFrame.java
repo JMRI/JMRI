@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  * @version			$Revision$
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
-
+    
     /**
      * Get a DispatcherFrame through the instance() method
      */
@@ -103,6 +103,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private boolean _AlwaysSet = true;
 	private boolean _UseScaleMeters = false;  // "true" if scale meters, "false" for scale feet
 	private int _LayoutScale = Scale.HO;
+        private boolean _SupportVSDecoder = false;
 			
 	// operational instance variables
 	private ArrayList<ActiveTrain> activeTrainsList = new ArrayList<ActiveTrain>();  // list of ActiveTrain objects
@@ -1244,6 +1245,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			 
 			// allocate the section
 			as = new AllocatedSection(s,at,ar.getSectionSeqNumber(),nextSection,nextSectionSeqNo);
+			if (_SupportVSDecoder) { 
+			    as.addPropertyChangeListener(InstanceManager.vsdecoderManagerInstance());
+			}
 
 			s.setState(ar.getSectionDirection());
 			at.addAllocatedSection(as);
@@ -1528,7 +1532,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	protected void setScale(int sc) {_LayoutScale = sc;}
 	protected ArrayList<ActiveTrain> getActiveTrainsList() {return activeTrainsList;}
 	protected ArrayList<AllocatedSection> getAllocatedSectionsList() {return allocatedSections;}
-	
+        protected boolean getSupportVSDecoder() { return _SupportVSDecoder;}
+        protected void setSupportVSDecoder(boolean set) { _SupportVSDecoder = set; }
+
 	// called by ActivateTrainFrame after a new train is all set up
 	//      Dispatcher side of activating a new train should be completed here
 	protected void newTrainDone(ActiveTrain at) {

@@ -151,6 +151,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 						if (options.getAttribute("nameinallocatedblock").getValue().equals("no"))
 							dispatcher.setNameInAllocatedBlock(false);
 					}
+					if (options.getAttribute("supportvsdecoder")!=null) {
+						dispatcher.setSupportVSDecoder(true);
+						if (options.getAttribute("supportvsdecoder").getValue().equals("no"))
+							dispatcher.setSupportVSDecoder(false);
+					}
 					if (options.getAttribute("layoutscale")!=null) {
 						String s = (options.getAttribute("layoutscale")).getValue();
 						for (int i = 1; i<=Scale.NUM_SCALES; i++) {
@@ -202,6 +207,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		options.setAttribute("shortnameinblock", ""+(dispatcher.getShortNameInBlock()?"yes":"no"));
 		options.setAttribute("extracolorforallocated", ""+(dispatcher.getExtraColorForAllocated()?"yes":"no"));
 		options.setAttribute("nameinallocatedblock", ""+(dispatcher.getNameInAllocatedBlock()?"yes":"no"));
+		options.setAttribute("supportvsdecoder", ""+(dispatcher.getSupportVSDecoder()?"yes":"no"));
 		options.setAttribute("layoutscale", Scale.getShortScaleID(dispatcher.getScale()));
 		options.setAttribute("usescalemeters", ""+(dispatcher.getUseScaleMeters()?"yes":"no"));
 		root.addContent(options);

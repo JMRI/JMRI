@@ -111,6 +111,7 @@ public class OptionsMenu extends JMenu {
 	JCheckBox nameInBlockCheckBox = new JCheckBox(rb.getString("NameInBlockBox"));
 	JCheckBox extraColorForAllocatedCheckBox = new JCheckBox(rb.getString("ExtraColorForAllocatedBox"));
 	JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(rb.getString("NameInAllocatedBlockBox"));
+        JCheckBox supportVSDecoderCheckBox = new JCheckBox(rb.getString("SupportVSDecoder"));
 	JComboBox layoutScaleBox = new JComboBox();
 	JRadioButton scaleFeet = new JRadioButton(rb.getString("ScaleFeet"));
 	JRadioButton scaleMeters = new JRadioButton(rb.getString("ScaleMeters"));
@@ -178,6 +179,11 @@ public class OptionsMenu extends JMenu {
 			p11.add(nameInAllocatedBlockCheckBox);
 			nameInAllocatedBlockCheckBox.setToolTipText(rb.getString("NameInAllocatedBlockBoxHint"));
 			optionsPane.add(p11);
+			JPanel p13 =new JPanel();
+			p13.setLayout(new FlowLayout());
+			p13.add(supportVSDecoderCheckBox);
+			supportVSDecoderCheckBox.setToolTipText(rb.getString("SupportVSDecoderBoxHint"));
+			optionsPane.add(p13);
 			JPanel p8 = new JPanel();
 			initializeScaleCombo();
 			p8.add(new JLabel(rb.getString("LayoutScale")+":"));
@@ -237,6 +243,7 @@ public class OptionsMenu extends JMenu {
 		nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());
 		extraColorForAllocatedCheckBox.setSelected(dispatcher.getExtraColorForAllocated());
 		nameInAllocatedBlockCheckBox.setSelected(dispatcher.getNameInAllocatedBlock());
+		supportVSDecoderCheckBox.setSelected(dispatcher.getSupportVSDecoder());
 		scaleMeters.setSelected(dispatcher.getUseScaleMeters());
 		scaleFeet.setSelected(!dispatcher.getUseScaleMeters());
 		optionsFrame.pack();
@@ -265,6 +272,7 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setShortNameInBlock(nameInBlockCheckBox.isSelected());
 		dispatcher.setExtraColorForAllocated(extraColorForAllocatedCheckBox.isSelected());
 		dispatcher.setNameInAllocatedBlock(nameInAllocatedBlockCheckBox.isSelected());
+		dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
 		dispatcher.setScale(layoutScaleBox.getSelectedIndex()+1);
 		dispatcher.setUseScaleMeters(scaleMeters.isSelected());
 		optionsFrame.setVisible(false);	

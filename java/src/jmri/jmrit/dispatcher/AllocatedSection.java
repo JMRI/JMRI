@@ -4,6 +4,8 @@ package jmri.jmrit.dispatcher;
 
 import java.util.ResourceBundle;
 import java.util.ArrayList;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 /**
  * This class holds information and options for an AllocatedSection, a Section 
@@ -57,7 +59,7 @@ public class AllocatedSection {
             public void propertyChange(java.beans.PropertyChangeEvent e) { handleSectionChange(e); }
         });
 		setStoppingSensors();
-		if (mActiveTrain.getAutoActiveTrain()==null) {
+		if ((mActiveTrain.getAutoActiveTrain()==null) && !(DispatcherFrame.instance().getSupportVSDecoder())) {
 			// for manual running, monitor block occupancy for selected Blocks only
 			if ( mActiveTrain.getReverseAtEnd() && 
 					( (mSequence==mActiveTrain.getEndBlockSectionSequenceNumber()) ||
@@ -69,7 +71,8 @@ public class AllocatedSection {
 		else {
 			// monitor block occupancy for all Sections of automatially running trains
 			initializeMonitorBlockOccupancy();
-		}		
+		}
+		listenerList = new javax.swing.event.EventListenerList();
 	}
 
 	static final ResourceBundle rb = ResourceBundle
@@ -87,6 +90,7 @@ public class AllocatedSection {
 	private int mAllocationNumber = 0;     // used to keep track of allocation order
 	private jmri.Sensor mForwardStoppingSensor = null;
 	private jmri.Sensor mReverseStoppingSensor = null;
+    private javax.swing.event.EventListenerList listenerList;
 	
 	/**
      * Access methods 
@@ -207,6 +211,8 @@ public class AllocatedSection {
 					Thread tBlockChange = new Thread(handleBlockChange);
 					tBlockChange.start();
 					addToActiveBlockList(b);
+					if (DispatcherFrame.instance().getSupportVSDecoder())
+					    firePropertyChangeEvent("BlockStateChange", null, b.getSystemName()); // NOI18N
 				}				
 			}
 		}
@@ -308,6 +314,30 @@ public class AllocatedSection {
 		private AllocatedSection _aSection = null;
 	}
 			    
+
+    public void addPropertyChangeListener(PropertyChangeListener listener) {
+	log.debug("Adding listener " + listener.getClass().getName() + " to " + this.getClass().getName());
+	listenerList.add(PropertyChangeListener.class, listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+	listenerList.remove(PropertyChangeListener.class, listener);
+    }
+
+    protected void firePropertyChangeEvent(PropertyChangeEvent evt) {
+	//Object[] listeners = listenerList.getListenerList();
+
+	for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
+	    l.propertyChange(evt);
+	}
+    }
+
+    protected void firePropertyChangeEvent(String name, Object oldVal, Object newVal) {
+	log.debug("Firing property change: " + name + " " + newVal.toString());
+	firePropertyChangeEvent(new PropertyChangeEvent(this, name, oldVal, newVal));
+    }
+
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AllocatedSection.class.getName());
 }
 
