@@ -274,7 +274,7 @@ class ConfigurableSound extends VSDSound {
     }
 
     public void setXml(Element e, VSDFile vf) {
-	this.setName(e.getAttributeValue("name"));
+	this.setName(this.getName() + e.getAttributeValue("name"));
 	log.debug("ConfigurableSound: " + e.getAttributeValue("name"));
 	//log.debug("  start file: " + e.getChildText("start-file"));
 	if (((start_file = e.getChildText("start-file")) != null) && !(start_file.equals("")))

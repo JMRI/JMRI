@@ -210,7 +210,7 @@ class Diesel3Sound extends EngineSound {
 	    sb = new D3Notch();
 	    int nn = Integer.parseInt(el.getChildText("notch"));
 	    sb.setNotch(nn);
-	    if (nn == idle_notch) { sb.setIdleNotch(true); log.debug("This Notch (" + nn + ") is Idle."); }
+	    if ((idle_notch != null) && (nn == idle_notch)) { sb.setIdleNotch(true); log.debug("This Notch (" + nn + ") is Idle."); }
 	    List<Element> elist = el.getChildren("file");
 	    int j = 0;
 	    for (Element fe : elist) {
@@ -268,11 +268,12 @@ class Diesel3Sound extends EngineSound {
 	// If there's a tie, this will take the first value, but the notches /should/
 	// all have unique notch numbers.
 	if (idle_notch == null) {
-	    D3Notch min_notch = notch_sounds.get(0);
+	    D3Notch min_notch = null;
 	    // No, this is not a terribly efficient "min" operation.  But that's oK.
-	    for (D3Notch n : notch_sounds.values()) { 
-		if (n.getNotch() < min_notch.getNotch())
+	    for (D3Notch n : notch_sounds.values()) {
+		if ((min_notch == null) || (n.getNotch() < min_notch.getNotch())) {
 		    min_notch = n;
+		}
 	    }
 	    log.debug("No Idle Notch Specified.  Choosing Notch (" + min_notch.getNotch() + ") to be the Idle Notch.");
 	    min_notch.setIdleNotch(true);
