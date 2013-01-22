@@ -207,7 +207,11 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     @Override
-    public void pack(){
+    public void pack() {
+        // work around for Linux, sometimes the stored window size is too small
+        if (this.getPreferredSize().width < 100 || this.getPreferredSize().height < 100) {
+        	this.setPreferredSize(null); // try without the preferred size
+        }
 	    super.pack();
         reSizeToFitOnScreen();
     }
