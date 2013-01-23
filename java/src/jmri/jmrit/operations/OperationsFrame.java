@@ -4,11 +4,6 @@ package jmri.jmrit.operations;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-
-import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -17,13 +12,11 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
-import javax.swing.KeyStroke;
 
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 
@@ -39,35 +32,15 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
 	public static SwingShutDownTask trainDirtyTask;
-	
-	//private KeyStroke escapeKeyStroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false);
-	
+
 	public OperationsFrame(String s) {
 		super(s);
-		final JmriJFrame jf = this;
-		
-		Action escapeAction = new AbstractAction() {
-            // close the frame when the user presses escape
-            public void actionPerformed(ActionEvent e) {
-            	jf.dispose();
-            }
-        };  
-    	this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false), "ESCAPE");
-       	this.getRootPane().getActionMap().put("ESCAPE", escapeAction);
-
+		setEscapeKeyClosesWindow(true);
 	}
 	
 	public OperationsFrame() {
 		super();
-		 final JmriJFrame jf = this;
-			Action escapeAction = new AbstractAction() {
-	            // close the frame when the user presses escape
-	            public void actionPerformed(ActionEvent e) {
-	            	jf.dispose();
-	            }
-	        }; 
-	        this.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0, false), "ESCAPE");
-	        this.getRootPane().getActionMap().put("ESCAPE", escapeAction);
+		setEscapeKeyClosesWindow(true);
 	}
 
 	protected void addItem(JComponent c, int x, int y) {
