@@ -202,7 +202,7 @@ you should either not use a JMRI throttle to run the locomotive on the
 PR3 programming track, or remember to rewrite CV128 with the right value 
 just before removing the locomotive from the track.
 
-<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
   </div>
 <!--#include virtual="/Footer" -->

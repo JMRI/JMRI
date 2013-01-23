@@ -76,7 +76,7 @@ case the Client and Server just happen to be on the same node.
 To get around this you will either have to enable access in your firewall software or change the port to
 another number like 9999 say. The new port number will also need to be passed into LbServer as a command line option.
 </UL>
-<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
     </div>
   </div>
 <!--#include virtual="/Footer" -->

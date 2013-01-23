@@ -288,7 +288,7 @@ Because Digitrax command stations handle programming via a special reserved
 slot, the jmri.Programmer interface is also implemented by the loconet.SlotManager class.
 This greatly complicates the class, but is acceptable for now.
 
-<p>LocoNet&reg; is a registered trademark of <a href="www.digitrax.com">Digitrax, Inc.</a></p>
+<p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
 <!--#include virtual="/Footer" -->
     </div>
