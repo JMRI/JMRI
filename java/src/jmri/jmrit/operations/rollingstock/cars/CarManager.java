@@ -242,7 +242,7 @@ public class CarManager extends RollingStockManager{
     	case BY_LOAD: return car.getLoad();
     	case BY_KERNEL: return car.getKernelName();
     	case BY_RWE: return car.getReturnWhenEmptyDestName();
-    	case BY_FINAL_DEST: return car.getNextDestinationName() + car.getNextDestTrackName();
+    	case BY_FINAL_DEST: return car.getFinalDestinationName() + car.getFinalDestinationTrackName();
     	case BY_WAIT: return car.getWait();	// returns an integer
     	default: return super.getRsAttribute(car, attribute);
     	}

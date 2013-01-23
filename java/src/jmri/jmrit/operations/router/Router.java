@@ -60,7 +60,7 @@ public class Router extends TrainCommon {
 	}
 
 	/**
-	 * Attempts to set the car's destination if a next destination exists. Only sets the car's destination if the train
+	 * Attempts to set the car's destination if a final destination exists. Only sets the car's destination if the train
 	 * is part of the car's route.
 	 * 
 	 * @param car
@@ -72,37 +72,37 @@ public class Router extends TrainCommon {
 	 * @return true if car can be routed.
 	 */
 	public boolean setDestination(Car car, Train train, PrintWriter buildReport) {
-		if (car.getTrack() == null || car.getNextDestination() == null)
+		if (car.getTrack() == null || car.getFinalDestination() == null)
 			return false;
 		_status = Track.OKAY;
 		_train = train;
 		_buildReport = buildReport;
 		log.debug("Car (" + car.toString() + ") at location (" + car.getLocationName() + ", "
-				+ car.getTrackName() + ") " + "next destination (" + car.getNextDestinationName() // NOI18N
-				+ ", " + car.getNextDestTrackName() + ") car routing begins"); // NOI18N
+				+ car.getTrackName() + ") " + "final destination (" + car.getFinalDestinationName() // NOI18N
+				+ ", " + car.getFinalDestinationTrackName() + ") car routing begins"); // NOI18N
 		if (_train != null)
 			log.debug("Routing using train (" + train.getName() + ")");
-		// Has the car arrived at the car's next destination?
-		if (car.getLocation() != null && car.getLocation().equals(car.getNextDestination())
-				&& (car.getTrack().equals(car.getNextDestTrack()) || car.getNextDestTrack() == null)) {
-			log.debug("Car (" + car.toString() + ") has arrived at next destination");
+		// Has the car arrived at the car's final destination?
+		if (car.getLocation() != null && car.getLocation().equals(car.getFinalDestination())
+				&& (car.getTrack().equals(car.getFinalDestinationTrack()) || car.getFinalDestinationTrack() == null)) {
+			log.debug("Car (" + car.toString() + ") has arrived at final destination");
 			_status = STATUS_CAR_AT_DESINATION;
-			car.setNextDestination(null);
-			car.setNextDestTrack(null);
+			car.setFinalDestination(null);
+			car.setFinalDestinationTrack(null);
 			return false;
 		}
 		// is car part of kernel?
 		if (car.getKernel() != null && !car.getKernel().isLead(car))
 			return false;
-		// note clone car has the car "next destination" as its destination
+		// note clone car has the car's "final destination" as its destination
 		Car clone = clone(car);
 		// Note the following test doesn't check for car length which is what we want! Also ignores if track has a
 		// schedule.
 		_status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
 		if (!_status.equals(Track.OKAY)) {
-			// log.info("Next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+"+) failed for car ("+car.toString()+") due to "+_status);
+			// log.info("Final destination ("+car.getFinalDestinationName()+", "+car.getFinalDestinationTrackName()+"+) failed for car ("+car.toString()+") due to "+_status);
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNextDestFailed"),
-					new Object[] { car.getNextDestinationName(), car.getNextDestTrackName(), car.toString(),
+					new Object[] { car.getFinalDestinationName(), car.getFinalDestinationTrackName(), car.toString(),
 							_status }));
 			return false;
 		}
@@ -194,7 +194,7 @@ public class Router extends TrainCommon {
 			car.setDestination(null, null);
 			return true; // able to route, but not able to set the car's destination
 		} else if (Setup.isCarRoutingEnabled()) {
-			log.debug("Car (" + car.toString() + ") next destination (" + car.getNextDestinationName()
+			log.debug("Car (" + car.toString() + ") final destination (" + car.getFinalDestinationName()
 					+ ") is not served by a single train"); // NOI18N
 			firstLocationTracks.clear();
 			lastLocationTracks.clear();
@@ -221,10 +221,10 @@ public class Router extends TrainCommon {
 				return false; // maybe next time
 			}
 		} else {
-			log.warn("Car (" + car.toString() + ") next destination (" + car.getNextDestinationName()
+			log.warn("Car (" + car.toString() + ") final destination (" + car.getFinalDestinationName()
 					+ ") is not served directly by any train"); // NOI18N
-			car.setNextDestination(null);
-			car.setNextDestTrack(null);
+			car.setFinalDestination(null);
+			car.setFinalDestinationTrack(null);
 			return false;
 		}
 		return true; // car's destination has been set
@@ -235,7 +235,7 @@ public class Router extends TrainCommon {
 	}
 
 	/**
-	 * Sets a car's next destination to an interchange track if two trains can route the car.
+	 * Sets a car's final destination to an interchange track if two trains can route the car.
 	 * 
 	 * @param car
 	 *            the car to be routed
@@ -247,7 +247,7 @@ public class Router extends TrainCommon {
 	}
 
 	/**
-	 * Sets a car's next destination to a yard track if two train can route the car.
+	 * Sets a car's final destination to a yard track if two train can route the car.
 	 * 
 	 * @param car
 	 *            the car to be routed
@@ -259,7 +259,7 @@ public class Router extends TrainCommon {
 	}
 
 	/**
-	 * Sets a car's next destination to a staging track if two train can route the car.
+	 * Sets a car's final destination to a staging track if two train can route the car.
 	 * 
 	 * @param car
 	 *            the car to be routed
@@ -312,7 +312,7 @@ public class Router extends TrainCommon {
 				if (debugFlag)
 					log.debug("Could not find a train to service car from " + trackType + " ("
 							+ track.getLocation().getName() + ", " + track.getName() + ") to destination ("	// NOI18N
-							+ car.getNextDestinationName() + ")"); // NOI18N
+							+ car.getFinalDestinationName() + ")"); // NOI18N
 				continue;
 			}
 			if (debugFlag)
@@ -345,8 +345,8 @@ public class Router extends TrainCommon {
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("RouterRoute2ForCar"), new Object[] { car.toString(),
 					car.getLocationName(), car.getTrackName(), testCar.getDestinationName(),
-					testCar.getDestinationTrackName(), car.getNextDestinationName(),
-					car.getNextDestTrackName() }));
+					testCar.getDestinationTrackName(), car.getFinalDestinationName(),
+					car.getFinalDestinationTrackName() }));
 				// only set car's destination if specific train can service car
 				if (_train != null && !_train.servicesCar(testCar)) {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
@@ -453,8 +453,8 @@ public class Router extends TrainCommon {
 							.getMessage("RouterRoute3ForCar"), new Object[] { car.toString(),
 						car.getLocationName(), car.getTrackName(), testCar.getLocationName(),
 						testCar.getTrackName(), testCar.getDestinationName(),
-						testCar.getDestinationTrackName(), car.getNextDestinationName(),
-						car.getNextDestTrackName() }));
+						testCar.getDestinationTrackName(), car.getFinalDestinationName(),
+						car.getFinalDestinationTrackName() }));
 					// only set car's destination if specific train can service car
 					Car ts2 = clone(car);
 					ts2.setDestination(fltp.getLocation());
@@ -512,7 +512,7 @@ public class Router extends TrainCommon {
 								car.getLocationName(), car.getTrackName(), fltp.getLocation(),
 								fltp.getName(), mltp.getLocation().getName(), mltp.getName(),
 								lltp.getLocation().getName(), lltp.getName(),
-								car.getNextDestinationName(), car.getNextDestTrackName() }));
+								car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
 							// only set car's destination if specific train can service car
 							Car ts2 = clone(car);
 							ts2.setDestination(fltp.getLocation());
@@ -599,7 +599,7 @@ public class Router extends TrainCommon {
 										mltp1.getLocation().getName(), mltp1.getName(),
 										mltp2.getLocation().getName(), mltp2.getName(),
 										lltp.getLocation().getName(), lltp.getName(),
-										car.getNextDestinationName(), car.getNextDestTrackName() }));
+										car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
 									// only set car's destination if specific train can service car
 									Car ts2 = clone(car);
 									ts2.setDestination(fltp.getLocation());
@@ -637,7 +637,7 @@ public class Router extends TrainCommon {
 		return false;
 	}
 
-	// sets clone car destination to next destination and track
+	// sets clone car destination to final destination and track
 	private Car clone(Car car) {
 		Car clone = new Car();
 		clone.setBuilt(car.getBuilt());
@@ -654,8 +654,8 @@ public class Router extends TrainCommon {
 		clone.setLocation(car.getLocation());
 		clone.setTrack(car.getTrack());
 		// next two items is where the clone is different
-		clone.setDestination(car.getNextDestination());
-		clone.setDestinationTrack(car.getNextDestTrack());
+		clone.setDestination(car.getFinalDestination());
+		clone.setDestinationTrack(car.getFinalDestinationTrack());
 		return clone;
 	}
 	
@@ -682,7 +682,7 @@ public class Router extends TrainCommon {
 								+ car.toString() + ") from " + track.getLocType()	// NOI18N
 								+ " (" // NOI18N
 								+ testCar.getLocationName() + ", " + testCar.getTrackName()	// NOI18N
-								+ ") to next destination (" + testCar.getDestinationName() // NOI18N
+								+ ") to final destination (" + testCar.getDestinationName() // NOI18N
 								+ ", " + testCar.getDestinationTrackName() + ")");
 					firstLocationTracks.add(track);
 				} else {

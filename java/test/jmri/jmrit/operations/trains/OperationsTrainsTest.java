@@ -4234,8 +4234,8 @@ public class OperationsTrainsTest extends TestCase {
 		// confirm that c1 isn't part of this train
 		Assert.assertNull("c1 isn't assigned to a train", c1.getTrain());
 		Assert.assertNull("c1 destination has been set to null", c1.getDestination());
-		Assert.assertNull("c1 next destination should be null", c1.getNextDestination());
-		Assert.assertNull("c1 next destination track should be null", c1.getNextDestTrack());
+		Assert.assertNull("c1 next destination should be null", c1.getFinalDestination());
+		Assert.assertNull("c1 next destination track should be null", c1.getFinalDestinationTrack());
 
 		// try without moves
 		r1l2.setCanDrop(true);
@@ -5733,14 +5733,14 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk1.setAlternativeTrack(loc2trk3);
 
 		// send cars to Arlington siding
-		c3.setNextDestination(loc2);
-		c3.setNextDestTrack(loc2trk1);
-		c8.setNextDestination(loc2);
-		c8.setNextDestTrack(loc2trk1);
-		c9.setNextDestination(loc2);
-		c9.setNextDestTrack(loc2trk1);
-		c11.setNextDestination(loc2);
-		c11.setNextDestTrack(loc2trk1);
+		c3.setFinalDestination(loc2);
+		c3.setFinalDestinationTrack(loc2trk1);
+		c8.setFinalDestination(loc2);
+		c8.setFinalDestinationTrack(loc2trk1);
+		c9.setFinalDestination(loc2);
+		c9.setFinalDestinationTrack(loc2trk1);
+		c11.setFinalDestination(loc2);
+		c11.setFinalDestinationTrack(loc2trk1);
 
 		train2.build();
 		Assert.assertTrue("Train 2 returns to staging", train2.isBuilt());
@@ -5770,14 +5770,14 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("e8 destination 3", "Harvard Yard 1", e8.getDestinationTrackName());
 
 		// check that cars on alternate track are sent to Arlington Siding
-		Assert.assertEquals("next dest Arlingtion", loc2, c3.getNextDestination());
-		Assert.assertEquals("next dest track Arlingtion Siding", loc2trk1, c3.getNextDestTrack());
-		Assert.assertEquals("next dest Arlingtion", loc2, c8.getNextDestination());
-		Assert.assertEquals("next dest track Arlingtion Siding", loc2trk1, c8.getNextDestTrack());
-		Assert.assertEquals("next dest Arlingtion", loc2, c9.getNextDestination());
-		Assert.assertEquals("next dest track Arlingtion Siding", loc2trk1, c9.getNextDestTrack());
-		Assert.assertEquals("next dest null", null, c11.getNextDestination());
-		Assert.assertEquals("next dest track null", null, c11.getNextDestTrack());
+		Assert.assertEquals("next dest Arlingtion", loc2, c3.getFinalDestination());
+		Assert.assertEquals("next dest track Arlingtion Siding", loc2trk1, c3.getFinalDestinationTrack());
+		Assert.assertEquals("next dest Arlingtion", loc2, c8.getFinalDestination());
+		Assert.assertEquals("next dest track Arlingtion Siding", loc2trk1, c8.getFinalDestinationTrack());
+		Assert.assertEquals("next dest Arlingtion", loc2, c9.getFinalDestination());
+		Assert.assertEquals("next dest track Arlingtion Siding", loc2trk1, c9.getFinalDestinationTrack());
+		Assert.assertEquals("next dest null", null, c11.getFinalDestination());
+		Assert.assertEquals("next dest track null", null, c11.getFinalDestinationTrack());
 
 		// test train move to a an exact location
 		Assert.assertFalse("Old Harvard is not part of this trains route", train2

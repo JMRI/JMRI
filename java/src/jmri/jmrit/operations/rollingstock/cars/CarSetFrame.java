@@ -102,7 +102,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	
 	protected void updateComboBoxes(){
 		super.updateComboBoxes();
-		finalDestinationBox.setSelectedItem(_car.getNextDestination());
+		finalDestinationBox.setSelectedItem(_car.getFinalDestination());
 		destReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyDestination());
 		
 		updateFinalDestination();
@@ -153,14 +153,14 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		// set final destination fields before destination in case there's a schedule at destination
 		if (!ignoreFinalDestinationCheckBox.isSelected()){
 			if (finalDestinationBox.getSelectedItem() == null || finalDestinationBox.getSelectedItem().equals("")) {
-				car.setNextDestination(null);
-				car.setNextDestTrack(null);
+				car.setFinalDestination(null);
+				car.setFinalDestinationTrack(null);
 			} else {
 				Track finalDestTrack = null;
 				if (finalDestTrackBox.getSelectedItem() != null 
 						&& !finalDestTrackBox.getSelectedItem().equals(""))
 					finalDestTrack = (Track)finalDestTrackBox.getSelectedItem();
-				if (finalDestTrack != null && car.getNextDestTrack() != finalDestTrack && finalDestTrack.getLocType().equals(Track.STAGING)){
+				if (finalDestTrack != null && car.getFinalDestinationTrack() != finalDestTrack && finalDestTrack.getLocType().equals(Track.STAGING)){
 					log.debug ("Destination track ("+finalDestTrack.getName()+") is staging");
 					JOptionPane.showMessageDialog(this,
 							Bundle.getMessage("rsDoNotSelectStaging"),
@@ -175,8 +175,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 							Bundle.getMessage("rsCanNotFinal"),
 							JOptionPane.WARNING_MESSAGE);
 				}
-				car.setNextDestination((Location) finalDestinationBox.getSelectedItem());
-				car.setNextDestTrack(finalDestTrack);
+				car.setFinalDestination((Location) finalDestinationBox.getSelectedItem());
+				car.setFinalDestinationTrack(finalDestTrack);
 			}
 		}
 		// car load
@@ -301,8 +301,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				car.setReturnWhenEmptyDestTrack(_car.getReturnWhenEmptyDestTrack());
 			}
 			if (!ignoreFinalDestinationCheckBox.isSelected()){
-				car.setNextDestination(_car.getNextDestination());
-				car.setNextDestTrack(_car.getNextDestTrack());
+				car.setFinalDestination(_car.getFinalDestination());
+				car.setFinalDestinationTrack(_car.getFinalDestinationTrack());
 			}
 			// update car load
 			if (!ignoreLoadCheckBox.isSelected() && car.getType().equals(_car.getType()) 
@@ -352,8 +352,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				log.debug("CarSetFrame sees final destination: "+ finalDestinationBox.getSelectedItem());
 				Location l = (Location)finalDestinationBox.getSelectedItem();
 				l.updateComboBox(finalDestTrackBox, _car, autoFinalDestTrackCheckBox.isSelected(), true);
-				if (_car != null && _car.getNextDestination() != null && _car.getNextDestination().equals(l) && _car.getNextDestTrack() != null)
-					finalDestTrackBox.setSelectedItem(_car.getNextDestTrack());
+				if (_car != null && _car.getFinalDestination() != null && _car.getFinalDestination().equals(l) && _car.getFinalDestinationTrack() != null)
+					finalDestTrackBox.setSelectedItem(_car.getFinalDestinationTrack());
 				packFrame();
 			}
 		}
@@ -362,7 +362,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	protected void updateFinalDestinationComboBoxes(){
 		if (_car != null){
 			log.debug("Updating final destinations for car ("+_car.toString()+")");
-			finalDestinationBox.setSelectedItem(_car.getNextDestination());
+			finalDestinationBox.setSelectedItem(_car.getFinalDestination());
 		}
 		updateFinalDestination();
 	}
@@ -404,8 +404,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			return;
 		}
 		super.propertyChange(e);
-		if (e.getPropertyName().equals(Car.NEXT_DESTINATION_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Car.NEXT_DESTINATION_TRACK_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(Car.FINAL_DESTINATION_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Car.FINAL_DESTINATION_TRACK_CHANGED_PROPERTY))
 			updateFinalDestinationComboBoxes();
 		if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Car.LOAD_CHANGED_PROPERTY)){

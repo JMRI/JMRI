@@ -512,10 +512,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			if (showDest == SHOWDEST || showDest == SHOWFD) {
 				if (!c.getDestinationName().equals(""))
 					s = c.getDestinationName() + " (" + c.getDestinationTrackName() + ")";
-				if (!c.getNextDestinationName().equals(""))
-					s = s + "->" + c.getNextDestinationName();	// NOI18N
-				if (!c.getNextDestTrackName().equals(""))
-					s = s + " (" + c.getNextDestTrackName() + ")";
+				if (!c.getFinalDestinationName().equals(""))
+					s = s + "->" + c.getFinalDestinationName();	// NOI18N
+				if (!c.getFinalDestinationTrackName().equals(""))
+					s = s + " (" + c.getFinalDestinationTrackName() + ")";
 			} else {
 				s = c.getReturnWhenEmptyDestName();
 			}

@@ -142,18 +142,18 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 				log.debug("RS (" + rs.toString() + ") has delimiter in car load field: " + carLoad);
 				carLoad = ESC + car.getLoad() + ESC;
 			}
-			carFinalDest = car.getNextDestinationName();
+			carFinalDest = car.getFinalDestinationName();
 			if (carFinalDest.contains(DEL)) {
 				log.debug("RS (" + rs.toString()
 						+ ") has delimiter in car final destination field: " + carFinalDest); // NOI18N
-				carFinalDest = ESC + car.getNextDestinationName() + ESC;
+				carFinalDest = ESC + car.getFinalDestinationName() + ESC;
 			}
-			carFinalDestTrack = car.getNextDestTrackName();
+			carFinalDestTrack = car.getFinalDestinationTrackName();
 			if (carFinalDestTrack.contains(DEL)) {
 				log.debug("RS (" + rs.toString()
 						+ ") has delimiter in car final destination track field: " // NOI18N
 						+ carFinalDestTrack);
-				carFinalDestTrack = ESC + car.getNextDestTrackName() + ESC;
+				carFinalDestTrack = ESC + car.getFinalDestinationTrackName() + ESC;
 			}
 		}
 
