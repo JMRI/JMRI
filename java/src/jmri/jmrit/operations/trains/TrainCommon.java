@@ -269,7 +269,7 @@ public class TrainCommon {
 	private void printLine(PrintWriter file, String level, String string) {
 		int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize());
 		if (string.length() > lineLengthMax) {
-			log.debug("String is too long for " + Setup.PORTRAIT);
+//			log.debug("String is too long for " + Setup.PORTRAIT);
 			String[] s = string.split(SPACE);
 			StringBuffer sb = new StringBuffer();
 			for (int i = 0; i < s.length; i++) {
@@ -326,7 +326,7 @@ public class TrainCommon {
 		return false;
 	}
 
-	// writes string to console and file
+	// writes string to file
 	protected void addLine(PrintWriter file, String string) {
 		if (log.isDebugEnabled()) {
 			log.debug(string);

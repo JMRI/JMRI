@@ -141,7 +141,7 @@ public class Router extends TrainCommon {
 					new Object[] { car.toString(), clone.getDestinationName(),
 				clone.getDestinationTrackName(), _status }));
 			// check to see if an alternative track was specified
-			if ((_status.contains(Track.LENGTH) || _status.startsWith(Car.SCHEDULE)) && car.getLocation() != clone.getDestination()
+			if ((_status.startsWith(Track.LENGTH) || _status.startsWith(Car.SCHEDULE)) && car.getLocation() != clone.getDestination()
 					&& clone.getDestinationTrack() != null
 					&& clone.getDestinationTrack().getAlternativeTrack() != null) {
 				String status = car.setDestination(clone.getDestination(), clone.getDestinationTrack()
@@ -166,7 +166,7 @@ public class Router extends TrainCommon {
 				}
 			}
 			// check to see if spur was full, if so, forward to yard if possible
-			if (Setup.isForwardToYardEnabled() && _status.contains(Track.LENGTH)
+			if (Setup.isForwardToYardEnabled() && _status.startsWith(Track.LENGTH)
 					&& car.getLocation() != clone.getDestination()) {
 				// log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSidingFull"),

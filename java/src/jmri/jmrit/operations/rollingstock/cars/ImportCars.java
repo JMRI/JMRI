@@ -551,7 +551,7 @@ public class ImportCars extends Thread {
 												carTrack, status }), Bundle
 										.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
 							}
-							if (status.contains(Track.TYPE)) {
+							if (status.startsWith(Track.TYPE)) {
 								if (autoAdjustLocationType) {
 									l.addTypeName(carType);
 									sl.addTypeName(carType);
@@ -585,7 +585,7 @@ public class ImportCars extends Thread {
 									}
 								}
 							}
-							if (status.contains(Track.LENGTH)) {
+							if (status.startsWith(Track.LENGTH)) {
 								if (autoAdjustTrackLength) {
 									sl.setLength(sl.getLength() + 1000);
 									status = car.setLocation(l, sl);

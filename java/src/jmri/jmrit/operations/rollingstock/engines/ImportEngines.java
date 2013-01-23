@@ -352,7 +352,7 @@ public class ImportEngines extends Thread {
 											(engineRoad + " " + engineNumber), engineModel,
 											engineLocation, engineTrack, status }), Bundle
 									.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
-							if (status.equals(Track.TYPE)) {
+							if (status.startsWith(Track.TYPE)) {
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat
 										.format(Bundle.getMessage("DoYouWantToAllowService"),
 												new Object[] { engineLocation, engineTrack,
@@ -367,7 +367,7 @@ public class ImportEngines extends Thread {
 									break;
 								}
 							}
-							if (status.equals(Track.LENGTH)) {
+							if (status.startsWith(Track.LENGTH)) {
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat
 										.format(Bundle.getMessage("DoYouWantIncreaseLength"),
 												new Object[] { engineTrack }), Bundle
