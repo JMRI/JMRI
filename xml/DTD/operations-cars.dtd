@@ -78,6 +78,7 @@
 <!ATTLIST car rfid					CDATA #IMPLIED>
 <!ATTLIST car order					CDATA #IMPLIED>
 <!ATTLIST car lastLocationId		CDATA #IMPLIED>
+<!ATTLIST car date					CDATA #IMPLIED>
 
 <!ELEMENT loads (defaults | load*)*>
 <!ELEMENT defaults EMPTY>

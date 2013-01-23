@@ -39,6 +39,7 @@ public class Xml {
 	static final String DESTINATION = "destination"; // NOI18N
 	static final String DES_TRACK = "desTrack"; // NOI18N
 	static final String LOC_UNKNOWN = "locUnknown"; // NOI18N
+	static final String DATE = "date"; // NOI18N
 	
 	static final String LOCATION_ID = "locationId"; // NOI18N
 	static final String SEC_LOCATION_ID = "secLocationId"; // NOI18N

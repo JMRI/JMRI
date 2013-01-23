@@ -499,7 +499,7 @@ public class TrainCommon {
 		return " (" + Bundle.getMessage("ErrorPrintOptions") + ") "; // maybe user changed locale
 	}
 
-	protected static String getDate() {
+	public static String getDate() {
 		Calendar calendar = Calendar.getInstance();
 
 		String year = Setup.getYearModeled();

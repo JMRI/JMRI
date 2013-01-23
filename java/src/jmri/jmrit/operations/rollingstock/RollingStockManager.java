@@ -376,6 +376,14 @@ public class RollingStockManager {
     	return getByList(getByIdList(), BY_RFID);
     }
     
+    /**
+     * Sort by rolling stock last date used
+     * @return list of RollingStock ids ordered by last date
+     */
+    public List<String> getByLastDateList() {
+    	return getByList(getByIdList(), BY_LAST);
+    }
+    
     private static final int pageSize = 64;
     
     protected List<String> getByList(List<String> sortIn, int attribute) {
@@ -441,6 +449,7 @@ public class RollingStockManager {
     }
     
     // The various sort options for RollingStock
+    // see CarManager and EngineManger for other values
     protected static final int BY_NUMBER = 0;
     protected static final int BY_ROAD = 1;
     protected static final int BY_TYPE = 2;
@@ -458,6 +467,7 @@ public class RollingStockManager {
     // BY_FINAL_DEST = 14
     protected static final int BY_VALUE = 15;
     // BY_WAIT = 16
+    protected static final int BY_LAST = 17;
     
     protected Object getRsAttribute(RollingStock rs, int attribute){
     	switch (attribute){
@@ -473,6 +483,7 @@ public class RollingStockManager {
     	case BY_OWNER: return rs.getOwner();
     	case BY_RFID: return rs.getRfid();
     	case BY_VALUE: return rs.getValue();
+    	case BY_LAST: return rs.getLastDate();
     	default: return "unknown";	 // NOI18N
     	}
     }

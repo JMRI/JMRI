@@ -60,6 +60,7 @@
 <!ATTLIST engine rfid					CDATA #IMPLIED>
 <!ATTLIST engine locUnknown				(true | false ) "false"> 
 <!ATTLIST engine outOfService			(true | false ) "false">
+<!ATTLIST engine date					CDATA #IMPLIED>
 
 <!ELEMENT models (model*)*>
 <!ELEMENT model EMPTY>

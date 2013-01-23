@@ -44,7 +44,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 
 	private static final int HIGHESTCOLUMN = EDITCOLUMN + 1;
 
-	private boolean showColor = true; // show color if true, show load if false
+	private boolean showColor = false; // show color if true, show load if false
 
 	private static final int SHOWDEST = 0;
 	private static final int SHOWFD = 1;
@@ -57,6 +57,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	private static final int SHOWVALUE = 3;
 	private static final int SHOWRFID = 4;
 	private static final int SHOWWAIT = 5;
+	private static final int SHOWLAST = 6;
 	private int showMoveCol = SHOWMOVES; // one of six possible columns to show
 
 	public final int SORTBYNUMBER = 1;
@@ -76,6 +77,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	public final int SORTBYFINALDESTINATION = 15;
 	public final int SORTBYVALUE = 16;
 	public final int SORTBYWAIT = 17;
+	public final int SORTBYLAST = 18;
 
 	private int _sort = SORTBYNUMBER;
 
@@ -142,6 +144,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			showMoveCol = SHOWWAIT;
 			fireTableStructureChanged();
 			initTable();
+		} else if (sort == SORTBYLAST) {
+			showMoveCol = SHOWLAST;
+			fireTableStructureChanged();
+			initTable();
 		} else
 			fireTableDataChanged();
 	}
@@ -182,6 +188,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			return Setup.getRfidLabel();
 		case SORTBYWAIT:
 			return Bundle.getMessage("Wait");
+		case SORTBYLAST:
+			return Bundle.getMessage("Last");
 		default:
 			return "Error";	// NOI18N
 		}
@@ -285,6 +293,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			list = manager.getByFinalDestinationList();
 		else if (_sort == SORTBYWAIT)
 			list = manager.getByWaitList();
+		else if (_sort == SORTBYLAST)
+			list = manager.getByLastDateList();
 		else
 			list = manager.getByNumberList();
 		filterList(list);
@@ -395,6 +405,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 				return Setup.getRfidLabel();
 			else if (showMoveCol == SHOWWAIT)
 				return Bundle.getMessage("Wait");
+			else if (showMoveCol == SHOWLAST)
+				return Bundle.getMessage("LastDate");
 			else
 				return Bundle.getMessage("Moves");
 		}
@@ -538,6 +550,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 				return c.getRfid();
 			else if (showMoveCol == SHOWWAIT)
 				return c.getWait();
+			else if (showMoveCol == SHOWLAST)
+				return c.getLastDate();
 			else
 				return c.getMoves();
 		}

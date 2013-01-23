@@ -74,6 +74,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
 	JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
 	JRadioButton sortByWait = new JRadioButton(Bundle.getMessage("Wait"));
+	JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
 	ButtonGroup group = new ButtonGroup();
 
 	// major buttons
@@ -142,17 +143,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			movep.add(sortByRfid);
 		if (ScheduleManager.instance().numEntries() > 0)
 			movep.add(sortByWait);
+		movep.add(sortByLast);
 		cp1.add(movep);
-
-		// cp1.add(sortByMoves);
-		// cp1.add(sortByBuilt);
-		// cp1.add(sortByOwner);
-		// if(Setup.isValueEnabled())
-		// cp1.add(sortByValue);
-		// if(Setup.isRfidEnabled())
-		// cp1.add(sortByRfid);
-		// if(ScheduleManager.instance().numEntries()>0)
-		// cp1.add(sortByWait);
 
 		// row 2
 		JPanel cp2 = new JPanel();
@@ -206,6 +198,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		addRadioButtonAction(sortByValue);
 		addRadioButtonAction(sortByRfid);
 		addRadioButtonAction(sortByWait);
+		addRadioButtonAction(sortByLast);
 
 		group.add(sortByNumber);
 		group.add(sortByRoad);
@@ -224,6 +217,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		group.add(sortByValue);
 		group.add(sortByRfid);
 		group.add(sortByWait);
+		group.add(sortByLast);
 
 		// sort by location
 		if (!showAllCars) {
@@ -310,6 +304,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		}
 		if (ae.getSource() == sortByWait) {
 			carsModel.setSort(carsModel.SORTBYWAIT);
+		}
+		if (ae.getSource() == sortByLast) {
+			carsModel.setSort(carsModel.SORTBYLAST);
 		}
 		// clear any sorts by column
 		clearTableSort(carsTable);

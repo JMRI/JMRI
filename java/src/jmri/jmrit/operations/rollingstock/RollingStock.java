@@ -10,6 +10,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 
 /**
@@ -36,6 +37,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	protected String _routeId = ""; // saved route for interchange tracks
 	protected String _rfid = "";
 	protected String _value = "";
+	protected String _last = "";
 	protected boolean _locationUnknown = false;
 	protected boolean _outOfService = false;
 
@@ -493,8 +495,10 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 				// rolling stock has been terminated or reset, bump rolling stock moves
 				if (getTrain() != null && getTrain().getRoute() != null)
 					setSavedRouteId(getTrain().getRoute().getId());
-				if (getRouteDestination() != null)
-					setMoves(++_moves);
+				if (getRouteDestination() != null) {
+					setMoves(getMoves()+1);
+					setLastDate(TrainCommon.getDate());
+				}
 				setRouteLocation(null);
 				setRouteDestination(null);
 			}
@@ -712,6 +716,17 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		_rfid = id;
 		if (!old.equals(id))
 			firePropertyChange("rolling stock rfid", old, id); // NOI18N
+	}
+	
+	public String getLastDate() {
+		return _last;
+	}
+	
+	public void setLastDate(String date) {
+		String old = _last;
+		_last = date;
+		if (!old.equals(date))
+			firePropertyChange("rolling stock date", old, date); // NOI18N
 	}
 
 	/**
@@ -933,6 +948,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			_locationUnknown = a.getValue().equals(Xml.TRUE);
 		if ((a = e.getAttribute(Xml.OUT_OF_SERVICE)) != null)
 			_outOfService = a.getValue().equals(Xml.TRUE);
+		if ((a = e.getAttribute(Xml.DATE)) != null)
+			_last = a.getValue();
 		addPropertyChangeListeners();
 	}
 
@@ -994,6 +1011,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			e.setAttribute(Xml.LOC_UNKNOWN, isLocationUnknown() ? Xml.TRUE : Xml.FALSE);
 		if (isOutOfService())
 			e.setAttribute(Xml.OUT_OF_SERVICE, isOutOfService() ? Xml.TRUE : Xml.FALSE);
+		e.setAttribute(Xml.DATE, getLastDate());
 		return e;
 	}
 
