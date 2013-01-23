@@ -45,22 +45,15 @@ public class PrintLocationsAction extends AbstractAction {
 
 	LocationManager manager = LocationManager.instance();
 
-	public PrintLocationsAction(String actionName, Frame frame, boolean preview, Component pWho) {
+	public PrintLocationsAction(String actionName, boolean preview) {
 		super(actionName);
-		mFrame = frame;
 		isPreview = preview;
-		panel = (LocationsTableFrame) pWho;
 	}
 
-	/**
-	 * Frame hosting the printing
-	 */
-	Frame mFrame;
 	/**
 	 * Variable to set whether this is to be printed or previewed
 	 */
 	boolean isPreview;
-	LocationsTableFrame panel;
 	HardcopyWriter writer;
 	LocationPrintOptionFrame lpof = null;
 
@@ -75,7 +68,7 @@ public class PrintLocationsAction extends AbstractAction {
 	public void printLocations() {
 		// obtain a HardcopyWriter
 		try {
-			writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleLocationsTable"), 10, .5, .5, .5, .5,
+			writer = new HardcopyWriter(new Frame(), Bundle.getMessage("TitleLocationsTable"), 10, .5, .5, .5, .5,
 					isPreview);
 		} catch (HardcopyWriter.PrintCanceledException ex) {
 			log.debug("Print cancelled");

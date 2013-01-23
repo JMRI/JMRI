@@ -9,7 +9,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Frame;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -87,8 +86,8 @@ public class LocationsTableFrame extends OperationsFrame {
 		toolMenu.add(new ShowCarsByLocationAction(false, null, null));
 		if (Setup.isVsdPhysicalLocationEnabled())
 			toolMenu.add(new SetPhysicalLocationAction(Bundle.getMessage("MenuSetPhysicalLocation"), null));
-		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), new Frame(), false, this));
-		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), new Frame(), true, this));
+		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
+		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));
 		menuBar.add(toolMenu);
 		menuBar.add(new jmri.jmrit.operations.OperationsMenu());
 		setJMenuBar(menuBar);

@@ -81,6 +81,8 @@ public class SchedulesTableFrame extends OperationsFrame {
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu("Tools");
 		toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));
+		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPrint"), false));
+		toolMenu.add(new PrintLocationsAction(Bundle.getMessage("MenuItemPreview"), true));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
