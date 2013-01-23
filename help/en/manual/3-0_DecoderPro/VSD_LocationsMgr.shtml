@@ -109,9 +109,8 @@ distances along an X, Y, and Z axis.  The Origin, or center of the
 coordinates can be in any convenient location, such as the center of
 the room, a corner of the room, or a corner of the layout.</p>
 
-<p>The X / Y / Z location values can be in any unit you choose,
-including an arbitrary relative scheme, as long as you are
-consistent. By default, positive X is to the space's right, positve Y
+<p>The X / Y / Z location values are in meters.
+By default, positive X is to the space's right, positve Y
 is "forward", and positive Z is "up".
 Negative values are left, behind, and
 down, respectively. Alternately you may prefer to think of +X as
@@ -128,6 +127,12 @@ the entry door, or the "bottom left" corner of the layout's track plan
 map, and with Z=0 at the layout's lowest nominal track elevation for
 the "live" part of the layout.  This system ensures that all locations
 used will have positive X / Y / Z values.</p>
+
+<p>Note that distances less than one meter will not be attenuated.
+That is, you will not hear position changes for positions within a 1
+meter radius of the listener.  This limitation is to prevent very
+close sounds from becoming so loud that they become distorted or
+damage the audio hardware.</p>
 
 <h5>Listener Location</h5>
 

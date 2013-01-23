@@ -41,7 +41,8 @@ speakers.</span></p>
 called a "VSD File".  When the Virtual Sound Decoder ("VSDecoder" or
 "VSD") is launched, the user chooses the desired Profile, and then
 assigns the VSDecoder an address.  When the operator then controls the engine by
-pressing function buttons or changing the speed, the Virtual Sound
+pressing function buttons or changing the speed on his throttle of
+choice (hardware, software or smartphone), the Virtual Sound
 Decoder responds just like a hardware sound decoder installed in the
 locomotive would by playing sounds through the computer
 speakers.</span></p>
@@ -117,7 +118,7 @@ because they do not send throttle information to JMRI.</p>
   <li>Lenz XPA (phone adapter)</li>
 </ul>
 
-<p>The buttons on the Sounds tab can be used to trigger sounds if you
+<p>The buttons on the VSDecoder Manager control panel can be used to trigger sounds if you
 are using an incompatible throttle system.</p>
 
 <a name="locations"></a><a name="VSDLocations"></a><h4>Location Following</h4>
