@@ -89,6 +89,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		buildReportIndentCheckBox.setSelected(Setup.isBuildReportIndentEnabled());
+		buildReportIndentCheckBox.setEnabled(buildReportCheckBox.isSelected());
 		
 		ButtonGroup buildReportGroup = new ButtonGroup();
 		buildReportGroup.add(buildReportMin);
@@ -104,6 +105,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		fontSizeComboBox.setSelectedItem(Setup.getBuildReportFontSize());
 		
 		addButtonAction(saveButton);
+		addCheckBoxAction(buildReportCheckBox);
 
 		//	build menu		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_BuildReportDetails", true); // NOI18N
@@ -112,7 +114,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		setVisible(true);
 	}
 	
-	// Add Remove Logo and Save buttons
+	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {		
 		if (ae.getSource() == saveButton){
 			// font size
@@ -133,6 +135,10 @@ public class BuildReportOptionFrame extends OperationsFrame{
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
+	}
+	
+	protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		buildReportIndentCheckBox.setEnabled(buildReportCheckBox.isSelected());
 	}
 	
 	private void setBuildReportRadioButton(){
