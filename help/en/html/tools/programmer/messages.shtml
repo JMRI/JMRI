@@ -26,12 +26,12 @@ JMRI: Decoder Programmer Error Messages
 
 Various things can go wrong when JMRI tries to work
 with your DCC command station to program a DCC decoder.
-This page lists the error message that can result, and 
-describes what they mean.
+This page lists the error message that can result the number that id's them, and 
+describes what they mean. They are on the bottom of the pane when an error occurs.
 
 <dl>
 
-<dt>timeout talking to command station</dt>
+<dt>timeout talking to command station 306</dt>
 <dd>
 The program did not hear back from the command station when
 it expected to.  
@@ -46,7 +46,7 @@ Once JMRI is working properly, this error may occasionally happen due to a
 transient error.  DecoderPro generally will retry it successfully in that case.
 </dd>
 
-<dt>no locomotive detected</dt>
+<dt>no locomotive detected 301</dt>
 <dd>
 The command station has reported that it doesn't see
 a locomotive on the programming track.
@@ -55,7 +55,7 @@ This can happen if the locomotive isn't making
 good electrical contact or if there's a wiring fault in the locomotive.
 </dd>
 
-<dt>No acknowledge from locomotive</dt>
+<dt>No acknowledge from locomotive 308</dt>
 <dd>
 At the end of a CV read or write operation, the locomotive
 replies ("acknowledges") to the command station using a pulse 
@@ -72,7 +72,7 @@ In that case, one of the various "programming boosters" may solve the problem.
 
 </dd>
 
-<dt>Short Circuit on Programming Track</dt>
+<dt>Short Circuit on Programming Track 309</dt>
 <dd>
 The command station has reported seeing a short circuit
 on the programming track.  That prevents programming
@@ -82,7 +82,7 @@ Check the electrical connections to the programming track, and
 also within the locomotive.
 </dd>
 
-<dt>programmer busy</dt>
+<dt>programmer busy 302</dt>
 <dd>
 The command station has reported that it's busy doing
 something else, and can't do any programming right now.
@@ -94,7 +94,7 @@ while also using the service mode programming track, in which case they'll
 return this error message.
 </dd>
 
-<dt>requested not implemented in command station</dt>
+<dt>requested not implemented in command station 303</dt>
 <dd>
 This means that JMRI has requested the command station do something
 that it doesn't support.
@@ -105,7 +105,7 @@ If you do see this message, please report the circumstances on
 the jmriusers mailing list.
 </dd>
 
-<dt>aborted by user</dt>
+<dt>aborted by user 304</dt>
 <dd>
 The user has requested that the read or write operation
 stop early.  
@@ -115,7 +115,7 @@ program doesn't know whether the decoder actually saw the
 operation complete or not.
 </dd>
 
-<dt>confirm failed</dt>
+<dt>confirm failed 305</dt>
 <dd>
 Some command stations allow you to "confirm" the content of
 a CV, rather that read the value from it.  In general, this is faster than
@@ -125,7 +125,7 @@ because if the values don't match, we know that we don't know the
 correct value for the CV contents.
 </dd>
 
-<dt>Unknown error</dt>
+<dt>Unknown error 307</dt>
 <dd>
 An error has happened, but JMRI doesn't know enough about it
 to be able to report more detail.
@@ -134,6 +134,8 @@ In general, JMRI is pretty good at deciphering what went wrong, and
 this message isn't very common.
 If you do see this message, please report the circumstances on
 the jmriusers mailing list.
+<p>
+
 </dd>
 
 </dl>
