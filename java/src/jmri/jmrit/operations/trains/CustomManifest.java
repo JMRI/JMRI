@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 
+import org.jdom.Attribute;
+import org.jdom.Element;
+
 import jmri.jmrit.operations.FileHelper;
 import jmri.util.SystemType;
 
@@ -11,28 +14,53 @@ public class CustomManifest {
 
 	// To start, all files will be created inside of
 	// ../JMRI/operations/csvManifests
-	private File workingDir;
 	
-	private String csvNamesFileName = "CSVFilesFile.txt";
-	private File csvNamesFile;
-
-	public String mcAppName;
-	public String mcAppArg = "";
-
-	private int fileCount = 0;
+	public static String directoryName = "csvManifests";
+	public static String mcAppName = "ManifestCreatorVer2.11Appl.xls";
+	public static String mcAppArg = "";
+	
+	private static String csvNamesFileName = "CSVFilesFile.txt";
 
 
-	public CustomManifest() {
-		// First get our working directory, normally
-		// ../Users/User/JMRI/operations/csvManifests
-		workingDir = FileHelper.getOperationsFile("csvManifests");
+	private static int fileCount = 0;
 
-		csvNamesFile = new File(workingDir, csvNamesFileName);
 
-		// Delete it if it exists
-		if (csvNamesFile.exists())
-			if (!csvNamesFile.delete())
-				log.warn("Not able to delete csv file!");
+//	public CustomManifest() {
+//		// First get our working directory, normally
+//		// ../Users/User/JMRI/operations/csvManifests
+//		workingDir = FileHelper.getOperationsFile("csvManifests");
+//
+//		csvNamesFile = new File(workingDir, csvNamesFileName);
+//
+//		// Delete it if it exists
+//		if (csvNamesFile.exists())
+//			if (!csvNamesFile.delete())
+//				log.warn("Not able to delete csv file!");
+//	}
+	
+	public static String getFileName() {
+		return mcAppName;
+	}
+	
+	public void setFileName(String name) {
+		mcAppName = name;
+	}
+	
+	public static String getCommonFileName() {
+		return csvNamesFileName;
+	}
+	
+	public void setCommonFileName(String name) {
+		csvNamesFileName = name;
+	}
+
+	
+	public static String getDirectoryName() {
+		return directoryName;
+	}
+	
+	public void setDirectoryName(String name) {
+		directoryName = name;
 	}
 
 	/**
@@ -40,10 +68,13 @@ public class CustomManifest {
 	 * 
 	 * @param csvFile
 	 */
-	public void addCVSFile(File csvFile) {
+	public static void addCVSFile(File csvFile) {
 		// Ignore null files...
 		if (csvFile == null)
 			return;
+		
+		File workingDir = FileHelper.getOperationsFile(getDirectoryName());
+		File csvNamesFile = new File(workingDir, csvNamesFileName);
 
 		try {
 			FileHelper.appendTextToFile(csvNamesFile, csvFile.getAbsolutePath());
@@ -57,20 +88,11 @@ public class CustomManifest {
 	 * Processes the CSV files using a Custom external program that reads the
 	 * file of file names.
 	 */
-	public boolean process() {
-
-		// Set our application name and any arguments
-		// These will come from some user changeable settings mechanism later...
-		mcAppName = "ManifestCreatorVer2.11Appl.xls";
+	public static boolean process() {
 
 		// Some alternates for testing...
 		// mcAppName="notepad";
 		// mcAppName = "ShowCurrentDir.exe";
-
-		// This will normally not be used for an XLS file, but could be used for
-		// a different type of program.
-		// mcAppArg = "csvFilesFile.txt";
-		mcAppArg = "";
 
 		// Only continue if we have some files to process.
 		if (fileCount == 0)
@@ -93,13 +115,15 @@ public class CustomManifest {
 			return false;
 		}
 		
+		File workingDir = FileHelper.getOperationsFile(getDirectoryName());
+		
 		File file = new File(workingDir, mcAppName);
 		if (!file.exists()) {
 			log.debug("Can not find file "+mcAppName);
 			return false;
 		}
 
-		String cmd = "cmd /c start " + mcAppName + " " + mcAppArg;
+		String cmd = "cmd /c start " + mcAppName + " " + mcAppArg; // NOI18N
 
 		try {
 			Runtime.getRuntime().exec(cmd, null, workingDir);
@@ -108,6 +132,37 @@ public class CustomManifest {
 		}
 		return true;
 	}
+	
+	public static void load(Element options) {
+		Element mc = options.getChild(Xml.MANIFEST_CREATOR);
+		if (mc != null) {
+			Attribute a;
+			Element directory = mc.getChild(Xml.DIRECTORY);
+			if (directory != null && (a = directory.getAttribute(Xml.NAME)) != null)
+				directoryName = a.getValue();
+			Element file = mc.getChild(Xml.RUN_FILE);
+			if (file != null && (a = file.getAttribute(Xml.NAME)) != null)
+				mcAppName = a.getValue();
+			Element common = mc.getChild(Xml.COMMON_FILE);
+			if (common != null && (a = common.getAttribute(Xml.NAME)) != null)
+				csvNamesFileName = a.getValue();
+		}
+	}
+	
+	public static void store(Element options) {
+		Element mc = new Element(Xml.MANIFEST_CREATOR);
+		Element file = new Element(Xml.RUN_FILE);
+		file.setAttribute(Xml.NAME, getFileName());
+		Element directory = new Element(Xml.DIRECTORY);
+		directory.setAttribute(Xml.NAME, getDirectoryName());
+		Element common = new Element(Xml.COMMON_FILE);
+		common.setAttribute(Xml.NAME, getCommonFileName());
+		mc.addContent(directory);
+		mc.addContent(file);
+		mc.addContent(common);
+		options.addContent(mc);
+	}
+	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CustomManifest.class
 			.getName());
 }

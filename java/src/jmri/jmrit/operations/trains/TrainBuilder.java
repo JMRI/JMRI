@@ -149,6 +149,10 @@ public class TrainBuilder extends TrainCommon {
 
 		// show train build options in very detailed mode
 		addLine(buildReport, SEVEN, Bundle.getMessage("MenuItemBuildOptions"));
+		if (Setup.isBuildAggressive())
+			addLine(buildReport, SEVEN, Bundle.getMessage("BuildModeAggressive"));
+		else
+			addLine(buildReport, SEVEN, Bundle.getMessage("BuildModeNormal"));
 		if (train.isBuildTrainNormalEnabled())
 			addLine(buildReport, SEVEN, Bundle.getMessage("NormalModeWhenBuilding"));
 		if (train.isSendCarsToTerminalEnabled())

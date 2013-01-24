@@ -637,9 +637,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 	}
 	
-	public void load (Element root) {	
+	public void load(Element root) {
 		if (root.getChild(Xml.OPTIONS) != null) {
 			Element options = root.getChild(Xml.OPTIONS);
+			CustomManifest.load(options);
 			Element e = options.getChild(Xml.TRAIN_OPTIONS);
 			Attribute a;
 			if (e != null) {
@@ -722,44 +723,48 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * 
 	 */
 	public void store(Element root) {
-		Element values = new Element(Xml.OPTIONS);
+		Element options = new Element(Xml.OPTIONS);
 		Element e = new Element(Xml.TRAIN_OPTIONS);
 		e.setAttribute(Xml.BUILD_MESSAGES, isBuildMessagesEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.BUILD_REPORT, isBuildReportEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.PRINT_PREVIEW, isPrintPreviewEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.OPEN_FILE, isOpenFileEnabled() ? Xml.TRUE : Xml.FALSE);
 		e.setAttribute(Xml.TRAIN_ACTION, getTrainsFrameTrainAction());
-		values.addContent(e);
+		options.addContent(e);
 		// now save train schedule options
 		e = new Element(Xml.TRAIN_SCHEDULE_OPTIONS);
 		e.setAttribute(Xml.ACTIVE_ID, getTrainScheduleActiveId());
-		values.addContent(e);
+		options.addContent(e);
 
-		// save list of move scripts for this train
 		if (getStartUpScripts().size() > 0 || getShutDownScripts().size() > 0) {
+			// save list of shutdown scripts
 			Element es = new Element(Xml.SCRIPTS);
 			for (int i = 0; i < getStartUpScripts().size(); i++) {
 				Element em = new Element(Xml.START_UP);
 				em.setAttribute(Xml.NAME, getStartUpScripts().get(i));
 				es.addContent(em);
 			}
-			// save list of termination scripts for this train
+			// save list of termination scripts
 			for (int i = 0; i < getShutDownScripts().size(); i++) {
 				Element et = new Element(Xml.SHUT_DOWN);
 				et.setAttribute(Xml.NAME, getShutDownScripts().get(i));
 				es.addContent(et);
 			}
-			values.addContent(es);
+			options.addContent(es);
 		}
-		root.addContent(values);
+		
+		CustomManifest.store(options);	// save custom manifest elements
+		
+		root.addContent(options);
 
-		root.addContent(values = new Element(Xml.TRAINS));
+		Element trains = new Element(Xml.TRAINS);
+		root.addContent(trains);
 		// add entries
 		List<String> trainList = getTrainsByIdList();
 		for (int i = 0; i < trainList.size(); i++) {
 			String trainId = trainList.get(i);
 			Train train = getTrainById(trainId);
-			values.addContent(train.store());
+			trains.addContent(train.store());
 		}
 	}
 

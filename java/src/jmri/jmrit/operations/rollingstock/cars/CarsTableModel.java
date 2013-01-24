@@ -406,7 +406,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			else if (showMoveCol == SHOWWAIT)
 				return Bundle.getMessage("Wait");
 			else if (showMoveCol == SHOWLAST)
-				return Bundle.getMessage("LastDate");
+				return Bundle.getMessage("LastMove");
 			else
 				return Bundle.getMessage("Moves");
 		}

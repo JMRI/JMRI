@@ -109,6 +109,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		weightTextField.setToolTipText(Bundle.getMessage("TipCarWeightOz"));
 		weightTonsTextField.setToolTipText(Bundle.getMessage("TipCarWeightTons"));
 		autoCheckBox.setToolTipText(Bundle.getMessage("TipCarAutoCalculate"));
+		autoTrackCheckBox.setToolTipText(Bundle.getMessage("rsTipAutoTrack"));
 		passengerCheckBox.setToolTipText(Bundle.getMessage("TipCarPassenger"));
 		cabooseCheckBox.setToolTipText(Bundle.getMessage("TipCarCaboose"));
 		fredCheckBox.setToolTipText(Bundle.getMessage("TipCarFred"));

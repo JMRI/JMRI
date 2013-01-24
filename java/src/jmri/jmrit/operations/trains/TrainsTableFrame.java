@@ -331,7 +331,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 		if (ae.getSource() == openFileButton) {
 			// Processes the CSV Manifest files using an external custom program.
-			CustomManifest customManifest = new CustomManifest();
+			//CustomManifest customManifest = new CustomManifest();
 
 			List<String> trains = getSortByList();
 			for (int i = 0; i < trains.size(); i++) {
@@ -353,13 +353,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 						File csvFile = train.createCSVManifestFile();
 
 						// Add it to our collection to be processed.
-						customManifest.addCVSFile(csvFile);
+						CustomManifest.addCVSFile(csvFile);
 					}
 				}
 			}
 			
 			// Now run the user specified custom Manifest processor program
-			customManifest.process();
+			CustomManifest.process();
 		}
 		if (ae.getSource() == printSwitchButton) {
 			if (tslef != null)

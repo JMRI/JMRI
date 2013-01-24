@@ -123,4 +123,10 @@ public class Xml {
 	// TrainScheduleManager.java
 	static final String SCHEDULES = "schedules"; // NOI18N
 	
+	// ManifestCreator.java
+	static final String MANIFEST_CREATOR = "manifestCreator"; // NOI18N
+	static final String RUN_FILE = "runFile"; // NOI18N
+	static final String DIRECTORY = "directory"; // NOI18N
+	static final String COMMON_FILE = "commonFile"; // NOI18N
+	
 }

@@ -11,6 +11,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -49,6 +51,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	protected JCheckBox ignoreLoadCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
 	
 	CarLoadEditFrame lef = null;
+	
+	protected static boolean enableDestination = false;
 		
 	public CarSetFrame() {
 		super(Bundle.getMessage("TitleCarSet"));
@@ -58,6 +62,11 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		super.initComponents();
 
 		// build menu
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		toolMenu.add(new EnableDestinationAction(Bundle.getMessage("MenuEnableDestination"), this));
+		menuBar.add(toolMenu);
+		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
 		
 		// Only show nextDestination if routing enabled
@@ -116,6 +125,10 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		ignoreLoadCheckBox.setEnabled(enabled);
 		loadComboBox.setEnabled(!ignoreLoadCheckBox.isSelected() & enabled);
 		editLoadButton.setEnabled(!ignoreLoadCheckBox.isSelected() & enabled & _car != null);
+		
+		destinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enableDestination & enabled);
+		trackDestinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enableDestination & enabled); 
+		autoDestinationTrackCheckBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enableDestination & enabled);
 	}
 	
 	// location combo box
@@ -384,6 +397,11 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		}
 		if (_car != null)
 			trainBox.setSelectedItem(_car.getTrain());
+	}
+	
+	public void setDestinationEnabled(boolean enable) {
+		enableDestination = !enableDestination;
+		enableComponents(!locationUnknownCheckBox.isSelected());
 	}
 	
 	protected void packFrame(){
