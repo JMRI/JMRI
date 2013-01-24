@@ -158,7 +158,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         return sorter;
     }
 
-    public void resetColumnWidths() {
+    public final void resetColumnWidths() {
         Enumeration<TableColumn> en = columnModel.getColumns(false);
         while (en.hasMoreElements()) {
             TableColumn tc = en.nextElement();
@@ -262,6 +262,22 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         return selectedRosterEntries;
     }
 
+    public void setEditable(boolean editable) {
+        this.dataModel.editable = editable;
+    }
+    
+    public boolean getEditable() {
+        return this.dataModel.editable;
+    }
+    
+    public void setSelectionMode(int selectionMode) {
+        dataTable.setSelectionMode(selectionMode);
+    }
+    
+    public int getSelectionMode() {
+        return dataTable.getSelectionModel().getSelectionMode();
+    }
+    
     class headerActionListener implements ActionListener {
 
         TableColumn tc;
@@ -270,6 +286,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
             this.tc = tc;
         }
 
+        @Override
         public void actionPerformed(ActionEvent e) {
             JCheckBoxMenuItem check = (JCheckBoxMenuItem) e.getSource();
             //Do not allow the last column to be hidden
