@@ -115,11 +115,13 @@ more than an 'intelligent' sensor - not only can it sense that 'something' is th
 tell us which something it is.
 Now to the implementation.
 A Sensor is purely ACTIVE or INACTIVE - i.e. something is there or it isn't.
-A Reporter, however, can tell us one of the following;
-1. 'Hey, I'm seeing something right now - this is it'
-2. 'Hmm, I'm not seeing anything right now'
-3. 'Hey, I saw something a while back - this was it'
-4. 'Hmm, I've not seen anything yet'
+A Reporter, however, can tell us one of the following:
+<ol>
+<li>'Hey, I'm seeing something right now - this is it'
+<li>'Hmm, I'm not seeing anything right now'
+<li>'Hey, I saw something a while back - this was it'
+<li>'Hmm, I've not seen anything yet'
+</ol>
 The first two are from the CurrentReport; the last two from LastReport.
 At start-up (assuming there is nothing within the range of the reader), both 2 and 4 are the initial 
 state. Once something is seen, both 1 and 3 return the same result. 
