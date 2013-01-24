@@ -27,73 +27,20 @@
 
 This help screen opens automatically when the JMRI preferences
 have not been set, or there was a preferences-related error while
-the program was starting up.  It walks you through setting the
-preferences for basic operation.
+the program was starting up. 
 
 <p>
-Once the preferences are set properly, this screen won't display
-any more.  You can get back to the
-<a href="">main preferences help page</a>
+Once the preferences are set properly, this screen won't display.
+The Help pane for setting the Preferences is at 
+<a href="./AppConfigPanel.shtml">main preferences help page</a>.You can also open the pane 
 by selecting "Window Help" in the Help menu of the preferences window.
-
 <p>
-There's also more information on setting preferences
-on the 
-<a href="../../manual/Getting_Started.shtml#Preferences">tutorial pages</a>.
-
-<h2>Basic Preferences</h2>
 <p>
-The first thing to do is set the basic preferences.
 <p>
-<a href="../../manual/images/Preferences.png">
-<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
-<dl>
-<dt>Layout Connection
-<dd>You can select any of the various JMRI layout connections here.
-For more information on how to configure this for your particular hardware,
-see the <a href="../../html/hardware/index.shtml">hardware pages</a>.
-<dt>GUI Style
-<dd>These radio boxes allow you to select how the program looks.
-The available choices depend on what kind of computer you have, and not 
-all of the following may be available:
-    <ul>
-    <li>Metal - the default Java style, usable on all computers
-    <li>CDE/Motif - A Linux/Unix form that works well with X Windows
-        screen managers.  It's also available on (almost) all computer types.
-    <li>Windows - only available on Microsoft Windows systems, this makes the
-        program look as much as possible like a regular Windows application.
-    <li>Mac OS X - only available on MacOS, this makes the program look
-        like a Macintosh application
-    </ul>
-<dt>Programmer Defaults
-<dd>The DecoderPro programmer allows you to select how much or how little
-to display of the decoder content using configurable "Programmers". You 
-can select one at the same time you 
-<a href="../../manual/Basic_Programming.shtml">select your locomotive decoder</a>,
-but this provides a convenient place to set a default so you don't
-have to select it each time you open a decoder.
-</dl>
-
-Perhaps the most important control is at the bottom of this section:
-The "Save" button!  
 <p>
-Be sure to click "Save" when leaving this window.  Your changes to the preferences
-don't take effect until the program is stopped and restarted, so the
-program will prompt you to do that after saving the preferences.
 
-<h2>Advanced Preferences</h2>
 
-The "Show Advanced Preferences" checkbox allows you to
-customize your connection to the layout. You do not need to use the
-advanced preferences to
-get your initial connection to the layout up and running, and it is
-recommended that you leave them alone until the connection to your
-command station is working properly. 
-<p>
-For more information on setting the advanced preferences, 
-see the 
-<a href="AppConfigPanel.shtml#advanced">Advanced Preferences help section</a>.
-
+This is the help\en\package\apps\AppConfixPanelErrorPage.shtml pane
 <!--#include virtual="/Footer" -->
 </body>
 </html>
