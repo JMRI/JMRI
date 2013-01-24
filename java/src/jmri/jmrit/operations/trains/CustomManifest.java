@@ -115,23 +115,25 @@ public class CustomManifest {
 			return false;
 		}
 		
-		File workingDir = FileHelper.getOperationsFile(getDirectoryName());
-		
-		File file = new File(workingDir, mcAppName);
-		if (!file.exists()) {
-			log.debug("Can not find file "+mcAppName);
+		if (!manifestCreatorFileExists())
 			return false;
-		}
 
 		String cmd = "cmd /c start " + mcAppName + " " + mcAppArg; // NOI18N
 
 		try {
-			Runtime.getRuntime().exec(cmd, null, workingDir);
+			Runtime.getRuntime().exec(cmd, null, FileHelper.getOperationsFile(getDirectoryName()));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return true;
 	}
+	
+	public static boolean manifestCreatorFileExists() {
+		File file = new File(FileHelper.getOperationsFile(getDirectoryName()), mcAppName);
+		return file.exists();
+	}
+	
+	
 	
 	public static void load(Element options) {
 		Element mc = options.getChild(Xml.MANIFEST_CREATOR);

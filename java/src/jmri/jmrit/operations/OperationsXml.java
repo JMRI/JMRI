@@ -47,7 +47,7 @@ public class OperationsXml extends XmlFile {
 		File file = null;
 		try {
 			if (!checkFile(fullPathName)) {
-				log.debug("File "+fullPathName+ " does not exist, creating it");
+//				log.debug("File "+fullPathName+ " does not exist, creating it");
 				// The file does not exist, create it before writing
 				file = new File(fullPathName);
 				File parentDir = file.getParentFile();

@@ -24,7 +24,7 @@ public class AutoSave {
 						saveFiles();
 					}
 				});
-				autoSave.setName("Auto Save"); // NOI18N
+				autoSave.setName("Operations Auto Save"); // NOI18N
 				autoSave.start();
 			}
 		}

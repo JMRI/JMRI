@@ -86,6 +86,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	JButton buildButton = new JButton(Bundle.getMessage("Build"));
 	JButton printButton = new JButton(Bundle.getMessage("Print"));
 	JButton openFileButton = new JButton(Bundle.getMessage("OpenFile"));
+	JButton runFileButton = new JButton(Bundle.getMessage("RunFile"));
 	JButton printSwitchButton = new JButton(Bundle.getMessage("SwitchLists"));
 	JButton terminateButton = new JButton(Bundle.getMessage("Terminate"));
 	JButton saveButton = new JButton(Bundle.getMessage("SaveBuilds"));
@@ -95,6 +96,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 	JCheckBox buildReportBox = new JCheckBox(Bundle.getMessage("BuildReport"));
 	JCheckBox printPreviewBox = new JCheckBox(Bundle.getMessage("Preview"));
 	JCheckBox openFileBox = new JCheckBox(Bundle.getMessage("OpenFile"));
+	JCheckBox runFileBox = new JCheckBox(Bundle.getMessage("RunFile"));
 	JCheckBox showAllBox = new JCheckBox(Bundle.getMessage("ShowAllTrains"));
 
 	public TrainsTableFrame() {
@@ -128,13 +130,14 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		show.add(showTime);
 		show.add(showId);
 
-		JPanel messages = new JPanel();
-		messages.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
-		messages.add(showAllBox);
-		messages.add(buildMsgBox);
-		messages.add(buildReportBox);
-		messages.add(printPreviewBox);
-		messages.add(openFileBox);
+		JPanel options = new JPanel();
+		options.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
+		options.add(showAllBox);
+		options.add(buildMsgBox);
+		options.add(buildReportBox);
+		options.add(printPreviewBox);
+		options.add(openFileBox);
+		options.add(runFileBox);
 
 		JPanel action = new JPanel();
 		action.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Action")));
@@ -144,7 +147,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		action.add(resetRB);
 
 		cp1.add(show);
-		cp1.add(messages);
+		cp1.add(options);
 		cp1.add(action);
 
 		// tool tips, see setPrintButtonText() for more tool tips
@@ -155,9 +158,11 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		terminateButton.setToolTipText(Bundle.getMessage("TerminateSelectedTip"));
 		saveButton.setToolTipText(Bundle.getMessage("SaveBuildsTip"));
 		openFileButton.setToolTipText(Bundle.getMessage("OpenFileButtonTip"));
+		runFileButton.setToolTipText(Bundle.getMessage("RunFileButtonTip"));
 		buildMsgBox.setToolTipText(Bundle.getMessage("BuildMessagesTip"));
 		printPreviewBox.setToolTipText(Bundle.getMessage("PreviewTip"));
 		openFileBox.setToolTipText(Bundle.getMessage("OpenFileTip"));
+		runFileBox.setToolTipText(Bundle.getMessage("RunFileTip"));
 		showAllBox.setToolTipText(Bundle.getMessage("ShowAllTrainsTip"));
 
 		moveRB.setToolTipText(Bundle.getMessage("MoveTip"));
@@ -171,6 +176,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		cp2.add(buildButton);
 		cp2.add(printButton);
 		cp2.add(openFileButton);
+		cp2.add(runFileButton);
 		cp2.add(printSwitchButton);
 		cp2.add(terminateButton);
 		cp2.add(saveButton);
@@ -195,6 +201,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		addButtonAction(buildButton);
 		addButtonAction(printButton);
 		addButtonAction(openFileButton);
+		addButtonAction(runFileButton);
 		addButtonAction(printSwitchButton);
 		addButtonAction(terminateButton);
 		addButtonAction(saveButton);
@@ -222,17 +229,21 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		buildReportBox.setSelected(trainManager.isBuildReportEnabled());
 		printPreviewBox.setSelected(trainManager.isPrintPreviewEnabled());
 		openFileBox.setSelected(trainManager.isOpenFileEnabled());
+		runFileBox.setSelected(trainManager.isRunFileEnabled());
 		showAllBox.setSelected(trainsModel.isShowAll());
 
 		// show open files only if create csv is enabled
 		openFileBox.setVisible(Setup.isGenerateCsvManifestEnabled());
 		openFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
+		runFileBox.setVisible(Setup.isGenerateCsvManifestEnabled());
+		runFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
 
 		addCheckBoxAction(buildMsgBox);
 		addCheckBoxAction(buildReportBox);
 		addCheckBoxAction(printPreviewBox);
 		addCheckBoxAction(showAllBox);
 		addCheckBoxAction(openFileBox);
+		addCheckBoxAction(runFileBox);
 
 		// Set the button text to Print or Preview
 		setPrintButtonText();
@@ -330,9 +341,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			}
 		}
 		if (ae.getSource() == openFileButton) {
-			// Processes the CSV Manifest files using an external custom program.
-			//CustomManifest customManifest = new CustomManifest();
-
+			// open the csv files
 			List<String> trains = getSortByList();
 			for (int i = 0; i < trains.size(); i++) {
 				Train train = trainManager.getTrainById(trains.get(i));
@@ -346,12 +355,39 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 								.getMessage("CanNotPrintManifest"), new Object[] { trainManager
 								.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
 								.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
-					} else {
-						// train.openFile();
-
+					} else if (train.isBuilt()) {
+						train.openFile();
+					}
+				}
+			}
+		}
+		if (ae.getSource() == runFileButton) {
+			// Processes the CSV Manifest files using an external custom program.
+			if (!CustomManifest.manifestCreatorFileExists()) {
+				log.warn("Manifest creator file not found!, directory name: "
+						+ CustomManifest.getDirectoryName() + ", file name: " + CustomManifest.getFileName()); // NOI18N
+				JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+						.getMessage("DirectoryNameFileName"), new Object[] {
+						CustomManifest.getDirectoryName(), CustomManifest.getFileName() }), Bundle
+						.getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			List<String> trains = getSortByList();
+			for (int i = 0; i < trains.size(); i++) {
+				Train train = trainManager.getTrainById(trains.get(i));
+				if (train.isBuildEnabled()) {
+					if (!train.isBuilt() && trainManager.isBuildMessagesEnabled()) {
+						JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle
+								.getMessage("NeedToBuildBeforeRunFile"), new Object[] {
+								train.getName(),
+								(trainManager.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
+										.getMessage("print")) }), MessageFormat.format(Bundle
+								.getMessage("CanNotPrintManifest"), new Object[] { trainManager
+								.isPrintPreviewEnabled() ? Bundle.getMessage("preview") : Bundle
+								.getMessage("print") }), JOptionPane.ERROR_MESSAGE);
+					} else if (train.isBuilt()) {
 						// Make sure our csv manifest file exists for this Train.
 						File csvFile = train.createCSVManifestFile();
-
 						// Add it to our collection to be processed.
 						CustomManifest.addCVSFile(csvFile);
 					}
@@ -479,6 +515,13 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 		if (ae.getSource() == openFileBox) {
 			trainManager.setOpenFileEnabled(openFileBox.isSelected());
+			runFileBox.setSelected(false);
+			trainManager.setRunFileEnabled(false);
+		}
+		if (ae.getSource() == runFileBox) {
+			trainManager.setRunFileEnabled(runFileBox.isSelected());
+			openFileBox.setSelected(false);
+			trainManager.setOpenFileEnabled(false);
 		}
 		if (ae.getSource() == showAllBox) {
 			trainsModel.setShowAll(showAllBox.isSelected());

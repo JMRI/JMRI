@@ -15,7 +15,7 @@
 
 <!ELEMENT operations-config (trains | options | schedules)*>
 
-<!ELEMENT options (trainOptions | trainEditOptions | trainScheduleOptions | scripts)*>
+<!ELEMENT options (trainOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator)*>
 <!ELEMENT trainOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
 <!ELEMENT trainScheduleOptions EMPTY>
@@ -24,6 +24,7 @@
 <!ATTLIST trainOptions printPreview 	(true | false) "false">
 <!ATTLIST trainOptions buildMessages 	(true | false) "true">
 <!ATTLIST trainOptions openFile		 	(true | false) "false">
+<!ATTLIST trainOptions runFile		 	(true | false) "false">
 <!ATTLIST trainOptions trainAction		CDATA #IMPLIED>
 
 <!ATTLIST trainScheduleOptions activeId		CDATA #IMPLIED>
@@ -54,6 +55,14 @@
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT manifestLogo EMPTY>
+
+<!ELEMENT manifestCreator (directory | runFile | commonFile)*>
+<!ELEMENT directory EMPTY>
+<!ATTLIST directory name				CDATA #IMPLIED>
+<!ELEMENT runFile EMPTY>
+<!ATTLIST runFile name					CDATA #IMPLIED>
+<!ELEMENT commonFile EMPTY>
+<!ATTLIST commonFile name				CDATA #IMPLIED>
 
 <!ELEMENT schedules (schedule)*>
 <!ELEMENT schedule EMPTY>

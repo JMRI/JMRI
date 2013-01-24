@@ -304,15 +304,18 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		case STATUSCOLUMN:
 			return train.getStatus();
 		case BUILDCOLUMN: {
-			if (train.isBuilt())
-				if (manager.isOpenFileEnabled())
+			if (train.isBuilt()) {
+				if (Setup.isGenerateCsvManifestEnabled() && manager.isOpenFileEnabled())
 					return Bundle.getMessage("OpenFile");
+				else if (Setup.isGenerateCsvManifestEnabled() && manager.isRunFileEnabled())
+					return Bundle.getMessage("RunFile");
 				else if (manager.isPrintPreviewEnabled())
 					return Bundle.getMessage("Preview");
 				else if (train.isPrinted())
 					return Bundle.getMessage("Printed");
 				else
 					return Bundle.getMessage("Print");
+			}
 			return Bundle.getMessage("Build");
 		}
 		case ACTIONCOLUMN: {
@@ -366,12 +369,14 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		Train train = manager.getTrainById(sysList.get(row));
 		if (!train.isBuilt()) {
 			train.build();
-			// print or open file
+			// print build report, print manifest, run or open file
 		} else {
 			if (manager.isBuildReportEnabled())
 				train.printBuildReport();
-			if (manager.isOpenFileEnabled())
+			if (Setup.isGenerateCsvManifestEnabled() && manager.isOpenFileEnabled())
 				train.openFile();
+			else if (Setup.isGenerateCsvManifestEnabled() && manager.isRunFileEnabled())
+				train.runFile();
 			else
 				train.printManifestIfBuilt();
 		}
@@ -470,6 +475,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(TrainManager.OPEN_FILE_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(TrainManager.RUN_FILE_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)
 				|| (e.getPropertyName().equals(Train.BUILD_CHANGED_PROPERTY) && !isShowAll())) {
