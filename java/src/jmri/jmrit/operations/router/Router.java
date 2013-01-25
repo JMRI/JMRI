@@ -30,10 +30,10 @@ public class Router extends TrainCommon {
 	private List<Track> lastLocationTracks = new ArrayList<Track>();
 	private List<Track> otherLocationTracks = new ArrayList<Track>();
 
-	private static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain"); // report that train can not
-																							// move car
+	private static final String STATUS_NOT_THIS_TRAIN = Bundle.getMessage("RouterTrain");
 	private static final String STATUS_NOT_ABLE = Bundle.getMessage("RouterNotAble");
 	private static final String STATUS_CAR_AT_DESINATION = Bundle.getMessage("RouterCarAtDestination");
+	private static final String STATUS_ROUTER_DISABLED = Bundle.getMessage("RouterDisabled");
 
 	private String _status = "";
 	private Train _train = null;
@@ -225,6 +225,7 @@ public class Router extends TrainCommon {
 		} else {
 			log.warn("Car (" + car.toString() + ") final destination (" + car.getFinalDestinationName()
 					+ ") is not served directly by any train"); // NOI18N
+			_status = STATUS_ROUTER_DISABLED;
 			car.setFinalDestination(null);
 			car.setFinalDestinationTrack(null);
 			return false;
