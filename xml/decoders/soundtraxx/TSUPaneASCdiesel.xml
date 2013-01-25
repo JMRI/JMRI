@@ -17,6 +17,7 @@
     <row>
       <label label="AUTOMATIC SOUND CONTROL">
         <label>AUTOMATIC SOUND CONTROL</label>
+	<label xml:lang="it">CONTROLLO AUTOMATICO SUONO</label>
       </label>
     </row>
     <label label=" ">
@@ -55,9 +56,11 @@
         </label>
         <label label="These CVs allow the user to set the parameters">
           <label>These CVs allow the user to set the parameters</label>
+	<label xml:lang="it">Queste CV permettono di impostare i parametri</label>
         </label>
         <label label="for the Automatic Sound Control features.">
           <label>for the Automatic Sound Control features.</label>
+	<label xml:lang="it">per il controllo automatico dei suoni</label>
         </label>
         <label label=" ">
           <label> </label>
