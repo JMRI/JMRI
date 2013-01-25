@@ -183,6 +183,10 @@ nmraWarrant="yes" nmraWarrantStart="200604"
 
       <xi:include href="http://jmri.org/xml/decoders/lenz/lighting_cv60_cv64.xml"/>
 
+      <variable label="Speed Table" CV="67">
+	     <speedTableVal/>
+	  </variable>
+
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
 
       <variable label="Motor timeout on loss of DCC (Gold only)" CV="112" tooltip="Duration of motor timeout t = value * 16 ms" item="Motor Timeout" default="16" comment="Range 0-255">
