@@ -190,6 +190,8 @@ public class Router extends TrainCommon {
 						return true;
 					}
 				}
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNoYardTracks"),
+						new Object[] { dest.getName(), car.toString() }));
 			}
 			car.setDestination(null, null);
 			return true; // able to route, but not able to set the car's destination
