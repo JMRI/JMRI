@@ -600,6 +600,10 @@
     <xs:sequence>
       <xs:element name="factReset" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+            <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
           <xs:attribute name="CV" type="xs:string"/>
           <xs:attribute name="default" type="xs:string"/>
@@ -610,6 +614,9 @@
       </xs:element>
       <xs:element name="ifactReset" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
+          <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
           <xs:attribute name="CVname" type="xs:string"/>
           <xs:attribute name="CV" type="xs:string"/>
