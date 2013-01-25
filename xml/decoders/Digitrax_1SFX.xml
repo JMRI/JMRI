@@ -90,6 +90,7 @@
           </enumChoice>
         </enumVal>
         <label>Normal direction of motion</label>
+        <label xml:lang="it">Normale direzione di movimento</label>
       </variable>
       <variable label="Speed steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
@@ -440,13 +441,14 @@
         <label>Bell Ring Rate</label>
         <label xml:lang="it">Frequenza Campana</label>
         <comment>24msec counts</comment>
-        <comment xml:lang="it">in passi da 24msec</comment>
+        <comment xml:lang="it">in incrementi da 24 msec</comment>
       </variable>
       <variable label="Time Between Cycles (60=2min)" CV="146" tooltip="CV 146" item="Sound Setting 10" comment="2 sec counts" default="60" include="1646">
         <decVal max="64"/>
         <label>Time Between Cycles</label>
-        <label xml:lang="it">tempo tra i Cicli</label>
+        <label xml:lang="it">Tempo tra i Cicli</label>
         <comment>24msec counts</comment>
+        <comment xml:lang="it">in incrementi da 24 msec</comment>
       </variable>
       <variable label="Air Drier Rate" CV="147" tooltip="CV 147" item="Sound Setting 11" default="50" include="1446,1645">
         <decVal max="64"/>
@@ -532,11 +534,18 @@
       <variable label="Horn Delay Rate" CV="156" item="Sound Setting 17" default="10" include="1446,1645">
         <decVal/>
         <label>Horn Delay Rate</label>
+        <label xml:lang="it">Tasso Ritardo Tromba</label>
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
-      <factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+                 <label>Reset All CVs</label>
+                 <label xml:lang="it">Ripristino di tutte le CV</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+                 <label>Reset All CVs except speed table</label>
+                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+      </factReset>
     </resets>
   </decoder>
   <pane name="Digitrax">
@@ -555,16 +564,28 @@
       <label label="  ">	
       </label>
       <label label="DIGITRAX SOUND DECODER NOTES: ">
+             <label>DIGITRAX SOUND DECODER NOTES: </label>
+             <label xml:lang="it">Note sui decoder Sonori Digitrax: </label>
       </label>
       <label label="Sound labels and values are shown for decoders as manufactured.">
+      	<label>Sound labels and values are shown for decoders as manufactured.></label>
+	<label xml:lang="it">Valori ed etichette visualizzati come da fabbrica</label>
       </label>
       <label label="These labels and values may not match downloaded sound projects.">
+      	<label>These labels and values may not match downloaded sound projects.></label>
+	<label xml:lang="it">Questi possono non corrspondere al progetto scaricato</label>
      </label>
       <label label="Please use the CVs pane to adjust downloaded sound projects.">
+      	<label>Please use the CVs pane to adjust downloaded sound projects.></label>
+	<label xml:lang="it">Usare il pannello CV per aggiustare il progetto</label>
       </label>
       <label label="If your locomotive with downloaded sound file is silent,try setting CV 60=0.">
+      	<label>If your locomotive with downloaded sound file is silent,try setting CV 60=0.></label>
+	<label xml:lang="it">Se la loco è silenziosa, provare ad impostare CV 60=0.</label>
       </label>
       <label label="To mute bell or horn, set the sound level = 1, not 0.">
+     	<label>To mute bell or horn, set the sound level = 1, not 0.></label>
+	<label xml:lang="it">Per silenziare la campana o la tromba, impostare livello suono=1, non=0.</label>
       </label>
     </column>
     <name>Digitrax</name>
