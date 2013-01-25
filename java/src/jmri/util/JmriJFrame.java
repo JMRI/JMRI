@@ -69,7 +69,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     protected boolean allowInFrameServlet = true;
     
     /**
-     * Creates a JFrame
+     * Creates a JFrame with standard settings, optional
+     * save/restore of size and position.
      * @param saveSize - Set true to save the last known size
      * @param savePosition - Set true to save the last known location
      */
@@ -109,16 +110,29 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
     }
     
+    /**
+     * Creates a JFrame with standard settings, including
+     * saving/restoring of size and position.
+     * @param saveSize - Set true to save the last known size
+     * @param savePosition - Set true to save the last known location
+     */
     public JmriJFrame() {
         this(true, true);
     }
     
+    /**
+     * Creates a JFrame with with given name plus standard settings, including
+     * saving/restoring of size and position.
+     * @param saveSize - Set true to save the last known size
+     * @param savePosition - Set true to save the last known location
+     */
     public JmriJFrame(String name) {
         this(name, true, true);
     }
     
     /**
-     * Creates a JMRI JFrame
+     * Creates a JFrame with with given name plus standard settings, including
+     * optional save/restore of size and position.
      * @param name - Title of the JFrame
      * @param saveSize - Set true to save the last knowm size
      * @param savePosition - Set true to save the last known location
@@ -334,7 +348,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 
         int stdMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         InputMap im = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, stdMask), "close");
+        im.put(KeyStroke.getKeyStroke(Bundle.getMessage("VkKeyWindowClose"), stdMask), 
+                    "close"); // NOI18N
         //im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close");
     }
 
