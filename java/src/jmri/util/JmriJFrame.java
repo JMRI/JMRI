@@ -348,8 +348,13 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
 
         int stdMask = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
         InputMap im = getRootPane().getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        im.put(KeyStroke.getKeyStroke(Bundle.getMessage("VkKeyWindowClose"), stdMask), 
-                    "close"); // NOI18N
+        
+        // We extract the modifiers as a string, then add the I18N string, and
+        // build a key code
+        String modifier = KeyStroke.getKeyStroke(KeyEvent.VK_W, stdMask).toString();
+        String keyCode = modifier.substring(0, modifier.length()-1)+Bundle.getMessage("VkKeyWindowClose").substring(0,1);
+
+        im.put(KeyStroke.getKeyStroke(keyCode), "close"); // NOI18N
         //im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close");
     }
 
