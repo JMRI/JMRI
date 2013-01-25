@@ -460,7 +460,7 @@
           </enumChoice>
           <enumChoice choice="Use Table">
             <choice>Use Table</choice>
-            <choice xml:lang="it">usa Tabella</choice>
+            <choice xml:lang="it">Usa Tabella</choice>
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
@@ -542,7 +542,7 @@
       <variable label="Decoder Lock Feature" CV="54" mask="XVXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Decoder Lock Feature</label>
-        <label xml:lang="it">Funzione di Blocco decore</label>
+        <label xml:lang="it">Funzione di Blocco decoder</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
