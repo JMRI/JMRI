@@ -144,6 +144,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 uniDirection = true;
         }
         
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SE_TRANSIENT_FIELD_NOT_RESTORED",
+                                                            justification="No auto serialization")
         transient protected PropertyChangeListener propertyBlockListener;
         
         /* = new PropertyChangeListener() {
