@@ -113,8 +113,6 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     /**
      * Creates a JFrame with standard settings, including
      * saving/restoring of size and position.
-     * @param saveSize - Set true to save the last known size
-     * @param savePosition - Set true to save the last known location
      */
     public JmriJFrame() {
         this(true, true);
@@ -123,8 +121,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     /**
      * Creates a JFrame with with given name plus standard settings, including
      * saving/restoring of size and position.
-     * @param saveSize - Set true to save the last known size
-     * @param savePosition - Set true to save the last known location
+     * @param name - Title of the JFrame
      */
     public JmriJFrame(String name) {
         this(name, true, true);
