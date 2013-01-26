@@ -100,7 +100,7 @@ The Basic Programmer</h4>
   <li><a href="Basic_BasicPane.shtml">Writing the new data to the
     decoder</a></li>
   <li><a href="Basic_BasicPane.shtml">Saving the new data to a file</a></li>
-  <li><a href="Basic_BasicPane.shtml#Do More">What if I need to do more?</a></li>
+  <li><a href="Basic_BasicPane.shtml#Do%20More">What if I need to do more?</a></li>
 </ul>
 <h4>
 <a NAME="Advanced Programmer"></a>The Comprehensive Programmer</h4>
@@ -116,7 +116,7 @@ The Basic Programmer</h4>
   <li><a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
   <li><a href="Comp_Analog.shtml">Analog Controls Pane</a></li>
   <li><a href="Comp_SoundFX.shtml">Sound Pane</a></li>
-  <li><a href="Comp_SoundLevels.shtml"> Sound Levels Pane</a></li>
+  <li><a href="Comp_SoundLevels.shtml">Sound Levels Pane</a></li>
   <li><a href="Comp_GlobalCVs.shtml">Global CV Pane</a></li>
   <li><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></li>
   <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
@@ -136,7 +136,7 @@ The Basic Programmer</h4>
   <li><a href="Comp_Advanced.shtml">Advanced Features Pane</a></li>
   <li><a href="Comp_Analog.shtml">Analog Controls Pane</a></li>
   <li><a href="Comp_SoundFX.shtml">Sound Pane</a></li>
-  <li><a href="Comp_SoundLevels.shtml"> Sound Levels Pane</a></li>
+  <li><a href="Comp_SoundLevels.shtml">Sound Levels Pane</a></li>
   <li><a href="Comp_GlobalCVs.shtml">Global CV Pane</a></li>
   <li><a href="Comp_ManfSpecific.shtml">Manufacturer-Specific Pane</a></li>
   <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
@@ -254,16 +254,16 @@ The Basic Programmer</h4>
       <li>Show Panel <img src="images/arrow.gif" width="20" height="9" alt="arrow">
         <ul>
           <li>
-            <input type="checkbox" name="checkbox4" id="checkbox4">
+            <input type="checkbox" name="checkbox4" id="checkbox4" value="unchecked">
           Panel </li>
           <li>
-            <input type="checkbox" name="checkbox5" id="checkbox5">
+            <input type="checkbox" name="checkbox5" id="checkbox5" value="unchecked">
           Panel 2</li>
           <li>
-            <input type="checkbox" name="checkbox6" id="checkbox6">
+            <input type="checkbox" name="checkbox6" id="checkbox6" value="unchecked">
           Control Panel</li>
           <li>
-            <input type="checkbox" name="checkbox7" id="checkbox7">
+            <input type="checkbox" name="checkbox7" id="checkbox7" value="unchecked">
           My Layout</li>
         </ul>
       </li>
@@ -349,13 +349,13 @@ The Basic Programmer</h4>
     <p>(lists all DecoderPro windows that are open)</p>
     <ul>
       <li>
-        <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
+        <input name="checkbox" id="checkbox" value="checked" type="checkbox">
         DecoderPro</li>
       <li> <strong>
-        <input name="checkbox2" id="checkbox2" type="checkbox">
+        <input name="checkbox2" id="checkbox2" type="checkbox" value="unchecked">
         </strong>LocoNet Traffic</li>
       <li> <strong>
-        <input name="checkbox3" id="checkbox3" type="checkbox">
+        <input name="checkbox3" id="checkbox3" type="checkbox" value="unchecked">
       </strong>        Power Control</li>
     </ul>
 </li>
@@ -476,6 +476,7 @@ are best submitted to the
 </table>
 <p>
 <hr>
+</div>
 <div align=right>Go to the
 <a href="http://groups.yahoo.com/group/jmriusers/">
 JMRI Users home page on Yahoo Groups</a></div>

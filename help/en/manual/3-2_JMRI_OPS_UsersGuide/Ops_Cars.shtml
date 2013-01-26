@@ -57,7 +57,7 @@ opens the<strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></str
 <p>
   <input type="button" name="button7" id="button7" value="Edit">
   opens
-  the <a href="Ops_AddCars.shtml">Edit Car </a>window, similar to the <strong>Add Car </strong>Window</p>
+  the <a href="Ops_AddCars.shtml"><strong>Edit Car </strong></a>window, similar to the <strong>Add Car </strong>Window</p>
 <p><img src="images/Ops_location_showCars.png" width="900" height="486" alt="show cars"></p>
 <h3>Menu Bar</h3>
 
@@ -77,16 +77,21 @@ opens the<strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></str
       </blockquote>
       <ul>
         <li><strong>Export to File<br>
-          <img src="images/Ops_Export_carRoster.png" width="712" height="122" alt="export roster"><br>
-        </strong></li>
+        <img src="images/Ops_Export_carRoster.png" width="712" height="122" alt="export roster"></strong> </li>
       </ul>
       <ul>
         <li><strong>Delete all Cars<br>
-          <img src="images/Ops_delete_cars_roster.png" width="403" height="122" alt="delete"><br>
-        </strong></li>
+        <img src="images/Ops_delete_cars_roster.png" width="403" height="122" alt="delete"></strong></li>
+        <li><strong>Reset move count all cars</strong></li>
+      </ul>
+      <blockquote>
+        <p><strong><img src="images/Ops_car_resetMove.png" width="521" height="122" alt="reset move"><br>
+        </strong></p>
+      </blockquote>
+      <ul>
         <li><strong>Print</strong><br>
           <br>
-        <img src="images/Ops_carRoster_printOptions.png" width="290" height="477" alt="options"></li>
+          <img src="images/Ops_carRoster_printOptions.png" width="290" height="477" alt="options"></li>
         <li><strong>Print Preview</strong><br>
           Print options dialog displays, 
           <input type="button" name="button" id="button" value="OK"> 
@@ -94,10 +99,7 @@ opens the<strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></str
         </li>
       </ul>
     </li>
-    <blockquote>
-      <p><img src="Ops_Cars_Ops_location_setCars_0000.png" alt="set cars" height="650" width="500"></p>
-    </blockquote>
-    <li><strong><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></strong><img src="Ops_Cars_Ops_location_setCars.png" alt="set cars" height="650" width="500"></li>
+    <li><strong><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></strong></li>
     <li><strong><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></strong></li>
     <li><strong><a href="Ops_Locations_setCars.shtml">Set Cars</a></strong></li>
  </ul>

@@ -37,11 +37,11 @@
       <p><strong>Tool
    	  </strong></p>
       <ul>
-        <li> <strong>Print Locations by Car Type</strong> <br>
+        <li><a href="Ops_Locations_printByCarType.shtml"><strong>Print Locations by Car Type</strong></a><br>
         Opens system printer dialog</li>
       </ul>
       <ul>
-        <li><strong>Preview Locations by Car Type</strong><br>
+        <li><strong><a href="Ops_Locations_print-Preview_ByCarType.shtml">Preview Locations by Car Type</a></strong><br>
           Opens the list in printer previw window
         </li>
       </ul>

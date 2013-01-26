@@ -27,7 +27,7 @@
 
 
 <hr>
-<p><a name="top"></a></p>
+<p align="right"><a name="top" ></a>  <a href="Ops_Cars.shtml"><strong>Back</strong></a></p>
 <table width="93%" border="1" cellspacing="1" cellpadding="2">
   <tr>
     <td width="38%" rowspan="6" valign="top"><img src="images/Ops_Location_Modify_Trains.png" width="300" height="356" alt="modify trains"></td>
@@ -36,7 +36,7 @@
   </tr>
   <tr>
     <td width="37%" rowspan="2" valign="top"><strong>Tools</strong></td>
-    <td><strong><a href="#print">Print Trins by Car Types</a></strong></td>
+    <td><strong><a href="#print">Print Trains by Car Types</a></strong></td>
   </tr>
   <tr>
     <td><strong><a href="#preview">Preview Trains by Car Types</a></strong></td>
@@ -64,6 +64,7 @@
 <p><a name="preview"></a>Sample Preview in System Printer.</p>
 <p><img src="images/Ops_Preview_TrainsbyCars.png" width="675" height="360" alt="preview"></p>
 <p><strong><a href="#Top">Back</a></strong></p>
+<p align="right"><a href="Ops_Cars.shtml"><strong>Back</strong></a></p>
 <hr>
 <!--#include virtual="/Footer" -->
 </body>

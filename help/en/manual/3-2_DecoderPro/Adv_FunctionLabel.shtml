@@ -18,7 +18,7 @@
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mainContent"></div>
 
 <a NAME="Top"></a>
 <h1>DecoderPro&reg; Advanced Programmer</h1>
@@ -31,8 +31,8 @@
 
 <hr>
 <p>This  pane is more than a scratch pad to keep track of what happens when function  buttons are pushed.&nbsp; It also interacts  with the <a href="Main_Throttle.shtml">JMRI throttle</a>. </p>
-<p wrap=""><img src="images/Adv_03_FunctionLabels.png" width="636" height="598" alt="function labels"></p>
-<p wrap="">The <strong>Function Label</strong>s Tab makes settings for the Software Throttles within JMRI.  Primarily the on-screen throttles, but some of the settings are mirrored on smart-phones (iPhone/Android) using the WiThrottle interface.</p>
+<p><img src="images/Adv_03_FunctionLabels.png" width="636" height="598" alt="function labels"></p>
+<p>The <strong>Function Label</strong>s Tab makes settings for the Software Throttles within JMRI.  Primarily the on-screen throttles, but some of the settings are mirrored on smart-phones (iPhone/Android) using the WiThrottle interface.</p>
 <p>When you  use the roster pull-down on the JMRI throttle to select a loco from your  roster, the function buttons will be marked with the descriptions you have  entered for those functions in this pane. </p>
 <p>In this example, the Function keys on the Throttle will be labeled for the FP-45 with Tsunami OEM Sound decoder with sounds and lighting functions.</p>
 <p><img src="images/Adv_03_FunctionOnThrottle.png" width="531" height="523" alt="throttle"></p>
