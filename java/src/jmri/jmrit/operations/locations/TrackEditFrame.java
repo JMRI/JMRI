@@ -57,6 +57,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel panelLoadNames = new JPanel();
 	JScrollPane paneLoadNames = new JScrollPane(panelLoadNames);
 	JPanel panelOrder = new JPanel();
+	
+	// labels
+	JLabel loadOption = new JLabel();
+	JLabel roadOption = new JLabel();
 
 	// major buttons
 	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
@@ -68,7 +72,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JButton addRoadButton = new JButton(Bundle.getMessage("AddRoad"));
 	JButton addLoadButton = new JButton(Bundle.getMessage("AddLoad"));
 	JButton deleteLoadButton = new JButton(Bundle.getMessage("DeleteLoad"));
-	JButton deleteAllLoadsButton = new JButton(Bundle.getMessage("DeleteAllLoads"));
+	JButton deleteAllLoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
 
 	JButton deleteDropButton = new JButton(Bundle.getMessage("Delete"));
 	JButton addDropButton = new JButton(Bundle.getMessage("Add"));
@@ -211,6 +215,19 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		loadGroup.add(loadNameAll);
 		loadGroup.add(loadNameInclude);
 		loadGroup.add(loadNameExclude);
+				
+		// status panel for roads and loads
+		JPanel panelRoadAndLoadStatus = new JPanel();
+		panelRoadAndLoadStatus.setLayout(new BoxLayout(panelRoadAndLoadStatus, BoxLayout.X_AXIS));
+		JPanel pRoadOption = new JPanel();
+		pRoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadOption")));
+		pRoadOption.add(roadOption);
+		JPanel pLoadOption = new JPanel();
+		pLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadOption")));
+		pLoadOption.add(loadOption);
+		
+		panelRoadAndLoadStatus.add(pRoadOption);
+		panelRoadAndLoadStatus.add(pLoadOption);
 
 		// row 10
 		// order panel
@@ -255,9 +272,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 		getContentPane().add(p1Pane);
 		getContentPane().add(paneCheckBoxes);
-		getContentPane().add(paneRoadNames);
-		getContentPane().add(paneLoadNames);
-		getContentPane().add(paneLoadNames);
+//		getContentPane().add(paneRoadNames);	// moved to tool bar
+		getContentPane().add(panelRoadAndLoadStatus);
+//		getContentPane().add(paneLoadNames);	// moved to tool bar
 		getContentPane().add(panelOrder);
 		getContentPane().add(dropPanel);
 		getContentPane().add(pickupPanel);
@@ -332,6 +349,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		_toolMenu = new JMenu(Bundle.getMessage("Tools"));
+		_toolMenu.add(new TrackRoadEditAction(location, _track));
+		_toolMenu.add(new TrackLoadEditAction(location, _track));
 		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		_toolMenu.add(new TrackEditCommentsAction(this));
 		_toolMenu.add(new PoolTrackAction(this));
@@ -349,6 +368,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateCarOrder();
 		updateDropOptions();
 		updatePickupOptions();
+		updateRoadOption();
+		updateLoadOption();
 
 		loadAndTypeCheckBox.setSelected(loadAndType);
 	}
@@ -1060,6 +1081,17 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			}
 		}
 	}
+	
+	private void updateRoadOption() {
+		if (_track != null) {
+			if (_track.getRoadOption().equals(Track.INCLUDEROADS))
+				roadOption.setText(Bundle.getMessage("AcceptOnly"));
+			else if (_track.getRoadOption().equals(Track.EXCLUDEROADS))
+				roadOption.setText(Bundle.getMessage("Exclude"));
+			else
+				roadOption.setText(Bundle.getMessage("AcceptsAllRoads"));
+		}
+	}
 
 	private void updateRoadNames() {
 		panelRoadNames.removeAll();
@@ -1110,6 +1142,17 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		panelRoadNames.repaint();
 		panelRoadNames.validate();
 		packFrame();
+	}
+	
+	private void updateLoadOption() {
+		if (_track != null) {
+			if (_track.getLoadOption().equals(Track.INCLUDELOADS))
+				loadOption.setText(Bundle.getMessage("AcceptOnly"));
+			else if (_track.getLoadOption().equals(Track.EXCLUDELOADS))
+				loadOption.setText(Bundle.getMessage("Exclude"));
+			else
+				loadOption.setText(Bundle.getMessage("AcceptsAllLoads"));
+		}
 	}
 
 	private void updateLoadNames() {
@@ -1235,8 +1278,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)) {
 			updateTrainDir();
 		}
-		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
 			updateRoadComboBox();
 			updateRoadNames();
 		}
@@ -1257,6 +1299,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			updateRouteComboBox();
 			updateDropOptions();
 			updatePickupOptions();
+		}
+		if (e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY)) {
+			updateRoadOption();			
+		}
+		if (e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)) {
+			updateLoadOption();			
 		}
 	}
 

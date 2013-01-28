@@ -90,6 +90,16 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		p.add(c, gc);
 	}
 	
+	protected void addItemTop(JPanel p, JComponent c, int x, int y) {
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridx = x;
+		gc.gridy = y;
+		gc.weightx = 100;
+		gc.weighty = 100;
+		gc.anchor = GridBagConstraints.NORTH;
+		p.add(c, gc);
+	}
+	
 	protected void addItemWidth(JPanel p, JComponent c, int width, int x, int y) {
 		GridBagConstraints gc = new GridBagConstraints();
 		gc.gridx = x;

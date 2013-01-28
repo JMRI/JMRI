@@ -87,7 +87,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	
 	JButton addLoadButton = new JButton(Bundle.getMessage("AddLoad"));
 	JButton deleteLoadButton = new JButton(Bundle.getMessage("DeleteLoad"));
-	JButton deleteAllLoadsButton = new JButton(Bundle.getMessage("DeleteAllLoads"));
+	JButton deleteAllLoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
 	
 	JButton addOwnerButton = new JButton(Bundle.getMessage("AddOwner"));
 	JButton deleteOwnerButton = new JButton(Bundle.getMessage("DeleteOwner"));	

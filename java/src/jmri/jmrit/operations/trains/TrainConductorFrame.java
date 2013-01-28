@@ -206,11 +206,11 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	pRow10.add(pNextLocationName);
        	
        	// row 12
-       	JPanel pRow12 = new JPanel();
-       	pRow12.setLayout(new BoxLayout(pRow12,BoxLayout.X_AXIS));
+       	JPanel pWorkPanes = new JPanel();
+       	pWorkPanes.setLayout(new BoxLayout(pWorkPanes,BoxLayout.X_AXIS));
       	
-       	pRow12.add(pickupPane);
-       	pRow12.add(setoutPane);
+       	pWorkPanes.add(pickupPane);
+       	pWorkPanes.add(setoutPane);
        	
        	// row 13
       	JPanel pStatus = new JPanel();
@@ -246,7 +246,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		getContentPane().add(pRow6);
 		getContentPane().add(pRow10);
 		getContentPane().add(locoPane);
-		getContentPane().add(pRow12);
+		getContentPane().add(pWorkPanes);
 		getContentPane().add(movePane);
 		getContentPane().add(pStatus);
 		getContentPane().add(pRow14);		

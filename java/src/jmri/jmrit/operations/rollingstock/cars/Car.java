@@ -469,6 +469,7 @@ public class Car extends RollingStock {
 	private static final boolean debugFlag = false;
 
 	private String searchSchedule(Track track) {
+		setScheduleId("");	// clear the schedule id
 		if (debugFlag)
 			log.debug("Search match for car " + toString() + " type (" + getType() + ") load (" + getLoad()
 					+ ")");
@@ -483,7 +484,7 @@ public class Car extends RollingStock {
 				log.debug("Found item match (" + si.getId() + ") car (" + toString() + ") load ("
 						+ si.getLoad() + ") ship (" + si.getShip() + ") " + "destination (" // NOI18N
 						+ si.getDestinationName() + ", " + si.getDestinationTrackName() + ")"); // NOI18N
-				setScheduleId(si.getId());
+				setScheduleId(si.getId());	// remember which item was a match
 				return Track.OKAY;
 			} else {
 				if (debugFlag)
@@ -599,13 +600,14 @@ public class Car extends RollingStock {
 			Schedule sch = track.getSchedule();
 			if (sch != null) {
 				ScheduleItem si = sch.getItemById(getScheduleId());
+				String id = getScheduleId();	// save id for error message
 				setScheduleId("");
 				if (si != null) {
 					loadNext(si);
 					return Track.OKAY;
 				}
 				log.debug("Schedule id " + getScheduleId() + " not valid for track (" + track.getName() + ")");
-				return Car.SCHEDULE + " ERROR id " + getScheduleId() + " not valid for track ("+ track.getName() + ")"; // NOI18N
+				return Car.SCHEDULE + " ERROR id " + id + " not valid for track ("+ track.getName() + ")"; // NOI18N
 			}
 		}
 		if (track.getScheduleMode() == Track.MATCH && !searchSchedule(track).equals(Track.OKAY)) {

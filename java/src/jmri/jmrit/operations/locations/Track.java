@@ -656,14 +656,14 @@ public class Track {
 		if (_roadList.contains(road))
 			return;
 		_roadList.add(road);
-		log.debug("track " + getName() + " add car road " + road);
+		log.debug("track (" + getName() + ") add car road " + road);
 		setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() - 1,
 				_roadList.size());
 	}
 
 	public void deleteRoadName(String road) {
 		_roadList.remove(road);
-		log.debug("track " + getName() + " delete car road " + road);
+		log.debug("track (" + getName() + ") delete car road " + road);
 		setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() + 1,
 				_roadList.size());
 	}
