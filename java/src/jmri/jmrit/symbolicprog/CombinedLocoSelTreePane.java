@@ -61,8 +61,8 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
     DecoderTreeNode dRoot;
     protected TreeSelectionListener dListener;
     
-    JRadioButton showAll;
-    JRadioButton showMatched;
+    JRadioButton showAll = new JRadioButton();
+    JRadioButton showMatched = new JRadioButton();
     protected JPanel viewButtons;
     /**
      * Create the panel used to select the decoder

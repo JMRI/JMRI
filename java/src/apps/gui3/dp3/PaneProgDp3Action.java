@@ -160,7 +160,11 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                             // note that we're leaving the filename null
                             // add the new roster entry to the in-memory roster
                         } else {
-                            saveRosterEntry();
+                            try{
+                                saveRosterEntry();
+                            } catch (jmri.JmriException ex){
+                                return;
+                            }
                         }
                         // create a dummy RosterEntry with the decoder info
                         startProgrammer(decoderFile, re, null);
@@ -320,7 +324,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     int cv19 = 0;
     int cv1 = 0;
     int longAddress;
-    int address;
+    String address;
     
     synchronized public void programmingOpReply(int value, int status) {
         switch(teststatus){
@@ -352,11 +356,11 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     synchronized void finishRead(){
         if((cv29&0x20) == 0){
             shortAddr = true;
-            address = cv1;
+            address = ""+cv1;
         }
         if(cv17!=-1 || cv18!=-1){
             longAddress = (cv17&0x3f)*256 + cv18;
-            address = longAddress;    
+            address = ""+longAddress;    
         }
         if(progPane!=null){
             progPane.setVariableValue("Short Address", cv1);
@@ -397,7 +401,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             p.add(rosterIdField);
             rosterPanel.add(p, BorderLayout.NORTH);
             rosterIdField.setText(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"));
-            rosterIdField.addFocusListener(
+            /*rosterIdField.addFocusListener(
                 new FocusListener() {
                     public void focusGained(FocusEvent e){}
                     public void focusLost(FocusEvent e) {
@@ -405,11 +409,14 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                             JOptionPane.showMessageDialog(progPane,jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ErrorDuplicateID"));
                     }
                 }
-            );
+            );*/
             saveBasicRoster = new JButton("Save");
             saveBasicRoster.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                    saveRosterEntry();
+                log.info("Save pressed");
+                    try{
+                        saveRosterEntry();
+                    } catch (jmri.JmriException ex){ }
                 }
             });
             TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
@@ -426,7 +433,6 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             f.getContentPane().repaint();
             f.repaint();
             f.pack();
-
         }
         if (jmri.InstanceManager.programmerManagerInstance() != null &&
             jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
@@ -452,6 +458,18 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         }
         Element programmerRoot;
         XmlFile pf = new XmlFile(){};  // XmlFile is abstract
+        
+        java.beans.PropertyChangeListener dccNews = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) { updateDccAddress(); }
+            };
+        primaryAddr = variableModel.findVar("Short Address");
+
+        if (primaryAddr==null) log.debug("DCC Address monitor didnt find a Short Address variable");
+        else primaryAddr.addPropertyChangeListener(dccNews);
+        extendAddr = variableModel.findVar("Long Address");
+        if (extendAddr==null) log.debug("DCC Address monitor didnt find an Long Address variable");
+        else extendAddr.addPropertyChangeListener(dccNews);
+
         try {
             programmerRoot = pf.rootFromName("programmers"+File.separator+"Basic.xml");
             Element base;
@@ -482,6 +500,32 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         }
     }
     
+    void updateDccAddress() {
+        boolean longMode = false;
+        if (log.isDebugEnabled())
+            log.debug("updateDccAddress: short "+(primaryAddr==null?"<null>":primaryAddr.getValueString())+
+                      " long "+(extendAddr==null?"<null>":extendAddr.getValueString())+
+                      " mode "+(addMode==null?"<null>":addMode.getValueString()));
+        String newAddr = null;
+        if (addMode == null || extendAddr == null || !addMode.getValueString().equals("1")) {
+            // short address mode
+            longMode = false;
+            if (primaryAddr != null && !primaryAddr.getValueString().equals(""))
+                newAddr = primaryAddr.getValueString();
+        }
+        else {
+            // long address
+            if (extendAddr != null && !extendAddr.getValueString().equals(""))
+                longMode = true;
+                newAddr = extendAddr.getValueString();
+        }
+        // update if needed
+        if (newAddr!=null) {
+            // store DCC address, type
+             address=newAddr;
+            shortAddr= !longMode;
+        }
+    }
     JButton saveBasicRoster;
     
     /**
@@ -499,15 +543,17 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         return oops;
     }
     
-    void saveRosterEntry(){
+    void saveRosterEntry() throws jmri.JmriException { 
         if(rosterIdField.getText().equals(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"))){
             synchronized(this){
                 JOptionPane.showMessageDialog(progPane, jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("PromptFillInID"));
             }
-            return;
+            throw new jmri.JmriException("No Roster ID");
         }
-        if(checkDuplicate())
-            return;
+        if(checkDuplicate()){
+            JOptionPane.showMessageDialog(progPane,jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ErrorDuplicateID"));
+            throw new jmri.JmriException("Duplcate ID");
+        }
         re = new RosterEntry();
         re.setDecoderFamily(decoderFile.getFamily());
         re.setDecoderModel(decoderFile.getModel());
@@ -523,6 +569,11 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         Roster.instance().addEntry(re);
         Roster.writeRosterFile();
     }
+    
+    // hold refs to variables to check dccAddress
+    VariableValue primaryAddr = null;
+    VariableValue extendAddr = null;
+    VariableValue addMode = null;
     
     public boolean isBusy() { return false; }
     
