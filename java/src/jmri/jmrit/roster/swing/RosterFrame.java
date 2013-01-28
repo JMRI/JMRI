@@ -21,7 +21,9 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -34,8 +36,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
-import javax.swing.JCheckBox;
-import javax.swing.JDialog;
 import javax.swing.ListSelectionModel;
 import javax.swing.Timer;
 import javax.swing.TransferHandler;
@@ -461,9 +461,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
-                    if (rtable.getSelectedRosterEntries().length == 1) {
+                    if (rtable.getSelectedRosterEntries().length == 1 && rtable.getTable().getSelectedRow() >= 0) {
+                        log.debug(rtable.getTable().getSelectedRow());
                         locoSelected(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).toString());
-                    } else if (rtable.getSelectedRosterEntries().length > 1) {
+                    } else if (rtable.getSelectedRosterEntries().length > 1 || rtable.getTable().getSelectedRow() < 0) {
                         locoSelected(null);
                     } // leave last selected item visible if no selection
                 }
@@ -779,12 +780,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 container.add(button);
                 
                 noButton.addActionListener(new ActionListener(){
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         dialog.dispose();
                     }
                 });
                 
                 yesButton.addActionListener(new ActionListener(){
+                    @Override
                     public void actionPerformed(ActionEvent e) {
                         if(remember.isSelected()) {
                            p.setSimplePreferenceState(rememberWindowClose, true);
