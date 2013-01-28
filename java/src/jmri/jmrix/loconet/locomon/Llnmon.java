@@ -1792,7 +1792,7 @@ public class Llnmon {
                                 + " is " + LnConstants.CONSIST_STAT(stat) + ", "
                                 + LnConstants.LOCO_STAT(stat) + ", operating in "
                                 + LnConstants.DEC_MODE(stat) + " SS mode, and is going "
-                                + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Foward")
+                                + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Forward")
                                 + " at speed " + spd + ",\n" + "\tF0="
                                 + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,")
                                 + " F1="
@@ -1823,7 +1823,7 @@ public class Llnmon {
                                 + " is " + LnConstants.CONSIST_STAT(stat) + ", "
                                 + LnConstants.LOCO_STAT(stat) + ", operating in "
                                 + LnConstants.DEC_MODE(stat) + " SS mode, and is going "
-                                + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Foward")
+                                + ((dirf & LnConstants.DIRF_DIR) != 0 ? "in Reverse" : "Forward")
                                 + " at speed " + spd + ",\n" + "\tF0="
                                 + ((dirf & LnConstants.DIRF_F0) != 0 ? "On, " : "Off,")
                                 + " F1="

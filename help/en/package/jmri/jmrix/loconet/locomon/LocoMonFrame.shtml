@@ -32,12 +32,11 @@
          alt="Command Station Slot Monitor" align="right"></a>
 <br>
 The LocoNet Monitor tool displays LocoNet traffic in a
-human-readable form. The last 20 messages are available
-in a scrolling window. Optionally, you can include the
+human-readable form. The most recent messages are available
+in a scrolling window. You can filter unwanted messages from 
+the display.  Optionally, you can include the
 time the message was received, and/or the raw packet
-bytes. The log information can also be stored in a text
-file.
-
+bytes. The log information can also be stored in a text file.  
 <p>
 For more information on the 
 various controls and options, please see the

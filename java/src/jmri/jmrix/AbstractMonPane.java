@@ -16,6 +16,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -24,7 +25,11 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
+import javax.swing.text.AbstractDocument;
+
 import jmri.util.FileUtil;
 
 import jmri.util.swing.JmriPanel;
@@ -55,6 +60,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
         p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
         p.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
         p.setSimplePreferenceState(autoScrollCheck, !autoScrollCheckBox.isSelected());
+        p.setProperty(filterFieldCheck, filterFieldCheck, filterField.getText());
         super.dispose();
     }
     // you'll also have to add the message(Foo) members to handle info to be logged.
@@ -71,6 +77,8 @@ public abstract class AbstractMonPane extends JmriPanel  {
     protected JCheckBox timeCheckBox = new JCheckBox();
     protected JCheckBox alwaysOnTopCheckBox = new JCheckBox();
     protected JCheckBox autoScrollCheckBox = new JCheckBox();
+    protected JTextField filterField = new JTextField();
+    protected JLabel filterLabel = new JLabel("Filter Bytes:", JLabel.LEFT);
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
@@ -78,6 +86,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
     String timeStampCheck = this.getClass().getName()+".TimeStamp";
     String alwaysOnTopCheck = this.getClass().getName()+".AlwaysOnTop";
     String autoScrollCheck = this.getClass().getName()+".AutoScroll";
+    String filterFieldCheck = this.getClass().getName()+".FilterField";
     jmri.UserPreferencesManager p;
 
     // for locking
@@ -135,13 +144,36 @@ public abstract class AbstractMonPane extends JmriPanel  {
                 doAutoScroll(ta, chk.isSelected());
             }
         });
-
+        
         entryField.setToolTipText("Enter text here, then click button to include it in log");
         // cap vertical size to avoid over-growth
         Dimension currentPreferredSize = entryField.getPreferredSize();
         Dimension currentMaximumSize = entryField.getMaximumSize();
         currentMaximumSize.height = currentPreferredSize.height;
         entryField.setMaximumSize(currentMaximumSize);
+
+        //setup filterField
+        filterField.setToolTipText("Enter byte values to hide, separated by spaces");
+        filterField.setMaximumSize(currentMaximumSize);
+        try {
+			filterField.setText(p.getProperty(filterFieldCheck, filterFieldCheck).toString());  //restore prev values
+		} catch (Exception e1) {  //leave blank if previous value not retrieved
+		}
+        //automatically uppercase input in filterField, and only accept spaces and valid hex characters
+        ((AbstractDocument) filterField.getDocument()).setDocumentFilter(new DocumentFilter() {
+        	public void insertString(DocumentFilter.FilterBypass fb, int offset, String text,
+        			AttributeSet attr) throws BadLocationException {
+    	        if (text.matches("[[0-9a-fA-F]{0,7}| ]")) {
+        			fb.insertString(offset, text.toUpperCase(), attr);
+        		}
+        	}
+        	public void replace(DocumentFilter.FilterBypass fb, int offset, int length, String text,
+        			AttributeSet attrs) throws BadLocationException {
+    	        if (text.matches("[[0-9a-fA-F]{0,7}| ]")) {
+        			fb.replace(offset, length, text.toUpperCase(), attrs);
+        		}
+        	}
+        }); 
 
         // fix a width for current character set
         JTextField t = new JTextField(80);
@@ -207,6 +239,8 @@ public abstract class AbstractMonPane extends JmriPanel  {
 
         JPanel pane2 = new JPanel();
         pane2.setLayout(new BoxLayout(pane2, BoxLayout.X_AXIS));
+        pane2.add(filterLabel);
+        pane2.add(filterField);
         pane2.add(openFileChooserButton);
         pane2.add(startLogButton);
         pane2.add(stopLogButton);
@@ -299,76 +333,93 @@ public abstract class AbstractMonPane extends JmriPanel  {
     }
     
     public void nextLine(String line, String raw) {
-        // handle display of traffic
-        // line is the traffic in 'normal form', raw is the "raw form"
-        // Both should be one or more well-formed lines, e.g. end with \n
-        StringBuffer sb = new StringBuffer(120);
+    	
+    	// handle display of traffic
+    	// line is the traffic in 'normal form', raw is the "raw form"
+    	// Both should be one or more well-formed lines, e.g. end with \n
+    	StringBuffer sb = new StringBuffer(120);
 
-        // display the timestamp if requested
-        if ( timeCheckBox.isSelected() ) {
-            sb.append(df.format(new Date())).append( ": " ) ;
-        }
+    	// display the timestamp if requested
+    	if ( timeCheckBox.isSelected() ) {
+    		sb.append(df.format(new Date())).append( ": " ) ;
+    	}
 
-        // display the raw data if requested
-        if ( rawCheckBox.isSelected() ) {
-            sb.append( '[' ).append(raw).append( "]  " );
-        }
+    	// display the raw data if available and requested
+    	if ( raw != null && rawCheckBox.isSelected() ) {
+    		sb.append( '[' ).append(raw).append( "]  " );
+    	}
 
-        // display decoded data
-        sb.append(line);
-        synchronized( self )
-        {
-            linesBuffer.append( sb.toString() );
-        }
+    	// display decoded data
+    	sb.append(line);
+    	synchronized( self )
+    	{
+    		linesBuffer.append( sb.toString() );
+    	}
 
-        // if not frozen, display it in the Swing thread
-        if (!freezeButton.isSelected()) {
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    synchronized( self )
-                    {
-                        monTextPane.append( linesBuffer.toString() );
-                        int LineCount = monTextPane.getLineCount() ;
-                        if( LineCount > MAX_LINES )
-                        {
-                            LineCount -= MAX_LINES ;
-                            try {
-                                int offset = monTextPane.getLineStartOffset(LineCount);
-                                monTextPane.getDocument().remove(0, offset ) ;
-                            }
-                            catch (BadLocationException ex) {
-                            }
-                        }
-                        linesBuffer.setLength(0) ;
-                    }
-                }
-            };
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
+    	// if requested, log to a file.
+    	if (logStream != null) {
+    		synchronized (logStream) {
+    			String logLine = sb.toString();
+    			if (!newline.equals("\n")) {
+    				// have to massage the line-ends
+    				int i = 0;
+    				int lim = sb.length();
+    				StringBuffer out = new StringBuffer(sb.length()+10);  // arbitrary guess at space
+    				for ( i = 0; i<lim; i++) {
+    					if (sb.charAt(i) == '\n')
+    						out.append(newline);
+    					else
+    						out.append(sb.charAt(i));
+    				}
+    				logLine = out.toString();
+    			}
+    			logStream.print(logLine);
+    		}
+    	}
 
-        // if requested, log to a file.
-        if (logStream != null) {
-            synchronized (logStream) {
-                String logLine = sb.toString();
-                if (!newline.equals("\n")) {
-                    // have to massage the line-ends
-                    int i = 0;
-                    int lim = sb.length();
-                    StringBuffer out = new StringBuffer(sb.length()+10);  // arbitrary guess at space
-                    for ( i = 0; i<lim; i++) {
-                        if (sb.charAt(i) == '\n')
-                            out.append(newline);
-                        else
-                            out.append(sb.charAt(i));
-                    }
-                    logLine = out.toString();
-                }
-                logStream.print(logLine);
-            }
-        }
+    	// if frozen, exit without adding to the Swing thread
+    	if (freezeButton.isSelected()) {
+    		return;
+    	} 
+    	//don't bother to check filter if no raw value passed
+    	if (raw != null) {
+    		// if first bytes are in the skip list,  exit without adding to the Swing thread
+    		String[] filters = filterField.getText().toUpperCase().split(" ");
+    		String checkRaw = raw.substring(0, 2);
+
+    		for (String s : filters) {
+    			if (s.equals(checkRaw)) {
+    				linesBuffer.setLength(0) ;
+    				return;
+    			}
+    		} 
+    	}
+
+    	Runnable r = new Runnable() {
+    		@Override
+    		public void run() {
+    			synchronized( self )
+    			{
+    				monTextPane.append( linesBuffer.toString() );
+    				int LineCount = monTextPane.getLineCount() ;
+    				if( LineCount > MAX_LINES )
+    				{
+    					LineCount -= MAX_LINES ;
+    					try {
+    						int offset = monTextPane.getLineStartOffset(LineCount);
+    						monTextPane.getDocument().remove(0, offset ) ;
+    					}
+    					catch (BadLocationException ex) {
+    					}
+    				}
+    				linesBuffer.setLength(0) ;
+    			}
+    		}
+    	};
+    	javax.swing.SwingUtilities.invokeLater(r);
     }
-
+    
+ 
     String newline = System.getProperty("line.separator");
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -418,7 +469,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
     }
 
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText()+"\n", "");
+        nextLine(entryField.getText()+"\n", null);
     }
 
     public synchronized String getFrameText() {

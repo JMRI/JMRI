@@ -67,10 +67,8 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
 
     
     public synchronized void message(LocoNetMessage l) {  // receive a LocoNet message and log it
-        // display the raw data if requested
-        String raw = null ;
-        if( rawCheckBox.isSelected() )
-			raw = l.toString();
+        // send the raw data, to display if requested
+        String raw = l.toString();
 
         // display the decoded data
         // we use Llnmon to format, expect it to provide consistent \n after each line
