@@ -175,6 +175,7 @@ public final static int PROG_READ_REQUEST = 0x22;
 public final static int PROG_READ_MODE_REGISTER = 0x11;
 public final static int PROG_READ_MODE_CV       = 0x15;
 public final static int PROG_READ_MODE_PAGED    = 0x14;
+public final static int PROG_READ_MODE_CV_V36   = 0x18; // version 3.6 read
 
 /* Program mode read requests */
 public final static int PROG_WRITE_REQUEST = 0x23;
@@ -183,6 +184,7 @@ public final static int PROG_WRITE_REQUEST = 0x23;
 public final static int PROG_WRITE_MODE_REGISTER = 0x12;
 public final static int PROG_WRITE_MODE_CV       = 0x16;
 public final static int PROG_WRITE_MODE_PAGED    = 0x17;
+public final static int PROG_WRITE_MODE_CV_V36   = 0x1c; // version 3.6 write
 
 /* Accessory Decoder Info Request */
 public final static int ACC_INFO_REQ = 0x42;

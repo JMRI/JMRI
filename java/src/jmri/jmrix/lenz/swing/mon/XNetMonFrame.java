@@ -530,6 +530,18 @@ import jmri.jmrix.lenz.XNetConstants;
 		  case XNetConstants.PROG_READ_MODE_PAGED:
 				text = "Service Mode Request: Read CV " + l.getElement(2) + " in Paged Mode";
 				break;
+                  case XNetConstants.PROG_READ_MODE_CV_V36:
+		        text = "Service Mode Request (V3.6): Read CV " + (l.getElement(2)==0?1024:l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case XNetConstants.PROG_READ_MODE_CV_V36+1:
+		        text = "Service Mode Request (V3.6): Read CV " + (256+l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case XNetConstants.PROG_READ_MODE_CV_V36+2:
+		        text = "Service Mode Request (V3.6): Read CV " + (512+l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case XNetConstants.PROG_READ_MODE_CV_V36+3:
+		        text = "Service Mode Request (V3.6): Read CV " + (768+l.getElement(2)) + " in Direct Mode";
+                               break;
 		  default:
 			text = l.toString();
 		  }
@@ -544,6 +556,18 @@ import jmri.jmrix.lenz.XNetConstants;
 		  case XNetConstants.PROG_WRITE_MODE_PAGED:
 				text = "Service Mode Request: Write " + l.getElement(3) +" to CV " + l.getElement(2) + " in Paged Mode";
 				break;
+                  case XNetConstants.PROG_WRITE_MODE_CV_V36:
+				text = "Service Mode Request (V3.6): Write " + l.getElement(3) +" to CV " + (l.getElement(2)==0?1024:l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case (XNetConstants.PROG_WRITE_MODE_CV_V36+1):
+				text = "Service Mode Request (V3.6): Write " + l.getElement(3) +" to CV " + (256+l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case (XNetConstants.PROG_WRITE_MODE_CV_V36+2):
+				text = "Service Mode Request (V3.6): Write " + l.getElement(3) +" to CV " + (512+l.getElement(2)) + " in Direct Mode";
+                               break;
+                  case (XNetConstants.PROG_WRITE_MODE_CV_V36+3):
+				text = "Service Mode Request (V3.6): Write " + l.getElement(3) +" to CV " + (768+l.getElement(2)) + " in Direct Mode";
+                               break;
 		  default:
 			text = l.toString();
 		  }
