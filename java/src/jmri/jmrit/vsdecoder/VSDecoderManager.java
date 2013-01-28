@@ -30,7 +30,6 @@ import java.beans.PropertyChangeListener;
 import java.io.File;
 import org.jdom.Element;
 
-import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
 import jmri.Block;
@@ -44,6 +43,7 @@ import jmri.jmrit.vsdecoder.listener.VSDListener;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 import jmri.util.FileUtil;
+import org.apache.log4j.Logger;
 
 // VSDecoderFactory
 //
@@ -93,8 +93,7 @@ public class VSDecoderManager implements PropertyChangeListener {
 	// Get preferences
 	String dirname = FileUtil.getUserFilesPath()+ "vsdecoder" +File.separator; // NOI18N
 	FileUtil.createDirectory(dirname);
-        // TODO: turn file name into final string instead of storing in .properties file
-	vsdecoderPrefs = new VSDecoderPreferences(dirname+ Bundle.getMessage("VSDPreferencesFileName"));
+	vsdecoderPrefs = new VSDecoderPreferences(dirname + VSDecoderPreferences.VSDPreferencesFileName);
 	// Listen to ReporterManager for Report List changes
 	setupReporterManagerListener();
 	// Get a Listener (the only one for now)
@@ -647,6 +646,6 @@ public class VSDecoderManager implements PropertyChangeListener {
 	fireMyEvent(new VSDManagerEvent(this, VSDManagerEvent.EventType.PROFILE_LIST_CHANGE, new_entries));
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderManager.class.getName());
+    private static final Logger log = Logger.getLogger(VSDecoderManager.class.getName());
 
 }
