@@ -8,77 +8,101 @@
       </label>
       <display item="FL(f)1" format="checkbox" layout="left" label="FL Forward">
         <label xml:lang="fr">FL en av</label>
+        <label xml:lang="it">FL avanti</label>
       </display>
       <display item="FL(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">FL indietro</label>
       </display>
       <display item="F1(f)1" format="checkbox" layout="left" label="F1 Forward">
         <label xml:lang="fr">F1 en av</label>
+        <label xml:lang="it">F1 avanti</label>
       </display>
       <display item="F1(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F1 indietro</label>
       </display>
       <display item="F2(f)1" format="checkbox" layout="left" label="F2 Forward">
         <label xml:lang="fr">F2 en av</label>
+        <label xml:lang="it">F2 avanti</label>
       </display>
       <display item="F2(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F2 indietro</label>
       </display>
       <display item="F3(f)1" format="checkbox" layout="left" label="F3 Forward">
         <label xml:lang="fr">F3 en av</label>
+        <label xml:lang="it">F3 avanti</label>
       </display>
       <display item="F3(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F3 indietro</label>
       </display>
       <display item="F4(f)1" format="checkbox" layout="left" label="F4 Forward">
         <label xml:lang="fr">F4 en av</label>
+        <label xml:lang="it">F4 avanti</label>
       </display>
       <display item="F4(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F4 indietro</label>
       </display>
       <display item="F5(f)1" format="checkbox" layout="left" label="F5 Forward">
         <label xml:lang="fr">F5 en av</label>
+        <label xml:lang="it">F5 avanti</label>
       </display>
       <display item="F5(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F5 indietro</label>
       </display>
       <display item="F6(f)1" format="checkbox" layout="left" label="F6 Forward">
         <label xml:lang="fr">F6 en av</label>
+        <label xml:lang="it">F6 avanti</label>
       </display>
       <display item="F6(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F6 indietro</label>
       </display>
       <display item="F7(f)1" format="checkbox" layout="left" label="F7 Forward">
         <label xml:lang="fr">F7 en av</label>
+        <label xml:lang="it">F7 avanti</label>
       </display>
       <display item="F7(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F7 indietro</label>
       </display>
       <display item="F8(f)1" format="checkbox" layout="left" label="F8 Forward">
         <label xml:lang="fr">F8 en av</label>
+        <label xml:lang="it">F8 avanti</label>
       </display>
       <display item="F8(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F8 indietro</label>
       </display>
       <display item="F9(f)1" format="checkbox" layout="left" label="F9 Forward">
         <label xml:lang="fr">F9 en av</label>
+        <label xml:lang="it">F9 avanti</label>
       </display>
       <display item="F9(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F9 indietro</label>
       </display>
       <display item="F10(f)1" format="checkbox" layout="left" label="F10 Forward">
         <label xml:lang="fr">F10 en av</label>
+        <label xml:lang="it">F10 avanti</label>
       </display>
       <display item="F10(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F10 indietro</label>
       </display>
     </column>
     <column>
       <label label="Rear ">
         <label xml:lang="fr">Arrière</label>
+        <label xml:lang="it">Dietro</label>
       </label>
       <label label="Light ">
         <label xml:lang="fr">Eclairage</label>
+        <label xml:lang="it">Luce</label>
       </label>
       <display item="FL(f)2" format="checkbox" label="">
         <label/>
@@ -150,6 +174,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux</label>
+        <label xml:lang="it">Ausiliar.</label>
       </label>
       <label label="  1 ">
         <label xml:lang="fr">  1 </label>
@@ -224,6 +249,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux</label>
+        <label xml:lang="it">Ausiliar.</label>
       </label>
       <label label="  2 ">
         <label xml:lang="fr">  2 </label>
@@ -298,6 +324,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux</label>
+        <label xml:lang="it">Ausiliar.</label>
       </label>
       <label label="  3 ">
         <label xml:lang="fr">  3 </label>
@@ -372,6 +399,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux</label>
+        <label xml:lang="it">Ausiliar.</label>
       </label>
       <label label="  4 ">
         <label xml:lang="fr">  4 </label>
@@ -446,9 +474,11 @@
     <column>
       <label label="Notch ">
         <label xml:lang="fr">Cran</label>
+        <label xml:lang="it">Notch</label>
       </label>
       <label label=" Up ">
         <label xml:lang="fr"> haut  </label>
+        <label xml:lang="it"> Su </label>
       </label>
       <display item="FL(f)7" format="checkbox" label="">
         <label/>
@@ -520,9 +550,11 @@
     <column>
       <label label="Notch">
         <label xml:lang="fr">Cran </label>
+        <label xml:lang="it">Notch</label>
       </label>
       <label label="Down">
         <label xml:lang="fr">Bas</label>
+        <label xml:lang="it"> Giù </label>
       </label>
       <display item="FL(f)8" format="checkbox" label="">
         <label/>
@@ -594,71 +626,93 @@
     <column>
       <label label="Button         Front ">
         <label xml:lang="fr">Bouton  avant </label>
+        <label xml:lang="it">Pulsante         Davanti </label>
       </label>
       <label label="                   Light ">
         <label xml:lang="fr">               Eclairage</label>
+        <label xml:lang="it">                  Luce </label>
       </label>
       <display item="F11(f)1" format="checkbox" layout="left" label="F11 Forward">
         <label xml:lang="fr">F11 en av</label>
+        <label xml:lang="it">F11 avanti</label>
       </display>
       <display item="F11(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F11 indietro</label>
       </display>
       <display item="F12(f)1" format="checkbox" layout="left" label="F12 Forward">
         <label xml:lang="fr">F12 en av</label>
+        <label xml:lang="it">F12 avanti</label>
       </display>
       <display item="F12(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F12 indietro</label>
       </display>
       <display item="F13(f)1" format="checkbox" layout="left" label="F13 Forward">
         <label xml:lang="fr">F13 en av</label>
+        <label xml:lang="it">F13 avanti</label>
       </display>
       <display item="F13(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F13 indietro</label>
       </display>
       <display item="F14(f)1" format="checkbox" layout="left" label="F14 Forward">
         <label xml:lang="fr">F14 en av</label>
+        <label xml:lang="it">F14 avanti</label>
       </display>
       <display item="F14(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F14 indietro</label>
       </display>
       <display item="F15(f)1" format="checkbox" layout="left" label="F15 Forward">
         <label xml:lang="fr">F15 en av</label>
+        <label xml:lang="it">F15 avanti</label>
       </display>
       <display item="F15(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">F15 indietro</label>
       </display>
       <display item="Stop(f)1" format="checkbox" layout="left" label="Stop Forward">
         <label xml:lang="fr">Stop en av</label>
+        <label xml:lang="it">Stop avanti</label>
       </display>
       <display item="Stop(r)1" format="checkbox" layout="left" label=" Reverse">
         <label xml:lang="fr"> en arr</label>
+        <label xml:lang="it">Stop indietro</label>
       </display>
       <display item="Run(f)1" format="checkbox" layout="left" label="Run Forward">
         <label xml:lang="fr">démarrage en av</label>
+        <label xml:lang="it">Avvio avanti</label>
       </display>
       <display item="Run(r)1" format="checkbox" layout="left" label=" Reverse">
         <label xml:lang="fr"> en arr</label>
+        <label xml:lang="it">Avvio indietro</label>
       </display>
       <display item="Sensor1(f)1" format="checkbox" layout="left" label="Sensor 1 Fwd">
         <label xml:lang="fr">Son 1 en av</label>
+        <label xml:lang="it">Sensore 1 avanti</label>
       </display>
       <display item="Sensor1(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">Sensore 1 indietro</label>
       </display>
       <display item="Sensor2(f)1" format="checkbox" layout="left" label="Sensor 2 Rev">
         <label xml:lang="fr">Son 2 en arr</label>
+        <label xml:lang="it">Sensore 2 avanti</label>
       </display>
       <display item="Sensor2(r)1" format="checkbox" layout="left" label="Reverse">
         <label xml:lang="fr">en arr</label>
+        <label xml:lang="it">Sensore 2 indietro</label>
       </display>
     </column>
     <column>
       <label label="Rear ">
         <label xml:lang="fr">Arrière</label>
+        <label xml:lang="it">Dietro</label>
       </label>
       <label label="Light ">
         <label xml:lang="fr">Eclairage</label>
+        <label xml:lang="it">Luce</label>
       </label>
       <display item="F11(f)2" format="checkbox" label="">
         <label/>
@@ -718,6 +772,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux </label>
+        <label xml:lang="it">Ausil.</label>
       </label>
       <label label="  1 ">
         <label xml:lang="fr">  1 </label>
@@ -780,6 +835,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux </label>
+        <label xml:lang="it">Ausil.</label>
       </label>
       <label label="  2 ">
         <label xml:lang="fr">  2 </label>
@@ -842,6 +898,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux </label>
+        <label xml:lang="it">Ausil.</label>
       </label>
       <label label="  3 ">
         <label xml:lang="fr">  3 </label>
@@ -904,6 +961,7 @@
     <column>
       <label label="Aux ">
         <label xml:lang="fr">Aux </label>
+        <label xml:lang="it">Ausil.</label>
       </label>
       <label label="  4 ">
         <label xml:lang="fr">  4 </label>
@@ -966,9 +1024,11 @@
     <column>
       <label label="Notch ">
         <label xml:lang="fr">Cran </label>
+        <label xml:lang="it">Notch</label>
       </label>
       <label label=" Up ">
         <label xml:lang="fr"> Haut </label>
+        <label xml:lang="it"> Su </label>
       </label>
       <display item="F11(f)7" format="checkbox" label="">
         <label/>
@@ -1028,9 +1088,11 @@
     <column>
       <label label="Notch">
         <label xml:lang="fr">Cran </label>
+        <label xml:lang="it">Notch</label>
       </label>
       <label label="Down">
         <label xml:lang="fr">Bas</label>
+        <label xml:lang="it"> Giù </label>
       </label>
       <display item="F11(f)8" format="checkbox" label="">
         <label/>

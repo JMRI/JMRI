@@ -48,6 +48,7 @@
         <label> </label>
       </label>
       <label label="                                                  Range 0 - 127 ">
+        <label xml:lang="it">                                                  Valori  0- 127</label>
         <label xml:lang="fr">                                                  Valeure 0 - 127</label>
       </label>
       <display item="DCstart">

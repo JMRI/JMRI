@@ -7,6 +7,7 @@
           </label>
           <label label="Brightness Range 0 (dark) - 15 (maximum)">
             <label xml:lang="fr">Luminosité valeur 0  - 15 (maximum)</label>
+            <label xml:lang="it">Luminosità: 0=spento  - 15 (massima)</label>
           </label>
           <label label=" ">
             <label> </label>
