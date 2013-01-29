@@ -843,7 +843,7 @@ public class LayoutTurntable
         }
         
         void updateDetails(){
-            if(beanBox==null && turnoutStateCombo==null){
+            if(beanBox==null || turnoutStateCombo==null){
                 return;
             }
             setTurnout(beanBox.getDisplayName(), turnoutStateValues[turnoutStateCombo.getSelectedIndex()]);
