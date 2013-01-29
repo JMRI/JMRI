@@ -75,6 +75,87 @@ public class XNetReplyTest extends TestCase {
     }
 
 
+    // check is service mode response
+    public void testIsServiceModeResponse(){
+          // CV 1 in direct mode.
+          XNetReply r= new XNetReply("63 14 01 04 72");
+          Assert.assertTrue(r.isServiceModeResponse());
+          // CV 1 in paged mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertTrue(r.isServiceModeResponse());
+          // CV 1 in register mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertTrue(r.isServiceModeResponse());
+          // CV 286 in direct mode.
+          r= new XNetReply("63 15 1E 14 7C");
+          Assert.assertTrue(r.isServiceModeResponse());
+    }
+
+    // check is paged mode response
+    public void testIsPagedModeResponse(){
+          // CV 1 in direct mode.
+          XNetReply r= new XNetReply("63 14 01 04 72");
+          Assert.assertFalse(r.isPagedModeResponse());
+          // CV 1 in paged mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertTrue(r.isPagedModeResponse());
+          // CV 1 in register mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertTrue(r.isPagedModeResponse());
+          // CV 286 in direct mode.
+          r= new XNetReply("63 15 1E 14 7C");
+          Assert.assertFalse(r.isPagedModeResponse());
+    }
+ 
+   // check is direct mode response
+    public void testIsDirectModeResponse(){
+          // CV 1 in direct mode.
+          XNetReply r= new XNetReply("63 14 01 04 72");
+          Assert.assertTrue(r.isDirectModeResponse());
+          // CV 1 in paged mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertFalse(r.isDirectModeResponse());
+          // CV 1 in register mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertFalse(r.isDirectModeResponse());
+          // CV 286 in direct mode.
+          r= new XNetReply("63 15 1E 14 7C");
+          Assert.assertTrue(r.isDirectModeResponse());
+    }
+
+    // check get service mode CV Number response code.
+    public void testGetServiceModeCVNumber(){
+          // CV 1 in direct mode.
+          XNetReply r= new XNetReply("63 14 01 04 72");
+          Assert.assertEquals("Direct Mode CV<256",1,r.getServiceModeCVNumber());
+          // CV 1 in paged mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertEquals("Paged Mode CV<256",1,r.getServiceModeCVNumber());
+          // CV 1 in register mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertEquals("Register Mode CV<256",1,r.getServiceModeCVNumber());
+          Assert.assertTrue(r.isServiceModeResponse());
+          // CV 286 in direct mode.
+          r= new XNetReply("63 15 1E 14 7C");
+          Assert.assertEquals("Direct Mode CV>256",286,r.getServiceModeCVNumber());
+    }
+
+    // check get service mode CV Value response code.
+    public void testGetServiceModeCVValue(){
+          // CV 1 in direct mode.
+          XNetReply r= new XNetReply("63 14 01 04 72");
+          Assert.assertEquals("Direct Mode CV<256",4,r.getServiceModeCVValue());
+          // CV 1 in paged mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertEquals("Paged Mode CV<256",4,r.getServiceModeCVValue());
+          // CV 1 in register mode.
+          r= new XNetReply("63 10 01 04 76");
+          Assert.assertEquals("Register Mode CV<256",4,r.getServiceModeCVValue());
+          Assert.assertTrue(r.isServiceModeResponse());
+          // CV 286 in direct mode.
+          r= new XNetReply("63 15 1E 14 7C");
+          Assert.assertEquals("Direct Mode CV>256",20,r.getServiceModeCVValue());
+    }
 
 
 	// from here down is testing infrastructure
