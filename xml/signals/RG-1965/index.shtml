@@ -25,7 +25,12 @@
 JMRI: RG-1965 Signaling Definition
 </h1>
 <p>
-This directory contains signaling definitions corresponding to the 1965 Rio Grande rules as described in the 1965 version of the RG publication "Rio Grande Rules of the Operating Department", as described by Frank Keller in his article Rio Grande Signals - Prototype &amp; Model, published in The Prospector volume 2 number 1 2005 by the <a href="http://rgmhs.drgw.org"> Rio Grande Modeling and Historical Society </a></div>
+This directory contains signaling definitions corresponding to the 1965 Rio Grande rules 
+as described in the 1965 version of the 
+RG publication "Rio Grande Rules of the Operating Department", 
+as described by Frank Keller in his article Rio Grande Signals - Prototype &amp; Model, 
+published in The Prospector volume 2 number 1 2005 
+by the <a href="http://rgmhs.drgw.org"> Rio Grande Modeling and Historical Society </a>.
 <p>
 Remark: The Rio Grande used the term &quot;Positive&quot; for an Absolute signal, marked with a round badge carrying the letter P.
 
