@@ -172,20 +172,17 @@ import jmri.jmrix.lenz.XNetConstants;
 				text= "Broadcast: Emergency Stop (track power on)";
                 /* Followed by Service Mode responses */
 		} else if(l.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE) {
-		  switch(l.getElement(1)) {
-		  case XNetConstants.CS_SERVICE_DIRECT_RESPONSE:
+		  if(l.isDirectModeResponse()) {
 				text = "Service Mode: Direct Programming Response: CV:" +
-				       l.getElement(2) +
+				       l.getServiceModeCVNumber() +
 				       " Value: " +
-				       l.getElement(3);
-				break;
-		  case XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE:
+				       l.getServiceModeCVValue();
+                  } else if (l.isPagedModeResponse()) {
 				text = "Service Mode: Register or Paged Mode Response: CV:" +
-				       l.getElement(2) +
+				       l.getServiceModeCVNumber() +
 				       " Value: " +
-				       l.getElement(3);
-				break;
-		  case XNetConstants.CS_SOFTWARE_VERSION:
+				       l.getServiceModeCVValue();
+                  } else if (l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION) {
 				text = "Command Station Software Version: " + (l.getElementBCD(2).floatValue())/10 + " Type: ";
 				switch(l.getElement(3)) {
 				    case 0x00: text = text+ "LZ100/LZV100";
@@ -200,10 +197,10 @@ import jmri.jmrix.lenz.XNetConstants;
 				    default:
 					text = text + l.getElement(3);
 				}
-				break; // GT 2007/11/6 - Added break
-		  default:
-			text = l.toString();
-		  }
+                     } else {
+                        text = l.toString();
+                     }
+		  //}
 		/* We want to look at responses to specific requests made to the Command Station */
 		} else if (l.getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
               	    if (l.getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {

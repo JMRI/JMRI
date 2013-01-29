@@ -514,6 +514,68 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
                  this.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)));
     }
 
+
+    /*
+     * Is this message a service mode response?
+     */
+    public boolean isServiceModeResponse(){
+         return(getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE &&
+                (getElement(1)==XNetConstants.CS_SERVICE_DIRECT_RESPONSE ||
+                 getElement(1)==(XNetConstants.CS_SERVICE_DIRECT_RESPONSE +1 )||
+                 getElement(1)==( XNetConstants.CS_SERVICE_DIRECT_RESPONSE +2)||
+                 getElement(1)==(XNetConstants.CS_SERVICE_DIRECT_RESPONSE +3) ||
+                 getElement(1)==XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE )
+               );
+    }
+
+    /*
+     * Is this message a register or paged mode programming response?
+     */
+    public boolean isPagedModeResponse(){
+         return(getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE &&
+                 getElement(1)==XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE ); 
+    }
+
+    /*
+     * Is this message a direct CV mode programming response?
+     */
+    public boolean isDirectModeResponse(){
+         return(getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE &&
+                (getElement(1)==XNetConstants.CS_SERVICE_DIRECT_RESPONSE ||
+                 getElement(1)==(XNetConstants.CS_SERVICE_DIRECT_RESPONSE +1 )||
+                 getElement(1)==( XNetConstants.CS_SERVICE_DIRECT_RESPONSE +2)||
+                 getElement(1)==(XNetConstants.CS_SERVICE_DIRECT_RESPONSE +3)));
+    }
+
+    /*
+     * @return the CV value associated with a service mode reply
+     * return -1 if not a service mode message.
+     */
+    public int getServiceModeCVNumber(){
+       int cv=-1;
+       if(isServiceModeResponse()){
+          if((getElement(1)&XNetConstants.CS_SERVICE_DIRECT_RESPONSE)==XNetConstants.CS_SERVICE_DIRECT_RESPONSE) {
+             cv=(getElement(1)-XNetConstants.CS_SERVICE_DIRECT_RESPONSE)*256 + getElement(2);
+          }
+          else
+             cv=getElement(2);
+       }
+       return(cv);
+    }
+
+    /*
+     * @return the value returned by the DCC system associated with a 
+     * service mode reply
+     * return -1 if not a service mode message.
+     */
+    public int getServiceModeCVValue(){
+       int value=-1;
+       if(isServiceModeResponse()){
+             value=getElement(3);
+       }
+       return(value);
+    }
+
     /*
      * Return True if the message is an error message indicating 
      * we should retransmit.
