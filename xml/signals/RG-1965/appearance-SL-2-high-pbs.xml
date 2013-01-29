@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+
+<appearancetable
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
+>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+  
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+	<author>
+    	<personname><firstname>Egbert</firstname><surname>Broerse</surname></personname>
+    	<email>dcc2@ebroerse.nl</email>
+		</author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+		<revnumber>1</revnumber>
+		<date>2013-01-28</date>
+		<authorinitials>EBR</authorinitials>
+		<revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
+    </revision>   
+  </revhistory> 
+  
+  <aspecttable>RG-1965</aspecttable>
+  <name>Double searchlight high permissive signal</name>
+  <reference>As described in the 1965 version of the RG publication "Rio Grande Rules of Operating Department".</reference>
+  <description>Appearances for a permissive two-searchlight signal with number plate</description>
+  
+  <appearances>
+
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <reference>Rule 281</reference>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-high-pbs/rule-281.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Approach Medium</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <reference>Rule 281B</reference>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-high-pbs/rule-281B.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach Medium</aspectname>
+      <show>flashyellow</show>
+      <show>red</show>
+      <reference>Rule 282</reference>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-high-pbs/rule-282.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <reference>Rule 283</reference>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-high-pbs/rule-283.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Rule 285</reference>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-high-pbs/rule-285.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Diverging Approach</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Rule 286</reference>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-high-pbs/rule-286.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>red</show>
+      <show>lunar</show>
+      <reference>Rule 290</reference>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-high-pbs/rule-290.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop and Proceed</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 291</reference>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-high-pbs/rule-291.gif</imagelink>
+    </appearance>
+
+  </appearances>
+  
+  <specificappearances>
+    <danger>
+      <aspect>Stop and Proceed</aspect>
+    </danger>
+    <held>
+      <aspect>Stop and Proceed</aspect>
+    </held>
+  </specificappearances>
+
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Approach Medium</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+    
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Diverging Approach Medium</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+  	  <advancedAspect>Stop and Proceed</advancedAspect>
+  	  <ourAspect>Approach</ourAspect>
+      <ourAspect>Diverging Approach</ourAspect>
+	</aspectMapping>
+	
+  </aspectMappings>
+  
+</appearancetable>  
