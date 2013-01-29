@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import java.util.*;
+import java.util.List;
 
 import jmri.Sensor;
 import jmri.implementation.AbstractNamedBean;
@@ -2491,25 +2492,27 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     * index 10, so we don't want to return it again.
     * The block returned will have a hopcount or metric equal to or greater than
     * the one of the last block returned.
-    * if last index is set to -1 this indicates that this is the first time.
+    * if the exclude block list is empty this is the first time, it has been used.
+    * The parameters for the best last block are based upon the last entry in the excludedBlock list
     */
-    public int getNextBestBlock(Block previousBlock, Block destBlock, int lastIndex, int routingMethod){
+    
+    public int getNextBestBlock(Block previousBlock, Block destBlock, List<Integer> excludeBlock, int routingMethod){
         if(enableSearchRouteLogging)
-            log.info("From " + this.getDisplayName() + " find best route from " + previousBlock.getDisplayName() + " to " + destBlock.getDisplayName() + " index " + lastIndex + " routingMethod " + routingMethod);
+            log.info("From " + this.getDisplayName() + " find best route from " + previousBlock.getDisplayName() + " to " + destBlock.getDisplayName() + " index " + excludeBlock + " routingMethod " + routingMethod);
         int bestCount = 965255; //set stupidly high
         int bestIndex = -1;
         int lastValue = 0;
-        if ((lastIndex!=-1) && (lastIndex<routes.size())) {
+        if(!excludeBlock.isEmpty() && (excludeBlock.get(excludeBlock.size()-1)<routes.size())){
             if (routingMethod==LayoutBlockConnectivityTools.METRIC){
-                lastValue = routes.get(lastIndex).getMetric();
+                lastValue = routes.get(excludeBlock.get(excludeBlock.size()-1)).getMetric();
             } else /* if (routingMethod==LayoutBlockManager.HOPCOUNT)*/{
-                lastValue = routes.get(lastIndex).getHopCount();
+                lastValue = routes.get(excludeBlock.get(excludeBlock.size()-1)).getHopCount();
             }
             if(enableSearchRouteLogging)
-                log.info("last index is " + lastIndex + " " + routes.get(lastIndex).getDestBlock().getDisplayName());
+                log.info("last index is " + excludeBlock.get(excludeBlock.size()-1) + " " + routes.get(excludeBlock.get(excludeBlock.size()-1)).getDestBlock().getDisplayName());
         }
         for (int i = 0; i<routes.size(); i ++){
-            if (i!=lastIndex){
+            if (!excludeBlock.contains(i)){
                 Routes r = routes.get(i);
                 int currentValue;
                 if (routingMethod==LayoutBlockConnectivityTools.METRIC){
@@ -2542,7 +2545,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                             }
                         }
                         if (r.getNextBlock()==this.getBlock()){
-                            log.debug("getNextBlock is this block therefore directly connected");
                             if(enableSearchRouteLogging)
                                 log.info("getNextBlock is this block therefore directly connected");
                             return i;

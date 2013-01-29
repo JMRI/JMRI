@@ -326,7 +326,7 @@ public class LayoutBlockConnectivityTools{
         Block currentBlock = sourceLayoutBlock.getBlock();
 
         Block destBlock = destinationLayoutBlock.getBlock();
-        log.debug("Destination Block " + destinationLayoutBlock.getDisplayName() + " " + destBlock);
+        if(log.isDebugEnabled()) log.debug("Destination Block " + destinationLayoutBlock.getDisplayName() + " " + destBlock);
         Block nextBlock = protectingLayoutBlock.getBlock();
         if(log.isDebugEnabled()){
             log.debug("s:" + sourceLayoutBlock.getDisplayName() + " p:" + protectingLayoutBlock.getDisplayName() + " d:" + destinationLayoutBlock.getDisplayName());
@@ -362,26 +362,27 @@ public class LayoutBlockConnectivityTools{
         BlocksTested bt = blocksInRoute.get(blocksInRoute.size()-1);
 
         int ttl=1;
-        int offSet=-1;
+        List<Integer> offSet= new ArrayList<Integer>();
         while (ttl <ttlSize){ //value should be higher but low for test!
             log.debug("===== Ttl value = " + ttl + " ======\nLooking for next block");
             int nextBlockIndex = findBestHop(currentBlock, nextBlock, destBlock, directionOfTravel, offSet, validateOnly, pathMethod);
             if (nextBlockIndex!=-1){
                 bt.addIndex(nextBlockIndex);
-                log.debug("block index returned " + nextBlockIndex + " Blocks in route size " + blocksInRoute.size());
+                if(log.isDebugEnabled()) log.debug("block index returned " + nextBlockIndex + " Blocks in route size " + blocksInRoute.size());
                 //Sets the old next block to be our current block.
                 currentLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextBlock);
 
-                offSet = -1;
+                offSet = new ArrayList<Integer>();
 
                 directionOfTravel = currentLBlock.getRouteDirectionAtIndex(nextBlockIndex);
 
                 currentBlock = nextBlock;
                 nextBlock = currentLBlock.getRouteNextBlockAtIndex(nextBlockIndex);
                 LayoutBlock nextLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextBlock);
-
-                log.debug("Blocks in route size " + blocksInRoute.size());
-                log.debug(nextBlock.getDisplayName() + " " + destBlock.getDisplayName());
+                if(log.isDebugEnabled()){
+                    log.debug("Blocks in route size " + blocksInRoute.size());
+                    log.debug(nextBlock.getDisplayName() + " " + destBlock.getDisplayName());
+                }
                 if (nextBlock==currentBlock){
                     nextBlock = currentLBlock.getRouteDestBlockAtIndex(nextBlockIndex);
                     log.debug("the next block to our destination we are looking for is directly connected to this one");
@@ -391,15 +392,14 @@ public class LayoutBlockConnectivityTools{
                     blocksInRoute.add(bt);
                 }
                 if (nextBlock==destBlock){
-                    log.debug("Adding destination Block " + destinationLayoutBlock.getDisplayName());
-                    log.debug("arrived at destination block");
-                    
                     ArrayList<LayoutBlock> returnBlocks = new ArrayList<LayoutBlock>();
                     for (int i =0; i<blocksInRoute.size(); i++){
                         returnBlocks.add(blocksInRoute.get(i).getBlock());
                     }
                     returnBlocks.add(destinationLayoutBlock);
                     if(log.isDebugEnabled()){
+                        log.debug("Adding destination Block " + destinationLayoutBlock.getDisplayName());
+                        log.debug("arrived at destination block");
                         log.debug(sourceLayoutBlock.getDisplayName() + " Return as Long");
                         for (int i =0; i<returnBlocks.size(); i++){
                             log.debug(returnBlocks.get(i).getDisplayName());
@@ -430,7 +430,8 @@ public class LayoutBlockConnectivityTools{
 
                     currentBlock = blocksInRoute.get(birSize-3).getBlock().getBlock();
                     nextBlock = blocksInRoute.get(birSize-2).getBlock().getBlock();
-                    offSet = blocksInRoute.get(birSize-2).getLastIndex();
+                    offSet = blocksInRoute.get(birSize-2).getTestedIndexes();
+                    bt = blocksInRoute.get(birSize-2);
                     blocksInRoute.remove(birSize-1);
                     ttl--;
                 }
@@ -458,7 +459,11 @@ public class LayoutBlockConnectivityTools{
         }
         
         int getLastIndex(){
-            return indexNumber.get(indexNumber.size()-1);
+            return indexNumber.get(indexNumber.size()-1); //get the last one in the list
+        }
+        
+        List<Integer> getTestedIndexes(){
+            return indexNumber;
         }
         
         LayoutBlock getBlock(){
@@ -478,7 +483,7 @@ public class LayoutBlockConnectivityTools{
     
     String lastErrorMessage = "Unknown Error Occured";
     //We need to take into account if the returned block has a signalmast attached.
-    int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, int offSet, boolean validateOnly, int pathMethod){
+    int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, int pathMethod){
         org.apache.log4j.Logger lBlockManLog = org.apache.log4j.Logger.getLogger(InstanceManager.layoutBlockManagerInstance().getClass().getName());
         org.apache.log4j.Level currentLevel = lBlockManLog.getLevel();
         int blockindex = 0;
@@ -537,7 +542,7 @@ public class LayoutBlockConnectivityTools{
                     return -1;
                 }
                 blkIndexTested.add(blockindex);
-                offSet = blockindex;
+                offSet.add(blockindex);
             } else {
                 log.debug("At this point the getNextBextBlock() has returned a -1");
             }
