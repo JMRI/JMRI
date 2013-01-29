@@ -39,7 +39,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 281</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -48,7 +48,7 @@
       <show>flashyellow</show>
       <show>red</show>
       <reference>Rule 281B</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-281B.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-281B.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -57,7 +57,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 282</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-282.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-282.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -66,7 +66,7 @@
       <show>green</show>
       <show>red</show>
       <reference>Rule 283</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-283.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-283.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -75,7 +75,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 285</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -84,7 +84,7 @@
       <show>yellow</show>
       <show>red</show>
       <reference>Rule 286</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-286.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-286.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -93,7 +93,7 @@
       <show>red</show>
       <show>lunar</show>
       <reference>Rule 290</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-290.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-290.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -102,7 +102,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 292</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-291.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-3-high-pbs/rule-291.gif</imagelink>
     </appearance>
 
   </appearances>

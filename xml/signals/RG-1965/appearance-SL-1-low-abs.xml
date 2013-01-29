@@ -37,35 +37,35 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Rule 281</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-281.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>flashyellow</show>
       <reference>Rule 282</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-282.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-282.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Rule 285</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-285.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
       <reference>Rule 290</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-290.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-290.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>Rule 292</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-292.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-abs/rule-292.gif</imagelink>
     </appearance>
 
   </appearances>
