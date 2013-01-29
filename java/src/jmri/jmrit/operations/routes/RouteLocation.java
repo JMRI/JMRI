@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.routes;
 
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
@@ -385,7 +386,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.TRAIN_ICON_X)) != null )  _trainIconX = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute(Xml.TRAIN_ICON_Y)) != null )  _trainIconY = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute(Xml.SEQUENCE_ID)) != null )  _sequenceId = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = a.getValue();
+        if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = OperationsXml.convertFromXmlComment(a.getValue());
     }
 
     /**

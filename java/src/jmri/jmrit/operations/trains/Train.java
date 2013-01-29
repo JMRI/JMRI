@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.List;
 import org.jdom.Element;
 
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -2993,8 +2994,8 @@ public class Train implements java.beans.PropertyChangeListener {
 			_leadEngineId = a.getValue();
 		if ((a = e.getAttribute(Xml.STATUS)) != null)
 			_status = a.getValue();
-		if ((a = e.getAttribute(Xml.COMMENT)) != null)
-			_comment = a.getValue();
+		if ((a = e.getAttribute(Xml.COMMENT)) != null)			
+			_comment = OperationsXml.convertFromXmlComment(a.getValue());
 		if (_route != null) {
 			if ((a = e.getAttribute(Xml.CURRENT)) != null)
 				_current = _route.getLocationById(a.getValue());

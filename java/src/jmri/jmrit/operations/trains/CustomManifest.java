@@ -16,7 +16,7 @@ public class CustomManifest {
 	// ../JMRI/operations/csvManifests
 	
 	public static String directoryName = "csvManifests";
-	public static String mcAppName = "ManifestCreatorVer2.11Appl.xls";
+	public static String mcAppName = "MC4JMRI.xls";
 	public static String mcAppArg = "";
 	
 	private static String csvNamesFileName = "CSVFilesFile.txt";

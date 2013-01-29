@@ -157,7 +157,7 @@ public class ManageBackupsDialog extends JDialog {
 				buttonPane.add(horizontalStrut_1);
 			}
 			{
-				JButton closeButton = new JButton(Bundle.getMessage("ManageBackupsDialog.closeButton.text"));
+				JButton closeButton = new JButton(Bundle.getMessage("ManageBackupsDialog.cancelButton.text"));
 				closeButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						do_cancelButton_actionPerformed(e);

@@ -7,6 +7,7 @@ import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 
@@ -1520,7 +1521,7 @@ public class Track {
 		if ((a = e.getAttribute(Xml.DIR)) != null)
 			_trainDir = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute(Xml.COMMENT)) != null)
-			_comment = a.getValue();
+			_comment = OperationsXml.convertFromXmlComment(a.getValue());
 		// new way of reading car types using elements added in 3.3.1
 		if (e.getChild(Xml.TYPES) != null) {
 			@SuppressWarnings("unchecked")

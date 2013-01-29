@@ -7,6 +7,7 @@ import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -835,7 +836,7 @@ public class Location implements java.beans.PropertyChangeListener {
         if ((x = e.getAttribute(Xml.SOUTH_TRAIN_ICON_X)) != null && (y = e.getAttribute(Xml.SOUTH_TRAIN_ICON_Y))!= null){
         	setTrainIconSouth(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
         }      
-        if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = a.getValue();
+        if ((a = e.getAttribute(Xml.COMMENT)) != null )  _comment = OperationsXml.convertFromXmlComment(a.getValue());
         if ((a = e.getAttribute(Xml.SWITCH_LIST_COMMENT)) != null )  _switchListComment = a.getValue();
         if ((a = e.getAttribute(Xml.PHYSICAL_LOCATION)) != null) _physicalLocation = PhysicalLocation.parse(a.getValue());
 		// new way of reading car types using elements added in 3.3.1
