@@ -36,7 +36,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements
 		saveTrackButton.setText(Bundle.getMessage("SaveInterchange"));
 
 		// finish
-		packFrame();
+		pack();
 		setVisible(true);
 	}
 

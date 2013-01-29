@@ -85,6 +85,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("East"));
 	JCheckBox westCheckBox = new JCheckBox(Bundle.getMessage("West"));
 	JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
+	JCheckBox autoDropCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
+	JCheckBox autoPickupCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
 
 	// radio buttons
 	JRadioButton roadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
@@ -148,6 +150,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	public void initComponents(Location location, Track track) {
 		_location = location;
 		_track = track;
+		
+		// tool tips
+		autoDropCheckBox.setToolTipText(Bundle.getMessage("TipAutoTrack"));
+		autoPickupCheckBox.setToolTipText(Bundle.getMessage("TipAutoTrack"));
 
 		// property changes
 		_location.addPropertyChangeListener(this);
@@ -330,6 +336,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(excludeRoutePickup);
 
 		addComboBoxAction(comboBoxTypes);
+		
+		addCheckBoxAction(autoDropCheckBox);
+		addCheckBoxAction(autoPickupCheckBox);
 
 		// track name for tools menu
 		String trackName = null;
@@ -372,6 +381,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateLoadOption();
 
 		loadAndTypeCheckBox.setSelected(loadAndType);
+		
+		setMinimumSize(new Dimension(750, Control.panelHeight));
 	}
 
 	// Save, Delete, Add
@@ -868,9 +879,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());
-		p.add(anyDrops, 0);
-		p.add(trainDrop, 1);
-		p.add(routeDrop, 2);
+		p.add(anyDrops);
+		p.add(trainDrop);
+		p.add(routeDrop);
 		p.add(excludeTrainDrop);
 		p.add(excludeRouteDrop);
 		GridBagConstraints gc = new GridBagConstraints();
@@ -897,6 +908,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				}
 				p.add(addDropButton);
 				p.add(deleteDropButton);
+				p.add(autoDropCheckBox);
 				gc.gridy = y++;
 				dropPanel.add(p, gc);
 				y++;
@@ -930,7 +942,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		dropPanel.revalidate();
 		dropPanel.repaint();
-		packFrame();
+		validate();;
 	}
 
 	private void updatePickupOptions() {
@@ -940,9 +952,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 		JPanel p = new JPanel();
 		p.setLayout(new GridBagLayout());
-		p.add(anyPickups, 0);
-		p.add(trainPickup, 1);
-		p.add(routePickup, 2);
+		p.add(anyPickups);
+		p.add(trainPickup);
+		p.add(routePickup);
 		p.add(excludeTrainPickup);
 		p.add(excludeRoutePickup);
 		GridBagConstraints gc = new GridBagConstraints();
@@ -969,6 +981,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				}
 				p.add(addPickupButton);
 				p.add(deletePickupButton);
+				p.add(autoPickupCheckBox);
 				gc.gridy = y++;
 				pickupPanel.add(p, gc);
 				y++;
@@ -1002,17 +1015,45 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		pickupPanel.revalidate();
 		pickupPanel.repaint();
-		packFrame();
+		validate();;
 	}
 
 	private void updateTrainComboBox() {
 		trainManager.updateComboBox(comboBoxPickupTrains);
+		if (autoPickupCheckBox.isSelected())
+			autoTrainComboBox(comboBoxPickupTrains);
 		trainManager.updateComboBox(comboBoxDropTrains);
+		if (autoDropCheckBox.isSelected())
+			autoTrainComboBox(comboBoxDropTrains);
 	}
 
+	// filter all trains not serviced by this track
+	private void autoTrainComboBox(JComboBox box) {
+		for (int i=1; i<box.getItemCount(); i++) {
+			Train train = (Train) box.getItemAt(i);
+			if (!checkRoute(train.getRoute())) {
+				box.removeItemAt(i--);
+			}
+		}
+	}
+	
 	private void updateRouteComboBox() {
 		routeManager.updateComboBox(comboBoxPickupRoutes);
+		if (autoPickupCheckBox.isSelected())
+			autoRouteComboBox(comboBoxPickupRoutes);
 		routeManager.updateComboBox(comboBoxDropRoutes);
+		if (autoDropCheckBox.isSelected())
+			autoRouteComboBox(comboBoxDropRoutes);
+	}
+	
+	// filter out all routes not serviced by this track
+	private void autoRouteComboBox(JComboBox box) {
+		for (int i=1; i<box.getItemCount(); i++) {
+			Route route = (Route) box.getItemAt(i);
+			if (!checkRoute(route)) {
+				box.removeItemAt(i--);
+			}
+		}
 	}
 
 	// Car type combo box has been changed, show loads associated with this car type
@@ -1056,10 +1097,18 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		loadTypes(CarTypes.instance().getNames());
 		loadTypes(EngineTypes.instance().getNames());
 		enableCheckboxes(_track != null);
-		addItem(panelCheckBoxes, clearButton, 1, ++y);
-		addItem(panelCheckBoxes, setButton, 4, y);
+		
+		JPanel p = new JPanel();
+		p.add(clearButton);
+		p.add(setButton);
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridwidth = getNumberOfCheckboxes() + 1;
+		gc.gridy = ++y;
+		panelCheckBoxes.add(p, gc);
+
 		panelCheckBoxes.revalidate();
-		packFrame();
+		panelCheckBoxes.repaint();
+		validate();;
 	}
 
 	int x = 0;
@@ -1145,7 +1194,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		panelRoadNames.repaint();
 		panelRoadNames.validate();
-		packFrame();
+		validate();;
 	}
 	
 	private void updateLoadOption() {
@@ -1211,7 +1260,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		panelLoadNames.repaint();
 		panelLoadNames.validate();
-		packFrame();
+		validate();;
 	}
 
 	private void deleteAllLoads() {
@@ -1241,10 +1290,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			westCheckBox.setSelected((_track.getTrainDirections() & Track.WEST) > 0);
 		}
 		panelTrainDir.revalidate();
-		packFrame();
+		validate();;
 	}
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		if (ae.getSource() == autoDropCheckBox || ae.getSource() == autoPickupCheckBox) {
+			updateTrainComboBox();
+			updateRouteComboBox();
+			return;
+		}			
 		JCheckBox b = (JCheckBox) ae.getSource();
 		log.debug("checkbox change " + b.getText());
 		if (_location == null)
@@ -1295,16 +1349,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		trainManager.removePropertyChangeListener(this);
 		routeManager.removePropertyChangeListener(this);
 		super.dispose();
-	}
-
-	protected void packFrame() {
-		validate();
-		pack();
-		// make some room so rolling stock type scroll window doesn't always appear
-		if (getWidth() < 750)
-			setSize(750, getHeight());
-		if (getHeight() < Control.panelHeight)
-			setSize(getWidth(), Control.panelHeight);
 	}
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {

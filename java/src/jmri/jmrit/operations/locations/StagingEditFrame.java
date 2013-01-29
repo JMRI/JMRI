@@ -106,7 +106,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 
 		// finish
 		panelOrder.setVisible(false); // Car order out of staging isn't necessary
-		packFrame();
+		pack();
 		setVisible(true);
 	}
 

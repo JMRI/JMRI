@@ -33,7 +33,7 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 		// finish
 		dropPanel.setVisible(false); // don't show drop and pick up panel
 		pickupPanel.setVisible(false);
-		packFrame();
+		pack();
 		setVisible(true);
 	}
 

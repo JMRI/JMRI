@@ -68,7 +68,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		addButtonAction(editScheduleButton);
 		// finish
 		panelOrder.setVisible(false); // Car order out of spurs is not available
-		packFrame();
+		pack();
 		setVisible(true);
 	}
 
