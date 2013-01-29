@@ -163,12 +163,12 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		//f.southCheckBox.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.southCheckBox ) );
 		
-		// accept only UP road
-		//f.roadNameInclude.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameInclude ) );
-		f.comboBoxRoads.setSelectedItem("UP");
-		//f.addRoadButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addRoadButton ) );
+//		// accept only UP road
+//		//f.roadNameInclude.doClick();
+//		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameInclude ) );
+//		f.comboBoxRoads.setSelectedItem("UP");
+//		//f.addRoadButton.doClick();
+//		getHelper().enterClickAndLeave( new MouseEventData( this, f.addRoadButton ) );
 		
 		//f.saveTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
@@ -184,9 +184,9 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertNotNull("2nd interchange track", t);
 		Assert.assertEquals("2nd interchange track length", 4331, t.getLength());
 		Assert.assertEquals("west and north", Track.NORTH+Track.WEST, t.getTrainDirections());
-		Assert.assertEquals("include roads", Track.INCLUDEROADS, t.getRoadOption());
-		Assert.assertTrue("only UP road", t.acceptsRoadName("UP"));
-		Assert.assertFalse("2nd interchange Road2", t.acceptsRoadName("Road2"));
+//		Assert.assertEquals("include roads", Track.INCLUDEROADS, t.getRoadOption());
+//		Assert.assertTrue("only UP road", t.acceptsRoadName("UP"));
+//		Assert.assertFalse("2nd interchange Road2", t.acceptsRoadName("Road2"));
 		
 		// check track accepts Boxcars
 		Assert.assertTrue("2nd interchange track accepts Boxcars", t.acceptsTypeName("Boxcar"));
@@ -240,10 +240,10 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		
 		// exclude UP road
 		//f.roadNameExclude.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameExclude ) );
-		f.comboBoxRoads.setSelectedItem("UP");
-		//f.addRoadButton.doClick();
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addRoadButton ) );
+//		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameExclude ) );
+//		f.comboBoxRoads.setSelectedItem("UP");
+//		//f.addRoadButton.doClick();
+//		getHelper().enterClickAndLeave( new MouseEventData( this, f.addRoadButton ) );
 		
 		//f.saveTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
@@ -267,9 +267,9 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("3rd siding track length", 1010, t.getLength());
 		
 		Assert.assertEquals("only south", Track.SOUTH, t.getTrainDirections());
-		Assert.assertEquals("exclude roads", Track.EXCLUDEROADS, t.getRoadOption());
-		Assert.assertFalse("only UP road", t.acceptsRoadName("UP"));
-		Assert.assertTrue("3rd siding Road2", t.acceptsRoadName("Road2"));
+//		Assert.assertEquals("exclude roads", Track.EXCLUDEROADS, t.getRoadOption());
+//		Assert.assertFalse("only UP road", t.acceptsRoadName("UP"));
+//		Assert.assertTrue("3rd siding Road2", t.acceptsRoadName("Road2"));
 		
 		// create the schedule edit frame
 		//f.editScheduleButton.doClick();
