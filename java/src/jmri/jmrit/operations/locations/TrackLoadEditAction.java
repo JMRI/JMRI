@@ -14,18 +14,19 @@ import javax.swing.*;
  */
 public class TrackLoadEditAction extends AbstractAction {
 	
-	private Track _track;
-	private Location _location;
+	private TrackEditFrame _frame;
+	private TrackLoadEditFrame tlef = null;
 
-	public TrackLoadEditAction(Location location, Track track) {
+	public TrackLoadEditAction(TrackEditFrame frame) {
 		super(Bundle.getMessage("MenuItemLoadOptions"));
-		_location = location;
-		_track = track;
+		_frame = frame;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		TrackLoadEditFrame tlef = new TrackLoadEditFrame();
-		tlef.initComponents(_location, _track);		
+		if (tlef != null)
+			tlef.dispose();
+		tlef = new TrackLoadEditFrame();
+		tlef.initComponents(_frame._location, _frame._track);		
 	}
 }
 

@@ -14,18 +14,19 @@ import javax.swing.*;
  */
 public class TrackRoadEditAction extends AbstractAction {
 	
-	private Track _track;
-	private Location _location;
+	private TrackEditFrame _frame;
+	private TrackRoadEditFrame tref = null;
 
-	public TrackRoadEditAction(Location location, Track track) {
+	public TrackRoadEditAction(TrackEditFrame frame) {
 		super(Bundle.getMessage("MenuItemRoadOptions"));
-		_location = location;
-		_track = track;
+		_frame = frame;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		TrackRoadEditFrame tref = new TrackRoadEditFrame();
-		tref.initComponents(_location, _track);		
+		if (tref != null)
+			tref.dispose();
+		tref = new TrackRoadEditFrame();
+		tref.initComponents(_frame._location, _frame._track);		
 	}
 }
 

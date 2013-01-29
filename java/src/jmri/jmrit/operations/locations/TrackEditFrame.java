@@ -59,8 +59,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel panelOrder = new JPanel();
 	
 	// labels
-	JLabel loadOption = new JLabel();
-	JLabel roadOption = new JLabel();
+	JLabel loadOption = new JLabel(Bundle.getMessage("AcceptsAllLoads"));
+	JLabel roadOption = new JLabel(Bundle.getMessage("AcceptsAllRoads"));
 
 	// major buttons
 	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
@@ -349,8 +349,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		_toolMenu = new JMenu(Bundle.getMessage("Tools"));
-		_toolMenu.add(new TrackRoadEditAction(location, _track));
-		_toolMenu.add(new TrackLoadEditAction(location, _track));
+		_toolMenu.add(new TrackRoadEditAction(this));
+		_toolMenu.add(new TrackLoadEditAction(this));
 		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		_toolMenu.add(new TrackEditCommentsAction(this));
 		_toolMenu.add(new PoolTrackAction(this));
@@ -566,6 +566,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateLoadNames();
 		updateDropOptions();
 		updatePickupOptions();
+		updateRoadOption();
+		updateLoadOption();
 
 		_track.addPropertyChangeListener(this);
 
@@ -1085,9 +1087,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	private void updateRoadOption() {
 		if (_track != null) {
 			if (_track.getRoadOption().equals(Track.INCLUDEROADS))
-				roadOption.setText(Bundle.getMessage("AcceptOnly"));
+				roadOption.setText(Bundle.getMessage("AcceptOnly") + " " + _track.getRoadNames().length + " "
+						+ Bundle.getMessage("Roads"));
 			else if (_track.getRoadOption().equals(Track.EXCLUDEROADS))
-				roadOption.setText(Bundle.getMessage("Exclude"));
+				roadOption.setText(Bundle.getMessage("Exclude") + " " + _track.getRoadNames().length + " "
+						+ Bundle.getMessage("Roads"));
 			else
 				roadOption.setText(Bundle.getMessage("AcceptsAllRoads"));
 		}
@@ -1147,9 +1151,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	private void updateLoadOption() {
 		if (_track != null) {
 			if (_track.getLoadOption().equals(Track.INCLUDELOADS))
-				loadOption.setText(Bundle.getMessage("AcceptOnly"));
+				loadOption.setText(Bundle.getMessage("AcceptOnly") + " " + _track.getLoadNames().length + " "
+						+ Bundle.getMessage("Loads"));
 			else if (_track.getLoadOption().equals(Track.EXCLUDELOADS))
-				loadOption.setText(Bundle.getMessage("Exclude"));
+				loadOption.setText(Bundle.getMessage("Exclude") + " " + _track.getLoadNames().length + " "
+						+ Bundle.getMessage("Loads"));
 			else
 				loadOption.setText(Bundle.getMessage("AcceptsAllLoads"));
 		}
@@ -1265,6 +1271,42 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		CarRoads.instance().updateComboBox(comboBoxRoads);
 	}
 
+
+
+	// set the service order
+	private void updateCarOrder() {
+		orderNormal.setSelected(true);
+		if (_track != null) {
+			if (_track.getServiceOrder().equals(Track.FIFO))
+				orderFIFO.setSelected(true);
+			if (_track.getServiceOrder().equals(Track.LIFO))
+				orderLIFO.setSelected(true);
+		}
+	}
+
+	public void dispose() {
+		if (_track != null)
+			_track.removePropertyChangeListener(this);
+		_location.removePropertyChangeListener(this);
+		CarRoads.instance().removePropertyChangeListener(this);
+		CarLoads.instance().removePropertyChangeListener(this);
+		CarTypes.instance().removePropertyChangeListener(this);
+		ScheduleManager.instance().removePropertyChangeListener(this);
+		trainManager.removePropertyChangeListener(this);
+		routeManager.removePropertyChangeListener(this);
+		super.dispose();
+	}
+
+	protected void packFrame() {
+		validate();
+		pack();
+		// make some room so rolling stock type scroll window doesn't always appear
+		if (getWidth() < 750)
+			setSize(750, getHeight());
+		if (getHeight() < Control.panelHeight)
+			setSize(getWidth(), Control.panelHeight);
+	}
+	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
@@ -1306,40 +1348,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)) {
 			updateLoadOption();			
 		}
-	}
-
-	// set the service order
-	private void updateCarOrder() {
-		orderNormal.setSelected(true);
-		if (_track != null) {
-			if (_track.getServiceOrder().equals(Track.FIFO))
-				orderFIFO.setSelected(true);
-			if (_track.getServiceOrder().equals(Track.LIFO))
-				orderLIFO.setSelected(true);
-		}
-	}
-
-	public void dispose() {
-		if (_track != null)
-			_track.removePropertyChangeListener(this);
-		_location.removePropertyChangeListener(this);
-		CarRoads.instance().removePropertyChangeListener(this);
-		CarLoads.instance().removePropertyChangeListener(this);
-		CarTypes.instance().removePropertyChangeListener(this);
-		ScheduleManager.instance().removePropertyChangeListener(this);
-		trainManager.removePropertyChangeListener(this);
-		routeManager.removePropertyChangeListener(this);
-		super.dispose();
-	}
-
-	protected void packFrame() {
-		validate();
-		pack();
-		// make some room so rolling stock type scroll window doesn't always appear
-		if (getWidth() < 750)
-			setSize(750, getHeight());
-		if (getHeight() < Control.panelHeight)
-			setSize(getWidth(), Control.panelHeight);
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackEditFrame.class

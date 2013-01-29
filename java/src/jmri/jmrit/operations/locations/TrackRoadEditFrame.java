@@ -109,6 +109,8 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 		pRoadControls.add(deleteRoadButton);
 		pRoadControls.add(deleteAllRoadsButton);
 		
+		pRoadControls.setVisible(false);
+		
 		p3.add(pRoadRadioButtons);
 		p3.add(pRoadControls);
 
