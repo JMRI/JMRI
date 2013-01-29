@@ -701,6 +701,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         for (int i = 0; i < entries; i++) {
             _cvModel.addCV("" + (CV + i), readOnly, infoOnly, writeOnly);
         }
+        if (mfxFlag) {
+            _cvModel.addCV("" + (2), readOnly, infoOnly, writeOnly);
+            _cvModel.addCV("" + (5), readOnly, infoOnly, writeOnly);
+		}
         v = new SpeedTableVarValue(name, comment, "", readOnly, infoOnly, writeOnly, opsOnly, CV, mask, minVal, maxVal, _cvModel.allCvVector(), _status, item, entries, mfxFlag);
         return v;
     }

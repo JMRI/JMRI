@@ -26,6 +26,8 @@
   <version author="Jos Wils" version="1" lastUpdated="20110523"/>
   <!-- ver2 added support for new mfx&reg; speed table -->
   <version author="Dave Heap" version="2" lastUpdated="20130105"/>
+  <!-- ver3 fixed range and default values CVs 5 and 6 -->
+  <version author="Dave Heap" version="3" lastUpdated="20130127"/>
   <decoder>
     <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH">
       <model model="LokPilot V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
@@ -134,12 +136,12 @@
         <decVal/>
         <label>Deceleration</label>
       </variable>
-      <variable label="Vhigh" CV="5" default="64">
-        <decVal max="64"/>
+      <variable label="Vhigh" CV="5" default="255">
+        <decVal/>
         <label>Vhigh</label>
       </variable>
-      <variable label="Vmid" CV="6" default="22">
-        <decVal max="64"/>
+      <variable label="Vmid" CV="6" default="88">
+        <decVal/>
         <label>Vmid</label>
       </variable>
       <variable label="Decoder Version " CV="7" readOnly="no" item="Decoder Version">
