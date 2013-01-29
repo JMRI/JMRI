@@ -413,10 +413,11 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             saveBasicRoster = new JButton("Save");
             saveBasicRoster.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
-                log.info("Save pressed");
                     try{
                         saveRosterEntry();
-                    } catch (jmri.JmriException ex){ }
+                    } catch (jmri.JmriException ex){
+                        return;
+                    }
                 }
             });
             TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
@@ -521,9 +522,11 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         }
         // update if needed
         if (newAddr!=null) {
-            // store DCC address, type
-             address=newAddr;
-            shortAddr= !longMode;
+            synchronized(this){
+                // store DCC address, type
+                address=newAddr;
+                shortAddr= !longMode;
+            }
         }
     }
     JButton saveBasicRoster;
@@ -551,7 +554,9 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             throw new jmri.JmriException("No Roster ID");
         }
         if(checkDuplicate()){
-            JOptionPane.showMessageDialog(progPane,jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ErrorDuplicateID"));
+            synchronized(this){
+                JOptionPane.showMessageDialog(progPane,jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ErrorDuplicateID"));
+            }
             throw new jmri.JmriException("Duplcate ID");
         }
         re = new RosterEntry();
