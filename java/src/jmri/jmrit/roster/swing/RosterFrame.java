@@ -23,7 +23,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -754,63 +753,30 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     void handleQuit(WindowEvent e) {
         if (e != null && openWindowInstances == 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeDP3prompt";
-            if(!p.getSimplePreferenceState(rememberWindowClose)){
-                final JDialog dialog = new JDialog();
-                dialog.setTitle(rb.getString("MessageShortCloseWarning"));
-                dialog.setLocationRelativeTo(e.getWindow());
-                dialog.setDefaultCloseOperation(javax.swing.JFrame.DISPOSE_ON_CLOSE);
-                JPanel container = new JPanel();
-                container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
-                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-
+            if (!p.getSimplePreferenceState(rememberWindowClose)) {
+                JPanel message = new JPanel();
                 JLabel question = new JLabel(rb.getString("MessageLongCloseWarning"));
-                question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.add(question);
-                
-                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
-                remember.setFont(remember.getFont().deriveFont(10f));
-                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-                JButton yesButton = new JButton("Yes");
-                JButton noButton = new JButton("No");
-                JPanel button = new JPanel();
-                button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                button.add(yesButton);
-                button.add(noButton);
-                container.add(button);
-                
-                noButton.addActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        dialog.dispose();
-                    }
-                });
-                
-                yesButton.addActionListener(new ActionListener(){
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if(remember.isSelected()) {
-                           p.setSimplePreferenceState(rememberWindowClose, true);
-                           //p.setMultipleChoiceOption(getWindowFrameRef(), "closeDP3warning", 0x02);
-                        }
-                        AppsBase.handleQuit();
-                    }
-                });
-                container.add(remember);
-                container.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.setAlignmentY(Component.CENTER_ALIGNMENT);
-                dialog.getContentPane().add(container);
-                dialog.pack();
-                dialog.setModal(true);
-                dialog.setVisible(true);
+                final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
+                remember.setFont(remember.getFont().deriveFont(10.0F));
+                message.setLayout(new BoxLayout(message, BoxLayout.Y_AXIS));
+                message.add(question);
+                message.add(remember);
+                int result = JOptionPane.showConfirmDialog(null,
+                        message,
+                        rb.getString("MessageShortCloseWarning"),
+                        JOptionPane.YES_NO_OPTION);
+                if (remember.isSelected()) {
+                    p.setSimplePreferenceState(rememberWindowClose, true);
+                }
+                if (result == JOptionPane.YES_OPTION) {
+                    AppsBase.handleQuit();
+                }
             } else {
                 AppsBase.handleQuit();
             }
-        } else {
-            AppsBase.handleQuit();
         }
     }
-    
+
     protected void helpMenu(JMenuBar menuBar, final JFrame frame) {
         try {
             // create menu and standard items
@@ -1490,13 +1456,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (serModeProCon != null) {
             if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
                 serviceModeProgrammerLabel.setText(
-                        Bundle.getMessage("ServiceModeProgOnline",serModeProCon.getConnectionName())
-                );
+                        Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
                 serviceModeProgrammerLabel.setText(
-                        Bundle.getMessage("ServiceModeProgOffline",serModeProCon.getConnectionName())
-                );
+                        Bundle.getMessage("ServiceModeProgOffline", serModeProCon.getConnectionName()));
                 serviceModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldServMode == null) {
@@ -1520,13 +1484,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         if (opsModeProCon != null) {
             if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && InstanceManager.programmerManagerInstance().getGlobalProgrammer() != null) {
                 operationsModeProgrammerLabel.setText(
-                        Bundle.getMessage("OpsModeProgOnline",opsModeProCon.getConnectionName())
-                );
+                        Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
             } else {
                 operationsModeProgrammerLabel.setText(
-                        Bundle.getMessage("OpsModeProgOffline",opsModeProCon.getConnectionName())
-                );
+                        Bundle.getMessage("OpsModeProgOffline", opsModeProCon.getConnectionName()));
                 operationsModeProgrammerLabel.setForeground(Color.red);
             }
             if (oldOpsMode == null) {
