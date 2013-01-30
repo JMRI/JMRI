@@ -1189,6 +1189,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     protected void showPopup(MouseEvent e) {
+        int row = rtable.getTable().rowAtPoint( e.getPoint() );
+        if (!rtable.getTable().isRowSelected(row)) {
+            rtable.getTable().changeSelection(row, 0, false, false);
+        }
         JPopupMenu popupMenu = new JPopupMenu();
         JMenuItem menuItem = new JMenuItem("Program");
         menuItem.addActionListener(new ActionListener() {
