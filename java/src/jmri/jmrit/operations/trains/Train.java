@@ -2422,8 +2422,14 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 		// Set up to process the CSV file by the external Manifest program
 		CustomManifest.addCVSFile(file);
-		if (!CustomManifest.process())
+		if (!CustomManifest.process()) {
+			if (!CustomManifest.manifestCreatorFileExists()) {
+				log.warn("Manifest creator file not found!, directory name: "
+						+ CustomManifest.getDirectoryName() + ", file name: " + CustomManifest.getFileName()); // NOI18N
+			}
 			TrainUtilities.openDesktop(file);
+			return false;
+		}
 
 		return true;
 	}
