@@ -1160,6 +1160,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 re = l.get(0);
             }
             re.addPropertyChangeListener(rosterEntryUpdateListener);
+            rtable.setSelection(re);
             updateDetails();
             rtable.moveTableViewToSelected();
         } else {

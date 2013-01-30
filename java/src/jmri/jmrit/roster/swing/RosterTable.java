@@ -265,19 +265,44 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     public void setEditable(boolean editable) {
         this.dataModel.editable = editable;
     }
-    
+
     public boolean getEditable() {
         return this.dataModel.editable;
     }
-    
+
     public void setSelectionMode(int selectionMode) {
         dataTable.setSelectionMode(selectionMode);
     }
-    
+
     public int getSelectionMode() {
         return dataTable.getSelectionModel().getSelectionMode();
     }
-    
+
+    public void setSelection(RosterEntry... selection) {
+        //Remove the listener as this change will re-activate it and we end up in a loop!
+        dataTable.getSelectionModel().removeListSelectionListener(tableSelectionListener);
+        dataTable.clearSelection();
+        if (selection != null) {
+            for (RosterEntry entry : selection) {
+                re = entry;
+                int entires = dataTable.getRowCount();
+                for (int i = 0; i < entires; i++) {
+                    if (dataTable.getValueAt(i, RosterTableModel.IDCOL).equals(re.getId())) {
+                        dataTable.addRowSelectionInterval(i, i);
+                    }
+                }
+            }
+            if (selection.length > 1) {
+                re = null;
+            } else {
+                this.moveTableViewToSelected();
+            }
+        } else {
+            re = null;
+        }
+        dataTable.getSelectionModel().addListSelectionListener(tableSelectionListener);
+    }
+
     class headerActionListener implements ActionListener {
 
         TableColumn tc;
