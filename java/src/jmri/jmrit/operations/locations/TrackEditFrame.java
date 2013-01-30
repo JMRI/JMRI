@@ -1108,7 +1108,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 		panelCheckBoxes.revalidate();
 		panelCheckBoxes.repaint();
-		validate();;
+		validate();
+		pack();
 	}
 
 	int x = 0;
