@@ -52,7 +52,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	
 	CarLoadEditFrame lef = null;
 	
-	protected static boolean enableDestination = false;
+	private static boolean enableDestination = false;
 		
 	public CarSetFrame() {
 		super(Bundle.getMessage("TitleCarSet"));
