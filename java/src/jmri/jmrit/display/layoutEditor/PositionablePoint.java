@@ -92,7 +92,7 @@ public class PositionablePoint
 	public String getWestBoundSignal() {return westBoundSignalName;}
 	public void setWestBoundSignal(String signalName) {westBoundSignalName = signalName;}
     
-    public String getEastBoundSensor() {
+    public String getEastBoundSensorName() {
         if(eastBoundSensorNamed!=null)
             return eastBoundSensorNamed.getName();
         return "";
@@ -111,7 +111,7 @@ public class PositionablePoint
         }
     }
     
-	public String getWestBoundSensor() {
+	public String getWestBoundSensorName() {
         if(westBoundSensorNamed!=null)
             return westBoundSensorNamed.getName();
         return "";
@@ -129,9 +129,9 @@ public class PositionablePoint
         }
     }
     
-	public String getEastBoundSignalMast() {return eastBoundSignalMastName;}
+	public String getEastBoundSignalMastName() {return eastBoundSignalMastName;}
 	public void setEastBoundSignalMast(String signalMastName) {eastBoundSignalMastName = signalMastName;}
-	public String getWestBoundSignalMast() {return westBoundSignalMastName;}
+	public String getWestBoundSignalMastName() {return westBoundSignalMastName;}
 	public void setWestBoundSignalMast(String signalMastName) {westBoundSignalMastName = signalMastName;}
     
 	// initialization instance variables (used when loading a LayoutEditor)
@@ -194,10 +194,10 @@ public class PositionablePoint
             return;
         if(connect1==null && connect2==null){
             //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if(!getWestBoundSignalMast().equals(""))
-                removeSML(getWestBoundSignalMast());
-            if(!getEastBoundSignalMast().equals(""))
-                removeSML(getEastBoundSignalMast());
+            if(!getWestBoundSignalMastName().equals(""))
+                removeSML(getWestBoundSignalMastName());
+            if(!getEastBoundSignalMastName().equals(""))
+                removeSML(getEastBoundSignalMastName());
             setWestBoundSignalMast("");
             setEastBoundSignalMast("");
             setWestBoundSensor("");
@@ -208,10 +208,10 @@ public class PositionablePoint
             return;
         } else if (connect1.getLayoutBlock()==connect2.getLayoutBlock()){
             //We are no longer a block bounardy
-            if(!getWestBoundSignalMast().equals(""))
-                removeSML(getWestBoundSignalMast());
-            if(!getEastBoundSignalMast().equals(""))
-                removeSML(getEastBoundSignalMast());
+            if(!getWestBoundSignalMastName().equals(""))
+                removeSML(getWestBoundSignalMastName());
+            if(!getEastBoundSignalMastName().equals(""))
+                removeSML(getEastBoundSignalMastName());
             setWestBoundSignalMast("");
             setEastBoundSignalMast("");
             setWestBoundSensor("");

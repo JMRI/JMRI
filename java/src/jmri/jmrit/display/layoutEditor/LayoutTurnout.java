@@ -302,16 +302,16 @@ public class LayoutTurnout
 	public String getSignalD2Name() {return signalD2Name;}
 	public void setSignalD2Name(String signalName) {signalD2Name = signalName;}
     
-    public String getSignalAMast() {return signalAMast;}
+    public String getSignalAMastName() {return signalAMast;}
 	public void setSignalAMast(String signalMast) {signalAMast = signalMast;}
-	public String getSignalBMast() {return signalBMast;}
+	public String getSignalBMastName() {return signalBMast;}
 	public void setSignalBMast(String signalMast) {signalBMast = signalMast;}
-	public String getSignalCMast() {return signalCMast;}
+	public String getSignalCMastName() {return signalCMast;}
 	public void setSignalCMast(String signalMast) {signalCMast = signalMast;}
-	public String getSignalDMast() {return signalDMast;}
+	public String getSignalDMastName() {return signalDMast;}
 	public void setSignalDMast(String signalMast) {signalDMast = signalMast;}
     
-    public String getSensorA() {
+    public String getSensorAName() {
         if(sensorANamed!=null)
             return sensorANamed.getName();
         return "";
@@ -331,7 +331,7 @@ public class LayoutTurnout
         }
     }
     
-	public String getSensorB() {
+	public String getSensorBName() {
         if(sensorBNamed!=null)
             return sensorBNamed.getName();
         return "";
@@ -351,7 +351,7 @@ public class LayoutTurnout
         }
     }
     
-	public String getSensorC() {
+	public String getSensorCName() {
         if(sensorCNamed!=null)
             return sensorCNamed.getName();
         return "";
@@ -371,7 +371,7 @@ public class LayoutTurnout
         }
     }
     
-	public String getSensorD() {
+	public String getSensorDName() {
         if(sensorDNamed!=null)
             return sensorDNamed.getName();
         return "";
@@ -2047,14 +2047,14 @@ public class LayoutTurnout
     public void reCheckBlockBoundary(){
         if(connectA==null && connectB==null && connectC==null){
             if ((type==RH_TURNOUT) || (type==LH_TURNOUT) || (type==WYE_TURNOUT)){
-                if(!getSignalAMast().equals(""))
-                    removeSML(getSignalAMast());
-                if(!getSignalBMast().equals(""))
-                    removeSML(getSignalBMast());
-                if(!getSignalCMast().equals(""))
-                    removeSML(getSignalCMast());
-                if(!getSignalDMast().equals(""))
-                    removeSML(getSignalDMast());
+                if(!getSignalAMastName().equals(""))
+                    removeSML(getSignalAMastName());
+                if(!getSignalBMastName().equals(""))
+                    removeSML(getSignalBMastName());
+                if(!getSignalCMastName().equals(""))
+                    removeSML(getSignalCMastName());
+                if(!getSignalDMastName().equals(""))
+                    removeSML(getSignalDMastName());
                 signalAMast = "";
                 signalBMast = "";
                 signalCMast = "";
@@ -2064,14 +2064,14 @@ public class LayoutTurnout
                 return;
             
             } else if (((type==DOUBLE_XOVER)||(type==RH_XOVER)||(type==LH_XOVER)) && connectD==null){
-                if(!getSignalAMast().equals(""))
-                    removeSML(getSignalAMast());
-                if(!getSignalBMast().equals(""))
-                    removeSML(getSignalBMast());
-                if(!getSignalCMast().equals(""))
-                    removeSML(getSignalCMast());
-                if(!getSignalDMast().equals(""))
-                    removeSML(getSignalDMast());
+                if(!getSignalAMastName().equals(""))
+                    removeSML(getSignalAMastName());
+                if(!getSignalBMastName().equals(""))
+                    removeSML(getSignalBMastName());
+                if(!getSignalCMastName().equals(""))
+                    removeSML(getSignalCMastName());
+                if(!getSignalDMastName().equals(""))
+                    removeSML(getSignalDMastName());
                 signalAMast = "";
                 signalBMast = "";
                 signalCMast = "";
@@ -2102,8 +2102,8 @@ public class LayoutTurnout
             if(trkA.getLayoutBlock()==block){
                 signalAMast = "";
                 sensorANamed=null;
-                if(!getSignalAMast().equals(""))
-                    removeSML(getSignalAMast());
+                if(!getSignalAMastName().equals(""))
+                    removeSML(getSignalAMastName());
             }
         }
         if(connectB instanceof TrackSegment){
@@ -2111,24 +2111,24 @@ public class LayoutTurnout
             if(trkB.getLayoutBlock()==block || trkB.getLayoutBlock()==blockB){
                 signalBMast = "";
                 sensorBNamed=null;
-                if(!getSignalBMast().equals(""))
-                    removeSML(getSignalBMast());
+                if(!getSignalBMastName().equals(""))
+                    removeSML(getSignalBMastName());
             }
         } if(connectC instanceof TrackSegment) {
             trkC = (TrackSegment)connectC;
             if(trkC.getLayoutBlock()==block || trkC.getLayoutBlock()==blockB || trkC.getLayoutBlock()==blockC){
                 signalCMast = "";
                 sensorCNamed=null;
-                if(!getSignalCMast().equals(""))
-                    removeSML(getSignalCMast());
+                if(!getSignalCMastName().equals(""))
+                    removeSML(getSignalCMastName());
             }
         } if(connectD!=null && connectD instanceof TrackSegment && ((type==DOUBLE_XOVER)||(type==RH_XOVER)||(type==LH_XOVER))){
             trkD = (TrackSegment)connectD;
             if(trkD.getLayoutBlock()==block || trkD.getLayoutBlock()==blockB || trkD.getLayoutBlock()==blockC || trkD.getLayoutBlock()==blockD){
                 signalDMast = "";
                 sensorDNamed=null;
-                if(!getSignalDMast().equals(""))
-                    removeSML(getSignalDMast());
+                if(!getSignalDMastName().equals(""))
+                    removeSML(getSignalDMastName());
             }
         }
     }

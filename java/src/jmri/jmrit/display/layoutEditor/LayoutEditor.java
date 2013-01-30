@@ -6447,7 +6447,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public PositionablePoint findPositionablePointByEastBoundSignalMast(String signalMastName){
         for (int i = 0; i<pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
-            if (p.getEastBoundSignalMast().equals(signalMastName))
+            if (p.getEastBoundSignalMastName().equals(signalMastName))
                 return p;
         }
         return null;
@@ -6456,7 +6456,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public PositionablePoint findPositionablePointByWestBoundSignalMast(String signalMastName){
         for (int i = 0; i<pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
-            if (p.getWestBoundSignalMast().equals(signalMastName))
+            if (p.getWestBoundSignalMastName().equals(signalMastName))
                 return p;
 
         }
@@ -6466,10 +6466,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName){
         for(int i = 0; i<turnoutList.size(); i++){
             LayoutTurnout t = turnoutList.get(i);
-            if((t.getSignalAMast().equals(signalMastName)) ||
-                (t.getSignalBMast().equals(signalMastName)) ||
-                (t.getSignalCMast().equals(signalMastName)) ||
-                (t.getSignalDMast().equals(signalMastName)))
+            if((t.getSignalAMastName().equals(signalMastName)) ||
+                (t.getSignalBMastName().equals(signalMastName)) ||
+                (t.getSignalCMastName().equals(signalMastName)) ||
+                (t.getSignalDMastName().equals(signalMastName)))
                 return t;
         }
         return null;
@@ -6478,10 +6478,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public LayoutTurnout findLayoutTurnoutBySensor(String sensorName){
         for(int i = 0; i<turnoutList.size(); i++){
             LayoutTurnout t = turnoutList.get(i);
-            if((t.getSensorA().equals(sensorName)) ||
-                (t.getSensorB().equals(sensorName)) ||
-                (t.getSensorC().equals(sensorName)) ||
-                (t.getSensorD().equals(sensorName)))
+            if((t.getSensorAName().equals(sensorName)) ||
+                (t.getSensorBName().equals(sensorName)) ||
+                (t.getSensorCName().equals(sensorName)) ||
+                (t.getSensorDName().equals(sensorName)))
                 return t;
         }
         return null;
@@ -6513,10 +6513,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 
     public LayoutSlip findLayoutSlipBySignalMast(String signalMastName){
         for(LayoutSlip l: slipList){
-            if((l.getSignalAMast().equals(signalMastName)) ||
-                (l.getSignalBMast().equals(signalMastName)) ||
-                (l.getSignalCMast().equals(signalMastName)) ||
-                (l.getSignalDMast().equals(signalMastName)))
+            if((l.getSignalAMastName().equals(signalMastName)) ||
+                (l.getSignalBMastName().equals(signalMastName)) ||
+                (l.getSignalCMastName().equals(signalMastName)) ||
+                (l.getSignalDMastName().equals(signalMastName)))
                 return l;
         }
         return null;
@@ -6524,10 +6524,10 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     
     public LayoutSlip findLayoutSlipBySensor(String sensorName){
         for(LayoutSlip l: slipList){
-            if((l.getSensorA().equals(sensorName)) ||
-                (l.getSensorB().equals(sensorName)) ||
-                (l.getSensorC().equals(sensorName)) ||
-                (l.getSensorD().equals(sensorName)))
+            if((l.getSensorAName().equals(sensorName)) ||
+                (l.getSensorBName().equals(sensorName)) ||
+                (l.getSensorCName().equals(sensorName)) ||
+                (l.getSensorDName().equals(sensorName)))
                 return l;
         }
         return null;
@@ -6536,7 +6536,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName){
         for (int i = 0; i<pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
-            if (p.getEastBoundSensor().equals(sensorName))
+            if (p.getEastBoundSensorName().equals(sensorName))
                 return p;
         }
         return null;
@@ -6545,7 +6545,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName){
         for (int i = 0; i<pointList.size(); i++) {
             PositionablePoint p = pointList.get(i);
-            if (p.getWestBoundSensor().equals(sensorName))
+            if (p.getWestBoundSensorName().equals(sensorName))
                 return p;
 
         }

@@ -275,14 +275,14 @@ public class LayoutSlip extends LayoutTurnout
     public void reCheckBlockBoundary(){
         if(connectA==null && connectB==null && connectC==null && connectD==null){
             //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if(!getSignalAMast().equals(""))
-                removeSML(getSignalAMast());
-            if(!getSignalBMast().equals(""))
-                removeSML(getSignalBMast());
-            if(!getSignalCMast().equals(""))
-                removeSML(getSignalCMast());
-            if(!getSignalDMast().equals(""))
-                removeSML(getSignalDMast());
+            if(!getSignalAMastName().equals(""))
+                removeSML(getSignalAMastName());
+            if(!getSignalBMastName().equals(""))
+                removeSML(getSignalBMastName());
+            if(!getSignalCMastName().equals(""))
+                removeSML(getSignalCMastName());
+            if(!getSignalDMastName().equals(""))
+                removeSML(getSignalDMastName());
             setSignalAMast("");
             setSignalBMast("");
             setSignalCMast("");
@@ -305,8 +305,8 @@ public class LayoutSlip extends LayoutTurnout
         if(connectA instanceof TrackSegment){
             trkA = (TrackSegment)connectA;
             if(trkA.getLayoutBlock()==block){
-                if(!getSignalAMast().equals(""))
-                    removeSML(getSignalAMast());
+                if(!getSignalAMastName().equals(""))
+                    removeSML(getSignalAMastName());
                 setSignalAMast("");
                 setSensorA("");
             }
@@ -314,8 +314,8 @@ public class LayoutSlip extends LayoutTurnout
         if(connectC instanceof TrackSegment) {
             trkC = (TrackSegment)connectC;
             if(trkC.getLayoutBlock()==block){
-                if(!getSignalCMast().equals(""))
-                    removeSML(getSignalCMast());
+                if(!getSignalCMastName().equals(""))
+                    removeSML(getSignalCMastName());
                 setSignalCMast("");
                 setSensorC("");
             }
@@ -323,8 +323,8 @@ public class LayoutSlip extends LayoutTurnout
         if(connectB instanceof TrackSegment){
             trkB = (TrackSegment)connectB;
             if(trkB.getLayoutBlock()==block){
-                if(!getSignalBMast().equals(""))
-                    removeSML(getSignalBMast());
+                if(!getSignalBMastName().equals(""))
+                    removeSML(getSignalBMastName());
                 setSignalBMast("");
                 setSensorB("");
             }
@@ -333,8 +333,8 @@ public class LayoutSlip extends LayoutTurnout
         if(connectD instanceof TrackSegment) {
             trkD = (TrackSegment)connectC;
             if(trkD.getLayoutBlock()==block){
-                if(!getSignalDMast().equals(""))
-                    removeSML(getSignalDMast());
+                if(!getSignalDMastName().equals(""))
+                    removeSML(getSignalDMastName());
                 setSignalDMast("");
                 setSensorD("");
             }
@@ -997,14 +997,14 @@ public class LayoutSlip extends LayoutTurnout
      */
     void remove() {
         
-        disableSML(getSignalAMast());
-        disableSML(getSignalBMast());
-        disableSML(getSignalCMast());
-        disableSML(getSignalDMast());
-        removeSML(getSignalAMast());
-        removeSML(getSignalBMast());
-        removeSML(getSignalCMast());
-        removeSML(getSignalDMast());
+        disableSML(getSignalAMastName());
+        disableSML(getSignalBMastName());
+        disableSML(getSignalCMastName());
+        disableSML(getSignalDMastName());
+        removeSML(getSignalAMastName());
+        removeSML(getSignalBMastName());
+        removeSML(getSignalCMastName());
+        removeSML(getSignalDMastName());
         // remove from persistance by flagging inactive
         active = false;
     }

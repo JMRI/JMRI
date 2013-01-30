@@ -936,16 +936,16 @@ public class ConnectivityUtil
 		if (((p.getConnect1()).getLayoutBlock()==lBlock) && ((p.getConnect2()).getLayoutBlock()!=lBlock)) {
 			if ( (leTools.isAtWestEndOfAnchor(p.getConnect2(), p) && facing) ||
 						((!leTools.isAtWestEndOfAnchor(p.getConnect2(), p)) && (!facing)) )				
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMast()));
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMastName()));
 			else
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMast()));
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMastName()));
 		}
 		else if (((p.getConnect1()).getLayoutBlock()!=lBlock) && ((p.getConnect2()).getLayoutBlock()==lBlock)) {
 			if ( (leTools.isAtWestEndOfAnchor(p.getConnect1(), p) && facing) ||
 						((!leTools.isAtWestEndOfAnchor(p.getConnect1(), p)) && (!facing)) )
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMast()));
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMastName()));
 			else
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMast()));
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMastName()));
 		}
 		else {
 			// should never happen
@@ -958,13 +958,13 @@ public class ConnectivityUtil
     public boolean layoutTurnoutHasSignalMasts(LayoutTurnout t) {
         String[] turnoutBlocks = t.getBlockBoundaries();
         boolean valid = true;
-        if(turnoutBlocks[0]!=null && (t.getSignalAMast()==null  || t.getSignalAMast().equals("")))
+        if(turnoutBlocks[0]!=null && (t.getSignalAMastName()==null  || t.getSignalAMastName().equals("")))
             valid = false;
-        if(turnoutBlocks[1]!=null && (t.getSignalBMast()==null  || t.getSignalBMast().equals("")))
+        if(turnoutBlocks[1]!=null && (t.getSignalBMastName()==null  || t.getSignalBMastName().equals("")))
             valid = false;
-        if(turnoutBlocks[2]!=null && (t.getSignalCMast()==null  || t.getSignalCMast().equals("")))
+        if(turnoutBlocks[2]!=null && (t.getSignalCMastName()==null  || t.getSignalCMastName().equals("")))
             valid = false;
-        if(turnoutBlocks[3]!=null && (t.getSignalDMast()==null  || t.getSignalDMast().equals("")))
+        if(turnoutBlocks[3]!=null && (t.getSignalDMastName()==null  || t.getSignalDMastName().equals("")))
             valid = false;
 		return valid;
 	}
