@@ -84,6 +84,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * Send the XpressNet message to set the state of locomotive
      * direction and functions F0, F1, F2, F3, F4
      */
+    @Override
     protected void sendFunctionGroup1()
     {
        XNetMessage msg=XNetMessage.getFunctionGroup1OpsMsg(this.getDccAddress(),
@@ -96,6 +97,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * Send the XpressNet message to set the state of
      * functions F5, F6, F7, F8
      */
+    @Override
     protected void sendFunctionGroup2()
     {
        XNetMessage msg=XNetMessage.getFunctionGroup2OpsMsg(this.getDccAddress(),
@@ -108,6 +110,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * Send the XpressNet message to set the state of
      * functions F9, F10, F11, F12
      */
+    @Override
     protected void sendFunctionGroup3()
     {
        XNetMessage msg=XNetMessage.getFunctionGroup3OpsMsg(this.getDccAddress(),
@@ -120,6 +123,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * Send the XpressNet message to set the state of
      * functions F13, F14, F15, F16, F17, F18, F19, F20
      */
+    @Override
     protected void sendFunctionGroup4()
     {
        if(tc.getCommandStation().getCommandStationSoftwareVersionBCD()<0x36){
@@ -137,6 +141,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * Send the XpressNet message to set the state of
      * functions F21, F22, F23, F24, F25, F26, F27, F28
      */
+    @Override
     protected void sendFunctionGroup5()
     {
        if(tc.getCommandStation().getCommandStationSoftwareVersionBCD()<0x36){
