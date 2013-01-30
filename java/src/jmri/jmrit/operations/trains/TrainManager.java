@@ -12,7 +12,10 @@ import javax.swing.JComboBox;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
@@ -642,6 +645,76 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 		return newTrain;
 	}
+	
+	/**
+	 * Provides a list of trains ordered by arrival time to a location
+	 * 
+	 * @param location
+	 *            The location
+	 * @return A list of trains ordered by arrival time.
+	 */
+	public List<Train> getTrainsArrivingThisLocationList(Location location) {
+		// get a list of trains
+		List<String> trainIds = getTrainsByTimeList();
+		List<Train> trains = new ArrayList<Train>();
+		List<Integer> arrivalTimes = new ArrayList<Integer>();
+		for (int i = 0; i < trainIds.size(); i++) {
+			Train train = getTrainById(trainIds.get(i));
+			if (!train.isBuilt())
+				continue; // train wasn't built so skip
+			Route route = train.getRoute();
+			if (route == null)
+				continue; // no route for this train
+			List<String> routeList = route.getLocationsBySequenceList();
+			for (int r = 0; r < routeList.size(); r++) {
+				RouteLocation rl = route.getLocationById(routeList.get(r));
+				if (TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(location.getName()))) {
+					int expectedArrivalTime = train.getExpectedTravelTimeInMinutes(rl);
+					// is already serviced then "-1"
+					if (expectedArrivalTime == -1) {
+						trains.add(0, train); // place all trains that have already been serviced at the start
+						arrivalTimes.add(0, expectedArrivalTime);
+					}
+					// if the train is in route, then expected arrival time is in minutes
+					else if (train.isTrainInRoute()) {
+						for (int j = 0; j < trains.size(); j++) {
+							Train t = trains.get(j);
+							int time = arrivalTimes.get(j);
+							if (t.isTrainInRoute() && expectedArrivalTime < time) {
+								trains.add(j, train);
+								arrivalTimes.add(j, expectedArrivalTime);
+								break;
+							}
+							if (!t.isTrainInRoute()) {
+								trains.add(j, train);
+								arrivalTimes.add(j, expectedArrivalTime);
+								break;
+							}
+						}
+						// Train has not departed
+					} else {
+						for (int j = 0; j < trains.size(); j++) {
+							Train t = trains.get(j);
+							int time = arrivalTimes.get(j);
+							if (!t.isTrainInRoute() && expectedArrivalTime < time) {
+								trains.add(j, train);
+								arrivalTimes.add(j, expectedArrivalTime);
+								break;
+							}
+						}
+					}
+					if (!trains.contains(train)) {
+						trains.add(train);
+						arrivalTimes.add(expectedArrivalTime);
+					}
+					break; // done
+				}
+			}
+
+		}
+		return trains;
+	}
+
 	
 	/**
 	 * Loads train icons if needed

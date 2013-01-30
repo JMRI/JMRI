@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
@@ -29,7 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
  */
 public class TrainSwitchLists extends TrainCommon {
 
-	TrainManager manager = TrainManager.instance();
+	TrainManager trainManager = TrainManager.instance();
 	char formFeed = '\f';
 
 	boolean pickupCars;
@@ -81,7 +80,7 @@ public class TrainSwitchLists extends TrainCommon {
 
 		if (Setup.isPrintTimetableNameEnabled()) {
 			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
-					manager.getTrainScheduleActiveId());
+					trainManager.getTrainScheduleActiveId());
 			if (sch != null)
 				valid = valid + " (" + sch.getName() + ")";
 		}
@@ -92,7 +91,7 @@ public class TrainSwitchLists extends TrainCommon {
 			newLine(fileOut, location.getSwitchListComment());
 
 		// get a list of trains sorted by arrival time
-		List<Train> trains = getTrainsArrivingThisLocationList(location);
+		List<Train> trains = trainManager.getTrainsArrivingThisLocationList(location);
 		CarManager carManager = CarManager.instance();
 		EngineManager engineManager = EngineManager.instance();
 		for (int i = 0; i < trains.size(); i++) {
@@ -363,75 +362,6 @@ public class TrainSwitchLists extends TrainCommon {
 					Bundle.getMessage("SwitchList") + " " + location.getName(), isPreview,
 					Setup.getFontName(), false, Setup.getManifestLogoURL(),
 					location.getDefaultPrinterName(), Setup.getSwitchListOrientation(), Setup.getManifestFontSize());
-	}
-
-	/**
-	 * Provides a list of trains ordered by arrival time to this location
-	 * 
-	 * @param location
-	 *            The location
-	 * @return A list of trains ordered by arrival time.
-	 */
-	private List<Train> getTrainsArrivingThisLocationList(Location location) {
-		// get a list of trains
-		List<String> trainIds = manager.getTrainsByTimeList();
-		List<Train> trains = new ArrayList<Train>();
-		List<Integer> arrivalTimes = new ArrayList<Integer>();
-		for (int i = 0; i < trainIds.size(); i++) {
-			Train train = manager.getTrainById(trainIds.get(i));
-			if (!train.isBuilt())
-				continue; // train wasn't built so skip
-			Route route = train.getRoute();
-			if (route == null)
-				continue; // no route for this train
-			List<String> routeList = route.getLocationsBySequenceList();
-			for (int r = 0; r < routeList.size(); r++) {
-				RouteLocation rl = route.getLocationById(routeList.get(r));
-				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
-					int expectedArrivalTime = train.getExpectedTravelTimeInMinutes(rl);
-					// is already serviced then "-1"
-					if (expectedArrivalTime == -1) {
-						trains.add(0, train); // place all trains that have already been serviced at the start
-						arrivalTimes.add(0, expectedArrivalTime);
-					}
-					// if the train is in route, then expected arrival time is in minutes
-					else if (train.isTrainInRoute()) {
-						for (int j = 0; j < trains.size(); j++) {
-							Train t = trains.get(j);
-							int time = arrivalTimes.get(j);
-							if (t.isTrainInRoute() && expectedArrivalTime < time) {
-								trains.add(j, train);
-								arrivalTimes.add(j, expectedArrivalTime);
-								break;
-							}
-							if (!t.isTrainInRoute()) {
-								trains.add(j, train);
-								arrivalTimes.add(j, expectedArrivalTime);
-								break;
-							}
-						}
-						// Train has not departed
-					} else {
-						for (int j = 0; j < trains.size(); j++) {
-							Train t = trains.get(j);
-							int time = arrivalTimes.get(j);
-							if (!t.isTrainInRoute() && expectedArrivalTime < time) {
-								trains.add(j, train);
-								arrivalTimes.add(j, expectedArrivalTime);
-								break;
-							}
-						}
-					}
-					if (!trains.contains(train)) {
-						trains.add(train);
-						arrivalTimes.add(expectedArrivalTime);
-					}
-					break; // done
-				}
-			}
-
-		}
-		return trains;
 	}
 
 	protected void newLine(PrintWriter file, String string) {

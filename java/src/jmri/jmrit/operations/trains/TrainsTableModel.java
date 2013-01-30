@@ -431,7 +431,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 				&& manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.CONDUCTOR)) {
 			if (log.isDebugEnabled())
 				log.debug("Enable conductor for train (" + train.getName() + ")");
-			lauchConductor(train);
+			launchConductor(train);
 		}
 	}
 	
@@ -451,7 +451,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	TrainConductorFrame tcf = null;
 	private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<String, TrainConductorFrame>();
 
-	private void lauchConductor(Train train) {
+	private void launchConductor(Train train) {
 		TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
 		// create a copy train frame
 		if (f == null || !f.isVisible()) {

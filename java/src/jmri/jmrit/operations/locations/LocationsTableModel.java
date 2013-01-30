@@ -31,7 +31,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     public static final int ROLLINGSTOCK = 4;
     public static final int PICKUPS = 5;
     public static final int DROPS = 6;
-    public static final int EDITCOLUMN = 7;
+    public static final int ACTIONCOLUMN = 7;
+    public static final int EDITCOLUMN = 8;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -78,6 +79,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
+		tcm.getColumn(ACTIONCOLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(ACTIONCOLUMN).setCellEditor(buttonEditor);
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
 		// set column preferred widths
@@ -88,6 +91,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(ROLLINGSTOCK).setPreferredWidth(Math.max(80, new JLabel(getColumnName(ROLLINGSTOCK)).getPreferredSize().width+10));
 		table.getColumnModel().getColumn(PICKUPS).setPreferredWidth(Math.max(60, new JLabel(getColumnName(PICKUPS)).getPreferredSize().width+10));
 		table.getColumnModel().getColumn(DROPS).setPreferredWidth(Math.max(60, new JLabel(getColumnName(DROPS)).getPreferredSize().width+10));
+		table.getColumnModel().getColumn(ACTIONCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -106,7 +110,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case ROLLINGSTOCK: return Bundle.getMessage("RollingStock");
         case PICKUPS: return Bundle.getMessage("Pickup");
         case DROPS: return Bundle.getMessage("Drop");
-        case EDITCOLUMN: return "";		//edit column
+        case ACTIONCOLUMN: return Bundle.getMessage("Action");
+        case EDITCOLUMN: return Bundle.getMessage("Edit");		//edit column
         default: return "unknown";	// NOI18N
         }
     }
@@ -120,6 +125,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case ROLLINGSTOCK: return String.class;
         case PICKUPS: return String.class;
         case DROPS: return String.class;
+        case ACTIONCOLUMN: return JButton.class;
         case EDITCOLUMN: return JButton.class;
         default: return null;
         }
@@ -128,6 +134,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     public boolean isCellEditable(int row, int col) {
         switch (col) {
         case EDITCOLUMN: 
+        case ACTIONCOLUMN:	
         	return true;
         default: 
         	return false;
@@ -143,6 +150,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     		focusLef = false;
     		lef.requestFocus();
     	}
+    	if (ymf != null) {
+    		ymf.requestFocus();
+    		ymf = null;
+    	}
     	if (row >= getRowCount())
     		return "ERROR row "+row;	// NOI18N
     	String locId = sysList.get(row);
@@ -157,18 +168,21 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         case ROLLINGSTOCK: return Integer.toString(l.getNumberRS());
         case PICKUPS: return Integer.toString(l.getPickupRS());
         case DROPS: return Integer.toString(l.getDropRS());
+        case ACTIONCOLUMN: return Bundle.getMessage("Yardmaster");
         case EDITCOLUMN: return Bundle.getMessage("Edit");
         default: return "unknown "+col;	// NOI18N
         }
     }
 
     public void setValueAt(Object value, int row, int col) {
-        switch (col) {
-        case EDITCOLUMN: editLocation (row);
-        	break;
-        default:
-            break;
-        }
+    	switch (col) {
+    	case ACTIONCOLUMN: launchYardmaster (row);
+    	break;
+    	case EDITCOLUMN: editLocation (row);
+    	break;
+    	default:
+    		break;
+    	}
     }
     
     boolean focusLef = false;
@@ -182,6 +196,14 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
      	lef.setTitle(Bundle.getMessage("TitleLocationEdit"));
     	lef.initComponents(loc);
     	focusLef = true;
+   }
+   
+    YardmasterFrame ymf = null;
+    private synchronized void launchYardmaster (int row){
+    	log.debug("Yardmaster");
+    	ymf = new YardmasterFrame();
+    	Location loc = manager.getLocationById(sysList.get(row));
+    	ymf.initComponents(loc);
    }
 
     public void propertyChange(PropertyChangeEvent e) {

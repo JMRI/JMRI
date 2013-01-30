@@ -98,7 +98,7 @@ public class TrainCommon {
 	 * @param engine
 	 * @return engine pick up string
 	 */
-	protected String pickupEngine(Engine engine) {
+	public String pickupEngine(Engine engine) {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (int i = 0; i < format.length; i++) {
@@ -108,7 +108,7 @@ public class TrainCommon {
 		return buf.toString();
 	}
 
-	private void dropEngine(PrintWriter file, Engine engine, String orientation) {
+	public void dropEngine(PrintWriter file, Engine engine, String orientation) {
 		StringBuffer buf = new StringBuffer(Setup.getDropEnginePrefix());
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i = 0; i < format.length; i++) {
@@ -127,7 +127,7 @@ public class TrainCommon {
 	 * @param engine
 	 * @return engine drop string
 	 */
-	protected String dropEngine(Engine engine) {
+	public String dropEngine(Engine engine) {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i = 0; i < format.length; i++) {
@@ -189,7 +189,7 @@ public class TrainCommon {
 	 * @param car
 	 * @return pick up car string
 	 */
-	protected String pickupCar(Car car) {
+	public String pickupCar(Car car) {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getPickupCarMessageFormat();
 		for (int i = 0; i < format.length; i++) {
@@ -270,7 +270,7 @@ public class TrainCommon {
 	 * @param car
 	 * @return drop car string
 	 */
-	protected String dropCar(Car car) {
+	public String dropCar(Car car) {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getDropCarMessageFormat();
 		for (int i = 0; i < format.length; i++) {
@@ -288,7 +288,7 @@ public class TrainCommon {
 	 * @param car
 	 * @return move car string
 	 */
-	protected String moveCar(Car car) {
+	public String moveCar(Car car) {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getLocalMessageFormat();
 		for (int i = 0; i < format.length; i++) {
