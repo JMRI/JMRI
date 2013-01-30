@@ -15,9 +15,9 @@ public class CustomManifest {
 	// To start, all files will be created inside of
 	// ../JMRI/operations/csvManifests
 	
-	public static String directoryName = "csvManifests";
-	public static String mcAppName = "MC4JMRI.xls";
-	public static String mcAppArg = "";
+	private static String directoryName = "csvManifests";
+	private static String mcAppName = "MC4JMRI.xls";
+	private static final String mcAppArg = "";
 	
 	private static String csvNamesFileName = "CSVFilesFile.txt";
 
@@ -118,7 +118,7 @@ public class CustomManifest {
 		if (!manifestCreatorFileExists())
 			return false;
 
-		String cmd = "cmd /c start " + mcAppName + " " + mcAppArg; // NOI18N
+		String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
 
 		try {
 			Runtime.getRuntime().exec(cmd, null, FileHelper.getOperationsFile(getDirectoryName()));
@@ -129,7 +129,7 @@ public class CustomManifest {
 	}
 	
 	public static boolean manifestCreatorFileExists() {
-		File file = new File(FileHelper.getOperationsFile(getDirectoryName()), mcAppName);
+		File file = new File(FileHelper.getOperationsFile(getDirectoryName()), getFileName());
 		return file.exists();
 	}
 	
