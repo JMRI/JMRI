@@ -42,7 +42,7 @@ public class CustomManifest {
 		return mcAppName;
 	}
 	
-	public void setFileName(String name) {
+	public static void setFileName(String name) {
 		mcAppName = name;
 	}
 	
@@ -50,7 +50,7 @@ public class CustomManifest {
 		return csvNamesFileName;
 	}
 	
-	public void setCommonFileName(String name) {
+	public static void setCommonFileName(String name) {
 		csvNamesFileName = name;
 	}
 
@@ -59,7 +59,7 @@ public class CustomManifest {
 		return directoryName;
 	}
 	
-	public void setDirectoryName(String name) {
+	public static void setDirectoryName(String name) {
 		directoryName = name;
 	}
 
