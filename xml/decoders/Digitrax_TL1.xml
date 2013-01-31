@@ -25,52 +25,66 @@
       <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="250">
         <decVal/>
         <label>Version ID</label>
+       <label xml:lang="it">ID Versione</label>
       </variable>
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
         <decVal/>
         <label>Manufacturer ID</label>
+       <label xml:lang="it">ID Costruttore</label>
       </variable>
       <variable label="Effect Generated" CV="49" mask="XXXXXVVV" item="Effect Generated">
         <enumVal>
           <enumChoice choice="Normal on off">
             <choice>Normal on off</choice>
+            <choice xml:lang="it">On-Off Normale</choice>
           </enumChoice>
           <enumChoice choice="Simulated FRED">
             <choice>Simulated FRED</choice>
+            <choice xml:lang="it">FRED Simulato (Fine treno)</choice>
           </enumChoice>
           <enumChoice choice="Simulated Mars light">
             <choice>Simulated Mars light</choice>
+            <choice xml:lang="it">Luci Mars Simulate</choice>
           </enumChoice>
           <enumChoice choice="Slow Strobe">
             <choice>Slow Strobe</choice>
+            <choice xml:lang="it">Strobe lento</choice>
           </enumChoice>
           <enumChoice choice="Single pulse">
             <choice>Single pulse</choice>
+            <choice xml:lang="it">SIngolo impulso</choice>
           </enumChoice>
           <enumChoice choice="Double pulse">
             <choice>Double pulse</choice>
+            <choice xml:lang="it">Doppio impulso</choice>
           </enumChoice>
           <enumChoice choice="Medium pulse">
             <choice>Medium pulse</choice>
+            <choice xml:lang="it">Impulso Medio</choice>
           </enumChoice>
           <enumChoice choice="Mostly on blinking off">
             <choice>Mostly on blinking off</choice>
+            <choice xml:lang="it">On Accesa Off lampeggio</choice>
           </enumChoice>
         </enumVal>
         <label>Effect Generated</label>
+      <label xml:lang="it">Effetti generati</label>
       </variable>
       <variable label="Use F0 for function control" CV="61" mask="XXXXXXXV" item="F0 use">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Use F0 for function control</label>
+      <label xml:lang="it">Usa F0 per controllo funzioni</label>
       </variable>
       <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Transpond" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Digitrax Transponding</label>
+       <label xml:lang="it">Tranponding Digitrax</label>
       </variable>
       <variable label="Effect Rate" CV="62" mask="XXXXXVVV" item="Effect Rate" tooltip="0 is slowest- max 7">
         <enumVal>
           <enumChoice choice="0 slowest">
             <choice>0 slowest</choice>
+            <choice xml:lang="it">0 lentissimo</choice>
           </enumChoice>
           <enumChoice choice="1">
             <choice>1</choice>
@@ -92,6 +106,7 @@
           </enumChoice>
           <enumChoice choice="7 fastest">
             <choice>7 fastest</choice>
+            <choice xml:lang="it">7 velocissimo</choice>
           </enumChoice>
         </enumVal>
         <label>Effect Rate</label>
@@ -100,6 +115,7 @@
         <enumVal>
           <enumChoice choice="F0 or F1">
             <choice>F0 or F1</choice>
+            <choice xml:lang="it">F0 o F1</choice>
           </enumChoice>
           <enumChoice choice="F2">
             <choice>F2</choice>
@@ -112,11 +128,18 @@
           </enumChoice>
         </enumVal>
         <label>Function controlling output</label>
+       <label xml:lang="it">Funzioni per controllare uscita</label>
       </variable>
     </variables>
-    <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
-      <factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+   <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+                 <label>Reset All CVs</label>
+                 <label xml:lang="it">Ripristino di tutte le CV</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+                 <label>Reset All CVs except speed table</label>
+                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+      </factReset>
     </resets>
   </decoder>
   <pane name="Function Output">
@@ -128,5 +151,6 @@
       <display item="Effect Rate"/>
     </column>
     <name>Function Output</name>
+    <name xml:lang="it">Uscita Funzione</name>
   </pane>
 </decoder-config>

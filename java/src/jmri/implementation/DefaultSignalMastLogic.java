@@ -273,14 +273,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if(log.isDebugEnabled())
                     log.debug(layout.get(i).getLayoutName());
                 if (facingBlock==null){
-                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getUserName(), layout.get(i));
-                    if (facingBlock==null)
-                        facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getSystemName(), layout.get(i));
+                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast(), layout.get(i));
+                    /*if (facingBlock==null)
+                        facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getSystemName(), layout.get(i));*/
                 }
                 if (protectingBlock==null){
-                    protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getUserName(), layout.get(i));
-                    if (protectingBlock==null)
-                        protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getSystemName(), layout.get(i));
+                    protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast(), layout.get(i));
+                    /*if (protectingBlock==null)
+                        protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getSystemName(), layout.get(i));*/
                 }
             }
         }
@@ -1947,24 +1947,24 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if(log.isDebugEnabled())
                     log.debug(destination.getDisplayName() + " Layout name " + layout.get(i).getLayoutName());
                 if (facingBlock==null){
-                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getUserName(), layout.get(i));
-                    if (facingBlock==null)
-                        facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getSystemName(), layout.get(i));
+                    facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast(), layout.get(i));
+/*                    if (facingBlock==null)
+                        facingBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(getSourceMast().getSystemName(), layout.get(i));*/
                 }
                 if (protectingBlock==null){
-                    protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getUserName(), layout.get(i));
-                    if (protectingBlock==null)
-                        protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getSystemName(), layout.get(i));
+                    protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast(), layout.get(i));
+                    /*if (protectingBlock==null)
+                        protectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(getSourceMast().getSystemName(), layout.get(i));*/
                 }
                 if(destinationBlock==null){
-                    destinationBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(destination.getUserName(), layout.get(i));
-                    if (destinationBlock==null)
-                        destinationBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(destination.getSystemName(), layout.get(i));
+                    destinationBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(destination, layout.get(i));
+/*                    if (destinationBlock==null)
+                        destinationBlock = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast(destination.getSystemName(), layout.get(i));*/
                 }
                 if(remoteProtectingBlock==null){
-                    remoteProtectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(destination.getUserName(), layout.get(i));
-                    if(remoteProtectingBlock==null)
-                        remoteProtectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(destination.getSystemName(), layout.get(i));
+                    remoteProtectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(destination, layout.get(i));
+                    /*if(remoteProtectingBlock==null)
+                        remoteProtectingBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(destination.getSystemName(), layout.get(i));*/
                 }
             }
             //At this point if we are not using the layout editor turnout or block

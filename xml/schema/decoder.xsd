@@ -493,6 +493,9 @@
             <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
             </xs:element>
+            <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>Provide an internationalized tooltip text</xs:documentation></xs:annotation>
+            </xs:element>
             <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
             </xs:element>

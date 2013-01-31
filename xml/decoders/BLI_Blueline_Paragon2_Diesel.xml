@@ -54,16 +54,9 @@
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-        <label>Primary Address</label>
-        <comment>Short address</comment>
-      </variable>
-      <variable label="Vstart" CV="2" default="1" comment="A value of 255 corresponds to 100%">
-        <decVal/>
-        <label>Vstart</label>
-        <comment>A value of 255 corresponds to 100%</comment>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable label="Acceleration Rate" CV="3" default="5" item="Accel">
         <decVal max="31"/>
         <label>Acceleration Rate</label>
@@ -72,24 +65,8 @@
         <decVal max="31"/>
         <label>Deceleration Rate</label>
       </variable>
-      <variable label="Vhigh" CV="5" default="250">
-        <decVal/>
-        <label>Vhigh</label>
-      </variable>
-      <variable label="Vmid" CV="6" default="50">
-        <decVal/>
-        <label>Vmid</label>
-      </variable>
-      <variable label="Manufacturer Version No" CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Manufacturer Version No</label>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
       <variable label="EMF Feedback Cutout" CV="10">
-        <decVal/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>EMF Feedback Cutout</label>
       </variable>
       <variable label="Packet Time-out Value" CV="11">
@@ -101,210 +78,62 @@
         <label>UnLock ID Code</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-      <variable label="Extended Address" CV="17" item="Long Address" default="128">
-        <longAddressVal/>
-        <label>Extended Address</label>
-      </variable>
-      <variable label="Consist Address" CV="19" mask="XVVVVVVV" item="Consist Address" default="0">
-        <decVal/>
-        <label>Consist Address</label>
-      </variable>
-      <variable label="Consist Direction" CV="19" mask="VXXXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Direction</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" minFn="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
       </variable>
       <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="0" minFn="2">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F2</label>
       </variable>
       <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="0" minFn="3">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F3</label>
       </variable>
       <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="0" minFn="4">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F4</label>
       </variable>
       <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="0" minFn="5">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F5</label>
       </variable>
       <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="0" minFn="6">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F6</label>
       </variable>
       <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="0" minFn="7">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F7</label>
       </variable>
       <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="0" minFn="8">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F8</label>
       </variable>
       <variable label="Consist Address Active For F0" CV="22" mask="XXXXXXXV" default="0" item="Consist Address Active For FL in Reverse">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F0</label>
       </variable>
       <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX" default="0" minFn="9">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F9</label>
       </variable>
       <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX" default="0" minFn="10">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F10</label>
       </variable>
       <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX" default="0" minFn="11">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F11</label>
       </variable>
       <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX" default="0" minFn="12">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
       </variable>
-      <variable label="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
-        <decVal max="127"/>
-        <label>Consist Acceleration Adjustment</label>
-      </variable>
-      <variable label="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Adjustment Added">
-            <choice>Adjustment Added</choice>
-          </enumChoice>
-          <enumChoice choice="Adjustment Subtracted">
-            <choice>Adjustment Subtracted</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Acceleration Adjustment Sign</label>
-      </variable>
-      <variable label="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
-        <decVal max="127"/>
-        <label>Consist Deceleration Adjustment</label>
-      </variable>
-      <variable label="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Adjustment Added">
-            <choice>Adjustment Added</choice>
-          </enumChoice>
-          <enumChoice choice="Adjustment Subtracted">
-            <choice>Adjustment Subtracted</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Deceleration Adjustment Sign</label>
-      </variable>
-      <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="Normal lighting for front and rear lights">
-            <choice>Normal lighting for front and rear lights</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed lighting for front and rear lights">
-            <choice>Reversed lighting for front and rear lights</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Locomotive Direction</label>
-      </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode">
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14 speed step format">
             <choice>14 speed step format</choice>
@@ -315,17 +144,7 @@
         </enumVal>
         <label>FL Location</label>
       </variable>
-      <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation">
-        <enumVal>
-          <enumChoice choice="DCC only">
-            <choice>DCC only</choice>
-          </enumChoice>
-          <enumChoice choice="DC enabled">
-            <choice>DC enabled</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Power Source Conversion</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
@@ -337,3034 +156,123 @@
         </enumVal>
         <label>Speed Table Definition</label>
       </variable>
-      <variable label="Address Format" CV="29" mask="XXVXXXXX">
-        <enumVal>
-          <enumChoice choice="One byte (short) address">
-            <choice>One byte (short) address</choice>
-          </enumChoice>
-          <enumChoice choice="Two byte (extended) address">
-            <choice>Two byte (extended) address</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Address Format</label>
-      </variable>
       <!-- This decoder doesn't do the bit-wise NMRA method of -->
       <!-- assigning functions to outputs. Instead, it has -->
       <!-- a much more civilized system of one CV per function -->
       <variable label="F0 Output Function Definition" CV="33" default="1" minFn="1" item="Function F0F effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F0 Output Function Definition</label>
       </variable>
       <variable label="F1 Output Function Definition" CV="34" default="2" minFn="1" item="Function 1 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F1 Output Function Definition</label>
       </variable>
       <variable label="F2 Output Function Definition" CV="35" default="3" minFn="2" item="Function 2 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F2 Output Function Definition</label>
       </variable>
       <variable label="F3 Output Function Definition" CV="36" default="17" minFn="3" item="Function 3 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F3 Output Function Definition</label>
       </variable>
       <variable label="F4 Output Function Definition" CV="37" default="5" minFn="4" item="Function 4 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F4 Output Function Definition</label>
       </variable>
       <variable label="F5 Output Function Definition" CV="38" default="6" minFn="5" item="Function 5 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F5 Output Function Definition</label>
       </variable>
       <variable label="F6 Output Function Definition" CV="39" default="7" minFn="6" item="Function 6 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F6 Output Function Definition</label>
       </variable>
       <variable label="F7 Output Function Definition" CV="40" default="8" minFn="7" item="Function 7 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F7 Output Function Definition</label>
       </variable>
       <variable label="F8 Output Function Definition" CV="41" default="9" minFn="8" item="Function 8 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F8 Output Function Definition</label>
       </variable>
       <variable label="F9 Output Function Definition" CV="42" default="10" minFn="9" item="Function 9 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F9 Output Function Definition</label>
       </variable>
       <variable label="F10 Output Function Definition" CV="43" default="11" minFn="10" item="Function 10 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F10 Output Function Definition</label>
       </variable>
       <variable label="F11 Output Function Definition" CV="44" default="12" minFn="11" item="Function 11 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F11 Output Function Definition</label>
       </variable>
       <variable label="F12 Output Function Definition" CV="45" default="13" minFn="12" item="Function 12 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F12 Output Function Definition</label>
       </variable>
       <variable label="F13 Output Function Definition" CV="46" default="30" minFn="13" item="Function 13 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F13 Output Function Definition</label>
       </variable>
       <variable label="F14 Output Function Definition" CV="47" default="50" minFn="14" item="Function 14 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F14 Output Function Definition</label>
       </variable>
       <variable label="F15 Output Function Definition" CV="48" default="51" minFn="15" item="Function 15 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F15 Output Function Definition</label>
       </variable>
       <variable label="F16 Output Function Definition" CV="49" default="52" minFn="16" item="Function 16 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F16 Output Function Definition</label>
       </variable>
       <variable label="F17 Output Function Definition" CV="50" default="53" minFn="17" item="Function 17 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F17 Output Function Definition</label>
       </variable>
       <variable label="F18 Output Function Definition" CV="51" default="54" minFn="18" item="Function 18 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F18 Output Function Definition</label>
       </variable>
       <variable label="F19 Output Function Definition" CV="52" default="55" minFn="19" item="Function 19 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F19 Output Function Definition</label>
       </variable>
       <variable label="F20 Output Function Definition" CV="53" default="56" minFn="20" item="Function 20 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F20 Output Function Definition</label>
       </variable>
       <variable label="F21 Output Function Definition" CV="54" default="57" minFn="21" item="Function 21 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F21 Output Function Definition</label>
       </variable>
       <variable label="F22 Output Function Definition" CV="55" default="19" minFn="22" item="Function 22 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F22 Output Function Definition</label>
       </variable>
       <variable label="F23 Output Function Definition" CV="56" default="0" minFn="23" item="Function 23 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F23 Output Function Definition</label>
       </variable>
       <variable label="F24 Output Function Definition" CV="57" default="0" minFn="24" item="Function 24 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F24 Output Function Definition</label>
       </variable>
       <variable label="F25 Output Function Definition" CV="58" default="0" minFn="25" item="Function 25 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F25 Output Function Definition</label>
       </variable>
       <variable label="F26 Output Function Definition" CV="59" default="40" minFn="26" item="Function 26 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F26 Output Function Definition</label>
       </variable>
       <variable label="F27 Output Function Definition" CV="60" default="41" minFn="27" item="Function 27 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F27 Output Function Definition</label>
       </variable>
       <variable label="F28 Output Function Definition" CV="61" default="18" minFn="27" item="Function 28 effect generated">
-        <enumVal>
-          <enumChoice choice="Nothing" value="0">
-            <choice>Nothing</choice>
-          </enumChoice>
-          <enumChoice choice="Front/Rear Lights">
-            <choice>Front/Rear Lights</choice>
-          </enumChoice>
-          <enumChoice choice="Bell Sound">
-            <choice>Bell Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Sound">
-            <choice>Horn Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Couple/Uncouple Sound">
-            <choice>Couple/Uncouple Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Compressor/Grid Blower Sound">
-            <choice>Compressor/Grid Blower Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Up">
-            <choice>Diesel Ramp Up</choice>
-          </enumChoice>
-          <enumChoice choice="Diesel Ramp Down/Start Diesel Sound">
-            <choice>Diesel Ramp Down/Start Diesel Sound</choice>
-          </enumChoice>
-          <enumChoice choice="L1 Function">
-            <choice>L1 Function</choice>
-          </enumChoice>
-          <enumChoice choice="Mute/Volume Control">
-            <choice>Mute/Volume Control</choice>
-          </enumChoice>
-          <enumChoice choice="Startup/Shutdown Sounds">
-            <choice>Startup/Shutdown Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cooling Fan Sound">
-            <choice>Cooling Fan Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Air Fill/Air Release Sound">
-            <choice>Air Fill/Air Release Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Brake Set/Release/Squeal Sound">
-            <choice>Brake Set/Release/Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Fuel Fill Sound">
-            <choice>Fuel Fill Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Spit Valve Sound">
-            <choice>Spit Valve Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Wheel Flange Sound">
-            <choice>Wheel Flange Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Coupler Slack/Couple Sound ">
-            <choice>Coupler Slack/Couple Sound </choice>
-          </enumChoice>
-          <enumChoice choice="Brake Squeal Sound">
-            <choice>Brake Squeal Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Horn2 Toggle">
-            <choice>Horn2 Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Horn Grade Crossing Sound" value="30">
-            <choice>Horn Grade Crossing Sound</choice>
-          </enumChoice>
-          <enumChoice choice="Play Macro" value="40">
-            <choice>Play Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Record Macro">
-            <choice>Record Macro</choice>
-          </enumChoice>
-          <enumChoice choice="Passenger Sounds" value="50">
-            <choice>Passenger Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Freight Sounds">
-            <choice>Freight Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Maintenance Sounds">
-            <choice>Maintenance Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Radio Chatter Sounds">
-            <choice>Radio Chatter Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="City Sounds">
-            <choice>City Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Farm Sounds">
-            <choice>Farm Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Industrial Sounds">
-            <choice>Industrial Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Lumber Yard Sounds">
-            <choice>Lumber Yard Sounds</choice>
-          </enumChoice>
-          <enumChoice choice="Cab Light Toggle" value="60">
-            <choice>Cab Light Toggle</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 Dimming Toggle">
-            <choice>Rule 17 Dimming Toggle</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceDiesel.xml"/>
         <label>F28 Output Function Definition</label>
       </variable>
       <variable label="Kick Start" CV="65" default="40">
@@ -3402,179 +310,67 @@
         <label>Speed Step Smoothing</label>
       </variable>
       <variable label="Consist Address Active For F13" CV="121" mask="XXXXXXXV" default="0" minFn="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F13</label>
       </variable>
       <variable label="Consist Address Active For F14" CV="121" mask="XXXXXXVX" default="0" minFn="2">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F14</label>
       </variable>
       <variable label="Consist Address Active For F15" CV="121" mask="XXXXXVXX" default="0" minFn="3">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F15</label>
       </variable>
       <variable label="Consist Address Active For F16" CV="121" mask="XXXXVXXX" default="0" minFn="4">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F16</label>
       </variable>
       <variable label="Consist Address Active For F17" CV="121" mask="XXXVXXXX" default="0" minFn="5">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F17</label>
       </variable>
       <variable label="Consist Address Active For F18" CV="121" mask="XXVXXXXX" default="0" minFn="6">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F18</label>
       </variable>
       <variable label="Consist Address Active For F19" CV="121" mask="XVXXXXXX" default="0" minFn="7">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F19</label>
       </variable>
       <variable label="Consist Address Active For F20" CV="121" mask="VXXXXXXX" default="0" minFn="8">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F20</label>
       </variable>
       <variable label="Consist Address Active For F21" CV="122" mask="XXXXXXXV" default="0" minFn="1">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F21</label>
       </variable>
       <variable label="Consist Address Active For F22" CV="122" mask="XXXXXXVX" default="0" minFn="2">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F22</label>
       </variable>
       <variable label="Consist Address Active For F23" CV="122" mask="XXXXXVXX" default="0" minFn="3">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F23</label>
       </variable>
       <variable label="Consist Address Active For F24" CV="122" mask="XXXXVXXX" default="0" minFn="4">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F24</label>
       </variable>
       <variable label="Consist Address Active For F25" CV="122" mask="XXXVXXXX" default="0" minFn="5">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F25</label>
       </variable>
       <variable label="Consist Address Active For F26" CV="122" mask="XXVXXXXX" default="0" minFn="6">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F26</label>
       </variable>
       <variable label="Consist Address Active For F27" CV="122" mask="XVXXXXXX" default="0" minFn="7">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F27</label>
       </variable>
       <variable label="Consist Address Active For F28" CV="122" mask="VXXXXXXX" default="0" minFn="8">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F28</label>
       </variable>
       <variable label="Master Volume Sound Increment" CV="130" item="Sound Setting 1" default="16">
@@ -3682,25 +478,11 @@
         <label>City/Farm/Industrial/Lumber Volume</label>
       </variable>
       <variable label="Rule 17 Lighting" CV="159" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Rule 17 Lighting</label>
       </variable>
       <variable label="L1 Inactive State" CV="159" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="Ditch Lights Off">
-            <choice>Ditch Lights Off</choice>
-          </enumChoice>
-          <enumChoice choice="Ditch Lights On">
-            <choice>Ditch Lights On</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>L1 Inactive State</label>
       </variable>
       <variable label="L1 Light Directional" CV="160" mask="VXXXXXXX" default="1" item="Directional Headlights">
@@ -3715,14 +497,7 @@
         <label>L1 Light Directional</label>
       </variable>
       <variable label="L1 Light Active" CV="160" mask="XVXXXXXX" default="1" item="Global lighting option 1">
-        <enumVal>
-          <enumChoice choice="Forward">
-            <choice>Forward</choice>
-          </enumChoice>
-          <enumChoice choice="Reverse">
-            <choice>Reverse</choice>
-          </enumChoice>
-        </enumVal>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
         <label>L1 Light Active</label>
       </variable>
       <variable label="L1 Light Type" CV="160" mask="XXVVVVVV" default="3" item="Global lighting option 2">
@@ -4012,36 +787,15 @@
         <label>Horn Select</label>
       </variable>
       <variable label="DCC Front/Rear Lights" CV="225" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Front/Rear Lights</label>
       </variable>
       <variable label="DCC L1 Light" CV="225" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC L1 Light</label>
       </variable>
       <variable label="DCC L1 Activate on Bell or Horn" CV="225" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC L1 Activate on Bell or Horn</label>
       </variable>
       <variable label="Activates L1 on DCC" CV="226" mask="XXXXXXXV" default="0">
@@ -4056,36 +810,15 @@
         <label>Activates L1 on DCC</label>
       </variable>
       <variable label="Brake Set/Release" CV="227" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic">
-            <choice>Automatic</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Brake Set/Release</label>
       </variable>
       <variable label="Brake Squeal" CV="227" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic">
-            <choice>Automatic</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Brake Squeal</label>
       </variable>
       <variable label="Forward/Reverse Startup Toots" CV="227" mask="XXXXXVXX" default="0">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Automatic">
-            <choice>Automatic</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Forward/Reverse Startup Toots</label>
       </variable>
       <variable label="DCC Startup Timer" CV="228" default="1">
@@ -4093,47 +826,19 @@
         <label>DCC Startup Timer</label>
       </variable>
       <variable label="DCC Consist Rear Light" CV="229" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Consist Rear Light</label>
       </variable>
       <variable label="DCC Consist Front Light" CV="229" mask="XXXXXXVX" default="1">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Consist Front Light</label>
       </variable>
       <variable label="DCC Consist L1 Light" CV="229" mask="XXXXXVXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Consist L1 Light</label>
       </variable>
       <variable label="DCC Consist Cab" CV="229" mask="VXXXXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>DCC Consist Cab</label>
       </variable>
       <variable label="DCC Easy Consist" CV="230" default="0">
@@ -4198,36 +903,15 @@
         <label>Motor changes direction</label>
       </variable>
       <variable label="CV write sound feedback" item="GSC1 bit 6" CV="245" mask="XVXXXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>CV write sound feedback</label>
       </variable>
       <variable label="Motor speed smoothing" item="GSC1 bit 5" CV="245" mask="XXVXXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="Enabled">
-            <choice>Enabled</choice>
-          </enumChoice>
-          <enumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Motor speed smoothing</label>
       </variable>
       <variable label="Macro recorder autosave" item="GSC1 bit 4" CV="245" mask="XXXVXXXX" default="0">
-        <enumVal>
-          <enumChoice choice="off">
-            <choice>off</choice>
-          </enumChoice>
-          <enumChoice choice="on">
-            <choice>on</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Macro recorder autosave</label>
       </variable>
       <variable label="Analog horn frequency shifted" item="GSC1 bit 3" CV="245" mask="XXXXVXXX" default="0">
@@ -4264,36 +948,15 @@
         <label>Motor starts</label>
       </variable>
       <variable label="Horn alternative ending" item="GSC1 bit 0" CV="245" mask="XXXXXXXV" default="1">
-        <enumVal>
-          <enumChoice choice="disabled">
-            <choice>disabled</choice>
-          </enumChoice>
-          <enumChoice choice="enabled">
-            <choice>enabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Horn alternative ending</label>
       </variable>
       <variable label="Motor loading" item="GSC2 bit 1" CV="246" mask="XXXXXXVX" default="0">
-        <enumVal>
-          <enumChoice choice="enabled">
-            <choice>enabled</choice>
-          </enumChoice>
-          <enumChoice choice="disabled">
-            <choice>disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Motor loading</label>
       </variable>
       <variable label="Direction change sound" item="GSC2 bit 0" CV="246" mask="XXXXXXXV" default="0">
-        <enumVal>
-          <enumChoice choice="enabled">
-            <choice>enabled</choice>
-          </enumChoice>
-          <enumChoice choice="disabled">
-            <choice>disabled</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Direction change sound</label>
       </variable>
       <variable label="Over Current Delay" CV="247" default="10">

@@ -570,8 +570,14 @@
       <display item="Short-circuit protection"/>
       <display item="Switching speed enabled by F6"/>
       <display item="Torque compensation"/>
-      <display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature"/>
-      <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number"/>
+      <display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature">
+         <tooltip>Activates Decoder Locking feature</tooltip>
+         <tooltip xml:lang="it">Attiva funzione Blocco Decoder</tooltip>
+      </display>
+      <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number">
+         <tooltip>Set this decoder's unique locking ID number</tooltip>
+        <tooltip xml:lang="it">Imposta il codice di blocco di questo Decoder</tooltip>
+      </display>
     </column>
     <name>Digitrax</name>
   </pane>

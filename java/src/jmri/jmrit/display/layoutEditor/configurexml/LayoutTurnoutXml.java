@@ -101,33 +101,33 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 			element.setAttribute("linktype", ""+p.getLinkType());
 		}
         
-        if(p.getSignalAMast().length()>0){
-            element.addContent(new Element("signalAMast").addContent(p.getSignalAMast()));
+        if(p.getSignalAMastName().length()>0){
+            element.addContent(new Element("signalAMast").addContent(p.getSignalAMastName()));
         }
         
-        if(p.getSignalBMast().length()>0){
-            element.addContent(new Element("signalBMast").addContent(p.getSignalBMast()));
+        if(p.getSignalBMastName().length()>0){
+            element.addContent(new Element("signalBMast").addContent(p.getSignalBMastName()));
         }
-        if(p.getSignalCMast().length()>0){
-            element.addContent(new Element("signalCMast").addContent(p.getSignalCMast()));
+        if(p.getSignalCMastName().length()>0){
+            element.addContent(new Element("signalCMast").addContent(p.getSignalCMastName()));
         }
-        if(p.getSignalDMast().length()>0){
-            element.addContent(new Element("signalDMast").addContent(p.getSignalDMast()));
+        if(p.getSignalDMastName().length()>0){
+            element.addContent(new Element("signalDMast").addContent(p.getSignalDMastName()));
 
         }
 
-        if(p.getSensorA().length()>0){
-            element.addContent(new Element("sensorA").addContent(p.getSensorA()));
+        if(p.getSensorAName().length()>0){
+            element.addContent(new Element("sensorA").addContent(p.getSensorAName()));
         }
         
-        if(p.getSensorB().length()>0){
-            element.addContent(new Element("sensorB").addContent(p.getSensorB()));
+        if(p.getSensorBName().length()>0){
+            element.addContent(new Element("sensorB").addContent(p.getSensorBName()));
         }
-        if(p.getSensorC().length()>0){
-            element.addContent(new Element("sensorC").addContent(p.getSensorC()));
+        if(p.getSensorCName().length()>0){
+            element.addContent(new Element("sensorC").addContent(p.getSensorCName()));
         }
-        if(p.getSensorD().length()>0){
-            element.addContent(new Element("sensorD").addContent(p.getSensorD()));
+        if(p.getSensorDName().length()>0){
+            element.addContent(new Element("sensorD").addContent(p.getSensorDName()));
         }
 
 		element.setAttribute("continuing", ""+p.getContinuingSense());		

@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import jmri.util.JmriJFrame;
 import jmri.Turnout;
+import jmri.SignalMast;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
 import java.awt.*;
 import java.awt.geom.*;
@@ -275,22 +276,23 @@ public class LayoutSlip extends LayoutTurnout
     public void reCheckBlockBoundary(){
         if(connectA==null && connectB==null && connectC==null && connectD==null){
             //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if(!getSignalAMast().equals(""))
+            if(signalAMastNamed!=null)
                 removeSML(getSignalAMast());
-            if(!getSignalBMast().equals(""))
+            if(signalBMastNamed!=null)
                 removeSML(getSignalBMast());
-            if(!getSignalCMast().equals(""))
+            if(signalCMastNamed!=null)
                 removeSML(getSignalCMast());
-            if(!getSignalDMast().equals(""))
+            if(signalDMastNamed!=null)
                 removeSML(getSignalDMast());
-            setSignalAMast("");
-            setSignalBMast("");
-            setSignalCMast("");
-            setSignalDMast("");
-            setSensorA("");
-            setSensorB("");
-            setSensorC("");
-            setSensorD("");
+            signalAMastNamed = null;
+            signalBMastNamed = null;
+            signalCMastNamed = null;
+            signalDMastNamed = null;
+            sensorANamed=null;
+            sensorBNamed=null;
+            sensorCNamed=null;
+            sensorDNamed=null;
+            return;
             //May want to look at a method to remove the assigned mast from the panel and potentially any logics generated
         }  else if(connectA==null || connectB==null || connectC==null || connectD==null){
             //could still be in the process of rebuilding the point details
@@ -305,52 +307,42 @@ public class LayoutSlip extends LayoutTurnout
         if(connectA instanceof TrackSegment){
             trkA = (TrackSegment)connectA;
             if(trkA.getLayoutBlock()==block){
-                if(!getSignalAMast().equals(""))
+               if(signalAMastNamed!=null)
                     removeSML(getSignalAMast());
-                setSignalAMast("");
-                setSensorA("");
+                signalAMastNamed = null;
+                sensorANamed=null;
             }
         }
         if(connectC instanceof TrackSegment) {
             trkC = (TrackSegment)connectC;
             if(trkC.getLayoutBlock()==block){
-                if(!getSignalCMast().equals(""))
+               if(signalCMastNamed!=null)
                     removeSML(getSignalCMast());
-                setSignalCMast("");
-                setSensorC("");
+                signalCMastNamed = null;
+                sensorCNamed=null;
             }
         }
         if(connectB instanceof TrackSegment){
             trkB = (TrackSegment)connectB;
             if(trkB.getLayoutBlock()==block){
-                if(!getSignalBMast().equals(""))
+               if(signalBMastNamed!=null)
                     removeSML(getSignalBMast());
-                setSignalBMast("");
-                setSensorB("");
+                signalBMastNamed = null;
+                sensorBNamed=null;
             }
         }
 
         if(connectD instanceof TrackSegment) {
             trkD = (TrackSegment)connectC;
             if(trkD.getLayoutBlock()==block){
-                if(!getSignalDMast().equals(""))
+               if(signalDMastNamed!=null)
                     removeSML(getSignalDMast());
-                setSignalDMast("");
-                setSensorD("");
+                signalDMastNamed = null;
+                sensorDNamed=null;
             }
         }
     }
     
-    void removeSML(String signalMast){
-        if(signalMast==null || signalMast.equals(""))
-            return;
-        jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
-        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(mast)){
-            InstanceManager.signalMastLogicManagerInstance().disableLayoutEditorUse(mast);
-            SignallingGuiTools.removeSignalMastLogic(null, mast);
-        }
-    }
-
 	/** 
 	 * Methods to test if mainline track or not
 	 *  Returns true if either connecting track segment is mainline
@@ -1009,11 +1001,10 @@ public class LayoutSlip extends LayoutTurnout
         active = false;
     }
     
-    void disableSML(String signalMast){
-         if(signalMast==null || signalMast.equals(""))
+    void disableSML(SignalMast signalMast){
+        if(signalMast==null)
             return;
-        jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
-        InstanceManager.signalMastLogicManagerInstance().disableLayoutEditorUse(mast);
+        InstanceManager.signalMastLogicManagerInstance().disableLayoutEditorUse(signalMast);
     }
 
     boolean active = true;

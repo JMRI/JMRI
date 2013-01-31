@@ -219,52 +219,17 @@ public class PointDetails {
     public void setRefObject(NamedBean refObs){
         refObj = refObs;
         if (panel!=null && refObj!=null){
-            if (refObj instanceof SignalMast){
-                String mast = ((SignalMast)refObj).getUserName();
-                refLoc = panel.findPositionablePointByEastBoundSignalMast(mast);
+            if (refObj instanceof SignalMast || refObj instanceof Sensor){
+                //String mast = ((SignalMast)refObj).getUserName();
+                refLoc = panel.findPositionablePointByEastBoundBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findPositionablePointByWestBoundSignalMast(mast);
+                    refLoc = panel.findPositionablePointByWestBoundBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findLayoutTurnoutBySignalMast(mast);
+                    refLoc = panel.findLayoutTurnoutByBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findLevelXingBySignalMast(mast);
+                    refLoc = panel.findLevelXingByBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findLayoutSlipBySignalMast(mast);
-                if(refLoc==null){
-                    mast = ((SignalMast)refObj).getSystemName();
-                    if(refLoc==null)
-                        refLoc = panel.findPositionablePointByWestBoundSignalMast(mast);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutTurnoutBySignalMast(mast);
-                    if(refLoc==null)
-                        refLoc = panel.findLevelXingBySignalMast(mast);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutSlipBySignalMast(mast);
-                }
-            } else if (refObj instanceof Sensor) {
-                String sourceSensor = ((Sensor)refObj).getSystemName();
-                refLoc = panel.findPositionablePointByEastBoundSensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findPositionablePointByWestBoundSensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findLayoutTurnoutBySensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findLevelXingBySensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findLayoutSlipBySensor(sourceSensor);
-                if(refLoc==null){
-                    sourceSensor = ((Sensor)refObj).getUserName();
-                    refLoc = panel.findPositionablePointByEastBoundSensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findPositionablePointByWestBoundSensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutTurnoutBySensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findLevelXingBySensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutSlipBySensor(sourceSensor);
-                }
-                setSensor((Sensor)refObj);
+                    refLoc = panel.findLayoutSlipByBean(refObj);
             } else if (refObj instanceof SignalHead){
                 String signal = ((SignalHead)refObj).getDisplayName();
                 refLoc = panel.findPositionablePointByEastBoundSignal(signal);
@@ -433,52 +398,52 @@ public class PointDetails {
         if (objLoc instanceof PositionablePoint){
             PositionablePoint p = (PositionablePoint)objLoc;
             if(mast!=null) {
-                if((p.getEastBoundSignalMast().equals(username)) || 
-                        p.getEastBoundSignalMast().equals(systemname))
-                    sensor = sm.getSensor(p.getEastBoundSensor());
-                else if((p.getWestBoundSignalMast().equals(username)) || 
-                        p.getWestBoundSignalMast().equals(systemname))
-                    sensor = sm.getSensor(p.getWestBoundSensor());
+                if((p.getEastBoundSignalMastName().equals(username)) || 
+                        p.getEastBoundSignalMastName().equals(systemname))
+                    sensor = sm.getSensor(p.getEastBoundSensorName());
+                else if((p.getWestBoundSignalMastName().equals(username)) || 
+                        p.getWestBoundSignalMastName().equals(systemname))
+                    sensor = sm.getSensor(p.getWestBoundSensorName());
             }
             else if(head!=null) {
                 if((p.getEastBoundSignal().equals(username)) || 
                         p.getEastBoundSignal().equals(systemname))
-                    sensor = sm.getSensor(p.getEastBoundSensor());
+                    sensor = sm.getSensor(p.getEastBoundSensorName());
                 else if((p.getWestBoundSignal().equals(username)) || 
                         p.getWestBoundSignal().equals(systemname))
-                    sensor = sm.getSensor(p.getWestBoundSensor());
+                    sensor = sm.getSensor(p.getWestBoundSensorName());
             }
         } else if (objLoc instanceof LayoutTurnout) {
             LayoutTurnout t = (LayoutTurnout)objLoc;
             if(mast!=null){
-                if((t.getSignalAMast().equals(username)) || (t.getSignalAMast().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorA());
-                else if((t.getSignalBMast().equals(username)) || (t.getSignalBMast().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorB());
-                else if((t.getSignalCMast().equals(username)) || (t.getSignalCMast().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorC());
-                else if((t.getSignalDMast().equals(username)) || (t.getSignalDMast().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorD());
+                if((t.getSignalAMastName().equals(username)) || (t.getSignalAMastName().equals(systemname)))
+                    sensor = sm.getSensor(t.getSensorAName());
+                else if((t.getSignalBMastName().equals(username)) || (t.getSignalBMastName().equals(systemname)))
+                    sensor = sm.getSensor(t.getSensorBName());
+                else if((t.getSignalCMastName().equals(username)) || (t.getSignalCMastName().equals(systemname)))
+                    sensor = sm.getSensor(t.getSensorCName());
+                else if((t.getSignalDMastName().equals(username)) || (t.getSignalDMastName().equals(systemname)))
+                    sensor = sm.getSensor(t.getSensorDName());
             }
             if(head!=null){
                 if((t.getSignalA1Name().equals(username)) || (t.getSignalA1Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorA());
+                    sensor = sm.getSensor(t.getSensorAName());
                 else if((t.getSignalA2Name().equals(username)) || (t.getSignalA2Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorA());
+                    sensor = sm.getSensor(t.getSensorAName());
                 else if((t.getSignalA3Name().equals(username)) || (t.getSignalA3Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorA());
+                    sensor = sm.getSensor(t.getSensorAName());
                 else if((t.getSignalB1Name().equals(username)) || (t.getSignalB1Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorB());
+                    sensor = sm.getSensor(t.getSensorBName());
                 else if((t.getSignalB2Name().equals(username)) || (t.getSignalB2Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorB());
+                    sensor = sm.getSensor(t.getSensorBName());
                 else if((t.getSignalC1Name().equals(username)) || (t.getSignalC1Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorC());
+                    sensor = sm.getSensor(t.getSensorCName());
                 else if((t.getSignalC2Name().equals(username)) || (t.getSignalC2Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorC());
+                    sensor = sm.getSensor(t.getSensorCName());
                 else if((t.getSignalD1Name().equals(username)) || (t.getSignalD1Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorD());
+                    sensor = sm.getSensor(t.getSensorDName());
                 else if((t.getSignalD2Name().equals(username)) || (t.getSignalD2Name().equals(systemname)))
-                    sensor = sm.getSensor(t.getSensorD());
+                    sensor = sm.getSensor(t.getSensorDName());
             }
         } else if (objLoc instanceof LevelXing){
             LevelXing x = (LevelXing)objLoc;
@@ -505,24 +470,24 @@ public class PointDetails {
         } else if (objLoc instanceof LayoutSlip) {
             LayoutSlip sl = (LayoutSlip)objLoc;
             if(mast!=null){
-                if((sl.getSignalAMast().equals(username)) || (sl.getSignalAMast().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorA());
-                else if((sl.getSignalBMast().equals(username)) || (sl.getSignalBMast().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorB());
-                else if((sl.getSignalCMast().equals(username)) || (sl.getSignalCMast().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorC());
-                else if((sl.getSignalDMast().equals(username)) || (sl.getSignalDMast().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorD());
+                if((sl.getSignalAMastName().equals(username)) || (sl.getSignalAMastName().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorAName());
+                else if((sl.getSignalBMastName().equals(username)) || (sl.getSignalBMastName().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorBName());
+                else if((sl.getSignalCMastName().equals(username)) || (sl.getSignalCMastName().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorCName());
+                else if((sl.getSignalDMastName().equals(username)) || (sl.getSignalDMastName().equals(systemname)))
+                    sensor = sm.getSensor(sl.getSensorDName());
             }
             if(head!=null){
                 if((sl.getSignalA1Name().equals(username)) || (sl.getSignalA1Name().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorA());
+                    sensor = sm.getSensor(sl.getSensorAName());
                 else if((sl.getSignalB1Name().equals(username)) || (sl.getSignalB1Name().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorB());
+                    sensor = sm.getSensor(sl.getSensorBName());
                 else if((sl.getSignalC1Name().equals(username)) || (sl.getSignalC1Name().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorC());
+                    sensor = sm.getSensor(sl.getSensorCName());
                 else if((sl.getSignalD1Name().equals(username)) || (sl.getSignalD1Name().equals(systemname)))
-                    sensor = sm.getSensor(sl.getSensorD());
+                    sensor = sm.getSensor(sl.getSensorDName());
             }
         }
         setSensor(sensor);
@@ -558,20 +523,20 @@ public class PointDetails {
         String systemname = sen.getSystemName();
         if(getRefLocation() instanceof PositionablePoint){
             PositionablePoint p = (PositionablePoint)getRefLocation();
-            if((p.getEastBoundSensor().equals(username)) || 
-                    p.getEastBoundSensor().equals(systemname)){
+            if((p.getEastBoundSensorName().equals(username)) || 
+                    p.getEastBoundSensorName().equals(systemname)){
                     
-                if(!p.getEastBoundSignalMast().equals(""))
-                    signal =  sm.getSignalMast(p.getEastBoundSignalMast());
+                if(!p.getEastBoundSignalMastName().equals(""))
+                    signal =  sm.getSignalMast(p.getEastBoundSignalMastName());
                     
                 else if(!p.getEastBoundSignal().equals(""))
                     signal =  sh.getSignalHead(p.getEastBoundSignal());
             }
-            else if((p.getWestBoundSensor().equals(username)) || 
-                    p.getWestBoundSensor().equals(systemname)){
+            else if((p.getWestBoundSensorName().equals(username)) || 
+                    p.getWestBoundSensorName().equals(systemname)){
                     
-                if(!p.getWestBoundSignalMast().equals(""))
-                    signal =  sm.getSignalMast(p.getWestBoundSignalMast());
+                if(!p.getWestBoundSignalMastName().equals(""))
+                    signal =  sm.getSignalMast(p.getWestBoundSignalMastName());
                     
                 else if(!p.getWestBoundSignal().equals(""))
                     signal =  sh.getSignalHead(p.getWestBoundSignal());
@@ -579,27 +544,27 @@ public class PointDetails {
         }
         else if(getRefLocation() instanceof LayoutTurnout){
             LayoutTurnout t = (LayoutTurnout)getRefLocation();
-            if(t.getSensorA().equals(username) || t.getSensorA().equals(systemname))
-                if(!t.getSignalAMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalAMast());
+            if(t.getSensorAName().equals(username) || t.getSensorAName().equals(systemname))
+                if(!t.getSignalAMastName().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalAMastName());
                 else if(!t.getSignalA1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalA1Name());
                     
-            else if(t.getSensorB().equals(username) || t.getSensorB().equals(systemname))
-                if(!t.getSignalBMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalBMast());
+            else if(t.getSensorBName().equals(username) || t.getSensorBName().equals(systemname))
+                if(!t.getSignalBMastName().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalBMastName());
                 else if(!t.getSignalB1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalB1Name());
                     
-            else if(t.getSensorC().equals(username) || t.getSensorC().equals(systemname))
-                if(!t.getSignalCMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalCMast());
+            else if(t.getSensorCName().equals(username) || t.getSensorCName().equals(systemname))
+                if(!t.getSignalCMastName().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalCMastName());
                 else if(!t.getSignalC1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalC1Name());
                     
-            else if(t.getSensorD().equals(username) || t.getSensorD().equals(systemname))
-                if(!t.getSignalDMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalDMast());
+            else if(t.getSensorDName().equals(username) || t.getSensorDName().equals(systemname))
+                if(!t.getSignalDMastName().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalDMastName());
                 else if(!t.getSignalD1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalD1Name());
         }
@@ -632,27 +597,27 @@ public class PointDetails {
         }
         else if(getRefLocation() instanceof LayoutSlip){
             LayoutSlip t = (LayoutSlip)getRefLocation();
-            if(t.getSensorA().equals(username) || t.getSensorA().equals(systemname))
-                if(!t.getSignalAMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalAMast());
+            if(t.getSensorAName().equals(username) || t.getSensorAName().equals(systemname))
+                if(!t.getSignalAMastName().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalAMastName());
                 else if(!t.getSignalA1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalA1Name());
                     
-            else if(t.getSensorB().equals(username) || t.getSensorB().equals(systemname))
-                if(!t.getSignalBMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalBMast());
+            else if(t.getSensorBName().equals(username) || t.getSensorBName().equals(systemname))
+                if(!t.getSignalBMastName().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalBMastName());
                 else if(!t.getSignalB1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalB1Name());
                     
-            else if(t.getSensorC().equals(username) || t.getSensorC().equals(systemname))
-                if(!t.getSignalCMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalCMast());
+            else if(t.getSensorCName().equals(username) || t.getSensorCName().equals(systemname))
+                if(!t.getSignalCMastName().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalCMastName());
                 else if(!t.getSignalC1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalC1Name());
                     
-            else if(t.getSensorD().equals(username) || t.getSensorD().equals(systemname))
-                if(!t.getSignalDMast().equals(""))
-                    signal =  sm.getSignalMast(t.getSignalDMast());
+            else if(t.getSensorDName().equals(username) || t.getSensorDName().equals(systemname))
+                if(!t.getSignalDMastName().equals(""))
+                    signal =  sm.getSignalMast(t.getSignalDMastName());
                 else if(!t.getSignalD1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalD1Name());
         }

@@ -733,8 +733,12 @@ public class Car extends RollingStock {
 			}
 			// empty car if it has a schedule load
 			if (destTrack.isRemoveLoadsEnabled() && !getLoad().equals(carLoads.getDefaultEmptyName())
-					&& !getLoad().equals(carLoads.getDefaultLoadName()))
+					&& !getLoad().equals(carLoads.getDefaultLoadName())) {
 				setLoadEmpty();
+				// remove this car's final destination if it has one
+				setFinalDestination(null);
+				setFinalDestinationTrack(null);
+			}
 		}
 	}
 

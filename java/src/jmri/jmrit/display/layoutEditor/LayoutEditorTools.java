@@ -7274,12 +7274,12 @@ public class LayoutEditorTools
 	/**
 	 * Returns a Sensor given a name
 	 */
-	public Sensor getSensorFromName(String str) {
+	/*public Sensor getSensorFromName(String str) {
 		if ( (str==null) || (str.equals("")) ) {
 			return null;
 		}
 		return  (jmri.InstanceManager.sensorManagerInstance().getSensor(str));
-	}
+	}*/
     
     public SensorIcon getSensorIcon(String sensorName) {
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", 
@@ -7299,79 +7299,72 @@ public class LayoutEditorTools
 	 */
 	public boolean isSensorAssignedAnywhere(Sensor sensor)
 	{
-		String sName = sensor.getSystemName();
-		String uName = sensor.getUserName();
-		for (int i=0;i<layoutEditor.pointList.size();i++) {
-			PositionablePoint po = layoutEditor.pointList.get(i);
+        for(PositionablePoint po : layoutEditor.pointList){
             //We allow the same sensor to be allocated in both directions.
             if (po!=boundary){
-                if ((po.getEastBoundSensor()!=null) &&
-                        (po.getEastBoundSensor().equals(sName) || ((uName!=null) &&
-                        (po.getEastBoundSensor().equals(uName))))){
+                if ((po.getEastBoundSensor()!=null) && po.getEastBoundSensor()==sensor){
                             if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                                 return true;
 
                         }
-                if ((po.getWestBoundSensor()!=null) &&
-                        (po.getWestBoundSensor().equals(sName) || ((uName!=null) &&
-                        (po.getWestBoundSensor().equals(uName))))){
+                if ((po.getWestBoundSensorName()!=null) && po.getWestBoundSensor()==sensor){
                             if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                                 return true;
                 }
             }
 		}
+        for(LayoutTurnout to : layoutEditor.turnoutList){
+			if ((to.getSensorA()!=null) && to.getSensorA()==sensor){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+			if ((to.getSensorB()!=null) && to.getSensorB()==sensor){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+			if ((to.getSensorC()!=null) &&to.getSensorC()==sensor){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+			if ((to.getSensorD()!=null) && to.getSensorD()==sensor){
+                        if(!sensorAssignedElseWhere(sensor.getDisplayName()))
+                            return true;
+                    }
+		}
         
-        for (int i=0;i<layoutEditor.turnoutList.size();i++) {
-			LayoutTurnout to = layoutEditor.turnoutList.get(i);
-			if ((to.getSensorA()!=null) &&
-					(to.getSensorA().equals(sName) || ((uName!=null) && 
-					(to.getSensorA().equals(uName))))){
+        for(LayoutSlip to : layoutEditor.slipList){
+			if ((to.getSensorA()!=null) && to.getSensorA()==sensor){
                         if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                             return true;
                     }
-			if ((to.getSensorB()!=null) &&
-					(to.getSensorB().equals(sName) || ((uName!=null) && 
-					(to.getSensorB().equals(uName))))){
+			if ((to.getSensorB()!=null) && to.getSensorB()==sensor){
                         if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                             return true;
                     }
-			if ((to.getSensorC()!=null) &&
-					(to.getSensorC().equals(sName) || ((uName!=null) && 
-					(to.getSensorC().equals(uName))))){
+			if ((to.getSensorC()!=null) &&to.getSensorC()==sensor){
                         if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                             return true;
                     }
-			if ((to.getSensorD()!=null) &&
-					(to.getSensorD().equals(sName) || ((uName!=null) && 
-					(to.getSensorD().equals(uName))))){
+			if ((to.getSensorD()!=null) && to.getSensorD()==sensor){
                         if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                             return true;
                     }
 		}
 
-		for (int i=0;i<layoutEditor.xingList.size();i++) {
-			LevelXing x = layoutEditor.xingList.get(i);
-			if ((x.getSensorAName()!=null) &&
-					(x.getSensorAName().equals(sName) || ((uName!=null) && 
-					(x.getSensorAName().equals(uName))))){
+        for(LevelXing x : layoutEditor.xingList){
+			if ((x.getSensorA()!=null) && x.getSensorA()==sensor){
                         if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                             return true;
                     }
-			if ((x.getSensorBName()!=null) &&
-					(x.getSensorBName().equals(sName) || ((uName!=null) && 
-					(x.getSensorBName().equals(uName))))){
+			if ((x.getSensorB()!=null) && x.getSensorB()==sensor){
                         if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                             return true;
                     }
-			if ((x.getSensorCName()!=null) &&
-					(x.getSensorCName().equals(sName) || ((uName!=null) && 
-					(x.getSensorCName().equals(uName))))){
+			if ((x.getSensorC()!=null) && x.getSensorC()==sensor){
                         if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                             return true;
                     }
-			if ((x.getSensorDName()!=null) &&
-					(x.getSensorDName().equals(sName) || ((uName!=null) && 
-					(x.getSensorDName().equals(uName))))){
+			if ((x.getSensorD()!=null) && x.getSensorD()==sensor){
                         if(!sensorAssignedElseWhere(sensor.getDisplayName()))
                             return true;
                     }
@@ -7397,18 +7390,56 @@ public class LayoutEditorTools
 	{
         if(sensor==null)
             return;
-		String sName = sensor.getSystemName();
-		String uName = sensor.getUserName();
-		for (int i=0;i<layoutEditor.pointList.size();i++) {
-			PositionablePoint po = layoutEditor.pointList.get(i);
-			if ((po.getEastBoundSensor()!=null) &&
-					(po.getEastBoundSensor().equals(sName) || ((uName!=null) && 
-					(po.getEastBoundSensor().equals(uName))))) 
-				po.setEastBoundSensor("");
-			if ((po.getWestBoundSensor()!=null) &&
-					(po.getWestBoundSensor().equals(sName) || ((uName!=null) && 
-					(po.getWestBoundSensor().equals(uName))))) 
-				po.setWestBoundSensor("");
+        
+        for(PositionablePoint po : layoutEditor.pointList){
+            if ((po.getEastBoundSensor()!=null) && po.getEastBoundSensor()==sensor){
+                po.setEastBoundSensor(null);
+            }
+            if ((po.getWestBoundSensor()!=null) && po.getWestBoundSensor()==sensor){
+                po.setWestBoundSensor(null);
+            }
+		}
+        for(LayoutTurnout to : layoutEditor.turnoutList){
+			if ((to.getSensorA()!=null) && to.getSensorA()==sensor){
+                to.setSensorA(null);
+            }
+			if ((to.getSensorB()!=null) && to.getSensorB()==sensor){
+                to.setSensorB(null);
+            }
+			if ((to.getSensorC()!=null) &&to.getSensorC()==sensor){
+                to.setSensorC(null);
+            }
+			if ((to.getSensorD()!=null) && to.getSensorD()==sensor){
+                to.setSensorD(null);
+            }
+		}
+        
+        for(LayoutSlip to : layoutEditor.slipList){
+			if ((to.getSensorA()!=null) && to.getSensorA()==sensor)
+                to.setSensorA(null);
+                
+			if ((to.getSensorB()!=null) && to.getSensorB()==sensor)
+                to.setSensorB(null);
+                
+			if ((to.getSensorC()!=null) && to.getSensorC()==sensor)
+                to.setSensorC(null);
+                
+			if ((to.getSensorD()!=null) && to.getSensorD()==sensor)
+                to.setSensorD(null);
+		}
+
+        for(LevelXing x : layoutEditor.xingList){
+			if ((x.getSensorA()!=null) && x.getSensorA()==sensor)
+                x.setSensorAName(null);
+                
+			if ((x.getSensorB()!=null) && x.getSensorB()==sensor)
+                x.setSensorBName(null);
+                
+			if ((x.getSensorC()!=null) && x.getSensorC()==sensor)
+                x.setSensorCName(null);
+                
+			if ((x.getSensorD()!=null) && x.getSensorD()==sensor)
+                x.setSensorDName(null);
 		}
 	}
 	/**
@@ -7416,10 +7447,14 @@ public class LayoutEditorTools
 	 *		assignment to any turnout, positionable point, or level crossing
 	 */
 	@SuppressWarnings("null")
-	public void removeSensorFromPanel(String sensorName) {
+	/*public void removeSensorFromPanel(String sensorName) {
 		if ( (sensorName==null) || (sensorName.length()<1) ) return;
 		Sensor sensor = jmri.InstanceManager.sensorManagerInstance().
 														getSensor(sensorName);
+        removeSensorFromPanel(sensor);
+    }*/
+    
+    public void removeSensorFromPanel(Sensor sensor){
 		removeSensorAssignment(sensor);
 		SensorIcon h = null;
 		int index = -1;
@@ -7439,8 +7474,8 @@ public class LayoutEditorTools
     
     private void getSavedAnchorSensors (ActionEvent a) {
 		if ( !getSimpleBlockInformation() ) return;
-		eastBoundSensor.setTextField(boundary.getEastBoundSensor());	
-		westBoundSensor.setTextField(boundary.getWestBoundSensor());
+		eastBoundSensor.setTextField(boundary.getEastBoundSensorName());	
+		westBoundSensor.setTextField(boundary.getWestBoundSensorName());
         
         if(boundary.getType()!=PositionablePoint.END_BUMPER){
             if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
@@ -7477,17 +7512,17 @@ public class LayoutEditorTools
 		Sensor eastSensor = getSensorFromEntry(eastBoundSensor.getText(),false,setSensorsAtBoundaryFrame);
 		Sensor westSensor = getSensorFromEntry(westBoundSensor.getText(),false,setSensorsAtBoundaryFrame);
 		if (eastSensor==null) {
-            removeSensorAssignment(jmri.InstanceManager.sensorManagerInstance().getSensor(boundary.getEastBoundSensor()));
+            removeSensorAssignment(jmri.InstanceManager.sensorManagerInstance().getSensor(boundary.getEastBoundSensorName()));
             boundary.setEastBoundSensor(null);
 		}
         if (westSensor==null) {
-            removeSensorAssignment(jmri.InstanceManager.sensorManagerInstance().getSensor(boundary.getWestBoundSensor()));
+            removeSensorAssignment(jmri.InstanceManager.sensorManagerInstance().getSensor(boundary.getWestBoundSensorName()));
             boundary.setWestBoundSensor(null);
 		}
 		// place or update signals as requested
 		if ( (eastSensor!=null) && eastBoundSensor.addToPanel() ) {
 			if (isSensorAssignedAnywhere(eastSensor) &&
-					(eastSensor!=getSensorFromName(boundary.getEastBoundSensor()))) { 
+					(eastSensor!=boundary.getEastBoundSensor())) { 
 				JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{eastBoundSensor.getText()}), 
@@ -7502,8 +7537,8 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (eastSensor!=null) && 
-				(eastSensor!=getSensorFromName(boundary.getEastBoundSensor())) &&
-				(eastSensor!=getSensorFromName(boundary.getWestBoundSensor())) ) {
+				(eastSensor!=boundary.getEastBoundSensor()) &&
+				(eastSensor!=boundary.getWestBoundSensor()) ) {
 			if (isSensorAssignedAnywhere(eastSensor)) {
 				JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError13"),
@@ -7517,13 +7552,13 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (eastSensor!=null) &&  
-				(eastSensor==getSensorFromName(boundary.getWestBoundSensor())) ) {
+				(eastSensor==boundary.getWestBoundSensor()) ) {
             boundary.setEastBoundSensor(eastBoundSensor.getText());
 		}
         
 		if ( (westSensor!=null) && westBoundSensor.addToPanel() ) {
 			if (isSensorAssignedAnywhere(westSensor) &&
-					(westSensor!=getSensorFromName(boundary.getWestBoundSensor()))) { 
+					(westSensor!=boundary.getWestBoundSensor())) { 
 				JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{westBoundSensor.getText()}), 
@@ -7538,8 +7573,8 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (westSensor!=null) && 
-				(westSensor!=getSensorFromName(boundary.getEastBoundSensor())) &&
-				(westSensor!=getSensorFromName(boundary.getWestBoundSensor())) ) {
+				(westSensor!=boundary.getEastBoundSensor()) &&
+				(westSensor!=boundary.getWestBoundSensor()) ) {
 			if (isSensorAssignedAnywhere(westSensor)) {
                 //Need to do this better, so that the sensor can be on panel multiple times but only alocated to one anchor at a time
 				JOptionPane.showMessageDialog(setSensorsAtBoundaryFrame,
@@ -7554,7 +7589,7 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (westSensor!=null) &&  
-				(westSensor==getSensorFromName(boundary.getEastBoundSensor())) ) {
+				(westSensor==boundary.getEastBoundSensor()) ) {
             boundary.setWestBoundSensor(westBoundSensor.getText());
 // need to figure out what to do in this case.			
 		}
@@ -7766,12 +7801,12 @@ public class LayoutEditorTools
 	/**
 	 * Returns a SignalMast given a name
 	 */
-	public SignalMast getSignalMastFromName(String str) {
+	/*public SignalMast getSignalMastFromName(String str) {
 		if ( (str==null) || (str.equals("")) ) {
 			return null;
 		}
 		return  (jmri.InstanceManager.signalMastManagerInstance().getSignalMast(str));
-	}
+	}*/
     
 	/**
 	 * Returns true if the specified SignalMast  is assigned to an object
@@ -7779,56 +7814,50 @@ public class LayoutEditorTools
 	 */
 	public boolean isSignalMastAssignedAnywhere(SignalMast signalMast) 
 	{
-		String sName = signalMast.getSystemName();
-		String uName = signalMast.getUserName();
-		for (int i=0;i<layoutEditor.pointList.size();i++) {
-			PositionablePoint po = layoutEditor.pointList.get(i);
-			if ((po.getEastBoundSignalMast()!=null) &&
-					(po.getEastBoundSignalMast().equals(sName) || ((uName!=null) && 
-					(po.getEastBoundSignalMast().equals(uName))))) return true;
-			if ((po.getWestBoundSignalMast()!=null) &&
-					(po.getWestBoundSignalMast().equals(sName) || ((uName!=null) && 
-					(po.getWestBoundSignalMast().equals(uName))))) return true;
+		/*for (int i=0;i<layoutEditor.pointList.size();i++) {
+			PositionablePoint po = layoutEditor.pointList.get(i);*/
+        for (PositionablePoint po :layoutEditor.pointList) {
+			if ((po.getEastBoundSignalMast()!=null) && po.getEastBoundSignalMast() == signalMast)
+                return true;
+			if ((po.getWestBoundSignalMast()!=null) && po.getWestBoundSignalMast() == signalMast)
+				return true;
 		}
         
-        for (int i=0;i<layoutEditor.turnoutList.size();i++) {
-			LayoutTurnout to = layoutEditor.turnoutList.get(i);
-			if ((to.getSignalAMast()!=null) &&
-					(to.getSignalAMast().equals(sName) || ((uName!=null) && 
-					(to.getSignalAMast().equals(uName)))))
-                            return true;
-			if ((to.getSignalBMast()!=null) &&
-					(to.getSignalBMast().equals(sName) || ((uName!=null) && 
-					(to.getSignalBMast().equals(uName)))))
-                            return true;
-			if ((to.getSignalCMast()!=null) &&
-					(to.getSignalCMast().equals(sName) || ((uName!=null) && 
-					(to.getSignalCMast().equals(uName)))))
-                            return true;
-			if ((to.getSignalDMast()!=null) &&
-					(to.getSignalDMast().equals(sName) || ((uName!=null) && 
-					(to.getSignalDMast().equals(uName)))))
-                              return true;
+        /*for (int i=0;i<layoutEditor.turnoutList.size();i++) {
+			LayoutTurnout to = layoutEditor.turnoutList.get(i);*/
+        for (LayoutTurnout to :layoutEditor.turnoutList) {
+			if ((to.getSignalAMast()!=null) && to.getSignalDMast() == signalMast)
+                return true;
+			if ((to.getSignalBMast()!=null) && to.getSignalDMast() == signalMast)
+                return true;
+			if ((to.getSignalCMast()!=null) && to.getSignalDMast() == signalMast)
+                return true;
+			if ((to.getSignalDMast()!=null) && to.getSignalDMast() == signalMast)
+              return true;
+		}
+        
+        for (LayoutSlip to :layoutEditor.slipList) {
+			if ((to.getSignalAMast()!=null) && to.getSignalDMast() == signalMast)
+                return true;
+			if ((to.getSignalBMast()!=null) && to.getSignalDMast() == signalMast)
+                return true;
+			if ((to.getSignalCMast()!=null) && to.getSignalDMast() == signalMast)
+                return true;
+			if ((to.getSignalDMast()!=null) && to.getSignalDMast() == signalMast)
+              return true;
 		}
 
-		for (int i=0;i<layoutEditor.xingList.size();i++) {
-			LevelXing x = layoutEditor.xingList.get(i);
-			if ((x.getSignalAMastName()!=null) &&
-					(x.getSignalAMastName().equals(sName) || ((uName!=null) && 
-					(x.getSignalAMastName().equals(uName)))))
-                            return true;
-			if ((x.getSignalBMastName()!=null) &&
-					(x.getSignalBMastName().equals(sName) || ((uName!=null) && 
-					(x.getSignalBMastName().equals(uName)))))
-                            return true;
-			if ((x.getSignalCMastName()!=null) &&
-					(x.getSignalCMastName().equals(sName) || ((uName!=null) && 
-					(x.getSignalCMastName().equals(uName)))))
-                            return true;
-			if ((x.getSignalDMastName()!=null) &&
-					(x.getSignalDMastName().equals(sName) || ((uName!=null) && 
-					(x.getSignalDMastName().equals(uName)))))
-                            return true;
+		/*for (int i=0;i<layoutEditor.xingList.size();i++) {
+			LevelXing x = layoutEditor.xingList.get(i);*/
+        for (LevelXing x :layoutEditor.xingList) {
+			if ((x.getSignalAMast()!=null) && x.getSignalAMast() == signalMast)
+                return true;
+			if ((x.getSignalBMast()!=null) && x.getSignalAMast() == signalMast)
+                return true;
+			if ((x.getSignalCMast()!=null) && x.getSignalAMast() == signalMast)
+                return true;
+			if ((x.getSignalDMast()!=null) && x.getSignalAMast() == signalMast)
+                return true;
 		}
         
 		return false;
@@ -7841,18 +7870,65 @@ public class LayoutEditorTools
 	{
         if (signalMast==null)
             return;
-		String sName = signalMast.getSystemName();
-		String uName = signalMast.getUserName();
-		for (int i=0;i<layoutEditor.pointList.size();i++) {
+		/*for (int i=0;i<layoutEditor.pointList.size();i++) {
 			PositionablePoint po = layoutEditor.pointList.get(i);
 			if ((po.getEastBoundSignalMast()!=null) &&
-					(po.getEastBoundSignalMast().equals(sName) || ((uName!=null) && 
-					(po.getEastBoundSignalMast().equals(uName))))) 
-				po.setEastBoundSignalMast("");
+					(po.getEastBoundSignalMast()== signalMast) )
+				po.setEastBoundSignalMast(null);
 			if ((po.getWestBoundSignalMast()!=null) &&
-					(po.getWestBoundSignalMast().equals(sName) || ((uName!=null) && 
-					(po.getWestBoundSignalMast().equals(uName))))) 
-				po.setWestBoundSignalMast("");
+					(po.getWestBoundSignalMast() == signalMast)) 
+				po.setWestBoundSignalMast(null);
+		}*/
+        
+                for(PositionablePoint po : layoutEditor.pointList){
+            if ((po.getEastBoundSignalMast()!=null) && po.getEastBoundSignalMast()==signalMast){
+                po.setEastBoundSignalMast(null);
+            }
+            if ((po.getWestBoundSignalMast()!=null) && po.getWestBoundSignalMast()==signalMast){
+                po.setWestBoundSignalMast(null);
+            }
+		}
+        for(LayoutTurnout to : layoutEditor.turnoutList){
+			if ((to.getSignalAMast()!=null) && to.getSignalAMast()==signalMast){
+                to.setSignalAMast(null);
+            }
+			if ((to.getSignalBMast()!=null) && to.getSignalBMast()==signalMast){
+                to.setSignalBMast(null);
+            }
+			if ((to.getSignalCMast()!=null) &&to.getSignalCMast()==signalMast){
+                to.setSignalCMast(null);
+            }
+			if ((to.getSignalDMast()!=null) && to.getSignalDMast()==signalMast){
+                to.setSignalDMast(null);
+            }
+		}
+        
+        for(LayoutSlip to : layoutEditor.slipList){
+			if ((to.getSignalAMast()!=null) && to.getSignalAMast()==signalMast)
+                to.setSignalAMast(null);
+                
+			if ((to.getSignalBMast()!=null) && to.getSignalBMast()==signalMast)
+                to.setSignalBMast(null);
+                
+			if ((to.getSignalCMast()!=null) && to.getSignalCMast()==signalMast)
+                to.setSignalCMast(null);
+                
+			if ((to.getSignalDMast()!=null) && to.getSignalDMast()==signalMast)
+                to.setSignalDMast(null);
+		}
+
+        for(LevelXing x : layoutEditor.xingList){
+			if ((x.getSignalAMast()!=null) && x.getSignalAMast()==signalMast)
+                x.setSignalAMast(null);
+                
+			if ((x.getSignalBMast()!=null) && x.getSignalBMast()==signalMast)
+                x.setSignalBMast(null);
+                
+			if ((x.getSignalCMast()!=null) && x.getSignalCMast()==signalMast)
+                x.setSignalCMast(null);
+                
+			if ((x.getSignalDMast()!=null) && x.getSignalDMast()==signalMast)
+                x.setSignalDMast(null);
 		}
 	}
 	/**
@@ -7860,10 +7936,7 @@ public class LayoutEditorTools
 	 *		assignment to any turnout, positionable point, or level crossing
 	 */
 	@SuppressWarnings("null")
-	public void removeSignalMastFromPanel(String signalMastName) {
-		if ( (signalMastName==null) || (signalMastName.length()<1) ) return;
-		SignalMast signalMast = jmri.InstanceManager.signalMastManagerInstance().
-														getSignalMast(signalMastName);
+    public void removeSignalMastFromPanel(SignalMast signalMast){
 		removeSignalMastAssignment(signalMast);
 		SignalMastIcon h = null;
 		int index = -1;
@@ -7883,8 +7956,8 @@ public class LayoutEditorTools
     
     private void getSavedAnchorSignalMasts (ActionEvent a) {
 		if ( !getSimpleBlockInformation() ) return;
-		eastSignalMast.setTextField(boundary.getEastBoundSignalMast());
-		westSignalMast.setTextField(boundary.getWestBoundSignalMast());
+		eastSignalMast.setTextField(boundary.getEastBoundSignalMastName());
+		westSignalMast.setTextField(boundary.getWestBoundSignalMastName());
         if(boundary.getType()!=PositionablePoint.END_BUMPER){
             if(isAtWestEndOfAnchor(boundary.getConnect1(), boundary)){
                 eastSignalMast.setBoundaryLabelText("Protecting Block : " + boundary.getConnect2().getLayoutBlock().getDisplayName());
@@ -7924,8 +7997,8 @@ public class LayoutEditorTools
     
 	private void setSignalMastsAtBoundaryDonePressed (ActionEvent a) {
 		if ( !getSimpleBlockInformation() ) return;
-        SignalMast oldBlock1SignalMast = getSignalMastFromName(boundary.getEastBoundSignalMast());
-        SignalMast oldBlock2SignalMast = getSignalMastFromName(boundary.getWestBoundSignalMast());
+        SignalMast oldBlock1SignalMast = boundary.getEastBoundSignalMast();
+        SignalMast oldBlock2SignalMast = boundary.getWestBoundSignalMast();
 		SignalMast block1BoundSignalMast = getSignalMastFromEntry(eastSignalMast.getText(),false,setSignalMastsAtBoundaryFrame);
 		SignalMast block2BoundSignalMast = getSignalMastFromEntry(westSignalMast.getText(),false,setSignalMastsAtBoundaryFrame);
         
@@ -7935,7 +8008,7 @@ public class LayoutEditorTools
             }
             
             removeSignalMastFromPanel(boundary.getEastBoundSignalMast());
-            removeSignalMastAssignment(jmri.InstanceManager.signalMastManagerInstance().getSignalMast(boundary.getEastBoundSignalMast()));
+            removeSignalMastAssignment(boundary.getEastBoundSignalMast());
             boundary.setEastBoundSignalMast("");
         }
         if(block2BoundSignalMast==null){
@@ -7944,7 +8017,7 @@ public class LayoutEditorTools
             }
             
             removeSignalMastFromPanel(boundary.getWestBoundSignalMast());
-            removeSignalMastAssignment(jmri.InstanceManager.signalMastManagerInstance().getSignalMast(boundary.getWestBoundSignalMast()));
+            removeSignalMastAssignment(boundary.getWestBoundSignalMast());
             boundary.setWestBoundSignalMast("");
         }
         if(block2BoundSignalMast!=null && block1BoundSignalMast!=null){
@@ -8003,8 +8076,8 @@ public class LayoutEditorTools
                         needRedraw = true;
                     }
                 }
-                else if ((block1BoundSignalMast!=getSignalMastFromName(boundary.getEastBoundSignalMast())) &&
-                        (block1BoundSignalMast!=getSignalMastFromName(boundary.getWestBoundSignalMast())) ) {
+                else if ((block1BoundSignalMast!=boundary.getEastBoundSignalMast()) &&
+                        (block1BoundSignalMast!=boundary.getWestBoundSignalMast()) ) {
                     if (isSignalMastOnPanel(block1BoundSignalMast)) {
                         JOptionPane.showMessageDialog(setSignalMastsAtBoundaryFrame,
                             java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
@@ -8039,7 +8112,7 @@ public class LayoutEditorTools
                         needRedraw = true;
                     }		
                 }
-                else if ( (block2BoundSignalMast!=getSignalMastFromName(boundary.getEastBoundSignalMast())) &&
+                else if ( (block2BoundSignalMast!=boundary.getEastBoundSignalMast()) &&
                         (block2BoundSignalMast!=oldBlock2SignalMast) ) {
                     if (isSignalMastAssignedAnywhere(block2BoundSignalMast)) {
                         //Need to do this better, so that the signalMast can be on panel multiple times but only alocated to one anchor at a time
@@ -8679,42 +8752,42 @@ public class LayoutEditorTools
 			PositionablePoint po = layoutEditor.pointList.get(i);
             //We allow the same sensor to be allocated in both directions.
             if (po!=boundary){
-                if (po.getEastBoundSignalMast()!=null && !po.getEastBoundSignalMast().equals(""))
-                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(po.getEastBoundSignalMast()));
-                if (po.getWestBoundSignalMast()!=null && !po.getWestBoundSignalMast().equals(""))
-                    usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(po.getWestBoundSignalMast()));
+                if (po.getEastBoundSignalMast()!=null)
+                    usedMasts.add(po.getEastBoundSignalMast());
+                if (po.getWestBoundSignalMast()!=null)
+                    usedMasts.add(po.getWestBoundSignalMast());
             }
 		}
         
         for (LayoutTurnout to : layoutEditor.turnoutList) {
-            if (to.getSignalAMast()!=null && !to.getSignalAMast().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalAMast()));
-            if (to.getSignalBMast()!=null && !to.getSignalBMast().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalBMast()));
-            if (to.getSignalCMast()!=null && !to.getSignalCMast().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalCMast()));
-            if (to.getSignalDMast()!=null && !to.getSignalDMast().equals("") )
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(to.getSignalDMast()));
+            if (to.getSignalAMast()!=null)
+                usedMasts.add(to.getSignalAMast());
+            if (to.getSignalBMast()!=null)
+                usedMasts.add(to.getSignalBMast());
+            if (to.getSignalCMast()!=null)
+                usedMasts.add(to.getSignalCMast());
+            if (to.getSignalDMast()!=null)
+                usedMasts.add(to.getSignalDMast());
 		}
 		for (LevelXing x :layoutEditor.xingList) {
-			if (x.getSignalAMastName()!=null && !x.getSignalAMastName().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalAMastName()));
-			if (x.getSignalBMastName()!=null && !x.getSignalBMastName().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalBMastName()));
-			if (x.getSignalCMastName()!=null && !x.getSignalCMastName().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalCMastName()));
-			if (x.getSignalDMastName()!=null && !x.getSignalDMastName().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(x.getSignalDMastName()));
+			if (x.getSignalAMast()!=null)
+                usedMasts.add(x.getSignalAMast());
+			if (x.getSignalBMast()!=null)
+                usedMasts.add(x.getSignalBMast());
+			if (x.getSignalCMast()!=null)
+                usedMasts.add(x.getSignalCMast());
+			if (x.getSignalDMast()!=null)
+                usedMasts.add(x.getSignalDMast());
 		}
         for (LayoutSlip sl :layoutEditor.slipList) {
-			if (sl.getSignalAMast()!=null && !sl.getSignalAMast().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(sl.getSignalAMast()));
-			if (sl.getSignalBMast()!=null && !sl.getSignalBMast().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(sl.getSignalBMast()));
-			if (sl.getSignalCMast()!=null && !sl.getSignalCMast().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(sl.getSignalCMast()));
-			if (sl.getSignalDMast()!=null && !sl.getSignalDMast().equals(""))
-                usedMasts.add(InstanceManager.signalMastManagerInstance().getSignalMast(sl.getSignalDMast()));
+			if (sl.getSignalAMast()!=null)
+                usedMasts.add(sl.getSignalAMast());
+			if (sl.getSignalBMast()!=null)
+                usedMasts.add(sl.getSignalBMast());
+			if (sl.getSignalCMast()!=null)
+                usedMasts.add(sl.getSignalCMast());
+			if (sl.getSignalDMast()!=null)
+                usedMasts.add(sl.getSignalDMast());
 		}
     }
     
@@ -8756,10 +8829,10 @@ public class LayoutEditorTools
 				JLabel turnoutMastNameLabel = new JLabel( rb.getString("Turnout")+" "+
 					rb.getString("Name")+" : "+layoutTurnout.getTurnoutName());
 				panel1.add(turnoutMastNameLabel);
-                turnoutSignalMastA.setTextField(layoutTurnout.getSignalAMast());
-                turnoutSignalMastB.setTextField(layoutTurnout.getSignalBMast());
-                turnoutSignalMastC.setTextField(layoutTurnout.getSignalCMast());
-                turnoutSignalMastD.setTextField(layoutTurnout.getSignalDMast());
+                turnoutSignalMastA.setTextField(layoutTurnout.getSignalAMastName());
+                turnoutSignalMastB.setTextField(layoutTurnout.getSignalBMastName());
+                turnoutSignalMastC.setTextField(layoutTurnout.getSignalCMastName());
+                turnoutSignalMastD.setTextField(layoutTurnout.getSignalDMastName());
 			}
 			else {
 				JLabel turnoutMastNameLabel = new JLabel( rb.getString("Turnout")+" "+
@@ -8845,10 +8918,10 @@ public class LayoutEditorTools
     private void turnoutSignalMastsGetSaved (ActionEvent a) {
 		if ( !getTurnoutMastInformation() ) return;
         turnoutBlocks = layoutTurnout.getBlockBoundaries();
-        turnoutSignalMastA.setTextField(layoutTurnout.getSignalAMast());
-        turnoutSignalMastB.setTextField(layoutTurnout.getSignalBMast());
-        turnoutSignalMastC.setTextField(layoutTurnout.getSignalCMast());
-        turnoutSignalMastD.setTextField(layoutTurnout.getSignalDMast());
+        turnoutSignalMastA.setTextField(layoutTurnout.getSignalAMastName());
+        turnoutSignalMastB.setTextField(layoutTurnout.getSignalBMastName());
+        turnoutSignalMastC.setTextField(layoutTurnout.getSignalCMastName());
+        turnoutSignalMastD.setTextField(layoutTurnout.getSignalDMastName());
 
         turnoutSignalMastA.setBoundaryLabel(turnoutBlocks[0]);
         turnoutSignalMastB.setBoundaryLabel(turnoutBlocks[1]);
@@ -8887,16 +8960,16 @@ public class LayoutEditorTools
             return NONE;
 		String sysName = mast.getSystemName();
 		String uName = mast.getUserName();
-		String name = lTurnout.getSignalAMast();
+		String name = lTurnout.getSignalAMastName();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return A1;
-		name = lTurnout.getSignalBMast();
+		name = lTurnout.getSignalBMastName();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return A2;
-		name = lTurnout.getSignalCMast();
+		name = lTurnout.getSignalCMastName();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return A3;
-		name = lTurnout.getSignalDMast();
+		name = lTurnout.getSignalDMastName();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return B1;
 		return NONE;
@@ -8908,44 +8981,44 @@ public class LayoutEditorTools
 		String uName = mast.getUserName();
 		for (int i=0;i<layoutEditor.turnoutList.size();i++) {
 			LayoutTurnout to = layoutEditor.turnoutList.get(i);
-			if ((to.getSignalAMast()!=null) &&
-					(to.getSignalAMast().equals(sName) || ((uName!=null) && 
-					(to.getSignalAMast().equals(uName))))) to.setSignalAMast("");
-			if ((to.getSignalBMast()!=null) &&
-					(to.getSignalBMast().equals(sName) || ((uName!=null) && 
-					(to.getSignalBMast().equals(uName))))) to.setSignalBMast("");
-			if ((to.getSignalCMast()!=null) &&
-					(to.getSignalCMast().equals(sName) || ((uName!=null) && 
-					(to.getSignalCMast().equals(uName))))) to.setSignalCMast("");
-			if ((to.getSignalDMast()!=null) &&
-					(to.getSignalDMast().equals(sName) || ((uName!=null) && 
-					(to.getSignalDMast().equals(uName))))) to.setSignalDMast("");
+			if ((to.getSignalAMastName()!=null) &&
+					(to.getSignalAMastName().equals(sName) || ((uName!=null) && 
+					(to.getSignalAMastName().equals(uName))))) to.setSignalAMast("");
+			if ((to.getSignalBMastName()!=null) &&
+					(to.getSignalBMastName().equals(sName) || ((uName!=null) && 
+					(to.getSignalBMastName().equals(uName))))) to.setSignalBMast("");
+			if ((to.getSignalCMastName()!=null) &&
+					(to.getSignalCMastName().equals(sName) || ((uName!=null) && 
+					(to.getSignalCMastName().equals(uName))))) to.setSignalCMast("");
+			if ((to.getSignalDMastName()!=null) &&
+					(to.getSignalDMastName().equals(sName) || ((uName!=null) && 
+					(to.getSignalDMastName().equals(uName))))) to.setSignalDMast("");
 		}
 		for (int i=0;i<layoutEditor.pointList.size();i++) {
 			PositionablePoint po = layoutEditor.pointList.get(i);
-			if ((po.getEastBoundSignalMast()!=null) &&
-					(po.getEastBoundSignalMast().equals(sName) || ((uName!=null) && 
-					(po.getEastBoundSignalMast().equals(uName))))) 
+			if ((po.getEastBoundSignalMastName()!=null) &&
+					(po.getEastBoundSignalMastName().equals(sName) || ((uName!=null) && 
+					(po.getEastBoundSignalMastName().equals(uName))))) 
 				po.setEastBoundSignalMast("");
-			if ((po.getWestBoundSignalMast()!=null) &&
-					(po.getWestBoundSignalMast().equals(sName) || ((uName!=null) && 
-					(po.getWestBoundSignalMast().equals(uName))))) 
+			if ((po.getWestBoundSignalMastName()!=null) &&
+					(po.getWestBoundSignalMastName().equals(sName) || ((uName!=null) && 
+					(po.getWestBoundSignalMastName().equals(uName))))) 
 				po.setWestBoundSignalMast("");
 		}
 		for (int i=0;i<layoutEditor.xingList.size();i++) {
 			LevelXing x = layoutEditor.xingList.get(i);
 			if ((x.getSignalAMastName()!=null) &&
 					(x.getSignalAMastName().equals(sName) || ((uName!=null) && 
-					(x.getSignalAMastName().equals(uName))))) x.setSignalAMastName("");
+					(x.getSignalAMastName().equals(uName))))) x.setSignalAMast("");
 			if ((x.getSignalBMastName()!=null) &&
 					(x.getSignalBMastName().equals(sName) || ((uName!=null) && 
-					(x.getSignalBMastName().equals(uName))))) x.setSignalBMastName("");
+					(x.getSignalBMastName().equals(uName))))) x.setSignalBMast("");
 			if ((x.getSignalCMastName()!=null) &&
 					(x.getSignalCMastName().equals(sName) || ((uName!=null) && 
-					(x.getSignalCMastName().equals(uName))))) x.setSignalCMastName("");
+					(x.getSignalCMastName().equals(uName))))) x.setSignalCMast("");
 			if ((x.getSignalDMastName()!=null) &&
 					(x.getSignalDMastName().equals(sName) || ((uName!=null) && 
-					(x.getSignalDMastName().equals(uName))))) x.setSignalDMastName("");
+					(x.getSignalDMastName().equals(uName))))) x.setSignalDMast("");
 		}
 	}
     
@@ -8960,7 +9033,7 @@ public class LayoutEditorTools
 		// place signals as requested
 		if (turnoutSignalMastA.addToPanel()) {
 			if (isSignalMastOnPanel(turnoutMast) &&
-				(turnoutMast!=getSignalMastFromName(layoutTurnout.getSignalAMast()))) {
+				(turnoutMast!=layoutTurnout.getSignalAMast())) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
 						new Object[]{turnoutSignalMastA.getText()}), 
@@ -9004,7 +9077,7 @@ public class LayoutEditorTools
 		}
 		if ( (turnoutSignalMastB.addToPanel()) && (turnoutMastB!=null) ) {
 			if (isSignalMastOnPanel(turnoutMastB) && 
-				(turnoutMastB!=getSignalMastFromName(layoutTurnout.getSignalBMast()))) {
+				(turnoutMastB!=layoutTurnout.getSignalBMast())) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
 					java.text.MessageFormat.format(rb.getString("SignalsError6"),
 						new Object[]{turnoutSignalMastB.getText()}), 
@@ -9049,7 +9122,7 @@ public class LayoutEditorTools
         if(turnoutMastC!=null){
             if (turnoutSignalMastC.addToPanel()) {
                 if (isSignalMastOnPanel(turnoutMastC) && 
-                    (turnoutMastC!=getSignalMastFromName(layoutTurnout.getSignalCMast()))) {
+                    (turnoutMastC!=layoutTurnout.getSignalCMast())) {
                     JOptionPane.showMessageDialog(setSignalsFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
                             new Object[]{turnoutSignalMastC.getText()}), 
@@ -9095,7 +9168,7 @@ public class LayoutEditorTools
         if(turnoutMastD!=null){
             if (turnoutSignalMastD.addToPanel()) {
                 if (isSignalMastOnPanel(turnoutMastD) && 
-                    (turnoutMastD!=getSignalMastFromName(layoutTurnout.getSignalDMast()))) {
+                    (turnoutMastD!=layoutTurnout.getSignalDMast())) {
                     JOptionPane.showMessageDialog(setSignalsFrame,
                         java.text.MessageFormat.format(rb.getString("SignalsError6"),
                             new Object[]{divergingField.getText()}), 
@@ -9340,10 +9413,10 @@ public class LayoutEditorTools
 							rb.getString("Name")+" : "+layoutSlip.getBlockName());
 			
 				panel11.add(blockANameLabel);
-                slipSignalMastA.setTextField(layoutSlip.getSignalAMast());
-                slipSignalMastB.setTextField(layoutSlip.getSignalBMast());
-                slipSignalMastC.setTextField(layoutSlip.getSignalCMast());
-                slipSignalMastD.setTextField(layoutSlip.getSignalDMast());
+                slipSignalMastA.setTextField(layoutSlip.getSignalAMastName());
+                slipSignalMastB.setTextField(layoutSlip.getSignalBMastName());
+                slipSignalMastC.setTextField(layoutSlip.getSignalCMastName());
+                slipSignalMastD.setTextField(layoutSlip.getSignalDMastName());
 			}
 			else {
 				JLabel blockANameLabel = new JLabel( rb.getString("BlockAtA")+" "+
@@ -9453,10 +9526,10 @@ public class LayoutEditorTools
 	private void slipSignalMastsGetSaved (ActionEvent a) {
 		if ( !getSlipMastInformation() ) return;
         slipBlocks = layoutSlip.getBlockBoundaries();
-		slipSignalMastA.setTextField(layoutSlip.getSignalAMast());
-		slipSignalMastB.setTextField(layoutSlip.getSignalBMast());
-		slipSignalMastC.setTextField(layoutSlip.getSignalCMast());
-		slipSignalMastD.setTextField(layoutSlip.getSignalDMast());
+		slipSignalMastA.setTextField(layoutSlip.getSignalAMastName());
+		slipSignalMastB.setTextField(layoutSlip.getSignalBMastName());
+		slipSignalMastC.setTextField(layoutSlip.getSignalCMastName());
+		slipSignalMastD.setTextField(layoutSlip.getSignalDMastName());
         
         slipSignalMastA.setBoundaryLabel(slipBlocks[0]);
         slipSignalMastB.setBoundaryLabel(slipBlocks[1]);
@@ -9578,7 +9651,7 @@ public class LayoutEditorTools
 		// place or update signals as requested
 		if ( (aMast!=null) && slipSignalMastA.addToPanel() ) {
 			if (isSignalMastOnPanel(aMast) && 
-					(aMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) ) { 
+					(aMast!=layoutSlip.getSignalAMast()) ) { 
 				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
 						new Object[]{slipSignalMastA.getText()}), 
@@ -9596,10 +9669,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (aMast!=null) && 
-				(aMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) &&
-				(aMast!=getSignalMastFromName(layoutSlip.getSignalBMast())) &&
-				(aMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) &&
-				(aMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) {
+				(aMast!=layoutSlip.getSignalAMast()) &&
+				(aMast!=layoutSlip.getSignalBMast()) &&
+				(aMast!=layoutSlip.getSignalCMast()) &&
+				(aMast!=layoutSlip.getSignalDMast()) ) {
 			if (isSignalMastOnPanel(aMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
@@ -9614,9 +9687,9 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (aMast!=null) &&  
-				( (aMast==getSignalMastFromName(layoutSlip.getSignalBMast())) ||
-					(aMast==getSignalMastFromName(layoutSlip.getSignalCMast())) ||
-					(aMast==getSignalMastFromName(layoutSlip.getSignalDMast())) ) ) {
+				( (aMast==layoutSlip.getSignalBMast()) ||
+					(aMast==layoutSlip.getSignalCMast()) ||
+					(aMast==layoutSlip.getSignalDMast()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (aMast==null) {
@@ -9625,7 +9698,7 @@ public class LayoutEditorTools
 		}
 		if ( (bMast!=null) && slipSignalMastB.addToPanel()) {
 			if (isSignalMastOnPanel(bMast) && 
-					(bMast!=getSignalMastFromName(layoutSlip.getSignalBMast()))) { 
+					(bMast!=layoutSlip.getSignalBMast())) { 
 				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
 						new Object[]{slipSignalMastB.getText()}), 
@@ -9643,10 +9716,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (bMast!=null) && 
-				(bMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) &&
-				(bMast!=getSignalMastFromName(layoutSlip.getSignalBMast())) &&
-				(bMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) &&
-				(bMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) {
+				(bMast!=layoutSlip.getSignalAMast()) &&
+				(bMast!=layoutSlip.getSignalBMast()) &&
+				(bMast!=layoutSlip.getSignalCMast()) &&
+				(bMast!=layoutSlip.getSignalDMast()) ) {
 			if (isSignalMastOnPanel(bMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
@@ -9661,9 +9734,9 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (bMast!=null) &&  
-				( (bMast==getSignalMastFromName(layoutSlip.getSignalAMast())) ||
-					(bMast==getSignalMastFromName(layoutSlip.getSignalCMast())) ||
-					(bMast==getSignalMastFromName(layoutSlip.getSignalDMast())) ) ) {
+				( (bMast==layoutSlip.getSignalAMast()) ||
+					(bMast==layoutSlip.getSignalCMast()) ||
+					(bMast==layoutSlip.getSignalDMast()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (bMast==null) {
@@ -9672,7 +9745,7 @@ public class LayoutEditorTools
 		}
 		if ( (cMast!=null) && slipSignalMastC.addToPanel() ) {
 			if (isSignalMastOnPanel(cMast) && 
-					(cMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) ) { 
+					(cMast!=layoutSlip.getSignalCMast()) ) { 
 				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
 						new Object[]{slipSignalMastC.getText()}), 
@@ -9690,10 +9763,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (cMast!=null) && 
-				(cMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) &&
-				(cMast!=getSignalMastFromName(layoutSlip.getSignalBMast())) &&
-				(cMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) &&
-				(cMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) {
+				(cMast!=layoutSlip.getSignalAMast()) &&
+				(cMast!=layoutSlip.getSignalBMast()) &&
+				(cMast!=layoutSlip.getSignalCMast()) &&
+				(cMast!=layoutSlip.getSignalDMast()) ) {
 			if (isSignalMastOnPanel(cMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
@@ -9708,9 +9781,9 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (cMast!=null) &&  
-				( (cMast==getSignalMastFromName(layoutSlip.getSignalBMast())) ||
-					(cMast==getSignalMastFromName(layoutSlip.getSignalAMast())) ||
-					(cMast==getSignalMastFromName(layoutSlip.getSignalDMast())) ) ) {
+				( (cMast==layoutSlip.getSignalBMast()) ||
+					(cMast==layoutSlip.getSignalAMast()) ||
+					(cMast==layoutSlip.getSignalDMast()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (cMast==null) {
@@ -9719,7 +9792,7 @@ public class LayoutEditorTools
 		}
 		if ( (dMast!=null) && slipSignalMastD.addToPanel() ) {
 			if (isSignalMastOnPanel(dMast) && 
-					(dMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) { 
+					(dMast!=layoutSlip.getSignalDMast()) ) { 
 				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
 						new Object[]{slipSignalMastD.getText()}), 
@@ -9737,10 +9810,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (dMast!=null) && 
-				(dMast!=getSignalMastFromName(layoutSlip.getSignalAMast())) &&
-				(dMast!=getSignalMastFromName(layoutSlip.getSignalBMast())) &&
-				(dMast!=getSignalMastFromName(layoutSlip.getSignalCMast())) &&
-				(dMast!=getSignalMastFromName(layoutSlip.getSignalDMast())) ) {
+				(dMast!=layoutSlip.getSignalAMast()) &&
+				(dMast!=layoutSlip.getSignalBMast()) &&
+				(dMast!=layoutSlip.getSignalCMast()) &&
+				(dMast!=layoutSlip.getSignalDMast()) ) {
 			if (isSignalMastOnPanel(dMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
@@ -9755,9 +9828,9 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (dMast!=null) &&  
-				( (dMast==getSignalMastFromName(layoutSlip.getSignalBMast())) ||
-					(dMast==getSignalMastFromName(layoutSlip.getSignalCMast())) ||
-					(dMast==getSignalMastFromName(layoutSlip.getSignalAMast())) ) ) {
+				( (dMast==layoutSlip.getSignalBMast()) ||
+					(dMast==layoutSlip.getSignalCMast()) ||
+					(dMast==layoutSlip.getSignalAMast()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (dMast==null) {
@@ -10091,7 +10164,7 @@ public class LayoutEditorTools
 		// place or update signals as requested
 		if ( (aMast!=null) && xingSignalMastA.addToPanel() ) {
 			if (isSignalMastOnPanel(aMast) && 
-					(aMast!=getSignalMastFromName(levelXing.getSignalAMastName())) ) { 
+					(aMast!=levelXing.getSignalAMast()) ) { 
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
 						new Object[]{xingSignalMastA.getText()}), 
@@ -10099,20 +10172,20 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-				removeSignalMastFromPanel(levelXing.getSignalAMastName());
+				removeSignalMastFromPanel(levelXing.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastA.getText());
 				placeXingAIcon(l, xingSignalMastA.isRightSelected(), 0.0);
 				removeAssignment(aMast);
-				levelXing.setSignalAMastName(xingSignalMastA.getText());
+				levelXing.setSignalAMast(xingSignalMastA.getText());
 				needRedraw = true;
 			}		
 		}
 		else if ( (aMast!=null) && 
-				(aMast!=getSignalMastFromName(levelXing.getSignalAMastName())) &&
-				(aMast!=getSignalMastFromName(levelXing.getSignalBMastName())) &&
-				(aMast!=getSignalMastFromName(levelXing.getSignalCMastName())) &&
-				(aMast!=getSignalMastFromName(levelXing.getSignalDMastName())) ) {
+				(aMast!=levelXing.getSignalAMast()) &&
+				(aMast!=levelXing.getSignalBMast()) &&
+				(aMast!=levelXing.getSignalCMast()) &&
+				(aMast!=levelXing.getSignalDMast()) ) {
 			if (isSignalMastOnPanel(aMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
@@ -10121,24 +10194,24 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSignalMastFromPanel(levelXing.getSignalAMastName());
+				removeSignalMastFromPanel(levelXing.getSignalAMast());
 				removeAssignment(aMast);
-				levelXing.setSignalAMastName(xingSignalMastA.getText());
+				levelXing.setSignalAMast(xingSignalMastA.getText());
 			}
 		}
 		else if ( (aMast!=null) &&  
-				( (aMast==getSignalMastFromName(levelXing.getSignalBMastName())) ||
-					(aMast==getSignalMastFromName(levelXing.getSignalCMastName())) ||
-					(aMast==getSignalMastFromName(levelXing.getSignalDMastName())) ) ) {
+				( (aMast==levelXing.getSignalBMast()) ||
+					(aMast==levelXing.getSignalCMast()) ||
+					(aMast==levelXing.getSignalDMast())) )  {
 // need to figure out what to do in this case.			
 		}
 		else if (aMast==null) {
-			removeSignalMastFromPanel(levelXing.getSignalAMastName());
-			levelXing.setSignalAMastName("");		
+			removeSignalMastFromPanel(levelXing.getSignalAMast());
+			levelXing.setSignalAMast("");		
 		}
 		if ( (bMast!=null) && xingSignalMastB.addToPanel()) {
 			if (isSignalMastOnPanel(bMast) && 
-					(bMast!=getSignalMastFromName(levelXing.getSignalBMastName()))) { 
+					(bMast!=levelXing.getSignalBMast())) { 
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
 						new Object[]{xingSignalMastB.getText()}), 
@@ -10146,20 +10219,20 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-				removeSignalMastFromPanel(levelXing.getSignalBMastName());
+				removeSignalMastFromPanel(levelXing.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastB.getText());
 				placeXingBIcon(l, xingSignalMastB.isRightSelected(), 0.0);
 				removeAssignment(bMast);
-				levelXing.setSignalBMastName(xingSignalMastB.getText());
+				levelXing.setSignalBMast(xingSignalMastB.getText());
 				needRedraw = true;
 			}		
 		}
 		else if ( (bMast!=null) && 
-				(bMast!=getSignalMastFromName(levelXing.getSignalAMastName())) &&
-				(bMast!=getSignalMastFromName(levelXing.getSignalBMastName())) &&
-				(bMast!=getSignalMastFromName(levelXing.getSignalCMastName())) &&
-				(bMast!=getSignalMastFromName(levelXing.getSignalDMastName())) ) {
+				(bMast!=levelXing.getSignalAMast()) &&
+				(bMast!=levelXing.getSignalBMast()) &&
+				(bMast!=levelXing.getSignalCMast()) &&
+				(bMast!=levelXing.getSignalDMast()) ) {
 			if (isSignalMastOnPanel(bMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
@@ -10168,24 +10241,25 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSignalMastFromPanel(levelXing.getSignalBMastName());
+				removeSignalMastFromPanel(levelXing.getSignalBMast());
 				removeAssignment(bMast);
-				levelXing.setSignalBMastName(xingSignalMastB.getText());
+				levelXing.setSignalBMast(xingSignalMastB.getText());
 			}
 		}
 		else if ( (bMast!=null) &&  
-				( (bMast==getSignalMastFromName(levelXing.getSignalAMastName())) ||
-					(bMast==getSignalMastFromName(levelXing.getSignalCMastName())) ||
-					(bMast==getSignalMastFromName(levelXing.getSignalDMastName())) ) ) {
+				( (bMast==levelXing.getSignalAMast()) ||
+					(bMast==levelXing.getSignalCMast()) ||
+					(bMast==levelXing.getSignalBMast()) ||
+					(bMast==levelXing.getSignalDMast()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (bMast==null) {
-			removeSignalMastFromPanel(levelXing.getSignalBMastName());
-			levelXing.setSignalBMastName("");		
+			removeSignalMastFromPanel(levelXing.getSignalBMast());
+			levelXing.setSignalBMast("");		
 		}
 		if ( (cMast!=null) && xingSignalMastC.addToPanel() ) {
 			if (isSignalMastOnPanel(cMast) && 
-					(cMast!=getSignalMastFromName(levelXing.getSignalCMastName())) ) { 
+					(cMast!=levelXing.getSignalCMast()) ) { 
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
 						new Object[]{xingSignalMastC.getText()}), 
@@ -10193,20 +10267,20 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-				removeSignalMastFromPanel(levelXing.getSignalCMastName());
+				removeSignalMastFromPanel(levelXing.getSignalCMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastC.getText());
 				placeXingCIcon(l, xingSignalMastA.isRightSelected(), 0.0);
 				removeAssignment(cMast);
-				levelXing.setSignalCMastName(xingSignalMastC.getText());
+				levelXing.setSignalCMast(xingSignalMastC.getText());
 				needRedraw = true;
 			}		
 		}
 		else if ( (cMast!=null) && 
-				(cMast!=getSignalMastFromName(levelXing.getSignalAMastName())) &&
-				(cMast!=getSignalMastFromName(levelXing.getSignalBMastName())) &&
-				(cMast!=getSignalMastFromName(levelXing.getSignalCMastName())) &&
-				(cMast!=getSignalMastFromName(levelXing.getSignalDMastName())) ) {
+				(cMast!=levelXing.getSignalAMast()) &&
+				(cMast!=levelXing.getSignalBMast()) &&
+				(cMast!=levelXing.getSignalCMast()) &&
+				(cMast!=levelXing.getSignalDMast()) ) {
 			if (isSignalMastOnPanel(cMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
@@ -10215,24 +10289,24 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSignalMastFromPanel(levelXing.getSignalCMastName());
+				removeSignalMastFromPanel(levelXing.getSignalCMast());
 				removeAssignment(cMast);
-				levelXing.setSignalCMastName(xingSignalMastC.getText());
+				levelXing.setSignalCMast(xingSignalMastC.getText());
 			}
 		}
 		else if ( (cMast!=null) &&  
-				( (cMast==getSignalMastFromName(levelXing.getSignalBMastName())) ||
-					(cMast==getSignalMastFromName(levelXing.getSignalAMastName())) ||
-					(cMast==getSignalMastFromName(levelXing.getSignalDMastName())) ) ) {
+				( (cMast==levelXing.getSignalBMast()) ||
+					(cMast==levelXing.getSignalAMast()) ||
+					(cMast==levelXing.getSignalDMast()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (cMast==null) {
-			removeSignalMastFromPanel(levelXing.getSignalCMastName());
+			removeSignalMastFromPanel(levelXing.getSignalCMast());
 			levelXing.setSignalCName("");		
 		}
 		if ( (dMast!=null) && xingSignalMastD.addToPanel() ) {
 			if (isSignalMastOnPanel(dMast) && 
-					(dMast!=getSignalMastFromName(levelXing.getSignalDMastName())) ) { 
+					(dMast!=levelXing.getSignalDMast()) ) {
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError6"),
 						new Object[]{xingSignalMastD.getText()}), 
@@ -10240,20 +10314,20 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-				removeSignalMastFromPanel(levelXing.getSignalDMastName());
+				removeSignalMastFromPanel(levelXing.getSignalDMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastD.getText());
 				placeXingDIcon(l, xingSignalMastD.isRightSelected(), 0.0);
 				removeAssignment(dMast);
-				levelXing.setSignalDMastName(xingSignalMastD.getText());
+				levelXing.setSignalDMast(xingSignalMastD.getText());
 				needRedraw = true;
 			}		
 		}
 		else if ( (dMast!=null) && 
-				(dMast!=getSignalMastFromName(levelXing.getSignalAMastName())) &&
-				(dMast!=getSignalMastFromName(levelXing.getSignalBMastName())) &&
-				(dMast!=getSignalMastFromName(levelXing.getSignalCMastName())) &&
-				(dMast!=getSignalMastFromName(levelXing.getSignalDMastName())) ) {
+				(dMast!=levelXing.getSignalAMast()) &&
+				(dMast!=levelXing.getSignalBMast()) &&
+				(dMast!=levelXing.getSignalCMast()) &&
+				(dMast!=levelXing.getSignalDMast()) ) {
 			if (isSignalMastOnPanel(dMast)) {
 				JOptionPane.showMessageDialog(signalMastsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SignalMastsError13"),
@@ -10262,20 +10336,20 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSignalMastFromPanel(levelXing.getSignalDMastName());
+				removeSignalMastFromPanel(levelXing.getSignalDMast());
 				removeAssignment(dMast);
-				levelXing.setSignalDMastName(xingSignalMastD.getText());
+				levelXing.setSignalDMast(xingSignalMastD.getText());
 			}
 		}
 		else if ( (dMast!=null) &&  
-				( (dMast==getSignalMastFromName(levelXing.getSignalBMastName())) ||
-					(dMast==getSignalMastFromName(levelXing.getSignalCMastName())) ||
-					(dMast==getSignalMastFromName(levelXing.getSignalAMastName())) ) ) {
+				( (dMast==levelXing.getSignalBMast()) ||
+					(dMast==levelXing.getSignalCMast()) ||
+					(dMast==levelXing.getSignalAMast()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (dMast==null) {
-			removeSignalMastFromPanel(levelXing.getSignalDMastName());
-			levelXing.setSignalDMastName("");		
+			removeSignalMastFromPanel(levelXing.getSignalDMast());
+			levelXing.setSignalDMast("");		
 		}
 		// setup logic if requested
 		// finish up
@@ -10438,10 +10512,10 @@ public class LayoutEditorTools
 				JLabel turnoutSensorNameLabel = new JLabel( rb.getString("Turnout")+" "+
 					rb.getString("Name")+" : "+layoutTurnout.getTurnoutName());
 				panel1.add(turnoutSensorNameLabel);
-                turnoutSensorA.setTextField(layoutTurnout.getSensorA());
-                turnoutSensorB.setTextField(layoutTurnout.getSensorB());
-                turnoutSensorC.setTextField(layoutTurnout.getSensorC());
-                turnoutSensorD.setTextField(layoutTurnout.getSensorD());
+                turnoutSensorA.setTextField(layoutTurnout.getSensorAName());
+                turnoutSensorB.setTextField(layoutTurnout.getSensorBName());
+                turnoutSensorC.setTextField(layoutTurnout.getSensorCName());
+                turnoutSensorD.setTextField(layoutTurnout.getSensorDName());
 			}
 			else {
 				JLabel turnoutSensorNameLabel = new JLabel( rb.getString("Turnout")+" "+
@@ -10533,10 +10607,10 @@ public class LayoutEditorTools
     private void turnoutSensorsGetSaved (ActionEvent a) {
 		if ( !getTurnoutSensorInformation() ) return;
         turnoutSenBlocks = layoutTurnout.getBlockBoundaries();
-		turnoutSensorA.setTextField(layoutTurnout.getSensorA());
-		turnoutSensorB.setTextField(layoutTurnout.getSensorB());
-		turnoutSensorC.setTextField(layoutTurnout.getSensorC());
-		turnoutSensorD.setTextField(layoutTurnout.getSensorD());
+		turnoutSensorA.setTextField(layoutTurnout.getSensorAName());
+		turnoutSensorB.setTextField(layoutTurnout.getSensorBName());
+		turnoutSensorC.setTextField(layoutTurnout.getSensorCName());
+		turnoutSensorD.setTextField(layoutTurnout.getSensorDName());
         
         turnoutSensorA.setBoundaryLabel(turnoutSenBlocks[0]);
         turnoutSensorB.setBoundaryLabel(turnoutSenBlocks[1]);
@@ -10576,16 +10650,16 @@ public class LayoutEditorTools
             return NONE;
 		String sysName = sensor.getSystemName();
 		String uName = sensor.getUserName();
-		String name = lTurnout.getSensorA();
+		String name = lTurnout.getSensorAName();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return A1;
-		name = lTurnout.getSensorB();
+		name = lTurnout.getSensorBName();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return A2;
-		name = lTurnout.getSensorC();
+		name = lTurnout.getSensorCName();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return A3;
-		name = lTurnout.getSensorD();
+		name = lTurnout.getSensorDName();
 		if ( (name!=null) && (name.length()>0) && ((name.equals(uName)) || 
 						(name.equals(sysName))) ) return B1;
 		return NONE;
@@ -10593,48 +10667,43 @@ public class LayoutEditorTools
     
     public void removeAssignment(Sensor sensor) 
 	{
-		String sName = sensor.getSystemName();
-		String uName = sensor.getUserName();
-		for (int i=0;i<layoutEditor.turnoutList.size();i++) {
-			LayoutTurnout to = layoutEditor.turnoutList.get(i);
-			if ((to.getSensorA()!=null) &&
-					(to.getSensorA().equals(sName) || ((uName!=null) && 
-					(to.getSensorA().equals(uName))))) to.setSensorA("");
-			if ((to.getSensorB()!=null) &&
-					(to.getSensorB().equals(sName) || ((uName!=null) && 
-					(to.getSensorB().equals(uName))))) to.setSensorB("");
-			if ((to.getSensorC()!=null) &&
-					(to.getSensorC().equals(sName) || ((uName!=null) && 
-					(to.getSensorC().equals(uName))))) to.setSensorC("");
-			if ((to.getSensorD()!=null) &&
-					(to.getSensorD().equals(sName) || ((uName!=null) && 
-					(to.getSensorD().equals(uName))))) to.setSensorD("");
+        for(LayoutTurnout to : layoutEditor.turnoutList){
+			if ((to.getSensorA()!=null) && to.getSensorA()==sensor)
+					to.setSensorA(null);
+			if ((to.getSensorB()!=null) && to.getSensorB()==sensor)
+					to.setSensorB(null);
+			if ((to.getSensorC()!=null) && to.getSensorC()==sensor)
+					to.setSensorC(null);
+			if ((to.getSensorD()!=null) && to.getSensorD()==sensor)
+					to.setSensorD(null);
 		}
-		for (int i=0;i<layoutEditor.pointList.size();i++) {
-			PositionablePoint po = layoutEditor.pointList.get(i);
-			if ((po.getEastBoundSensor()!=null) &&
-					(po.getEastBoundSensor().equals(sName) || ((uName!=null) && 
-					(po.getEastBoundSensor().equals(uName))))) 
-				po.setEastBoundSensor("");
-			if ((po.getWestBoundSensor()!=null) &&
-					(po.getWestBoundSensor().equals(sName) || ((uName!=null) && 
-					(po.getWestBoundSensor().equals(uName))))) 
-				po.setWestBoundSensor("");
+        for(LayoutSlip to : layoutEditor.slipList){
+			if ((to.getSensorA()!=null) && to.getSensorA()==sensor)
+					to.setSensorA(null);
+			if ((to.getSensorB()!=null) && to.getSensorB()==sensor)
+					to.setSensorB(null);
+			if ((to.getSensorC()!=null) && to.getSensorC()==sensor)
+					to.setSensorC(null);
+			if ((to.getSensorD()!=null) && to.getSensorD()==sensor)
+					to.setSensorD(null);
 		}
-		for (int i=0;i<layoutEditor.xingList.size();i++) {
-			LevelXing x = layoutEditor.xingList.get(i);
-			if ((x.getSensorAName()!=null) &&
-					(x.getSensorAName().equals(sName) || ((uName!=null) && 
-					(x.getSensorAName().equals(uName))))) x.setSensorAName("");
-			if ((x.getSensorBName()!=null) &&
-					(x.getSensorBName().equals(sName) || ((uName!=null) && 
-					(x.getSensorBName().equals(uName))))) x.setSensorBName("");
-			if ((x.getSensorCName()!=null) &&
-					(x.getSensorCName().equals(sName) || ((uName!=null) && 
-					(x.getSensorCName().equals(uName))))) x.setSensorCName("");
-			if ((x.getSensorDName()!=null) &&
-					(x.getSensorDName().equals(sName) || ((uName!=null) && 
-					(x.getSensorDName().equals(uName))))) x.setSensorDName("");
+
+        for(PositionablePoint po : layoutEditor.pointList){
+			if ((po.getEastBoundSensor()!=null) && po.getEastBoundSensor()==sensor)
+				po.setEastBoundSensor(null);
+			if ((po.getWestBoundSensor()!=null) && po.getWestBoundSensor() ==sensor)
+				po.setWestBoundSensor(null);
+		}
+
+        for(LevelXing x : layoutEditor.xingList){
+			if ((x.getSensorA()!=null) && x.getSensorA()==sensor)
+					x.setSensorAName(null);
+			if ((x.getSensorB()!=null) && x.getSensorB()==sensor)
+					x.setSensorBName(null);
+			if ((x.getSensorC()!=null) && x.getSensorC()==sensor)
+					x.setSensorCName(null);
+			if ((x.getSensorD()!=null) && x.getSensorD()==sensor)
+					x.setSensorDName(null);
 		}
 	}
 
@@ -10656,7 +10725,7 @@ public class LayoutEditorTools
 		// place signals as requested
 		if (turnoutSensorA.addToPanel()) {
 			if (isSensorOnPanel(sensorA) &&
-				(sensorA!=getSensorFromName(layoutTurnout.getSensorA()))) {
+				(sensorA!=layoutTurnout.getSensorA())) {
 				JOptionPane.showMessageDialog(setSensorsFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{turnoutSensorA.getText()}), 
@@ -10698,7 +10767,7 @@ public class LayoutEditorTools
 		}
 		if ( (turnoutSensorB!=null) && (turnoutSensorB.addToPanel())) {
 			if (isSensorOnPanel(sensorB) && 
-				(sensorB!=getSensorFromName(layoutTurnout.getSensorB()))) {
+				(sensorB!=layoutTurnout.getSensorB())) {
 				JOptionPane.showMessageDialog(setSensorsFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{turnoutSensorB.getText()}), 
@@ -10742,7 +10811,7 @@ public class LayoutEditorTools
         if(sensorC!=null){
             if (turnoutSensorC.addToPanel()) {
                 if (isSensorOnPanel(sensorC) && 
-                    (sensorC!=getSensorFromName(layoutTurnout.getSensorC()))) {
+                    (sensorC!=layoutTurnout.getSensorC())) {
                     JOptionPane.showMessageDialog(setSensorsFrame,
                         java.text.MessageFormat.format(rb.getString("SensorsError6"),
                             new Object[]{turnoutSensorC.getText()}), 
@@ -10787,7 +10856,7 @@ public class LayoutEditorTools
         if(sensorD!=null){
             if (turnoutSensorD.addToPanel()) {
                 if (isSensorOnPanel(sensorD) && 
-                    (sensorD!=getSensorFromName(layoutTurnout.getSensorD()))) {
+                    (sensorD!=layoutTurnout.getSensorD())) {
                     JOptionPane.showMessageDialog(setSensorsFrame,
                         java.text.MessageFormat.format(rb.getString("SensorsError6"),
                             new Object[]{divergingField.getText()}), 
@@ -11196,7 +11265,7 @@ public class LayoutEditorTools
 		// place or update signals as requested
 		if ( (aSensor!=null) && xingSensorA.addToPanel() ) {
 			if (isSensorOnPanel(aSensor) && 
-					(aSensor!=getSensorFromName(levelXing.getSensorAName())) ) { 
+					(aSensor!=levelXing.getSensorA()) ) { 
 				JOptionPane.showMessageDialog(sensorsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{xingSensorA.getText()}), 
@@ -11204,7 +11273,7 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-				removeSensorFromPanel(levelXing.getSensorAName());
+				removeSensorFromPanel(levelXing.getSensorA());
 				placeXingAIcon(getSensorIcon(xingSensorA.getText()), xingSensorA.isRightSelected(), 0.0);
 				removeAssignment(aSensor);
 				levelXing.setSensorAName(xingSensorB.getText());
@@ -11212,10 +11281,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (aSensor!=null) && 
-				(aSensor!=getSensorFromName(levelXing.getSensorAName())) &&
-				(aSensor!=getSensorFromName(levelXing.getSensorBName())) &&
-				(aSensor!=getSensorFromName(levelXing.getSensorCName())) &&
-				(aSensor!=getSensorFromName(levelXing.getSensorDName())) ) {
+				(aSensor!=levelXing.getSensorA()) &&
+				(aSensor!=levelXing.getSensorB()) &&
+				(aSensor!=levelXing.getSensorC()) &&
+				(aSensor!=levelXing.getSensorD()) ) {
 			if (isSensorOnPanel(aSensor)) {
 				JOptionPane.showMessageDialog(sensorsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError13"),
@@ -11224,24 +11293,24 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSensorFromPanel(levelXing.getSensorAName());
+				removeSensorFromPanel(levelXing.getSensorA());
 				removeAssignment(aSensor);
 				levelXing.setSensorAName(xingSensorA.getText());
 			}
 		}
 		else if ( (aSensor!=null) &&  
-				( (aSensor==getSensorFromName(levelXing.getSensorBName())) ||
-					(aSensor==getSensorFromName(levelXing.getSensorCName())) ||
-					(aSensor==getSensorFromName(levelXing.getSensorDName())) ) ) {
+				( (aSensor==levelXing.getSensorB()) ||
+					(aSensor==levelXing.getSensorC()) ||
+					(aSensor==levelXing.getSensorD()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (aSensor==null) {
-			removeSensorFromPanel(levelXing.getSensorAName());
+			removeSensorFromPanel(levelXing.getSensorA());
 			levelXing.setSensorAName("");		
 		}
 		if ( (bSensor!=null) && xingSensorB.addToPanel() ) {
 			if (isSensorOnPanel(bSensor) && 
-					(bSensor!=getSensorFromName(levelXing.getSensorBName()))) { 
+					(bSensor!=levelXing.getSensorB())) { 
 				JOptionPane.showMessageDialog(sensorsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{xingSensorB.getText()}), 
@@ -11249,7 +11318,7 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-				removeSensorFromPanel(levelXing.getSensorBName());
+				removeSensorFromPanel(levelXing.getSensorB());
 				placeXingBIcon(getSensorIcon(xingSensorB.getText()), xingSensorB.isRightSelected(), 0.0);
 				removeAssignment(bSensor);
 				levelXing.setSensorBName(xingSensorB.getText());
@@ -11257,10 +11326,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (bSensor!=null) && 
-				(bSensor!=getSensorFromName(levelXing.getSensorAName())) &&
-				(bSensor!=getSensorFromName(levelXing.getSensorBName())) &&
-				(bSensor!=getSensorFromName(levelXing.getSensorCName())) &&
-				(bSensor!=getSensorFromName(levelXing.getSensorDName())) ) {
+				(bSensor!=levelXing.getSensorA()) &&
+				(bSensor!=levelXing.getSensorB()) &&
+				(bSensor!=levelXing.getSensorC()) &&
+				(bSensor!=levelXing.getSensorD()) ) {
 			if (isSensorOnPanel(bSensor)) {
 				JOptionPane.showMessageDialog(sensorsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError13"),
@@ -11269,24 +11338,24 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSensorFromPanel(levelXing.getSensorBName());
+				removeSensorFromPanel(levelXing.getSensorB());
 				removeAssignment(bSensor);
 				levelXing.setSensorBName(xingSensorB.getText());
 			}
 		}
 		else if ( (bSensor!=null) &&  
-				( (bSensor==getSensorFromName(levelXing.getSensorAName())) ||
-					(bSensor==getSensorFromName(levelXing.getSensorCName())) ||
-					(bSensor==getSensorFromName(levelXing.getSensorDName())) ) ) {
+				( (bSensor==levelXing.getSensorA()) ||
+					(bSensor==levelXing.getSensorC()) ||
+					(bSensor==levelXing.getSensorD()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (bSensor==null) {
-			removeSensorFromPanel(levelXing.getSensorBName());
+			removeSensorFromPanel(levelXing.getSensorB());
 			levelXing.setSensorBName("");		
 		}
 		if ( (cSensor!=null) && xingSensorC.addToPanel() ) {
 			if (isSensorOnPanel(cSensor) && 
-					(cSensor!=getSensorFromName(levelXing.getSensorCName())) ) { 
+					(cSensor!=levelXing.getSensorC()) ) { 
 				JOptionPane.showMessageDialog(sensorsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{xingSensorC.getText()}), 
@@ -11294,7 +11363,7 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-				removeSensorFromPanel(levelXing.getSensorCName());
+				removeSensorFromPanel(levelXing.getSensorC());
 				placeXingCIcon(getSensorIcon(xingSensorC.getText()), xingSensorC.isRightSelected(), 0.0);
 				removeAssignment(cSensor);
 				levelXing.setSensorCName(xingSensorC.getText());
@@ -11302,10 +11371,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (cSensor!=null) && 
-				(cSensor!=getSensorFromName(levelXing.getSensorAName())) &&
-				(cSensor!=getSensorFromName(levelXing.getSensorBName())) &&
-				(cSensor!=getSensorFromName(levelXing.getSensorCName())) &&
-				(cSensor!=getSensorFromName(levelXing.getSensorDName())) ) {
+				(cSensor!=levelXing.getSensorA()) &&
+				(cSensor!=levelXing.getSensorB()) &&
+				(cSensor!=levelXing.getSensorC()) &&
+				(cSensor!=levelXing.getSensorD()) ) {
 			if (isSensorOnPanel(cSensor)) {
 				JOptionPane.showMessageDialog(sensorsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError13"),
@@ -11314,24 +11383,24 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSensorFromPanel(levelXing.getSensorCName());
+				removeSensorFromPanel(levelXing.getSensorC());
 				removeAssignment(cSensor);
 				levelXing.setSensorCName(xingSensorC.getText());
 			}
 		}
 		else if ( (cSensor!=null) &&  
-				( (cSensor==getSensorFromName(levelXing.getSensorBName())) ||
-					(cSensor==getSensorFromName(levelXing.getSensorAName())) ||
-					(cSensor==getSensorFromName(levelXing.getSensorDName())) ) ) {
+				( (cSensor==levelXing.getSensorB()) ||
+					(cSensor==levelXing.getSensorA()) ||
+					(cSensor==levelXing.getSensorD()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (cSensor==null) {
-			removeSensorFromPanel(levelXing.getSensorCName());
+			removeSensorFromPanel(levelXing.getSensorC());
 			levelXing.setSensorCName("");		
 		}
 		if ( (dSensor!=null) && xingSensorD.addToPanel() ) {
 			if (isSensorOnPanel(dSensor) && 
-					(dSensor!=getSensorFromName(levelXing.getSensorDName())) ) { 
+					(dSensor!=levelXing.getSensorD()) ) { 
 				JOptionPane.showMessageDialog(sensorsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{xingSensorD.getText()}), 
@@ -11339,7 +11408,7 @@ public class LayoutEditorTools
 				return;
 			}
 			else {
-				removeSensorFromPanel(levelXing.getSensorDName());
+				removeSensorFromPanel(levelXing.getSensorD());
 				placeXingDIcon(getSensorIcon(xingSensorD.getText()), xingSensorD.isRightSelected(), 0.0);
 				removeAssignment(dSensor);
 				levelXing.setSensorDName(xingSensorD.getText());
@@ -11347,10 +11416,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (dSensor!=null) && 
-				(dSensor!=getSensorFromName(levelXing.getSensorAName())) &&
-				(dSensor!=getSensorFromName(levelXing.getSensorBName())) &&
-				(dSensor!=getSensorFromName(levelXing.getSensorCName())) &&
-				(dSensor!=getSensorFromName(levelXing.getSensorDName())) ) {
+				(dSensor!=levelXing.getSensorA()) &&
+				(dSensor!=levelXing.getSensorB()) &&
+				(dSensor!=levelXing.getSensorC()) &&
+				(dSensor!=levelXing.getSensorD()) ) {
 			if (isSensorOnPanel(dSensor)) {
 				JOptionPane.showMessageDialog(sensorsAtXingFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError13"),
@@ -11359,19 +11428,19 @@ public class LayoutEditorTools
 				return;
 			}		
 			else {
-				removeSensorFromPanel(levelXing.getSensorDName());
+				removeSensorFromPanel(levelXing.getSensorD());
 				removeAssignment(dSensor);
 				levelXing.setSensorDName(xingSensorD.getText());
 			}
 		}
 		else if ( (dSensor!=null) &&  
-				( (dSensor==getSensorFromName(levelXing.getSensorBName())) ||
-					(dSensor==getSensorFromName(levelXing.getSensorCName())) ||
-					(dSensor==getSensorFromName(levelXing.getSensorAName())) ) ) {
+				( (dSensor==levelXing.getSensorB()) ||
+					(dSensor==levelXing.getSensorC()) ||
+					(dSensor==levelXing.getSensorA()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (dSensor==null) {
-			removeSensorFromPanel(levelXing.getSensorDName());
+			removeSensorFromPanel(levelXing.getSensorD());
 			levelXing.setSensorDName("");		
 		}
 		// setup logic if requested
@@ -11490,10 +11559,10 @@ public class LayoutEditorTools
 							rb.getString("Name")+" : "+layoutSlip.getBlockName());
 			
 				panel11.add(blockANameLabel);
-                slipSensorA.setTextField(layoutSlip.getSensorA());
-                slipSensorB.setTextField(layoutSlip.getSensorB());
-                slipSensorC.setTextField(layoutSlip.getSensorC());
-                slipSensorD.setTextField(layoutSlip.getSensorD());
+                slipSensorA.setTextField(layoutSlip.getSensorAName());
+                slipSensorB.setTextField(layoutSlip.getSensorBName());
+                slipSensorC.setTextField(layoutSlip.getSensorCName());
+                slipSensorD.setTextField(layoutSlip.getSensorDName());
 			}
 			else {
 				JLabel blockANameLabel = new JLabel( rb.getString("BlockAtA")+" "+
@@ -11596,10 +11665,10 @@ public class LayoutEditorTools
 		if ( !getSlipSensorInformation() ) return;
         
         slipSensorBlocks = layoutSlip.getBlockBoundaries();
-        slipSensorA.setTextField(layoutSlip.getSensorA());
-        slipSensorB.setTextField(layoutSlip.getSensorB());
-        slipSensorC.setTextField(layoutSlip.getSensorC());
-        slipSensorD.setTextField(layoutSlip.getSensorD());
+        slipSensorA.setTextField(layoutSlip.getSensorAName());
+        slipSensorB.setTextField(layoutSlip.getSensorBName());
+        slipSensorC.setTextField(layoutSlip.getSensorCName());
+        slipSensorD.setTextField(layoutSlip.getSensorDName());
         
         sensorSlipPanel.remove(slipSensorA.getDetailsPanel());
         sensorSlipPanel.remove(slipSensorB.getDetailsPanel());
@@ -11719,7 +11788,7 @@ public class LayoutEditorTools
 		// place or update signals as requested
 		if ( (aSensor!=null) && slipSensorA.addToPanel() ) {
 			if (isSensorOnPanel(aSensor) && 
-					(aSensor!=getSensorFromName(layoutSlip.getSensorA())) ) { 
+					(aSensor!=layoutSlip.getSensorA()) ) { 
 				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{slipSensorA.getText()}), 
@@ -11735,10 +11804,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (aSensor!=null) && 
-				(aSensor!=getSensorFromName(layoutSlip.getSensorA())) &&
-				(aSensor!=getSensorFromName(layoutSlip.getSensorB())) &&
-				(aSensor!=getSensorFromName(layoutSlip.getSensorC())) &&
-				(aSensor!=getSensorFromName(layoutSlip.getSensorD())) ) {
+				(aSensor!=layoutSlip.getSensorA()) &&
+				(aSensor!=layoutSlip.getSensorB()) &&
+				(aSensor!=layoutSlip.getSensorC()) &&
+				(aSensor!=layoutSlip.getSensorD()) ) {
 			if (isSensorOnPanel(aSensor)) {
 				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError13"),
@@ -11753,9 +11822,9 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (aSensor!=null) &&  
-				( (aSensor==getSensorFromName(layoutSlip.getSensorB())) ||
-					(aSensor==getSensorFromName(layoutSlip.getSensorC())) ||
-					(aSensor==getSensorFromName(layoutSlip.getSensorD())) ) ) {
+				( (aSensor==layoutSlip.getSensorB()) ||
+					(aSensor==layoutSlip.getSensorC()) ||
+					(aSensor==layoutSlip.getSensorD()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (aSensor==null) {
@@ -11764,7 +11833,7 @@ public class LayoutEditorTools
 		}
 		if ( (bSensor!=null) && slipSensorB.addToPanel() ) {
 			if (isSensorOnPanel(bSensor) && 
-					(bSensor!=getSensorFromName(layoutSlip.getSensorB()))) { 
+					(bSensor!=layoutSlip.getSensorB())) { 
 				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{slipSensorB.getText()}), 
@@ -11780,10 +11849,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (bSensor!=null) && 
-				(bSensor!=getSensorFromName(layoutSlip.getSensorA())) &&
-				(bSensor!=getSensorFromName(layoutSlip.getSensorB())) &&
-				(bSensor!=getSensorFromName(layoutSlip.getSensorC())) &&
-				(bSensor!=getSensorFromName(layoutSlip.getSensorD())) ) {
+				(bSensor!=layoutSlip.getSensorA()) &&
+				(bSensor!=layoutSlip.getSensorB()) &&
+				(bSensor!=layoutSlip.getSensorC()) &&
+				(bSensor!=layoutSlip.getSensorD()) ) {
 			if (isSensorOnPanel(bSensor)) {
 				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError13"),
@@ -11798,9 +11867,9 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (bSensor!=null) &&  
-				( (bSensor==getSensorFromName(layoutSlip.getSensorA())) ||
-					(bSensor==getSensorFromName(layoutSlip.getSensorC())) ||
-					(bSensor==getSensorFromName(layoutSlip.getSensorD())) ) ) {
+				( (bSensor==layoutSlip.getSensorA()) ||
+					(bSensor==layoutSlip.getSensorC()) ||
+					(bSensor==layoutSlip.getSensorD()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (bSensor==null) {
@@ -11809,7 +11878,7 @@ public class LayoutEditorTools
 		}
 		if ( (cSensor!=null) && slipSensorC.addToPanel() ) {
 			if (isSensorOnPanel(cSensor) && 
-					(cSensor!=getSensorFromName(layoutSlip.getSensorC())) ) { 
+					(cSensor!=layoutSlip.getSensorC()) ) { 
 				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{slipSensorC.getText()}), 
@@ -11825,10 +11894,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (cSensor!=null) && 
-				(cSensor!=getSensorFromName(layoutSlip.getSensorA())) &&
-				(cSensor!=getSensorFromName(layoutSlip.getSensorB())) &&
-				(cSensor!=getSensorFromName(layoutSlip.getSensorC())) &&
-				(cSensor!=getSensorFromName(layoutSlip.getSensorD())) ) {
+				(cSensor!=layoutSlip.getSensorA()) &&
+				(cSensor!=layoutSlip.getSensorB()) &&
+				(cSensor!=layoutSlip.getSensorC()) &&
+				(cSensor!=layoutSlip.getSensorD()) ) {
 			if (isSensorOnPanel(cSensor)) {
 				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError13"),
@@ -11843,9 +11912,9 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (cSensor!=null) &&  
-				( (cSensor==getSensorFromName(layoutSlip.getSensorB())) ||
-					(cSensor==getSensorFromName(layoutSlip.getSensorA())) ||
-					(cSensor==getSensorFromName(layoutSlip.getSensorD())) ) ) {
+				( (cSensor==layoutSlip.getSensorB()) ||
+					(cSensor==layoutSlip.getSensorA()) ||
+					(cSensor==layoutSlip.getSensorD()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (cSensor==null) {
@@ -11854,7 +11923,7 @@ public class LayoutEditorTools
 		}
 		if ( (dSensor!=null) && slipSensorD.addToPanel() ) {
 			if (isSensorOnPanel(dSensor) && 
-					(dSensor!=getSensorFromName(layoutSlip.getSensorD())) ) { 
+					(dSensor!=layoutSlip.getSensorD()) ) { 
 				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError6"),
 						new Object[]{slipSensorD.getText()}), 
@@ -11870,10 +11939,10 @@ public class LayoutEditorTools
 			}		
 		}
 		else if ( (dSensor!=null) && 
-				(dSensor!=getSensorFromName(layoutSlip.getSensorA())) &&
-				(dSensor!=getSensorFromName(layoutSlip.getSensorB())) &&
-				(dSensor!=getSensorFromName(layoutSlip.getSensorC())) &&
-				(dSensor!=getSensorFromName(layoutSlip.getSensorD())) ) {
+				(dSensor!=layoutSlip.getSensorA()) &&
+				(dSensor!=layoutSlip.getSensorB()) &&
+				(dSensor!=layoutSlip.getSensorC()) &&
+				(dSensor!=layoutSlip.getSensorD()) ) {
 			if (isSensorOnPanel(dSensor)) {
 				JOptionPane.showMessageDialog(sensorsAtSlipFrame,
 					java.text.MessageFormat.format(rb.getString("SensorsError13"),
@@ -11888,9 +11957,9 @@ public class LayoutEditorTools
 			}
 		}
 		else if ( (dSensor!=null) &&  
-				( (dSensor==getSensorFromName(layoutSlip.getSensorB())) ||
-					(dSensor==getSensorFromName(layoutSlip.getSensorC())) ||
-					(dSensor==getSensorFromName(layoutSlip.getSensorA())) ) ) {
+				( (dSensor==layoutSlip.getSensorB()) ||
+					(dSensor==layoutSlip.getSensorC()) ||
+					(dSensor==layoutSlip.getSensorA()) ) ) {
 // need to figure out what to do in this case.			
 		}
 		else if (dSensor==null) {

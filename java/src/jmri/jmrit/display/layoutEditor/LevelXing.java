@@ -70,10 +70,15 @@ public class LevelXing
 	private String signalCName = "";  // signal at C track junction
 	private String signalDName = "";  // signal at D track junction
     
-	private String signalAMastName = "";  // signal at A track junction
+	/*private String signalAMastName = "";  // signal at A track junction
 	private String signalBMastName = "";  // signal at B track junction
 	private String signalCMastName = "";  // signal at C track junction
-	private String signalDMastName = "";  // signal at D track junction    
+	private String signalDMastName = "";  // signal at D track junction    */
+    
+    protected NamedBeanHandle<SignalMast> signalAMastNamed = null; // signal at A track junction
+    protected NamedBeanHandle<SignalMast> signalBMastNamed = null; // signal at B track junction
+    protected NamedBeanHandle<SignalMast> signalCMastNamed = null; // signal at C track junction
+    protected NamedBeanHandle<SignalMast> signalDMastNamed = null; // signal at B track junction
     
     /*private String sensorAName = "";  // sensor at A track junction
 	private String sensorBName = "";  // sensor at B track junction
@@ -119,19 +124,120 @@ public class LevelXing
 	public String getSignalDName() {return signalDName;}
 	public void setSignalDName(String signalName) {signalDName = signalName;}
     
-    public String getSignalAMastName() {return signalAMastName;}
-	public void setSignalAMastName(String signalName) {signalAMastName = signalName;}
-	public String getSignalBMastName() {return signalBMastName;}
-	public void setSignalBMastName(String signalName) {signalBMastName = signalName;}
-	public String getSignalCMastName() {return signalCMastName;}
-	public void setSignalCMastName(String signalName) {signalCMastName = signalName;}
-	public String getSignalDMastName() {return signalDMastName;}
-	public void setSignalDMastName(String signalName) {signalDMastName = signalName;}
+    public String getSignalAMastName(){
+        if(signalAMastNamed!=null)
+            return signalAMastNamed.getName();
+        return "";
+    }
+    
+    public SignalMast getSignalAMast(){
+        if(signalAMastNamed!=null)
+            return signalAMastNamed.getBean();
+        return null;
+    }
+    
+	public void setSignalAMast(String signalMast){
+        if(signalMast==null || signalMast.equals("")){
+            signalAMastNamed=null;
+            return;
+        }
+        
+        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        if (mast != null) {
+            signalAMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+        } else {
+            signalAMastNamed=null;
+        }
+    }
+    
+	public String getSignalBMastName() {
+        if(signalBMastNamed!=null)
+            return signalBMastNamed.getName();
+        return "";
+    }
+    
+    public SignalMast getSignalBMast(){
+        if(signalBMastNamed!=null)
+            return signalBMastNamed.getBean();
+        return null;
+    }
+    
+	public void setSignalBMast(String signalMast){
+        if(signalMast==null || signalMast.equals("")){
+            signalBMastNamed=null;
+            return;
+        }
+        
+        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        if (mast != null) {
+            signalBMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+        } else {
+            signalBMastNamed=null;
+        }
+    }
+    
+	public String getSignalCMastName() {
+        if(signalCMastNamed!=null)
+            return signalCMastNamed.getName();
+        return "";
+    }
+    
+    public SignalMast getSignalCMast(){
+        if(signalCMastNamed!=null)
+            return signalCMastNamed.getBean();
+        return null;
+    }
+    
+	public void setSignalCMast(String signalMast){
+        if(signalMast==null || signalMast.equals("")){
+            signalCMastNamed=null;
+            return;
+        }
+        
+        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        if (mast != null) {
+            signalCMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+        } else {
+            signalCMastNamed=null;
+        }
+    }
+    
+	public String getSignalDMastName() {
+        if(signalDMastNamed!=null)
+            return signalDMastNamed.getName();
+        return "";
+    }
+    
+    public SignalMast getSignalDMast(){
+        if(signalDMastNamed!=null)
+            return signalDMastNamed.getBean();
+        return null;
+    }
+    
+	public void setSignalDMast(String signalMast){
+        if(signalMast==null || signalMast.equals("")){
+            signalDMastNamed=null;
+            return;
+        }
+        
+        SignalMast mast = InstanceManager.signalMastManagerInstance().provideSignalMast(signalMast);
+        if (mast != null) {
+            signalDMastNamed = InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(signalMast, mast);
+        } else {
+            signalDMastNamed=null;
+        }
+    }
     
     public String getSensorAName() {
         if(sensorANamed!=null)
             return sensorANamed.getName();
         return "";
+    }
+    
+    public Sensor getSensorA(){
+        if(sensorANamed!=null)
+            return sensorANamed.getBean();
+        return null;
     }
     
 	public void setSensorAName(String sensorName) {
@@ -142,7 +248,7 @@ public class LevelXing
         
         Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         if (sensor != null) {
-            sensorANamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            sensorANamed =InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
         } else {
             sensorANamed=null;
         }
@@ -154,6 +260,12 @@ public class LevelXing
         return "";
     }
     
+    public Sensor getSensorB(){
+        if(sensorBNamed!=null)
+            return sensorBNamed.getBean();
+        return null;
+    }
+    
 	public void setSensorBName(String sensorName) {
         if(sensorName==null || sensorName.equals("")){
             sensorBNamed=null;
@@ -162,7 +274,7 @@ public class LevelXing
         
         Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         if (sensor != null) {
-            sensorBNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            sensorBNamed =InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
         } else {
             sensorBNamed=null;
         }
@@ -174,6 +286,12 @@ public class LevelXing
         return "";
     }
     
+    public Sensor getSensorC(){
+        if(sensorCNamed!=null)
+            return sensorCNamed.getBean();
+        return null;
+    }
+    
 	public void setSensorCName(String sensorName) {
         if(sensorName==null || sensorName.equals("")){
             sensorCNamed=null;
@@ -182,7 +300,7 @@ public class LevelXing
         
         Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         if (sensor != null) {
-            sensorCNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            sensorCNamed =InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
         } else {
             sensorCNamed=null;
         }
@@ -194,6 +312,12 @@ public class LevelXing
         return "";
     }
     
+    public Sensor getSensorD(){
+        if(sensorDNamed!=null)
+            return sensorDNamed.getBean();
+        return null;
+    }
+    
 	public void setSensorDName(String sensorName) {
         if(sensorName==null || sensorName.equals("")){
             sensorDNamed=null;
@@ -202,7 +326,7 @@ public class LevelXing
         
         Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(sensorName);
         if (sensor != null) {
-            sensorDNamed = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
+            sensorDNamed =InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
         } else {
             sensorDNamed=null;
         }
@@ -316,22 +440,22 @@ public class LevelXing
     public void reCheckBlockBoundary(){
         if(connectA==null && connectB==null && connectC==null && connectD==null){
             //This is no longer a block boundary, therefore will remove signal masts and sensors if present
-            if(!getSignalAMastName().equals(""))
-                removeSML(getSignalAMastName());
-            if(!getSignalBMastName().equals(""))
-                removeSML(getSignalBMastName());
-            if(!getSignalCMastName().equals(""))
-                removeSML(getSignalCMastName());
-            if(!getSignalDMastName().equals(""))
-                removeSML(getSignalDMastName());
-            setSignalAMastName("");
-            setSignalBMastName("");
-            setSignalCMastName("");
-            setSignalDMastName("");
-            setSensorAName("");
-            setSensorBName("");
-            setSensorCName("");
-            setSensorDName("");
+            if(signalAMastNamed!=null)
+                removeSML(getSignalAMast());
+            if(signalBMastNamed!=null)
+                removeSML(getSignalBMast());
+            if(signalCMastNamed!=null)
+                removeSML(getSignalCMast());
+            if(signalDMastNamed!=null)
+                removeSML(getSignalDMast());
+            signalAMastNamed = null;
+            signalBMastNamed = null;
+            signalCMastNamed = null;
+            signalDMastNamed = null;
+            sensorANamed=null;
+            sensorBNamed=null;
+            sensorCNamed=null;
+            sensorDNamed=null;
             //May want to look at a method to remove the assigned mast from the panel and potentially any logics generated
         }  else if(connectA==null || connectB==null || connectC==null || connectD==null){
             //could still be in the process of rebuilding the point details
@@ -346,48 +470,47 @@ public class LevelXing
         if(connectA instanceof TrackSegment){
             trkA = (TrackSegment)connectA;
             if(trkA.getLayoutBlock()==blockAC){
-                setSignalAMastName("");
-                setSensorAName("");
-                if(!getSignalAMastName().equals(""))
-                    removeSML(getSignalAMastName());
+                if(signalAMastNamed!=null)
+                    removeSML(getSignalAMast());
+                signalAMastNamed = null;
+                sensorANamed=null;
             }
         }
         if(connectC instanceof TrackSegment) {
             trkC = (TrackSegment)connectC;
             if(trkC.getLayoutBlock()==blockAC){
-                setSignalCMastName("");
-                setSensorCName("");
-                if(!getSignalCMastName().equals(""))
-                    removeSML(getSignalCMastName());
+                if(signalCMastNamed!=null)
+                    removeSML(getSignalCMast());
+                signalCMastNamed = null;
+                sensorCNamed=null;
             }
         }
         if(connectB instanceof TrackSegment){
             trkB = (TrackSegment)connectB;
             if(trkB.getLayoutBlock()==blockBD){
-                setSignalBMastName("");
-                setSensorBName("");
-                if(!getSignalBMastName().equals(""))
-                    removeSML(getSignalBMastName());
+                if(signalBMastNamed!=null)
+                    removeSML(getSignalBMast());
+                signalBMastNamed = null;
+                sensorBNamed=null;
             }
         }
 
         if(connectD instanceof TrackSegment) {
             trkD = (TrackSegment)connectC;
             if(trkD.getLayoutBlock()==blockBD){
-                setSignalDMastName("");
-                setSensorDName("");
-                if(!getSignalDMastName().equals(""))
-                    removeSML(getSignalDMastName());
+                if(signalDMastNamed!=null)
+                    removeSML(getSignalDMast());
+                signalDMastNamed = null;
+                sensorDNamed=null;
             }
         }
     }
     
-    void removeSML(String signalMast){
-        if(signalMast==null || !signalMast.equals(""))
+    void removeSML(SignalMast signalMast){
+        if(signalMast==null)
             return;
-        jmri.SignalMast mast = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(signalMast);
-        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(mast)){
-            SignallingGuiTools.removeSignalMastLogic(null, mast);
+        if(jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() && InstanceManager.signalMastLogicManagerInstance().isSignalMastUsed(signalMast)){
+            SignallingGuiTools.removeSignalMastLogic(null, signalMast);
         }
     }
 
@@ -948,9 +1071,9 @@ public class LevelXing
             sml.add(sm);
             return;
         }
-        SignalMastLogic sl = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+        SignalMastLogic sl =InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
         for(int i = 0; i<sml.size(); i++){
-            SignalMastLogic s = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sml.get(i));
+            SignalMastLogic s =InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sml.get(i));
             if (s!=null){
                 s.setConflictingLogic(sm, this);
             }
@@ -967,7 +1090,7 @@ public class LevelXing
             return;
         }
         for(int i = 0; i<sml.size(); i++){
-            SignalMastLogic s = jmri.InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
+            SignalMastLogic s =InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(sm);
             if (s!=null)
                 s.removeConflictingLogic(sm, this);
         }

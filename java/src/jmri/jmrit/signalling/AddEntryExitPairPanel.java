@@ -225,15 +225,15 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         fromPoint.removeAllItems();
         toPoint.removeAllItems();
         for(PositionablePoint pp: panel.pointList){
-            addPointToCombo(pp.getWestBoundSignalMast(), pp.getWestBoundSensor());
-            addPointToCombo(pp.getEastBoundSignalMast(), pp.getEastBoundSensor());
+            addPointToCombo(pp.getWestBoundSignalMastName(), pp.getWestBoundSensorName());
+            addPointToCombo(pp.getEastBoundSignalMastName(), pp.getEastBoundSensorName());
         }
         
         for(LayoutTurnout t: panel.turnoutList){
-            addPointToCombo(t.getSignalAMast(), t.getSensorA());
-            addPointToCombo(t.getSignalBMast(), t.getSensorB());
-            addPointToCombo(t.getSignalCMast(), t.getSensorC());
-            addPointToCombo(t.getSignalDMast(), t.getSensorD());
+            addPointToCombo(t.getSignalAMastName(), t.getSensorAName());
+            addPointToCombo(t.getSignalBMastName(), t.getSensorBName());
+            addPointToCombo(t.getSignalCMastName(), t.getSensorCName());
+            addPointToCombo(t.getSignalDMastName(), t.getSensorDName());
         }
         
         for(LevelXing xing: panel.xingList){
@@ -243,10 +243,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             addPointToCombo(xing.getSignalDMastName(), xing.getSensorDName());
         }
         for(LayoutSlip slip: panel.slipList){
-            addPointToCombo(slip.getSignalAMast(), slip.getSensorA());
-            addPointToCombo(slip.getSignalBMast(), slip.getSensorB());
-            addPointToCombo(slip.getSignalCMast(), slip.getSensorC());
-            addPointToCombo(slip.getSignalDMast(), slip.getSensorD());
+            addPointToCombo(slip.getSignalAMastName(), slip.getSensorAName());
+            addPointToCombo(slip.getSignalBMastName(), slip.getSensorBName());
+            addPointToCombo(slip.getSignalCMastName(), slip.getSensorCName());
+            addPointToCombo(slip.getSignalDMastName(), slip.getSensorDName());
         }
     }
     

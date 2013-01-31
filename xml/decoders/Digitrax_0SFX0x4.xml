@@ -293,24 +293,32 @@
         <enumVal>
           <enumChoice choice="Automatic">
             <choice>Automatic</choice>
-            <choice>Automatic</choice>
+            <choice xml:lang="it">>Automatic</choice>
           </enumChoice>
           <enumChoice choice="Semi-Automatic">
             <choice>Semi-Automatic</choice>
-            <choice>Semi-Automatic</choice>
+            <choice xml:lang="it">>Semi-Automatic</choice>
           </enumChoice>
           <enumChoice choice="Manual">
             <choice>Manual</choice>
-            <choice>Manuale</choice>
+            <choice xml:lang="it">>Manuale</choice>
           </enumChoice>
         </enumVal>
         <label>Notching Mode</label>
         <label xml:lang="it">Modalità Notch</label>
+       <tooltip>Not supported on early EVO</tooltip>
+       <tooltip xml:lang="it">Non supportato dai primi EVO</tooltip>
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
-      <factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+                 <label>Reset All CVs</label>
+                 <label xml:lang="it">Ripristino di tutte le CV</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+                 <label>Reset All CVs except speed table</label>
+                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+      </factReset>
     </resets>
   </decoder>
   <pane name="Digitrax">

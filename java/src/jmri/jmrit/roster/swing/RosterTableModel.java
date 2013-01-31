@@ -53,11 +53,11 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
 
     @Override
     public void propertyChange(PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("add")) { // NOI18N
+        if (e.getPropertyName().equals(Roster.ADD)) {
             fireTableDataChanged();
-        } else if (e.getPropertyName().equals("remove")) { // NOI18N
+        } else if (e.getPropertyName().equals(Roster.REMOVE)) {
             fireTableDataChanged();
-        } else if (e.getPropertyName().equals("saved")) { // NOI18N
+        } else if (e.getPropertyName().equals(Roster.SAVED)) {
             //TODO This really needs to do something like find the index of the roster entry here
             if (e.getSource() instanceof RosterEntry) {
                 int row = Roster.instance().getGroupIndex(rosterGroup, (RosterEntry) e.getSource());
