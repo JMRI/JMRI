@@ -152,11 +152,11 @@
         <enumVal>
           <enumChoice choice="Use Vstart, Vmid, Vhigh">
             <choice>Use Vstart, Vmid, Vhigh</choice>
-      <label xml:lang="it">Usa Vstart, Vmid e Vhigh</label>
+            <choice xml:lang="it">Usa Vstart, Vmid e Vhigh</choice>
           </enumChoice>
           <enumChoice choice="Use Table">
             <choice>Use Table</choice>
-      <label xml:lang="it">Usa Tabella</label>
+            <choice xml:lang="it">Usa Tabella</choice>
           </enumChoice>
         </enumVal>
         <label>Use Speed Table</label>
