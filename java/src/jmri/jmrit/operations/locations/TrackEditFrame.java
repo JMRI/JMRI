@@ -942,7 +942,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		dropPanel.revalidate();
 		dropPanel.repaint();
-		validate();;
+		validate();
 	}
 
 	private void updatePickupOptions() {
@@ -1015,7 +1015,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		pickupPanel.revalidate();
 		pickupPanel.repaint();
-		validate();;
+		validate();
 	}
 
 	private void updateTrainComboBox() {
@@ -1195,7 +1195,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		panelRoadNames.repaint();
 		panelRoadNames.validate();
-		validate();;
+		validate();
 	}
 	
 	private void updateLoadOption() {
@@ -1261,7 +1261,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		panelLoadNames.repaint();
 		panelLoadNames.validate();
-		validate();;
+		validate();
 	}
 
 	private void deleteAllLoads() {
@@ -1291,7 +1291,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			westCheckBox.setSelected((_track.getTrainDirections() & Track.WEST) > 0);
 		}
 		panelTrainDir.revalidate();
-		validate();;
+		validate();
 	}
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
