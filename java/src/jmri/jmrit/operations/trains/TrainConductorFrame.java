@@ -544,10 +544,17 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	}
 	
 	private String getStatus(RouteLocation rl){
-		return MessageFormat.format(Bundle.getMessage("TrainDepartsCars"),
-				new Object[] { rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
-			_train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
-
+		if (Setup.isPrintLoadsAndEmptiesEnabled()) {
+			int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
+			return MessageFormat.format(Bundle.getMessage("TrainDepartsLoads"), new Object[] {
+				TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
+				_train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
+				Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
+		} else {
+			return MessageFormat.format(Bundle.getMessage("TrainDepartsCars"),
+					new Object[] { rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(),
+				_train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
+		}
 	}
     
     private void packFrame(){
