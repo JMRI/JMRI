@@ -254,6 +254,9 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		addComboBoxAction(trainVisitComboBox);
 
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
+		
+		// listen for trains being built
+		addTrainListeners();
 
 		setMinimumSize(new Dimension(600, Control.panelHeight));
 		pack();
@@ -297,21 +300,19 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 
 	// Select Train and Visit
 	protected void comboBoxActionPerformed(ActionEvent ae) {
-		if (ae.getSource() == trainComboBox) {
-			if (_train != null)
-				_train.removePropertyChangeListener(this);
+		// made the combo box not visible during updates, so ignore if not visible
+		if (ae.getSource() == trainComboBox && trainComboBox.isVisible()) {
 			_train = null;
-			_visitNumber = 1;
-			if (trainComboBox.getSelectedItem() != null && !trainComboBox.getSelectedItem().equals(""))
+			if (trainComboBox.getSelectedItem() != null && !trainComboBox.getSelectedItem().equals("")
+					) {
 				_train = (Train) trainComboBox.getSelectedItem();
-			// listen for train changes
-			if (_train != null)
-				_train.addPropertyChangeListener(this);
+				_visitNumber = 1;
+			}
 			update();
 		}
-		if (ae.getSource() == trainVisitComboBox) {
-			// made the combo box not visible during updates, so ignore if not visible
-			if (trainVisitComboBox.getSelectedItem() != null && trainVisitComboBox.isVisible()) {
+		// made the combo box not visible during updates, so ignore if not visible
+		if (ae.getSource() == trainVisitComboBox && trainVisitComboBox.isVisible()) {
+			if (trainVisitComboBox.getSelectedItem() != null) {
 				_visitNumber = (Integer) trainVisitComboBox.getSelectedItem();
 				update();
 			}
@@ -602,6 +603,8 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 	}
 
 	private void updateTrainsComboBox() {
+		Object selectedItem = trainComboBox.getSelectedItem();
+		trainComboBox.setVisible(false);	// used as a flag to ignore updates
 		trainComboBox.removeAllItems();
 		trainComboBox.addItem("");
 		if (_location != null) {
@@ -611,6 +614,9 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 					trainComboBox.addItem(trains.get(i));
 			}
 		}
+		if (selectedItem != null)
+			trainComboBox.setSelectedItem(selectedItem);
+		trainComboBox.setVisible(true);
 	}
 
 	// returns true if there's work at location
@@ -635,6 +641,29 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		}
 		return false;
 	}
+	
+	private void addTrainListeners() {
+		log.debug("Adding train listerners");
+		List<String> trains = TrainManager.instance().getTrainsByIdList();
+		for (int i = 0; i < trains.size(); i++) {
+			Train train = TrainManager.instance().getTrainById(trains.get(i));
+			if (train != null)
+				train.addPropertyChangeListener(this);
+		}
+		// listen for new trains being added
+		TrainManager.instance().addPropertyChangeListener(this);
+	}
+
+	private void removeTrainListeners() {
+		log.debug("Removing train listerners");
+		List<String> trains = TrainManager.instance().getTrainsByIdList();
+		for (int i = 0; i < trains.size(); i++) {
+			Train train = TrainManager.instance().getTrainById(trains.get(i));
+			if (train != null)
+				train.removePropertyChangeListener(this);
+		}
+		TrainManager.instance().removePropertyChangeListener(this);
+	}
 
 	private void removePropertyChangeListerners() {
 		for (int i = 0; i < rollingStock.size(); i++) {
@@ -644,15 +673,13 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 	}
 
 	public void dispose() {
+		removeTrainListeners();
 		removePropertyChangeListerners();
-		if (_train != null) {
-			_train.removePropertyChangeListener(this);
-		}
 		super.dispose();
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled())
+//		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " for: " + e.getSource().toString() + " old: "
 					+ e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
 		if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
@@ -668,6 +695,9 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 				log.debug("Car " + car.toString() + " removed from list");
 			}
 			update();
+		}
+		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+			updateTrainsComboBox();
 		}
 	}
 
