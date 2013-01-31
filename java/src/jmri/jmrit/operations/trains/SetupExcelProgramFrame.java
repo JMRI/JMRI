@@ -77,8 +77,10 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		setVisible(true);
 	}
 
-	// Save train, add scripts buttons
+	// Save and Test
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+		
+		CustomManifest.setFileName(fileName.getText());
 
 		if (ae.getSource() == testButton) {
 			if (CustomManifest.manifestCreatorFileExists()) {
@@ -94,10 +96,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 			}
 		}
 		if (ae.getSource() == saveButton) {
-			log.debug("Save button activated");
-			
-			CustomManifest.setFileName(fileName.getText());
-			
+			log.debug("Save button activated");		
 			TrainManagerXml.instance().writeOperationsFile();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
