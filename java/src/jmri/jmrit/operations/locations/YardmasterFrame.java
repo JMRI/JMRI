@@ -588,9 +588,29 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		if (_location != null) {
 			List<Train> trains = trainManager.getTrainsArrivingThisLocationList(_location);
 			for (int i = 0; i < trains.size(); i++) {
-				trainComboBox.addItem(trains.get(i));
+				if(isThereWorkAtLocation(trains.get(i), _location))
+					trainComboBox.addItem(trains.get(i));
 			}
 		}
+	}
+	
+	// returns true if there's work at location
+	private boolean isThereWorkAtLocation(Train train, Location location) {
+		List<String> carList = carManager.getByTrainDestinationList(train);
+		for (int i = 0; i < carList.size(); i++) {
+			Car car = carManager.getById(carList.get(i));
+			if (car.getRouteLocation().getName().equals(location.getName()) 
+					|| car.getRouteDestination().getName().equals(location.getName()))
+				return true;
+		}
+		List<String> engList = engManager.getByTrainList(train);
+		for (int i = 0; i < engList.size(); i++) {
+			Engine eng = engManager.getById(engList.get(i));
+			if (eng.getRouteLocation().getName().equals(location.getName())
+					|| eng.getRouteDestination().getName().equals(location.getName()))
+				return true;
+		}
+		return false;
 	}
     
     private void removePropertyChangeListerners(){
