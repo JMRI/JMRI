@@ -95,7 +95,6 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 	JPanel pMoves = new JPanel();
 	JPanel pTrainRouteLocationComment = new JPanel();
   	JPanel pWork = new JPanel();
-
 	
 	// check boxes
 	Hashtable<String, JCheckBox> carCheckBoxes = new Hashtable<String, JCheckBox>();
@@ -297,10 +296,15 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 	
 	protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == trainComboBox) {
+			if (_train != null)
+				_train.removePropertyChangeListener(this);
 			_train = null;
 			_visitNumber = 1;
 			if (trainComboBox.getSelectedItem() != null && !trainComboBox.getSelectedItem().equals(""))
 				_train = (Train) trainComboBox.getSelectedItem();
+			// listen for train changes
+			if (_train != null)
+				_train.addPropertyChangeListener(this);
 			update();
 		}
 		if (ae.getSource() == trainVisitComboBox) {
@@ -333,12 +337,6 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 			JCheckBox checkBox = en.nextElement();
 			checkBox.setSelected(enable);
 		}
-		setMode = false;
-		update();
-	}
-	
-	private void clearAndUpdate(){
-		carCheckBoxes.clear();
 		setMode = false;
 		update();
 	}
@@ -385,9 +383,6 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 			// Does this train have a unique railroad name?
 			if (!_train.getRailroadName().equals(""))
 				textRailRoadName.setText(_train.getRailroadName());
-
-			// listen for train changes
-			_train.addPropertyChangeListener(this);
 
 			RouteLocation rl = null;
 			
@@ -585,7 +580,6 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		return MessageFormat.format(Bundle.getMessage("TrainDepartsCars"),
 				new Object[] { rl.getName(), rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl),
 			_train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
-
 	}
 	
 	private void updateTrainsComboBox() {
@@ -618,9 +612,6 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		//if (Control.showProperty && log.isDebugEnabled()) 
 		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue()); // NOI18N
-		if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY))
-			clearAndUpdate();
 		if ((e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY) && e.getNewValue() == null)
 				|| (e.getPropertyName().equals(RollingStock.ROUTE_DESTINATION_CHANGED_PROPERTY) && e.getNewValue() == null)
 				|| e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)){
