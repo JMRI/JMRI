@@ -6443,12 +6443,33 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         }
         return null;
     }
+    
+    public PositionablePoint findPositionablePointByWestBoundBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(PositionablePoint p:pointList){
+                if(p.getWestBoundSignalMast()==bean)
+                    return p;
+            }
+        } else if (bean instanceof Sensor){
+            for(PositionablePoint p:pointList){
+                if(p.getWestBoundSensor()==bean)
+                    return p;
+            }
+        }
+        return null;
+    }
 
-    public PositionablePoint findPositionablePointByEastBoundSignalMast(String signalMastName){
-        for (int i = 0; i<pointList.size(); i++) {
-            PositionablePoint p = pointList.get(i);
-            if (p.getEastBoundSignalMastName().equals(signalMastName))
-                return p;
+    public PositionablePoint findPositionablePointByEastBoundBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(PositionablePoint p:pointList){
+                if(p.getEastBoundSignalMast()==bean)
+                    return p;
+            }
+        } else if (bean instanceof Sensor){
+            for(PositionablePoint p:pointList){
+                if(p.getEastBoundSensor()==bean)
+                    return p;
+            }
         }
         return null;
     }
@@ -6458,7 +6479,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             PositionablePoint p = pointList.get(i);
             if (p.getWestBoundSignalMastName().equals(signalMastName))
                 return p;
-
         }
         return null;
     }

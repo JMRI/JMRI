@@ -219,52 +219,17 @@ public class PointDetails {
     public void setRefObject(NamedBean refObs){
         refObj = refObs;
         if (panel!=null && refObj!=null){
-            if (refObj instanceof SignalMast){
-                String mast = ((SignalMast)refObj).getUserName();
-                refLoc = panel.findPositionablePointByEastBoundSignalMast(mast);
+            if (refObj instanceof SignalMast || refObj instanceof Sensor){
+                //String mast = ((SignalMast)refObj).getUserName();
+                refLoc = panel.findPositionablePointByEastBoundBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findPositionablePointByWestBoundSignalMast(mast);
+                    refLoc = panel.findPositionablePointByWestBoundBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findLayoutTurnoutBySignalMast(mast);
+                    refLoc = panel.findLayoutTurnoutByBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findLevelXingBySignalMast(mast);
+                    refLoc = panel.findLevelXingByBean(refObj);
                 if(refLoc==null)
-                    refLoc = panel.findLayoutSlipBySignalMast(mast);
-                if(refLoc==null){
-                    mast = ((SignalMast)refObj).getSystemName();
-                    if(refLoc==null)
-                        refLoc = panel.findPositionablePointByWestBoundSignalMast(mast);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutTurnoutBySignalMast(mast);
-                    if(refLoc==null)
-                        refLoc = panel.findLevelXingBySignalMast(mast);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutSlipBySignalMast(mast);
-                }
-            } else if (refObj instanceof Sensor) {
-                String sourceSensor = ((Sensor)refObj).getSystemName();
-                refLoc = panel.findPositionablePointByEastBoundSensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findPositionablePointByWestBoundSensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findLayoutTurnoutBySensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findLevelXingBySensor(sourceSensor);
-                if(refLoc==null)
-                    refLoc = panel.findLayoutSlipBySensor(sourceSensor);
-                if(refLoc==null){
-                    sourceSensor = ((Sensor)refObj).getUserName();
-                    refLoc = panel.findPositionablePointByEastBoundSensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findPositionablePointByWestBoundSensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutTurnoutBySensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findLevelXingBySensor(sourceSensor);
-                    if(refLoc==null)
-                        refLoc = panel.findLayoutSlipBySensor(sourceSensor);
-                }
-                setSensor((Sensor)refObj);
+                    refLoc = panel.findLayoutSlipByBean(refObj);
             } else if (refObj instanceof SignalHead){
                 String signal = ((SignalHead)refObj).getDisplayName();
                 refLoc = panel.findPositionablePointByEastBoundSignal(signal);
