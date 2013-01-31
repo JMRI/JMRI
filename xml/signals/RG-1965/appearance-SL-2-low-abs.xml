@@ -24,6 +24,12 @@
 		<authorinitials>EBR</authorinitials>
 		<revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
     </revision>   
+	<revision>
+		<revnumber>2</revnumber>
+		<date>2013-01-29</date>
+		<authorinitials>EBR</authorinitials>
+		<revremark>imagelink paths corrected</revremark>
+	</revision>   
   </revhistory> 
   
   <aspecttable>RG-1965</aspecttable>
@@ -38,7 +44,7 @@
       <show>red</show>
       <show>flashyellow</show>
       <reference>Rule 281B</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-281B.gif</imagelink>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-281B.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -46,7 +52,7 @@
       <show>red</show>
       <show>green</show>
       <reference>Rule 283</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-283.gif</imagelink>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-283.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -54,7 +60,7 @@
       <show>red</show>
       <show>yellow</show>
       <reference>Rule 286</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-286.gif</imagelink>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-286.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -62,7 +68,7 @@
       <show>red</show>
       <show>red</show>
       <reference>Rule 292 (unofficial)</reference>
-      <imagelink>preference:resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-292.gif</imagelink>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-2-low-abs/rule-292.gif</imagelink>
     </appearance>
 
   </appearances>

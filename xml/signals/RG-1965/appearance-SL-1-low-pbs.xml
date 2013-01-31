@@ -24,7 +24,13 @@
 		<authorinitials>EBR</authorinitials>
 		<revremark>Initial version, based on AAR-1946 in JMRI 3.2</revremark>
     </revision>   
-  </revhistory> 
+	<revision>
+		<revnumber>2</revnumber>
+		<date>2013-01-29</date>
+		<authorinitials>EBR</authorinitials>
+		<revremark>imagelink path for rule-282 corrected</revremark>
+	</revision>
+	</revhistory> 
 
   <aspecttable>RG-1965</aspecttable>
   <name>Single head dwarf permissive signal</name>
@@ -37,28 +43,28 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Rule 281</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-281.gif</imagelink>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>flashyellow</show>
       <reference>Rule 282</reference>
-      <imagelink>../../../resources/resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-282.gif</imagelink>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-282.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Rule 285</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-285.gif</imagelink>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-285.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
       <reference>Rule 290</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-290.gif</imagelink>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-290.gif</imagelink>
     </appearance>
     
 
@@ -66,7 +72,7 @@
       <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <reference>Rule 291</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-291.gif</imagelink>
+      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-291.gif</imagelink>
     </appearance>
 
   </appearances>
