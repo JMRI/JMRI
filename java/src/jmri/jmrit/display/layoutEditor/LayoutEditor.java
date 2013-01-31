@@ -6463,74 +6463,111 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         return null;
     }
     
+    public PositionablePoint findPositionablePointByBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(PositionablePoint p:pointList){
+                if(p.getWestBoundSignalMast()==bean ||
+                    p.getEastBoundSignalMast()==bean)
+                    return p;
+            }
+        } else if (bean instanceof Sensor){
+            for(PositionablePoint p:pointList){
+                if(p.getWestBoundSensor()==bean ||
+                    p.getEastBoundSensor()==bean)
+                    return p;
+            }
+        }
+        return null;
+    
+    }
+    
     public LayoutTurnout findLayoutTurnoutBySignalMast(String signalMastName){
-        for(int i = 0; i<turnoutList.size(); i++){
-            LayoutTurnout t = turnoutList.get(i);
-            if((t.getSignalAMastName().equals(signalMastName)) ||
-                (t.getSignalBMastName().equals(signalMastName)) ||
-                (t.getSignalCMastName().equals(signalMastName)) ||
-                (t.getSignalDMastName().equals(signalMastName)))
-                return t;
+        return findLayoutTurnoutByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+    }
+    
+    public LayoutTurnout findLayoutTurnoutByBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(LayoutTurnout t:turnoutList){
+                if(t.getSignalAMast()==bean ||
+                    t.getSignalBMast()==bean ||
+                    t.getSignalCMast()==bean ||
+                    t.getSignalDMast()==bean)
+                    return t;
+            }
+        } else if (bean instanceof Sensor){
+            for(LayoutTurnout t:turnoutList){
+                if(t.getSensorA()==bean ||
+                    t.getSensorB()==bean ||
+                    t.getSensorC()==bean ||
+                    t.getSensorD()==bean)
+                    return t;
+            }
         }
         return null;
     }
     
     public LayoutTurnout findLayoutTurnoutBySensor(String sensorName){
-        for(int i = 0; i<turnoutList.size(); i++){
-            LayoutTurnout t = turnoutList.get(i);
-            if((t.getSensorAName().equals(sensorName)) ||
-                (t.getSensorBName().equals(sensorName)) ||
-                (t.getSensorCName().equals(sensorName)) ||
-                (t.getSensorDName().equals(sensorName)))
-                return t;
-        }
-        return null;
+        return findLayoutTurnoutByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
     
     public LevelXing findLevelXingBySignalMast(String signalMastName){
-        for(int i = 0; i<xingList.size(); i++){
-            LevelXing l = xingList.get(i);
-            if((l.getSignalAMastName().equals(signalMastName)) ||
-                (l.getSignalBMastName().equals(signalMastName)) ||
-                (l.getSignalCMastName().equals(signalMastName)) ||
-                (l.getSignalDMastName().equals(signalMastName)))
-                return l;
+        return findLevelXingByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
+    }
+    
+    public LevelXing findLevelXingBySensor(String sensorName){
+        return findLevelXingByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
+    }
+    
+    public LevelXing findLevelXingByBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(LevelXing l: xingList){
+                if(l.getSignalAMast()==bean ||
+                    l.getSignalBMast()==bean ||
+                    l.getSignalCMast()==bean ||
+                    l.getSignalDMast()==bean)
+                    return l;
+            }
+        } else if (bean instanceof Sensor){
+            for(LevelXing l: xingList){
+                if(l.getSensorA()==bean ||
+                    l.getSensorB()==bean ||
+                    l.getSensorC()==bean ||
+                    l.getSensorD()==bean)
+                    return l;
+            }
+        
         }
         return null;
     }
     
-    public LevelXing findLevelXingBySensor(String sensorName){
-        for(int i = 0; i<xingList.size(); i++){
-            LevelXing l = xingList.get(i);
-            if((l.getSensorAName().equals(sensorName)) ||
-                (l.getSensorBName().equals(sensorName)) ||
-                (l.getSensorCName().equals(sensorName)) ||
-                (l.getSensorDName().equals(sensorName)))
-                return l;
+    public LayoutSlip findLayoutSlipByBean(jmri.NamedBean bean){
+        if(bean instanceof SignalMast){
+            for(LayoutSlip l: slipList){
+                if(l.getSignalAMast()==bean ||
+                    l.getSignalBMast()==bean ||
+                    l.getSignalCMast()==bean ||
+                    l.getSignalDMast()==bean)
+                    return l;
+            }
+        } else if (bean instanceof Sensor){
+            for(LayoutSlip l: slipList){
+                if(l.getSensorA()==bean ||
+                    l.getSensorB()==bean ||
+                    l.getSensorC()==bean ||
+                    l.getSensorD()==bean)
+                    return l;
+            }
+        
         }
         return null;
     }
 
     public LayoutSlip findLayoutSlipBySignalMast(String signalMastName){
-        for(LayoutSlip l: slipList){
-            if((l.getSignalAMastName().equals(signalMastName)) ||
-                (l.getSignalBMastName().equals(signalMastName)) ||
-                (l.getSignalCMastName().equals(signalMastName)) ||
-                (l.getSignalDMastName().equals(signalMastName)))
-                return l;
-        }
-        return null;
+        return findLayoutSlipByBean(InstanceManager.signalMastManagerInstance().provideSignalMast(signalMastName));
     }
     
     public LayoutSlip findLayoutSlipBySensor(String sensorName){
-        for(LayoutSlip l: slipList){
-            if((l.getSensorAName().equals(sensorName)) ||
-                (l.getSensorBName().equals(sensorName)) ||
-                (l.getSensorCName().equals(sensorName)) ||
-                (l.getSensorDName().equals(sensorName)))
-                return l;
-        }
-        return null;
+        return findLayoutSlipByBean(InstanceManager.sensorManagerInstance().provideSensor(sensorName));
     }
     
     public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName){
