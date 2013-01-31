@@ -98,7 +98,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     public synchronized static void resetInstance() {
-        listeners = _instance.pcs.getPropertyChangeListeners();
+        if (_instance != null) {
+            listeners = _instance.pcs.getPropertyChangeListeners();
+        }
         _instance = null;
     }
 
