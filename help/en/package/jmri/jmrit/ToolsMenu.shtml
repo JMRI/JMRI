@@ -41,7 +41,7 @@ The Tools Menu gives access to the basic JMRI tools:
   <li><a href="beantable/TurnoutTable.shtml">Turnouts</a>
   <li><a href="beantable/SensorTable.shtml">Sensors</a>
   <li><a href="beantable/LightTable.shtml">Lights</a>
-  <li><a href="beantable/SignalHeadsTable.shtml">Signal Heads</a>
+  <li><a href="beantable/SignalHeadTable.shtml">Signal Heads</a>
   <li><a href="beantable/SignalMastTable.shtml">Signal Masts</a>
   <li><a href="beantable/ReporterTable.shtml">Reporters</a>
   <li><a href="beantable/MemoryTable.shtml">Memory Variables</a>
