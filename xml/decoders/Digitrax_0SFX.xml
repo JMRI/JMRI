@@ -668,8 +668,14 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
-      <factReset label="Reset All CVs except speed table" CV="8" default="9"/>
+      <factReset label="Reset All CVs" CV="8" default="8">
+                 <label>Reset All CVs</label>
+                 <label xml:lang="it">Ripristino di tutte le CV</label>
+      </factReset>
+      <factReset label="Reset All CVs except speed table" CV="8" default="9">
+                 <label>Reset All CVs except speed table</label>
+                 <label xml:lang="it">Ripristino di tutte le CV eccetto Tabella velocità</label>
+      </factReset>
     </resets>
   </decoder>
   <pane name="Digitrax">
@@ -681,8 +687,14 @@
       <display item="Short-circuit protection"/>
       <display item="Switching speed enabled by F6"/>
       <display item="Torque compensation"/>
-      <display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature"/>
-      <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number"/>
+      <display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature">
+         <tooltip>Activates Decoder Locking feature</tooltip>
+         <tooltip xml:lang="it">Attiva funzione Blocco Decoder</tooltip>
+      </display>
+      <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number">
+        <tooltip>Set this decoder's unique locking ID number</tooltip>
+         <tooltip xml:lang="it">Imposta Codice Blocco di questo Decoder</tooltip>
+      </display>
       <display item="Sound Project Author ID"/>
       <display item="Sound Project ID"/>
       <label label="  ">	

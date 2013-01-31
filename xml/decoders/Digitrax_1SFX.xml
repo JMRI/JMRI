@@ -557,8 +557,14 @@
       <display item="Short-circuit protection"/>
       <display item="Switching speed enabled by F6"/>
       <display item="Torque compensation"/>
-      <display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature"/>
-      <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number"/>
+      <display item="Decoder Lock Feature" tooltip="Activates Decoder Locking feature">
+         <tooltip>Activates Decoder Locking feature</tooltip>
+         <tooltip xml:lang="it">Attiva funzione Blocco decoder</tooltip>
+      </display>
+      <display item="Decoder Lock ID number" tooltip="Set this decoder's unique locking ID number">
+         <tooltip>Set this decoder's unique locking ID number</tooltip>
+         <tooltip xml:lang="it">Imposta Codice Blocco di questo Decoder</tooltip>
+      </display>
       <display item="Sound Project Author ID"/>
       <display item="Sound Project ID"/>
       <label label="  ">	
@@ -570,20 +576,30 @@
       <label label="Sound labels and values are shown for decoders as manufactured.">
       	<label>Sound labels and values are shown for decoders as manufactured.></label>
 	<label xml:lang="it">Valori ed etichette visualizzati come da fabbrica</label>
+      	<label>Sound labels and values are shown for decoders as manufactured.></label>
+	<label xml:lang="it">Valori ed etichette visualizzati come da fabbrica</label>
       </label>
       <label label="These labels and values may not match downloaded sound projects.">
+      	<label>These labels and values may not match downloaded sound projects.></label>
+	<label xml:lang="it">Questi possono non corrspondere al progetto scaricato</label>
       	<label>These labels and values may not match downloaded sound projects.></label>
 	<label xml:lang="it">Questi possono non corrspondere al progetto scaricato</label>
      </label>
       <label label="Please use the CVs pane to adjust downloaded sound projects.">
       	<label>Please use the CVs pane to adjust downloaded sound projects.></label>
 	<label xml:lang="it">Usare il pannello CV per aggiustare il progetto</label>
+      	<label>Please use the CVs pane to adjust downloaded sound projects.></label>
+	<label xml:lang="it">Usare il pannello CV per aggiustare il progetto</label>
       </label>
       <label label="If your locomotive with downloaded sound file is silent,try setting CV 60=0.">
       	<label>If your locomotive with downloaded sound file is silent,try setting CV 60=0.></label>
 	<label xml:lang="it">Se la loco è silenziosa, provare ad impostare CV 60=0.</label>
+      	<label>If your locomotive with downloaded sound file is silent,try setting CV 60=0.></label>
+	<label xml:lang="it">Se la loco è silenziosa, provare ad impostare CV 60=0.</label>
       </label>
       <label label="To mute bell or horn, set the sound level = 1, not 0.">
+     	<label>To mute bell or horn, set the sound level = 1, not 0.></label>
+	<label xml:lang="it">Per silenziare la campana o la tromba, impostare livello suono=1, non=0.</label>
      	<label>To mute bell or horn, set the sound level = 1, not 0.></label>
 	<label xml:lang="it">Per silenziare la campana o la tromba, impostare livello suono=1, non=0.</label>
       </label>
