@@ -56,13 +56,22 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
     /** record the single instance of Roster **/
     static transient Roster _instance = null;
-
+    private static PropertyChangeListener[] listeners = null;
+    
     private UserPreferencesManager preferences;
     private String defaultRosterGroup = null;
 
     // should be private except that JUnit testing creates multiple Roster objects
     public Roster() {
         super();
+        synchronized (this) {
+            if (listeners != null) {
+                for (PropertyChangeListener l : listeners) {
+                    this.addPropertyChangeListener(l);
+                }
+                listeners = null;
+            }
+        }
         this.preferences = InstanceManager.getDefault(UserPreferencesManager.class);
         if (this.preferences != null) {
             // for some reason, during JUnit testing, preferences is often null
@@ -88,8 +97,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
     }
 
-    public synchronized static void resetInstance() { 
-        _instance = null; 
+    public synchronized static void resetInstance() {
+        listeners = _instance.pcs.getPropertyChangeListeners();
+        _instance = null;
     }
 
     /**
@@ -761,10 +771,12 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     // Note that dispose() doesn't act on these.  Its not clear whether it should...
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
+    @Override
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.addPropertyChangeListener(propertyName, listener);
     }
@@ -773,10 +785,12 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         pcs.firePropertyChange(p,old,n);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
+    @Override
     public synchronized void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         pcs.removePropertyChangeListener(propertyName, listener);
     }
