@@ -30,8 +30,7 @@ import jmri.util.FileUtil;
 
 public class TrainsScriptFrame extends OperationsFrame {
 
-	TrainManager manager;
-	TrainManagerXml managerXml;
+	TrainManager trainManager = TrainManager.instance();
 
 	// script panels
 	JPanel pStartUpScript = new JPanel();
@@ -65,19 +64,11 @@ public class TrainsScriptFrame extends OperationsFrame {
 		shutDownScriptPane
 				.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ScriptsShutDown")));
 
-		// remember who called us
-
-		// load managers
-		manager = TrainManager.instance();
-		managerXml = TrainManagerXml.instance();
-
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		// Layout the panel by rows
 
 		// row 1
-
-		// row 2
 		updateStartUpScriptPanel();
 
 		// row 3
@@ -111,7 +102,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 		addItem(pStartUpScript, addStartUpScriptButton, 0, 0);
 
 		// load any existing startup scripts
-		List<String> scripts = manager.getStartUpScripts();
+		List<String> scripts = trainManager.getStartUpScripts();
 		if (scripts.size() > 0)
 			addItem(pStartUpScript, runStartUpScriptButton, 1, 0);
 		for (int i = 0; i < scripts.size(); i++) {
@@ -135,7 +126,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 		addItem(pShutDownScript, addShutDownScriptButton, 0, 0);
 
 		// load any existing shutdown scripts
-		List<String> scripts = manager.getShutDownScripts();
+		List<String> scripts = trainManager.getShutDownScripts();
 		if (scripts.size() > 0)
 			addItem(pShutDownScript, runShutDownScriptButton, 1, 0);
 		for (int i = 0; i < scripts.size(); i++) {
@@ -158,7 +149,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 			log.debug("train add move script button activated");
 			File f = selectFile();
 			if (f != null) {
-				manager.addStartUpScript(FileUtil.getPortableFilename(f));
+				trainManager.addStartUpScript(FileUtil.getPortableFilename(f));
 				updateStartUpScriptPanel();
 				packFrame();
 			}
@@ -167,16 +158,16 @@ public class TrainsScriptFrame extends OperationsFrame {
 			log.debug("train add termination script button activated");
 			File f = selectFile();
 			if (f != null) {
-				manager.addShutDownScript(FileUtil.getPortableFilename(f));
+				trainManager.addShutDownScript(FileUtil.getPortableFilename(f));
 				updateShutDownScriptPanel();
 				packFrame();
 			}
 		}
 		if (ae.getSource() == runStartUpScriptButton) {
-			runScripts(manager.getStartUpScripts());
+			runScripts(trainManager.getStartUpScripts());
 		}
 		if (ae.getSource() == runShutDownScriptButton) {
-			runScripts(manager.getShutDownScripts());
+			runScripts(trainManager.getShutDownScripts());
 		}
 		if (ae.getSource() == saveButton) {
 			log.debug("Save button activated");
@@ -189,7 +180,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 	public void buttonActionRemoveStartUpScript(java.awt.event.ActionEvent ae) {
 		JButton rbutton = (JButton) ae.getSource();
 		log.debug("remove move script button activated " + rbutton.getName());
-		manager.deleteStartUpScript(rbutton.getName());
+		trainManager.deleteStartUpScript(rbutton.getName());
 		updateStartUpScriptPanel();
 		packFrame();
 	}
@@ -197,7 +188,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 	public void buttonActionRemoveShutDownScript(java.awt.event.ActionEvent ae) {
 		JButton rbutton = (JButton) ae.getSource();
 		log.debug("remove termination script button activated " + rbutton.getName());
-		manager.deleteShutDownScript(rbutton.getName());
+		trainManager.deleteShutDownScript(rbutton.getName());
 		updateShutDownScriptPanel();
 		packFrame();
 	}
