@@ -177,7 +177,7 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
         RosterEntry re = new RosterEntry();
         re.setDecoderFamily(decoderFile.getFamily());
         re.setDecoderModel(decoderFile.getModel());
-        re.setId(SymbolicProgBundle.bundle().getString("LabelNewDecoder"));
+        re.setId(SymbolicProgBundle.getMessage("LabelNewDecoder"));
         // note we're leaving the filename information as null
         // add the new roster entry to the in-memory roster
         Roster.instance().addEntry(re);
