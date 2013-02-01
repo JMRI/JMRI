@@ -14,6 +14,7 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
@@ -1445,6 +1446,40 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 		return number;
 	}
+	
+	/**
+	 * Gets the number of empty cars in the train when train departs the route location.
+	 * 
+	 * @return The number of empty cars in the train departing the route location.
+	 */
+	public int getNumberEmptyCarsInTrain(RouteLocation routeLocation) {
+		int number = 0;
+		Route route = getRoute();
+		if (route != null) {
+			List<String> cars = CarManager.instance().getByTrainList(this);
+			List<String> ids = route.getLocationsBySequenceList();
+			for (int i = 0; i < ids.size(); i++) {
+				RouteLocation rl = route.getLocationById(ids.get(i));
+				for (int j = 0; j < cars.size(); j++) {
+					Car car = CarManager.instance().getById(cars.get(j));
+					if (!CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(
+							CarLoad.LOAD_TYPE_EMPTY))
+						continue;
+					if (car.getRouteLocation() == rl) {
+						number++;
+					}
+					if (car.getRouteDestination() == rl) {
+						number--;
+					}
+				}
+				if (rl == routeLocation)
+					break;
+			}
+		}
+	
+		return number;
+	}
+
 
 	/**
 	 * Gets the train's length at the current location in the train's route.
