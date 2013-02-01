@@ -30,12 +30,18 @@
 		<authorinitials>EBR</authorinitials>
 		<revremark>imagelink path for rule-282 corrected</revremark>
 	</revision>
+<revision>
+	<revnumber>3</revnumber>
+	<date>2013-01-31</date>
+	<authorinitials>EBR</authorinitials>
+	<revremark>image link pointing to jmri.org, description corrected (color light)</revremark>
+</revision>
 	</revhistory> 
 
   <aspecttable>RG-1965</aspecttable>
   <name>Single head dwarf permissive signal</name>
   <reference>As described in the 1965 version of the RG publication "Rio Grande Rules of Operating Department".</reference>
-  <description>Appearances for a permissive one-searchlight dwarf signal with number plate</description>
+  <description>Appearances for a permissive color light dwarf signal with number plate</description>
   
   <appearances>
 
@@ -43,28 +49,28 @@
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Rule 281</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-281.gif</imagelink>
+      <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>flashyellow</show>
       <reference>Rule 282</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-282.gif</imagelink>
+      <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-282.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Rule 285</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-285.gif</imagelink>
+      <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-285.gif</imagelink>
     </appearance>
     
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
       <reference>Rule 290</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-290.gif</imagelink>
+      <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-290.gif</imagelink>
     </appearance>
     
 
@@ -72,7 +78,7 @@
       <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <reference>Rule 291</reference>
-      <imagelink>program:resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-291.gif</imagelink>
+      <imagelink>http://jmri.org/resources/icons/smallschematics/aspects/RG-1965/SL-1-low-pbs/rule-291.gif</imagelink>
     </appearance>
 
   </appearances>
