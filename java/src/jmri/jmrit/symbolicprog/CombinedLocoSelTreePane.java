@@ -69,7 +69,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
      */
     protected JPanel layoutDecoderSelection() {
         JPanel pane1a = new JPanel(new BorderLayout());
-        pane1a.add(new JLabel(SymbolicProgBundle.getMessage("LabelDecoderInstalled")), BorderLayout.NORTH);
+        pane1a.add(new JLabel(Bundle.getMessage("LabelDecoderInstalled")), BorderLayout.NORTH);
         // create the list of manufacturers; get the list of decoders, and add elements
         dRoot = new DecoderTreeNode("Root");
         dModel = new InvisibleTreeModel(dRoot);
@@ -186,11 +186,11 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
                     go2.setEnabled(true);
                     go2.setRequestFocusEnabled(true);
                     go2.requestFocus();
-                    go2.setToolTipText(SymbolicProgBundle.getMessage("TipClickToOpen"));
+                    go2.setToolTipText(Bundle.getMessage("TipClickToOpen"));
                 } else {
                     // decoder not selected - require one
                     go2.setEnabled(false);
-                    go2.setToolTipText(SymbolicProgBundle.getMessage("TipSelectLoco"));
+                    go2.setToolTipText(Bundle.getMessage("TipSelectLoco"));
                 }
             }
         });
@@ -199,7 +199,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         dTree.addMouseListener(new MouseAdapter(){
             public void mouseClicked(MouseEvent me){
              // Clear any status messages and ensure the tree is in single path select mode
-             if (_statusLabel != null) _statusLabel.setText(SymbolicProgBundle.getMessage("StateIdle"));
+             if (_statusLabel != null) _statusLabel.setText(Bundle.getMessage("StateIdle"));
              dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
             
              if (me.getClickCount() == 2){
@@ -215,9 +215,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         }
         if (jmri.InstanceManager.programmerManagerInstance() != null &&
             jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()){
-            showAll = new JRadioButton(SymbolicProgBundle.getMessage("LabelAll"));
+            showAll = new JRadioButton(Bundle.getMessage("LabelAll"));
             showAll.setSelected(true);
-            showMatched = new JRadioButton(SymbolicProgBundle.getMessage("LabelMatched"));
+            showMatched = new JRadioButton(Bundle.getMessage("LabelMatched"));
             ButtonGroup group = new ButtonGroup();
             group.add(showAll);
             group.add(showMatched);
@@ -299,7 +299,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         // and issue a warning instruction in the status bar
         if (pList.size()>1) {
         	dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
-        	_statusLabel.setText(SymbolicProgBundle.getMessage("StateMultipleMatch"));
+        	_statusLabel.setText(Bundle.getMessage("StateMultipleMatch"));
         }
         else dTree.getSelectionModel().setSelectionMode(DefaultTreeSelectionModel.SINGLE_TREE_SELECTION);
         ArrayList<DecoderTreeNode> selectedNode = new ArrayList<DecoderTreeNode>();

@@ -83,12 +83,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
     public String getColumnName(int col) {
         switch (col) {
-        case NUMCOLUMN: return SymbolicProgBundle.getMessage("ColumnNameNumber");
-        case VALCOLUMN: return SymbolicProgBundle.getMessage("ColumnNameValue");
-        case STATECOLUMN: return SymbolicProgBundle.getMessage("ColumnNameState");
-        case READCOLUMN: return SymbolicProgBundle.getMessage("ColumnNameRead");
-        case WRITECOLUMN: return SymbolicProgBundle.getMessage("ColumnNameWrite");
-        case COMPARECOLUMN: return SymbolicProgBundle.getMessage("ColumnNameCompare");
+        case NUMCOLUMN: return Bundle.getMessage("ColumnNameNumber");
+        case VALCOLUMN: return Bundle.getMessage("ColumnNameValue");
+        case STATECOLUMN: return Bundle.getMessage("ColumnNameState");
+        case READCOLUMN: return Bundle.getMessage("ColumnNameRead");
+        case WRITECOLUMN: return Bundle.getMessage("ColumnNameWrite");
+        case COMPARECOLUMN: return Bundle.getMessage("ColumnNameCompare");
         default: return "unknown";
         }
     }
@@ -143,13 +143,13 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         case STATECOLUMN:
             int state = _cvDisplayVector.elementAt(row).getState();
             switch (state) {
-            case CvValue.UNKNOWN:  		return SymbolicProgBundle.getMessage("CvStateUnknown");
-            case CvValue.READ:  		return SymbolicProgBundle.getMessage("CvStateRead");
-            case CvValue.EDITED:  		return SymbolicProgBundle.getMessage("CvStateEdited");
-            case CvValue.STORED:  		return SymbolicProgBundle.getMessage("CvStateStored");
-            case CvValue.FROMFILE:  	return SymbolicProgBundle.getMessage("CvStateFromFile");
-            case CvValue.SAME:  		return SymbolicProgBundle.getMessage("CvStateSame");
-            case CvValue.DIFF:  		return SymbolicProgBundle.getMessage("CvStateDiff")+ " " +
+            case CvValue.UNKNOWN:  		return Bundle.getMessage("CvStateUnknown");
+            case CvValue.READ:  		return Bundle.getMessage("CvStateRead");
+            case CvValue.EDITED:  		return Bundle.getMessage("CvStateEdited");
+            case CvValue.STORED:  		return Bundle.getMessage("CvStateStored");
+            case CvValue.FROMFILE:  	return Bundle.getMessage("CvStateFromFile");
+            case CvValue.SAME:  		return Bundle.getMessage("CvStateSame");
+            case CvValue.DIFF:  		return Bundle.getMessage("CvStateDiff")+ " " +
             							_cvDisplayVector.elementAt(row).getDecoderValue();
             default: return "inconsistent";
             }
@@ -205,11 +205,11 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             _cvDisplayVector.addElement(cv);
             // connect to this CV to ensure the table display updates
             cv.addPropertyChangeListener(this);
-            JButton bw = new JButton(SymbolicProgBundle.getMessage("ButtonWrite"));
+            JButton bw = new JButton(Bundle.getMessage("ButtonWrite"));
             _writeButtons.addElement(bw);
-            JButton br = new JButton(SymbolicProgBundle.getMessage("ButtonRead"));
+            JButton br = new JButton(Bundle.getMessage("ButtonRead"));
             _readButtons.addElement(br);
-            JButton bc = new JButton(SymbolicProgBundle.getMessage("ButtonCompare"));
+            JButton bc = new JButton(Bundle.getMessage("ButtonCompare"));
             _compareButtons.addElement(bc);
             if (infoOnly || readOnly) {
                 if (writeOnly) {
