@@ -2,52 +2,33 @@
 
 package apps.gui3.dp3;
 
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.decoderdefn.DecoderIndexFile;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.symbolicprog.*;
-import jmri.util.JmriJFrame;
-import jmri.util.swing.JmriPanel;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.util.ResourceBundle;
 import java.io.File;
-import java.util.List;
 import java.util.ArrayList;
-
-import javax.swing.tree.TreeNode;
-
+import java.util.List;
 import javax.swing.*;
-import java.awt.Rectangle;
-
-import org.jdom.Element;
-import jmri.jmrit.XmlFile;
-
-import  jmri.jmrit.symbolicprog.tabbedframe.*;
-
-import javax.swing.BoxLayout;
-import java.awt.BorderLayout;
-import java.awt.event.ActionListener;
+import javax.swing.border.TitledBorder;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JSeparator;
-import javax.swing.ButtonGroup;
-import javax.swing.border.TitledBorder;
-import java.awt.Color;
+import javax.swing.tree.TreeNode;
+import jmri.jmrit.XmlFile;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.*;
+import jmri.jmrit.symbolicprog.tabbedframe.*;
+import jmri.util.JmriJFrame;
+import jmri.util.swing.JmriPanel;
+import org.jdom.Element;
 
 /**
  * Swing action to create and register a
@@ -71,8 +52,6 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     JLabel statusLabel;
     jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
-
     public PaneProgDp3Action(String s, jmri.util.swing.WindowInterface wi) {
     	super(s, wi);
         init();
@@ -94,7 +73,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     }
     
     void init(){
-        statusLabel = new JLabel(rbt.getString("StateIdle"));
+        statusLabel = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
     }
     
     JmriJFrame f;
@@ -106,22 +85,22 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
 
         if(f==null){
             // create the initial frame that steers
-            f = new JmriJFrame("Create New Loco"); //rbt.getString("FrameServiceProgrammerSetup")
+            f = new JmriJFrame("Create New Loco"); //SymbolicProgBundle.getMessage("FrameServiceProgrammerSetup")
             f.getContentPane().setLayout(new BorderLayout());
             // ensure status line is cleared on close so it is normal if re-opened
             f.addWindowListener(new WindowAdapter(){
                 @Override
                 public void windowClosing(WindowEvent we){
-                    statusLabel.setText(rbt.getString("StateIdle"));
+                    statusLabel.setText(SymbolicProgBundle.getMessage("StateIdle"));
                     f.windowClosing(we);}});
 
             // add the Roster menu
             JMenuBar menuBar = new JMenuBar();
-            JMenu j = new JMenu(rbt.getString("MenuFile"));
-            j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintDecoderDefinitions"), f, false));
-            j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintPreviewDecoderDefinitions"), f, true));
+            JMenu j = new JMenu(SymbolicProgBundle.getMessage("MenuFile"));
+            j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(SymbolicProgBundle.getMessage("MenuPrintDecoderDefinitions"), f, false));
+            j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(SymbolicProgBundle.getMessage("MenuPrintPreviewDecoderDefinitions"), f, true));
             menuBar.add(j);
-            menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(rbt.getString("MenuRoster"), jmri.jmrit.roster.swing.RosterMenu.MAINMENU, f));
+            menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(SymbolicProgBundle.getMessage("MenuRoster"), jmri.jmrit.roster.swing.RosterMenu.MAINMENU, f));
             f.setJMenuBar(menuBar);
             final JPanel bottomPanel = new JPanel(new BorderLayout());
             // new Loco on programming track
@@ -129,9 +108,9 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                 @Override
                     protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                     String filename) {
-                        String title = java.text.MessageFormat.format(rbt.getString("FrameServiceProgrammerTitle"),
+                        String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),
                                                             new Object[]{"new decoder"});
-                        if (re!=null) title = java.text.MessageFormat.format(rbt.getString("FrameServiceProgrammerTitle"),
+                        if (re!=null) title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),
                                                             new Object[]{re.getId()});
                         JFrame p = new PaneServiceProgFrame(decoderFile, re,
                                                      title, "programmers"+File.separator+"Comprehensive.xml",
@@ -151,11 +130,11 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                     // find the decoderFile object
                         DecoderFile decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
                         if (log.isDebugEnabled()) log.debug("decoder file: "+decoderFile.getFilename());
-                        if(rosterIdField.getText().equals(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"))){
+                        if(rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))){
                             re = new RosterEntry();
                             re.setDecoderFamily(decoderFile.getFamily());
                             re.setDecoderModel(decoderFile.getModel());
-                            re.setId(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"));
+                            re.setId(SymbolicProgBundle.getMessage("LabelNewDecoder"));
                             //re.writeFile(cvModel, iCvModel, variableModel );
                             // note that we're leaving the filename null
                             // add the new roster entry to the in-memory roster
@@ -191,14 +170,14 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                                     go2.setEnabled(true);
                                     go2.setRequestFocusEnabled(true);
                                     go2.requestFocus();
-                                    go2.setToolTipText(rbt.getString("TipClickToOpen"));
+                                    go2.setToolTipText(SymbolicProgBundle.getMessage("TipClickToOpen"));
                                     decoderFile = DecoderIndexFile.instance().fileFromTitle(selectedDecoderType());
                                     setUpRosterPanel();
                                 } else {
                                     decoderFile = null;
                                     // decoder not selected - require one
                                     go2.setEnabled(false);
-                                    go2.setToolTipText(rbt.getString("TipSelectLoco"));
+                                    go2.setToolTipText(SymbolicProgBundle.getMessage("TipSelectLoco"));
                                     setUpRosterPanel();
                                 }
                             }
@@ -255,7 +234,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                             }
                         });
                         
-                        go2 = new JButton(/*rbt.getString("OPEN PROGRAMMER")*/"Open Comprehensive Programmer");
+                        go2 = new JButton(/*SymbolicProgBundle.getMessage("OPEN PROGRAMMER")*/"Open Comprehensive Programmer");
                         go2.addActionListener( new ActionListener() {
                                 public void actionPerformed(java.awt.event.ActionEvent e) {
                                     if (log.isDebugEnabled()) log.debug("Open programmer pressed");
@@ -265,7 +244,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                             });
                         go2.setAlignmentX(JLabel.RIGHT_ALIGNMENT);
                         go2.setEnabled(false);
-                        go2.setToolTipText(rbt.getString("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
+                        go2.setToolTipText(SymbolicProgBundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE"));
                         bottomPanel.add(go2, BorderLayout.EAST);
                         //pane3a.add(go2);
                         return pane3a;
@@ -400,13 +379,13 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             p.add(new JLabel("Roster Id"));
             p.add(rosterIdField);
             rosterPanel.add(p, BorderLayout.NORTH);
-            rosterIdField.setText(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"));
+            rosterIdField.setText(SymbolicProgBundle.getMessage("LabelNewDecoder"));
             /*rosterIdField.addFocusListener(
                 new FocusListener() {
                     public void focusGained(FocusEvent e){}
                     public void focusLost(FocusEvent e) {
                         if (checkDuplicate())
-                            JOptionPane.showMessageDialog(progPane,jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ErrorDuplicateID"));
+                            JOptionPane.showMessageDialog(SymbolicProgBundle.getMessage("ErrorDuplicateID"));
                     }
                 }
             );*/
@@ -547,15 +526,15 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     }
     
     void saveRosterEntry() throws jmri.JmriException { 
-        if(rosterIdField.getText().equals(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("LabelNewDecoder"))){
+        if(rosterIdField.getText().equals(SymbolicProgBundle.getMessage("LabelNewDecoder"))){
             synchronized(this){
-                JOptionPane.showMessageDialog(progPane, jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("PromptFillInID"));
+                JOptionPane.showMessageDialog(progPane, SymbolicProgBundle.getMessage("PromptFillInID"));
             }
             throw new jmri.JmriException("No Roster ID");
         }
         if(checkDuplicate()){
             synchronized(this){
-                JOptionPane.showMessageDialog(progPane,jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ErrorDuplicateID"));
+                JOptionPane.showMessageDialog(progPane, SymbolicProgBundle.getMessage("ErrorDuplicateID"));
             }
             throw new jmri.JmriException("Duplcate ID");
         }
@@ -609,8 +588,8 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             super(parent, name, pane, cvModel, icvModel, varModel, modelElem);
             bottom.remove(readChangesButton);
             bottom.remove(writeChangesButton);
-            writeAllButton.setText(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ButtonWrite"));
-            readAllButton.setText(jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle().getString("ButtonRead"));
+            writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWrite"));
+            readAllButton.setText(SymbolicProgBundle.getMessage("ButtonRead"));
             synchronized(this){
                 bottom.add(saveBasicRoster);
             }
@@ -619,7 +598,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             readAllButton.addItemListener(l2 = new ItemListener() {
                 public void itemStateChanged (ItemEvent e) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
-                        readAllButton.setText(rbt.getString("ButtonStopReadSheet"));
+                        readAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopReadSheet"));
                         if (container.isBusy() == false) {
                             prepReadPane(false);
                             prepGlassPane(readAllButton);
@@ -628,7 +607,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                         }
                     } else {
                         stopProgramming();
-                        readAllButton.setText(rbt.getString("ButtonRead"));
+                        readAllButton.setText(SymbolicProgBundle.getMessage("ButtonRead"));
                         if (container.isBusy()) {
                             readAllButton.setEnabled(false);
                         }
@@ -639,7 +618,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             writeAllButton.addItemListener(l4 = new ItemListener() {
                 public void itemStateChanged (ItemEvent e) {
                     if (e.getStateChange() == ItemEvent.SELECTED) {
-                        writeAllButton.setText(rbt.getString("ButtonStopWriteSheet"));
+                        writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonStopWriteSheet"));
                         if (container.isBusy() == false) {
                             prepWritePane(false);
                             prepGlassPane(writeAllButton);
@@ -648,7 +627,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                         }
                     } else {
                         stopProgramming();
-                        writeAllButton.setText(rbt.getString("ButtonWrite"));
+                        writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWrite"));
                         if (container.isBusy()) {
                             writeAllButton.setEnabled(false);
                         }
