@@ -69,6 +69,7 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 	JLabel textTrainRouteComment = new JLabel();
 	JLabel textTrainRouteLocationComment = new JLabel();
 	JLabel textLocationComment = new JLabel();
+	JLabel textSwitchListComment = new JLabel();
 	JLabel textLocationName = new JLabel();
 
 	// major buttons
@@ -165,6 +166,11 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		JPanel pLocationComment = new JPanel();
 		pLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
 		pLocationComment.add(textLocationComment);
+		
+		// row 5 (switch list comment)
+		JPanel pSwitchListComment = new JPanel();
+		pSwitchListComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
+		pSwitchListComment.add(textSwitchListComment);
 
 		// row 6
 		JPanel pRow6 = new JPanel();
@@ -224,6 +230,7 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 
 		getContentPane().add(pRow2);
 		getContentPane().add(pLocationComment);
+		getContentPane().add(pSwitchListComment);
 		getContentPane().add(pRow6);
 		getContentPane().add(pTrainComment);
 		getContentPane().add(pTrainRouteComment);
@@ -242,9 +249,11 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		// tool tips
 
 		if (_location != null) {
-			textLocationName.setText(TrainCommon.splitString(_location.getName()));
+			textLocationName.setText(_location.getName());
 			textLocationComment.setText(_location.getComment());
 			pLocationComment.setVisible(!_location.getComment().equals(""));
+			textSwitchListComment.setText(_location.getSwitchListComment());
+			pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(""));
 			updateTrainsComboBox();
 		}
 
