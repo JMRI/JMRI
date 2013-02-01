@@ -176,7 +176,7 @@ The "aspectname" needs to be at the start, followed by zero or more
 <p>
 The show element(s) will be used to set the signalheads that
 make up the signal properly to display this aspect. There can be zero or more
-of these, containing "red", "flash red", "yellow", "flash yellow", "green", "flash green", "lunar", "flash lunar" or "dark".
+of these, containing "red", "flashred", "yellow", "flashyellow", "green", "flashgreen", "lunar", "flashlunar" or "dark".
 
 <p>
 You can have as many "reference" elements as you'd like, they're
