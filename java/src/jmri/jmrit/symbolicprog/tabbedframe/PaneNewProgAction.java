@@ -2,13 +2,8 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.LocoSelTreePane;
-import jmri.util.JmriJFrame;
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -16,6 +11,11 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.LocoSelTreePane;
+import jmri.jmrit.symbolicprog.SymbolicProgBundle;
+import jmri.util.JmriJFrame;
 
 /**
  * Swing action to create and register a
@@ -34,8 +34,6 @@ public class PaneNewProgAction extends AbstractAction {
 
     Object o1, o2, o3, o4;
 
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
-
     public PaneNewProgAction() {
         this("DecoderPro service programmer");
     }
@@ -49,24 +47,24 @@ public class PaneNewProgAction extends AbstractAction {
         if (log.isDebugEnabled()) log.debug("New roster entry programmer requested");
 
         // create the initial frame that steers
-        final JmriJFrame f = new JmriJFrame(rbt.getString("FrameNewEntrySetup"));
+        final JmriJFrame f = new JmriJFrame(SymbolicProgBundle.getMessage("FrameNewEntrySetup"));
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
         
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
-        JMenu j = new JMenu(rbt.getString("MenuFile"));
-        j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintDecoderDefinitions"), f, false));
-        j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(rbt.getString("MenuPrintPreviewDecoderDefinitions"), f, true));
+        JMenu j = new JMenu(SymbolicProgBundle.getMessage("MenuFile"));
+        j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(SymbolicProgBundle.getMessage("MenuPrintDecoderDefinitions"), f, false));
+        j.add(new jmri.jmrit.decoderdefn.PrintDecoderListAction(SymbolicProgBundle.getMessage("MenuPrintPreviewDecoderDefinitions"), f, true));
         menuBar.add(j);
-        menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(rbt.getString("MenuRoster"), jmri.jmrit.roster.swing.RosterMenu.MAINMENU, f));
+        menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(SymbolicProgBundle.getMessage("MenuRoster"), jmri.jmrit.roster.swing.RosterMenu.MAINMENU, f));
         f.setJMenuBar(menuBar);
 
         // new Loco on programming track
         JPanel pane1 = new LocoSelTreePane(null){
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
-                    String title = rbt.getString("FrameNewEntryTitle");
+                    String title = SymbolicProgBundle.getMessage("FrameNewEntryTitle");
                     JFrame p = new PaneProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",
                                                  null, false){

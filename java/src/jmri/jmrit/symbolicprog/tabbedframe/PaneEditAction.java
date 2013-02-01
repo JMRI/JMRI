@@ -2,19 +2,19 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.symbolicprog.KnownLocoSelPane;
-import jmri.util.JmriJFrame;
 import java.awt.event.ActionEvent;
 import java.io.File;
-
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.KnownLocoSelPane;
+import jmri.jmrit.symbolicprog.SymbolicProgBundle;
+import jmri.util.JmriJFrame;
 
 /**
  * Swing action to create and register a
@@ -32,8 +32,6 @@ public class PaneEditAction 	extends AbstractAction {
 
     Object o1, o2, o3, o4;
 
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
-
     public PaneEditAction() {
         this("Edit Roster Entry");
     }
@@ -48,13 +46,13 @@ public class PaneEditAction 	extends AbstractAction {
         if (log.isDebugEnabled()) log.debug("Pane programmer requested");
 
         // create the initial frame that steers
-        final JmriJFrame f = new JmriJFrame(rbt.getString("FrameEditEntrySetup"));
+        final JmriJFrame f = new JmriJFrame(SymbolicProgBundle.getMessage("FrameEditEntrySetup"));
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
 
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
-        menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(rbt.getString("MenuRoster"),
+        menuBar.add(new jmri.jmrit.roster.swing.RosterMenu(SymbolicProgBundle.getMessage("MenuRoster"),
                              jmri.jmrit.roster.swing.RosterMenu.MAINMENU, f));
         f.setJMenuBar(menuBar);
 
@@ -62,7 +60,7 @@ public class PaneEditAction 	extends AbstractAction {
         JPanel pane1 = new KnownLocoSelPane(false){  // not programming
                 protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
                                                 String filename) {
-                    String title = rbt.getString("FrameEditEntryTitle");
+                    String title = SymbolicProgBundle.getMessage("FrameEditEntryTitle");
                     JFrame p = new PaneProgFrame(decoderFile, re,
                                                  title, "programmers"+File.separator+filename+".xml",
                                                  null, false){

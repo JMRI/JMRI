@@ -35,7 +35,6 @@ import jmri.jmrit.symbolicprog.*;
  */
 public class PaneSet {
 
-    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
     List<PaneProgPane>  paneList     = new ArrayList<PaneProgPane>();
     PaneContainer       container;
     Programmer          mProgrammer;
@@ -43,7 +42,7 @@ public class PaneSet {
     IndexedCvTableModel iCvModel     = null;
     VariableTableModel  variableModel;
     ResetTableModel     resetModel   = null;
-    JLabel              progStatus   = new JLabel(rbt.getString("StateIdle"));
+    JLabel              progStatus   = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
 
     /**
      * The 'model' element representing the decoder type
