@@ -42,7 +42,8 @@ of Decoder Pro has programmed. It includes the information seen in the screen
 below:
 
 <p>
-<a href=""><img src="RosterTab.png" ></a>
+<img src="RosterTab.png" >
+</p>
 
 
 
@@ -73,7 +74,8 @@ a CV in  the decoder, CV8 in the case of Digitrax. All  decoders may not support
 <p>
 <a NAME="Basic"></a><H3>Basic Tab</H3></a>
 <p>
-<a href=""><img src="BasicTab.png" ></a>
+<img src="BasicTab.png" >
+</p>
 
 <p>The Basic pane is where you set the Decoder address, you can set the short and the long address and then select which one is Active.
 <p>The items that displayed may be different for each decoder. It depends on how the decoder definition file was written and what options the manufacture included in the decoder.
@@ -94,7 +96,8 @@ the panes are either gray or not enabled.
 <a name="Speed Table"></a>
 <H3>Speed Table Tab</H3>
 <p>
-<a href=""><img src="SpeedTab.png" ></a>
+<img src="SpeedTab.png" >
+</p>
 <p>
 This panel may look different depending on how the decoder xml was built. To use the Speed Table CV's usually the 
 basic speed option needs to be turned off. The little boxes under each slider are very useful. To see how they 

@@ -64,7 +64,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
 
         addProgrammerBox();
 
-        JButton go2 = new JButton(SymbolicProgBundle.getMessage("OpenProgrammer"));
+        JButton go2 = new JButton(Bundle.getMessage("OpenProgrammer"));
         go2.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
                     if (log.isDebugEnabled()) log.debug("Open programmer pressed");
@@ -81,7 +81,7 @@ public class KnownLocoSelPane extends LocoSelPane  {
     private void addProgrammerBox() {
         JPanel pane3a = new JPanel();
         pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.X_AXIS));
-        pane3a.add(new JLabel(SymbolicProgBundle.getMessage("ProgrammerFormat")));
+        pane3a.add(new JLabel(Bundle.getMessage("ProgrammerFormat")));
 
         // create the programmer box
         programmerBox = new JComboBox(ProgDefault.findListOfProgFiles());
@@ -146,8 +146,8 @@ public class KnownLocoSelPane extends LocoSelPane  {
             startProgrammer(null, re, (String)programmerBox.getSelectedItem());
         } else {
             JOptionPane.showMessageDialog(this, 
-                    SymbolicProgBundle.getMessage("LocoMustSelected"), 
-                    SymbolicProgBundle.getMessage("NoSelection"), 
+                    Bundle.getMessage("LocoMustSelected"), 
+                    Bundle.getMessage("NoSelection"), 
                     JOptionPane.ERROR_MESSAGE);
         }
     }

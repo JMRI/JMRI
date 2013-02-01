@@ -95,15 +95,15 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
 
     public String getColumnName(int col) {
         switch (col) {
-        case NAMECOLUMN:  return SymbolicProgBundle.getMessage("ColumnNameNumber");
+        case NAMECOLUMN:  return Bundle.getMessage("ColumnNameNumber");
         case PICOLUMN:    return "PI Val";
         case SICOLUMN:    return "SI Val";
         case CVCOLUMN:    return "CV Num";
-        case VALCOLUMN:   return SymbolicProgBundle.getMessage("ColumnNameValue");
-        case STATECOLUMN: return SymbolicProgBundle.getMessage("ColumnNameState");
-        case READCOLUMN:  return SymbolicProgBundle.getMessage("ColumnNameRead");
-        case WRITECOLUMN: return SymbolicProgBundle.getMessage("ColumnNameWrite");
-        case COMPARECOLUMN: return SymbolicProgBundle.getMessage("ColumnNameCompare");
+        case VALCOLUMN:   return Bundle.getMessage("ColumnNameValue");
+        case STATECOLUMN: return Bundle.getMessage("ColumnNameState");
+        case READCOLUMN:  return Bundle.getMessage("ColumnNameRead");
+        case WRITECOLUMN: return Bundle.getMessage("ColumnNameWrite");
+        case COMPARECOLUMN: return Bundle.getMessage("ColumnNameCompare");
         default: return "unknown";
         }
     }
@@ -186,13 +186,13 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
             case STATECOLUMN:
             	int state = (_indxCvDisplayVector.elementAt(row)).getState();
             	switch (state) {
-            		case CvValue.UNKNOWN:  		return SymbolicProgBundle.getMessage("CvStateUnknown");
-            		case CvValue.READ:  		return SymbolicProgBundle.getMessage("CvStateRead");
-            		case CvValue.EDITED:  		return SymbolicProgBundle.getMessage("CvStateEdited");
-            		case CvValue.STORED:  		return SymbolicProgBundle.getMessage("CvStateStored");
-            		case CvValue.FROMFILE:  	return SymbolicProgBundle.getMessage("CvStateFromFile");
-            		case CvValue.SAME:  		return SymbolicProgBundle.getMessage("CvStateSame");
-            		case CvValue.DIFF:  		return SymbolicProgBundle.getMessage("CvStateDiff")+ " " +
+            		case CvValue.UNKNOWN:  		return Bundle.getMessage("CvStateUnknown");
+            		case CvValue.READ:  		return Bundle.getMessage("CvStateRead");
+            		case CvValue.EDITED:  		return Bundle.getMessage("CvStateEdited");
+            		case CvValue.STORED:  		return Bundle.getMessage("CvStateStored");
+            		case CvValue.FROMFILE:  	return Bundle.getMessage("CvStateFromFile");
+            		case CvValue.SAME:  		return Bundle.getMessage("CvStateSame");
+            		case CvValue.DIFF:  		return Bundle.getMessage("CvStateDiff")+ " " +
             									(_indxCvDisplayVector.elementAt(row)).getDecoderValue();
             		default: return "inconsistent";
             	}

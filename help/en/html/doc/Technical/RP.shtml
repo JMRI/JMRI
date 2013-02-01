@@ -57,7 +57,7 @@ we are not permitted to distribute the libraries for other purposes.
 <a href="http://java.sun.com/j2se/1.5.0/docs/guide/collections/overview.html">Java collections</a>
 that are available
 (<a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/List.html">List</a>, 
-<a href=""http://java.sun.com/j2se/1.5.0/docs/api/java/util/HashMap.html>HashMap</a>, 
+<a href="http://java.sun.com/j2se/1.5.0/docs/api/java/util/HashMap.html">HashMap</a>, 
 etc)
 in the
 <a href="">java.util package</a>.
