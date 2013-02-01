@@ -535,7 +535,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	
 	private void setCheckBoxFont(JCheckBox checkBox){
 		if (Setup.isTabEnabled()){			
-			Font font = new Font ("Courier", Font.PLAIN, checkBox.getFont().getSize());
+			Font font = new Font (Setup.getFontName(), Font.PLAIN, checkBox.getFont().getSize());
 			checkBox.setFont(font);
 		}
 	}

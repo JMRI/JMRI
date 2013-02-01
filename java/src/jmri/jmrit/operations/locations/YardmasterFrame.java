@@ -588,7 +588,7 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 
 	private void setCheckBoxFont(JCheckBox checkBox) {
 		if (Setup.isTabEnabled()) {
-			Font font = new Font("Courier", Font.PLAIN, checkBox.getFont().getSize());
+			Font font = new Font(Setup.getFontName(), Font.PLAIN, checkBox.getFont().getSize());
 			checkBox.setFont(font);
 		}
 	}
