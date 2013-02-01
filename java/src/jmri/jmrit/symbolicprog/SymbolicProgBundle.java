@@ -1,8 +1,6 @@
 // SymbolicProgBundle.java
 package jmri.jmrit.symbolicprog;
 
-import java.util.ResourceBundle;
-
 /**
  * Common access to the SymbolicProgBundle of properties.
  *
