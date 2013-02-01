@@ -21,6 +21,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -65,11 +66,8 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 	JLabel textStatus = new JLabel();
 	JLabel textRailRoadName = new JLabel(Setup.getRailroadName());
 	JLabel textTrainDescription = new JLabel();
-	JLabel textTrainComment = new JLabel();
 	JLabel textTrainRouteComment = new JLabel();
 	JLabel textTrainRouteLocationComment = new JLabel();
-	JLabel textLocationComment = new JLabel();
-	JLabel textSwitchListComment = new JLabel();
 	JLabel textLocationName = new JLabel();
 
 	// major buttons
@@ -79,7 +77,10 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 
 	// radio buttons
 
-	// text field
+	// text panes
+	JTextPane textLocationComment = new JTextPane();
+	JTextPane textTrainComment = new JTextPane();
+	JTextPane textSwitchListComment = new JTextPane();
 
 	// combo boxes
 	JComboBox trainComboBox = new JComboBox();
@@ -166,11 +167,13 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		JPanel pLocationComment = new JPanel();
 		pLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
 		pLocationComment.add(textLocationComment);
+		textLocationComment.setBackground(null);
 		
 		// row 5 (switch list comment)
 		JPanel pSwitchListComment = new JPanel();
 		pSwitchListComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
 		pSwitchListComment.add(textSwitchListComment);
+		textSwitchListComment.setBackground(null);
 
 		// row 6
 		JPanel pRow6 = new JPanel();
@@ -197,6 +200,7 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		// row 8 (train comment)
 		pTrainComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainComment")));
 		pTrainComment.add(textTrainComment);
+		textTrainComment.setBackground(null);
 
 		// row 10 (train route comment)
 		pTrainRouteComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteComment")));
@@ -251,7 +255,8 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		if (_location != null) {
 			textLocationName.setText(_location.getName());
 			textLocationComment.setText(_location.getComment());
-			pLocationComment.setVisible(!_location.getComment().equals(""));
+			pLocationComment.setVisible(!_location.getComment().equals("")
+					&& Setup.isPrintLocationCommentsEnabled());
 			textSwitchListComment.setText(_location.getSwitchListComment());
 			pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(""));
 			updateTrainsComboBox();
@@ -391,7 +396,7 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 				textTrainComment.setText(_train.getComment());
 			}
 			// show route comment box only if there's a route comment
-			if (!route.getComment().equals("")) {
+			if (!route.getComment().equals("") && Setup.isPrintRouteCommentsEnabled()) {
 				pTrainRouteComment.setVisible(true);
 				textTrainRouteComment.setText(route.getComment());
 			}

@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
+import javax.swing.JTextPane;
 //import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -58,10 +59,8 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 	JLabel textRailRoadName = new JLabel();
 	JLabel textTrainName = new JLabel();
 	JLabel textTrainDescription = new JLabel();
-	JLabel textTrainComment = new JLabel();
 	JLabel textTrainRouteComment = new JLabel();
 	JLabel textTrainRouteLocationComment = new JLabel();
-	JLabel textLocationComment = new JLabel();
 	JLabel textLocationName = new JLabel();
 	JLabel textNextLocationName = new JLabel();
 	JLabel textStatus = new JLabel();
@@ -74,7 +73,9 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 
 	// radio buttons
 	
-	// text field
+	// text panes
+	JTextPane textTrainComment = new JTextPane();
+	JTextPane textLocationComment = new JTextPane();
 	
 	// combo boxes
 	
@@ -166,6 +167,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	JPanel pTrainComment = new JPanel();
        	pTrainComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainComment")));
        	pTrainComment.add(textTrainComment);
+       	textTrainComment.setBackground(null);
        	
        	// row 6
        	JPanel pRow6 = new JPanel();
@@ -195,6 +197,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
        	// row 10b (location comment)
        	pLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
        	pLocationComment.add(textLocationComment);
+       	textLocationComment.setBackground(null);
        	
       	// row 10c (next location name)
        	JPanel pNextLocationName = new JPanel();
@@ -269,7 +272,7 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 				textTrainComment.setText(_train.getComment());
 			// show route comment box only if there's a route comment
 			if (_train.getRoute() != null)
-				if (_train.getRoute().getComment().equals(""))
+				if (_train.getRoute().getComment().equals("") || !Setup.isPrintRouteCommentsEnabled())
 					pTrainRouteComment.setVisible(false);
 				else
 					textTrainRouteComment.setText(_train.getRoute().getComment());
@@ -379,13 +382,14 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 			locoPane.setVisible(false);
 			movePane.setVisible(false);	
 			RouteLocation rl = _train.getCurrentLocation();
-			if (rl != null){
+			if (rl != null) {
 				textTrainName.setText(_train.getIconName());
 				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
 				textTrainRouteLocationComment.setText(rl.getComment());
 				textLocationName.setText(rl.getLocation().getName());
-				pLocationComment.setVisible(!rl.getLocation().getComment().equals(""));
-				textLocationComment.setText(rl.getLocation().getComment());				
+				pLocationComment.setVisible(!rl.getLocation().getComment().equals("")
+						&& Setup.isPrintLocationCommentsEnabled());
+				textLocationComment.setText(rl.getLocation().getComment());
 				textNextLocationName.setText(_train.getNextLocationName());
 				
 				List<String> routeList = _train.getRoute().getLocationsBySequenceList();
