@@ -20,901 +20,158 @@
   <decoder>
     <family name="DS54" mfg="Digitrax" comment="DS54 is a stationary decoder, but it can be programmed in the usual way">
       <model model="DS54" lowVersionID="65"/>
+      <comment xml:lang="it">DS54 is a stationary decoder, but it can be programmed in the usual way</comment>
     </family>
     <programming direct="no" paged="yes" register="no" ops="no"/>
     <variables>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version">
-        <decVal/>
-        <label>Version ID</label>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
-        <decVal/>
-        <label>Manufacturer ID</label>
-      </variable>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
       <variable label="Address" CV="1" mask="VVVVVVVV" comment="Decoder address">
         <decVal min="1" max="127"/>
         <label>Address</label>
+        <label xml:lang="it">Indirizzo</label>
         <comment>Decoder address</comment>
+        <comment xml:lang="it">Indirizzo decoder</comment>
       </variable>
       <variable label="High Address" CV="9" mask="VVVVVVVV" comment="Decoder address high part, use this if the address is greater than 127">
         <decVal min="1" max="127"/>
         <label>High Address</label>
+        <label xml:lang="it">Parte Alta Indirizzo</label>
         <comment>Decoder address high part, use this if the address is greater than 127</comment>
+        <comment xml:lang="it">Parte Alta Indirizzo decoder, usare se l'indirizzo è maggiore di 127</comment>
       </variable>
       <variable label="A Output Type" CV="3" mask="VVVVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/ds54enum-OutputType.xml"/>
         <label>A Output Type</label>
+        <label xml:lang="it">Tipo Uscita A</label>
       </variable>
       <variable label="B Output Type" CV="4" mask="VVVVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/ds54enum-OutputType.xml"/>
         <label>B Output Type</label>
+        <label xml:lang="it">Tipo Uscita B</label>
       </variable>
       <variable label="C Output Type" CV="5" mask="VVVVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/ds54enum-OutputType.xml"/>
         <label>C Output Type</label>
+        <label xml:lang="it">Tipo Uscita C</label>
       </variable>
       <variable label="D Output Type" CV="6" mask="VVVVVVVV">
         <xi:include href="http://jmri.org/xml/decoders/digitrax/ds54enum-OutputType.xml"/>
         <label>D Output Type</label>
+        <label xml:lang="it">Tipo Uscita D</label>
       </variable>
       <variable label="Aux A input" CV="33" mask="VVVVXXXX">
-        <enumVal>
-          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
-            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active ON, trigger on change, Positive Level">
-            <choice>Active ON, trigger on change, Positive Level</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
-            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
-            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x04)">
-            <choice>Reserved (0x04)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x05)">
-            <choice>Reserved (0x05)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
-            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger on change, Negative Level">
-            <choice>Active OFF, trigger on change, Negative Level</choice>
-          </enumChoice>
-        </enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Aux A input</label>
+        <label xml:lang="it">Ingresso Aux. A</label>
       </variable>
       <variable label="Aux A task" CV="33" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Output toggle">
-            <choice>Output toggle</choice>
-          </enumChoice>
-          <enumChoice choice="No output change">
-            <choice>No output change</choice>
-          </enumChoice>
-          <enumChoice choice="Output thrown">
-            <choice>Output thrown</choice>
-          </enumChoice>
-          <enumChoice choice="Output closed">
-            <choice>Output closed</choice>
-          </enumChoice>
-          <enumChoice choice="Both outputs off">
-            <choice>Both outputs off</choice>
-          </enumChoice>
-          <enumChoice choice="Restore to last state">
-            <choice>Restore to last state</choice>
-          </enumChoice>
-          <enumChoice choice="Execute local route">
-            <choice>Execute local route</choice>
-          </enumChoice>
-          <enumChoice choice="Output follows input">
-            <choice>Output follows input</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group2.xml"/>
         <label>Aux A task</label>
       </variable>
       <variable label="Switch A input" CV="34" mask="VVVVXXXX">
-        <enumVal>
-          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
-            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active ON, trigger on change, Positive Level">
-            <choice>Active ON, trigger on change, Positive Level</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
-            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
-            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x04)">
-            <choice>Reserved (0x04)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x05)">
-            <choice>Reserved (0x05)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
-            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger on change, Negative Level">
-            <choice>Active OFF, trigger on change, Negative Level</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Switch A input</label>
+        <label xml:lang="it">Ingresso interruttore A</label>
       </variable>
       <variable label="Switch A task" CV="34" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Output toggle">
-            <choice>Output toggle</choice>
-          </enumChoice>
-          <enumChoice choice="No output change">
-            <choice>No output change</choice>
-          </enumChoice>
-          <enumChoice choice="Output thrown">
-            <choice>Output thrown</choice>
-          </enumChoice>
-          <enumChoice choice="Output closed">
-            <choice>Output closed</choice>
-          </enumChoice>
-          <enumChoice choice="Both outputs off">
-            <choice>Both outputs off</choice>
-          </enumChoice>
-          <enumChoice choice="Restore to last state">
-            <choice>Restore to last state</choice>
-          </enumChoice>
-          <enumChoice choice="Execute local route">
-            <choice>Execute local route</choice>
-          </enumChoice>
-          <enumChoice choice="Output follows input">
-            <choice>Output follows input</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group2.xml"/>
         <label>Switch A task</label>
+        <label xml:lang="it">Comportamento Interruttore A</label>
       </variable>
       <variable label="Aux B input" CV="35" mask="VVVVXXXX">
-        <enumVal>
-          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
-            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active ON, trigger on change, Positive Level">
-            <choice>Active ON, trigger on change, Positive Level</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
-            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
-            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x04)">
-            <choice>Reserved (0x04)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x05)">
-            <choice>Reserved (0x05)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
-            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger on change, Negative Level">
-            <choice>Active OFF, trigger on change, Negative Level</choice>
-          </enumChoice>
-        </enumVal>
+       <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Aux B input</label>
       </variable>
       <variable label="Aux B task" CV="35" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Output toggle">
-            <choice>Output toggle</choice>
-          </enumChoice>
-          <enumChoice choice="No output change">
-            <choice>No output change</choice>
-          </enumChoice>
-          <enumChoice choice="Output thrown">
-            <choice>Output thrown</choice>
-          </enumChoice>
-          <enumChoice choice="Output closed">
-            <choice>Output closed</choice>
-          </enumChoice>
-          <enumChoice choice="Both outputs off">
-            <choice>Both outputs off</choice>
-          </enumChoice>
-          <enumChoice choice="Restore to last state">
-            <choice>Restore to last state</choice>
-          </enumChoice>
-          <enumChoice choice="Execute local route">
-            <choice>Execute local route</choice>
-          </enumChoice>
-          <enumChoice choice="Output follows input">
-            <choice>Output follows input</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Aux B task</label>
       </variable>
       <variable label="Switch B input" CV="36" mask="VVVVXXXX">
-        <enumVal>
-          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
-            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active ON, trigger on change, Positive Level">
-            <choice>Active ON, trigger on change, Positive Level</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
-            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
-            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x04)">
-            <choice>Reserved (0x04)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x05)">
-            <choice>Reserved (0x05)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
-            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger on change, Negative Level">
-            <choice>Active OFF, trigger on change, Negative Level</choice>
-          </enumChoice>
-        </enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Switch B input</label>
       </variable>
       <variable label="Switch B task" CV="36" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Output toggle">
-            <choice>Output toggle</choice>
-          </enumChoice>
-          <enumChoice choice="No output change">
-            <choice>No output change</choice>
-          </enumChoice>
-          <enumChoice choice="Output thrown">
-            <choice>Output thrown</choice>
-          </enumChoice>
-          <enumChoice choice="Output closed">
-            <choice>Output closed</choice>
-          </enumChoice>
-          <enumChoice choice="Both outputs off">
-            <choice>Both outputs off</choice>
-          </enumChoice>
-          <enumChoice choice="Restore to last state">
-            <choice>Restore to last state</choice>
-          </enumChoice>
-          <enumChoice choice="Execute local route">
-            <choice>Execute local route</choice>
-          </enumChoice>
-          <enumChoice choice="Output follows input">
-            <choice>Output follows input</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group2.xml"/>
         <label>Switch B task</label>
       </variable>
       <variable label="Aux C input" CV="37" mask="VVVVXXXX">
-        <enumVal>
-          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
-            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active ON, trigger on change, Positive Level">
-            <choice>Active ON, trigger on change, Positive Level</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
-            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
-            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x04)">
-            <choice>Reserved (0x04)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x05)">
-            <choice>Reserved (0x05)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
-            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger on change, Negative Level">
-            <choice>Active OFF, trigger on change, Negative Level</choice>
-          </enumChoice>
-        </enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Aux C input</label>
       </variable>
       <variable label="Aux C task" CV="37" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Output toggle">
-            <choice>Output toggle</choice>
-          </enumChoice>
-          <enumChoice choice="No output change">
-            <choice>No output change</choice>
-          </enumChoice>
-          <enumChoice choice="Output thrown">
-            <choice>Output thrown</choice>
-          </enumChoice>
-          <enumChoice choice="Output closed">
-            <choice>Output closed</choice>
-          </enumChoice>
-          <enumChoice choice="Both outputs off">
-            <choice>Both outputs off</choice>
-          </enumChoice>
-          <enumChoice choice="Restore to last state">
-            <choice>Restore to last state</choice>
-          </enumChoice>
-          <enumChoice choice="Execute local route">
-            <choice>Execute local route</choice>
-          </enumChoice>
-          <enumChoice choice="Output follows input">
-            <choice>Output follows input</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group2.xml"/>
         <label>Aux C task</label>
       </variable>
       <variable label="Switch C input" CV="38" mask="VVVVXXXX">
-        <enumVal>
-          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
-            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active ON, trigger on change, Positive Level">
-            <choice>Active ON, trigger on change, Positive Level</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
-            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
-            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x04)">
-            <choice>Reserved (0x04)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x05)">
-            <choice>Reserved (0x05)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
-            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger on change, Negative Level">
-            <choice>Active OFF, trigger on change, Negative Level</choice>
-          </enumChoice>
-        </enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Switch C input</label>
       </variable>
       <variable label="Switch C task" CV="38" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Output toggle">
-            <choice>Output toggle</choice>
-          </enumChoice>
-          <enumChoice choice="No output change">
-            <choice>No output change</choice>
-          </enumChoice>
-          <enumChoice choice="Output thrown">
-            <choice>Output thrown</choice>
-          </enumChoice>
-          <enumChoice choice="Output closed">
-            <choice>Output closed</choice>
-          </enumChoice>
-          <enumChoice choice="Both outputs off">
-            <choice>Both outputs off</choice>
-          </enumChoice>
-          <enumChoice choice="Restore to last state">
-            <choice>Restore to last state</choice>
-          </enumChoice>
-          <enumChoice choice="Execute local route">
-            <choice>Execute local route</choice>
-          </enumChoice>
-          <enumChoice choice="Output follows input">
-            <choice>Output follows input</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group2.xml"/>
         <label>Switch C task</label>
       </variable>
       <variable label="Aux D input" CV="39" mask="VVVVXXXX">
-        <enumVal>
-          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
-            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active ON, trigger on change, Positive Level">
-            <choice>Active ON, trigger on change, Positive Level</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
-            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
-            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x04)">
-            <choice>Reserved (0x04)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x05)">
-            <choice>Reserved (0x05)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
-            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger on change, Negative Level">
-            <choice>Active OFF, trigger on change, Negative Level</choice>
-          </enumChoice>
-        </enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Aux D input</label>
       </variable>
       <variable label="Aux D task" CV="39" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Output toggle">
-            <choice>Output toggle</choice>
-          </enumChoice>
-          <enumChoice choice="No output change">
-            <choice>No output change</choice>
-          </enumChoice>
-          <enumChoice choice="Output thrown">
-            <choice>Output thrown</choice>
-          </enumChoice>
-          <enumChoice choice="Output closed">
-            <choice>Output closed</choice>
-          </enumChoice>
-          <enumChoice choice="Both outputs off">
-            <choice>Both outputs off</choice>
-          </enumChoice>
-          <enumChoice choice="Restore to last state">
-            <choice>Restore to last state</choice>
-          </enumChoice>
-          <enumChoice choice="Execute local route">
-            <choice>Execute local route</choice>
-          </enumChoice>
-          <enumChoice choice="Output follows input">
-            <choice>Output follows input</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group2.xml"/>
         <label>Aux D task</label>
       </variable>
       <variable label="Switch D input" CV="40" mask="VVVVXXXX">
-        <enumVal>
-          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
-            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active ON, trigger on change, Positive Level">
-            <choice>Active ON, trigger on change, Positive Level</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
-            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
-          </enumChoice>
-          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
-            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x04)">
-            <choice>Reserved (0x04)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x05)">
-            <choice>Reserved (0x05)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
-            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
-          </enumChoice>
-          <enumChoice choice="Active OFF, trigger on change, Negative Level">
-            <choice>Active OFF, trigger on change, Negative Level</choice>
-          </enumChoice>
-        </enumVal>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group1.xml"/>
         <label>Switch D input</label>
       </variable>
       <variable label="Switch D task" CV="40" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Output toggle">
-            <choice>Output toggle</choice>
-          </enumChoice>
-          <enumChoice choice="No output change">
-            <choice>No output change</choice>
-          </enumChoice>
-          <enumChoice choice="Output thrown">
-            <choice>Output thrown</choice>
-          </enumChoice>
-          <enumChoice choice="Output closed">
-            <choice>Output closed</choice>
-          </enumChoice>
-          <enumChoice choice="Both outputs off">
-            <choice>Both outputs off</choice>
-          </enumChoice>
-          <enumChoice choice="Restore to last state">
-            <choice>Restore to last state</choice>
-          </enumChoice>
-          <enumChoice choice="Execute local route">
-            <choice>Execute local route</choice>
-          </enumChoice>
-          <enumChoice choice="Output follows input">
-            <choice>Output follows input</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group2.xml"/>
         <label>Switch D task</label>
       </variable>
       <variable label="When Aux A input changes, send" CV="41" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Sensor input message">
-            <choice>Sensor input message</choice>
-          </enumChoice>
-          <enumChoice choice="No message">
-            <choice>No message</choice>
-          </enumChoice>
-          <enumChoice choice="Turnout feedback message">
-            <choice>Turnout feedback message</choice>
-          </enumChoice>
-          <enumChoice choice="Cascaded turnout request">
-            <choice>Cascaded turnout request</choice>
-          </enumChoice>
-          <enumChoice choice="System power on/off">
-            <choice>System power on/off</choice>
-          </enumChoice>
-          <enumChoice choice="System stop/run">
-            <choice>System stop/run</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x08)">
-            <choice>Reserved (0x08)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x09)">
-            <choice>Reserved (0x09)</choice>
-          </enumChoice>
-          <enumChoice choice="Exact turnout feedback message">
-            <choice>Exact turnout feedback message</choice>
-          </enumChoice>
-        </enumVal>
+          <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group3.xml"/>
         <label>When Aux A input changes, send</label>
       </variable>
       <variable label="When Switch A input changes, send" CV="42" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Sensor input message">
-            <choice>Sensor input message</choice>
-          </enumChoice>
-          <enumChoice choice="No message">
-            <choice>No message</choice>
-          </enumChoice>
-          <enumChoice choice="Turnout feedback message">
-            <choice>Turnout feedback message</choice>
-          </enumChoice>
-          <enumChoice choice="Cascaded turnout request">
-            <choice>Cascaded turnout request</choice>
-          </enumChoice>
-          <enumChoice choice="System power on/off">
-            <choice>System power on/off</choice>
-          </enumChoice>
-          <enumChoice choice="System stop/run">
-            <choice>System stop/run</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x08)">
-            <choice>Reserved (0x08)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x09)">
-            <choice>Reserved (0x09)</choice>
-          </enumChoice>
-          <enumChoice choice="Exact turnout feedback message">
-            <choice>Exact turnout feedback message</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group3.xml"/>
         <label>When Switch A input changes, send</label>
       </variable>
       <variable label="When Switch A output changes" CV="42" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Don't send a message">
-            <choice>Don't send a message</choice>
-          </enumChoice>
-          <enumChoice choice="Send output message">
-            <choice>Send output message</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group4.xml"/>
         <label>When Switch A output changes</label>
       </variable>
       <variable label="When Aux B input changes, send" CV="43" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Sensor input message">
-            <choice>Sensor input message</choice>
-          </enumChoice>
-          <enumChoice choice="No message">
-            <choice>No message</choice>
-          </enumChoice>
-          <enumChoice choice="Turnout feedback message">
-            <choice>Turnout feedback message</choice>
-          </enumChoice>
-          <enumChoice choice="Cascaded turnout request">
-            <choice>Cascaded turnout request</choice>
-          </enumChoice>
-          <enumChoice choice="System power on/off">
-            <choice>System power on/off</choice>
-          </enumChoice>
-          <enumChoice choice="System stop/run">
-            <choice>System stop/run</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x08)">
-            <choice>Reserved (0x08)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x09)">
-            <choice>Reserved (0x09)</choice>
-          </enumChoice>
-          <enumChoice choice="Exact turnout feedback message">
-            <choice>Exact turnout feedback message</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group3.xml"/>
         <label>When Aux B input changes, send</label>
       </variable>
       <variable label="When Switch B input changes, send" CV="44" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Sensor input message">
-            <choice>Sensor input message</choice>
-          </enumChoice>
-          <enumChoice choice="No message">
-            <choice>No message</choice>
-          </enumChoice>
-          <enumChoice choice="Turnout feedback message">
-            <choice>Turnout feedback message</choice>
-          </enumChoice>
-          <enumChoice choice="Cascaded turnout request">
-            <choice>Cascaded turnout request</choice>
-          </enumChoice>
-          <enumChoice choice="System power on/off">
-            <choice>System power on/off</choice>
-          </enumChoice>
-          <enumChoice choice="System stop/run">
-            <choice>System stop/run</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x08)">
-            <choice>Reserved (0x08)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x09)">
-            <choice>Reserved (0x09)</choice>
-          </enumChoice>
-          <enumChoice choice="Exact turnout feedback message">
-            <choice>Exact turnout feedback message</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group3.xml"/>
         <label>When Switch B input changes, send</label>
       </variable>
       <variable label="When Switch B output changes" CV="44" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Don't send a message">
-            <choice>Don't send a message</choice>
-          </enumChoice>
-          <enumChoice choice="Send output message">
-            <choice>Send output message</choice>
-          </enumChoice>
-        </enumVal>
+            <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group4.xml"/>
         <label>When Switch B output changes</label>
       </variable>
       <variable label="When Aux C input changes, send" CV="45" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Sensor input message">
-            <choice>Sensor input message</choice>
-          </enumChoice>
-          <enumChoice choice="No message">
-            <choice>No message</choice>
-          </enumChoice>
-          <enumChoice choice="Turnout feedback message">
-            <choice>Turnout feedback message</choice>
-          </enumChoice>
-          <enumChoice choice="Cascaded turnout request">
-            <choice>Cascaded turnout request</choice>
-          </enumChoice>
-          <enumChoice choice="System power on/off">
-            <choice>System power on/off</choice>
-          </enumChoice>
-          <enumChoice choice="System stop/run">
-            <choice>System stop/run</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x08)">
-            <choice>Reserved (0x08)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x09)">
-            <choice>Reserved (0x09)</choice>
-          </enumChoice>
-          <enumChoice choice="Exact turnout feedback message">
-            <choice>Exact turnout feedback message</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group3.xml"/>
         <label>When Aux C input changes, send</label>
       </variable>
       <variable label="When Switch C input changes, send" CV="46" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Sensor input message">
-            <choice>Sensor input message</choice>
-          </enumChoice>
-          <enumChoice choice="No message">
-            <choice>No message</choice>
-          </enumChoice>
-          <enumChoice choice="Turnout feedback message">
-            <choice>Turnout feedback message</choice>
-          </enumChoice>
-          <enumChoice choice="Cascaded turnout request">
-            <choice>Cascaded turnout request</choice>
-          </enumChoice>
-          <enumChoice choice="System power on/off">
-            <choice>System power on/off</choice>
-          </enumChoice>
-          <enumChoice choice="System stop/run">
-            <choice>System stop/run</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x08)">
-            <choice>Reserved (0x08)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x09)">
-            <choice>Reserved (0x09)</choice>
-          </enumChoice>
-          <enumChoice choice="Exact turnout feedback message">
-            <choice>Exact turnout feedback message</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group3.xml"/>
         <label>When Switch C input changes, send</label>
       </variable>
       <variable label="When Switch C output changes" CV="46" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Don't send a message">
-            <choice>Don't send a message</choice>
-          </enumChoice>
-          <enumChoice choice="Send output message">
-            <choice>Send output message</choice>
-          </enumChoice>
-        </enumVal>
+            <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group4.xml"/>
         <label>When Switch C output changes</label>
       </variable>
       <variable label="When Aux D input changes, send" CV="47" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Sensor input message">
-            <choice>Sensor input message</choice>
-          </enumChoice>
-          <enumChoice choice="No message">
-            <choice>No message</choice>
-          </enumChoice>
-          <enumChoice choice="Turnout feedback message">
-            <choice>Turnout feedback message</choice>
-          </enumChoice>
-          <enumChoice choice="Cascaded turnout request">
-            <choice>Cascaded turnout request</choice>
-          </enumChoice>
-          <enumChoice choice="System power on/off">
-            <choice>System power on/off</choice>
-          </enumChoice>
-          <enumChoice choice="System stop/run">
-            <choice>System stop/run</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x08)">
-            <choice>Reserved (0x08)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x09)">
-            <choice>Reserved (0x09)</choice>
-          </enumChoice>
-          <enumChoice choice="Exact turnout feedback message">
-            <choice>Exact turnout feedback message</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group3.xml"/>
         <label>When Aux D input changes, send</label>
       </variable>
       <variable label="When Switch D input changes, send" CV="48" mask="XXXXVVVV">
-        <enumVal>
-          <enumChoice choice="Sensor input message">
-            <choice>Sensor input message</choice>
-          </enumChoice>
-          <enumChoice choice="No message">
-            <choice>No message</choice>
-          </enumChoice>
-          <enumChoice choice="Turnout feedback message">
-            <choice>Turnout feedback message</choice>
-          </enumChoice>
-          <enumChoice choice="Cascaded turnout request">
-            <choice>Cascaded turnout request</choice>
-          </enumChoice>
-          <enumChoice choice="System power on/off">
-            <choice>System power on/off</choice>
-          </enumChoice>
-          <enumChoice choice="System stop/run">
-            <choice>System stop/run</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x06)">
-            <choice>Reserved (0x06)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x07)">
-            <choice>Reserved (0x07)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x08)">
-            <choice>Reserved (0x08)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x09)">
-            <choice>Reserved (0x09)</choice>
-          </enumChoice>
-          <enumChoice choice="Exact turnout feedback message">
-            <choice>Exact turnout feedback message</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group3.xml"/>
         <label>When Switch D input changes, send</label>
       </variable>
       <variable label="When Switch D output changes" CV="48" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Don't send a message">
-            <choice>Don't send a message</choice>
-          </enumChoice>
-          <enumChoice choice="Send output message">
-            <choice>Send output message</choice>
-          </enumChoice>
-        </enumVal>
+            <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group4.xml"/>
         <label>When Switch D output changes</label>
       </variable>
       <variable label="Aux A local route includes A" CV="49" mask="XXXVXXXX">
@@ -922,14 +179,7 @@
         <label>Aux A local route includes A</label>
       </variable>
       <variable label="Aux A local route sets A" CV="49" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+            <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux A local route sets A</label>
       </variable>
       <variable label="Aux A local route includes B" CV="49" mask="XXVXXXXX">
@@ -937,14 +187,7 @@
         <label>Aux A local route includes B</label>
       </variable>
       <variable label="Aux A local route sets B" CV="49" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux A local route sets B</label>
       </variable>
       <variable label="Aux A local route includes C" CV="49" mask="XVXXXXXX">
@@ -952,14 +195,7 @@
         <label>Aux A local route includes C</label>
       </variable>
       <variable label="Aux A local route sets C" CV="49" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux A local route sets C</label>
       </variable>
       <variable label="Aux A local route includes D" CV="49" mask="VXXXXXXX">
@@ -967,14 +203,7 @@
         <label>Aux A local route includes D</label>
       </variable>
       <variable label="Aux A local route sets D" CV="49" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux A local route sets D</label>
       </variable>
       <variable label="Switch A local route includes A" CV="50" mask="XXXVXXXX">
@@ -982,14 +211,7 @@
         <label>Switch A local route includes A</label>
       </variable>
       <variable label="Switch A local route sets A" CV="50" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch A local route sets A</label>
       </variable>
       <variable label="Switch A local route includes B" CV="50" mask="XXVXXXXX">
@@ -997,14 +219,7 @@
         <label>Switch A local route includes B</label>
       </variable>
       <variable label="Switch A local route sets B" CV="50" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch A local route sets B</label>
       </variable>
       <variable label="Switch A local route includes C" CV="50" mask="XVXXXXXX">
@@ -1012,14 +227,7 @@
         <label>Switch A local route includes C</label>
       </variable>
       <variable label="Switch A local route sets C" CV="50" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch A local route sets C</label>
       </variable>
       <variable label="Switch A local route includes D" CV="50" mask="VXXXXXXX">
@@ -1027,14 +235,7 @@
         <label>Switch A local route includes D</label>
       </variable>
       <variable label="Switch A local route sets D" CV="50" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch A local route sets D</label>
       </variable>
       <variable label="Aux B local route includes A" CV="51" mask="XXXVXXXX">
@@ -1042,14 +243,7 @@
         <label>Aux B local route includes A</label>
       </variable>
       <variable label="Aux B local route sets A" CV="51" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux B local route sets A</label>
       </variable>
       <variable label="Aux B local route includes B" CV="51" mask="XXVXXXXX">
@@ -1057,14 +251,7 @@
         <label>Aux B local route includes B</label>
       </variable>
       <variable label="Aux B local route sets B" CV="51" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux B local route sets B</label>
       </variable>
       <variable label="Aux B local route includes C" CV="51" mask="XVXXXXXX">
@@ -1072,14 +259,7 @@
         <label>Aux B local route includes C</label>
       </variable>
       <variable label="Aux B local route sets C" CV="51" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux B local route sets C</label>
       </variable>
       <variable label="Aux B local route includes D" CV="51" mask="VXXXXXXX">
@@ -1087,14 +267,7 @@
         <label>Aux B local route includes D</label>
       </variable>
       <variable label="Aux B local route sets D" CV="51" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux B local route sets D</label>
       </variable>
       <variable label="Switch B local route includes A" CV="52" mask="XXXVXXXX">
@@ -1102,14 +275,7 @@
         <label>Switch B local route includes A</label>
       </variable>
       <variable label="Switch B local route sets A" CV="52" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch B local route sets A</label>
       </variable>
       <variable label="Switch B local route includes B" CV="52" mask="XXVXXXXX">
@@ -1117,14 +283,7 @@
         <label>Switch B local route includes B</label>
       </variable>
       <variable label="Switch B local route sets B" CV="52" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch B local route sets B</label>
       </variable>
       <variable label="Switch B local route includes C" CV="52" mask="XVXXXXXX">
@@ -1132,14 +291,7 @@
         <label>Switch B local route includes C</label>
       </variable>
       <variable label="Switch B local route sets C" CV="52" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch B local route sets C</label>
       </variable>
       <variable label="Switch B local route includes D" CV="52" mask="VXXXXXXX">
@@ -1147,14 +299,7 @@
         <label>Switch B local route includes D</label>
       </variable>
       <variable label="Switch B local route sets D" CV="52" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch B local route sets D</label>
       </variable>
       <variable label="Aux C local route includes A" CV="53" mask="XXXVXXXX">
@@ -1162,14 +307,7 @@
         <label>Aux C local route includes A</label>
       </variable>
       <variable label="Aux C local route sets A" CV="53" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux C local route sets A</label>
       </variable>
       <variable label="Aux C local route includes B" CV="53" mask="XXVXXXXX">
@@ -1177,14 +315,7 @@
         <label>Aux C local route includes B</label>
       </variable>
       <variable label="Aux C local route sets B" CV="53" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux C local route sets B</label>
       </variable>
       <variable label="Aux C local route includes C" CV="53" mask="XVXXXXXX">
@@ -1192,14 +323,7 @@
         <label>Aux C local route includes C</label>
       </variable>
       <variable label="Aux C local route sets C" CV="53" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux C local route sets C</label>
       </variable>
       <variable label="Aux C local route includes D" CV="53" mask="VXXXXXXX">
@@ -1207,14 +331,7 @@
         <label>Aux C local route includes D</label>
       </variable>
       <variable label="Aux C local route sets D" CV="53" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux C local route sets D</label>
       </variable>
       <variable label="Switch C local route includes A" CV="54" mask="XXXVXXXX">
@@ -1222,14 +339,7 @@
         <label>Switch C local route includes A</label>
       </variable>
       <variable label="Switch C local route sets A" CV="54" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch C local route sets A</label>
       </variable>
       <variable label="Switch C local route includes B" CV="54" mask="XXVXXXXX">
@@ -1237,14 +347,7 @@
         <label>Switch C local route includes B</label>
       </variable>
       <variable label="Switch C local route sets B" CV="54" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch C local route sets B</label>
       </variable>
       <variable label="Switch C local route includes C" CV="54" mask="XVXXXXXX">
@@ -1252,14 +355,7 @@
         <label>Switch C local route includes C</label>
       </variable>
       <variable label="Switch C local route sets C" CV="54" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch C local route sets C</label>
       </variable>
       <variable label="Switch C local route includes D" CV="54" mask="VXXXXXXX">
@@ -1267,14 +363,7 @@
         <label>Switch C local route includes D</label>
       </variable>
       <variable label="Switch C local route sets D" CV="54" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch C local route sets D</label>
       </variable>
       <variable label="Aux D local route includes A" CV="55" mask="XXXVXXXX">
@@ -1282,14 +371,7 @@
         <label>Aux D local route includes A</label>
       </variable>
       <variable label="Aux D local route sets A" CV="55" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux D local route sets A</label>
       </variable>
       <variable label="Aux D local route includes B" CV="55" mask="XXVXXXXX">
@@ -1297,14 +379,7 @@
         <label>Aux D local route includes B</label>
       </variable>
       <variable label="Aux D local route sets B" CV="55" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux D local route sets B</label>
       </variable>
       <variable label="Aux D local route includes C" CV="55" mask="XVXXXXXX">
@@ -1312,14 +387,7 @@
         <label>Aux D local route includes C</label>
       </variable>
       <variable label="Aux D local route sets C" CV="55" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux D local route sets C</label>
       </variable>
       <variable label="Aux D local route includes D" CV="55" mask="VXXXXXXX">
@@ -1327,14 +395,7 @@
         <label>Aux D local route includes D</label>
       </variable>
       <variable label="Aux D local route sets D" CV="55" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Aux D local route sets D</label>
       </variable>
       <variable label="Switch D local route includes A" CV="56" mask="XXXVXXXX">
@@ -1342,14 +403,7 @@
         <label>Switch D local route includes A</label>
       </variable>
       <variable label="Switch D local route sets A" CV="56" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch D local route sets A</label>
       </variable>
       <variable label="Switch D local route includes B" CV="56" mask="XXVXXXXX">
@@ -1357,14 +411,7 @@
         <label>Switch D local route includes B</label>
       </variable>
       <variable label="Switch D local route sets B" CV="56" mask="XXXXXXVX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch D local route sets B</label>
       </variable>
       <variable label="Switch D local route includes C" CV="56" mask="XVXXXXXX">
@@ -1372,14 +419,7 @@
         <label>Switch D local route includes C</label>
       </variable>
       <variable label="Switch D local route sets C" CV="56" mask="XXXXXVXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch D local route sets C</label>
       </variable>
       <variable label="Switch D local route includes D" CV="56" mask="VXXXXXXX">
@@ -1387,14 +427,7 @@
         <label>Switch D local route includes D</label>
       </variable>
       <variable label="Switch D local route sets D" CV="56" mask="XXXXVXXX">
-        <enumVal>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group5.xml"/>
         <label>Switch D local route sets D</label>
       </variable>
       <variable label="Aux A local route does cascade" CV="57" mask="VXXXXXXX">
@@ -1406,20 +439,7 @@
         <label>Aux A cascaded turnout address</label>
       </variable>
       <variable label="Aux A cascaded turnout set to" CV="57" mask="XXVVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="reserved (0)">
-            <choice>reserved (0)</choice>
-          </enumChoice>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="reserved (2)">
-            <choice>reserved (2)</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group6.xml"/>
         <label>Aux A cascaded turnout set to</label>
       </variable>
       <variable label="Switch A local route does cascade" CV="59" mask="VXXXXXXX">
@@ -1431,20 +451,7 @@
         <label>Switch A cascaded turnout address</label>
       </variable>
       <variable label="Switch A cascaded turnout set to" CV="59" mask="XXVVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="reserved (0)">
-            <choice>reserved (0)</choice>
-          </enumChoice>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="reserved (2)">
-            <choice>reserved (2)</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group6.xml"/>
         <label>Switch A cascaded turnout set to</label>
       </variable>
       <variable label="Aux B local route does cascade" CV="61" mask="VXXXXXXX">
@@ -1456,20 +463,7 @@
         <label>Aux B cascaded turnout address</label>
       </variable>
       <variable label="Aux B cascaded turnout set to" CV="61" mask="XXVVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="reserved (0)">
-            <choice>reserved (0)</choice>
-          </enumChoice>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="reserved (2)">
-            <choice>reserved (2)</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group6.xml"/>
         <label>Aux B cascaded turnout set to</label>
       </variable>
       <variable label="Switch B local route does cascade" CV="63" mask="VXXXXXXX">
@@ -1481,20 +475,7 @@
         <label>Switch B cascaded turnout address</label>
       </variable>
       <variable label="Switch B cascaded turnout set to" CV="63" mask="XXVVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="reserved (0)">
-            <choice>reserved (0)</choice>
-          </enumChoice>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="reserved (2)">
-            <choice>reserved (2)</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group6.xml"/>
         <label>Switch B cascaded turnout set to</label>
       </variable>
       <variable label="Aux C local route does cascade" CV="65" mask="VXXXXXXX">
@@ -1506,20 +487,7 @@
         <label>Aux C cascaded turnout address</label>
       </variable>
       <variable label="Aux C cascaded turnout set to" CV="65" mask="XXVVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="reserved (0)">
-            <choice>reserved (0)</choice>
-          </enumChoice>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="reserved (2)">
-            <choice>reserved (2)</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group6.xml"/>
         <label>Aux C cascaded turnout set to</label>
       </variable>
       <variable label="Switch C local route does cascade" CV="67" mask="VXXXXXXX">
@@ -1531,20 +499,7 @@
         <label>Switch C cascaded turnout address</label>
       </variable>
       <variable label="Switch C cascaded turnout set to" CV="67" mask="XXVVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="reserved (0)">
-            <choice>reserved (0)</choice>
-          </enumChoice>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="reserved (2)">
-            <choice>reserved (2)</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group6.xml"/>
         <label>Switch C cascaded turnout set to</label>
       </variable>
       <variable label="Aux D local route does cascade" CV="69" mask="VXXXXXXX">
@@ -1556,20 +511,7 @@
         <label>Aux D cascaded turnout address</label>
       </variable>
       <variable label="Aux D cascaded turnout set to" CV="69" mask="XXVVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="reserved (0)">
-            <choice>reserved (0)</choice>
-          </enumChoice>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="reserved (2)">
-            <choice>reserved (2)</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group6.xml"/>
         <label>Aux D cascaded turnout set to</label>
       </variable>
       <variable label="Switch D local route does cascade" CV="71" mask="VXXXXXXX">
@@ -1581,20 +523,7 @@
         <label>Switch D cascaded turnout address</label>
       </variable>
       <variable label="Switch D cascaded turnout set to" CV="71" mask="XXVVXXXX" default="1">
-        <enumVal>
-          <enumChoice choice="reserved (0)">
-            <choice>reserved (0)</choice>
-          </enumChoice>
-          <enumChoice choice="thrown">
-            <choice>thrown</choice>
-          </enumChoice>
-          <enumChoice choice="reserved (2)">
-            <choice>reserved (2)</choice>
-          </enumChoice>
-          <enumChoice choice="closed">
-            <choice>closed</choice>
-          </enumChoice>
-        </enumVal>
+           <xi:include href="http://jmri.org/xml/decoders/digitrax/EnumVal_group6.xml"/>
         <label>Switch D cascaded turnout set to</label>
       </variable>
     </variables>
