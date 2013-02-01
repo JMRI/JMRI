@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: motorDriveFreq.xml 22090 2012-12-29 02:30:04Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+         <enumVal>
+          <enumChoice choice="Active ON, trigger OFF to ON, Positive Edge">
+            <choice>Active ON, trigger OFF to ON, Positive Edge</choice>
+            <choice xml:lang="it">Attiva ON, Trigger da OFF a ON, fronte Positivo</choice>
+          </enumChoice>
+          <enumChoice choice="Active ON, trigger on change, Positive Level">
+            <choice>Active ON, trigger on change, Positive Level</choice>
+            <choice xml:lang="it">Attiva ON, Trigger da cambio stato, livello Positivo</choice>
+          </enumChoice>
+          <enumChoice choice="Qualified: Output on positive edge, Output off negative edge">
+            <choice>Qualified: Output on positive edge, Output off negative edge</choice>
+            <choice xml:lang="it">Uscita Attiva da fronte positivo, uscita OFF per fronte negativo</choice>
+          </enumChoice>
+          <enumChoice choice="Qualified: Output on negative edge, Output off positive edge">
+            <choice>Qualified: Output on negative edge, Output off positive edge</choice>
+            <choice xml:lang="it">Uscita Attiva da fronte negativo, uscita OFF per fronte positivo</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x04)">
+            <choice>Reserved (0x04)</choice>
+            <choice xml:lang="it">Riservato(0x04)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x05)">
+            <choice>Reserved (0x05)</choice>
+            <choice xml:lang="it">Riservato(0x05)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x06)">
+            <choice>Reserved (0x06)</choice>
+            <choice xml:lang="it">Riservato(0x06)</choice>
+          </enumChoice>
+          <enumChoice choice="Reserved (0x07)">
+            <choice>Reserved (0x07)</choice>
+            <choice xml:lang="it">Riservato(0x07)</choice>
+          </enumChoice>
+          <enumChoice choice="Active OFF, trigger ON to OFF, Negative Edge">
+            <choice>Active OFF, trigger ON to OFF, Negative Edge</choice>
+            <choice xml:lang="it">Attiva OFF, Trigger da ON a OFF, fronte Negativo</choice>
+          </enumChoice>
+          <enumChoice choice="Active OFF, trigger on change, Negative Level">
+            <choice>Active OFF, trigger on change, Negative Level</choice>
+            <choice xml:lang="it">Attiva OFF, Trigger da cambio stato, livello negativo</choice>
+          </enumChoice>
+        </enumVal>

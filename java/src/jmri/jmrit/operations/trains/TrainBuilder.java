@@ -3470,6 +3470,8 @@ public class TrainBuilder extends TrainCommon {
 																						// car?
 			if (status.equals(Track.OKAY)) {
 				car.setLoadGeneratedFromStaging(true);
+				car.setFinalDestination(stageTrack.getLocation());
+				car.setFinalDestinationTrack(stageTrack);
 				// is car part of kernel?
 				car.updateKernel();
 				addLine(buildReport, SEVEN, MessageFormat.format(
