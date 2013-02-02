@@ -88,15 +88,17 @@ The columns are:
 <li><CODE>No power manager instance found, panel not active - the message itself</CODE>
 </UL>
 
-<P>
+<p>
 To log messages
-from a class named MyClass, add this to the bottom of the class file:
-<code>
-<PRE>
-	private static final org.apache.log4j.Logger log 
-	        = org.apache.log4j.Logger.getLogger(MyClass.class.getName());
-</PRE>
-</code>
+from a class named MyClass, add this to the bottom of the class file:</p>
+<pre><code>
+	private static final Logger log = Logger.getLogger(MyClass.class.getName());
+</code></pre>
+<p>and add an import for org.apache.log4j.Logger in your imports section:</p>
+<pre><code>
+        import org.apache.log4j.Logger;
+</code></pre>
+<p>
 Then for each message to log insert a line like:
 
 <code>

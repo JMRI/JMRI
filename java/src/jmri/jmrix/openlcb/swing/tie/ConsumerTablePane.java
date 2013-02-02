@@ -2,6 +2,7 @@
 
 package jmri.jmrix.openlcb.swing.tie;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -54,7 +55,7 @@ public class ConsumerTablePane extends JPanel {
 
     // for Print button support, see jmri.jmrix.cmri.serial.assignment.ListFrame
 
-    static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(ConsumerTablePane.class.getName());
+    static Logger log = Logger.getLogger(ConsumerTablePane.class.getName());
 	
 }
 

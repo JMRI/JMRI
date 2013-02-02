@@ -12,6 +12,8 @@ PARSER_BEGIN(SRCPClientParser)
 
 package jmri.jmrix.srcp.parser;
 
+import org.apache.log4j.Logger;
+
 /* 
  * This file defines a JavaTree/JavaCC parser implementation for
  * the SRCP protocol responses to the client.
@@ -25,7 +27,7 @@ package jmri.jmrix.srcp.parser;
 
 public class SRCPClientParser {
   
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPClientParser.class.getName());
+   static Logger log = Logger.getLogger(SRCPClientParser.class.getName());
 
   }
 
