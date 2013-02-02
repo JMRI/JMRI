@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.layoutEditor;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import jmri.Conditional;
@@ -13174,5 +13175,5 @@ public class LayoutEditorTools
         l.rotate(90);
         return l;
 	}
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditorTools.class.getName());
+    static Logger log = Logger.getLogger(LayoutEditorTools.class.getName());
 }

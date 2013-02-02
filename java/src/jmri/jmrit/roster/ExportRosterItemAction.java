@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import org.apache.log4j.Logger;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -90,7 +91,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ExportRosterItemAction.class.getName());
+    static Logger log = Logger.getLogger(ExportRosterItemAction.class.getName());
 
     /**
      * Main entry point to run as standalone tool. This doesn't work

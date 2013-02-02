@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 public class TurnoutTableTabAction extends AbstractTableTabAction {
@@ -29,5 +30,5 @@ public class TurnoutTableTabAction extends AbstractTableTabAction {
         return "package.jmri.jmrit.beantable.TurnoutTable";
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutTableTabAction.class.getName());
+    static Logger log = Logger.getLogger(TurnoutTableTabAction.class.getName());
 }

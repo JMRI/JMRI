@@ -1,5 +1,6 @@
 package jmri.implementation.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.implementation.DccSignalMast;
 import jmri.SignalAppearanceMap;
@@ -107,5 +108,5 @@ public class DccSignalMastXml
         log.error("Invalid method called");
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccSignalMastXml.class.getName());
+    static Logger log = Logger.getLogger(DccSignalMastXml.class.getName());
 }

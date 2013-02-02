@@ -2,6 +2,7 @@
 
 package jmri.jmris.srcp;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -46,7 +47,7 @@ public class JmriSRCPTurnoutServerTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSRCPTurnoutServerTest.class.getName());
+    static Logger log = Logger.getLogger(JmriSRCPTurnoutServerTest.class.getName());
 
 }
 

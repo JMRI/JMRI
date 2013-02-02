@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.IdentifyDecoder;
@@ -194,6 +195,6 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NewLocoSelPane.class.getName());
+    static Logger log = Logger.getLogger(NewLocoSelPane.class.getName());
 
 }

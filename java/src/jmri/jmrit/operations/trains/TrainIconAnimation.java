@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.routes.RouteLocation;
 
 /**
@@ -68,7 +69,7 @@ public class TrainIconAnimation extends Thread {
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainIconAnimation.class
+	static Logger log = Logger.getLogger(TrainIconAnimation.class
 			.getName());
 
 }

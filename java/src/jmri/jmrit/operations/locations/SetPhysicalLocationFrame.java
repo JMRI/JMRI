@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -163,6 +164,6 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(SetPhysicalLocationFrame.class.getName());
 }

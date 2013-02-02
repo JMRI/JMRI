@@ -2,6 +2,8 @@
 
 package jmri.jmrix.sprog.update;
 
+import org.apache.log4j.Logger;
+
 /**
  * Class to hold SPROG type 
  *
@@ -189,7 +191,7 @@ public class SprogType  {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogType.class.getName());
+    static Logger log = Logger.getLogger(SprogType.class.getName());
 }
 
 /* @(#)SprogType.java */

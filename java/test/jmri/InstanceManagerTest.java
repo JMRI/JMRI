@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.managers.TurnoutManagerScaffold;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -222,6 +223,6 @@ public class InstanceManagerTest extends TestCase implements InstanceManagerAuto
         };
     }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstanceManagerTest.class.getName());
+	static Logger log = Logger.getLogger(InstanceManagerTest.class.getName());
 
 }

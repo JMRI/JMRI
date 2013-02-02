@@ -1,5 +1,6 @@
 package jmri.jmrix.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.*;
 import jmri.jmrix.JmrixConfigPane;
@@ -110,6 +111,6 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
         jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmrixConfigPaneXml.class.getName());
+    static Logger log = Logger.getLogger(JmrixConfigPaneXml.class.getName());
 
 }

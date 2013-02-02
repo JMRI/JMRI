@@ -1,6 +1,8 @@
 // VirtualSignalMast.javaa
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
+
  /**
  * SignalMast implemented via one SignalHead object.
  * <p>
@@ -85,7 +87,7 @@ public class VirtualSignalMast extends AbstractSignalMast {
     
     static int lastRef = 0;
     
-    static final protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VirtualSignalMast.class.getName());
+    static final protected Logger log = Logger.getLogger(VirtualSignalMast.class.getName());
 }
 
 /* @(#)VirtualSignalMast.java */

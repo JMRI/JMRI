@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
+
 /**
  * A convenient place to access operations xml element and attribute names.
  * 

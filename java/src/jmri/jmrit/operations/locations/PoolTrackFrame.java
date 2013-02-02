@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import javax.swing.*;
 
@@ -371,6 +372,6 @@ class PoolTrackFrame extends OperationsFrame implements
 			updatePoolStatus();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(PoolTrackFrame.class.getName());
 }

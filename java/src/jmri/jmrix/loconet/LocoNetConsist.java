@@ -10,6 +10,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
@@ -437,6 +438,6 @@ public class LocoNetConsist extends jmri.DccConsist implements SlotListener,Thro
 	    consistRequestState=IDLESTATE;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetConsist.class.getName());
+	static Logger log = Logger.getLogger(LocoNetConsist.class.getName());
 
 }

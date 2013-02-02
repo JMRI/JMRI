@@ -2,6 +2,7 @@
 
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Block;
 import jmri.EntryPoint;
@@ -229,5 +230,5 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
         return InstanceManager.sectionManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SectionManagerXml.class.getName());
+    static Logger log = Logger.getLogger(SectionManagerXml.class.getName());
 }

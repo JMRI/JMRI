@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
@@ -716,6 +717,6 @@ public class OperationsSetupFrame extends OperationsFrame implements
 
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(OperationsSetupFrame.class.getName());
 }

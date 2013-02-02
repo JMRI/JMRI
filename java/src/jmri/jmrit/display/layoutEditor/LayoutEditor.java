@@ -1,6 +1,7 @@
 // jmri.jmrit.display.LayoutEditor.java
 package jmri.jmrit.display.layoutEditor;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -8141,5 +8142,5 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         }
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutEditor.class.getName());
+    static Logger log = Logger.getLogger(LayoutEditor.class.getName());
 }

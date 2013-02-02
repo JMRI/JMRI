@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -112,5 +113,5 @@ public class JmriSimplePropertyListener implements PropertyChangeListener
         }
     }
 
-static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSimplePropertyListener.class.getName());
+static final Logger log = Logger.getLogger(JmriSimplePropertyListener.class.getName());
 }

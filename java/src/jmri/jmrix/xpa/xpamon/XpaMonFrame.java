@@ -2,6 +2,7 @@
 
 package jmri.jmrix.xpa.xpamon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.xpa.XpaListener;
 import jmri.jmrix.xpa.XpaMessage;
 import jmri.jmrix.xpa.XpaTrafficController;
@@ -36,6 +37,6 @@ public class XpaMonFrame extends jmri.jmrix.AbstractMonFrame implements XpaListe
 		nextLine("Recieved: \""+l.toString()+"\"\n", "");
 	}
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaMonFrame.class.getName());
+   static Logger log = Logger.getLogger(XpaMonFrame.class.getName());
 
 }

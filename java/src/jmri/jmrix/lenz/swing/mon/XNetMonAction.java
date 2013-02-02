@@ -11,6 +11,7 @@
 
 package jmri.jmrix.lenz.swing.mon;
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -55,7 +56,7 @@ public class XNetMonAction extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMonAction.class.getName());
+	static Logger log = Logger.getLogger(XNetMonAction.class.getName());
 
 }
 

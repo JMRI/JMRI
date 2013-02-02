@@ -4,6 +4,7 @@
 
 package jmri.jmrix.lenz.ztc640;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.XNetPacketizer;
 
 /**
@@ -58,7 +59,7 @@ public class ZTC640XNetPacketizer extends XNetPacketizer {
 	   log.debug("Accepted Message: " + msg.toString());
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZTC640XNetPacketizer.class.getName());
+    static Logger log = Logger.getLogger(ZTC640XNetPacketizer.class.getName());
 }
 
 /* @(#)ZTC640XNetPacketizer.java */

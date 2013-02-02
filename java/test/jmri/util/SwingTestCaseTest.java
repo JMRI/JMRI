@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import junit.framework.*;
 import junit.extensions.jfcunit.finder.*;
@@ -73,5 +74,5 @@ public class SwingTestCaseTest extends SwingTestCase {
         //apps.tests.Log4JFixture.tearDown();
     }
 
-	//static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SwingTestCaseTest.class.getName());
+	//static Logger log = Logger.getLogger(SwingTestCaseTest.class.getName());
 }

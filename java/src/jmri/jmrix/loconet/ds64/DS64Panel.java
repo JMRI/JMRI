@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.ds64;
 
+import org.apache.log4j.Logger;
 import javax.swing.JCheckBox;
 
 /**
@@ -174,6 +175,6 @@ public class DS64Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
     JCheckBox opsw20    = new JCheckBox("OpSw 20: Output 4 is crossing gate");
     JCheckBox opsw21    = new JCheckBox("OpSw 21: Send turnout sensor messages (general sensor messages if off)");
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DS64Panel.class.getName());
+    static Logger log = Logger.getLogger(DS64Panel.class.getName());
 
 }

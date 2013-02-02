@@ -2,6 +2,8 @@
 
 package jmri.jmrix.tams;
 
+import org.apache.log4j.Logger;
+
 /**
  * Carries the reply to an TamsMessage.
  * <P>
@@ -55,7 +57,7 @@ public class TamsReply extends jmri.jmrix.AbstractMRReply {
         return val;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsReply.class.getName());
+    static Logger log = Logger.getLogger(TamsReply.class.getName());
 
 }
 

@@ -3,6 +3,7 @@
  */
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 import java.util.List;
@@ -69,5 +70,5 @@ public class TurnoutOperationManagerXml extends jmri.configurexml.AbstractXmlAda
     	return elem;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationManagerXml.class.getName());
+    static Logger log = Logger.getLogger(TurnoutOperationManagerXml.class.getName());
 }

@@ -9,6 +9,7 @@ package jmri.jmrix.loconet.duplexgroup.swing;
  * @author B. Milhaupt Copyright 2010, 2011
  */
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.duplexgroup.*;
 import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -653,5 +654,5 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
         }
     }
 
-    //    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DuplexGroupInfoPanel.class.getName());
+    //    static Logger log = Logger.getLogger(DuplexGroupInfoPanel.class.getName());
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.util.JmriJFrame;
@@ -124,6 +125,6 @@ public class MemoryFrameAction extends AbstractAction {
 	}
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryFrameAction.class.getName());
+    static Logger log = Logger.getLogger(MemoryFrameAction.class.getName());
 
 }

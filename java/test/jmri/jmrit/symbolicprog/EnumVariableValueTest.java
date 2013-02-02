@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import javax.swing.*;
 import junit.framework.Test;
@@ -176,6 +177,6 @@ public class EnumVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( EnumVariableValueTest.class.getName());
+    static Logger log = Logger.getLogger( EnumVariableValueTest.class.getName());
 
 }

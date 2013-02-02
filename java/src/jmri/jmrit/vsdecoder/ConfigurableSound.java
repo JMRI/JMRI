@@ -20,6 +20,7 @@ package jmri.jmrit.vsdecoder;
  */
 
 // JMRI and Java stuff
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import jmri.util.PhysicalLocation;
@@ -323,6 +324,6 @@ class ConfigurableSound extends VSDSound {
 	
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigurableSound.class.getName());
+    static Logger log = Logger.getLogger(ConfigurableSound.class.getName());
 
 }

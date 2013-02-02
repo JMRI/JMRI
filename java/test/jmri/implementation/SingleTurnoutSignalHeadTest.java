@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 import junit.framework.Assert;
@@ -136,5 +137,5 @@ public class SingleTurnoutSignalHeadTest extends TestCase {
         jmri.util.JUnitUtil.resetInstanceManager();
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SingleTurnoutSignalHeadTest.class.getName());
+    static protected Logger log = Logger.getLogger(SingleTurnoutSignalHeadTest.class.getName());
 }

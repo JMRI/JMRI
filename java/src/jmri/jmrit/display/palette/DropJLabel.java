@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -106,5 +107,5 @@ public class DropJLabel extends JLabel implements DropTargetListener {
                                              ", "+(newIcon!=null ? newIcon.getURL().toString():" newIcon==null "));
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DropJLabel.class.getName());
+    static Logger log = Logger.getLogger(DropJLabel.class.getName());
 }

@@ -4,6 +4,7 @@
 
 package jmri.jmrit.operations;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 /**
@@ -33,7 +34,7 @@ public class OperationsMenu extends JMenu {
             
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsMenu.class.getName());
+    static Logger log = Logger.getLogger(OperationsMenu.class.getName());
 }
 
 

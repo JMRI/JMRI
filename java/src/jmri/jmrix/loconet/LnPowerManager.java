@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.PowerManager;
 import jmri.JmriException;
 
@@ -149,7 +150,7 @@ public class LnPowerManager
             tc.sendLocoNetMessage(msg);
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPowerManager.class.getName());
+    static Logger log = Logger.getLogger(LnPowerManager.class.getName());
 }
 
 /* @(#)LnPowerManager.java */

@@ -106,6 +106,7 @@
 
 package jmri.jmrix.nce.cab;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -1272,6 +1273,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		}
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceShowCabPanel.class.getName());
+    static Logger log = Logger.getLogger(NceShowCabPanel.class.getName());
 }
 

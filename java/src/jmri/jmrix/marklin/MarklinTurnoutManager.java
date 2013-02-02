@@ -1,6 +1,7 @@
 // MarklinTurnoutManager.java
 
 package jmri.jmrix.marklin;
+import org.apache.log4j.Logger;
 import jmri.Turnout;
 
 /**
@@ -42,7 +43,7 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     
     boolean noWarnDelete = false;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(MarklinTurnoutManager.class.getName());
 }
 
 /* @(#)MarklinTurnoutManager.java */

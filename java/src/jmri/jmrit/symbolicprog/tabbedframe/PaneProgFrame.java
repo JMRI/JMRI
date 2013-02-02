@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.apache.log4j.Logger;
 import jmri.Programmer;
 import jmri.ShutDownTask;
 import jmri.implementation.swing.SwingShutDownTask;
@@ -1319,7 +1320,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     public RosterEntry getRosterEntry() { return _rosterEntry; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgFrame.class.getName());
+    static Logger log = Logger.getLogger(PaneProgFrame.class.getName());
 
 }
 

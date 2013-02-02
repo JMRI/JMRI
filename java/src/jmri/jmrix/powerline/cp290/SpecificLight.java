@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.cp290;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.powerline.*;
 
 /**
@@ -100,7 +101,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
     }
            
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificLight.class.getName());
+    static Logger log = Logger.getLogger(SpecificLight.class.getName());
 }
 
 /* @(#)SpecificLight.java */

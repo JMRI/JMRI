@@ -2,6 +2,7 @@
 
 package jmri.jmrix.cmri.serial;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractLight;
 
 /**
@@ -75,7 +76,7 @@ public class SerialLight extends AbstractLight {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLight.class.getName());
+    static Logger log = Logger.getLogger(SerialLight.class.getName());
 }
 
 /* @(#)SerialLight.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.Manager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -161,6 +162,6 @@ abstract public class AbstractTableAction extends AbstractAction {
 
     protected abstract void addPressed(ActionEvent e);
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTableAction.class.getName());
+    static Logger log = Logger.getLogger(AbstractTableAction.class.getName());
 }
 /* @(#)AbstractTableAction.java */

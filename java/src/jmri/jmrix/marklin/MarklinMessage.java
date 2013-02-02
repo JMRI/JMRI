@@ -2,6 +2,8 @@
 
 package jmri.jmrix.marklin;
 
+import org.apache.log4j.Logger;
+
 /**
  * Encodes a message to an Marklin command station.
  * <P>
@@ -292,7 +294,7 @@ public class MarklinMessage extends jmri.jmrix.AbstractMRMessage {
         return new MarklinMessage();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinMessage.class.getName());
+    static Logger log = Logger.getLogger(MarklinMessage.class.getName());
 }
 
 /* @(#)MarklinMessage.java */

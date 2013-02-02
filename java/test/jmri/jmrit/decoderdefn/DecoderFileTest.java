@@ -2,6 +2,7 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -292,6 +293,6 @@ public class DecoderFileTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    // static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderFileTest.class.getName());
+    // static Logger log = Logger.getLogger(DecoderFileTest.class.getName());
 
 }

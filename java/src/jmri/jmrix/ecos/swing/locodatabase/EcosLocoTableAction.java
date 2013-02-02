@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.swing.locodatabase;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
@@ -529,5 +530,5 @@ public class EcosLocoTableAction extends AbstractTableAction {
     
     protected String getClassName() { return EcosLocoTableAction.class.getName(); }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoTableAction.class.getName());
+    static final Logger log = Logger.getLogger(EcosLocoTableAction.class.getName());
 }

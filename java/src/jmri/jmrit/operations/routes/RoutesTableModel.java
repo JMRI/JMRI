@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -236,6 +237,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		removePropertyChangeRoutes();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RoutesTableModel.class
+	static Logger log = Logger.getLogger(RoutesTableModel.class
 			.getName());
 }

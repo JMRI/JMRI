@@ -2,6 +2,7 @@
 
 package jmri.jmrit.consisttool;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.XmlFile;
 import jmri.DccLocoAddress;
 import jmri.Consist;
@@ -315,6 +316,6 @@ location.
 
        
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistFile.class.getName());
+    static Logger log = Logger.getLogger(ConsistFile.class.getName());
 
 }

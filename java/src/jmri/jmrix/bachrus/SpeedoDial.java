@@ -2,6 +2,7 @@
 
 package jmri.jmrix.bachrus;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -307,6 +308,6 @@ public class SpeedoDial extends JPanel {
         secString = "MPH";
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoDial.class.getName());
+    static Logger log = Logger.getLogger(SpeedoDial.class.getName());
 }
 

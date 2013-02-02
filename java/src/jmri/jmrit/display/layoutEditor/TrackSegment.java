@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.apache.log4j.Logger;
 import jmri.util.JmriJFrame;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.*;
 
@@ -717,6 +718,6 @@ public class TrackSegment
     public double getChordLength() { return chordLength; }
     public void setChordLength(double chord) { chordLength=chord;}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackSegment.class.getName());
+    static Logger log = Logger.getLogger(TrackSegment.class.getName());
 
 }

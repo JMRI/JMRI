@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import javax.vecmath.Point3d;
 
 /**
@@ -379,7 +380,7 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
         double x, y, z, t, vs;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Ash2_2Algorithm.class.getName());
+    static Logger log = Logger.getLogger(Ash2_2Algorithm.class.getName());
 }
 
 /* @(#)Ash2_2Algorithm.java */

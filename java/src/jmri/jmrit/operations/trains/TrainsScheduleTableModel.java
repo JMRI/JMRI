@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -293,6 +294,6 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
 		removePropertyChangeTrainSchedules();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(TrainsScheduleTableModel.class.getName());
 }

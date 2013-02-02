@@ -2,6 +2,7 @@
 
 package jmri.jmrit.sensorgroup;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -30,7 +31,7 @@ public class SensorGroupAction extends AbstractAction {
         f.initComponents();
         f.setVisible(true);
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorGroupAction.class.getName());
+    static Logger log = Logger.getLogger(SensorGroupAction.class.getName());
 }
 
 /* @(#)SensorGroupAction.java */

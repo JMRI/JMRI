@@ -2,6 +2,7 @@
  
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 //import java.io.IOException;
 
@@ -120,5 +121,5 @@ public class Model {
         return _instance;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Model.class.getName());
+    static Logger log = Logger.getLogger(Model.class.getName());
 }

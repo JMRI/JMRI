@@ -1,5 +1,6 @@
 package jmri.jmrit.signalling.entryexit;
 
+import org.apache.log4j.Logger;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
@@ -666,5 +667,5 @@ public class PointDetails {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PointDetails.class.getName());
+    static Logger log = Logger.getLogger(PointDetails.class.getName());
 }

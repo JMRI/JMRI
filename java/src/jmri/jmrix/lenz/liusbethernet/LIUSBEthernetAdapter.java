@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.liusbethernet;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
@@ -137,6 +138,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBEthernetAdapter.class.getName());
+    static Logger log = Logger.getLogger(LIUSBEthernetAdapter.class.getName());
 
 }

@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 //import java.awt.datatransfer.Transferable; 
+import org.apache.log4j.Logger;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 //import java.awt.dnd.*;
@@ -85,5 +86,5 @@ public class RPSItemPanel extends FamilyItemPanel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RPSItemPanel.class.getName());
+    static Logger log = Logger.getLogger(RPSItemPanel.class.getName());
 }

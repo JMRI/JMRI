@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.*;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
@@ -243,5 +244,5 @@ public class PositionableShape extends PositionableJComponent {
         repaint();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableShape.class.getName());
+    static Logger log = Logger.getLogger(PositionableShape.class.getName());
 }

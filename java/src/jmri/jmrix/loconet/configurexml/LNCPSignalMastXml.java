@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.configurexml;
 
 //import jmri.SignalHead;
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.LNCPSignalMast;
 import org.jdom.Element;
 
@@ -32,5 +33,5 @@ public class LNCPSignalMastXml extends jmri.implementation.configurexml.DccSigna
         
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LNCPSignalMastXml.class.getName());
+    static Logger log = Logger.getLogger(LNCPSignalMastXml.class.getName());
 }

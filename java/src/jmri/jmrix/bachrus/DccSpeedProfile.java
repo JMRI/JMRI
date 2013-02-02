@@ -2,6 +2,7 @@
 
 package jmri.jmrix.bachrus;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
@@ -188,5 +189,5 @@ public class DccSpeedProfile {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccSpeedProfile.class.getName());
+    static Logger log = Logger.getLogger(DccSpeedProfile.class.getName());
 }

@@ -2,6 +2,8 @@
 
 package apps;
 
+import org.apache.log4j.Logger;
+
 /**
  * Application for running JMRI server functions without a graphical interface.
  *   Goal is to run on very light hardware, such as a Raspberry Pi, without requiring the 
@@ -46,5 +48,5 @@ public class JmriFaceless extends apps.AppsBase {
         new JmriFaceless(args);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriFaceless.class.getName());
+    static Logger log = Logger.getLogger(JmriFaceless.class.getName());
 }

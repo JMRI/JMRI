@@ -1,5 +1,6 @@
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
@@ -66,6 +67,6 @@ public class NceThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceThrottleManager.class.getName());
+    static Logger log = Logger.getLogger(NceThrottleManager.class.getName());
 
 }

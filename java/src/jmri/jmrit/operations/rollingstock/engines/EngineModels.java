@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -258,7 +259,7 @@ public class EngineModels {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineModels.class
+	static Logger log = Logger.getLogger(EngineModels.class
 			.getName());
 
 }

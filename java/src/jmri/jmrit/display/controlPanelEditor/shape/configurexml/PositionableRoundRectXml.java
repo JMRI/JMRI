@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.*;
 
@@ -71,5 +72,5 @@ public class PositionableRoundRectXml extends PositionableShapeXml {
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableRoundRectXml.class.getName());
+    static Logger log = Logger.getLogger(PositionableRoundRectXml.class.getName());
 }

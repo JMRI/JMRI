@@ -2,6 +2,7 @@
 
 package jmri.jmrit.catalog;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 
 import java.util.HashMap;
@@ -104,6 +105,6 @@ public class CatalogTreeFS extends AbstractCatalogTree {
 
     HashMap<Object, Object> parameters = null;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogTreeFS.class.getName());
+    static Logger log = Logger.getLogger(CatalogTreeFS.class.getName());
 }
 

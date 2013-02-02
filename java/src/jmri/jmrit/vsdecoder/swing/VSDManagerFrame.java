@@ -24,6 +24,7 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
+import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -381,5 +382,5 @@ public class VSDManagerFrame extends JmriJFrame {
 
     //public List<JMenu> getMenus() { return menuList; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDManagerFrame.class.getName());
+    static Logger log = Logger.getLogger(VSDManagerFrame.class.getName());
 }

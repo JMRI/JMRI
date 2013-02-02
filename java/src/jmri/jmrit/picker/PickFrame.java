@@ -1,5 +1,6 @@
 package jmri.jmrit.picker;
 
+import org.apache.log4j.Logger;
 import jmri.util.JmriJFrame;
 import javax.swing.JMenuBar;
 
@@ -44,5 +45,5 @@ public class PickFrame extends JmriJFrame {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PickFrame.class.getName());
+    static Logger log = Logger.getLogger(PickFrame.class.getName());
 }

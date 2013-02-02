@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -2577,5 +2578,5 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastLogic.class.getName());
+    static Logger log = Logger.getLogger(DefaultSignalMastLogic.class.getName());
 }

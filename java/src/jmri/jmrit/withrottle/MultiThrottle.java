@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import org.apache.log4j.Logger;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -152,5 +153,5 @@ public class MultiThrottle {
         }
     }
 
-    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiThrottle.class.getName());
+    private static Logger log = Logger.getLogger(MultiThrottle.class.getName());
 }

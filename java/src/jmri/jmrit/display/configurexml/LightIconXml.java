@@ -1,5 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LightIcon;
@@ -108,5 +109,5 @@ public class LightIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LIGHTS, element);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LightIconXml.class.getName());
+    static Logger log = Logger.getLogger(LightIconXml.class.getName());
 }

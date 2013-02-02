@@ -8,6 +8,7 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -179,6 +180,6 @@ public class EasyDccConsistManagerTest extends TestCase {
     
     
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccConsistManagerTest.class.getName());
+    static Logger log = Logger.getLogger(EasyDccConsistManagerTest.class.getName());
     
 }

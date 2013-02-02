@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import org.apache.log4j.Logger;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.io.File;
@@ -1157,6 +1158,6 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntry.class.getName());
+    static Logger log = Logger.getLogger(RosterEntry.class.getName());
 
 }

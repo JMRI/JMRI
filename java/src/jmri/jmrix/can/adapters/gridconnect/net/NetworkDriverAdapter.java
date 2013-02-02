@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.adapters.gridconnect.net;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.SystemConnectionMemo;
@@ -74,6 +75,6 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(NetworkDriverAdapter.class.getName());
 
 }

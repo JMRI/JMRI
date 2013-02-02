@@ -1,5 +1,6 @@
 package jmri.jmrix.openlcb;
 
+import org.apache.log4j.Logger;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -89,7 +90,7 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbThrottleManager.class.getName());
+    static Logger log = Logger.getLogger(OlcbThrottleManager.class.getName());
 
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.simpleclock;
 
+import org.apache.log4j.Logger;
 import jmri.Timebase;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
@@ -608,7 +609,7 @@ public class SimpleClockFrame extends JmriJFrame
         super.windowClosing(e);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleClockFrame.class.getName());
+    static Logger log = Logger.getLogger(SimpleClockFrame.class.getName());
 }
 
 /* @(#)SimpleClockFrame.java */

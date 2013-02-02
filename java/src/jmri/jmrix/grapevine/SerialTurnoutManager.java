@@ -2,6 +2,7 @@
 
 package jmri.jmrix.grapevine;
 
+import org.apache.log4j.Logger;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.Turnout;
 import jmri.JmriException;
@@ -137,7 +138,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(SerialTurnoutManager.class.getName());
 
 }
 

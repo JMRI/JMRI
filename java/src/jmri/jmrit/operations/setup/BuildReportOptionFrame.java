@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -148,6 +149,6 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		buildReportVD.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(OperationsSetupFrame.class.getName());
 }

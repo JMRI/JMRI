@@ -2,6 +2,7 @@
 
 package apps.InstallTest;
 
+import org.apache.log4j.Logger;
 import apps.AppConfigPanel;
 import apps.Apps;
 
@@ -126,7 +127,7 @@ public class InstallTest extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstallTest.class.getName());
+    static Logger log = Logger.getLogger(InstallTest.class.getName());
 }
 
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.catalog.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
@@ -284,5 +285,5 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultCatalogTreeManagerXml.class.getName());
+    static Logger log = Logger.getLogger(DefaultCatalogTreeManagerXml.class.getName());
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.swing.li101;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -212,6 +213,6 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI101Frame.class.getName());
+    static Logger log = Logger.getLogger(LI101Frame.class.getName());
 
 }

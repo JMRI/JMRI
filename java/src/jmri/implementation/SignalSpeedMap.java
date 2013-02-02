@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.util.Hashtable;
 import java.util.List;
@@ -188,7 +189,7 @@ public class SignalSpeedMap {
         return _numSteps;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalSpeedMap.class.getName());
+    static Logger log = Logger.getLogger(SignalSpeedMap.class.getName());
 }
 
 /* @(#)SignalSpeedMap.java */

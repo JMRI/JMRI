@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import javax.vecmath.Point3d;
 
 /**
@@ -395,7 +396,7 @@ int gps3()						{// GPS Position Solver
 
 // ******************
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Ash1_1Algorithm.class.getName());
+    static Logger log = Logger.getLogger(Ash1_1Algorithm.class.getName());
 
     /**
      * Internal class to handle return value.

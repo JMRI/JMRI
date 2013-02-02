@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio.swing;
 
+import org.apache.log4j.Logger;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -389,7 +390,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         }
     }
 
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioSourceFrame.class.getName());
+    //private static final Logger log = Logger.getLogger(AudioSourceFrame.class.getName());
 
 }
 

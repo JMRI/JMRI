@@ -1,5 +1,6 @@
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 import org.jdom.*;
 import java.util.*;
@@ -145,5 +146,5 @@ public class PollingFile extends XmlFile {
     }
     
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PollingFile.class.getName());
+    static private Logger log = Logger.getLogger(PollingFile.class.getName());
 }

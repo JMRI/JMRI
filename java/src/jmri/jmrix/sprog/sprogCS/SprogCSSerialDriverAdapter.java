@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog.sprogCS;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
@@ -69,7 +70,7 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         mInstance = null;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSSerialDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(SprogCSSerialDriverAdapter.class.getName());
 
 }
 

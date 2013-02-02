@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -184,6 +185,6 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(TrainManifestOptionFrame.class.getName());
 }

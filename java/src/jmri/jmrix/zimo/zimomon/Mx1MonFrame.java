@@ -2,6 +2,7 @@
 
 package jmri.jmrix.zimo.zimomon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.zimo.Mx1Listener;
 import jmri.jmrix.zimo.Mx1TrafficController;
 import jmri.jmrix.zimo.Mx1Message;
@@ -50,7 +51,7 @@ import jmri.jmrix.zimo.Mx1Message;
 		nextLine(l.toString()+"\n", raw);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1MonFrame.class.getName());
+	static Logger log = Logger.getLogger(Mx1MonFrame.class.getName());
 
 }
 

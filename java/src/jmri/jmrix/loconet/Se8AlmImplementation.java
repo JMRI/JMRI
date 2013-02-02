@@ -1,5 +1,7 @@
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
+
 /**
  * ALM implementation for the SE8.
  * <P>
@@ -189,5 +191,5 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
             contents[j]=0x3FFF;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Se8AlmImplementation.class.getName());
+    static Logger log = Logger.getLogger(Se8AlmImplementation.class.getName());
 }

@@ -25,6 +25,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -408,5 +409,5 @@ public class VSDecoderPane extends JmriPanel {
 	log.debug("VSDecoderPane windowClosing() called...");
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPane.class.getName());
+    private static final Logger log = Logger.getLogger(VSDecoderPane.class.getName());
 }

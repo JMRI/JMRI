@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
 import jmri.jmrit.operations.OperationsFrame;
@@ -202,7 +203,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(SetPhysicalLocationAction.class.getName());
 }
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.palette.ItemPalette;
@@ -840,6 +841,6 @@ public class PositionableLabel extends JLabel implements Positionable {
     */
     public jmri.NamedBean getNamedBean() { return null; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabel.class.getName());
+    static Logger log = Logger.getLogger(PositionableLabel.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.adapters.loopback;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.can.*;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -127,7 +128,7 @@ public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController 
         return true;
     }
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoopbackTrafficController.class.getName());
+    static Logger log = Logger.getLogger(LoopbackTrafficController.class.getName());
 }
 
 

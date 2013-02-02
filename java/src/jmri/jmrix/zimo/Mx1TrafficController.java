@@ -2,6 +2,7 @@
 
 package jmri.jmrix.zimo;
 
+import org.apache.log4j.Logger;
 import java.util.Vector;
 
 /**
@@ -95,7 +96,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
      */
     public Mx1CommandStation getCommandStation() { return mCommandStation; }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1TrafficController.class.getName());
+	static Logger log = Logger.getLogger(Mx1TrafficController.class.getName());
 }
 
 

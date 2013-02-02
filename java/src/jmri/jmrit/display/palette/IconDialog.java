@@ -1,6 +1,7 @@
 // IconDialog.java
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -354,5 +355,5 @@ public class IconDialog extends ItemDialog {
         return clone;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IconDialog.class.getName());
+    static Logger log = Logger.getLogger(IconDialog.class.getName());
 }

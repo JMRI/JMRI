@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import javax.swing.*;
 import jmri.jmrit.operations.OperationsFrame;
@@ -117,5 +118,5 @@ class IgnoreUsedTrackFrame extends OperationsFrame {
 		}		
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IgnoreUsedTrackFrame.class.getName());
+	static Logger log = Logger.getLogger(IgnoreUsedTrackFrame.class.getName());
 }

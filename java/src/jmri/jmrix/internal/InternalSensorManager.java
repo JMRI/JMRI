@@ -2,6 +2,8 @@
 
 package jmri.jmrix.internal;
 
+import org.apache.log4j.Logger;
+
 /**
  * Implementation of the InternalSensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003, 2006
@@ -15,7 +17,7 @@ public class InternalSensorManager extends jmri.managers.InternalSensorManager {
         this.prefix = prefix;
     }
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalSensorManager.class.getName());
+    static Logger log = Logger.getLogger(InternalSensorManager.class.getName());
 }
 
 /* @(#)InternalSensorManager.java */

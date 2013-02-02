@@ -10,6 +10,7 @@ package jmri.implementation;
  *
  * @version     $Revision$
  */
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import jmri.SignalMast;
@@ -131,6 +132,6 @@ public class SignalMastRepeater {
         _slave = null;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastRepeater.class.getName());
+    static Logger log = Logger.getLogger(SignalMastRepeater.class.getName());
 
 }

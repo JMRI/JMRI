@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.cp290;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -186,7 +187,7 @@ public class SpecificTrafficController extends SerialTrafficController {
         return false;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificTrafficController.class.getName());
+    static Logger log = Logger.getLogger(SpecificTrafficController.class.getName());
 }
 
 

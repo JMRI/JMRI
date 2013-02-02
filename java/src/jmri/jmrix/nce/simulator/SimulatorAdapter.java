@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.simulator;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceMessage;
@@ -505,7 +506,7 @@ public class SimulatorAdapter extends NcePortController implements
 		return reply;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(SimulatorAdapter.class.getName());
 
 }

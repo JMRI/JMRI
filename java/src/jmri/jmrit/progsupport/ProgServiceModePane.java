@@ -2,6 +2,7 @@
 
 package jmri.jmrit.progsupport;
 
+import org.apache.log4j.Logger;
 import javax.swing.BoxLayout;
 import jmri.*;
 
@@ -271,5 +272,5 @@ public class ProgServiceModePane extends ProgModeSelector implements java.beans.
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgServiceModePane.class.getName());
+    static Logger log = Logger.getLogger(ProgServiceModePane.class.getName());
 }

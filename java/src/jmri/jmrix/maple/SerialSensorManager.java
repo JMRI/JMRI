@@ -2,6 +2,7 @@
 
 package jmri.jmrix.maple;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.JmriException;
 
@@ -195,7 +196,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManager.class.getName());
+    static Logger log = Logger.getLogger(SerialSensorManager.class.getName());
 }
 
 /* @(#)SerialSensorManager.java */

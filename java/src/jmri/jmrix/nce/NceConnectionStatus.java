@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import javax.swing.JOptionPane;
 
 import jmri.jmrix.ConnectionStatus;
@@ -341,7 +342,7 @@ public class NceConnectionStatus implements NceListener {
 		nceEpromMarch2007 = b;
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(NceConnectionStatus.class.getName());
 
 }

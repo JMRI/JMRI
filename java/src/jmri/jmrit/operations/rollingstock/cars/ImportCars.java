@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apache.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -717,6 +718,6 @@ public class ImportCars extends Thread {
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ImportCars.class
+	static Logger log = Logger.getLogger(ImportCars.class
 			.getName());
 }

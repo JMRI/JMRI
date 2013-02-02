@@ -2,6 +2,7 @@
 
 package jmri.jmrix.grapevine.nodetable;
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -31,7 +32,7 @@ public class NodeTableAction extends AbstractAction {
         f.setLocation(100,30);
         f.setVisible(true);
     }
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeTableAction.class.getName());
+   static Logger log = Logger.getLogger(NodeTableAction.class.getName());
 }
 
 

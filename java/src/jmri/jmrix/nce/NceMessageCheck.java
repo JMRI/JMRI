@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.JmriException;
 
 /**
@@ -83,7 +84,7 @@ public class NceMessageCheck {
 
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMessageCheck.class.getName());
+	static Logger log = Logger.getLogger(NceMessageCheck.class.getName());
 }
 
 /* @(#)NceMessageCheck.java */

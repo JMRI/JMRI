@@ -2,6 +2,7 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.apache.log4j.Logger;
 import jmri.util.*;
 
 import java.awt.*;
@@ -431,7 +432,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	}	
 	
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoTrainsFrame.class.getName());
+	static Logger log = Logger.getLogger(AutoTrainsFrame.class.getName());
 
 }
 

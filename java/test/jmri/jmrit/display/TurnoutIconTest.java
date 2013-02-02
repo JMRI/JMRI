@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import junit.framework.Assert;
@@ -126,6 +127,6 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
 
-	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconTest.class.getName());
+	// static private Logger log = Logger.getLogger(TurnoutIconTest.class.getName());
 
 }

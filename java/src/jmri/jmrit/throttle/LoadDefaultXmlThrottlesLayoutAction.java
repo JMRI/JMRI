@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -66,7 +67,7 @@ public class LoadDefaultXmlThrottlesLayoutAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleCreationAction.class.getName());
+    static Logger log = Logger.getLogger(ThrottleCreationAction.class.getName());
 
     @Override
     public JmriPanel makePanel() {

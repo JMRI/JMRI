@@ -1,6 +1,7 @@
 package apps.configurexml;
 
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 
 import org.jdom.Element;
@@ -44,6 +45,6 @@ public class ManagerDefaultsConfigPaneXml extends jmri.configurexml.AbstractXmlA
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ManagerDefaultsConfigPaneXml.class.getName());
+    static Logger log = Logger.getLogger(ManagerDefaultsConfigPaneXml.class.getName());
 
 }

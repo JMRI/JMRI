@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -300,7 +301,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(ScheduleItem.class.getName());
 
 }

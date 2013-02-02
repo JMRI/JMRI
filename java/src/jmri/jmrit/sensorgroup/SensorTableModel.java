@@ -2,6 +2,7 @@
 
 package jmri.jmrit.sensorgroup;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Manager;
 
@@ -82,7 +83,7 @@ public class SensorTableModel extends BeanTableModel implements PropertyChangeLi
         }
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableModel.class.getName());
+    static final Logger log = Logger.getLogger(SensorTableModel.class.getName());
 
 }
 /* @(#)SensorTableModel.java */

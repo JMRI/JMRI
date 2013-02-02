@@ -1,5 +1,6 @@
 package apps.configurexml;
 
+import org.apache.log4j.Logger;
 import apps.GuiLafConfigPane;
 import java.util.Locale;
 
@@ -137,6 +138,6 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiLafConfigPaneXml.class.getName());
+    static Logger log = Logger.getLogger(GuiLafConfigPaneXml.class.getName());
 
 }

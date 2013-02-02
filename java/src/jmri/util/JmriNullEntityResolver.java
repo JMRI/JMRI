@@ -10,6 +10,7 @@ package jmri.util;
  * @version $Revision$
  */
 
+import org.apache.log4j.Logger;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
@@ -22,7 +23,7 @@ public class JmriNullEntityResolver implements EntityResolver {
         return new InputSource(new java.io.StringReader(""));
     }
 
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriNullEntityResolver.class.getName());
+    static private Logger log = Logger.getLogger(JmriNullEntityResolver.class.getName());
 
 }
  

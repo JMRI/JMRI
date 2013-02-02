@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 import java.util.List;
@@ -243,7 +244,7 @@ public class SectionManager extends AbstractManager
     }
 	
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SectionManager.class.getName());
+    static Logger log = Logger.getLogger(SectionManager.class.getName());
 }
 
 /* @(#)SectionManager.java */

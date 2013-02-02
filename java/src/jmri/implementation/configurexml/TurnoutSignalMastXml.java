@@ -1,5 +1,6 @@
 package jmri.implementation.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.implementation.TurnoutSignalMast;
@@ -111,5 +112,5 @@ public class TurnoutSignalMastXml
         log.error("Invalid method called");
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutSignalMastXml.class.getName());
+    static Logger log = Logger.getLogger(TurnoutSignalMastXml.class.getName());
 }

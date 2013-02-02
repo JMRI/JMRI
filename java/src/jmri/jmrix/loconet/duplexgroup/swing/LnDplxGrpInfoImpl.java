@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.duplexgroup.swing;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.duplexgroup.*;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnConstants;
@@ -1182,6 +1183,6 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
             memo.getLnTrafficController().removeLocoNetListener(~0, this);
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnDplxGrpInfoImpl.class.getName());
+    static Logger log = Logger.getLogger(LnDplxGrpInfoImpl.class.getName());
 
 }

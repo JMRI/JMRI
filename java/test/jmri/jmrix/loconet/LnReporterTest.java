@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -94,7 +95,7 @@ public class LnReporterTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnReporterTest.class.getName());
+    static Logger log = Logger.getLogger(LnReporterTest.class.getName());
 
     jmri.jmrix.loconet.LocoNetInterfaceScaffold tc;
     

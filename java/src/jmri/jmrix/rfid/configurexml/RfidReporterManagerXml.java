@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -33,5 +34,5 @@ public class RfidReporterManagerXml extends jmri.managers.configurexml.AbstractR
         return loadReporters(reporters);
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RfidReporterManagerXml.class.getName());
+    private static final Logger log = Logger.getLogger(RfidReporterManagerXml.class.getName());
 }

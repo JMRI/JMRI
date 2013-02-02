@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.swing;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import java.io.*;
 
@@ -97,5 +98,5 @@ public class CsvExportMeasurementAction extends AbstractAction implements Measur
         str.println(r.getValue(r.getNValues()-1));
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CsvExportMeasurementAction.class.getName());
+    static Logger log = Logger.getLogger(CsvExportMeasurementAction.class.getName());
 }

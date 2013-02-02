@@ -2,6 +2,7 @@
 
 package jmri.jmrix.ecos.networkdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.ecos.*;
 
 /*import java.io.*;
@@ -72,6 +73,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(NetworkDriverAdapter.class.getName());
 
 }

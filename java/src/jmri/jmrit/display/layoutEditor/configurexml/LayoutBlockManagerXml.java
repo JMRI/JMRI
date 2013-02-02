@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
@@ -211,5 +212,5 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         InstanceManager.configureManagerInstance().registerConfig(pManager, jmri.Manager.LAYOUTBLOCKS);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManagerXml.class.getName());
+    static Logger log = Logger.getLogger(LayoutBlockManagerXml.class.getName());
 }

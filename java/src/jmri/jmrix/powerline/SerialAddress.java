@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline;
 
+import org.apache.log4j.Logger;
 import java.util.regex.*;
 
 /**
@@ -372,7 +373,7 @@ public class SerialAddress {
         return dCode;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAddress.class.getName());
+    static Logger log = Logger.getLogger(SerialAddress.class.getName());
 }
 
 /* @(#)SerialAddress.java */

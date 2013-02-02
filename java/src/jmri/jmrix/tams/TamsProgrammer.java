@@ -2,6 +2,7 @@
 
 package jmri.jmrix.tams;
 
+import org.apache.log4j.Logger;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 
@@ -278,7 +279,7 @@ public class TamsProgrammer extends AbstractProgrammer implements TamsListener {
         temp.programmingOpReply(value, status);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsProgrammer.class.getName());
+    static Logger log = Logger.getLogger(TamsProgrammer.class.getName());
 
 }
 

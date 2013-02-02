@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.sdf;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import java.util.ArrayList;
@@ -122,7 +123,7 @@ public class SdfBuffer {
     // byte[] representation
     byte[] buffer;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SdfBuffer.class.getName());
+    static Logger log = Logger.getLogger(SdfBuffer.class.getName());
 
 }
 

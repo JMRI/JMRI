@@ -1,6 +1,7 @@
 // RollingStockGroup.java
 
 package jmri.jmrit.operations.rollingstock;
+import org.apache.log4j.Logger;
 import java.util.*;
 
 /**
@@ -132,6 +133,6 @@ public class RollingStockGroup {
 	}
 
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(RollingStockGroup.class.getName());
 }

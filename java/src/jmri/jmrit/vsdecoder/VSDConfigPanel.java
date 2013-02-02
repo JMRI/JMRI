@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -539,6 +540,6 @@ public class VSDConfigPanel extends JmriPanel {
 	updateAddress();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDConfigPanel.class.getName());
+    private static final Logger log = Logger.getLogger(VSDConfigPanel.class.getName());
     
 }

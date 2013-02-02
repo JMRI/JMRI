@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.spjfile;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import jmri.jmrix.loconet.sdf.SdfBuffer;
@@ -632,7 +633,7 @@ public class SpjFile {
         }
     }
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpjFile.class.getName());
+    static Logger log = Logger.getLogger(SpjFile.class.getName());
 
 }
 

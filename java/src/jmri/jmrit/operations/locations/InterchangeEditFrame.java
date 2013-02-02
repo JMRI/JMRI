@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import javax.swing.BorderFactory;
 
 /**
@@ -40,6 +41,6 @@ public class InterchangeEditFrame extends TrackEditFrame implements
 		setVisible(true);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(InterchangeEditFrame.class.getName());
 }

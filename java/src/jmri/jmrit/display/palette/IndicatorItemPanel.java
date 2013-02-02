@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -154,6 +155,6 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorItemPanel.class.getName());
+    static Logger log = Logger.getLogger(IndicatorItemPanel.class.getName());
 }
 

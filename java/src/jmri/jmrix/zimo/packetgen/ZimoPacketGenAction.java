@@ -2,6 +2,7 @@
 
 package jmri.jmrix.zimo.packetgen;
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -35,7 +36,7 @@ public class ZimoPacketGenAction 			extends AbstractAction {
 		// connect to the TrafficController
 		f.connect(Mx1TrafficController.instance());
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZimoPacketGenAction.class.getName());
+   static Logger log = Logger.getLogger(ZimoPacketGenAction.class.getName());
 }
 
 

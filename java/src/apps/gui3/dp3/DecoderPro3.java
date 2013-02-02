@@ -1,6 +1,7 @@
 // Paned.java
 package apps.gui3.dp3;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
@@ -141,5 +142,5 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         jmri.InstanceManager.tabbedPreferencesInstance().disablePreferenceItem("STARTUP", "apps.PerformFilePanel");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3.class.getName());
+    static Logger log = Logger.getLogger(DecoderPro3.class.getName());
 }

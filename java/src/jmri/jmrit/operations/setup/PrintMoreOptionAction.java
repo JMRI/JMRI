@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
@@ -35,7 +36,7 @@ public class PrintMoreOptionAction extends AbstractAction {
         f.setVisible(true);	
     }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(PrintMoreOptionAction.class.getName());
 }
 

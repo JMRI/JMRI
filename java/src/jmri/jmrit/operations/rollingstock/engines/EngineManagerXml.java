@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.RollingStockLogger;
@@ -105,6 +106,6 @@ public class EngineManagerXml extends OperationsXml {
  
     private String operationsFileName = "OperationsEngineRoster.xml"; // NOI18N
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineManagerXml.class.getName());
+    static Logger log = Logger.getLogger(EngineManagerXml.class.getName());
 
 }

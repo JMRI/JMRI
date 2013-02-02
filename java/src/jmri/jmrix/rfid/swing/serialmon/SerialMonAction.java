@@ -35,7 +35,7 @@
 //        f.setVisible(true);
 //    }
 //
-//    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonAction.class.getName());
+//    private static final Logger log = Logger.getLogger(SerialMonAction.class.getName());
 //
 //}
 //

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.JmriException;
 
@@ -152,7 +153,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSensorManager.class.getName());
+    static Logger log = Logger.getLogger(XNetSensorManager.class.getName());
 
 }
 

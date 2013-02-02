@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio;
 
+import org.apache.log4j.Logger;
 import java.util.Random;
 import jmri.Audio;
 import jmri.AudioManager;
@@ -817,7 +818,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                             "(min=" + this.getMinLoops() + " max=" + this.getMaxLoops() + ")"));
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAudioSource.class.getName());
+    private static final Logger log = Logger.getLogger(AbstractAudioSource.class.getName());
 
     /**
      * An internal class used to create a new thread to monitor and maintain

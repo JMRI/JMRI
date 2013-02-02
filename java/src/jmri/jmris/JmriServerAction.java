@@ -2,6 +2,7 @@
 
 package jmri.jmris;
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -26,7 +27,7 @@ import java.awt.event.ActionEvent;
 		f.setVisible(true);
 
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriServerAction.class.getName());
+   static Logger log = Logger.getLogger(JmriServerAction.class.getName());
 }
 
 

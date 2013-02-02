@@ -2,6 +2,7 @@
 
 package jmri.jmrit.ussctc;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import javax.swing.*;
 
@@ -70,6 +71,6 @@ public class BasePanel extends JPanel implements Constants {
         return true;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BasePanel.class.getName());
+    static Logger log = Logger.getLogger(BasePanel.class.getName());
 
 }

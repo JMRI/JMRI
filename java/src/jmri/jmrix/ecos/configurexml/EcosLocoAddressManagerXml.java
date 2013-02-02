@@ -2,6 +2,7 @@
 
 package jmri.jmrix.ecos.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -30,5 +31,5 @@ public class EcosLocoAddressManagerXml extends jmri.managers.configurexml.Abstra
     public Element store(Object o){
         return null;
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoAddressManagerXml.class.getName());
+    static Logger log = Logger.getLogger(EcosLocoAddressManagerXml.class.getName());
 }

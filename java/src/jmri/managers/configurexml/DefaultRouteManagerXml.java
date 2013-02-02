@@ -2,6 +2,7 @@
 
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Route;
 import jmri.RouteManager;
@@ -500,5 +501,5 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         return InstanceManager.routeManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRouteManagerXml.class.getName());
+    static Logger log = Logger.getLogger(DefaultRouteManagerXml.class.getName());
 }

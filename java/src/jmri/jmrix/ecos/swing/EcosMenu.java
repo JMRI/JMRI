@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.swing;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 import javax.swing.*;
 
@@ -65,5 +66,5 @@ public class EcosMenu extends JMenu{
         String load;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosMenu.class.getName());
+    static Logger log = Logger.getLogger(EcosMenu.class.getName());
 }

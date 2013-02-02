@@ -1,6 +1,7 @@
 // MS100Adapter.java
 
 package jmri.jmrix.loconet.ms100;
+import org.apache.log4j.Logger;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.*;
 import jmri.util.SystemType;
@@ -320,6 +321,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MS100Adapter.class.getName());
+    static Logger log = Logger.getLogger(MS100Adapter.class.getName());
 
 }

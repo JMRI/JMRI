@@ -1,6 +1,7 @@
 
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 
 //import java.awt.datatransfer.Transferable; 
@@ -104,5 +105,5 @@ public class ClockItemPanel extends IconItemPanel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockItemPanel.class.getName());
+    static Logger log = Logger.getLogger(ClockItemPanel.class.getName());
 }

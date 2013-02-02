@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -482,7 +483,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTrafficController.class.getName());
+    static Logger log = Logger.getLogger(AcelaTrafficController.class.getName());
 }
 
 /* @(#)AcelaTrafficController.java */

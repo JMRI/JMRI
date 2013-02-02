@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio;
 
+import org.apache.log4j.Logger;
 import java.util.List;
 import jmri.Audio;
 import jmri.AudioManager;
@@ -124,7 +125,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
         return new NullAudioSource(systemName, userName);
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NullAudioFactory.class.getName());
+    private static final Logger log = Logger.getLogger(NullAudioFactory.class.getName());
 
 }
 

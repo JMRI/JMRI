@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -254,5 +255,5 @@ public class ThrottlesPreferences {
 			listeners.remove(l);		
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesPreferences.class.getName());
+	static Logger log = Logger.getLogger(ThrottlesPreferences.class.getName());
 }

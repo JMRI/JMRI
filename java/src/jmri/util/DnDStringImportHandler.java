@@ -9,6 +9,7 @@ package jmri.util;
  * @version $Revision$
  */
 
+import org.apache.log4j.Logger;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.TransferHandler;
@@ -55,5 +56,5 @@ public class DnDStringImportHandler extends TransferHandler {
         }
         return false;
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DnDStringImportHandler.class.getName());
+    static Logger log = Logger.getLogger(DnDStringImportHandler.class.getName());
 }

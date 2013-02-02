@@ -3,6 +3,7 @@
  */
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.implementation.NoFeedbackTurnoutOperator;
 
@@ -70,5 +71,5 @@ public class NoFeedbackTurnoutOperation extends CommonTurnoutOperation {
 	}
 	
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NoFeedbackTurnoutOperation.class.getName());
+    static Logger log = Logger.getLogger(NoFeedbackTurnoutOperation.class.getName());
 }

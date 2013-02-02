@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -65,7 +66,7 @@ public class SprogCSTurnout extends AbstractTurnout {
 
     int _number;   // turnout number
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSTurnout.class.getName());
+    static Logger log = Logger.getLogger(SprogCSTurnout.class.getName());
 }
 
 /* @(#)SprogCSTurnout.java */

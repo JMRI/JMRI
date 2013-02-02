@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio;
 
+import org.apache.log4j.Logger;
 import java.util.List;
 
 import jmri.Audio;
@@ -546,7 +547,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         }
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JoalAudioFactory.class.getName());
+    private static final Logger log = Logger.getLogger(JoalAudioFactory.class.getName());
 
 }
 

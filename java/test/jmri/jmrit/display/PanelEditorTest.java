@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 
 import junit.framework.*;
@@ -62,6 +63,6 @@ public class PanelEditorTest extends TestCase {
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconTest.class.getName());
+	// static private Logger log = Logger.getLogger(TurnoutIconTest.class.getName());
 
 }

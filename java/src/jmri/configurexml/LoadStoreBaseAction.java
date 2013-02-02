@@ -2,6 +2,7 @@
 
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 
 import javax.swing.AbstractAction;
@@ -45,6 +46,6 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadStoreBaseAction.class.getName());
+    static Logger log = Logger.getLogger(LoadStoreBaseAction.class.getName());
 
 }

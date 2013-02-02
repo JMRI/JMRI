@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.locomon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.LocoNetMessage;
 
 import junit.framework.Test;
@@ -90,6 +91,6 @@ public class LlnmonTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LlnmonTest.class.getName());
+    static Logger log = Logger.getLogger(LlnmonTest.class.getName());
 
 }

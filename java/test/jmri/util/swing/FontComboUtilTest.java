@@ -2,6 +2,7 @@
 
 package jmri.util.swing;
 
+import org.apache.log4j.Logger;
 import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -96,6 +97,6 @@ public class FontComboUtilTest extends TestCase {
         return suite;
     }
     
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FontComboUtilTest.class.getName());
+    //private static final Logger log = Logger.getLogger(FontComboUtilTest.class.getName());
 
 }

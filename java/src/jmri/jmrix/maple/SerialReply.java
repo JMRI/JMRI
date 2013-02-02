@@ -2,6 +2,8 @@
 
 package jmri.jmrix.maple;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * Contains the data payload of a serial reply
@@ -50,7 +52,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialReply.class.getName());
+    static Logger log = Logger.getLogger(SerialReply.class.getName());
 
 }
 

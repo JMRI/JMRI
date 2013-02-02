@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.locoio;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.LnConstants;
 
 import javax.swing.JButton;
@@ -236,5 +237,5 @@ public class LocoIOTableModel
         if (log.isDebugEnabled()) log.debug("dispose");
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIOTableModel.class.getName());
+    static final Logger log = Logger.getLogger(LocoIOTableModel.class.getName());
 }

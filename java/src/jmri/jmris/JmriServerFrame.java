@@ -3,6 +3,7 @@
 package jmri.jmris;
 
 //import java.awt.*;
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -82,6 +83,6 @@ public class JmriServerFrame extends jmri.util.JmriJFrame {
 	JmriServer.instance().stop();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriServerFrame.class.getName());
+    static Logger log = Logger.getLogger(JmriServerFrame.class.getName());
 
 }

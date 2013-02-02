@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
 
@@ -138,7 +139,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     }
      
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetThrottleManager.class.getName());
+    static Logger log = Logger.getLogger(XNetThrottleManager.class.getName());
 
 }
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
+import org.apache.log4j.Logger;
 import jmri.BeanSetting;
 import jmri.Path;
 import jmri.jmrit.display.*;
@@ -525,6 +526,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         return _block;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditCircuitPaths.class.getName());
+    static Logger log = Logger.getLogger(EditCircuitPaths.class.getName());
 }
 

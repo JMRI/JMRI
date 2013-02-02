@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
+
 /**
  * Abstract base for classes representing a XNet communications port
  * <p>
@@ -63,7 +65,7 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetNetworkPortController.class.getName());
+    static Logger log = Logger.getLogger(XNetNetworkPortController.class.getName());
 
 
 }

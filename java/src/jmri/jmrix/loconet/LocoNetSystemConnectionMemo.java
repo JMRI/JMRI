@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import java.util.ResourceBundle;
 
@@ -328,7 +329,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetSystemConnectionMemo.class.getName());   
+    static Logger log = Logger.getLogger(LocoNetSystemConnectionMemo.class.getName());   
 }
 
 

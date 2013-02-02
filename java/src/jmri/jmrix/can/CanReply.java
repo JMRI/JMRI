@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRReply;
 
 /**
@@ -136,7 +137,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     boolean _isExtended;
     boolean _isRtr;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanReply.class.getName());
+    static Logger log = Logger.getLogger(CanReply.class.getName());
 }
 
 /* @(#)CanReply.java */

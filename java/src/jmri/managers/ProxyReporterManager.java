@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.NamedBean;
@@ -128,7 +129,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyReporterManager.class.getName());
+    static Logger log = Logger.getLogger(ProxyReporterManager.class.getName());
 }
 
 /* @(#)ProxyReporterManager.java */

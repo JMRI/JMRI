@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.managers.AbstractManager;
 
 import java.util.ArrayList;
@@ -165,7 +166,7 @@ public class TransitManager extends AbstractManager
         return (_instance);
     }
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitManager.class.getName());
+    static Logger log = Logger.getLogger(TransitManager.class.getName());
 }
 
 

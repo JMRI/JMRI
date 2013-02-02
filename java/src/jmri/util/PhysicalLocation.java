@@ -19,6 +19,7 @@ package jmri.util;
  * @version			$Revision: 18568 $
  */
 
+import org.apache.log4j.Logger;
 import javax.vecmath.Vector3f;
 import javax.vecmath.Vector3d;
 import java.util.regex.*;
@@ -309,5 +310,5 @@ public class PhysicalLocation extends Vector3f {
 
 
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PhysicalLocation.class.getName());
+    private static final Logger log = Logger.getLogger(PhysicalLocation.class.getName());
 }

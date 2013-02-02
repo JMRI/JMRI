@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
@@ -136,5 +137,5 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 		p.pointList.add(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePointXml.class.getName());
+    static Logger log = Logger.getLogger(PositionablePointXml.class.getName());
 }

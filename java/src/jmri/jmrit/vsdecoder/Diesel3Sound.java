@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18481 $
  */
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 import java.util.HashMap;
 import java.util.List;
@@ -283,7 +284,7 @@ class Diesel3Sound extends EngineSound {
 	this.startThread();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Diesel3Sound.class.getName());
+    private static final Logger log = Logger.getLogger(Diesel3Sound.class.getName());
 
 }
 
@@ -434,7 +435,7 @@ class D3Notch {
 	return(buf);
     }
  
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(D3Notch.class.getName());
+    private static final Logger log = Logger.getLogger(D3Notch.class.getName());
    
 }
 
@@ -630,6 +631,6 @@ class D3LoopThread extends Thread {
 	_notch = null;
 	_sound = null;
     }
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(D3LoopThread.class.getName());
+    private static final Logger log = Logger.getLogger(D3LoopThread.class.getName());
 
 }

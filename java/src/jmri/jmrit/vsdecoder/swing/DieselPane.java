@@ -24,6 +24,7 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 18410 $
  */
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -127,6 +128,6 @@ public class DieselPane extends EnginePane {
 	throttle_spinner.setValue(t);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DieselPane.class.getName());
+    static Logger log = Logger.getLogger(DieselPane.class.getName());
 
 }

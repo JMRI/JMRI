@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
@@ -117,6 +118,6 @@ public class PrintTrainsAction extends PrintTrainAction {
 		return buf.toString();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintTrainsAction.class
+	static Logger log = Logger.getLogger(PrintTrainsAction.class
 			.getName());
 }

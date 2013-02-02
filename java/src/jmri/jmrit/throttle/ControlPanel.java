@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -1441,6 +1442,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	}
 	
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());	
+    static Logger log = Logger.getLogger(ControlPanel.class.getName());	
 }
 

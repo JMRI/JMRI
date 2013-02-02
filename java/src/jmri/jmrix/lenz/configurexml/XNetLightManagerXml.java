@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -33,5 +34,5 @@ public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         return loadLights(lights);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightManagerXml.class.getName());
+    static Logger log = Logger.getLogger(XNetLightManagerXml.class.getName());
 }

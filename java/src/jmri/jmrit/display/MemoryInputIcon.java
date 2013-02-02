@@ -1,6 +1,7 @@
 
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Memory;
 
@@ -232,5 +233,5 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         namedMemory = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryInputIcon.class.getName());
+    static Logger log = Logger.getLogger(MemoryInputIcon.class.getName());
 }

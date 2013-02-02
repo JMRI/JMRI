@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.duplexgroup.swing;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import java.awt.*;
 import jmri.jmrix.loconet.*;
@@ -468,7 +469,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DuplexGroupScanPanel.class.getName());
+    static Logger log = Logger.getLogger(DuplexGroupScanPanel.class.getName());
 
     public void stateChanged (javax.swing.event.ChangeEvent e) {
         graphicArea.repaint ();

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.apache.log4j.Logger;
 import jmri.Block;
 import jmri.Section;
 import jmri.EntryPoint;
@@ -250,7 +251,7 @@ public class AutoTurnouts {
 	}
 	
    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoTurnouts.class.getName());
+    static Logger log = Logger.getLogger(AutoTurnouts.class.getName());
 }
 
 /* @(#)AutoTurnouts.java */

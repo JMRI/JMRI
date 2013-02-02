@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apache.log4j.Logger;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -142,7 +143,7 @@ public class ExportCars extends XmlFile {
 
 	private static String OperationsFileName = "ExportOperationsCarRoster.csv"; // NOI18N
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ExportCars.class
+	static Logger log = Logger.getLogger(ExportCars.class
 			.getName());
 
 }

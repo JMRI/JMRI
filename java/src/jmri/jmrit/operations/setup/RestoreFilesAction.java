@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
@@ -23,7 +24,7 @@ import apps.Apps;
  */
 public class RestoreFilesAction extends AbstractAction {
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(RestoreFilesAction.class.getName());
 
 	public RestoreFilesAction(String s) {

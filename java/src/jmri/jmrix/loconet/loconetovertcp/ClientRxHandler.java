@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
+import org.apache.log4j.Logger;
 import java.net.Socket;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetListener;
@@ -207,5 +208,5 @@ public void run(){
     }
   }
 
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClientRxHandler.class.getName());
+  static Logger log = Logger.getLogger(ClientRxHandler.class.getName());
 }

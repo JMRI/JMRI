@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import junit.framework.Test;
@@ -149,6 +150,6 @@ public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CheckProgrammerNames.class.getName());
+    static Logger log = Logger.getLogger(CheckProgrammerNames.class.getName());
     
 }

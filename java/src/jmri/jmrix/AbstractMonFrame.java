@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -440,5 +441,5 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
     StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500 ;
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMonFrame.class.getName());
+    private static final Logger log = Logger.getLogger(AbstractMonFrame.class.getName());
 }

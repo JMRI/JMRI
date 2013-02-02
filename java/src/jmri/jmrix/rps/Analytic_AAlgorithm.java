@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import javax.vecmath.Point3d;
 
 /**
@@ -308,7 +309,7 @@ public double sub(double[][] A, int r, int c) {
         double x, y, z, vs;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Analytic_AAlgorithm.class.getName());
+    static Logger log = Logger.getLogger(Analytic_AAlgorithm.class.getName());
 }
 
 /* @(#)Analytic_AAlgorithm.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutTurnout;
@@ -363,5 +364,5 @@ public class LayoutTurnoutXml extends AbstractXmlAdapter {
 		p.turnoutList.add(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutTurnoutXml.class.getName());
+    static Logger log = Logger.getLogger(LayoutTurnoutXml.class.getName());
 }

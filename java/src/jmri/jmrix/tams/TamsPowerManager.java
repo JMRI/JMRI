@@ -2,6 +2,7 @@
 
 package jmri.jmrix.tams;
 
+import org.apache.log4j.Logger;
 import jmri.JmriException;
 import jmri.PowerManager;
 
@@ -97,7 +98,7 @@ public class TamsPowerManager implements PowerManager, TamsListener {
         // messages are ignored
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsPowerManager.class.getName());
+    static Logger log = Logger.getLogger(TamsPowerManager.class.getName());
 }
 
 

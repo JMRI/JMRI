@@ -1,5 +1,7 @@
 package jmri.jmrit.vsdecoder;
 
+import org.apache.log4j.Logger;
+
 /*
  * <hr>
  * This file is part of JMRI.
@@ -114,7 +116,7 @@ class NotchSound extends SoundBite {
     public SoundBite getAccelSound() { return(accel_sound); }
     public SoundBite getDecelSound() { return(decel_sound); }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NotchSound.class.getName());
+    private static final Logger log = Logger.getLogger(NotchSound.class.getName());
 
 }
 

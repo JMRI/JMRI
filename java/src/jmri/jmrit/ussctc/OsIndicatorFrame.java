@@ -2,6 +2,7 @@
 
 package jmri.jmrit.ussctc;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 /**
@@ -29,6 +30,6 @@ public class OsIndicatorFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OsIndicatorFrame.class.getName());
+    static Logger log = Logger.getLogger(OsIndicatorFrame.class.getName());
 
 }

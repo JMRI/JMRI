@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 
@@ -151,6 +152,6 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		super.propertyChange(e);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SidingEditFrame.class
+	static Logger log = Logger.getLogger(SidingEditFrame.class
 			.getName());
 }

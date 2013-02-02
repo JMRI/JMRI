@@ -2,6 +2,7 @@
 
 package jmri.jmrit.catalog;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
@@ -460,7 +461,7 @@ public class PreviewDialog extends JDialog {
         log.debug("PreviewDialog disposed.");
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PreviewDialog.class.getName());
+    static Logger log = Logger.getLogger(PreviewDialog.class.getName());
 }
 
 

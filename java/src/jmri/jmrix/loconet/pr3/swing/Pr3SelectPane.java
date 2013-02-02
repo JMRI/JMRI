@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.pr3.swing;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.*;
 
 import java.awt.*;
@@ -119,6 +120,6 @@ public class Pr3SelectPane extends jmri.jmrix.loconet.swing.LnPanel implements L
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr3SelectPane.class.getName());
+    static Logger log = Logger.getLogger(Pr3SelectPane.class.getName());
 
 }

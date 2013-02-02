@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
@@ -19,7 +20,7 @@ import jmri.jmrit.operations.OperationsXml;
  */
 public class BackupFilesAction extends AbstractAction {
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(BackupFilesAction.class.getName());
 
 	public BackupFilesAction(String s) {

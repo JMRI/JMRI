@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.DefaultSignalHead;
 
 /**
@@ -107,7 +108,7 @@ public class AcelaSignalHead extends DefaultSignalHead {
     String tSystemName; // System Name of this signal head
     int addr;         // output address
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaSignalHead.class.getName());
+    static Logger log = Logger.getLogger(AcelaSignalHead.class.getName());
 }
 
 /* @(#)AcelaSignalHead.java */

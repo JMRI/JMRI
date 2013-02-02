@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.managers.AbstractManager;
 
@@ -216,7 +217,7 @@ public abstract class AbstractLightManager extends AbstractManager
     **/
     public boolean allowMultipleAdditions(String systemName) { return false;  }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractLightManager.class.getName());
+    static Logger log = Logger.getLogger(AbstractLightManager.class.getName());
 }
 
 /* @(#)AbstractLightManager.java */

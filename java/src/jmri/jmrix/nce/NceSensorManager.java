@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRReply;
 import jmri.JmriException;
@@ -377,7 +378,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         }
         
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceSensorManager.class.getName());
+    static Logger log = Logger.getLogger(NceSensorManager.class.getName());
 }
 
 /* @(#)NceSensorManager.java */

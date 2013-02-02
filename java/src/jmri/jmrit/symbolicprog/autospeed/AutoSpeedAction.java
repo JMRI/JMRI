@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog.autospeed;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import java.io.*;
 
@@ -90,7 +91,7 @@ public class AutoSpeedAction 			extends AbstractAction {
         f.setVisible(true);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoSpeedAction.class.getName());
+    static Logger log = Logger.getLogger(AutoSpeedAction.class.getName());
 
 }
 

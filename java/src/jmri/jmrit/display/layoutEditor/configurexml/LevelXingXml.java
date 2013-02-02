@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LevelXing;
@@ -252,5 +253,5 @@ public class LevelXingXml extends AbstractXmlAdapter {
 		p.xingList.add(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LevelXingXml.class.getName());
+    static Logger log = Logger.getLogger(LevelXingXml.class.getName());
 }

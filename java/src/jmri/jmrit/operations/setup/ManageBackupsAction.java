@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -15,7 +16,7 @@ import javax.swing.AbstractAction;
  * @author Gregory Madsen Copyright (C) 2012
  */
 public class ManageBackupsAction extends AbstractAction {
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(ManageBackupsAction.class.getName());
 
 	public ManageBackupsAction(String s) {

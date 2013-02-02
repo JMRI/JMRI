@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.util.Vector;
 import java.awt.Component;
 import javax.swing.*;
@@ -321,6 +322,6 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     abstract public CvValue[] usesCVs();
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VariableValue.class.getName());
+    static Logger log = Logger.getLogger(VariableValue.class.getName());
 
 }

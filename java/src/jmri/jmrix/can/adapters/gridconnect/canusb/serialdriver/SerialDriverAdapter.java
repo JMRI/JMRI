@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.SystemConnectionMemo;
 
@@ -40,6 +41,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

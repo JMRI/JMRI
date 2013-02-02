@@ -1,5 +1,6 @@
 package jmri.implementation.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.implementation.SignalHeadSignalMast;
@@ -79,5 +80,5 @@ public class SignalHeadSignalMastXml
         log.error("Invalid method called");
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMastXml.class.getName());
+    static Logger log = Logger.getLogger(SignalHeadSignalMastXml.class.getName());
 }

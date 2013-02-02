@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apache.log4j.Logger;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -124,6 +125,6 @@ public class PrintCarLoadsAction extends AbstractAction {
 		return buf.toString();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(PrintCarLoadsAction.class.getName());
 }

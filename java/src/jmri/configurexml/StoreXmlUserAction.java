@@ -2,6 +2,7 @@
 
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
@@ -65,5 +66,5 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StoreXmlUserAction.class.getName());
+    static Logger log = Logger.getLogger(StoreXmlUserAction.class.getName());
 }

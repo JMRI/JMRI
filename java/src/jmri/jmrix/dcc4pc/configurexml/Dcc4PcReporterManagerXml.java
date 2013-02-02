@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -34,5 +35,5 @@ public class Dcc4PcReporterManagerXml extends jmri.managers.configurexml.Abstrac
         return loadReporters(reporter);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcReporterManagerXml.class.getName());
+    static Logger log = Logger.getLogger(Dcc4PcReporterManagerXml.class.getName());
 }

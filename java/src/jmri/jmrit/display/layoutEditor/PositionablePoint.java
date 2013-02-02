@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.apache.log4j.Logger;
 import java.awt.geom.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
@@ -462,6 +463,6 @@ public class PositionablePoint
         return active;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePoint.class.getName());
+    static Logger log = Logger.getLogger(PositionablePoint.class.getName());
 
 }

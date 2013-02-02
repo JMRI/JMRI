@@ -2,6 +2,7 @@
 
 package jmri.jmrit.simpleturnoutctrl;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import java.awt.GridBagLayout;
@@ -396,7 +397,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
     
     Turnout turnout = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTurnoutCtrlFrame.class.getName());
+    static Logger log = Logger.getLogger(SimpleTurnoutCtrlFrame.class.getName());
 
     String newState = "";
 }

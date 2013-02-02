@@ -2,6 +2,7 @@
 
 package jmri.jmrix.maple;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.JmriException;
 
@@ -174,7 +175,7 @@ public class InputBits {
 	}
 	static InputBits mInstance = null;  // package access for tests
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InputBits.class.getName());
+    static Logger log = Logger.getLogger(InputBits.class.getName());
 }
 
 /* @(#)InputBits.java */

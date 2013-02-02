@@ -6,6 +6,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import jmri.*;
@@ -73,5 +74,5 @@ public class SensorTurnoutOperator extends TurnoutOperator {
 		myTurnout.removePropertyChangeListener(listener);
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTurnoutOperator.class.getName());
+    static Logger log = Logger.getLogger(SensorTurnoutOperator.class.getName());
 }

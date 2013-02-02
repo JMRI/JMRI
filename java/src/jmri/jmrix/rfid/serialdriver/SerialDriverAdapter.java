@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rfid.serialdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.rfid.RfidPortController;
 
 import java.io.DataInputStream;
@@ -293,6 +294,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     @Override
     public void setManufacturer(String manu) { manufacturerName=manu; }
     
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    private static final Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

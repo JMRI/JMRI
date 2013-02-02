@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 import jmri.jmrix.acela.*;
 
@@ -49,7 +50,7 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         return loadSensors(sensors);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaSensorManagerXml.class.getName());
+    static Logger log = Logger.getLogger(AcelaSensorManagerXml.class.getName());
 }
 
 /* @(#)AcelaSensorManagerXml.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import java.util.List;
 import javax.swing.BorderFactory;
@@ -209,7 +210,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 			updateLocations();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(LocationsByCarTypeFrame.class.getName());
 
 }

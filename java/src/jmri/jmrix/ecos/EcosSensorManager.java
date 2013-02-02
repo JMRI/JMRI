@@ -2,6 +2,7 @@
 
 package jmri.jmrix.ecos;
 
+import org.apache.log4j.Logger;
 import java.util.Hashtable;
 import jmri.Sensor;
 
@@ -202,7 +203,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         tc.sendEcosMessage(m, this);
         
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosSensorManager.class.getName());
+    static Logger log = Logger.getLogger(EcosSensorManager.class.getName());
 }
 
 /* @(#)EcosSensorManager.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import jmri.util.FileChooserFilter;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -56,5 +57,5 @@ public class Pr1ImportAction  extends AbstractAction {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1ImportAction.class.getName());
+    static Logger log = Logger.getLogger(Pr1ImportAction.class.getName());
 }

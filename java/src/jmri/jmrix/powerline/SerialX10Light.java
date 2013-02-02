@@ -2,6 +2,8 @@
 
 package jmri.jmrix.powerline;
 
+import org.apache.log4j.Logger;
+
 /**
  * Implementation of the Light class for X10-based subclasses.
  * <P>
@@ -210,7 +212,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialX10Light.class.getName());
+    static Logger log = Logger.getLogger(SerialX10Light.class.getName());
 }
 
 /* @(#)SerialX10Light.java */

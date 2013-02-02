@@ -2,6 +2,7 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 import java.util.Vector;
@@ -138,6 +139,6 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
     // The minimal setup for log4J
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccPowerManagerTest.class.getName());
+	static Logger log = Logger.getLogger(EasyDccPowerManagerTest.class.getName());
 	
 }

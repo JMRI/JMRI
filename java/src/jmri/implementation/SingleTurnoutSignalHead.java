@@ -1,6 +1,7 @@
 // SingleTurnoutSignalHead.java
 
 package jmri.implementation;
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.NamedBeanHandle;
 
@@ -195,7 +196,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SingleTurnoutSignalHead.class.getName());
+    static Logger log = Logger.getLogger(SingleTurnoutSignalHead.class.getName());
 }
 
 /* @(#)SingleTurnoutSignalHead.java */

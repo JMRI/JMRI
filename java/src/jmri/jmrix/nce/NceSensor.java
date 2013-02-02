@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractSensor;
 
 /**
@@ -31,7 +32,7 @@ public class NceSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceSensor.class.getName());
+    static Logger log = Logger.getLogger(NceSensor.class.getName());
 
 }
 

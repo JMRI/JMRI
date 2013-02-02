@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -381,5 +382,5 @@ public class JmrixConfigPane extends JPanel {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmrixConfigPane.class.getName());
+    static Logger log = Logger.getLogger(JmrixConfigPane.class.getName());
 }

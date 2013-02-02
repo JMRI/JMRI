@@ -2,6 +2,7 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -110,7 +111,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
         else return true;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccTrafficController.class.getName());
+    static Logger log = Logger.getLogger(EasyDccTrafficController.class.getName());
 }
 
 

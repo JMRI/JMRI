@@ -2,6 +2,7 @@
 
 package jmri.jmrix.jmriclient;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -148,7 +149,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 
 
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientTurnout.class.getName());
+	static Logger log = Logger.getLogger(JMRIClientTurnout.class.getName());
 
 }
 

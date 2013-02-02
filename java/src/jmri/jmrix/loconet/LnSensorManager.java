@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.JmriException;
 
@@ -177,7 +178,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorManager.class.getName());
+    static Logger log = Logger.getLogger(LnSensorManager.class.getName());
 
 }
 

@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -213,7 +214,7 @@ abstract public class AbstractManager
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractManager.class.getName());
+    static Logger log = Logger.getLogger(AbstractManager.class.getName());
 
 }
 

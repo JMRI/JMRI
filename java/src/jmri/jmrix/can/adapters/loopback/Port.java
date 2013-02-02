@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.adapters.loopback;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractSerialPortController;
 
 import java.io.DataInputStream;
@@ -68,7 +69,7 @@ public class Port extends AbstractSerialPortController {
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Port.class.getName());
+    static Logger log = Logger.getLogger(Port.class.getName());
 }
 
 /* @(#)Port.java */

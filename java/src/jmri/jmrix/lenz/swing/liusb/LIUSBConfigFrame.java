@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.swing.liusb;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -171,6 +172,6 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBConfigFrame.class.getName());
+    static Logger log = Logger.getLogger(LIUSBConfigFrame.class.getName());
 
 }

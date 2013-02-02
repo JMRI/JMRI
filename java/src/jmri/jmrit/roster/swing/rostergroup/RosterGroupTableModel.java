@@ -1,6 +1,7 @@
 // RosterGroupTableModel.java
 
 package jmri.jmrit.roster.swing.rostergroup;
+import org.apache.log4j.Logger;
 import javax.swing.JTable;
 import jmri.jmrit.roster.*;
 import javax.swing.JTextField;
@@ -164,5 +165,5 @@ public class RosterGroupTableModel extends javax.swing.table.AbstractTableModel 
     
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterGroupTableModel.class.getName());
+    static final Logger log = Logger.getLogger(RosterGroupTableModel.class.getName());
 }

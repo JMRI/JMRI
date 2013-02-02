@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -775,6 +776,6 @@ public class TrainCommon {
 		return sbuf.toString();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainCommon.class
+	static Logger log = Logger.getLogger(TrainCommon.class
 			.getName());
 }

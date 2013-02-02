@@ -2,6 +2,7 @@
 
 package jmri.jmrix.openlcb.swing.networktree;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.*;
 
@@ -115,7 +116,7 @@ public class NetworkTreePane extends jmri.util.swing.JmriPanel implements CanLis
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkTreePane.class.getName());
+    static Logger log = Logger.getLogger(NetworkTreePane.class.getName());
 
     /**
      * Nested class to open specific windows when proper tree element is picked

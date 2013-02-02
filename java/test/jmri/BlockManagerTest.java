@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -178,7 +179,7 @@ public class BlockManagerTest extends TestCase {
 
 //TODO: Bob C says: Needed for the commented out Default Speed tests
 /*
-        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManagerXmlTest.class.getName());
+        static Logger log = Logger.getLogger(BlockManagerXmlTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

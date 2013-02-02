@@ -2,6 +2,7 @@
 
 package jmri.jmrix.jmriclient;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 
 /**
@@ -34,7 +35,7 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
         return t;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientSensorManager.class.getName());
+    static Logger log = Logger.getLogger(JMRIClientSensorManager.class.getName());
 
 }
 

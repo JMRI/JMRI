@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.awt.Component;
 import java.util.Vector;
 import javax.swing.*;
@@ -205,6 +206,6 @@ public class ConstantValue extends VariableValue {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConstantValue.class.getName());
+    static Logger log = Logger.getLogger(ConstantValue.class.getName());
 
 }

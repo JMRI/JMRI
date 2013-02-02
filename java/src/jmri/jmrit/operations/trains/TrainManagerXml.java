@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 
 import jmri.jmrit.operations.setup.Control;
@@ -215,7 +216,7 @@ public class TrainManagerXml extends OperationsXml {
 
 	private String operationsFileName = "OperationsTrainRoster.xml";// NOI18N
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainManagerXml.class
+	static Logger log = Logger.getLogger(TrainManagerXml.class
 			.getName());
 
 }

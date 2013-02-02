@@ -2,6 +2,8 @@
 
 package jmri.jmrix.bachrus;
 
+import org.apache.log4j.Logger;
+
 /**
  * SpeedoReply.java
  *
@@ -113,7 +115,7 @@ public class SpeedoReply {
     private int _nDataChars;
     private char _dataChars[] = new char[maxSize];
     private boolean unsolicited;
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoReply.class.getName());
+    static Logger log = Logger.getLogger(SpeedoReply.class.getName());
 }
 
 /* @(#)SpeedoReply.java */

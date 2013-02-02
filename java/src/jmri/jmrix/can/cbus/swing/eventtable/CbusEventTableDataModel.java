@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.cbus.swing.eventtable;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.*;
@@ -497,5 +498,5 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     @SuppressWarnings("unused")
 	private boolean _saved = false;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventTableDataModel.class.getName());
+    static Logger log = Logger.getLogger(CbusEventTableDataModel.class.getName());
 }

@@ -1,5 +1,6 @@
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.SensorManager;
 import jmri.Sensor;
@@ -200,5 +201,5 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         return InstanceManager.sensorManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManagerConfigXML.class.getName());
+    static Logger log = Logger.getLogger(AbstractSensorManagerConfigXML.class.getName());
 }

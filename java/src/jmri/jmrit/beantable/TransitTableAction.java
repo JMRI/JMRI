@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -2337,7 +2338,7 @@ public class TransitTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleTransitTable"); }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitTableAction.class.getName());
+    static final Logger log = Logger.getLogger(TransitTableAction.class.getName());
 }
 
 /* @(#)TransitTableAction.java */

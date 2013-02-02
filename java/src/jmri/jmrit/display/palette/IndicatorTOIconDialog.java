@@ -2,6 +2,7 @@
 // IndicatorTOIconDialog.java
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.util.Hashtable;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -106,5 +107,5 @@ public class IndicatorTOIconDialog extends IconDialog {
         return true;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTOIconDialog.class.getName());
+    static Logger log = Logger.getLogger(IndicatorTOIconDialog.class.getName());
 }

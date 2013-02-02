@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -171,5 +172,5 @@ public class ShapeDrawer  {
         return false;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ShapeDrawer.class.getName());
+    static Logger log = Logger.getLogger(ShapeDrawer.class.getName());
 }

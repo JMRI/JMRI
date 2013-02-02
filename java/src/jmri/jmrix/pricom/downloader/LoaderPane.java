@@ -2,6 +2,7 @@
 
 package jmri.jmrix.pricom.downloader;
 
+import org.apache.log4j.Logger;
 import java.awt.FlowLayout;
 
 import gnu.io.CommPortIdentifier;
@@ -651,6 +652,6 @@ public class LoaderPane extends javax.swing.JPanel {
         return buffer;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoaderPane.class.getName());
+    static Logger log = Logger.getLogger(LoaderPane.class.getName());
 
 }

@@ -4,6 +4,7 @@
 
 package jmri.jmrix.lenz.xntcp;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
 
@@ -74,7 +75,7 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XnTcpXNetPacketizer.class.getName());
+    static Logger log = Logger.getLogger(XnTcpXNetPacketizer.class.getName());
 }
 
 /* @(#)XnTcpXNetPacketizer.java */

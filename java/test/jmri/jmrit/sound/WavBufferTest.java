@@ -2,6 +2,7 @@
 
 package jmri.jmrit.sound;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -82,6 +83,6 @@ public class WavBufferTest extends TestCase {
     0x31,0x30, 0x20,0x70, 0x61,0x73, 0x73,0x69, 0x6e,0x67, 0x20,0x63, 0x61,0x70, 0x74,0x75,
     0x72,0x65, 0x00,0x00 
     };
-    //static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WavBufferTest.class.getName());
+    //static private Logger log = Logger.getLogger(WavBufferTest.class.getName());
 
 }

@@ -1,6 +1,7 @@
 // jmri.jmrit.display.LayoutBlock.java
 package jmri.jmrit.display.layoutEditor;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import jmri.Path;
@@ -2055,7 +2056,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         /* We change the logging level to fatal in the connectivity Util as we are testing all possible 
         combinations including those that are invalid which would generate errors */
-        org.apache.log4j.Logger connectionLog = org.apache.log4j.Logger.getLogger(connection.getClass().getName());
+        org.apache.log4j.Logger connectionLog = Logger.getLogger(connection.getClass().getName());
         org.apache.log4j.Level currentLevel = connectionLog.getLevel();
        
         try{
@@ -3749,6 +3750,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlock.class.getName());
+    static Logger log = Logger.getLogger(LayoutBlock.class.getName());
 
 }

@@ -1,5 +1,6 @@
 package jmri;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -193,5 +194,5 @@ public class Path  {
     private int _toBlockDirection;
     private int _fromBlockDirection;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Path.class.getName());
+    static Logger log = Logger.getLogger(Path.class.getName());
 }

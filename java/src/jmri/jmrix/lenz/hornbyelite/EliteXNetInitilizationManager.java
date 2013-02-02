@@ -1,6 +1,7 @@
 // EliteXNetInitilizationManager.java
 
 package jmri.jmrix.lenz.hornbyelite;
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.AbstractXNetInitilizationManager;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
@@ -51,6 +52,6 @@ public class EliteXNetInitilizationManager extends AbstractXNetInitilizationMana
 	if(log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetInitilizationManager.class.getName());
+    static Logger log = Logger.getLogger(EliteXNetInitilizationManager.class.getName());
 
 }

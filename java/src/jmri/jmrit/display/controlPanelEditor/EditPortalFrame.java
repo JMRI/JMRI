@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -540,6 +541,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditPortalFrame.class.getName());
+    static Logger log = Logger.getLogger(EditPortalFrame.class.getName());
 }
 

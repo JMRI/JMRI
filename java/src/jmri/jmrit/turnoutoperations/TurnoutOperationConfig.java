@@ -3,6 +3,7 @@
  */
 package jmri.jmrit.turnoutoperations;
 
+import org.apache.log4j.Logger;
 import javax.swing.JPanel;
 
 import jmri.TurnoutOperation;
@@ -59,5 +60,5 @@ public class TurnoutOperationConfig extends JPanel {
 		}
 		return config;
 	}
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationConfig.class.getName());
+    static Logger log = Logger.getLogger(TurnoutOperationConfig.class.getName());
 }

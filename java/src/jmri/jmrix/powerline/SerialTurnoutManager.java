@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline;
 
+import org.apache.log4j.Logger;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.Turnout;
 
@@ -90,7 +91,7 @@ public String getNextValidAddress(String curAddress, String prefix){
         return t;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(SerialTurnoutManager.class.getName());
 
 }
 

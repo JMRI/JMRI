@@ -2,6 +2,7 @@
 
 package jmri.jmrit;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import java.io.*;
 
@@ -113,5 +114,5 @@ public class XmlFileValidateAction extends AbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFileValidateAction.class.getName());
+    static Logger log = Logger.getLogger(XmlFileValidateAction.class.getName());
 }

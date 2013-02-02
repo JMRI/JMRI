@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.DccLocoAddressSelector;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -423,6 +424,6 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         if (log.isDebugEnabled()) log.debug("dispose");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntryPane.class.getName());
+    static Logger log = Logger.getLogger(RosterEntryPane.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog.symbolicframe;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.decoderdefn.*;
 import jmri.jmrit.progsupport.ProgModePane;
 import jmri.jmrit.symbolicprog.*;
@@ -459,6 +460,6 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SymbolicProgFrame.class.getName());
+    static Logger log = Logger.getLogger(SymbolicProgFrame.class.getName());
 
 }

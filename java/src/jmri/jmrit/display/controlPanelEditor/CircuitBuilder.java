@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -1424,6 +1425,6 @@ public class CircuitBuilder  {
         return panel;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CircuitBuilder.class.getName());
+    static Logger log = Logger.getLogger(CircuitBuilder.class.getName());
 }
 

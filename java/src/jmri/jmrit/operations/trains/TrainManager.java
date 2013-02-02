@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -889,7 +890,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainManager.class
+	static Logger log = Logger.getLogger(TrainManager.class
 			.getName());
 
 }

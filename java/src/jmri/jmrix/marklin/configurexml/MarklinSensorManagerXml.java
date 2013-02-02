@@ -1,5 +1,6 @@
 package jmri.jmrix.marklin.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -33,5 +34,5 @@ public class MarklinSensorManagerXml extends jmri.managers.configurexml.Abstract
         return loadSensors(sensors);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinSensorManagerXml.class.getName());
+    static Logger log = Logger.getLogger(MarklinSensorManagerXml.class.getName());
 }

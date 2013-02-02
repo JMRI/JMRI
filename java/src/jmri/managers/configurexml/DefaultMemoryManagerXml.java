@@ -1,5 +1,6 @@
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 
 import org.jdom.Element;
@@ -40,5 +41,5 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
         return true;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultMemoryManagerXml.class.getName());
+    static Logger log = Logger.getLogger(DefaultMemoryManagerXml.class.getName());
 }

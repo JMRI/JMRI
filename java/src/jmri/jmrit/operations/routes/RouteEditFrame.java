@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -370,6 +371,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteEditFrame.class
+	static Logger log = Logger.getLogger(RouteEditFrame.class
 			.getName());
 }

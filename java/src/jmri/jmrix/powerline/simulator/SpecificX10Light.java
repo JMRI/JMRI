@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.simulator;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.powerline.*;
 
 /**
@@ -101,7 +102,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
     }
     
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificX10Light.class.getName());
+    static Logger log = Logger.getLogger(SpecificX10Light.class.getName());
 }
 
 /* @(#)SpecificX10Light.java */

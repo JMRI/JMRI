@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
@@ -78,6 +79,6 @@ public class EngineSetFrame extends RollingStockSetFrame implements
 		return true;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineSetFrame.class
+	static Logger log = Logger.getLogger(EngineSetFrame.class
 			.getName());
 }

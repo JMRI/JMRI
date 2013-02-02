@@ -1,5 +1,6 @@
 package jmri.jmrit.display.panelEditor;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.util.JmriJFrame;
@@ -1217,5 +1218,5 @@ public class PanelEditor extends Editor implements ItemListener {
    /******************************************************/
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditor.class.getName());
+    static Logger log = Logger.getLogger(PanelEditor.class.getName());
 }

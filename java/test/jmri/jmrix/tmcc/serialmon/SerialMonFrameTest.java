@@ -8,6 +8,7 @@
 
 package jmri.jmrix.tmcc.serialmon;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 
 import junit.framework.Assert;
@@ -149,6 +150,6 @@ public class SerialMonFrameTest extends TestCase {
         return suite;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonFrameTest.class.getName());
+    static Logger log = Logger.getLogger(SerialMonFrameTest.class.getName());
     
 }

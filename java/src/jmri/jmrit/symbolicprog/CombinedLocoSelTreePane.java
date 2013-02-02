@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
@@ -511,7 +512,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
     boolean isDecoderSelected() {
         return !dTree.isSelectionEmpty();
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CombinedLocoSelTreePane.class.getName());
+    static Logger log = Logger.getLogger(CombinedLocoSelTreePane.class.getName());
 
 }
 

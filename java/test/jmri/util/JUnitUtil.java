@@ -1,5 +1,6 @@
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 
 import jmri.*;
@@ -149,5 +150,5 @@ public class JUnitUtil {
         InstanceManager.store(new DefaultIdTagManager(), jmri.IdTagManager.class);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JUnitUtil.class.getName());
+    static Logger log = Logger.getLogger(JUnitUtil.class.getName());
 }

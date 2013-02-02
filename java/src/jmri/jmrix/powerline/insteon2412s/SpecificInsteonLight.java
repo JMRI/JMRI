@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.insteon2412s;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.powerline.*;
 import jmri.util.StringUtil;
 
@@ -182,7 +183,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificInsteonLight.class.getName());
+    static Logger log = Logger.getLogger(SpecificInsteonLight.class.getName());
 }
 
 /* @(#)SpecificInsteonLight.java */

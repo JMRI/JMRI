@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 
 /**
@@ -184,7 +185,7 @@ public class PythonInterp {
     static String defaultContextFile = "jython/jmri_defaults.py";
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PythonInterp.class.getName());
+    static Logger log = Logger.getLogger(PythonInterp.class.getName());
 
 }
 

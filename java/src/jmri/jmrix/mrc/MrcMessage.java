@@ -2,6 +2,8 @@
 
 package jmri.jmrix.mrc;
 
+import org.apache.log4j.Logger;
+
 /**
  * Encodes a message to an EasyDCC command station.  The MrcReply
  * class handles the response from the command station.
@@ -213,7 +215,7 @@ public class MrcMessage extends jmri.jmrix.AbstractMRMessage {
 
     static protected final int LONG_TIMEOUT=180000;  // e.g. for programming options
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MrcMessage.class.getName());
+    static Logger log = Logger.getLogger(MrcMessage.class.getName());
 
 }
 

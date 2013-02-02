@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.ConditionalAction;
 import jmri.jmrit.Sound;
@@ -804,5 +805,5 @@ public class DefaultConditionalAction implements ConditionalAction {
         return str;
     }
 
-	static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConditionalAction.class.getName());
+	static final Logger log = Logger.getLogger(ConditionalAction.class.getName());
 }

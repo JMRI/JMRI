@@ -12,6 +12,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.Consist;
 import jmri.DccLocoAddress;
 import jmri.jmrix.ConnectionStatus;
@@ -136,6 +137,6 @@ public class NceConsistManager extends jmri.jmrix.AbstractConsistManager impleme
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceConsistManager.class.getName());
+    static Logger log = Logger.getLogger(NceConsistManager.class.getName());
     
 }

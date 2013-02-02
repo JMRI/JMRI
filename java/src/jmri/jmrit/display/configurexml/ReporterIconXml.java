@@ -1,5 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ReporterIcon;
 
@@ -65,5 +66,5 @@ public class ReporterIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.REPORTERS, element);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterIconXml.class.getName());
+    static Logger log = Logger.getLogger(ReporterIconXml.class.getName());
 }

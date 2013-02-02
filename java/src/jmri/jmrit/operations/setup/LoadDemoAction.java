@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -22,7 +23,7 @@ import apps.Apps;
  * @version $Revision$
  */
 public class LoadDemoAction extends AbstractAction {
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadDemoAction.class
+	static Logger log = Logger.getLogger(LoadDemoAction.class
 			.getName());
 
 	public LoadDemoAction(String s) {

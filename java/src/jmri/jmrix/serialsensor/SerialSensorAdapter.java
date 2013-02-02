@@ -2,6 +2,7 @@
 
 package jmri.jmrix.serialsensor;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -208,6 +209,6 @@ public class SerialSensorAdapter extends AbstractSerialPortController
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorAdapter.class.getName());
+    static Logger log = Logger.getLogger(SerialSensorAdapter.class.getName());
 
 }

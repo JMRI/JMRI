@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -532,6 +533,6 @@ public class FunctionButton extends JToggleButton implements ActionListener
 		return isSelectedImageOK;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FunctionButton.class.getName());
+	static Logger log = Logger.getLogger(FunctionButton.class.getName());
 
 }

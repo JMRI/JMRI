@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.swing.polling;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ResourceBundle;
@@ -192,6 +193,6 @@ public class PollTablePane extends javax.swing.JPanel {
         pollModel.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PollTablePane.class.getName());
+    static Logger log = Logger.getLogger(PollTablePane.class.getName());
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.*;
 import jmri.jmrit.display.configurexml.*;
 
@@ -54,6 +55,6 @@ public class LayoutSensorIconXml extends AbstractXmlAdapter {
     
     
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutSensorIconXml.class.getName());
+    static Logger log = Logger.getLogger(LayoutSensorIconXml.class.getName());
 
 }

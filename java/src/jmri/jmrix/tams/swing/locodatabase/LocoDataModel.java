@@ -2,6 +2,7 @@
 
 package jmri.jmrix.tams.swing.locodatabase;
 
+import org.apache.log4j.Logger;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.tams.TamsMessage;
@@ -243,6 +244,6 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
         memo.getTrafficController().sendTamsMessage(m, this);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoDataModel.class.getName());
+    static Logger log = Logger.getLogger(LocoDataModel.class.getName());
 
 }

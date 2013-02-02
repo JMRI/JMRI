@@ -2,6 +2,7 @@
 
 package jmri.jmrix.openlcb.swing.hub;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.swing.CanPanelInterface;
@@ -151,6 +152,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HubPane.class.getName());
+    static Logger log = Logger.getLogger(HubPane.class.getName());
 
 }

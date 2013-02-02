@@ -2,6 +2,8 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
+
 /**
  * Provides a base to perform a shutdown task without user-intervention.
  * 
@@ -36,7 +38,7 @@ public class QuietShutDownTask extends AbstractShutDownTask {
         return true;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QuietShutDownTask.class.getName());
+    static Logger log = Logger.getLogger(QuietShutDownTask.class.getName());
 
 }
 

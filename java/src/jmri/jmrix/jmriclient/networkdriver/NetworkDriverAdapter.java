@@ -2,6 +2,7 @@
 
 package jmri.jmrix.jmriclient.networkdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.jmriclient.JMRIClientPortController;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 
@@ -64,6 +65,6 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
     }
     static NetworkDriverAdapter mInstance = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(NetworkDriverAdapter.class.getName());
 
 }

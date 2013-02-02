@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.util.JmriJFrame;
 import jmri.util.ConnectionNameFromSystemName;
 
@@ -324,7 +325,7 @@ public class SensorTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleSensorTable"); }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableAction.class.getName());
+    static final Logger log = Logger.getLogger(SensorTableAction.class.getName());
 }
 
 

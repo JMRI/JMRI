@@ -2,6 +2,8 @@
 
 package jmri.jmrix.qsi;
 
+import org.apache.log4j.Logger;
+
 /**
  * Carries the reply to an QsiMessage
  * @author			Bob Jacobsen  Copyright (C) 2007
@@ -150,7 +152,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     // contents (private)
     private boolean _isBoot = false;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiReply.class.getName());
+    static Logger log = Logger.getLogger(QsiReply.class.getName());
 }
 
 /* @(#)QsiReply.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -164,7 +165,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetOpsModeProgrammer.class.getName());
+    static Logger log = Logger.getLogger(XNetOpsModeProgrammer.class.getName());
 
 }
 

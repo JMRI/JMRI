@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -36,7 +37,7 @@ import java.io.IOException;
 
 public class RestoreDialog extends JDialog {
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RestoreDialog.class
+	static Logger log = Logger.getLogger(RestoreDialog.class
 			.getName());
 
 	private JPanel mainPanel;

@@ -1,5 +1,6 @@
 package jmri.jmrit.symbolicprog.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.symbolicprog.ProgrammerConfigPane;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import org.jdom.Attribute;
@@ -78,6 +79,6 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         log.warn("unexpected call of 2nd load form");
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgrammerConfigPaneXml.class.getName());
+    static Logger log = Logger.getLogger(ProgrammerConfigPaneXml.class.getName());
 
 }

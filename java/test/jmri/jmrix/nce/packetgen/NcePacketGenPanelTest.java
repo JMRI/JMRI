@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.packetgen;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.nce.*;
 
 import junit.framework.*;
@@ -55,6 +56,6 @@ public class NcePacketGenPanelTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketGenPanelTest.class.getName());
+    static Logger log = Logger.getLogger(NcePacketGenPanelTest.class.getName());
 
 }

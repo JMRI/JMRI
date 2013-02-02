@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.locobufferusb;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import gnu.io.SerialPort;
 
@@ -59,5 +60,5 @@ public class LocoBufferUsbAdapter extends LocoBufferAdapter {
         return new int[]{57600};
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferUsbAdapter.class.getName());
+    static Logger log = Logger.getLogger(LocoBufferUsbAdapter.class.getName());
 }

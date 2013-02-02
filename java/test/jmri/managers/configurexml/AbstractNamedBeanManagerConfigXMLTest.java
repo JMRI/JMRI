@@ -2,6 +2,7 @@
 
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -148,5 +149,5 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNamedBeanManagerConfigXMLTest.class.getName());
+    static Logger log = Logger.getLogger(AbstractNamedBeanManagerConfigXMLTest.class.getName());
 }

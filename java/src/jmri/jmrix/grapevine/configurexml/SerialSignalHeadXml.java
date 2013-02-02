@@ -2,6 +2,7 @@
 
 package jmri.jmrix.grapevine.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrix.grapevine.SerialSignalHead;
@@ -64,5 +65,5 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSignalHeadXml.class.getName());
+    static Logger log = Logger.getLogger(SerialSignalHeadXml.class.getName());
 }

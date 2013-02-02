@@ -1,5 +1,6 @@
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
@@ -1008,6 +1009,6 @@ public class ConditionalVariable {
         return super.toString();
     }
 
-	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static final Logger log = org.apache.log4j.Logger
 		.getLogger(ConditionalVariable.class.getName());
 }

@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import java.util.List;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -264,7 +265,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(ProxyTurnoutManager.class.getName());
 }
 
 /* @(#)ProxyTurnoutManager.java */

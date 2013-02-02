@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -307,7 +308,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     	pcs.firePropertyChange(p,old,n);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainScheduleManager.class.getName());
+    static Logger log = Logger.getLogger(TrainScheduleManager.class.getName());
 
 }
 

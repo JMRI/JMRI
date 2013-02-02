@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.hexfile.configurexml;
 
+import org.apache.log4j.Logger;
 import java.awt.GraphicsEnvironment;
 
 import jmri.InstanceManager;
@@ -156,6 +157,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
+    static Logger log = Logger.getLogger(ConnectionConfigXml.class.getName());
 
 }

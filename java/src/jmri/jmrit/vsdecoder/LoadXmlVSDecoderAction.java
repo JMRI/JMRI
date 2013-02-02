@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.XmlFile;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -131,6 +132,6 @@ public class LoadXmlVSDecoderAction extends AbstractAction {
 	static class VSDecoderPrefs extends XmlFile {}
 
 	// initialize logging
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadXmlVSDecoderAction.class.getName());
+	static Logger log = Logger.getLogger(LoadXmlVSDecoderAction.class.getName());
 
 }

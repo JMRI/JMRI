@@ -2,6 +2,7 @@
 
 package jmri.jmrix.marklin;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractSensor;
 
 /**
@@ -35,7 +36,7 @@ public class MarklinSensor extends AbstractSensor {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinSensor.class.getName());
+    static Logger log = Logger.getLogger(MarklinSensor.class.getName());
 }
 
 /* @(#)MarklinSensor.java */

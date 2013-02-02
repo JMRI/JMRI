@@ -2,6 +2,7 @@
 
 package jmri.jmrix.secsi.serialmon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.secsi.SerialListener;
 import jmri.jmrix.secsi.SerialMessage;
 import jmri.jmrix.secsi.SerialReply;
@@ -71,6 +72,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonFrame.class.getName());
+    static Logger log = Logger.getLogger(SerialMonFrame.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.log;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import javax.swing.AbstractAction;
 
@@ -29,7 +30,7 @@ public class LogAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LogAction.class.getName());
+    static Logger log = Logger.getLogger(LogAction.class.getName());
 }
 
 /* @(#)LogAction.java */

@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.JOptionPane;
@@ -165,6 +166,6 @@ public class CustomManifest {
 		options.addContent(mc);
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CustomManifest.class
+	static Logger log = Logger.getLogger(CustomManifest.class
 			.getName());
 }

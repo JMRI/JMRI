@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
@@ -71,7 +72,7 @@ public abstract class XNetSimulatorPortController extends jmri.jmrix.AbstractSer
             adaptermemo.setDisabled(disabled);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSimulatorPortController.class.getName());
+    static Logger log = Logger.getLogger(XNetSimulatorPortController.class.getName());
 
 
 }

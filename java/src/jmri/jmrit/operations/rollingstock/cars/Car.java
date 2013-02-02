@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.text.MessageFormat;
 import java.util.List;
@@ -968,6 +969,6 @@ public class Car extends RollingStock {
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Car.class.getName());
+	static Logger log = Logger.getLogger(Car.class.getName());
 
 }

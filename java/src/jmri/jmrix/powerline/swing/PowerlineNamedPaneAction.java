@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.swing;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
@@ -50,7 +51,7 @@ public class PowerlineNamedPaneAction extends jmri.util.swing.JmriNamedPaneActio
         return p;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PowerlineNamedPaneAction.class.getName());
+    static Logger log = Logger.getLogger(PowerlineNamedPaneAction.class.getName());
 }
 
 /* @(#)PowerlineNamedPaneAction.java */

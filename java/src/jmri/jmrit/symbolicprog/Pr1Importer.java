@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import jmri.JmriException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +31,7 @@ import java.util.Properties;
  * @version			$Revision$
  */
 public class Pr1Importer {
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1Importer.class.getName());
+  static Logger log = Logger.getLogger(Pr1Importer.class.getName());
   private static final String VERSION_KEY = "Version" ;
   private static final String CV_PREFIX = "CV" ;
   private static final int    CV_INDEX_OFFSET = 2 ;

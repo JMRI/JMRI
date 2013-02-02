@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
@@ -549,5 +550,5 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIcon.class.getName());
+    static Logger log = Logger.getLogger(MemoryIcon.class.getName());
 }

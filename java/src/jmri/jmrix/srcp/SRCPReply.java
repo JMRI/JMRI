@@ -2,6 +2,7 @@
 
 package jmri.jmrix.srcp;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.srcp.parser.SimpleNode;
 
 /**
@@ -102,7 +103,7 @@ public class SRCPReply extends jmri.jmrix.AbstractMRReply {
 	} catch(Exception e){ return false;}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPReply.class.getName());
+    static Logger log = Logger.getLogger(SRCPReply.class.getName());
 
 }
 

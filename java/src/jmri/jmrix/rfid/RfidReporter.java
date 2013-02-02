@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rfid;
 
+import org.apache.log4j.Logger;
 import jmri.IdTag;
 import jmri.implementation.AbstractReporter;
 
@@ -139,7 +140,7 @@ public class RfidReporter extends AbstractReporter
 	return(PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RfidReporter.class.getName());
+    private static final Logger log = Logger.getLogger(RfidReporter.class.getName());
 
 }
 

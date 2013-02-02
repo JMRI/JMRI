@@ -2,6 +2,8 @@
 
 package apps.gui3.demo3;
 
+import org.apache.log4j.Logger;
+
 /**
  * The JMRI application for developing the 3rd GUI
  * <P>
@@ -39,7 +41,7 @@ public class Demo3 extends apps.gui3.demo3.Apps3 {
         
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Demo3.class.getName());
+    static Logger log = Logger.getLogger(Demo3.class.getName());
 }
 
 

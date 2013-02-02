@@ -1,5 +1,6 @@
 package jmri.jmrix.rps.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.rps.RpsSensorManager;
 
 import org.jdom.Element;
@@ -35,5 +36,5 @@ public class RpsSensorManagerXml extends jmri.managers.configurexml.AbstractSens
         return loadSensors(sensors);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsSensorManagerXml.class.getName());
+    static Logger log = Logger.getLogger(RpsSensorManagerXml.class.getName());
 }

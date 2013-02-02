@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.Block;
 import jmri.SignalMast;
@@ -484,7 +485,7 @@ public class LayoutBlockConnectivityTools{
     String lastErrorMessage = "Unknown Error Occured";
     //We need to take into account if the returned block has a signalmast attached.
     int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, int pathMethod){
-        org.apache.log4j.Logger lBlockManLog = org.apache.log4j.Logger.getLogger(InstanceManager.layoutBlockManagerInstance().getClass().getName());
+        org.apache.log4j.Logger lBlockManLog = Logger.getLogger(InstanceManager.layoutBlockManagerInstance().getClass().getName());
         org.apache.log4j.Level currentLevel = lBlockManLog.getLevel();
         int blockindex = 0;
         Block block;
@@ -772,6 +773,6 @@ public class LayoutBlockConnectivityTools{
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockConnectivityTools.class.getName());
+    static Logger log = Logger.getLogger(LayoutBlockConnectivityTools.class.getName());
 
 }

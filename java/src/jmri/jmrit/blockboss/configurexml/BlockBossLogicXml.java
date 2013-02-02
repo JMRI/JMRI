@@ -1,5 +1,6 @@
 package jmri.jmrit.blockboss.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.blockboss.BlockBossLogic;
 import java.util.Enumeration;
 
@@ -331,6 +332,6 @@ public class BlockBossLogicXml extends jmri.configurexml.AbstractXmlAdapter {
         return jmri.Manager.BLOCKBOSS;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockBossLogicXml.class.getName());
+    static Logger log = Logger.getLogger(BlockBossLogicXml.class.getName());
 
 }

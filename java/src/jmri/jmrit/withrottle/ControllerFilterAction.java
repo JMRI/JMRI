@@ -1,6 +1,7 @@
 package jmri.jmrit.withrottle;
 
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import jmri.util.JmriJFrame;
@@ -38,7 +39,7 @@ public class ControllerFilterAction extends AbstractAction{
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControllerFilterAction.class.getName());
+    static Logger log = Logger.getLogger(ControllerFilterAction.class.getName());
 
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -137,7 +138,7 @@ public class AddNewBeanPanel extends jmri.util.swing.JmriPanel {
 
     
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddNewBeanPanel.class.getName());
+    static final Logger log = Logger.getLogger(AddNewBeanPanel.class.getName());
 }
 
 

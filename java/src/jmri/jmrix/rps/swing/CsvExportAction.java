@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.swing;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import java.io.*;
 
@@ -93,5 +94,5 @@ public class CsvExportAction extends AbstractAction implements ReadingListener {
         str.println(r.getValue(r.getNValues()-1));
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CsvExportAction.class.getName());
+    static Logger log = Logger.getLogger(CsvExportAction.class.getName());
 }

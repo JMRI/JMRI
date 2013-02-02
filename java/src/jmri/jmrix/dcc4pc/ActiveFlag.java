@@ -2,6 +2,8 @@
 
 package jmri.jmrix.dcc4pc;
 
+import org.apache.log4j.Logger;
+
 /**
  * Provide a flag to indicate that the subsystem provided by
  * this package is active.
@@ -22,7 +24,7 @@ abstract public class ActiveFlag {
         return flag;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ActiveFlag.class.getName());
+    static Logger log = Logger.getLogger(ActiveFlag.class.getName());
 
 }
 

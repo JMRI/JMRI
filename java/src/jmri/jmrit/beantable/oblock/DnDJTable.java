@@ -21,6 +21,7 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.awt.Point;
 
 import java.awt.datatransfer.Transferable; 
@@ -335,6 +336,6 @@ public class DnDJTable extends JTable implements DropTargetListener,
          }
      }
 
-     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DnDJTable.class.getName());
+     static Logger log = Logger.getLogger(DnDJTable.class.getName());
 }
 

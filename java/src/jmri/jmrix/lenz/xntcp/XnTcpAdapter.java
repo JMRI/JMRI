@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.xntcp;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
@@ -341,6 +342,6 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
      	}
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XnTcpAdapter.class.getName());
+    static Logger log = Logger.getLogger(XnTcpAdapter.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rfid.generic.standalone;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -75,7 +76,7 @@ public class SpecificTrafficController extends RfidTrafficController {
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received
     
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificTrafficController.class.getName());
+    private static final Logger log = Logger.getLogger(SpecificTrafficController.class.getName());
 }
 
 

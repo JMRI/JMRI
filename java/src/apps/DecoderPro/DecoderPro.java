@@ -2,6 +2,7 @@
 
 package apps.DecoderPro;
 
+import org.apache.log4j.Logger;
 import apps.AppConfigPanel;
 import apps.Apps;
 
@@ -136,7 +137,7 @@ public class DecoderPro extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro.class.getName());
+    static Logger log = Logger.getLogger(DecoderPro.class.getName());
 }
 
 

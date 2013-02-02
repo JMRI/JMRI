@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.SignalHead;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
@@ -560,5 +561,5 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadIcon.class.getName());
+    static Logger log = Logger.getLogger(SignalHeadIcon.class.getName());
 }

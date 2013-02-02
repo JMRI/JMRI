@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
@@ -29,7 +30,7 @@ import jmri.jmrit.operations.UnexpectedExceptionContext;
 
 public class BackupDialog extends JDialog {
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(BackupDialog.class.getName());
 
 	private final JPanel contentPanel = new JPanel();

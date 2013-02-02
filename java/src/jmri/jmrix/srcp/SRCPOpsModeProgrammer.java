@@ -2,6 +2,7 @@
 
 package jmri.jmrix.srcp;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 /**
@@ -104,7 +105,7 @@ public class SRCPOpsModeProgrammer extends SRCPProgrammer  {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPOpsModeProgrammer.class.getName());
+    static Logger log = Logger.getLogger(SRCPOpsModeProgrammer.class.getName());
 
 }
 

@@ -2,6 +2,8 @@
 
 package jmri.util;
 
+import org.apache.log4j.Logger;
+
 /**
  * Common utility methods for determining which type
  * of operating system is in use.
@@ -134,5 +136,5 @@ public class SystemType {
     }
     
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemType.class.getName());
+    static private Logger log = Logger.getLogger(SystemType.class.getName());
 }

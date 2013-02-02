@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -126,7 +127,7 @@ class FloatTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FloatTrigger.class.getName());
+    static Logger log = Logger.getLogger(FloatTrigger.class.getName());
 
 
 }

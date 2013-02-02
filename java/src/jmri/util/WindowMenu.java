@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import jmri.util.JmriJFrame;
 
 import java.awt.Frame;
@@ -80,6 +81,6 @@ public class WindowMenu extends JMenu implements javax.swing.event.MenuListener 
 	public void menuDeselected(MenuEvent e) {}
 	public void menuCanceled(MenuEvent e) {}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WindowMenu.class.getName());
+    static Logger log = Logger.getLogger(WindowMenu.class.getName());
 
 }

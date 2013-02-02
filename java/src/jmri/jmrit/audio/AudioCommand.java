@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio;
 
+import org.apache.log4j.Logger;
 import jmri.Audio;
 
 /**
@@ -110,7 +111,7 @@ public class AudioCommand {
         }
     }
 
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioCommand.class.getName());
+    //private static final Logger log = Logger.getLogger(AudioCommand.class.getName());
 
 }
 

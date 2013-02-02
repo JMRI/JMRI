@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -346,5 +347,5 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorItemPanel.class.getName());
+    static Logger log = Logger.getLogger(MultiSensorItemPanel.class.getName());
 }

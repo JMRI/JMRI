@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.hexfile;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.LnPortController;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
@@ -214,7 +215,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     public LocoNetSystemConnectionMemo getAdapterMemo() { return adaptermemo; }
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnHexFilePort.class.getName());
+    static Logger log = Logger.getLogger(LnHexFilePort.class.getName());
 }
 
 /* @(#)LnHexFilePort.java */

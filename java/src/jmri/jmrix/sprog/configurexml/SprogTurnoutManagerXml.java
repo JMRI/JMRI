@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 import jmri.jmrix.sprog.SprogTurnoutManager;
 
@@ -35,5 +36,5 @@ public class SprogTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
     }
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogTurnoutManagerXml.class.getName());
+    static Logger log = Logger.getLogger(SprogTurnoutManagerXml.class.getName());
 }

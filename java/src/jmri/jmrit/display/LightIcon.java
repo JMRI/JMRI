@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.jmrit.catalog.NamedIcon;
@@ -280,5 +281,5 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LightIcon.class.getName());
+    static Logger log = Logger.getLogger(LightIcon.class.getName());
 }

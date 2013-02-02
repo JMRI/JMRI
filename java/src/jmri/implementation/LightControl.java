@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import javax.swing.Timer;
 import java.util.Date;
 import jmri.*;
@@ -554,7 +555,7 @@ public class LightControl {
 	}
 
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LightControl.class.getName());
+    static Logger log = Logger.getLogger(LightControl.class.getName());
 }
 
 /* @(#)LightControl.java */

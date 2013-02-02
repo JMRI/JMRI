@@ -2,6 +2,7 @@
 
 package jmri.jmrix.secsi;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -276,7 +277,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return 5; // All are 5 bytes long
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTrafficController.class.getName());
+    static Logger log = Logger.getLogger(SerialTrafficController.class.getName());
 }
 
 /* @(#)SerialTrafficController.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.blockboss;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 
 import java.awt.*;
@@ -884,7 +885,7 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         activate();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockBossLogic.class.getName());
+    static Logger log = Logger.getLogger(BlockBossLogic.class.getName());
 }
 
 /* @(#)BlockBossFrame.java */

@@ -45,6 +45,7 @@ package jmri.jmrit.withrottle;
  *	@version $Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;
@@ -777,6 +778,6 @@ public class ThrottleController implements ThrottleListener, PropertyChangeListe
         
     }
 
-    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleController.class.getName());
+    private static Logger log = Logger.getLogger(ThrottleController.class.getName());
 
 }

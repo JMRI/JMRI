@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -202,7 +203,7 @@ public class AudioTablePanel extends JPanel {
         sourceDataScroll = null;
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioTablePanel.class.getName());
+    private static final Logger log = Logger.getLogger(AudioTablePanel.class.getName());
 
 }
 

@@ -1,6 +1,7 @@
 
 package jmri.jmrit.display.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemoryInputIcon;
 import jmri.Memory;
@@ -91,5 +92,5 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryInputIconXml.class.getName());
+    static Logger log = Logger.getLogger(MemoryInputIconXml.class.getName());
 }

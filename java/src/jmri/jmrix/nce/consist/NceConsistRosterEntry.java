@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.consist;
 
+import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
@@ -510,6 +511,6 @@ public class NceConsistRosterEntry {
 
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceConsistRosterEntry.class.getName());
+    static Logger log = Logger.getLogger(NceConsistRosterEntry.class.getName());
 
 }

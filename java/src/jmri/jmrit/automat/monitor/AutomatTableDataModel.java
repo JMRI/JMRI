@@ -2,6 +2,7 @@
 
 package jmri.jmrit.automat.monitor;
 
+import org.apache.log4j.Logger;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrit.automat.AutomatSummary;
@@ -182,6 +183,6 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
 		AutomatSummary.instance().removePropertyChangeListener(this);
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutomatTableDataModel.class.getName());
+    static final Logger log = Logger.getLogger(AutomatTableDataModel.class.getName());
 
 }

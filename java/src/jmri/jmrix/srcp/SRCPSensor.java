@@ -2,6 +2,7 @@
 
 package jmri.jmrix.srcp;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
@@ -110,7 +111,7 @@ public class SRCPSensor extends AbstractSensor implements SRCPListener {
 
 
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPSensor.class.getName());
+	static Logger log = Logger.getLogger(SRCPSensor.class.getName());
 
 }
 

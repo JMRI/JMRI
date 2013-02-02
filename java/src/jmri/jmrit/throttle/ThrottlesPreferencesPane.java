@@ -11,6 +11,7 @@
 
 package jmri.jmrit.throttle;
 
+import org.apache.log4j.Logger;
 import javax.swing.JFrame;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
@@ -297,7 +298,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         jbCancel.setText(Bundle.getMessage("ThrottlesPrefsCancel"));
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesPreferencesPane.class.getName());
+	static Logger log = Logger.getLogger(ThrottlesPreferencesPane.class.getName());
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		if ((evt == null) || (evt.getPropertyName() == null)) return;

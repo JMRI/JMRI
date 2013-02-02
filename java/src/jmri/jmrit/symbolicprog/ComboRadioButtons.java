@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 import javax.swing.*;
 
@@ -146,6 +147,6 @@ public class ComboRadioButtons extends JPanel {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ComboRadioButtons.class.getName());
+    static Logger log = Logger.getLogger(ComboRadioButtons.class.getName());
 
 }

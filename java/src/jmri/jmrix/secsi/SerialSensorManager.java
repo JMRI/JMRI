@@ -2,6 +2,7 @@
 
 package jmri.jmrix.secsi;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 
 /**
@@ -152,7 +153,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     static SerialSensorManager _instance = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManager.class.getName());
+    static Logger log = Logger.getLogger(SerialSensorManager.class.getName());
 }
 
 /* @(#)SerialSensorManager.java */

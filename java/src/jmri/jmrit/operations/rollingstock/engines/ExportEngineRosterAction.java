@@ -1,6 +1,7 @@
 // ExportEngineRosterAction.java
 
 package jmri.jmrit.operations.rollingstock.engines;
+import org.apache.log4j.Logger;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -25,6 +26,6 @@ public class ExportEngineRosterAction extends AbstractAction {
 		ex.writeOperationsEngineFile();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(ExportEngineRosterAction.class.getName());
 }

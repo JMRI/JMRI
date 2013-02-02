@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
@@ -92,7 +93,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
         if(adaptermemo!=null)
             adaptermemo.setDisabled(disabled);
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPortController.class.getName());
+    static Logger log = Logger.getLogger(LnPortController.class.getName());
 }
 
 

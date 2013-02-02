@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 
@@ -12,7 +13,7 @@ import java.io.IOException;
  * @author Gregory Madsen Copyright (C) 2012
  */
 public class AutoBackup extends BackupBase {
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(AutoBackup.class.getName());
 
 	/**

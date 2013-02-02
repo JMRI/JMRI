@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import org.apache.log4j.Logger;
 import java.util.HashMap;
 import java.util.Iterator;
 import jmri.ThrottleManager;
@@ -385,5 +386,5 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         return false;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusThrottleManager.class.getName());
+    static Logger log = Logger.getLogger(CbusThrottleManager.class.getName());
 }

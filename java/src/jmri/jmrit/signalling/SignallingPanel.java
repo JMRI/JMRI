@@ -2,6 +2,7 @@
 
 package jmri.jmrit.signalling;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Block;
@@ -1848,7 +1849,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
         }
     }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignallingPanel.class.getName());
+    static final Logger log = Logger.getLogger(SignallingPanel.class.getName());
 }
 
 /* @(#)StatusPane.java */

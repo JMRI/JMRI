@@ -3,6 +3,7 @@
 
 package jmri.jmrix.lenz.swing.lzv100;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -33,7 +34,7 @@ public class LZV100Test extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LZV100Test.class.getName());
+    static Logger log = Logger.getLogger(LZV100Test.class.getName());
 
 }
 

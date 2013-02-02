@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -609,6 +610,6 @@ public class TrainConductorFrame extends OperationsFrame implements java.beans.P
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(TrainConductorFrame.class.getName());
 }

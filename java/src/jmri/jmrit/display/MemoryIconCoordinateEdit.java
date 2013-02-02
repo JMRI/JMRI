@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 //import java.awt.event.MouseEvent;
@@ -124,5 +125,5 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
 		pack();
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIconCoordinateEdit.class.getName());
+    static Logger log = Logger.getLogger(MemoryIconCoordinateEdit.class.getName());
 }

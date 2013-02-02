@@ -2,6 +2,7 @@
 
 package jmri.jmrix.openlcb;
 
+import org.apache.log4j.Logger;
 import java.util.regex.*;
 
 import jmri.jmrix.can.CanReply;
@@ -174,7 +175,7 @@ public class OlcbAddress {
         return retval;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbAddress.class.getName());
+    static Logger log = Logger.getLogger(OlcbAddress.class.getName());
 
 }
 

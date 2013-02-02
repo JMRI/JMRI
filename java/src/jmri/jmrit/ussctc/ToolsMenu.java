@@ -4,6 +4,7 @@
 
 package jmri.jmrit.ussctc;
 
+import org.apache.log4j.Logger;
 import javax.swing.JMenu;
 
 /**
@@ -31,7 +32,7 @@ public class ToolsMenu extends JMenu {
 
     static java.util.ResourceBundle rb = null;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ToolsMenu.class.getName());
+    static Logger log = Logger.getLogger(ToolsMenu.class.getName());
 }
 
 

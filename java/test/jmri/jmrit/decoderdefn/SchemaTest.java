@@ -2,6 +2,7 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 //import jmri.InstanceManager;
@@ -61,5 +62,5 @@ public class SchemaTest extends jmri.configurexml.LoadFileTestBase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SchemaTest.class.getName());
+    static Logger log = Logger.getLogger(SchemaTest.class.getName());
 }

@@ -21,6 +21,7 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 
@@ -757,6 +758,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         //log.debug("Internal frame deactivated: "+frame.getTitle());
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TableFrames.class.getName());
+    static Logger log = Logger.getLogger(TableFrames.class.getName());
 }
 

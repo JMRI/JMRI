@@ -2,6 +2,7 @@
 
 package jmri.jmrit.progsupport;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import jmri.*;
 
@@ -112,6 +113,6 @@ public class ProgOpsModePane extends javax.swing.JPanel {
     public void dispose() {
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgOpsModePane.class.getName());
+    static Logger log = Logger.getLogger(ProgOpsModePane.class.getName());
 
 }

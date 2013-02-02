@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.adapters.gridconnect.net;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.SystemConnectionMemo;
@@ -25,6 +26,6 @@ public class MergNetworkDriverAdapter extends NetworkDriverAdapter {
         setManufacturer(jmri.jmrix.DCCManufacturerList.MERG);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergNetworkDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(MergNetworkDriverAdapter.class.getName());
 
 }

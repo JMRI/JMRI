@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.DefaultClockControl;
 import jmri.InstanceManager;
 import jmri.Timebase;
@@ -527,7 +528,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         return((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceClockControl.class.getName());
+    static Logger log = Logger.getLogger(NceClockControl.class.getName());
 }
 
 /* @(#)NceClockControl.java */

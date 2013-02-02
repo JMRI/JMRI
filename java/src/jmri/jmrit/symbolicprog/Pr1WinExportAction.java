@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import java.io.*;
 
@@ -86,5 +87,5 @@ public class Pr1WinExportAction  extends AbstractAction {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1ExportAction.class.getName());
+    static Logger log = Logger.getLogger(Pr1ExportAction.class.getName());
 }

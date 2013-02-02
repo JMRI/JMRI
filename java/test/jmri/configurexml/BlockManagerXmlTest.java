@@ -3,6 +3,7 @@
 package jmri.configurexml;
 
 /*
+import org.apache.log4j.Logger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jmri.JmriException;
@@ -432,7 +433,7 @@ public class BlockManagerXmlTest extends LoadFileTestBase {
     }
 
 /*    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManagerXmlTest.class.getName());
+    static Logger log = Logger.getLogger(BlockManagerXmlTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

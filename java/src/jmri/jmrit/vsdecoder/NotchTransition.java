@@ -1,5 +1,7 @@
 package jmri.jmrit.vsdecoder;
 
+import org.apache.log4j.Logger;
+
 /* NotchTransition
  *
  * This class holds the information needed about a transitional sound
@@ -53,6 +55,6 @@ class NotchTransition extends SoundBite {
     public void setNextNotch(int p) { next_notch = p; }
 
     //Unused for now... commented out to hide the warning.
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NotchTransition.class.getName());
+    //private static final Logger log = Logger.getLogger(NotchTransition.class.getName());
  
  }

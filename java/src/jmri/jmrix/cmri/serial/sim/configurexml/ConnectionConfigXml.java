@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial.sim.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.jmrix.cmri.serial.sim.ConnectionConfig;
 import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
@@ -37,6 +38,6 @@ public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.con
      
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
+    static Logger log = Logger.getLogger(ConnectionConfigXml.class.getName());
 
 }

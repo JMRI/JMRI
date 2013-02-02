@@ -2,6 +2,7 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 import java.beans.PropertyChangeListener;
@@ -338,7 +339,7 @@ public class AllocatedSection {
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AllocatedSection.class.getName());
+    static Logger log = Logger.getLogger(AllocatedSection.class.getName());
 }
 
 /* @(#)AllocatedSection.java */

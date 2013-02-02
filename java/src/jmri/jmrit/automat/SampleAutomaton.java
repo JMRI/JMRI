@@ -2,6 +2,7 @@
 
 package jmri.jmrit.automat;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -108,7 +109,7 @@ public class SampleAutomaton extends AbstractAutomaton {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SampleAutomaton.class.getName());
+    static Logger log = Logger.getLogger(SampleAutomaton.class.getName());
 
 }
 

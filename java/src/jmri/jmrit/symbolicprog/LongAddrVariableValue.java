@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.*;
@@ -371,6 +372,6 @@ public class LongAddrVariableValue extends VariableValue
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LongAddrVariableValue.class.getName());
+    static Logger log = Logger.getLogger(LongAddrVariableValue.class.getName());
 
 }

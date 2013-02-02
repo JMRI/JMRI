@@ -4,6 +4,8 @@
 
 package jmri.jmrix.lenz.liusbethernet;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * This is an extension of the XNetPacketizer to handle the device 
@@ -89,7 +91,7 @@ public class LIUSBEthernetXNetPacketizer extends jmri.jmrix.lenz.liusb.LIUSBXNet
         }
     }
 
-static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBEthernetXNetPacketizer.class.getName());
+static Logger log = Logger.getLogger(LIUSBEthernetXNetPacketizer.class.getName());
 }
 
 /* @(#)LIUSBEthernetXNetPacketizer.java */

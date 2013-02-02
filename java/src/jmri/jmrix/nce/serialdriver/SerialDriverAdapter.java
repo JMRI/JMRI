@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.serialdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -177,6 +178,6 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         adaptermemo = null;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

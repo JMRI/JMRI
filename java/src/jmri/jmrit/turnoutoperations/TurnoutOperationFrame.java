@@ -3,6 +3,7 @@
  */
 package jmri.jmrit.turnoutoperations;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
@@ -159,5 +160,5 @@ public class TurnoutOperationFrame extends JDialog {
 		}
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationFrame.class.getName());
+	static Logger log = Logger.getLogger(TurnoutOperationFrame.class.getName());
 }

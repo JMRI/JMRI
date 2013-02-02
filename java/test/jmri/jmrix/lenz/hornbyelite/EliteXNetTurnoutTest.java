@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -121,6 +122,6 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetTurnoutTest.class.getName());
+	static Logger log = Logger.getLogger(EliteXNetTurnoutTest.class.getName());
 
 }

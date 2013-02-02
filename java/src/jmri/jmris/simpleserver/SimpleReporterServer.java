@@ -2,6 +2,7 @@
 
 package jmri.jmris.simpleserver;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import org.eclipse.jetty.websocket.WebSocket.Connection;
@@ -76,6 +77,6 @@ public class SimpleReporterServer extends AbstractReporterServer {
      	}
      }
      
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleReporterServer.class.getName());
+    static Logger log = Logger.getLogger(SimpleReporterServer.class.getName());
 
 }

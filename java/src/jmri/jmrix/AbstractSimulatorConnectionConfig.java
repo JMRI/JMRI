@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Color;
@@ -242,5 +243,5 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
     }
 
-    final static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSimulatorConnectionConfig.class.getName());
+    final static protected Logger log = Logger.getLogger(AbstractSimulatorConnectionConfig.class.getName());
 }

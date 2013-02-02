@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -339,6 +340,6 @@ public class IndicatorTrackIcon extends PositionableIcon
         super.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTrackIcon.class.getName());
+    static Logger log = Logger.getLogger(IndicatorTrackIcon.class.getName());
 }
 

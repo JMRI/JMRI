@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rfid.coreid;
 
+import org.apache.log4j.Logger;
 import jmri.IdTag;
 import jmri.jmrix.rfid.RfidSensor;
 
@@ -95,7 +96,7 @@ public class CoreIdRfidSensor extends RfidSensor {
 
     static final long serialVersionUID = 5290531989069550265L;
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CoreIdRfidSensor.class.getName());
+    private static final Logger log = Logger.getLogger(CoreIdRfidSensor.class.getName());
 
 }
 

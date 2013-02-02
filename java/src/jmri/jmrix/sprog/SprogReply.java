@@ -1,6 +1,7 @@
 // SprogReply.java
 package jmri.jmrix.sprog;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 
@@ -236,7 +237,7 @@ public class SprogReply extends AbstractMRReply {
 
         
     
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogReply.class.getName());
+   static Logger log = Logger.getLogger(SprogReply.class.getName());
 
 }
 

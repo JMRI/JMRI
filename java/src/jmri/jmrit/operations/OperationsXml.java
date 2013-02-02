@@ -1,5 +1,6 @@
 package jmri.jmrit.operations;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -186,6 +187,6 @@ public class OperationsXml extends XmlFile {
 		return false;
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OperationsXml.class.getName());
+	static Logger log = Logger.getLogger(OperationsXml.class.getName());
 
 }

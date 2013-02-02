@@ -2,6 +2,7 @@
 
 package jmri.jmrix.cmri.serial.serialmon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.cmri.serial.SerialListener;
 import jmri.jmrix.cmri.serial.SerialMessage;
 import jmri.jmrix.cmri.serial.SerialReply;
@@ -94,6 +95,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonFrame.class.getName());
+    static Logger log = Logger.getLogger(SerialMonFrame.class.getName());
 
 }

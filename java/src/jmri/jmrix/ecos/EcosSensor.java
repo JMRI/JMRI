@@ -2,6 +2,7 @@
 
 package jmri.jmrix.ecos;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractSensor;
 
 /**
@@ -43,7 +44,7 @@ public class EcosSensor extends AbstractSensor {
         
     public int getObject() { return objectNumber; }
  
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosSensor.class.getName());
+    static Logger log = Logger.getLogger(EcosSensor.class.getName());
 }
 
 /* @(#)EcosSensor.java */

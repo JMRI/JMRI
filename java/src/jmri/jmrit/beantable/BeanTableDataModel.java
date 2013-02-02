@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -948,6 +949,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             }
         }
     }
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanTableDataModel.class.getName());
+    static final Logger log = Logger.getLogger(BeanTableDataModel.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
@@ -479,6 +480,6 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CompositeVariableValue.class.getName());
+    static Logger log = Logger.getLogger(CompositeVariableValue.class.getName());
 
 }

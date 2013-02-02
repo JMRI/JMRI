@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio;
 
+import org.apache.log4j.Logger;
 import java.nio.ByteBuffer;
 import jmri.util.FileUtil;
 import net.java.games.joal.AL;
@@ -374,7 +375,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     }
 
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JoalAudioBuffer.class.getName());
+    private static final Logger log = Logger.getLogger(JoalAudioBuffer.class.getName());
 
 }
 

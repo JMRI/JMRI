@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.awt.event.ActionListener;
@@ -130,6 +131,6 @@ public class ButtonTrigger extends Trigger implements PropertyChangeListener, Ac
 	}
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ButtonTrigger.class.getName());
+    private static final Logger log = Logger.getLogger(ButtonTrigger.class.getName());
 
 }

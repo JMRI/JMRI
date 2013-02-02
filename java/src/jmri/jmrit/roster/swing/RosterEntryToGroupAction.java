@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster.swing;
 
+import org.apache.log4j.Logger;
 import java.awt.Component;
 import javax.swing.AbstractAction;
 import javax.swing.JComboBox;
@@ -98,5 +99,5 @@ public class RosterEntryToGroupAction extends AbstractAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntryToGroupAction.class.getName());
+    static Logger log = Logger.getLogger(RosterEntryToGroupAction.class.getName());
 }

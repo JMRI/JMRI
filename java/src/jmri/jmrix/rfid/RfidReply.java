@@ -2,6 +2,8 @@
 
 package jmri.jmrix.rfid;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * Contains the data payload of a serial reply
@@ -134,7 +136,7 @@ abstract public class RfidReply extends jmri.jmrix.AbstractMRReply {
         return bytes;
     }
     
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RfidReply.class.getName());
+    private static final Logger log = Logger.getLogger(RfidReply.class.getName());
 
 }
 

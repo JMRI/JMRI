@@ -2,6 +2,7 @@
 
 package jmri.jmrix.mrc.mrcmon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.mrc.MrcListener;
 import jmri.jmrix.mrc.MrcMessage;
 import jmri.jmrix.mrc.MrcReply;
@@ -37,6 +38,6 @@ public class MrcMonFrame extends jmri.jmrix.AbstractMonFrame implements MrcListe
 		nextLine("rep: \""+l.toString()+"\"\n", "");
 	}
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MrcMonFrame.class.getName());
+   static Logger log = Logger.getLogger(MrcMonFrame.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -790,6 +791,6 @@ public class PrintLocationsAction extends AbstractAction {
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintLocationsAction.class
+	static Logger log = Logger.getLogger(PrintLocationsAction.class
 			.getName());
 }

@@ -1,5 +1,6 @@
 package jmri.implementation.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.SE8cSignalHead;
@@ -117,5 +118,5 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SE8cSignalHeadXml.class.getName());
+    static Logger log = Logger.getLogger(SE8cSignalHeadXml.class.getName());
 }

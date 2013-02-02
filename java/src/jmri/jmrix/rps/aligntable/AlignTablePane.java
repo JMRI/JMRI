@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.aligntable;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.rps.Algorithms;
 import jmri.jmrix.rps.Engine;
 import jmri.jmrix.rps.Receiver;
@@ -359,6 +360,6 @@ public class AlignTablePane extends javax.swing.JPanel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AlignTablePane.class.getName());
+    static Logger log = Logger.getLogger(AlignTablePane.class.getName());
 
 }

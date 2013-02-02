@@ -1,5 +1,6 @@
 package jmri.util.datatransfer;
 
+import org.apache.log4j.Logger;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.ClipboardOwner;
 import java.awt.datatransfer.DataFlavor;
@@ -115,6 +116,6 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntrySelection.class.getName());
+    static Logger log = Logger.getLogger(RosterEntrySelection.class.getName());
 
 }

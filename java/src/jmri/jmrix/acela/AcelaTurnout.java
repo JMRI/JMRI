@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -210,7 +211,7 @@ public class AcelaTurnout extends AbstractTurnout {
 	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTurnout.class.getName());
+    static Logger log = Logger.getLogger(AcelaTurnout.class.getName());
 }
 
 /* @(#)AcelaTurnout.java */

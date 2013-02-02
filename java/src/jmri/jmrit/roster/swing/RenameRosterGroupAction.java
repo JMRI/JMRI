@@ -1,6 +1,7 @@
 // DeleteRosterGroupAction.java
 package jmri.jmrit.roster.swing;
 
+import org.apache.log4j.Logger;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import jmri.util.swing.JmriAbstractAction;
@@ -113,5 +114,5 @@ public class RenameRosterGroupAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RenameRosterGroupAction.class.getName());
+    static Logger log = Logger.getLogger(RenameRosterGroupAction.class.getName());
 }

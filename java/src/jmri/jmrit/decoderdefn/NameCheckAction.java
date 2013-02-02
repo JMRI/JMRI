@@ -2,6 +2,7 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.*;
 import java.awt.event.*;
 import java.io.*;
@@ -113,6 +114,6 @@ public class NameCheckAction extends AbstractAction {
     
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NameCheckAction.class.getName());
+    static Logger log = Logger.getLogger(NameCheckAction.class.getName());
     
 }

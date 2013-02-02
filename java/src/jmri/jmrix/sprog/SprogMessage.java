@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog;
 
+import org.apache.log4j.Logger;
 import jmri.Programmer;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 
@@ -497,7 +498,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogMessage.class.getName());
+    static Logger log = Logger.getLogger(SprogMessage.class.getName());
 
 }
 

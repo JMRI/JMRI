@@ -2,6 +2,7 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
@@ -110,5 +111,5 @@ public class PrintDecoderListAction  extends AbstractAction {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintDecoderListAction.class.getName());
+    static Logger log = Logger.getLogger(PrintDecoderListAction.class.getName());
 }

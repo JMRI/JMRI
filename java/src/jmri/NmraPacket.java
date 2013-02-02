@@ -3,6 +3,8 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
+
 /**
  * Utilities for coding/decoding NMRA S&RP DCC packets.
  *<P>
@@ -1045,7 +1047,7 @@ public class NmraPacket {
      */
 
     private NmraPacket() {}
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NmraPacket.class.getName());
+    static Logger log = Logger.getLogger(NmraPacket.class.getName());
 }
 
 

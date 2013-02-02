@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.managers.AbstractManager;
 import jmri.implementation.DefaultLogix;
@@ -180,7 +181,7 @@ public class DefaultLogixManager extends AbstractManager
         return (_instance);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultLogixManager.class.getName());
+    static Logger log = Logger.getLogger(DefaultLogixManager.class.getName());
 }
 
 /* @(#)DefaultLogixManager.java */

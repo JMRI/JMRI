@@ -2,6 +2,7 @@
 
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
@@ -332,5 +333,5 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         return InstanceManager.lightManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractLightManagerConfigXML.class.getName());
+    static Logger log = Logger.getLogger(AbstractLightManagerConfigXML.class.getName());
 }

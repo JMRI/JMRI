@@ -1,5 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MemorySpinnerIcon;
 import org.jdom.Element;
@@ -61,5 +62,5 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemorySpinnerIconXml.class.getName());
+    static Logger log = Logger.getLogger(MemorySpinnerIconXml.class.getName());
 }

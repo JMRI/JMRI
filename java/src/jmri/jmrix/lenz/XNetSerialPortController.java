@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import gnu.io.SerialPort;
@@ -117,7 +118,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSerialPortController.class.getName());
+    static Logger log = Logger.getLogger(XNetSerialPortController.class.getName());
 
 
 }

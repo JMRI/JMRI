@@ -1,5 +1,6 @@
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import jmri.DccThrottle;
 import jmri.CommandStation;
 import jmri.DccLocoAddress;
@@ -1161,6 +1162,6 @@ abstract public class AbstractThrottle implements DccThrottle {
         return re;
      }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractThrottle.class.getName());
+    static Logger log = Logger.getLogger(AbstractThrottle.class.getName());
 
 }

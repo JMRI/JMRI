@@ -4,6 +4,7 @@
 
 package jmri.jmrix.lenz.liusb;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.XNetPacketizer;
 
 /**
@@ -91,7 +92,7 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBXNetPacketizer.class.getName());
+    static Logger log = Logger.getLogger(LIUSBXNetPacketizer.class.getName());
 }
 
 /* @(#)LIUSBXNetPacketizer.java */

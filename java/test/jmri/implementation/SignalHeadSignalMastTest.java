@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -206,5 +207,5 @@ public class SignalHeadSignalMastTest extends TestCase {
         );
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMastTest.class.getName());
+    static protected Logger log = Logger.getLogger(SignalHeadSignalMastTest.class.getName());
 }

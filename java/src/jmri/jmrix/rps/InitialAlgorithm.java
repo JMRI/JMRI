@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import javax.vecmath.Point3d;
 
 /**
@@ -278,7 +279,7 @@ boolean gps()						{// GPS Position Solver
   return true					;//     r0 = range offset (rel)
 }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InitialAlgorithm.class.getName());
+    static Logger log = Logger.getLogger(InitialAlgorithm.class.getName());
 
 }
 

@@ -10,6 +10,7 @@
 
 package jmri.jmrix.dcc4pc.swing.monitor;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.dcc4pc.*;
 import jmri.jmrix.dcc4pc.swing.*;
 
@@ -110,7 +111,7 @@ public class Dcc4PcMonPane extends jmri.jmrix.AbstractMonPane implements Dcc4PcL
         //We should be increasing our timeout
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcMonPane.class.getName());
+	static Logger log = Logger.getLogger(Dcc4PcMonPane.class.getName());
 
 }
 

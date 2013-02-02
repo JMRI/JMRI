@@ -1,5 +1,6 @@
 package jmri.jmrit.roster.swing;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -590,5 +591,5 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterGroupsPanel.class.getName());
+    static Logger log = Logger.getLogger(RosterGroupsPanel.class.getName());
 }

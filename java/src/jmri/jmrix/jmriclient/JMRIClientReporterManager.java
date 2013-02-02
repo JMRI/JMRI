@@ -2,6 +2,7 @@
 
 package jmri.jmrix.jmriclient;
 
+import org.apache.log4j.Logger;
 import jmri.Reporter;
 
 /**
@@ -34,7 +35,7 @@ public class JMRIClientReporterManager extends jmri.managers.AbstractReporterMan
         return t;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientReporterManager.class.getName());
+    static Logger log = Logger.getLogger(JMRIClientReporterManager.class.getName());
 
 }
 

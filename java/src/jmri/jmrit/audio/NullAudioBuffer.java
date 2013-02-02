@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio;
 
+import org.apache.log4j.Logger;
 import java.io.InputStream;
 
 /**
@@ -118,7 +119,7 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
         this.dispose();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NullAudioBuffer.class.getName());
+    private static final Logger log = Logger.getLogger(NullAudioBuffer.class.getName());
 
 }
 

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
  
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
@@ -130,6 +131,6 @@ public class LocationsTableFrame extends OperationsFrame {
         super.dispose();
     }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(LocationsTableFrame.class.getName());
 }

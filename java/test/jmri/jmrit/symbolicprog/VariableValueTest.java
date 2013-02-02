@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 import javax.swing.*;
 import java.awt.Component;
@@ -394,7 +395,7 @@ public abstract class VariableValueTest extends TestCase {
 
     // abstract class has no main entry point, test suite
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VariableValueTest.class.getName());
+    static Logger log = Logger.getLogger(VariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

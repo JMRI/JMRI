@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -22,7 +23,7 @@ import jmri.util.FileUtil;
  * @author Gregory Madsen Copyright (C) 2012
  */
 public abstract class BackupBase {
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(BackupBase.class.getName());
 
 	// Just for testing......

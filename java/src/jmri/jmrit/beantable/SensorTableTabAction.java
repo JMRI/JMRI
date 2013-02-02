@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 public class SensorTableTabAction extends AbstractTableTabAction {
@@ -29,5 +30,5 @@ public class SensorTableTabAction extends AbstractTableTabAction {
         return "package.jmri.jmrit.beantable.SensorTable";
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableTabAction.class.getName());
+    static Logger log = Logger.getLogger(SensorTableTabAction.class.getName());
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -2007,6 +2008,6 @@ public class RouteTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleRouteTable"); }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteTableAction.class.getName());
+    static final Logger log = Logger.getLogger(RouteTableAction.class.getName());
 }
 /* @(#)RouteTableAction.java */

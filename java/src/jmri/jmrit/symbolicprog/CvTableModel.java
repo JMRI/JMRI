@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import java.beans.*;
 
@@ -309,6 +310,6 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         _status = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CvTableModel.class.getName());
+    static Logger log = Logger.getLogger(CvTableModel.class.getName());
 }
 

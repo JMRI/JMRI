@@ -2,6 +2,7 @@
 
 package jmri.jmrix.srcp;
 
+import org.apache.log4j.Logger;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 import java.util.Vector;
@@ -288,7 +289,7 @@ public class SRCPProgrammer extends AbstractProgrammer implements SRCPListener {
         return _controller;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPProgrammer.class.getName());
+    static Logger log = Logger.getLogger(SRCPProgrammer.class.getName());
 
 }
 

@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18481 $
  */
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -297,6 +298,6 @@ class DieselSound extends EngineSound {
 
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineSound.class.getName());
+    private static final Logger log = Logger.getLogger(EngineSound.class.getName());
 
 }

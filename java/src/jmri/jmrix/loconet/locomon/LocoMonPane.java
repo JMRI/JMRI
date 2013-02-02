@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.locomon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.swing.*;
 
@@ -89,5 +90,5 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoMonPane.class.getName());
+    static Logger log = Logger.getLogger(LocoMonPane.class.getName());
 }

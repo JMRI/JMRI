@@ -2,6 +2,7 @@
 
 package jmri.jmrix.pricom.downloader;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -121,5 +122,5 @@ public class PdiFile {
         return buffer;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PdiFile.class.getName());
+    static Logger log = Logger.getLogger(PdiFile.class.getName());
 }

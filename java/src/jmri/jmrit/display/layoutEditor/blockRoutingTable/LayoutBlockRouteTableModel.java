@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.layoutEditor.blockRoutingTable;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.layoutEditor.*;
 import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
@@ -154,5 +155,5 @@ public class LayoutBlockRouteTableModel extends javax.swing.table.AbstractTableM
 
     LayoutBlock lBlock;
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockRouteTableModel.class.getName());
+    static final Logger log = Logger.getLogger(LayoutBlockRouteTableModel.class.getName());
 }

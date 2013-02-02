@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.cm11;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
@@ -123,7 +124,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
 	    }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificSensorManager.class.getName());
+    static Logger log = Logger.getLogger(SpecificSensorManager.class.getName());
 }
 
 /* @(#)SpecificSensorManager.java */

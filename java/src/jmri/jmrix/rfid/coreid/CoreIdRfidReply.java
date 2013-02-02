@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rfid.coreid;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidTrafficController;
 
@@ -83,7 +84,7 @@ abstract public class CoreIdRfidReply extends RfidReply {
         return checksum == convertHexString(getCheckSum())[0];
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CoreIdRfidReply.class.getName());
+    private static final Logger log = Logger.getLogger(CoreIdRfidReply.class.getName());
 
 }
 

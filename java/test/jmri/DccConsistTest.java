@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -46,6 +47,6 @@ public class DccConsistTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccConsistTest.class.getName());
+	static Logger log = Logger.getLogger(DccConsistTest.class.getName());
 
 }

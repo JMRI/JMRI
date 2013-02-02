@@ -5,6 +5,7 @@ package jmri.jmrit.withrottle;
  *	@version $Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
@@ -301,6 +302,6 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     }
 
-    //private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiThrottlePrefsPanel.class.getName());
+    //private static Logger log = Logger.getLogger(WiThrottlePrefsPanel.class.getName());
 
 }

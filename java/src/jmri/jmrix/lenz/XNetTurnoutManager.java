@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.Turnout;
 
 /**
@@ -124,7 +125,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     }
     static XNetTurnoutManager _instance = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(XNetTurnoutManager.class.getName());
 
 }
 

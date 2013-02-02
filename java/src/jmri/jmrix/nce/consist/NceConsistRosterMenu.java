@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.consist;
 
+import org.apache.log4j.Logger;
 import java.awt.Component;
 import java.awt.Frame;
 import java.util.ResourceBundle;
@@ -108,6 +109,6 @@ public class NceConsistRosterMenu extends JMenu {
     }
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceConsistRosterMenu.class.getName());
+    static Logger log = Logger.getLogger(NceConsistRosterMenu.class.getName());
 
 }

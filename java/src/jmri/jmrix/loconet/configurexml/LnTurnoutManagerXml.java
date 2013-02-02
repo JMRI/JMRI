@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -32,6 +33,6 @@ public class LnTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurn
         return loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnoutManagerXml.class.getName());
+    static Logger log = Logger.getLogger(LnTurnoutManagerXml.class.getName());
 
 }

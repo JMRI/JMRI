@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.ztc640;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetInitilizationManager;
@@ -255,7 +256,7 @@ public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmri
     }
     static volatile ZTC640Adapter mInstance = null;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZTC640Adapter.class.getName());
+    static Logger log = Logger.getLogger(ZTC640Adapter.class.getName());
 
 }
 

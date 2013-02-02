@@ -2,6 +2,7 @@
 
 package jmri.jmrix.srcp;
 
+import org.apache.log4j.Logger;
 import jmri.JmriException;
 import jmri.PowerManager;
 
@@ -100,7 +101,7 @@ public class SRCPPowerManager implements PowerManager, SRCPListener {
 	}
 
 
-        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPPowerManager.class.getName());
+        static Logger log = Logger.getLogger(SRCPPowerManager.class.getName());
 
 }
 

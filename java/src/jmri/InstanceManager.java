@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
@@ -625,7 +626,7 @@ public class InstanceManager {
     // data members to hold contact with the property listeners
     final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InstanceManager.class.getName());
+    static Logger log = Logger.getLogger(InstanceManager.class.getName());
 }
 
 /* @(#)InstanceManager.java */

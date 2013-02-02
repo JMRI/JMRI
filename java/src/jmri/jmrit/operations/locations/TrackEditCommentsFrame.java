@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
@@ -98,6 +99,6 @@ public class TrackEditCommentsFrame extends OperationsFrame {
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainSwitchListEditFrame.class
+	static Logger log = Logger.getLogger(TrainSwitchListEditFrame.class
 			.getName());
 }

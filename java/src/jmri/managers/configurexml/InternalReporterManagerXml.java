@@ -1,5 +1,6 @@
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -31,5 +32,5 @@ public class InternalReporterManagerXml extends jmri.managers.configurexml.Abstr
         return loadReporters(reporters);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalReporterManagerXml.class.getName());
+    static Logger log = Logger.getLogger(InternalReporterManagerXml.class.getName());
 }

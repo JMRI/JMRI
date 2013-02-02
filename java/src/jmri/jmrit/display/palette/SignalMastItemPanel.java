@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -236,5 +237,5 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastItemPanel.class.getName());
+    static Logger log = Logger.getLogger(SignalMastItemPanel.class.getName());
 }

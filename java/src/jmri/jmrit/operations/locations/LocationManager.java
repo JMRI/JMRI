@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.util.Enumeration;
 
 import java.util.ArrayList;
@@ -405,7 +406,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocationManager.class
+	static Logger log = Logger.getLogger(LocationManager.class
 			.getName());
 
 }

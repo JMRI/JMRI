@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import org.apache.log4j.Logger;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -190,5 +191,5 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	abstract protected void makeFigure();
 	abstract protected void updateFigure(PositionableShape pos);
  
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DrawFrame.class.getName());
+    static Logger log = Logger.getLogger(DrawFrame.class.getName());
 }

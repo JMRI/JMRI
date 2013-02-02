@@ -2,6 +2,7 @@
 
 package jmri.jmrix.bachrus.serialdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.bachrus.SpeedoPortController;
 import jmri.jmrix.bachrus.SpeedoTrafficController;
 import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
@@ -195,6 +196,6 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         }
         adaptermemo = null;
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

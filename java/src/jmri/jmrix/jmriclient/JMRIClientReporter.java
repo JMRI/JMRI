@@ -2,6 +2,7 @@
 
 package jmri.jmrix.jmriclient;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractReporter;
 
 /**
@@ -87,7 +88,7 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
         }
 
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientReporter.class.getName());
+	static Logger log = Logger.getLogger(JMRIClientReporter.class.getName());
 
 }
 

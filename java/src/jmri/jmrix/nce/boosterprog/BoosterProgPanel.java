@@ -2,6 +2,7 @@
 
  package jmri.jmrix.nce.boosterprog;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -207,6 +208,6 @@ public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
         } finally { releaseProgrammer(); }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger
+    static Logger log = org.apache.log4j.Logger
 	.getLogger(BoosterProgPanel.class.getName());
 }

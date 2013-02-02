@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
@@ -229,6 +230,6 @@ abstract public class AbstractPortController implements PortAdapter {
           }
     }
 
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractPortController.class.getName());
+    static private Logger log = Logger.getLogger(AbstractPortController.class.getName());
 
 }

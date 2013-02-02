@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -107,6 +108,6 @@ class BoolTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BoolTrigger.class.getName());
+    static Logger log = Logger.getLogger(BoolTrigger.class.getName());
 
 }

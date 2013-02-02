@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
@@ -150,6 +151,6 @@ public class RouteCopyFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteCopyFrame.class
+	static Logger log = Logger.getLogger(RouteCopyFrame.class
 			.getName());
 }

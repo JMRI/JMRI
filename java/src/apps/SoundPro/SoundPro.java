@@ -2,6 +2,7 @@
 
 package apps.SoundPro;
 
+import org.apache.log4j.Logger;
 import apps.AppConfigPanel;
 import apps.Apps;
 
@@ -126,7 +127,7 @@ public class SoundPro extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SoundPro.class.getName());
+    static Logger log = Logger.getLogger(SoundPro.class.getName());
 }
 
 

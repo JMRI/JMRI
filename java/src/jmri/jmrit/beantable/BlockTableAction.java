@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -704,7 +705,7 @@ public class BlockTableAction extends AbstractTableAction {
     
     protected String getClassName() { return BlockTableAction.class.getName(); }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockTableAction.class.getName());
+    static final Logger log = Logger.getLogger(BlockTableAction.class.getName());
 }
 
 /* @(#)BlockTableAction.java */

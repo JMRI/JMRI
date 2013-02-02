@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 //import java.awt.event.MouseEvent;
@@ -720,5 +721,5 @@ public class CoordinateEdit extends JmriJFrame {
 		getContentPane().add(c, gc);
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CoordinateEdit.class.getName());
+    static Logger log = Logger.getLogger(CoordinateEdit.class.getName());
 }

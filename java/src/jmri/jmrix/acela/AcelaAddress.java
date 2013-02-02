@@ -2,6 +2,8 @@
 
 package jmri.jmrix.acela;
 
+import org.apache.log4j.Logger;
+
 /**
  * Utility Class supporting parsing and testing of addresses for Acela
  * <P>
@@ -371,7 +373,7 @@ public class AcelaAddress {
 		return ("");
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaAddress.class.getName());
+    static Logger log = Logger.getLogger(AcelaAddress.class.getName());
 }
 
 /* @(#)AcelaAddress.java */

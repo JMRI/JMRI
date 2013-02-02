@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
 
 /**
@@ -54,7 +55,7 @@ public class MergReply extends GridConnectReply {
         return val;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergReply.class.getName());
+    static Logger log = Logger.getLogger(MergReply.class.getName());
 }
 
 /* @(#)MergReply.java */

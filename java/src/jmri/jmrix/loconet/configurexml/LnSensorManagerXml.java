@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -32,5 +33,5 @@ public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSenso
 		return true;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorManagerXml.class.getName());
+    static Logger log = Logger.getLogger(LnSensorManagerXml.class.getName());
 }

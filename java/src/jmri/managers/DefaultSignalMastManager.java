@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.managers.AbstractManager;
 import jmri.implementation.SignalMastRepeater;
@@ -108,7 +109,7 @@ public class DefaultSignalMastManager extends AbstractManager
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastManager.class.getName());
+    static Logger log = Logger.getLogger(DefaultSignalMastManager.class.getName());
 }
 
 /* @(#)DefaultSignalMastManager.java */

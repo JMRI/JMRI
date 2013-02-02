@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.*;
@@ -153,6 +154,6 @@ public class PrintEngineRosterAction extends AbstractAction {
 		return buf.toString();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(PrintEngineRosterAction.class.getName());
 }

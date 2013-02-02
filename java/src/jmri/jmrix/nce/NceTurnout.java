@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.NmraPacket;
 import jmri.Turnout;
@@ -234,7 +235,7 @@ public class NceTurnout extends AbstractTurnout {
     	}
     }
  
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTurnout.class.getName());
+    static Logger log = Logger.getLogger(NceTurnout.class.getName());
 }
 
 /* @(#)NceTurnout.java */

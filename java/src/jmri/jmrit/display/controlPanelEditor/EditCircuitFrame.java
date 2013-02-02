@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Sensor;
 
@@ -422,6 +423,6 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         _numTurnouts.setText(String.valueOf(turnouts));
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditCircuitFrame.class.getName());
+    static Logger log = Logger.getLogger(EditCircuitFrame.class.getName());
 }
 

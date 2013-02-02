@@ -4,6 +4,7 @@
 
 package jmri.jmrit;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import java.util.*;
@@ -140,7 +141,7 @@ public class ToolsMenu extends JMenu {
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ToolsMenu.class.getName());
+    static Logger log = Logger.getLogger(ToolsMenu.class.getName());
 }
 
 

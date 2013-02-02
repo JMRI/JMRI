@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import java.util.List;
 
 import java.io.File;
@@ -357,7 +358,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     protected java.util.Hashtable<String, int[]> table = new jmri.util.OrderedHashtable<String, int[]>();
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalAppearanceMap.class.getName());
+    static Logger log = Logger.getLogger(DefaultSignalAppearanceMap.class.getName());
 }
 
 /* @(#)DefaultSignalAppearanceMap.java */

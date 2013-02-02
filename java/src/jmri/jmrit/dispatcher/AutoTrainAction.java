@@ -2,6 +2,7 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -672,7 +673,7 @@ public class AutoTrainAction {
 		private TransitSectionAction _tsa = null;
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoTrainAction.class.getName());
+	static Logger log = Logger.getLogger(AutoTrainAction.class.getName());
 }
 
 /* @(#)AutoTrainAction.java */

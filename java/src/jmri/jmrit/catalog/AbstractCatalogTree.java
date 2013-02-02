@@ -2,6 +2,7 @@
 
 package jmri.jmrit.catalog;
 
+import org.apache.log4j.Logger;
 import jmri.CatalogTree;
 
 import java.beans.PropertyChangeSupport;
@@ -183,6 +184,6 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
 
     public void setState(int s) throws jmri.JmriException{}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractCatalogTree.class.getName());
+    static Logger log = Logger.getLogger(AbstractCatalogTree.class.getName());
 
 }

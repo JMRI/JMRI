@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.TrackSegment;
@@ -127,5 +128,5 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
 		p.trackList.add(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackSegmentXml.class.getName());
+    static Logger log = Logger.getLogger(TrackSegmentXml.class.getName());
 }

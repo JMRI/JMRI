@@ -2,6 +2,7 @@
 
 package jmri.jmrit.consisttool;
 
+import org.apache.log4j.Logger;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -144,6 +145,6 @@ public class ConsistDataModel extends javax.swing.table.AbstractTableModel {
 	      }
         }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistDataModel.class.getName());	
+    static Logger log = Logger.getLogger(ConsistDataModel.class.getName());	
 
 }

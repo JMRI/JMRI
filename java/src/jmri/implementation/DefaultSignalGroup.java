@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.NamedBeanHandle;
 import java.util.ArrayList;
@@ -694,5 +695,5 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalGroup.class.getName());
+    static Logger log = Logger.getLogger(DefaultSignalGroup.class.getName());
 }

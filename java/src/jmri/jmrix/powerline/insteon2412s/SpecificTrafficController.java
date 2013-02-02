@@ -2,8 +2,7 @@
 
 package jmri.jmrix.powerline.insteon2412s;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -78,7 +77,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             try {
                 wait(250);
             } catch (InterruptedException ex) {
-                Logger.getLogger(SpecificTrafficController.class.getName()).log(Level.SEVERE, null, ex);
+                log.error(null, ex);
             }
         }
     }
@@ -257,7 +256,7 @@ public class SpecificTrafficController extends SerialTrafficController {
 	        }
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificTrafficController.class.getName());
+    static Logger log = Logger.getLogger(SpecificTrafficController.class.getName());
 }
 
 

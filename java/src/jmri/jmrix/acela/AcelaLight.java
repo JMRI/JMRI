@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractLight;
 
 /**
@@ -106,7 +107,7 @@ public class AcelaLight extends AbstractLight {
 	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaLight.class.getName());
+    static Logger log = Logger.getLogger(AcelaLight.class.getName());
 }
 
 /* @(#)AcelaLight.java */

@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import org.apache.log4j.Logger;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -523,7 +524,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
 
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LearnThrottleFrame.class.getName());
+    static Logger log = Logger.getLogger(LearnThrottleFrame.class.getName());
     
 }
 

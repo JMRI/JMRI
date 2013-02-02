@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.net.URI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -358,6 +359,6 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
     }
 
     // Unused - yet.
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderPreferencesPane.class.getName());
+    //private static final Logger log = Logger.getLogger(VSDecoderPreferencesPane.class.getName());
 
 }

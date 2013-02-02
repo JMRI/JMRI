@@ -5,6 +5,7 @@
 
 package jmri.jmrix.can.cbus.swing.console;
 
+import org.apache.log4j.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.WindowConstants;
@@ -131,5 +132,5 @@ public class CbusEventFilterFrame extends JmriJFrame {
 //    	addHelpMenu("package.jmri.jmrix.can.cbus.CbusEventFilterFrame", true);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusEventFilterFrame.class.getName());
+    static Logger log = Logger.getLogger(CbusEventFilterFrame.class.getName());
 }

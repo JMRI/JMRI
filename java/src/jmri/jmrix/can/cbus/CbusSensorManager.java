@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.cbus;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 import jmri.JmriException;
 
@@ -94,7 +95,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
 	public void updateAll() {
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusSensorManager.class.getName());
+    static Logger log = Logger.getLogger(CbusSensorManager.class.getName());
 
 }
 

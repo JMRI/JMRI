@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -170,7 +171,7 @@ public class PaneProgFrameTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgFrameTest.class.getName());
+    static Logger log = Logger.getLogger(PaneProgFrameTest.class.getName());
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }

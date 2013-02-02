@@ -2,6 +2,8 @@
 
 package jmri.jmrix.jmriclient;
 
+import org.apache.log4j.Logger;
+
 /**
  * Carries the reply to an JMRIClientMessage.
  *
@@ -73,7 +75,7 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientReply.class.getName());
+    static Logger log = Logger.getLogger(JMRIClientReply.class.getName());
 
 }
 

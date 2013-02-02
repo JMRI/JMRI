@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline;
 
+import org.apache.log4j.Logger;
 import java.util.Vector;
 
 /** 
@@ -58,6 +59,6 @@ import java.util.Vector;
         }
 
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialInterfaceScaffold.class.getName());
+	static Logger log = Logger.getLogger(SerialInterfaceScaffold.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.marklin;
 
+import org.apache.log4j.Logger;
 import java.util.Hashtable;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -243,7 +244,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinSensorManager.class.getName());
+    static Logger log = Logger.getLogger(MarklinSensorManager.class.getName());
 }
 
 /* @(#)MarklinSensorManager.java */

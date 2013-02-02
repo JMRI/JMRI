@@ -2,6 +2,7 @@
 
 package jmri.jmrix.grapevine;
 
+import org.apache.log4j.Logger;
 import jmri.util.StringUtil;
 
 /**
@@ -244,7 +245,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
     
     static String colorAsString(int color) { return colors[color]; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMessage.class.getName());
+    static Logger log = Logger.getLogger(SerialMessage.class.getName());
 }
 
 /* @(#)SerialMessage.java */

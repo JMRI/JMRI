@@ -2,6 +2,7 @@
 
 package jmri.jmris.simpleserver;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import org.eclipse.jetty.websocket.WebSocket.Connection;
@@ -81,6 +82,6 @@ public class SimpleSensorServer extends AbstractSensorServer {
      	}
      }
      
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleSensorServer.class.getName());
+    static Logger log = Logger.getLogger(SimpleSensorServer.class.getName());
 
 }

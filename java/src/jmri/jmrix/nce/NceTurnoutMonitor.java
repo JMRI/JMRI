@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
 import jmri.Turnout;
 
 /**
@@ -439,7 +440,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(NceTurnoutMonitor.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.catalog;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.datatransfer.DataFlavor;
@@ -334,7 +335,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         return cnt;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ImageIndexEditor.class.getName());
+    static Logger log = Logger.getLogger(ImageIndexEditor.class.getName());
 }
 
 

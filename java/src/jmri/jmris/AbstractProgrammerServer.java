@@ -2,6 +2,7 @@
 
 package jmri.jmris;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 import jmri.InstanceManager;
 import jmri.Programmer;
@@ -97,6 +98,6 @@ abstract public class AbstractProgrammerServer implements jmri.ProgListener {
 
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractProgrammerServer.class.getName());
+    static Logger log = Logger.getLogger(AbstractProgrammerServer.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.tams;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -212,7 +213,7 @@ public class TamsTurnout extends AbstractTurnout
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsTurnout.class.getName());
+    static Logger log = Logger.getLogger(TamsTurnout.class.getName());
 }
 
 /* @(#)TamsTurnout.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.bachrus;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 import java.text.*;
 import java.awt.*;
@@ -1073,6 +1074,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoConsoleFrame.class.getName());
+    static Logger log = Logger.getLogger(SpeedoConsoleFrame.class.getName());
     
 }

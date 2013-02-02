@@ -2,6 +2,7 @@
 
 package jmri.jmrix.xpa.packetgen;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -27,7 +28,7 @@ public class XpaPacketGenAction  extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaPacketGenAction.class.getName());
+   static Logger log = Logger.getLogger(XpaPacketGenAction.class.getName());
 }
 
 

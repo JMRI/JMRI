@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -169,7 +170,7 @@ public class DefaultRailComManager extends AbstractManager
     
     public void init() {}
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRailComManager.class.getName());
+    private static final Logger log = Logger.getLogger(DefaultRailComManager.class.getName());
 
 }
 

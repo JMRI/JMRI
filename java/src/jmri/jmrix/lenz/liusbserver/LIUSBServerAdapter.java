@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.liusbserver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
@@ -280,6 +281,6 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LIUSBServerAdapter.class.getName());
+    static Logger log = Logger.getLogger(LIUSBServerAdapter.class.getName());
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.xnetsimulator.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.SerialPortAdapter;
@@ -89,6 +90,6 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
+    static Logger log = Logger.getLogger(ConnectionConfigXml.class.getName());
 
 }

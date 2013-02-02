@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.slotmon;
 
+import org.apache.log4j.Logger;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.loconet.LnConstants;
@@ -14,7 +15,6 @@ import jmri.util.StringUtil;
 import javax.swing.*;
 import java.awt.event.*;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;
@@ -373,7 +373,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 Thread.sleep(100);
             } 
             catch (InterruptedException ex) {
-                Logger.getLogger(SlotMonDataModel.class.getName()).log(Level.SEVERE, null, ex);
+                log.error(null, ex);
             }
             // reset status to original value if not previously 'in use'
             if(status != LnConstants.LOCO_IN_USE)
@@ -422,7 +422,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
                 Thread.sleep(100);
             } 
             catch (InterruptedException ex) {
-                Logger.getLogger(SlotMonDataModel.class.getName()).log(Level.SEVERE, null, ex);
+                log.error(null, ex);
             }
             
             // reset status to original value if not previously 'in use'
@@ -631,6 +631,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // table = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SlotMonDataModel.class.getName());
+    static Logger log = Logger.getLogger(SlotMonDataModel.class.getName());
 
 }

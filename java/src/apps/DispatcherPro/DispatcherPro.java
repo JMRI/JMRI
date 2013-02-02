@@ -2,6 +2,7 @@
 
 package apps.DispatcherPro;
 
+import org.apache.log4j.Logger;
 import apps.Apps;
 import jmri.util.JmriJFrame;
 
@@ -108,7 +109,7 @@ public class DispatcherPro extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DispatcherPro.class.getName());
+    static Logger log = Logger.getLogger(DispatcherPro.class.getName());
 }
 
 

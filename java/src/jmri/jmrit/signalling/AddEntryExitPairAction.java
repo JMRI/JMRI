@@ -2,6 +2,7 @@
 
 package jmri.jmrit.signalling;
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -32,7 +33,7 @@ public class AddEntryExitPairAction extends AbstractAction {
 			}
 		f.setVisible(true);	
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddEntryExitPairAction.class.getName());
+   static Logger log = Logger.getLogger(AddEntryExitPairAction.class.getName());
 }
 
 

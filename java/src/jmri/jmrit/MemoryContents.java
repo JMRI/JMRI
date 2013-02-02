@@ -2,6 +2,7 @@
 
 package jmri.jmrit;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -216,7 +217,7 @@ public class MemoryContents {
         }
     }
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryContents.class.getName());
+    static Logger log = Logger.getLogger(MemoryContents.class.getName());
 }
 
 /* @(#)MemoryContents.java */

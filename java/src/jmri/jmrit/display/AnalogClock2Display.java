@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import java.util.*;
 
 import java.awt.*;
@@ -378,5 +379,5 @@ public class AnalogClock2Display extends PositionableJComponent {
         rateButtonGroup = null;
         runMenu = null;
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AnalogClock2Display.class.getName());
+    static Logger log = Logger.getLogger(AnalogClock2Display.class.getName());
 }

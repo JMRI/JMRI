@@ -1,6 +1,7 @@
 // SprogSystemConnectionMemo.javaf
 package jmri.jmrix.sprog;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
@@ -197,7 +198,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogSystemConnectionMemo.class.getName());
+    static Logger log = Logger.getLogger(SprogSystemConnectionMemo.class.getName());
 }
 
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.consisttool.ConsistFile;
 
 /**
@@ -44,6 +45,6 @@ public class WiFiConsistFile extends ConsistFile{
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiFiConsistFile.class.getName());
+    static Logger log = Logger.getLogger(WiFiConsistFile.class.getName());
 
 }

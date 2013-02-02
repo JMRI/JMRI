@@ -2,6 +2,7 @@
 
 package jmri.jmris.srcp;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import jmri.ProgListener;
@@ -46,6 +47,6 @@ public class JmriSRCPProgrammerServer extends AbstractProgrammerServer {
      }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSRCPProgrammerServer.class.getName());
+    static Logger log = Logger.getLogger(JmriSRCPProgrammerServer.class.getName());
 
 }

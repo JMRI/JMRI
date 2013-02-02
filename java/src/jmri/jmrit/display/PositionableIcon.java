@@ -7,6 +7,7 @@ package jmri.jmrit.display;
  * @author PeteCressman Copyright (C) 2011
  * @version $Revision$
  */
+import org.apache.log4j.Logger;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -161,5 +162,5 @@ public class PositionableIcon extends PositionableLabel {
         return clone;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableIcon.class.getName());
+    static Logger log = Logger.getLogger(PositionableIcon.class.getName());
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.swing;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -49,7 +50,7 @@ public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceNamedPaneAction.class.getName());
+    static Logger log = Logger.getLogger(NceNamedPaneAction.class.getName());
 }
 
 /* @(#)NceNamedPaneAction.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.*;
@@ -384,6 +385,6 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EnumVariableValue.class.getName());
+    static Logger log = Logger.getLogger(EnumVariableValue.class.getName());
 
 }

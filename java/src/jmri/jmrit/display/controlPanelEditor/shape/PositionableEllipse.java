@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 
@@ -83,5 +84,5 @@ public class PositionableEllipse extends PositionableShape {
         return true;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableEllipse.class.getName());
+    static Logger log = Logger.getLogger(PositionableEllipse.class.getName());
 }

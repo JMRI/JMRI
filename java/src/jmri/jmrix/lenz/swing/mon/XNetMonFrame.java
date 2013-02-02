@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.swing.mon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetMessage;
@@ -1299,6 +1300,6 @@ import jmri.jmrix.lenz.XNetConstants;
 		return(text);
         }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetMonFrame.class.getName());
+	static Logger log = Logger.getLogger(XNetMonFrame.class.getName());
 
 }

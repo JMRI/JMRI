@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.li100f;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetSerialPortController;
@@ -271,6 +272,6 @@ public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100Adapter.class.getName());
+    static Logger log = Logger.getLogger(LI100Adapter.class.getName());
     
 }

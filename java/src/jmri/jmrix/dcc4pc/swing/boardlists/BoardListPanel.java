@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc.swing.boardlists;
 
+import org.apache.log4j.Logger;
 import javax.swing.table.*;
 import java.util.List;
 import java.beans.PropertyChangeListener;
@@ -313,6 +314,6 @@ public class BoardListPanel extends jmri.jmrix.dcc4pc.swing.Dcc4PcPanel implemen
         }
     }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BoardListPanel.class.getName());
+    static final Logger log = Logger.getLogger(BoardListPanel.class.getName());
 
 }

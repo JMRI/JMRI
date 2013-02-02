@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRTrafficController;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -305,7 +306,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         return _FeedbackCache;
    }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTrafficController.class.getName());
+	static Logger log = Logger.getLogger(XNetTrafficController.class.getName());
 }
 
 

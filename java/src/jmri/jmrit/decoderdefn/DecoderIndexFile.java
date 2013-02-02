@@ -2,6 +2,7 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 import java.util.Enumeration;
@@ -508,6 +509,6 @@ public class DecoderIndexFile extends XmlFile {
 
     static final protected String decoderIndexFileName = "decoderIndex.xml";
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderIndexFile.class.getName());
+    static private Logger log = Logger.getLogger(DecoderIndexFile.class.getName());
 
 }

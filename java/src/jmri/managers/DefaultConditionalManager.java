@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import java.util.Iterator;
 import java.util.List;
 import jmri.*;
@@ -197,7 +198,7 @@ public class DefaultConditionalManager extends AbstractManager
         return (_instance);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultConditionalManager.class.getName());
+    static Logger log = Logger.getLogger(DefaultConditionalManager.class.getName());
 }
 
 

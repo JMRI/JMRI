@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrix.acela.AcelaAddress;
@@ -84,5 +85,5 @@ public class AcelaSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaSignalHeadXml.class.getName());
+    static Logger log = Logger.getLogger(AcelaSignalHeadXml.class.getName());
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import org.apache.log4j.Logger;
 import java.util.List;
 import javax.swing.Timer;
 
@@ -203,5 +204,5 @@ public class OPath extends jmri.Path  {
             (_toPortal==null?"":" to portal "+ _toPortal.getName());
     }
        
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OPath.class.getName());
+    static Logger log = Logger.getLogger(OPath.class.getName());
 }

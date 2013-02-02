@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.liusbethernet.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbethernet.ConnectionConfig;
@@ -42,6 +43,6 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     // initialize logging
-static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
+static Logger log = Logger.getLogger(ConnectionConfigXml.class.getName());
 
 }

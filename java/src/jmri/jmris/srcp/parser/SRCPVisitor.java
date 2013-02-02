@@ -2,6 +2,7 @@
 
 package jmri.jmris.srcp.parser;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 
 /* This class provides an interface between the JavaTree/JavaCC 
@@ -339,6 +340,6 @@ public class SRCPVisitor implements SRCPParserVisitor {
     return node.childrenAccept(this,data);
   }
 
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPVisitor.class.getName());
+  static Logger log = Logger.getLogger(SRCPVisitor.class.getName());
 
 }

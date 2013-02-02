@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.io.File;
 
@@ -165,6 +166,6 @@ public class LoadVSDFileAction extends AbstractAction {
     }
 
 	// initialize logging
-	private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadVSDFileAction.class.getName());
+	private static final Logger log = Logger.getLogger(LoadVSDFileAction.class.getName());
 
 }

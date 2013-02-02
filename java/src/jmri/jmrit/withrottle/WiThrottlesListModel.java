@@ -11,6 +11,7 @@ package jmri.jmrit.withrottle;
  *	@version $Revision$
  */
 
+import org.apache.log4j.Logger;
 import javax.swing.table.AbstractTableModel;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
@@ -77,5 +78,5 @@ public class WiThrottlesListModel extends AbstractTableModel{
         this.fireTableDataChanged();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiThrottlesListModel.class.getName());
+    static Logger log = Logger.getLogger(WiThrottlesListModel.class.getName());
 }

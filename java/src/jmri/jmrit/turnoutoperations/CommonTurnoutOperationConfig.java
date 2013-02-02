@@ -3,6 +3,7 @@
  */
 package jmri.jmrit.turnoutoperations;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import java.awt.*;
@@ -74,5 +75,5 @@ public class CommonTurnoutOperationConfig extends TurnoutOperationConfig {
 		myOp.setMaxTries(newMaxTries);
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CommonTurnoutOperationConfig.class.getName());
+	static Logger log = Logger.getLogger(CommonTurnoutOperationConfig.class.getName());
 }

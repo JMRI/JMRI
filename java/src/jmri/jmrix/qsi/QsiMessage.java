@@ -2,6 +2,8 @@
 
 package jmri.jmrix.qsi;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * Encodes a message to an QSI command station.
@@ -369,7 +371,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.frame();
     }
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiMessage.class.getName());
+    static Logger log = Logger.getLogger(QsiMessage.class.getName());
     
 }
 

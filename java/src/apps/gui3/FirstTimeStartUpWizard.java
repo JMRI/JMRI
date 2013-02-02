@@ -1,5 +1,6 @@
 package apps.gui3;
 
+import org.apache.log4j.Logger;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JButton;
@@ -385,6 +386,6 @@ public class FirstTimeStartUpWizard {
     
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FirstTimeStartUpWizard.class.getName());
+    static Logger log = Logger.getLogger(FirstTimeStartUpWizard.class.getName());
   
 }

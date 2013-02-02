@@ -2,6 +2,7 @@
 
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.XmlFile;
 import java.io.*;
 
@@ -142,5 +143,5 @@ public class LoadFileTest extends LoadFileTestBase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoadFileTest.class.getName());
+    static Logger log = Logger.getLogger(LoadFileTest.class.getName());
 }

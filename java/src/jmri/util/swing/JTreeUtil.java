@@ -2,6 +2,7 @@
 
 package jmri.util.swing;
 
+import org.apache.log4j.Logger;
 import javax.swing.tree.*;
 import java.io.File;
 import org.jdom.*;
@@ -49,5 +50,5 @@ public class JTreeUtil extends GuiUtilBase {
         return node;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JTreeUtil.class.getName());
+    static Logger log = Logger.getLogger(JTreeUtil.class.getName());
 }

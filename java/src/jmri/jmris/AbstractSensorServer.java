@@ -2,6 +2,7 @@
 
 package jmri.jmris;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -137,6 +138,6 @@ abstract public class AbstractSensorServer {
     String newState = "";
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorServer.class.getName());
+    static Logger log = Logger.getLogger(AbstractSensorServer.class.getName());
 
 }

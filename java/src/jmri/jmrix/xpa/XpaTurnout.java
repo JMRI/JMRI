@@ -2,6 +2,7 @@
 
 package jmri.jmrix.xpa;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -55,7 +56,7 @@ public class XpaTurnout extends AbstractTurnout {
 		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton PT"+_number);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaTurnout.class.getName());
+    static Logger log = Logger.getLogger(XpaTurnout.class.getName());
 
 }
 

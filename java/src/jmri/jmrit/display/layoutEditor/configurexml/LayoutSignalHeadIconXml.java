@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.*;
 import jmri.jmrit.display.configurexml.*;
 
@@ -55,6 +56,6 @@ public class LayoutSignalHeadIconXml extends AbstractXmlAdapter {
         // create the objects
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutSignalHeadIconXml.class.getName());
+    static Logger log = Logger.getLogger(LayoutSignalHeadIconXml.class.getName());
 
 }

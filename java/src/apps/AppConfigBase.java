@@ -2,6 +2,7 @@
 
 package apps;
 
+import org.apache.log4j.Logger;
 import jmri.Application;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
@@ -64,7 +65,7 @@ public class AppConfigBase extends JmriPanel {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppConfigBase.class.getName());
+    static Logger log = Logger.getLogger(AppConfigBase.class.getName());
 
     /**
      * Detect duplicate connection types

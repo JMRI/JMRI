@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.apache.log4j.Logger;
 import jmri.LocoAddress;
 
 import jmri.jmrix.lenz.XNetReply;
@@ -161,6 +162,6 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
     }
 
     // register for notification
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetThrottle.class.getName());
+    static Logger log = Logger.getLogger(EliteXNetThrottle.class.getName());
 }
 

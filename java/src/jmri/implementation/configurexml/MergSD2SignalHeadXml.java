@@ -2,6 +2,7 @@
 
 package jmri.implementation.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.MergSD2SignalHead;
@@ -189,5 +190,5 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergSD2SignalHeadXml.class.getName());
+    static Logger log = Logger.getLogger(MergSD2SignalHeadXml.class.getName());
 }

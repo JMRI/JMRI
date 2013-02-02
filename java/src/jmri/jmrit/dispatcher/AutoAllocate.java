@@ -2,6 +2,7 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.apache.log4j.Logger;
 import jmri.Block;
 import jmri.Section;
 import jmri.Transit;
@@ -1067,7 +1068,7 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 	}
 	ArrayList<LevelXing> _levelXingList = new ArrayList<LevelXing>();
 					
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AutoAllocate.class.getName());
+    static Logger log = Logger.getLogger(AutoAllocate.class.getName());
 }
 
 /* @(#)AutoAllocate.java */

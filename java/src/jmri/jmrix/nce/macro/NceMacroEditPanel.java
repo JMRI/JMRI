@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.macro;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -1162,6 +1163,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
     
    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMacroEditPanel.class.getName());	
+    static Logger log = Logger.getLogger(NceMacroEditPanel.class.getName());	
 }
 

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.beans.*;
 
 import javax.swing.*;
@@ -310,6 +311,6 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     }
     
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SchedulesTableModel.class.getName());
+    static Logger log = Logger.getLogger(SchedulesTableModel.class.getName());
 }
 

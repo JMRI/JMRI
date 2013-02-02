@@ -6,6 +6,7 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.apache.log4j.Logger;
 import jmri.Programmer;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetProgrammer;
@@ -341,7 +342,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
     	synchronized public void message(XNetMessage l) {
     	}
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteXNetProgrammer.class.getName());
+   static Logger log = Logger.getLogger(EliteXNetProgrammer.class.getName());
 
 }
 

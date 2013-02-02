@@ -1,6 +1,7 @@
 // RestartAction.java
 package apps;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
 import javax.swing.Icon;
@@ -61,6 +62,6 @@ public class RestartAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RestartAction.class.getName());
+    private static final Logger log = Logger.getLogger(RestartAction.class.getName());
     
 }

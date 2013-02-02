@@ -1,6 +1,7 @@
 // ConsistToolFrame.java
 package jmri.jmrit.consisttool;
 
+import org.apache.log4j.Logger;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -659,5 +660,5 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
        initializeConsistBox();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistToolFrame.class.getName());
+    static Logger log = Logger.getLogger(ConsistToolFrame.class.getName());
 }

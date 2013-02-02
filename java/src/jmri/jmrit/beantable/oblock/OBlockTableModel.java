@@ -21,6 +21,7 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -425,5 +426,5 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OBlockTableModel.class.getName());
+    static Logger log = Logger.getLogger(OBlockTableModel.class.getName());
 }

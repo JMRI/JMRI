@@ -4,6 +4,7 @@
 
 package jmri.jmris;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.util.*;
 
@@ -37,7 +38,7 @@ public class ServerMenu extends JMenu {
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ServerMenu.class.getName());
+    static Logger log = Logger.getLogger(ServerMenu.class.getName());
 }
 
 

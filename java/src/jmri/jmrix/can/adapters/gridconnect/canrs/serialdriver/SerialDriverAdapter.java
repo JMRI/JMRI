@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
 import jmri.jmrix.can.TrafficController;
@@ -64,6 +65,6 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

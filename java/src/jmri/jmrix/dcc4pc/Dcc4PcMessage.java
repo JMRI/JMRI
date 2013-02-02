@@ -2,6 +2,8 @@
 
 package jmri.jmrix.dcc4pc;
 
+import org.apache.log4j.Logger;
+
 /**
  * Encodes a message to the DCC4PC Interface.
  * <P>
@@ -179,7 +181,7 @@ public class Dcc4PcMessage  extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcMessage.class.getName());
+    static Logger log = Logger.getLogger(Dcc4PcMessage.class.getName());
 
 }
 

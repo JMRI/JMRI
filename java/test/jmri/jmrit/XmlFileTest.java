@@ -2,6 +2,7 @@
 
 package jmri.jmrit;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import jmri.util.FileUtil;
 
@@ -148,6 +149,6 @@ public class XmlFileTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
     
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XmlFileTest.class.getName());
+    static protected Logger log = Logger.getLogger(XmlFileTest.class.getName());
 
 }

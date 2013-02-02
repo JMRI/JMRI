@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela.packetgen;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -34,7 +35,7 @@ public class AcelaPacketGenAction extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaPacketGenAction.class.getName());
+	static Logger log = Logger.getLogger(AcelaPacketGenAction.class.getName());
 }
 
 /* @(#)AcelaPacketGenAction.java */

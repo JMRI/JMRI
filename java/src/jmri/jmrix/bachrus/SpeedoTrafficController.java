@@ -2,6 +2,7 @@
 
 package jmri.jmrix.bachrus;
 
+import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
@@ -152,7 +153,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
     }
 
     private boolean unsolicited;
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoTrafficController.class.getName());
+    static Logger log = Logger.getLogger(SpeedoTrafficController.class.getName());
 
     /**
      * serialEvent - respond to an event triggered by RXTX. In this case

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
@@ -132,6 +133,6 @@ public class RoutesTableFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RoutesTableFrame.class
+	static Logger log = Logger.getLogger(RoutesTableFrame.class
 			.getName());
 }

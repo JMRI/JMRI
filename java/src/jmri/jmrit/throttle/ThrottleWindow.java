@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
@@ -767,5 +768,5 @@ public class ThrottleWindow extends JmriJFrame {
         pcs.removePropertyChangeListener(l);
     }
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleWindow.class.getName());
+    static Logger log = Logger.getLogger(ThrottleWindow.class.getName());
 }

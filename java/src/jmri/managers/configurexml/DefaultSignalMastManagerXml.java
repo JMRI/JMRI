@@ -1,5 +1,6 @@
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.SignalMast;
 import jmri.managers.DefaultSignalMastManager;
@@ -197,5 +198,5 @@ public class DefaultSignalMastManagerXml
         return InstanceManager.signalMastManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastManagerXml.class.getName());
+    static Logger log = Logger.getLogger(DefaultSignalMastManagerXml.class.getName());
 }

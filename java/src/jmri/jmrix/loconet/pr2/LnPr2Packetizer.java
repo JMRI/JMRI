@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.pr2;
 
+import org.apache.log4j.Logger;
+
 /**
  * Special LnPr2Packetizer implementation for PR2.
  * 
@@ -26,7 +28,7 @@ public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
     	debug = log.isDebugEnabled();
    	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPr2Packetizer.class.getName());
+    static Logger log = Logger.getLogger(LnPr2Packetizer.class.getName());
 }
 
 /* @(#)LnPr2Packetizer.java */

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -617,6 +618,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
     // first attempt to access a given OpSw
     private final int MAX_OPSW_ACCESS_RETRIES = 2;
     
-    org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractBoardProgPanel.class.getName());
+    Logger log = Logger.getLogger(AbstractBoardProgPanel.class.getName());
 
 }

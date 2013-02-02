@@ -1,6 +1,8 @@
 
 package apps.tests;
 
+import org.apache.log4j.Logger;
+
 public class Log4JFixture extends java.lang.Object {
 
   public Log4JFixture() {
@@ -47,5 +49,5 @@ public class Log4JFixture extends java.lang.Object {
 		}
 	}
 
-  	static org.apache.log4j.Logger log = null;
+  	static Logger log = null;
 }

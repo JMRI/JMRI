@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog.update;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 
@@ -315,6 +316,6 @@ public class SprogIIUpdateFrame
     startLongTimer();
   }
 
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger
+  static Logger log = org.apache.log4j.Logger
   .getLogger(SprogIIUpdateFrame.class.getName());
 }

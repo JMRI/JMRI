@@ -1,5 +1,6 @@
 package jmri.jmrix.can.adapters.gridconnect.net.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter;
@@ -38,6 +39,6 @@ public class MergConnectionConfigXml extends ConnectionConfigXml {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MergConnectionConfigXml.class.getName());
+    static Logger log = Logger.getLogger(MergConnectionConfigXml.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.decoderdefn;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -259,6 +260,6 @@ public class DecoderIndexFileTest extends TestCase {
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    // static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderIndexFileTest.class.getName());
+    // static private Logger log = Logger.getLogger(DecoderIndexFileTest.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline;
 
+import org.apache.log4j.Logger;
 import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
@@ -89,7 +90,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
 	 */
 	public boolean supportsVariableLights(String systemName) {return true;}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightManager.class.getName());
+    static Logger log = Logger.getLogger(SerialLightManager.class.getName());
 
 }
 

@@ -1,5 +1,6 @@
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -32,5 +33,5 @@ public class InternalLightManagerXml extends jmri.managers.configurexml.Abstract
         return true;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InternalLightManagerXml.class.getName());
+    static Logger log = Logger.getLogger(InternalLightManagerXml.class.getName());
 }

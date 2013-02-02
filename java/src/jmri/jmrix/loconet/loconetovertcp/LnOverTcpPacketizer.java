@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.LnPacketizer;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnNetworkPortController;
@@ -269,7 +270,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
       }
   }
 
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnOverTcpPacketizer.class.getName());
+  static Logger log = Logger.getLogger(LnOverTcpPacketizer.class.getName());
 }
 
 /* @(#)LnOverTcpPacketizer.java */

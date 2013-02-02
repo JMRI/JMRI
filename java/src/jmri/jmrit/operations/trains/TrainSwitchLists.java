@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -368,6 +369,6 @@ public class TrainSwitchLists extends TrainCommon {
 		newLine(file, string, Setup.getSwitchListOrientation());
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainSwitchLists.class
+	static Logger log = Logger.getLogger(TrainSwitchLists.class
 			.getName());
 }

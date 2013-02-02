@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 
 /**
@@ -111,7 +112,7 @@ public class TransitSection {
 	}
 
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitSection.class.getName());
+    static Logger log = Logger.getLogger(TransitSection.class.getName());
 }
 
 /* @(#)TransitSection.java */

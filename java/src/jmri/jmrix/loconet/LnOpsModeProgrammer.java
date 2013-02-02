@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import java.beans.*;
 
 import jmri.*;
@@ -78,7 +79,7 @@ public class LnOpsModeProgrammer implements Programmer  {
         return mSlotMgr.decodeErrorCode(i);
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnOpsModeProgrammer.class.getName());
+    static Logger log = Logger.getLogger(LnOpsModeProgrammer.class.getName());
 
 }
 

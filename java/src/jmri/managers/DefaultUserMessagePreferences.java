@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.UserPreferencesManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -1330,5 +1331,5 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile  implement
 
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferences.class.getName());
+    static Logger log = Logger.getLogger(DefaultUserMessagePreferences.class.getName());
 }

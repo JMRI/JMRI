@@ -2,6 +2,7 @@
 
 package jmri.util.swing;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -179,7 +180,7 @@ public class VerticalLabelUI extends BasicLabelUI {
         return verticalLabelUI;
     }
 
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VerticalLabelUI.class.getName());
+    //private static final Logger log = Logger.getLogger(VerticalLabelUI.class.getName());
 
 }
 

@@ -3,6 +3,7 @@
  */
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 
 
@@ -34,5 +35,5 @@ public abstract class TurnoutOperator extends Thread {
 	 */
 	static public class TurnoutOperatorException extends java.lang.Exception { }
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperator.class.getName());
+    static Logger log = Logger.getLogger(TurnoutOperator.class.getName());
 }

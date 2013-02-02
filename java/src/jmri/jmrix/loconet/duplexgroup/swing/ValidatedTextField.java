@@ -1,6 +1,7 @@
 // ValidatedTextField.java
 
 package jmri.jmrix.loconet.duplexgroup.swing;
+import org.apache.log4j.Logger;
 import java.awt.event.FocusListener;
 import java.awt.event.FocusEvent;
 
@@ -553,5 +554,5 @@ public class ValidatedTextField extends javax.swing.JTextField  {
     public final static java.awt.Color      COLOR_BG_UNEDITED      = COLOR_BG_OK;
     public final static java.awt.Color      COLOR_BG_ERROR         = java.awt.Color.red;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ValidatedTextField.class.getName());
+    static Logger log = Logger.getLogger(ValidatedTextField.class.getName());
 }

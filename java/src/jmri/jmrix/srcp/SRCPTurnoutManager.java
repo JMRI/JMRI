@@ -2,6 +2,7 @@
 
 package jmri.jmrix.srcp;
 
+import org.apache.log4j.Logger;
 import jmri.Turnout;
 
 /**
@@ -36,7 +37,7 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
     static SRCPTurnoutManager _instance = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(SRCPTurnoutManager.class.getName());
 
 }
 

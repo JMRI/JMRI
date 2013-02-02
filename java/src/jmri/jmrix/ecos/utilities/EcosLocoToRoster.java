@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.utilities;
 
+import org.apache.log4j.Logger;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -849,7 +850,7 @@ public class EcosLocoToRoster implements EcosListener {
         adaptermemo.getTrafficController().sendEcosMessage(m, this);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoToRoster.class.getName());
+    static Logger log = Logger.getLogger(EcosLocoToRoster.class.getName());
 }
 /*
 cv8 - mfgIdFromName

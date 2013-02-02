@@ -2,6 +2,7 @@
 
 package jmri.jmrix.cmri.serial.sim;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 
@@ -118,6 +119,6 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     }
     static SimDriverAdapter mInstance;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(SimDriverAdapter.class.getName());
 
 }

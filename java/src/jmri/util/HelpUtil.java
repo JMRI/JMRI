@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import apps.AboutAction;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
@@ -199,5 +200,5 @@ public class HelpUtil {
     static HelpBroker globalHelpBroker;
     
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HelpUtil.class.getName());
+    static private Logger log = Logger.getLogger(HelpUtil.class.getName());
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import javax.swing.*;
 import java.awt.*;
@@ -250,6 +251,6 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTableTabAction.class.getName());
+    static Logger log = Logger.getLogger(AbstractTableTabAction.class.getName());
 
 }

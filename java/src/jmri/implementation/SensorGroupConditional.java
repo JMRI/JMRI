@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import java.beans.PropertyChangeEvent;
 
@@ -68,5 +69,5 @@ public class SensorGroupConditional extends DefaultConditional
 	}
 
 
-static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorGroupConditional.class.getName());
+static final Logger log = Logger.getLogger(SensorGroupConditional.class.getName());
 }

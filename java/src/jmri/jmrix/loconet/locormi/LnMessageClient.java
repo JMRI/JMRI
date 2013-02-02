@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.locormi;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.SystemConnectionMemo;
 
@@ -149,5 +150,5 @@ public class LnMessageClient extends LnTrafficRouter {
             new jmri.util.WaitHandler("");  // handle synchronization, spurious wake, interruption
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnMessageClient.class.getName());
+    static Logger log = Logger.getLogger(LnMessageClient.class.getName());
 }

@@ -1,5 +1,6 @@
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.SignalGroup;
@@ -240,5 +241,5 @@ public class DefaultSignalGroupManagerXml
         return InstanceManager.signalGroupManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalGroupManagerXml.class.getName());
+    static Logger log = Logger.getLogger(DefaultSignalGroupManagerXml.class.getName());
 }

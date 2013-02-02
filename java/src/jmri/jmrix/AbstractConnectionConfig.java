@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
@@ -167,6 +168,6 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     abstract public boolean getDisabled();
     abstract public void setDisabled(boolean disable);
     
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractConnectionConfig.class.getName());
+    static protected Logger log = Logger.getLogger(AbstractConnectionConfig.class.getName());
     
 }

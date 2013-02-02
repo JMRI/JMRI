@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable.signalmast;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.util.StringUtil;
 
@@ -1116,7 +1117,7 @@ public class AddSignalMastPanel extends JPanel {
     }
     
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddSignalMastPanel.class.getName());
+    static final Logger log = Logger.getLogger(AddSignalMastPanel.class.getName());
 }
 
 

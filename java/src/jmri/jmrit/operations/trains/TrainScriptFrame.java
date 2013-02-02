@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import java.util.List;
 import java.io.File;
@@ -417,6 +418,6 @@ public class TrainScriptFrame extends OperationsFrame {
 		setVisible(true);
     }
  	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(TrainScriptFrame.class.getName());
 }

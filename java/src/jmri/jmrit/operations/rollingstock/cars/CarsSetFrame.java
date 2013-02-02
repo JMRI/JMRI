@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apache.log4j.Logger;
 import java.text.MessageFormat;
 
 import javax.swing.JOptionPane;
@@ -109,6 +110,6 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		return true;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarsSetFrame.class
+	static Logger log = Logger.getLogger(CarsSetFrame.class
 			.getName());
 }

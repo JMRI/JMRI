@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.setup;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -2138,7 +2139,7 @@ public class Setup {
     	}
     }
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Setup.class.getName());
+    static Logger log = Logger.getLogger(Setup.class.getName());
 
 }
 

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -188,6 +189,6 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 		fileOut.close();
 	}
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(TrainCsvSwitchLists.class.getName());
 }

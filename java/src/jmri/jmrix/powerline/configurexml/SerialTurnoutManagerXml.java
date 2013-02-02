@@ -1,5 +1,6 @@
 package jmri.jmrix.powerline.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -31,5 +32,5 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
         return loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManagerXml.class.getName());
+    static Logger log = Logger.getLogger(SerialTurnoutManagerXml.class.getName());
 }

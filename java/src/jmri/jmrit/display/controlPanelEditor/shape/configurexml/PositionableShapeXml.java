@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.*;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ToolTip;
@@ -180,5 +181,5 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
 		return 0;
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableShapeXml.class.getName());
+    static Logger log = Logger.getLogger(PositionableShapeXml.class.getName());
 }

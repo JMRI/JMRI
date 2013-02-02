@@ -2,6 +2,8 @@
 
 package jmri.jmrix.tmcc;
 
+import org.apache.log4j.Logger;
+
 /**
  * Utility Class supporting parsing and testing of addresses for TMCC
  * <P>
@@ -373,7 +375,7 @@ public class SerialAddress {
 		return (nName);
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAddress.class.getName());
+    static Logger log = Logger.getLogger(SerialAddress.class.getName());
 }
 
 /* @(#)SerialAddress.java */

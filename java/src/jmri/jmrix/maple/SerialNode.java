@@ -2,6 +2,7 @@
 
 package jmri.jmrix.maple;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractNode;
@@ -121,7 +122,7 @@ public class SerialNode extends AbstractNode {
 	
 	public int getTimeoutCount(){return timeout;}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialNode.class.getName());
+    static Logger log = Logger.getLogger(SerialNode.class.getName());
 }
 
 /* @(#)SerialNode.java */

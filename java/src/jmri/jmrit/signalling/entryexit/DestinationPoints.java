@@ -1,5 +1,6 @@
 package jmri.jmrit.signalling.entryexit;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -769,5 +770,5 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             firePropertyChange("active", oldvalue, getState());
             
         }
-        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DestinationPoints.class.getName());
+        static Logger log = Logger.getLogger(DestinationPoints.class.getName());
     }

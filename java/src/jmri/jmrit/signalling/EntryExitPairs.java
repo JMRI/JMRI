@@ -1,5 +1,6 @@
 package jmri.jmrit.signalling;
 
+import org.apache.log4j.Logger;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Sensor;
@@ -675,5 +676,5 @@ public class EntryExitPairs implements jmri.Manager{
     };
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EntryExitPairs.class.getName());
+    static Logger log = Logger.getLogger(EntryExitPairs.class.getName());
 }

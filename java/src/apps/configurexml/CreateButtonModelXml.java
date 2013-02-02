@@ -1,5 +1,6 @@
 package apps.configurexml;
 
+import org.apache.log4j.Logger;
 import apps.Apps;
 import apps.gui3.Apps3;
 import apps.CreateButtonModel;
@@ -99,6 +100,6 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CreateButtonModelXml.class.getName());
+    static Logger log = Logger.getLogger(CreateButtonModelXml.class.getName());
 
 }

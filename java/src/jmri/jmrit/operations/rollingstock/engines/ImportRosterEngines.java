@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.apache.log4j.Logger;
 import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -97,7 +98,7 @@ public class ImportRosterEngines extends Thread {
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(ImportRosterEngines.class.getName());
 }
 

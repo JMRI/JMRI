@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
@@ -250,6 +251,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         return jmri.Manager.PANELFILES;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanelEditorXml.class.getName());
+    static Logger log = Logger.getLogger(ControlPanelEditorXml.class.getName());
 
 }

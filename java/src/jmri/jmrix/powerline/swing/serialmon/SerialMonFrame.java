@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.swing.serialmon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
@@ -46,6 +47,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         nextLine(l.toMonitorString(), l.toString());
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialMonFrame.class.getName());
+    static Logger log = Logger.getLogger(SerialMonFrame.class.getName());
 
 }

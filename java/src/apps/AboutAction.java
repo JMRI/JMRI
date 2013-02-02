@@ -1,6 +1,7 @@
 // AboutAction.java
 package apps;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.swing.AboutDialog;
@@ -36,5 +37,5 @@ public class AboutAction extends JmriAbstractAction {
     public JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AboutAction.class.getName());
+    //private static final Logger log = Logger.getLogger(AboutAction.class.getName());
 }

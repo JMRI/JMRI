@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -675,6 +676,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarsTableModel.class
+	static Logger log = Logger.getLogger(CarsTableModel.class
 			.getName());
 }

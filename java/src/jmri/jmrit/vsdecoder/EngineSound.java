@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -211,6 +212,6 @@ class EngineSound extends VSDSound {
 		  " Fade-Out-Time: " + this.getFadeOutTime());
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineSound.class.getName());
+    private static final Logger log = Logger.getLogger(EngineSound.class.getName());
 
 }

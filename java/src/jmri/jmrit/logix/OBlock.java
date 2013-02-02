@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -598,5 +599,5 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             WarrantTableAction.rb.getString("BlockDescription"), getDisplayName());
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OBlock.class.getName());
+    static Logger log = Logger.getLogger(OBlock.class.getName());
 }

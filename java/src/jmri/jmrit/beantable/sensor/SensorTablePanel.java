@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable.sensor;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 
 
@@ -48,7 +49,7 @@ public class SensorTablePanel extends jmri.jmrit.beantable.BeanTablePane {
         addFrame.setVisible(true);
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTablePanel.class.getName());
+    static final Logger log = Logger.getLogger(SensorTablePanel.class.getName());
 }
 
 

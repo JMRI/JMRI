@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -282,5 +283,5 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TableItemPanel.class.getName());
+    static Logger log = Logger.getLogger(TableItemPanel.class.getName());
 }

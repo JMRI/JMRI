@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.macro;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import java.io.*;
@@ -295,6 +296,6 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(NceMacroRestore.class.getName());
 }

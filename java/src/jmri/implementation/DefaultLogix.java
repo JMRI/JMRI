@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
@@ -1130,7 +1131,7 @@ public class DefaultLogix extends AbstractNamedBean
         return;
     }
 	
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultLogix.class.getName());
+    static final Logger log = Logger.getLogger(DefaultLogix.class.getName());
 }
 
 /* @(#)DefaultLogix.java */

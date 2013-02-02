@@ -1,6 +1,7 @@
 // DragJComponent.java
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
@@ -82,7 +83,7 @@ import java.awt.dnd.*;
          return _dataFlavor.equals(flavor);
      }
 
-     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DragJComponent.class.getName());
+     static Logger log = Logger.getLogger(DragJComponent.class.getName());
 }
 
 

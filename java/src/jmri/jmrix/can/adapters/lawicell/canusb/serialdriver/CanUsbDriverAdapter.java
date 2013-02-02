@@ -1,6 +1,7 @@
 // CanUsbDriverAdapter.java
 
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
+import org.apache.log4j.Logger;
 import jmri.jmrix.SystemConnectionMemo;
 
 /**
@@ -34,6 +35,6 @@ public class CanUsbDriverAdapter
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanUsbDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(CanUsbDriverAdapter.class.getName());
 
 }

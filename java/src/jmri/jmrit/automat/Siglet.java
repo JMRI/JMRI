@@ -2,6 +2,7 @@
 
 package jmri.jmrit.automat;
 
+import org.apache.log4j.Logger;
 import jmri.NamedBean;
 
 /**
@@ -72,7 +73,7 @@ public class Siglet extends AbstractAutomaton {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Siglet.class.getName());
+    static Logger log = Logger.getLogger(Siglet.class.getName());
 }
 
 /* @(#)Siglet.java */

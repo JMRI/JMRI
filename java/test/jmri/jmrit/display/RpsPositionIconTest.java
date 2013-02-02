@@ -1,6 +1,7 @@
 // RpsPositionIconTest.java
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import junit.framework.Assert;
@@ -134,6 +135,6 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
 
-	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsPositionIconTest.class.getName());
+	// static private Logger log = Logger.getLogger(RpsPositionIconTest.class.getName());
 
 }

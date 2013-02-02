@@ -1,6 +1,7 @@
 // IdTagTableAction.java
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -330,7 +331,7 @@ public class IdTagTableAction extends AbstractTableAction {
     protected String getClassName() {
         return IdTagTableAction.class.getName();
     }
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IdTagTableAction.class.getName());
+    private static final Logger log = Logger.getLogger(IdTagTableAction.class.getName());
 }
 
 /* @(#)IdTagTableAction.java */

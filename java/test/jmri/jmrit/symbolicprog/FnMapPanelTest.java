@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -66,7 +67,7 @@ public class FnMapPanelTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FnMapPanelTest.class.getName());
+    static Logger log = Logger.getLogger(FnMapPanelTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

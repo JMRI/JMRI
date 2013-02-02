@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -34,5 +35,5 @@ public class Dcc4PcSensorManagerXml extends jmri.managers.configurexml.AbstractS
         return loadSensors(sensors);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcSensorManagerXml.class.getName());
+    static Logger log = Logger.getLogger(Dcc4PcSensorManagerXml.class.getName());
 }

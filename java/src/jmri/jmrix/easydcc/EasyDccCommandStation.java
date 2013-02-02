@@ -2,6 +2,7 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
 import jmri.CommandStation;
 
 /**
@@ -65,7 +66,7 @@ public class EasyDccCommandStation implements CommandStation {
         return memo.getSystemPrefix();
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccCommandStation.class.getName());
+	static Logger log = Logger.getLogger(EasyDccCommandStation.class.getName());
 
 }
 

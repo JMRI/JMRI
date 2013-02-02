@@ -2,6 +2,7 @@
 
 package jmri.jmrit.speedometer;
 
+import org.apache.log4j.Logger;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.awt.FlowLayout;
@@ -754,7 +755,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedometerFrame.class.getName());
+    private static final Logger log = Logger.getLogger(SpeedometerFrame.class.getName());
 }
 
 

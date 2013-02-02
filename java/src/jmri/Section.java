@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.Block;
 import jmri.Sensor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -2197,7 +2198,7 @@ public class Section extends AbstractNamedBean
 	}
 		
 		
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Section.class.getName());
+    static final Logger log = Logger.getLogger(Section.class.getName());
 	
 }
 

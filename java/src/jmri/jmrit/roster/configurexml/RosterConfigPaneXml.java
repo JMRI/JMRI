@@ -1,5 +1,6 @@
 package jmri.jmrit.roster.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigPane;
 import jmri.jmrit.roster.RosterEntry;
@@ -70,6 +71,6 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         jmri.InstanceManager.configureManagerInstance().registerPref(new jmri.jmrit.roster.RosterConfigPane());
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterConfigPaneXml.class.getName());
+    static Logger log = Logger.getLogger(RosterConfigPaneXml.class.getName());
 
 }

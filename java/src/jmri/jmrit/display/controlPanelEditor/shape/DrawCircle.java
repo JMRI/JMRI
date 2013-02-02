@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import org.apache.log4j.Logger;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -100,5 +101,5 @@ public class DrawCircle extends DrawFrame {
 //		pos.makeShape();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DrawCircle.class.getName());
+    static Logger log = Logger.getLogger(DrawCircle.class.getName());
 }

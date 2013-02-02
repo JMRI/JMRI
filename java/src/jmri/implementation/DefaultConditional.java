@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.jmrit.Sound;
 import java.util.ArrayList;
@@ -1517,7 +1518,7 @@ public class DefaultConditional extends AbstractNamedBean
 		}
 	}
 	
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultConditional.class.getName());
+    static final Logger log = Logger.getLogger(DefaultConditional.class.getName());
 }
 
 /* @(#)DefaultConditional.java */

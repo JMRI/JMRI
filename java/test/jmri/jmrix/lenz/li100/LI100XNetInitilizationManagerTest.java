@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.li100;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
@@ -65,6 +66,6 @@ public class LI100XNetInitilizationManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100XNetInitilizationManagerTest.class.getName());
+    static Logger log = Logger.getLogger(LI100XNetInitilizationManagerTest.class.getName());
 
 }

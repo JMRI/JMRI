@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
@@ -118,7 +119,7 @@ public class RpsSensor extends AbstractSensor
     public void requestUpdateFromLayout() {
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsSensor.class.getName());
+    static Logger log = Logger.getLogger(RpsSensor.class.getName());
 
 }
 

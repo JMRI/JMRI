@@ -1,6 +1,7 @@
 package jmri.jmrit.picker;
 
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -108,6 +109,6 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PickPanel.class.getName());
+    static Logger log = Logger.getLogger(PickPanel.class.getName());
 }
 

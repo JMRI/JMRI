@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import java.util.*;
@@ -297,6 +298,6 @@ public class SplitVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( SplitVariableValueTest.class.getName());
+    static Logger log = Logger.getLogger( SplitVariableValueTest.class.getName());
 
 }

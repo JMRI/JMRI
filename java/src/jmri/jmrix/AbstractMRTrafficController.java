@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
@@ -1041,7 +1042,7 @@ abstract public class AbstractMRTrafficController {
         }
     } // end cleanUpHook
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMRTrafficController.class.getName());
+    static Logger log = Logger.getLogger(AbstractMRTrafficController.class.getName());
 }
 
 

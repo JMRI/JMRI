@@ -2,6 +2,7 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.util.*;
 import jmri.jmrit.roster.Roster;
@@ -1018,7 +1019,7 @@ public class ActivateTrainFrame {
 		// Note: the order above must correspond to the numbers in AutoActiveTrain.java
 	}
    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ActivateTrainFrame.class.getName());
+    static Logger log = Logger.getLogger(ActivateTrainFrame.class.getName());
 }
 	
 			

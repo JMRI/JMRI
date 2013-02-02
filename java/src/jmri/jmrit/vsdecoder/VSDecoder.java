@@ -30,6 +30,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import jmri.LocoAddress;
@@ -935,6 +936,6 @@ public class VSDecoder implements PropertyChangeListener {
 	}
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoder.class.getName());
+    private static final Logger log = Logger.getLogger(VSDecoder.class.getName());
 
 }

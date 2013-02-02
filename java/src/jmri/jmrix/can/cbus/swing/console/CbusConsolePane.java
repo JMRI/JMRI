@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.cbus.swing.console;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -1083,5 +1084,5 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusConsolePane.class.getName());
+    static Logger log = Logger.getLogger(CbusConsolePane.class.getName());
 }

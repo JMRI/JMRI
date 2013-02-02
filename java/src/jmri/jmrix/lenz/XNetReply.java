@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
+
 /**
  * Represents a single response from the XpressNet.
  *<P>
@@ -607,7 +609,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     public final void resetUnsolicited() { reallyUnsolicited = false; }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetReply.class.getName());
+    static Logger log = Logger.getLogger(XNetReply.class.getName());
 
 }
 

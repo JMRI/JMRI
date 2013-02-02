@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import java.util.Hashtable;
 import java.util.Enumeration;
 
@@ -170,7 +171,7 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
         return retval;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalSystem.class.getName());
+    static Logger log = Logger.getLogger(DefaultSignalSystem.class.getName());
 }
 
 /* @(#)DefaultSignalSystem.java */

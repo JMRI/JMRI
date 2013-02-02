@@ -1,5 +1,7 @@
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
+
 /**
  * Default operation for reporting errors while loading.
  *
@@ -36,6 +38,6 @@ public class ErrorHandler {
     public void done() {}
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ErrorHandler.class.getName());
+    static Logger log = Logger.getLogger(ErrorHandler.class.getName());
 }
 

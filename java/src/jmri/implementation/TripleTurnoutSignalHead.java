@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.NamedBeanHandle;
 
@@ -99,7 +100,7 @@ public class TripleTurnoutSignalHead extends DoubleTurnoutSignalHead {
     public NamedBeanHandle<Turnout> getYellow() {return mYellow;}
 	public void setYellow(NamedBeanHandle<Turnout> t) {mYellow=t;}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TripleTurnoutSignalHead.class.getName());
+    static Logger log = Logger.getLogger(TripleTurnoutSignalHead.class.getName());
 }
 
 /* @(#)TripleTurnoutSignalHead.java */

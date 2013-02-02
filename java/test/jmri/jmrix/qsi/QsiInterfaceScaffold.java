@@ -8,6 +8,8 @@
 
 package jmri.jmrix.qsi;
 
+import org.apache.log4j.Logger;
+
 class QsiInterfaceScaffold implements QsiListener {
 	public QsiInterfaceScaffold() {
 		rcvdReply = null;
@@ -19,6 +21,6 @@ class QsiInterfaceScaffold implements QsiListener {
 	QsiReply rcvdReply;
 	QsiMessage rcvdMsg;
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiInterfaceScaffold.class.getName());
+	static Logger log = Logger.getLogger(QsiInterfaceScaffold.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 import java.util.Enumeration;
@@ -216,7 +217,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSensorManager.class.getName());
+    static Logger log = Logger.getLogger(AbstractSensorManager.class.getName());
 }
 
 /* @(#)AbstractSensorManager.java */

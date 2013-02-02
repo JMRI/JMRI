@@ -2,6 +2,7 @@
 
 package apps.gui3.dp3;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -665,7 +666,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgAction.class.getName());
+    static Logger log = Logger.getLogger(PaneProgAction.class.getName());
 
 }
 

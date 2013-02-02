@@ -2,6 +2,7 @@
 
 package jmri.jmrix.marklin;
 
+import org.apache.log4j.Logger;
 import jmri.CommandStation;
 
 import jmri.jmrix.AbstractMRListener;
@@ -224,7 +225,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
         return adaptermemo.getSystemPrefix();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinTrafficController.class.getName());
+    static Logger log = Logger.getLogger(MarklinTrafficController.class.getName());
 }
 
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -936,5 +937,5 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		}
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrame.class.getName());
+    static Logger log = Logger.getLogger(ThrottleFrame.class.getName());
 }

@@ -2,6 +2,7 @@
 
 package apps.gui3.paned;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 import jmri.Application;
 import jmri.util.swing.multipane.MultiPaneWindow;
@@ -52,7 +53,7 @@ public class Paned extends apps.gui3.Apps3 {
         return null;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Paned.class.getName());
+    static Logger log = Logger.getLogger(Paned.class.getName());
 }
 
 

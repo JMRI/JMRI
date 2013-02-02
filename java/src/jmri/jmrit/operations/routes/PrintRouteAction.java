@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
 
+import org.apache.log4j.Logger;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -139,5 +140,5 @@ public class PrintRouteAction  extends AbstractAction {
 		return buf.toString();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintRouteAction.class.getName());
+    static Logger log = Logger.getLogger(PrintRouteAction.class.getName());
 }

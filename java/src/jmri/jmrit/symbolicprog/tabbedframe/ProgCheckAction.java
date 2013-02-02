@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.*;
 import java.awt.event.*;
 import java.io.*;
@@ -225,6 +226,6 @@ public class ProgCheckAction extends AbstractAction {
     
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgCheckAction.class.getName());
+    static Logger log = Logger.getLogger(ProgCheckAction.class.getName());
     
 }

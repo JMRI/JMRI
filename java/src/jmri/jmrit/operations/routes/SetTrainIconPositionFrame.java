@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
  
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
@@ -413,6 +414,6 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         super.dispose();
     }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(SetTrainIconPositionFrame.class.getName());
 }

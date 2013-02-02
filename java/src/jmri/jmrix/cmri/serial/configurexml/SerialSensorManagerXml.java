@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 import jmri.jmrix.cmri.serial.*;
@@ -35,5 +36,5 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
         return loadSensors(sensors);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManagerXml.class.getName());
+    static Logger log = Logger.getLogger(SerialSensorManagerXml.class.getName());
 }

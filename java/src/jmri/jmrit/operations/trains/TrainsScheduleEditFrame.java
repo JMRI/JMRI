@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.trains;
 
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import javax.swing.*;
 
@@ -91,5 +92,5 @@ public class TrainsScheduleEditFrame extends OperationsFrame implements java.bea
 	}
 
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainsScheduleEditFrame.class.getName());
+	static Logger log = Logger.getLogger(TrainsScheduleEditFrame.class.getName());
 }

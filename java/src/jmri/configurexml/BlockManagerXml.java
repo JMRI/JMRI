@@ -2,6 +2,7 @@
 
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.BeanSetting;
 import jmri.Block;
 import jmri.BlockManager;
@@ -371,5 +372,5 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         return InstanceManager.blockManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManagerXml.class.getName());
+    static Logger log = Logger.getLogger(BlockManagerXml.class.getName());
 }

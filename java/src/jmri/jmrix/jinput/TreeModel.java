@@ -2,6 +2,7 @@
 
 package jmri.jmrix.jinput;
 
+import org.apache.log4j.Logger;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
@@ -235,6 +236,6 @@ public final class TreeModel extends DefaultTreeModel {
         pcs.removePropertyChangeListener(l);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TreeModel.class.getName());
+    static Logger log = Logger.getLogger(TreeModel.class.getName());
 }
 

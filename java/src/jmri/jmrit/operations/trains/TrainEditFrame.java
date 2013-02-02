@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.GridBagLayout;
@@ -973,6 +974,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainEditFrame.class
+	static Logger log = Logger.getLogger(TrainEditFrame.class
 			.getName());
 }

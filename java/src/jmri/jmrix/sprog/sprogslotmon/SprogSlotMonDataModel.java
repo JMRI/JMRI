@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog.sprogslotmon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.sprog.SprogConstants;
 import jmri.jmrix.sprog.SprogSlot;
 import jmri.jmrix.sprog.SprogSlotListener;
@@ -299,6 +300,6 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
         // table = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogSlotMonDataModel.class.getName());
+    static Logger log = Logger.getLogger(SprogSlotMonDataModel.class.getName());
 
 }

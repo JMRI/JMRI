@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -353,6 +354,6 @@ public class DecVariableValue extends VariableValue
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecVariableValue.class.getName());
+    static Logger log = Logger.getLogger(DecVariableValue.class.getName());
 
 }

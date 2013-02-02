@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -175,7 +176,7 @@ public class CvValueTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CvValueTest.class.getName());
+    static Logger log = Logger.getLogger(CvValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

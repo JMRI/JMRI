@@ -2,6 +2,7 @@
 
 package jmri.jmrit.automat;
 
+import org.apache.log4j.Logger;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -875,7 +876,7 @@ public class AbstractAutomaton implements Runnable {
         }
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractAutomaton.class.getName());
+    static Logger log = Logger.getLogger(AbstractAutomaton.class.getName());
 }
 
 /* @(#)AbstractAutomaton.java */

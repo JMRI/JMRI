@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -522,6 +523,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		removePropertyChangeTrains();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainsTableModel.class
+	static Logger log = Logger.getLogger(TrainsTableModel.class
 			.getName());
 }

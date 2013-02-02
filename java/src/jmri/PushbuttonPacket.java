@@ -2,6 +2,8 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
+
 /**
  * Generates an NMRA packet containing the correct payload to enable or
  * disable pushbutton lockout.  Currently supports the following Decoders
@@ -130,7 +132,7 @@ public class PushbuttonPacket {
 		return CVdata;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(PushbuttonPacket.class.getName());
 }
 

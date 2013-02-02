@@ -2,6 +2,7 @@
 
 package jmri.jmris.srcp;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 
 import jmri.Sensor;
@@ -153,6 +154,6 @@ public class JmriSRCPSensorServer extends AbstractSensorServer {
      }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSRCPSensorServer.class.getName());
+    static Logger log = Logger.getLogger(JmriSRCPSensorServer.class.getName());
 
 }

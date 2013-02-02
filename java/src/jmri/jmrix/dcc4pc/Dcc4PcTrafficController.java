@@ -2,6 +2,7 @@
 
 package jmri.jmrix.dcc4pc;
 
+import org.apache.log4j.Logger;
 import jmri.CommandStation;
 import java.util.Calendar;
 
@@ -583,6 +584,6 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
         return adaptermemo.getSystemPrefix();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcTrafficController.class.getName());
+    static Logger log = Logger.getLogger(Dcc4PcTrafficController.class.getName());
 }
 /* @(#)Dcc4PcTrafficController.java */

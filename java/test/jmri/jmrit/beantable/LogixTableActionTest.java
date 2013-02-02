@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 import junit.extensions.jfcunit.*;
 //import junit.extensions.jfcunit.finder.*;
@@ -239,6 +240,6 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LogixTableActionTest.class.getName());
+    static Logger log = Logger.getLogger(LogixTableActionTest.class.getName());
 }
 

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
@@ -145,6 +146,6 @@ public class TrainCopyFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainCopyFrame.class
+	static Logger log = Logger.getLogger(TrainCopyFrame.class
 			.getName());
 }

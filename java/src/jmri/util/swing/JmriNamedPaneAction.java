@@ -2,6 +2,7 @@
 
 package jmri.util.swing;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 /**
@@ -52,7 +53,7 @@ public class JmriNamedPaneAction extends JmriAbstractAction {
         }      
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriNamedPaneAction.class.getName());
+    static Logger log = Logger.getLogger(JmriNamedPaneAction.class.getName());
 }
 
 /* @(#)JmriAbstractAction.java */

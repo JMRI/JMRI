@@ -1,6 +1,7 @@
 
 package jmri.jmrit.logix;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 //import java.util.Enumeration;
 //import java.util.HashMap;
@@ -166,5 +167,5 @@ public class RouteFinder implements Runnable {
         return children;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteFinder.class.getName());
+    static Logger log = Logger.getLogger(RouteFinder.class.getName());
 }

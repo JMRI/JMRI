@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.managers.AbstractManager;
 
@@ -50,7 +51,7 @@ public class AbstractSignalHeadManager extends AbstractManager
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSignalHeadManager.class.getName());
+    static Logger log = Logger.getLogger(AbstractSignalHeadManager.class.getName());
 }
 
 /* @(#)AbstractSignalHeadManager.java */

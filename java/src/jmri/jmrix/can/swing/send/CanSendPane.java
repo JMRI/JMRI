@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.swing.send;
 
+import org.apache.log4j.Logger;
 import jmri.util.StringUtil;
 
 import jmri.jmrix.can.CanListener;
@@ -290,6 +291,6 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel implements CanLis
                 jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class));
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanSendPane.class.getName());
+    static Logger log = Logger.getLogger(CanSendPane.class.getName());
 
 }

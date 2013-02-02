@@ -1,6 +1,7 @@
 // TamsTurnoutManager.java
 
 package jmri.jmrix.tams;
+import org.apache.log4j.Logger;
 import jmri.Turnout;
 
 /**
@@ -42,7 +43,7 @@ public class TamsTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     
     boolean noWarnDelete = false;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(TamsTurnoutManager.class.getName());
 }
 
 /* @(#)TamsTurnoutManager.java */

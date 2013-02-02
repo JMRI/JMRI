@@ -18,6 +18,7 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.awt.Frame;
@@ -135,7 +136,7 @@ public class ManageLocationsAction extends AbstractAction {
 	f.setExtendedState(Frame.NORMAL);
     }
 
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger
+    static private Logger log = org.apache.log4j.Logger
 	.getLogger(ManageLocationsAction.class.getName());
 
 }

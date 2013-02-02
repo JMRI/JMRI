@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.managers.AbstractManager;
 
@@ -116,7 +117,7 @@ public abstract class AbstractMemoryManager extends AbstractManager
      */
     abstract protected Memory createNewMemory(String systemName, String userName);
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMemoryManager.class.getName());
+    static Logger log = Logger.getLogger(AbstractMemoryManager.class.getName());
 }
 
 /* @(#)AbstractMemoryManager.java */

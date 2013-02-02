@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 /**
  * Extend jmri.AbstractTurnout for LocoNet layouts
@@ -311,7 +312,7 @@ import jmri.implementation.AbstractTurnout;
      static final int METERINTERVAL = 100;  // msec wait before closed
      static java.util.Timer meterTimer = new java.util.Timer(true);
      
-     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnTurnout.class.getName());
+     static Logger log = Logger.getLogger(LnTurnout.class.getName());
 
  }
 

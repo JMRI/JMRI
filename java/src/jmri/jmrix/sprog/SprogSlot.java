@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog;
 
+import org.apache.log4j.Logger;
 import jmri.DccThrottle;
 import java.util.Arrays;
 import jmri.NmraPacket;
@@ -344,7 +345,7 @@ private boolean f5to8Packet = false;
       return payload[0];
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogSlot.class.getName());
+    static Logger log = Logger.getLogger(SprogSlot.class.getName());
 }
 
 

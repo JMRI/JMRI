@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Frame;
@@ -715,5 +716,5 @@ public class YardmasterFrame extends OperationsFrame implements java.beans.Prope
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(YardmasterFrame.class.getName());
+	static Logger log = Logger.getLogger(YardmasterFrame.class.getName());
 }

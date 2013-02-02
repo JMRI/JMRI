@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import jmri.util.JmriJFrame;
 import java.awt.BorderLayout;
 import java.util.List;
@@ -93,5 +94,5 @@ class VSDecoderFrame extends JmriJFrame {
 
     public List<JMenu> getMenus() { return menuList; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderFrame.class.getName());
+    static Logger log = Logger.getLogger(VSDecoderFrame.class.getName());
 }

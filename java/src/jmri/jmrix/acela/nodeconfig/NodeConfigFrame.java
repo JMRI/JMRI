@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela.nodeconfig;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.util.ResourceBundle;
 
@@ -2034,5 +2035,5 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     private String[] outputType = new String[16];
     private String[] outputLength = new String[16];
   
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NodeConfigFrame.class.getName());
+    static Logger log = Logger.getLogger(NodeConfigFrame.class.getName());
 }

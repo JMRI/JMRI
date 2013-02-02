@@ -2,6 +2,7 @@
 
 package jmri.jmrit.automat;
 
+import org.apache.log4j.Logger;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
@@ -118,7 +119,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SampleAutomaton3.class.getName());
+    static Logger log = Logger.getLogger(SampleAutomaton3.class.getName());
 
 }
 

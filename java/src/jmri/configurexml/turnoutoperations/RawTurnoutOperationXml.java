@@ -3,6 +3,7 @@
  */
 package jmri.configurexml.turnoutoperations;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 import java.lang.Class;
@@ -38,5 +39,5 @@ public class RawTurnoutOperationXml extends CommonTurnoutOperationXml {
         }
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RawTurnoutOperation.class.getName());
+    static Logger log = Logger.getLogger(RawTurnoutOperation.class.getName());
 }

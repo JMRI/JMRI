@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.swing.debugger;
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -33,7 +34,7 @@ public class DebuggerAction 			extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebuggerAction.class.getName());
+	static Logger log = Logger.getLogger(DebuggerAction.class.getName());
 
 }
 

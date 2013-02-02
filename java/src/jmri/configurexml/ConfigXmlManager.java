@@ -1,5 +1,6 @@
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.jmrit.revhistory.FileHistory;
 
@@ -871,6 +872,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     static public void setErrorHandler(ErrorHandler handler) { ConfigXmlManager.handler = handler; }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConfigXmlManager.class.getName());
+    static Logger log = Logger.getLogger(ConfigXmlManager.class.getName());
 }
 

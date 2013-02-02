@@ -2,6 +2,7 @@
 
 package jmri.jmrit.jython;
 
+import org.apache.log4j.Logger;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -279,7 +280,7 @@ public class InputWindow extends JPanel {
         PythonInterp.execCommand(cmd);
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InputWindow.class.getName());
+    static Logger log = Logger.getLogger(InputWindow.class.getName());
 }
 
 /* @(#)InputWindow.java */

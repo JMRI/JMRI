@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.clockmon;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.TimebaseRateException;
@@ -1752,6 +1753,6 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         super.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ClockMonPanel.class.getName());
+    static Logger log = Logger.getLogger(ClockMonPanel.class.getName());
     
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.direct;
 
+import org.apache.log4j.Logger;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
@@ -127,6 +128,6 @@ public class Throttle extends AbstractThrottle
     protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Throttle.class.getName());
+    static Logger log = Logger.getLogger(Throttle.class.getName());
 
 }

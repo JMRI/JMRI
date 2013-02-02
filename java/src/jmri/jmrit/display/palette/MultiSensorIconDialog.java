@@ -1,6 +1,7 @@
 // MultiSensorIconDialog.java
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -112,6 +113,6 @@ public class MultiSensorIconDialog extends IconDialog {
         return true;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorIconDialog.class.getName());
+    static Logger log = Logger.getLogger(MultiSensorIconDialog.class.getName());
 }
 

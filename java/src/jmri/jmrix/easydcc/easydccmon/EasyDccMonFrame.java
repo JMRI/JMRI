@@ -2,6 +2,7 @@
 
 package jmri.jmrix.easydcc.easydccmon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.easydcc.EasyDccListener;
 import jmri.jmrix.easydcc.EasyDccMessage;
 import jmri.jmrix.easydcc.EasyDccReply;
@@ -37,6 +38,6 @@ public class EasyDccMonFrame extends jmri.jmrix.AbstractMonFrame implements Easy
 		nextLine("rep: \""+l.toString()+"\"\n", "");
 	}
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccMonFrame.class.getName());
+   static Logger log = Logger.getLogger(EasyDccMonFrame.class.getName());
 
 }

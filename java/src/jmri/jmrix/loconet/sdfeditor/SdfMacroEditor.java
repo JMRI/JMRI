@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.sdfeditor;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import jmri.jmrix.loconet.sdf.*;
@@ -98,7 +99,7 @@ public abstract class SdfMacroEditor extends JPanel {
             return null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SdfMacroEditor.class.getName());
+    static Logger log = Logger.getLogger(SdfMacroEditor.class.getName());
 
 }
 /* @(#)SdfMacroEditor.java */

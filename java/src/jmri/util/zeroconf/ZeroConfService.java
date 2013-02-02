@@ -1,6 +1,7 @@
 // ZeroConfService.java
 package jmri.util.zeroconf;
 
+import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.net.Inet4Address;
 import java.net.InetAddress;
@@ -66,7 +67,7 @@ public class ZeroConfService {
     // static data objects
     private static HashMap<String, ZeroConfService> _services = null;
     private static JmDNS _jmdns = null;
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ZeroConfService.class.getName());
+    static Logger log = Logger.getLogger(ZeroConfService.class.getName());
 
     /**
      * Create a ZeroConfService with the minimal required settings. This method

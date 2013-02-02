@@ -1,5 +1,6 @@
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -392,5 +393,5 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
         setImagePath(dest.getPath());
     }
 
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ResizableImagePanel.class.getName());
+    static private Logger log = Logger.getLogger(ResizableImagePanel.class.getName());
 }

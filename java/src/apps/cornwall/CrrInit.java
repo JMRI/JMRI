@@ -2,6 +2,7 @@
 
 package apps.cornwall;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 
 import java.util.List;
@@ -91,7 +92,7 @@ public class CrrInit extends jmri.jmrit.automat.AbstractAutomaton {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CrrInit.class.getName());
+    static Logger log = Logger.getLogger(CrrInit.class.getName());
 
 }
 

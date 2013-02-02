@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.*;
 
 import java.awt.event.ActionEvent;
@@ -69,5 +70,5 @@ public class PositionableCircle extends PositionableShape {
         repaint();
     }*/
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableCircle.class.getName());
+    static Logger log = Logger.getLogger(PositionableCircle.class.getName());
 }

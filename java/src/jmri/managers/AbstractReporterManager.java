@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.managers.AbstractManager;
 
@@ -140,7 +141,7 @@ public abstract class AbstractReporterManager extends AbstractManager
             return Integer.toString(iName);
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractReporterManager.class.getName());
+    static Logger log = Logger.getLogger(AbstractReporterManager.class.getName());
 }
 
 /* @(#)AbstractReporterManager.java */

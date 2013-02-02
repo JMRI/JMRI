@@ -1,5 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.RpsPositionIcon;
@@ -142,6 +143,6 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SENSORS, element);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsPositionIconXml.class.getName());
+    static Logger log = Logger.getLogger(RpsPositionIconXml.class.getName());
 
 }

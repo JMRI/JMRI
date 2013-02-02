@@ -1,5 +1,6 @@
 package jmri.jmrix.grapevine.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 import jmri.jmrix.grapevine.*;
 
@@ -34,5 +35,5 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
         return loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManagerXml.class.getName());
+    static Logger log = Logger.getLogger(SerialTurnoutManagerXml.class.getName());
 }

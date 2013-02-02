@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 import jmri.jmrit.display.configurexml.*;
@@ -53,5 +54,5 @@ public class LayoutReporterIconXml extends PositionableLabelXml {
         // create the object
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutReporterIconXml.class.getName());
+    static Logger log = Logger.getLogger(LayoutReporterIconXml.class.getName());
 }

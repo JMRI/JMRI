@@ -2,6 +2,7 @@
 
 package jmri.jmrix.oaktree;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -76,7 +77,7 @@ public class SerialTurnout extends AbstractTurnout {
         tNode.setOutputBit(tBit, closed);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnout.class.getName());
+    static Logger log = Logger.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

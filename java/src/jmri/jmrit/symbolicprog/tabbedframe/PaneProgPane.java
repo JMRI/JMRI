@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -1958,6 +1959,6 @@ public class PaneProgPane extends javax.swing.JPanel
         return l;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgPane.class.getName());
+    static Logger log = Logger.getLogger(PaneProgPane.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -391,7 +392,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		pcs.removePropertyChangeListener(l);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarLoadEditFrame.class
+	static Logger log = Logger.getLogger(CarLoadEditFrame.class
 			.getName());
 }
 
@@ -408,6 +409,6 @@ final class CarLoadAttributeAction extends AbstractAction {
 		clef.toggleShowQuanity();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(CarAttributeEditFrame.class.getName());
 }

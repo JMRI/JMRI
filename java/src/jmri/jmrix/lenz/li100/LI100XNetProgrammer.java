@@ -6,6 +6,7 @@
 
 package jmri.jmrix.lenz.li100;
 
+import org.apache.log4j.Logger;
 import jmri.Programmer;
 import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetProgrammer;
@@ -400,7 +401,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
 
 
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100XNetProgrammer.class.getName());
+   static Logger log = Logger.getLogger(LI100XNetProgrammer.class.getName());
 
 }
 

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.cmri.serial.assignment;
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -31,7 +32,7 @@ public class ListAction extends AbstractAction {
         f.setVisible(true);
     }
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ListAction.class.getName());
+   static Logger log = Logger.getLogger(ListAction.class.getName());
 }
 
 /* @(#)ListAction.java */

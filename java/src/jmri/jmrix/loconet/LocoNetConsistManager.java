@@ -11,6 +11,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.Consist;
 import jmri.DccLocoAddress;
 
@@ -110,6 +111,6 @@ public class LocoNetConsistManager extends jmri.jmrix.AbstractConsistManager imp
        }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetConsistManager.class.getName());
+    static Logger log = Logger.getLogger(LocoNetConsistManager.class.getName());
     
 }

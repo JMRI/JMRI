@@ -2,6 +2,7 @@
 
 package jmri.jmrix.qsi.packetgen;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -32,7 +33,7 @@ public class PacketGenAction extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketGenAction.class.getName());
+   static Logger log = Logger.getLogger(PacketGenAction.class.getName());
 }
 
 

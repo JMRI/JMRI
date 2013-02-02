@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 
 /**
@@ -117,7 +118,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManager.class.getName());
+    static Logger log = Logger.getLogger(SerialSensorManager.class.getName());
 }
 
 /* @(#)SerialSensorManager.java */

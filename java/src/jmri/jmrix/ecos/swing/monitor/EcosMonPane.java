@@ -10,6 +10,7 @@
 
 package jmri.jmrix.ecos.swing.monitor;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.ecos.*;
 import jmri.jmrix.ecos.swing.*;
 
@@ -84,7 +85,7 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
         }
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosMonPane.class.getName());
+	static Logger log = Logger.getLogger(EcosMonPane.class.getName());
 
 }
 

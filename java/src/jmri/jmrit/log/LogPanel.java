@@ -2,6 +2,7 @@
 
 package jmri.jmrit.log;
 
+import org.apache.log4j.Logger;
 import java.awt.FlowLayout;
 import javax.swing.*;
 
@@ -42,6 +43,6 @@ public class LogPanel extends JPanel {
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LogPanel.class.getName());
+    static Logger log = Logger.getLogger(LogPanel.class.getName());
 
 }

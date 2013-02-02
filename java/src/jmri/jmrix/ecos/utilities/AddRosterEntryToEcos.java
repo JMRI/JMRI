@@ -3,6 +3,7 @@
 package jmri.jmrix.ecos.utilities;
 
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -84,5 +85,5 @@ public class AddRosterEntryToEcos extends AbstractAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddRosterEntryToEcos.class.getName());
+    static Logger log = Logger.getLogger(AddRosterEntryToEcos.class.getName());
 }

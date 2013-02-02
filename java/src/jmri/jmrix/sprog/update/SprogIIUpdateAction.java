@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog.update;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
@@ -37,7 +38,7 @@ public class SprogIIUpdateAction 	extends SprogUpdateAction {
       }
   }
   
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogIIUpdateAction.class.getName());
+  static Logger log = Logger.getLogger(SprogIIUpdateAction.class.getName());
 
 }
 

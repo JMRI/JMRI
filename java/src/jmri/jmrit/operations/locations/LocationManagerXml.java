@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -98,7 +99,7 @@ public class LocationManagerXml extends OperationsXml {
 
 	private String operationsFileName = "OperationsLocationRoster.xml"; // NOI18N
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocationManagerXml.class
+	static Logger log = Logger.getLogger(LocationManagerXml.class
 			.getName());
 
 }

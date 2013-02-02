@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.reversealign;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.rps.*;
 import jmri.jmrix.rps.trackingpanel.RpsTrackingPanel;
 import java.io.*;
@@ -548,5 +549,5 @@ public class AlignmentPanel extends javax.swing.JPanel
         double s1, s2, s3, s4, s5, s6;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsTrackingPanel.class.getName());
+    static Logger log = Logger.getLogger(RpsTrackingPanel.class.getName());
 }

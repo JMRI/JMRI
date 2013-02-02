@@ -1,5 +1,6 @@
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.TurnoutManager;
@@ -381,5 +382,5 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
         return InstanceManager.turnoutManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTurnoutManagerConfigXML.class.getName());
+    static Logger log = Logger.getLogger(AbstractTurnoutManagerConfigXML.class.getName());
 }

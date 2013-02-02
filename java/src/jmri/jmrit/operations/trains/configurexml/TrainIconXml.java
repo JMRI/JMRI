@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.trains.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.configurexml.LocoIconXml;
 import jmri.jmrit.operations.trains.TrainIcon;
@@ -68,5 +69,5 @@ public class TrainIconXml extends LocoIconXml {
 		log.debug("Warning: loading of TrainIcon not implemented, TrainIcons will be placed by Operations");
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainIconXml.class.getName());
+	static Logger log = Logger.getLogger(TrainIconXml.class.getName());
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SlipTurnoutIcon;
@@ -222,5 +223,5 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SlipTurnoutIconXml.class.getName());
+    static Logger log = Logger.getLogger(SlipTurnoutIconXml.class.getName());
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.Light;
 import jmri.LightManager;
 import junit.framework.Assert;
@@ -73,7 +74,7 @@ public class XNetLightManagerTest extends jmri.managers.AbstractLightMgrTest  {
     @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightManagerTest.class.getName());
+    static Logger log = Logger.getLogger(XNetLightManagerTest.class.getName());
 
 }
 

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
+
 /**
  * Implements a XNetInterface by doing a scatter-gather to
  * another, simpler implementation.
@@ -99,7 +101,7 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
 	        lastSender=null;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTrafficRouter.class.getName());
+	static Logger log = Logger.getLogger(XNetTrafficRouter.class.getName());
 }
 
 

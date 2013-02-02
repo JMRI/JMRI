@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeListener;
 
 import org.jdom.Element;
@@ -132,6 +133,6 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	*/
     }  // end setXml()
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ToggleSoundEvent.class.getName());
+    private static final Logger log = Logger.getLogger(ToggleSoundEvent.class.getName());
     
 }

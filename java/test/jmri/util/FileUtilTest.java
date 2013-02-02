@@ -1,6 +1,7 @@
 // FileUtilTest.java
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import jmri.jmrit.XmlFile;
@@ -237,5 +238,5 @@ public class FileUtilTest extends TestCase {
         TestSuite suite = new TestSuite(FileUtilTest.class);
         return suite;
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(FileUtilTest.class.getName());
+    static Logger log = Logger.getLogger(FileUtilTest.class.getName());
 }

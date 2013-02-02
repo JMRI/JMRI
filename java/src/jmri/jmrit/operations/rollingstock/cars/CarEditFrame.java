@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -891,6 +892,6 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarEditFrame.class
+	static Logger log = Logger.getLogger(CarEditFrame.class
 			.getName());
 }

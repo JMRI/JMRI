@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import org.apache.log4j.Logger;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -114,6 +115,6 @@ public class RosterRecorder extends Thread {
     BlockingQueue<Roster> queue = new ArrayBlockingQueue<Roster>(25);
     
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterRecorder.class.getName());
+    static Logger log = Logger.getLogger(RosterRecorder.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps.aligntable;
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -41,7 +42,7 @@ public class AlignTableAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AlignTableAction.class.getName());
+   static Logger log = Logger.getLogger(AlignTableAction.class.getName());
 }
 
 

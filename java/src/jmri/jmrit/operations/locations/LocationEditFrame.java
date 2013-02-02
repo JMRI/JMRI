@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -691,6 +692,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(LocationEditFrame.class.getName());
 }

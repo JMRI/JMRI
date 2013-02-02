@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
@@ -282,5 +283,5 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
         return "";
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutSlipXml.class.getName());
+    static Logger log = Logger.getLogger(LayoutSlipXml.class.getName());
 }

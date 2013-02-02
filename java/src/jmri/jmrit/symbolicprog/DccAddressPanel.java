@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import java.util.ResourceBundle;
 
@@ -194,6 +195,6 @@ public class DccAddressPanel extends JPanel {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccAddressPanel.class.getName());
+    static Logger log = Logger.getLogger(DccAddressPanel.class.getName());
 
 }

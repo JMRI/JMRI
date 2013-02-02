@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Sensor;
@@ -456,5 +457,5 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         NamedIcon icon; 
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MultiSensorIcon.class.getName());
+    static Logger log = Logger.getLogger(MultiSensorIcon.class.getName());
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.soundloader;
 
+import org.apache.log4j.Logger;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -442,6 +443,6 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorTableDataModel.class.getName());
+    static final Logger log = Logger.getLogger(EditorTableDataModel.class.getName());
 
 }

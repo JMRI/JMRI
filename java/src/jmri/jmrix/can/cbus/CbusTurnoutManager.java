@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.cbus;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -90,7 +91,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return range;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(CbusTurnoutManager.class.getName());
 }
 
 /* @(#)CbusTurnoutManager.java */

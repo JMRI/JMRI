@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -176,7 +177,7 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
 
     HashMap<Object, Object> parameters = null;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNamedBean.class.getName());
+    static Logger log = Logger.getLogger(AbstractNamedBean.class.getName());
 }
 
 /* @(#)AbstractNamedBean.java */

@@ -1,6 +1,7 @@
 // Beans.java
 package jmri.beans;
 
+import org.apache.log4j.Logger;
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
@@ -280,5 +281,5 @@ public class Beans extends java.beans.Beans {
         return (null != object && BeanInterface.class.isAssignableFrom(object.getClass()));
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Beans.class.getName());
+    static Logger log = Logger.getLogger(Beans.class.getName());
 }

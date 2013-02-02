@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela.serialdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.acela.AcelaPortController;
 import jmri.jmrix.acela.AcelaTrafficController;
 import jmri.jmrix.acela.AcelaSystemConnectionMemo;
@@ -202,7 +203,7 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
 }
 
 /* @(#)SerialDriverAdapter.java */

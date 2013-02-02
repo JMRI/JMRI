@@ -2,6 +2,7 @@
 
 package jmri.jmrit.simpleclock;
 
+import org.apache.log4j.Logger;
 import java.util.Date;
 import jmri.Memory;
 import jmri.Timebase;
@@ -544,7 +545,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
     public void setState(int s) throws jmri.JmriException{}
     public int getState(){ return 0; }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTimebase.class.getName());
+    static Logger log = Logger.getLogger(SimpleTimebase.class.getName());
 
 }
 

@@ -1,6 +1,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Frame;
@@ -1427,7 +1428,7 @@ public class Maintenance
         dialog.setVisible(true);
     }
 
-	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static final Logger log = org.apache.log4j.Logger
 			.getLogger(Maintenance.class.getName());
 }
 

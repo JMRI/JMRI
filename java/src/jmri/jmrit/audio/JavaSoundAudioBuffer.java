@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -395,7 +396,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
     private static final long serialVersionUID = 1L;
     
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JavaSoundAudioBuffer.class.getName());
+    private static final Logger log = Logger.getLogger(JavaSoundAudioBuffer.class.getName());
 
 }
 

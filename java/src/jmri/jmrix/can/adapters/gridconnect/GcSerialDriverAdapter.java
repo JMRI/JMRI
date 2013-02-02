@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.adapters.gridconnect;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.can.adapters.gridconnect.GcPortController;
 import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
 import jmri.jmrix.can.TrafficController;
@@ -181,6 +182,6 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GcSerialDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(GcSerialDriverAdapter.class.getName());
 
 }

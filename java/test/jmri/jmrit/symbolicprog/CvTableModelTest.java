@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -36,6 +37,6 @@ public class CvTableModelTest extends TestCase {
         return suite;
     }
 
-    // static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CvTableModelTest.class.getName());
+    // static Logger log = Logger.getLogger(CvTableModelTest.class.getName());
 
 }

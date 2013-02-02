@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
  
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
@@ -296,6 +297,6 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     	}
     }
     
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(SetTrainIconRouteFrame.class.getName());
 }

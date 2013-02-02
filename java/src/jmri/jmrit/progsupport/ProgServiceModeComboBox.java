@@ -1,6 +1,7 @@
 // ProgServiceModeComboBox.java
 package jmri.jmrit.progsupport;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -183,5 +184,5 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements java.be
             connected = false;
         }
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProgServiceModeComboBox.class.getName());
+    static Logger log = Logger.getLogger(ProgServiceModeComboBox.class.getName());
 }

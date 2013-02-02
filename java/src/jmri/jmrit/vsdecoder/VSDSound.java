@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;
@@ -114,6 +115,6 @@ abstract public class VSDSound {
 	// Default: do nothing
     } 
 
-    //private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDSound.class.getName());
+    //private static final Logger log = Logger.getLogger(VSDSound.class.getName());
 
 }

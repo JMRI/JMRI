@@ -19,6 +19,7 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
@@ -71,5 +72,5 @@ public class VSDecoderCreationAction extends AbstractAction {
 	tf.toFront();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VSDecoderCreationAction.class.getName());
+    static Logger log = Logger.getLogger(VSDecoderCreationAction.class.getName());
 }

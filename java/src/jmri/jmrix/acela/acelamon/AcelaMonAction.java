@@ -2,6 +2,7 @@
 
 package jmri.jmrix.acela.acelamon;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -36,7 +37,7 @@ public class AcelaMonAction extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaMonAction.class.getName());
+	static Logger log = Logger.getLogger(AcelaMonAction.class.getName());
 }
 
 /* @(#)AcelaMonAction.java */

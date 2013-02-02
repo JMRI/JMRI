@@ -1,5 +1,6 @@
 package jmri.jmrix.marklin.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -33,5 +34,5 @@ public class MarklinTurnoutManagerXml extends jmri.managers.configurexml.Abstrac
         return loadTurnouts(turnouts);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinTurnoutManagerXml.class.getName());
+    static Logger log = Logger.getLogger(MarklinTurnoutManagerXml.class.getName());
 }

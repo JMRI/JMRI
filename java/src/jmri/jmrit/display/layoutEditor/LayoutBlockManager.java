@@ -1,6 +1,7 @@
 // jmri.jmrit.display.LayoutBlockManager.java
 package jmri.jmrit.display.layoutEditor;
 
+import org.apache.log4j.Logger;
 import jmri.managers.AbstractManager;
 import jmri.Sensor;
 import jmri.Block;
@@ -2332,7 +2333,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         return lastRoutingChange;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManager.class.getName());
+    static Logger log = Logger.getLogger(LayoutBlockManager.class.getName());
 }
 
 /* @(#)LayoutBlockManager.java */

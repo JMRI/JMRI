@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import org.apache.log4j.Logger;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -188,5 +189,5 @@ public class TurnoutController extends AbstractController implements PropertyCha
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutController.class.getName());
+    static Logger log = Logger.getLogger(TurnoutController.class.getName());
 }

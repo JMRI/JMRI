@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.IdentifyDecoder;
@@ -487,6 +488,6 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
         log.error("startProgrammer method in CombinedLocoSelPane should have been overridden");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CombinedLocoSelPane.class.getName());
+    static Logger log = Logger.getLogger(CombinedLocoSelPane.class.getName());
 
 }

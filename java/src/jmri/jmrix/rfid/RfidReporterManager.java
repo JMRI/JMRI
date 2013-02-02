@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rfid;
 
+import org.apache.log4j.Logger;
 import jmri.managers.AbstractReporterManager;
 
 /**
@@ -32,7 +33,7 @@ abstract public class RfidReporterManager extends AbstractReporterManager implem
         log.warn("Unexpected message received"+m);
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RfidReporterManager.class.getName());
+    private static final Logger log = Logger.getLogger(RfidReporterManager.class.getName());
 
 }
 

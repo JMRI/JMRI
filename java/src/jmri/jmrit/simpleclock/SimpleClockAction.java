@@ -2,6 +2,7 @@
 
  package jmri.jmrit.simpleclock;
 
+import org.apache.log4j.Logger;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -33,7 +34,7 @@ public class SimpleClockAction extends AbstractAction {
         f.setVisible(true);
      }
      
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleClockAction.class.getName());
+    static Logger log = Logger.getLogger(SimpleClockAction.class.getName());
 }
 
 /* @(#)SimpleClockAction.java */

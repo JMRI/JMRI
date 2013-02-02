@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.apache.log4j.Logger;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -275,6 +276,6 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceConsistEngines.class
+	static Logger log = Logger.getLogger(NceConsistEngines.class
 			.getName());
 }

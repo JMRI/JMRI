@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
@@ -270,5 +271,5 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         return icon;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadIconXml.class.getName());
+    static Logger log = Logger.getLogger(SignalHeadIconXml.class.getName());
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz.li100;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -53,6 +54,6 @@ public class LI100XNetProgrammerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100XNetProgrammerTest.class.getName());
+    static Logger log = Logger.getLogger(LI100XNetProgrammerTest.class.getName());
 
 }

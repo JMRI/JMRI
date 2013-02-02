@@ -1,6 +1,7 @@
 //SimpleTurnoutServer.java
 package jmri.jmris.simpleserver;
 
+import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -84,5 +85,5 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     	}
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTurnoutServer.class.getName());
+    static Logger log = Logger.getLogger(SimpleTurnoutServer.class.getName());
 }

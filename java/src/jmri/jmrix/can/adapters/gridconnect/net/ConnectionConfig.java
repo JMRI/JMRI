@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.adapters.gridconnect.net;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -92,6 +93,6 @@ import jmri.jmrix.can.ConfigurationManager;
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfig.class.getName());
+    static Logger log = Logger.getLogger(ConnectionConfig.class.getName());
 }
 

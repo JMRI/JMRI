@@ -1,6 +1,7 @@
 package jmri.jmrit.withrottle;
 
 
+import org.apache.log4j.Logger;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -190,6 +191,6 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         useWiFiConsist = value;
     }
 
-    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiThrottlePreferences.class.getName());
+    private static Logger log = Logger.getLogger(WiThrottlePreferences.class.getName());
 
 }

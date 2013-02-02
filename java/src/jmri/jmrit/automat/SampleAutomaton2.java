@@ -2,6 +2,7 @@
 
 package jmri.jmrit.automat;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Programmer;
@@ -110,7 +111,7 @@ public class SampleAutomaton2 extends AbstractAutomaton {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SampleAutomaton2.class.getName());
+    static Logger log = Logger.getLogger(SampleAutomaton2.class.getName());
 }
 
 /* @(#)SampleAutomaton2.java */

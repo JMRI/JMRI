@@ -2,6 +2,7 @@
 
 package jmri.util.swing;
 
+import org.apache.log4j.Logger;
 import junit.framework.*;
 
 /**
@@ -49,5 +50,5 @@ public class GuiUtilBaseTest extends jmri.configurexml.LoadFileTestBase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiUtilBaseTest.class.getName());
+    static Logger log = Logger.getLogger(GuiUtilBaseTest.class.getName());
 }

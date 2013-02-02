@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.cmdstnconfig;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import javax.swing.*;
 import jmri.jmrix.loconet.*;
@@ -309,5 +310,5 @@ public class CmdStnConfigPane extends LnPanel implements LocoNetListener {
   }
 
   // initialize logging
-  static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( CmdStnConfigPane.class.getName());
+  static Logger log = Logger.getLogger( CmdStnConfigPane.class.getName());
 }

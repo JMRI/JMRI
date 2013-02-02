@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.cbus;
 
+import org.apache.log4j.Logger;
 import java.util.regex.*;
 
 import jmri.jmrix.can.CanReply;
@@ -237,7 +238,7 @@ public class CbusAddress {
         return retval;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusAddress.class.getName());
+    static Logger log = Logger.getLogger(CbusAddress.class.getName());
 
 }
 

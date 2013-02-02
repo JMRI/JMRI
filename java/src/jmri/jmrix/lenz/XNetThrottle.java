@@ -1,5 +1,6 @@
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractThrottle;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
@@ -1525,6 +1526,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     // register for notification
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetThrottle.class.getName());
+    static Logger log = Logger.getLogger(XNetThrottle.class.getName());
 }
 

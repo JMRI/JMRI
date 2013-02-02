@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
@@ -360,5 +361,5 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     
     public jmri.NamedBean getNamedBean() { return null; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableJPanel.class.getName());
+    static Logger log = Logger.getLogger(PositionableJPanel.class.getName());
 }

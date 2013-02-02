@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
+
 /*
  
   From NCE System notes for version March 1, 2007
@@ -511,7 +513,7 @@ public class NceBinaryCommand {
 	}
 	
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceBinaryCommand.class.getName());
+    static Logger log = Logger.getLogger(NceBinaryCommand.class.getName());
 }
 /* @(#)NceBinaryCommand.java */
 

@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -44,6 +45,6 @@ public class ActiveSystemFlagTest extends TestCase {
     }
 
     // protected access for subclass
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ActiveSystemFlagTest.class.getName());
+    static protected Logger log = Logger.getLogger(ActiveSystemFlagTest.class.getName());
 
 }

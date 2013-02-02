@@ -1,5 +1,6 @@
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.awt.*;
 import javax.swing.border.*;
@@ -149,7 +150,7 @@ public class PhysicalLocationPanel extends JPanel {
 	      
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PhysicalLocationPanel.class.getName());
+    private static final Logger log = Logger.getLogger(PhysicalLocationPanel.class.getName());
 
 
 }

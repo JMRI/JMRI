@@ -1,5 +1,6 @@
 package jmri.jmrix.jmriclient.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -32,5 +33,5 @@ public class JMRIClientSensorManagerXml extends jmri.managers.configurexml.Abstr
     }
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientSensorManagerXml.class.getName());
+    static Logger log = Logger.getLogger(JMRIClientSensorManagerXml.class.getName());
 }

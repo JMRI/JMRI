@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.serialdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
@@ -319,6 +320,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

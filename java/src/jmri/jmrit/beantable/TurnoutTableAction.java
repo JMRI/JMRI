@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -1254,7 +1255,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
     
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutTableAction.class.getName());
+    static final Logger log = Logger.getLogger(TurnoutTableAction.class.getName());
 }
 
 /* @(#)TurnoutTableAction.java */

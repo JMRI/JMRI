@@ -1,5 +1,6 @@
 package jmri.implementation.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.DoubleTurnoutSignalHead;
@@ -117,5 +118,5 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DoubleTurnoutSignalHeadXml.class.getName());
+    static Logger log = Logger.getLogger(DoubleTurnoutSignalHeadXml.class.getName());
 }

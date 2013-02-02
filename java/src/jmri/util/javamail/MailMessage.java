@@ -54,6 +54,7 @@ package jmri.util.javamail;
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+import org.apache.log4j.Logger;
 import java.util.Properties;
 import java.util.Date;
 
@@ -245,5 +246,5 @@ public class MailMessage {
 		}
 	}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MailMessage.class.getName());
+    static Logger log = Logger.getLogger(MailMessage.class.getName());
 }

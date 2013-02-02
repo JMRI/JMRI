@@ -2,6 +2,7 @@
 
 package apps;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.JmrixConfigPane;
 
 import java.awt.Component;
@@ -189,6 +190,6 @@ public class AppConfigPanel extends AppConfigBase {
 
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppConfigPanel.class.getName());
+    static Logger log = Logger.getLogger(AppConfigPanel.class.getName());
 
 }

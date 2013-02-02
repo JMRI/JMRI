@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos;
 
+import org.apache.log4j.Logger;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
@@ -118,6 +119,6 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosDccThrottleManager.class.getName());
+    static Logger log = Logger.getLogger(EcosDccThrottleManager.class.getName());
 
 }

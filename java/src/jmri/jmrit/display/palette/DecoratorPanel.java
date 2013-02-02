@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.Font;
 //import java.awt.Dimension;
@@ -613,5 +614,5 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoratorPanel.class.getName());
+    static Logger log = Logger.getLogger(DecoratorPanel.class.getName());
 }

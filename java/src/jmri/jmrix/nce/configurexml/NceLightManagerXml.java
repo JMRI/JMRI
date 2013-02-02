@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -33,5 +34,5 @@ public class NceLightManagerXml extends jmri.managers.configurexml.AbstractLight
         return loadLights(lights);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceLightManagerXml.class.getName());
+    static Logger log = Logger.getLogger(NceLightManagerXml.class.getName());
 }

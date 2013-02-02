@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.cbus;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
@@ -48,7 +49,7 @@ public class CbusDccProgrammerManager  extends DefaultProgrammerManager {
         return null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusDccProgrammerManager.class.getName());
+    static Logger log = Logger.getLogger(CbusDccProgrammerManager.class.getName());
 }
 
 

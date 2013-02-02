@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import java.util.concurrent.Delayed;
 import java.util.concurrent.DelayQueue;
 import java.util.concurrent.TimeUnit;
@@ -181,7 +182,7 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoNetThrottledTransmitter.class.getName());
+    static Logger log = Logger.getLogger(LocoNetThrottledTransmitter.class.getName());
 
 }
 

@@ -2,6 +2,8 @@
 
 package jmri.jmrix.xpa;
 
+import org.apache.log4j.Logger;
+
 /**
  * Encodes a message to an XPressNet command station via an XPA and a modem.
  *
@@ -181,7 +183,7 @@ public class XpaMessage {
 
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaMessage.class.getName());
+    static Logger log = Logger.getLogger(XpaMessage.class.getName());
 
 }
 

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -410,5 +411,5 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         }    
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IconItemPanel.class.getName());
+    static Logger log = Logger.getLogger(IconItemPanel.class.getName());
 }

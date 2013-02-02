@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog.sprogmon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.sprog.SprogListener;
 import jmri.jmrix.sprog.SprogMessage;
 import jmri.jmrix.sprog.SprogReply;
@@ -40,6 +41,6 @@ public class SprogMonFrame extends jmri.jmrix.AbstractMonFrame implements SprogL
 			
 	}
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogMonFrame.class.getName());
+   static Logger log = Logger.getLogger(SprogMonFrame.class.getName());
 
 }

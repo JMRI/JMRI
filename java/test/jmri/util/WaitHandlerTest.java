@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -226,6 +227,6 @@ public class WaitHandlerTest extends TestCase {
         super.tearDown();
     }
 
-	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WaitHandlerTest.class.getName());
+	 static Logger log = Logger.getLogger(WaitHandlerTest.class.getName());
 
 }

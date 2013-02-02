@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import org.apache.log4j.Logger;
 import jmri.DccThrottle;
 
 import java.awt.BorderLayout;
@@ -528,6 +529,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanel.class.getName());
+    static Logger log = Logger.getLogger(ControlPanel.class.getName());
 }
 

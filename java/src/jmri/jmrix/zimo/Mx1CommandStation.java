@@ -4,6 +4,8 @@
 
 package jmri.jmrix.zimo;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * Defines standard operations for Dcc command stations.
@@ -153,7 +155,7 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
         }
       }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1CommandStation.class.getName());
+    static Logger log = Logger.getLogger(Mx1CommandStation.class.getName());
 
 }
 

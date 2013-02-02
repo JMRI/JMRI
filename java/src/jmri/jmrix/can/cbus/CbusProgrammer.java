@@ -2,6 +2,7 @@
 
 package jmri.jmrix.can.cbus;
 
+import org.apache.log4j.Logger;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 
@@ -215,7 +216,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
         temp.programmingOpReply(value, status);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusProgrammer.class.getName());
+    static Logger log = Logger.getLogger(CbusProgrammer.class.getName());
 }
 
 

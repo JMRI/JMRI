@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import jmri.util.StringUtil;
 
 /**
@@ -146,7 +147,7 @@ abstract public class AbstractMRMessage extends AbstractMessage {
         setElement(offset+3,s.charAt(3));
         return;
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMRMessage.class.getName());
+    static Logger log = Logger.getLogger(AbstractMRMessage.class.getName());
 
     public String toString() {
         String s = "";

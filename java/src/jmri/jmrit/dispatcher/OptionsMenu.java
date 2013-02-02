@@ -2,6 +2,7 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.awt.*;
 import jmri.Scale;
@@ -326,7 +327,7 @@ public class OptionsMenu extends JMenu {
 		layoutScaleBox.setSelectedIndex(dispatcher.getScale()-1);
 	}
    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OptionsMenu.class.getName());
+    static Logger log = Logger.getLogger(OptionsMenu.class.getName());
 }
 
 /* @(#)OptionsMenu.java */

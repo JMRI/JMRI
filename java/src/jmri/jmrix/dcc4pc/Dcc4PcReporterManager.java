@@ -2,6 +2,7 @@
 
 package jmri.jmrix.dcc4pc;
 
+import org.apache.log4j.Logger;
 import jmri.Reporter;
 
 /**
@@ -35,7 +36,7 @@ public class Dcc4PcReporterManager extends jmri.managers.AbstractReporterManager
         return r;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcReporterManager.class.getName());
+    static Logger log = Logger.getLogger(Dcc4PcReporterManager.class.getName());
 }
 
 /* @(#)Dcc4PcReporterManager.java */

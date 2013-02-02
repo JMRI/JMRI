@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -240,5 +241,5 @@ public class LocoIcon extends PositionableLabel {
     	return dockMenu;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
+    static Logger log = Logger.getLogger(LocoIcon.class.getName());
 }

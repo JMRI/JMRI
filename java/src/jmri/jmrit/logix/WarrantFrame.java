@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -2301,6 +2302,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
 
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WarrantFrame.class.getName());
+    static Logger log = Logger.getLogger(WarrantFrame.class.getName());
 }
 

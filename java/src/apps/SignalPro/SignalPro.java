@@ -2,6 +2,7 @@
 
 package apps.SignalPro;
 
+import org.apache.log4j.Logger;
 import apps.Apps;
 import jmri.util.JmriJFrame;
 
@@ -108,7 +109,7 @@ public class SignalPro extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalPro.class.getName());
+    static Logger log = Logger.getLogger(SignalPro.class.getName());
 }
 
 

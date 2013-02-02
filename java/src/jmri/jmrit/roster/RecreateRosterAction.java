@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import jmri.util.swing.JmriAbstractAction;
@@ -132,5 +133,5 @@ public class RecreateRosterAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RecreateRosterAction.class.getName());
+    static private Logger log = Logger.getLogger(RecreateRosterAction.class.getName());
 }

@@ -1,5 +1,7 @@
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
+
 /**
  * Abstract class to provide basic error handling for XmlAdapter
  *
@@ -64,5 +66,5 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
     public void setConfigXmlManager(ConfigXmlManager c) { this.c = c; }
     protected ConfigXmlManager getConfigXmlManager() { return c; }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractXmlAdapter.class.getName());
+    static Logger log = Logger.getLogger(AbstractXmlAdapter.class.getName());
 }

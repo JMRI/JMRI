@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import org.apache.log4j.Logger;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -449,6 +450,6 @@ public class ConsistController extends AbstractController implements ProgListene
         throw new UnsupportedOperationException("Not used.");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConsistController.class.getName());
+    static Logger log = Logger.getLogger(ConsistController.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -505,7 +506,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(CarAttributeEditFrame.class.getName());
 }
 
@@ -522,7 +523,7 @@ final class CarAttributeAction extends AbstractAction {
 		caef.toggleShowQuanity();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(CarAttributeEditFrame.class.getName());
 }
 
@@ -539,6 +540,6 @@ final class CarDeleteAttributeAction extends AbstractAction {
 		caef.deleteUnusedAttribures();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(CarAttributeEditFrame.class.getName());
 }

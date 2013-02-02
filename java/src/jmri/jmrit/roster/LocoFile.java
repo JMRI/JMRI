@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
@@ -320,6 +321,6 @@ class LocoFile extends XmlFile {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoFile.class.getName());
+    static Logger log = Logger.getLogger(LocoFile.class.getName());
 
 }

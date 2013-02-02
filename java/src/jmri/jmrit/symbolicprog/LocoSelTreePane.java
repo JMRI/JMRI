@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import javax.swing.JToggleButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -45,6 +46,6 @@ public class LocoSelTreePane extends CombinedLocoSelTreePane  {
         return null;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoSelTreePane.class.getName());
+    static Logger log = Logger.getLogger(LocoSelTreePane.class.getName());
 
 }

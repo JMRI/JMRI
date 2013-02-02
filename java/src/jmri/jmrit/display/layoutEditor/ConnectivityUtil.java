@@ -1,6 +1,7 @@
 // jmri.jmrit.display.ConnectivityUtil.java
 package jmri.jmrit.display.layoutEditor;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 
@@ -2682,5 +2683,5 @@ public class ConnectivityUtil
 
 
 	// initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectivityUtil.class.getName());
+    static Logger log = Logger.getLogger(ConnectivityUtil.class.getName());
 }

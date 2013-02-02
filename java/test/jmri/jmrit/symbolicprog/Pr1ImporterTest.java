@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -109,7 +110,7 @@ public class Pr1ImporterTest extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger( Pr1ImporterTest.class.getName());
+    static Logger log = Logger.getLogger( Pr1ImporterTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() { apps.tests.Log4JFixture.setUp(); }

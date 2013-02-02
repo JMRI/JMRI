@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio;
 
+import org.apache.log4j.Logger;
 import javax.vecmath.Vector3f;
 
 /**
@@ -61,7 +62,7 @@ public class NullAudioListener extends AbstractAudioListener {
         this.dispose();
     }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NullAudioListener.class.getName());
+    private static final Logger log = Logger.getLogger(NullAudioListener.class.getName());
 
 }
 

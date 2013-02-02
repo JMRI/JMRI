@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.consist;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import java.io.*;
@@ -269,6 +270,6 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(NceConsistBackup.class.getName());
 }

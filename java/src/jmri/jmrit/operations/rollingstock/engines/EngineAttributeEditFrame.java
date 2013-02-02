@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
@@ -360,6 +361,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(EngineAttributeEditFrame.class.getName());
 }

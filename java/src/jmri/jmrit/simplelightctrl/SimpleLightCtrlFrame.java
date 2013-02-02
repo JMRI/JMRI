@@ -2,6 +2,7 @@
 
 package jmri.jmrit.simplelightctrl;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Light;
 import java.awt.Dimension;
@@ -439,7 +440,7 @@ public class SimpleLightCtrlFrame extends jmri.util.JmriJFrame implements java.b
         }
       }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleLightCtrlFrame.class.getName());
+    static Logger log = Logger.getLogger(SimpleLightCtrlFrame.class.getName());
 }
 
 

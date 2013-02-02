@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import org.apache.log4j.Logger;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -190,7 +191,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log
-        = org.apache.log4j.Logger.getLogger(AbstractRosterItemAction.class.getName());
+    static Logger log
+        = Logger.getLogger(AbstractRosterItemAction.class.getName());
 
 }

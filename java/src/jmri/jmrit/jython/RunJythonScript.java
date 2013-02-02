@@ -2,6 +2,7 @@
 
 package jmri.jmrit.jython;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import javax.swing.JFileChooser;
 import java.io.*;
@@ -118,7 +119,7 @@ public class RunJythonScript extends JmriAbstractAction {
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RunJythonScript.class.getName());
+    static Logger log = Logger.getLogger(RunJythonScript.class.getName());
 
 }
 

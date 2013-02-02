@@ -3,6 +3,7 @@
 package jmri.jmrix.loconet.soundloader;
 
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.util.ResourceBundle;
 import java.io.IOException;
@@ -87,6 +88,6 @@ public class EditorFilePane extends javax.swing.JPanel {
     }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EditorFilePane.class.getName());
+    static Logger log = Logger.getLogger(EditorFilePane.class.getName());
 
 }

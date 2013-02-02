@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
@@ -112,7 +113,7 @@ public class XNetLightManager extends AbstractLightManager {
         return null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightManager.class.getName());
+    static Logger log = Logger.getLogger(XNetLightManager.class.getName());
 
 }
 

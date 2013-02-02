@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -614,7 +615,7 @@ public class RollingStockManager {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RollingStockManager.class.getName());
+    static Logger log = Logger.getLogger(RollingStockManager.class.getName());
 
 }
 

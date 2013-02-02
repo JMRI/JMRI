@@ -2,6 +2,7 @@
 
 package jmri.jmrix.dcc4pc;
 
+import org.apache.log4j.Logger;
 import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.List;
@@ -1089,7 +1090,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcSensorManager.class.getName());
+    static Logger log = Logger.getLogger(Dcc4PcSensorManager.class.getName());
 }
 
 /* @(#)Dcc4PcSensorManager.java */

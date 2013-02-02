@@ -1,5 +1,6 @@
 package apps.configurexml;
 
+import org.apache.log4j.Logger;
 import apps.PerformScriptModel;
 
 import org.jdom.Element;
@@ -72,6 +73,6 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PerformScriptModelXml.class.getName());
+    static Logger log = Logger.getLogger(PerformScriptModelXml.class.getName());
 
 }

@@ -1,6 +1,7 @@
 // Dcc4PcReply.java
 package jmri.jmrix.dcc4pc;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractMRReply;
 //import jmri.jmrix.dcc4pc.Dcc4PcConstants.Dcc4PcState;
 
@@ -136,7 +137,7 @@ public class Dcc4PcReply extends AbstractMRReply {
     
     public int maxSize() { return maxSize; }
     
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Dcc4PcReply.class.getName());
+   static Logger log = Logger.getLogger(Dcc4PcReply.class.getName());
 
 }
 

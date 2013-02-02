@@ -1,5 +1,6 @@
 package jmri.jmrit.withrottle;
 
+import org.apache.log4j.Logger;
 import jmri.DccConsist;
 import jmri.DccLocoAddress;
 
@@ -49,6 +50,6 @@ public class WiFiConsist extends DccConsist{
         }
     }
     
-        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiFiConsist.class.getName());
+        static Logger log = Logger.getLogger(WiFiConsist.class.getName());
     
 }

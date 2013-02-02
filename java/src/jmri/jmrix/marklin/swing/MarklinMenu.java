@@ -1,5 +1,6 @@
 package jmri.jmrix.marklin.swing;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 import javax.swing.*;
 
@@ -57,5 +58,5 @@ public class MarklinMenu extends JMenu{
         String load;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MarklinMenu.class.getName());
+    static Logger log = Logger.getLogger(MarklinMenu.class.getName());
 }

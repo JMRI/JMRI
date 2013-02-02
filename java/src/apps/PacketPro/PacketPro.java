@@ -4,6 +4,7 @@
 
 package apps.PacketPro;
 
+import org.apache.log4j.Logger;
 import apps.Apps;
 
 import java.text.MessageFormat;
@@ -65,7 +66,7 @@ public class PacketPro extends Apps {
         splash(false);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketPro.class.getName());
+    static Logger log = Logger.getLogger(PacketPro.class.getName());
 }
 
 

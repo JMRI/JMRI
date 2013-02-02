@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.implementation.DefaultSignalSystem;
@@ -196,7 +197,7 @@ public class DefaultSignalSystemManager extends AbstractManager
     static class AspectFile extends XmlFile {
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalSystemManager.class.getName());
+    static Logger log = Logger.getLogger(DefaultSignalSystemManager.class.getName());
 }
 
 /* @(#)DefaultSignalSystemManager.java */

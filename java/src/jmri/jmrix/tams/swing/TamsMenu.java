@@ -1,5 +1,6 @@
 package jmri.jmrix.tams.swing;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 import javax.swing.*;
 
@@ -60,5 +61,5 @@ public class TamsMenu extends JMenu{
         String load;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsMenu.class.getName());
+    static Logger log = Logger.getLogger(TamsMenu.class.getName());
 }

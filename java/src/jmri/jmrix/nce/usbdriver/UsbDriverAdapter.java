@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.usbdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -182,6 +183,6 @@ public class UsbDriverAdapter extends NcePortController {
         adaptermemo = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UsbDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(UsbDriverAdapter.class.getName());
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrix.dcc4pc.serialdriver.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.dcc4pc.serialdriver.ConnectionConfig;
@@ -34,6 +35,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
+    static Logger log = Logger.getLogger(ConnectionConfigXml.class.getName());
 
 }

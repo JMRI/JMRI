@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import org.apache.log4j.Logger;
 import java.util.concurrent.locks.ReentrantLock;
 
 import jmri.DccThrottle;
@@ -605,6 +606,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Engineer.class.getName());
+    static Logger log = Logger.getLogger(Engineer.class.getName());
 }
 

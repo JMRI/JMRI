@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import org.apache.log4j.Logger;
 import java.awt.Component;
 import java.awt.Frame;
 import javax.swing.AbstractAction;
@@ -108,7 +109,7 @@ public class EngineRosterMenu extends JMenu {
 	}
 
 	// initialize logging
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EngineRosterMenu.class
+	static Logger log = Logger.getLogger(EngineRosterMenu.class
 			.getName());
 
 }

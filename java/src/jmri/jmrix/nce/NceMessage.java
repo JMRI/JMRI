@@ -1,6 +1,7 @@
 // NceMessage.java
 
 package jmri.jmrix.nce;
+import org.apache.log4j.Logger;
 import java.util.Arrays;
 
 /**
@@ -474,7 +475,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMessage.class.getName());
+    static Logger log = Logger.getLogger(NceMessage.class.getName());
 }
 
 /* @(#)NceMessage.java */

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -132,5 +133,5 @@ public class ReporterItemPanel extends TableItemPanel {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterItemPanel.class.getName());
+    static Logger log = Logger.getLogger(ReporterItemPanel.class.getName());
 }

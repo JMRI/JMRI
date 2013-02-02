@@ -2,6 +2,7 @@
 
 package jmri.jmrix.easydcc.serialdriver;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.easydcc.EasyDccPortController;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
@@ -163,7 +164,7 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
     //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }
 

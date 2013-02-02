@@ -2,6 +2,7 @@
  
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
@@ -524,5 +525,5 @@ public class Engine implements ReadingListener {
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p) { prop.removePropertyChangeListener(p); }
     public void addPropertyChangeListener(java.beans.PropertyChangeListener p) { prop.addPropertyChangeListener(p); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Engine.class.getName());
+    static Logger log = Logger.getLogger(Engine.class.getName());
 }

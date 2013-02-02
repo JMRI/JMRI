@@ -2,6 +2,7 @@
 
 package jmri.jmrix.jmriclient;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
@@ -102,7 +103,7 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 
 
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientSensor.class.getName());
+	static Logger log = Logger.getLogger(JMRIClientSensor.class.getName());
 
 }
 

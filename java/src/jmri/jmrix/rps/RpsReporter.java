@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import javax.vecmath.*;
 import java.util.ArrayList;
 
@@ -181,7 +182,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
 
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsReporter.class.getName());
+    static Logger log = Logger.getLogger(RpsReporter.class.getName());
  }
 
 /* @(#)AbstractReporter.java */

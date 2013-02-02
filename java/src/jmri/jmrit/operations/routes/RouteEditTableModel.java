@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.routes;
 
+import org.apache.log4j.Logger;
 import java.beans.*;
 
 import javax.swing.*;
@@ -597,6 +598,6 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		fireTableDataChanged();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(RouteEditTableModel.class.getName());
 }

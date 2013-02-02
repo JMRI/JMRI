@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.ConsistListener;
 
 
@@ -73,6 +74,6 @@ public class NmraConsist extends DccConsist implements Consist{
 	}
 
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NmraConsist.class.getName());
+	static Logger log = Logger.getLogger(NmraConsist.class.getName());
 
 }

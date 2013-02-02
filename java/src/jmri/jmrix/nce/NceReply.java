@@ -2,6 +2,8 @@
 
 package jmri.jmrix.nce;
 
+import org.apache.log4j.Logger;
+
 /**
  * Carries the reply to an NceMessage.
  * <P>
@@ -92,7 +94,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
     	}
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceReply.class.getName());
+    static Logger log = Logger.getLogger(NceReply.class.getName());
 
 }
 

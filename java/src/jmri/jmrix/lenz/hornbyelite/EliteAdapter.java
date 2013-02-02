@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
@@ -275,6 +276,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
     
     static volatile EliteAdapter mInstance = null;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteAdapter.class.getName());
+    static Logger log = Logger.getLogger(EliteAdapter.class.getName());
     
 }

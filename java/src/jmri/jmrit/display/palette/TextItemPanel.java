@@ -6,6 +6,7 @@ package jmri.jmrit.display.palette;
 
 //import java.awt.datatransfer.Transferable; 
 
+import org.apache.log4j.Logger;
 import javax.swing.BoxLayout;
 //import javax.swing.TransferHandler;
 
@@ -49,5 +50,5 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */{
     	}
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TextItemPanel.class.getName());
+    static Logger log = Logger.getLogger(TextItemPanel.class.getName());
 }

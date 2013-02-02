@@ -2,6 +2,7 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
 import jmri.Turnout;
 
 /**
@@ -36,7 +37,7 @@ public class EasyDccTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     }
     static EasyDccTurnoutManager _instance = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(EasyDccTurnoutManager.class.getName());
 
 }
 

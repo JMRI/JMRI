@@ -1,5 +1,6 @@
 package jmri.jmrix.acela;
 
+import org.apache.log4j.Logger;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import junit.framework.Assert;
@@ -102,6 +103,6 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
     @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AcelaTurnoutManagerTest.class.getName());
+    static Logger log = Logger.getLogger(AcelaTurnoutManagerTest.class.getName());
 
 }

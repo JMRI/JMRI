@@ -21,6 +21,7 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 
 import java.beans.PropertyChangeEvent;
@@ -242,6 +243,6 @@ public class PathTurnoutTableModel extends AbstractTableModel {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PathTurnoutTableModel.class.getName());
+    static Logger log = Logger.getLogger(PathTurnoutTableModel.class.getName());
 }
 

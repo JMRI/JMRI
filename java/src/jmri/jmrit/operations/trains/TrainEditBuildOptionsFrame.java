@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -1244,6 +1245,6 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		}
 	}
  	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(TrainEditBuildOptionsFrame.class.getName());
 }

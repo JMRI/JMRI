@@ -1,5 +1,6 @@
 package jmri.managers.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -114,5 +115,5 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         return InstanceManager.reporterManagerInstance().getXMLOrder();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractReporterManagerConfigXML.class.getName());
+    static Logger log = Logger.getLogger(AbstractReporterManagerConfigXML.class.getName());
 }

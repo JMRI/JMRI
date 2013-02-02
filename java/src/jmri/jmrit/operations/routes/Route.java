@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.routes;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -446,7 +447,7 @@ public class Route implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(Route.class.getName());
 
 }

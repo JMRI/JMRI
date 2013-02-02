@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -106,7 +107,7 @@ public class SignalMastTableAction extends AbstractTableAction {
         });
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastTableAction.class.getName());
+    static final Logger log = Logger.getLogger(SignalMastTableAction.class.getName());
 
     public static class MyComboBoxRenderer extends JComboBox implements TableCellRenderer {
         public MyComboBoxRenderer(Vector<String> items) {

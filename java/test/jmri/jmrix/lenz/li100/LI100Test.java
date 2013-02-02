@@ -3,6 +3,7 @@
 
 package jmri.jmrix.lenz.li100;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -35,7 +36,7 @@ public class LI100Test extends TestCase {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LI100Test.class.getName());
+    static Logger log = Logger.getLogger(LI100Test.class.getName());
 
 }
 

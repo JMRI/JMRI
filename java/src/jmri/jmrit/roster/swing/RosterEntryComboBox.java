@@ -1,6 +1,7 @@
 // RosterEntryComboBox.java
 package jmri.jmrit.roster.swing;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -38,7 +39,7 @@ public class RosterEntryComboBox extends JComboBox implements RosterEntrySelecto
     protected String _nonSelectedItem = "Select Loco";
     protected RosterEntry[] _currentSelection = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntryComboBox.class.getName());
+    static Logger log = Logger.getLogger(RosterEntryComboBox.class.getName());
 
     /**
      * Create a combo box with the default Roster and all entries in the active

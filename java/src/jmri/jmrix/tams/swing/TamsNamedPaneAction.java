@@ -2,6 +2,7 @@
 
 package jmri.jmrix.tams.swing;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import jmri.jmrix.tams.TamsSystemConnectionMemo;
@@ -49,7 +50,7 @@ public class TamsNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsNamedPaneAction.class.getName());
+    static Logger log = Logger.getLogger(TamsNamedPaneAction.class.getName());
 }
 
 /* @(#)TamsNamedPaneAction.java */

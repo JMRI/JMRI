@@ -2,6 +2,7 @@
 
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.managers.AbstractManager;
 
@@ -298,7 +299,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager
         return defaultClosedSpeed;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTurnoutManager.class.getName());
+    static Logger log = Logger.getLogger(AbstractTurnoutManager.class.getName());
 }
 
 /* @(#)AbstractTurnoutManager.java */

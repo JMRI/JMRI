@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet;
 
+import org.apache.log4j.Logger;
 import jmri.Reporter;
 
 /**
@@ -66,7 +67,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
 		r.message(l);	// make sure it got the message
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnReporterManager.class.getName());
+    static Logger log = Logger.getLogger(LnReporterManager.class.getName());
 }
 
 /* @(#)LnReporterManager.java */

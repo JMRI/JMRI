@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import java.util.ResourceBundle;
 
 import javax.swing.JMenu;
@@ -107,7 +108,7 @@ public class SystemsMenu extends JMenu {
         if (j!=null) add(j);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemsMenu.class.getName());
+    static Logger log = Logger.getLogger(SystemsMenu.class.getName());
 }
 
 

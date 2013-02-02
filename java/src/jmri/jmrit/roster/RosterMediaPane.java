@@ -1,5 +1,6 @@
 package jmri.jmrit.roster;
 
+import org.apache.log4j.Logger;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -284,5 +285,5 @@ public class RosterMediaPane extends javax.swing.JPanel {
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterMediaPane.class.getName());
+	static Logger log = Logger.getLogger(RosterMediaPane.class.getName());
 }

@@ -2,6 +2,7 @@
 
 package apps;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -50,6 +51,6 @@ public class ValidateConfigFilesTest extends jmri.util.swing.GuiUtilBaseTest {
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ValidateConfigFilesTest.class.getName());
+    static Logger log = Logger.getLogger(ValidateConfigFilesTest.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrix.grapevine;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -107,7 +108,7 @@ public class SerialTurnout extends AbstractTurnout {
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnout.class.getName());
+    static Logger log = Logger.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

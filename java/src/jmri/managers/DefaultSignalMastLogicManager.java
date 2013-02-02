@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.SignalMastLogic;
 import jmri.implementation.DefaultSignalMastLogic;
@@ -400,5 +401,5 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         firePropertyChange("autoGenerateComplete", null, null);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalMastLogicManager.class.getName());
+    static Logger log = Logger.getLogger(DefaultSignalMastLogicManager.class.getName());
 }

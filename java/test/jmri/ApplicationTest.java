@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -64,6 +65,6 @@ public class ApplicationTest extends TestCase {
     @Override
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ApplicationTest.class.getName());
+    private static final Logger log = Logger.getLogger(ApplicationTest.class.getName());
 
 }

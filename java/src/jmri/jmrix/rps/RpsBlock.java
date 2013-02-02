@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import jmri.SignalHead;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
@@ -124,7 +125,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
 
     static java.util.Hashtable<Integer,DccThrottle> throttleTable = new java.util.Hashtable<Integer,DccThrottle>();
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RpsBlock.class.getName());
+    static Logger log = Logger.getLogger(RpsBlock.class.getName());
 
 }
 

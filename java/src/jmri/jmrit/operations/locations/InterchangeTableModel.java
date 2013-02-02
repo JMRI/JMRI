@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.beans.*;
 import javax.swing.*;
 import jmri.jmrit.operations.setup.Control;
@@ -62,6 +63,6 @@ public class InterchangeTableModel extends TrackTableModel {
 		}
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(InterchangeTableModel.class.getName());
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.NamedBeanHandle;
@@ -1006,5 +1007,5 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorIcon.class.getName());
+    static Logger log = Logger.getLogger(SensorIcon.class.getName());
 }

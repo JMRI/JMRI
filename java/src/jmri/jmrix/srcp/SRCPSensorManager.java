@@ -2,6 +2,7 @@
 
 package jmri.jmrix.srcp;
 
+import org.apache.log4j.Logger;
 import jmri.Sensor;
 
 /**
@@ -36,7 +37,7 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
         return null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPSensorManager.class.getName());
+    static Logger log = Logger.getLogger(SRCPSensorManager.class.getName());
 
 }
 

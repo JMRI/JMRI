@@ -2,6 +2,7 @@
 
 package jmri.jmrix.cmri.serial;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.AbstractNode;
 
 /**
@@ -568,7 +569,7 @@ public class SerialAddress {
 		return ("");
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialAddress.class.getName());
+    static Logger log = Logger.getLogger(SerialAddress.class.getName());
 }
 
 /* @(#)SerialAddress.java */

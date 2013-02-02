@@ -2,6 +2,7 @@
 
 package jmri.jmrit.sensorgroup;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +93,6 @@ public class SensorGroup {
     }
 
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorGroup.class.getName());
+    static Logger log = Logger.getLogger(SensorGroup.class.getName());
 
 }

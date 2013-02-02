@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.swing.lz100;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import java.util.ResourceBundle;
 import javax.swing.*;
@@ -273,6 +274,6 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LZ100Frame.class.getName());
+    static Logger log = Logger.getLogger(LZ100Frame.class.getName());
 
 }

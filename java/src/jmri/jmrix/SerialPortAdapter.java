@@ -2,6 +2,8 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
+
 /**
  * Enables basic setup of a serial interface
  * for a jmrix implementation.
@@ -79,7 +81,7 @@ public interface SerialPortAdapter extends PortAdapter {
      */
     public String handlePortBusy(gnu.io.PortInUseException p,
                             String portName,
-                            org.apache.log4j.Logger log);
+                            Logger log);
                             
     
      /**

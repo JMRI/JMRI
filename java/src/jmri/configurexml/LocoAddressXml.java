@@ -1,5 +1,6 @@
 package jmri.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.LocoAddress;
 
 import org.jdom.Element;
@@ -66,5 +67,5 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Invalid method called");
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccLocoAddressXml.class.getName());
+    static Logger log = Logger.getLogger(DccLocoAddressXml.class.getName());
 }

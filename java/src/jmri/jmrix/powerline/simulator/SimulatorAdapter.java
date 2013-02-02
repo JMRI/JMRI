@@ -2,6 +2,7 @@
 
 package jmri.jmrix.powerline.simulator;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialPortController;
 
@@ -218,7 +219,7 @@ public class SimulatorAdapter extends SerialPortController implements
 //		}
 //	}
 		
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 			.getLogger(SimulatorAdapter.class.getName());
 
 }

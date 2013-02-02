@@ -2,6 +2,7 @@
 
 package jmri.jmrit;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -154,6 +155,6 @@ public class DccLocoAddressSelectorTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccLocoAddressSelectorTest.class.getName());
+	static Logger log = Logger.getLogger(DccLocoAddressSelectorTest.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.implementation;
 
+import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -169,6 +170,6 @@ public class AbstractLocoAddressTest extends TestCase {
 		return suite;
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractLocoAddressTest.class.getName());
+	static Logger log = Logger.getLogger(AbstractLocoAddressTest.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.util;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import javax.swing.table.*;
 import jmri.util.com.sun.TableSorter;
@@ -53,5 +54,5 @@ public class JTableUtil {
         return dataTable;
     }
 
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JTableUtil.class.getName());
+    static final Logger log = Logger.getLogger(JTableUtil.class.getName());
 }

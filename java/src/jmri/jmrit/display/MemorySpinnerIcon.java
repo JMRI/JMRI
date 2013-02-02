@@ -1,5 +1,6 @@
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import jmri.InstanceManager;
 import jmri.Memory;
 
@@ -250,5 +251,5 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         namedMemory = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemorySpinnerIcon.class.getName());
+    static Logger log = Logger.getLogger(MemorySpinnerIcon.class.getName());
 }

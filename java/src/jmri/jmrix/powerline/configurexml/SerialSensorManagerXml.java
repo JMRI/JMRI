@@ -1,5 +1,6 @@
 package jmri.jmrix.powerline.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -31,5 +32,5 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
         return loadSensors(sensors);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManagerXml.class.getName());
+    static Logger log = Logger.getLogger(SerialSensorManagerXml.class.getName());
 }

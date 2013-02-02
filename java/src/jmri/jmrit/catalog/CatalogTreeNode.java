@@ -2,6 +2,7 @@
 
 package jmri.jmrit.catalog;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -101,6 +102,6 @@ public class CatalogTreeNode extends DefaultMutableTreeNode {
        _leaves = leaves;
    }
 
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogTreeNode.class.getName());
+   static Logger log = Logger.getLogger(CatalogTreeNode.class.getName());
 }
 

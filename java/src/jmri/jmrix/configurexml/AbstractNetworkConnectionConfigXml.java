@@ -1,5 +1,6 @@
 package jmri.jmrix.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.configurexml.*;
 import jmri.jmrix.NetworkPortAdapter;
 
@@ -134,6 +135,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
 
 
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNetworkConnectionConfigXml.class.getName());
+    static Logger log = Logger.getLogger(AbstractNetworkConnectionConfigXml.class.getName());
 
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Frame;
@@ -622,6 +623,6 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 			updateSwitchListButton();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainsTableFrame.class
+	static Logger log = Logger.getLogger(TrainsTableFrame.class
 			.getName());
 }

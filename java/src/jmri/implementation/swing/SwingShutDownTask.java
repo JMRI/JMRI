@@ -2,6 +2,7 @@
 
 package jmri.implementation.swing;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractShutDownTask;
 import java.awt.Component;
 import javax.swing.JOptionPane;
@@ -115,7 +116,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
     	return true;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SwingShutDownTask.class.getName());
+    static Logger log = Logger.getLogger(SwingShutDownTask.class.getName());
 
 }
 

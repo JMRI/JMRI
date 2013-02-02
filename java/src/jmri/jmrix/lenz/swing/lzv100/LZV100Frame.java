@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz.swing.lzv100;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -65,6 +66,6 @@ public class LZV100Frame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LZV100Frame.class.getName());
+    static Logger log = Logger.getLogger(LZV100Frame.class.getName());
 
 }

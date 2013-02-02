@@ -2,6 +2,7 @@
 
 package jmri.jmrix.easydcc.easydccmon;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -31,7 +32,7 @@ public class EasyDccMonAction 			extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccMonAction.class.getName());
+	static Logger log = Logger.getLogger(EasyDccMonAction.class.getName());
 
 }
 

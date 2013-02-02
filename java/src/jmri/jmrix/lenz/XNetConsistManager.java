@@ -2,6 +2,7 @@
 
 package jmri.jmrix.lenz;
 
+import org.apache.log4j.Logger;
 import jmri.Consist;
 import jmri.DccLocoAddress;
 
@@ -271,6 +272,6 @@ public final class XNetConsistManager extends jmri.jmrix.AbstractConsistManager 
 
      }
 
-        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetConsistManager.class.getName());
+        static Logger log = Logger.getLogger(XNetConsistManager.class.getName());
 
 }

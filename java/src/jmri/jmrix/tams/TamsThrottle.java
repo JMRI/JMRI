@@ -1,5 +1,6 @@
 package jmri.jmrix.tams;
 
+import org.apache.log4j.Logger;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.Throttle;
@@ -381,6 +382,6 @@ public class TamsThrottle extends AbstractThrottle implements TamsListener
     }
     
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsThrottle.class.getName());
+    static Logger log = Logger.getLogger(TamsThrottle.class.getName());
 
 }

@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+import org.apache.log4j.Logger;
 import jmri.util.JmriJFrame;
 
 import jmri.Turnout;
@@ -893,6 +894,6 @@ public class LayoutTurntable
 		}
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutTurntable.class.getName());
+    static Logger log = Logger.getLogger(LayoutTurntable.class.getName());
 
 }

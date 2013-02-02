@@ -2,6 +2,7 @@
 
 package jmri.jmrix.srcp;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -67,7 +68,7 @@ public class SRCPTurnout extends AbstractTurnout {
 
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPTurnout.class.getName());
+	static Logger log = Logger.getLogger(SRCPTurnout.class.getName());
 
 }
 

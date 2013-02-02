@@ -3,6 +3,7 @@
  */
 package jmri.configurexml.turnoutoperations;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 //import java.lang.reflect.Constructor;
@@ -39,5 +40,5 @@ public class SensorTurnoutOperationXml extends CommonTurnoutOperationXml {
         }
 	}
 	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTurnoutOperationXml.class.getName());
+    static Logger log = Logger.getLogger(SensorTurnoutOperationXml.class.getName());
 }

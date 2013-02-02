@@ -2,6 +2,7 @@
 
 package jmri.progdebugger;
 
+import org.apache.log4j.Logger;
 import jmri.ProgListener;
 import jmri.Programmer;
 import junit.framework.Assert;
@@ -80,5 +81,5 @@ public class PackageTest extends TestCase {
           apps.tests.Log4JFixture.tearDown(); 
       }
   
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PackageTest.class.getName());    
+    static Logger log = Logger.getLogger(PackageTest.class.getName());    
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmris;
 
+import org.apache.log4j.Logger;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -102,6 +103,6 @@ abstract public class AbstractMemoryServer {
     String newState = "";
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractMemoryServer.class.getName());
+    static Logger log = Logger.getLogger(AbstractMemoryServer.class.getName());
 
 }

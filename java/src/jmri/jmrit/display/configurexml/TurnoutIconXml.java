@@ -1,5 +1,6 @@
 package jmri.jmrit.display.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.TurnoutIcon;
@@ -179,5 +180,5 @@ public class TurnoutIconXml extends PositionableLabelXml {
         return icon;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconXml.class.getName());
+    static Logger log = Logger.getLogger(TurnoutIconXml.class.getName());
 }

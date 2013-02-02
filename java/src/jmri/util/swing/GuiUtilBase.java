@@ -2,6 +2,7 @@
 
 package jmri.util.swing;
 
+import org.apache.log4j.Logger;
 import javax.swing.*;
 import java.util.HashMap;
 import java.io.File;
@@ -213,5 +214,5 @@ public class GuiUtilBase {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GuiUtilBase.class.getName());
+    static Logger log = Logger.getLogger(GuiUtilBase.class.getName());
 }

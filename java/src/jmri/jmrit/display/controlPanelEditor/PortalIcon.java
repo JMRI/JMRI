@@ -3,6 +3,7 @@
 
 package jmri.jmrit.display.controlPanelEditor;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.catalog.NamedIcon;
@@ -82,5 +83,5 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
         return _portal.getDescription();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PortalIcon.class.getName());
+    static Logger log = Logger.getLogger(PortalIcon.class.getName());
 }

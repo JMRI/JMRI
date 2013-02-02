@@ -1,5 +1,6 @@
 package jmri.jmrit.tracker;
 
+import org.apache.log4j.Logger;
 import jmri.Block;
 import jmri.SignalHead;
 import jmri.Throttle;
@@ -151,5 +152,5 @@ public class StoppingBlock {
     float slow = 0.3f;
     float fast = 0.6f;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(StoppingBlock.class.getName());
+    static Logger log = Logger.getLogger(StoppingBlock.class.getName());
 }

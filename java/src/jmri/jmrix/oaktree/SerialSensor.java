@@ -2,6 +2,7 @@
 
 package jmri.jmrix.oaktree;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractSensor;
 
 /**
@@ -33,7 +34,7 @@ public class SerialSensor extends AbstractSensor {
     public void requestUpdateFromLayout() {
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensor.class.getName());
+    static Logger log = Logger.getLogger(SerialSensor.class.getName());
 
 }
 

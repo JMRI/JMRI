@@ -2,6 +2,7 @@
 
 package jmri.jmrit.dispatcher;
 
+import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -118,7 +119,7 @@ public class AllocationRequest {
 		mActiveTrain = null;
     }
 			    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AllocationRequest.class.getName());
+    static Logger log = Logger.getLogger(AllocationRequest.class.getName());
 }
 
 /* @(#)AllocationRequest.java */

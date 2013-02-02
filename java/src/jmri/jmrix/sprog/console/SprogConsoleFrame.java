@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog.console;
 
+import org.apache.log4j.Logger;
 import java.awt.*;
 import javax.swing.*;
 
@@ -585,6 +586,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         timer.start();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogConsoleFrame.class.getName());
+    static Logger log = Logger.getLogger(SprogConsoleFrame.class.getName());
     
 }

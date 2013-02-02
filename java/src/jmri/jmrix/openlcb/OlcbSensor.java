@@ -2,6 +2,7 @@
 
 package jmri.jmrix.openlcb;
 
+import org.apache.log4j.Logger;
 import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
@@ -144,7 +145,7 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
         super.dispose();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbSensor.class.getName());
+    static Logger log = Logger.getLogger(OlcbSensor.class.getName());
 
 }
 

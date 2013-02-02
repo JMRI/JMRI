@@ -2,6 +2,7 @@
 
 package jmri.jmrit.display;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -43,6 +44,6 @@ public class NewPanelAction extends AbstractAction {
 		    new jmri.jmrit.display.panelEditor.PanelEditorAction().actionPerformed(null);
 		}
 	}
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NewPanelAction.class.getName());
+    static Logger log = Logger.getLogger(NewPanelAction.class.getName());
 
 }

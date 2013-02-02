@@ -2,6 +2,7 @@
 
 package jmri.jmrix;
 
+import org.apache.log4j.Logger;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -27,7 +28,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     public String handlePortBusy(gnu.io.PortInUseException p,
                             String portName,
-                            org.apache.log4j.Logger log) {
+                            Logger log) {
 				log.error(portName+" port is in use: "+p.getMessage());
                 /*JOptionPane.showMessageDialog(null, "Port is in use",
                                                 "Error", JOptionPane.ERROR_MESSAGE);*/
@@ -40,7 +41,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      */
     public String handlePortNotFound(gnu.io.NoSuchPortException p,
                             String portName,
-                            org.apache.log4j.Logger log) {
+                            Logger log) {
 				log.error("Serial port "+portName+" not found");
                 /*JOptionPane.showMessageDialog(null, "Serial port "+portName+" not found",
                                                 "Error", JOptionPane.ERROR_MESSAGE);*/
@@ -260,6 +261,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
     }
     
-    final static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSerialPortController.class.getName());
+    final static protected Logger log = Logger.getLogger(AbstractSerialPortController.class.getName());
 
 }

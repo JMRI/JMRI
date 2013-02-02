@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
+import org.apache.log4j.Logger;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
@@ -86,7 +87,7 @@ public class PaneNewProgAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneProgAction.class.getName());
+    static Logger log = Logger.getLogger(PaneProgAction.class.getName());
 
 }
 

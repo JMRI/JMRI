@@ -1,5 +1,6 @@
 package jmri.jmrit.display.controlPanelEditor.configurexml;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
@@ -122,5 +123,5 @@ public class PortalIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, ControlPanelEditor.MARKERS, element);        
      }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PortalIconXml.class.getName());
+    static Logger log = Logger.getLogger(PortalIconXml.class.getName());
 }

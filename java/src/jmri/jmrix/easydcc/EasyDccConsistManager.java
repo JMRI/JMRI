@@ -11,6 +11,7 @@
 
 package jmri.jmrix.easydcc;
 
+import org.apache.log4j.Logger;
 import jmri.Consist;
 import jmri.DccLocoAddress;
 
@@ -159,6 +160,6 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EasyDccConsistManager.class.getName());
+    static Logger log = Logger.getLogger(EasyDccConsistManager.class.getName());
     
 }

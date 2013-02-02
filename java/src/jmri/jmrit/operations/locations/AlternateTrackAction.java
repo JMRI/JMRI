@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.locations;
 
+import org.apache.log4j.Logger;
 import java.awt.GridBagLayout;
 import java.awt.event.*;
 
@@ -93,5 +94,5 @@ class AlternateTrackFrame extends OperationsFrame{
 	}
 	
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackEditFrame.class.getName());
+	static Logger log = Logger.getLogger(TrackEditFrame.class.getName());
 }

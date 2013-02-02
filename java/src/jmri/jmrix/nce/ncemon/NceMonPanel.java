@@ -14,6 +14,7 @@
 
 package jmri.jmrix.nce.ncemon;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.nce.*;
 import jmri.jmrix.nce.swing.*;
 import javax.swing.JOptionPane;
@@ -106,7 +107,7 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
         }
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMonPanel.class.getName());
+	static Logger log = Logger.getLogger(NceMonPanel.class.getName());
 
 }
 

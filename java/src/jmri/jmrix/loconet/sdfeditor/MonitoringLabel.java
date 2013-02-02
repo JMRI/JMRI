@@ -2,6 +2,8 @@
 
 package jmri.jmrix.loconet.sdfeditor;
 
+import org.apache.log4j.Logger;
+
 
 /**
  * Label which displays the contents of 
@@ -26,6 +28,6 @@ public class MonitoringLabel extends javax.swing.JTextArea implements java.beans
         setText(evt.getNewValue().toString());
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonitoringLabel.class.getName());
+    static Logger log = Logger.getLogger(MonitoringLabel.class.getName());
 
 }

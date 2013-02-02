@@ -2,6 +2,7 @@
 
 package jmri.jmrit.symbolicprog;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.decoderdefn.DecoderFile;
 
 import java.awt.event.*;
@@ -1012,6 +1013,6 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         _status = null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(VariableTableModel.class.getName());
+    static Logger log = Logger.getLogger(VariableTableModel.class.getName());
 
 }

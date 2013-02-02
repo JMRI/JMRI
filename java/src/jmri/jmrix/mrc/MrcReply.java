@@ -2,6 +2,8 @@
 
 package jmri.jmrix.mrc;
 
+import org.apache.log4j.Logger;
+
 /**
  * Carries the reply to an MrcMessage.
  *
@@ -60,7 +62,7 @@ public class MrcReply extends jmri.jmrix.AbstractMRReply {
 		return val;
 	}
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MrcReply.class.getName());
+    static Logger log = Logger.getLogger(MrcReply.class.getName());
 
 }
 

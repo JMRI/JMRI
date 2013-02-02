@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.trains;
 
+import org.apache.log4j.Logger;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
@@ -254,6 +255,6 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 			updateComboBox();
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	static Logger log = org.apache.log4j.Logger
 	.getLogger(TrainsByCarTypeFrame.class.getName());
 }

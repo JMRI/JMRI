@@ -2,6 +2,8 @@
 
 package jmri.util.exceptionhandler;
 
+import org.apache.log4j.Logger;
+
 /**
  * Class to log exceptions that rise to the top of 
  * threads, including to the top of 
@@ -21,5 +23,5 @@ public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler
         log.error("Unhandled Exception: "+e, e);
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UncaughtExceptionHandler.class.getName());
+    static Logger log = Logger.getLogger(UncaughtExceptionHandler.class.getName());
 }

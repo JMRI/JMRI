@@ -2,6 +2,7 @@
 
 package jmri.jmrit.roster;
 
+import org.apache.log4j.Logger;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -129,5 +130,5 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintRosterAction.class.getName());
+    static Logger log = Logger.getLogger(PrintRosterAction.class.getName());
 }

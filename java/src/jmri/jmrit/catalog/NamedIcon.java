@@ -1,5 +1,6 @@
 package jmri.jmrit.catalog;
 
+import org.apache.log4j.Logger;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -406,6 +407,6 @@ public class NamedIcon extends ImageIcon {
         transformImage(w, h, _transformF, null);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NamedIcon.class.getName());
+    static Logger log = Logger.getLogger(NamedIcon.class.getName());
 
 }

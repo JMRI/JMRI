@@ -2,6 +2,7 @@
 
 package jmri.jmrix.loconet.locobuffer;
 
+import org.apache.log4j.Logger;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.SystemConnectionMemo;
 
@@ -304,6 +305,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
             adaptermemo.dispose();
         adaptermemo = null;
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferAdapter.class.getName());
+    static Logger log = Logger.getLogger(LocoBufferAdapter.class.getName());
 
 }

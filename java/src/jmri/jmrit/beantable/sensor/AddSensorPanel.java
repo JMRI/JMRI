@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable.sensor;
 
+import org.apache.log4j.Logger;
 import jmri.*;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.jmrit.beantable.AddNewHardwareDevicePanel;
@@ -226,7 +227,7 @@ public class AddSensorPanel extends jmri.util.swing.JmriPanel {
     }
     
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AddSensorPanel.class.getName());
+    static final Logger log = Logger.getLogger(AddSensorPanel.class.getName());
 }
 
 

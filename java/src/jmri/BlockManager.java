@@ -2,6 +2,7 @@
 
 package jmri;
 
+import org.apache.log4j.Logger;
 import jmri.managers.AbstractManager;
 import java.text.DecimalFormat;
 
@@ -178,7 +179,7 @@ public class BlockManager extends AbstractManager
         return defaultSpeed;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockManager.class.getName());
+    static Logger log = Logger.getLogger(BlockManager.class.getName());
 }
 
 /* @(#)BlockManager.java */

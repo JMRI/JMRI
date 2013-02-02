@@ -2,6 +2,7 @@
 
 package jmri.jmrix.rps;
 
+import org.apache.log4j.Logger;
 import java.util.Vector;
 
 /**
@@ -107,7 +108,7 @@ public class Distributor {
     final private Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
     final private Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Distributor.class.getName());
+    static Logger log = Logger.getLogger(Distributor.class.getName());
 
     /**
      * Forward the Reading from the Swing thread

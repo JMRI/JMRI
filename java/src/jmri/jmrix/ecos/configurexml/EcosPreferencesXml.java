@@ -1,5 +1,6 @@
 package jmri.jmrix.ecos.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 /**
@@ -42,5 +43,5 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
     }
     
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosPreferencesXml.class.getName());
+    static Logger log = Logger.getLogger(EcosPreferencesXml.class.getName());
 }

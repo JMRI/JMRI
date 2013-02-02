@@ -2,6 +2,7 @@
 
 package jmri.jmrix.maple.configurexml;
 
+import org.apache.log4j.Logger;
 import org.jdom.Element;
 
 import jmri.jmrix.maple.*;
@@ -39,5 +40,5 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         return loadLights(lights);
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightManagerXml.class.getName());
+    static Logger log = Logger.getLogger(SerialLightManagerXml.class.getName());
 }

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.sendpacket;
 
+import org.apache.log4j.Logger;
 import java.awt.event.*;
 
 import javax.swing.*;
@@ -36,7 +37,7 @@ public class SendPacketAction extends AbstractAction {
         }
         f.setVisible(true);
     }
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SendPacketAction.class.getName());
+    static Logger log = Logger.getLogger(SendPacketAction.class.getName());
 }
 
 /* @(#)SendPacketAction.java */
