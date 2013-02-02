@@ -152,7 +152,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		pRailRoadName.add(textRailRoadName);
 
 		// location name		
-		pLocationName.setBorder(BorderFactory.createTitledBorder("Location"));
+		pLocationName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
 		pLocationName.add(textLocationName);
 
 		// location comment

@@ -398,7 +398,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment))
-			setDirtyAndFirePropertyChange ("LocationComment", old, comment);	// NOI18N
+			setDirtyAndFirePropertyChange ("Location Comment", old, comment);	// NOI18N
 	}
 
 	public String getComment() {

@@ -941,7 +941,7 @@ public class Car extends RollingStock {
 			if (e.getOldValue().equals(getType())) {
 				if (log.isDebugEnabled())
 					log.debug("Car (" + toString() + ") sees type name change old: " + e.getOldValue()
-							+ " new: " + e.getNewValue());
+							+ " new: " + e.getNewValue());	// NOI18N
 				setType((String) e.getNewValue());
 			}
 		}

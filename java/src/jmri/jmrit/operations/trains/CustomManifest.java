@@ -3,8 +3,6 @@ package jmri.jmrit.operations.trains;
 import org.apache.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.JOptionPane;
-
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -16,11 +14,11 @@ public class CustomManifest {
 	// To start, all files will be created inside of
 	// ../JMRI/operations/csvManifests
 	
-	private static String directoryName = "csvManifests";
-	private static String mcAppName = "MC4JMRI.xls";
-	private static final String mcAppArg = "";
+	private static String directoryName = "csvManifests";	// NOI18N
+	private static String mcAppName = "MC4JMRI.xls";	// NOI18N
+	private static final String mcAppArg = "";		// NOI18N
 	
-	private static String csvNamesFileName = "CSVFilesFile.txt";
+	private static String csvNamesFileName = "CSVFilesFile.txt";	// NOI18N
 
 
 	private static int fileCount = 0;
@@ -107,12 +105,12 @@ public class CustomManifest {
 		// For now, just complain if we are not on Windows...
 
 		if (!SystemType.isWindows()) {
-			JOptionPane
-					.showMessageDialog(
-							null,
-							"Custom processing of manifest csv files is only supported on Windows at the moment.",
-							"Custom manifests not supported",
-							JOptionPane.ERROR_MESSAGE);
+//			JOptionPane
+//					.showMessageDialog(
+//							null,
+//							"Custom processing of manifest csv files is only supported on Windows at the moment.",
+//							"Custom manifests not supported",
+//							JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		
