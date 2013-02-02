@@ -152,7 +152,7 @@ public class BackupDialog extends JDialog {
 						do_cancelButton_actionPerformed(arg0);
 					}
 				});
-				cancelButton.setActionCommand("Cancel");
+				cancelButton.setActionCommand("Cancel");	// NOI18N
 				buttonPane.add(cancelButton);
 			}
 // Help button isn't used yet
@@ -210,8 +210,8 @@ public class BackupDialog extends JDialog {
 		catch (IOException ex) {
 			ExceptionContext context = new ExceptionContext(
 					ex,
-					"Backing up Operation files to: " + setName,
-					"Ensure that the name is a valid directory name and that you have permission to create files there, and try again.");
+					Bundle.getMessage("BackupDialog.BackingUp")+ " " + setName,
+					Bundle.getMessage("BackupDialog.Ensure"));
 			new ExceptionDisplayFrame(context);
 
 		} catch (RuntimeException ex) {
@@ -219,7 +219,7 @@ public class BackupDialog extends JDialog {
 			log.error("Doing backup...", ex);
 
 			UnexpectedExceptionContext context = new UnexpectedExceptionContext(
-					ex, "Backing up Operation files to: " + setName);
+					ex, Bundle.getMessage("BackupDialog.BackingUp")+ " " + setName);
 
 			new ExceptionDisplayFrame(context);
 		} catch (Exception ex) {
@@ -227,7 +227,7 @@ public class BackupDialog extends JDialog {
 			log.error("Doing backup...", ex);
 
 			UnexpectedExceptionContext context = new UnexpectedExceptionContext(
-					ex, "Backing up Operation files to: " + setName);
+					ex, Bundle.getMessage("BackupDialog.BackingUp")+ " " + setName);
 
 			new ExceptionDisplayFrame(context);
 		}

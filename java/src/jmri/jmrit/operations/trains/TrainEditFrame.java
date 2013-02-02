@@ -487,7 +487,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (numEnginesBox.getSelectedItem().equals(Train.AUTO)
 				&& !_train.getNumberEngines().equals(Train.AUTO)) {
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("AutoEngines"),
-					"Feature still under development!", JOptionPane.INFORMATION_MESSAGE);
+					Bundle.getMessage("FeatureUnderDevelopment"), JOptionPane.INFORMATION_MESSAGE);
 		}
 		_train.setDepartureTime((String) hourBox.getSelectedItem(),
 				(String) minuteBox.getSelectedItem());

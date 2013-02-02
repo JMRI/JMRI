@@ -98,8 +98,8 @@ public class RestoreFilesAction extends AbstractAction {
 
 		} catch (Exception ex) {
 			ExceptionContext context = new ExceptionContext(ex,
-					"Restore files",
-					"Make sure that the backup set files exists and can be read.");
+					Bundle.getMessage("RestoreDialog.restore.files"),
+					Bundle.getMessage("RestoreDialog.makeSure"));
 			new ExceptionDisplayFrame(context);
 		}
 	}

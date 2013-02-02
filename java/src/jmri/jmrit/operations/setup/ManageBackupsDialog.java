@@ -163,7 +163,7 @@ public class ManageBackupsDialog extends JDialog {
 						do_cancelButton_actionPerformed(e);
 					}
 				});
-				closeButton.setActionCommand("Cancel");
+				closeButton.setActionCommand("Cancel");	// NOI18N
 				getRootPane().setDefaultButton(closeButton);
 				buttonPane.add(closeButton);
 			}

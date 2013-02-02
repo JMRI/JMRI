@@ -253,15 +253,15 @@ public class RestoreDialog extends JDialog {
 		// These may need to be enhanced to show the backup store being used,
 		// auto or default.
 		catch (IOException ex) {
-			ExceptionContext context = new ExceptionContext(ex, "Restoring Operation files from: "
-					+ setName, "Hint about checking valid names, etc.");
+			ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("RestoreDialog.restoring")
+					+ " " + setName, "Hint about checking valid names, etc.");	// NOI18N
 			new ExceptionDisplayFrame(context);
 
 		} catch (Exception ex) {
 			log.error("Doing restore from " + setName, ex);
 
 			UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
-					"Restoring Operation files from: " + setName);
+					Bundle.getMessage("RestoreDialog.restoring") + " " + setName);
 
 			new ExceptionDisplayFrame(context);
 		}

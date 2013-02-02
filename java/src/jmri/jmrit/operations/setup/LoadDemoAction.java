@@ -69,8 +69,8 @@ public class LoadDemoAction extends AbstractAction {
 			Apps.handleRestart();
 
 		} catch (Exception ex) {
-			ExceptionContext context = new ExceptionContext(ex, "Loading demo files",
-					"Make sure that all of the demo files exist and can be read.");
+			ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("LoadingDemoFiles"),
+					Bundle.getMessage("LoadingDemoMakeSure"));
 			new ExceptionDisplayFrame(context);
 		}
 	}
