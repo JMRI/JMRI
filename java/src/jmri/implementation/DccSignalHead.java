@@ -21,13 +21,15 @@ import jmri.*;
  * <P>
  * The mapping is as follows:
  * <P>
- *    0 = DARK        <BR>
- *    1 = RED         <BR>
- *    2 = YELLOW      <BR>
- *    3 = GREEN       <BR>
+ *    0 = RED         <BR>
+ *    1 = YELLOW      <BR>
+ *    2 = GREEN       <BR>
+ *    3 = LUNAR       <BR>
  *    4 = FLASHRED    <BR>
  *    5 = FLASHYELLOW <BR>
  *    6 = FLASHGREEN  <BR>
+ *    7 = FLASHLUNAR  <BR>
+ *    8 = DARK        <BR>
  * <P>
  * The FLASH appearances are expected to be implemented in the decoder.
  *
@@ -49,7 +51,7 @@ public class DccSignalHead extends AbstractSignalHead {
   void configureHead(String sys){
     //New method seperates the system name and address using $
     if(sys.contains("$")){
-        DccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$")+1, sys.length()));
+        dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$")+1, sys.length()));
         String commandStationPrefix = sys.substring(0, sys.indexOf("$")-1);
         java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
         if(connList!=null){
@@ -68,9 +70,9 @@ public class DccSignalHead extends AbstractSignalHead {
     } else {
         c = InstanceManager.commandStationInstance();
         if (( sys.length() > 2 ) && (( sys.charAt(1) == 'H' ) || ( sys.charAt(1) == 'h' )))
-          DccSignalDecoderAddress = Integer.parseInt(sys.substring(2,sys.length()));
+          dccSignalDecoderAddress = Integer.parseInt(sys.substring(2,sys.length()));
         else
-          DccSignalDecoderAddress = Integer.parseInt(sys);
+          dccSignalDecoderAddress = Integer.parseInt(sys);
     }
   }
 
@@ -115,28 +117,30 @@ public class DccSignalHead extends AbstractSignalHead {
 
   protected void updateOutput() {
     if (c != null) {
-      int aspect = 0 ;  // SignalHead.DARK
+      int aspect = 0 ;  // SignalHead.RED, but default set below
 
       if( getLit() ) {
         switch( mAppearance ){
-          case SignalHead.DARK:        aspect = 0 ; break;
-          case SignalHead.RED:         aspect = 1 ; break;
-          case SignalHead.YELLOW:      aspect = 2 ; break;
-          case SignalHead.GREEN:       aspect = 3 ; break;
+          case SignalHead.DARK:        aspect = 8 ; break;
+          case SignalHead.RED:         aspect = 0 ; break;
+          case SignalHead.YELLOW:      aspect = 1 ; break;
+          case SignalHead.GREEN:       aspect = 2 ; break;
+          case SignalHead.LUNAR:       aspect = 3 ; break;
           case SignalHead.FLASHRED:    aspect = 4 ; break;
           case SignalHead.FLASHYELLOW: aspect = 5 ; break;
           case SignalHead.FLASHGREEN:  aspect = 6 ; break;
-          default :                    aspect = 1;
+          case SignalHead.FLASHLUNAR:  aspect = 7 ; break;
+          default :                    aspect = 0;
                                        log.error("Unknown appearance " + mAppearance);
                                        break;
         }
       }
 
-      c.sendPacket( NmraPacket.accSignalDecoderPkt( DccSignalDecoderAddress, aspect ), 3);
+      c.sendPacket( NmraPacket.altAccSignalDecoderPkt( dccSignalDecoderAddress, aspect ), 3);
     }
   }
   
   CommandStation c;
 
-  int DccSignalDecoderAddress ;
+  int dccSignalDecoderAddress ;
 }
