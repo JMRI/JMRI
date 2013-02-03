@@ -180,10 +180,14 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 				textNextLocationName.setText(_train.getNextLocationName());
 								
 				// check for locos
-				updateLocoPanes(rl);			
+				updateLocoPanes(rl);
+				
 				// now update the car pick ups and set outs
-				blockCarsByPickUpAndSetOut(rl, true);
-			
+				if (Setup.isSortByTrackEnabled())
+					blockCarsByTrack(rl, true);
+				else
+					blockCarsByPickUpAndSetOut(rl, true);
+
 				textStatus.setText(getStatus(rl));
 
 			} else {

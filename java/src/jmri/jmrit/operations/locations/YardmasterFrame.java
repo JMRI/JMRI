@@ -141,7 +141,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				_train = (Train) trainComboBox.getSelectedItem();
 				_visitNumber = 1;
 			}
-			update();
+			clearAndUpdate();
 		}
 		// made the combo box not visible during updates, so ignore if not visible
 		if (ae.getSource() == trainVisitComboBox && trainVisitComboBox.isVisible()) {
@@ -150,6 +150,12 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				update();
 			}
 		}
+	}
+	
+	private void clearAndUpdate(){
+		carCheckBoxes.clear();
+		setMode = false;
+		update();
 	}
 
 	private void update() {
@@ -223,8 +229,12 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 				// check for locos
 				updateLocoPanes(rl);
+				
 				// now update the car pick ups and set outs
-				blockCarsByPickUpAndSetOut(rl, false);
+				if (Setup.isSortByTrackEnabled())
+					blockCarsByTrack(rl, false);
+				else
+					blockCarsByPickUpAndSetOut(rl, false);
 
 				if (lastLocation) {
 					textStatus.setText(MessageFormat.format(Bundle.getMessage("TrainTerminatesIn"),
