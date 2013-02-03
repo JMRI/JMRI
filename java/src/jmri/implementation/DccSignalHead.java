@@ -117,7 +117,7 @@ public class DccSignalHead extends AbstractSignalHead {
 
   protected void updateOutput() {
     if (c != null) {
-      int aspect = 0 ;  // SignalHead.RED, but default set below
+      int aspect = 8 ;  // SignalHead.DARK, but default set below
 
       if( getLit() ) {
         switch( mAppearance ){
@@ -130,8 +130,8 @@ public class DccSignalHead extends AbstractSignalHead {
           case SignalHead.FLASHYELLOW: aspect = 5 ; break;
           case SignalHead.FLASHGREEN:  aspect = 6 ; break;
           case SignalHead.FLASHLUNAR:  aspect = 7 ; break;
-          default :                    aspect = 0;
-                                       log.error("Unknown appearance " + mAppearance);
+          default :                    aspect = 8;
+                                       log.error("Unknown appearance " + mAppearance+" displays DARK");
                                        break;
         }
       }
