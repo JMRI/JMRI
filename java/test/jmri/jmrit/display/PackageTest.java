@@ -33,6 +33,7 @@ public class PackageTest extends TestCase {
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(jmri.jmrit.display.layoutEditor.PackageTest.suite());
+            suite.addTest(jmri.jmrit.display.LinkingLabelTest.suite());
             suite.addTest(jmri.jmrit.display.MemoryIconTest.suite());
             suite.addTest(jmri.jmrit.display.MemorySpinnerIconTest.suite());
             suite.addTest(jmri.jmrit.display.PanelEditorTest.suite());

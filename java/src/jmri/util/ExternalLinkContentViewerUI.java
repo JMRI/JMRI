@@ -36,42 +36,46 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
             try{
                 if (log.isDebugEnabled()) log.debug("event has URL  "+he.getURL());
                 URL u = he.getURL();
-                if(u.getProtocol().equalsIgnoreCase("mailto")||u.getProtocol().equalsIgnoreCase("http")
-                        ||u.getProtocol().equalsIgnoreCase("ftp")
-                     ){
-                    URI uri = new URI(u.toString());
-                    log.debug("defer protocol "+u.getProtocol()+" to browser via "+uri);
-                    java.awt.Desktop.getDesktop().browse(uri);
-                    return;
-                } else if ( u.getProtocol().equalsIgnoreCase("file") && (
-                        u.getFile().endsWith("jpg")
-                        ||u.getFile().endsWith("png")
-                        ||u.getFile().endsWith("xml")
-                        ||u.getFile().endsWith("gif")) ) {
-                    
-                    // following was 
-                    // ("file:"+System.getProperty("user.dir")+"/"+u.getFile()) 
-                    // but that duplicated the path information; JavaHelp seems to provide
-                    // full pathnames here.
-                    URI uri = new URI(u.toString());
-                    log.debug("defer content of "+u.getFile()+" to browser with "+uri);
-                    java.awt.Desktop.getDesktop().browse(uri);
-                    return;
-                } else if ( u.getProtocol().equalsIgnoreCase("file") ) {
-                    // if file not present, fall back to web browser
-                    // first, get file name
-                    java.io.File file = new java.io.File(u.getFile());
-                    if (!file.exists()) {
-                        URI uri = new URI("http://jmri.org/"+u.getFile());
-                        log.debug("fallback to browser with "+uri);
-                        java.awt.Desktop.getDesktop().browse(uri);                  
-                    }
-                }
-            }
-            catch(Throwable t){log.error("Error processing request", t);}
+                activateURL(u);
+            } catch(Throwable t){log.error("Error processing request", t);}
         }
         super.hyperlinkUpdate(he);
     }
+    
+    public static void activateURL(URL u) throws java.io.IOException, java.net.URISyntaxException {
+        if(u.getProtocol().equalsIgnoreCase("mailto")||u.getProtocol().equalsIgnoreCase("http")
+                ||u.getProtocol().equalsIgnoreCase("ftp")
+             ){
+            URI uri = new URI(u.toString());
+            log.debug("defer protocol "+u.getProtocol()+" to browser via "+uri);
+            java.awt.Desktop.getDesktop().browse(uri);
+            return;
+        } else if ( u.getProtocol().equalsIgnoreCase("file") && (
+                u.getFile().endsWith("jpg")
+                ||u.getFile().endsWith("png")
+                ||u.getFile().endsWith("xml")
+                ||u.getFile().endsWith("gif")) ) {
+        
+            // following was 
+            // ("file:"+System.getProperty("user.dir")+"/"+u.getFile()) 
+            // but that duplicated the path information; JavaHelp seems to provide
+            // full pathnames here.
+            URI uri = new URI(u.toString());
+            log.debug("defer content of "+u.getFile()+" to browser with "+uri);
+            java.awt.Desktop.getDesktop().browse(uri);
+            return;
+        } else if ( u.getProtocol().equalsIgnoreCase("file") ) {
+            // if file not present, fall back to web browser
+            // first, get file name
+            java.io.File file = new java.io.File(u.getFile());
+            if (!file.exists()) {
+                URI uri = new URI("http://jmri.org/"+u.getFile());
+                log.debug("fallback to browser with "+uri);
+                java.awt.Desktop.getDesktop().browse(uri);                  
+            }
+        }
+    }
+    
     static private Logger log = Logger.getLogger(ExternalLinkContentViewerUI.class.getName());
 }
 
