@@ -328,7 +328,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	/**
 	 * Block cars by pick up and set out for each location in a train's route.
 	 */
-	protected void blockCarsByPickUpAndSetOut(RouteLocation rl) {
+	protected void blockCarsByPickUpAndSetOut(RouteLocation rl, boolean isManifest) {
 		List<String> routeList = _train.getRoute().getLocationsBySequenceList();
 		List<String> carList = carManager.getByTrainDestinationList(_train);
 		// block pick ups by destination
@@ -349,7 +349,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 							pPickups.add(carCheckBoxes.get("p" + car.getId()));
 						}
 					} else {
-						JCheckBox checkBox = new JCheckBox(trainCommon.pickupCar(car));
+						JCheckBox checkBox = new JCheckBox(trainCommon.pickupCar(car, isManifest));
 						setCheckBoxFont(checkBox);
 						addCheckBoxAction(checkBox);
 						pPickups.add(checkBox);
@@ -377,7 +377,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 						pSetouts.add(carCheckBoxes.get("s" + car.getId()));
 					}
 				} else {
-					JCheckBox checkBox = new JCheckBox(trainCommon.dropCar(car));
+					JCheckBox checkBox = new JCheckBox(trainCommon.dropCar(car, isManifest));
 					setCheckBoxFont(checkBox);
 					addCheckBoxAction(checkBox);
 					pSetouts.add(checkBox);
@@ -403,7 +403,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 						pMoves.add(carCheckBoxes.get("m" + car.getId()));
 					}
 				} else {
-					JCheckBox checkBox = new JCheckBox(trainCommon.moveCar(car));
+					JCheckBox checkBox = new JCheckBox(trainCommon.moveCar(car, isManifest));
 					setCheckBoxFont(checkBox);
 					addCheckBoxAction(checkBox);
 					pMoves.add(checkBox);

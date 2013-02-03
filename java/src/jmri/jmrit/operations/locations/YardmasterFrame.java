@@ -224,7 +224,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				// check for locos
 				updateLocoPanes(rl);
 				// now update the car pick ups and set outs
-				blockCarsByPickUpAndSetOut(rl);
+				blockCarsByPickUpAndSetOut(rl, false);
 
 				if (lastLocation) {
 					textStatus.setText(MessageFormat.format(Bundle.getMessage("TrainTerminatesIn"),

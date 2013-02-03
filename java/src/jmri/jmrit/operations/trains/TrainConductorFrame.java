@@ -16,6 +16,7 @@ import jmri.jmrit.operations.CommonConductorYardmasterFrame;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 
@@ -181,7 +182,7 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 				// check for locos
 				updateLocoPanes(rl);			
 				// now update the car pick ups and set outs
-				blockCarsByPickUpAndSetOut(rl);
+				blockCarsByPickUpAndSetOut(rl, true);
 			
 				textStatus.setText(getStatus(rl));
 
@@ -203,8 +204,8 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e){
-		//if (Control.showProperty && log.isDebugEnabled()) 
-		log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
+		if (Control.showProperty && log.isDebugEnabled()) 
+			log.debug("Property change " +e.getPropertyName() + " for: "+e.getSource().toString()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY))

@@ -190,9 +190,11 @@ public class TrainCommon {
 	 * @param car
 	 * @return pick up car string
 	 */
-	public String pickupCar(Car car) {
+	public String pickupCar(Car car, boolean isManifest) {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getPickupCarMessageFormat();
+		if (!isManifest)
+			format = Setup.getSwitchListPickupCarMessageFormat();
 		for (int i = 0; i < format.length; i++) {
 			String s = getCarAttribute(car, format[i], pickup, !local);
 			buf.append(s);
@@ -271,9 +273,11 @@ public class TrainCommon {
 	 * @param car
 	 * @return drop car string
 	 */
-	public String dropCar(Car car) {
+	public String dropCar(Car car, boolean isManifest) {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getDropCarMessageFormat();
+		if (!isManifest)
+			format = Setup.getSwitchListDropCarMessageFormat();
 		for (int i = 0; i < format.length; i++) {
 			// TODO the Setup.Location doesn't work correctly for the conductor
 			// window
@@ -289,9 +293,11 @@ public class TrainCommon {
 	 * @param car
 	 * @return move car string
 	 */
-	public String moveCar(Car car) {
+	public String moveCar(Car car, boolean isManifest) {
 		StringBuffer buf = new StringBuffer();
 		String[] format = Setup.getLocalMessageFormat();
+		if (!isManifest)
+			format = Setup.getSwitchListLocalMessageFormat();
 		for (int i = 0; i < format.length; i++) {
 			String s = getCarAttribute(car, format[i], !pickup, local);
 			buf.append(s);
