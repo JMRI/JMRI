@@ -326,93 +326,12 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		}
 	}
 	
-	/**
-	 * Block cars by pick up and set out for each location in a train's route.
-	 */
-	protected void blockCarsByPickUpAndSetOut(RouteLocation rl, boolean isManifest) {
-		List<String> routeList = _train.getRoute().getLocationsBySequenceList();
-		List<String> carList = carManager.getByTrainDestinationList(_train);
-		// block pick ups by destination
-		for (int j = 0; j < routeList.size(); j++) {
-			RouteLocation rld = _train.getRoute().getLocationById(routeList.get(j));
-			for (int k = 0; k < carList.size(); k++) {
-				Car car = carManager.getById(carList.get(k));
-				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
-						&& car.getRouteDestination() == rld && car.getRouteDestination() != rl) {
-					pickupPane.setVisible(true);
-					rollingStock.add(car);
-					car.addPropertyChangeListener(this);
-					if (carCheckBoxes.containsKey("p" + car.getId())) {
-						if (setMode && !carCheckBoxes.get("p" + car.getId()).isSelected()) {
-							// change to set button so user can remove car from train
-							pPickups.add(addSet(car));
-						} else {
-							pPickups.add(carCheckBoxes.get("p" + car.getId()));
-						}
-					} else {
-						JCheckBox checkBox = new JCheckBox(trainCommon.pickupCar(car, isManifest));
-						setCheckBoxFont(checkBox);
-						addCheckBoxAction(checkBox);
-						pPickups.add(checkBox);
-						carCheckBoxes.put("p" + car.getId(), checkBox);
-					}
-				}
-			}
-		}
-		// set outs
-		for (int j = 0; j < carList.size(); j++) {
-			Car car = carManager.getById(carList.get(j));
-			if ((car.getRouteLocation() != rl && car.getRouteDestination() == rl && !car.getTrackName()
-					.equals(""))
-					|| (car.getTrackName().equals("") && car.getRouteDestination() == rl)) {
-				setoutPane.setVisible(true);
-				if (!rollingStock.contains(car)) {
-					rollingStock.add(car);
-					car.addPropertyChangeListener(this);
-				}
-				if (carCheckBoxes.containsKey("s" + car.getId())) {
-					if (setMode && !carCheckBoxes.get("s" + car.getId()).isSelected()) {
-						// change to set button so user can remove car from train
-						pSetouts.add(addSet(car));
-					} else {
-						pSetouts.add(carCheckBoxes.get("s" + car.getId()));
-					}
-				} else {
-					JCheckBox checkBox = new JCheckBox(trainCommon.dropCar(car, isManifest));
-					setCheckBoxFont(checkBox);
-					addCheckBoxAction(checkBox);
-					pSetouts.add(checkBox);
-					carCheckBoxes.put("s" + car.getId(), checkBox);
-				}
-			} else if (car.getRouteLocation() == rl && car.getRouteDestination() == rl
-					&& !car.getTrackName().equals("")) {
-				movePane.setVisible(true);
-				if (!rollingStock.contains(car)) {
-					rollingStock.add(car);
-					car.addPropertyChangeListener(this);
-				}
-				if (carCheckBoxes.containsKey("m" + car.getId())) {
-					if (setMode && !carCheckBoxes.get("m" + car.getId()).isSelected()) {
-						// change to set button so user can remove car from train
-						pMoves.add(addSet(car));
-					} else {
-						pMoves.add(carCheckBoxes.get("m" + car.getId()));
-					}
-				} else {
-					JCheckBox checkBox = new JCheckBox(trainCommon.moveCar(car, isManifest));
-					setCheckBoxFont(checkBox);
-					addCheckBoxAction(checkBox);
-					pMoves.add(checkBox);
-					carCheckBoxes.put("m" + car.getId(), checkBox);
-				}
-			}
-		}
-	}
+
 	
 	/**
 	 * Block cars by track, then pick up and set out for each location in a train's route.
 	 */
-	protected void blockCarsByTrack(RouteLocation rl, boolean isManifest) {
+	protected void blockCars(RouteLocation rl, boolean isManifest) {
 		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
 		for (int i = 0; i < trackIds.size(); i++) {
 			Track track = rl.getLocation().getTrackById(trackIds.get(i));
@@ -423,9 +342,12 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 				RouteLocation rld = _train.getRoute().getLocationById(routeList.get(j));
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carManager.getById(carList.get(k));
-					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
-							&& car.getTrack() == track
-							&& car.getRouteDestination() == rld && car.getRouteDestination() != rl) {
+					if (!car.getTrackName().equals("")
+							&& (!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
+									car.getTrack().getName())
+									.equals(TrainCommon.splitString(track.getName())))
+							&& car.getRouteLocation() == rl && car.getRouteDestination() == rld
+							&& car.getRouteDestination() != rl) {
 						pickupPane.setVisible(true);
 						rollingStock.add(car);
 						car.addPropertyChangeListener(this);
@@ -449,9 +371,18 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			// set outs
 			for (int j = 0; j < carList.size(); j++) {
 				Car car = carManager.getById(carList.get(j));
-				if ((car.getRouteLocation() != rl && car.getRouteDestination() == rl && !car.getTrackName()
-						.equals("") && car.getDestinationTrack() == track)
-						|| (car.getTrackName().equals("") && car.getRouteDestination() == rl)) {
+				if (!car.getTrackName().equals("")
+						&& car.getDestinationTrack() != null
+						&& (!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
+								car.getDestinationTrack().getName()).equals(
+								TrainCommon.splitString(track.getName())))
+						&& (car.getRouteLocation() != rl && car.getRouteDestination() == rl)
+						|| (car.getTrackName().equals("")
+								&& car.getDestinationTrack() != null
+								&& (!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
+										car.getDestinationTrack().getName()).equals(
+										TrainCommon.splitString(track.getName()))) && car
+								.getRouteDestination() == rl)) {
 					setoutPane.setVisible(true);
 					if (!rollingStock.contains(car)) {
 						rollingStock.add(car);
@@ -471,8 +402,11 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 						pSetouts.add(checkBox);
 						carCheckBoxes.put("s" + car.getId(), checkBox);
 					}
-				} else if (car.getRouteLocation() == rl && car.getRouteDestination() == rl
-						&& !car.getTrackName().equals("") && car.getTrack() == track) {
+				} else if (!car.getTrackName().equals("") && car.getDestinationTrack() != null 
+						&&(!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
+						car.getDestinationTrack().getName()).equals(TrainCommon.splitString(track.getName())))
+						&& car.getRouteLocation() == rl
+						&& car.getRouteDestination() == rl) {
 					movePane.setVisible(true);
 					if (!rollingStock.contains(car)) {
 						rollingStock.add(car);
@@ -494,6 +428,9 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 					}
 				}
 			}
+			// if not sorting by track, we're done
+			if (!Setup.isSortByTrackEnabled())
+				break;
 		}
 	}
 

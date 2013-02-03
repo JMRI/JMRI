@@ -231,10 +231,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				updateLocoPanes(rl);
 				
 				// now update the car pick ups and set outs
-				if (Setup.isSortByTrackEnabled())
-					blockCarsByTrack(rl, false);
-				else
-					blockCarsByPickUpAndSetOut(rl, false);
+				blockCars(rl, false);
 
 				if (lastLocation) {
 					textStatus.setText(MessageFormat.format(Bundle.getMessage("TrainTerminatesIn"),

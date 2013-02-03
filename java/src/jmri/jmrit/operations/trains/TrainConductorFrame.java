@@ -183,10 +183,7 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 				updateLocoPanes(rl);
 				
 				// now update the car pick ups and set outs
-				if (Setup.isSortByTrackEnabled())
-					blockCarsByTrack(rl, true);
-				else
-					blockCarsByPickUpAndSetOut(rl, true);
+				blockCars(rl, true);
 
 				textStatus.setText(getStatus(rl));
 
