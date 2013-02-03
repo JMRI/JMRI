@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
@@ -277,15 +278,20 @@ public class TrainManifest extends TrainCommon {
 	private void blockCarsByTrack(PrintWriter fileOut, Train train, List<String> carList,
 			List<String> routeList, RouteLocation rl, int r) {
 		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
+		List<String> trackNames = new ArrayList<String>();
 		for (int i = 0; i < trackIds.size(); i++) {
 			Track track = rl.getLocation().getTrackById(trackIds.get(i));
+			if (trackNames.contains(splitString(track.getName())))
+				continue;
+			trackNames.add(splitString(track.getName()));	// use a track name once
 			// block car pick ups by destination
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
 				utilityCarTypes.clear(); // list utility cars by quantity
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carManager.getById(carList.get(k));
-					if (car.getRouteLocation() == rl && track == car.getTrack()
+					if (car.getRouteLocation() == rl
+							&& splitString(track.getName()).equals(splitString(car.getTrack().getName()))
 							&& car.getRouteDestination() == rld) {
 						if (car.isUtility())
 							pickupCars(fileOut, carList, car, rl, rld);
@@ -305,7 +311,9 @@ public class TrainManifest extends TrainCommon {
 			utilityCarTypes.clear(); // list utility cars by quantity
 			for (int j = 0; j < carList.size(); j++) {
 				Car car = carManager.getById(carList.get(j));
-				if (car.getRouteDestination() == rl && track == car.getDestinationTrack()) {
+				if (car.getRouteDestination() == rl
+						&& splitString(track.getName()).equals(
+								splitString(car.getDestinationTrack().getName()))) {
 					if (car.isUtility())
 						setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(
 								car.getRouteDestination())
