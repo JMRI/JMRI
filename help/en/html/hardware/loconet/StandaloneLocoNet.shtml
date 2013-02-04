@@ -105,11 +105,14 @@
     on a separate JMRI "Connection" within the JMRI "Connections" settings under JMRI
     "Preferences".  Each connection should be configured following the general 
     instructions found at the <a href="Digitrax.shtml">JMRI Hardware Guide: Digitrax DCC</a> 
-    page.</p>
-<p>For a "standalone" LocoNet, it is necessary to set the connection's 
-    "Command Station" - choose any of the available options.  Typically, there will
-    not be a command station installed on a standalone LocoNet, and the command 
-    station-related tools and command station-related features will not function.</p>
+    page.  Note that the "Command Station" setting is not critical for a standalone
+    LocoNet connection.</p>
+<p>A "standalone" LocoNet will typically not control the hardware resources associated
+    with "throttle management", "track power management", "command station management", 
+    and will typically not provide a programming track.  As such, a standalone LocoNet
+    connection will typically not be associated with "Throttles", "Power Control", 
+    "Command Station", or "Programmer" on the "Default" pane of the JMRI "Preferences" 
+    panel.</p>
 <H1><A name="hwconsider">Hardware Considerations</A></H1>
 <p>A "LocoNet" bus implementation which has all the electrical signaling required by all LocoNet
 devices requires a LocoNet-based command station, such as the Digitrax DCS100 or
@@ -218,20 +221,67 @@ useful.</p>
             "termination" so that all LocoNet devices may communicate on the 
             LocoNet "data" wires.  Without this "termination", LocoNet devices 
             cannot pass LocoNet messages to each other.</p>
+        <p>LocoNet Data Signal "Termination" has been called many different things.
+            The BDL168 manuals define an OpSw setting which "Allows this BDL168 
+            board to terminate LocoNet".  The LocoBuffer-II and LocoBuffer-USB 
+            devices have a hardware jumper which allows these devices to 
+            "provide LocoNet Master termination".  The PR3 has an operating mode 
+            where "The PR3 has the ability to act as a LocoNet terminator."  All 
+            of these are describing the same function.</p>
         <H3><A name="hwdataterm">Some commercial hardware which can provide LocoNet Data signal termination</A></H3>
         <UL>
             <LI>BDL16, BDL162, BDL168
                 <p>The instructions in the BDL16x manual includes a section on 
                     how to use the BDL168x with a non-Digitrax layout.  This 
                     section mentions setting one of the the BDL16x boards to act 
-                    as a LocoNet master.  Doing this will set the BDL16x board 
-                    to provide LocoNet Data signal termination.  </p>
-                <p>This is done by changing the value of OpSw 11 to "thrown" on 
-                    <i>one</i> of the BDL16x boards.  Only one source of LocoNet 
-                    Data signal termination should be active at any time, so all 
-                    other BDL16x boards should be configured with OpSw 11 as 
-                    "closed", and all other sources of LocoNet Data signal 
-                    termination should be disabled or disconnected.</p>
+                    as a LocoNet master by properly configuring a BDL16x OpSw.  
+                    Doing this can set the BDL16x board to provide LocoNet Data 
+                    signal termination, and to act as a LocoNet Master.</p>
+                <p>The BDL16x board provides two ways to configure a BDL16x board
+                    to provide LocoNet Data Signal Termination.  One mechanism is
+                    only usable when the BDL16x is connected to a LocoNet which 
+                    has LocoNet Data Signal Termination from some other source, 
+                    and requires use of some other device to send LocoNet switch
+                    commands to the BDL16x.  The other mechanism does not 
+                    require a functioning LocoNet.</p>
+                <ul>
+                    <li>When using a functioning LocoNet to configure a BDL16x to 
+                        provide LocoNet Data Signal Termination, it is necessary
+                        to provide power to the BDL168 through its edge connector,
+                        and to connect it to a functioning LocoNet.  Then place 
+                        the BDL16x into its OpSw mode (see BDL16x documentation),
+                        and use a throttle or computer or other device to send a 
+                        switch command to "Close" OpSw 12.  Then return the BDL16x 
+                        to normal operating mode (as described in the BDL16x 
+                        documentation).  If you will have multiple BDL16x boards
+                        connected to your standalone LocoNet, or to avoid sensor
+                        address conflicts with other devices which implement sensor
+                        messages, it is a good time to change the BDL16x board's
+                        BDL168's Board Address (also called Board ID).  Follow the
+                        instructions in the BDL16x documentation for this.</li>
+                    <li>If a functioning LocoNet is not available, use the 
+                        "pushbutton" mechanism to configure the BDL16x board for
+                        either "direct home" layout wiring or "common rail" 
+                        layout wiring, as described in BDL16x documentation.  When 
+                        this is done, the following BDL16x OpSw values are forced:
+                        <ul>
+                            <li>BDL16x OpSw11 is forced to "c", which forces the 
+                            BDL16x to act as a LocoNet "master".</li>
+                            <li>BDL16x OpSw12 is forced to "c", which forces the
+                                BDL16x to provide LocoNet Data Signal Termination.</li>
+                            <li>Depending on which button is used with this mechanism,
+                                BDL16x OpSw1 is forced either to "t" for "direct 
+                                home" layout wiring or to "c" for "common rail" 
+                                layout wiring.</li>
+                        </ul>
+                    </li>
+                    
+                </ul>
+                <p>Once you have established a functioning Standalone LocoNet,
+                    additional BDL16x boards can be added.  Each should have its 
+                    own Board ID (Board Address) number so that BDL16x sensor 
+                    numbers do not overlap sensor numbers for other boards or
+                    sensor numbers used by other devices on the Standalone LocoNet.</p>
             </LI>
             <LI>PR3
                 <p>Follow the instructions in the PR3 manual for enabling MS100 mode with LocoNet termination.
@@ -330,6 +380,11 @@ useful.</p>
                 connected directly to the Standalone LocoNet "Ground" wire, it is 
                 sufficient to connect the Digitrax Command Station RailSync+, RailSync-, 
                 and "Ground" wires to the comparable wires on the Standalone LocoNet.</p>
+            <p> Do <i>not</i> make any connections between the Standalone LocoNet's
+                red or green wires and <i>any</i> wire on the command station's 
+                LocoNet.  Doing so would make the Standalone LocoNet just another
+                part of the primary LocoNet.</p>
+            <img src="images/RailSyncFromPrimaryLocoNet.jpg" alt="Creating Standalone LocoNet RailSync from primary LocoNet">
             <p>Note that this circuit must not be used in conjunction with any other 
                 device or circuit which actively puts a signal on the standalone LocoNet 
                 RailSync wires.</p> 
@@ -413,9 +468,12 @@ useful.</p>
             from the remainder of the system.</P>
         <P>Isolation of LocoNet from the computer is recommended.  The LocoBuffer-II 
             and LocoBuffer-USB computer interface devices provide "optical isolation" of the
-            LocoNet signals from the computer electrical signals <b>if</b> the 
-            LocoBuffer-II/-USB is <b>not</b> configured to provide LocoNet termination.</P>
-        <P>Other computer interfaces can be isloated using 3rd-party isolation 
+            LocoNet signals from the computer electrical signals.  Note that
+            the LocoBuffer-II isolation is not effective when it is configured 
+            for "Local Power".  The LocoBuffer-II should be configured for 
+            "isolated power" and should have an external power supply plugged in 
+            for proper operation and isolation.</P>
+        <P>Other computer interfaces can be isolated using 3rd-party isolation 
             devices.  Placing a USB hub with optical isolation between the computer
             and the USB device, or an RS232 optical isolation 
             device between the computer and the RS232-based interface device might 
@@ -443,10 +501,19 @@ useful.</p>
             appropriate LocoNet messages to the SE8Cs.  JMRI can also control 
             switches connected to the DS64.  This type of connectivity may be useful
             when JMRI is used to implement a CTC panel.</p>
-        <p>For the connectivity shown in this diagram, the DS64 should be 
-            configured to take its switch control messages from LocoNet 
-            instead of from its DCC track inputs.  This should avoid some 
-            reported instability of DS64s when connected to the DCC track signal.</p>
+        <p>For the connectivity shown in this diagram, the Standalone LocoNet data
+            wires are not connected to the primary LocoNet, so LocoNet Master 
+            termination cannot be provided by the command station.  An alternative
+            source of LocoNet Master termination must be used.  The LocoBuffer-USB
+            can easily be configured to provide LocoNet Master termination via an
+            internal jumper setting (see the LocoBuffer-USB User's Manual).  Alternate
+            sources of LocoNet Master termination are described HHHHHHHH above.</p>
+        <p>With the connectivity shown in the diagram above, the DS64 does not 
+            get its switch commands from DCC track power.  This is an intentional
+            choice.  Connecting DS64s so that they do not get track power can 
+            help avoid some DS64 instability which has been reported by some users.
+            Instead, the DS64 gets its power from an external power supply, and 
+            gets its switch control commands from LocoNet.</p>
         <p>This diagram assumes that there are no sneak current paths between any
             device associated with the standalone LocoNet and any device associated
             with the primary LocoNet.  This allows connection of the Digitrax 
