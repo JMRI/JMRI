@@ -39,6 +39,7 @@
 //persistent (global) variables
 var $gTimeout = 45; //heartbeat timeout in seconds
 var $gWidgets = {}; //array of all widget objects, key=CSSId
+var $gPanelList = {}; 	//store list of available panels
 var $gPanel = {}; 	//store overall panel info
 var $gPts = {}; 	//array of all points, key="pointname.pointtype" (used for layoutEditor panels)
 var $gBlks = {}; 	//array of all blocks, key="blockname" (used for layoutEditor panels)
@@ -158,6 +159,17 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						var $rotation = 		$(this).find('icon').find('rotation').text();
 						$widget['degrees'] = 	($(this).find('icon').attr('degrees') * 1) - ($rotation * 90);
 						$widget['scale'] = 		$(this).find('icon').attr('scale');
+						break;
+					case "linkinglabel" :
+						$widget['icon1'] = 		$(this).find('icon').attr('url');
+						var $rotation = 		$(this).find('icon').find('rotation').text();
+						$widget['degrees'] = 	($(this).find('icon').attr('degrees') * 1) - ($rotation * 90);
+						$widget['scale'] = 		$(this).find('icon').attr('scale');
+						$url = $(this).find('url').text();
+						$widget['url'] = $url; //default to using url value as is 		
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
 						break;
 					case "indicatortrackicon" :
 						$widget['icon1'] = 		$(this).find('iconmap').find('ClearTrack').attr('url');
@@ -344,6 +356,23 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						$widget['element']  =	"memory"; //what xmlio server calls this
 						$widget['text']  =		$widget.memory; //use name for initial text
 						$widget.styles['border']	= "1px solid black" //add border for looks (temporary)
+						break;
+					case "linkinglabel" :
+						$url = $(this).find('url').text();
+						$widget['url'] = $url; //default to using url value as is 		
+						if ($url.toLowerCase().indexOf("frame:") == 0) {
+							$frameName = $url.substring(6); //if "frame" found, remove it
+							$frameType = $gPanelList[$frameName];  //find panel type in panel list
+							if ($frameType == undefined) {  
+								$url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver  
+							} else {  
+								$url = "?name=" + $frameType + "/" + $frameName; //format for panel server  
+							}
+						}
+						$widget['text'] = "<a href='" + $url + "' >" + $widget.text + "</a>"; //add link around text
+						if ($widget.forcecontroloff != "true") {
+							$widget.classes += 		$widget.element + " clickable ";
+						}
 						break;
 					}
 					$widget['safeName'] = $safeName($widget.name);
@@ -658,17 +687,32 @@ function $drawIcon($widget) {
 
 	//add the image to the panel area, with appropriate css classes and id (skip any unsupported)
 	if ($widget['icon'+$widget.state] != undefined) {
-		$("div#panelArea").append("<img id=" + $widget.id +
-				" class='" + $widget.classes +
-				"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>");
+		$imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
+		"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>"
 
-		//also add in overlay text if specified  (append "overlay" to id to keep them unique)
+		//if url is set for icon, wrap image in <a> tag
+		if ($widget.url  != undefined) {
+			if ($url.toLowerCase().indexOf("frame:") == 0) {
+				$frameName = $url.substring(6); //if "frame" found, remove it
+				$frameType = $gPanelList[$frameName];  //find panel type in panel list
+				if ($frameType == undefined) {  
+					$url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver  
+				} else {  
+					$url = "?name=" + $frameType + "/" + $frameName; //format for panel server  
+				}
+			}
+			$imgHtml = "<a href='" + $url + "' >" + $imgHtml + "</a>"; //add link around icon
+		}
+		$("div#panelArea").append($imgHtml);  //put the html in the panel
+
+		//add in overlay text if specified  (append "overlay" to id to keep them unique)
 		if ($widget.text != undefined) {
 			$("div#panelArea").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
 			$("div#panelArea>#"+$widget.id+"overlay").css({position:'absolute',left:$widget.x+'px',top:$widget.y+'px',zIndex:($widget.level-1)});
-		} 
+		}
 	}
-	$setWidgetPosition($("div#panelArea>#"+$widget.id));
+	$setWidgetPosition($("div#panelArea #"+$widget.id));
+
 };
 
 //draw a LevelXing (pass in widget)
@@ -1202,9 +1246,9 @@ var $sendXMLIOChg = function($commandstr){
 	});
 };
 
-//show all ajax errors except for abort (this is expected)
+//show unexpected ajax errors
 $(document).ajaxError(function(event,xhr,opt, exception){
-	if (xhr.statusText !="abort") {
+	if (xhr.statusText !="abort" && xhr.status != 0) {
 		var $msg = "AJAX Error requesting " + opt.url + ", status= " + xhr.status + " " + xhr.statusText;
 		$('div#messageText').text($msg);
 		$('div#workingMessage').show();
@@ -1295,23 +1339,26 @@ function getParameterByName(name) {
 	return match && match[1];
 }
 
-//request and show a list of available panels from the server (used when no panel passed in)
-var $showPanelList = function($panelName){
+//request and show a list of available panels from the server, and store in persistent var for later checks
+var $getPanelList = function($panelName){
 	$.ajax({
 		url:  '/xmlio/list', //request proper url
 		data: {type: "panel"},
 		success: function($r, $s, $x){
-			$(document).attr('title', 'Client-side panels');
+//			$(document).attr('title', 'Client-side panels');
 			var $h = "<h1>Client-side panels:</h1>";
 			$h += "<table><tr><th>View Panel</th><th>Type</th><th>XML</th></tr>";
             $($r).find("panel").each(function(){
             	var $t = $(this).attr("name").split("/");
-            	$h += "<tr><td><a href='?name=" + $(this).attr("name") + "'>" + $(this).attr("userName") + "</a></td>";
-            	$h += "<td>" + $t[0] + "</td>";
-            	$h += "<td><a href='/panel/" + $(this).attr("name") + "' target=_new >XML</a></td></tr>";
+            	var $panelType = $t[0];
+            	var $panelName = $(this).attr("userName");
+            	$gPanelList[$panelName] = $panelType; //store the type for each panel
+            	$h += "<tr><td><a href='?name=" + $(this).attr("name") + "'>" + $panelName + "</a></td>";
+            	$h += "<td>" + $panelType + "</td>";
+            	$h += "<td><a href='/panel/" + $panelType + "/" + $panelName + "' target=_new >XML</a></td></tr>";
             });
             $h += "</table>";
-            $('div#panelArea').html($h); //put table on page
+            $('div#panelList').html($h); //put table on page
 		},
 		dataType: 'xml' //<--dataType
 	});
@@ -1346,7 +1393,7 @@ var $preloadWidgetImages = function($widget) {
 //note: not-yet-supported widgets are commented out here so as to return undefined
 var $getWidgetFamily = function($widget) {
 
-	if ($widget.widgetType== "positionablelabel" && $widget.text != undefined) {
+	if (($widget.widgetType== "positionablelabel" || $widget.widgetType== "linkinglabel") && $widget.text != undefined) {
 		return "text";  //special case to distinguish text vs. icon labels
 	}
 	if ($widget.widgetType== "sensoricon" && $widget.icon == "no") {
@@ -1363,6 +1410,7 @@ var $getWidgetFamily = function($widget) {
 		return "text";
 		break;
 	case "positionablelabel" :
+	case "linkinglabel" :
 	case "turnouticon" :
 	case "sensoricon" :
 	case "multisensoricon" :
@@ -1432,11 +1480,15 @@ var $drawAllIconWidgets = function() {
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function() {
 
+	//always request a list of panels from server
+	$getPanelList();
 	//if panelname not passed in, show list of available panels
 	var $panelName = getParameterByName('name');
 	if ($panelName == undefined) {
-        $showPanelList();
+		$('div#panelList').show();  //show the list of available panels if none passed in
+		$(document).attr('title', 'List Available JMRI Panels');
 	} else {
+		$('div#panelList').hide();
 		//set up events based on browser's support for touch events
 		var $is_touch_device = 'ontouchstart' in document.documentElement;
 		if ($is_touch_device) {
@@ -1473,8 +1525,11 @@ $(document).ready(function() {
 		$gWidgets[$widget.id] = $widget;
 
 		//request actual xml of panel, and process it on return
-		$requestPanelXML($panelName);
-		
+		// NOTE: uses settimeout to release control and allow panel list to populate
+		setTimeout(function() {
+			$requestPanelXML($panelName);
+		},
+		100);
 	}
 	
 });
