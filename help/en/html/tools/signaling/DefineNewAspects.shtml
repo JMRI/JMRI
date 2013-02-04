@@ -188,6 +188,13 @@ a image file (.gif, .png or .jpg) showing what this appearance looks like.<br>
 If you are creating or using custom images then these should be placed in a 
 sub-directory within the user preference area, the image link should then 
 be prefixed with "preference:" followed by the remainder of the path.
+As long as you work locally, use preference:resources/etc paths. 
+If all aspects of your new signal definition are working on your panel/layout 
+and you plan to submit your new signal system as a patch to JMRI, 
+use full URL paths like http://jmri.org/resources/icons/etc in the XML files
+so that they'll work with both the local JMRI program and for 
+people viewing them on the JMRI web site.
+
 <h4>Specific Appearances</h4>
 There are four specific appearances that JMRI will and can refer to, as the appearance names
 are all user defined and can be in any language all are optional and dependant upon the signalmast<br>
