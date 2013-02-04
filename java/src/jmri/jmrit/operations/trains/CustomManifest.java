@@ -104,27 +104,36 @@ public class CustomManifest {
 		// Not sure how to do this on Mac and Linux....
 		// For now, just complain if we are not on Windows...
 
-		if (!SystemType.isWindows()) {
+//		if (!SystemType.isWindows()) {
 //			JOptionPane
 //					.showMessageDialog(
 //							null,
 //							"Custom processing of manifest csv files is only supported on Windows at the moment.",
 //							"Custom manifests not supported",
 //							JOptionPane.ERROR_MESSAGE);
-			return false;
-		}
+//			return false;
+//		}
 		
 		if (!manifestCreatorFileExists())
 			return false;
 
-		String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
-
-		try {
-			Runtime.getRuntime().exec(cmd, null, FileHelper.getOperationsFile(getDirectoryName()));
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (SystemType.isWindows()) {
+			String cmd = "cmd /c start " + getFileName() + " " + mcAppArg; // NOI18N
+			try {
+				Runtime.getRuntime().exec(cmd, null, FileHelper.getOperationsFile(getDirectoryName()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			String cmd = "open " + getFileName() + " " + mcAppArg; // NOI18N
+			try {
+				Runtime.getRuntime().exec(cmd, null, FileHelper.getOperationsFile(getDirectoryName()));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return true;
+
 	}
 	
 	public static boolean manifestCreatorFileExists() {

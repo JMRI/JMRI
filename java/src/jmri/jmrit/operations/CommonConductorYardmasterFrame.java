@@ -108,7 +108,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	protected List<RollingStock> rollingStock = new ArrayList<RollingStock>();
 
 	// flags
-	protected boolean setMode = false; // when true, cars that aren't selected (checkbox) can be "set"
+	protected boolean isSetMode = false; // when true, cars that aren't selected (checkbox) can be "set"
 
 	public CommonConductorYardmasterFrame() {
 		super();
@@ -184,6 +184,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.X_AXIS));
 		pWorkPanes.add(pickupPane);
 		pWorkPanes.add(setoutPane);
+		pWorkPanes.setPreferredSize(new Dimension(600, 400));
 
 		// row 13
 		pStatus.setLayout(new GridBagLayout());
@@ -212,7 +213,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		if (ae.getSource() == clearButton)
 			selectCheckboxes(false);
 		if (ae.getSource() == setButton) {
-			setMode = !setMode; // toggle setMode
+			isSetMode = !isSetMode; // toggle setMode
 		}
 		check();
 	}
@@ -254,7 +255,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 
 	CarSetFrame csf = null;
 
-	// set button for a car, opens the set car window
+	// action for set button for a car, opens the set car window
 	public void setCarButtonActionPerfomed(ActionEvent ae) {
 		String name = ((JButton) ae.getSource()).getName();
 		log.debug("Set button for car " + name);
@@ -290,7 +291,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		// all selected, work done!
 		moveButton.setEnabled(true);
 		setButton.setEnabled(false);
-		setMode = false;
+		isSetMode = false;
 	}
 
 	protected void selectCheckboxes(boolean enable) {
@@ -299,7 +300,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			JCheckBox checkBox = en.nextElement();
 			checkBox.setSelected(enable);
 		}
-		setMode = false;
+		isSetMode = false;
 	}
 	
 	protected void updateLocoPanes(RouteLocation rl) {
@@ -325,11 +326,14 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 			}
 		}
 	}
-	
-
-	
+		
 	/**
-	 * Block cars by track, then pick up and set out for each location in a train's route.
+	 * Block cars by track (optional), then pick up and set out for each location in a train's route. This shows each
+	 * car with a check box or with a set button. The set button is displayed when the checkbox isn't selected and the
+	 * display is in "set" mode. If the car is a utility. Show the number of cars that have the same attributes, and not
+	 * the car's road and number. Each car is displayed only once in one of three panes. The three panes are pick up,
+	 * set out, or local move. To keep track of each car and which pane to use, they are placed in the list
+	 * "rollingStock" with the prefix "p", "s" or "m" and the car's unique id.
 	 */
 	protected void blockCars(RouteLocation rl, boolean isManifest) {
 		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
@@ -342,24 +346,36 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 				RouteLocation rld = _train.getRoute().getLocationById(routeList.get(j));
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carManager.getById(carList.get(k));
-					if (!car.getTrackName().equals("")
+					// determine if car is a pick up from the right track
+					if (car.getTrack() != null
 							&& (!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
 									car.getTrack().getName())
 									.equals(TrainCommon.splitString(track.getName())))
 							&& car.getRouteLocation() == rl && car.getRouteDestination() == rld
 							&& car.getRouteDestination() != rl) {
+						// yes we have a pick up
 						pickupPane.setVisible(true);
-						rollingStock.add(car);
-						car.addPropertyChangeListener(this);
+						if (!rollingStock.contains(car)) {
+							rollingStock.add(car);
+							car.addPropertyChangeListener(this);
+						}
+						// did we already process this car?
 						if (carCheckBoxes.containsKey("p" + car.getId())) {
-							if (setMode && !carCheckBoxes.get("p" + car.getId()).isSelected()) {
+							if (isSetMode && !carCheckBoxes.get("p" + car.getId()).isSelected()) {
 								// change to set button so user can remove car from train
 								pPickups.add(addSet(car));
 							} else {
 								pPickups.add(carCheckBoxes.get("p" + car.getId()));
 							}
+						// figure out the checkbox text, either single car or utility
 						} else {
-							JCheckBox checkBox = new JCheckBox(trainCommon.pickupCar(car, isManifest));
+							String text = trainCommon.pickupCar(car, isManifest);
+							if (car.isUtility()) {
+								text = trainCommon.pickupUtilityCars(carList, car, rl, rld, isManifest);
+								if (text == null)
+									continue;	// this car type has already been processed
+							}
+							JCheckBox checkBox = new JCheckBox(text);
 							setCheckBoxFont(checkBox);
 							addCheckBoxAction(checkBox);
 							pPickups.add(checkBox);
@@ -389,19 +405,26 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 						car.addPropertyChangeListener(this);
 					}
 					if (carCheckBoxes.containsKey("s" + car.getId())) {
-						if (setMode && !carCheckBoxes.get("s" + car.getId()).isSelected()) {
+						if (isSetMode && !carCheckBoxes.get("s" + car.getId()).isSelected()) {
 							// change to set button so user can remove car from train
 							pSetouts.add(addSet(car));
 						} else {
 							pSetouts.add(carCheckBoxes.get("s" + car.getId()));
 						}
 					} else {
-						JCheckBox checkBox = new JCheckBox(trainCommon.dropCar(car, isManifest));
+						String text = trainCommon.dropCar(car, isManifest);
+						if (car.isUtility()) {
+							text = trainCommon.setoutUtilityCars(carList, car, rl, false, isManifest);
+							if (text == null)
+								continue;	// this car type has already been processed
+						}
+						JCheckBox checkBox = new JCheckBox(text);
 						setCheckBoxFont(checkBox);
 						addCheckBoxAction(checkBox);
 						pSetouts.add(checkBox);
 						carCheckBoxes.put("s" + car.getId(), checkBox);
 					}
+				// local move?
 				} else if (!car.getTrackName().equals("") && car.getDestinationTrack() != null 
 						&&(!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
 						car.getDestinationTrack().getName()).equals(TrainCommon.splitString(track.getName())))
@@ -413,14 +436,20 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 						car.addPropertyChangeListener(this);
 					}
 					if (carCheckBoxes.containsKey("m" + car.getId())) {
-						if (setMode && !carCheckBoxes.get("m" + car.getId()).isSelected()) {
+						if (isSetMode && !carCheckBoxes.get("m" + car.getId()).isSelected()) {
 							// change to set button so user can remove car from train
 							pMoves.add(addSet(car));
 						} else {
 							pMoves.add(carCheckBoxes.get("m" + car.getId()));
 						}
 					} else {
-						JCheckBox checkBox = new JCheckBox(trainCommon.moveCar(car, isManifest));
+						String text = trainCommon.moveCar(car, isManifest);
+						if (car.isUtility()) {
+							text = trainCommon.setoutUtilityCars(carList, car, rl, true, isManifest);
+							if (text == null)
+								continue;	// this car type has already been processed
+						}
+						JCheckBox checkBox = new JCheckBox(text);
 						setCheckBoxFont(checkBox);
 						addCheckBoxAction(checkBox);
 						pMoves.add(checkBox);
@@ -459,7 +488,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	}
 
 	protected void setButtonText() {
-		if (setMode)
+		if (isSetMode)
 			setButton.setText(Bundle.getMessage("Done"));
 		else
 			setButton.setText(Bundle.getMessage("Set"));

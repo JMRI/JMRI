@@ -159,13 +159,14 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 	}
 
 	private void clearAndUpdate(){
+		trainCommon.clearUtilityCarTypes();	// reset the utility car counts
 		carCheckBoxes.clear();
-		setMode = false;
+		isSetMode = false;
 		update();
 	}
 	
 	private void update(){
-		log.debug("update, setMode "+setMode);
+		log.debug("update, setMode "+isSetMode);
 		initialize();
 		if (_train != null && _train.getRoute() != null){
 			RouteLocation rl = _train.getCurrentLocation();

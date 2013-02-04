@@ -56,11 +56,6 @@ public class TrainSwitchLists extends TrainCommon {
 			location.setStatus(Location.UPDATED);
 		}
 
-		// load message formats
-		pickupUtilityMessageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
-		setoutUtilityMessageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
-		localUtilityMessageFormat = Setup.getSwitchListLocalUtilityCarMessageFormat();
-
 		// create manifest file
 		File file = TrainManagerXml.instance().createSwitchListFile(location.getName());
 
@@ -254,13 +249,13 @@ public class TrainSwitchLists extends TrainCommon {
 		// block cars by destination
 		for (int j = 0; j < routeList.size(); j++) {
 			RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
-			utilityCarTypes.clear(); // list utility cars by quantity
+			clearUtilityCarTypes(); // list utility cars by quantity
 			for (int k = 0; k < carList.size(); k++) {
 				Car car = carManager.getById(carList.get(k));
 				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 						&& car.getRouteDestination() == rld) {
 					if (car.isUtility())
-						pickupCars(fileOut, carList, car, rl, rld);
+						pickupUtilityCars(fileOut, carList, car, rl, rld, false);
 					else
 						switchListPickUpCar(fileOut, car);
 					pickupCars = true;
@@ -268,14 +263,14 @@ public class TrainSwitchLists extends TrainCommon {
 			}
 		}
 
-		utilityCarTypes.clear(); // list utility cars by quantity
+		clearUtilityCarTypes(); // list utility cars by quantity
 		for (int j = 0; j < carList.size(); j++) {
 			Car car = carManager.getById(carList.get(j));
 			if (car.getRouteDestination() == rl) {
 				if (car.isUtility())
-					setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(
+					setoutUtilityCars(fileOut, carList, car, rl, car.getRouteLocation().equals(
 							car.getRouteDestination())
-							&& car.getTrack() != null);
+							&& car.getTrack() != null, false);
 				else
 					switchListDropCar(fileOut, car);
 				dropCars = true;
@@ -298,14 +293,14 @@ public class TrainSwitchLists extends TrainCommon {
 			// block cars by destination
 			for (int j = 0; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
-				utilityCarTypes.clear(); // list utility cars by quantity
+				clearUtilityCarTypes(); // list utility cars by quantity
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carManager.getById(carList.get(k));
 					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 							&& splitString(track.getName()).equals(splitString(car.getTrack().getName()))
 							&& car.getRouteDestination() == rld) {
 						if (car.isUtility())
-							pickupCars(fileOut, carList, car, rl, rld);
+							pickupUtilityCars(fileOut, carList, car, rl, rld, false);
 						else
 							switchListPickUpCar(fileOut, car);
 						pickupCars = true;
@@ -313,7 +308,7 @@ public class TrainSwitchLists extends TrainCommon {
 				}
 			}
 
-			utilityCarTypes.clear(); // list utility cars by quantity
+			clearUtilityCarTypes(); // list utility cars by quantity
 			for (int j = 0; j < carList.size(); j++) {
 				Car car = carManager.getById(carList.get(j));
 				if (car.getRouteDestination() == rl
@@ -321,9 +316,9 @@ public class TrainSwitchLists extends TrainCommon {
 						&& splitString(track.getName()).equals(
 								splitString(car.getDestinationTrack().getName()))) {
 					if (car.isUtility())
-						setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(
+						setoutUtilityCars(fileOut, carList, car, rl, car.getRouteLocation().equals(
 								car.getRouteDestination())
-								&& car.getTrack() != null);
+								&& car.getTrack() != null, false);
 					else
 						switchListDropCar(fileOut, car);
 					dropCars = true;

@@ -147,19 +147,20 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		if (ae.getSource() == trainVisitComboBox && trainVisitComboBox.isVisible()) {
 			if (trainVisitComboBox.getSelectedItem() != null) {
 				_visitNumber = (Integer) trainVisitComboBox.getSelectedItem();
-				update();
+				clearAndUpdate();
 			}
 		}
 	}
 	
 	private void clearAndUpdate(){
+		trainCommon.clearUtilityCarTypes();	// reset the utility car counts
 		carCheckBoxes.clear();
-		setMode = false;
+		isSetMode = false;
 		update();
 	}
 
 	private void update() {
-		log.debug("update, setMode " + setMode);
+		log.debug("update, setMode " + isSetMode);
 		initialize();
 
 		// turn everything off and re-enable if needed

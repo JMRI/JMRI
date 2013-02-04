@@ -231,12 +231,12 @@ public class TrainManifest extends TrainCommon {
 		// block car pick ups by destination
 		for (int j = r; j < routeList.size(); j++) {
 			RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
-			utilityCarTypes.clear(); // list utility cars by quantity
+			clearUtilityCarTypes(); // list utility cars by quantity
 			for (int k = 0; k < carList.size(); k++) {
 				Car car = carManager.getById(carList.get(k));
 				if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
 					if (car.isUtility())
-						pickupCars(fileOut, carList, car, rl, rld);
+						pickupUtilityCars(fileOut, carList, car, rl, rld, true);
 					// use truncated format if there's a switch list
 					else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
 						pickUpCarTruncated(fileOut, car);
@@ -250,14 +250,14 @@ public class TrainManifest extends TrainCommon {
 				}
 			}
 		}
-		utilityCarTypes.clear(); // list utility cars by quantity
+		clearUtilityCarTypes(); // list utility cars by quantity
 		for (int j = 0; j < carList.size(); j++) {
 			Car car = carManager.getById(carList.get(j));
 			if (car.getRouteDestination() == rl) {
 				if (car.isUtility())
-					setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(
+					setoutUtilityCars(fileOut, carList, car, rl, car.getRouteLocation().equals(
 							car.getRouteDestination())
-							&& car.getTrack() != null);
+							&& car.getTrack() != null, true);
 				// use truncated format if there's a switch list
 				else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
 					truncatedDropCar(fileOut, car);
@@ -287,14 +287,14 @@ public class TrainManifest extends TrainCommon {
 			// block car pick ups by destination
 			for (int j = r; j < routeList.size(); j++) {
 				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
-				utilityCarTypes.clear(); // list utility cars by quantity
+				clearUtilityCarTypes(); // list utility cars by quantity
 				for (int k = 0; k < carList.size(); k++) {
 					Car car = carManager.getById(carList.get(k));
 					if (car.getRouteLocation() == rl
 							&& splitString(track.getName()).equals(splitString(car.getTrack().getName()))
 							&& car.getRouteDestination() == rld) {
 						if (car.isUtility())
-							pickupCars(fileOut, carList, car, rl, rld);
+							pickupUtilityCars(fileOut, carList, car, rl, rld, true);
 						// use truncated format if there's a switch list
 						else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
 							pickUpCarTruncated(fileOut, car);
@@ -308,16 +308,16 @@ public class TrainManifest extends TrainCommon {
 					}
 				}
 			}
-			utilityCarTypes.clear(); // list utility cars by quantity
+			clearUtilityCarTypes(); // list utility cars by quantity
 			for (int j = 0; j < carList.size(); j++) {
 				Car car = carManager.getById(carList.get(j));
 				if (car.getRouteDestination() == rl
 						&& splitString(track.getName()).equals(
 								splitString(car.getDestinationTrack().getName()))) {
 					if (car.isUtility())
-						setoutCars(fileOut, carList, car, rl, car.getRouteLocation().equals(
+						setoutUtilityCars(fileOut, carList, car, rl, car.getRouteLocation().equals(
 								car.getRouteDestination())
-								&& car.getTrack() != null);
+								&& car.getTrack() != null, true);
 					// use truncated format if there's a switch list
 					else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
 						truncatedDropCar(fileOut, car);
