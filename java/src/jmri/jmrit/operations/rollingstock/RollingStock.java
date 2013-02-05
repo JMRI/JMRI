@@ -266,6 +266,10 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		return _built;
 	}
 
+	/**
+	 * 
+	 * @return location unknown symbol, out of service symbol, or none if car okay
+	 */
 	public String getStatus() {
 		return (isLocationUnknown() ? "<?> " : (isOutOfService() ? "<O> " : "")); // NOI18N
 	}

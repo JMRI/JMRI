@@ -326,7 +326,7 @@ public class TrainCommon {
 		if (count == 0)
 			return; // already printed out this car type
 		pickUpCar(fileOut, car, new StringBuffer(Setup.getPickupCarPrefix() + " "
-				+ tabString(Integer.toString(count), 2)), messageFormat, Setup.getManifestOrientation());
+				+ tabString(Integer.toString(count), 3)), messageFormat, Setup.getManifestOrientation());
 	}
 	
 	/**
@@ -355,7 +355,7 @@ public class TrainCommon {
 		int count = countUtiltiyCars(messageFormat, carList, car, rl, null, !PICKUP);
 		if (count == 0)
 			return; // already printed out this car type
-		buf.append(" " + tabString(Integer.toString(count), 2));
+		buf.append(" " + tabString(Integer.toString(count), 3));
 		dropCar(fileOut, car, buf, messageFormat, isLocal, Setup.getManifestOrientation());
 	}
 	
@@ -369,7 +369,7 @@ public class TrainCommon {
 		int count = countUtiltiyCars(messageFormat, carList, car, rl, rld, PICKUP);
 		if (count == 0)
 			return null;
-		StringBuffer buf = new StringBuffer(tabString(Integer.toString(count), 2));
+		StringBuffer buf = new StringBuffer(" " + tabString(Integer.toString(count), 3));
 		for (int i = 0; i < messageFormat.length; i++) {
 			String s = getCarAttribute(car, messageFormat[i], PICKUP, !LOCAL);
 			buf.append(s);
@@ -391,7 +391,7 @@ public class TrainCommon {
 		int count = countUtiltiyCars(messageFormat, carList, car, rl, null, !PICKUP);
 		if (count == 0)
 			return null;
-		StringBuffer buf = new StringBuffer(tabString(Integer.toString(count), 2));
+		StringBuffer buf = new StringBuffer(" " + tabString(Integer.toString(count), 3));
 		for (int i = 0; i < messageFormat.length; i++) {
 			String s = getCarAttribute(car, messageFormat[i], !PICKUP, isLocal);
 			buf.append(s);
@@ -727,7 +727,7 @@ public class TrainCommon {
 			return "";
 		// the three utility attributes that don't get printed but need to be tabbed out
 		else if (attribute.equals(Setup.NO_NUMBER))
-			return " " + tabString("", Control.max_len_string_road_number - 7); // (-4 -3) for utility quantity field
+			return " " + tabString("", Control.max_len_string_road_number - 8); // (-4 -4) for utility quantity field
 		else if (attribute.equals(Setup.NO_ROAD))
 			return " " + tabString("", CarRoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.NO_COLOR))
