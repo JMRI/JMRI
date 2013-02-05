@@ -74,7 +74,7 @@ public class PositionableEllipse extends PositionableShape {
     }
     
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rbcp.getString("editShape"), rbcp.getString("ellipse"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("ellipse"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                 	_editFrame = new DrawEllipse("editShape", "ellipse", null);

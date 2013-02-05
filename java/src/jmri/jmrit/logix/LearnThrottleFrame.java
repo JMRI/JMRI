@@ -77,6 +77,8 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     private FunctionPanel _functionPanel;
     private ButtonFrame _buttonPanel;
     private WarrantFrame _warrantFrame;
+    private float _currentSpeed;
+
         
     private DccThrottle _throttle;
     
@@ -186,7 +188,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      *  Set up View, Edit and Power Menus
      */
     private void initializeMenu() {
-		JMenu editControl = new JMenu("Speed Control... ");
+		JMenu speedControl = new JMenu(Bundle.getMessage("SpeedControl"));
         ButtonGroup buttonGroup = new ButtonGroup();
         JRadioButtonMenuItem displaySlider = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSlider"));
         displaySlider.addActionListener(new ActionListener() {
@@ -196,7 +198,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             });
         displaySlider.setSelected(true);
         buttonGroup.add(displaySlider);
-        editControl.add(displaySlider);
+        speedControl.add(displaySlider);
         JRadioButtonMenuItem displaySteps = new JRadioButtonMenuItem(Bundle.getMessage("ButtonDisplaySpeedSteps"));
         displaySteps.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -204,37 +206,22 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
                 }
             });
         buttonGroup.add(displaySteps);
-        editControl.add(displaySteps);
-
-        JCheckBoxMenuItem trackBox = new JCheckBoxMenuItem(Bundle.getMessage("CheckBoxTrackSliderInRealTime"), true);
-        trackBox.addActionListener(new ActionListener() {
-                JCheckBoxMenuItem trackBox;
-                public void actionPerformed(ActionEvent e) {
-                    _controlPanel.setSpeedController(trackBox.isSelected());
-                }
-                ActionListener init(JCheckBoxMenuItem tb) {
-                    trackBox = tb;
-                    return this;
-                }
-            }.init(trackBox));
-        editControl.add(trackBox);
-
-		JMenuItem resetFuncButtonsItem = new JMenuItem("Reset Function Buttons");
+        speedControl.add(displaySteps);
+/*
+        JMenuItem resetFuncButtonsItem = new JMenuItem("Reset Function Buttons");
 		resetFuncButtonsItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				_functionPanel.resetFuncButtons();
 			}
-		});
+		});	*/
 
-		JMenu editMenu = new JMenu("Edit");
-		editMenu.add(editControl);
-		editMenu.add(resetFuncButtonsItem);
+//		editMenu.add(resetFuncButtonsItem);
 		this.setJMenuBar(new JMenuBar());
-		this.getJMenuBar().add(editMenu);
+		this.getJMenuBar().add(speedControl);
 
 		if (powerMgr != null) {
-			JMenu powerMenu = new JMenu("  Power");
-			JMenuItem powerOn = new JMenuItem("Power On");
+			JMenu powerMenu = new JMenu(Bundle.getMessage("ThrottleMenuPower"));
+			JMenuItem powerOn = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOn"));
 			powerMenu.add(powerOn);
 			powerOn.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -242,7 +229,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
 				}
 			});
 
-			JMenuItem powerOff = new JMenuItem("Power Off");
+			JMenuItem powerOff = new JMenuItem(Bundle.getMessage("ThrottleMenuPowerOff"));
 			powerMenu.add(powerOff);
 			powerOff.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -253,25 +240,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
 			this.getJMenuBar().add(powerMenu);
 			powerLight = new JButton();
 			setPowerIcons();
-			// make the button itself invisible, just display the power LED
-			powerLight.setBorderPainted(false);
-			powerLight.setContentAreaFilled(false);
-			powerLight.setFocusPainted(false);
 			this.getJMenuBar().add(powerLight);
-			powerLight.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					try {
-						if (powerMgr.getPower() == PowerManager.ON)
-							powerControl.offButtonPushed();
-						else if (powerMgr.getPower() == PowerManager.OFF)
-							powerControl.onButtonPushed();
-						else if (powerMgr.getPower() == PowerManager.UNKNOWN)
-							powerControl.offButtonPushed();
-					} catch (JmriException ex) {
-						powerLight.setIcon(powerXIcon);
-					}
-				}
-			});
 		}
 		// add help selection
 		addHelpMenu("package.jmri.jmrit.throttle.ThrottleFrame", true);
@@ -302,6 +271,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     /* from ControlPanel */
     protected void setSpeedSetting(float speed) {
         _warrantFrame.setThrottleCommand("Speed", Float.toString(speed));
+    	_currentSpeed = speed;
     }
     /* from ControlPanel */
     protected void setSpeedStepMode(int speedStep) {
@@ -333,6 +303,9 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         _throttle.setIsForward(isForward);
         //setButtonForward(isForward);
     }
+    protected float getSpeedSetting() {
+    	return _currentSpeed;
+    }
     protected void stopRunTrain() {
     	_warrantFrame.setThrottleCommand("Speed", "-1.0");
         _warrantFrame.stopRunTrain();
@@ -343,28 +316,28 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      *  
      */
     public void setPowerIcons() {
-        if (powerMgr==null) return;
+        if (powerMgr==null) {        	
+            powerLight.setIcon(powerXIcon);
+            powerLight.setToolTipText(Bundle.getMessage("PowerUnknown"));
+            return;
+        }
         try {
             if (powerMgr.getPower()==PowerManager.ON) {
                 powerLight.setIcon(powerOnIcon);
-                powerLight.setToolTipText("Layout Power On.  Click light to turn off, or use Power menu");
+                powerLight.setToolTipText(Bundle.getMessage("PowerOn"));
             }
             else if (powerMgr.getPower()==PowerManager.OFF) {
                 powerLight.setIcon(powerOffIcon);
-                powerLight.setToolTipText("Layout Power Off.  Click light to turn on, or use Power menu");
-            }
-            else if (powerMgr.getPower()==PowerManager.UNKNOWN) {
-                powerLight.setIcon(powerXIcon);
-                powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
+                powerLight.setToolTipText(Bundle.getMessage("PowerOff"));
             }
             else {
                 powerLight.setIcon(powerXIcon);
-                powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
+                powerLight.setToolTipText(Bundle.getMessage("PowerUnknown"));
                 log.error("Unexpected state value: +"+powerMgr.getPower());
             }
         } catch (JmriException ex) {
             powerLight.setIcon(powerXIcon);
-            powerLight.setToolTipText("Layout Power state unknown.  Click light to turn off, or use Power menu");
+            powerLight.setToolTipText(Bundle.getMessage("PowerUnknown"));
         }
     }
 
@@ -461,9 +434,9 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
             constraints.gridy = 1;
             reversePanel.add(reverseButton, constraints);
 
-            stopLabel = new JLabel("Emergency");
+            stopLabel = new JLabel(Bundle.getMessage("Emergency"));
             _gap = -(stopIcon.getIconWidth()+stopLabel.getPreferredSize().width)/2;
-            stopButton = new JButton("Stop");
+            stopButton = new JButton(Bundle.getMessage("EStop"));
             stopButton.addActionListener(new ActionListener() {
                                              public void actionPerformed(ActionEvent e)  {
                                                  stop();
@@ -492,8 +465,6 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         public void stop()
         {
             _throttle.setSpeedSetting(-0.5F);
-            //setSpeedSetting(-1);
-            //setSpeedSetting(0);
             _throttle.setSpeedSetting(0.0F);
             stopLabel.setIcon(stopIcon);
             stopLabel.setIconTextGap(_gap);

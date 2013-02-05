@@ -35,7 +35,7 @@ public class DrawCircle extends DrawFrame {
 	   
        JPanel p = new JPanel();
 	   p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-       p.add(new JLabel(rbcp.getString("circle")));
+       p.add(new JLabel(Bundle.getMessage("circle")));
        JPanel pp = new JPanel();
        _radiusText = new JTextField(6);
        _radiusText.addKeyListener(new KeyListener() {
@@ -52,7 +52,7 @@ public class DrawCircle extends DrawFrame {
 	   _radiusText.setText(Integer.toString(_radius));
        _radiusText.setHorizontalAlignment(JTextField.RIGHT);
        pp.add(_radiusText);
-       pp.add(new JLabel(rbcp.getString("circleRadius")));
+       pp.add(new JLabel(Bundle.getMessage("circleRadius")));
        p.add(pp);
        panel.add(p);
        panel.add(Box.createVerticalStrut(STRUT_SIZE));

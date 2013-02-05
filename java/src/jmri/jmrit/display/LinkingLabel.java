@@ -60,8 +60,8 @@ public class LinkingLabel extends PositionableLabel {
     public String getUrl() {return url;}
     
     // overide where used - e.g. momentary
-    public void doMousePressed(MouseEvent event) {}
-    public void doMouseReleased(MouseEvent event) {}
+//    public void doMousePressed(MouseEvent event) {}
+//    public void doMouseReleased(MouseEvent event) {}
     public void doMouseClicked(MouseEvent event) {
         log.debug("click to "+url);
         try {
@@ -82,16 +82,14 @@ public class LinkingLabel extends PositionableLabel {
         } catch (Throwable t) { log.error("Error handling link", t); }
         super.doMouseClicked(event);
     }
-    public void doMouseDragged(MouseEvent event) {}
-    public void doMouseMoved(MouseEvent event) {}
-    public void doMouseEntered(MouseEvent event) {
-    }
-    public void doMouseExited(MouseEvent event) {
-    }
+//    public void doMouseDragged(MouseEvent event) {}
+//    public void doMouseMoved(MouseEvent event) {}
+//    public void doMouseEntered(MouseEvent event) {}
+//    public void doMouseExited(MouseEvent event) {}
 
 
     /************ Methods for Item Popups in Panel editor *************************/
-    JFrame _iconEditorFrame;
+/*    JFrame _iconEditorFrame;
     IconAdder _iconEditor;
     public boolean setEditIconMenu(JPopupMenu popup) {
         if (_icon && !_text) {
@@ -109,7 +107,7 @@ public class LinkingLabel extends PositionableLabel {
     /**
      * For item popups in Panel Editor
      */
-    protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
+ /*   protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
         if (editor!=null) {
             _iconEditor = editor;
         } else {
@@ -159,7 +157,7 @@ public class LinkingLabel extends PositionableLabel {
     /**
      * For item popups in Control Panel Editor
      */
-    protected void makePalettteFrame(String title) {
+ /*   protected void makePalettteFrame(String title) {
     	jmri.jmrit.display.palette.ItemPalette.loadIcons();
 
         _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
@@ -179,7 +177,7 @@ public class LinkingLabel extends PositionableLabel {
         }
         return false;
     }
-    
+ */   
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LinkingLabel.class.getName());
 
 }

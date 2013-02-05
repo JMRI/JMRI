@@ -244,10 +244,9 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
         ArrayList<NamedBean> selections = _itemPanel.getTableSelections();
         int[] positions = _itemPanel.getPositions();
-        if (selections==null) {
+        if (selections==null || selections.size()<positions.length) {
             JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(
-                        ItemPalette.rbp.getString("NeedPosition"), positions.length), 
+                    Bundle.getMessage("NeedPosition", positions.length), 
                         Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }

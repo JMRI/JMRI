@@ -39,7 +39,7 @@ public class MultiSensorIconDialog extends IconDialog {
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
         JPanel panel2 = new JPanel();
         panel2.setLayout(new FlowLayout());
-        JButton addSensor = new JButton(ItemPalette.rbp.getString("addIcon"));
+        JButton addSensor = new JButton(Bundle.getMessage("addIcon"));
         addSensor.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (addNewIcon(getIconName())) {
@@ -51,10 +51,10 @@ public class MultiSensorIconDialog extends IconDialog {
                     }
                 }
         });
-        addSensor.setToolTipText(ItemPalette.rbp.getString(addTip));
+        addSensor.setToolTipText(Bundle.getMessage(addTip));
         panel2.add(addSensor);
 
-        JButton deleteSensor = new JButton(ItemPalette.rbp.getString("deleteIcon"));
+        JButton deleteSensor = new JButton(Bundle.getMessage("deleteIcon"));
         deleteSensor.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (deleteIcon()) {
@@ -66,7 +66,7 @@ public class MultiSensorIconDialog extends IconDialog {
                     }
                 }
         });
-        deleteSensor.setToolTipText(ItemPalette.rbp.getString(deleteTip));
+        deleteSensor.setToolTipText(Bundle.getMessage(deleteTip));
         panel2.add(deleteSensor);
         buttonPanel.add(panel2);
     }
@@ -85,12 +85,12 @@ public class MultiSensorIconDialog extends IconDialog {
     protected boolean addNewIcon(String name) {
         if (log.isDebugEnabled()) log.debug("addNewIcon Action: iconMap.size()= "+_iconMap.size());
         if (name==null || name.length()==0) {
-            JOptionPane.showMessageDialog(_parent._paletteFrame, ItemPalette.rbp.getString("NoIconName"),
+            JOptionPane.showMessageDialog(_parent._paletteFrame, Bundle.getMessage("NoIconName"),
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         } else if (_iconMap.get(name)!=null) {
             JOptionPane.showMessageDialog(_parent._paletteFrame,
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateIconName"), name),
+                    Bundle.getMessage("DuplicateIconName", name),
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }

@@ -54,7 +54,7 @@ public class PositionableRoundRect extends PositionableRectangle {
     }
     
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rbcp.getString("editShape"), rbcp.getString("roundRect"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("roundRect"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                 	_editFrame = new DrawRoundRect("editShape", "rectangle", null);

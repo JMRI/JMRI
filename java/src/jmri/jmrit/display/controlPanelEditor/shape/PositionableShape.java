@@ -36,8 +36,6 @@ public class PositionableShape extends PositionableJComponent {
     protected int		_degrees;
     protected AffineTransform _transform;
     
-    public final static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
-    
     public PositionableShape(Editor editor) {
     	super(editor);
     	setName("Graphic");
@@ -219,7 +217,7 @@ public class PositionableShape extends PositionableJComponent {
     protected JPanel makeDoneButtonPanel() {
         JPanel panel0 = new JPanel();
         panel0.setLayout(new FlowLayout());
-        JButton doneButton = new JButton(rbcp.getString("ButtonDone"));
+        JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                 	editItem();
@@ -227,7 +225,7 @@ public class PositionableShape extends PositionableJComponent {
         });
         panel0.add(doneButton);
 
-        JButton cancelButton = new JButton(rbcp.getString("ButtonCancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                 	_editFrame.dispose();

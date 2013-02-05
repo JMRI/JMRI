@@ -134,7 +134,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             }
         }        
         int result = JOptionPane.showConfirmDialog(_paletteFrame,
-                            ItemPalette.rbp.getString("NoFamilyName"), ItemPalette.rb.getString("questionTitle"),
+                            Bundle.getMessage("NoFamilyName"), ItemPalette.rb.getString("questionTitle"),
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.NO_OPTION) {
             return;
@@ -143,7 +143,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             return;
         }
         do {
-            _family = JOptionPane.showInputDialog(_paletteFrame, ItemPalette.rbp.getString("EnterFamilyName"), 
+            _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"), 
                     ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (_family==null || _family.trim().length()==0) {
                 // bail out
@@ -166,8 +166,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             addFamilyPanels(familyPanel);
             if (_currentIconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"),
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
+                        Bundle.getMessage("FamilyNotFound",_itemType, _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
                 addIconsToPanel(_currentIconMap);        // need to have family iconMap identified before calling
@@ -192,8 +191,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected JPanel makeFamilyButtons (Iterator <String> it, boolean setDefault) {
         JPanel familyPanel = new JPanel();
         familyPanel.setLayout(new BoxLayout(familyPanel, BoxLayout.Y_AXIS));
-        String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamiliesLabel"),
-                                                    ItemPalette.rbp.getString(_itemType));
+        String txt = Bundle.getMessage("IconFamiliesLabel", Bundle.getMessage(_itemType));
         JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(txt));
         familyPanel.add(p);
@@ -255,8 +253,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
     protected void addCreatePanels() {
         JOptionPane.showMessageDialog(_paletteFrame, 
-                java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), 
-                                               ItemPalette.rbp.getString(_itemType)), 
+                Bundle.getMessage("AllFamiliesDeleted", _itemType), 
                 ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
         _bottom1Panel.setVisible(false);
         _bottom2Panel.setVisible(true);
@@ -293,7 +290,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                                                             borderName));
            JLabel image = new JLabel(icon);
            if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
-               image.setText(ItemPalette.rbp.getString("invisibleIcon"));
+               image.setText(Bundle.getMessage("invisibleIcon"));
                image.setForeground(Color.lightGray);
            }
            panel.add(image);
@@ -325,7 +322,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (_update) {
             return;
         }
-        _dragIconPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        _dragIconPanel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         if (iconMap!=null) {
         	if (iconMap.get(displayKey)==null) {
         		displayKey = (String)iconMap.keySet().toArray()[0];
@@ -340,7 +337,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
                JLabel label;
                try {
                    label = getDragger(new DataFlavor(Editor.POSITIONABLE_FLAVOR), iconMap);
-                   label.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+                   label.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
                } catch (java.lang.ClassNotFoundException cnfe) {
                    cnfe.printStackTrace();
                    label = new JLabel();
@@ -350,14 +347,13 @@ public abstract class FamilyItemPanel extends ItemPanel {
                panel.add(label);
                int width = Math.max(100, panel.getPreferredSize().width);
                panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
-               panel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+               panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
                _dragIconPanel.add(panel);
                return;
             }
         } else {
             JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                   ItemPalette.rbp.getString(_itemType), _family), 
+                    Bundle.getMessage("FamilyNotFound", _itemType, _family), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
         }
     }    
@@ -365,7 +361,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected JPanel makeBottom1Panel() {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
-        _showIconsButton = new JButton(ItemPalette.rbp.getString("ShowIcons"));
+        _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (_iconPanel.isVisible()) {
@@ -375,16 +371,16 @@ public abstract class FamilyItemPanel extends ItemPanel {
                     }
                 }
         });
-        _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipShowIcons"));
+        _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
         bottomPanel.add(_showIconsButton);
 
-        JButton editIconsButton = new JButton(ItemPalette.rbp.getString("ButtonEditIcons"));
+        JButton editIconsButton = new JButton(Bundle.getMessage("ButtonEditIcons"));
         editIconsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     openEditDialog();
                 }
         });
-        editIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
+        editIconsButton.setToolTipText(Bundle.getMessage("ToolTipEditIcons"));
         bottomPanel.add(editIconsButton);
         return bottomPanel;
     }
@@ -395,7 +391,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _dragIconPanel.setVisible(true);
             _dragIconPanel.invalidate();
         }
-        _showIconsButton.setText(ItemPalette.rbp.getString("ShowIcons"));
+        _showIconsButton.setText(Bundle.getMessage("ShowIcons"));
         reset();
     }
 
@@ -405,7 +401,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (!_update) {
             _dragIconPanel.setVisible(false);
         }
-        _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
+        _showIconsButton.setText(Bundle.getMessage("HideIcons"));
         reset();
     }
      
@@ -415,16 +411,16 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected JPanel makeBottom2Panel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        JButton newFamilyButton = new JButton(ItemPalette.rbp.getString("createNewFamily"));
+        JButton newFamilyButton = new JButton(Bundle.getMessage("createNewFamily"));
         newFamilyButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     createNewFamilySet(_itemType);
                 }
         });
-        newFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
+        newFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         panel.add(newFamilyButton);
 
-        JButton cancelButton = new JButton(ItemPalette.rbp.getString("cancelButton"));
+        JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     updateFamiliesPanel();
@@ -444,9 +440,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.add(bottom1Panel);
         JPanel updatePanel = new JPanel(new FlowLayout());
-        _updateButton = new JButton(ItemPalette.rbp.getString("updateButton"));
+        _updateButton = new JButton(Bundle.getMessage("updateButton"));
         _updateButton.addActionListener(doneAction);
-        _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+        _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         updatePanel.add(_updateButton);
         bottomPanel.add(updatePanel);
         return bottomPanel;
@@ -493,8 +489,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         	_currentIconMap = ItemPalette.getIconMap(_itemType, _family);
             if (_currentIconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
+                        Bundle.getMessage("FamilyNotFound", _itemType, _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             }
         }        

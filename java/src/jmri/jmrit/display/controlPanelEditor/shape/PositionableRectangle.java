@@ -72,7 +72,7 @@ public class PositionableRectangle extends PositionableShape {
     }
     
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rbcp.getString("editShape"), rbcp.getString("rectangle"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("rectangle"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                 	_editFrame = new DrawRectangle("editShape", "rectangle", null);

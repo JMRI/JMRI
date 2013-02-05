@@ -48,7 +48,7 @@ public class DrawRoundRect extends DrawRectangle {
 	   _radiusText.setText(Integer.toString(_radius));
        _radiusText.setHorizontalAlignment(JTextField.RIGHT);
        pp.add(_radiusText);
-       pp.add(new JLabel(rbcp.getString("cornerRadius")));
+       pp.add(new JLabel(Bundle.getMessage("cornerRadius")));
        p.add(pp);
        panel.add(p);
        panel.add(Box.createVerticalStrut(STRUT_SIZE));

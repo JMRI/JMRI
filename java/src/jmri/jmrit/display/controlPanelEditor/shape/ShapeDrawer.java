@@ -26,23 +26,21 @@ public class ShapeDrawer  {
 	private boolean 	_creatingNewShape = false;
 	private DrawFrame 	_drawFrame;
 
-    public final static ResourceBundle rbcp = ControlPanelEditor.rbcp;
-	
 	public ShapeDrawer(ControlPanelEditor ed) {
         _editor = ed;
    }
 	
 	public JMenu makeMenu() {
-    	JMenu drawMenu = new JMenu(rbcp.getString("drawShapes"));
+    	JMenu drawMenu = new JMenu(Bundle.getMessage("drawShapes"));
     	
-        JMenuItem shapeItem = new JMenuItem(rbcp.getString("drawRectangle"));
+        JMenuItem shapeItem = new JMenuItem(Bundle.getMessage("drawRectangle"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     newRectangle();
                 }
             });
-        shapeItem = new JMenuItem(rbcp.getString("drawRoundRectangle"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawRoundRectangle"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -50,14 +48,14 @@ public class ShapeDrawer  {
                 }
             });
         /*
-        shapeItem = new JMenuItem(rbcp.getString("drawPolygon"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawPolygon"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     newPolygon();
                 }
             });
-        shapeItem = new JMenuItem(rbcp.getString("drawLine"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawLine"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
@@ -65,14 +63,14 @@ public class ShapeDrawer  {
                 }
             });
             */
-        shapeItem = new JMenuItem(rbcp.getString("drawCircle"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawCircle"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     newCircle();
                 }
             });
-        shapeItem = new JMenuItem(rbcp.getString("drawEllipse"));
+        shapeItem = new JMenuItem(Bundle.getMessage("drawEllipse"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {

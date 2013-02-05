@@ -37,11 +37,10 @@ public class RPSItemPanel extends FamilyItemPanel {
             JPanel blurb = new JPanel();
             blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(ItemPalette.rbp.getString("AddToPanel")));
-            blurb.add(new JLabel(ItemPalette.rbp.getString("DragIconPanel")));
+            blurb.add(new JLabel(Bundle.getMessage("AddToPanel")));
+            blurb.add(new JLabel(Bundle.getMessage("DragIconPanel")));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-            blurb.add(new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("ToAddDeleteModify"), 
-                                                           ItemPalette.rbp.getString("ButtonEditIcons"))));
+            blurb.add(new JLabel(Bundle.getMessage("ToAddDeleteModify", "ButtonEditIcons")));
             blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
             JPanel panel = new JPanel();
             panel.add(blurb);

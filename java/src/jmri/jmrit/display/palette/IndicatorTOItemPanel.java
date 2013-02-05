@@ -94,7 +94,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 return;     // Must assume no family names were changed
             }
         }
-        int result = JOptionPane.showConfirmDialog(_paletteFrame,ItemPalette.rbp.getString("NoFamilyName"),
+        int result = JOptionPane.showConfirmDialog(_paletteFrame,Bundle.getMessage("NoFamilyName"),
                 ItemPalette.rb.getString("questionTitle"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.NO_OPTION) {
@@ -106,7 +106,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             }
         }
         do {
-            _family = JOptionPane.showInputDialog(_paletteFrame, ItemPalette.rbp.getString("EnterFamilyName"),
+            _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"),
                     ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (_family==null || _family.trim().length()==0) {
                 // bail out
@@ -152,9 +152,10 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             // make _iconPanel & _dragIconPanel before calls to add icons
             addFamilyPanels(familyPanel);
             if (_iconGroupsMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
+                JOptionPane.showMessageDialog(_paletteFrame,
+                		Bundle.getMessage("FamilyNotFound", _itemType, _family),
+       //                 java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+       //                                                ItemPalette.rbp.getString(_itemType), _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 _family = null;
             } else {
@@ -232,7 +233,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 //                                    " height= "+icon.getIconHeight());
                 JLabel image = new JLabel(icon);
                 if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
-                    image.setText(ItemPalette.rbp.getString("invisibleIcon"));
+                    image.setText(Bundle.getMessage("invisibleIcon"));
                     image.setForeground(Color.lightGray);
                 }
                 panel.add(image);
@@ -243,7 +244,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 c.gridx++;
             }
             panel = new JPanel();
-            JButton button = new JButton(ItemPalette.rbp.getString("ButtonEditIcons"));
+            JButton button = new JButton(Bundle.getMessage("ButtonEditIcons"));
             button.addActionListener(new ActionListener() {
                     String key;
                     public void actionPerformed(ActionEvent a) {
@@ -254,7 +255,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                         return this;
                     }
             }.init(stateName));
-            button.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
+            button.setToolTipText(Bundle.getMessage("ToolTipEditIcons"));
             panel.add(button);
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
@@ -269,7 +270,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         buttonPanel.add(ItemPalette.makeBannerPanel("IconSetName", _familyName));
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        JButton newFamilyButton = new JButton(ItemPalette.rbp.getString("createNewFamily"));
+        JButton newFamilyButton = new JButton(Bundle.getMessage("createNewFamily"));
         newFamilyButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     //check text
@@ -281,10 +282,10 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                     }
                 }
             });
-        newFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
+        newFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         panel.add(newFamilyButton);
 
-        JButton cancelButton = new JButton(ItemPalette.rbp.getString("cancelButton"));
+        JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     resetFamiliesPanel();
@@ -299,15 +300,15 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         JPanel buttonPanel = new JPanel();
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
-        JButton addFamilyButton = new JButton(ItemPalette.rbp.getString("addNewFamily"));
+        JButton addFamilyButton = new JButton(Bundle.getMessage("addNewFamily"));
         addFamilyButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     createNewFamily();
                 }
             });
-        addFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
+        addFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         panel1.add(addFamilyButton);
-        JButton deleteButton = new JButton(ItemPalette.rbp.getString("deleteFamily"));
+        JButton deleteButton = new JButton(Bundle.getMessage("deleteFamily"));
         deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     ItemPalette.removeLevel4IconMap(_itemType, _family, null);
@@ -315,10 +316,10 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                     resetFamiliesPanel();
                 }
             });
-        deleteButton.setToolTipText(ItemPalette.rbp.getString("ToolTipDeleteFamily"));
+        deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteFamily"));
         panel1.add(deleteButton);
 
-        _showIconsButton = new JButton(ItemPalette.rbp.getString("ShowIcons"));
+        _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
         _showIconsButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (_iconPanel.isVisible()) {
@@ -328,7 +329,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                     }
                 }
         });
-        _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipShowIcons"));
+        _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
         panel1.add(_showIconsButton);
         buttonPanel.add(panel1);
         return buttonPanel;
@@ -446,8 +447,9 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         	_iconGroupsMap = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
             if (_iconGroupsMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
+                		Bundle.getMessage("FamilyNotFound", _itemType, _family),
+      //                  java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+      //                                                 ItemPalette.rbp.getString(_itemType), _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
              }
         }        

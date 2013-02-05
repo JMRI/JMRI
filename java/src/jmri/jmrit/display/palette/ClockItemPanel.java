@@ -38,14 +38,14 @@ public class ClockItemPanel extends IconItemPanel {
     */
     public ClockItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
         super(parentFrame,  type, family, editor);
-        setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
     
     protected JPanel instructions() {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
-        blurb.add(new JLabel(ItemPalette.rbp.getString("AddClockToPanel")));
+        blurb.add(new JLabel(Bundle.getMessage("AddClockToPanel")));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -65,7 +65,7 @@ public class ClockItemPanel extends IconItemPanel {
            try {
                JLabel label = new ClockDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
                if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
-                   label.setText(ItemPalette.rbp.getString("invisibleIcon"));
+                   label.setText(Bundle.getMessage("invisibleIcon"));
                    label.setForeground(Color.lightGray);
                } else {
                    icon.reduceTo(100, 100, 0.2);

@@ -202,11 +202,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         alt2Button.setEnabled(isEnabled);
     }
     
-    protected void resetFuncButtons(){
+ /*   protected void resetFuncButtons(){
         functionButton = null;
     	initGUI();
     	setEnabled(true);
-    }
+    }	*/
     
     JPanel mainPanel = new JPanel();
     /**
@@ -227,8 +227,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             	functionButton[i].setText(Bundle.getMessage("F" + String.valueOf(i)));
             else
             	functionButton[i].setText("F" + String.valueOf(i));
-             if (i > 0)
-            {
+             if (i > 0) {
                 mainPanel.add(functionButton[i]);
                 if (i >= NUM_FUNC_BUTTONS_INIT){
                 	functionButton[i].setVisible(false);

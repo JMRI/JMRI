@@ -45,8 +45,7 @@ public class IconDialog extends ItemDialog {
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public IconDialog(String type, String family, ItemPanel parent, Hashtable <String, NamedIcon> iconMap ) {
-        super(type, family, 
-              java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), parent, true);
+        super(type, family, Bundle.getMessage("ShowIconsTitle", type), parent, true);
         
         _iconMap = clone(iconMap);
         JPanel panel = new JPanel();
@@ -57,7 +56,7 @@ public class IconDialog extends ItemDialog {
         _familyName = new JTextField(family);
         if (_family==null) {
         	_newIconSet = true;
-//        	_familyName.setText(ItemPalette.rbp.getString("Unnamed"));
+//        	_familyName.setText(Bundle.getMessage("Unnamed"));
         }
         _familyName.setEditable(!isUpdate);
         panel.add(ItemPalette.makeBannerPanel("IconSetName", _familyName));
@@ -92,27 +91,27 @@ public class IconDialog extends ItemDialog {
     protected void makeAddSetButtonPanel(JPanel buttonPanel) {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
-        _addFamilyButton = new JButton(ItemPalette.rbp.getString("addNewFamily"));
+        _addFamilyButton = new JButton(Bundle.getMessage("addNewFamily"));
         _addFamilyButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addFamilySet();
                     dispose();
                 }
         });
-        _addFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
+        _addFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         panel1.add(_addFamilyButton);
         if (_newIconSet) {
         	_addFamilyButton.setEnabled(false);
         }
 
-        _deleteButton = new JButton(ItemPalette.rbp.getString("deleteFamily"));
+        _deleteButton = new JButton(Bundle.getMessage("deleteFamily"));
         _deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     deleteFamilySet();
                     dispose();
                 }
         });
-        _deleteButton.setToolTipText(ItemPalette.rbp.getString("ToolTipDeleteFamily"));
+        _deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteFamily"));
         panel1.add(_deleteButton);
         buttonPanel.add(panel1);
     }
@@ -138,7 +137,7 @@ public class IconDialog extends ItemDialog {
     	}        
     	while (!ItemPalette.addFamily(_parent._paletteFrame, _type, family, _iconMap)) {
     		/*
-            family = JOptionPane.showInputDialog(_parent._paletteFrame, ItemPalette.rbp.getString("EnterFamilyName"), 
+            family = JOptionPane.showInputDialog(_parent._paletteFrame, Bundle.getMessage("EnterFamilyName"), 
                     ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (family==null || family.trim().length()==0) {
                 // bail out
@@ -175,7 +174,7 @@ public class IconDialog extends ItemDialog {
     protected void makeDoneButtonPanel(JPanel buttonPanel) {
         JPanel panel0 = new JPanel();
         panel0.setLayout(new FlowLayout());
-        JButton doneButton = new JButton(ItemPalette.rbp.getString("doneButton"));
+        JButton doneButton = new JButton(Bundle.getMessage("doneButton"));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (doDoneAction()) {
@@ -185,7 +184,7 @@ public class IconDialog extends ItemDialog {
         });
         panel0.add(doneButton);
 
-        JButton cancelButton = new JButton(ItemPalette.rbp.getString("cancelButton"));
+        JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     _parent.updateFamiliesPanel();
@@ -199,7 +198,7 @@ public class IconDialog extends ItemDialog {
     protected void makeCreateButtonPanel(JPanel buttonPanel) {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
-        JButton newFamilyButton = new JButton(ItemPalette.rbp.getString("createNewFamily"));
+        JButton newFamilyButton = new JButton(Bundle.getMessage("createNewFamily"));
         newFamilyButton.addActionListener(new ActionListener() {
                 //IconDialog dialog; never used?
                 public void actionPerformed(ActionEvent a) {
@@ -208,10 +207,10 @@ public class IconDialog extends ItemDialog {
                     }
                 }
         });
-        newFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
+        newFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
         panel.add(newFamilyButton);
 
-        JButton cancelButton = new JButton(ItemPalette.rbp.getString("cancelButton"));
+        JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     dispose();
@@ -262,7 +261,7 @@ public class IconDialog extends ItemDialog {
     	   JLabel image = new DropJLabel(icon, _iconMap, _parent.isUpdate());
     	   image.setName(entry.getKey());
     	   if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
-    		   image.setText(ItemPalette.rbp.getString("invisibleIcon"));
+    		   image.setText(Bundle.getMessage("invisibleIcon"));
     		   image.setForeground(Color.lightGray);
     	   }
     	   JPanel iPanel = new JPanel();
@@ -293,7 +292,7 @@ public class IconDialog extends ItemDialog {
     	   if (log.isDebugEnabled()) log.debug("makeIconPanel: icon width= "+icon.getIconWidth()+" height= "+icon.getIconHeight());
     	   if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
     	   panel.add(iPanel);
-    	   JLabel label = new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("scale"),
+    	   JLabel label = new JLabel(java.text.MessageFormat.format(Bundle.getMessage("scale"),
     			   new Object[] {CatalogPanel.printDbl(scale,2)}));
     	   JPanel sPanel = new JPanel();
     	   sPanel.add(label);

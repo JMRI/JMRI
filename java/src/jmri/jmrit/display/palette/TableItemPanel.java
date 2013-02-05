@@ -83,37 +83,37 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
         _scrollPane = new JScrollPane(_table);
         topPanel.add(_scrollPane, BorderLayout.CENTER);
-        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         java.awt.Dimension dim = _table.getPreferredSize();
         dim.height = ROW_HEIGHT*12;
         _scrollPane.getViewport().setPreferredSize(dim);
 
         JPanel panel = new JPanel();
-        _addTableButton = new JButton(ItemPalette.rbp.getString("CreateNewItem"));
+        _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
         _addTableButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     makeAddToTableWindow();
                 }
         });
-        _addTableButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddToTable"));
+        _addTableButton.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
         panel.add(_addTableButton);
-        JButton clearSelectionButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
+        JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     _table.clearSelection();
                 }
         });
-        clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
+        clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
-        _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        _table.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        _scrollPane.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         return topPanel;
     }
 
     protected void makeAddToTableWindow() {
-        _addTableDialog = new JDialog(_paletteFrame, ItemPalette.rbp.getString("AddToTableTitle"), true);
+        _addTableDialog = new JDialog(_paletteFrame, Bundle.getMessage("AddToTableTitle"), true);
         ActionListener listener = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     addToTable();
@@ -198,7 +198,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
 
         } else {
             _updateButton.setEnabled(false);
-            _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+            _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         }
         hideIcons();
     }
@@ -210,8 +210,6 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         int row = _table.getSelectedRow();
         if (log.isDebugEnabled()) log.debug("getNamedBean: from table \""+_itemType+ "\" at row "+row);
         if (row<0) { 
-//        	JOptionPane.showMessageDialog(null, ItemPalette.rbp.getString("noRowSelected"), 
-//        				ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
         return _model.getBeanAt(row);

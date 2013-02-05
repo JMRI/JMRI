@@ -90,7 +90,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         if (log.isDebugEnabled()) log.debug("accept drop for "+label.getName()+
                                              ", "+newIcon.getURL());
         if (newIcon==null || newIcon.getIconWidth()<1 || newIcon.getIconHeight()<1) {
-            label.setText(ItemPalette.rbp.getString("invisibleIcon"));
+            label.setText(Bundle.getMessage("invisibleIcon"));
             label.setForeground(Color.lightGray);
         } else {
             newIcon.reduceTo(100, 100, 0.2);

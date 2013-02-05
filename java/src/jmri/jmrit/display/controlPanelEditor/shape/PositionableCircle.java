@@ -53,7 +53,7 @@ public class PositionableCircle extends PositionableShape {
     }
     
     public boolean setEditItemMenu(JPopupMenu popup) {
-        String txt = java.text.MessageFormat.format(rbcp.getString("editShape"), rbcp.getString("circle"));
+        String txt = Bundle.getMessage("editShape", Bundle.getMessage("circle"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                 	_editFrame = new DrawCircle("editShape", "circle", null);

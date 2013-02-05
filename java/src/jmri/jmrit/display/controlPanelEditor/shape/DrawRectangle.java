@@ -53,7 +53,7 @@ public class DrawRectangle extends DrawFrame{
     	_widthText.setText(Integer.toString(_width));
         _widthText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_widthText);
-        pp.add(new JLabel(rbcp.getString("width")));
+        pp.add(new JLabel(Bundle.getMessage("width")));
         p.add(pp);
         p.add(Box.createHorizontalStrut(STRUT_SIZE));
 
@@ -73,7 +73,7 @@ public class DrawRectangle extends DrawFrame{
     	_heightText.setText(Integer.toString(_height));
         _heightText.setHorizontalAlignment(JTextField.RIGHT);
         pp.add(_heightText);
-        pp.add(new JLabel(rbcp.getString("height")));
+        pp.add(new JLabel(Bundle.getMessage("height")));
         p.add(pp);
         
         panel.add(p);

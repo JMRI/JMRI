@@ -162,7 +162,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
         	if (changed) {
                 if (_shutDownTask == null) {
-                	_shutDownTask = new SwingShutDownTask("DecoderPro Decoder Window Check", 
+                	_shutDownTask = new SwingShutDownTask("PanelPro Save default icon check", 
                 			rb.getString("SaveImageIndex"), 
                 			rb.getString("SaveAndQuit"), null)
             		{

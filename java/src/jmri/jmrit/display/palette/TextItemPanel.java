@@ -29,7 +29,7 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */{
 
     public TextItemPanel(ItemPalette parentFrame, String  type, String family, Editor editor) {
         super(parentFrame,  type, family, editor);
-        setToolTipText(ItemPalette.rbp.getString("ToolTipDragText"));
+        setToolTipText(Bundle.getMessage("ToolTipDragText"));
     }
 
     public void init() {
@@ -37,8 +37,8 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */{
         	Thread.yield();
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.add(new JLabel(ItemPalette.rbp.getString("addTextAndAttrs")));
-            panel.add(new JLabel(ItemPalette.rbp.getString("ToolTipDragText")));
+            panel.add(new JLabel(Bundle.getMessage("addTextAndAttrs")));
+            panel.add(new JLabel(Bundle.getMessage("ToolTipDragText")));
             JPanel p = new JPanel();
             p.add(panel);
             add(p);

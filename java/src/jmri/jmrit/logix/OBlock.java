@@ -596,7 +596,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
    
     public String getDescription() {
         return java.text.MessageFormat.format(
-            WarrantTableAction.rb.getString("BlockDescription"), getDisplayName());
+            Bundle.getMessage("BlockDescription"), getDisplayName());
     }
     
     static Logger log = Logger.getLogger(OBlock.class.getName());

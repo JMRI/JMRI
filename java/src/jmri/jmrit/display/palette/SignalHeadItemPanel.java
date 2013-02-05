@@ -49,17 +49,17 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         _scrollPane = new JScrollPane(_table);
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         _table.getSelectionModel().addListSelectionListener(this);
-        _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        _table.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        _scrollPane.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         JPanel panel = new JPanel();
-        JButton clearSelectionButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
+        JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     _table.clearSelection();
                 }
         });
-        clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
+        clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
         return topPanel;
@@ -79,7 +79,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         if (!_update) {
             _dragIconPanel.setVisible(false);
         }
-        _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
+        _showIconsButton.setText(Bundle.getMessage("HideIcons"));
     }
    
     protected void addIconsToPanel(Hashtable<String, NamedIcon> allIconsMap) {
@@ -88,7 +88,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
                 _updateButton.setEnabled(false);
-                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+                _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
             }
         } else {
             super.addIconsToPanel(iconMap);
@@ -111,7 +111,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             }
         } else {
             _updateButton.setEnabled(false);
-            _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+            _updateButton.setToolTipText(Bundle.getMessage("ToolTipPickFromTable"));
         }
         if (_iconPanel.isVisible()) {
         	showIcons();
@@ -122,8 +122,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
     protected Hashtable<String, NamedIcon> getFilteredIconMap(Hashtable<String, NamedIcon> allIconsMap) {
         if (allIconsMap==null) {
             JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                   ItemPalette.rbp.getString(_itemType), _family), 
+                    Bundle.getMessage("FamilyNotFound", _itemType, _family), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }

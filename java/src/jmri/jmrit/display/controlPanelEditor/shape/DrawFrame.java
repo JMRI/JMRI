@@ -35,7 +35,6 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	
     protected ShapeDrawer _parent;
     
-    public static final java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
     static Point _loc = new Point(100,100);
     static Dimension _dim = new Dimension(500,500);
@@ -54,7 +53,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	public DrawFrame(String which, String title, ShapeDrawer parent) {
 		super(title, false, false);
         _parent = parent;
-        setTitle(java.text.MessageFormat.format(rbcp.getString(which), rbcp.getString(title)));       
+        setTitle(Bundle.getMessage(which, Bundle.getMessage(title)));       
  
         _lineWidth = 1;
         _lineColor = Color.black;
@@ -68,10 +67,10 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
             panel.add(Box.createVerticalStrut(STRUT_SIZE));
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            JLabel l = new JLabel(rbcp.getString("drawInstructions1"));
+            JLabel l = new JLabel(Bundle.getMessage("drawInstructions1"));
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             p.add(l);
-            l = new JLabel(rbcp.getString("drawInstructions2"));
+            l = new JLabel(Bundle.getMessage("drawInstructions2"));
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             p.add(l);
             JPanel pp = new JPanel();
@@ -99,20 +98,20 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-	    p.add(new JLabel(rbcp.getString("lineWidth")));
+	    p.add(new JLabel(Bundle.getMessage("lineWidth")));
 	    JPanel pp = new JPanel();
-	    pp.add(new JLabel(rbcp.getString("thin")));
+	    pp.add(new JLabel(Bundle.getMessage("thin")));
 	    _lineSlider = new JSlider(SwingConstants.HORIZONTAL, 1, 30, _lineWidth);
 	    pp.add(_lineSlider);
-	    pp.add(new JLabel(rbcp.getString("thick")));
+	    pp.add(new JLabel(Bundle.getMessage("thick")));
 	    p.add(pp);
 	    panel.add(p);
 	    p = new JPanel();
 	    ButtonGroup bg = new ButtonGroup();
-	    _lineColorButon = new JRadioButton(rbcp.getString("lineColor"));
+	    _lineColorButon = new JRadioButton(Bundle.getMessage("lineColor"));
 	    p.add(_lineColorButon);
 	    bg.add(_lineColorButon);
-	    _fillColorButon = new JRadioButton(rbcp.getString("fillColor"));
+	    _fillColorButon = new JRadioButton(Bundle.getMessage("fillColor"));
 	    p.add(_fillColorButon);
 	    bg.add(_fillColorButon);
 	    _lineColorButon.setSelected(true);
@@ -125,12 +124,12 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	    panel.add(_chooser);
 	    p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-	    p.add(new JLabel(rbcp.getString("transparency")));
+	    p.add(new JLabel(Bundle.getMessage("transparency")));
 	    pp = new JPanel();
-	    pp.add(new JLabel(rbcp.getString("transparent")));
+	    pp.add(new JLabel(Bundle.getMessage("transparent")));
 	    _fillSlider = new JSlider(SwingConstants.HORIZONTAL, 0, 255, _alpha);
 	    pp.add(_fillSlider);
-	    pp.add(new JLabel(rbcp.getString("opaque")));
+	    pp.add(new JLabel(Bundle.getMessage("opaque")));
 	    p.add(pp);
 	    panel.add(p);
         panel.add(Box.createVerticalStrut(STRUT_SIZE));

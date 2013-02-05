@@ -48,7 +48,7 @@ import jmri.jmrit.picker.PickListModel;
 
 public class ItemPalette extends JmriJFrame implements ChangeListener  {
 
-    public static final ResourceBundle rbp = ResourceBundle.getBundle("jmri.jmrit.display.palette.PaletteBundle");
+//    public static final ResourceBundle rbp = ResourceBundle.getBundle("jmri.jmrit.display.palette.PaletteBundle");
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
@@ -313,85 +313,85 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         ItemPanel itemPanel = new TableItemPanel(this, "Turnout", null,
                                        PickListModel.turnoutPickModelInstance(), editor);
         itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), rbp.getString("Turnout"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Turnout"));
         _tabIndex.put("Turnout", itemPanel);
         
         itemPanel = new TableItemPanel(this, "Sensor", null,
                                        PickListModel.sensorPickModelInstance(), editor);
 //        itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), rbp.getString("Sensor"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Sensor"));
         _tabIndex.put("Sensor", itemPanel);
 
         itemPanel = new SignalHeadItemPanel(this, "SignalHead", null,
                                        PickListModel.signalHeadPickModelInstance(), editor);
  //       itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), rbp.getString("SignalHead"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("SignalHead"));
         _tabIndex.put("SignalHead", itemPanel);
 
         itemPanel = new SignalMastItemPanel(this, "SignalMast", null,
                                             PickListModel.signalMastPickModelInstance(), editor);
 //        itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), rbp.getString("SignalMast"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("SignalMast"));
         _tabIndex.put("SignalMast", itemPanel);
 
         itemPanel = new MemoryItemPanel(this, "Memory", null,
                                         PickListModel.memoryPickModelInstance(), editor);
  //       itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), rbp.getString("Memory"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Memory"));
         _tabIndex.put("Memory", itemPanel);
 
         itemPanel = new ReporterItemPanel(this, "Reporter", null,
                                           PickListModel.reporterPickModelInstance(), editor);
 //        itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), rbp.getString("Reporter"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Reporter"));
         _tabIndex.put("Reporter", itemPanel);
 
        itemPanel = new TableItemPanel(this, "Light", null,
                                        PickListModel.lightPickModelInstance(), editor);
 //        itemPanel.init();
-        _tabPane.add(itemPanel, rbp.getString("Light"));
+        _tabPane.add(itemPanel, Bundle.getMessage("Light"));
         _tabIndex.put("Light", itemPanel);
 
         itemPanel = new MultiSensorItemPanel(this, "MultiSensor", null,
                                              PickListModel.multiSensorPickModelInstance(), editor);
  //       itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), rbp.getString("MultiSensor"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("MultiSensor"));
         _tabIndex.put("MultiSensor", itemPanel);
  
         ItemPanel iconPanel = new IconItemPanel(this, "Icon", null, editor);
 //        iconPanel.init();
-        _tabPane.add(new JScrollPane(iconPanel), rbp.getString("Icon"));
+        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Icon"));
         _tabIndex.put("Icon", itemPanel);
  
         iconPanel = new BackgroundItemPanel(this, "Background", null, editor);
 //        iconPanel.init();
-        _tabPane.add(new JScrollPane(iconPanel), rbp.getString("Background")); 
+        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Background")); 
         _tabIndex.put("Background", itemPanel);
 
         iconPanel = new TextItemPanel(this, "Text", null, editor);
  //       iconPanel.init();
-        _tabPane.add(new JScrollPane(iconPanel), rbp.getString("Text"));     
+        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Text"));     
         _tabIndex.put("Text", itemPanel);
 
         iconPanel = new RPSItemPanel(this, "RPSReporter", null, editor);
 //        iconPanel.init();
-        _tabPane.add(new JScrollPane(iconPanel), rbp.getString("RPSReporter")); 
+        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("RPSReporter")); 
         _tabIndex.put("RPSReporter", itemPanel);
 
         iconPanel = new ClockItemPanel(this, "FastClock", null, editor);
 //        iconPanel.init();
-        _tabPane.add(new JScrollPane(iconPanel), rbp.getString("FastClock")); 
+        _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("FastClock")); 
         _tabIndex.put("FastClock", itemPanel);
 
         itemPanel = new IndicatorItemPanel(this, "IndicatorTrack", null, editor);
 //        itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), rbp.getString("IndicatorTrack"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("IndicatorTrack"));
         _tabIndex.put("IndicatorTrack", itemPanel);
 
         itemPanel = new IndicatorTOItemPanel(this, "IndicatorTO", null,
                                        PickListModel.turnoutPickModelInstance(), editor);
 //        itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), rbp.getString("IndicatorTO"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("IndicatorTO"));
         _tabIndex.put("IndicatorTO", itemPanel);
         
         _tabPane.addChangeListener(this);
@@ -456,14 +456,14 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator <String> it) {
         if (family==null || family.length()==0) {
             JOptionPane.showMessageDialog(frame, 
-                    ItemPalette.rbp.getString("EnterFamilyName"), 
+                    Bundle.getMessage("EnterFamilyName"), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         while (it.hasNext()) {
            if (family.equals(it.next())) {
                JOptionPane.showMessageDialog(frame,
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateFamilyName"), 
+                    java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"), 
                     new Object[] { family, type }), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                return false;
@@ -599,7 +599,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
             cName = ItemPalette.rbean.getString(name);
         } catch (java.util.MissingResourceException mre) {
             try {
-                cName = ItemPalette.rbp.getString(name);
+                cName = Bundle.getMessage(name);
             } catch (java.util.MissingResourceException mre2) {
                 cName = name;
             }
@@ -616,7 +616,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.CENTER;
-        panel.add(new JLabel(ItemPalette.rbp.getString(labelText)), c);
+        panel.add(new JLabel(Bundle.getMessage(labelText)), c);
         c.gridx = 1;
         c.anchor = java.awt.GridBagConstraints.CENTER;
         c.weightx = 1.0;

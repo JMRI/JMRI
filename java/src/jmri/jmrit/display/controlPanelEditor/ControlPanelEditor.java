@@ -83,8 +83,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
     private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
 
-    public static final ResourceBundle rbcp = ResourceBundle.getBundle("jmri.jmrit.display.controlPanelEditor.ControlPanelBundle");
-
     // DnD
     public static final String POSITIONABLE_LIST_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
                ";class=jmri.jmrit.display.controlPanelEditor.ControlPanelEditor";
@@ -1396,7 +1394,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 Positionable item = (Positionable)tr.getTransferData(_positionableDataFlavor);
                 if (item==null) {
 //                    if (_debug) log.debug("Drop of null POSITIONABLE_FLAVOR");
-                    JOptionPane.showMessageDialog(null, ItemPalette.rbp.getString("noRowSelected"), 
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"), 
                             ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                     return;
                 }

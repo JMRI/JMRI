@@ -32,7 +32,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
     public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
         super(parentFrame, type, family, model, editor);
-        setToolTipText(ItemPalette.rbp.getString("ToolTipDragSelection"));
+        setToolTipText(Bundle.getMessage("ToolTipDragSelection"));
     }
 
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
@@ -50,16 +50,16 @@ public class MultiSensorItemPanel extends TableItemPanel {
         topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
         _scrollPane = new JScrollPane(_table);
         topPanel.add(_scrollPane, BorderLayout.CENTER);
-        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
 
         JPanel panel = new JPanel();
-        _addTableButton = new JButton(ItemPalette.rbp.getString("CreateNewItem"));
+        _addTableButton = new JButton(Bundle.getMessage("CreateNewItem"));
         _addTableButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     makeAddToTableWindow();
                 }
         });
-        _addTableButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddToTable"));
+        _addTableButton.setToolTipText(Bundle.getMessage("ToolTipAddToTable"));
         panel.add(_addTableButton);
 
         int size = 6;
@@ -68,18 +68,18 @@ public class MultiSensorItemPanel extends TableItemPanel {
             size = map.size();
         }
         _selectionModel.setPositionRange(size-3);
-        JButton clearSelectionButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
+        JButton clearSelectionButton = new JButton(Bundle.getMessage("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                 	clearSelections();
                 }
         });
-        clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
+        clearSelectionButton.setToolTipText(Bundle.getMessage("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
-        _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        _table.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        _scrollPane.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
+        topPanel.setToolTipText(Bundle.getMessage("ToolTipDragTableRow"));
         return topPanel;
     }
     public void clearSelections() {
@@ -110,7 +110,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _multiSensorPanel.setLayout(new BoxLayout(_multiSensorPanel, BoxLayout.Y_AXIS));
         JPanel panel2 = new JPanel();
         ButtonGroup group2 = new ButtonGroup();
-        JRadioButton button = new JRadioButton(ItemPalette.rbp.getString("LeftRight"));
+        JRadioButton button = new JRadioButton(Bundle.getMessage("LeftRight"));
         button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     _upDown = false;
@@ -119,7 +119,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         group2.add(button);
         panel2.add(button);
         button.setSelected(true);
-        button = new JRadioButton(ItemPalette.rbp.getString("UpDown"));
+        button = new JRadioButton(Bundle.getMessage("UpDown"));
         button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     _upDown = true;
@@ -276,8 +276,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         public void setSelectionInterval(int row, int index1) {
             if (_nextPosition>=_positions.length) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(
-                            ItemPalette.rbp.getString("NeedIcon"), _selectionModel.getPositions().length), 
+                        Bundle.getMessage("NeedIcon", _selectionModel.getPositions().length), 
                             ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
@@ -286,11 +285,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
             String position = (String)_tableModel.getValueAt(row, PickListModel.POSITION_COL);
             if (position!=null && position.length()>0) {
                 JOptionPane.showMessageDialog(_paletteFrame,
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicatePosition"), 
+                        Bundle.getMessage("DuplicatePosition", 
                             new Object[]{bean.getDisplayName(), position}),
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
-                _tableModel.setValueAt(ItemPalette.rbp.getString(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
+                _tableModel.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
                 _selections.add(_nextPosition, bean);
                 _positions[_nextPosition] = row;
                 _nextPosition++;
@@ -331,8 +330,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             ArrayList<NamedBean> selections = _selectionModel.getSelections();
             if (selections==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(
-                            ItemPalette.rbp.getString("NeedPosition"), _selectionModel.getPositions().length), 
+                        Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length), 
                             ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }

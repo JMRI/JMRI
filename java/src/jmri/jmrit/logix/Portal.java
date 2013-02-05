@@ -121,8 +121,7 @@ public class Portal  {
         if (msg==null) {
             _portalName = name;
         } else {
-            msg = java.text.MessageFormat.format(
-                  WarrantTableAction.rb.getString("DuplicatePortalName"), msg, name); 
+            msg = Bundle.getMessage("DuplicatePortalName", msg, name); 
         }
         return msg;
     }
@@ -458,7 +457,7 @@ public class Portal  {
     }
 
     public String getDescription() {
-        return java.text.MessageFormat.format(WarrantTableAction.rb.getString("PortalDescription"),
+        return Bundle.getMessage("PortalDescription",
                         _portalName, getFromBlockName(), getToBlockName());
     }
     

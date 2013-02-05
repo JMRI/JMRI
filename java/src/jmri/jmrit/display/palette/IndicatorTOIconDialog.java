@@ -40,10 +40,10 @@ public class IndicatorTOIconDialog extends IconDialog {
     */
     protected void makeAddSetButtonPanel(JPanel buttonPanel) {
         super.makeAddSetButtonPanel(buttonPanel);
-        _addFamilyButton.setText(ItemPalette.rbp.getString("addMissingStatus"));
-        _addFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipMissingStatus"));
-        _deleteButton.setText(ItemPalette.rbp.getString("deleteStatus"));
-        _deleteButton.setToolTipText(ItemPalette.rbp.getString("ToolTipDeleteStatus"));
+        _addFamilyButton.setText(Bundle.getMessage("addMissingStatus"));
+        _addFamilyButton.setToolTipText(Bundle.getMessage("ToolTipMissingStatus"));
+        _deleteButton.setText(Bundle.getMessage("deleteStatus"));
+        _deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeleteStatus"));
     }
 
     /**
@@ -70,8 +70,8 @@ public class IndicatorTOIconDialog extends IconDialog {
             new IndicatorTOIconDialog(_type, null, parent, _key, _iconMap);
         } else {
             JOptionPane.showMessageDialog(_parent._paletteFrame, 
-                    ItemPalette.rbp.getString("AllStatus"), 
-                    ItemPalette.rbp.getString("infoTitle"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("AllStatus"), 
+                    Bundle.getMessage("infoTitle"), JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

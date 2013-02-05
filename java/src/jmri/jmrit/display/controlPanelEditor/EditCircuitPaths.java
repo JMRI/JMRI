@@ -34,7 +34,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     private boolean _pathChange = false;
 
-    static java.util.ResourceBundle rbcp = ControlPanelEditor.rbcp;
     static int STRUT_SIZE = 10;
     static boolean _firstInstance = true;
     static Point _loc = null;
@@ -82,7 +81,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
 
-        JButton doneButton = new JButton(rbcp.getString("ButtonDone"));
+        JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     closingEvent();
@@ -105,8 +104,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         JPanel panel = new JPanel();
-        panel.add(new JLabel(java.text.MessageFormat.format(
-                                    rbcp.getString("PathTitle"), _block.getDisplayName())));
+        panel.add(new JLabel(Bundle.getMessage("PathTitle", _block.getDisplayName())));
         pathPanel.add(panel);
 
         _pathListModel = new PathListModel();
@@ -121,13 +119,13 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 //        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.setLayout(new FlowLayout());
  
-        JButton clearButton = new JButton(rbcp.getString("buttonClearSelection"));
+        JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
         clearButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     clearListSelection();
                 }
         });
-        clearButton.setToolTipText(rbcp.getString("ToolTipClearList"));
+        clearButton.setToolTipText(Bundle.getMessage("ToolTipClearList"));
         panel.add(clearButton);
         pathPanel.add(panel);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -140,31 +138,31 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         panel = new JPanel();
 
-        JButton addButton = new JButton(rbcp.getString("buttonAddPath"));
+        JButton addButton = new JButton(Bundle.getMessage("buttonAddPath"));
         addButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                 	addPath();
                 }
         });
-        addButton.setToolTipText(rbcp.getString("ToolTipAddPath"));
+        addButton.setToolTipText(Bundle.getMessage("ToolTipAddPath"));
         panel.add(addButton);
  
-        JButton changeButton = new JButton(rbcp.getString("buttonChangeName"));
+        JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
         changeButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     changePathName();
                 }
         });
-        changeButton.setToolTipText(rbcp.getString("ToolTipChangeName"));
+        changeButton.setToolTipText(Bundle.getMessage("ToolTipChangeName"));
         panel.add(changeButton);
  
-        JButton deleteButton = new JButton(rbcp.getString("buttonDeletePath"));
+        JButton deleteButton = new JButton(Bundle.getMessage("buttonDeletePath"));
         deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     deletePath();
                 }
         });
-        deleteButton.setToolTipText(rbcp.getString("ToolTipDeletePath"));
+        deleteButton.setToolTipText(Bundle.getMessage("ToolTipDeletePath"));
         panel.add(deleteButton);
  
         pathPanel.add(panel);
@@ -172,27 +170,27 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JLabel l = new JLabel(rbcp.getString("enterNewPath"));
+        JLabel l = new JLabel(Bundle.getMessage("enterNewPath"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
-        l = new JLabel(rbcp.getString("selectPathIcons"));
+        l = new JLabel(Bundle.getMessage("selectPathIcons"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
-        l = new JLabel(rbcp.getString("pressAddButton"));
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        panel.add(l);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
-        l = new JLabel(rbcp.getString("selectPath"));
-        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-        panel.add(l);
-        l = new JLabel(rbcp.getString("editPathIcons"));
+        l = new JLabel(Bundle.getMessage("pressAddButton"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
         panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
-        l = new JLabel(rbcp.getString("throwPathTO"));
+        l = new JLabel(Bundle.getMessage("selectPath"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
-        l = new JLabel(rbcp.getString("holdShiftDown"));
+        l = new JLabel(Bundle.getMessage("editPathIcons"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        panel.add(Box.createVerticalStrut(STRUT_SIZE/2));
+        l = new JLabel(Bundle.getMessage("throwPathTO"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        panel.add(l);
+        l = new JLabel(Bundle.getMessage("holdShiftDown"));
         l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
         panel.add(l);
         JPanel p = new JPanel();
@@ -319,9 +317,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     private void checkForSavePath() {
         if (_pathChange && _pathName.getText().length()>0) {
-            int result = JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
-                            rbcp.getString("savePath"), _pathName.getText()), 
-                            rbcp.getString("makePath"), JOptionPane.YES_NO_OPTION, 
+            int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("savePath", 
+            			_pathName.getText()), Bundle.getMessage("makePath"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.QUESTION_MESSAGE);
             if (result==JOptionPane.YES_OPTION) {
  //           	deletePath();
@@ -344,13 +341,13 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     private void addPath() {
         String name = _pathName.getText();
         if (name==null || name.trim().length()==0) {
-            JOptionPane.showMessageDialog(this, rbcp.getString("TooltipPathName"),
-                                rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("TooltipPathName"),
+                                Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         if (_pathGroup.size()==0) {
-            JOptionPane.showMessageDialog(this, rbcp.getString("noPathIcons"),
-                                rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("noPathIcons"),
+                                Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         Portal fromPortal = null;
@@ -389,27 +386,27 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         	fromPortal = path.getFromPortal();
         }
         if (fromPortal!=null && fromPortal.equals(toPortal)) {
-            int result = JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
-                    rbcp.getString("balloonTrack"), name, fromPortal.getDescription()), 
-                    rbcp.getString("makePath"), JOptionPane.YES_NO_OPTION, 
+            int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("balloonTrack",
+            		name, fromPortal.getDescription()), 
+                    Bundle.getMessage("makePath"), JOptionPane.YES_NO_OPTION, 
                     JOptionPane.QUESTION_MESSAGE);
             if (result==JOptionPane.NO_OPTION) {
             	fromPortal = null;
             }
         }
         if (toPortal==null && fromPortal==null) {
-            JOptionPane.showMessageDialog(this, rbcp.getString("tooFewPortals"),
-                                rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("tooFewPortals"),
+                                Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         } 
         if (!hasTrack) {
-            JOptionPane.showMessageDialog(this, rbcp.getString("noPathIcons"),
-                                rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("noPathIcons"),
+                                Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         if (!hasPortalIcon) {
-            JOptionPane.showMessageDialog(this, rbcp.getString("noPortalIcons"),
-                    rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);     	
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("noPortalIcons"),
+                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);     	
         }
 
         path.setToPortal(toPortal);
@@ -438,16 +435,16 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         OPath path = (OPath)_pathList.getSelectedValue();
         String name = _pathName.getText();
         if (name==null || name.trim().length()==0 || path==null) {
-            JOptionPane.showMessageDialog(this, rbcp.getString("changePathName"), 
-                            rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("changePathName"), 
+                            Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         String oldName = path.getName();
         OPath oldPath = _block.getPathByName(name);
         if (oldPath!=null) { 
-            JOptionPane.showMessageDialog(this, java.text.MessageFormat.format(
-                            rbcp.getString("duplicatePathName"), name, _block.getDisplayName()), 
-                            rbcp.getString("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicatePathName",
+            			name, _block.getDisplayName()), 
+                            Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         path.setName(name);

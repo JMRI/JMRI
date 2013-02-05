@@ -39,14 +39,14 @@ import jmri.jmrit.display.*;
 */
 public class DecoratorPanel extends JPanel implements ChangeListener, ItemListener {
 
-    static final String[] JUSTIFICATION = {ItemPalette.rbp.getString("left"), 
-                                            ItemPalette.rbp.getString("center"),
-                                            ItemPalette.rbp.getString("right")};
+    static final String[] JUSTIFICATION = {Bundle.getMessage("left"), 
+                                            Bundle.getMessage("center"),
+                                            Bundle.getMessage("right")};
 
-    static final String[] STYLES = {ItemPalette.rbp.getString("plain"), 
-                                    ItemPalette.rbp.getString("bold"),
-                                    ItemPalette.rbp.getString("italic"),
-                                    ItemPalette.rbp.getString("bold/italic")};
+    static final String[] STYLES = {Bundle.getMessage("plain"), 
+                                    Bundle.getMessage("bold"),
+                                    Bundle.getMessage("italic"),
+                                    Bundle.getMessage("bold/italic")};
 
     static final String[] FONTSIZE = {"6", "8", "10", "11", "12", "14", "16",
                                         "20", "24", "28", "32", "36"};
@@ -108,7 +108,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     private JPanel makeBoxPanel(String caption, JComboBox box) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel(ItemPalette.rbp.getString(caption)));
+        panel.add(new JLabel(Bundle.getMessage(caption)));
         box.addItemListener(this);
         panel.add(box);
         return panel;
@@ -135,7 +135,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     private JPanel makeSpinPanel(String caption, JSpinner spin) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel(ItemPalette.rbp.getString(caption)));
+        panel.add(new JLabel(Bundle.getMessage(caption)));
         spin.addChangeListener(this);
         panel.add(spin);
         return panel;
@@ -152,7 +152,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     	preview.add(Box.createVerticalStrut(STRUT));
     	preview.setBackground(_editor.getTargetPanel().getBackground());
         samplePanel.setBackground(_editor.getTargetPanel().getBackground());
-        String text = ItemPalette.rbp.getString("sample");
+        String text = Bundle.getMessage("sample");
        _sample = new Hashtable <String, PositionableLabel>();       
        _buttonGroup = new ButtonGroup();
        Positionable item;		// copy of PositionableLabel being edited
@@ -287,9 +287,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         this.add(sizePanel);
 
         JPanel colorPanel = new JPanel();
-        colorPanel.add(makeButton(new AJRadioButton(ItemPalette.rbp.getString("borderColor"), BORDER_COLOR)));
-        //colorPanel.add(makeButton(new AJRadioButton(ItemPalette.rbp.getString("transparentBack"), TRANSPARENT_COLOR)));
-        JRadioButton button = new AJRadioButton(ItemPalette.rbp.getString("transparentBack"), TRANSPARENT_COLOR);
+        colorPanel.add(makeButton(new AJRadioButton(Bundle.getMessage("borderColor"), BORDER_COLOR)));
+        //colorPanel.add(makeButton(new AJRadioButton(Bundle.getMessage("transparentBack"), TRANSPARENT_COLOR)));
+        JRadioButton button = new AJRadioButton(Bundle.getMessage("transparentBack"), TRANSPARENT_COLOR);
         button.addActionListener(new ActionListener() {
         	JRadioButton button ;
             public void actionPerformed(ActionEvent a) {
@@ -317,7 +317,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     
     private JPanel makeTextPanel(String caption, JLabel sample, int state) {
     	JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(ItemPalette.rbp.getString(caption)));
+        panel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage(caption)));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JPanel p = new JPanel();
         JTextField textField = new JTextField(sample.getText(), 25);
@@ -338,8 +338,8 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         panel.add(p);
         
         p = new JPanel();
-        p.add(makeButton(new AJRadioButton(ItemPalette.rbp.getString("fontColor"), state)));
-        p.add(makeButton(new AJRadioButton(ItemPalette.rbp.getString("backColor"), state+10)));
+        p.add(makeButton(new AJRadioButton(Bundle.getMessage("fontColor"), state)));
+        p.add(makeButton(new AJRadioButton(Bundle.getMessage("backColor"), state+10)));
         panel.add(p);
        
     	return panel;
