@@ -28,6 +28,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Initial Version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2013-01-26</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Added Dark</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>NS</aspecttable>
@@ -219,6 +225,10 @@
       <advancedAspect>Stop Signal</advancedAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+     <aspectMapping>
+      <advancedAspect>171</advancedAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 

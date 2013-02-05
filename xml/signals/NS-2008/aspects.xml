@@ -31,6 +31,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2013-01-26</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Added Dark (171))</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -153,6 +159,15 @@
     </aspect>
 
     <aspect>
+      <name>171</name>
+      <rule>Rule 171</rule>
+      <indication>Proceed at authorized speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+    </aspect>
+
+    <aspect>
       <name>Stop Signal</name>
       <rule>Rule N292</rule>
       <indication>Stop.</indication>
@@ -169,6 +184,7 @@
     <appearancefile href="appearance-CLS-3-3-lo.xml"/>
     <appearancefile href="appearance-CLS-3-hi.xml"/>
     <appearancefile href="appearance-CLS-3-lo.xml"/>
+    <appearancefile href="appearance-171.xml"/>
   </appearancefiles>
   
 </aspecttable>
