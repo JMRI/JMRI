@@ -277,7 +277,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             if (_nextPosition>=_positions.length) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
                         Bundle.getMessage("NeedIcon", _selectionModel.getPositions().length), 
-                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return;
             }
             if (log.isDebugEnabled()) log.debug("setSelectionInterval("+row+", "+index1+")");
@@ -287,7 +287,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                 JOptionPane.showMessageDialog(_paletteFrame,
                         Bundle.getMessage("DuplicatePosition", 
                             new Object[]{bean.getDisplayName(), position}),
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
                 _tableModel.setValueAt(Bundle.getMessage(POSITION[_nextPosition]), row, PickListModel.POSITION_COL);
                 _selections.add(_nextPosition, bean);
@@ -331,7 +331,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             if (selections==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
                         Bundle.getMessage("NeedPosition", _selectionModel.getPositions().length), 
-                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
             for (int i=0; i<selections.size(); i++) {

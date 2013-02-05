@@ -95,7 +95,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             }
         }
         int result = JOptionPane.showConfirmDialog(_paletteFrame,Bundle.getMessage("NoFamilyName"),
-                ItemPalette.rb.getString("questionTitle"), JOptionPane.YES_NO_OPTION,
+                Bundle.getMessage("questionTitle"), JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.NO_OPTION) {
             return;
@@ -107,7 +107,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
         do {
             _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"),
-                    ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
+                    Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (_family==null || _family.trim().length()==0) {
                 // bail out
                 return;
@@ -156,7 +156,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 		Bundle.getMessage("FamilyNotFound", _itemType, _family),
        //                 java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
        //                                                ItemPalette.rbp.getString(_itemType), _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 _family = null;
             } else {
                 addIcons2Panel(_iconGroupsMap);  // need to have family iconMap identified before calling
@@ -450,7 +450,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 		Bundle.getMessage("FamilyNotFound", _itemType, _family),
       //                  java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
       //                                                 ItemPalette.rbp.getString(_itemType), _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
              }
         }        
         return _iconGroupsMap;

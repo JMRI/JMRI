@@ -245,7 +245,7 @@ public class DetectionPanel extends JPanel {
                 if (sensor==null) {
                     JOptionPane.showMessageDialog(_parent._paletteFrame, 
                     		Bundle.getMessage("InvalidOccDetector", name), 
-                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                            Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);
                 }
                 _blockPathPanel.setVisible(false);

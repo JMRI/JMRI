@@ -1395,7 +1395,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 if (item==null) {
 //                    if (_debug) log.debug("Drop of null POSITIONABLE_FLAVOR");
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"), 
-                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    		Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 item.setLocation(pt.x, pt.y);

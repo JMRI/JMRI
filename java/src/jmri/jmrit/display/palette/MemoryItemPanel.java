@@ -103,7 +103,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         _spinner.setMaximumSize(_spinner.getPreferredSize());
         _spinner.addChangeListener(this);
         JPanel p1 = new JPanel();
-        p1.add(new JLabel(ItemPalette.rb.getString("NumColsLabel")));
+        p1.add(new JLabel(Bundle.getMessage("NumColsLabel")));
         p1.add(_spinner);
         JPanel p2 =new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));

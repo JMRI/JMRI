@@ -134,7 +134,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             }
         }        
         int result = JOptionPane.showConfirmDialog(_paletteFrame,
-                            Bundle.getMessage("NoFamilyName"), ItemPalette.rb.getString("questionTitle"),
+                            Bundle.getMessage("NoFamilyName"), Bundle.getMessage("questionTitle"),
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.NO_OPTION) {
             return;
@@ -144,7 +144,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
         do {
             _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"), 
-                    ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
+                    Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (_family==null || _family.trim().length()==0) {
                 // bail out
                 return;
@@ -167,7 +167,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (_currentIconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
                         Bundle.getMessage("FamilyNotFound",_itemType, _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
                 addIconsToPanel(_currentIconMap);        // need to have family iconMap identified before calling
                 makeDndIconPanel(_currentIconMap, "BeanStateUnknown");
@@ -254,7 +254,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     protected void addCreatePanels() {
         JOptionPane.showMessageDialog(_paletteFrame, 
                 Bundle.getMessage("AllFamiliesDeleted", _itemType), 
-                ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
         _bottom1Panel.setVisible(false);
         _bottom2Panel.setVisible(true);
     }
@@ -354,7 +354,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         } else {
             JOptionPane.showMessageDialog(_paletteFrame, 
                     Bundle.getMessage("FamilyNotFound", _itemType, _family), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
         }
     }    
 
@@ -490,7 +490,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             if (_currentIconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
                         Bundle.getMessage("FamilyNotFound", _itemType, _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             }
         }        
         return _currentIconMap;

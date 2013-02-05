@@ -79,7 +79,7 @@ public class IconDialog extends ItemDialog {
         panel.add(buttonPanel);
         
         _catalog = CatalogPanel.makeDefaultCatalog();
-        _catalog.setToolTipText(ItemPalette.rb.getString("ToolTipDragIcon"));
+        _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
         panel.add(new JScrollPane(_catalog));
 
         setContentPane(panel);
@@ -138,7 +138,7 @@ public class IconDialog extends ItemDialog {
     	while (!ItemPalette.addFamily(_parent._paletteFrame, _type, family, _iconMap)) {
     		/*
             family = JOptionPane.showInputDialog(_parent._paletteFrame, Bundle.getMessage("EnterFamilyName"), 
-                    ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
+                    Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (family==null || family.trim().length()==0) {
                 // bail out
                 return false;
@@ -331,7 +331,7 @@ public class IconDialog extends ItemDialog {
            int nextHeight = icon.getIconHeight();
            if ((Math.abs(lastWidth - nextWidth) > 3 || Math.abs(lastHeight - nextHeight) > 3)) {
                JOptionPane.showMessageDialog(_parent._paletteFrame, 
-                                             ItemPalette.rb.getString("IconSizeDiff"), ItemPalette.rb.getString("warnTitle"),
+                                             Bundle.getMessage("IconSizeDiff"), Bundle.getMessage("warnTitle"),
                                              JOptionPane.WARNING_MESSAGE);
                return;
            }

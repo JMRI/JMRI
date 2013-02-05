@@ -48,10 +48,6 @@ import jmri.jmrit.picker.PickListModel;
 
 public class ItemPalette extends JmriJFrame implements ChangeListener  {
 
-//    public static final ResourceBundle rbp = ResourceBundle.getBundle("jmri.jmrit.display.palette.PaletteBundle");
-    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
-    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-
     public static final int STRUT_SIZE = 10;
     
     static JTabbedPane _tabPane;
@@ -413,10 +409,10 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
 
     private void makeMenus(Editor editor) {
         JMenuBar menuBar = new JMenuBar();
-        JMenu findIcon = new JMenu(rb.getString("findIconMenu"));
+        JMenu findIcon = new JMenu(Bundle.getMessage("findIconMenu"));
         menuBar.add(findIcon);
 
-        JMenuItem editItem = new JMenuItem(rb.getString("editIndexMenu"));
+        JMenuItem editItem = new JMenuItem(Bundle.getMessage("editIndexMenu"));
         editItem.addActionListener(new ActionListener() {
                 Editor editor;
                 public void actionPerformed(ActionEvent e) {
@@ -432,7 +428,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         findIcon.add(editItem);
         findIcon.addSeparator();
 
-        JMenuItem searchItem = new JMenuItem(rb.getString("searchFSMenu"));
+        JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
         findIcon.add(searchItem);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.ItemPalette", true);
@@ -457,7 +453,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         if (family==null || family.length()==0) {
             JOptionPane.showMessageDialog(frame, 
                     Bundle.getMessage("EnterFamilyName"), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         while (it.hasNext()) {
@@ -465,7 +461,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                JOptionPane.showMessageDialog(frame,
                     java.text.MessageFormat.format(Bundle.getMessage("DuplicateFamilyName"), 
                     new Object[] { family, type }), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                return false;
            }
         }
@@ -596,7 +592,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     static public String convertText(String name) {
         String cName = null;
         try {
-            cName = ItemPalette.rbean.getString(name);
+            cName = Bundle.getMessage(name);
         } catch (java.util.MissingResourceException mre) {
             try {
                 cName = Bundle.getMessage(name);

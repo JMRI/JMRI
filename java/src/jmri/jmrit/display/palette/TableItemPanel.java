@@ -148,7 +148,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 _addTableDialog.dispose();
             }catch(IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(_paletteFrame, ex.getMessage(), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);            	
+                        Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);            	
             }
         }
         _sysNametext.setText("");

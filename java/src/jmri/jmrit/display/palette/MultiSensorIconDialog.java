@@ -86,12 +86,12 @@ public class MultiSensorIconDialog extends IconDialog {
         if (log.isDebugEnabled()) log.debug("addNewIcon Action: iconMap.size()= "+_iconMap.size());
         if (name==null || name.length()==0) {
             JOptionPane.showMessageDialog(_parent._paletteFrame, Bundle.getMessage("NoIconName"),
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         } else if (_iconMap.get(name)!=null) {
             JOptionPane.showMessageDialog(_parent._paletteFrame,
                     Bundle.getMessage("DuplicateIconName", name),
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
         String fileName = "resources/icons/misc/X-red.gif";

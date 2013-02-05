@@ -123,7 +123,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         if (allIconsMap==null) {
             JOptionPane.showMessageDialog(_paletteFrame, 
                     Bundle.getMessage("FamilyNotFound", _itemType, _family), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
         if (_table==null || _table.getSelectedRow()<0) {
@@ -190,7 +190,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
-                sh.setIcon(ItemPalette.rbean.getString(ent.getKey()), new NamedIcon(ent.getValue()));
+                sh.setIcon(Bundle.getMessage(ent.getKey()), new NamedIcon(ent.getValue()));
             }
             sh.setFamily(_family);
             sh.setLevel(Editor.SIGNALS);
