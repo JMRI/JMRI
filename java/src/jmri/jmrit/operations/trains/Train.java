@@ -1349,7 +1349,7 @@ public class Train implements java.beans.PropertyChangeListener {
 								}
 								// check to see if moves are available
 								if (getStatus().equals(BUILDING)) {
-									if (rLoc.getMaxCarMoves() - rLoc.getCarMoves() == 0) {
+									if (rLoc.getMaxCarMoves() - rLoc.getCarMoves() <= 0) {
 										if (debugFlag)
 											log.debug("No available moves for destination " + rLoc.getName());
 										continue;
