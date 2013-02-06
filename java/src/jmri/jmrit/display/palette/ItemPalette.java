@@ -345,7 +345,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
        itemPanel = new TableItemPanel(this, "Light", null,
                                        PickListModel.lightPickModelInstance(), editor);
 //        itemPanel.init();
-        _tabPane.add(itemPanel, Bundle.getMessage("Light"));
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Light"));
         _tabIndex.put("Light", itemPanel);
 
         itemPanel = new MultiSensorItemPanel(this, "MultiSensor", null,
