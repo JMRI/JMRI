@@ -51,7 +51,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 // set new state & save values
                 progState = REQUESTSENT;
                 _val = val;
-                _cv = 0xff & CV;
+                _cv = 0xffff & CV;
 
                 try {
                    // start the error timer
@@ -109,7 +109,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
                 _progRead = true;
                 // set new state
                 progState = REQUESTSENT;
-                _cv = 0xff & CV;
+                _cv = 0xffff & CV;
                 try {
                   // start the error timer
                    restartTimer(EliteXNetProgrammerTimeout);
@@ -246,17 +246,16 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 		} else if (progState == INQUIRESENT) {
 			if (log.isDebugEnabled()) log.debug("reply in INQUIRESENT state");
             		// check for right message, else return
-            		if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
-                	    m.getElement(1)==XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE) {
+            		if (m.isPagedModeResponse()) {
                 	    // valid operation response, but does it belong to us?
                             try {
                                // we always save the cv number, but if 
                                // we are using register mode, there is 
                                // at least one case (CV29) where the value
                                // returned does not match the value we saved.
-                               if(m.getElement(2)!=_cv &&
-                                  m.getElement(2)!=registerFromCV(_cv)) {
-                                   log.debug(" result for CV " + m.getElement(2) +
+                               if(m.getServiceModeCVNumber()!=_cv &&
+                                  m.getServiceModeCVNumber()!=registerFromCV(_cv)) {
+                                   log.debug(" result for CV " + m.getServiceModeCVNumber() +
                                              " expecting " + _cv);
                                    return;
                                }
@@ -268,7 +267,7 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 			    // see why waiting
 			    if (_progRead) {
 			        // read was in progress - get return value
-				_val = m.getElement(3);
+				_val = m.getServiceModeCVValue();
 			    }
 			    progState = NOTPROGRAMMING;
 			    stopTimer();
@@ -276,18 +275,17 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
 			    // If its a write, we're to return the original write value
 			    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
                 	    return;
-            		} else if (m.getElement(0)==XNetConstants.CS_SERVICE_MODE_RESPONSE && 
-                		   m.getElement(1)==XNetConstants.CS_SERVICE_DIRECT_RESPONSE) {
+            		} else if (m.isDirectModeResponse()) {
                 	    // valid operation response, but does it belong to us?
-                            if(m.getElement(2)!=_cv) {
-                                log.debug(" result for CV " + m.getElement(2) +
+                            if(m.getServiceModeCVNumber()!=_cv) {
+                                log.debug(" result for CV " + m.getServiceModeCVNumber() +
                                           " expecting " + _cv);
                                 return;
                             }
 			    // see why waiting
 			    if (_progRead) {
 				// read was in progress - get return value
-				_val = m.getElement(3);
+				_val = m.getServiceModeCVValue();
 			    }
 			    progState = NOTPROGRAMMING;
 			    stopTimer();

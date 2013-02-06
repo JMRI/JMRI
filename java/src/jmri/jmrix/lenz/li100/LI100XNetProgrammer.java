@@ -54,7 +54,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                 // set new state & save values
                 progState = REQUESTSENT;
                 _val = val;
-                _cv = 0xff & CV;
+                _cv = 0xffff & CV;
 
                 try {
                    // start the error timer
@@ -101,7 +101,7 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                 _progRead = true;
                 // set new state
                 progState = REQUESTSENT;
-                _cv = 0xff & CV;
+                _cv = 0xffff & CV;
                 try {
                   // start the error timer
                    restartTimer(XNetProgrammerTimeout);

@@ -136,7 +136,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		// set new state & save values
 		progState = REQUESTSENT;
 		_val = val;
-		_cv = 0xff & CV;
+		_cv = 0xffff & CV;
 		
 		try {
 		   // start the error timer
@@ -172,7 +172,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			return;
 		} 
 		useProgrammer(p);
-		_cv = 0xff & CV;
+		_cv = 0xffff & CV;
 		_progRead = true;
 		// set new state
 		progState = REQUESTSENT;
