@@ -55,9 +55,19 @@ public class LinkingLabel extends PositionableLabel {
         }
         return finishClone(pos);
     }
+    public Positionable finishClone(Positionable p) {
+    	LinkingLabel pos = (LinkingLabel)p;
+        return super.finishClone(pos);
+    }
 
     String url;
     public String getUrl() {return url;}
+    public void setUrl(String u) {url = u;}
+    
+    public boolean setLinkMenu(JPopupMenu popup) {
+        popup.add(CoordinateEdit.getLinkEditAction(this, "EditLink"));
+    	return true;
+    }
     
     // overide where used - e.g. momentary
 //    public void doMousePressed(MouseEvent event) {}

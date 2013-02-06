@@ -2,9 +2,13 @@
 package jmri.jmrit.display.palette;
 
 import org.apache.log4j.Logger;
+
+import java.awt.FlowLayout;
 import java.util.Hashtable;
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import jmri.util.JmriJFrame;
 import jmri.jmrit.catalog.NamedIcon;
@@ -29,6 +33,7 @@ public abstract class ItemPanel extends JPanel {
     protected Editor    _editor;
     protected boolean   _update = false;    // Editing existing icon, do not allow icon dragging. set in init()
     protected boolean   _initialized = false;    // Has init() been run
+	JTextField _linkName = new JTextField(30);
 
     /**
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
@@ -52,6 +57,16 @@ public abstract class ItemPanel extends JPanel {
      */
     public void init() {
     	_initialized = true;
+    }
+    protected void initLinkPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
+        panel.add(new JLabel(Bundle.getMessage("LinkName")));
+    	panel.add(_linkName);
+    	_linkName.setToolTipText(Bundle.getMessage("ToolTipLink"));
+    	panel.setToolTipText(Bundle.getMessage("ToolTipLink"));
+
+    	add(panel);
     }
 
     /* Methods used upon return from Icon dialogs

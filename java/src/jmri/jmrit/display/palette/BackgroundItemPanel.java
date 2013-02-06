@@ -39,14 +39,14 @@ public class BackgroundItemPanel extends IconItemPanel {
     public void init() {
     	if (!_initialized) {
     		Thread.yield();
-    		super.init();
+    		super.init(true);
     		add(initBottomPanel(), 2);
     		setSize(getPreferredSize());
     	}
     }
 
-    protected JPanel instructions() {
-        JPanel panel = super.instructions();
+    protected JPanel instructions(boolean isBackGround) {
+        JPanel panel = super.instructions(isBackGround);
         JPanel blurb = (JPanel)panel.getComponent(0);
         blurb.add(new JLabel(Bundle.getMessage("ToColorBackground","ButtonBackgroundColor")));
         blurb.add(javax.swing.Box.createVerticalStrut(ItemPalette.STRUT_SIZE));

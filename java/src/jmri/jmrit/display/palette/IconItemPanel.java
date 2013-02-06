@@ -33,6 +33,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.CatalogPanel;
@@ -40,6 +41,7 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PositionableLabel;
+import jmri.jmrit.display.LinkingLabel;
 
 /**
 *  ItemPanel for for plain icons and backgrounds 
@@ -64,20 +66,26 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     }
     public void init() {
     	if (!_initialized) {
-        	Thread.yield();
-            add(instructions());
-            initIconFamiliesPanel();
-            initButtonPanel();
-            _catalog = CatalogPanel.makeDefaultCatalog();
-            add(_catalog);
-           _catalog.setVisible(false);
-            _catalog.setToolTipText(Bundle.getMessage("ToolTipDragCatalog"));
-            setSize(getPreferredSize());
+    		Thread.yield();
+    		init(false);
+    		setSize(getPreferredSize());
             super.init();
     	}
     }
+   public void init(boolean isBackGround) {
+       add(instructions(isBackGround));
+       initIconFamiliesPanel();
+       if (!isBackGround) {
+           initLinkPanel();            	
+       }
+       initButtonPanel();
+       _catalog = CatalogPanel.makeDefaultCatalog();
+       add(_catalog);
+      _catalog.setVisible(false);
+       _catalog.setToolTipText(Bundle.getMessage("ToolTipDragCatalog"));
+    }
 
-    protected JPanel instructions() {
+    protected JPanel instructions(boolean isBackGround) {
         JPanel blurb = new JPanel();
         blurb.setLayout(new BoxLayout(blurb, BoxLayout.Y_AXIS));
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
@@ -88,6 +96,12 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
         blurb.add(new JLabel(Bundle.getMessage("ToAddDeleteModify")));
         blurb.add(new JLabel(Bundle.getMessage("ToChangeName")));
         blurb.add(new JLabel(Bundle.getMessage("ToDeleteIcon", "deleteIcon")));
+        if (!isBackGround) {
+            blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
+            blurb.add(new JLabel(Bundle.getMessage("ToLinkToURL", "Icon")));
+            blurb.add(new JLabel(Bundle.getMessage("enterPanel")));
+            blurb.add(new JLabel(Bundle.getMessage("enterURL")));
+        }
         blurb.add(Box.createVerticalStrut(ItemPalette.STRUT_SIZE));
         JPanel panel = new JPanel();
         panel.add(blurb);
@@ -342,7 +356,13 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             }
             String url = ((NamedIcon)getIcon()).getURL();
             if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferData url= "+url);
-            PositionableLabel l = new PositionableLabel(NamedIcon.getIconByName(url), _editor);
+            String link = _linkName.getText().trim();
+            PositionableLabel l;
+            if (link.length()==0) {
+                l = new PositionableLabel(NamedIcon.getIconByName(url), _editor);            	
+            } else {            	
+                l = new LinkingLabel(NamedIcon.getIconByName(url), _editor, link);
+            }
             l.setPopupUtility(null);        // no text 
             l.setLevel(level);
             return l;

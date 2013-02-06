@@ -33,6 +33,7 @@ import javax.swing.border.Border;
 
 import jmri.jmrit.display.*;
 //import jmri.jmrit.display.PositionablePropertiesUtil.TextDetails;
+import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
 
 /**
 *  ItemPanel for text labels
@@ -84,6 +85,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     AJSpinner _heightSpin;
 
     JColorChooser _chooser;
+    JPanel _previewPanel;
     private PositionablePopupUtil _util;
     boolean _isOpaque;			// transfer opaqueness from decorator label here to panel label being edited
     private Hashtable <String, PositionableLabel> _sample = null;
@@ -95,7 +97,17 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     public DecoratorPanel(Editor editor) {
         _editor = editor;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-    }
+        Color bkgrnd = _editor.getTargetPanel().getBackground();
+        _chooser = new JColorChooser(bkgrnd);
+    	_previewPanel = new JPanel();
+    	_previewPanel.setLayout(new BoxLayout(_previewPanel, BoxLayout.Y_AXIS));
+    	_previewPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1)));
+    	_previewPanel.add(Box.createVerticalStrut(STRUT));
+    	_previewPanel.add(Box.createVerticalStrut(STRUT));
+    	_previewPanel.setBackground(bkgrnd);
+        _sample = new Hashtable <String, PositionableLabel>();       
+        _buttonGroup = new ButtonGroup();
+   }
 
     static class AJComboBox extends JComboBox {
         int _which;
@@ -141,47 +153,41 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         return panel;
     }
 
+    protected JPanel getPreviewPanel() {
+    	return _previewPanel;
+    }
+    protected void initDecoratorPanel(DragDecoratorLabel sample) {
+        sample.setDisplayLevel(Editor.LABELS);
+    	sample.setBackground(_editor.getTargetPanel().getBackground());
+        _previewPanel.add(sample);
+        _util = sample.getPopupUtility();
+        _sample.put("Text", sample);
+        this.add(makeTextPanel("Text", sample, TEXT_FONT));
+        makeFontPanels();
+    }
+    
     public void initDecoratorPanel(Positionable pos) {
-        _chooser = new JColorChooser(_editor.getTargetPanel().getBackground());
-    	JPanel samplePanel = new JPanel();
-    	JPanel preview = new JPanel();
-    	preview.setLayout(new BoxLayout(preview, BoxLayout.Y_AXIS));
-    	preview.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1)));
-    	preview.add(Box.createVerticalStrut(STRUT));
-    	preview.add(samplePanel);
-    	preview.add(Box.createVerticalStrut(STRUT));
-    	preview.setBackground(_editor.getTargetPanel().getBackground());
-        samplePanel.setBackground(_editor.getTargetPanel().getBackground());
+        Positionable item= pos.deepClone();		// copy of PositionableLabel being edited
         String text = Bundle.getMessage("sample");
-       _sample = new Hashtable <String, PositionableLabel>();       
-       _buttonGroup = new ButtonGroup();
-       Positionable item;		// copy of PositionableLabel being edited
-        if (pos==null) {
-        	item = new PositionableLabel("crap", null);
-        	_util = item.getPopupUtility();
-        } else {
-    		item = pos.deepClone();
-        	if (pos instanceof PositionableLabel) {
-//        		PositionableLabel item = (PositionableLabel)pos.deepClone();
-                _isOpaque = item.getSaveOpaque();
-            	item.rotate(0);
-            	PositionablePopupUtil u = item.getPopupUtility();
-                text = ((PositionableLabel)item).getUnRotatedText();
-                _util = item.getPopupUtility();
-        		
-                PositionableLabel p = (PositionableLabel)pos;
-        		if (p.isRotated()) {
-            		_isOpaque = pos.getSaveOpaque();     			
-        		} else {
-            		_isOpaque = pos.isOpaque();
-        		}
-        	} else {
-        		_isOpaque = pos.isOpaque();        		
-        		//_util = pos.getPopupUtility().clone(pos);
-                _util = item.getPopupUtility();
-        	}
-         }
+        if (pos instanceof PositionableLabel) {
+             _isOpaque = item.getSaveOpaque();
+         	item.rotate(0);
+             text = ((PositionableLabel)item).getUnRotatedText();
+     		
+             PositionableLabel p = (PositionableLabel)pos;
+     		if (p.isRotated()) {
+         		_isOpaque = pos.getSaveOpaque();     			
+     		} else {
+         		_isOpaque = pos.isOpaque();
+     		}
+     	} else {
+     		_isOpaque = pos.isOpaque();        		
+     	}
+        _util = item.getPopupUtility();
+        JPanel samplePanel = new JPanel();
         samplePanel.add(Box.createHorizontalStrut(STRUT));
+    	samplePanel.setBackground(_editor.getTargetPanel().getBackground());
+    	
         if (pos instanceof SensorIcon) {
         	SensorIcon si = (SensorIcon)pos;
         	if (!si.isIcon() && si.isText()) {
@@ -220,26 +226,24 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 samplePanel.add(sample);
                 this.add(makeTextPanel("Inconsistent", sample, INCONSISTENT_FONT));
         	} 
-        } else {
-        	PositionableLabel sample;
-        	if (pos==null) {
-        		sample = new DragDecoratorLabel(text, _editor);
-        		sample.setDisplayLevel(Editor.LABELS);
-                sample.setPopupUtility(_util);
-        	} else {
-        		sample = new PositionableLabel(text, _editor);
-                sample.setPopupUtility(_util);
-                sample.setForeground(pos.getForeground());
-                sample.setBackground(pos.getBackground());
-                _util.setBackgroundColor(pos.getBackground());
-                sample.setOpaque(true);
-            }
+        } else if (pos!=null) {
+        	PositionableLabel sample = new PositionableLabel(text, _editor);
+            sample.setPopupUtility(_util);
+            sample.setForeground(pos.getForeground());
+            sample.setBackground(pos.getBackground());
+            _util.setBackgroundColor(pos.getBackground());
+            sample.setOpaque(true);
             _sample.put("Text", sample);
             samplePanel.add(sample);
             this.add(makeTextPanel("Text", sample, TEXT_FONT));
         }
         samplePanel.add(Box.createHorizontalStrut(STRUT));
-        
+    	_previewPanel.add(samplePanel);
+    	makeFontPanels();
+    	item.setVisible(false);		// otherwise leaves traces for PositionableJPanels
+    }
+    
+    protected void makeFontPanels()  {        
         JPanel fontPanel = new JPanel();
         _fontSizeBox = new AJComboBox(FONTSIZE, SIZE);
         fontPanel.add(makeBoxPanel("fontSize", _fontSizeBox));
@@ -309,10 +313,9 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         this.add(colorPanel);
 
         _chooser.getSelectionModel().addChangeListener(this);
-        _chooser.setPreviewPanel(preview);
+        _chooser.setPreviewPanel(_previewPanel);
         this.add(_chooser);
         updateSamples();
-    	item.setVisible(false);		// otherwise leaves traces for PositionableJPanels
     }
     
     private JPanel makeTextPanel(String caption, JLabel sample, int state) {
@@ -559,58 +562,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     break;
             }
             updateSamples();
-        }
-    }
-
-    /**
-    * Export a Positionable item from panel 
-    */
-    class DragDecoratorLabel extends PositionableLabel implements DragGestureListener, DragSourceListener, Transferable {    
-
-        DataFlavor dataFlavor;
-
-        public DragDecoratorLabel(String s, Editor editor) {
-            super(s, editor);
-            DragSource dragSource = DragSource.getDefaultDragSource();
-            dragSource.createDefaultDragGestureRecognizer(this,
-                        DnDConstants.ACTION_COPY, this);
-            try {
-                dataFlavor = new DataFlavor(Editor.POSITIONABLE_FLAVOR);
-            } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
-            }
-        }
-        /**************** DragGestureListener ***************/
-        public void dragGestureRecognized(DragGestureEvent e) {
-            if (log.isDebugEnabled()) log.debug("DragPositionable.dragGestureRecognized ");
-            //Transferable t = getTransferable(this);
-            e.startDrag(DragSource.DefaultCopyDrop, this, this); 
-        }
-        /**************** DragSourceListener ************/
-        public void dragDropEnd(DragSourceDropEvent e) {
-            }
-        public void dragEnter(DragSourceDragEvent e) {
-            }
-        public void dragExit(DragSourceEvent e) {
-            }
-        public void dragOver(DragSourceDragEvent e) {
-            }
-        public void dropActionChanged(DragSourceDragEvent e) {
-            }
-        /*************** Transferable *********************/
-        public DataFlavor[] getTransferDataFlavors() {
-            //if (log.isDebugEnabled()) log.debug("DragPositionable.getTransferDataFlavors ");
-            return new DataFlavor[] { dataFlavor };
-        }
-        public boolean isDataFlavorSupported(DataFlavor flavor) {
-            //if (log.isDebugEnabled()) log.debug("DragPositionable.isDataFlavorSupported ");
-            return dataFlavor.equals(flavor);
-        }
-        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
-            if (!isDataFlavorSupported(flavor)) {
-                return null;
-            }
-            return _sample.get("Text").deepClone();
         }
     }
 

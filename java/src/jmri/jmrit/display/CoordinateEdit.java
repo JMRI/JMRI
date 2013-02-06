@@ -195,6 +195,20 @@ public class CoordinateEdit extends JmriJFrame {
     }
     //////////////////////////////////////////////////////////////
 
+    public static AbstractAction getLinkEditAction(final Positionable pos, final String title) {
+        return new AbstractAction(Bundle.getMessage(title)) {
+                public void actionPerformed(ActionEvent e) {
+                    CoordinateEdit f = new CoordinateEdit();
+                    f.addHelpMenu("package.jmri.jmrit.display.CoordinateEdit", true);
+                    f.init(Bundle.getMessage(title), pos, false);
+                    f.initLink();
+                    f.setVisible(true);	
+                    f.setLocationRelativeTo((Component)pos);
+                }
+            };
+    }
+    //////////////////////////////////////////////////////////////
+
     public static AbstractAction getZoomEditAction(final Positionable pos) {
         return new AbstractAction(Bundle.getMessage("Zoom")) {
                 public void actionPerformed(ActionEvent e) {
@@ -275,14 +289,14 @@ public class CoordinateEdit extends JmriJFrame {
             };
         spinX = new javax.swing.JSpinner(model);
         spinX.setValue(Integer.valueOf(pl.getX()));
-        spinX.setToolTipText("Enter x coordinate");
+        spinX.setToolTipText(Bundle.getMessage("EnterXcoord"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         spinX.addChangeListener(listener);
         model = new javax.swing.SpinnerNumberModel(0,0,10000,1);
         spinY = new javax.swing.JSpinner(model);
         spinY.setValue(Integer.valueOf(pl.getY()));
-        spinY.setToolTipText("Enter y coordinate");
+        spinY.setToolTipText(Bundle.getMessage("EnterYcoord"));
         spinY.setMaximumSize(new Dimension(
 				spinY.getMaximumSize().width, spinY.getPreferredSize().height));
         spinY.addChangeListener(listener);
@@ -319,7 +333,7 @@ public class CoordinateEdit extends JmriJFrame {
         SpinnerNumberModel model = new SpinnerNumberModel(0,0,10,1);
         spinX = new javax.swing.JSpinner(model);
         spinX.setValue(Integer.valueOf(pl.getDisplayLevel()));
-        spinX.setToolTipText("Enter display level");
+        spinX.setToolTipText(Bundle.getMessage("EnterLevel"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
 
@@ -352,7 +366,7 @@ public class CoordinateEdit extends JmriJFrame {
 
         xTextField = new javax.swing.JTextField(15);
 		xTextField.setText(pl.getTooltip().getText());
-		xTextField.setToolTipText("Enter Tooltip");
+		xTextField.setToolTipText(Bundle.getMessage("EnterTooltip"));
 //		xTextField.setMaximumSize(new Dimension(
 //				xTextField.getMaximumSize().width+100, xTextField.getPreferredSize().height));
 
@@ -602,6 +616,46 @@ public class CoordinateEdit extends JmriJFrame {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
                 PositionableLabel pp = (PositionableLabel)pl;
                 pp.setText(oldStr);
+                pp.updateSize();
+                dispose();
+			}
+		});
+		pack();
+	}
+
+    public void initLink() {
+        LinkingLabel pLabel = (LinkingLabel)pl;
+        oldStr = pLabel.getUrl();
+        textX = new javax.swing.JLabel();
+		textX.setText(Bundle.getMessage("LinkEqual"));
+		textX.setVisible(true);
+
+        xTextField = new javax.swing.JTextField(15);
+		xTextField.setText(pLabel.getUrl());
+		xTextField.setToolTipText(Bundle.getMessage("EnterLink"));
+
+		getContentPane().setLayout(new GridBagLayout());		
+		addTextItems();
+
+		okButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				LinkingLabel pp = (LinkingLabel)pl;
+                String t = xTextField.getText();
+                boolean hasText = (t!=null && t.length()>0);
+                if (pp.isIcon() || hasText) {
+                    pp._text = hasText; 
+                    pp.setUrl(t);
+                    pp.updateSize();
+                    dispose();
+                } else {
+                    xTextField.setText("Item disappears with null text!");
+                }
+			}
+		});
+		cancelButton.addActionListener(new java.awt.event.ActionListener() {
+			public void actionPerformed(java.awt.event.ActionEvent e) {
+				LinkingLabel pp = (LinkingLabel)pl;
+                pp.setUrl(oldStr);
                 pp.updateSize();
                 dispose();
 			}
