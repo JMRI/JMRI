@@ -7272,15 +7272,6 @@ public class LayoutEditorTools
 		}
 		return (head);
 	}
-	/**
-	 * Returns a Sensor given a name
-	 */
-	/*public Sensor getSensorFromName(String str) {
-		if ( (str==null) || (str.equals("")) ) {
-			return null;
-		}
-		return  (jmri.InstanceManager.sensorManagerInstance().getSensor(str));
-	}*/
     
     public SensorIcon getSensorIcon(String sensorName) {
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", 
@@ -7444,17 +7435,9 @@ public class LayoutEditorTools
 		}
 	}
 	/**
-	 * Removes the Sensor with the specified name from the panel and from
+	 * Removes the Sensor object from the panel and from
 	 *		assignment to any turnout, positionable point, or level crossing
 	 */
-	@SuppressWarnings("null")
-	/*public void removeSensorFromPanel(String sensorName) {
-		if ( (sensorName==null) || (sensorName.length()<1) ) return;
-		Sensor sensor = jmri.InstanceManager.sensorManagerInstance().
-														getSensor(sensorName);
-        removeSensorFromPanel(sensor);
-    }*/
-    
     public void removeSensorFromPanel(Sensor sensor){
 		removeSensorAssignment(sensor);
 		SensorIcon h = null;
@@ -7465,7 +7448,7 @@ public class LayoutEditorTools
 				index = i;
 			}
 		}
-		if (index!=(-1)) {
+		if (index!=(-1) && h!=null) {
 			layoutEditor.sensorList.remove(index);
 			h.remove();
 			h.dispose();
@@ -7799,15 +7782,6 @@ public class LayoutEditorTools
 		}
 		return (head);
 	}
-	/**
-	 * Returns a SignalMast given a name
-	 */
-	/*public SignalMast getSignalMastFromName(String str) {
-		if ( (str==null) || (str.equals("")) ) {
-			return null;
-		}
-		return  (jmri.InstanceManager.signalMastManagerInstance().getSignalMast(str));
-	}*/
     
 	/**
 	 * Returns true if the specified SignalMast  is assigned to an object
@@ -8703,8 +8677,7 @@ public class LayoutEditorTools
     }
     
     
-	public boolean isSignalMastOnPanel(SignalMast signalMast) 
-	{
+	public boolean isSignalMastOnPanel(SignalMast signalMast) {
 		SignalMastIcon s = null;
 		for (int i=0;i<layoutEditor.signalMastList.size();i++) {
 			s = layoutEditor.signalMastList.get(i);
@@ -9045,7 +9018,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(layoutTurnout.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(turnoutSignalMastA.getText());
-				placingBlock(l, turnoutSignalMastA.isRightSelected(), 0.0);
+				placingBlock(l, turnoutSignalMastA.isRightSelected(), 0.0, layoutTurnout.getConnectA(), layoutTurnout.getCoordsA());
 				removeAssignment(turnoutMast);
 				layoutTurnout.setSignalAMast(turnoutSignalMastA.getText());
 				needRedraw = true;
@@ -9089,7 +9062,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(layoutTurnout.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(turnoutSignalMastB.getText());
-				placingBlockB(l, turnoutSignalMastB.isRightSelected(), 0.0);
+				placingBlock(l, turnoutSignalMastB.isRightSelected(), 0.0, layoutTurnout.getConnectB(), layoutTurnout.getCoordsB());
 				removeAssignment(turnoutMastB);
 				layoutTurnout.setSignalBMast(turnoutSignalMastB.getText());
 				needRedraw = true;
@@ -9134,7 +9107,7 @@ public class LayoutEditorTools
                     removeSignalMastFromPanel(layoutTurnout.getSignalCMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
                     l.setSignalMast(turnoutSignalMastC.getText());
-                    placingBlockC(l, turnoutSignalMastC.isRightSelected(), 0.0);
+                    placingBlock(l, turnoutSignalMastC.isRightSelected(), 0.0, layoutTurnout.getConnectC(), layoutTurnout.getCoordsC());
                     removeAssignment(turnoutMastC);
                     layoutTurnout.setSignalCMast(turnoutSignalMastC.getText());
                     needRedraw = true;
@@ -9180,7 +9153,7 @@ public class LayoutEditorTools
                     removeSignalMastFromPanel(layoutTurnout.getSignalDMast());
                     SignalMastIcon l = new SignalMastIcon(layoutEditor);
                     l.setSignalMast(turnoutSignalMastD.getText());
-                    placingBlockD(l, turnoutSignalMastD.isRightSelected(), 0.0);
+                    placingBlock(l, turnoutSignalMastD.isRightSelected(), 0.0, layoutTurnout.getConnectD(), layoutTurnout.getCoordsD());
                     removeAssignment(turnoutMastD);
                     layoutTurnout.setSignalDMast(turnoutSignalMastD.getText());
                     needRedraw = true;
@@ -9267,10 +9240,9 @@ public class LayoutEditorTools
         return true;
     }
     
-	private void placingBlock(PositionableIcon icon, boolean right, double fromPoint) {
-        if(layoutTurnout.getConnectA() instanceof TrackSegment){
-            TrackSegment t = (TrackSegment) layoutTurnout.getConnectA();
-            Point2D p = layoutTurnout.getCoordsA();
+	private void placingBlock(PositionableIcon icon, boolean right, double fromPoint, Object obj, Point2D p){
+        if(obj instanceof TrackSegment){
+            TrackSegment t = (TrackSegment)obj;
             Point2D end;
             if(t.getConnect1()==layoutTurnout){
                 end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
@@ -9279,77 +9251,18 @@ public class LayoutEditorTools
                 end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
             }
             boolean east = false;
-            
-            if(end.getX()<p.getX())
+            if(end.getX()==p.getX()){
+                if(end.getY()<p.getY()){
+                    east = true;
+                }
+            } else if(end.getX()<p.getX()){
                 east = true;
-
-            setIconOnPanel(t, icon, east, p, end, right, fromPoint);
-            return;
-        }
-	}
-	private void placingBlockB(PositionableIcon icon, boolean right, double fromPoint) {
-        
-        if(layoutTurnout.getConnectB() instanceof TrackSegment){
-            TrackSegment t = (TrackSegment) layoutTurnout.getConnectB();
-            Point2D p = layoutTurnout.getCoordsB();
-            
-            Point2D end;
-            if(t.getConnect1()==layoutTurnout){
-                end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
-            
-            } else {
-                end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
             }
 
-            boolean east = false;
-            if(end.getX()<p.getX())
-                east =true;
             setIconOnPanel(t, icon, east, p, end, right, fromPoint);
-            return;
         }
-	}
-	private void placingBlockC(PositionableIcon icon, boolean right, double fromPoint) {
-        
-        if(layoutTurnout.getConnectC() instanceof TrackSegment){
-            TrackSegment t = (TrackSegment) layoutTurnout.getConnectC();
-            Point2D p = layoutTurnout.getCoordsC();
-
-            Point2D end;
-            if(t.getConnect1()==layoutTurnout){
-                end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
-            
-            } else {
-                end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
-            }
-            boolean east = false;
-
-            if(end.getX()<p.getX())
-                east = true;
-            setIconOnPanel(t, icon, east, p, end, right, fromPoint);
-            return;
-        }
-	}
-	private void placingBlockD(PositionableIcon icon, boolean right, double fromPoint) {
-        if(layoutTurnout.getConnectD() instanceof TrackSegment){
-            TrackSegment t = (TrackSegment) layoutTurnout.getConnectD();
-            Point2D p = layoutTurnout.getCoordsD();
-            
-            Point2D end;
-            if(t.getConnect1()==layoutTurnout){
-                end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
-            
-            } else {
-                end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
-            }
-            
-            //TrackSegment t = boundary.getConnect2();
-            boolean east = false;
-            if(end.getX()<p.getX())
-                east = true;
-            setIconOnPanel(t, icon, east, p, end, right, fromPoint);
-            return;
-        }
-	}
+        return;
+    }
     
     private void setSignalMastsCancelPressed (ActionEvent a) {
 		setSignalMastsOpen = false;
@@ -9663,7 +9576,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(layoutSlip.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastA.getText());
-				placingBlock(l, slipSignalMastA.isRightSelected(), 0.0);
+				placingBlock(l, slipSignalMastA.isRightSelected(), 0.0, layoutSlip.getConnectA(), layoutTurnout.getCoordsD());
 				removeAssignment(aMast);
 				layoutSlip.setSignalAMast(slipSignalMastA.getText());
 				needRedraw = true;
@@ -9710,7 +9623,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(layoutSlip.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastB.getText());
-				placingBlockB(l, slipSignalMastB.isRightSelected(), 0.0);
+				placingBlock(l, slipSignalMastB.isRightSelected(), 0.0, layoutTurnout.getConnectB(), layoutTurnout.getCoordsB());
 				removeAssignment(bMast);
 				layoutSlip.setSignalBMast(slipSignalMastB.getText());
 				needRedraw = true;
@@ -9757,7 +9670,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(layoutSlip.getSignalCMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastC.getText());
-				placingBlockC(l, slipSignalMastA.isRightSelected(), 0.0);
+				placingBlock(l, slipSignalMastA.isRightSelected(), 0.0, layoutTurnout.getConnectC(), layoutTurnout.getCoordsC());
 				removeAssignment(cMast);
 				layoutSlip.setSignalCMast(slipSignalMastC.getText());
 				needRedraw = true;
@@ -9804,7 +9717,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(layoutSlip.getSignalDMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(slipSignalMastD.getText());
-				placingBlockD(l, slipSignalMastD.isRightSelected(), 0.0);
+				placingBlock(l, slipSignalMastD.isRightSelected(), 0.0, layoutTurnout.getConnectD(), layoutTurnout.getCoordsD());
 				removeAssignment(dMast);
 				layoutSlip.setSignalDMast(slipSignalMastD.getText());
 				needRedraw = true;
@@ -10176,7 +10089,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(levelXing.getSignalAMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastA.getText());
-				placeXingAIcon(l, xingSignalMastA.isRightSelected(), 0.0);
+				placingBlock(l, xingSignalMastA.isRightSelected(), 0.0, levelXing.getConnectA(), levelXing.getCoordsA());
 				removeAssignment(aMast);
 				levelXing.setSignalAMast(xingSignalMastA.getText());
 				needRedraw = true;
@@ -10223,7 +10136,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(levelXing.getSignalBMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastB.getText());
-				placeXingBIcon(l, xingSignalMastB.isRightSelected(), 0.0);
+				placingBlock(l, xingSignalMastB.isRightSelected(), 0.0, levelXing.getConnectB(), levelXing.getCoordsB());
 				removeAssignment(bMast);
 				levelXing.setSignalBMast(xingSignalMastB.getText());
 				needRedraw = true;
@@ -10271,7 +10184,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(levelXing.getSignalCMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastC.getText());
-				placeXingCIcon(l, xingSignalMastA.isRightSelected(), 0.0);
+				placingBlock(l, xingSignalMastC.isRightSelected(), 0.0, levelXing.getConnectC(), levelXing.getCoordsC());
 				removeAssignment(cMast);
 				levelXing.setSignalCMast(xingSignalMastC.getText());
 				needRedraw = true;
@@ -10318,7 +10231,7 @@ public class LayoutEditorTools
 				removeSignalMastFromPanel(levelXing.getSignalDMast());
                 SignalMastIcon l = new SignalMastIcon(layoutEditor);
                 l.setSignalMast(xingSignalMastD.getText());
-				placeXingDIcon(l, xingSignalMastD.isRightSelected(), 0.0);
+				placingBlock(l, xingSignalMastD.isRightSelected(), 0.0, levelXing.getConnectD(), levelXing.getCoordsD());
 				removeAssignment(dMast);
 				levelXing.setSignalDMast(xingSignalMastD.getText());
 				needRedraw = true;
@@ -10364,96 +10277,6 @@ public class LayoutEditorTools
 		}		
 	}
 
-    private void placeXingAIcon(PositionableIcon icon, boolean right, double fromPoint) {
-		
-        if(levelXing.getConnectA() instanceof TrackSegment){
-            TrackSegment t = (TrackSegment) levelXing.getConnectA();
-            Point2D p = levelXing.getCoordsA();
-            
-            Point2D end;
-            if(t.getConnect1()==levelXing){
-                end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
-            
-            } else {
-                end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
-            }
-
-            boolean east = false;
-            
-            if(end.getX()<p.getX())
-                east = true;
-
-            setIconOnPanel(t, icon, east, p, end, right, fromPoint);
-            return;
-        }
-	}
-	private void placeXingBIcon(PositionableIcon icon, boolean right, double fromPoint) {
-
-        if(levelXing.getConnectB() instanceof TrackSegment){
-            TrackSegment t = (TrackSegment) levelXing.getConnectB();
-            Point2D p = levelXing.getCoordsB();
-            
-            Point2D end;
-            if(t.getConnect1()==levelXing){
-                end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
-            
-            } else {
-                end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
-            }
-            boolean east = false;
-            
-            if(end.getX()<p.getX())
-                east = true;
-
-            setIconOnPanel(t, icon, east, p, end, right, fromPoint);
-            return;
-        }
-	}
-	private void placeXingCIcon(PositionableIcon icon, boolean right, double fromPoint) {
-        if(levelXing.getConnectC() instanceof TrackSegment) {
-            TrackSegment t = (TrackSegment) levelXing.getConnectC();
-            Point2D p = levelXing.getCoordsC();
-            
-            Point2D end;
-            if(t.getConnect1()==levelXing){
-                end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
-            
-            } else {
-                end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
-            }
-            boolean east = false;
-            
-            if(end.getX()<p.getX())
-                east = true;
-
-            setIconOnPanel(t, icon, east, p, end, right, fromPoint);
-            return;
-        }
-	}
-
-	private void placeXingDIcon(PositionableIcon icon, boolean right, double fromPoint) {
-        if(levelXing.getConnectD() instanceof TrackSegment){
-            TrackSegment t = (TrackSegment) levelXing.getConnectD();
-            Point2D p = levelXing.getCoordsD();
-            
-            Point2D end;
-            if(t.getConnect1()==levelXing){
-                end = layoutEditor.getEndCoords(t.getConnect2(), t.getType2());
-            
-            } else {
-                end = layoutEditor.getEndCoords(t.getConnect1(), t.getType1());
-            }
-            //TrackSegment t = boundary.getConnect2();
-            boolean east = false;
-            
-            if(end.getX()<p.getX())
-                east = true;
-
-            setIconOnPanel(t, icon, east, p, end, right, fromPoint);
-            return;
-        }
-	}	// initialize logging
-    
     boolean setSensorsOpen =false;
     boolean turnoutSensorFromMenu = false;
     private JmriJFrame setSensorsFrame = null;
@@ -10735,7 +10558,7 @@ public class LayoutEditorTools
 			}
 			else {
 				removeSensorFromPanel(layoutTurnout.getSensorA());
-				placingBlock(getSensorIcon(turnoutSensorA.getText()), turnoutSensorA.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(turnoutSensorA.getText()), turnoutSensorA.isRightSelected(), 0.0, layoutTurnout.getConnectA(), layoutTurnout.getCoordsA());
 				removeAssignment(sensorA);
 				layoutTurnout.setSensorA(turnoutSensorA.getText());
 				needRedraw = true;
@@ -10778,7 +10601,7 @@ public class LayoutEditorTools
 			else {
 				removeSensorFromPanel(layoutTurnout.getSensorB());
 
-				placingBlockB(getSensorIcon(turnoutSensorB.getText()), turnoutSensorB.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(turnoutSensorB.getText()), turnoutSensorB.isRightSelected(), 0.0, layoutTurnout.getConnectB(), layoutTurnout.getCoordsB());
 				removeAssignment(sensorB);
 				layoutTurnout.setSensorB(turnoutSensorB.getText());
 				needRedraw = true;
@@ -10822,7 +10645,7 @@ public class LayoutEditorTools
                 else {
                     removeSensorFromPanel(layoutTurnout.getSensorC());
 
-                    placingBlockC(getSensorIcon(turnoutSensorC.getText()), turnoutSensorC.isRightSelected(), 0.0);
+                    placingBlock(getSensorIcon(turnoutSensorC.getText()), turnoutSensorC.isRightSelected(), 0.0, layoutTurnout.getConnectC(), layoutTurnout.getCoordsC());
                     removeAssignment(sensorC);
                     layoutTurnout.setSensorC(turnoutSensorC.getText());
                     needRedraw = true;
@@ -10866,7 +10689,7 @@ public class LayoutEditorTools
                 }
                 else {
                     removeSensorFromPanel(layoutTurnout.getSensorD());
-                    placingBlockD(getSensorIcon(turnoutSensorD.getText()), turnoutSensorD.isRightSelected(), 0.0);
+                    placingBlock(getSensorIcon(turnoutSensorD.getText()), turnoutSensorD.isRightSelected(), 0.0, layoutTurnout.getConnectD(), layoutTurnout.getCoordsD());
                     removeAssignment(sensorD);
                     layoutTurnout.setSensorD(turnoutSensorD.getText());
                     needRedraw = true;
@@ -11275,7 +11098,7 @@ public class LayoutEditorTools
 			}
 			else {
 				removeSensorFromPanel(levelXing.getSensorA());
-				placeXingAIcon(getSensorIcon(xingSensorA.getText()), xingSensorA.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(xingSensorA.getText()), xingSensorA.isRightSelected(), 0.0, levelXing.getConnectA(), levelXing.getCoordsA());
 				removeAssignment(aSensor);
 				levelXing.setSensorAName(xingSensorB.getText());
 				needRedraw = true;
@@ -11320,7 +11143,7 @@ public class LayoutEditorTools
 			}
 			else {
 				removeSensorFromPanel(levelXing.getSensorB());
-				placeXingBIcon(getSensorIcon(xingSensorB.getText()), xingSensorB.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(xingSensorB.getText()), xingSensorB.isRightSelected(), 0.0, levelXing.getConnectB(), levelXing.getCoordsB());
 				removeAssignment(bSensor);
 				levelXing.setSensorBName(xingSensorB.getText());
 				needRedraw = true;
@@ -11365,7 +11188,7 @@ public class LayoutEditorTools
 			}
 			else {
 				removeSensorFromPanel(levelXing.getSensorC());
-				placeXingCIcon(getSensorIcon(xingSensorC.getText()), xingSensorC.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(xingSensorC.getText()), xingSensorC.isRightSelected(), 0.0, levelXing.getConnectC(), levelXing.getCoordsC());
 				removeAssignment(cSensor);
 				levelXing.setSensorCName(xingSensorC.getText());
 				needRedraw = true;
@@ -11410,7 +11233,7 @@ public class LayoutEditorTools
 			}
 			else {
 				removeSensorFromPanel(levelXing.getSensorD());
-				placeXingDIcon(getSensorIcon(xingSensorD.getText()), xingSensorD.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(xingSensorD.getText()), xingSensorD.isRightSelected(), 0.0, levelXing.getConnectD(), levelXing.getCoordsD());
 				removeAssignment(dSensor);
 				levelXing.setSensorDName(xingSensorD.getText());
 				needRedraw = true;
@@ -11798,7 +11621,7 @@ public class LayoutEditorTools
 			}
 			else {
 				removeSensorFromPanel(layoutSlip.getSensorA());
-				placingBlock(getSensorIcon(slipSensorA.getText()), slipSensorA.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(slipSensorA.getText()), slipSensorA.isRightSelected(), 0.0, layoutSlip.getConnectA(), layoutSlip.getCoordsA());
 				removeAssignment(aSensor);
 				layoutSlip.setSensorA(slipSensorA.getText());
 				needRedraw = true;
@@ -11843,7 +11666,7 @@ public class LayoutEditorTools
 			}
 			else {
 				removeSensorFromPanel(layoutSlip.getSensorB());
-				placingBlockB(getSensorIcon(slipSensorB.getText()), slipSensorB.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(slipSensorB.getText()), slipSensorB.isRightSelected(), 0.0, layoutSlip.getConnectB(), layoutSlip.getCoordsB());
 				removeAssignment(bSensor);
 				layoutSlip.setSensorB(slipSensorB.getText());
 				needRedraw = true;
@@ -11888,7 +11711,7 @@ public class LayoutEditorTools
 			}
 			else {
 				removeSensorFromPanel(layoutSlip.getSensorC());
-				placingBlockC(getSensorIcon(slipSensorC.getText()), slipSensorC.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(slipSensorC.getText()), slipSensorC.isRightSelected(), 0.0, layoutSlip.getConnectC(), layoutSlip.getCoordsC());
 				removeAssignment(cSensor);
 				layoutSlip.setSensorC(slipSensorC.getText());
 				needRedraw = true;
@@ -11933,7 +11756,7 @@ public class LayoutEditorTools
 			}
 			else {
 				removeSensorFromPanel(layoutSlip.getSensorD());
-				placingBlockD(getSensorIcon(slipSensorD.getText()), slipSensorD.isRightSelected(), 0.0);
+				placingBlock(getSensorIcon(slipSensorD.getText()), slipSensorD.isRightSelected(), 0.0, layoutSlip.getConnectD(), layoutSlip.getCoordsD());
 				removeAssignment(dSensor);
 				layoutSlip.setSensorD(slipSensorD.getText());
 				needRedraw = true;
@@ -12556,8 +12379,6 @@ public class LayoutEditorTools
 			layoutSlip.setSignalB2Name("");
 		}
 		if (setB1SlipHead.isSelected()) {
-            log.info(b1SlipHead);
-            log.info(b1SlipField.getText().trim());
 			if (isHeadOnPanel(b1SlipHead) &&
 				(b1SlipHead!=getHeadFromName(layoutSlip.getSignalC1Name()))) {
 				JOptionPane.showMessageDialog(setSignalsAtSlipFrame,
@@ -12885,33 +12706,33 @@ public class LayoutEditorTools
 	}
 	private void placeA1Slip(String headName) {
 		// place head near the continuing track of turnout 1
-        placingBlock(getSignalHeadIcon(headName), false, 0.0);
+        placingBlock(getSignalHeadIcon(headName), false, 0.0, layoutSlip.getConnectA(), layoutSlip.getCoordsA());
 	}
 	private void placeA2Slip(String headName) {
         SignalHeadIcon l = getSignalHeadIcon(headName);
-        placingBlock(l, false, (4+l.getHeight()));
+        placingBlock(l, false, (4+l.getHeight()), layoutSlip.getConnectA(), layoutSlip.getCoordsA());
 	}
 	private void placeB1Slip(String headName) {
-        placingBlockB(getSignalHeadIcon(headName), true, 0.0);
+        placingBlock(getSignalHeadIcon(headName), true, 0.0, layoutSlip.getConnectB(), layoutSlip.getCoordsB());
 	}
 	private void placeB2Slip(String headName) {
         SignalHeadIcon l = getSignalHeadIcon(headName);
-        placingBlockB(l, true, (4+l.getHeight()));
+        placingBlock(l, true, (4+l.getHeight()), layoutSlip.getConnectB(), layoutSlip.getCoordsB());
 	}
 	private void placeC1Slip(String headName) {
-        placingBlockC(getSignalHeadIcon(headName), false, 0.0);
+        placingBlock(getSignalHeadIcon(headName), false, 0.0, layoutSlip.getConnectC(), layoutSlip.getCoordsC());
 	}
 	private void placeC2Slip(String headName) {
         SignalHeadIcon l = getSignalHeadIcon(headName);
-        placingBlockC(l, false, (4+l.getHeight()));
+        placingBlock(l, false, (4+l.getHeight()), layoutSlip.getConnectC(), layoutSlip.getCoordsC());
 	}
 	private void placeD1Slip(String headName) {
-        placingBlockD(getSignalHeadIcon(headName), true, 0.0);
+        placingBlock(getSignalHeadIcon(headName), true, 0.0, layoutSlip.getConnectD(), layoutSlip.getCoordsD());
 
 	}
 	private void placeD2Slip(String headName) {
         SignalHeadIcon l = getSignalHeadIcon(headName);
-        placingBlockD(l, true, (4+l.getHeight()));
+        placingBlock(l, true, (4+l.getHeight()), layoutSlip.getConnectD(), layoutSlip.getCoordsD());
 	}
     
 	private void setLogicSlip(SignalHead head,TrackSegment track1,SignalHead secondHead,TrackSegment track2,
