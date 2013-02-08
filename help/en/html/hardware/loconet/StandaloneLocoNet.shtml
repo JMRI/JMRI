@@ -15,7 +15,7 @@
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
-
+<link rel="stylesheet" type="text/css" href="../../../../../web/css/default.css" media="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
 	MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
@@ -54,6 +54,7 @@
             </li>
         </UL>
         </LI>
+        <LI><A href="#pseudoground">BDL16x connection to a DCC system without a "Ground" terminal</A></li>
         <LI><A href="#sneakpaths">"Sneak paths" and Computer Interfaces</A></LI>
     </UL></LI>
     <LI><A href="#examples">Examples</A>
@@ -434,14 +435,14 @@ useful.</p>
                 booster manufacturers only offer opto-isolated boosters, and some
                 other booster manufacturers offer some models which include optical
                 isolation.</p>
-        <H4><A name="rsfromncecs">RailSync from an NCE command station</a></H4>
-            <p>NCE has recommended at least two different ways to use NCE Control Bus
-                signals to create RailSync+ and RailSync- for use by Digitrax Boosters.
-                The diagram below, based on one shown in an NCE document, shows what
-                is believed to be a good way to do this.</p>
-            <img src="images/RailSyncFromNCEControlBus.png" 
-                 alt="Image showing circuit to create Standalone LocoNet RailSync 
-                 from NCE Control Bus Control+/-">
+            <H4><A name="rsfromncecs">RailSync from an NCE command station</a></H4>
+                <p>NCE has recommended at least two different ways to use NCE Control Bus
+                    signals to create RailSync+ and RailSync- for use by Digitrax Boosters.
+                    The diagram below, based on one shown in an NCE document, shows what
+                    is believed to be a good way to do this.</p>
+                <img src="images/RailSyncFromNCEControlBus.png" 
+                     alt="Image showing circuit to create Standalone LocoNet RailSync 
+                     from NCE Control Bus Control+/-">
             <p>Notes:</p>
             <ul>
                 <li>These types of circuits must not be used in conjunction with any other 
@@ -454,8 +455,21 @@ useful.</p>
                     a circuit might work but would be more sensitive to electrical 
                     noise than the circuit shown above.</li>
             </ul>
-            
-        <H2><A name="sneakpaths">"Sneak paths" and Computer Interfaces</A></H2>
+    <H2><A name="pseudoground">BDL16x connection to a DCC system without a "Ground" terminal</A></H2>
+        <p>According to BDL16x documentation, proper BDL16x operation <strong>
+            requires</strong> a "ground" connection to the DCC booster, via 
+            pin 11 on the BDL16x connector.  But some boosters do not have any 
+            documented "ground" connection.</p>
+        <p>The following circuit has been used to allow connection of a BDL16x for
+            occupancy detection with the Hornby Elite DCC system, which does not
+            have a "ground" connection.  This circuit creates a "pseudo-ground"
+            from the DCC track signal which can be used as the "Ground" for the
+            connection to the BDL16x.</p>
+        <img src="images/PseudoGroundForBdl16x.jpg" 
+           alt="Image showing circuit to generate a pseudo-ground from a command station without a 'ground' connection">
+        <p>Note that this "pseudo-ground" should only be connected to BDL16x 
+            devices.</p>
+    <H2><A name="sneakpaths">"Sneak paths" and Computer Interfaces</A></H2>
         <P>When multiple devices share different types of electrical connections, 
             unexpected current paths can be present that can cause malfunction or
             component failure.  A properly designed and implemented system prevents 
