@@ -228,7 +228,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         map.put("BeanStateInconsistent", inconsistent);
         map.put("BeanStateUnknown", unknown);
         for (int i = 0; i<entries.size(); i++) {
-        	map.put(MultiSensorItemPanel.POSITION[i], entries.get(i).icon);
+        	map.put(MultiSensorItemPanel.getPositionName(i), entries.get(i).icon);
          }     	
         _itemPanel.init(updateAction, map);
         for (int i = 0; i<entries.size(); i++) {
@@ -259,7 +259,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         }
         entries = new ArrayList<Entry>(selections.size());
         for (int i=0; i<selections.size(); i++) {
-            addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(MultiSensorItemPanel.POSITION[i])));
+            addEntry(selections.get(i).getDisplayName(), new NamedIcon(iconMap.get(MultiSensorItemPanel.getPositionName(i))));
         }
         _iconFamily = _itemPanel.getFamilyName();
         _itemPanel.clearSelections();

@@ -193,9 +193,11 @@ public class MultiSensorItemPanel extends TableItemPanel {
     	_upDown = upDown;
     }
     
-    public static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
+    static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
                                          "sixth", "seventh", "eighth", "nineth", "tenth" };
 
+    static public String getPositionName(int index) { return POSITION[index]; }
+    
     protected class MultiSensorSelectionModel extends DefaultListSelectionModel {
 
         ArrayList<NamedBean> _selections;
