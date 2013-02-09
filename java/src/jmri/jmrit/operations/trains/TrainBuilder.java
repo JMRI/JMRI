@@ -196,28 +196,25 @@ public class TrainBuilder extends TrainCommon {
 				addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocSkipped"),
 						new Object[] { rl.getName(), train.getName() }));
 				rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
-			}
-			// skip if a location doesn't allow drops or pick ups
-			else if (!rl.canDrop() && !rl.canPickup()) {
-				addLine(buildReport, THREE, MessageFormat.format(Bundle
-						.getMessage("buildLocNoDropsOrPickups"), new Object[] { rl.getName() }));
-				rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
 			} else {
 				// we're going to use this location, so initialize the location
 				rl.setCarMoves(0); // clear the number of moves
 				requested = requested + rl.getMaxCarMoves(); // add up the total number of car moves requested
 				// show the type of moves allowed at this location
-				if (rl.canDrop() && rl.canPickup())
+				if (!rl.canDrop() && !rl.canPickup())
+					addLine(buildReport, THREE, MessageFormat.format(Bundle
+							.getMessage("buildLocNoDropsOrPickups"), new Object[] { rl.getName() }));
+				else if (rl.canDrop() && rl.canPickup())
 					addLine(buildReport, THREE, MessageFormat.format(Bundle
 							.getMessage("buildLocRequestMoves"), new Object[] { rl.getName(),
 							rl.getMaxCarMoves() }));
 				else if (!rl.canDrop())
 					addLine(buildReport, THREE, MessageFormat.format(Bundle
-							.getMessage("buildLocRequestNoDrops"), new Object[] { rl.getName(),
+							.getMessage("buildLocRequestPickups"), new Object[] { rl.getName(),
 							rl.getMaxCarMoves() }));
 				else
 					addLine(buildReport, THREE, MessageFormat.format(Bundle
-							.getMessage("buildLocRequestNoPickups"), new Object[] { rl.getName(),
+							.getMessage("buildLocRequestDrops"), new Object[] { rl.getName(),
 							rl.getMaxCarMoves() }));
 			}
 			rl.setTrainWeight(0); // clear the total train weight

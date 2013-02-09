@@ -339,9 +339,31 @@ public class Train implements java.beans.PropertyChangeListener {
 			return "-1"; // NOI18N
 		log.debug("Calculate departure time for train (" + getName() + ") at (" + routeLocation.getName()
 				+ ")");
-
+		
+		// figure out the work at this location, note that there can be consecutive locations with the same name
+		if (getRoute() != null) {
+			List<String> routeList = getRoute().getLocationsBySequenceList();
+			boolean foundRouteLocation = false;
+			for (int i = 0; i < routeList.size(); i++) {
+				RouteLocation rl = getRoute().getLocationById(routeList.get(i));
+				if (rl == routeLocation) {
+					foundRouteLocation = true;
+				}
+				if (foundRouteLocation) {
+					if (TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(routeLocation.getName())))
+						minutes = minutes + calculateWorkAtLocation(rl);
+					else
+						break; // done
+				}
+			}
+		}
+		return parseTime(minutes);
+	}
+	
+	private int calculateWorkAtLocation(RouteLocation routeLocation) {
 		CarManager carManager = CarManager.instance();
 		List<String> carList = carManager.getByTrainList(this);
+		int minutes = 0;
 		// add any work at this location
 		for (int j = 0; j < carList.size(); j++) {
 			Car car = carManager.getById(carList.get(j));
@@ -352,7 +374,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				minutes += Setup.getSwitchTime();
 			}
 		}
-		return parseTime(minutes);
+		return minutes;
 	}
 
 	protected int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
