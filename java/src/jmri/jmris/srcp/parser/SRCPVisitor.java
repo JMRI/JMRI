@@ -73,8 +73,6 @@ public class SRCPVisitor implements SRCPParserVisitor {
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM"))
     {
       // This is a Service Mode read request.
-      int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
-      int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
       int modeno=jmri.Programmer.REGISTERMODE;
       if(node.jjtGetChild(3).getClass()==ASTcv.class)
          modeno=jmri.Programmer.DIRECTBYTEMODE;
@@ -140,8 +138,6 @@ public class SRCPVisitor implements SRCPParserVisitor {
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM"))
     {
       // This is a Service Mode write request
-      int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
-      int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
       int modeno=jmri.Programmer.REGISTERMODE;
       if(node.jjtGetChild(3).getClass()==ASTcv.class)
          modeno=jmri.Programmer.DIRECTBYTEMODE;
