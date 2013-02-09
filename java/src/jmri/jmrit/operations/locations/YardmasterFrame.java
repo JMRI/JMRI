@@ -267,10 +267,11 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		List<String> carList = carManager.getByTrainDestinationList(train);
 		for (int i = 0; i < carList.size(); i++) {
 			Car car = carManager.getById(carList.get(i));
-			if (TrainCommon.splitString(car.getRouteLocation().getName()).equals(
-					TrainCommon.splitString(location.getName()))
-					|| TrainCommon.splitString(car.getRouteDestination().getName()).equals(
-							TrainCommon.splitString(location.getName())))
+			if ((car.getRouteLocation() != null && TrainCommon.splitString(car.getRouteLocation().getName())
+					.equals(TrainCommon.splitString(location.getName())))
+					|| (car.getRouteDestination() != null && TrainCommon.splitString(
+							car.getRouteDestination().getName()).equals(
+							TrainCommon.splitString(location.getName()))))
 				return true;
 		}
 		List<String> engList = engManager.getByTrainList(train);
