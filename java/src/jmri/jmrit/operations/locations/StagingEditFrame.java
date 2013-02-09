@@ -91,6 +91,8 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 			loadCheckBox.setSelected(_track.isAddLoadsEnabled());
 			loadAnyCheckBox.setSelected(_track.isAddLoadsAnySidingEnabled());
 			loadAnyStagingCheckBox.setSelected(_track.isAddCustomLoadsAnyStagingTrackEnabled());
+			pShipLoadOption.setVisible(loadCheckBox.isSelected() 
+					|| loadAnyCheckBox.isSelected() || loadAnyStagingCheckBox.isSelected());	// show which loads this track can ship
 			blockCarsCheckBox.setSelected(_track.isBlockCarsEnabled());
 			if (loadCheckBox.isSelected() || loadAnyCheckBox.isSelected()
 					|| loadAnyStagingCheckBox.isSelected()) {
@@ -130,10 +132,13 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		loadAnyCheckBox.setEnabled(enabled);
 		loadAnyStagingCheckBox.setEnabled(enabled);
 		if (!loadCheckBox.isSelected() && !loadAnyCheckBox.isSelected()
-				&& !loadAnyStagingCheckBox.isSelected() && enabled)
+				&& !loadAnyStagingCheckBox.isSelected() && enabled) {
 			blockCarsCheckBox.setEnabled(true);
-		else
+			pShipLoadOption.setVisible(false);
+		} else {
 			blockCarsCheckBox.setEnabled(false);
+			pShipLoadOption.setVisible(true);
+		}
 		super.enableButtons(enabled);
 	}
 
@@ -144,24 +149,21 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		} else if (ae.getSource() == emptyCheckBox) {
 			if (emptyCheckBox.isSelected())
 				swapLoadsCheckBox.setSelected(false);
-		}
-		if (ae.getSource() == loadCheckBox) {
+		} else if (ae.getSource() == loadCheckBox) {
 			if (loadCheckBox.isSelected()) {
 				loadAnyCheckBox.setSelected(false);
 				blockCarsCheckBox.setSelected(false);
 				blockCarsCheckBox.setEnabled(false);
 			} else if (!loadAnyCheckBox.isSelected() && !loadAnyStagingCheckBox.isSelected())
 				blockCarsCheckBox.setEnabled(true);
-		}
-		if (ae.getSource() == loadAnyCheckBox) {
+		} else if (ae.getSource() == loadAnyCheckBox) {
 			if (loadAnyCheckBox.isSelected()) {
 				loadCheckBox.setSelected(false);
 				blockCarsCheckBox.setSelected(false);
 				blockCarsCheckBox.setEnabled(false);
 			} else if (!loadCheckBox.isSelected() && !loadAnyStagingCheckBox.isSelected())
 				blockCarsCheckBox.setEnabled(true);
-		}
-		if (ae.getSource() == loadAnyStagingCheckBox) {
+		} else if (ae.getSource() == loadAnyStagingCheckBox) {
 			if (loadAnyStagingCheckBox.isSelected()) {
 				blockCarsCheckBox.setEnabled(false);
 			} else if (!loadCheckBox.isSelected() && !loadAnyCheckBox.isSelected())

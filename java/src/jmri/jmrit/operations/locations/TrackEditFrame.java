@@ -5,7 +5,6 @@ package jmri.jmrit.operations.locations;
 import org.apache.log4j.Logger;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -35,7 +34,7 @@ import java.util.List;
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
-	private static boolean loadAndType = false;
+//	private static boolean loadAndType = false;
 
 	// Managers
 	LocationManagerXml managerXml = LocationManagerXml.instance();
@@ -53,14 +52,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JPanel panelCheckBoxes = new JPanel();
 	JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
 	JPanel panelTrainDir = new JPanel();
-	JPanel panelRoadNames = new JPanel();
-	JScrollPane paneRoadNames = new JScrollPane(panelRoadNames);
-	JPanel panelLoadNames = new JPanel();
-	JScrollPane paneLoadNames = new JScrollPane(panelLoadNames);
+	JPanel pShipLoadOption = new JPanel();
+//	JPanel panelRoadNames = new JPanel();
+//	JScrollPane paneRoadNames = new JScrollPane(panelRoadNames);
+//	JPanel panelLoadNames = new JPanel();
+//	JScrollPane paneLoadNames = new JScrollPane(panelLoadNames);
 	JPanel panelOrder = new JPanel();
 	
 	// labels
-	JLabel loadOption = new JLabel(Bundle.getMessage("AcceptsAllLoads"));
+	JLabel loadOption = new JLabel();
+	JLabel shipLoadOption = new JLabel();
 	JLabel roadOption = new JLabel(Bundle.getMessage("AcceptsAllRoads"));
 
 	// major buttons
@@ -69,11 +70,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JButton saveTrackButton = new JButton(Bundle.getMessage("SaveTrack"));
 	JButton deleteTrackButton = new JButton(Bundle.getMessage("DeleteTrack"));
 	JButton addTrackButton = new JButton(Bundle.getMessage("AddTrack"));
-	JButton deleteRoadButton = new JButton(Bundle.getMessage("DeleteRoad"));
-	JButton addRoadButton = new JButton(Bundle.getMessage("AddRoad"));
-	JButton addLoadButton = new JButton(Bundle.getMessage("AddLoad"));
-	JButton deleteLoadButton = new JButton(Bundle.getMessage("DeleteLoad"));
-	JButton deleteAllLoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
+//	JButton deleteRoadButton = new JButton(Bundle.getMessage("DeleteRoad"));
+//	JButton addRoadButton = new JButton(Bundle.getMessage("AddRoad"));
+//	JButton addLoadButton = new JButton(Bundle.getMessage("AddLoad"));
+//	JButton deleteLoadButton = new JButton(Bundle.getMessage("DeleteLoad"));
+//	JButton deleteAllLoadsButton = new JButton(Bundle.getMessage("DeleteAll"));
 
 	JButton deleteDropButton = new JButton(Bundle.getMessage("Delete"));
 	JButton addDropButton = new JButton(Bundle.getMessage("Add"));
@@ -85,18 +86,18 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JCheckBox southCheckBox = new JCheckBox(Bundle.getMessage("South"));
 	JCheckBox eastCheckBox = new JCheckBox(Bundle.getMessage("East"));
 	JCheckBox westCheckBox = new JCheckBox(Bundle.getMessage("West"));
-	JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
+//	JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
 	JCheckBox autoDropCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
 	JCheckBox autoPickupCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
 
 	// radio buttons
-	JRadioButton roadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
-	JRadioButton roadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
-	JRadioButton roadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
+//	JRadioButton roadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
+//	JRadioButton roadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
+//	JRadioButton roadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
-	JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
-	JRadioButton loadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
-	JRadioButton loadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
+//	JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
+//	JRadioButton loadNameInclude = new JRadioButton(Bundle.getMessage("AcceptOnly"));
+//	JRadioButton loadNameExclude = new JRadioButton(Bundle.getMessage("Exclude"));
 
 	// car pick up order controls
 	JRadioButton orderNormal = new JRadioButton(Bundle.getMessage("Normal"));
@@ -131,8 +132,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	Dimension minScrollerDim = new Dimension(500, 42);
 
 	// combo box
-	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
-	JComboBox comboBoxLoads = CarLoads.instance().getComboBox(null);
+//	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
+//	JComboBox comboBoxLoads = CarLoads.instance().getComboBox(null);
 	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
 
 	// optional panel for spurs, staging, and interchanges
@@ -208,20 +209,20 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		panelCheckBoxes.setLayout(new GridBagLayout());
 
 		// row 5
-		panelRoadNames.setLayout(new GridBagLayout());
-		paneRoadNames.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadsTrack")));
-		ButtonGroup roadGroup = new ButtonGroup();
-		roadGroup.add(roadNameAll);
-		roadGroup.add(roadNameInclude);
-		roadGroup.add(roadNameExclude);
+//		panelRoadNames.setLayout(new GridBagLayout());
+//		paneRoadNames.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RoadsTrack")));
+//		ButtonGroup roadGroup = new ButtonGroup();
+//		roadGroup.add(roadNameAll);
+//		roadGroup.add(roadNameInclude);
+//		roadGroup.add(roadNameExclude);
 
 		// row 8
-		panelLoadNames.setLayout(new GridBagLayout());
-		paneLoadNames.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadsTrack")));
-		ButtonGroup loadGroup = new ButtonGroup();
-		loadGroup.add(loadNameAll);
-		loadGroup.add(loadNameInclude);
-		loadGroup.add(loadNameExclude);
+//		panelLoadNames.setLayout(new GridBagLayout());
+//		paneLoadNames.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadsTrack")));
+//		ButtonGroup loadGroup = new ButtonGroup();
+//		loadGroup.add(loadNameAll);
+//		loadGroup.add(loadNameInclude);
+//		loadGroup.add(loadNameExclude);
 				
 		// status panel for roads and loads
 		JPanel panelRoadAndLoadStatus = new JPanel();
@@ -232,9 +233,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		JPanel pLoadOption = new JPanel();
 		pLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LoadOption")));
 		pLoadOption.add(loadOption);
+		pShipLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ShipLoadOption")));
+		pShipLoadOption.add(shipLoadOption);
 		
 		panelRoadAndLoadStatus.add(pRoadOption);
 		panelRoadAndLoadStatus.add(pLoadOption);
+		panelRoadAndLoadStatus.add(pShipLoadOption);
+		
+		// only staging uses the ship load option
+		pShipLoadOption.setVisible(false);
 
 		// row 10
 		// order panel
@@ -300,25 +307,25 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addButtonAction(deleteTrackButton);
 		addButtonAction(addTrackButton);
 		addButtonAction(saveTrackButton);
-		addButtonAction(deleteRoadButton);
+//		addButtonAction(deleteRoadButton);
 
-		addButtonAction(addRoadButton);
-		addButtonAction(deleteLoadButton);
-		addButtonAction(deleteAllLoadsButton);
-		addButtonAction(addLoadButton);
+//		addButtonAction(addRoadButton);
+//		addButtonAction(deleteLoadButton);
+//		addButtonAction(deleteAllLoadsButton);
+//		addButtonAction(addLoadButton);
 
 		addButtonAction(deleteDropButton);
 		addButtonAction(addDropButton);
 		addButtonAction(deletePickupButton);
 		addButtonAction(addPickupButton);
 
-		addRadioButtonAction(roadNameAll);
-		addRadioButtonAction(roadNameInclude);
-		addRadioButtonAction(roadNameExclude);
+//		addRadioButtonAction(roadNameAll);
+//		addRadioButtonAction(roadNameInclude);
+//		addRadioButtonAction(roadNameExclude);
 
-		addRadioButtonAction(loadNameAll);
-		addRadioButtonAction(loadNameInclude);
-		addRadioButtonAction(loadNameExclude);
+//		addRadioButtonAction(loadNameAll);
+//		addRadioButtonAction(loadNameInclude);
+//		addRadioButtonAction(loadNameExclude);
 
 		addRadioButtonAction(orderNormal);
 		addRadioButtonAction(orderFIFO);
@@ -370,10 +377,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 		// load
 		updateCheckboxes();
-		updateRoadNames();
+//		updateRoadNames();
 		updateTypeComboBoxes();
-		updateLoadComboBoxes();
-		updateLoadNames();
+//		updateLoadComboBoxes();
+//		updateLoadNames();
 		updateTrainDir();
 		updateCarOrder();
 		updateDropOptions();
@@ -381,7 +388,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateRoadOption();
 		updateLoadOption();
 
-		loadAndTypeCheckBox.setSelected(loadAndType);
+//		loadAndTypeCheckBox.setSelected(loadAndType);
 		
 		setMinimumSize(new Dimension(750, Control.panelHeight));
 	}
@@ -425,35 +432,35 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (_track == null)
 			return;
-		if (ae.getSource() == addRoadButton) {
-			_track.addRoadName((String) comboBoxRoads.getSelectedItem());
-			updateRoadNames();
-			selectNextItemComboBox(comboBoxRoads);
-		}
-		if (ae.getSource() == deleteRoadButton) {
-			_track.deleteRoadName((String) comboBoxRoads.getSelectedItem());
-			updateRoadNames();
-			selectNextItemComboBox(comboBoxRoads);
-		}
-		if (ae.getSource() == addLoadButton) {
-			String loadName = (String) comboBoxLoads.getSelectedItem();
-			if (loadAndTypeCheckBox.isSelected())
-				loadName = comboBoxTypes.getSelectedItem() + CarLoad.SPLIT_CHAR + loadName;
-			if (_track.addLoadName(loadName))
-				updateLoadNames();
-			selectNextItemComboBox(comboBoxLoads);
-		}
-		if (ae.getSource() == deleteLoadButton) {
-			String loadName = (String) comboBoxLoads.getSelectedItem();
-			if (loadAndTypeCheckBox.isSelected())
-				loadName = comboBoxTypes.getSelectedItem() + CarLoad.SPLIT_CHAR + loadName;
-			if (_track.deleteLoadName(loadName))
-				updateLoadNames();
-			selectNextItemComboBox(comboBoxLoads);
-		}
-		if (ae.getSource() == deleteAllLoadsButton) {
-			deleteAllLoads();
-		}
+//		if (ae.getSource() == addRoadButton) {
+//			_track.addRoadName((String) comboBoxRoads.getSelectedItem());
+//			updateRoadNames();
+//			selectNextItemComboBox(comboBoxRoads);
+//		}
+//		if (ae.getSource() == deleteRoadButton) {
+//			_track.deleteRoadName((String) comboBoxRoads.getSelectedItem());
+//			updateRoadNames();
+//			selectNextItemComboBox(comboBoxRoads);
+//		}
+//		if (ae.getSource() == addLoadButton) {
+//			String loadName = (String) comboBoxLoads.getSelectedItem();
+//			if (loadAndTypeCheckBox.isSelected())
+//				loadName = comboBoxTypes.getSelectedItem() + CarLoad.SPLIT_CHAR + loadName;
+//			if (_track.addLoadName(loadName))
+//				updateLoadNames();
+//			selectNextItemComboBox(comboBoxLoads);
+//		}
+//		if (ae.getSource() == deleteLoadButton) {
+//			String loadName = (String) comboBoxLoads.getSelectedItem();
+//			if (loadAndTypeCheckBox.isSelected())
+//				loadName = comboBoxTypes.getSelectedItem() + CarLoad.SPLIT_CHAR + loadName;
+//			if (_track.deleteLoadName(loadName))
+//				updateLoadNames();
+//			selectNextItemComboBox(comboBoxLoads);
+//		}
+//		if (ae.getSource() == deleteAllLoadsButton) {
+//			deleteAllLoads();
+//		}
 		if (ae.getSource() == setButton) {
 			selectCheckboxes(true);
 		}
@@ -574,8 +581,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// reset all of the track's attributes
 		updateTrainDir();
 		updateCheckboxes();
-		updateRoadNames();
-		updateLoadNames();
+//		updateRoadNames();
+//		updateLoadNames();
 		updateDropOptions();
 		updatePickupOptions();
 		updateRoadOption();
@@ -626,7 +633,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		track.setComment(commentTextArea.getText());
 
 		// save the last state of the "Use car type and load" checkbox
-		loadAndType = loadAndTypeCheckBox.isSelected();
+//		loadAndType = loadAndTypeCheckBox.isSelected();
 
 		// enable
 		enableButtons(true);
@@ -773,13 +780,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		setButton.setEnabled(enabled);
 		deleteTrackButton.setEnabled(enabled);
 		saveTrackButton.setEnabled(enabled);
-		roadNameAll.setEnabled(enabled);
-		roadNameInclude.setEnabled(enabled);
-		roadNameExclude.setEnabled(enabled);
-		loadNameAll.setEnabled(enabled);
-		loadNameInclude.setEnabled(enabled);
-		loadNameExclude.setEnabled(enabled);
-		loadAndTypeCheckBox.setEnabled(enabled);
+//		roadNameAll.setEnabled(enabled);
+//		roadNameInclude.setEnabled(enabled);
+//		roadNameExclude.setEnabled(enabled);
+//		loadNameAll.setEnabled(enabled);
+//		loadNameInclude.setEnabled(enabled);
+//		loadNameExclude.setEnabled(enabled);
+//		loadAndTypeCheckBox.setEnabled(enabled);
 		anyDrops.setEnabled(enabled);
 		trainDrop.setEnabled(enabled);
 		routeDrop.setEnabled(enabled);
@@ -798,30 +805,30 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("radio button activated");
-		if (ae.getSource() == roadNameAll) {
-			_track.setRoadOption(Track.ALLROADS);
-			updateRoadNames();
-		}
-		if (ae.getSource() == roadNameInclude) {
-			_track.setRoadOption(Track.INCLUDEROADS);
-			updateRoadNames();
-		}
-		if (ae.getSource() == roadNameExclude) {
-			_track.setRoadOption(Track.EXCLUDEROADS);
-			updateRoadNames();
-		}
-		if (ae.getSource() == loadNameAll) {
-			_track.setLoadOption(Track.ALLLOADS);
-			updateLoadNames();
-		}
-		if (ae.getSource() == loadNameInclude) {
-			_track.setLoadOption(Track.INCLUDELOADS);
-			updateLoadNames();
-		}
-		if (ae.getSource() == loadNameExclude) {
-			_track.setLoadOption(Track.EXCLUDELOADS);
-			updateLoadNames();
-		}
+//		if (ae.getSource() == roadNameAll) {
+//			_track.setRoadOption(Track.ALLROADS);
+//			updateRoadNames();
+//		}
+//		if (ae.getSource() == roadNameInclude) {
+//			_track.setRoadOption(Track.INCLUDEROADS);
+//			updateRoadNames();
+//		}
+//		if (ae.getSource() == roadNameExclude) {
+//			_track.setRoadOption(Track.EXCLUDEROADS);
+//			updateRoadNames();
+//		}
+//		if (ae.getSource() == loadNameAll) {
+//			_track.setLoadOption(Track.ALLLOADS);
+//			updateLoadNames();
+//		}
+//		if (ae.getSource() == loadNameInclude) {
+//			_track.setLoadOption(Track.INCLUDELOADS);
+//			updateLoadNames();
+//		}
+//		if (ae.getSource() == loadNameExclude) {
+//			_track.setLoadOption(Track.EXCLUDELOADS);
+//			updateLoadNames();
+//		}
 		if (ae.getSource() == orderNormal) {
 			_track.setServiceOrder(Track.NORMAL);
 		}
@@ -1058,9 +1065,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	// Car type combo box has been changed, show loads associated with this car type
-	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		updateLoadComboBoxes();
-	}
+//	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+//		updateLoadComboBoxes();
+//	}
 
 	private void enableCheckboxes(boolean enable) {
 		for (int i = 0; i < checkBoxes.size(); i++) {
@@ -1084,10 +1091,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
-	private void updateLoadComboBoxes() {
-		String carType = (String) comboBoxTypes.getSelectedItem();
-		CarLoads.instance().updateComboBox(carType, comboBoxLoads);
-	}
+//	private void updateLoadComboBoxes() {
+//		String carType = (String) comboBoxTypes.getSelectedItem();
+//		CarLoads.instance().updateComboBox(carType, comboBoxLoads);
+//	}
 
 	// car and loco types
 	private void updateCheckboxes() {
@@ -1148,56 +1155,56 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
-	private void updateRoadNames() {
-		panelRoadNames.removeAll();
-		int numberOfCheckboxes = getNumberOfCheckboxes();
-
-		JPanel p = new JPanel();
-		p.setLayout(new GridBagLayout());
-		p.add(roadNameAll, 0);
-		p.add(roadNameInclude, 1);
-		p.add(roadNameExclude, 2);
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridwidth = numberOfCheckboxes + 1;
-		panelRoadNames.add(p, gc);
-
-		int y = 1; // vertical position in panel
-
-		if (_track != null) {
-			// set radio button
-			roadNameAll.setSelected(_track.getRoadOption().equals(Track.ALLROADS));
-			roadNameInclude.setSelected(_track.getRoadOption().equals(Track.INCLUDEROADS));
-			roadNameExclude.setSelected(_track.getRoadOption().equals(Track.EXCLUDEROADS));
-
-			if (!roadNameAll.isSelected()) {
-				p = new JPanel();
-				p.setLayout(new FlowLayout());
-				p.add(comboBoxRoads);
-				p.add(addRoadButton);
-				p.add(deleteRoadButton);
-				gc.gridy = y++;
-				panelRoadNames.add(p, gc);
-				y++;
-
-				String[] carRoads = _track.getRoadNames();
-				int x = 0;
-				for (int i = 0; i < carRoads.length; i++) {
-					JLabel road = new JLabel();
-					road.setText(carRoads[i]);
-					addItem(panelRoadNames, road, x++, y);
-					if (x > numberOfCheckboxes) {
-						y++;
-						x = 0;
-					}
-				}
-			}
-		} else {
-			roadNameAll.setSelected(true);
-		}
-		panelRoadNames.repaint();
-		panelRoadNames.validate();
-		validate();
-	}
+//	private void updateRoadNames() {
+//		panelRoadNames.removeAll();
+//		int numberOfCheckboxes = getNumberOfCheckboxes();
+//
+//		JPanel p = new JPanel();
+//		p.setLayout(new GridBagLayout());
+//		p.add(roadNameAll, 0);
+//		p.add(roadNameInclude, 1);
+//		p.add(roadNameExclude, 2);
+//		GridBagConstraints gc = new GridBagConstraints();
+//		gc.gridwidth = numberOfCheckboxes + 1;
+//		panelRoadNames.add(p, gc);
+//
+//		int y = 1; // vertical position in panel
+//
+//		if (_track != null) {
+//			// set radio button
+//			roadNameAll.setSelected(_track.getRoadOption().equals(Track.ALLROADS));
+//			roadNameInclude.setSelected(_track.getRoadOption().equals(Track.INCLUDEROADS));
+//			roadNameExclude.setSelected(_track.getRoadOption().equals(Track.EXCLUDEROADS));
+//
+//			if (!roadNameAll.isSelected()) {
+//				p = new JPanel();
+//				p.setLayout(new FlowLayout());
+//				p.add(comboBoxRoads);
+//				p.add(addRoadButton);
+//				p.add(deleteRoadButton);
+//				gc.gridy = y++;
+//				panelRoadNames.add(p, gc);
+//				y++;
+//
+//				String[] carRoads = _track.getRoadNames();
+//				int x = 0;
+//				for (int i = 0; i < carRoads.length; i++) {
+//					JLabel road = new JLabel();
+//					road.setText(carRoads[i]);
+//					addItem(panelRoadNames, road, x++, y);
+//					if (x > numberOfCheckboxes) {
+//						y++;
+//						x = 0;
+//					}
+//				}
+//			}
+//		} else {
+//			roadNameAll.setSelected(true);
+//		}
+//		panelRoadNames.repaint();
+//		panelRoadNames.validate();
+//		validate();
+//	}
 	
 	private void updateLoadOption() {
 		if (_track != null) {
@@ -1209,71 +1216,80 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 						+ Bundle.getMessage("Loads"));
 			else
 				loadOption.setText(Bundle.getMessage("AcceptsAllLoads"));
+			
+			if (_track.getShipLoadOption().equals(Track.INCLUDELOADS))
+				shipLoadOption.setText(Bundle.getMessage("ShipOnly") + " " + _track.getShipLoadNames().length + " "
+						+ Bundle.getMessage("Loads"));
+			else if (_track.getShipLoadOption().equals(Track.EXCLUDELOADS))
+				shipLoadOption.setText(Bundle.getMessage("Exclude") + " " + _track.getShipLoadNames().length + " "
+						+ Bundle.getMessage("Loads"));
+			else
+				shipLoadOption.setText(Bundle.getMessage("ShipAll"));
 		}
 	}
 
-	private void updateLoadNames() {
-		panelLoadNames.removeAll();
+//	private void updateLoadNames() {
+//		panelLoadNames.removeAll();
+//
+//		int numberOfCheckboxes = getNumberOfCheckboxes();
+//		JPanel p = new JPanel();
+//		p.setLayout(new GridBagLayout());
+//		p.add(loadNameAll, 0);
+//		p.add(loadNameInclude, 1);
+//		p.add(loadNameExclude, 2);
+//		GridBagConstraints gc = new GridBagConstraints();
+//		gc.gridwidth = numberOfCheckboxes + 1;
+//		panelLoadNames.add(p, gc);
+//
+//		int y = 1; // vertical position in panel
+//
+//		if (_track != null) {
+//			// set radio button
+//			loadNameAll.setSelected(_track.getLoadOption().equals(Track.ALLLOADS));
+//			loadNameInclude.setSelected(_track.getLoadOption().equals(Track.INCLUDEROADS));
+//			loadNameExclude.setSelected(_track.getLoadOption().equals(Track.EXCLUDEROADS));
+//
+//			if (!loadNameAll.isSelected()) {
+//				p = new JPanel();
+//				p.setLayout(new FlowLayout());
+//				p.add(comboBoxTypes);
+//				p.add(comboBoxLoads);
+//				p.add(addLoadButton);
+//				p.add(deleteLoadButton);
+//				p.add(deleteAllLoadsButton);
+//				p.add(loadAndTypeCheckBox);
+//				gc.gridy = y++;
+//				panelLoadNames.add(p, gc);
+//
+//				String[] carLoads = _track.getLoadNames();
+//				int x = 0;
+//				for (int i = 0; i < carLoads.length; i++) {
+//					JLabel load = new JLabel();
+//					load.setText(carLoads[i]);
+//					addItem(panelLoadNames, load, x++, y);
+//					if (x > numberOfCheckboxes) {
+//						y++;
+//						x = 0;
+//					}
+//				}
+//			}
+//		} else {
+//			loadNameAll.setSelected(true);
+//		}
+//		panelLoadNames.repaint();
+//		panelLoadNames.validate();
+//		validate();
+//	}
 
-		int numberOfCheckboxes = getNumberOfCheckboxes();
-		JPanel p = new JPanel();
-		p.setLayout(new GridBagLayout());
-		p.add(loadNameAll, 0);
-		p.add(loadNameInclude, 1);
-		p.add(loadNameExclude, 2);
-		GridBagConstraints gc = new GridBagConstraints();
-		gc.gridwidth = numberOfCheckboxes + 1;
-		panelLoadNames.add(p, gc);
-
-		int y = 1; // vertical position in panel
-
-		if (_track != null) {
-			// set radio button
-			loadNameAll.setSelected(_track.getLoadOption().equals(Track.ALLLOADS));
-			loadNameInclude.setSelected(_track.getLoadOption().equals(Track.INCLUDEROADS));
-			loadNameExclude.setSelected(_track.getLoadOption().equals(Track.EXCLUDEROADS));
-
-			if (!loadNameAll.isSelected()) {
-				p = new JPanel();
-				p.setLayout(new FlowLayout());
-				p.add(comboBoxTypes);
-				p.add(comboBoxLoads);
-				p.add(addLoadButton);
-				p.add(deleteLoadButton);
-				p.add(deleteAllLoadsButton);
-				p.add(loadAndTypeCheckBox);
-				gc.gridy = y++;
-				panelLoadNames.add(p, gc);
-
-				String[] carLoads = _track.getLoadNames();
-				int x = 0;
-				for (int i = 0; i < carLoads.length; i++) {
-					JLabel load = new JLabel();
-					load.setText(carLoads[i]);
-					addItem(panelLoadNames, load, x++, y);
-					if (x > numberOfCheckboxes) {
-						y++;
-						x = 0;
-					}
-				}
-			}
-		} else {
-			loadNameAll.setSelected(true);
-		}
-		panelLoadNames.repaint();
-		panelLoadNames.validate();
-		validate();
-	}
-
-	private void deleteAllLoads() {
-		if (_track != null) {
-			String[] trackLoads = _track.getLoadNames();
-			for (int i = 0; i < trackLoads.length; i++) {
-				_track.deleteLoadName(trackLoads[i]);
-			}
-		}
-		updateLoadNames();
-	}
+//	private void deleteAllLoads() {
+//		if (_track != null) {
+//			String[] trackLoads = _track.getLoadNames();
+//			for (int i = 0; i < trackLoads.length; i++) {
+//				_track.deleteLoadName(trackLoads[i]);
+//			}
+//		}
+//		updateLoadNames();
+//	}
 
 	private void updateTrainDir() {
 		northCheckBox.setVisible(((Setup.getTrainDirection() & Setup.NORTH) & (_location
@@ -1323,9 +1339,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
-	private void updateRoadComboBox() {
-		CarRoads.instance().updateComboBox(comboBoxRoads);
-	}
+//	private void updateRoadComboBox() {
+//		CarRoads.instance().updateComboBox(comboBoxRoads);
+//	}
 
 
 
@@ -1366,18 +1382,18 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)) {
 			updateTrainDir();
 		}
-		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
-			updateRoadComboBox();
-			updateRoadNames();
-		}
+//		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)) {
+//			updateRoadComboBox();
+//			updateRoadNames();
+//		}
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)) {
 			updateTypeComboBoxes();
 		}
-		if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)) {
-			updateLoadComboBoxes();
-			updateLoadNames();
-		}
+//		if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)
+//				|| e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)) {
+//			updateLoadComboBoxes();
+//			updateLoadNames();
+//		}
 		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateTrainComboBox();
 			updateDropOptions();

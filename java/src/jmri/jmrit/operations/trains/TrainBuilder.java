@@ -995,7 +995,7 @@ public class TrainBuilder extends TrainCommon {
 					new Object[] { train.getName(), roadCaboose, rl.getName(), rld.getName() }));
 		}
 		// Does the route have enough moves?
-		if (rl.getMaxCarMoves() - rl.getCarMoves() <= 0) {
+		if (requiresCaboose && rl.getMaxCarMoves() - rl.getCarMoves() <= 0) {
 			throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNoMoves"),
 					new Object[] {rl.getName(), Bundle.getMessage("Caboose")}));
 		}
@@ -2752,7 +2752,7 @@ public class TrainBuilder extends TrainCommon {
 			return null;
 		}
 		// does the departure track allow this load?
-		if (!car.getTrack().acceptsLoad(si.getLoad(), car.getType())) {
+		if (!car.getTrack().shipsLoad(si.getLoad(), car.getType())) {
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackNotNewLoad"),
 					new Object[] { car.getTrackName(), si.getLoad(), track.getLocation().getName(),
 							track.getName() }));
@@ -3462,7 +3462,7 @@ public class TrainBuilder extends TrainCommon {
 						stageTrack.getLocation().getName(), stageTrack.getName() }));
 		for (int i = loads.size() - 1; i >= 0; i--) {
 			String load = loads.get(i);
-			if (!stageTrack.acceptsLoad(load, car.getType()) || !train.acceptsLoad(load, car.getType()))
+			if (!car.getTrack().shipsLoad(load, car.getType()) || !stageTrack.acceptsLoad(load, car.getType()) || !train.acceptsLoad(load, car.getType()))
 				loads.remove(i);
 		}
 		// Use random loads rather that the first one that works to create interesting loads

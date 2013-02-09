@@ -70,7 +70,9 @@ public class Xml {
 	static final String CAR_ROADS = "carRoads"; // NOI18N
 	static final String CAR_ROAD = "carRoad"; // NOI18N
 	static final String CAR_LOAD_OPTION = "carLoadOption"; // NOI18N
+	static final String CAR_SHIP_LOAD_OPTION = "carShipLoadOption"; // NOI18N
 	static final String CAR_LOADS = "carLoads"; // NOI18N
+	static final String CAR_SHIP_LOADS = "carShipLoads"; // NOI18N
 	static final String CAR_LOAD = "carLoad"; // NOI18N
 	static final String DROP_IDS = "dropIds"; // NOI18N
 	static final String DROP_ID = "dropId"; // NOI18N

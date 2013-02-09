@@ -7,7 +7,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManager;
@@ -465,6 +464,7 @@ public class PrintLocationsAction extends AbstractAction {
 				writer.write(getTrackTypes(location, track));
 				writer.write(getTrackRoads(track));
 				writer.write(getTrackLoads(track));
+				writer.write(getTrackShipLoads(track));
 				writer.write(getCarOrder(track));
 				writer.write(getSetOutTrains(track));
 				writer.write(getPickUpTrains(track));
@@ -557,19 +557,21 @@ public class PrintLocationsAction extends AbstractAction {
 		if (track.getRoadOption().equals(Track.ALLROADS)) {
 			return TAB + TAB + Bundle.getMessage("AcceptsAllRoads") + NEW_LINE;
 		}
-		StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("RoadsServicedTrack") + NEW_LINE
-				+ TAB + TAB);
+		
+		String op = Bundle.getMessage("RoadsServicedTrack");
+		if (track.getRoadOption().equals(Track.EXCLUDEROADS))
+			op = Bundle.getMessage("ExcludeRoadsTrack");
+
+		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
 		int charCount = 0;
-		String[] roads = CarRoads.instance().getNames();
+		String[] roads = track.getRoadNames();
 		for (int i = 0; i < roads.length; i++) {
-			if (track.acceptsRoadName(roads[i])) {
-				charCount += roads[i].length() + 2;
-				if (charCount > characters) {
-					buf.append(NEW_LINE + TAB + TAB);
-					charCount = roads[i].length() + 2;
-				}
-				buf.append(roads[i] + ", ");
+			charCount += roads[i].length() + 2;
+			if (charCount > characters) {
+				buf.append(NEW_LINE + TAB + TAB);
+				charCount = roads[i].length() + 2;
 			}
+			buf.append(roads[i] + ", ");
 		}
 		if (buf.length() > 2)
 			buf.setLength(buf.length() - 2); // remove trailing separators
@@ -581,10 +583,42 @@ public class PrintLocationsAction extends AbstractAction {
 		if (track.getLoadOption().equals(Track.ALLLOADS)) {
 			return TAB + TAB + Bundle.getMessage("AcceptsAllLoads") + NEW_LINE;
 		}
-		StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("LoadsServicedTrack") + NEW_LINE
-				+ TAB + TAB);
+		
+		String op = Bundle.getMessage("LoadsServicedTrack");
+		if (track.getLoadOption().equals(Track.EXCLUDELOADS))
+			op = Bundle.getMessage("ExcludeLoadsTrack");
+
+		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
 		int charCount = 0;
 		String[] carLoads = track.getLoadNames();
+		for (int i = 0; i < carLoads.length; i++) {
+			charCount += carLoads[i].length() + 2;
+			if (charCount > characters) {
+				buf.append(NEW_LINE + TAB + TAB);
+				charCount = carLoads[i].length() + 2;
+			}
+			buf.append(carLoads[i] + ", ");
+		}
+		if (buf.length() > 2)
+			buf.setLength(buf.length() - 2); // remove trailing separators
+		buf.append(NEW_LINE);
+		return buf.toString();
+	}
+	
+	private String getTrackShipLoads(Track track) {
+		// only staging has the ship load control
+		if (!track.getLocType().equals(Track.STAGING))
+			return "";
+		if (track.getShipLoadOption().equals(Track.ALLLOADS)) {
+			return TAB + TAB + Bundle.getMessage("ShipsAllLoads") + NEW_LINE;
+		}
+		String op = Bundle.getMessage("LoadsShippedTrack");
+		if (track.getShipLoadOption().equals(Track.EXCLUDELOADS))
+			op = Bundle.getMessage("ExcludeLoadsShippedTrack");
+		
+		StringBuffer buf = new StringBuffer(TAB + TAB + op + NEW_LINE + TAB + TAB);
+		int charCount = 0;
+		String[] carLoads = track.getShipLoadNames();
 		for (int i = 0; i < carLoads.length; i++) {
 			charCount += carLoads[i].length() + 2;
 			if (charCount > characters) {

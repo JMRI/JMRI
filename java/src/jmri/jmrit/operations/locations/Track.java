@@ -57,7 +57,8 @@ public class Track {
 	protected String _commentSetout = "";
 	protected String _commentBoth = "";
 
-	protected String _loadOption = ALLLOADS; // track load restrictions
+	protected String _loadOption = ALLLOADS; // receive track load restrictions
+	protected String _shipLoadOption = ALLLOADS; // ship track load restrictions
 
 	// schedule options
 	protected String _scheduleName = ""; // Schedule name if there's one
@@ -148,6 +149,7 @@ public class Track {
 	public static final String LOADS_CHANGED_PROPERTY = "trackLoads"; // NOI18N
 	public static final String POOL_CHANGED_PROPERTY = "trackPool"; // NOI18N
 	public static final String PLANNEDPICKUPS_CHANGED_PROPERTY = "plannedPickUps"; // NOI18N
+	public static final String LOAD_OPTIONS_CHANGED_PROPERTY = "trackLoadOptions";
 
 	public Track(String id, String name, String type, Location location) {
 		log.debug("New track " + name + " " + id);
@@ -686,7 +688,7 @@ public class Track {
 	}
 
 	/**
-	 * Gets the car load option for this track.
+	 * Gets the car receive load option for this track.
 	 * 
 	 * @return ALLLOADS INCLUDELOADS EXCLUDELOADS
 	 */
@@ -695,7 +697,7 @@ public class Track {
 	}
 
 	/**
-	 * Set how this track deals with car loads
+	 * Set how this track deals with receiving car loads
 	 * 
 	 * @param option
 	 *            ALLLOADS INCLUDELOADS EXCLUDELOADS
@@ -719,7 +721,7 @@ public class Track {
 	}
 
 	/**
-	 * Provides a list of loads that the track will either service or exclude. See setLoadOption
+	 * Provides a list of receive loads that the track will either service or exclude. See setLoadOption
 	 * 
 	 * @return Array of load names as Strings
 	 */
@@ -734,7 +736,7 @@ public class Track {
 	}
 
 	/**
-	 * Add a load that the track will either service or exclude. See setLoadOption
+	 * Add a receive load that the track will either service or exclude. See setLoadOption
 	 * 
 	 * @return true if load name was added, false if load name wasn't in the list.
 	 */
@@ -749,7 +751,7 @@ public class Track {
 	}
 
 	/**
-	 * Delete a load name that the track will either service or exclude. See setLoadOption
+	 * Delete a receive load name that the track will either service or exclude. See setLoadOption
 	 * 
 	 * @return true if load name was removed, false if load name wasn't in the list.
 	 */
@@ -764,7 +766,7 @@ public class Track {
 	}
 
 	/**
-	 * Determine if track will service a specific load name.
+	 * Determine if track will service a specific receive load name.
 	 * 
 	 * @param load
 	 *            the load name to check.
@@ -782,7 +784,7 @@ public class Track {
 	}
 
 	/**
-	 * Determine if track will service a specific load and car type.
+	 * Determine if track will service a specific receive load and car type.
 	 * 
 	 * @param load
 	 *            the load name to check.
@@ -800,6 +802,123 @@ public class Track {
 		// exclude!
 		return !_loadList.contains(load) && !_loadList.contains(type + CarLoad.SPLIT_CHAR + load);
 	}
+	
+	/**
+	 * Gets the car ship load option for this track.
+	 * 
+	 * @return ALLLOADS INCLUDELOADS EXCLUDELOADS
+	 */
+	public String getShipLoadOption() {
+		return _shipLoadOption;
+	}
+
+	/**
+	 * Set how this track deals with shipping car loads
+	 * 
+	 * @param option
+	 *            ALLLOADS INCLUDELOADS EXCLUDELOADS
+	 */
+	public void setShipLoadOption(String option) {
+		String old = _shipLoadOption;
+		_shipLoadOption = option;
+		setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, old, option);
+	}
+
+	List<String> _shipLoadList = new ArrayList<String>();
+
+	private void setShipLoadNames(String[] loads) {
+		if (loads.length == 0)
+			return;
+		jmri.util.StringUtil.sort(loads);
+		for (int i = 0; i < loads.length; i++) {
+			if (!loads[i].equals(""))
+				_shipLoadList.add(loads[i]);
+		}
+	}
+
+	/**
+	 * Provides a list of ship loads that the track will either service or exclude. See setShipLoadOption
+	 * 
+	 * @return Array of load names as Strings
+	 */
+	public String[] getShipLoadNames() {
+		String[] loads = new String[_shipLoadList.size()];
+		for (int i = 0; i < _shipLoadList.size(); i++)
+			loads[i] = _shipLoadList.get(i);
+		if (_shipLoadList.size() == 0)
+			return loads;
+		jmri.util.StringUtil.sort(loads);
+		return loads;
+	}
+
+	/**
+	 * Add a ship load that the track will either service or exclude. See setShipLoadOption
+	 * 
+	 * @return true if load name was added, false if load name wasn't in the list.
+	 */
+	public boolean addShipLoadName(String load) {
+		if (_shipLoadList.contains(load))
+			return false;
+		_shipLoadList.add(load);
+		log.debug("track (" + getName() + ") add car load " + load);
+		setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _shipLoadList.size() - 1,
+				_shipLoadList.size());
+		return true;
+	}
+
+	/**
+	 * Delete a ship load name that the track will either service or exclude. See setLoadOption
+	 * 
+	 * @return true if load name was removed, false if load name wasn't in the list.
+	 */
+	public boolean deleteShipLoadName(String load) {
+		if (!_shipLoadList.contains(load))
+			return false;
+		_shipLoadList.remove(load);
+		log.debug("track (" + getName() + ") delete car load " + load);
+		setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _shipLoadList.size() + 1,
+				_shipLoadList.size());
+		return true;
+	}
+
+	/**
+	 * Determine if track will service a specific ship load name.
+	 * 
+	 * @param load
+	 *            the load name to check.
+	 * @return true if track will service this load.
+	 */
+	public boolean shipsLoadName(String load) {
+		if (_shipLoadOption.equals(ALLLOADS)) {
+			return true;
+		}
+		if (_shipLoadOption.equals(INCLUDELOADS)) {
+			return _shipLoadList.contains(load);
+		}
+		// exclude!
+		return !_shipLoadList.contains(load);
+	}
+
+	/**
+	 * Determine if track will service a specific ship load and car type.
+	 * 
+	 * @param load
+	 *            the load name to check.
+	 * @param type
+	 *            the type of car used to carry the load.
+	 * @return true if track will service this load.
+	 */
+	public boolean shipsLoad(String load, String type) {
+		if (_shipLoadOption.equals(ALLLOADS)) {
+			return true;
+		}
+		if (_shipLoadOption.equals(INCLUDELOADS)) {
+			return _shipLoadList.contains(load) || _shipLoadList.contains(type + CarLoad.SPLIT_CHAR + load);
+		}
+		// exclude!
+		return !_shipLoadList.contains(load) && !_shipLoadList.contains(type + CarLoad.SPLIT_CHAR + load);
+	}
+
 
 	public String getDropOption() {
 		return _dropOption;
@@ -1407,10 +1526,12 @@ public class Track {
 	 *            when true, add Scheduled loads from cars
 	 */
 	public void setAddLoadsEnabled(boolean enable) {
+		boolean old = isAddLoadsEnabled();
 		if (enable)
 			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS;
 		else
 			_loadOptions = _loadOptions & 0xFFFF - GENERATE_SCHEDULE_LOADS;
+		setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
 	}
 
 	public boolean isAddLoadsEnabled() {
@@ -1424,10 +1545,12 @@ public class Track {
 	 *            when true, add Scheduled loads from cars
 	 */
 	public void setAddLoadsAnySidingEnabled(boolean enable) {
+		boolean old = isAddLoadsAnySidingEnabled();
 		if (enable)
 			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS_ANY_SIDING;
 		else
 			_loadOptions = _loadOptions & 0xFFFF - GENERATE_SCHEDULE_LOADS_ANY_SIDING;
+		setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
 	}
 
 	public boolean isAddLoadsAnySidingEnabled() {
@@ -1441,10 +1564,12 @@ public class Track {
 	 *            when true, add custom load to car
 	 */
 	public void setAddCustomLoadsAnyStagingTrackEnabled(boolean enable) {
+		boolean old = isAddCustomLoadsAnyStagingTrackEnabled();
 		if (enable)
 			_loadOptions = _loadOptions | GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK;
 		else
 			_loadOptions = _loadOptions & 0xFFFF - GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK;
+		setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
 	}
 
 	public boolean isAddCustomLoadsAnyStagingTrackEnabled() {
@@ -1576,6 +1701,21 @@ public class Track {
 			if (log.isDebugEnabled())
 				log.debug("Track (" + getName() + ") " + getLoadOption() + " car loads: " + names);
 			setLoadNames(loads);
+		}
+		if ((a = e.getAttribute(Xml.CAR_SHIP_LOAD_OPTION)) != null)
+			_shipLoadOption = a.getValue();
+		// new way of reading car loads using elements
+		if (e.getChild(Xml.CAR_SHIP_LOADS) != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> carLoads = e.getChild(Xml.CAR_SHIP_LOADS).getChildren(Xml.CAR_LOAD);
+			String[] loads = new String[carLoads.size()];
+			for (int i = 0; i < carLoads.size(); i++) {
+				Element load = carLoads.get(i);
+				if ((a = load.getAttribute(Xml.NAME)) != null) {
+					loads[i] = a.getValue();
+				}
+			}
+			setShipLoadNames(loads);
 		}
 		// new way of reading drop ids using elements
 		if (e.getChild(Xml.DROP_IDS) != null) {
@@ -1775,6 +1915,20 @@ public class Track {
 			}
 			// new way of saving car loads using elements
 			Element eLoads = new Element(Xml.CAR_LOADS);
+			for (int i = 0; i < loads.length; i++) {
+				Element eLoad = new Element(Xml.CAR_LOAD);
+				eLoad.setAttribute(Xml.NAME, loads[i]);
+				eLoads.addContent(eLoad);
+			}
+			e.addContent(eLoads);
+		}
+		
+		e.setAttribute(Xml.CAR_SHIP_LOAD_OPTION, getShipLoadOption());
+		// save list of car loads for this track
+		if (!getShipLoadOption().equals(ALLLOADS)) {
+			String[] loads = getShipLoadNames();
+			// new way of saving car loads using elements
+			Element eLoads = new Element(Xml.CAR_SHIP_LOADS);
 			for (int i = 0; i < loads.length; i++) {
 				Element eLoad = new Element(Xml.CAR_LOAD);
 				eLoad.setAttribute(Xml.NAME, loads[i]);
