@@ -34,6 +34,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Added Dark</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.2</revnumber>
+        <date>2013-02-08</date>
+        <authorinitials>DB</authorinitials>
+        <revremark>Fixed Approach Aspects</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>NS</aspecttable>
@@ -182,18 +188,16 @@
     <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-      <ourAspect>Medium Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-      <ourAspect>Medium Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach Slow</advancedAspect>
-      <ourAspect>Limited Approach</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -206,13 +210,12 @@
 
     <aspectMapping>
       <advancedAspect>Approach</advancedAspect>
-      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Medium Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
-      <ourAspect>Medium Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -229,14 +232,12 @@
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>
-      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
      <aspectMapping>
       <advancedAspect>Stop Signal</advancedAspect>
       <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>
-      <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
      <aspectMapping>
