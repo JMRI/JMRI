@@ -259,15 +259,13 @@ public class CarManager extends RollingStockManager{
 	 */
     public List<String> getByTrainDestinationList(Train train) {
      	List<String> inTrain = getByTrainList(train);
-    	Car car;
-
      	// now sort by track destination
     	List<String> out = new ArrayList<String>();
     	boolean carAdded;
     	int lastCarsIndex = 0;	// incremented each time a car is added to the end of the train 
     	for (int i = 0; i < inTrain.size(); i++) {
     		carAdded = false;
-    		car = getById(inTrain.get(i));
+    	   	Car car = getById(inTrain.get(i));
     		String carDestination = car.getDestinationTrackName();
     		for (int j = 0; j < out.size(); j++) {
     			Car carOut = getById (out.get(j));
