@@ -1169,34 +1169,27 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
 						}
 						break;
-                    case ACTION_ALLOCATE_BLOCK_PATH:
+					case Conditional.ACTION_SET_BLOCK_ERROR:
                         OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
 						else {
-                            String err = b.allocate(getActionString(action));
-							if (err!=null) {
-                                errorList.add("allocate error - "+err);
-                            }
+                            b.setError(true);
                             actionCount++;
 						}
 						break;
-                    case ACTION_SET_BLOCK_PATH_TURNOUTS:
+                    case Conditional.ACTION_CLEAR_BLOCK_ERROR:
                     	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
 						else {
-                            String err = b.setPath(getActionString(action), null);
-                            if (err!=null) {
-                                log.info("setPath error - "+err);
-                            }
-                            actionCount++;
+                            b.setError(false);
 						}
 						break;
                     case ACTION_DEALLOCATE_BLOCK:
-                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                    	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
@@ -1206,7 +1199,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
                     case ACTION_SET_BLOCK_OUT_OF_SERVICE:
-                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+                    	b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}

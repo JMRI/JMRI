@@ -766,7 +766,7 @@ public class DefaultLogix extends AbstractNamedBean
                 
             case LISTENER_TYPE_WARRANT:
 				Warrant w = InstanceManager.warrantManagerInstance().
-										provideWarrant(listener.getDevName());
+										getWarrant(listener.getDevName());
 				if (w==null) {
 					msg= "warrant";
 					break;
@@ -779,7 +779,7 @@ public class DefaultLogix extends AbstractNamedBean
 				return;
             case LISTENER_TYPE_OBLOCK:
 				OBlock b = InstanceManager.oBlockManagerInstance().
-										provideOBlock(listener.getDevName());
+										getOBlock(listener.getDevName());
 				if (b==null) {
 					msg= "oblock";
 					break;
@@ -878,7 +878,7 @@ public class DefaultLogix extends AbstractNamedBean
                     return;
                 case LISTENER_TYPE_WARRANT:
                     Warrant w = InstanceManager.warrantManagerInstance().
-                                            provideWarrant(listener.getDevName());
+                                            getWarrant(listener.getDevName());
                     if (w==null) {
                         msg= "warrant";
                         break;
@@ -892,7 +892,7 @@ public class DefaultLogix extends AbstractNamedBean
                     return;
                 case LISTENER_TYPE_OBLOCK:
                     OBlock b = InstanceManager.oBlockManagerInstance().
-                                            provideOBlock(listener.getDevName());
+                                            getOBlock(listener.getDevName());
                     if (b==null) {
                         msg= "oblock";
                         break;

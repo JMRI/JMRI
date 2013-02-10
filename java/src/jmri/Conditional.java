@@ -179,8 +179,8 @@ public interface Conditional extends NamedBean {
     public static final int ACTION_CLEAR_SIGNALMAST_HELD = 40;
     public static final int ACTION_SET_SIGNALMAST_DARK = 41;
     public static final int ACTION_SET_SIGNALMAST_LIT = 42;
-	public static final int ACTION_ALLOCATE_BLOCK_PATH = 43;
-	public static final int ACTION_SET_BLOCK_PATH_TURNOUTS = 44;
+	public static final int ACTION_SET_BLOCK_ERROR = 43;
+	public static final int ACTION_CLEAR_BLOCK_ERROR = 44;
 	public static final int ACTION_DEALLOCATE_BLOCK = 45;
 	public static final int ACTION_SET_BLOCK_OUT_OF_SERVICE = 46;
 	public static final int ACTION_SET_BLOCK_IN_SERVICE = 47;
@@ -388,8 +388,8 @@ public interface Conditional extends NamedBean {
                                         ITEM_TYPE_SIGNALMAST,   // ACTION_CLEAR_SIGNALMAST_HELD = 40 
                                         ITEM_TYPE_SIGNALMAST,   // ACTION_SET_SIGNALMAST_DARK = 41
                                         ITEM_TYPE_SIGNALMAST,   // ACTION_SET_SIGNALMAST_LIT = 42
-                                        ITEM_TYPE_OBLOCK,       // ACTION_ALLOCATE_BLOCK_PATH = 43;
-                                        ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_PATH_TURNOUTS = 44;
+                                        ITEM_TYPE_OBLOCK,       // ACTION_SET_BLOCK_ERROR = 43;
+                                        ITEM_TYPE_OBLOCK,       //  ACTION_CLEAR_BLOCK_ERROR = 44;
                                         ITEM_TYPE_OBLOCK,       //  ACTION_DEALLOCATE_BLOCK = 45;
                                         ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_OUT_OF_SERVICE = 46;
                                         ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_IN_SERVICE = 47;
@@ -461,8 +461,8 @@ public interface Conditional extends NamedBean {
                 ACTION_SET_TRAIN_NAME, ACTION_THROTTLE_FACTOR };
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") 
-    public final static int[] ITEM_TO_OBLOCK_ACTION = {ACTION_ALLOCATE_BLOCK_PATH, 
-                ACTION_SET_BLOCK_PATH_TURNOUTS, ACTION_DEALLOCATE_BLOCK, 
+    public final static int[] ITEM_TO_OBLOCK_ACTION = {ACTION_DEALLOCATE_BLOCK,
+    			ACTION_SET_BLOCK_ERROR, ACTION_CLEAR_BLOCK_ERROR,
 	            ACTION_SET_BLOCK_OUT_OF_SERVICE, ACTION_SET_BLOCK_IN_SERVICE };
 
     // Map Signal Head Type comboBox items to Signal Head action types

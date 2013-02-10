@@ -447,10 +447,10 @@ public class DefaultConditionalAction implements ConditionalAction {
                return (rbx.getString("ActionSetSignalMastDark"));                
             case Conditional.ACTION_SET_SIGNALMAST_LIT:
                return (rbx.getString("ActionClearSignalMastDark"));                
-            case Conditional.ACTION_ALLOCATE_BLOCK_PATH:
-               return (rbx.getString("ActionAllocateBlockPath"));                
-            case Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS:
-               return (rbx.getString("ActionSetBlockPathTurnouts"));
+            case Conditional.ACTION_SET_BLOCK_ERROR:
+               return (rbx.getString("ActionSetBlockError"));                
+            case Conditional.ACTION_CLEAR_BLOCK_ERROR:
+               return (rbx.getString("ActionClearBlockError"));
             case Conditional.ACTION_DEALLOCATE_BLOCK:
                return (rbx.getString("ActionDeallocateBlock"));                
             case Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE:
@@ -706,6 +706,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_CLEAR_SIGNALMAST_HELD:
                 case Conditional.ACTION_SET_SIGNALMAST_DARK:
                 case Conditional.ACTION_SET_SIGNALMAST_LIT:
+                case Conditional.ACTION_SET_BLOCK_ERROR:
+                case Conditional.ACTION_CLEAR_BLOCK_ERROR:
                 case Conditional.ACTION_DEALLOCATE_BLOCK:
                 case Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE:
                 case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
@@ -736,12 +738,6 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_CONTROL_TRAIN:
                     str = str +" "+rbx.getString("onWarrant")+" \""+ _deviceName +"\" "
                           +rbx.getString("to")+ " " + getActionDataString();
-                    break;
-                case Conditional.ACTION_ALLOCATE_BLOCK_PATH:
-                case Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS:
-                    str = str +getActionDataString()+" "+rbx.getString("onPath")+ " \""+
-                            _actionString+"\" "+
-                            rbx.getString("onBlock")+" \""+ _deviceName +"\".";
                     break;
             }
         }

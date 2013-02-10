@@ -8,6 +8,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import jmri.Conditional;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -60,8 +61,6 @@ import jmri.NamedBeanHandle;
  */
 public class OBlock extends jmri.Block implements java.beans.PropertyChangeListener {
 
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
-
     /*
     * Block states.
     * NamedBean.UNKNOWN                 = 0x01;
@@ -80,46 +79,54 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     static final Hashtable<String, Integer> _oldstatusMap = new Hashtable<String, Integer>();
     static final Hashtable<String, Integer> _statusMap = new Hashtable<String, Integer>();
     static final Hashtable<String, String> _statusNameMap = new Hashtable<String, String>();
-    {
-        _oldstatusMap.put(rb.getString("unoccupied"), Integer.valueOf(UNOCCUPIED));
-        _oldstatusMap.put(rb.getString("occupied"), Integer.valueOf(OCCUPIED));
-        _oldstatusMap.put(rb.getString("allocated"), Integer.valueOf(ALLOCATED));
-        _oldstatusMap.put(rb.getString("running"), Integer.valueOf(RUNNING));
-        _oldstatusMap.put(rb.getString("outOfService"), Integer.valueOf(OUT_OF_SERVICE));
-        _oldstatusMap.put(rb.getString("dark"), Integer.valueOf(DARK));
-        _oldstatusMap.put(rb.getString("powerError"), Integer.valueOf(TRACK_ERROR));
 
-        _statusMap.put("unoccupied", Integer.valueOf(UNOCCUPIED));
+    static void loadStatusMap() {
+    	_statusMap.put("unoccupied", Integer.valueOf(UNOCCUPIED));
         _statusMap.put("occupied", Integer.valueOf(OCCUPIED));
         _statusMap.put("allocated", Integer.valueOf(ALLOCATED));
         _statusMap.put("running", Integer.valueOf(RUNNING));
         _statusMap.put("outOfService", Integer.valueOf(OUT_OF_SERVICE));
         _statusMap.put("dark", Integer.valueOf(DARK));
         _statusMap.put("powerError", Integer.valueOf(TRACK_ERROR));
-
-        _statusNameMap.put(rb.getString("unoccupied"), "unoccupied");
-        _statusNameMap.put(rb.getString("occupied"), "occupied");
-        _statusNameMap.put(rb.getString("allocated"), "allocated");
-        _statusNameMap.put(rb.getString("running"), "running");
-        _statusNameMap.put(rb.getString("outOfService"), "outOfService");
-        _statusNameMap.put(rb.getString("dark"), "dark");
-        _statusNameMap.put(rb.getString("powerError"), "powerError");
+        _oldstatusMap.put(Bundle.getMessage("unoccupied"), Integer.valueOf(UNOCCUPIED));
+        _oldstatusMap.put(Bundle.getMessage("occupied"), Integer.valueOf(OCCUPIED));
+        _oldstatusMap.put(Bundle.getMessage("allocated"), Integer.valueOf(ALLOCATED));
+        _oldstatusMap.put(Bundle.getMessage("running"), Integer.valueOf(RUNNING));
+        _oldstatusMap.put(Bundle.getMessage("outOfService"), Integer.valueOf(OUT_OF_SERVICE));
+        _oldstatusMap.put(Bundle.getMessage("dark"), Integer.valueOf(DARK));
+        _oldstatusMap.put(Bundle.getMessage("powerError"), Integer.valueOf(TRACK_ERROR));
+    }
+    
+    static void loadStatusNameMap() {
+        _statusNameMap.put(Bundle.getMessage("unoccupied"), "unoccupied");
+        _statusNameMap.put(Bundle.getMessage("occupied"), "occupied");
+        _statusNameMap.put(Bundle.getMessage("allocated"), "allocated");
+        _statusNameMap.put(Bundle.getMessage("running"), "running");
+        _statusNameMap.put(Bundle.getMessage("outOfService"), "outOfService");
+        _statusNameMap.put(Bundle.getMessage("dark"), "dark");
+        _statusNameMap.put(Bundle.getMessage("powerError"), "powerError");    	
     }
 
     public static Enumeration<String> getLocalStatusNames() {
+    	if (_statusNameMap.size()==0) {
+    		loadStatusNameMap();
+    	}
         Enumeration<String> keys = _statusNameMap.keys();
         return keys;
     }
 
     public static String getLocalStatusName(String str) {
         try {
-            return rb.getString(str);
+            return Bundle.getMessage(str);
         } catch (java.util.MissingResourceException mre) {
             return str;
         }
     }
 
     public static String getSystemStatusName(String str) {
+    	if (_statusNameMap.size()==0) {
+    		loadStatusNameMap();
+    	}
         return _statusNameMap.get(str);
     }
 
@@ -238,6 +245,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     *  From the universal name for block status, check if it is the current status
     */
     public boolean statusIs(String statusName) {
+    	if (_statusMap.size()==0) {
+    		loadStatusMap();
+    	}
         Integer i = _statusMap.get(statusName);
         if (i==null) {
             i = _oldstatusMap.get(statusName);
@@ -273,13 +283,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
         if (_warrant!=null && !warrant.equals(_warrant)) {
             // allocated to another warrant
-            return java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
-                                                  _warrant.getDisplayName(), getDisplayName()); 
+            return Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName()); 
         }
         int state = getState();
         if ((state & OUT_OF_SERVICE) !=0) {
-            return java.text.MessageFormat.format(rb.getString("BlockOutOfService"),
-                                                    getDisplayName()); 
+            return Bundle.getMessage("BlockOutOfService", getDisplayName()); 
         }
         String path = warrant.getRoutePathInBlock(this);
         if (_pathName==null) {
@@ -303,12 +311,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return null;
         } else if (_warrant!=null) {
             // allocated to another warrant
-            return java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
-                                                  _warrant.getDisplayName(), getDisplayName()); 
+            return Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName()); 
         }
         if (_pathName!=null && !_pathName.equals(pathName)) {
-            return java.text.MessageFormat.format(rb.getString("AllocatedToPath"),
-                                          pathName, getDisplayName(), _pathName); 
+            return Bundle.getMessage("AllocatedToPath", pathName, getDisplayName(), _pathName); 
         }
         _pathName = pathName;
 //        setState(getState() | ALLOCATED);  DO NOT ALLOCATE
@@ -348,6 +354,14 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             setState(getState() | OUT_OF_SERVICE);  // set OoS bit
         } else {
             setState(getState() & ~OUT_OF_SERVICE);  // unset OoS bit
+        }
+    }
+
+    public void setError(boolean set) {
+        if (set) {
+            setState(getState() | TRACK_ERROR);  // set OoS bit
+        } else {
+            setState(getState() & ~TRACK_ERROR);  // unset OoS bit
         }
     }
 
@@ -508,15 +522,14 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                                             pathName+"\" for warrant "+warrant.getDisplayName());
         String msg = null;
         if (_warrant!=null && !_warrant.equals(warrant)) {
-            msg = java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
-                                                  _warrant.getDisplayName(), getDisplayName());
+            msg = Bundle.getMessage("AllocatedToWarrant", _warrant.getDisplayName(), getDisplayName());
             return msg; 
         }
         pathName = pathName.trim();
         _warrant = warrant;
         OPath path = getPathByName(pathName);
         if (path==null) {
-            msg = java.text.MessageFormat.format(rb.getString("PathNotFound"), pathName, getDisplayName()); 
+            msg = Bundle.getMessage("PathNotFound", pathName, getDisplayName()); 
             return msg; 
         } else {
             if (_warrant!=null) {
