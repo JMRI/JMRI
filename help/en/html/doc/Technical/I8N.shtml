@@ -111,7 +111,7 @@ new locale.  On a MacOS X or Unix machine, this would be:
 and so on.  
 The easiest way to find the proper suffix letters is to set the
 program to your particular language via the 
-<a href="../../../package/apps/AppConfigPanel#locale">advanced preferences</a>, 
+<a href="../../../package/apps/AppConfigPanel.shtml">advanced preferences</a>, 
 quit and restart the program,
 and then look at the suffix that it displays on the main window.
 You can also check the official 

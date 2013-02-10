@@ -655,7 +655,7 @@
 		<LI><B>Turnout Lock</B>: Locks or unlocks a turnout. Enter the
 		name for the turnout, and choose the operation from the popup menu.
 		Note, to control the type of turnout lock go to the <A
-		HREF="TurnoutTable.shtml">Turnout Table</A> and select the Lock Mode.</LI>
+		HREF="../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</A> and select the Lock Mode.</LI>
 		<LI><B>Reset Delayed Set Sensor</B>: Sets the specified sensor to the
 		chosen state after waiting for a specified number of seconds. Specify
 		the sensor to set by entering its name. Specify the state to set by

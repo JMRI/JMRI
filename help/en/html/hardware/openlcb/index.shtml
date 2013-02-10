@@ -30,9 +30,9 @@ actual code might be ahead or behind the documentation
 on any given day.</em><p>
 
 JMRI provides support for general JMRI
-<a href="../../../tools/Sensors.shtml">Sensors</a>
+<a href="../../tools/Sensors.shtml">Sensors</a>
 and
-<a href="../../../tools/Turnouts.shtml">Turnouts</a>
+<a href="../../tools/Turnouts.shtml">Turnouts</a>
 in terms of OpenLCB "events". 
 
 <p>
