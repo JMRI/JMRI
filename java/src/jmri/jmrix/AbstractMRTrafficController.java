@@ -508,7 +508,7 @@ abstract public class AbstractMRTrafficController {
     /**
      * Actually transmits the next message to the port
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="TLW_TWO_LOCK_WAIT, SBSC_USE_STRINGBUFFER_CONCATENATION",
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value={"TLW_TWO_LOCK_WAIT", "SBSC_USE_STRINGBUFFER_CONCATENATION"},
             justification="Two locks needed for synchronization here, this is OK; String + only used for debug, so inefficient String processing not really a problem") 
     synchronized protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (log.isDebugEnabled()) log.debug("forwardToPort message: ["+m+"]");
