@@ -220,6 +220,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		// Layout the panel by rows
 	   	JPanel p1 = new JPanel();
     	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
+    	p1.setMaximumSize(new Dimension(2000, 250));
 				
 		// Layout the panel by rows
 		// row 1a
@@ -382,7 +383,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		
 		// row 15 buttons
 	   	JPanel pB = new JPanel();
-    	pB.setLayout(new GridBagLayout());		
+    	pB.setLayout(new GridBagLayout());
+    	pB.setMaximumSize(new Dimension(2000, 250));
 		addItem(pB, saveTrainButton, 3, 0);
 		
 		getContentPane().add(p1);

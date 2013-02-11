@@ -1115,14 +1115,14 @@ public class TrainBuilder extends TrainCommon {
 	}
 
 	/**
-	 * Remove unwanted cars from the car list. Remove cars that don't have a valid track, interchange, road, load,
-	 * owner, or type for this train
+	 * Remove unwanted cars from the car list. Remove cars that don't have a track assignment, and check that the car
+	 * can be serviced by this train
 	 */
 	private void removeCars() throws BuildFailedException {
 		addLine(buildReport, SEVEN, Bundle.getMessage("buildRemoveCars"));
 		for (carIndex = 0; carIndex < carList.size(); carIndex++) {
 			Car c = carManager.getById(carList.get(carIndex));
-			// remove cars that don't have a valid track
+			// remove cars that don't have a track assignment
 			if (c.getTrack() == null) {
 				addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorRsNoLoc"),
 						new Object[] { c.toString(), c.getLocationName() }));
@@ -1623,9 +1623,24 @@ public class TrainBuilder extends TrainCommon {
 				// Departing staging?
 				if (routeIndex == 0 && departStageTrack != null) {
 					reqNumOfMoves = 0; // Move cars out of staging after working other locations
+					// if leaving and returning to staging on the same track temporary pull cars off the track
+					if (departStageTrack == terminateStageTrack) {
+						for (int i = 0; i < carList.size(); i++) {
+							Car car = carManager.getById(carList.get(i));
+							if (car.getTrack() == departStageTrack)
+								car.setLocation(car.getLocation(), null);
+						}
+					}
 					addLine(buildReport, THREE, MessageFormat.format(Bundle
 							.getMessage("buildDepartStagingAggressive"), new Object[] { departStageTrack
 							.getLocation().getName() }));
+				}
+			// restore departure track for cars departing staging
+			} else if (departStageTrack != null && departStageTrack == terminateStageTrack) {
+				for (int i = 0; i < carList.size(); i++) {
+					Car car = carManager.getById(carList.get(i));
+					if (car.getTrack() == null)
+						car.setLocation(car.getLocation(), departStageTrack, true);	// force
 				}
 			}
 			addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"),
@@ -3193,8 +3208,12 @@ public class TrainBuilder extends TrainCommon {
 					if (generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack)) {
 						trackTemp = terminateStageTrack;
 						destinationTemp = testDestination;
-					} else
+					} else {
+						addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
+								terminateStageTrack.getName(), status }));
 						continue; // failed to create load
+					}
 				} else {
 					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 							.getMessage("buildCanNotDropCarBecause"), new Object[] { car.toString(),
@@ -3255,8 +3274,8 @@ public class TrainBuilder extends TrainCommon {
 							continue; // no
 						}
 						addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-								.getMessage("buildSearchTrackNewLoad"), new Object[] { car.toString(),
-								car.getType(), car.getLoad(), testTrack.getName() }));
+								.getMessage("buildGenerateLoad"), new Object[] { car.toString(),
+								car.getType(), testDestination.getName(), testTrack.getName() }));
 						String carLoad = car.getLoad(); // save the car's load
 						ScheduleItem si = getScheduleItem(car, testTrack);
 						if (si != null) {
@@ -3459,8 +3478,28 @@ public class TrainBuilder extends TrainCommon {
 						stageTrack.getLocation().getName(), stageTrack.getName() }));
 		for (int i = loads.size() - 1; i >= 0; i--) {
 			String load = loads.get(i);
-			if (!car.getTrack().shipsLoad(load, car.getType()) || !stageTrack.acceptsLoad(load, car.getType()) || !train.acceptsLoad(load, car.getType()))
-				loads.remove(i);
+			if (!car.getTrack().shipsLoad(load, car.getType())
+					|| !stageTrack.acceptsLoad(load, car.getType())
+					|| !train.acceptsLoad(load, car.getType())) {
+				if (!car.getTrack().shipsLoad(load, car.getType())) {
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("buildTrackNotNewLoad"), new Object[] { car.getTrackName(), load,
+							stageTrack.getLocation().getName(), stageTrack.getName() }));
+				}
+				if (!stageTrack.acceptsLoad(load, car.getType())) {
+					addLine(buildReport, SEVEN, MessageFormat
+							.format(Bundle.getMessage("BuildDestTrackNoLoad"), new Object[] {
+									stageTrack.getLocation().getName(), stageTrack.getName(), car.toString(),
+									load, }));
+				}
+				if (!train.acceptsLoad(load, car.getType())) {
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("buildTrainNotNewLoad"), new Object[] { train.getName(), load,
+							stageTrack.getLocation().getName(), stageTrack.getName() }));
+
+				}
+			loads.remove(i);
+			}
 		}
 		// Use random loads rather that the first one that works to create interesting loads
 		if (loads.size() > 0) {
