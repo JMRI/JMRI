@@ -70,13 +70,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     public boolean enableUpdateRouteLogging = false;
     public boolean enableDeleteRouteLogging = false;
     public boolean enableSearchRouteLogging = false;
-    //public int routingMethod = HOPCOUNT;
-    //static boolean InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() = true;
     
-    static ArrayList<Integer> updateReferences = new ArrayList<Integer>();
+    static ArrayList<Integer> updateReferences = new ArrayList<Integer>(500);
     //might want to use the jmri ordered hashtable, so that we can add at the top
     // and remove at the bottom.
-    ArrayList<Integer> actedUponUpdates = new ArrayList<Integer>();
+    ArrayList<Integer> actedUponUpdates = new ArrayList<Integer>(500);
     
     public void enableDeleteRouteLog() { enableDeleteRouteLogging = false; }
     public void disableDeleteRouteLog() { enableDeleteRouteLogging = false; }
@@ -1502,20 +1500,20 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         Adjacencies adj = getAdjacency(newblock);
         if(adj.isMutual()){
             if(enableAddRouteLogging)
-                log.info("From " + this.getDisplayName() + "adj with " + newblock.getDisplayName() + " is mutual");
+                log.info("From " + this.getDisplayName() + " adj with " + newblock.getDisplayName() + " is mutual");
             lBnewblock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(newblock);
         }
         else if(enableAddRouteLogging) {
-            log.info("From " + this.getDisplayName() + "adj with " + newblock.getDisplayName() + " is NOT mutual");
+            log.info("From " + this.getDisplayName() + " adj with " + newblock.getDisplayName() + " is NOT mutual");
         }
         if (lBnewblock==null){
             return;
         }
-        
+        ArrayList<Block> routeToAdvertise = new ArrayList<Block>();
         for(int i = 0; i<routes.size(); i++){
             Routes ro = routes.get(i);
             if(enableAddRouteLogging)
-                log.info("source " + ro.getNextBlock().getDisplayName() + " Dest " + ro.getDestBlock().getDisplayName());
+                log.info("source " + ro.getNextBlock().getDisplayName() + " Dest " + ro.getDestBlock().getDisplayName() + " " + ro.getNextBlock());
             if(ro.getNextBlock()==getBlock()){
                 if(enableAddRouteLogging)
                     log.info("From " + this.getDisplayName() + " ro next block is this");
@@ -1539,6 +1537,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount()+1, (ro.getMetric()+metric), (ro.getLength()+block.getLengthMm()), -1, getNextPacketID());
                         lBnewblock.addRouteFromNeighbour(this, update);
                     }
+                } else if(enableAddRouteLogging){
+                    log.info("failed valid from path Not advertised/added");
                 }
             }
         }
@@ -2264,10 +2264,20 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             int lastIDPos = updateReferences.size()-1;
             lastID = updateReferences.get(lastIDPos) +1;
         }
+        if(lastID>2000){
+            lastID=0;
+        }
         updateReferences.add(lastID);
         /*As we are originating a packet, we will added to the acted upion list 
         thus making sure if the packet gets back to us we do knowing with it.*/
         actedUponUpdates.add(lastID);
+        if(updateReferences.size()>500){
+            //log.info("flush update references");
+            updateReferences.subList(0, 250).clear();
+        }
+        if(actedUponUpdates.size()>500){
+            actedUponUpdates.subList(0, 250).clear();
+        }
         return lastID;
     }
     
@@ -2503,52 +2513,60 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         int bestCount = 965255; //set stupidly high
         int bestIndex = -1;
         int lastValue = 0;
+        ArrayList<Block> nextBlocks = new ArrayList<Block>(5);
         if(!excludeBlock.isEmpty() && (excludeBlock.get(excludeBlock.size()-1)<routes.size())){
             if (routingMethod==LayoutBlockConnectivityTools.METRIC){
                 lastValue = routes.get(excludeBlock.get(excludeBlock.size()-1)).getMetric();
             } else /* if (routingMethod==LayoutBlockManager.HOPCOUNT)*/{
                 lastValue = routes.get(excludeBlock.get(excludeBlock.size()-1)).getHopCount();
             }
+            for(int i:excludeBlock){
+                nextBlocks.add(routes.get(i).getNextBlock());
+            }
             if(enableSearchRouteLogging)
                 log.info("last index is " + excludeBlock.get(excludeBlock.size()-1) + " " + routes.get(excludeBlock.get(excludeBlock.size()-1)).getDestBlock().getDisplayName());
         }
+        
         for (int i = 0; i<routes.size(); i ++){
             if (!excludeBlock.contains(i)){
                 Routes r = routes.get(i);
-                int currentValue;
-                if (routingMethod==LayoutBlockConnectivityTools.METRIC){
-                    currentValue = routes.get(i).getMetric();
-                
-                } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
-                    currentValue = routes.get(i).getHopCount();  //was lastindex changed to i
-                }
-                if(currentValue>=lastValue){
-                    if (r.getDestBlock()==destBlock){
-                        if(enableSearchRouteLogging){
-                            log.info("Match on dest blocks");
-                        //Check that the route through from the previous block, to the next hop is valid
-                            log.info("Is valid through path previous block " + previousBlock.getDisplayName() + " to " + r.getNextBlock().getDisplayName());
-                        }
-                        if(validThroughPath(previousBlock, r.getNextBlock())){
-                            if(enableSearchRouteLogging)
-                                log.info("valid through path");
-                            if (routingMethod==LayoutBlockConnectivityTools.METRIC){
-                                if (r.getMetric()<bestCount){
-                                    bestIndex = i;
-                                    bestCount = r.getMetric();
-                                }
-                            
-                            } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
-                                if (r.getHopCount()<bestCount){
-                                    bestIndex = i;
-                                    bestCount = r.getHopCount();
+                if(!nextBlocks.contains(r.getNextBlock())){
+                //if(r.getNextBlock()!=nextBlock){
+                    int currentValue;
+                    if (routingMethod==LayoutBlockConnectivityTools.METRIC){
+                        currentValue = routes.get(i).getMetric();
+                    
+                    } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
+                        currentValue = routes.get(i).getHopCount();  //was lastindex changed to i
+                    }
+                    if(currentValue>=lastValue){
+                        if (r.getDestBlock()==destBlock){
+                            if(enableSearchRouteLogging){
+                                log.info("Match on dest blocks");
+                            //Check that the route through from the previous block, to the next hop is valid
+                                log.info("Is valid through path previous block " + previousBlock.getDisplayName() + " to " + r.getNextBlock().getDisplayName());
+                            }
+                            if(validThroughPath(previousBlock, r.getNextBlock())){
+                                if(enableSearchRouteLogging)
+                                    log.info("valid through path");
+                                if (routingMethod==LayoutBlockConnectivityTools.METRIC){
+                                    if (r.getMetric()<bestCount){
+                                        bestIndex = i;
+                                        bestCount = r.getMetric();
+                                    }
+                                
+                                } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
+                                    if (r.getHopCount()<bestCount){
+                                        bestIndex = i;
+                                        bestCount = r.getHopCount();
+                                    }
                                 }
                             }
-                        }
-                        if (r.getNextBlock()==this.getBlock()){
-                            if(enableSearchRouteLogging)
-                                log.info("getNextBlock is this block therefore directly connected");
-                            return i;
+                            if (r.getNextBlock()==this.getBlock()){
+                                if(enableSearchRouteLogging)
+                                    log.info("getNextBlock is this block therefore directly connected");
+                                return i;
+                            }
                         }
                     }
                 }
@@ -2643,7 +2661,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                     addRouteFromNeighbour(srcEvent, update);
                                     break;
                     case UPDATE :  if(enableUpdateRouteLogging) log.info("Update");
-                                   updateRoutingInfo(srcEvent, update);
+                                    updateRoutingInfo(srcEvent, update);
                                     break;
                     case REMOVAL : if(enableUpdateRouteLogging) log.info("Removal");
                                     InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
@@ -2716,6 +2734,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return rtr;
     }
 
+    void updateRoutingInfo(Routes route){
+        if(route.getHopCount()>=254)
+            return;
+        Block destBlock = route.getDestBlock();
+        
+        RoutingPacket update = new RoutingPacket(UPDATE, destBlock, getBestRouteByHop(destBlock).getHopCount()+1, ((getBestRouteByMetric(destBlock).getMetric())+metric), ((getBestRouteByMetric(destBlock).getMetric())+block.getLengthMm()), -1, getNextPacketID());
+        firePropertyChange("routing", null, update);
+    }
     void updateRoutingInfo(LayoutBlock src, RoutingPacket update){
         if(enableUpdateRouteLogging)
             log.info("From " + this.getDisplayName() + " src: " + src.getDisplayName() + " block: " + update.getBlock().getDisplayName() + " hopCount " + update.getHopCount() + " metric: " + update.getMetric() + " status: " + update.getBlockState() + " packetID: " + update.getPacketId());
@@ -2786,6 +2812,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (hopCount!=-1){
               //Was increase hop count before setting it
             if(ro.getHopCount()!=hopCount){
+                if(enableUpdateRouteLogging)
+                    log.info(this.getDisplayName() + " Hop counts to " + ro.getDestBlock().getDisplayName() + " not the same so will change from " + ro.getHopCount() + " to " + hopCount);
                 ro.setHopCount(hopCount);
                 hopCount++;
             } else {
@@ -2818,7 +2846,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         ArrayList<Block> messageRecipients = getThroughPathDestinationBySource(srcblk);
                         RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), -1, -1, updateLength+block.getLengthMm(), -1, getNextPacketID());
                         updateRoutesToNeighbours(messageRecipients, nRo, newUpdate);
-                        
                     }
                 } else {
                     //This can cause a loop, if the layout is in a loop, so we send out the same packetID.
@@ -2859,7 +2886,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         ArrayList<Block> messageRecipients = getThroughPathDestinationBySource(srcblk);
                         RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), -1, updatemet+metric, -1, -1, getNextPacketID());
                         updateRoutesToNeighbours(messageRecipients, nRo, newUpdate);
-                        
                     }
                 } else {
                     //This can cause a loop, if the layout is in a loop, so we send out the same packetID.
@@ -2914,7 +2940,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }    
     }
     
-    Routes getBestRoute(Block dest){
+    Routes getBestRouteByMetric(Block dest){
         //int bestHopCount = 255;
         int bestMetric = 965000;
         int bestIndex = -1;
@@ -2930,17 +2956,54 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         return destRoutes.get(bestIndex);
     }
     
+    Routes getBestRouteByHop(Block dest){
+        int bestHopCount = 255;
+        //int bestMetric = 965000;
+        int bestIndex = -1;
+        ArrayList<Routes> destRoutes = getDestRoutes(dest);
+        for (int i = 0; i<destRoutes.size(); i++){
+            if(destRoutes.get(i).getHopCount()<bestHopCount){
+                bestHopCount = destRoutes.get(i).getHopCount();
+                bestIndex=i;
+            }
+        }
+        if (bestIndex==-1)
+            return null;
+        return destRoutes.get(bestIndex);
+    }
+    
+    Routes getBestRouteByLength(Block dest){
+        //int bestHopCount = 255;
+        //int bestMetric = 965000;
+        //long bestLength = 999999999;
+        int bestIndex = -1;
+        ArrayList<Routes> destRoutes = getDestRoutes(dest);
+        float bestLength = destRoutes.get(0).getLength();
+        for (int i = 0; i<destRoutes.size(); i++){
+            if(destRoutes.get(i).getLength()<bestLength){
+                bestLength = destRoutes.get(i).getLength();
+                bestIndex=i;
+            }
+        }
+        if (bestIndex==-1)
+            return null;
+        return destRoutes.get(bestIndex);
+    }
+    
     void addRouteToNeighbours(Routes ro){
         if(enableAddRouteLogging)
-            log.info("From " + this.getDisplayName() + " Add route to neighbour ");
+            log.info("From " + this.getDisplayName() + " Add route to neighbour");
         Block nextHop = ro.getNextBlock();
         ArrayList<LayoutBlock> validFromPath = new ArrayList<LayoutBlock>();
         if(enableAddRouteLogging)
             log.info("From " + this.getDisplayName() + " new block " + nextHop.getDisplayName());
         for(int i= 0; i<throughPaths.size(); i++){
+            
             LayoutBlock validBlock=null;
-            if(enableAddRouteLogging)
+            if(enableAddRouteLogging){
+                log.info("Through routes index " + i);
                 log.info("From " + this.getDisplayName() + " A through routes " + throughPaths.get(i).getSourceBlock().getDisplayName() + " " + throughPaths.get(i).getDestinationBlock().getDisplayName());
+            }
             /*As the through paths include each possible path, ie 2 > 3 and 3 > 2 
             as seperate entries then we only need to forward the new route to those 
             source blocks that have a desination of the next hop*/
@@ -2955,8 +3018,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
         if(enableAddRouteLogging){
             log.info("From " + this.getDisplayName() + " ===== valid from size path " + validFromPath.size() + " ==== (addroutetoneigh)");
-            log.info(nextHop.getDisplayName());
+            for(LayoutBlock valid: validFromPath){
+                log.info(valid.getDisplayName());
+            }
+            log.info("Next Hop " + nextHop.getDisplayName());
         }
+
         RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount()+1, ro.getMetric()+metric, (ro.getLength()+getBlock().getLengthMm()), -1, getNextPacketID());
         for(int i = 0; i<validFromPath.size(); i++){
             Adjacencies adj = getAdjacency(validFromPath.get(i).getBlock());
@@ -3006,22 +3073,39 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             return;
         }
         
+        boolean routeAlreadyExists = false;
         for (int i = 0; i<routes.size(); i++){
             Routes ro = routes.get(i);
             if((ro.getNextBlock()==srcblk) && ro.getDestBlock()==destBlock){
-                if(enableAddRouteLogging)
+                if(enableAddRouteLogging){
                     log.info("From " + this.getDisplayName() + " Route is already configured");
+                    log.info("Already added, but do we need to update the hop count From " + this.getDisplayName() + " To " + src.getDisplayName());
+                    log.info(ro.getHopCount() + " new " + hopCount);
+                }
                 return;
             }
+            else if (ro.getDestBlock()==destBlock){
+                routeAlreadyExists = true;
+                if(enableAddRouteLogging){
+                    log.info("dest already exists, so will hand off to update the route");
+                    log.info("From " + this.getDisplayName() + " we already have a route to the dest configured so fire off an update instead? " + ro.getNextBlock().getDisplayName());
+                    log.info(ro.getHopCount() + " new " + hopCount);
+                }
+            }   
         }
         if(enableAddRouteLogging)   
             log.info("From " + this.getDisplayName() + " We should be adding route " + destBlock.getDisplayName());
         //We need to propergate out the routes that we have added to our neighbour
         int direction = adj.getDirection();
         Routes route = new Routes(destBlock, srcblk, hopCount, direction, updatemetric, length);
-        routes.add(route); 
-        //Need to propergate the route down to our neighbours
-        addRouteToNeighbours(route);
+        routes.add(route);
+        //Fire off an route updaget 
+        if(routeAlreadyExists){
+            updateRoutingInfo(route);
+        }
+        else {
+            addRouteToNeighbours(route);
+        }
     }
     /* this should look after removal of a specific next hop from our neighbour*/
 
@@ -3160,7 +3244,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         boolean mutualAdjacency=false;
 
         Hashtable<Block, Routes> adjDestRoutes = new Hashtable<Block, Routes>();
-        ArrayList<Integer> actedUponUpdates = new ArrayList<Integer>();
+        ArrayList<Integer> actedUponUpdates = new ArrayList<Integer>(501);
         
         Adjacencies(Block block, int dir, int packetFlow){
             adjBlock = block;
@@ -3251,6 +3335,15 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             adjDestRoutes.put(addedRoute.getDestBlock(), addedRoute);
         }
         
+       /* boolean advertiseDestinationToNeighbour(Block destBlock){
+            for(Route r:adjDestRoutes){
+                if(r.getDestBlock()==destBlock){
+                    return true;
+                }
+            }
+            return false;
+        }*/
+        
         boolean advertiseRouteToNeighbour(Routes routeToAdd){
         //Just wonder if this should forward on the new packet to the neighbour?
             Block dest = routeToAdd.getDestBlock();
@@ -3264,10 +3357,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
             Routes existingRoute = adjDestRoutes.get(dest);
             if(existingRoute==routeToAdd){
+                log.info("Matched on equals");
                 //We return true as the metric might have changed
                 return true;
             }
             if(existingRoute.getMetric()>routeToAdd.getMetric()){
+                log.info("newer is Better metric");
                 return true;
             }
             return false;
@@ -3279,6 +3374,9 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         
         void addPacketRecievedFromNeighbour(Integer packetID){
             actedUponUpdates.add(packetID);
+            if(actedUponUpdates.size()>500){
+                actedUponUpdates.subList(0, 250).clear();
+            }
         }
         
         void dispose(){
@@ -3522,7 +3620,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 //Misc flags is not used in general routing, but is used for determining route removals
         void setMiscFlags(int f) { miscflags = f; }
         int getMiscFlags() { return miscflags; }
-        
     }
 
     /**
