@@ -1509,7 +1509,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if (lBnewblock==null){
             return;
         }
-        ArrayList<Block> routeToAdvertise = new ArrayList<Block>();
+        
         for(int i = 0; i<routes.size(); i++){
             Routes ro = routes.get(i);
             if(enableAddRouteLogging)
@@ -3335,15 +3335,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             adjDestRoutes.put(addedRoute.getDestBlock(), addedRoute);
         }
         
-       /* boolean advertiseDestinationToNeighbour(Block destBlock){
-            for(Route r:adjDestRoutes){
-                if(r.getDestBlock()==destBlock){
-                    return true;
-                }
-            }
-            return false;
-        }*/
-        
         boolean advertiseRouteToNeighbour(Routes routeToAdd){
         //Just wonder if this should forward on the new packet to the neighbour?
             Block dest = routeToAdd.getDestBlock();
@@ -3357,12 +3348,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
             Routes existingRoute = adjDestRoutes.get(dest);
             if(existingRoute==routeToAdd){
-                log.info("Matched on equals");
                 //We return true as the metric might have changed
                 return true;
             }
             if(existingRoute.getMetric()>routeToAdd.getMetric()){
-                log.info("newer is Better metric");
                 return true;
             }
             return false;
