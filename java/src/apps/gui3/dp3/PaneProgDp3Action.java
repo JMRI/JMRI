@@ -30,6 +30,7 @@ import jmri.jmrit.symbolicprog.tabbedframe.*;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JmriPanel;
 import org.jdom.Element;
+import jmri.util.FileUtil;
 
 /**
  * Swing action to create and register a
@@ -187,10 +188,10 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                     }
                     
                     protected void selectDecoder(int mfgID, int modelID, int productID) {
+                        //On selecting a new decoder start a fresh with a new roster entry
                         super.selectDecoder(mfgID, modelID, productID);
                         findDecoderAddress();
                     }
-                    
                     
                     JRadioButton serviceModeProg;
                     JRadioButton editModeProg;
@@ -272,6 +273,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             f.pack();
             if (log.isDebugEnabled()) log.debug("Tab-Programmer setup created");
         } else {
+            re = null;
             combinedLocoSelTree.resetSelections();
         }
         f.setVisible(true);
@@ -304,7 +306,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     int cv19 = 0;
     int cv1 = 0;
     int longAddress;
-    String address;
+    String address="3";
     
     synchronized public void programmingOpReply(int value, int status) {
         switch(teststatus){
@@ -373,6 +375,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     
     @SuppressWarnings("unchecked")
     synchronized void setUpRosterPanel(){
+        re=null;
         if(rosterPanel==null){
             rosterPanel = new JPanel();
             rosterPanel.setLayout(new BorderLayout());
@@ -381,15 +384,6 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             p.add(rosterIdField);
             rosterPanel.add(p, BorderLayout.NORTH);
             rosterIdField.setText(SymbolicProgBundle.getMessage("LabelNewDecoder"));
-            /*rosterIdField.addFocusListener(
-                new FocusListener() {
-                    public void focusGained(FocusEvent e){}
-                    public void focusLost(FocusEvent e) {
-                        if (checkDuplicate())
-                            JOptionPane.showMessageDialog(SymbolicProgBundle.getMessage("ErrorDuplicateID"));
-                    }
-                }
-            );*/
             saveBasicRoster = new JButton("Save");
             saveBasicRoster.addActionListener( new ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -405,6 +399,8 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             rosterPanel.setBorder(border);
             rosterPanel.setVisible(false);
             f.getContentPane().add(rosterPanel, BorderLayout.EAST);
+        } else {
+            rosterIdField.setText(SymbolicProgBundle.getMessage("LabelNewDecoder"));
         }
         if(progPane!=null){
             progPane.dispose();
@@ -450,7 +446,10 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         extendAddr = variableModel.findVar("Long Address");
         if (extendAddr==null) log.debug("DCC Address monitor didnt find an Long Address variable");
         else extendAddr.addPropertyChangeListener(dccNews);
-
+        addMode = variableModel.findVar("Address Format");
+        if (addMode==null) log.debug("DCC Address monitor didnt find an Address Format variable");
+        else addMode.addPropertyChangeListener(dccNews);
+        
         try {
             programmerRoot = pf.rootFromName("programmers"+File.separator+"Basic.xml");
             Element base;
@@ -477,7 +476,6 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             return;
         } catch (Exception e) {
             log.error("exception reading programmer file: ", e);
-            e.printStackTrace();
         }
     }
     
@@ -539,20 +537,38 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             }
             throw new jmri.JmriException("Duplcate ID");
         }
-        re = new RosterEntry();
-        re.setDecoderFamily(decoderFile.getFamily());
-        re.setDecoderModel(decoderFile.getModel());
-        re.setId(rosterIdField.getText());
+        
+        if(re==null){
+            re = new RosterEntry();
+            re.setDecoderFamily(decoderFile.getFamily());
+            re.setDecoderModel(decoderFile.getModel());
+            re.setId(rosterIdField.getText());
+            Roster.instance().addEntry(re);
+        }
+        
+        updateDccAddress();
+        
+        // if there isn't a filename, store using the id
+        re.ensureFilenameExists();
+        String filename = re.getFileName();
+
+        // create the RosterEntry to its file
         synchronized(this){
             re.setDccAddress(""+address);
             re.setLongAddress(!shortAddr);
-        }
-        re.ensureFilenameExists();
-        synchronized(this){
             re.writeFile(cvModel, iCvModel, variableModel );
         }
-        Roster.instance().addEntry(re);
+        // mark this as a success
+        variableModel.setFileDirty(false);
+
+        // and store an updated roster file
+        FileUtil.createDirectory(FileUtil.getUserFilesPath());
         Roster.writeRosterFile();
+
+        // show OK status
+        statusLabel.setText(java.text.MessageFormat.format(
+                                SymbolicProgBundle.getMessage("StateSaveOK"),
+                                new Object[]{filename}));
     }
     
     // hold refs to variables to check dccAddress
