@@ -733,14 +733,18 @@ different format for your switch lists.
     showing the departure time. Selecting the "Show Timetable" prints which train <A
      HREF="#Timetable">timetable</A> you are using when building your trains.
    </P>
-   <P>The last option is "Truncate" and when selected will cause the program to reduce the
+   <P>The next option is "Truncate" and when selected will cause the program to reduce the
     amount of information printed when setting out or picking up a car at a location that also has a
     switch list. The idea here is that you have a location that is staffed by an operator with a
     switch list and he or she will be doing the actual car pick up and set out for the train. Since
     the switch list contains all of the needed information with regards to where the cars are and
     eventually where they need to be, the train manifest only shows which cars are being removed and
     added to the train.</P>
-
+    
+    <P>The last options is "Sort by Track".  The program when creating a train manifest normally lists the
+    cars in the order they need to be placed into the train for proper blocking.  If you would rather have
+    the cars listed by the track name, select the option "Sort by Track".
+    
    <H3>Manifest Preview</H3>
 
    If you want to use a text editor to preview your manifests and switch lists, select this option.
@@ -752,7 +756,6 @@ different format for your switch lists.
    "Add Logo" button and select a file with the image you want to display. You can also have a
    different logo for every train in your roster, see
    <A HREF="#TrainManifestOptions">Train Manifest Options</A> for details. 
-   
    
    <A NAME="MisplacedCarsComment"></A>
    <H3>Misplaced Cars Comment</H3>
@@ -802,11 +805,15 @@ railroad.
 <P>
 <img src="images/Locations.png">
 </P>
-<P>
-To add a location, press the "Add" button located on the
-bottom of the "Locations" window. A new window should appear. 
-</P>
-<P>
+   <P>The "Locations" window shows all of the places that your trains can work. For each
+    location the window shows the total length of all tracks at that location, the amount of track
+    used by your rolling stock, the quantity of rolling stock, and the number of pick ups and set
+    outs of your rolling stock that are scheduled for that location. The "Yardmaster" button
+    produces a window that allows you to see the scheduled pick ups and set outs by train. Only
+    trains that have work for the location are shown.</P>
+   <P>To add a location, press the "Add" button located on the bottom of the "Locations" window.
+    A new window should appear.</P>
+   <P>
 <img src="images/EditLocation.png">
 </P>
 
@@ -895,21 +902,23 @@ selected. If the rolling stock type you want doesn't exist for a
 location, you will have to create the type using the "Cars" window, see
 <A HREF="#Cars">Cars</A> below.
 
-<H3>Road Names Serviced</H3>
+   <H3>Road Names Serviced</H3>
 
-You can also restrict which roads a yard can service. Select "Accept
-only" if you want to build a list of road names that the yard will
-accept. Select "Exclude" if you want to build a list of road names that
-you want to exclude from the yard.
+   You can also restrict which roads a yard can service. Under "Tools" in the menu, Select "Road
+   Options". In the "Edit Track Road Options" window select "Accept only" if you want to build a
+   list of road names that the yard will accept. Select "Exclude" if you want to build a list of
+   road names that you want to exclude from the yard.
 
-<H3>Load Serviced</H3>
+   <H3>Load Serviced</H3>
 
-You can also restrict which car loads a yard can service. Select "Accept
-only" if you want to build a list of car load names that the yard will
-accept. Select "Exclude" if you want to build a list of car load names that
-you want to exclude from the yard.
+   You can also restrict which car loads a yard can service. Under "Tools" in the menu, Select "Load
+   Options". In the "Edit Track Load Options" window select "Accept only" if you want to build a
+   list of car load names that the yard will accept. Select "Exclude" if you want to build a list of
+   car load names that you want to exclude from the yard. There's also an option to associate the
+   loads to a particular type of rolling stock that the track will service. Select the "Use car
+   type and load" if you want this feature.
 
-<H3>Pick Up Car Order</H3>
+   <H3>Pick Up Car Order</H3>
 
 There are three options for picking up cars from the yard. "Normal" uses
 the car's move count to determine the order cars are removed from the
@@ -1324,34 +1333,36 @@ car if the appropriate option is selected.</P>
 <P>For a spur to request a custom load, the spur must have a <A
 	HREF="#Schedules">schedule</A>.</P>
 
-<P>To restrict which loads the program will place into your cars,
-you can use the staging tracks load service control feature. See "Select
-loads serviced by this track" when editing the staging track. You can
-also restrict which types of loads the program will place by restricting
-the types of loads the train departing from staging is allowed to
-service. See "Select loads serviced by this train" under Edit-&gt;Train,
-then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.</P>
+   <P>
+    To restrict which loads the program will place into your cars, you can use the staging track's
+    load control features. See in the menu under Tools "Load Options". You can also control which
+    types of loads the program will place by restricting the types of loads the train departing from
+    staging is allowed to service. See "Select loads serviced by this train" under Edit-&gt;Train,
+    then Tools-&gt;<A HREF="#TrainBuildOptions">Train Build Options</A>.
+   </P>
 
    <P>The program provides another feature with regards to car loads. If the train departs from
     staging and also terminates into staging, the program will automatically generate the
     appropriate load for your cars that depart and terminate into staging. To use this feature, one
     of the two "Generate custom loads ..." from staging must be selected for the departure track.
-    Use the terminating staging track's "Select loads serviced by this track" to control which
-    type of loads the program will generate from the departure staging track.</P>
+    Use the "Load Options" under "Tools" to control which loads the program will generate for you.
+    You can also use the terminating staging track's "Load Options" to
+    control which type of loads the program will generate from the departure staging track.</P>
 
    <P>The third option "Generate custom loads for any staging track" will try and place custom
     loads into your cars by searching for destinations that are staging tracks. First, if the train
     departing staging is also terminating into staging, the program will try a place a custom load
-    into an empty car that meets the train's and terminal staging track's load requirements. If
-    there isn't a terminal staging track for the train, or the program was unsuccessful in adding a
-    custom load to the car that meets the terminal staging track requirements, the program will then
-    search for other staging tracks that aren't at the departure or terminal location. If the
-    program does find a staging track that isn't located at the departure or terminal location, it
-    will randomly assign a custom load that is serviced by both the train and destination staging
-    track. Next the program will determine if the car can be routed to destination staging track
-    using the assigned custom load. If the staging track is reachable, the program will in addition
-    to placing the custom load in the car, set the car's final destination to the location where the
-    staging track resides.</P>
+    into an empty car that meets the train's load requirements, and the train's departure and
+    terminal staging track's load requirements. If there isn't a terminal staging track for the
+    train, or the program was unsuccessful in adding a custom load to the car that meets the
+    terminal staging track requirements, the program will then search for other staging tracks that
+    aren't at the departure or terminal location. If the program does find a staging track that
+    isn't located at the departure or terminal location, it will randomly assign a custom load that
+    is serviced by the train, the staging departure track and destination staging track. Next the
+    program will determine if the car can be routed to destination staging track using the assigned
+    custom load. If the staging track is reachable, the program will in addition to placing the
+    custom load in the car, set the car's final destination to the location where the staging track
+    resides.</P>
 
    <A NAME="BlockingCarsFromStaging"></A>
    <H3>Blocking Cars from Staging</H3>
@@ -2121,10 +2132,39 @@ create coordinates unique to a specific route.
 <A NAME="Trains"></A>
 <H2>Trains</H2>
 
-Now that we've created our routes we need trains to move cars! Create a
-train by selecting "Tools-&gt;Operations-&gt;Trains" from the top level menu.
-<P><img src="images/Trains.png"></P>
-<P>Press the "Add" button to create a train.</P>
+   Now that we've created our routes we need trains to move cars! Create a train by selecting
+   "Tools-&gt;Operations-&gt;Trains" from the top level menu.
+   <P>
+    <img src="images/Trains.png">
+   </P>
+   <P>The "Trains" window shows all of your trains. For each train, the there's a checkbox to
+    select which trains to build, print, and terminate using the buttons on the bottom of the page.
+    You can also modify an existing train using the "Edit" button. For each train there's also an
+    action button. You can select one of four actions for your train. The 'Move" action causes a
+    built train to depart its current location and move to the next location in the train's route.
+    The "Conductor" action opens a window that provides the train's manifest for each location in
+    the train's route. The last two actions are "Terminate" and "Reset", pressing "Terminate" moves
+    a built train to the last location in the train's route, and completes the work assigned to the
+    train. "Reset" is used to release all cars assigned to a built train. You can only reset a train
+    that hasn't been moved.</P>
+
+   <P>There are several checkboxes along the bottom of the Trains window. The "Show All" when
+    selects shows all trains in your roster. When deselected, only trains that have the "Build"
+    checkbox selected are shown. The "Messages" checkbox when selected will present a dialog box
+    whenever a train build failure occurs explaining why the train didn't build. The "Build Report"
+    checkbox when selected provides a report detailing how the train was built by the program. Use
+    the "Print" or "Preview" button for a built train to see the build report. The program always
+    provides a "Report" button under the "Action" column for a train that fails to build.</P>
+
+   <P>The "Preview" checkbox when selected, allows you to preview rather than printing your
+    train's manifest or build report.</P>
+    
+    <P>One of the most important buttons is the "Save Builds" button.  When pressed, the program saves
+    all the files that have been modified by building and moving your trains.  Pressing this button
+    allows you to shut down the program and resume exactly where you left the program.</P>
+
+   <P>Press the "Add" button to create a train.</P>
+   
 <P><img src="images/EditTrain.png"></P>
 <P>Enter the train's name and optional description, and then press
 the "Add Train" button. Both will show up on the train's manifest. The
