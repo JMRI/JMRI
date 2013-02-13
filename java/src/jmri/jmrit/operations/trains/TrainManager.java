@@ -728,6 +728,19 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	/**
+	 * Sets the flag that all of the build trains have updated switch lists 
+	 */
+	public void setTrainsPrintedSwitchLists() {
+		List<String> trains = getTrainsByTimeList();
+		for (int i = 0; i < trains.size(); i++) {
+			Train train = getTrainById(trains.get(i));
+			if (!train.isBuilt())
+				continue; // train wasn't built so skip
+			train.setSwitchListStatus(Train.PRINTED);
+		}
+	}
+	
 	public void load(Element root) {
 		if (root.getChild(Xml.OPTIONS) != null) {
 			Element options = root.getChild(Xml.OPTIONS);

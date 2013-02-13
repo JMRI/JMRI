@@ -59,6 +59,15 @@ public class Router extends TrainCommon {
 			log.debug("Router returns instance " + _instance);
 		return _instance;
 	}
+	
+	/**
+	 * Returns the status of the router when using the setDestination() for a car.
+	 * 
+	 * @return Track.OKAY, STATUS_NOT_THIS_TRAIN, STATUS_NOT_ABLE, STATUS_CAR_AT_DESINATION, or STATUS_ROUTER_DISABLED
+	 */
+	public String getStatus() {
+		return _status;
+	}
 
 	/**
 	 * Attempts to set the car's destination if a final destination exists. Only sets the car's destination if the train
@@ -232,10 +241,6 @@ public class Router extends TrainCommon {
 			return false;
 		}
 		return true; // car's destination has been set
-	}
-
-	public String getStatus() {
-		return _status;
 	}
 
 	/**

@@ -16,7 +16,6 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -100,34 +99,31 @@ public class TrainSwitchLists extends TrainCommon {
 			Route route = train.getRoute();
 			if (route == null)
 				continue; // no route for this train
-			// get engine and car lists
-			List<String> enginesList = engineManager.getByTrainList(train);
-			List<String> carList = carManager.getByTrainDestinationList(train);
 			// determine if train works this location
-			boolean works = false;
-			List<String> routeList = route.getLocationsBySequenceList();
-			// first determine if there's any work at this location
-			for (int r = 0; r < routeList.size(); r++) {
-				RouteLocation rl = route.getLocationById(routeList.get(r));
-				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
-					for (int k = 0; k < carList.size(); k++) {
-						Car car = carManager.getById(carList.get(k));
-						if (car.getRouteLocation() == rl || car.getRouteDestination() == rl) {
-							works = true;
-							break;
-						}
-					}
-					for (int k = 0; k < enginesList.size(); k++) {
-						Engine eng = engineManager.getById(enginesList.get(k));
-						if (eng.getRouteLocation() == rl || eng.getRouteDestination() == rl) {
-							works = true;
-							break;
-						}
-					}
-					if (works)
-						break;
-				}
-			}
+			boolean works = isThereWorkAtLocation(train, location);
+//			List<String> routeList = route.getLocationsBySequenceList();
+//			// first determine if there's any work at this location
+//			for (int r = 0; r < routeList.size(); r++) {
+//				RouteLocation rl = route.getLocationById(routeList.get(r));
+//				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
+//					for (int k = 0; k < carList.size(); k++) {
+//						Car car = carManager.getById(carList.get(k));
+//						if (car.getRouteLocation() == rl || car.getRouteDestination() == rl) {
+//							works = true;
+//							break;
+//						}
+//					}
+//					for (int k = 0; k < enginesList.size(); k++) {
+//						Engine eng = engineManager.getById(enginesList.get(k));
+//						if (eng.getRouteLocation() == rl || eng.getRouteDestination() == rl) {
+//							works = true;
+//							break;
+//						}
+//					}
+//					if (works)
+//						break;
+//				}
+//			}
 			if (!works && !Setup.isSwitchListAllTrainsEnabled()) {
 				log.debug("No work for train (" + train.getName() + ") at location (" + location.getName()
 						+ ")");
@@ -141,6 +137,10 @@ public class TrainSwitchLists extends TrainCommon {
 			dropCars = false;
 			int stops = 1;
 			boolean trainDone = false;
+			// get engine and car lists
+			List<String> enginesList = engineManager.getByTrainList(train);
+			List<String> carList = carManager.getByTrainDestinationList(train);
+			List<String> routeList = route.getLocationsBySequenceList();
 			// does the train stop once or more at this location?
 			for (int r = 0; r < routeList.size(); r++) {
 				RouteLocation rl = route.getLocationById(routeList.get(r));

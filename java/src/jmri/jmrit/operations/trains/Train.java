@@ -2807,7 +2807,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Sets the print status for this location's switch list
+	 * Sets the print status for switch lists
 	 * 
 	 * @param status
 	 *            UNKNOWN PRINTED

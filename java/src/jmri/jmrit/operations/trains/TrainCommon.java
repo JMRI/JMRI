@@ -13,6 +13,7 @@ import java.util.List;
 
 import javax.swing.JLabel;
 
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
@@ -626,6 +627,38 @@ public class TrainCommon {
 			}
 		}
 		return parsedName;
+	}
+	
+	/**
+	 * returns true if the train has work at the location
+	 * @param train
+	 * @param location
+	 * @return true if the train has work at the location
+	 */
+	public static boolean isThereWorkAtLocation(Train train, Location location) {
+		CarManager carManager = CarManager.instance();
+		List<String> carList = carManager.getByTrainDestinationList(train);
+		for (int i = 0; i < carList.size(); i++) {
+			Car car = carManager.getById(carList.get(i));
+			if ((car.getRouteLocation() != null && car.getTrack() != null && TrainCommon.splitString(
+					car.getRouteLocation().getName()).equals(TrainCommon.splitString(location.getName())))
+					|| (car.getRouteDestination() != null && TrainCommon.splitString(
+							car.getRouteDestination().getName()).equals(
+							TrainCommon.splitString(location.getName()))))
+				return true;
+		}
+		EngineManager engineManager = EngineManager.instance();
+		List<String> engList = engineManager.getByTrainList(train);
+		for (int i = 0; i < engList.size(); i++) {
+			Engine eng = engineManager.getById(engList.get(i));
+			if ((eng.getRouteLocation() != null && eng.getTrack() != null && TrainCommon.splitString(
+					eng.getRouteLocation().getName()).equals(TrainCommon.splitString(location.getName())))
+					|| (eng.getRouteDestination() != null && TrainCommon.splitString(
+							eng.getRouteDestination().getName()).equals(
+							TrainCommon.splitString(location.getName()))))
+				return true;
+		}
+		return false;
 	}
 
 	protected void addCarsLocationUnknown(PrintWriter file) {
