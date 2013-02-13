@@ -445,12 +445,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
      */
     protected void addPressed(ActionEvent e) {
         if (addFrame==null) {
-            for(Object obj:jmri.InstanceManager.getList(jmri.CommandStation.class)){
-                if(obj!=null){
-                    jmri.CommandStation station = (jmri.CommandStation) obj;
-                    prefixBox.addItem(station.getUserName());
+        	if (jmri.InstanceManager.getList(jmri.CommandStation.class) != null) {
+                for(Object obj:jmri.InstanceManager.getList(jmri.CommandStation.class)){
+                    if(obj!=null){
+                        jmri.CommandStation station = (jmri.CommandStation) obj;
+                        prefixBox.addItem(station.getUserName());
+                    }
                 }
-            }
+        	}
             
             to1 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
             to2 = new BeanSelectCreatePanel(InstanceManager.turnoutManagerInstance(), null);
