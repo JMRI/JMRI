@@ -165,8 +165,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 		return validSpeeds;
 	}
 
-	private String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
-	private int [] validSpeedValues = new int[]{9600, 19200};
+	private String [] validSpeeds = new String[]{"9,600 baud"};
+	private int [] validSpeedValues = new int[]{9600};
 
     // private control members
     private boolean opened = false;
