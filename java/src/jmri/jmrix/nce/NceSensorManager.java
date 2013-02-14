@@ -75,8 +75,9 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     NceAIU[] aiuArray = new NceAIU[MAXAIU+1];  // element 0 isn't used
     int [] activeAIUs = new int[MAXAIU];		// keep track of those worth polling
     int activeAIUMax = 0;							// last+1 element used of activeAIUs
-    private static int MINAIU =  1;
-    private static int MAXAIU = 63;
+    private static final int MINAIU =  1;
+    private static final int MAXAIU = 63;
+    private static final int MAXPIN = 14;				// only pins 1 - 14 used on NCE AIU
 
     Thread pollThread;
     boolean stopPolling = false;
@@ -322,6 +323,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         if(curAddress.contains(":")){
             //Sensor address is presented in the format AIU Cab Address:Pin Number On AIU
             //Should we be validating the values of aiucab address and pin number?
+        	// Yes we should, added check for valid AIU and pin ranges DBoudreau 2/13/2013
             int seperator = curAddress.indexOf(":");
             try {
                 aiucab = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
@@ -340,6 +342,18 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 throw new JmriException("Hardware Address passed should be a number");
             }
+            pin = iName%16 + 1;
+            aiucab = iName/16 + 1;
+        }
+        // only pins 1 through 14 are valid
+        if (pin == 0 || pin > MAXPIN) {
+            log.error("NCE sensor "+ curAddress +" pin number " + pin + " is out of range only pin numbers 1 - 14 are valid");
+            throw new JmriException("Sensor pin number is out of range");
+        }
+        if (aiucab == 0 || aiucab > MAXAIU) {
+            log.error("NCE sensor "+ curAddress +" AIU number " + aiucab + " is out of range only AIU 1 - 63 are valid");
+            throw new JmriException("AIU number is out of range");
+
         }
         return prefix+typeLetter()+iName;
     
@@ -363,19 +377,22 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
-        Sensor s = getBySystemName(tmpSName);
-        if(s!=null){
-            for(int x = 1; x<10; x++){
-                iName=iName+1;
-                s = getBySystemName(prefix+typeLetter()+iName);
-                if(s==null){
-                    return Integer.toString(iName);
-                }
-            }
-            return null;
-        } else {
-            return Integer.toString(iName);
-        }
+		Sensor s = getBySystemName(tmpSName);
+		if (s != null) {
+			for (int x = 1; x < 10; x++) {
+				iName = iName + 1;
+				pin = pin + 1;
+				if (pin > MAXPIN)
+					return null;
+				s = getBySystemName(prefix + typeLetter() + iName);
+				if (s == null) {
+					return Integer.toString(iName);
+				}
+			}
+			return null;
+		} else {
+			return Integer.toString(iName);
+		}
         
     }
     static Logger log = Logger.getLogger(NceSensorManager.class.getName());
