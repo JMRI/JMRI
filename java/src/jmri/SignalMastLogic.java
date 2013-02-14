@@ -252,8 +252,6 @@ public interface SignalMastLogic {
      */
     public void setMasts(Hashtable<SignalMast, String> masts, SignalMast destination);
 
-    public void setProtectingBlock(LayoutBlock protecting);
-
     /**
      * Sets which sensors must be in a given state before our mast can be set.
      * @param sensors
@@ -339,8 +337,16 @@ public interface SignalMastLogic {
 
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l);
     
+    /**
+    *  Get the block facing our source signal
+    *  
+    */
     public LayoutBlock getFacingBlock();
     
-    public LayoutBlock getProtectingBlock();
+    /**
+    * Get the block that the source signal is protecting on the path to the 
+    * destination signal mast
+    */
+    public LayoutBlock getProtectingBlock(SignalMast destination);
     
 }

@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.apache.log4j.Logger;
 import jmri.util.JmriJFrame;
 import jmri.InstanceManager;
 import jmri.Turnout;
@@ -1567,7 +1566,7 @@ public class LayoutTurnout
         }
         
         else {
-            ArrayList<LayoutBlock> localblks = new ArrayList<LayoutBlock>(4);
+            /*ArrayList<LayoutBlock> localblks = new ArrayList<LayoutBlock>(4);
             if(block!=null)
                 localblks.add(block);
             if(blockB!=null)
@@ -1575,7 +1574,7 @@ public class LayoutTurnout
             if(blockC!=null)
                 localblks.add(blockC);
             if(blockD!=null)
-                localblks.add(blockD);
+                localblks.add(blockD);*/
             
             LayoutBlock aLBlock = null;
             LayoutBlock bLBlock = null;
@@ -2170,6 +2169,7 @@ public class LayoutTurnout
 		}
 	}
 
+    //@todo on the cross-overs check the internal boundary details.
     public void reCheckBlockBoundary(){
         if(connectA==null && connectB==null && connectC==null){
             if ((type==RH_TURNOUT) || (type==LH_TURNOUT) || (type==WYE_TURNOUT)){
@@ -2259,6 +2259,135 @@ public class LayoutTurnout
         }
     }
     
+    public ArrayList<LayoutBlock> getProtectedBlocks(jmri.NamedBean bean){
+        ArrayList<LayoutBlock> ret = new ArrayList<LayoutBlock>(2);
+        if(block==null){
+            return ret;
+        }
+        if(getTurnoutType()>=DOUBLE_XOVER  && getTurnoutType()<=LH_XOVER){
+            if((getTurnoutType()==DOUBLE_XOVER || getTurnoutType()==RH_XOVER) && (getSignalAMast() == bean || getSignalCMast() == bean || getSensorA()==bean || getSensorC()==bean)){
+                if(getSignalAMast() == bean || getSensorA()==bean){
+                    if(connectA!=null){
+                        if(((TrackSegment)connectA).getLayoutBlock()==block){
+                            if(blockB!=null && block!=blockB && blockC!=null && block!=blockC){
+                                ret.add(blockB);
+                                ret.add(blockC);
+                            }
+                        } else {
+                            ret.add(block);
+                        }
+                    }
+                } else {
+                    if(connectC!=null && blockC!=null) {
+                        if(((TrackSegment)connectC).getLayoutBlock()==blockC){
+                            if(blockC!=block && blockD!=null && blockC!=blockD){
+                                ret.add(block);
+                                ret.add(blockD);
+                            }
+                        } else {
+                            ret.add(blockC);
+                        }
+                    }
+                }
+            }
+            if((getTurnoutType()==DOUBLE_XOVER || getTurnoutType()==LH_XOVER) && (getSignalBMast() == bean || getSignalDMast() == bean || getSensorB()==bean || getSensorD()==bean)){
+                if(getSignalBMast() == bean || getSensorB()==bean){
+                    if(connectB!=null && blockB !=null){
+                        if(((TrackSegment)connectB).getLayoutBlock()==blockB){
+                            if(block!=blockB && blockD!=null && blockB!=blockD){
+                                ret.add(block);
+                                ret.add(blockD);
+                            }
+                        } else {
+                            ret.add(blockB);
+                        }
+                    }
+                } else {
+                    if(connectD!=null && blockD!=null){
+                        if(((TrackSegment)connectD).getLayoutBlock()==blockD){
+                            if(blockB!=null && blockB!=blockD && blockC!=null && blockC!=blockD){
+                                ret.add(blockB);
+                                ret.add(blockC);
+                            }
+                        } else {
+                            ret.add(blockD);
+                        }
+                    }
+                }
+            }
+            if(getTurnoutType()==RH_XOVER && (getSignalBMast() == bean || getSignalDMast() == bean || getSensorB()==bean || getSensorD()==bean)){
+                if(getSignalBMast() == bean || getSensorB()==bean){
+                    if(connectB!=null && ((TrackSegment)connectB).getLayoutBlock()==blockB){
+                        if(blockB!=block){
+                            ret.add(block);
+                        }
+                    } else {
+                        ret.add(blockB);
+                    }
+                } else {
+                    if(connectD!=null && ((TrackSegment)connectD).getLayoutBlock()==blockD){
+                        if(blockC!=blockD){
+                            ret.add(blockC);
+                        }
+                    } else {
+                        ret.add(blockD);
+                    }
+                }
+            }
+            if(getTurnoutType()==LH_XOVER && (getSensorA()==bean || getSensorC()==bean || getSignalAMast() == bean || getSignalCMast() == bean)){
+                if(getSignalAMast() == bean || getSensorA()==bean){
+                    if(connectA!=null && ((TrackSegment)connectA).getLayoutBlock()==block){
+                        if(blockB!=block){
+                            ret.add(blockB);
+                        }
+                    } else {
+                        ret.add(block);
+                    }
+                } else {
+                    if(connectC!=null && ((TrackSegment)connectC).getLayoutBlock()==blockC){
+                        if(blockC!=blockD){
+                            ret.add(blockD);
+                        }
+                    } else {
+                        ret.add(blockC);
+                    }
+                }
+            }
+        } else {
+            if(connectA!=null){
+                if(getSignalAMast() == bean || getSensorA()==bean){
+                    //Mast at throat
+                        //if the turnout is in the same block as the segment connected at the throat, then we can be protecting two blocks
+                    if(((TrackSegment)connectA).getLayoutBlock()==block){
+                        if(connectB!=null && connectC!=null){
+                            if(((TrackSegment)connectB).getLayoutBlock()!=block && ((TrackSegment)connectC).getLayoutBlock()!=block){
+                                ret.add(((TrackSegment)connectB).getLayoutBlock());
+                                ret.add(((TrackSegment)connectC).getLayoutBlock());
+                            }
+                        }
+                    } else {
+                        ret.add(block);
+                    }
+                } else if(getSignalBMast() == bean || getSensorB()==bean){
+                    //Mast at Continuing
+                    if(connectB!=null && ((TrackSegment)connectB).getLayoutBlock()==block){
+                        if(((TrackSegment)connectA).getLayoutBlock()!=block) ret.add(((TrackSegment)connectA).getLayoutBlock());
+                    } else {
+                        ret.add(block);
+                    }
+                } else if(getSignalCMast() == bean || getSensorC()==bean){
+                    //Mast at Diverging
+                    if(connectC!=null && ((TrackSegment)connectC).getLayoutBlock()==block){
+                        if(((TrackSegment)connectA).getLayoutBlock()!=block) ret.add(((TrackSegment)connectA).getLayoutBlock());
+                    } else {
+                        ret.add(block);
+                    }
+                }
+            }
+        }
+        return ret;
+    }
+    
     protected void removeSML(SignalMast signalMast){
         if(signalMast==null)
             return;
@@ -2325,6 +2454,6 @@ public class LayoutTurnout
         }
     }
 
-    static Logger log = Logger.getLogger(LayoutTurnout.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutTurnout.class.getName());
 
 }

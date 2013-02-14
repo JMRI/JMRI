@@ -1,7 +1,6 @@
 // jmri.jmrit.display.LayoutBlockManager.java
 package jmri.jmrit.display.layoutEditor;
 
-import org.apache.log4j.Logger;
 import jmri.managers.AbstractManager;
 import jmri.Sensor;
 import jmri.Block;
@@ -12,6 +11,7 @@ import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
 import jmri.NamedBean;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
@@ -1144,8 +1144,8 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * @param panel
      * @return The assigned sensor or signal mast as a named bean
      */
-    public jmri.NamedBean getNamedBeanAtEndBumper(Block facingBlock, LayoutEditor panel){
-        jmri.NamedBean bean = getSignalMastAtEndBumper(facingBlock, panel);
+    public NamedBean getNamedBeanAtEndBumper(Block facingBlock, LayoutEditor panel){
+        NamedBean bean = getSignalMastAtEndBumper(facingBlock, panel);
         if(bean!=null)
             return bean;
         else return getSensorAtEndBumper(facingBlock, panel);
@@ -1174,20 +1174,19 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 if(t.getType1()==LayoutEditor.POS_POINT){
                     p = (PositionablePoint) t.getConnect1();
                         if(p.getType()==PositionablePoint.END_BUMPER){
-                            if(!p.getEastBoundSignalMastName().equals(""))
-                                return jmri.InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMastName());
-                            if(!p.getWestBoundSignalMastName().equals(""))
-                                return jmri.InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMastName());
+                            if(p.getEastBoundSignalMast()!=null)
+                                return p.getEastBoundSignalMast();
+                            if(p.getWestBoundSignalMast()!=null)
+                                return p.getWestBoundSignalMast();
                         }
-
                 }
                 if (t.getType2()==LayoutEditor.POS_POINT){
                     p = (PositionablePoint) t.getConnect2();
                         if(p.getType()==PositionablePoint.END_BUMPER){
-                            if(!p.getEastBoundSignalMastName().equals(""))
-                                return jmri.InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMastName());
-                            if(!p.getWestBoundSignalMastName().equals(""))
-                                return jmri.InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMastName());
+                            if(p.getEastBoundSignalMast()!=null)
+                                return p.getEastBoundSignalMast();
+                            if(p.getWestBoundSignalMast()!=null)
+                                return p.getWestBoundSignalMast();
                         }
                 }
             }
@@ -1218,20 +1217,20 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 if(t.getType1()==LayoutEditor.POS_POINT){
                     p = (PositionablePoint) t.getConnect1();
                         if(p.getType()==PositionablePoint.END_BUMPER){
-                            if(!p.getEastBoundSensorName().equals(""))
-                                return jmri.InstanceManager.sensorManagerInstance().getSensor(p.getEastBoundSensorName());
-                            if(!p.getWestBoundSensorName().equals(""))
-                                return jmri.InstanceManager.sensorManagerInstance().getSensor(p.getWestBoundSensorName());
+                            if(p.getEastBoundSensor()!=null)
+                                return p.getEastBoundSensor();
+                            if(p.getWestBoundSensor()!=null)
+                                return p.getWestBoundSensor();
                         }
 
                 }
                 if (t.getType2()==LayoutEditor.POS_POINT){
                     p = (PositionablePoint) t.getConnect2();
                         if(p.getType()==PositionablePoint.END_BUMPER){
-                            if(!p.getEastBoundSensorName().equals(""))
-                                return jmri.InstanceManager.sensorManagerInstance().getSensor(p.getEastBoundSensorName());
-                            if(!p.getWestBoundSensorName().equals(""))
-                                return jmri.InstanceManager.sensorManagerInstance().getSensor(p.getWestBoundSensorName());
+                            if(p.getEastBoundSensor()!=null)
+                                return p.getEastBoundSensor();
+                            if(p.getWestBoundSensor()!=null)
+                                return p.getWestBoundSensor();
                         }
                 }
             }
@@ -1246,11 +1245,14 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * @param protectedBlock
      * @return The assigned sensor or signal mast as a named bean
      */
-    public jmri.NamedBean getFacingNamedBean(Block facingBlock, Block protectedBlock, LayoutEditor panel){
-        jmri.NamedBean bean = getFacingSignalMast(facingBlock, protectedBlock, panel);
+    public NamedBean getFacingNamedBean(Block facingBlock, Block protectedBlock, LayoutEditor panel){
+        NamedBean bean = getFacingBean(facingBlock, protectedBlock, panel, SignalMast.class);
         if(bean!=null)
             return bean;
-        else return getFacingSensor(facingBlock, protectedBlock, panel);
+        bean = getFacingBean(facingBlock, protectedBlock, panel, Sensor.class);
+        if(bean!=null)
+            return bean;
+        return getFacingSignalHead(facingBlock, protectedBlock);
     }
     
     public SignalMast getFacingSignalMast(Block facingBlock, Block protectedBlock){
@@ -1264,12 +1266,41 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * @param protectedBlock
      * @return The assigned signalMast.
      */
-    public SignalMast getFacingSignalMast(Block facingBlock, Block protectedBlock, LayoutEditor panel){
-        // check input
+    public SignalMast getFacingSignalMast (Block facingBlock, Block protectedBlock, LayoutEditor panel){
+        return (SignalMast)getFacingBean(facingBlock, protectedBlock, panel, SignalMast.class);
+    }
+
+    
+    /**
+	 * Method to return the Sensor facing into a specified Block from a specified protected Block.
+	 * <P>
+     * @param facingBlock
+     * @param protectedBlock
+     * @return The assigned sensor.
+     */
+    public Sensor getFacingSensor (Block facingBlock, Block protectedBlock, LayoutEditor panel){
+        return (Sensor) getFacingBean(facingBlock, protectedBlock, panel, Sensor.class);
+    }
+    /**
+	 * Method to return a facing bean into a specified Block from a specified protected Block.
+	 * <P>
+     * @param facingBlock
+     * @param protectedBlock
+     * @param panel the layout editor panel the block is assigned, if null then the maximum connected panel of the facing block is used
+     * @param T The class of the item that we are looking for, either SignalMast or Sensor
+     * @return The assigned sensor.
+     */
+    public NamedBean getFacingBean(Block facingBlock, Block protectedBlock, LayoutEditor panel, Class<?> T){
+           // check input
 		if ( (facingBlock == null) || (protectedBlock == null) ) {
 			log.error ("null block in call to getFacingSignalMast");
 			return null;
 		}
+        if(!T.equals(SignalMast.class) && !T.equals(Sensor.class)){
+            log.error ("Incorrect class type called, must be either SignalMast or Sensor");
+			return null;
+        }
+        if(log.isDebugEnabled()) log.debug("find signal mast between facing " + facingBlock.getDisplayName() + " protected " + protectedBlock.getDisplayName());
         // non-null - check if input corresponds to Blocks in a Layout Editor panel.
 		LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
 		LayoutBlock pLayoutBlock = getByUserName(protectedBlock.getUserName());
@@ -1324,6 +1355,22 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                     }
                     connected = lc.getXover();
                 }
+                else if (lc.getXoverBoundaryType()==LayoutConnectivity.XOVER_BOUNDARY_AC){
+                    if(fLayoutBlock==lc.getXover().getLayoutBlock()){
+                        cType=LayoutEditor.TURNOUT_A;
+                    } else {
+                        cType=LayoutEditor.TURNOUT_C;
+                    }
+                    connected = lc.getXover();
+                }
+                else if (lc.getXoverBoundaryType()==LayoutConnectivity.XOVER_BOUNDARY_BD){
+                    if(fLayoutBlock==lc.getXover().getLayoutBlockB()){
+                        cType=LayoutEditor.TURNOUT_B;
+                    } else {
+                        cType=LayoutEditor.TURNOUT_D;
+                    }
+                    connected = lc.getXover();
+                }
             }
         }
         if (connected == null) {
@@ -1338,76 +1385,143 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			boolean block1IsWestEnd = tools.isAtWestEndOfAnchor(tr,p);
 			if ( (block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1) ) {
 				// block1 is on the west (north) end of the block boundary
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMastName()));
+                if(T.equals(SignalMast.class))
+                    return p.getEastBoundSignalMast();
+                else if (T.equals(Sensor.class))
+                    return p.getEastBoundSensor();
 			}
 			else {
-				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMastName()));
+                if(T.equals(SignalMast.class))
+                    return p.getWestBoundSignalMast();
+                else if (T.equals(Sensor.class))
+                    return p.getWestBoundSensor();
 			}
 		}
-        if(!facingIsBlock1)
-            return null;
+
         if (cType==LayoutEditor.TURNOUT_A) {
             lt = (LayoutTurnout)connected;
             if ((lt.getLinkType()==LayoutTurnout.NO_LINK) || (lt.getLinkType()==LayoutTurnout.FIRST_3_WAY)){
-                if ( (lt.getSignalAMastName()!=null) || (!lt.getSignalAMastName().equals("")) ){
-                    return (InstanceManager.signalMastManagerInstance().getSignalMast(lt.getSignalAMastName()));
+                if ((T.equals(SignalMast.class) && lt.getSignalAMast()!=null ) || (T.equals(Sensor.class) && lt.getSensorA()!=null )){
+                    if(tr==null){
+                        if(lt.getConnectA() instanceof TrackSegment){
+                            TrackSegment t = (TrackSegment)lt.getConnectA();
+                            if(t.getLayoutBlock()!=null && t.getLayoutBlock()==lt.getLayoutBlock()){
+                                if(T.equals(SignalMast.class))
+                                    return (lt.getSignalAMast());
+                                else if (T.equals(Sensor.class))
+                                    return lt.getSensorA();
+                            }
+                        }
+                    }  else if(tr.getLayoutBlock().getBlock()==facingBlock){
+                        if(T.equals(SignalMast.class))
+                            return (lt.getSignalAMast());
+                        else if (T.equals(Sensor.class))
+                            return lt.getSensorA();
+                    }
                 }
-                // we only allow signal masts inbound to the turnout.
-                return null;
             }
-            else {
-                return null;
-            }
+            return null;
         }
         
         if (cType==LayoutEditor.TURNOUT_B) {
             lt = (LayoutTurnout)connected;
-            if ( (lt.getSignalBMastName()!=null) || (!lt.getSignalBMastName().equals("")) ){
-                return (InstanceManager.signalMastManagerInstance().getSignalMast(lt.getSignalBMastName()));
+            if ((T.equals(SignalMast.class) && lt.getSignalBMast()!=null ) || (T.equals(Sensor.class) && lt.getSensorB()!=null ) ){
+                if(tr==null){
+                    if(lt.getConnectB() instanceof TrackSegment){
+                        TrackSegment t = (TrackSegment)lt.getConnectB();
+                        if(t.getLayoutBlock()!=null && t.getLayoutBlock()==lt.getLayoutBlockB()){
+                            if(T.equals(SignalMast.class))
+                                return (lt.getSignalBMast());
+                            else if (T.equals(Sensor.class))
+                                return lt.getSensorB();
+                        }
+                    }
+                } else if(tr.getLayoutBlock().getBlock()==facingBlock){
+                    if(T.equals(SignalMast.class))
+                        return (lt.getSignalBMast());
+                    else if (T.equals(Sensor.class))
+                        return lt.getSensorB();
+                }
             }
             return null;
         }
         if (cType==LayoutEditor.TURNOUT_C) {
             lt = (LayoutTurnout)connected;
-            if ( (lt.getSignalCMastName()!=null) || (!lt.getSignalCMastName().equals("")) ){
-                return (InstanceManager.signalMastManagerInstance().getSignalMast(lt.getSignalCMastName()));
+            if ( (T.equals(SignalMast.class) && lt.getSignalCMast()!=null ) || (T.equals(Sensor.class) && lt.getSensorC()!=null )){
+                if(tr==null){
+                    if(lt.getConnectC() instanceof TrackSegment){
+                        TrackSegment t = (TrackSegment)lt.getConnectC();
+                        if(t.getLayoutBlock()!=null && t.getLayoutBlock()==lt.getLayoutBlockC()){
+                            if(T.equals(SignalMast.class))
+                                return lt.getSignalCMast();
+                            else if (T.equals(Sensor.class))
+                                return lt.getSensorC();
+                        }
+                    }
+                }
+                 else if(tr.getLayoutBlock().getBlock()==facingBlock){
+                    if(T.equals(SignalMast.class))
+                        return (lt.getSignalCMast());
+                    else if (T.equals(Sensor.class))
+                        return lt.getSensorC();
+                }
             }
             return null;
         }
         
         if (cType==LayoutEditor.TURNOUT_D) {
             lt = (LayoutTurnout)connected;
-                if ( (lt.getSignalDMastName()!=null) || (!lt.getSignalDMastName().equals("")) ){
-                    return (InstanceManager.signalMastManagerInstance().getSignalMast(lt.getSignalDMastName()));
+                if ( (T.equals(SignalMast.class) && lt.getSignalDMast()!=null ) || (T.equals(Sensor.class) && lt.getSensorD()!=null ) ){
+                    if(tr==null){
+                        if(lt.getConnectD() instanceof TrackSegment){
+                            TrackSegment t = (TrackSegment)lt.getConnectD();
+                            if(t.getLayoutBlock()!=null && t.getLayoutBlock()==lt.getLayoutBlockD()){
+                                if(T.equals(SignalMast.class))
+                                    return lt.getSignalDMast();
+                                else if (T.equals(Sensor.class))
+                                    return lt.getSensorD();
+                            }
+                        }
+                    }
+                    else if(tr.getLayoutBlock().getBlock()==facingBlock){
+                        if(T.equals(SignalMast.class))
+                            return (lt.getSignalDMast());
+                        else if (T.equals(Sensor.class))
+                            return lt.getSensorD();
+                    }
                 }
+            return null;
+        }
+        
+        if(tr==null || tr.getLayoutBlock().getBlock()!=facingBlock){
             return null;
         }
         
         if((cType>=LayoutEditor.SLIP_A) && (cType<=LayoutEditor.SLIP_D)){
             LayoutSlip ls = (LayoutSlip)connected;
             if(cType==LayoutEditor.SLIP_A){
-                if((ls.getSignalAMastName()!=null) || (!ls.getSignalAMastName().equals(""))){
-                    return (InstanceManager.signalMastManagerInstance().getSignalMast(ls.getSignalAMastName()));
-                }
-                return null;
+                if(T.equals(SignalMast.class))
+                    return ls.getSignalAMast();
+                else if (T.equals(Sensor.class))
+                    return ls.getSensorA();
             }
             if(cType==LayoutEditor.SLIP_B){
-                if((ls.getSignalBMastName()!=null) || (!ls.getSignalBMastName().equals(""))){
-                    return (InstanceManager.signalMastManagerInstance().getSignalMast(ls.getSignalBMastName()));
-                }
-                return null;
+                if(T.equals(SignalMast.class))
+                    return ls.getSignalBMast();
+                else if (T.equals(Sensor.class))
+                    return ls.getSensorB();
             }
             if(cType==LayoutEditor.SLIP_C){
-                if((ls.getSignalCMastName()!=null) || (!ls.getSignalCMastName().equals(""))){
-                    return (InstanceManager.signalMastManagerInstance().getSignalMast(ls.getSignalCMastName()));
-                }
-                return null;
+                if(T.equals(SignalMast.class))
+                    return ls.getSignalCMast();
+                else if (T.equals(Sensor.class))
+                    return ls.getSensorC();
             }
             if(cType==LayoutEditor.SLIP_D){
-                if((ls.getSignalDMastName()!=null) || (!ls.getSignalDMastName().equals(""))){
-                    return (InstanceManager.signalMastManagerInstance().getSignalMast(ls.getSignalDMastName()));
-                }
-                return null;
+                if(T.equals(SignalMast.class))
+                    return ls.getSignalDMast();
+                else if (T.equals(Sensor.class))
+                    return ls.getSensorD();
             }
         }
         
@@ -1421,202 +1535,34 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 		LevelXing xing = (LevelXing)connected;
         if (cType==LayoutEditor.LEVEL_XING_A) {
             // block boundary is at the A connection of a level crossing
-            return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalAMastName()));
+            if(T.equals(SignalMast.class))
+                return xing.getSignalAMast();
+            else if (T.equals(Sensor.class))
+                return xing.getSensorA();
         }
         if (cType==LayoutEditor.LEVEL_XING_B) {
              // block boundary is at the B connection of a level crossing
-            return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalBMastName()));
+            if(T.equals(SignalMast.class))
+                return xing.getSignalBMast();
+            else if (T.equals(Sensor.class))
+                return xing.getSensorB();
         }
         if (cType==LayoutEditor.LEVEL_XING_C) {
-            // block boundary is at the C connection of a level crossing
-            return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalCMastName()));
+                // block boundary is at the C connection of a level crossing
+            if(T.equals(SignalMast.class))
+                return xing.getSignalCMast();
+            else if (T.equals(Sensor.class))
+                return xing.getSensorC();
         }
         if (cType==LayoutEditor.LEVEL_XING_D) {
-            // block boundary is at the D connection of a level crossing
-            return (InstanceManager.signalMastManagerInstance().getSignalMast(xing.getSignalDMastName()));
+            if(T.equals(SignalMast.class))
+                return xing.getSignalDMast();
+            else if (T.equals(Sensor.class))
+                return xing.getSensorD();
         }
         return null;
-    }
     
-    /**
-	 * Method to return the Sensor facing into a specified Block from a specified protected Block.
-	 * <P>
-     * @param facingBlock
-     * @param protectedBlock
-     * @return The assigned sensor.
-     */
-    public Sensor getFacingSensor (Block facingBlock, Block protectedBlock, LayoutEditor panel){
-        // check input
-		if ( (facingBlock == null) || (protectedBlock == null) ) {
-			log.error ("null block in call to getFacingSignal");
-			return null;
-		}
-        // non-null - check if input corresponds to Blocks in a Layout Editor panel.
-		LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
-		LayoutBlock pLayoutBlock = getByUserName(protectedBlock.getUserName());
-		if ( (fLayoutBlock==null) || (pLayoutBlock==null) ) {
-			if (fLayoutBlock==null) log.error("Block "+facingBlock.getSystemName()+"is not on a Layout Editor panel.");
-			if (pLayoutBlock==null) log.error("Block "+protectedBlock.getSystemName()+"is not on a Layout Editor panel.");
-			return null;
-		}
-		// input has corresponding LayoutBlocks - does it correspond to a block boundary?
-        if(panel==null){
-            panel = fLayoutBlock.getMaxConnectedPanel();
-        }
-		ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
-		LayoutConnectivity lc = null;
-		int i = 0;
-		boolean facingIsBlock1 = true;
-		while ((i<c.size()) && (lc==null)) {
-			LayoutConnectivity tlc = c.get(i);
-			if ( (tlc.getBlock1()==fLayoutBlock) && (tlc.getBlock2()==pLayoutBlock) ) {
-				lc = tlc;
-			}
-			else if ( (tlc.getBlock1()==pLayoutBlock) && (tlc.getBlock2()==fLayoutBlock) ) {
-				lc = tlc;
-				facingIsBlock1 = false;
-			}
-			i ++;
-		}
-		if (lc==null) {
-			log.error("Block "+facingBlock.getSystemName()+" is not connected to Block "+protectedBlock.getSystemName());
-			return null;
-		}
-		LayoutTurnout lt = null;
-        Object connected = lc.getConnectedObject();
-		TrackSegment tr = lc.getTrackSegment();
-        int cType = lc.getConnectedType();
-        if(connected==null){
-            if(lc.getXover()!=null){
-                if(lc.getXoverBoundaryType()==LayoutConnectivity.XOVER_BOUNDARY_AB) {
-                    if(fLayoutBlock==lc.getXover().getLayoutBlock()){
-                        cType=LayoutEditor.TURNOUT_A;
-                    } else {
-                        cType=LayoutEditor.TURNOUT_B;
-                    }
-                    connected = lc.getXover();
-                }
-                else if(lc.getXoverBoundaryType()==LayoutConnectivity.XOVER_BOUNDARY_CD){
-                    if(fLayoutBlock==lc.getXover().getLayoutBlockC()){
-                        cType=LayoutEditor.TURNOUT_C;
-                    } else {
-                        cType=LayoutEditor.TURNOUT_D;
-                    }
-                    connected = lc.getXover();
-                }
-            }
-        }
-        if(connected==null){
-            log.error("No connectivity object found between Blocks "+facingBlock.getSystemName()+
-										", "+protectedBlock.getSystemName()  + " " + cType);
-            return null;
-        }
-        
-		if (cType==LayoutEditor.TRACK) {
-			// block boundary is at an Anchor Point
-			LayoutEditorTools tools = new LayoutEditorTools(panel);
-			PositionablePoint p = panel.findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
-			boolean block1IsWestEnd = tools.isAtWestEndOfAnchor(tr,p);
-			if ( (block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1) ) {
-				// block1 is on the west (north) end of the block boundary
-				return (InstanceManager.sensorManagerInstance().getSensor(p.getEastBoundSensorName()));
-			}
-			else {
-				return (InstanceManager.sensorManagerInstance().getSensor(p.getWestBoundSensorName()));
-			}
-		}
-        if(!facingIsBlock1)
-            return null;
-        if (cType==LayoutEditor.TURNOUT_A) {
-            lt = (LayoutTurnout)connected;
-            if ((lt.getLinkType()==LayoutTurnout.NO_LINK) || (lt.getLinkType()==LayoutTurnout.FIRST_3_WAY)){
-                if ( (lt.getSensorAName()!=null) || (!lt.getSensorAName().equals("")) ){
-                    return (InstanceManager.sensorManagerInstance().getSensor(lt.getSensorAName()));
-                }
-                // we only allow signal s inbound to the turnout.
-                return null;
-            }
-            else {
-                return null;
-            }
-        }
-        
-        if (cType==LayoutEditor.TURNOUT_B) {
-            lt = (LayoutTurnout)connected;
-            if ( (lt.getSensorBName()!=null) || (!lt.getSensorBName().equals("")) ){
-                return (InstanceManager.sensorManagerInstance().getSensor(lt.getSensorBName()));
-            }
-            return null;
-        }
-        if (cType==LayoutEditor.TURNOUT_C) {
-            lt = (LayoutTurnout)connected;
-            if ( (lt.getSensorCName()!=null) || (!lt.getSensorCName().equals("")) ){
-                return (InstanceManager.sensorManagerInstance().getSensor(lt.getSensorCName()));
-            }
-            return null;
-        }
-        
-        if (cType==LayoutEditor.TURNOUT_D) {
-            lt = (LayoutTurnout)connected;
-                if ( (lt.getSensorDName()!=null) || (!lt.getSensorDName().equals("")) ){
-                    return (InstanceManager.sensorManagerInstance().getSensor(lt.getSensorDName()));
-                }
-            return null;
-        }
-        if((cType>=LayoutEditor.SLIP_A) && (cType<=LayoutEditor.SLIP_D)){
-            LayoutSlip ls = (LayoutSlip)connected;
-            if(cType==LayoutEditor.SLIP_A){
-                if((ls.getSensorAName()!=null) || (!ls.getSensorAName().equals(""))){
-                    return (InstanceManager.sensorManagerInstance().getSensor(ls.getSensorAName()));
-                }
-                return null;
-            }
-            if(cType==LayoutEditor.SLIP_B){
-                if((ls.getSensorBName()!=null) || (!ls.getSensorBName().equals(""))){
-                    return (InstanceManager.sensorManagerInstance().getSensor(ls.getSensorBName()));
-                }
-                return null;
-            }
-            if(cType==LayoutEditor.SLIP_C){
-                if((ls.getSensorCName()!=null) || (!ls.getSensorCName().equals(""))){
-                    return (InstanceManager.sensorManagerInstance().getSensor(ls.getSensorCName()));
-                }
-                return null;
-            }
-            if(cType==LayoutEditor.SLIP_D){
-                if((ls.getSensorDName()!=null) || (!ls.getSensorDName().equals(""))){
-                    return (InstanceManager.sensorManagerInstance().getSensor(ls.getSensorDName()));
-                }
-                return null;
-            }
-        }
-        if ( (cType<LayoutEditor.LEVEL_XING_A) || (cType>LayoutEditor.LEVEL_XING_D) ) {
-			log.error(cType +  " " + connected +" Block Boundary not identified correctly - Blocks "+facingBlock.getSystemName()+
-										", "+protectedBlock.getSystemName());
-			return null;
-		}
-        /*We don't allow signal s on the block outward facing from the level
-        xing, nor do we consider the signal , that is protecting the in block on the xing*/
-		LevelXing xing = (LevelXing)connected;
-        if (cType==LayoutEditor.LEVEL_XING_A) {
-            // block boundary is at the A connection of a level crossing
-            return (InstanceManager.sensorManagerInstance().getSensor(xing.getSensorAName()));
-        }
-        if (cType==LayoutEditor.LEVEL_XING_B) {
-             // block boundary is at the B connection of a level crossing
-            return (InstanceManager.sensorManagerInstance().getSensor(xing.getSensorBName()));
-        }
-        if (cType==LayoutEditor.LEVEL_XING_C) {
-            // block boundary is at the C connection of a level crossing
-            return (InstanceManager.sensorManagerInstance().getSensor(xing.getSensorCName()));
-        }
-        if (cType==LayoutEditor.LEVEL_XING_D) {
-            // block boundary is at the D connection of a level crossing
-            return (InstanceManager.sensorManagerInstance().getSensor(xing.getSensorDName()));
-        }
-        return null;
     }
-
     /**
      * Returns in the first instance a Signal Mast or if none exists a Signal Head
      * for a given facing block and protected block combination.
@@ -1635,26 +1581,6 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         return sig;
     }
     
-    /**
-     * Method to return the block facing a given bean object (Sensor, SignalMast or SignalHead).
-     * <P>
-     * @param nb NamedBean
-     * @param panel - panel that this bean is on
-     * @return The block that the bean object is facing
-     */
-    public LayoutBlock getFacingBlockByNamedBean(NamedBean nb, LayoutEditor panel){
-        if(nb instanceof SignalMast){
-            return getFacingBlockByMast((SignalMast)nb, panel);
-        }
-        if(nb instanceof SignalHead){
-            return getFacingBlock((SignalHead)nb, panel);
-        }
-        if(nb instanceof Sensor){
-            return getFacingBlockBySensor((Sensor)nb, panel);
-        }
-        return null;
-    }
-    
      /**
      * Method to return the block that a given bean object (Sensor, SignalMast or SignalHead) is protecting
      * <P>
@@ -1663,238 +1589,110 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * @return The block that the bean object is facing
      */
     public LayoutBlock getProtectedBlockByNamedBean(NamedBean nb, LayoutEditor panel){
-        if(nb instanceof SignalMast){
-            return getProtectedBlockByMast((SignalMast)nb, panel);
-        }
         if(nb instanceof SignalHead){
             return getProtectedBlock((SignalHead)nb, panel);
         }
-        if(nb instanceof Sensor){
-            return getProtectedBlockBySensor((Sensor)nb, panel);
-        }
-        return null;
+        List<LayoutBlock> proBlocks = getProtectingBlocksByBean(nb, panel);
+        if(proBlocks.isEmpty())
+            return null;
+        return proBlocks.get(0);
     }
     
-    /**
-     * Method to return the LayoutBlock that a given signal is protecting.
-     */
-    public LayoutBlock getProtectedBlockByMast(String signalMastName, LayoutEditor panel){
-        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMastName);
-        return getProtectedBlockByMast(mast, panel);
+    public List<LayoutBlock> getProtectingBlocksByNamedBean(NamedBean nb, LayoutEditor panel){
+        ArrayList<LayoutBlock> ret = new ArrayList<LayoutBlock>();
+        if(nb instanceof SignalHead){
+            ret.add(getProtectedBlock((SignalHead)nb, panel));
+            return ret;
+        }
+        return getProtectingBlocksByBean(nb, panel);
+    }
     
+    private List<LayoutBlock> getProtectingBlocksByBean(NamedBean bean, LayoutEditor panel){
+        ArrayList<LayoutBlock> protectingBlocks = new ArrayList<LayoutBlock>();
+        if(!(bean instanceof SignalMast) && !(bean instanceof Sensor)){
+            log.error ("Incorrect class type called, must be either SignalMast or Sensor");
+			return protectingBlocks;
+        }
+    
+        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(bean);
+        TrackSegment tr = null;
+        boolean east = true;
+        
+        if (pp==null) {
+            pp = panel.findPositionablePointByWestBoundBean(bean);
+            east = false;
+        }
+        if(pp!=null){
+            LayoutEditorTools tools = new LayoutEditorTools(panel);
+            if(east){
+                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
+                    tr=pp.getConnect2();
+                }
+                else {
+                    tr=pp.getConnect1();
+                }
+            } else {
+                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
+                    tr=pp.getConnect1();
+                }
+                else {
+                    tr=pp.getConnect2();
+                }
+            }
+            
+            if (tr!=null){
+                protectingBlocks.add(tr.getLayoutBlock());
+                return protectingBlocks;
+            }
+        }
+        
+        LevelXing l = panel.findLevelXingByBean(bean);
+        if(l!=null){
+            if(bean instanceof SignalMast){
+                if(l.getSignalAMast()==bean){
+                    protectingBlocks.add(l.getLayoutBlockAC());
+                } else if (l.getSignalBMast()==bean) {
+                    protectingBlocks.add(l.getLayoutBlockBD());
+                } else if (l.getSignalCMast()== bean) {
+                    protectingBlocks.add(l.getLayoutBlockAC());
+                } else {
+                    protectingBlocks.add(l.getLayoutBlockBD());
+                }
+            } else if (bean instanceof Sensor){
+                if(l.getSensorA()==bean){
+                    protectingBlocks.add(l.getLayoutBlockAC());
+                } else if (l.getSensorB()==bean) {
+                    protectingBlocks.add(l.getLayoutBlockBD());
+                } else if (l.getSensorC()==bean) {
+                    protectingBlocks.add(l.getLayoutBlockAC());
+                } else {
+                    protectingBlocks.add(l.getLayoutBlockBD());
+                }
+            }
+            return protectingBlocks;
+        }
+        
+        LayoutSlip ls = panel.findLayoutSlipByBean(bean);
+        if(ls!=null){
+            protectingBlocks.add(ls.getLayoutBlock());
+            return protectingBlocks;
+        }
+
+        
+        LayoutTurnout t = panel.findLayoutTurnoutByBean(bean);
+        if(t!=null){
+            return t.getProtectedBlocks(bean);
+        }
+        return protectingBlocks;
     }
     
     public LayoutBlock getProtectedBlockByMast(SignalMast signalMast, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(signalMast);
-        TrackSegment tr = null;
-        boolean east = true;
-        //Don't think that the logic for this is the right way round
-        if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundBean(signalMast);
-            east = false;
-        }
-        if(pp!=null){
-            LayoutEditorTools tools = new LayoutEditorTools(panel);
-            if(east){
-                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
-                    tr=pp.getConnect2();
-                }
-                else {
-                    tr=pp.getConnect1();
-                }
-            } else {
-                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
-                    tr=pp.getConnect1();
-                }
-                else {
-                    tr=pp.getConnect2();
-                }
-            }
-            
-            if (tr!=null){
-                return tr.getLayoutBlock();
-            }
-        }
-        
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(signalMast);
-        if(t!=null){
-            if(t.getSignalAMast()==signalMast){
-                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockB()!=null){
-                    if(t.getConnectA()!=null && t.getConnectA() instanceof TrackSegment){
-                        if(((TrackSegment)t.getConnectA()).getLayoutBlock()==t.getLayoutBlock()){
-                            if(t.getLayoutBlock()!=t.getLayoutBlockB()){
-                                return t.getLayoutBlockB();
-                            }
-                        }
-                    }
-                }
-                //This is only valid where the block boundary is external to the mast
-                return t.getLayoutBlock();
-            } else if (t.getSignalBMast()==signalMast) {
-                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlock()!=null){
-                    if(t.getConnectB()!=null && t.getConnectB() instanceof TrackSegment){
-                        if(((TrackSegment)t.getConnectB()).getLayoutBlock()==t.getLayoutBlockB()){
-                            if(t.getLayoutBlock()!=t.getLayoutBlockB()){
-                                return t.getLayoutBlock();
-                            }
-                        }
-                    }
-                }
-                return t.getLayoutBlockB();
-            } else if (t.getSignalCMast()==signalMast) {
-                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockD()!=null){
-                    if(t.getConnectC()!=null && t.getConnectC() instanceof TrackSegment){
-                        if(((TrackSegment)t.getConnectC()).getLayoutBlock()==t.getLayoutBlockC()){
-                            if(t.getLayoutBlockC()!=t.getLayoutBlockD()){
-                                return t.getLayoutBlockD();
-                            }
-                        }
-                    }
-                }
-                return t.getLayoutBlockC();
-            } else {
-                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockC()!=null){
-                    if(t.getConnectD()!=null && t.getConnectD() instanceof TrackSegment){
-                        if(((TrackSegment)t.getConnectD()).getLayoutBlock()==t.getLayoutBlockD()){
-                            if(t.getLayoutBlockC()!=t.getLayoutBlockD()){
-                                return t.getLayoutBlockC();
-                            }
-                        }
-                    }
-                }
-                return t.getLayoutBlockD();
-            }
-        }
-        
-        LevelXing l = panel.findLevelXingByBean(signalMast);
-        if(l!=null){
-            if(l.getSignalAMast()==signalMast){
-                return l.getLayoutBlockAC();
-            } else if (l.getSignalBMast()==signalMast) {
-                return l.getLayoutBlockBD();
-            } else if (l.getSignalCMast()== signalMast) {
-                return l.getLayoutBlockAC();
-            } else {
-                return l.getLayoutBlockBD();
-            }
-            
-        }
-        LayoutSlip ls = panel.findLayoutSlipByBean(signalMast);
-        if(ls!=null){
-            return ls.getLayoutBlock();
-        }
-        return null;
-    }
-     
-    /**
-     * Method to return the LayoutBlock that a given signal mast is facing.
-     */
-    public LayoutBlock getFacingBlockByMast(String signalMastName, LayoutEditor panel){
-        SignalMast mast = InstanceManager.signalMastManagerInstance().getSignalMast(signalMastName);
-        return getFacingBlockByMast(mast, panel);
-    
+        List<LayoutBlock> proBlocks = getProtectingBlocksByBean(signalMast, panel);
+        if(proBlocks.isEmpty())
+            return null;
+        return proBlocks.get(0);
     }
     
-    /**
-     * Method to return the LayoutBlock that a given signal is facing.
-     */
-    public LayoutBlock getFacingBlockByMast(SignalMast signalMast, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(signalMast);
-        TrackSegment tr = null;
-        boolean east = true;
-        //Don't think that the logic for this is the right way round
-        if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundBean(signalMast);
-            east = false;
-        }
-        if(pp!=null){
-            LayoutEditorTools tools = new LayoutEditorTools(panel);
-            if(east){
-                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
-                    tr=pp.getConnect1();
-                }
-                else {
-                    tr=pp.getConnect2();
-                }
-            } else {
-                if(tools.isAtWestEndOfAnchor(pp.getConnect1(), pp)){
-                    tr=pp.getConnect2();
-                }
-                else {
-                    tr=pp.getConnect1();
-                }
-            }
-            
-            if (tr!=null){
-                log.debug("found facing block by positionable point");
-                return tr.getLayoutBlock();
-            }
-        }
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(signalMast);
-        if(t!=null){
-            log.debug("found signalmast at turnout " + t.getTurnout().getDisplayName());
-            Object connect;
-            if(t.getSignalAMast()==signalMast){
-                connect = t.getConnectA();
-            } else if (t.getSignalBMast()==signalMast) {
-                connect = t.getConnectB();
-            } else if (t.getSignalCMast()==signalMast) {
-                connect = t.getConnectC();
-            } else {
-                connect = t.getConnectD();
-            }
-            if (connect instanceof TrackSegment){
-                tr = (TrackSegment) connect;
-                log.debug("return block " + tr.getLayoutBlock().getDisplayName());
-                return tr.getLayoutBlock();
-            
-            }
-        }
-        
-        LevelXing l = panel.findLevelXingByBean(signalMast);
-        if(l!=null){
-            Object connect;
-            if(l.getSignalAMast()==signalMast){
-                connect = l.getConnectA();
-            } else if (l.getSignalBMast()==signalMast) {
-                connect = l.getConnectB();
-            } else if (l.getSignalCMast()==signalMast) {
-                connect = l.getConnectC();
-            } else {
-                connect = l.getConnectD();
-            }
-            
-            if (connect instanceof TrackSegment){
-                tr = (TrackSegment) connect;
-                log.debug("return block " + tr.getLayoutBlock().getDisplayName());
-                return tr.getLayoutBlock();
-            
-            }
-            
-        }
-        
-        LayoutSlip ls = panel.findLayoutSlipByBean(signalMast);
-        if(ls!=null){
-            Object connect;
-            if(ls.getSignalAMast()==signalMast){
-                connect = ls.getConnectA();
-            } else if (ls.getSignalBMast()==signalMast) {
-                connect = ls.getConnectB();
-            } else if (ls.getSignalCMast()==signalMast) {
-                connect = ls.getConnectC();
-            } else {
-                connect = ls.getConnectD();
-            }
-            
-            if (connect instanceof TrackSegment){
-                tr = (TrackSegment) connect;
-                log.debug("return block " + tr.getLayoutBlock().getDisplayName());
-                return tr.getLayoutBlock();
-            }
-        }
-        return null;
-    }
-     
     /**
      * Method to return the LayoutBlock that a given sensor is protecting.
      */
@@ -1902,11 +1700,13 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
         return getProtectedBlockBySensor(sensor, panel);
     }
-     
-    /**
-     * Method to return the LayoutBlock that a given sensor is protecting.
-     */
-    public LayoutBlock getProtectedBlockBySensor(Sensor sensor, LayoutEditor panel){
+    
+    public List<LayoutBlock> getProtectingBlocksBySensor(Sensor sensor, LayoutEditor panel){
+        return getProtectingBlocksByBean(sensor, panel);
+    }
+    
+    public List<LayoutBlock> getProtectingBlocksBySensorOld(Sensor sensor, LayoutEditor panel){
+        ArrayList<LayoutBlock> protectingBlocks = new ArrayList<LayoutBlock>();
         PositionablePoint pp = panel.findPositionablePointByEastBoundBean(sensor);
         TrackSegment tr;
         boolean east = true;
@@ -1932,79 +1732,60 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 }
             }
             if (tr!=null){
-                return tr.getLayoutBlock();
-            }
-        }
-        
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(sensor);
-        if(t!=null){
-            if(t.getSensorA()==sensor){
-                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockB()!=null){
-                    if(t.getConnectA()!=null && t.getConnectA() instanceof TrackSegment){
-                        if(((TrackSegment)t.getConnectA()).getLayoutBlock()==t.getLayoutBlock()){
-                            if(t.getLayoutBlock()!=t.getLayoutBlockB()){
-                                return t.getLayoutBlockB();
-                            }
-                        }
-                    }
-                }
-                return t.getLayoutBlock();
-            } else if (t.getSensorB()==sensor) {
-                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlock()!=null){
-                    if(t.getConnectB()!=null && t.getConnectB() instanceof TrackSegment){
-                        if(((TrackSegment)t.getConnectB()).getLayoutBlock()==t.getLayoutBlockB()){
-                            if(t.getLayoutBlock()!=t.getLayoutBlockB()){
-                                return t.getLayoutBlock();
-                            }
-                        }
-                    }
-                }
-                return t.getLayoutBlockB();
-            } else if (t.getSensorC()==sensor) {
-                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockD()!=null){
-                    if(t.getConnectC()!=null && t.getConnectC() instanceof TrackSegment){
-                        if(((TrackSegment)t.getConnectC()).getLayoutBlock()==t.getLayoutBlockC()){
-                            if(t.getLayoutBlockC()!=t.getLayoutBlockD()){
-                                return t.getLayoutBlockD();
-                            }
-                        }
-                    }
-                }
-                return t.getLayoutBlockC();
-            } else {
-                if (t.getTurnoutType()>=LayoutTurnout.DOUBLE_XOVER  && t.getTurnoutType()<=LayoutTurnout.LH_XOVER && t.getLayoutBlockC()!=null){
-                    if(t.getConnectD()!=null && t.getConnectD() instanceof TrackSegment){
-                        if(((TrackSegment)t.getConnectD()).getLayoutBlock()==t.getLayoutBlockD()){
-                            if(t.getLayoutBlockC()!=t.getLayoutBlockD()){
-                                return t.getLayoutBlockC();
-                            }
-                        }
-                    }
-                }
-                return t.getLayoutBlockD();
+                protectingBlocks.add(tr.getLayoutBlock());
+                return protectingBlocks;
             }
         }
         
         LevelXing l = panel.findLevelXingByBean(sensor);
         if(l!=null){
             if(l.getSensorA()==sensor){
-                return l.getLayoutBlockAC();
+                protectingBlocks.add(l.getLayoutBlockAC());
             } else if (l.getSensorB()==sensor) {
-                return l.getLayoutBlockBD();
+                protectingBlocks.add(l.getLayoutBlockBD());
             } else if (l.getSensorC()==sensor) {
-                return l.getLayoutBlockAC();
+                protectingBlocks.add(l.getLayoutBlockAC());
             } else {
-                return l.getLayoutBlockBD();
+                protectingBlocks.add(l.getLayoutBlockBD());
             }
-            
+            return protectingBlocks;
         }
         LayoutSlip ls = panel.findLayoutSlipByBean(sensor);
         if(ls!=null){
-            return ls.getLayoutBlock();
+            protectingBlocks.add(ls.getLayoutBlock());
+            return protectingBlocks;
         }
-        return null;
+        LayoutTurnout t = panel.findLayoutTurnoutByBean(sensor);
+        if(t!=null){
+            return t.getProtectedBlocks(sensor);
+        }
+        return protectingBlocks;
+    }
+     
+    /**
+     * Method to return the LayoutBlock that a given sensor is protecting.
+     */
+    public LayoutBlock getProtectedBlockBySensor(Sensor sensor, LayoutEditor panel){
+        List<LayoutBlock> proBlocks = getProtectingBlocksByBean(sensor, panel);
+        if(proBlocks.isEmpty())
+            return null;
+        return proBlocks.get(0);
     }
 
+    /**
+     * Method to return the block facing a given bean object (Sensor, SignalMast or SignalHead).
+     * <P>
+     * @param nb NamedBean
+     * @param panel - panel that this bean is on
+     * @return The block that the bean object is facing
+     */
+    public LayoutBlock getFacingBlockByNamedBean(NamedBean nb, LayoutEditor panel){
+        if(nb instanceof SignalHead){
+            return getFacingBlock((SignalHead)nb, panel);
+        }
+        return getFacingBlockByBean(nb, panel);
+    }
+    
     /**
      * Method to return the LayoutBlock that a given sensor is facing.
      */
@@ -2014,16 +1795,19 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
     }
     
     /**
-     * Method to return the LayoutBlock that a given sensor is facing.
+     * Method to return the LayoutBlock that a given signal is facing.
      */
+    public LayoutBlock getFacingBlockByMast(SignalMast signalMast, LayoutEditor panel){
+        return getFacingBlockByBean(signalMast, panel);
+    }
 
-    public LayoutBlock getFacingBlockBySensor(Sensor sensor, LayoutEditor panel){
-        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(sensor); //was west
+    private LayoutBlock getFacingBlockByBean(NamedBean bean, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByEastBoundBean(bean);
         TrackSegment tr = null;
         boolean east = true;
         //Don't think that the logic for this is the right way round
         if (pp==null) {
-            pp = panel.findPositionablePointByWestBoundBean(sensor);  // was east
+            pp = panel.findPositionablePointByWestBoundBean(bean);
             east = false;
         }
         if(pp!=null){
@@ -2049,18 +1833,30 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
                 return tr.getLayoutBlock();
             }
         }
-        LayoutTurnout t = panel.findLayoutTurnoutByBean(sensor);
+        LayoutTurnout t = panel.findLayoutTurnoutByBean(bean);
         if(t!=null){
             log.debug("found signalmast at turnout " + t.getTurnout().getDisplayName());
-            Object connect;
-            if(t.getSensorA()==sensor){
-                connect = t.getConnectA();
-            } else if (t.getSensorB()==sensor) {
-                connect = t.getConnectB();
-            } else if (t.getSensorC()==sensor) {
-                connect = t.getConnectC();
-            } else {
-                connect = t.getConnectD();
+            Object connect = null;
+            if(bean instanceof SignalMast){
+                if(t.getSignalAMast()==bean){
+                    connect = t.getConnectA();
+                } else if (t.getSignalBMast()==bean) {
+                    connect = t.getConnectB();
+                } else if (t.getSignalCMast()==bean) {
+                    connect = t.getConnectC();
+                } else {
+                    connect = t.getConnectD();
+                }
+            } else if (bean instanceof Sensor){
+                if(t.getSensorA()==bean){
+                    connect = t.getConnectA();
+                } else if (t.getSensorB()==bean) {
+                    connect = t.getConnectB();
+                } else if (t.getSensorC()==bean) {
+                    connect = t.getConnectC();
+                } else {
+                    connect = t.getConnectD();
+                }
             }
             if (connect instanceof TrackSegment){
                 tr = (TrackSegment) connect;
@@ -2070,17 +1866,29 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         
-        LevelXing l = panel.findLevelXingByBean(sensor);
+        LevelXing l = panel.findLevelXingByBean(bean);
         if(l!=null){
-            Object connect;
-            if(l.getSensorA()==sensor){
-                connect = l.getConnectA();
-            } else if (l.getSensorB()==sensor) {
-                connect = l.getConnectB();
-            } else if (l.getSensorC()==sensor) {
-                connect = l.getConnectC();
-            } else {
-                connect = l.getConnectD();
+            Object connect = null;
+            if(bean instanceof SignalMast){
+                if(l.getSignalAMast()==bean){
+                    connect = l.getConnectA();
+                } else if (l.getSignalBMast()==bean) {
+                    connect = l.getConnectB();
+                } else if (l.getSignalCMast()==bean) {
+                    connect = l.getConnectC();
+                } else {
+                    connect = l.getConnectD();
+                }
+            } else if (bean instanceof Sensor){
+                if(l.getSensorA()==bean){
+                    connect = l.getConnectA();
+                } else if (l.getSensorB()==bean) {
+                    connect = l.getConnectB();
+                } else if (l.getSensorC()==bean) {
+                    connect = l.getConnectC();
+                } else {
+                    connect = l.getConnectD();
+                }
             }
             
             if (connect instanceof TrackSegment){
@@ -2091,19 +1899,31 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
             
         }
-        LayoutSlip ls = panel.findLayoutSlipByBean(sensor);
+        
+        LayoutSlip ls = panel.findLayoutSlipByBean(bean);
         if(ls!=null){
-            Object connect;
-            if(ls.getSensorA()==sensor){
-                connect = ls.getConnectA();
-            } else if (ls.getSensorB()==sensor) {
-                connect = ls.getConnectB();
-            } else if (ls.getSensorC()==sensor) {
-                connect = ls.getConnectC();
-            } else {
-                connect = ls.getConnectD();
+            Object connect = null;
+            if(bean instanceof SignalMast){
+                if(ls.getSignalAMast()==bean){
+                    connect = ls.getConnectA();
+                } else if (ls.getSignalBMast()==bean) {
+                    connect = ls.getConnectB();
+                } else if (ls.getSignalCMast()==bean) {
+                    connect = ls.getConnectC();
+                } else {
+                    connect = ls.getConnectD();
+                }
+            } else if (bean instanceof Sensor){
+                if(ls.getSensorA()==bean){
+                    connect = ls.getConnectA();
+                } else if (ls.getSensorB()==bean) {
+                    connect = ls.getConnectB();
+                } else if (ls.getSensorC()==bean) {
+                    connect = ls.getConnectC();
+                } else {
+                    connect = ls.getConnectD();
+                }
             }
-            
             if (connect instanceof TrackSegment){
                 tr = (TrackSegment) connect;
                 log.debug("return block " + tr.getLayoutBlock().getDisplayName());
@@ -2111,6 +1931,14 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
         }
         return null;
+    
+    }
+    
+    /**
+     * Method to return the LayoutBlock that a given sensor is facing.
+     */
+    public LayoutBlock getFacingBlockBySensor(Sensor sensor, LayoutEditor panel){
+        return getFacingBlockByBean(sensor, panel);
     }
 
     public LayoutBlock getProtectedBlock(SignalHead signalHead, LayoutEditor panel){
@@ -2268,7 +2096,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
             }
           }
         };
-        thr = new Thread(r);
+        thr = new Thread(r, "Routing stabilisiing timer");
         thr.start();
     }
 
@@ -2333,7 +2161,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         return lastRoutingChange;
     }
     
-    static Logger log = Logger.getLogger(LayoutBlockManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManager.class.getName());
 }
 
 /* @(#)LayoutBlockManager.java */

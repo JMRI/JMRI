@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
+import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -646,7 +647,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             if(activeEntryExit){
                // log.debug(mUserName + "  Our route is active so this would go for a clear down but we need to check that the we can clear it down" + activeEndPoint);
                 if(!isEnabled()){
-                    log.info("A disabled entry exit has been called will bomb out");
+                    log.debug("A disabled entry exit has been called will bomb out");
+                    return;
                 }
                 if (activeEntryExit){
                     log.debug(mUserName + "  We have a valid match on our end point so we can clear down");
@@ -682,19 +684,19 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                         if(log.isDebugEnabled())
                             log.debug("reverse set destination is set going for " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());
                         try{
-                            if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, src.getSourceProtecting(), src.getStart())){
+                            if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, src.getSourceProtecting(), src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)){
                                 startlBlock = getFacing();
                                 protectLBlock = getProtecting();
                                 if(log.isDebugEnabled())
                                     log.debug("That didn't work so try  " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());
-                                if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, src.getSourceProtecting(), src.getStart())){
+                                if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, src.getSourceProtecting(), src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)){
                                     log.error("No route found");
                                     JOptionPane.showMessageDialog(null, "No Valid path found");
                                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                                     point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
                                     return;
                                 }
-                            } else if(InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(getFacing(), getProtecting(), src.getSourceProtecting(), src.getStart())){
+                            } else if(InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(getFacing(), getProtecting(), src.getSourceProtecting(), src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)){
                                 //Both paths are valid, so will go for setting the shortest
                                 int distance = startlBlock.getBlockHopCount(destinationLBlock.getBlock(), protectLBlock.getBlock());
                                 int distance2 = getFacing().getBlockHopCount(destinationLBlock.getBlock(), getProtecting().getBlock());

@@ -11,6 +11,7 @@ import jmri.SignalMastManager;
 import jmri.SignalMastLogic;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
+import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.JmriBeanComboBox;
 
@@ -136,7 +137,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                 if (useLayoutEditor.isSelected()){
                     try {
                         boolean valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
-                            destMastBox.getSelectedBean());
+                            destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
                         if(!valid)
                             JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
                     }
@@ -188,7 +189,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
                         }
                         try {
                             valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMastBox.getSelectedBean(), 
-                                destMastBox.getSelectedBean());
+                                destMastBox.getSelectedBean(), LayoutBlockConnectivityTools.MASTTOMAST);
                             if(!valid){
                                 JOptionPane.showMessageDialog(null, rb.getString("ErrorUnReachableDestination"));
                             }
@@ -769,7 +770,7 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             boolean valid = false;
             try {
                 valid = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(sourceMast, 
-                    destMast);
+                    destMast, LayoutBlockConnectivityTools.MASTTOMAST);
                 if(!valid){
                     JOptionPane.showMessageDialog(null,  rb.getString("ErrorUnReachableDestination"));
                     return;

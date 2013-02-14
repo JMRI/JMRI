@@ -40,11 +40,17 @@ public class LayoutBlockConnectivityTools{
     public final static int HEADTOHEAD = 0x02;
     
     /**
+     * Constant used in the getLayoutBlocks to represent a path from one Sensor
+     * to another and that no sensor should be in the path.
+     */
+    public final static int SENSORTOSENSOR = 0x04;
+    
+    /**
      * Constant used in the getLayoutBlocks to represent a path from either 
      * a Signal Mast or Head to another Signal Mast or Head and that no mast of
      * head should be in the path.
      */
-    public final static int ANY = 0x04;
+    public final static int ANY = 0x08;
     
     /**
      * Constant used in the getLayoutBlocks to indicate that the the system should
@@ -65,11 +71,13 @@ public class LayoutBlockConnectivityTools{
      * @return true if source and destination beans are reachable, or false if they are not
      * @throws Jmri.Exception if no blocks can be found that related to the named beans.
      */
-    public boolean checkValidDest(NamedBean sourceBean, NamedBean destBean) throws jmri.JmriException{
+    public boolean checkValidDest(NamedBean sourceBean, NamedBean destBean, int pathMethod) throws jmri.JmriException{
+        if(log.isDebugEnabled())
+            log.debug("check valid des with source/dest bean" + sourceBean.getDisplayName() + "  " + destBean.getDisplayName());
         LayoutBlock facingBlock = null;
         LayoutBlock protectingBlock = null;
         LayoutBlock destFacingBlock = null;
-        LayoutBlock destProtectBlock = null;
+        List<LayoutBlock> destProtectBlock = null;
         ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
         LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         for(int i = 0; i<layout.size(); i++){
@@ -85,14 +93,14 @@ public class LayoutBlockConnectivityTools{
                 destFacingBlock = lbm.getFacingBlockByNamedBean(destBean, layout.get(i));
             }
             if(destProtectBlock==null){
-                destProtectBlock = lbm.getProtectedBlockByNamedBean(destBean, layout.get(i));
+                destProtectBlock = lbm.getProtectingBlocksByNamedBean(destBean, layout.get(i));
             }
             if((destFacingBlock!=null) && (facingBlock!=null) && (protectingBlock!=null)){
                 /*Destination protecting block is allowed to be null, as the destination signalmast
                 could be assigned to an end bumper */
                 //A simple to check to see if the remote signal is in the correct direction to ours.
                 try{
-                    return checkValidDest(facingBlock, protectingBlock, destFacingBlock, destProtectBlock);
+                    return checkValidDest(facingBlock, protectingBlock, destFacingBlock, destProtectBlock, pathMethod);
                 } catch (jmri.JmriException e){
                     throw e;
                 }
@@ -188,7 +196,7 @@ public class LayoutBlockConnectivityTools{
         }
         return beansInPath;
     }
-
+    
     /**
      * Determines if one set of blocks is reachable from another set of blocks
      * based upon the directions of the set of blocks.
@@ -205,20 +213,37 @@ public class LayoutBlockConnectivityTools{
      * false if destBlock comes after destBlock+1
      * @throws Jmri.Exception if any Block is null;
      */
-    public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destBlockn1) throws jmri.JmriException {
+     
+     public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destBlockn1, int pathMethod) throws jmri.JmriException {
+     
+        List<LayoutBlock> destList = new ArrayList<LayoutBlock>();
+        if(destBlockn1!=null)
+            destList.add(destBlockn1);
+        try {
+            return checkValidDest(currentBlock, nextBlock, destBlock, destList, pathMethod);
+        } catch (jmri.JmriException e){
+            throw e;
+        }
+     
+     
+     }
+    public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, List<LayoutBlock> destBlockn1, int pathMethod) throws jmri.JmriException {
         LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         if (!lbm.isAdvancedRoutingEnabled()){
             log.info("Advanced routing has not been enabled therefore we cannot use this function");
             throw new jmri.JmriException("Advanced routing has not been enabled therefore we cannot use this function");
         }
+        
         if(log.isDebugEnabled()){
             try {
                 log.debug("faci " + currentBlock.getDisplayName());
                 log.debug("next " + nextBlock.getDisplayName());
                 log.debug("dest " + destBlock.getDisplayName());
-                log.debug("dest + 1 " + destBlockn1.getDisplayName());
+                for(LayoutBlock dp:destBlockn1){
+                    log.debug("dest + 1 " + dp.getDisplayName());
+                }
             } catch (java.lang.NullPointerException e){
-
+                
             }
         }
         if((destBlock!=null) && (currentBlock!=null) && (nextBlock!=null)){
@@ -228,16 +253,23 @@ public class LayoutBlockConnectivityTools{
             }
             if(log.isDebugEnabled()){
                 log.debug("dest " + destBlock.getDisplayName());
-                if(destBlockn1!=null)
-                    log.debug("remote prot " + destBlockn1.getDisplayName());
+                /*if(destBlockn1!=null)
+                    log.debug("remote prot " + destBlockn1.getDisplayName());*/
             }
             //Do a simple test to see if one is reachable from the other.
             int proCount = 0;
             int desCount = 0;
-            if(destBlockn1!=null){
+            if(!destBlockn1.isEmpty()){
                 desCount = currentBlock.getBlockHopCount(destBlock.getBlock(), nextBlock.getBlock());
-                proCount = currentBlock.getBlockHopCount(destBlockn1.getBlock(), nextBlock.getBlock());
-                log.debug("dest " + desCount + " protecting " + proCount);
+                proCount = currentBlock.getBlockHopCount(destBlockn1.get(0).getBlock(), nextBlock.getBlock());
+                if(log.isDebugEnabled()) log.debug("dest " + desCount + " protecting " + proCount);
+            }
+            if(proCount>desCount && (proCount-1)!=desCount){
+                /* The block that we are protecting should be one hop greater than the destination count
+                   if it is not then the route is not valid.
+                */
+                log.debug("Protecting is more than one hop away from destination and therefore not valid.");
+                return false;
             }
             if(proCount<desCount){
                 /*Need to do a more advanced check in this case as the destBlockn1
@@ -247,10 +279,13 @@ public class LayoutBlockConnectivityTools{
                 We also need to perform a more advanced check if the destBlockn1 
                 is null as this indicates that the destination signal mast is assigned
                 on an end bumper*/
-                ArrayList<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, NONE); //Was MASTTOMAST
-                if(blockList.contains(destBlockn1)){
-                    log.debug("Signal mast in the wrong direction");
-                    return false;
+                log.debug("proCount is less than destination");
+                ArrayList<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod); //Was MASTTOMAST
+                for(LayoutBlock dp: destBlockn1){
+                    if(blockList.contains(dp)){
+                        log.debug("Signal mast in the wrong direction");
+                        return false;
+                    }
                 }
                 /*Work on the basis that if you get the blocks from source to dest
                 then the dest+1 block should not be included*/
@@ -258,8 +293,10 @@ public class LayoutBlockConnectivityTools{
                 return true;
             } else if ((proCount==-1) && (desCount==-1)) {
                 //The destination block and destBlock+1 are both directly connected
+                log.debug("Dest and dest+1 are directly connected");
                 return false;
             }
+            log.debug("Return true path");
             return true;
         } else if (destBlock==null){
             throw new jmri.JmriException("Block in Destination Field returns as invalid");
@@ -282,12 +319,23 @@ public class LayoutBlockConnectivityTools{
     * @return true if valid, false if not valid.
     */
     
-    public boolean checkValidDest(LayoutBlock facing, LayoutBlock protecting, FacingProtecting dest) throws JmriException{
+    public boolean checkValidDest(LayoutBlock facing, LayoutBlock protecting, FacingProtecting dest, int pathMethod) throws JmriException{
         if(facing==null || protecting==null || dest == null){
             return false;
         }
+        if(log.isDebugEnabled()) log.debug("facing : " + facing.getDisplayName() + " protecting : " + protecting.getDisplayName() + " dest " + dest.getBean().getDisplayName());
         try{
-            return checkValidDest(facing, protecting, InstanceManager.layoutBlockManagerInstance().getLayoutBlock(dest.getFacing()), InstanceManager.layoutBlockManagerInstance().getLayoutBlock(dest.getProtecting()));
+            //In this instance it doesn't matter what the destination protecting block is so we get the first
+            /*LayoutBlock destProt = null;
+            if(!dest.getProtectingBlocks().isEmpty()){
+                destProt = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(dest.getProtectingBlocks().get(0));
+                //log.info(dest.getProtectingBlocks());
+            }*/
+            List <LayoutBlock>destList = new ArrayList<LayoutBlock>();
+            for(Block b:dest.getProtectingBlocks()){
+                destList.add(InstanceManager.layoutBlockManagerInstance().getLayoutBlock(b));
+            }
+            return checkValidDest(facing, protecting, InstanceManager.layoutBlockManagerInstance().getLayoutBlock(dest.getFacing()), destList, pathMethod);
         } catch (jmri.JmriException e){
             throw e;
         }
@@ -496,8 +544,10 @@ public class LayoutBlockConnectivityTools{
         while(blockindex!=-1){
             if (currentBlock==preBlock){
                 //Basically looking for the connected block, which there should only be one of!
+                log.debug("At get ConnectedBlockRoute");
                 blockindex = currentLBlock.getConnectedBlockRouteIndex(destBlock, direction);
             } else {
+                if(log.isDebugEnabled()) log.debug("Off Set " + offSet);
                 blockindex = currentLBlock.getNextBestBlock(preBlock, destBlock, offSet, METRIC);
             }
             if (blockindex!=-1){
@@ -517,21 +567,23 @@ public class LayoutBlockConnectivityTools{
                         log.debug("current block matches returned block therefore the next block is directly connected");
                         blocktoCheck=destBlock;
                     }
-                    jmri.NamedBean signal = null;
+                    jmri.NamedBean foundBean = null;
                     /* We change the logging level to fatal in the layout block manager as we are testing to make sure that no signalhead/mast exists
                        this would generate an error message that is expected.*/
                     lBlockManLog.setLevel(org.apache.log4j.Level.FATAL);
                     switch(pathMethod){
-                        case MASTTOMAST : signal = InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(currentBlock, blocktoCheck); break;
-                        case HEADTOHEAD : signal = InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(currentBlock, blocktoCheck); break;
-                        default : signal = (jmri.NamedBean) InstanceManager.layoutBlockManagerInstance().getFacingSignalObject(currentBlock, blocktoCheck); break;
+                        case MASTTOMAST : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(currentBlock, blocktoCheck); break;
+                        case HEADTOHEAD : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(currentBlock, blocktoCheck); break;
+                        case SENSORTOSENSOR : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingSensor(currentBlock, blocktoCheck, null); break;
+                        case NONE : break;
+                        default : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingNamedBean(currentBlock, blocktoCheck, null); break;
                     }
                     lBlockManLog.setLevel(currentLevel);
-                    if (signal==null){
+                    if (foundBean==null){
                         log.debug("No object found so okay to return");
                         return blockindex;
                     } else {
-                        lastErrorMessage ="Signal " + signal.getDisplayName() + " already exists between blocks " + currentBlock.getDisplayName() + " and " + blocktoCheck.getDisplayName() + " in the same direction on this path";
+                        lastErrorMessage ="Signal " + foundBean.getDisplayName() + " already exists between blocks " + currentBlock.getDisplayName() + " and " + blocktoCheck.getDisplayName() + " in the same direction on this path";
                         log.debug(lastErrorMessage);
                     }
                 } else {
@@ -555,29 +607,31 @@ public class LayoutBlockConnectivityTools{
     *   Discovers valid pairs of beans type T assigned to a layout editor.
     *   If no bean type is provided, then either SignalMasts or Sensors are discovered
     *   If no editor is provided, then all editors are considered
+    * @param pathMethod Determine whether or not we should reject pairs if there are other beans in the way.
+    *                   Constant values of NONE, ANY, MASTTOMAST, HEADTOHEAD
     */
-    public Hashtable<NamedBean, ArrayList<NamedBean>> discoverValidBeanPairs(LayoutEditor editor, Class<?> T){
+    public Hashtable<NamedBean, ArrayList<NamedBean>> discoverValidBeanPairs(LayoutEditor editor, Class<?> T, int pathMethod){
         LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         Hashtable<NamedBean, ArrayList<NamedBean>> retPairs = new Hashtable<NamedBean, ArrayList<NamedBean>>();
         ArrayList<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
-        for(int i = 0; i<beanList.size(); i++){
-            if(log.isDebugEnabled())
-                try{
-                    log.debug("\nSource " + beanList.get(i).getBean().getDisplayName());
-                    log.debug("facing " + beanList.get(i).getFacing().getDisplayName());
-                    log.debug("protecting " + beanList.get(i).getProtecting().getDisplayName());
-                } catch (java.lang.NullPointerException e){
-                    //Can be considered normal if the signalmast is assigned to an end bumper.
+        for(FacingProtecting fp:beanList){
+            for(Block block: fp.getProtectingBlocks()){
+                if(log.isDebugEnabled())
+                    try{
+                        log.debug("\nSource " + fp.getBean().getDisplayName());
+                        log.debug("facing " + fp.getFacing().getDisplayName());
+                        log.debug("protecting " + block.getDisplayName());
+                    } catch (java.lang.NullPointerException e){
+                        //Can be considered normal if the signalmast is assigned to an end bumper.
+                    }
+                LayoutBlock lFacing = lbm.getLayoutBlock(fp.getFacing());
+                LayoutBlock lProtecting = lbm.getLayoutBlock(block);
+                NamedBean source = fp.getBean();
+                try {
+                    retPairs.put(source, discoverPairDest(source, lProtecting, lFacing, beanList, pathMethod));
+                } catch (JmriException ex){
+                    log.error(ex.toString());
                 }
-            Block facing = beanList.get(i).getFacing();
-            LayoutBlock lFacing = lbm.getLayoutBlock(facing);
-            Block protecting = beanList.get(i).getProtecting();
-            LayoutBlock lProtecting = lbm.getLayoutBlock(protecting);
-            NamedBean source = beanList.get(i).getBean();
-            try {
-                retPairs.put(source, discoverPairDest(source, lProtecting, lFacing, beanList));
-            } catch (JmriException ex){
-                log.error(ex.toString());
             }
         }
         return retPairs;
@@ -588,20 +642,28 @@ public class LayoutBlockConnectivityTools{
     * @param source Either a SignalMast or Sensor
     * @param editor The layout editor that the source is located on, if null, then all editors are considered
     * @param T The class of the remote destination, if null, then both SignalMasts and Sensors are considered
+    * @param pathMethod Determine whether or not we should reject pairs if there are other beans in the way.
+    *                   Constant values of NONE, ANY, MASTTOMAST, HEADTOHEAD
     * @return A list of all reachable NamedBeans
     */
-    public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T) throws JmriException{
+    public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T, int pathMethod) throws JmriException{
+        if(log.isDebugEnabled()) log.debug("discover pairs from source " + source.getDisplayName());
         LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         LayoutBlock lFacing = lbm.getFacingBlockByNamedBean(source, editor);
-        LayoutBlock lProtecting = lbm.getProtectedBlockByNamedBean(source, editor);
+        List<LayoutBlock> lProtecting = lbm.getProtectingBlocksByNamedBean(source, editor);
+        ArrayList<NamedBean> ret = new ArrayList<NamedBean>();
+        ArrayList<FacingProtecting> beanList = generateBlocksWithBeans(editor, T);
         try {
-            return discoverPairDest(source, lProtecting, lFacing, generateBlocksWithBeans(editor, T));
+            for(LayoutBlock lb:lProtecting){
+                ret.addAll(discoverPairDest(source, lb, lFacing, beanList, pathMethod));
+            }
         } catch (JmriException e){
             throw e;
         }
+        return ret;
     }
     
-    ArrayList<NamedBean> discoverPairDest(NamedBean source, LayoutBlock lProtecting, LayoutBlock lFacing, ArrayList<FacingProtecting> blockList) throws JmriException{
+    ArrayList<NamedBean> discoverPairDest(NamedBean source, LayoutBlock lProtecting, LayoutBlock lFacing, ArrayList<FacingProtecting> blockList, int pathMethod) throws JmriException{
         LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
         if(!lbm.isAdvancedRoutingEnabled()){
             throw new JmriException("advanced routing not enabled");
@@ -612,12 +674,11 @@ public class LayoutBlockConnectivityTools{
         ArrayList<NamedBean> validDestBean = new ArrayList<NamedBean>();
         for (int j = 0; j<blockList.size(); j++){
             if (blockList.get(j).getBean()!=source){
- //               boolean alreadyExist = false;
                 NamedBean destObj = blockList.get(j).getBean();
                 if(log.isDebugEnabled())
                     log.debug("looking for pair " + source.getDisplayName() + " " + destObj.getDisplayName());
                 try {
-                    if(checkValidDest(lFacing, lProtecting, blockList.get(j))){
+                    if(checkValidDest(lFacing, lProtecting, blockList.get(j), pathMethod)){
                         if(log.isDebugEnabled())
                             log.debug("Valid pair " + source.getDisplayName() + " " + destObj.getDisplayName());
                         LayoutBlock ldstBlock = lbm.getLayoutBlock(blockList.get(j).getFacing());
@@ -647,72 +708,83 @@ public class LayoutBlockConnectivityTools{
         for(int i = 0; i<lblksSysName.size(); i++){
             LayoutBlock curLblk = lbm.getLayoutBlock(lblksSysName.get(i));
             Block curBlk = curLblk.getBlock();
+            LayoutEditor useEdit = editor;
+            if(editor==null){
+                useEdit = curLblk.getMaxConnectedPanel();
+            }
             if(curBlk!=null){
                 int noNeigh = curLblk.getNumberOfNeighbours();
                 for(int x = 0; x<noNeigh; x++){
                     Block blk = curLblk.getNeighbourAtIndex(x);
-                    
+                    ArrayList<Block> proBlk = new ArrayList<Block>();
+                    NamedBean bean = null;
                     if(T==null) {
-                        NamedBean sourceBean = lbm.getFacingNamedBean(curBlk, blk, editor);
-                        if(sourceBean!=null){
-                            FacingProtecting toadd = new FacingProtecting(curBlk, blk, sourceBean);
-                            if(!beanList.contains(toadd)){
-                                beanList.add(toadd);
-                            }
-                        }
+                        proBlk.add(blk);
+                        bean = lbm.getFacingNamedBean(curBlk, blk, useEdit);
                     } else if (T.equals(SignalMast.class)){
-                        NamedBean sourceBean = lbm.getFacingSignalMast(curBlk, blk, editor);
-                        if(sourceBean!=null){
-                            FacingProtecting toadd = new FacingProtecting(curBlk, blk, sourceBean);
-                            if(!beanList.contains(toadd)){
-                                beanList.add(toadd);
+                        bean = lbm.getFacingSignalMast(curBlk, blk, useEdit);
+                        if(bean!=null){
+                            if(log.isDebugEnabled()) log.debug("Get list of protecting blocks for " + bean.getDisplayName() + " facing " + curBlk.getDisplayName()); 
+                            List<LayoutBlock> lProBlk = lbm.getProtectingBlocksByNamedBean(bean,useEdit);
+                            for(LayoutBlock lb:lProBlk){
+                                if(lb!=null){
+                                    proBlk.add(lb.getBlock());
+                                }
                             }
                         }
                     } else if (T.equals(Sensor.class)){
-                        NamedBean sourceBean = lbm.getFacingSensor(curBlk, blk, editor);
-                        if(sourceBean!=null){
-                            FacingProtecting toadd = new FacingProtecting(curBlk, blk, sourceBean);
-                            if(!beanList.contains(toadd)){
-                                beanList.add(toadd);
+                        bean = lbm.getFacingSensor(curBlk, blk, useEdit);
+                        if(bean!=null){
+                            if(log.isDebugEnabled()) log.debug("Get list of protecting blocks for " + bean.getDisplayName()); 
+                            List<LayoutBlock> lProBlk = lbm.getProtectingBlocksByNamedBean(bean,useEdit);
+                            for(LayoutBlock lb:lProBlk){
+                                if(lb!=null){
+                                    proBlk.add(lb.getBlock());
+                                }
                             }
                         }
                     }  else {
                         log.error("Past bean type is unknown " + T);
                     }
+                    if(bean!=null){
+                        FacingProtecting toadd = new FacingProtecting(curBlk, proBlk, bean);
+                        boolean found = false;
+                        for(FacingProtecting fp: beanList){
+                            if(fp.equals(toadd)){
+                                found = true;
+                                break;
+                            }
+                        }
+                        if(!found){
+                            beanList.add(toadd);
+                        }
+                    }
                 }
                 if (noNeigh==1){
+                    NamedBean bean = null;
                     if(log.isDebugEnabled())
                         log.debug("We have a dead end " + curBlk.getDisplayName());
                     if(T==null){
-                        NamedBean destBean = lbm.getNamedBeanAtEndBumper(curBlk, editor);
-                        if(destBean!=null){
-                            FacingProtecting toadd = new FacingProtecting(curBlk, null, destBean);
-                            if(!beanList.contains(toadd)){
-                                beanList.add(toadd);
-                            }
-                            if(log.isDebugEnabled())
-                                log.debug("We have found dest bean " + destBean.getDisplayName());
-                        }
+                        bean = lbm.getNamedBeanAtEndBumper(curBlk, useEdit);
                     } else if (T.equals(SignalMast.class)){
-                        NamedBean destBean = lbm.getSignalMastAtEndBumper(curBlk, editor);
-                        if(destBean!=null){
-                            FacingProtecting toadd = new FacingProtecting(curBlk, null, destBean);
-                            if(!beanList.contains(toadd)){
-                                beanList.add(toadd);
-                            }
-                            if(log.isDebugEnabled())
-                                log.debug("We have found dest bean " + destBean.getDisplayName());
-                        }
+                        bean = lbm.getSignalMastAtEndBumper(curBlk, useEdit);
                     } else if (T.equals(Sensor.class)){
-                        NamedBean sourceBean = lbm.getSensorAtEndBumper(curBlk, editor);
-                        if(sourceBean!=null){
-                            FacingProtecting toadd = new FacingProtecting(curBlk, null, sourceBean);
-                            if(!beanList.contains(toadd)){
-                                beanList.add(toadd);
-                            }
-                        }
+                        bean = lbm.getSensorAtEndBumper(curBlk, useEdit);
                     } else {
                         log.error("Past bean type is unknown " + T);
+                    }
+                    if(bean!=null){
+                        FacingProtecting toadd = new FacingProtecting(curBlk, null, bean);
+                        boolean found = false;
+                        for(FacingProtecting fp: beanList){
+                            if(fp.equals(toadd)){
+                                found = true;
+                                break;
+                            }
+                        }
+                        if(!found){
+                            beanList.add(toadd);
+                        }
                     }
                 }
             }
@@ -722,25 +794,33 @@ public class LayoutBlockConnectivityTools{
     
     static class FacingProtecting{
         Block facing;
-        Block protecting;
+        ArrayList<Block> protectingBlocks;
         NamedBean bean;
         
-        FacingProtecting(Block facing, Block protecting, NamedBean bean){
+        FacingProtecting(Block facing, ArrayList<Block> protecting, NamedBean bean){
             this.facing = facing;
-            this.protecting = protecting;
+            if(protecting==null){
+                this.protectingBlocks = new ArrayList<Block>(0);
+            } else {
+                this.protectingBlocks = protecting;
+            }
             this.bean = bean;
         }
         
         Block getFacing() { return facing; }
         
-        Block getProtecting() { return protecting; }
+        List<Block> getProtectingBlocks(){
+            return protectingBlocks;
+        }
         
         NamedBean getBean() { return bean; }
         
         @Override
         public boolean equals(Object obj){
-            if(obj ==this)
+            
+            if(obj ==this){
                 return true;
+            }
             if(obj ==null){
                 return false;
             }
@@ -750,13 +830,13 @@ public class LayoutBlockConnectivityTools{
             }
             else{
                 FacingProtecting tmp = (FacingProtecting)obj;
+                if(tmp.getBean()!=this.bean){
+                    return false;
+                }
                 if(tmp.getFacing()!=this.facing){
                     return false;
                 }
-                if(tmp.getProtecting()!=this.protecting){
-                    return false;
-                }
-                if(tmp.getBean()!=this.bean){
+                if(!tmp.getProtectingBlocks().equals(this.protectingBlocks)){
                     return false;
                 }
             }
@@ -768,7 +848,7 @@ public class LayoutBlockConnectivityTools{
             int hash = 7;
             hash = 37 * hash + (this.bean != null ? this.bean.hashCode() : 0);
             hash = 37 * hash + (this.facing != null ? this.facing.hashCode() : 0);
-            hash = 37 * hash + (this.protecting != null ? this.protecting.hashCode() : 0);
+            hash = 37 * hash + (this.protectingBlocks != null ? this.protectingBlocks.hashCode() : 0);
             return hash;
         }
     }

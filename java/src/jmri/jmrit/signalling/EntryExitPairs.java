@@ -1,8 +1,6 @@
 package jmri.jmrit.signalling;
 
 import org.apache.log4j.Logger;
-import jmri.SignalHead;
-import jmri.SignalMast;
 import jmri.Sensor;
 import jmri.NamedBean;
 import jmri.InstanceManager;
@@ -24,6 +22,7 @@ import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
+//This needs refactorting to deal with multiple protecting blocks
 
 /**
  * Implements an Entry Exit based method of setting turnouts, setting up signal logic and the 
@@ -236,9 +235,9 @@ public class EntryExitPairs implements jmri.Manager{
     private PointDetails providePoint(NamedBean source, LayoutEditor panel){
         PointDetails sourcePoint = getPointDetails(source, panel);
         if(sourcePoint==null){
-            LayoutBlock facing = null;
-            LayoutBlock protecting = null;
-            if(source instanceof SignalMast){
+            LayoutBlock facing = InstanceManager.layoutBlockManagerInstance().getFacingBlockByNamedBean(source, panel);
+            LayoutBlock protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByNamedBean(source, panel);
+            /*if(source instanceof SignalMast){
                 facing = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast((SignalMast)source, panel);
                 protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast((SignalMast)source, panel);
             } else if (source instanceof Sensor) {
@@ -247,7 +246,7 @@ public class EntryExitPairs implements jmri.Manager{
             } else if (source instanceof SignalHead){
                 facing = InstanceManager.layoutBlockManagerInstance().getFacingBlock((SignalHead)source, panel);
                 protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlock((SignalHead)source, panel);
-            }
+            }*/
             if((facing==null) && (protecting==null)){
                 log.error("Unable to find facing and protecting block");
                 return null;
@@ -637,7 +636,7 @@ public class EntryExitPairs implements jmri.Manager{
             log.debug("Layout block routing has not yet stabilsed, discovery will happen once it has");
             return;
         }
-        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class);
+        Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(editor, Sensor.class, LayoutBlockConnectivityTools.SENSORTOSENSOR);
         Enumeration<NamedBean> en = validPaths.keys();
         EntryExitPairs eep = this;
         while (en.hasMoreElements()) {
