@@ -27,7 +27,7 @@ import javax.swing.JTextField;
 import jmri.util.com.sun.TableSorter;
 import java.awt.event.MouseEvent;
 
-public class SignalMastLogicTableAction extends AbstractTableAction implements PropertyChangeListener{
+public class SignalMastLogicTableAction extends AbstractTableAction{
 
     /**
      * Create an action with a specific title.
@@ -139,6 +139,8 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
             //Will need to redo this so that we work out the row number from looking in the signalmastlogiclist.
             @Override
             public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if(suppressUpdate)
+                    return;
                // updateNameList();
                 if (e.getPropertyName().equals("length") ||  e.getPropertyName().equals("updatedDestination") ||  e.getPropertyName().equals("updatedSource")) {
                     updateNameList();
@@ -420,7 +422,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
     }
     
     JPanel update;
-    
+    boolean suppressUpdate = false;
     JmriJFrame signalMastLogicFrame = null;
     JLabel sourceLabel = new JLabel();
     
@@ -444,28 +446,47 @@ public class SignalMastLogicTableAction extends AbstractTableAction implements P
                                                   JOptionPane.YES_NO_OPTION,
                                                   JOptionPane.QUESTION_MESSAGE, null, null, null);
         if (retval == 0) {
-            try {
-                InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(this);
-                InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
-                    
-            } catch (jmri.JmriException e){
-                InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
-                JOptionPane.showMessageDialog(null, e.toString());
-                signalMastLogicFrame.setVisible(false);
-            }
+            
+            InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(propertyGenerateListener);
+            //This process can take some time, so we do not want to hog the GUI thread
+            Runnable r = new Runnable() {
+            public void run() {
+                //While the global discovery is taking place we remove the listener as this can result in a race condition.
+                suppressUpdate=true;
+                try {
+                    InstanceManager.signalMastLogicManagerInstance().automaticallyDiscoverSignallingPairs();
+                } catch (jmri.JmriException e){
+                    InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(propertyGenerateListener);
+                    JOptionPane.showMessageDialog(null, e.toString());
+                    signalMastLogicFrame.setVisible(false);
+                }
+                m.updateNameList();
+                suppressUpdate=false;
+                m.fireTableDataChanged();
+              }
+            };
+            Thread thr = new Thread(r, "Discover Signal Mast Logic");
+            thr.start();
+            
         } else {
             signalMastLogicFrame.setVisible(false);
         }
     }
     
-    public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("autoGenerateComplete")){
-            if (signalMastLogicFrame!=null)
-                signalMastLogicFrame.setVisible(false);
-            InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
-            JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
+    protected PropertyChangeListener propertyGenerateListener = new PropertyChangeListener() {
+        public void propertyChange(PropertyChangeEvent evt) {
+            if (evt.getPropertyName().equals("autoGenerateComplete")){
+                if (signalMastLogicFrame!=null)
+                    signalMastLogicFrame.setVisible(false);
+                InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
+                JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
+            } else if (evt.getPropertyName().equals("autoGenerateUpdate")){
+                sourceLabel.setText((String)evt.getNewValue());
+                signalMastLogicFrame.pack();
+                signalMastLogicFrame.repaint();
+            }
         }
-    }
+    };
     
     jmri.jmrit.signalling.SignallingAction sigLog = new jmri.jmrit.signalling.SignallingAction();
     

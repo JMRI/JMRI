@@ -371,7 +371,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
         Hashtable<NamedBean, ArrayList<NamedBean>> validPaths = lbm.getLayoutBlockConnectivityTools().discoverValidBeanPairs(null, SignalMast.class, LayoutBlockConnectivityTools.MASTTOMAST);
         Enumeration<NamedBean> en = validPaths.keys();
-
+        firePropertyChange("autoGenerateUpdate", null, ("Found " + validPaths.size() +" masts as sources for logic"));
         while (en.hasMoreElements()) {
             SignalMast key = (SignalMast)en.nextElement();
             SignalMastLogic sml = getSignalMastLogic(key);
