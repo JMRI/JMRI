@@ -10,7 +10,6 @@ import java.io.IOException;
 
 import javax.swing.*;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -72,6 +71,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 
 			// Loop through the Roster, printing as needed
 			CarLoads carLoads = CarLoads.instance();
+			String[] carTypes = CarTypes.instance().getNames();
 			Hashtable<String, List<CarLoad>> list = carLoads.getList();
 			try {
 				String s = Bundle.getMessage("Type") + TAB + Bundle.getMessage("Load") + "   "
@@ -80,10 +80,8 @@ public class PrintCarLoadsAction extends AbstractAction {
 						+ Bundle.getMessage("LoadPickupMessage") + "   "
 						+ Bundle.getMessage("LoadDropMessage") + NEW_LINE;
 				writer.write(s);
-				Enumeration<String> en = list.keys();
-				while (en.hasMoreElements()) {
-					String key = en.nextElement();
-					List<CarLoad> loads = list.get(key);
+				for (int i = 0; i < carTypes.length; i++) {
+					List<CarLoad> loads = list.get(carTypes[i]);
 					boolean printType = true;
 					for (int j = 0; j < loads.size(); j++) {
 						StringBuffer buf = new StringBuffer(TAB);
@@ -97,7 +95,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 							continue;
 						// print the car type once
 						if (printType) {
-							writer.write(key + NEW_LINE);
+							writer.write(carTypes[i] + NEW_LINE);
 							printType = false;
 						}
 						buf.append(tabString(load, carLoads.getCurMaxNameLength()+1));
