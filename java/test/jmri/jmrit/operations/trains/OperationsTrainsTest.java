@@ -2954,7 +2954,7 @@ public class OperationsTrainsTest extends TestCase {
 		c9.setMoves(19);
 		cmanager.register(c9);
 
-		Assert.assertEquals("Westford should not accept Flat Car", false, loc1.acceptsTypeName("Flat Car"));
+//		Assert.assertEquals("Westford should not accept Flat Car", false, loc1.acceptsTypeName("Flat Car"));
 		// add Flat Car as a valid type so Westford will accept
 		ct.addName("Flat Car");
 		Assert.assertEquals("Westford should now accepts Flat Car", true, loc1.acceptsTypeName("Flat Car"));

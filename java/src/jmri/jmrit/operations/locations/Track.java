@@ -593,8 +593,8 @@ public class Track {
 	}
 
 	public boolean acceptsTypeName(String type) {
-		if (!CarTypes.instance().containsName(type) && !EngineTypes.instance().containsName(type))
-			return false;
+//		if (!CarTypes.instance().containsName(type) && !EngineTypes.instance().containsName(type))
+//			return false;
 		if (!_location.acceptsTypeName(type))
 			return false;
 		return _typeList.contains(type);

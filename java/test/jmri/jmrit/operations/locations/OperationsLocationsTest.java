@@ -810,8 +810,8 @@ public class OperationsLocationsTest extends TestCase {
 
 		Assert.assertEquals("Location Accepts Type Name undefined", false, l.acceptsTypeName("TestTypeName"));
 
-		l.addTypeName("TestTypeName");
-		Assert.assertEquals("Location Accepts Type Name defined", false, l.acceptsTypeName("TestTypeName"));
+//		l.addTypeName("TestTypeName");
+//		Assert.assertEquals("Location Accepts Type Name defined", false, l.acceptsTypeName("TestTypeName"));
 
 		// now add to car types
 		CarTypes ct = CarTypes.instance();

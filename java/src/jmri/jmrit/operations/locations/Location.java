@@ -452,8 +452,8 @@ public class Location implements java.beans.PropertyChangeListener {
      }
     
     public boolean acceptsTypeName(String type){
-    	if (!CarTypes.instance().containsName(type) && !EngineTypes.instance().containsName(type))
-    		return false;
+//    	if (!CarTypes.instance().containsName(type) && !EngineTypes.instance().containsName(type))
+//    		return false;
     	return _listTypes.contains(type);
     }
   

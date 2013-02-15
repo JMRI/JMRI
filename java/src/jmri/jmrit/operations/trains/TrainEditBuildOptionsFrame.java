@@ -1236,6 +1236,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)){
 			updateTypeComboBoxes();
+			updateLoadNames();
 		}
 		if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)){

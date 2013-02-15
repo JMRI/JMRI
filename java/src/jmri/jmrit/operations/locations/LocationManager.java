@@ -15,6 +15,7 @@ import org.jdom.Element;
 
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -291,14 +292,31 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		for (int i = 0; i < locs.size(); i++) {
 			Location loc = getLocationById(locs.get(i));
 			if (loc.acceptsTypeName(oldType)) {
-				loc.addTypeName(newType);
+				if (newType != null)
+					loc.addTypeName(newType);
 				// now adjust tracks
 				List<String> tracks = loc.getTrackIdsByNameList(null);
 				for (int j = 0; j < tracks.size(); j++) {
 					Track track = loc.getTrackById(tracks.get(j));
 					if (track.acceptsTypeName(oldType)) {
 						track.deleteTypeName(oldType);
-						track.addTypeName(newType);
+						if (newType != null)
+							track.addTypeName(newType);
+					}
+					// adjust custom loads
+					String[] loadNames = track.getLoadNames();
+					for (int k = 0; k < loadNames.length; k++) {
+						String load = loadNames[k];
+						String[] splitLoad = load.split(CarLoad.SPLIT_CHAR);
+						if (splitLoad.length > 1) {
+							if (splitLoad[0].equals(oldType)) {
+								track.deleteLoadName(load);
+								if (newType != null) {
+									load = newType + CarLoad.SPLIT_CHAR + splitLoad[1];
+									track.addLoadName(load);
+								}
+							}
+						}
 					}
 				}
 				loc.deleteTypeName(oldType);
@@ -375,6 +393,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: "
 				+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
 			replaceType((String) e.getOldValue(), (String) e.getNewValue());
 		}

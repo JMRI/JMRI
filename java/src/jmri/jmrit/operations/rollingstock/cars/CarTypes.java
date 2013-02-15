@@ -128,13 +128,13 @@ public class CarTypes {
 			return;
 		list.add(0, type);
 		maxNameLength = 0; // reset maximum name length
-		firePropertyChange(CARTYPES_LENGTH_CHANGED_PROPERTY, list.size() - 1, list.size());
+		firePropertyChange(CARTYPES_LENGTH_CHANGED_PROPERTY, null, type);
 	}
 
 	public void deleteName(String type) {
 		list.remove(type);
 		maxNameLength = 0; // reset maximum name length
-		firePropertyChange(CARTYPES_LENGTH_CHANGED_PROPERTY, list.size() + 1, list.size());
+		firePropertyChange(CARTYPES_LENGTH_CHANGED_PROPERTY, type, null);
 	}
 
 	public boolean containsName(String type) {

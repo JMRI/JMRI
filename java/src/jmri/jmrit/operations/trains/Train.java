@@ -873,6 +873,21 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (acceptsTypeName(oldType)) {
 			deleteTypeName(oldType);
 			addTypeName(newType);
+			// adjust custom loads
+			String[] loadNames = getLoadNames();
+			for (int k = 0; k < loadNames.length; k++) {
+				String load = loadNames[k];
+				String[] splitLoad = load.split(CarLoad.SPLIT_CHAR);
+				if (splitLoad.length > 1) {
+					if (splitLoad[0].equals(oldType)) {
+						deleteLoadName(load);
+						if (newType != null) {
+							load = newType + CarLoad.SPLIT_CHAR + splitLoad[1];
+							addLoadName(load);
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -3430,6 +3445,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			setRoute(null);
 		}
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
 			replaceType((String) e.getOldValue(), (String) e.getNewValue());
 		}
