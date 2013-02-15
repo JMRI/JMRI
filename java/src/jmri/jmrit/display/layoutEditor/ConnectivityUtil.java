@@ -547,6 +547,7 @@ public class ConnectivityUtil
 							}
 							else if (lt.getLayoutBlock()==lb && lb == nlb){
                                 //we are at our final destination so not an error such
+                                tr = null;
                             } else {
 								// no legal outcome found, print error
 								log.error("Connectivity mismatch at A in turnout "+lt.getTurnoutName());
