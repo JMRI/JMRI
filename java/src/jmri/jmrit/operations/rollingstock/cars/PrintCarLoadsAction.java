@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import jmri.jmrit.operations.setup.Control;
 
 /**
  * Action to print a summary of car loads ordered by car type.
@@ -75,9 +74,10 @@ public class PrintCarLoadsAction extends AbstractAction {
 			CarLoads carLoads = CarLoads.instance();
 			Hashtable<String, List<CarLoad>> list = carLoads.getList();
 			try {
-				String s = Bundle.getMessage("Type") + TAB + Bundle.getMessage("Load") + TAB
-						+ Bundle.getMessage("BorderLayoutPriority") + "  "
-						+ Bundle.getMessage("LoadPickupMessage") + "  "
+				String s = Bundle.getMessage("Type") + TAB + Bundle.getMessage("Load") + "   "
+						+ Bundle.getMessage("BorderLayoutLoadType") + " "
+						+ Bundle.getMessage("BorderLayoutPriority") + "   "
+						+ Bundle.getMessage("LoadPickupMessage") + "   "
 						+ Bundle.getMessage("LoadDropMessage") + NEW_LINE;
 				writer.write(s);
 				Enumeration<String> en = list.keys();
@@ -100,10 +100,11 @@ public class PrintCarLoadsAction extends AbstractAction {
 							writer.write(key + NEW_LINE);
 							printType = false;
 						}
-						buf.append(tabString(load, Control.max_len_string_attibute));
+						buf.append(tabString(load, carLoads.getCurMaxNameLength()+1));
+						buf.append(tabString(loads.get(j).getLoadType(), 6));
 						buf.append(tabString(loads.get(j).getPriority(), 5));
 						buf.append(tabString(loads.get(j).getPickupComment(), 27));
-						buf.append(loads.get(j).getDropComment());
+						buf.append(tabString(loads.get(j).getDropComment(), 27));
 						writer.write(buf.toString() + NEW_LINE);
 					}
 				}
@@ -117,7 +118,7 @@ public class PrintCarLoadsAction extends AbstractAction {
 
 	private static String tabString(String s, int fieldSize) {
 		if (s.length() > fieldSize)
-			s = s.substring(0, fieldSize);
+			s = s.substring(0, fieldSize-1);
 		StringBuffer buf = new StringBuffer(s + " ");
 		while (buf.length() < fieldSize) {
 			buf.append(" ");
