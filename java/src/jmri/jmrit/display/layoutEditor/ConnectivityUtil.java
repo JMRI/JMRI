@@ -545,7 +545,9 @@ public class ConnectivityUtil
 								prevConnectType = LayoutEditor.TURNOUT_C;
 								prevConnectObject = cObject;
 							}
-							else {
+							else if (lt.getLayoutBlock()==lb && lb == nlb){
+                                //we are at our final destination so not an error such
+                            } else {
 								// no legal outcome found, print error
 								log.error("Connectivity mismatch at A in turnout "+lt.getTurnoutName());
 								tr = null;
@@ -584,6 +586,10 @@ public class ConnectivityUtil
 								prevConnectType = LayoutEditor.TURNOUT_D;
 								prevConnectObject = cObject;
 							}
+                            else if (lt.getLayoutBlockB()==lb && lb == nlb){
+                                //we are at our final destination so not an error such
+                                tr=null;
+                            }
 							else {
 								// no legal outcome found, print error
 								log.error("Connectivity mismatch at B in turnout "+lt.getTurnoutName());
@@ -623,6 +629,10 @@ public class ConnectivityUtil
 								prevConnectType = LayoutEditor.TURNOUT_A;
 								prevConnectObject = cObject;
 							}
+                            else if (lt.getLayoutBlockC()==lb && lb == nlb){
+                                //we are at our final destination so not an error such
+                                tr=null;
+                            }
 							else {
 								// no legal outcome found, print error
 								log.error("Connectivity mismatch at C in turnout "+lt.getTurnoutName());
@@ -662,6 +672,10 @@ public class ConnectivityUtil
 								prevConnectType = LayoutEditor.TURNOUT_B;
 								prevConnectObject = cObject;
 							}
+							else if (lt.getLayoutBlockD()==lb && lb == nlb){
+                                //we are at our final destination so not an error such
+                                tr=null;
+                            }
 							else {
 								// no legal outcome found, print error
 								log.error("Connectivity mismatch at D in turnout "+lt.getTurnoutName());
