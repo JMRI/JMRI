@@ -339,7 +339,7 @@ public class Router extends TrainCommon {
 			testCar.setDestinationTrack(track);
 			// test to see if car can be transported from current location to this yard or interchange
 			Train firstTrain = TrainManager.instance().getTrainForCar(testCar);
-			status = testCar.testDestination(track.getLocation(), track);
+			status = car.testDestination(track.getLocation(), track);
 			// Is there a "first" train for this car out of staging?
 			if (_train != null && !_train.servicesCar(testCar)
 					&& car.getTrack().getLocType().equals(Track.STAGING)) {
@@ -379,12 +379,13 @@ public class Router extends TrainCommon {
 							+ car.getLocationName() + ", " + car.getTrackName() + ") to "	// NOI18N
 							+ trackType + " (" + track.getLocation().getName() // NOI18N
 							+ ", " + track.getName() + ")"); // NOI18N
-				if (!_status.equals(Track.OKAY))
-					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-							.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
-							track.getLocation().getName(), track.getName(), _status }));
 				return true;
 			}
+//			if (!status.equals(Track.OKAY))
+//				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+//						.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
+//						track.getLocation().getName(), track.getName(), status }));
+
 			// restore car's destination
 			testCar.setDestination(saveDestation);
 			testCar.setDestinationTrack(saveDestTrack);
@@ -671,9 +672,8 @@ public class Router extends TrainCommon {
 	private void loadTracks(Car car, Car testCar, List<Track> tracks) {
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
-			if ((track.getLocType().equals(Track.INTERCHANGE) || track.getLocType().equals(Track.YARD) || (enable_staging && track
-					.getLocType().equals(Track.STAGING)))
-					&& testCar.testLocation(track.getLocation(), track).equals(Track.OKAY)) {
+			String status = testCar.testLocation(track.getLocation(), track);
+			if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
 				if (debugFlag)
 					log.debug("Found " + track.getLocType() + " track (" + track.getLocation().getName() + ", "
 							+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
@@ -693,7 +693,12 @@ public class Router extends TrainCommon {
 								+ testCar.getLocationName() + ", " + testCar.getTrackName()	// NOI18N
 								+ ") to final destination (" + testCar.getDestinationName() // NOI18N
 								+ ", " + testCar.getDestinationTrackName() + ")");
-					firstLocationTracks.add(track);
+					if (status.equals(Track.OKAY))
+						firstLocationTracks.add(track);
+					else
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
+								track.getLocation().getName(), track.getName(), status }));
 				} else {
 					// don't add to other if already in last location list
 					if (!lastLocationTracks.contains(track)) {
