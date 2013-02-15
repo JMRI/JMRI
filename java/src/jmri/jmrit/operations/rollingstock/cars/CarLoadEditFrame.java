@@ -194,6 +194,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 				return;
 			}
 			deleteLoadFromCombobox(_type, deleteLoad);
+			replaceLoad(_type, deleteLoad, null);
 		}
 		if (ae.getSource() == replaceButton) {
 			String newLoad = addTextBox.getText();
@@ -310,9 +311,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		// now adjust schedules
 		ScheduleManager.instance().replaceLoad(type, oldLoad, newLoad);
 		// now adjust trains
-		TrainManager.instance().replaceLoad(oldLoad, newLoad);
+		TrainManager.instance().replaceLoad(type, oldLoad, newLoad);
 		// now adjust tracks
-		LocationManager.instance().replaceLoad(oldLoad, newLoad);
+		LocationManager.instance().replaceLoad(type, oldLoad, newLoad);
 	}
 
 	private void loadComboboxes() {

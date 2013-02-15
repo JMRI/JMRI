@@ -15,6 +15,7 @@ import org.jdom.Element;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -336,7 +337,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 				Integer.valueOf(_trainHashTable.size()));
 	}
 
-	public void replaceLoad(String oldLoadName, String newLoadName) {
+	public void replaceLoad(String type, String oldLoadName, String newLoadName) {
 		List<String> trains = getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = getTrainById(trains.get(i));
@@ -346,6 +347,16 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 					train.deleteLoadName(oldLoadName);
 					if (newLoadName != null)
 						train.addLoadName(newLoadName);
+				}
+				// adjust combination car type and load name
+   				String[] splitLoad = loadNames[j].split(CarLoad.SPLIT_CHAR);
+				if (splitLoad.length > 1) {
+					if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
+						train.deleteLoadName(loadNames[j]);
+						if (newLoadName != null) {
+							train.addLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
+						}
+					}
 				}
 			}
 		}

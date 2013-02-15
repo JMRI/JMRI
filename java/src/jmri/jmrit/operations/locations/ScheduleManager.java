@@ -292,10 +292,16 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 			for(int j=0; j<items.size(); j++ ){
 				ScheduleItem si = sch.getItemById(items.get(j));
 				if (si.getType().equals(type) && si.getLoad().equals(oldLoad)){
-					si.setLoad(newLoad);
+					if (newLoad != null)
+						si.setLoad(newLoad);
+					else
+						si.setLoad("");
 				}
 				if (si.getType().equals(type) && si.getShip().equals(oldLoad)){
-					si.setShip(newLoad);
+					if (newLoad != null)
+						si.setShip(newLoad);
+					else
+						si.setShip("");
 				}
 			}
 		}

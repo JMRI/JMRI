@@ -329,14 +329,17 @@ public class CarManager extends RollingStockManager{
      * @param oldLoadName old load name
      * @param newLoadName new load name
      */
-	public void replaceLoad(String type, String oldLoadName, String newLoadName){
-		List<String> cars = getList();
-		for (int i = 0; i < cars.size(); i++) {
-			Car car = getById(cars.get(i));
-			if (car.getType().equals(type) && car.getLoad().equals(oldLoadName))
-				car.setLoad(newLoadName);
-		}
-	}
+    public void replaceLoad(String type, String oldLoadName, String newLoadName){
+    	List<String> cars = getList();
+    	for (int i = 0; i < cars.size(); i++) {
+    		Car car = getById(cars.get(i));
+    		if (car.getType().equals(type) && car.getLoad().equals(oldLoadName))
+    			if (newLoadName != null)
+    				car.setLoad(newLoadName);
+    			else
+    				car.setLoad(CarLoads.instance().getDefaultEmptyName());
+    	}
+    }
 	
 	public List<String> getCarsLocationUnknown(){
 		List<String> mias = new ArrayList<String>();

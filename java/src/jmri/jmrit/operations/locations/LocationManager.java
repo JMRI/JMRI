@@ -13,12 +13,9 @@ import javax.swing.JComboBox;
 
 import org.jdom.Element;
 
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 
 /**
  * Manages locations.
@@ -31,9 +28,6 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength"; // NOI18N
 
 	public LocationManager() {
-		CarTypes.instance().addPropertyChangeListener(this);
-		CarRoads.instance().addPropertyChangeListener(this);
-		EngineTypes.instance().addPropertyChangeListener(this);
 	}
 
 	/** record the single instance **/
@@ -287,61 +281,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 		}
 	}
 
-	public void replaceType(String oldType, String newType) {
-		List<String> locs = getLocationsByIdList();
-		for (int i = 0; i < locs.size(); i++) {
-			Location loc = getLocationById(locs.get(i));
-			if (loc.acceptsTypeName(oldType)) {
-				if (newType != null)
-					loc.addTypeName(newType);
-				// now adjust tracks
-				List<String> tracks = loc.getTrackIdsByNameList(null);
-				for (int j = 0; j < tracks.size(); j++) {
-					Track track = loc.getTrackById(tracks.get(j));
-					if (track.acceptsTypeName(oldType)) {
-						track.deleteTypeName(oldType);
-						if (newType != null)
-							track.addTypeName(newType);
-					}
-					// adjust custom loads
-					String[] loadNames = track.getLoadNames();
-					for (int k = 0; k < loadNames.length; k++) {
-						String load = loadNames[k];
-						String[] splitLoad = load.split(CarLoad.SPLIT_CHAR);
-						if (splitLoad.length > 1) {
-							if (splitLoad[0].equals(oldType)) {
-								track.deleteLoadName(load);
-								if (newType != null) {
-									load = newType + CarLoad.SPLIT_CHAR + splitLoad[1];
-									track.addLoadName(load);
-								}
-							}
-						}
-					}
-				}
-				loc.deleteTypeName(oldType);
-			}
-		}
-	}
 
-	public void replaceRoad(String oldRoad, String newRoad) {
-		List<String> locs = getLocationsByIdList();
-		for (int i = 0; i < locs.size(); i++) {
-			Location loc = getLocationById(locs.get(i));
-			// now adjust any track locations
-			List<String> tracks = loc.getTrackIdsByNameList(null);
-			for (int j = 0; j < tracks.size(); j++) {
-				Track track = loc.getTrackById(tracks.get(j));
-				if (track.containsRoadName(oldRoad)) {
-					track.deleteRoadName(oldRoad);
-					if (newRoad != null)
-						track.addRoadName(newRoad);
-				}
-			}
-		}
-	}
-
-	public void replaceLoad(String oldLoadName, String newLoadName) {
+	public void replaceLoad(String type, String oldLoadName, String newLoadName) {
 		List<String> locs = getLocationsByIdList();
 		for (int i = 0; i < locs.size(); i++) {
 			Location loc = getLocationById(locs.get(i));
@@ -356,15 +297,25 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 						if (newLoadName != null)
 							track.addLoadName(newLoadName);
 					}
+					// adjust combination car type and load name
+	   				String[] splitLoad = loadNames[k].split(CarLoad.SPLIT_CHAR);
+    				if (splitLoad.length > 1) {
+    					if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
+    						track.deleteLoadName(loadNames[k]);
+    						if (newLoadName != null) {
+    							track.addLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
+    						}
+    					}
+    				}
 				}
 			}
 		}
 	}
 	
 	public void load(Element root) {
-		if (root.getChild("locations") != null) { // NOI18N
+		if (root.getChild(Xml.LOCATIONS) != null) {
 			@SuppressWarnings("unchecked")
-			List<Element> l = root.getChild("locations").getChildren("location"); // NOI18N
+			List<Element> l = root.getChild(Xml.LOCATIONS).getChildren(Xml.LOCATION);
 			if (log.isDebugEnabled())
 				log.debug("readFile sees " + l.size() + " locations");
 			for (int i = 0; i < l.size(); i++) {
@@ -375,7 +326,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	
 	public void store(Element root) {
 		Element values;
-		root.addContent(values = new Element("locations")); // NOI18N
+		root.addContent(values = new Element(Xml.LOCATIONS));
 		// add entries
 		List<String> locationList = getLocationsByIdList();
 		for (int i = 0; i < locationList.size(); i++) {
@@ -386,20 +337,12 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Check for car type and road name replacements. Also check for engine type replacement.
+	 * There aren't any current property changes being monitored
 	 * 
 	 */
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: "
 				+ e.getOldValue() + " new: " + e.getNewValue());	// NOI18N
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
-			replaceType((String) e.getOldValue(), (String) e.getNewValue());
-		}
-		if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)) {
-			replaceRoad((String) e.getOldValue(), (String) e.getNewValue());
-		}
 	}
 
 	/**

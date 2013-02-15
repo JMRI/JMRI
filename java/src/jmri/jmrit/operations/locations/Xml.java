@@ -24,6 +24,9 @@ public class Xml {
 	static final String TRUE = "true"; // NOI18N
 	static final String FALSE = "false"; // NOI18N
 	
+	// LocationManager.java
+	static final String LOCATIONS = "locations"; // NOI18N
+	
 	// Location.java
 	static final String LOCATION = "location"; // NOI18N
 	static final String OPS = "ops"; // NOI18N

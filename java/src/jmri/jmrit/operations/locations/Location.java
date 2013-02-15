@@ -10,6 +10,8 @@ import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
@@ -95,6 +97,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		// a new location accepts all types
 		setTypeNames(CarTypes.instance().getNames());
 		setTypeNames(EngineTypes.instance().getNames());
+		addPropertyChangeListeners();
 	}
 
 	public String getId() {
@@ -798,7 +801,16 @@ public class Location implements java.beans.PropertyChangeListener {
     		Track track = getTrackById(tracks.get(i));
     		deleteTrack(track);
     	}
+		CarTypes.instance().removePropertyChangeListener(this);
+		CarRoads.instance().removePropertyChangeListener(this);
+		EngineTypes.instance().removePropertyChangeListener(this);
     	setDirtyAndFirePropertyChange (DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
+    }
+    
+    private void addPropertyChangeListeners() {
+		CarTypes.instance().addPropertyChangeListener(this);
+		CarRoads.instance().addPropertyChangeListener(this);
+		EngineTypes.instance().addPropertyChangeListener(this);
     }
  	
    /**
@@ -887,6 +899,7 @@ public class Location implements java.beans.PropertyChangeListener {
                 register(new Track(l.get(i), this));
             }
         }
+        addPropertyChangeListeners();
     }
 
     /**
@@ -965,10 +978,58 @@ public class Location implements java.beans.PropertyChangeListener {
         return e;
     }
     
+    private void replaceType(String oldType, String newType) {
+    	if (acceptsTypeName(oldType)) {
+    		if (newType != null)
+    			addTypeName(newType);
+    		// now adjust tracks
+    		List<String> tracks = getTrackIdsByNameList(null);
+    		for (int j = 0; j < tracks.size(); j++) {
+    			Track track = getTrackById(tracks.get(j));
+    			if (track.acceptsTypeName(oldType)) {
+    				track.deleteTypeName(oldType);
+    				if (newType != null)
+    					track.addTypeName(newType);
+    			}
+    			// adjust custom loads
+    			String[] loadNames = track.getLoadNames();
+    			for (int k = 0; k < loadNames.length; k++) {
+    				String load = loadNames[k];
+    				String[] splitLoad = load.split(CarLoad.SPLIT_CHAR);
+    				if (splitLoad.length > 1) {
+    					if (splitLoad[0].equals(oldType)) {
+    						track.deleteLoadName(load);
+    						if (newType != null) {
+    							load = newType + CarLoad.SPLIT_CHAR + splitLoad[1];
+    							track.addLoadName(load);
+    						}
+    					}
+    				}
+    			}
+    		}
+    		deleteTypeName(oldType);
+    	}
+    }
+
+
+    private void replaceRoad(String oldRoad, String newRoad) {
+    	// now adjust any track locations
+    	List<String> tracks = getTrackIdsByNameList(null);
+    	for (int j = 0; j < tracks.size(); j++) {
+    		Track track = getTrackById(tracks.get(j));
+    		if (track.containsRoadName(oldRoad)) {
+    			track.deleteRoadName(oldRoad);
+    			if (newRoad != null)
+    				track.addRoadName(newRoad);
+    		}
+    	}
+    }
+
+    
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled())
     		log.debug("location (" + getName() + ") sees property change: "
-    				+ e.getPropertyName() + " from track (" +e.getSource()+") old: " + e.getOldValue() + " new: "// NOI18N
+    				+ e.getPropertyName() + " source: (" +e.getSource()+") old: " + e.getOldValue() + " new: "// NOI18N
     				+ e.getNewValue());
     	// update length of tracks at this location if track length changes
     	if(e.getPropertyName().equals(Track.LENGTH_CHANGED_PROPERTY)){
@@ -978,6 +1039,14 @@ public class Location implements java.beans.PropertyChangeListener {
     	if(e.getPropertyName().equals(Track.TRACK_TYPE_CHANGED_PROPERTY)){
     		setDirtyAndFirePropertyChange(TRACK_LISTLENGTH_CHANGED_PROPERTY, null, null);
     	}
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
+			replaceType((String) e.getOldValue(), (String) e.getNewValue());
+		}
+		if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)) {
+			replaceRoad((String) e.getOldValue(), (String) e.getNewValue());
+		}
     }
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(
