@@ -27,8 +27,8 @@ public class CarLoads {
 	protected String _loadName = Bundle.getMessage("LoadedCar");
 
 	// for property change
-	public static final String LOAD_CHANGED_PROPERTY = "CarLoads Load"; // NOI18N
-	public static final String LOAD_NAME_CHANGED_PROPERTY = "CarLoads Name"; // NOI18N
+	public static final String LOAD_CHANGED_PROPERTY = "CarLoads_Load"; // NOI18N
+	public static final String LOAD_NAME_CHANGED_PROPERTY = "CarLoads_Name"; // NOI18N
 
 	private static final int MIN_NAME_LENGTH = 4;
 
@@ -190,7 +190,7 @@ public class CarLoads {
 		}
 		loads.add(0, new CarLoad(name));
 		maxNameLength = 0; // reset maximum name length
-		firePropertyChange(LOAD_CHANGED_PROPERTY, loads.size() - 1, loads.size());
+		firePropertyChange(LOAD_CHANGED_PROPERTY, null, name);
 	}
 
 	public void deleteName(String type, String name) {
@@ -207,7 +207,7 @@ public class CarLoads {
 			}
 		}
 		maxNameLength = 0; // reset maximum name length
-		firePropertyChange(LOAD_CHANGED_PROPERTY, loads.size() + 1, loads.size());
+		firePropertyChange(LOAD_CHANGED_PROPERTY, name, null);
 	}
 
 	/**

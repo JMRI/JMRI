@@ -1218,7 +1218,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	}
 
  	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()
+		if (Control.showProperty && log.isDebugEnabled()) 
+			log.debug("Property change: " +e.getPropertyName()
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
 			updateRoadComboBoxes();

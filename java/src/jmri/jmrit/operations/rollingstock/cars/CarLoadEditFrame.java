@@ -193,8 +193,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			deleteLoadFromCombobox(_type, deleteLoad);
 			replaceLoad(_type, deleteLoad, null);
+			deleteLoadFromCombobox(_type, deleteLoad);
 		}
 		if (ae.getSource() == replaceButton) {
 			String newLoad = addTextBox.getText();
@@ -377,8 +377,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("CarsLoadEditFrame sees propertyChange " + e.getPropertyName() + " "
-				+ e.getNewValue());
+		log.debug("Property change: " + e.getPropertyName()  + " old: " + e.getOldValue() + " new: "
+				+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY))
 			carLoads.updateComboBox(_type, comboBox);
 	}
