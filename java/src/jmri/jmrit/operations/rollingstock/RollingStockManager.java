@@ -484,7 +484,7 @@ public class RollingStockManager {
     	case BY_OWNER: return rs.getOwner();
     	case BY_RFID: return rs.getRfid();
     	case BY_VALUE: return rs.getValue();
-    	case BY_LAST: return rs.getLastDate();
+    	case BY_LAST: return convertLastDate(rs.getLastDate());
     	default: return "unknown";	 // NOI18N
     	}
     }
@@ -502,6 +502,29 @@ public class RollingStockManager {
     		}
     	return date;
     }
+    
+	/**
+	 * The input format is month/day/year time. The problem is month and day can be a single character, and the order is
+	 * all wrong so sorting doesn't work well. This converts the format to yyyy/mm/dd time for proper sorting.
+	 * 
+	 * @param date
+	 * @return
+	 */
+	private String convertLastDate(String date) {
+		String[] newDate = date.split("/");
+		if (newDate.length < 3)
+			return date;
+		String month = newDate[0];
+		String day = newDate[1];
+		if (newDate[0].length() == 1)
+			month = "0" + month;
+		if (newDate[1].length() == 1)
+			day = "0" + day;
+		String[] yearTime = newDate[2].split(" ");
+		String year = yearTime[0];
+		String time = yearTime[1];
+		return month = year + "/" + month + "/" + day + " " + time;
+	}
     
     /**
 	 * Return a list available rolling stock (no assigned train or rolling stock already assigned
