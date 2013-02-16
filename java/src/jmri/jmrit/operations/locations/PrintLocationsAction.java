@@ -102,6 +102,7 @@ public class PrintLocationsAction extends AbstractAction {
 		int numberRS = 0;
 		int numberCars = 0;
 		int numberEngines = 0;
+		// header
 		String s = Bundle.getMessage("Location") + TAB + TAB + TAB + Bundle.getMessage("Length") + " "
 				+ Bundle.getMessage("Used") + TAB + Bundle.getMessage("RS") + TAB + Bundle.getMessage("Cars")
 				+ TAB + Bundle.getMessage("Engines") + TAB + Bundle.getMessage("Pickup") + " "
@@ -109,13 +110,9 @@ public class PrintLocationsAction extends AbstractAction {
 		writer.write(s);
 		for (int i = 0; i < locations.size(); i++) {
 			Location location = manager.getLocationById(locations.get(i));
-			String name = location.getName();
-			StringBuffer buf = new StringBuffer(name);
-			// pad out the location name
-			for (int j = name.length(); j < LocationEditFrame.MAX_NAME_LENGTH; j++) {
-				buf.append(" ");
-			}
-			s = buf.toString() + TAB + Integer.toString(location.getLength()) + TAB
+			// location name, track length, used, number of RS, scheduled pick ups and drops
+			s = padOutString(location.getName(), Control.max_len_string_location_name) + TAB + "  "
+					+ Integer.toString(location.getLength()) + TAB
 					+ Integer.toString(location.getUsedLength()) + TAB
 					+ Integer.toString(location.getNumberRS()) + TAB + TAB + TAB
 					+ Integer.toString(location.getPickupRS()) + TAB + Integer.toString(location.getDropRS())
@@ -128,18 +125,11 @@ public class PrintLocationsAction extends AbstractAction {
 
 			List<String> yards = location.getTrackIdsByNameList(Track.YARD);
 			if (yards.size() > 0) {
-				s = "    " + Bundle.getMessage("YardName") + NEW_LINE;
-				writer.write(s);
+				// header
+				writer.write(SPACE + Bundle.getMessage("YardName") + NEW_LINE);
 				for (int k = 0; k < yards.size(); k++) {
 					Track yard = location.getTrackById(yards.get(k));
-					name = yard.getName();
-					buf = new StringBuffer(name);
-					// pad out the track name
-					for (int j = name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-						buf.append(" ");
-					}
-					s = getTrackString(yard, buf.toString());
-					writer.write(s);
+					writer.write(getTrackString(yard));
 					numberCars += yard.getNumberCars();
 					numberEngines += yard.getNumberEngines();
 				}
@@ -147,17 +137,11 @@ public class PrintLocationsAction extends AbstractAction {
 
 			List<String> sidings = location.getTrackIdsByNameList(Track.SIDING);
 			if (sidings.size() > 0) {
-				s = "    " + Bundle.getMessage("SidingName") + NEW_LINE;
-				writer.write(s);
+				// header
+				writer.write(SPACE + Bundle.getMessage("SidingName") + NEW_LINE);
 				for (int k = 0; k < sidings.size(); k++) {
 					Track siding = location.getTrackById(sidings.get(k));
-					name = siding.getName();
-					buf = new StringBuffer(name);
-					for (int j = name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-						buf.append(" ");
-					}
-					s = getTrackString(siding, buf.toString());
-					writer.write(s);
+					writer.write(getTrackString(siding));
 					numberCars += siding.getNumberCars();
 					numberEngines += siding.getNumberEngines();
 				}
@@ -165,17 +149,11 @@ public class PrintLocationsAction extends AbstractAction {
 
 			List<String> interchanges = location.getTrackIdsByNameList(Track.INTERCHANGE);
 			if (interchanges.size() > 0) {
-				s = "    " + Bundle.getMessage("InterchangeName") + NEW_LINE;
-				writer.write(s);
+				// header
+				writer.write(SPACE + Bundle.getMessage("InterchangeName") + NEW_LINE);
 				for (int k = 0; k < interchanges.size(); k++) {
 					Track interchange = location.getTrackById(interchanges.get(k));
-					name = interchange.getName();
-					buf = new StringBuffer(name);
-					for (int j = name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-						buf.append(" ");
-					}
-					s = getTrackString(interchange, buf.toString());
-					writer.write(s);
+					writer.write(getTrackString(interchange));
 					numberCars += interchange.getNumberCars();
 					numberEngines += interchange.getNumberEngines();
 				}
@@ -183,17 +161,11 @@ public class PrintLocationsAction extends AbstractAction {
 
 			List<String> stagings = location.getTrackIdsByNameList(Track.STAGING);
 			if (stagings.size() > 0) {
-				s = "    " + Bundle.getMessage("StagingName") + NEW_LINE;
-				writer.write(s);
+				// header
+				writer.write(SPACE + Bundle.getMessage("StagingName") + NEW_LINE);
 				for (int k = 0; k < stagings.size(); k++) {
 					Track staging = location.getTrackById(stagings.get(k));
-					name = staging.getName();
-					buf = new StringBuffer(name);
-					for (int j = name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-						buf.append(" ");
-					}
-					s = getTrackString(staging, buf.toString());
-					writer.write(s);
+					writer.write(getTrackString(staging));
 					numberCars += staging.getNumberCars();
 					numberEngines += staging.getNumberEngines();
 				}
@@ -428,12 +400,12 @@ public class PrintLocationsAction extends AbstractAction {
 		return trackLength;
 	}
 
-	private String getTrackString(Track track, String name) {
-		String s = TAB + name + " " + Integer.toString(track.getLength()) + TAB
-				+ Integer.toString(track.getUsedLength()) + TAB + Integer.toString(track.getNumberRS()) + TAB
-				+ Integer.toString(track.getNumberCars()) + TAB + Integer.toString(track.getNumberEngines())
-				+ TAB + Integer.toString(track.getPickupRS()) + TAB + Integer.toString(track.getDropRS())
-				+ NEW_LINE;
+	private String getTrackString(Track track) {
+		String s = TAB + padOutString(track.getName(), Control.max_len_string_track_name) + " "
+				+ Integer.toString(track.getLength()) + TAB + Integer.toString(track.getUsedLength()) + TAB
+				+ Integer.toString(track.getNumberRS()) + TAB + Integer.toString(track.getNumberCars()) + TAB
+				+ Integer.toString(track.getNumberEngines()) + TAB + Integer.toString(track.getPickupRS())
+				+ TAB + Integer.toString(track.getDropRS()) + NEW_LINE;
 		return s;
 	}
 
