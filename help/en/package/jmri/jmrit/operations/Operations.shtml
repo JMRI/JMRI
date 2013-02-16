@@ -730,7 +730,11 @@ different format for your switch lists.
     checkbox. You can also use a 12 hour rather than a 24 hour clock format on your manifests and
     switch lists. The manifest normally shows the estimated arrival time for the train at each
     location worked by the train, selecting the "Departure Time" checkbox changes the format to
-    showing the departure time. Selecting the "Show Timetable" prints which train <A
+    showing the departure time. You can if you wish, print your manifest without departure and arrival
+    times.  See <A HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
+    
+    
+    <P>Selecting the "Show Timetable" prints which train <A
      HREF="#Timetable">timetable</A> you are using when building your trains.
    </P>
    <P>The next option is "Truncate" and when selected will cause the program to reduce the
@@ -1790,12 +1794,15 @@ force a car to a specific destination using the specified train.
 
    <P>The next three set of fields are normally set by the program when building trains. We'll
     explain how they work in case you're interested in how the program works or if you want to
-    manually override the program. The first is the "Destination" set of pull down menus. The
-    "Destination" is the next location that the car will be delivered to. The destination must be
-    reachable by only one train from the car's current location or the car will not be serviced.
-    Normally we recommend that you don't use the "Destination" pull down menus to forward a car to a
-    location, but use the "Final Destination" as described below. However, if you're manually adding
-    a car to a built train, you must set the car's destination and track.</P>
+    manually override the program. The first is the "Destination" set of pull down menus. By default
+    the destination fields are disabled. Under "Tools" there's an option to enable the destination
+    fields.</P>
+
+   <P>The "Destination" is the next location that the car will be delivered to. The destination
+    must be reachable by only one train from the car's current location or the car will not be
+    serviced. Normally we recommend that you don't use the "Destination" pull down menus to forward
+    a car to a location, but use the "Final Destination" as described below. However, if you're
+    manually adding a car to a built train, you must set the car's destination and track.</P>
 
    <P>The next field is the "Final Destination" set of pull down boxes. You can select any
     destination or track, the program will figure out the best route to ship the car to this
