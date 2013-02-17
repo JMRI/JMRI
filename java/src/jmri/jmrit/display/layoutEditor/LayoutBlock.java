@@ -3023,11 +3023,11 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             }
             log.info("Next Hop " + nextHop.getDisplayName());
         }
-
         RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount()+1, ro.getMetric()+metric, (ro.getLength()+getBlock().getLengthMm()), -1, getNextPacketID());
         for(int i = 0; i<validFromPath.size(); i++){
             Adjacencies adj = getAdjacency(validFromPath.get(i).getBlock());
             if(adj.advertiseRouteToNeighbour(ro)){
+            //getBestRouteByHop(destBlock).getHopCount()+1, ((getBestRouteByMetric(destBlock).getMetric())+metric), ((getBestRouteByMetric(destBlock).getMetric())+block.getLengthMm())
                 if(enableAddRouteLogging)
                     log.info("From " + this.getDisplayName() + " Sending update to " + validFromPath.get(i).getDisplayName() + " As this has a better hop count or metric");
                 adj.addRouteAdvertisedToNeighbour(ro);
@@ -3073,39 +3073,22 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             return;
         }
         
-        boolean routeAlreadyExists = false;
         for (int i = 0; i<routes.size(); i++){
             Routes ro = routes.get(i);
             if((ro.getNextBlock()==srcblk) && ro.getDestBlock()==destBlock){
-                if(enableAddRouteLogging){
+                if(enableAddRouteLogging)
                     log.info("From " + this.getDisplayName() + " Route is already configured");
-                    log.info("Already added, but do we need to update the hop count From " + this.getDisplayName() + " To " + src.getDisplayName());
-                    log.info(ro.getHopCount() + " new " + hopCount);
-                }
                 return;
             }
-            else if (ro.getDestBlock()==destBlock){
-                routeAlreadyExists = true;
-                if(enableAddRouteLogging){
-                    log.info("dest already exists, so will hand off to update the route");
-                    log.info("From " + this.getDisplayName() + " we already have a route to the dest configured so fire off an update instead? " + ro.getNextBlock().getDisplayName());
-                    log.info(ro.getHopCount() + " new " + hopCount);
-                }
-            }   
         }
         if(enableAddRouteLogging)   
             log.info("From " + this.getDisplayName() + " We should be adding route " + destBlock.getDisplayName());
         //We need to propergate out the routes that we have added to our neighbour
         int direction = adj.getDirection();
         Routes route = new Routes(destBlock, srcblk, hopCount, direction, updatemetric, length);
-        routes.add(route);
-        //Fire off an route updaget 
-        if(routeAlreadyExists){
-            updateRoutingInfo(route);
-        }
-        else {
-            addRouteToNeighbours(route);
-        }
+        routes.add(route); 
+        //Need to propergate the route down to our neighbours
+        addRouteToNeighbours(route);
     }
     /* this should look after removal of a specific next hop from our neighbour*/
 
@@ -3347,12 +3330,15 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 return false;
             }
             Routes existingRoute = adjDestRoutes.get(dest);
-            if(existingRoute==routeToAdd){
-                //We return true as the metric might have changed
-                return true;
-            }
             if(existingRoute.getMetric()>routeToAdd.getMetric()){
                 return true;
+            }
+            if(existingRoute.getHopCount()>routeToAdd.getHopCount()){
+                return true;
+            }            
+            if(existingRoute==routeToAdd){
+                //We return true as the metric might have changed
+                return false;
             }
             return false;
         }
