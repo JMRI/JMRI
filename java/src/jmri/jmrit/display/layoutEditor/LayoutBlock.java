@@ -1336,6 +1336,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 else {
                     if (enableAddRouteLogging)
                         log.info("From " + this.getDisplayName() + " neighbour working direction is not valid " + addBlock.getDisplayName());
+                    return;
                 }
                 adj.setMutual(mutual);
 
@@ -1529,13 +1530,16 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             //Don't know if this might need changing so that we only send out our best route to the neighbour, rather than cycling through them all.
                 if(validFromPath.contains(ro.getNextBlock())){
                     if(enableAddRouteLogging){
-                        log.info("From " + this.getDisplayName() + " route to " + ro.getDestBlock().getDisplayName() + " we have it with a metric of " + ro.getMetric() + " we will add our metric of " + metric + " this will be sent to " + lBnewblock.getDisplayName() + " a");
+                        log.info("From " + this.getDisplayName() + " route to " + ro.getDestBlock().getDisplayName() + " we have it with a metric of " + ro.getMetric() + " we will add our metric of " + metric + " this will be sent to " + lBnewblock.getDisplayName() + " b");
                     } //we added +1 to hop count and our metric.
                     if(adj.advertiseRouteToNeighbour(ro)){
+                        if(enableAddRouteLogging) log.info("Told to advertise to neighbour");
                         //this should keep track of the routes we sent to our neighbour.
                         adj.addRouteAdvertisedToNeighbour(ro);
                         RoutingPacket update = new RoutingPacket(ADDITION, ro.getDestBlock(), ro.getHopCount()+1, (ro.getMetric()+metric), (ro.getLength()+block.getLengthMm()), -1, getNextPacketID());
                         lBnewblock.addRouteFromNeighbour(this, update);
+                    } else {
+                        if(enableAddRouteLogging) log.info("Not advertised to neighbor");
                     }
                 } else if(enableAddRouteLogging){
                     log.info("failed valid from path Not advertised/added");
@@ -2742,6 +2746,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         RoutingPacket update = new RoutingPacket(UPDATE, destBlock, getBestRouteByHop(destBlock).getHopCount()+1, ((getBestRouteByMetric(destBlock).getMetric())+metric), ((getBestRouteByMetric(destBlock).getMetric())+block.getLengthMm()), -1, getNextPacketID());
         firePropertyChange("routing", null, update);
     }
+    
+    //This lot might need changing to only forward on the best route details.
     void updateRoutingInfo(LayoutBlock src, RoutingPacket update){
         if(enableUpdateRouteLogging)
             log.info("From " + this.getDisplayName() + " src: " + src.getDisplayName() + " block: " + update.getBlock().getDisplayName() + " hopCount " + update.getHopCount() + " metric: " + update.getMetric() + " status: " + update.getBlockState() + " packetID: " + update.getPacketId());
@@ -2774,7 +2780,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 log.info("Reject packet update as it is a route advertised by our selves");
             return;
         }
-        
+
         Routes ro=null;
         boolean neighbour = false;
         if (updateBlock==srcblk){
@@ -2794,7 +2800,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             //Then we will simply reject it.
             return;
         }
-        
         /*This prevents us from entering into an update loop.
         We only add it to our list once it has passed through as being a valid
         packet, otherwise we may get the same packet id back, but from a valid source
@@ -2811,6 +2816,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         //Need to add in a check for a block that is directly connected.
         if (hopCount!=-1){
               //Was increase hop count before setting it
+//            int oldHop = ro.getHopCount();
             if(ro.getHopCount()!=hopCount){
                 if(enableUpdateRouteLogging)
                     log.info(this.getDisplayName() + " Hop counts to " + ro.getDestBlock().getDisplayName() + " not the same so will change from " + ro.getHopCount() + " to " + hopCount);
@@ -2826,13 +2832,18 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             float oldLength = ro.getLength();
             if(oldLength!=length){
                 ro.setLength(length);
+                boolean forwardUpdate = true;
+                if(ro != getBestRouteByLength(update.getBlock())){
+                    forwardUpdate = false;
+                }
                 if(enableUpdateRouteLogging)
                     log.info("From " + this.getDisplayName() + " updating length from " + oldLength + " to " + length);
                 if(neighbour){
                     length = srcblk.getLengthMm();
                     adj.setLength(length);
-                    ro.setLength(length);
+                    //ro.setLength(length);
                     //Also if neighbour we need to update the cost of the routes via it to reflect the new metric 02/20/2011
+                    if(forwardUpdate){
                     ArrayList<Routes> neighbourRoute = getNextRoutes(srcblk);
                     //neighbourRoutes, contains all the routes that have been advertised by the neighbour that will need to have their metric updated to reflect the change.
                     for(int i = 0; i<neighbourRoute.size(); i++){
@@ -2847,7 +2858,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), -1, -1, updateLength+block.getLengthMm(), -1, getNextPacketID());
                         updateRoutesToNeighbours(messageRecipients, nRo, newUpdate);
                     }
-                } else {
+                    }
+                } else if(forwardUpdate) {
                     //This can cause a loop, if the layout is in a loop, so we send out the same packetID.
                     ArrayList<Block> messageRecipients = getThroughPathSourceByDestination(srcblk);
                     RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, -1, -1, length+block.getLengthMm(), -1, update.getPacketId());
@@ -2867,11 +2879,16 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 ro.setMetric(packetmetric);
                 if(enableUpdateRouteLogging)
                     log.info("From " + this.getDisplayName() + " updating metric from " + oldmetric + " to " + packetmetric);
+                boolean forwardUpdate = true;
+                if(ro != getBestRouteByMetric(update.getBlock())){
+                    forwardUpdate = false;
+                }
                 //if the metric update is for a neighbour then we will go directly to the neighbour for the value, rather than trust what is in the message at this stage.
                 if(neighbour){
                     packetmetric = src.getBlockMetric();
                     adj.setMetric(packetmetric);
-                    ro.setMetric(packetmetric);
+                    if(forwardUpdate){
+                    //ro.setMetric(packetmetric);
                     //Also if neighbour we need to update the cost of the routes via it to reflect the new metric 02/20/2011
                     ArrayList<Routes> neighbourRoute = getNextRoutes(srcblk);
                     //neighbourRoutes, contains all the routes that have been advertised by the neighbour that will need to have their metric updated to reflect the change.
@@ -2884,13 +2901,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                             log.info("From " + this.getDisplayName() + " update metric for route " + nRo.getDestBlock().getDisplayName() + " from " + nRo.getMetric() + " to " + updatemet);
                         nRo.setMetric(updatemet);
                         ArrayList<Block> messageRecipients = getThroughPathDestinationBySource(srcblk);
-                        RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), -1, updatemet+metric, -1, -1, getNextPacketID());
+                        RoutingPacket newUpdate = new RoutingPacket(UPDATE, nRo.getDestBlock(), hopCount, updatemet+metric, -1, -1, getNextPacketID());
                         updateRoutesToNeighbours(messageRecipients, nRo, newUpdate);
                     }
-                } else {
+                    }
+                } else if(forwardUpdate) {
                     //This can cause a loop, if the layout is in a loop, so we send out the same packetID.
                     ArrayList<Block> messageRecipients = getThroughPathSourceByDestination(srcblk);
-                    RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, -1, packetmetric+metric,-1, -1, update.getPacketId());
+                    RoutingPacket newUpdate = new RoutingPacket(UPDATE, updateBlock, hopCount, packetmetric+metric,-1, -1, update.getPacketId());
                     updateRoutesToNeighbours(messageRecipients, ro, newUpdate);
                 }
                 packetmetric=packetmetric+metric;
@@ -3076,8 +3094,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         for (int i = 0; i<routes.size(); i++){
             Routes ro = routes.get(i);
             if((ro.getNextBlock()==srcblk) && ro.getDestBlock()==destBlock){
-                if(enableAddRouteLogging)
-                    log.info("From " + this.getDisplayName() + " Route is already configured");
+                if(enableAddRouteLogging){
+                    log.info("From " + this.getDisplayName() + " Route to " + destBlock.getDisplayName() + " is already configured");
+                    log.info(ro.getHopCount() + " v " + hopCount);
+                    log.info(ro.getMetric() + " v " + updatemetric);
+                }
+                updateRoutingInfo(src, update);
                 return;
             }
         }
