@@ -6,8 +6,9 @@
 #
 # Use this script after the train has been built.
 #
-# Author: Daniel Boudreau, copyright 2011
-# 
+# Author: Daniel Boudreau, copyright 2011, 2012
+# The next line is maintained by CVS, please don't change it
+# $Revision: 17977 $
 #
 # To use this script you must assign the train that you want the cars waited, 
 # and the wait value.  
@@ -19,10 +20,10 @@ class WaitCars(jmri.jmrit.automat.AbstractAutomaton):
   def init(self):
   
     # train (use train name)
-    self.trainName = "BB"
+    self.trainName = "Green Bay Hauler"
     
     # wait value
-    self.wait = 1
+    self.wait = 3
     
     return
 
@@ -47,8 +48,11 @@ class WaitCars(jmri.jmrit.automat.AbstractAutomaton):
     
     for carId in carList:
         car = cm.getById(carId)
-        car.setWait(self.wait)
-        print "Setting wait to ", self.wait, " for car ", car.toString()
+        if (car.getNextWait() == 0):
+            car.setNextWait(self.wait)
+            print "Setting next wait to ", self.wait, " for car ", car.toString()
+        else:
+            print "Car ",car.toString(), " has next wait value ", car.getNextWait()
  
     print "Done"
     return False              # all done, don't repeat again
