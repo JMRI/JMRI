@@ -552,9 +552,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		panelCheckBoxes.removeAll();
 		loadTypes(CarTypes.instance().getNames());
 		loadTypes(EngineTypes.instance().getNames());
-    	addItem(panelCheckBoxes, clearButton, 1, ++y);
-    	addItem(panelCheckBoxes, setButton, 3, y);
-    	addItem(panelCheckBoxes, autoSelectButton, 5, y);
+		JPanel p = new JPanel();
+		p.add(clearButton);
+		p.add(setButton);
+		p.add(autoSelectButton);
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridwidth = getNumberOfCheckboxes() + 1;
+		gc.gridy = ++y;
+		panelCheckBoxes.add(p, gc);
 		panelCheckBoxes.revalidate();
 		repaint();
 	}

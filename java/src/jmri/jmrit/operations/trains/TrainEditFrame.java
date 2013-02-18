@@ -5,6 +5,7 @@ package jmri.jmrit.operations.trains;
 import org.apache.log4j.Logger;
 import java.awt.Dimension;
 import java.awt.Frame;
+import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -714,8 +715,18 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				x = 0;
 			}
 		}
-		addItem(typeCarPanelCheckBoxes, clearButton, 1, ++y);
-		addItem(typeCarPanelCheckBoxes, setButton, 4, y);
+//		addItem(typeCarPanelCheckBoxes, clearButton, 1, ++y);
+//		addItem(typeCarPanelCheckBoxes, setButton, 4, y);
+		
+		JPanel p = new JPanel();
+		p.add(clearButton);
+		p.add(setButton);
+		GridBagConstraints gc = new GridBagConstraints();
+		gc.gridwidth = getNumberOfCheckboxes() + 1;
+		gc.gridy = ++y;
+		typeCarPanelCheckBoxes.add(p, gc);
+
+		
 	}
 
 	private void updateEngineTypeCheckboxes() {
