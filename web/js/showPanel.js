@@ -1340,14 +1340,13 @@ function getParameterByName(name) {
 }
 
 //request and show a list of available panels from the server, and store in persistent var for later checks
-var $getPanelList = function($panelName){
+var $getPanelList = function(){
 	$.ajax({
 		url:  '/xmlio/list', //request proper url
 		data: {type: "panel"},
 		success: function($r, $s, $x){
-//			$(document).attr('title', 'Client-side panels');
 			var $h = "<h1>Client-side panels:</h1>";
-			$h += "<table><tr><th>View Panel</th><th>Type</th><th>XML</th></tr>";
+			$h += "<table><tr><th>View Panel</th><th>Type</th></tr>";
             $($r).find("panel").each(function(){
             	var $t = $(this).attr("name").split("/");
             	var $panelType = $t[0];
@@ -1355,7 +1354,6 @@ var $getPanelList = function($panelName){
             	$gPanelList[$panelName] = $panelType; //store the type for each panel
             	$h += "<tr><td><a href='?name=" + $(this).attr("name") + "'>" + $panelName + "</a></td>";
             	$h += "<td>" + $panelType + "</td>";
-            	$h += "<td><a href='/panel/" + $panelType + "/" + $panelName + "' target=_new >XML</a></td></tr>";
             });
             $h += "</table>";
             $('div#panelList').html($h); //put table on page
