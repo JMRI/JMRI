@@ -477,24 +477,28 @@ public class TrainBuilder extends TrainCommon {
 		// remove unwanted cars
 		removeCars();
 
-		// get caboose or car with FRED if needed for train
-		getCaboose(train.getCabooseRoad(), train.getLeadEngine(), train.getTrainDepartsRouteLocation(),
-				cabooseOrFredTerminatesFirstLeg, (train.getRequirements() & Train.CABOOSE) > 0);
-		getCarWithFred(train.getCabooseRoad(), train.getTrainDepartsRouteLocation(),
-				cabooseOrFredTerminatesFirstLeg);
+		// Do caboose changes in reverse order in case there isn't enough track space
 
-		// first caboose change?
-		if ((train.getSecondLegOptions() & Train.ADD_CABOOSE) > 0
-				&& train.getSecondLegStartLocation() != null && cabooseOrFredTerminatesSecondLeg != null) {
-			getCaboose(train.getSecondLegCabooseRoad(), secondLeadEngine, train.getSecondLegStartLocation(),
-					cabooseOrFredTerminatesSecondLeg, true);
-		}
 		// second caboose change?
 		if ((train.getThirdLegOptions() & Train.ADD_CABOOSE) > 0 && train.getThirdLegStartLocation() != null
 				&& cabooseOrFredTerminatesThirdLeg != null) {
 			getCaboose(train.getThirdLegCabooseRoad(), thirdLeadEngine, train.getThirdLegStartLocation(),
 					cabooseOrFredTerminatesThirdLeg, true);
 		}
+		
+		// first caboose change?
+		if ((train.getSecondLegOptions() & Train.ADD_CABOOSE) > 0
+				&& train.getSecondLegStartLocation() != null && cabooseOrFredTerminatesSecondLeg != null) {
+			getCaboose(train.getSecondLegCabooseRoad(), secondLeadEngine, train.getSecondLegStartLocation(),
+					cabooseOrFredTerminatesSecondLeg, true);
+		}
+		
+		// get caboose or car with FRED if needed for train
+		getCaboose(train.getCabooseRoad(), train.getLeadEngine(), train.getTrainDepartsRouteLocation(),
+				cabooseOrFredTerminatesFirstLeg, (train.getRequirements() & Train.CABOOSE) > 0);
+		getCarWithFred(train.getCabooseRoad(), train.getTrainDepartsRouteLocation(),
+				cabooseOrFredTerminatesFirstLeg);
+
 
 		// done assigning cabooses and cars with FRED, remove the rest, and save final destination
 		removeCaboosesAndCarsWithFredAndSaveFinalDestination();
