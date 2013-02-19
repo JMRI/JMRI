@@ -190,7 +190,7 @@ public abstract class XmlFile {
      */
     public void writeXML(File file, Document doc) throws IOException, FileNotFoundException {
         // ensure parent directory exists
-        FileUtil.createDirectory(file.getParent());
+        if (file.getParent()!=null) FileUtil.createDirectory(file.getParent());
         // write the result to selected file
         FileOutputStream o = new FileOutputStream(file);
         try {
