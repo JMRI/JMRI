@@ -60,7 +60,7 @@ public class Control {
 	public static int max_len_string_weight_name = 4;
 	
 	// Car and Engine built date maximum string length
-	public static int max_len_string_built_name = 4;
+	public static int max_len_string_built_name = 5;
 	
 	// Train name maximum string length
 	public static int max_len_string_train_name = 25;
