@@ -1560,7 +1560,19 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     private void runLearnModeTrain() {
     	String msg = checkTrainId();
     	if (msg==null) {
-            msg = setupRun();    		
+            msg = setupRun();
+            if (msg != null) {
+            	OBlock block = _warrant.getBlockAt(0);
+            	if (msg.equals(Bundle.getMessage("BlockDark", block.getDisplayName()))) {
+                    if (JOptionPane.showConfirmDialog(this, msg+
+                    		Bundle.getMessage("OkToRun",""),
+                            Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION, 
+                                JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+                             return;
+                         }
+                    msg = null;
+            	}
+            }
     	}
     	if (msg==null) {
             if (_throttleCommands.size() > 0) {

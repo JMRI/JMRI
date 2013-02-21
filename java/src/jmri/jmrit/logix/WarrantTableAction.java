@@ -1083,6 +1083,9 @@ public class WarrantTableAction extends AbstractAction {
                         fireTableRowsUpdated(i, i);
                     }
                 }
+                if (e.getPropertyName().equals("blockChange")) {
+                    setStatusText("", Color.red);               	
+                }
             }
             if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+
                                                 "\" for "+e.getSource().getClass().getName());

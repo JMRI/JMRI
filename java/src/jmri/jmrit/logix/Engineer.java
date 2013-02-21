@@ -28,7 +28,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private boolean _waitForSync = false;  // waits for train to catch up to commands
     private boolean _waitForSensor = false; // wait for sensor event
     private boolean _speedOverride = false; // speed changing due to signal or occupancy
-    private int     _syncIdx;
+    private int     _syncIdx;			// block order index of current command
     private DccThrottle _throttle;
     private Warrant _warrant;
     private Sensor 	_waitSensor;
@@ -47,10 +47,20 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     public void run() {
         if (log.isDebugEnabled()) log.debug("Engineer started warrant "+_warrant.getDisplayName());
 
+        int cmdBlockIdx = 0;
         while (_idxCurrentCommand+1 < _warrant._commands.size()) {
             long et = System.currentTimeMillis();
             ThrottleSetting ts = _warrant._commands.get(_idxCurrentCommand+1);
+            int idx = _warrant.getIndexOfBlock(ts.getBlockName(), cmdBlockIdx);
+            if (idx>=0) {
+            	cmdBlockIdx = idx;
+            }
             long time = ts.getTime();
+            if (!_warrant._tempRunBlind && cmdBlockIdx < _warrant._idxCurrentOrder) {
+            	// Train advancing too fast, need to process commands more quickly,
+            	// allowing half second for whistle toots etc.
+            	time = Math.min(time, 500);
+            }
             String command = ts.getCommand().toUpperCase();
             // actual playback total elapsed time is "ts.getTime()" before record time.
             // current block at playback may also be before current block at record
@@ -61,9 +71,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         wait(time);
                     }
                     if (_abort) { break; }
-                    if (!command.equals("SET SENSOR") && !command.equals("WAIT SENSOR")
-                    			&& !command.equals("RUN WARRANT")) {
-                        _syncIdx = _warrant.getIndexOfBlock(ts.getBlockName(), _warrant._idxCurrentOrder);
+                    //if (!command.equals("SET SENSOR") && !command.equals("WAIT SENSOR")
+                    //			&& !command.equals("RUN WARRANT")) {
+                        _syncIdx = cmdBlockIdx;
                         // Having waited, time=ts.getTime(), so blocks should agree.  if not,
                         // wait for train to arrive at block and send sync notification.
                         // note, blind runs cannot detect entrance.
@@ -75,7 +85,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
                             wait();
                         }
-                    }
+                    //}
                 } catch (InterruptedException ie) {
                     log.error("InterruptedException "+ie);
                 } catch (java.lang.IllegalArgumentException iae) {
@@ -442,6 +452,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             synchronized(this) {
                 try {
                     _waitForSensor = true;            	
+                    _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
                     wait();                    	
                 } catch (InterruptedException ie) {
                     log.error("InterruptedException "+ie);

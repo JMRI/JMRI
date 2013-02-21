@@ -115,6 +115,7 @@ public class SignalSpeedMap {
     }
 
     public boolean checkSpeed(String name) {
+    	if (name==null) {return false; }
         return _table.get(name) != null;
     }
 
@@ -157,7 +158,7 @@ public class SignalSpeedMap {
             // not a valid aspect
             log.warn("attempting to set invalid speed: "+name);
             //java.util.Enumeration<String> e = _table.keys();
-            throw new IllegalArgumentException("attempting to get speed from invalid name: "+name);
+            throw new IllegalArgumentException("attempting to get speed from invalid name: \""+name+"\"");
         }
         Float speed = _table.get(name);
         if (speed==null) {
