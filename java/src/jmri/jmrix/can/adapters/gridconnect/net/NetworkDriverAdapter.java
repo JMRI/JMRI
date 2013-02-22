@@ -35,8 +35,8 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
     }
     
     /**
-     * set up all of the other objects to operate with an NCE command
-     * station connected to this port
+     * set up all of the other objects to operate with the CAN bus
+     * connected via this TCP/IP link
      */
     public void configure() {
         TrafficController tc;
@@ -62,6 +62,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractNetworkPortControll
 
         // do central protocol-specific configuration    
         adaptermemo.configureManagers();
+        if (socketConn!=null) log.info("Connection complete with "+socketConn.getInetAddress());
     }
     @Override
     public boolean status() {return opened;}
