@@ -461,8 +461,13 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 					&& _train.getTrainTerminatesRouteLocation() != null
 					&& _train.getTrainTerminatesRouteLocation().getLocation().getLocationOps() == (Location.STAGING)
 					&& _train.getTrainDepartsRouteLocation().getName().equals(_train.getTrainTerminatesRouteLocation().getName())) {
-				returnStagingCheckBox.setEnabled(true);
 				allowThroughCarsCheckBox.setEnabled(false);
+				if (Setup.isAllowReturnToStagingEnabled()) {
+					returnStagingCheckBox.setEnabled(false);
+					returnStagingCheckBox.setSelected(true);
+				} else {
+					returnStagingCheckBox.setEnabled(true);
+				}
 			}
 			// listen for train changes
 			_train.addPropertyChangeListener(this);
@@ -952,7 +957,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			return;
 		_train.setBuildTrainNormalEnabled(buildNormalCheckBox.isSelected());
 		_train.setSendCarsToTerminalEnabled(sendToTerminalCheckBox.isSelected());
-		_train.setAllowReturnToStagingEnabled(returnStagingCheckBox.isSelected());
+		_train.setAllowReturnToStagingEnabled(returnStagingCheckBox.isSelected() && returnStagingCheckBox.isEnabled());
 		_train.setAllowLocalMovesEnabled(allowLocalMovesCheckBox.isSelected());
 		_train.setAllowThroughCarsEnabled(allowThroughCarsCheckBox.isSelected());
 		_train.setBuiltStartYear(builtAfterTextField.getText().trim());

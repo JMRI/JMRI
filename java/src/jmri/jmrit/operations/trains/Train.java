@@ -2207,7 +2207,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if cars can return to staging
 	 */
 	public boolean isAllowReturnToStagingEnabled() {
-		return _allowCarsReturnStaging || Setup.isAllowReturnToStagingEnabled();
+		return _allowCarsReturnStaging;
 	}
 
 	public void setAllowReturnToStagingEnabled(boolean enable) {

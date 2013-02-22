@@ -159,7 +159,7 @@ public class TrainBuilder extends TrainCommon {
 		if (train.isSendCarsToTerminalEnabled())
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("SendToTerminal"),
 					new Object[] { terminateLocation.getName() }));
-		if (train.isAllowReturnToStagingEnabled())
+		if (train.isAllowReturnToStagingEnabled()  || Setup.isAllowReturnToStagingEnabled())
 			addLine(buildReport, SEVEN, Bundle.getMessage("AllowCarsToReturn"));
 		if (train.isAllowLocalMovesEnabled())
 			addLine(buildReport, SEVEN, Bundle.getMessage("AllowLocalMoves"));
@@ -1629,7 +1629,7 @@ public class TrainBuilder extends TrainCommon {
 					reqNumOfMoves = 0; // Move cars out of staging after working other locations
 					// if leaving and returning to staging on the same track temporary pull cars off the track
 					if (departStageTrack == terminateStageTrack 
-							&& !train.isAllowReturnToStagingEnabled()) {
+							&& !train.isAllowReturnToStagingEnabled() && !Setup.isAllowReturnToStagingEnabled()) {
 						for (int i = 0; i < carList.size(); i++) {
 							Car car = carManager.getById(carList.get(i));
 							if (car.getTrack() == departStageTrack)
@@ -1642,7 +1642,7 @@ public class TrainBuilder extends TrainCommon {
 				}
 				// restore departure track for cars departing staging
 			} else if (departStageTrack != null && departStageTrack == terminateStageTrack
-					&& !train.isAllowReturnToStagingEnabled()) {
+					&& !train.isAllowReturnToStagingEnabled() && !Setup.isAllowReturnToStagingEnabled()) {
 				for (int i = 0; i < carList.size(); i++) {
 					Car car = carManager.getById(carList.get(i));
 					if (car.getTrack() == null)
@@ -3149,7 +3149,7 @@ public class TrainBuilder extends TrainCommon {
 			if (splitString(rl.getName()).equals(splitString(rld.getName())) && !train.isLocalSwitcher()
 					&& !car.isPassenger() && !car.isCaboose() && !car.hasFred()) {
 				// allow cars to return to the same staging location if no other options (tracks) are available
-				if (train.isAllowReturnToStagingEnabled()
+				if ((train.isAllowReturnToStagingEnabled()  || Setup.isAllowReturnToStagingEnabled())
 						&& testDestination.getLocationOps() == Location.STAGING && trackSave == null) {
 					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 							.getMessage("buildReturnCarToStaging"), new Object[] { car.toString(),
