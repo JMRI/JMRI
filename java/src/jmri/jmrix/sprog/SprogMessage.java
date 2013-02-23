@@ -293,28 +293,28 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
      * Two parametes are taken as the CV address and data to be written.
     */
     static public SprogMessage getReadCV(int cv, int mode) {
-        SprogMessage m = new SprogMessage(5);
+        SprogMessage m = new SprogMessage(6);
         if (mode == Programmer.PAGEMODE) {
           m.setOpCode('V');
         } else { // Bit direct mode
           m.setOpCode('C');
         }
         addSpace(m, 1);
-        addIntAsThree(cv, m, 2);
+        addIntAsFour(cv, m, 2);
         return m;
     }
 
     static public SprogMessage getWriteCV(int cv, int val, int mode) {
-        SprogMessage m = new SprogMessage(9);
+        SprogMessage m = new SprogMessage(10);
         if (mode == Programmer.PAGEMODE) {
           m.setOpCode('V');
         } else { // Bit direct mode
           m.setOpCode('C');
         }
         addSpace(m, 1);
-        addIntAsThree(cv, m, 2);
-        addSpace(m, 5);
-        addIntAsThree(val, m, 6);
+        addIntAsFour(cv, m, 2);
+        addSpace(m, 6);
+        addIntAsThree(val, m, 7);
         return m;
     }
 
@@ -495,6 +495,18 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
         m.setElement(offset,s.charAt(0));
         m.setElement(offset+1,s.charAt(1));
         m.setElement(offset+2,s.charAt(2));
+        return s;
+    }
+
+    private static String addIntAsFour(int val, SprogMessage m, int offset) {
+        String s = ""+val;
+        if (s.length() != 4) s = "0"+s;  // handle <10
+        if (s.length() != 4) s = "0"+s;  // handle <100
+        if (s.length() != 4) s = "0"+s;  // handle <1000
+        m.setElement(offset,s.charAt(0));
+        m.setElement(offset+1,s.charAt(1));
+        m.setElement(offset+2,s.charAt(2));
+        m.setElement(offset+3,s.charAt(3));
         return s;
     }
 
