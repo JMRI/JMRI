@@ -37,6 +37,15 @@ public class PositionableEllipse extends PositionableShape {
     public void setHeight(int h) {
     	_height = h;
     }
+    @Override
+    public int getHeight() {
+      return _height;
+    }
+
+    @Override
+    public int getWidth() {
+      return _width;
+    }
     /**
      * Rotate shape 
      */
@@ -58,7 +67,7 @@ public class PositionableEllipse extends PositionableShape {
      *  only after its parameters have been set
      */
     public void makeShape() {  	
-		_shape = new Ellipse2D.Double(0, 0, _width, _height);
+    	setShape(new Ellipse2D.Double(0, 0, _width, _height));
     }
 
     public Positionable deepClone() {

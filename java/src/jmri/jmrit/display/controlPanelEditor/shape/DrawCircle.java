@@ -59,20 +59,20 @@ public class DrawCircle extends DrawFrame {
        return panel;
 	}
 	
-	protected void makeFigure() {
+	protected boolean makeFigure() {
 		ControlPanelEditor ed = _parent.getEditor();
 		Rectangle r = ed.getSelectRect();
-		if (r==null) {
-			return;
+		if (r!=null) {
+			_radius = Math.max(r.width, r.height);
+			Ellipse2D.Double rr = new Ellipse2D.Double(0, 0, _radius, _radius);
+			PositionableCircle ps = new PositionableCircle(ed, rr);
+			ps.setLocation(r.x, r.y);
+			ps.setDisplayLevel(ControlPanelEditor.MARKERS);
+			setPositionableParams(ps);
+			ps.updateSize();
+			ed.putItem(ps);
 		}
-		_radius = Math.max(r.width, r.height);
-		Ellipse2D.Double rr = new Ellipse2D.Double(0, 0, _radius, _radius);
-		PositionableCircle ps = new PositionableCircle(ed, rr);
-		ps.setLocation(r.x, r.y);
-		ps.setDisplayLevel(ControlPanelEditor.MARKERS);
-		setPositionableParams(ps);
-		ps.updateSize();
-		ed.putItem(ps);
+		return true;
 	}
 	
 	/**

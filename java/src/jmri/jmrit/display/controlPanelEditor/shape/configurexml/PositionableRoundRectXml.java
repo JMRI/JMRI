@@ -29,9 +29,6 @@ public class PositionableRoundRectXml extends PositionableShapeXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("positionableRoundRect");
-        element.setAttribute("width", ""+p.getWidth());
-        element.setAttribute("height", ""+p.getHeight());
-        element.setAttribute("cornerRadius", ""+p.getCornerRadius());
         storeCommonAttributes(p, element);
 
         Element elem = new Element("size");

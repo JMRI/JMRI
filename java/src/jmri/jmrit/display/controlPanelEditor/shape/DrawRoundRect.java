@@ -58,19 +58,19 @@ public class DrawRoundRect extends DrawRectangle {
 	/**
     * Create a new PositionableShape 
     */
-	protected void makeFigure() {
+	protected boolean makeFigure() {
 		ControlPanelEditor ed = _parent.getEditor();
 		Rectangle r = ed.getSelectRect();
-		if (r==null) {
-		   return;
+		if (r!=null) {
+			RoundRectangle2D.Double rr = new RoundRectangle2D.Double(0, 0, r.width, r.height, _radius, _radius);
+			PositionableRoundRect ps = new PositionableRoundRect(ed, rr);
+			ps.setLocation(r.x, r.y);
+	    	ps.setDisplayLevel(ControlPanelEditor.MARKERS);
+		   	setPositionableParams(ps);
+		   	ps.updateSize();
+		   	ed.putItem(ps);
 		}
-		RoundRectangle2D.Double rr = new RoundRectangle2D.Double(0, 0, r.width, r.height, _radius, _radius);
-		PositionableRoundRect ps = new PositionableRoundRect(ed, rr);
-		ps.setLocation(r.x, r.y);
-    	ps.setDisplayLevel(ControlPanelEditor.MARKERS);
-	   	setPositionableParams(ps);
-	   	ps.updateSize();
-	   	ed.putItem(ps);
+		return true;
 	}
    
    

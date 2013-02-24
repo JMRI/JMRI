@@ -25,6 +25,8 @@ import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.AnalogClock2Display;
+import jmri.jmrit.display.LinkingLabel;
+import jmri.jmrit.display.PositionableLabel;
 
 /**
 *  ItemPanel for for plain icons and backgrounds 
@@ -97,7 +99,13 @@ public class ClockItemPanel extends IconItemPanel {
             }
             String url = ((NamedIcon)getIcon()).getURL();
             if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferData url= "+url);
-            AnalogClock2Display c = new AnalogClock2Display(_editor);
+            AnalogClock2Display c;
+            String link = _linkName.getText().trim();
+            if (link.length()==0) {
+            	c = new AnalogClock2Display(_editor);            	
+            } else {            	
+            	c = new AnalogClock2Display(_editor, link);
+            }
             c.setOpaque(false);
             c.update();
             c.setLevel(Editor.CLOCK);

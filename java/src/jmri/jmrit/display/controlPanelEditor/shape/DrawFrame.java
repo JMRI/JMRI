@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Stroke;
 import javax.swing.Box;
@@ -15,10 +17,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import jmri.NamedBeanHandle;
+import jmri.Sensor;
 import jmri.jmrit.display.Editor.TargetPane;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 
@@ -49,6 +54,8 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
     JRadioButton _fillColorButon;
     JSlider 	_lineSlider;
     JSlider		_fillSlider;
+	JTextField	_sensorName = new JTextField(30);
+	PositionableShape _pShape;
     
 	public DrawFrame(String which, String title, ShapeDrawer parent) {
 		super(title, false, false);
@@ -63,22 +70,39 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         panel.setLayout(new java.awt.BorderLayout(10,10));
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         if (which.equals("newShape")) {
             panel.add(Box.createVerticalStrut(STRUT_SIZE));
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             JLabel l = new JLabel(Bundle.getMessage("drawInstructions1"));
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             p.add(l);
-            l = new JLabel(Bundle.getMessage("drawInstructions2"));
+            if (title.equals("polygon")) {
+                l = new JLabel(Bundle.getMessage("drawInstructions2a"));            	            	
+                l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+                p.add(l);
+                l = new JLabel(Bundle.getMessage("drawInstructions2b"));            	            	
+            }else {
+                l = new JLabel(Bundle.getMessage("drawInstructions2"));            	
+            }
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             p.add(l);
-            JPanel pp = new JPanel();
-            pp.add(p);
-            panel.add(pp);        	
         }
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        JLabel l = new JLabel(Bundle.getMessage("drawInstructions3a"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        p.add(l);
+        l = new JLabel(Bundle.getMessage("drawInstructions3b"));
+        l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+        p.add(l);
+        
+        JPanel pp = new JPanel();
+        pp.add(p);
+        panel.add(pp);
+        
         panel.add(makePanel());
+        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(makeSensorPanel());
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         setContentPane(panel);
@@ -92,7 +116,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         setLocation(_loc);
         setVisible(true);
 	}
-	
+
 	protected JPanel makePanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -136,6 +160,14 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	    return panel;
 	}
 	
+    protected JPanel makeSensorPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
+        panel.add(new JLabel(Bundle.getMessage("VisibleSensor")));
+        panel.add(_sensorName);
+	    return panel;
+    }
+	
     protected JPanel makeParamsPanel() {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -153,6 +185,10 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		_lineSlider.setValue(_lineWidth);
 		_lineColor = ps.getLineColor();
 		_fillColor = ps.getFillColor();
+		NamedBeanHandle handle = ps.getControlSensorHandle();
+		if (handle!=null) {
+			_sensorName.setText(handle.getName());			
+		}
 	}
 
 	protected void setPositionableParams(PositionableShape ps) {
@@ -160,6 +196,10 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         ps.setLineColor(_lineColor);
         ps.setFillColor(_fillColor);
         ps.setLineWidth(_lineSlider.getValue());
+        String text = _sensorName.getText().trim();
+        if (text.length()>0) {
+        	ps.setControlSensor(text);
+        }
 	}
 
 	protected void setDrawParams() {
@@ -168,12 +208,18 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		targetPane.setSelectRectStroke(stroke);
 		targetPane.setSelectRectColor(Color.green);
 	}
-	   
+
+	protected void setParent(ShapeDrawer parent) {
+		_parent = parent;		
+	}
 	protected void closingEvent() {
     	if (_parent!=null) {
   	      _parent.closeDrawFrame(this);
   	      _parent.getEditor().resetEditor();    		
     	}
+    	if (_pShape!=null) {
+    		_pShape.setVisible(true);
+    	}    	
     	_loc = getLocation(_loc);
     	_dim = getSize(_dim);
     	dispose();
@@ -187,7 +233,17 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		}
 	}
 	
-	abstract protected void makeFigure();
+	protected void moveTo(int x, int y) {		
+	}
+	protected void anchorPoint(int x, int y) {
+	}
+	protected void drawShape(Graphics g) {		
+	}
+	protected boolean dragTo(int x, int y) {
+		return false;
+	}
+	
+	abstract protected boolean makeFigure();
 	abstract protected void updateFigure(PositionableShape pos);
  
     static Logger log = Logger.getLogger(DrawFrame.class.getName());

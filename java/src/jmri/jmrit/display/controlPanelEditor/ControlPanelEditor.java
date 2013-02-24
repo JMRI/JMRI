@@ -136,6 +136,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setVisible(true);
         addKeyListener(this);
     }
+    
+    public void setDrawFrame(jmri.jmrit.display.controlPanelEditor.shape.DrawFrame f) {
+    	_shapeDrawer.setDrawFrame(f);
+    }
 
     protected void makeIconMenu() {
         _iconMenu = new JMenu(Bundle.getMessage("MenuIcon"));
@@ -985,6 +989,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
             mouseClicked(event);
 
+        _lastX = event.getX();
+        _lastY = event.getY();
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
 //        if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+
@@ -1005,7 +1011,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+")");
 
         Positionable selection = getCurrentSelection(event);
-        if (_shapeDrawer.doMouseClicked(selection, event)) {
+        if (_shapeDrawer.doMouseClicked(event)) {
         	return;
         }
 
@@ -1076,7 +1082,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     }
                 }
             } else {
-                if ((isEditable() && _selectionGroup==null) || _shapeDrawer.doMouseDragged(_currentSelection, event)) {
+                if ((isEditable() && _selectionGroup==null && !_shapeDrawer.doMouseDragged(event))) {
                     drawSelectRect(event.getX(), event.getY());
                 }
             }
@@ -1090,14 +1096,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     public void mouseMoved(MouseEvent event) {
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
         if (_dragging || event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) { return; }
-
-        Positionable selection = getCurrentSelection(event);
-        if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
-            showToolTip(selection, event);
-            //selection.highlightlabel(true);
-        } else {
-            setToolTip(null);
-        }
+    	if (!_shapeDrawer.doMouseMoved(event)) {
+            Positionable selection = getCurrentSelection(event);
+            if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
+                showToolTip(selection, event);
+                //selection.highlightlabel(true);
+            } else {
+                setToolTip(null);
+            }    		
+    	}
         _targetPanel.repaint();
     }
     
@@ -1122,6 +1129,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     protected void paintTargetPanel(Graphics g) {
+    	if (_shapeDrawer != null) {
+    		_shapeDrawer.paint(g);
+    	}
     }
 
     /**

@@ -39,7 +39,7 @@ public class PositionableRoundRect extends PositionableRectangle {
      *  only after its parameters have been set
      */
     public void makeShape() {  	
- 	   _shape = new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius);
+    	setShape(new RoundRectangle2D.Double(0, 0, _width, _height, _radius, _radius));
     }
 
     public Positionable deepClone() {

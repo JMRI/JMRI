@@ -1,11 +1,10 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import org.apache.log4j.Logger;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -23,7 +22,6 @@ import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 public class ShapeDrawer  {
 	
 	protected ControlPanelEditor _editor;
-	private boolean 	_creatingNewShape = false;
 	private DrawFrame 	_drawFrame;
 
 	public ShapeDrawer(ControlPanelEditor ed) {
@@ -47,7 +45,7 @@ public class ShapeDrawer  {
                     newRoundRectangle();
                 }
             });
-        /*
+
         shapeItem = new JMenuItem(Bundle.getMessage("drawPolygon"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
@@ -55,6 +53,7 @@ public class ShapeDrawer  {
                     newPolygon();
                 }
             });
+        /*
         shapeItem = new JMenuItem(Bundle.getMessage("drawLine"));
         drawMenu.add(shapeItem);
         shapeItem.addActionListener(new ActionListener() {
@@ -80,6 +79,13 @@ public class ShapeDrawer  {
 
     	return drawMenu;
     }
+	
+	public void setDrawFrame(DrawFrame f) {
+    	if (_drawFrame==null) {
+        	_drawFrame = f;
+        	_drawFrame.setParent(this);
+    	}
+	}
     
     private void newRectangle() {
     	if (_drawFrame==null) {
@@ -97,9 +103,14 @@ public class ShapeDrawer  {
     	}
     }
     private void newPolygon() {   	
+    	if (_drawFrame==null) {
+        	_drawFrame = new DrawPolygon("newShape", "polygon", this);    		
+    	} else {
+    		_drawFrame.toFront();
+    	}
     }
-    private void newLine() {   	
-    }
+//    private void newLine() {   	
+//    }
     private void newCircle() {   	
     	if (_drawFrame==null) {
         	_drawFrame = new DrawCircle("newShape", "circle", this);    		
@@ -122,21 +133,20 @@ public class ShapeDrawer  {
     protected ControlPanelEditor getEditor() {
     	return _editor;
     }
+
+    public void paint(Graphics g) {
+    	if (_drawFrame!=null) {
+    		_drawFrame.drawShape(g);
+    	}
+    }
     
     /**************************** Mouse *************************/
 
-    ArrayList<Positionable> _saveSelectionGroup;
-    /**
-    * Keep selections when editing.  Restore what super nulls
-    */
-    public void saveSelectionGroup(ArrayList<Positionable> selectionGroup) {
-    	_saveSelectionGroup = selectionGroup;
-    }
-    
     public boolean doMousePressed(MouseEvent event) {
     	if (_drawFrame!=null) {
-            _editor.setSelectionGroup(null);
-            _drawFrame.setDrawParams();
+    		_drawFrame.anchorPoint(event.getX(), event.getY());
+//            _editor.setSelectionGroup(null);
+//            _drawFrame.setDrawParams();
             return true;
     	}
     	return false;
@@ -144,27 +154,35 @@ public class ShapeDrawer  {
    
     public boolean doMouseReleased(Positionable selection, MouseEvent event) {
         if (_drawFrame!=null) {
-        	_drawFrame.makeFigure();
-        	_drawFrame.closingEvent();
-            _editor.resetEditor();
+        	if (_drawFrame.makeFigure()) {
+            	_drawFrame.closingEvent();
+                _editor.resetEditor();        		
+        	}
             return true;
         }
         return false;
     }
 
-    public boolean doMouseClicked(Positionable selection, MouseEvent event) {
+    public boolean doMouseClicked(MouseEvent event) {
         if (_drawFrame!=null) {
             return true;
         }
         return false;
     }
 
-    /**
-    * No dragging when editing
-    */
-    public boolean doMouseDragged(Positionable selection, MouseEvent event) {
+    public boolean doMouseDragged(MouseEvent event) {
         if (_drawFrame!=null) {
-            _editor.drawSelectRect(event.getX(), event.getY());
+            return _drawFrame.dragTo(event.getX(), event.getY());
+        }
+        return false;
+    }
+
+    /*
+     * Make rubber band line
+     */
+    public boolean doMouseMoved(MouseEvent event) {
+        if (_drawFrame!=null) {
+        	_drawFrame.moveTo(event.getX(), event.getY());
             return true;     // no dragging when editing
         }
         return false;

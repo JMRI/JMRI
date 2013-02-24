@@ -26,7 +26,6 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.picker.PickListModel;
-import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
 
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
 import jmri.util.JmriJFrame;
@@ -520,8 +519,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
                 if (_selectionGroup!=null){
                     for(int i=0; i<_selectionGroup.size();i++){
-                        g.drawRect(_selectionGroup.get(i).getX(), _selectionGroup.get(i).getY(), 
-                                   _selectionGroup.get(i).maxWidth(), _selectionGroup.get(i).maxHeight());
+                    	Positionable p = _selectionGroup.get(i);
+                        g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());
                     }
                 }
             }
@@ -989,7 +988,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * Add a checkbox to set visibility of the Positionable item
     */
     public void setHiddenMenu(Positionable p, JPopupMenu popup) {
-        if (p.getDisplayLevel() == BKG || p instanceof PositionableShape) {
+        if (p.getDisplayLevel() == BKG) {
             return;
         }
         JCheckBoxMenuItem hideItem = new JCheckBoxMenuItem(Bundle.getMessage("SetHidden"));
@@ -2207,9 +2206,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         ArrayList <Positionable> selections = new ArrayList <Positionable>();
         for (int i=0; i<_contents.size(); i++) {
             Positionable p = _contents.get(i);
-//            if (p instanceof PositionableShape && !event.isShiftDown()) {
-//            	continue;
-//            }
             rect= p.getBounds(rect);
             //if (_debug && !_dragging) log.debug("getSelectedItems: rect= ("+rect.x+","+rect.y+
             //                      ") width= "+rect.width+", height= "+rect.height+
@@ -2250,9 +2246,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (event.isShiftDown()) {
             for (int i=0; i < list.size(); i++) {
                 Positionable comp = list.get(i);
-                if (comp instanceof PositionableShape && !event.isShiftDown()) {
-                	continue;
-                }
                 if (_selectRect.intersects(comp.getBounds(test)) && 
                                 (event.isControlDown() || comp.getDisplayLevel()>BKG)) {
                     _selectionGroup.add(comp);
@@ -2265,9 +2258,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             for (int i=0; i < list.size(); i++) {
                 Positionable comp = list.get(i);
-                if (comp instanceof PositionableShape && !event.isShiftDown()) {
-                	continue;
-                }
                 if (_selectRect.contains(comp.getBounds(test)) && 
                                 (event.isControlDown() || comp.getDisplayLevel()>BKG)) {
                     _selectionGroup.add(comp);
@@ -2300,7 +2290,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (_selectionGroup.contains(selection)) {
                 removed = _selectionGroup.remove(selection);
             } else {
-                if (event.isShiftDown() || !(selection instanceof PositionableShape)) {
+                if (event.isShiftDown()) {
                     _selectionGroup.add(selection);
                 }
             }
@@ -2584,9 +2574,15 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public final int getAnchorX() {
         return _anchorX;
     }
-
     public final int getAnchorY() {
         return _anchorY;
+    }
+
+    public final int getLastX() {
+        return _lastX;
+    }
+    public final int getLastY() {
+        return _lastY;
     }
 
     public void keyTyped(KeyEvent e) {

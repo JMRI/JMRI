@@ -38,7 +38,7 @@ public class PositionableCircle extends PositionableShape {
      *  only after its parameters have been set
      */
     public void makeShape() {  	
-		_shape = new Ellipse2D.Double(0, 0, _radius, _radius);
+		setShape(new Ellipse2D.Double(0, 0, _radius, _radius));
     }
 
     public Positionable deepClone() {
