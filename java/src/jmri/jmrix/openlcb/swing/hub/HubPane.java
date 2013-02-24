@@ -4,6 +4,8 @@ package jmri.jmrix.openlcb.swing.hub;
 
 import org.apache.log4j.Logger;
 import javax.swing.*;
+import java.net.*;
+
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -64,8 +66,10 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         
         // add GUI components
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
-
-        add(new JLabel("Port: "+hub.getPort()));
+        
+        try {
+            add(new JLabel("Hub IP address "+InetAddress.getLocalHost().getHostAddress()+":"+hub.getPort()));
+        } catch (UnknownHostException e) { log.error(e); }
         add(label);
         
         startHubThread(hub.getPort());
