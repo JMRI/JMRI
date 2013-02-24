@@ -383,7 +383,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
     		return;
     	} 
     	//don't bother to check filter if no raw value passed
-    	if (raw != null) {
+    	if (raw != null && raw.length() >= 2) {
     		// if first bytes are in the skip list,  exit without adding to the Swing thread
     		String[] filters = filterField.getText().toUpperCase().split(" ");
     		String checkRaw = raw.substring(0, 2);
