@@ -71,6 +71,8 @@ public class AnalogClock2Display extends PositionableJComponent {
     // centreX, centreY are the coordinates of the centre of the clock
     int centreX;
     int centreY;
+    
+    String _url;
 
     public AnalogClock2Display(Editor editor) {
         super(editor);
@@ -80,9 +82,18 @@ public class AnalogClock2Display extends PositionableJComponent {
 
         init();
     }
+    public AnalogClock2Display(Editor editor, String url) {
+    	this(editor);
+        _url = url;
+    }
 
     public Positionable deepClone() {
-        AnalogClock2Display pos = new AnalogClock2Display(_editor);
+    	AnalogClock2Display pos;
+    	if (_url==null || _url.trim().length()==0) {
+    		pos = new AnalogClock2Display(_editor);    		
+    	} else {
+            pos = new AnalogClock2Display(_editor, _url);    		
+    	}
         return finishClone(pos);
     }
 
@@ -379,5 +390,44 @@ public class AnalogClock2Display extends PositionableJComponent {
         rateButtonGroup = null;
         runMenu = null;
     }
+    public String getUrl() {
+    	return _url;
+    }
+    public void setUrl(String u) {
+    	_url = u;
+    }
+    
+    public boolean setLinkMenu(JPopupMenu popup) {
+    	if (_url==null || _url.trim().length()==0) {
+    		return false;
+    	}
+        popup.add(CoordinateEdit.getLinkEditAction(this, "EditLink"));
+    	return true;
+    }
+    
+    public void doMouseClicked(MouseEvent event) {
+        log.debug("click to "+_url);
+    	if (_url==null || _url.trim().length()==0) {
+    		return;
+    	}
+        try {
+            if (_url.startsWith("frame:")) {
+                // locate JmriJFrame and push to front
+                String frame = _url.substring(6);
+                final jmri.util.JmriJFrame jframe = jmri.util.JmriJFrame.getFrame(frame);
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        jframe.toFront();
+                        jframe.repaint();
+                    }
+                });                
+            } else {
+                jmri.util.ExternalLinkContentViewerUI.activateURL(new java.net.URL(_url));
+            }
+        } catch (Throwable t) { log.error("Error handling link", t); }
+        super.doMouseClicked(event);
+    }
+    
     static Logger log = Logger.getLogger(AnalogClock2Display.class.getName());
 }

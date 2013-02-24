@@ -38,6 +38,10 @@ public class AnalogClock2DisplayXml
         element.setAttribute("x", "" + p.getX());
         element.setAttribute("y", "" + p.getY());
         element.setAttribute("scale", "" + p.getScale());
+        String link = p.getUrl();
+        if (link!=null || link.trim().length()>0) {
+            element.setAttribute("link", link);        	
+        }
 
         element.setAttribute("class",
             "jmri.jmrit.display.configurexml.AnalogClock2DisplayXml");
@@ -73,6 +77,9 @@ public class AnalogClock2DisplayXml
         }
         catch (org.jdom.DataConversionException e) {
             log.error("failed to convert positional attribute");
+        }
+        if (element.getAttribute("link")!=null) {
+            l.setUrl(element.getAttribute("link").getValue());
         }
         l.setOpaque(false);
         l.update();
