@@ -64,11 +64,13 @@ public class PositionableJComponent extends JComponent implements Positionable {
 
     public void setPositionable(boolean enabled) {
         _positionable = enabled;
-        showHidden();
     }
     public boolean isPositionable() { return _positionable; }
 
-    public void setEditable(boolean enabled) {_editable = enabled;}
+    public void setEditable(boolean enabled) {
+    	_editable = enabled;
+        showHidden();
+    }
     public boolean isEditable() { return _editable; }
      
     public void setViewCoordinates(boolean enabled) { _viewCoordinates = enabled; }
