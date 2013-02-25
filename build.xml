@@ -150,8 +150,8 @@
         <pathelement location="${libdir}/jetty-util-8.1.0.v20120127.jar"/>
         <pathelement location="${libdir}/jetty-io-8.1.0.v20120127.jar"/>
         <pathelement location="${libdir}/jetty-websocket-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/slf4j-api-1.6.4.jar"/>
-        <pathelement location="${libdir}/slf4j-log4j12-1.6.4.jar"/>
+        <pathelement location="${libdir}/slf4j-api-1.7.2.jar"/>
+        <pathelement location="${libdir}/slf4j-log4j12-1.7.2.jar"/>
     </path>
 
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
