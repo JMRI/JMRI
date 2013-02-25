@@ -38,7 +38,7 @@ JMRI logs error, status and debugging information.
 
 <P>
 For other details on JMRI internals, please see the
-<A HREF="../Technical/index.shtml" NAME="technical pages">technical pages</A>.
+<A HREF="../Technical/index.shtml" title="technical pages">technical pages</A>.
 
 <P>
 JMRI uses the Jakarta
@@ -76,9 +76,9 @@ by "A1", and a file by "R".
 The "default.lcf" file determines the destination and format
 of the logged messages.  By default, you get lines that look like:
 
-<CODE><PRE>
+<pre><CODE>
 514668 [AWT-EventQueue-0] WARN jmri.jmrit.powerpanel.PowerPane  - No power manager instance found, panel not active
-</PRE></CODE>
+</CODE></pre>
 The columns are:
 <ul>
 <li><CODE>514668 - time in milliseconds since the program started</CODE>
@@ -92,41 +92,41 @@ The columns are:
 To log messages
 from a class named MyClass, add this to the bottom of the class file:</p>
 <pre><code>
-	private static final Logger log = Logger.getLogger(MyClass.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(MyClass.class());
 </code></pre>
-<p>and add an import for org.apache.log4j.Logger in your imports section:</p>
+<p>and add imports for org.slf4j.Logger and org.slf4j.LoggerFactory in your imports section:</p>
 <pre><code>
-        import org.apache.log4j.Logger;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
 </code></pre>
-<p>
-Then for each message to log insert a line like:
-
-<code>
-<PRE>
+<p>Then for each message to log insert a line like:</p>
+<pre><code>
 	log.debug("message");
-</PRE>
-</code>
-
-<P>
-If the message is not just an explicit string, you should use
-this form instead:
-<code>
-<PRE>
-	if (log.isDebugEnabled()) log.debug("Found "+numberEntries());
-</PRE>
-</code>
-so the program doesn't waste time forming the message string (in this
-case, calling numberEntries() and concatenating the strings) if
-the log.debug call isn't going to store it anyway.
+</code></pre>
+<p>Messages that are not just an explicit string should use this form instead for variables:</p>
+<pre><code>
+	log.debug("Found {}", numberEntries);
+</code></pre>
+<p>If it would be computationally expensive to pass a parameter into the log, use following form
+so the program does not waste time calculating parameters (in this
+case, calling numberEntries() and concatenating the strings):</p>
+<pre><code>
+        if (log.isDebugEnabled()) {
+            log.debug("Found {}", numberEntries());
+        }
+</code></pre>
+<p>Exceptions should be logged as:</p>
+<pre><code>
+        log.error(exception.getLocalizedMessage(), exception);
+</code></pre>
 
 <h3>Logging Levels</h3>
 <table border="1">
 <tr><th>Level</th><th>Code Fragment</th><th>Use</th></tr>
-<tr><td>DEBUG</td><td>if (log.isDebugEnabled()) log.debug(..)</td><td>Detailed messages, only used in debugging</td></tr>
-<tr><td>INFO</td><td>if (log.isInfoEnabled())log.info(..)</td><td>Routine messages you want to see in normal operation</td></tr>
+<tr><td>DEBUG</td><td>log.debug(..)</td><td>Detailed messages, only used in debugging</td></tr>
+<tr><td>INFO</td><td>log.info(..)</td><td>Routine messages you want to see in normal operation</td></tr>
 <tr><td>WARN</td><td>log.warn(..)</td><td>The program is still operating, sort of, but something here needs to be looked at</td></tr>
 <tr><td>ERROR</td><td>log.error(..)</td><td>Indicates the desired operation is not going to happen, and explains why</td></tr>
-<tr><td>FATAL</td><td>log.fatal(..)</td><td>Rarely used, these are the last things the program says before shutting down unexpectedly</td></tr>
 </table>
 
 <!--#include virtual="/Footer" -->
@@ -135,4 +135,3 @@ the log.debug call isn't going to store it anyway.
 	</div> <!-- closes #mBody-->
 </body>
 </html>
-

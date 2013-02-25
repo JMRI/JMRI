@@ -90,12 +90,9 @@ Les colonnes sont:
 
 Pour enregistrer des messages
 à partir d'une classe nommée MyClass, ajoutez ceci à la fin du fichier de class:
-<code>
-<PRE>
-	static org.apache.log4j.Category log 
-	        = org.apache.log4j.Category.getInstance(MyClass.class.getName());
-</PRE>
-</code>
+<pre><code>
+	private static final Logger log = LoggerFactory.getLogger(MyClass.class());
+</code></pre>
 Ensuite, pour chaque message pour vous connecter insérer une ligne comme:
 
 <code>
@@ -109,7 +106,7 @@ Si le message n'est pas seulement une chaîne explicite, vous devez utiliser
 cette forme à la place:
 <code>
 <PRE>
-	if (log.isDebugEnabled()) log.debug("Found "+numberEntrie());
+	if (log.isDebugEnabled()) log.debug("Found {}", numberEntries());
 </PRE>
 <code>
 de sorte que le programme ne perde pas de temps en formant la chaîne de message (dans ce cas, appelert numberEntries () et la concaténation des chaînes) si
@@ -118,11 +115,10 @@ l'appel de Log.debug ne va pas le stocker.
 <h3>Niveaux de Connexion</h3>
 <table border="1">
 <tr><th>Niveau</th><th>Fragment de Code</th><th>Utilisation</th></tr>
-<tr><td>DEBUG</td><td>if (log.isDebugEnabled()) log.debug(..)</td><td>Messages détaillés, utilisé dans le débogage</td></tr>
-<tr><td>INFO</td><td>if (log.isInfoEnabled())log.info(..)</td><td>Messages de routine que vous voulez voir en fonctionnement normal</td></tr>
+<tr><td>DEBUG</td><td>log.debug(..)</td><td>Messages détaillés, utilisé dans le débogage</td></tr>
+<tr><td>INFO</td><td>log.info(..)</td><td>Messages de routine que vous voulez voir en fonctionnement normal</td></tr>
 <tr><td>AVERT</td><td>log.warn(..)</td><td>Le programme est encore en exploitation, en quelque sorte, mais quelque chose doit être examiné</td></tr>
 <tr><td>ERR</td><td>log.error(..)</td><td>Indique que l'opération souhaitée ne va pas se produire, et explique pourquoi</td></tr>
-<tr><td>FATAL</td><td>log.fatal(..)</td><td>Rarement utilisé, ce sont les dernières choses que le programme dit avant d'arrêter de façon inattendue</td></tr>
 </table>
 
 <!--#include virtual="/Footer" -->
