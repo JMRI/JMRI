@@ -682,7 +682,7 @@ public class LayoutBlockConnectivityTools{
                             log.debug("Valid pair " + source.getDisplayName() + " " + destObj.getDisplayName());
                         LayoutBlock ldstBlock = lbm.getLayoutBlock(blockList.get(j).getFacing());
                         try {
-                            ArrayList<LayoutBlock> lblks = getLayoutBlocks(lFacing, ldstBlock, lProtecting, true, MASTTOMAST);
+                            ArrayList<LayoutBlock> lblks = getLayoutBlocks(lFacing, ldstBlock, lProtecting, true, pathMethod);
                             if(log.isDebugEnabled())
                                 log.debug("Adding block " + destObj.getDisplayName() + " to paths, current size " + lblks.size());
                             validDestBean.add(destObj);

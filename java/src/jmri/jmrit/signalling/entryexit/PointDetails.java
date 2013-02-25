@@ -546,19 +546,19 @@ public class PointDetails {
             }
             else if(t.getSensorB()==sen){
                 if(t.getSignalBMast()!=null)
-                    signal =  t.getSignalAMast();
+                    signal =  t.getSignalBMast();
                 else if(!t.getSignalB1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalB1Name());
             }
             else if(t.getSensorC()==sen){
                 if(t.getSignalCMast()!=null)
-                    signal =  t.getSignalAMast();
+                    signal =  t.getSignalCMast();
                 else if(!t.getSignalC1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalC1Name());
             }
             else if(t.getSensorD()==sen){
                 if(t.getSignalDMast()!=null)
-                    signal =  t.getSignalAMast();
+                    signal =  t.getSignalDMast();
                 else if(!t.getSignalD1Name().equals(""))
                     signal =  sh.getSignalHead(t.getSignalD1Name());
             }
