@@ -1,7 +1,8 @@
 // IconAdder.java
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.SignalHead;
@@ -772,5 +773,5 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
     }
 
-    static Logger log = Logger.getLogger(IconAdder.class.getName());
+    static Logger log = LoggerFactory.getLogger(IconAdder.class.getName());
 }

@@ -1,13 +1,12 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import java.awt.BasicStroke;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Shape;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
 
@@ -15,6 +14,7 @@ import java.util.ArrayList;
 
 //import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.Editor;
+import org.slf4j.LoggerFactory;
 
 /**
  * <P>
@@ -247,5 +247,5 @@ public class DrawPolygon extends DrawFrame{
 		setPositionableParams(pos);
     }
    
-    static Logger log = Logger.getLogger(DrawPolygon.class.getName());
+    static Logger log = LoggerFactory.getLogger(DrawPolygon.class.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -187,7 +188,7 @@ public class CarOwners {
     	pcs.firePropertyChange(p,old,n);
     }
 
-    static Logger log = Logger.getLogger(CarOwners.class.getName());
+    static Logger log = LoggerFactory.getLogger(CarOwners.class.getName());
 
 }
 

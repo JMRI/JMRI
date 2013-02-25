@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 
 /**
@@ -149,7 +150,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1);
     }
 
-    static Logger log = Logger.getLogger(LnTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnTurnoutManager.class.getName());
 }
 
 /* @(#)LnTurnoutManager.java */

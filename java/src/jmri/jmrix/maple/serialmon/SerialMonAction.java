@@ -2,7 +2,8 @@
 
 package jmri.jmrix.maple.serialmon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -34,7 +35,7 @@ public class SerialMonAction 			extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static Logger log = Logger.getLogger(SerialMonAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
 
 }
 

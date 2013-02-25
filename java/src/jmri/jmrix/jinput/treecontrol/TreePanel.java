@@ -2,7 +2,8 @@
 
 package jmri.jmrix.jinput.treecontrol;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.tree.*;
@@ -283,6 +284,6 @@ public class TreePanel extends JPanel {
 
     JTree dTree;
 
-    static Logger log = Logger.getLogger(TreePanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(TreePanel.class.getName());
 }
 

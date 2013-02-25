@@ -2,7 +2,8 @@
 
 package jmri.jmrix.acela.acelamon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.acela.AcelaListener;
 import jmri.jmrix.acela.AcelaMessage;
 import jmri.jmrix.acela.AcelaReply;
@@ -43,7 +44,7 @@ public class AcelaMonFrame extends jmri.jmrix.AbstractMonFrame implements AcelaL
 		nextLine("rep: \""+l.toString()+"\"\n", "");
 	}
 
-   static Logger log = Logger.getLogger(AcelaMonFrame.class.getName());
+   static Logger log = LoggerFactory.getLogger(AcelaMonFrame.class.getName());
 }
 
 /* @(#)AcelaMonFrame.java */

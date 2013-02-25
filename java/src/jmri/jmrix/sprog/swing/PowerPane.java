@@ -2,7 +2,8 @@
 
 package jmri.jmrix.sprog.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.PowerManager;
 import java.awt.GridLayout;
@@ -113,6 +114,6 @@ public class PowerPane extends javax.swing.JPanel implements java.beans.Property
     }
 
     SprogPowerManager p = null;
-    static Logger log = Logger.getLogger(PowerPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(PowerPane.class.getName());
 
 }

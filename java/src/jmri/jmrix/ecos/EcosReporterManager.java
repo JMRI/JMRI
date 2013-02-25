@@ -2,7 +2,8 @@
 
 package jmri.jmrix.ecos;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Reporter;
 
 /**
@@ -34,7 +35,7 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
         return r;
     }
 
-    static Logger log = Logger.getLogger(EcosReporterManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosReporterManager.class.getName());
 }
 
 /* @(#)EcosReporterManager.java */

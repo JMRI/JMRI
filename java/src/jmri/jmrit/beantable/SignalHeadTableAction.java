@@ -15,7 +15,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -160,7 +161,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 try {
                     val = s.getAppearanceName();
                 } catch (java.lang.ArrayIndexOutOfBoundsException e) {
-                    log.error(e);
+                    log.error(e.getLocalizedMessage(), e);
                 }
                 if (val != null) return val;
                 else return "Unexpected null value";
@@ -2028,7 +2029,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleSignalTable"); }
     
-    static final Logger log = Logger.getLogger(SignalHeadTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SignalHeadTableAction.class.getName());
 }
 /* @(#)SignalHeadTableAction.java */
 

@@ -1,7 +1,8 @@
 // Dcc4PcSystemConnectionMemo.javaf
 package jmri.jmrix.dcc4pc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 //import jmri.jmrix.dcc4pc.Dcc4PcConstants.Dcc4PcMode;
 import jmri.managers.DefaultRailComManager;
@@ -171,7 +172,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     public void setDefaultProgrammer(String prog){
         progManager = prog;
     }
-    static Logger log = Logger.getLogger(Dcc4PcSystemConnectionMemo.class.getName());
+    static Logger log = LoggerFactory.getLogger(Dcc4PcSystemConnectionMemo.class.getName());
 }
 
 

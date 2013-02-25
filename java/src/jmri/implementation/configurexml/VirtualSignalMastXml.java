@@ -1,6 +1,7 @@
 package jmri.implementation.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.implementation.VirtualSignalMast;
 import java.util.List;
@@ -78,5 +79,5 @@ public class VirtualSignalMastXml
         log.error("Invalid method called");
     }
     
-    static Logger log = Logger.getLogger(VirtualSignalMastXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(VirtualSignalMastXml.class.getName());
 }

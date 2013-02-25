@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.implementation.*;
 import jmri.jmrit.logix.OBlock;
@@ -5249,6 +5250,6 @@ public class LogixTableAction extends AbstractTableAction {
     
     protected String getClassName() { return LogixTableAction.class.getName(); }
 
-	static final Logger log = Logger.getLogger(LogixTableAction.class.getName());
+	static final Logger log = LoggerFactory.getLogger(LogixTableAction.class.getName());
 }
 /* @(#)LogixTableAction.java */

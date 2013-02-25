@@ -1,6 +1,7 @@
 package jmri.jmrix.ecos;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottle;
@@ -796,6 +797,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(EcosDccThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosDccThrottle.class.getName());
 
 }

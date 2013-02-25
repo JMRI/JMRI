@@ -2,7 +2,8 @@
 
 package jmri.jmrit.logix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractManager;
 
 /**
@@ -113,7 +114,7 @@ public class OBlockManager extends AbstractManager
         return (_instance);
     }
 
-    static Logger log = Logger.getLogger(OBlockManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(OBlockManager.class.getName());
 }
 
 /* @(#)OBlockManager.java */

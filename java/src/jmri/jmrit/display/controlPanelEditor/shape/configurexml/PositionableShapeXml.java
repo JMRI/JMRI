@@ -1,17 +1,15 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
-import org.apache.log4j.Logger;
-
+import java.awt.Color;
 import jmri.NamedBeanHandle;
 import jmri.configurexml.*;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.*;
-
-import java.awt.Color;
-
 import org.jdom.Attribute;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.PositionableShape objects
@@ -216,5 +214,5 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
 		return 0;
 	}
 	
-    static Logger log = Logger.getLogger(PositionableShapeXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableShapeXml.class.getName());
 }

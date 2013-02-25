@@ -2,7 +2,8 @@
 
 package jmri.jmrix.jmriclient.swing.mon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.jmriclient.JMRIClientListener;
 import jmri.jmrix.jmriclient.JMRIClientMessage;
 import jmri.jmrix.jmriclient.JMRIClientReply;
@@ -42,6 +43,6 @@ public class JMRIClientMonFrame extends jmri.jmrix.AbstractMonFrame implements J
 		nextLine("rep: "+l.toString(), "");
 	}
 
-   static Logger log = Logger.getLogger(JMRIClientMonFrame.class.getName());
+   static Logger log = LoggerFactory.getLogger(JMRIClientMonFrame.class.getName());
 
 }

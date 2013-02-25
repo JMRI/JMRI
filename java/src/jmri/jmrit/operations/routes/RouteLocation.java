@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.routes;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -453,6 +454,6 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		firePropertyChange(p, old, n);
 	}
 
-	static Logger log = Logger.getLogger(RouteLocation.class.getName());
+	static Logger log = LoggerFactory.getLogger(RouteLocation.class.getName());
 
 }

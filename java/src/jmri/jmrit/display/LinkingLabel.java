@@ -23,6 +23,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPopupMenu;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * LinkingLabel is a PositionableLabel that opens a link
@@ -188,6 +190,6 @@ public class LinkingLabel extends PositionableLabel {
         return false;
     }
  */   
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LinkingLabel.class.getName());
+    static Logger log = LoggerFactory.getLogger(LinkingLabel.class.getName());
 
 }

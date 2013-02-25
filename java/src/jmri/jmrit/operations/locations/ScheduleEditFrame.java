@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -370,6 +371,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 	}
 
-	static Logger log = Logger.getLogger(ScheduleEditFrame.class
+	static Logger log = LoggerFactory.getLogger(ScheduleEditFrame.class
 			.getName());
 }

@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -197,6 +198,6 @@ public class Pr2Throttle extends AbstractThrottle {
     protected void throttleDispose(){ finishRecord(); }
 
     // initialize logging
-    static Logger log = Logger.getLogger(Pr2Throttle.class.getName());
+    static Logger log = LoggerFactory.getLogger(Pr2Throttle.class.getName());
 
 }

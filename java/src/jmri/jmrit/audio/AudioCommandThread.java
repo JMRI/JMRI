@@ -2,7 +2,8 @@
 
 package jmri.jmrit.audio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represents a thread for processing commands contained within AudioCommand
@@ -86,7 +87,7 @@ public class AudioCommandThread extends AbstractAudioThread {
         super.cleanup();
     }
 
-    private static final Logger log = Logger.getLogger(AudioCommandThread.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioCommandThread.class.getName());
 
 }
 

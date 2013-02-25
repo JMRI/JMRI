@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -197,5 +198,5 @@ import jmri.jmrit.logix.OBlock;
         }
     }
       
-    static Logger log = Logger.getLogger(IndicatorTrackPaths.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndicatorTrackPaths.class.getName());
  }

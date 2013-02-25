@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -165,7 +166,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(XNetOpsModeProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetOpsModeProgrammer.class.getName());
 
 }
 

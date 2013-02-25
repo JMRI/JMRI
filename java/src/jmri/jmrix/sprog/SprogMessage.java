@@ -2,9 +2,10 @@
 
 package jmri.jmrix.sprog;
 
-import org.apache.log4j.Logger;
 import jmri.Programmer;
 import jmri.jmrix.sprog.SprogConstants.SprogState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Encodes a message to an SPROG command station.
@@ -510,7 +511,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    static Logger log = Logger.getLogger(SprogMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogMessage.class.getName());
 
 }
 

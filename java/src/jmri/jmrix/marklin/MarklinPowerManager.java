@@ -2,7 +2,8 @@
 
 package jmri.jmrix.marklin;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.JmriException;
 import jmri.PowerManager;
 
@@ -81,7 +82,7 @@ public class MarklinPowerManager implements PowerManager, MarklinListener {
     public void message(MarklinMessage m) {
         // messages are ignored
     }
-    static Logger log = Logger.getLogger(MarklinPowerManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(MarklinPowerManager.class.getName());
 }
 
 

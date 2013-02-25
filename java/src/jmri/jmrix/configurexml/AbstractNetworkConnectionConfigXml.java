@@ -1,6 +1,7 @@
 package jmri.jmrix.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.*;
 import jmri.jmrix.NetworkPortAdapter;
 
@@ -103,7 +104,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
         } catch (Exception ex) {
             ConfigXmlManager.creationErrorEncountered(
                                         null, "opening connection",
-                                        org.apache.log4j.Level.ERROR,
                                         ex.getMessage(),
                                         null,null,null
                                     );            
@@ -135,6 +135,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
 
 
     // initialize logging
-    static Logger log = Logger.getLogger(AbstractNetworkConnectionConfigXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractNetworkConnectionConfigXml.class.getName());
 
 }

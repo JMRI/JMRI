@@ -2,7 +2,8 @@
 
 package jmri.jmrix.bachrus;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.font.*;
 import java.awt.geom.*;
@@ -216,5 +217,5 @@ public class GraphPane extends JPanel implements Printable {
         }
     }
 
-    static Logger log = Logger.getLogger(GraphPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(GraphPane.class.getName());
 }

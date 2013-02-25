@@ -128,7 +128,7 @@
         <pathelement location="${libdir}/jlfgr-1_0.jar"/>
         <pathelement location="${libdir}/joal.jar"/>
         <pathelement location="${libdir}/jython.jar"/>
-        <pathelement location="${libdir}/log4j.jar"/>
+        <pathelement location="${libdir}/log4j-1.2.17.jar"/>
         <pathelement location="${libdir}/servlet-api-3.0.jar"/>
         <pathelement location="${libdir}/vecmath.jar"/>
         <pathelement location="${libdir}/activation.jar"/>

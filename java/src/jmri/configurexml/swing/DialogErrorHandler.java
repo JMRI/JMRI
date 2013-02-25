@@ -26,18 +26,8 @@ public class DialogErrorHandler extends jmri.configurexml.ErrorHandler {
         if (e.exception!=null) m += "<br> Exception: "+e.exception.toString();
         m+="</html>";
 
-        if (e.level == org.apache.log4j.Level.ERROR) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Error during " + e.title,m,e.description, "",true, false, e.level);
-                            
-        } else if (e.level == org.apache.log4j.Level.WARN) {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Warning during " + e.title,m,e.description, "", true, false, e.level);
-        } else {
-            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage("Message during " + e.title,m,e.description, "",true, false, e.level);
-        }
-        
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                            showErrorMessage("Error during " + e.title,m,e.description, "",true, false);        
     }
     
     /**

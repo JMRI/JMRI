@@ -1,6 +1,7 @@
 package jmri.jmrix.easydcc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
@@ -112,6 +113,6 @@ public class EasyDccThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static Logger log = Logger.getLogger(EasyDccThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccThrottleManager.class.getName());
 
 }

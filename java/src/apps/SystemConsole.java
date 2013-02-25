@@ -2,7 +2,8 @@
 
 package apps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -632,7 +633,7 @@ public final class SystemConsole extends JTextArea {
         }
     }
 
-    private static final Logger log = Logger.getLogger(SystemConsole.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SystemConsole.class.getName());
 
 }
 

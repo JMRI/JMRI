@@ -1,6 +1,7 @@
 package jmri.jmrit.tracker;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Block;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
@@ -47,5 +48,5 @@ public class MemoryTracker  {
     //Memory m;
     Block block;
     
-    static Logger log = Logger.getLogger(MemoryTracker.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryTracker.class.getName());
 }

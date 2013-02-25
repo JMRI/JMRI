@@ -2,7 +2,8 @@
 
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Encodes a message to an SRCP server.  The SRCPReply
@@ -230,7 +231,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
     static final int LONG_TIMEOUT=180000;  // e.g. for programming options
 
-    static Logger log = Logger.getLogger(SRCPMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(SRCPMessage.class.getName());
 
 }
 

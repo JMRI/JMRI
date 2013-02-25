@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
@@ -106,7 +107,7 @@ public class LnLightManager extends AbstractLightManager {
     public boolean allowMultipleAdditions(String systemName) { return true;  }
 
     
-    static Logger log = Logger.getLogger(LnLightManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnLightManager.class.getName());
 
 }
 

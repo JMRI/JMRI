@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
@@ -1122,7 +1123,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = Logger.getLogger(RollingStock.class
+	static Logger log = LoggerFactory.getLogger(RollingStock.class
 			.getName());
 
 }

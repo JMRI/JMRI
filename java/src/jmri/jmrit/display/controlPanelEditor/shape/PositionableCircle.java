@@ -1,12 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
-import jmri.jmrit.display.*;
+import java.awt.Shape;
 
 import java.awt.event.ActionEvent;
 import java.awt.geom.Ellipse2D;
-import java.awt.Shape;
 import javax.swing.JPopupMenu;
+import jmri.jmrit.display.*;
+import jmri.jmrit.display.controlPanelEditor.shape.Bundle;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PositionableCircle  PositionableShapes.
@@ -70,5 +72,5 @@ public class PositionableCircle extends PositionableShape {
         repaint();
     }*/
 
-    static Logger log = Logger.getLogger(PositionableCircle.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableCircle.class.getName());
 }

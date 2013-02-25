@@ -2,7 +2,8 @@
 
 package jmri;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.ConsistListener;
 
 import java.util.Vector;
@@ -395,6 +396,6 @@ public class DccConsist implements Consist, ProgListener{
 		notifyConsistListeners(new DccLocoAddress(0,false),ConsistListener.OPERATION_SUCCESS);
 	}
 
-	static Logger log = Logger.getLogger(DccConsist.class.getName());
+	static Logger log = LoggerFactory.getLogger(DccConsist.class.getName());
 
 }

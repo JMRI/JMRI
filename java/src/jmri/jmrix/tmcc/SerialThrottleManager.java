@@ -1,6 +1,7 @@
 package jmri.jmrix.tmcc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -49,6 +50,6 @@ public class SerialThrottleManager extends AbstractThrottleManager {
      */
     public boolean addressTypeUnique() { return false; }
 
-    static Logger log = Logger.getLogger(SerialThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialThrottleManager.class.getName());
 
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.roster;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -192,6 +193,6 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     
     // initialize logging
     static Logger log
-        = Logger.getLogger(AbstractRosterItemAction.class.getName());
+        = LoggerFactory.getLogger(AbstractRosterItemAction.class.getName());
 
 }

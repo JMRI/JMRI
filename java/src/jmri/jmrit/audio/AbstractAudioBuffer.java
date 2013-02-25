@@ -2,7 +2,8 @@
 
 package jmri.jmrit.audio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractAudio;
 import jmri.util.FileUtil;
 import java.io.InputStream;
@@ -296,7 +297,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
         // Move along... nothing to see here...
     }
 
-    private static final Logger log = Logger.getLogger(AbstractAudioBuffer.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioBuffer.class.getName());
 }
 
 /* $(#)AbstractAudioBuffer.java */

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.acela;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -483,7 +484,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    static Logger log = Logger.getLogger(AcelaTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaTrafficController.class.getName());
 }
 
 /* @(#)AcelaTrafficController.java */

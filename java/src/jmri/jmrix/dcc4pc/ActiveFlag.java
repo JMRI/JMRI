@@ -2,7 +2,8 @@
 
 package jmri.jmrix.dcc4pc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide a flag to indicate that the subsystem provided by
@@ -24,7 +25,7 @@ abstract public class ActiveFlag {
         return flag;
     }
 
-    static Logger log = Logger.getLogger(ActiveFlag.class.getName());
+    static Logger log = LoggerFactory.getLogger(ActiveFlag.class.getName());
 
 }
 

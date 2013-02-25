@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
 
 import javax.swing.BorderFactory;
@@ -172,6 +173,6 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 			super.checkBoxActionPerformed(ae);
 	}
 
-	static Logger log = Logger.getLogger(StagingEditFrame.class
+	static Logger log = LoggerFactory.getLogger(StagingEditFrame.class
 			.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.adapters.lawicell;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
@@ -189,6 +190,6 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     
     public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
-    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.powerline;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -199,7 +200,7 @@ abstract public class SerialTrafficController extends AbstractMRTrafficControlle
      */
     protected AbstractMRReply newReply() {return null;}
       
-    static Logger log = Logger.getLogger(SerialTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialTrafficController.class.getName());
 
 }
 

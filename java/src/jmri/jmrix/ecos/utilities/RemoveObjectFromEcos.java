@@ -1,6 +1,7 @@
 package jmri.jmrix.ecos.utilities;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.ecos.*;
 
 public class RemoveObjectFromEcos implements EcosListener{
@@ -74,5 +75,5 @@ public class RemoveObjectFromEcos implements EcosListener{
         // messages are ignored
     }
     
-    static Logger log = Logger.getLogger(RemoveObjectFromEcos.class.getName());
+    static Logger log = LoggerFactory.getLogger(RemoveObjectFromEcos.class.getName());
 }

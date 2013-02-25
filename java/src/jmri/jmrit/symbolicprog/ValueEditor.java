@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -153,5 +154,5 @@ public class ValueEditor extends JComboBox implements TableCellEditor, FocusList
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(ValueEditor.class.getName());
+    static Logger log = LoggerFactory.getLogger(ValueEditor.class.getName());
 }

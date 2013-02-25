@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -569,7 +570,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (!validateNumericalInput(text)){
                     String msg = java.text.MessageFormat.format(rb
                         .getString("ShouldBeNumber"), new Object[] { rb.getString("BlockLengthColName") });
-                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(rb.getString("ErrorTitle"), msg, getClassName(), "length", false, false, org.apache.log4j.Level.WARN);
+                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showWarningMessage(rb.getString("ErrorTitle"), msg, getClassName(), "length", false, false);
                 }
             }
             public void keyTyped(KeyEvent keyEvent) {
@@ -602,7 +603,7 @@ public class BlockTableAction extends AbstractTableAction {
                 String msg = java.text.MessageFormat.format(rb
                     .getString("ShouldBeNumber"), new Object[] { rb.getString("LabelNumberToAdd") });
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage(rb.getString("ErrorTitle"),msg,""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage(rb.getString("ErrorTitle"),msg,""+ex, "",true, false);
                 return;
             }
         }
@@ -705,7 +706,7 @@ public class BlockTableAction extends AbstractTableAction {
     
     protected String getClassName() { return BlockTableAction.class.getName(); }
     
-    static final Logger log = Logger.getLogger(BlockTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(BlockTableAction.class.getName());
 }
 
 /* @(#)BlockTableAction.java */

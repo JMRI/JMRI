@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 
@@ -13,7 +14,7 @@ import java.io.IOException;
  * @author Gregory Madsen Copyright (C) 2012
  */
 public class AutoBackup extends BackupBase {
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(AutoBackup.class.getName());
 
 	/**

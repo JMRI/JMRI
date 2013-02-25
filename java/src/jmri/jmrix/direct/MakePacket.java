@@ -2,7 +2,8 @@
 
 package jmri.jmrix.direct;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide utilities for coding/decoding NMRA S&RP DCC packets into
@@ -444,7 +445,7 @@ static boolean readFirstChild(int bs[], int offset, int validBits,
     }
   }
 
-  static Logger log = Logger.getLogger(
+  static Logger log = LoggerFactory.getLogger(
       MakePacket.class.getName());
 }
 

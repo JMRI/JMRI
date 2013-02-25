@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -472,6 +473,6 @@ public class MultiSensorIconAdder extends IconAdder {
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(MultiSensorIconAdder.class.getName());
+    static Logger log = LoggerFactory.getLogger(MultiSensorIconAdder.class.getName());
 }
 

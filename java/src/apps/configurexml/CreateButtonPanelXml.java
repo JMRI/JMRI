@@ -1,6 +1,7 @@
 package apps.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.CreateButtonPanel;
 
 import jmri.InstanceManager;
@@ -55,6 +56,6 @@ public class CreateButtonPanelXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Unexpected call of load(Element, Object)");
     }
     // initialize logging
-    static Logger log = Logger.getLogger(CreateButtonPanelXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(CreateButtonPanelXml.class.getName());
 
 }

@@ -7,7 +7,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.net.URI;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.EntityResolver;
 import org.xml.sax.InputSource;
 
@@ -156,8 +157,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 return null;
             }
         } catch (Exception e1) { // was java.net.URISyntaxException, but that's not in Java 1.3.1
-            log.warn(e1);
-            e1.printStackTrace();
+            log.warn(e1.getLocalizedMessage(), e1);
             return null;
         } catch (NoClassDefFoundError e2) { // working on an old version of java, go with default quietly
             if (!toldYouOnce) log.info("Falling back to defailt resolver due to JVM version");
@@ -167,7 +167,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
     }
 
     static private boolean toldYouOnce = false;
-    static private Logger log = Logger.getLogger(JmriLocalEntityResolver.class.getName());
+    static private Logger log = LoggerFactory.getLogger(JmriLocalEntityResolver.class.getName());
 
 }
  

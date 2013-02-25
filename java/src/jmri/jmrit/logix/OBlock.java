@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 import java.util.ArrayList;
 import java.util.Enumeration;
@@ -612,5 +613,5 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             Bundle.getMessage("BlockDescription"), getDisplayName());
     }
     
-    static Logger log = Logger.getLogger(OBlock.class.getName());
+    static Logger log = LoggerFactory.getLogger(OBlock.class.getName());
 }

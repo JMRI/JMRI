@@ -1,5 +1,6 @@
 package jmri.jmrit.throttle;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -217,7 +218,7 @@ public class ThrottleFrameManager
 		throttlePreferencesFrame.requestFocus();
 	}
 	
-    static Logger log = Logger.getLogger(ThrottleFrameManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(ThrottleFrameManager.class.getName());
 }
 
 

@@ -2,7 +2,8 @@
 
 package jmri.managers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -461,11 +462,11 @@ public class DefaultIdTagManager extends AbstractManager
 
         private static String fileLocation = FileUtil.getUserFilesPath();
 
-        private static final Logger log = Logger.getLogger(DefaultIdTagManager.IdTagManagerXml.class.getName());
+        private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.IdTagManagerXml.class.getName());
 
     }
 
-    private static final Logger log = Logger.getLogger(DefaultIdTagManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class.getName());
 
 }
 

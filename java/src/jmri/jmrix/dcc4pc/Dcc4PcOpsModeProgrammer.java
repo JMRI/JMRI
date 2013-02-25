@@ -2,7 +2,8 @@
 
 package jmri.jmrix.dcc4pc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -130,7 +131,7 @@ public class Dcc4PcOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer imple
 
 
     // initialize logging
-    static Logger log = Logger.getLogger(Dcc4PcOpsModeProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(Dcc4PcOpsModeProgrammer.class.getName());
 
 }
 

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
 import java.io.File;
 import java.util.ArrayList;
@@ -762,6 +763,6 @@ public class PrintOptionFrame extends OperationsFrame {
 		fontComboBox.setSelectedItem(Setup.getFontName());
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(OperationsSetupFrame.class.getName());
 }

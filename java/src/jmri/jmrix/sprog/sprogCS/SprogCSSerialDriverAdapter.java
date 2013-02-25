@@ -2,7 +2,8 @@
 
 package jmri.jmrix.sprog.sprogCS;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
@@ -70,7 +71,7 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         mInstance = null;
     }
     
-    static Logger log = Logger.getLogger(SprogCSSerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
 
 }
 

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz.xntcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent; 
 import java.awt.event.ActionListener;
 
@@ -128,6 +129,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
     public boolean isHostNameAdvanced(){ return true;}
 
 
-static Logger log = Logger.getLogger(ConnectionConfig.class.getName());
+static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
 
 }

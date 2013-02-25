@@ -2,7 +2,8 @@
 
 package jmri.jmrix.acela;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 
 /**
@@ -226,7 +227,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
 
     static AcelaSensorManager _instance = null;
 
-    static Logger log = Logger.getLogger(AcelaSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaSensorManager.class.getName());
 }
 
 /* @(#)AcelaSensorManager.java */

@@ -1,7 +1,8 @@
 
 package jmri.jmrit.display.palette;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -287,6 +288,6 @@ public class DetectionPanel extends JPanel {
         _blockPathPanel.setVisible(true);
     }
 
-    static Logger log = Logger.getLogger(DetectionPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(DetectionPanel.class.getName());
 }
 

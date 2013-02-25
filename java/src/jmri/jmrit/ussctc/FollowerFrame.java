@@ -2,7 +2,8 @@
 
 package jmri.jmrit.ussctc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 /**
@@ -30,6 +31,6 @@ public class FollowerFrame extends jmri.util.JmriJFrame {
         pack();
     }
 
-    static Logger log = Logger.getLogger(FollowerFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(FollowerFrame.class.getName());
 
 }

@@ -19,7 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JSlider;
 import javax.swing.JToggleButton;
 import javax.swing.BorderFactory;
@@ -121,6 +122,6 @@ class DieselPane extends EnginePane {
 	throttle_slider.setValue(t);
     }
 
-    static Logger log = Logger.getLogger(DieselPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(DieselPane.class.getName());
 
 }

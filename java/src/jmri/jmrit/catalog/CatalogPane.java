@@ -2,7 +2,8 @@
 
 package jmri.jmrit.catalog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import javax.swing.BoxLayout;
@@ -156,6 +157,6 @@ public class CatalogPane extends JPanel {
         frame.setVisible(true);
     }
 
-    static Logger log = Logger.getLogger(CatalogPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(CatalogPane.class.getName());
 }
 

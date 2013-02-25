@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.Frame;
 import javax.swing.AbstractAction;
@@ -104,7 +105,7 @@ public class CarRosterMenu extends JMenu {
 	}
 
 	// initialize logging
-	static Logger log = Logger.getLogger(CarRosterMenu.class
+	static Logger log = LoggerFactory.getLogger(CarRosterMenu.class
 			.getName());
 
 }

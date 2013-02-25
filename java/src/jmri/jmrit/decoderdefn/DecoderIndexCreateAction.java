@@ -2,7 +2,8 @@
 
 package jmri.jmrit.decoderdefn;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
@@ -39,7 +40,7 @@ public class DecoderIndexCreateAction extends JmriAbstractAction {
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(DecoderIndexCreateAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(DecoderIndexCreateAction.class.getName());
 
     // main entry point to run standalone
     static public void main(String[] args) {

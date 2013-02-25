@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
@@ -339,6 +340,6 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 			updateComboBox();
  	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(LocationsByCarTypeFrame.class.getName());
 }

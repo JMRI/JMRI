@@ -1,7 +1,8 @@
 // TrainInfoFile.java
 package jmri.jmrit.dispatcher;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import java.util.ResourceBundle;
@@ -316,7 +317,7 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
             log.error("failed to delete TrainInfo file - " + name);
         }
     }
-    static Logger log = Logger.getLogger(TrainInfoFile.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrainInfoFile.class.getName());
 }
 
 /* @(#)TrainInfoFile.java */

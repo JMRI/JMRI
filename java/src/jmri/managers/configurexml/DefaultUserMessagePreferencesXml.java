@@ -1,6 +1,7 @@
 package jmri.managers.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 import java.util.List;
 import java.lang.reflect.*;
@@ -365,6 +366,6 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
     }
     
     
-    static Logger log = Logger.getLogger(DefaultUserMessagePreferencesXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultUserMessagePreferencesXml.class.getName());
 }
     

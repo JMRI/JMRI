@@ -1,7 +1,8 @@
 // SystemConnectionMemo.java
 
 package jmri.jmrix;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 import java.beans.PropertyChangeEvent;
@@ -245,7 +246,7 @@ abstract public class SystemConnectionMemo {
     // data members to hold contact with the property listeners
     final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
     
-    static Logger log = Logger.getLogger(SystemConnectionMemo.class.getName());
+    static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
 }
 
 

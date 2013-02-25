@@ -17,7 +17,8 @@ import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServerManager;
 import static jmri.web.xmlio.XmlIO.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -42,7 +43,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
     static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
     static HashMap<Integer, ThrottleContext> map = new HashMap<Integer, ThrottleContext>();
     boolean useAttributes = false;
-    static Logger log = Logger.getLogger(DefaultXmlIOServer.class);
+    static Logger log = LoggerFactory.getLogger(DefaultXmlIOServer.class);
     
     @Override
     public Element immediateRequest(Element e) throws JmriException {

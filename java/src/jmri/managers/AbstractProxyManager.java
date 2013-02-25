@@ -2,7 +2,8 @@
 
 package jmri.managers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import jmri.NamedBean;
 import java.util.ArrayList;
@@ -292,7 +293,7 @@ abstract public class AbstractProxyManager implements Manager {
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(AbstractProxyManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractProxyManager.class.getName());
 }
 
 /* @(#)AbstractProxyManager.java */

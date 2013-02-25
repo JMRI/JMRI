@@ -2,7 +2,8 @@
 
 package jmri.jmrix.nce;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 import jmri.jmrix.AbstractMRReply;
 import jmri.JmriException;
@@ -371,7 +372,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                    showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         
@@ -395,7 +396,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
 		}
         
     }
-    static Logger log = Logger.getLogger(NceSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceSensorManager.class.getName());
 }
 
 /* @(#)NceSensorManager.java */

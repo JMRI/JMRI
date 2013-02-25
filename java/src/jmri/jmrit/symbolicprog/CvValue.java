@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.ProgListener;
 
@@ -573,6 +574,6 @@ public class CvValue extends AbstractValue implements ProgListener {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(CvValue.class.getName());
+    static Logger log = LoggerFactory.getLogger(CvValue.class.getName());
 
 }

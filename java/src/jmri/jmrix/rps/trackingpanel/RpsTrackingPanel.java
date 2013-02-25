@@ -2,7 +2,8 @@
 
 package jmri.jmrix.rps.trackingpanel;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.*;
 
 import java.awt.*;
@@ -288,5 +289,5 @@ public class RpsTrackingPanel extends javax.swing.JPanel
         Shape rep2;
         Measurement measurement;
     }
-    static Logger log = Logger.getLogger(RpsTrackingPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(RpsTrackingPanel.class.getName());
 }

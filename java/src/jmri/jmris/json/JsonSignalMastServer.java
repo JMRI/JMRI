@@ -11,7 +11,8 @@ import jmri.SignalMast;
 import jmri.jmris.AbstractSignalMastServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JSON Web Socket interface between the JMRI SignalMast manager and a network
@@ -24,7 +25,7 @@ public class JsonSignalMastServer extends AbstractSignalMastServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    static Logger log = Logger.getLogger(JsonSignalMastServer.class);
+    static Logger log = LoggerFactory.getLogger(JsonSignalMastServer.class);
 
     public JsonSignalMastServer(JmriConnection connection) {
         super();

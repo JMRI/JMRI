@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.uhlenbrock;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.NoSuchElementException;
 
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -366,7 +367,7 @@ public class IBLnPacketizer extends LnPacketizer implements LocoNetInterface {
     }
 
     
-    static Logger log = Logger.getLogger(IBLnPacketizer.class.getName());
+    static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class.getName());
 }
 
 /* @(#)LnPacketizer.java */

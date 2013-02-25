@@ -24,7 +24,8 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 import javax.swing.*;
 import jmri.jmrit.operations.trains.TrainManager;
@@ -71,5 +72,5 @@ public class VSDOptionsDialog extends JDialog {
     }
 
     // Log not used... yet...
-    //    private static final Logger log = Logger.getLogger(VSDOptionsDialog.class.getName());
+    //    private static final Logger log = LoggerFactory.getLogger(VSDOptionsDialog.class.getName());
 }

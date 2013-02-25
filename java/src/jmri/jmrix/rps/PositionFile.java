@@ -1,6 +1,7 @@
 package jmri.jmrix.rps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 import org.jdom.*;
 import java.util.*;
@@ -315,5 +316,5 @@ public class PositionFile extends XmlFile {
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(PositionFile.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionFile.class.getName());
 }

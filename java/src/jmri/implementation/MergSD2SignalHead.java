@@ -14,7 +14,8 @@
 
 package jmri.implementation;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
 
@@ -291,6 +292,6 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         }
     }
     
-    static Logger log = Logger.getLogger(MergSD2SignalHead.class.getName());
+    static Logger log = LoggerFactory.getLogger(MergSD2SignalHead.class.getName());
     
 }

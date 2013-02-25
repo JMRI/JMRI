@@ -2,7 +2,8 @@
 
 package jmri.jmrit.audio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Mixer;
@@ -167,7 +168,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
         return _mixer;
     }
 
-    private static final Logger log = Logger.getLogger(JavaSoundAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioFactory.class.getName());
 
 }
 

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.cbus.swing.configtool;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrix.can.*;
 import jmri.jmrix.can.cbus.CbusMessage;
@@ -128,7 +129,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         tc.removeCanListener(this);
     }
 
-    static Logger log = Logger.getLogger(ConfigToolPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConfigToolPane.class.getName());
 
     /** 
      * Class to build one NamedBean

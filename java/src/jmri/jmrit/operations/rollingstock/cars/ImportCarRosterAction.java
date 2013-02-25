@@ -1,7 +1,8 @@
 // ImportCarRosterAction.java
 
 package jmri.jmrit.operations.rollingstock.cars;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -27,6 +28,6 @@ public class ImportCarRosterAction extends AbstractAction {
 		mb.start();
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(ImportCarRosterAction.class.getName());
 }

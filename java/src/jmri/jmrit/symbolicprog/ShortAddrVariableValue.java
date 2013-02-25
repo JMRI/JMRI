@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import java.util.Vector;
@@ -98,6 +99,6 @@ public class ShortAddrVariableValue extends DecVariableValue {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(ShortAddrVariableValue.class.getName());
+    static Logger log = LoggerFactory.getLogger(ShortAddrVariableValue.class.getName());
 
 }

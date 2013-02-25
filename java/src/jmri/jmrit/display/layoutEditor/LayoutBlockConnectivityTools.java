@@ -1,16 +1,17 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.apache.log4j.Logger;
-import jmri.Sensor;
-import jmri.Block;
-import jmri.SignalMast;
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.JmriException;
-
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import jmri.Block;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.NamedBean;
+import jmri.Sensor;
+import jmri.SignalMast;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 /**
 * These are a series of layout block connectivity tools that can be used
 * when the advanced layout block routing has been enabled.
@@ -533,8 +534,6 @@ public class LayoutBlockConnectivityTools{
     String lastErrorMessage = "Unknown Error Occured";
     //We need to take into account if the returned block has a signalmast attached.
     int findBestHop(final Block preBlock, final Block currentBlock, Block destBlock, int direction, List<Integer> offSet, boolean validateOnly, int pathMethod){
-        org.apache.log4j.Logger lBlockManLog = Logger.getLogger(InstanceManager.layoutBlockManagerInstance().getClass().getName());
-        org.apache.log4j.Level currentLevel = lBlockManLog.getLevel();
         int blockindex = 0;
         Block block;
         LayoutBlock currentLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(currentBlock);
@@ -570,7 +569,7 @@ public class LayoutBlockConnectivityTools{
                     jmri.NamedBean foundBean = null;
                     /* We change the logging level to fatal in the layout block manager as we are testing to make sure that no signalhead/mast exists
                        this would generate an error message that is expected.*/
-                    lBlockManLog.setLevel(org.apache.log4j.Level.FATAL);
+                    MDC.put("loggingDisabled", LayoutBlockManager.class.getName());
                     switch(pathMethod){
                         case MASTTOMAST : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(currentBlock, blocktoCheck); break;
                         case HEADTOHEAD : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(currentBlock, blocktoCheck); break;
@@ -578,7 +577,7 @@ public class LayoutBlockConnectivityTools{
                         case NONE : break;
                         default : foundBean = InstanceManager.layoutBlockManagerInstance().getFacingNamedBean(currentBlock, blocktoCheck, null); break;
                     }
-                    lBlockManLog.setLevel(currentLevel);
+                    MDC.remove("loggingDisabled");
                     if (foundBean==null){
                         log.debug("No object found so okay to return");
                         return blockindex;
@@ -853,6 +852,6 @@ public class LayoutBlockConnectivityTools{
         }
     }
     
-    static Logger log = Logger.getLogger(LayoutBlockConnectivityTools.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutBlockConnectivityTools.class.getName());
 
 }

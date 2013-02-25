@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -137,5 +138,5 @@ public class BackgroundItemPanel extends IconItemPanel {
         }
     }
 
-    static Logger log = Logger.getLogger(BackgroundItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(BackgroundItemPanel.class.getName());
 }

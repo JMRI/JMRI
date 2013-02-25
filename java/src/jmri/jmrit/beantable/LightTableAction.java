@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -1818,6 +1819,6 @@ public class LightTableAction extends AbstractTableAction {
     
     protected String getClassName() { return LightTableAction.class.getName(); }
 
-    static final Logger log = Logger.getLogger(LightTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(LightTableAction.class.getName());
 }
 /* @(#)LightTableAction.java */

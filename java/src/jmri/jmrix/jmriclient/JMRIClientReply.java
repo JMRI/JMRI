@@ -2,7 +2,8 @@
 
 package jmri.jmrix.jmriclient;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Carries the reply to an JMRIClientMessage.
@@ -75,7 +76,7 @@ public class JMRIClientReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
-    static Logger log = Logger.getLogger(JMRIClientReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(JMRIClientReply.class.getName());
 
 }
 

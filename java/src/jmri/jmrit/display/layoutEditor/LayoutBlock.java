@@ -1,25 +1,23 @@
 // jmri.jmrit.display.LayoutBlock.java
 package jmri.jmrit.display.layoutEditor;
 
-import org.apache.log4j.Logger;
-import jmri.InstanceManager;
-import jmri.util.JmriJFrame;
-import jmri.Path;
-import jmri.Block;
-import jmri.Turnout;
-import jmri.NamedBeanHandle;
-import javax.swing.JOptionPane;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.*;
 import java.util.*;
 import java.util.List;
-
+import javax.swing.*;
+import jmri.Block;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.Path;
 import jmri.Sensor;
+import jmri.Turnout;
 import jmri.implementation.AbstractNamedBean;
+import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * A LayoutBlock is a group of track segments and turnouts on a LayoutEditor panel 
@@ -2058,18 +2056,13 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         ArrayList<LayoutTurnout> stod = new ArrayList<LayoutTurnout>();
         ArrayList<Integer> stodSet = new ArrayList<Integer>();
         
-        /* We change the logging level to fatal in the connectivity Util as we are testing all possible 
-        combinations including those that are invalid which would generate errors */
-        org.apache.log4j.Logger connectionLog = Logger.getLogger(connection.getClass().getName());
-        org.apache.log4j.Level currentLevel = connectionLog.getLevel();
-       
         try{
-            connectionLog.setLevel(org.apache.log4j.Level.FATAL);
+            MDC.put("loggingDisabled", connection.getClass().getCanonicalName());
             stod = connection.getTurnoutList(block, srcBlock, dstBlock);
             stodSet = connection.getTurnoutSettingList();
-            connectionLog.setLevel(currentLevel);
+            MDC.remove("loggingDisabled");
         } catch (java.lang.NullPointerException ex){
-            connectionLog.setLevel(currentLevel);
+            MDC.remove("loggingDisabled");
             if(enableAddRouteLogging)
                 log.error(block.getDisplayName() + " Exception caught while trying to dicover turnout connectivity\nSource " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName()+"\n"+ex.toString());
             return;
@@ -2082,12 +2075,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         ArrayList<Integer> tmpdtosSet = new ArrayList<Integer>();
         
         try{
-            connectionLog.setLevel(org.apache.log4j.Level.FATAL);
+            MDC.put("loggingDisabled", connection.getClass().getName());
             tmpdtos = connection.getTurnoutList(block, dstBlock, srcBlock);
             tmpdtosSet = connection.getTurnoutSettingList();
-            connectionLog.setLevel(currentLevel);
+            MDC.remove("loggingDisabled");
         } catch (java.lang.NullPointerException ex){
-            connectionLog.setLevel(currentLevel);
+            MDC.remove("loggingDisabled");
             if(enableAddRouteLogging)
                 log.error(block.getDisplayName() + " Exception caught while trying to dicover turnout connectivity\nSource " + srcBlock.getDisplayName() + ", dest  " + dstBlock.getDisplayName()+"\n"+ex.toString());
             return;
@@ -2453,7 +2446,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             if (routes.get(i).getNextBlock()==this.getBlock()){
                 log.info("Found a block that is directly connected");
                 if ((routes.get(i).getDestBlock()==destBlock)) {
-                    log.info((routes.get(i).getDirection()&direction));
+                    log.info(Integer.toString(routes.get(i).getDirection() & direction));
                     if ((routes.get(i).getDirection()&direction)!=0){
                         return i;
                     }
@@ -2470,7 +2463,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         for (int i = offSet; i<routes.size(); i++){
             Routes r = routes.get(i);
             if ((r.getDestBlock()==destBlock)) {
-                log.info((r.getDirection()&direction));
+                log.info(Integer.toString(r.getDirection()&direction));
                 if ((r.getDirection()&direction)!=0){
                     return i;
                 }
@@ -3844,6 +3837,6 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
     }
     
-    static Logger log = Logger.getLogger(LayoutBlock.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutBlock.class.getName());
 
 }

@@ -3,7 +3,8 @@ package jmri.jmris.json;
 import java.io.File;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -18,7 +19,7 @@ public class JsonServerPreferences extends Bean {
     // initial defaults if prefs not found
     private int heartbeatInterval = 15000;
     private int port = 2056;
-    private static Logger log = Logger.getLogger(JsonServerPreferences.class);
+    private static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
     public JsonServerPreferences(String fileName) {
         openFile(fileName);

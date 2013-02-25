@@ -12,7 +12,8 @@ package jmri.implementation;
  *
  * @version     $Revision$
  */
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
@@ -1003,7 +1004,7 @@ public class DefaultRoute extends AbstractNamedBean
     }
 
 
-    static final Logger log = Logger.getLogger(DefaultRoute.class.getName());
+    static final Logger log = LoggerFactory.getLogger(DefaultRoute.class.getName());
     
     
 }
@@ -1093,7 +1094,7 @@ class SetRouteThread extends Thread {
 	}
 	
 	private DefaultRoute r;
-    static final Logger log = Logger.getLogger(SetRouteThread.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SetRouteThread.class.getName());
 }
 
 /* @(#)DefaultRoute.java */

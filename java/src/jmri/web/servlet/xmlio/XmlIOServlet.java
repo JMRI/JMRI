@@ -15,7 +15,8 @@ import jmri.web.xmlio.XmlIO;
 import jmri.web.xmlio.XmlIOFactory;
 import jmri.web.xmlio.XmlIORequestor;
 import jmri.web.xmlio.XmlIOServer;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
@@ -29,7 +30,7 @@ import org.jdom.output.XMLOutputter;
 public class XmlIOServlet extends HttpServlet implements XmlIORequestor {
 
     static XmlIOFactory factory = null;
-    static Logger log = Logger.getLogger(XmlIOServlet.class);
+    static Logger log = LoggerFactory.getLogger(XmlIOServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

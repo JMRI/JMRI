@@ -2,7 +2,8 @@
  
 package jmri.jmrix.rps.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -92,5 +93,5 @@ public class AffineEntryPanel extends javax.swing.JPanel {
     }
     AffineTransform t = new AffineTransform();
     
-    static Logger log = Logger.getLogger(AffineEntryPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(AffineEntryPanel.class.getName());
 }

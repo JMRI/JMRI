@@ -2,7 +2,8 @@
 
 package jmri;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Represent an EntryPoint to a Section of track. 
@@ -113,7 +114,7 @@ public class EntryPoint {
 	public String getFromBlockDirection() { return mFromBlockDirection; }
 	
     
-    static Logger log = Logger.getLogger(EntryPoint.class.getName());
+    static Logger log = LoggerFactory.getLogger(EntryPoint.class.getName());
 }
 
 /* @(#)EntryPoint.java */

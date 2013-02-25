@@ -1,6 +1,7 @@
 // SignalHeadSignalMast.javaa
 package jmri.implementation;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.*;
 
 import jmri.*;
@@ -272,7 +273,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         return null;
     }
     
-    static final protected Logger log = Logger.getLogger(SignalHeadSignalMast.class.getName());
+    static final protected Logger log = LoggerFactory.getLogger(SignalHeadSignalMast.class.getName());
 }
 
 /* @(#)SignalHeadSignalMast.java */

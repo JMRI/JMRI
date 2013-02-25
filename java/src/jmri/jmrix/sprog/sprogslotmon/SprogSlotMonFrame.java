@@ -2,7 +2,8 @@
 
 package jmri.jmrix.sprog.sprogslotmon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants;
 
@@ -162,6 +163,6 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
       super.dispose();
     }
 
-    static Logger log = Logger.getLogger(SprogSlotMonFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogSlotMonFrame.class.getName());
 
   }

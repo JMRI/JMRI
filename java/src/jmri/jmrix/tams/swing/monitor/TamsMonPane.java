@@ -11,7 +11,8 @@
 
 package jmri.jmrix.tams.swing.monitor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JPanel;
 import javax.swing.JCheckBox;
 import jmri.jmrix.tams.*;
@@ -107,7 +108,7 @@ public class TamsMonPane extends jmri.jmrix.AbstractMonPane implements TamsListe
         }
     }
 
-	static Logger log = Logger.getLogger(TamsMonPane.class.getName());
+	static Logger log = LoggerFactory.getLogger(TamsMonPane.class.getName());
 
 }
 

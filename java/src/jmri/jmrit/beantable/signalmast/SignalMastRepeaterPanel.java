@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable.signalmast;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.SignalMast;
 import jmri.NamedBean;
 import jmri.managers.DefaultSignalMastManager;
@@ -348,6 +349,6 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         }
     }
     
-    static final Logger log = Logger.getLogger(SignalMastRepeaterPanel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SignalMastRepeaterPanel.class.getName());
 
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.cbus;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import java.awt.Color;
@@ -93,5 +94,5 @@ public class CbusEventFilter {
     private int _type;
     private Color _color;
     
-    static Logger log = Logger.getLogger(CbusEventFilter.class.getName());
+    static Logger log = LoggerFactory.getLogger(CbusEventFilter.class.getName());
 }

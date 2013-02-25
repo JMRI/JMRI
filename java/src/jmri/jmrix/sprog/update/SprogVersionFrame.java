@@ -2,7 +2,8 @@
 
 package jmri.jmrix.sprog.update;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 /**
@@ -35,5 +36,5 @@ public class SprogVersionFrame extends jmri.util.JmriJFrame implements SprogVers
         dispose();
     }
 
-    static Logger log = Logger.getLogger(SprogVersionFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogVersionFrame.class.getName());
 }

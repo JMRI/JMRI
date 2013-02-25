@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -474,5 +475,5 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         super.dispose();
     }
 
-    static Logger log = Logger.getLogger(IndicatorTurnoutIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndicatorTurnoutIcon.class.getName());
 }

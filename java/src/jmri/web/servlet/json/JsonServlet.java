@@ -18,7 +18,8 @@ import static jmri.jmris.json.JSON.*;
 import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonLister;
 import jmri.jmris.json.JsonServerManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 
@@ -34,7 +35,7 @@ public class JsonServlet extends WebSocketServlet {
     private static final long serialVersionUID = -671593634343578915L;
     private ObjectMapper mapper;
     private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
-    private static Logger log = Logger.getLogger(JsonServlet.class);
+    private static Logger log = LoggerFactory.getLogger(JsonServlet.class);
 
     public JsonServlet() {
         super();

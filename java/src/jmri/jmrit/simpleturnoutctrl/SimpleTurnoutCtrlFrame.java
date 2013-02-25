@@ -2,7 +2,8 @@
 
 package jmri.jmrit.simpleturnoutctrl;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import java.awt.GridBagLayout;
@@ -389,15 +390,14 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
 
     void invalidTurnout(String name, Exception ex) {
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
-                .showInfoMessage("Error",
+                .showErrorMessage("Error",
                                  "Unable to convert \"" + name + "\" to a valid hardware address",
-                                 ex.toString(), "", true, false,
-                                 org.apache.log4j.Level.ERROR);
+                                 ex.toString(), "", true, false);
     }
     
     Turnout turnout = null;
 
-    static Logger log = Logger.getLogger(SimpleTurnoutCtrlFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SimpleTurnoutCtrlFrame.class.getName());
 
     String newState = "";
 }

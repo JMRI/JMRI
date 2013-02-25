@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Specific Backup class for backing up and restoring Operations working files
@@ -11,7 +12,7 @@ import org.apache.log4j.Logger;
  * @author Gregory Madsen Copyright (C) 2012
  */
 public class DefaultBackup extends BackupBase {
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(DefaultBackup.class.getName());
 
 	/**

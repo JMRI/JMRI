@@ -1,13 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
+import java.awt.Shape;
 
 import java.awt.event.ActionEvent;
 import java.awt.geom.RoundRectangle2D;
-import java.awt.Shape;
 import javax.swing.JPopupMenu;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PositionableRoundRect adds corner radii to PositionableShapes.
@@ -64,5 +65,5 @@ public class PositionableRoundRect extends PositionableRectangle {
         return true;
     }
 
-    static Logger log = Logger.getLogger(PositionableRoundRect.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableRoundRect.class.getName());
 }

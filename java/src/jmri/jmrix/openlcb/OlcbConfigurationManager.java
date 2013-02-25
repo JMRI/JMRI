@@ -2,7 +2,8 @@
 
 package jmri.jmrix.openlcb;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.InstanceManager;
 import java.util.ResourceBundle;
@@ -414,7 +415,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         
     }
     
-static Logger log = Logger.getLogger(OlcbConfigurationManager.class.getName());
+static Logger log = LoggerFactory.getLogger(OlcbConfigurationManager.class.getName());
 }
 
 /* @(#)OlcbConfigurationManager.java */

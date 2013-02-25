@@ -29,9 +29,10 @@ import org.apache.log4j.Appender;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.FileAppender;
 import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.apache.log4j.RollingFileAppender;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base class for the core of JMRI applications. <p> This provides a non-GUI
@@ -54,7 +55,7 @@ public abstract class AppsBase {
     protected boolean preferenceFileExists;
     static boolean log4JSetUp = false;
     static boolean preInit = false;
-    static Logger log = Logger.getLogger(AppsBase.class.getName());
+    static Logger log = LoggerFactory.getLogger(AppsBase.class.getName());
 
     /**
      * Initial actions before frame is created, invoked in the applications
@@ -358,7 +359,7 @@ public abstract class AppsBase {
                 PropertyConfigurator.configure(FileUtil.getProgramPath() + logFile);
             } else {
                 BasicConfigurator.configure();
-                Logger.getRootLogger().setLevel(Level.WARN);
+                org.apache.log4j.Logger.getRootLogger().setLevel(Level.WARN);
             }
         } catch (java.lang.NoSuchMethodError e) {
             log.error("Exception starting logging: " + e);
@@ -372,7 +373,7 @@ public abstract class AppsBase {
 
         // now indicate logging locations
         @SuppressWarnings("unchecked")
-        Enumeration<Logger> e = Logger.getRootLogger().getAllAppenders();
+        Enumeration<Logger> e = org.apache.log4j.Logger.getRootLogger().getAllAppenders();
 
         while (e.hasMoreElements()) {
             Appender a = (Appender) e.nextElement();

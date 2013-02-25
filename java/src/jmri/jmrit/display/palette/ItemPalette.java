@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.event.ActionListener;
@@ -621,5 +622,5 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         return panel;
     }
 
-    static Logger log = Logger.getLogger(ItemPalette.class.getName());
+    static Logger log = LoggerFactory.getLogger(ItemPalette.class.getName());
 }

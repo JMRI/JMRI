@@ -1,6 +1,7 @@
 package jmri.jmrix.nce.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -32,5 +33,5 @@ public class NceTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
         return loadTurnouts(turnouts);
     }
 
-    static Logger log = Logger.getLogger(NceTurnoutManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceTurnoutManagerXml.class.getName());
 }

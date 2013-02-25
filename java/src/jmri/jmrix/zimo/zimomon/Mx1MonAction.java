@@ -2,7 +2,8 @@
 
 package jmri.jmrix.zimo.zimomon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -34,7 +35,7 @@ public class Mx1MonAction 			extends AbstractAction {
 
 	}
 
-	static Logger log = Logger.getLogger(Mx1MonAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(Mx1MonAction.class.getName());
 
 }
 

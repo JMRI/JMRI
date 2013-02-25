@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -124,6 +125,6 @@ public class PrintCarLoadsAction extends AbstractAction {
 		return buf.toString();
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(PrintCarLoadsAction.class.getName());
 }

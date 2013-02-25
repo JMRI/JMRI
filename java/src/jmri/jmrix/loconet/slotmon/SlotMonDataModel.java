@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.slotmon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.loconet.LnConstants;
@@ -631,6 +632,6 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         // table = null;
     }
 
-    static Logger log = Logger.getLogger(SlotMonDataModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(SlotMonDataModel.class.getName());
 
 }

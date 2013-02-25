@@ -2,7 +2,8 @@
 
 package jmri.jmrix.easydcc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -103,7 +104,7 @@ public class EasyDccOpsModeProgrammer extends EasyDccProgrammer  {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(EasyDccOpsModeProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccOpsModeProgrammer.class.getName());
 
 }
 

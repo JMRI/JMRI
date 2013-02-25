@@ -1,7 +1,8 @@
 // MarklinSystemConnectionMemo.java
 
 package jmri.jmrix.marklin;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
@@ -162,7 +163,7 @@ public class MarklinSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         super.dispose();
     }
     
-    static Logger log = Logger.getLogger(MarklinSystemConnectionMemo.class.getName());
+    static Logger log = LoggerFactory.getLogger(MarklinSystemConnectionMemo.class.getName());
 }
 
 

@@ -1,6 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.*;
 
@@ -67,5 +68,5 @@ public class PositionableEllipseXml extends PositionableShapeXml {
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
 
-    static Logger log = Logger.getLogger(PositionableEllipseXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableEllipseXml.class.getName());
 }

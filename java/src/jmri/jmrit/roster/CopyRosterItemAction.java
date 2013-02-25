@@ -2,7 +2,8 @@
 
 package jmri.jmrit.roster;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
@@ -96,7 +97,7 @@ public class CopyRosterItemAction extends AbstractRosterItemAction {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(CopyRosterItemAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(CopyRosterItemAction.class.getName());
 
     /**
      * Main entry point to run as standalone tool. This doesn't work

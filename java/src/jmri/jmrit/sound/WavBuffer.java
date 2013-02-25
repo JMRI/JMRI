@@ -1,6 +1,7 @@
 package jmri.jmrit.sound;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -150,5 +151,5 @@ public class WavBuffer {
         return buffer;
     }
     
-    static Logger log = Logger.getLogger(WavBuffer.class.getName());
+    static Logger log = LoggerFactory.getLogger(WavBuffer.class.getName());
 }

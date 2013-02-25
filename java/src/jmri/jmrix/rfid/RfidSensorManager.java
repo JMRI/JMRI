@@ -2,7 +2,8 @@
 
 package jmri.jmrix.rfid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manage the Rfid-specific Sensor implementation.
@@ -43,7 +44,7 @@ abstract public class RfidSensorManager extends jmri.managers.AbstractSensorMana
         log.warn("Unexpected message received"+m);
     }
 
-    private static final Logger log = Logger.getLogger(RfidSensorManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidSensorManager.class.getName());
 
 }
 

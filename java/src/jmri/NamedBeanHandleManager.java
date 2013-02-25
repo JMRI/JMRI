@@ -1,6 +1,7 @@
 package jmri;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -235,5 +236,5 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         throw new UnsupportedOperationException("Not supported yet.");
     }
     
-    static Logger log = Logger.getLogger(NamedBeanHandleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class.getName());
 }

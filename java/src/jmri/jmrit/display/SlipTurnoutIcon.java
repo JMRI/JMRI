@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
@@ -1097,7 +1098,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 				thread.start();
 			}
     }
-    static Logger log = Logger.getLogger(SlipTurnoutIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(SlipTurnoutIcon.class.getName());
 }
 
 class SetSlipThread extends Thread {
@@ -1130,7 +1131,7 @@ class SetSlipThread extends Thread {
 	}
     
     private SlipTurnoutIcon s;
-    static final Logger log = Logger.getLogger(SetSlipThread.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SetSlipThread.class.getName());
 
     
 }

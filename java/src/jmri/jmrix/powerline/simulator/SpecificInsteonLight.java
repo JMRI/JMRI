@@ -2,7 +2,8 @@
 
 package jmri.jmrix.powerline.simulator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.powerline.*;
 import jmri.util.StringUtil;
 
@@ -168,7 +169,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         }
     }
 
-    static Logger log = Logger.getLogger(SpecificInsteonLight.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpecificInsteonLight.class.getName());
 }
 
 /* @(#)SpecificInsteonLight.java */

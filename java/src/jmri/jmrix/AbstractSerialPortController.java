@@ -2,7 +2,8 @@
 
 package jmri.jmrix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Enumeration;
 import java.util.Vector;
 
@@ -261,6 +262,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         }
     }
     
-    final static protected Logger log = Logger.getLogger(AbstractSerialPortController.class.getName());
+    final static protected Logger log = LoggerFactory.getLogger(AbstractSerialPortController.class.getName());
 
 }

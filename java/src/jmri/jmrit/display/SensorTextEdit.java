@@ -2,7 +2,8 @@
 
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -194,6 +195,6 @@ public class SensorTextEdit extends JmriJFrame
 		}
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(SensorTextEdit.class.getName());
 }

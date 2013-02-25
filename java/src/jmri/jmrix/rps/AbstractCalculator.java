@@ -2,7 +2,8 @@
 
 package jmri.jmrix.rps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Point3d;
 
 /**
@@ -67,7 +68,7 @@ public abstract class AbstractCalculator implements Calculator {
         }
     }
     
-    static Logger log = Logger.getLogger(AbstractCalculator.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractCalculator.class.getName());
 
 }
 

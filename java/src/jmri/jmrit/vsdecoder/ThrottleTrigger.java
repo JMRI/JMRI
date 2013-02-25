@@ -19,7 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18245 $
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -83,7 +84,7 @@ class ThrottleTrigger extends Trigger implements PropertyChangeListener {
 	}
     }
 
-    private static final Logger log = Logger.getLogger(ThrottleTrigger.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ThrottleTrigger.class.getName());
 
 
 }

@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -854,5 +855,5 @@ public class PositionablePropertiesUtil {
         JLabel getLabel() { return example; }
     
     }
-    static Logger log = Logger.getLogger(PositionablePropertiesUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionablePropertiesUtil.class.getName());
 }

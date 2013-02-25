@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Definition of objects to handle configuring a LocoNetOverTcp layout connection
@@ -40,6 +41,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
         }
     }
 
-    static Logger log = Logger.getLogger(ConnectionConfig.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
 }
 

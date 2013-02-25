@@ -1,6 +1,7 @@
 package jmri.jmrix.ecos.utilities;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.ecos.*;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.decoderdefn.*;
@@ -120,5 +121,5 @@ public class RosterToEcos implements EcosListener{
         createloco = false;        
     }
     
-    static Logger log = Logger.getLogger(RosterToEcos.class.getName());
+    static Logger log = LoggerFactory.getLogger(RosterToEcos.class.getName());
 }

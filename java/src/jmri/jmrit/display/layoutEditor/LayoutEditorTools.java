@@ -2,7 +2,8 @@
 
 package jmri.jmrit.display.layoutEditor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.util.JmriJFrame;
 import jmri.Conditional;
@@ -8645,8 +8646,8 @@ public class LayoutEditorTools
             double x_dist_to_Icon = bpa+to;
             double y_dist_to_Icon = (bpo-ta)-(l.maxHeight()-iconAdjOpp);
             
-            log.debug(((bpo-ta)-(l.maxHeight()-iconAdjOpp)));
-            log.debug((bpo-(iconAdj+ta)));
+            log.debug(Double.toString((bpo-ta)-(l.maxHeight()-iconAdjOpp)));
+            log.debug(Double.toString(bpo-(iconAdj+ta)));
             /*if(angleDeg<45){
                 y_dist_to_Icon = (bpo-ta)-(l.maxHeight()-iconAdjOpp);
             } else {
@@ -12996,5 +12997,5 @@ public class LayoutEditorTools
         l.rotate(90);
         return l;
 	}
-    static Logger log = Logger.getLogger(LayoutEditorTools.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutEditorTools.class.getName());
 }

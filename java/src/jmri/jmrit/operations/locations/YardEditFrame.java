@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.BorderFactory;
 
 /**
@@ -38,6 +39,6 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 		setVisible(true);
 	}
 
-	static Logger log = Logger.getLogger(YardEditFrame.class
+	static Logger log = LoggerFactory.getLogger(YardEditFrame.class
 			.getName());
 }

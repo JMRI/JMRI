@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.soundloader;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 
 import javax.swing.*;
@@ -232,6 +233,6 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
     }
 
 
-    static Logger log = Logger.getLogger(LoaderPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
 
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -880,6 +881,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(SpeedTableVarValue.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpeedTableVarValue.class.getName());
 
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -155,7 +156,7 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
         pcs.removePropertyChangeListener(l);
     }
 
-    static Logger log = Logger.getLogger(AspectGenerator.class.getName());
+    static Logger log = LoggerFactory.getLogger(AspectGenerator.class.getName());
 
     // for now, this is an internal class
     static class Aspect {

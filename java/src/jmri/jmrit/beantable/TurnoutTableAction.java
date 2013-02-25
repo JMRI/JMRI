@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -1067,7 +1068,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to turnouts to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Number to turnouts to Add must be a number!",""+ex, "",true, false);
                 return;
             }
         } 
@@ -1093,7 +1094,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, prefix);
             } catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false);
                 return;
             }
             if (curAddress==null){
@@ -1161,8 +1162,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     
                     else if (InstanceManager.turnoutManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(getClassName(), "duplicateUserName")){
                         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true, org.apache.log4j.Level.ERROR);
-                        //p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true, org.apache.log4j.Level.ERROR);
+                        showErrorMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
+                        //p.showErrorMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true);
                     }
                     t.setNumberOutputBits(iNum);
                     // Ask about the type of turnout control if appropriate
@@ -1255,7 +1256,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
     
-    static final Logger log = Logger.getLogger(TurnoutTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(TurnoutTableAction.class.getName());
 }
 
 /* @(#)TurnoutTableAction.java */

@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz.liusbserver.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
@@ -89,6 +90,6 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     // initialize logging
-static Logger log = Logger.getLogger(ConnectionConfigXml.class.getName());
+static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

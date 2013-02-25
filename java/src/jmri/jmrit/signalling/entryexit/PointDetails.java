@@ -1,6 +1,7 @@
 package jmri.jmrit.signalling.entryexit;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
@@ -364,7 +365,7 @@ public class PointDetails {
             try {
                 getSensor().setKnownState(sensorState);
             } catch (jmri.JmriException ex){
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
             }
             addSensorList();
         }
@@ -661,5 +662,5 @@ public class PointDetails {
     }
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
     
-    static Logger log = Logger.getLogger(PointDetails.class.getName());
+    static Logger log = LoggerFactory.getLogger(PointDetails.class.getName());
 }

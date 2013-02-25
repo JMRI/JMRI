@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz.xnetsimulator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
 import jmri.jmrix.lenz.XNetSimulatorPortController;
@@ -393,6 +394,6 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private DataInputStream inpipe = null; // feed pout
     private Thread sourceThread;
 
-    static Logger log = Logger.getLogger(XNetSimulatorAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetSimulatorAdapter.class.getName());
     
 }

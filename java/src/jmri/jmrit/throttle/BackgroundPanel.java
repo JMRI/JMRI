@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 
 import jmri.DccThrottle;
@@ -55,5 +56,5 @@ public class BackgroundPanel extends ResizableImagePanel implements AddressListe
         public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
         }
 
-    static Logger log = Logger.getLogger(BackgroundPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(BackgroundPanel.class.getName());
 }

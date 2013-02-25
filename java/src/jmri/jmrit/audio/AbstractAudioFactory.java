@@ -2,7 +2,8 @@
 
 package jmri.jmrit.audio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
 import java.util.List;
 import jmri.Audio;
@@ -212,7 +213,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         return _distanceAttenuated;
     }
 
-    private static final Logger log = Logger.getLogger(AbstractAudioFactory.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioFactory.class.getName());
 
 }
 

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -208,7 +209,7 @@ public class PanelMenu extends JMenu {
 		}				
 		return lePanelsList;
 	}	
-    static Logger log = Logger.getLogger(PanelMenu.class.getName());
+    static Logger log = LoggerFactory.getLogger(PanelMenu.class.getName());
 }
 
 

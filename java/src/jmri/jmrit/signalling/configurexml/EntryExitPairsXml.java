@@ -2,7 +2,8 @@
 
 package jmri.jmrit.signalling.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.signalling.EntryExitPairs;
@@ -216,5 +217,5 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         return jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getXMLOrder();
     }
 
-    static Logger log = Logger.getLogger(EntryExitPairsXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(EntryExitPairsXml.class.getName());
 }

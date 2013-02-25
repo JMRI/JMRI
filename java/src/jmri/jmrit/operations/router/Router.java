@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.router;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -712,6 +713,6 @@ public class Router extends TrainCommon {
 		}
 	}
 
-	static Logger log = Logger.getLogger(Router.class.getName());
+	static Logger log = LoggerFactory.getLogger(Router.class.getName());
 
 }

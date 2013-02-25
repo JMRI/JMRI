@@ -2,7 +2,8 @@
 
 package jmri.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JMenu;
 import java.util.*;
 
@@ -32,7 +33,7 @@ public class SaveMenu extends JMenu {
 
     }
 
-    static Logger log = Logger.getLogger(SaveMenu.class.getName());
+    static Logger log = LoggerFactory.getLogger(SaveMenu.class.getName());
 }
 
 

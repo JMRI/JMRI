@@ -9,7 +9,8 @@
 
 package jmri.jmrix.loconet.locoio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Vector;
 import jmri.jmrix.loconet.LnConstants;
 
@@ -268,5 +269,5 @@ public class LocoIOModeList {
     }
 
 
-    static Logger log = Logger.getLogger(LocoIOModeList.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoIOModeList.class.getName());
 }

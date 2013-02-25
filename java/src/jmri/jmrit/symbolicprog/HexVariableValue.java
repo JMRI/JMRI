@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.util.Vector;
 
@@ -58,6 +59,6 @@ public class HexVariableValue extends DecVariableValue {
         }
 
         // initialize logging
-    static Logger log = Logger.getLogger(HexVariableValue.class.getName());
+    static Logger log = LoggerFactory.getLogger(HexVariableValue.class.getName());
 
 }

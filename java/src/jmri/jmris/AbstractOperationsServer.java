@@ -9,7 +9,8 @@ import java.util.List;
 
 import javax.management.Attribute;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jmri.JmriException;
 import jmri.jmris.simpleserver.SimpleOperationsServer;
@@ -321,6 +322,6 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
 
 	abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
-	static Logger log = Logger.getLogger(AbstractOperationsServer.class.getName());
+	static Logger log = LoggerFactory.getLogger(AbstractOperationsServer.class.getName());
 
 }

@@ -8,7 +8,8 @@ package jmri.jmrit.withrottle;
  *	@version $Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -97,5 +98,5 @@ public class TrackPowerController extends AbstractController implements Property
         pwrMgr.removePropertyChangeListener(this);
     }
 
-    static Logger log = Logger.getLogger(TrackPowerController.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrackPowerController.class.getName());
 }

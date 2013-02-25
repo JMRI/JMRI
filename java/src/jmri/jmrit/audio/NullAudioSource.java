@@ -2,7 +2,8 @@
 
 package jmri.jmrit.audio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 
 /**
@@ -152,7 +153,7 @@ public class NullAudioSource extends AbstractAudioSource {
         // do nothing
     }
 
-    private static final Logger log = Logger.getLogger(NullAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(NullAudioSource.class.getName());
 
 }
 

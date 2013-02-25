@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
@@ -541,14 +542,14 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     addRosterToMemory(roster);
                 }
             } catch(java.awt.datatransfer.UnsupportedFlavorException e){
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             } catch (java.io.IOException e){
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
             return true;
         }
 
     }
 
-    static Logger log = Logger.getLogger(MemoryIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());
 }

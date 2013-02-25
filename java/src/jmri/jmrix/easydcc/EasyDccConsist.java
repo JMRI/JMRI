@@ -10,7 +10,8 @@
 
 package jmri.jmrix.easydcc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
@@ -294,6 +295,6 @@ public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
 	  if(log.isDebugEnabled()) log.debug("reply received unexpectedly: " +r.toString());
 	}
 
-	static Logger log = Logger.getLogger(EasyDccConsist.class.getName());
+	static Logger log = LoggerFactory.getLogger(EasyDccConsist.class.getName());
 
 }

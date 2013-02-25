@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -108,5 +109,5 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
                 }
         }
     }
-    static Logger log = Logger.getLogger(PowerManagerButton.class.getName());
+    static Logger log = LoggerFactory.getLogger(PowerManagerButton.class.getName());
 }

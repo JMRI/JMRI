@@ -2,7 +2,8 @@
 
 package jmri.managers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBean;
@@ -199,7 +200,7 @@ public class ProxyLightManager extends AbstractProxyManager
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(ProxyLightManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(ProxyLightManager.class.getName());
 }
 
 /* @(#)ProxyLightManager.java */

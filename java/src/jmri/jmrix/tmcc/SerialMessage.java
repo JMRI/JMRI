@@ -2,7 +2,8 @@
 
 package jmri.jmrix.tmcc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -84,7 +85,7 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         return (getElement(1)&0xFF)*256+(getElement(2)&0xFF);
     }
         
-    static Logger log = Logger.getLogger(SerialMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialMessage.class.getName());
 }
 
 /* @(#)SerialMessage.java */

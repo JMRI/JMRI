@@ -2,7 +2,8 @@
 
 package jmri.jmris.srcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmris.*;
 
 import java.io.*;
@@ -148,5 +149,5 @@ public class JmriSRCPServer extends JmriServer{
 	 }	
        }
 
-     static Logger log = Logger.getLogger(JmriSRCPServer.class.getName());
+     static Logger log = LoggerFactory.getLogger(JmriSRCPServer.class.getName());
 }

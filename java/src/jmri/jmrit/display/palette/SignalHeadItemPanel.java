@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -198,5 +199,5 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         }
     }
 
-    static Logger log = Logger.getLogger(SignalHeadItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalHeadItemPanel.class.getName());
 }

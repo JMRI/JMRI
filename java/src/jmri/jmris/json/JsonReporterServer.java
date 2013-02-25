@@ -10,7 +10,8 @@ import jmri.Reporter;
 import jmri.jmris.AbstractReporterServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI reporter manager and a network
@@ -23,7 +24,7 @@ public class JsonReporterServer extends AbstractReporterServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    static Logger log = Logger.getLogger(JsonReporterServer.class);
+    static Logger log = LoggerFactory.getLogger(JsonReporterServer.class);
 
     public JsonReporterServer(JmriConnection connection) {
         super();

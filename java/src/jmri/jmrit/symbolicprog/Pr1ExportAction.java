@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -78,5 +79,5 @@ public class Pr1ExportAction  extends AbstractAction {
         }
     }
 
-    static Logger log = Logger.getLogger(Pr1ExportAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(Pr1ExportAction.class.getName());
 }

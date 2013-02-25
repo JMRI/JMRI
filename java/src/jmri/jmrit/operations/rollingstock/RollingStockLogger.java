@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -320,6 +321,6 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		return Calendar.getInstance().getTime().toString();
 	}
 
-	static Logger log = Logger.getLogger(RollingStockLogger.class
+	static Logger log = LoggerFactory.getLogger(RollingStockLogger.class
 			.getName());
 }

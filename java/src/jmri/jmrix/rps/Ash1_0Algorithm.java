@@ -2,7 +2,8 @@
 
 package jmri.jmrix.rps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Point3d;
 
 /**
@@ -313,7 +314,7 @@ double    Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz;//  xi, yi, zi, ri
     x0 = x2;  y0 = y2;  z0 = z2			;}//  GPS Position = x0, y0, z0
   return 0					;
 }
-    static Logger log = Logger.getLogger(Ash1_0Algorithm.class.getName());
+    static Logger log = LoggerFactory.getLogger(Ash1_0Algorithm.class.getName());
 
     /**
      * Internal class to handle return value.

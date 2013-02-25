@@ -2,7 +2,8 @@
 
 package jmri.util.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -328,7 +329,7 @@ public class FontComboUtil {
         return fontList;
     }
 
-    private static final Logger log = Logger.getLogger(FontComboUtil.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(FontComboUtil.class.getName());
 
 }
 

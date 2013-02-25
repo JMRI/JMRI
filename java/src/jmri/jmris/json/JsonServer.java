@@ -10,7 +10,8 @@ import java.util.Scanner;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriConnection;
 import jmri.jmris.JmriServer;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is an implementation of a simple server for JMRI. There is currently no
@@ -22,7 +23,7 @@ import org.apache.log4j.Logger;
  */
 public class JsonServer extends JmriServer {
 
-    static Logger log = Logger.getLogger(JsonServer.class);
+    static Logger log = LoggerFactory.getLogger(JsonServer.class);
 
     // Create a new server using the default port
     public JsonServer() {

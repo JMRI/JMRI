@@ -2,19 +2,18 @@
 
 package jmri.jmrix.openlcb.swing.hub;
 
-import org.apache.log4j.Logger;
-import javax.swing.*;
 import java.net.*;
-
+import javax.swing.*;
 import jmri.jmrix.can.CanListener;
-import jmri.jmrix.can.swing.CanPanelInterface;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
+import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
 import jmri.jmrix.can.adapters.gridconnect.GridConnectReply;
-
+import jmri.jmrix.can.swing.CanPanelInterface;
 import org.openlcb.hub.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying,and more importantly starting, an OpenLCB TCP/IP hub
@@ -69,7 +68,7 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         
         try {
             add(new JLabel("Hub IP address "+InetAddress.getLocalHost().getHostAddress()+":"+hub.getPort()));
-        } catch (UnknownHostException e) { log.error(e); }
+        } catch (UnknownHostException e) { log.error(e.getLocalizedMessage(), e); }
         add(label);
         
         startHubThread(hub.getPort());
@@ -156,6 +155,6 @@ public class HubPane extends jmri.util.swing.JmriPanel implements CanListener, C
         }
     }
     
-    static Logger log = Logger.getLogger(HubPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(HubPane.class.getName());
 
 }

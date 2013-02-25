@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.PowerManager;
 import jmri.JmriException;
 
@@ -150,7 +151,7 @@ public class LnPowerManager
             tc.sendLocoNetMessage(msg);
         }
     }
-    static Logger log = Logger.getLogger(LnPowerManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnPowerManager.class.getName());
 }
 
 /* @(#)LnPowerManager.java */

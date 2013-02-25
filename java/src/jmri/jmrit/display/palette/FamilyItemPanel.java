@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
@@ -496,6 +497,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         return _currentIconMap;
     }
 
-    static Logger log = Logger.getLogger(FamilyItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(FamilyItemPanel.class.getName());
 }
 

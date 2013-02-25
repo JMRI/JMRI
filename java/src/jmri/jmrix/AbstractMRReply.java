@@ -2,7 +2,8 @@
 
 package jmri.jmrix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for replies in a message/reply protocol.
@@ -156,7 +157,7 @@ abstract public class AbstractMRReply extends AbstractMessage {
     // contents (private)
     private boolean unsolicited;
 
-    static Logger log = Logger.getLogger(AbstractMRReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractMRReply.class.getName());
 
 }
 

@@ -37,7 +37,8 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
 import jmri.web.server.WebServerManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -46,7 +47,7 @@ import org.apache.log4j.Logger;
 public class JsonLister {
 
     private static ObjectMapper mapper = new ObjectMapper();
-    private static Logger log = Logger.getLogger(JsonLister.class);
+    private static Logger log = LoggerFactory.getLogger(JsonLister.class);
 
     static public JsonNode getCar(String id) {
         ObjectNode root = mapper.createObjectNode();

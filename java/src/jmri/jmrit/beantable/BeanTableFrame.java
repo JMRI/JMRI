@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 import javax.swing.*;
@@ -151,5 +152,5 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static Logger log = Logger.getLogger(BeanTableFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(BeanTableFrame.class.getName());
 }

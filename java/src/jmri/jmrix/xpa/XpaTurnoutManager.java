@@ -2,7 +2,8 @@
 
 package jmri.jmrix.xpa;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 
 /**
@@ -37,7 +38,7 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
     static XpaTurnoutManager _instance = null;
 
-    static Logger log = Logger.getLogger(XpaTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(XpaTurnoutManager.class.getName());
 
 }
 

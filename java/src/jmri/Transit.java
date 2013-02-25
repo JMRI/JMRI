@@ -2,7 +2,8 @@
 
 package jmri;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Section;
 import jmri.TransitSection;
 import jmri.Block;
@@ -504,7 +505,7 @@ public class Transit extends AbstractNamedBean
 	}
 		
 	    
-    static final Logger log = Logger.getLogger(Transit.class.getName());
+    static final Logger log = LoggerFactory.getLogger(Transit.class.getName());
 	
 }
 

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.direct.serial;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.direct.PortController;
 import jmri.jmrix.direct.TrafficController;
 import jmri.util.SystemType;
@@ -290,6 +291,6 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

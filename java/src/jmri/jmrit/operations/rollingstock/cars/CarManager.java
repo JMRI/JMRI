@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -463,7 +464,7 @@ public class CarManager extends RollingStockManager{
     	super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = Logger.getLogger(CarManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(CarManager.class.getName());
 
 }
 

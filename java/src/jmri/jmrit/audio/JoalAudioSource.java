@@ -2,7 +2,8 @@
 
 package jmri.jmrit.audio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import net.java.games.joal.AL;
 import java.util.List;
@@ -518,7 +519,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return this._source;
     }
 
-    private static final Logger log = Logger.getLogger(JoalAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioSource.class.getName());
 
     /**
      * An internal class used to create a new thread to monitor looping as,

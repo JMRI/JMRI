@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 import jmri.util.ConnectionNameFromSystemName;
 
@@ -152,7 +153,7 @@ public class SensorTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to Sensors to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Number to Sensors to Add must be a number!",""+ex, "",true, false);
                 return;
             }
         } 
@@ -172,7 +173,7 @@ public class SensorTableAction extends AbstractTableAction {
                 curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
             }  catch (jmri.JmriException ex) {
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Unable to convert '" + curAddress + "' to a valid Hardware Address",""+ex, "",true, false);
                 return;
             }
             if (curAddress==null){
@@ -197,7 +198,7 @@ public class SensorTableAction extends AbstractTableAction {
                     s.setUserName(user);
                 } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
                     jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showInfoMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true, org.apache.log4j.Level.ERROR);
+                        showErrorMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true);
                 }
             }
         }
@@ -325,7 +326,7 @@ public class SensorTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleSensorTable"); }
 
-    static final Logger log = Logger.getLogger(SensorTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SensorTableAction.class.getName());
 }
 
 

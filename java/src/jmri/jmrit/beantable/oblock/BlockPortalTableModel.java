@@ -22,7 +22,8 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -117,5 +118,5 @@ class BlockPortalTableModel extends AbstractTableModel implements PropertyChange
         }
     }
 
-    static Logger log = Logger.getLogger(BlockPortalTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockPortalTableModel.class.getName());
 }

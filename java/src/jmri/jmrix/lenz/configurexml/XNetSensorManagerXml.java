@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -32,6 +33,6 @@ public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         return loadSensors(sensors);
     }
 
-    static Logger log = Logger.getLogger(XNetTurnoutManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetTurnoutManagerXml.class.getName());
 
 }

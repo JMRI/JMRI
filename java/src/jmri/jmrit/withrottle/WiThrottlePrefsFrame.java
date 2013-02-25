@@ -5,7 +5,8 @@ package jmri.jmrit.withrottle;
  *	@version $Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 import java.util.ResourceBundle;
 
@@ -27,5 +28,5 @@ public class WiThrottlePrefsFrame extends JmriJFrame{
         this.setVisible(true);
     }
 
-    //private static Logger log = Logger.getLogger(WiThrottlePrefsFrame.class.getName());
+    //private static Logger log = LoggerFactory.getLogger(WiThrottlePrefsFrame.class.getName());
 }

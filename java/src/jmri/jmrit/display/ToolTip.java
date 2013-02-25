@@ -1,7 +1,8 @@
 
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.font.TextLayout;
@@ -125,5 +126,5 @@ public class ToolTip {
         g2d.setFont(font);
     }
 
-    static Logger log = Logger.getLogger(ToolTip.class.getName());
+    static Logger log = LoggerFactory.getLogger(ToolTip.class.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
@@ -285,7 +286,7 @@ abstract public class AbstractCanTrafficController
         }
     }
 
-    static Logger log = Logger.getLogger(AbstractCanTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractCanTrafficController.class.getName());
 
 }
 

@@ -1,6 +1,7 @@
 package jmri;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -194,5 +195,5 @@ public class Path  {
     private int _toBlockDirection;
     private int _fromBlockDirection;
     
-    static Logger log = Logger.getLogger(Path.class.getName());
+    static Logger log = LoggerFactory.getLogger(Path.class.getName());
 }

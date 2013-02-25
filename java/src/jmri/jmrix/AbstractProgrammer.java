@@ -2,7 +2,8 @@
 
 package jmri.jmrix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.ProgListener;
 import jmri.Programmer;
 import jmri.ProgrammerException;
@@ -129,7 +130,7 @@ public abstract class AbstractProgrammer implements Programmer {
 
     javax.swing.Timer timer = null;
 
-    static Logger log = Logger.getLogger(AbstractProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractProgrammer.class.getName());
 
 }
 

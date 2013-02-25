@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import java.beans.*;
 
@@ -568,5 +569,5 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
         _status = null;
     }
 
-    static Logger log = Logger.getLogger(IndexedCvTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndexedCvTableModel.class.getName());
 }

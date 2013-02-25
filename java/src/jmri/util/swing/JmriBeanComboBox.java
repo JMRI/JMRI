@@ -1,6 +1,7 @@
 package jmri.util.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.NamedBean;
 
 import java.util.HashMap;
@@ -319,5 +320,5 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
     }
 	
     
-    static Logger log = Logger.getLogger(JmriBeanComboBox.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriBeanComboBox.class.getName());
 }

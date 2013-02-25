@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.audio.swing.AudioSourceFrame;
 import jmri.jmrit.audio.swing.AudioListenerFrame;
 import jmri.jmrit.audio.swing.AudioBufferFrame;
@@ -266,7 +267,7 @@ public class AudioTableAction extends AbstractTableAction {
         }
     }
 
-    private static final Logger log = Logger.getLogger(AudioTableAction.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioTableAction.class.getName());
 
     /**
      * Define abstract AudioTableDataModel

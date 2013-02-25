@@ -2,7 +2,8 @@
 
 package jmri.jmrix.maple.nodeconfig;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -33,7 +34,7 @@ public class NodeConfigAction extends AbstractAction {
         f.setVisible(true);
     }
 	
-	static Logger log = Logger.getLogger(NodeConfigAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(NodeConfigAction.class.getName());
 }
 
 

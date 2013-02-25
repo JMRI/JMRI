@@ -1,6 +1,7 @@
 package jmri.jmrix.openlcb.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -33,6 +34,6 @@ public class OlcbTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         return loadTurnouts(turnouts);
     }
 
-    static Logger log = Logger.getLogger(OlcbTurnoutManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(OlcbTurnoutManagerXml.class.getName());
 
 }

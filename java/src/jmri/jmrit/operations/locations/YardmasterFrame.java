@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
@@ -313,5 +314,5 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		}
 	}
 
-	static Logger log = Logger.getLogger(YardmasterFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(YardmasterFrame.class.getName());
 }

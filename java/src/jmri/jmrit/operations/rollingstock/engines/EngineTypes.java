@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JComboBox;
@@ -180,7 +181,7 @@ public class EngineTypes {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = Logger.getLogger(EngineTypes.class
+	static Logger log = LoggerFactory.getLogger(EngineTypes.class
 			.getName());
 
 }

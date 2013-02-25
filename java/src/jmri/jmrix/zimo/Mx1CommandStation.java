@@ -4,7 +4,8 @@
 
 package jmri.jmrix.zimo;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -155,7 +156,7 @@ public class Mx1CommandStation implements jmri.jmrix.DccCommandStation {
         }
       }
 
-    static Logger log = Logger.getLogger(Mx1CommandStation.class.getName());
+    static Logger log = LoggerFactory.getLogger(Mx1CommandStation.class.getName());
 
 }
 

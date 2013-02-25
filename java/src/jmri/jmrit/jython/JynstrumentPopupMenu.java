@@ -1,6 +1,7 @@
 package jmri.jmrit.jython;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -77,6 +78,6 @@ public class JynstrumentPopupMenu extends JPopupMenu {
 		addSeparator();
 	}
 
-    static Logger log = Logger.getLogger(JynstrumentPopupMenu.class.getName());
+    static Logger log = LoggerFactory.getLogger(JynstrumentPopupMenu.class.getName());
 }
 

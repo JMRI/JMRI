@@ -10,7 +10,8 @@
 
 package jmri.jmrix.lenz.packetgen;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -41,7 +42,7 @@ public class PacketGenAction 			extends AbstractAction {
 		// connect to the TrafficController
 		f.connect(_memo.getXNetTrafficController());
 	}
-   static Logger log = Logger.getLogger(PacketGenAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(PacketGenAction.class.getName());
 }
 
 

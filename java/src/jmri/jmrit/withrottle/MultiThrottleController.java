@@ -1,6 +1,7 @@
 package jmri.jmrit.withrottle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.Method;
 import jmri.DccThrottle;
@@ -124,13 +125,13 @@ public class MultiThrottleController extends ThrottleController{
             }
 
         }catch (NoSuchMethodException ea){
-            log.warn(ea);
+            log.warn(ea.getLocalizedMessage(), ea);
             return;
         }catch (IllegalAccessException eb){
-            log.warn(eb);
+            log.warn(eb.getLocalizedMessage(), eb);
             return;
         }catch (java.lang.reflect.InvocationTargetException ec){
-            log.warn(ec);
+            log.warn(ec.getLocalizedMessage(), ec);
             return;
         }
     }
@@ -186,13 +187,13 @@ public class MultiThrottleController extends ThrottleController{
             }
 
         }catch (NoSuchMethodException ea){
-            log.warn(ea);
+            log.warn(ea.getLocalizedMessage(), ea);
             return;
         }catch (IllegalAccessException eb){
-            log.warn(eb);
+            log.warn(eb.getLocalizedMessage(), eb);
             return;
         }catch (java.lang.reflect.InvocationTargetException ec){
-            log.warn(ec);
+            log.warn(ec.getLocalizedMessage(), ec);
             return;
         }
     }
@@ -213,7 +214,7 @@ public class MultiThrottleController extends ThrottleController{
     }
 
 
-    private static Logger log = Logger.getLogger(MultiThrottleController.class.getName());
+    private static Logger log = LoggerFactory.getLogger(MultiThrottleController.class.getName());
 
 
 }

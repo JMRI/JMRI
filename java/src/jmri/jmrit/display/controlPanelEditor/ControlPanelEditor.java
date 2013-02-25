@@ -1,6 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 
@@ -1506,5 +1507,5 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
     }
 
-    static Logger log = Logger.getLogger(ControlPanelEditor.class.getName());
+    static Logger log = LoggerFactory.getLogger(ControlPanelEditor.class.getName());
 }

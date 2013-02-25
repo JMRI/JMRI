@@ -18,7 +18,8 @@ import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.JmriLocalEntityResolver;
 import jmri.util.NoArchiveFileFilter;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Comment;
 import org.jdom.DocType;
 import org.jdom.Document;
@@ -570,5 +571,5 @@ public abstract class XmlFile {
         return builder;
     }
     // initialize logging
-    static private Logger log = Logger.getLogger(XmlFile.class.getName());
+    static private Logger log = LoggerFactory.getLogger(XmlFile.class.getName());
 }

@@ -1,7 +1,8 @@
 // DragJLabel.java
 package jmri.jmrit.catalog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JLabel;
 
 import java.awt.datatransfer.Transferable; 
@@ -90,7 +91,7 @@ import java.io.IOException;
          return null;
      }
 
-     static Logger log = Logger.getLogger(DragJLabel.class.getName());
+     static Logger log = LoggerFactory.getLogger(DragJLabel.class.getName());
 }
 
 

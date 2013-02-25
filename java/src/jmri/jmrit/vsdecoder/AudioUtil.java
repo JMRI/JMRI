@@ -21,7 +21,8 @@ package jmri.jmrit.vsdecoder;
  * @version $Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
 import java.nio.ShortBuffer;
 import jmri.util.FileUtil;
@@ -319,7 +320,7 @@ public class AudioUtil {
 	return(retbuf);
     }
 
-    private static final Logger log = Logger.getLogger(AudioUtil.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioUtil.class.getName());
 
 }
 

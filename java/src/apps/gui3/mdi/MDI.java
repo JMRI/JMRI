@@ -2,7 +2,8 @@
 
 package apps.gui3.mdi;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 import jmri.Application;
 import jmri.util.swing.mdi.MdiMainFrame;
@@ -53,7 +54,7 @@ public class MDI extends apps.gui3.Apps3 {
         return null;
     }
     
-    static Logger log = Logger.getLogger(MDI.class.getName());
+    static Logger log = LoggerFactory.getLogger(MDI.class.getName());
 }
 
 

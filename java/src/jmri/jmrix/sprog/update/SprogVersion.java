@@ -2,7 +2,8 @@
 
 package jmri.jmrix.sprog.update;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to hold SPROG type and firmware version
@@ -148,7 +149,7 @@ public class SprogVersion  {
         return (s.sprogType.toString() + sprogVersion);
     }
 
-    static Logger log = Logger.getLogger(SprogVersion.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
 }
 
 /* @(#)SprogVersion.java */

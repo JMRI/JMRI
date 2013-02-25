@@ -2,7 +2,8 @@
 
 package jmri.jmrix.rps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.*;
 import java.awt.geom.GeneralPath;
 import java.awt.Shape;
@@ -122,7 +123,7 @@ public class Region {
    
    final Point3d[] points;
     
-    private final static Logger log = Logger.getLogger(Region.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(Region.class.getName());
 }
 
 /* @(#)Region.java */

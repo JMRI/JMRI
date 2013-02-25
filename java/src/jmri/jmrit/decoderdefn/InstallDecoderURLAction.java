@@ -2,7 +2,8 @@
 
 package jmri.jmrit.decoderdefn;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.*;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
@@ -184,5 +185,5 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     // initialize logging
-    static Logger log = Logger.getLogger(InstallDecoderURLAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(InstallDecoderURLAction.class.getName());
 }

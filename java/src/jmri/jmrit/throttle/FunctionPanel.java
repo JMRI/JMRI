@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.KeyAdapter;
@@ -543,5 +544,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         public void notifyConsistAddressThrottleFound(DccThrottle throttle) {
         }
 
-	static Logger log = Logger.getLogger(FunctionPanel.class.getName());
+	static Logger log = LoggerFactory.getLogger(FunctionPanel.class.getName());
 }

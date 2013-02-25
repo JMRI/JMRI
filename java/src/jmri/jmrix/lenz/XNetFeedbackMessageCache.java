@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implement a feedback message cache for XPressNet sensors and turnouts.
@@ -100,7 +101,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
        if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
     }
 
-    static Logger log = Logger.getLogger(XNetFeedbackMessageCache.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetFeedbackMessageCache.class.getName());
 
 }
 

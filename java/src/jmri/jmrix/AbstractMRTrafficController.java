@@ -2,7 +2,8 @@
 
 package jmri.jmrix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Calendar;
@@ -626,7 +627,7 @@ abstract public class AbstractMRTrafficController {
                                         try {
                                             transmitLoop(); 
                                             } catch (Throwable e) {
-                                                log.fatal("Transmit thread terminated prematurely by: "+e, e);
+                                                log.error("Transmit thread terminated prematurely by: " + e.toString(), e);
                                             }
                                       }
                 });
@@ -1041,7 +1042,7 @@ abstract public class AbstractMRTrafficController {
         }
     } // end cleanUpHook
 
-    static Logger log = Logger.getLogger(AbstractMRTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractMRTrafficController.class.getName());
 }
 
 

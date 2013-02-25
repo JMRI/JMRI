@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
 
@@ -124,6 +125,5 @@ public class SchedulesTableFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static Logger log = org.apache.log4j.Logger
-			.getLogger(SchedulesTableFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(SchedulesTableFrame.class.getName());
 }

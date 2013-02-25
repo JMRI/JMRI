@@ -2,7 +2,8 @@
 
 package jmri.jmrit.automat;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 /**
@@ -143,7 +144,7 @@ public class AutomatSummary  {
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(AutomatSummary.class.getName());
+    static Logger log = LoggerFactory.getLogger(AutomatSummary.class.getName());
 }
 
 /* @(#)AutomatSummary.java */

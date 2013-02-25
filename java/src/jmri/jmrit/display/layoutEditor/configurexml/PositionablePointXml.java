@@ -2,7 +2,8 @@
 
 package jmri.jmrit.display.layoutEditor.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
@@ -137,5 +138,5 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 		p.pointList.add(l);
     }
 
-    static Logger log = Logger.getLogger(PositionablePointXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionablePointXml.class.getName());
 }

@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.setup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -2139,7 +2140,7 @@ public class Setup {
     	}
     }
 	
-    static Logger log = Logger.getLogger(Setup.class.getName());
+    static Logger log = LoggerFactory.getLogger(Setup.class.getName());
 
 }
 

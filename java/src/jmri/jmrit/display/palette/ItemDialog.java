@@ -1,7 +1,8 @@
 // ItemDialog.java
 package jmri.jmrit.display.palette;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.JDialog;
 
 /**
@@ -35,5 +36,5 @@ public class ItemDialog extends JDialog {
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(ItemDialog.class.getName());
+    static Logger log = LoggerFactory.getLogger(ItemDialog.class.getName());
 }

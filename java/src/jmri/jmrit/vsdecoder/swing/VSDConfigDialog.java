@@ -24,7 +24,8 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -488,6 +489,6 @@ public class VSDConfigDialog extends JDialog {
         return true;
     }
 
-    private static final Logger log = Logger.getLogger(VSDConfigDialog.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDConfigDialog.class.getName());
     
 }

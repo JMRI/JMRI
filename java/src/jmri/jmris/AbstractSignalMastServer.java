@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalMast;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract interface between a JMRI signal mast and a network connection
@@ -20,7 +21,7 @@ abstract public class AbstractSignalMastServer {
 
     protected ArrayList<String> signalMasts = null;
     protected String newState = "";
-    static Logger log = Logger.getLogger(AbstractSignalMastServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractSignalMastServer.class.getName());
 
     public AbstractSignalMastServer() {
         signalMasts = new ArrayList<String>();

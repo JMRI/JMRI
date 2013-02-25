@@ -2,7 +2,8 @@
 
 package jmri.jmrit.decoderdefn;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Interact with a programmer to identify the DecoderIndexFile entry for a decoder
@@ -133,6 +134,6 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     abstract protected void message(String m);
 
     // initialize logging
-    static Logger log = Logger.getLogger(IdentifyDecoder.class.getName());
+    static Logger log = LoggerFactory.getLogger(IdentifyDecoder.class.getName());
 
 }

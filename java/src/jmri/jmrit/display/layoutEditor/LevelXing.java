@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
@@ -1130,6 +1131,6 @@ public class LevelXing
         }
     }
 
-    static Logger log = Logger.getLogger(LevelXing.class.getName());
+    static Logger log = LoggerFactory.getLogger(LevelXing.class.getName());
 
 }

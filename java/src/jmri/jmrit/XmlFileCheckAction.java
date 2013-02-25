@@ -2,7 +2,8 @@
 
 package jmri.jmrit;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import java.io.*;
 
@@ -67,5 +68,5 @@ public class XmlFileCheckAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(XmlFileCheckAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(XmlFileCheckAction.class.getName());
 }

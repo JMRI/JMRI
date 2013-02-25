@@ -36,7 +36,8 @@ import org.jdom.Element;
 
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class VSDecoderPreferences {
 
@@ -303,5 +304,5 @@ public class VSDecoderPreferences {
 	    listeners.remove(l);		
     }
     
-    static Logger log = Logger.getLogger(VSDecoderPreferences.class.getName());
+    static Logger log = LoggerFactory.getLogger(VSDecoderPreferences.class.getName());
 }

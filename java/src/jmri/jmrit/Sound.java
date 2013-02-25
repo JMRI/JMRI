@@ -1,6 +1,7 @@
 package jmri.jmrit;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.applet.AudioClip;
 import java.net.URL;
 import java.net.MalformedURLException;
@@ -318,5 +319,5 @@ public class Sound  {
 		}
 	}	
 	
-	static Logger log = Logger.getLogger(Sound.class.getName());
+	static Logger log = LoggerFactory.getLogger(Sound.class.getName());
 }

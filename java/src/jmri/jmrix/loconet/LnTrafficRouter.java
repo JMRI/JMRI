@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements a LocoNetInterface by doing a scatter-gather to
@@ -91,7 +92,7 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
         return false;
     }
 
-	static Logger log = Logger.getLogger(LnTrafficRouter.class.getName());
+	static Logger log = LoggerFactory.getLogger(LnTrafficRouter.class.getName());
 }
 
 

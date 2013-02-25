@@ -11,7 +11,8 @@ package jmri.jmrit.withrottle;
  */
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -26,7 +27,7 @@ import jmri.util.zeroconf.ZeroConfService;
 //	listen() has to run in a separate thread.
 public class FacelessServer implements DeviceListener, DeviceManager {
 
-    static Logger log = Logger.getLogger(FacelessServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     UserPreferencesManager userPreferences = InstanceManager.getDefault(UserPreferencesManager.class);
@@ -183,7 +184,7 @@ class FacelessThread extends Thread {
         log.debug("Leaving ThreadNoUI.run()");
     }
 
-    static Logger log = Logger.getLogger(FacelessThread.class.getName());
+    static Logger log = LoggerFactory.getLogger(FacelessThread.class.getName());
 }
 
  	  	 

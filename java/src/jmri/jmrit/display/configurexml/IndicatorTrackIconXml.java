@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 
@@ -181,6 +182,6 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
     
-    static Logger log = Logger.getLogger(IndicatorTrackIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndicatorTrackIconXml.class.getName());
 }
 

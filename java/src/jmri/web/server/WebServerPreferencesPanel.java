@@ -18,12 +18,13 @@ import jmri.swing.DefaultListCellEditor;
 import jmri.swing.EditableList;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class WebServerPreferencesPanel extends JPanel implements ListDataListener, PreferencesPanel {
 
     private static final long serialVersionUID = 6907436730813458420L;
-    static Logger log = Logger.getLogger(WebServerPreferencesPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(WebServerPreferencesPanel.class.getName());
     Border lineBorder;
     JSpinner clickDelaySpinner;
     JSpinner refreshDelaySpinner;

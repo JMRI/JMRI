@@ -2,7 +2,8 @@
 
 package jmri.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for determining which type
@@ -136,5 +137,5 @@ public class SystemType {
     }
     
     // initialize logging
-    static private Logger log = Logger.getLogger(SystemType.class.getName());
+    static private Logger log = LoggerFactory.getLogger(SystemType.class.getName());
 }

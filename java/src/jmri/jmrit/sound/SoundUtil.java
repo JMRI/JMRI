@@ -1,6 +1,7 @@
 package jmri.jmrit.sound;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.ByteArrayOutputStream; 
 import java.io.File; 
 
@@ -99,5 +100,5 @@ public class SoundUtil  {
         return abAudioData;
     }
     
-    static Logger log = Logger.getLogger(SoundUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(SoundUtil.class.getName());
 }

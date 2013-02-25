@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrix.loconet.AspectGenerator;
 import jmri.jmrix.loconet.LnSecurityElementManager;
@@ -236,6 +237,6 @@ public class LnSecurityElementManagerXml extends jmri.configurexml.AbstractXmlAd
         }
     }
 
-    static Logger log = Logger.getLogger(LnSecurityElementManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnSecurityElementManagerXml.class.getName());
 
 }

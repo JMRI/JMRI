@@ -2,7 +2,8 @@
 
 package jmri.jmrix.jmriclient;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractLight;
 import jmri.Light;
 
@@ -98,7 +99,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
         }
 
 
-	static Logger log = Logger.getLogger(JMRIClientLight.class.getName());
+	static Logger log = LoggerFactory.getLogger(JMRIClientLight.class.getName());
 
 }
 

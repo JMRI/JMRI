@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 
@@ -240,5 +241,5 @@ public class FnMapPanel extends JPanel {
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(FnMapPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(FnMapPanel.class.getName());
 }

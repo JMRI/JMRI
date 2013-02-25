@@ -2,7 +2,8 @@
 
 package jmri.managers.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
@@ -191,5 +192,5 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         return InstanceManager.logixManagerInstance().getXMLOrder();
     }
 
-    static Logger log = Logger.getLogger(DefaultLogixManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultLogixManagerXml.class.getName());
 }

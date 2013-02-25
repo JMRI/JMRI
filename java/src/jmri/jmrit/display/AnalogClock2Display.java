@@ -2,16 +2,15 @@
 
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
-import java.util.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
+import java.util.*;
 import javax.swing.*;
-
 import jmri.*;
 import jmri.jmrit.catalog.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>An Analog Clock for displaying in a panel</p>
@@ -390,6 +389,7 @@ public class AnalogClock2Display extends PositionableJComponent {
         rateButtonGroup = null;
         runMenu = null;
     }
+
     public String getUrl() {
     	return _url;
     }
@@ -429,5 +429,5 @@ public class AnalogClock2Display extends PositionableJComponent {
         super.doMouseClicked(event);
     }
     
-    static Logger log = Logger.getLogger(AnalogClock2Display.class.getName());
+    static Logger log = LoggerFactory.getLogger(AnalogClock2Display.class.getName());
 }

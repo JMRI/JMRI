@@ -11,7 +11,8 @@ import jmri.JmriException;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple interface between the JMRI operations and a network connection
@@ -25,7 +26,7 @@ public class JsonOperationsServer extends AbstractOperationsServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    static Logger log = Logger.getLogger(JsonOperationsServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonOperationsServer.class.getName());
 
     public JsonOperationsServer(JmriConnection connection) {
         super();

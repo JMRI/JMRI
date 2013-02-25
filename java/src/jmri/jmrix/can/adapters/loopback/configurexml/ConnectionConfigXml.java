@@ -1,6 +1,7 @@
 package jmri.jmrix.can.adapters.loopback.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.adapters.loopback.Port;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
@@ -130,6 +131,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(ConnectionConfigXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

@@ -13,6 +13,8 @@ import java.awt.Color;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.LinkingLabel objects
@@ -143,5 +145,5 @@ public class LinkingLabelXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.LABELS, element);
     }
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LinkingLabelXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(LinkingLabelXml.class.getName());
 }

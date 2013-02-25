@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.*;
 
 import javax.swing.*;
@@ -273,6 +274,6 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
         fireTableDataChanged();
     }
 
-    static Logger log = Logger.getLogger(TrackTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrackTableModel.class.getName());
 }
 

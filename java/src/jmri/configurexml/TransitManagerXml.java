@@ -2,7 +2,8 @@
 
 package jmri.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Section;
 import jmri.Transit;
@@ -218,5 +219,5 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
         return InstanceManager.transitManagerInstance().getXMLOrder();
     }
 
-    static Logger log = Logger.getLogger(TransitManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(TransitManagerXml.class.getName());
 }

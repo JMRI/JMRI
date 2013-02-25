@@ -2,7 +2,8 @@
 
 package jmri.jmrix.powerline;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 
 /**
@@ -98,7 +99,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                                showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         
@@ -118,7 +119,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         }
     }
 
-    static Logger log = Logger.getLogger(SerialSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
 
 /* @(#)SerialSensorManager.java */

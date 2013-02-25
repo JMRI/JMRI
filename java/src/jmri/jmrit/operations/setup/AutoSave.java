@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsXml;
 
 /**
@@ -52,5 +53,5 @@ public class AutoSave {
 		autoSave = null;	// done
 	}	
 	
-	static Logger log = Logger.getLogger(AutoSave.class.getName());
+	static Logger log = LoggerFactory.getLogger(AutoSave.class.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import java.util.ResourceBundle;
 
@@ -97,7 +98,7 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     }
         // initialize logging
-    static Logger log = Logger.getLogger(CanSystemConnectionMemo.class.getName());
+    static Logger log = LoggerFactory.getLogger(CanSystemConnectionMemo.class.getName());
 }
 
 

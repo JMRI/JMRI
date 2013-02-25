@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.hexfile;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.*;
 
 /**
@@ -75,6 +76,6 @@ public class HexFileServer {
     public LnHexFilePort getAdapter() { return port; }
     private LnHexFilePort port = null;
 
-    static Logger log = Logger.getLogger(HexFileServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(HexFileServer.class.getName());
 
 }

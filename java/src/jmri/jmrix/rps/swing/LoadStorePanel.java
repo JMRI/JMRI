@@ -2,7 +2,8 @@
  
 package jmri.jmrix.rps.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.rps.*;
 
 import javax.swing.*;
@@ -99,5 +100,5 @@ public class LoadStorePanel extends javax.swing.JPanel {
         }
     }
 
-    static Logger log = Logger.getLogger(LoadStorePanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(LoadStorePanel.class.getName());
 }

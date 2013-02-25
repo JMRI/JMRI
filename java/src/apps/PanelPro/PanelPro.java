@@ -2,7 +2,8 @@
 
 package apps.PanelPro;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.Apps;
 import jmri.util.JmriJFrame;
 
@@ -109,7 +110,7 @@ public class PanelPro extends Apps {
         splash(false);
     }
 
-    static Logger log = Logger.getLogger(PanelPro.class.getName());
+    static Logger log = LoggerFactory.getLogger(PanelPro.class.getName());
 }
 
 

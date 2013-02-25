@@ -19,7 +19,8 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Map;
@@ -344,7 +345,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 	dispose();
     }
 
-    static private Logger log = Logger.getLogger(ManageLocationsFrame.class.getName());
+    static private Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
 
 }
 

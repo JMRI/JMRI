@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
@@ -361,6 +362,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(EngineAttributeEditFrame.class.getName());
 }

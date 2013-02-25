@@ -11,7 +11,8 @@ import jmri.SignalHead;
 import jmri.jmris.AbstractSignalHeadServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JSON Web Socket interface between the JMRI SignalHead manager and a network
@@ -24,7 +25,7 @@ public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    static Logger log = Logger.getLogger(JsonSignalHeadServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonSignalHeadServer.class.getName());
 
     public JsonSignalHeadServer(JmriConnection connection) {
         super();

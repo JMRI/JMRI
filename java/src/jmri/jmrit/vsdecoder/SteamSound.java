@@ -19,7 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18481 $
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -288,6 +289,6 @@ class SteamSound extends EngineSound {
 	*/
     }
 
-    private static final Logger log = Logger.getLogger(SteamSound.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SteamSound.class.getName());
 
 }

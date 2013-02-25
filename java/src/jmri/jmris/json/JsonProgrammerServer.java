@@ -11,7 +11,8 @@ import jmri.Programmer;
 import jmri.jmris.AbstractProgrammerServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SRCP interface between the JMRI service mode programmer and a network
@@ -24,7 +25,7 @@ public class JsonProgrammerServer extends AbstractProgrammerServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    static Logger log = Logger.getLogger(JsonProgrammerServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonProgrammerServer.class.getName());
 
     public JsonProgrammerServer(JmriConnection connection) {
         super();

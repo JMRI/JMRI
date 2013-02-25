@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.*;
 
 import java.util.ResourceBundle;
@@ -114,5 +115,5 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements
         }
     }
 
-    static Logger log = Logger.getLogger(NodeConfigToolPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(NodeConfigToolPane.class.getName());
 }

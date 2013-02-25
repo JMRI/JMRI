@@ -12,7 +12,8 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.util.swing.XTableColumnModel;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Table data model for display of Roster variable values. <P> Any desired
@@ -325,5 +326,5 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
     // drop listeners
     public void dispose() {
     }
-    static final Logger log = Logger.getLogger(RosterTableModel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(RosterTableModel.class.getName());
 }

@@ -9,7 +9,8 @@
  */
 
 package jmri.jmrit.simpleturnoutctrl;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
@@ -50,7 +51,7 @@ public class SimpleTurnoutCtrlAction 			extends JmriAbstractAction {
         throw new IllegalArgumentException("Should not be invoked");
     }
     
-   static Logger log = Logger.getLogger(SimpleTurnoutCtrlAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(SimpleTurnoutCtrlAction.class.getName());
 }
 
 

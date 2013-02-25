@@ -35,7 +35,7 @@
 //        f.setVisible(true);
 //    }
 //
-//    private static final Logger log = Logger.getLogger(SerialMonAction.class.getName());
+//    private static final Logger log = LoggerFactory.getLogger(SerialMonAction.class.getName());
 //
 //}
 //

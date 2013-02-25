@@ -2,7 +2,8 @@
 
 package jmri.jmrix.oaktree.serialmon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.oaktree.SerialListener;
 import jmri.jmrix.oaktree.SerialMessage;
 import jmri.jmrix.oaktree.SerialReply;
@@ -72,6 +73,6 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         }
     }
 
-    static Logger log = Logger.getLogger(SerialMonFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialMonFrame.class.getName());
 
 }

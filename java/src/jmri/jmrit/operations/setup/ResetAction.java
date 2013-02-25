@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
@@ -74,7 +75,7 @@ public class ResetAction extends AbstractAction {
 		}
 	}
 
-	static Logger log = Logger.getLogger(ResetAction.class
+	static Logger log = LoggerFactory.getLogger(ResetAction.class
 			.getName());
 }
 

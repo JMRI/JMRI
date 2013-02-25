@@ -2,7 +2,8 @@
 
 package jmri.jmrix.libusb;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Invoke the UsbView tool from libusb-java.
@@ -30,7 +31,7 @@ public class UsbViewAction extends javax.swing.AbstractAction {
         }
     }
     
-    static Logger log = Logger.getLogger(UsbViewAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(UsbViewAction.class.getName());
 }
 
 /* @(#)UsbViewAction.java */

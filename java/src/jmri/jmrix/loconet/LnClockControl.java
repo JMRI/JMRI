@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.DefaultClockControl;
 import java.util.Date;
 
@@ -306,7 +307,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		}
     }
 
-    static Logger log = Logger.getLogger(LnClockControl.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnClockControl.class.getName());
 }
 
 /* @(#)LnClockControl.java */

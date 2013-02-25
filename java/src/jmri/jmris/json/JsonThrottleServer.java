@@ -8,14 +8,15 @@ import java.util.HashMap;
 import jmri.JmriException;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JsonThrottleServer {
 
     private ObjectMapper mapper;
     protected JmriConnection connection;
     private HashMap<String, JsonThrottle> throttles;
-    static final Logger log = Logger.getLogger(JsonThrottleServer.class.getName());
+    static final Logger log = LoggerFactory.getLogger(JsonThrottleServer.class.getName());
 
     public JsonThrottleServer(JmriConnection connection) {
         this.connection = connection;

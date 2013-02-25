@@ -1,6 +1,7 @@
 package jmri.jmrit.logix.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.Iterator;
 
@@ -315,6 +316,6 @@ public class WarrantManagerXml //extends XmlFile
         return InstanceManager.warrantManagerInstance().getXMLOrder();
     }
     
-    static Logger log = Logger.getLogger(WarrantManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(WarrantManagerXml.class.getName());
 }
 

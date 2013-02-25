@@ -1,12 +1,12 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
-import org.apache.log4j.Logger;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.controlPanelEditor.shape.*;
-
 import java.awt.geom.GeneralPath;
 import java.awt.geom.PathIterator;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.controlPanelEditor.shape.*;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle configuration for display.PositionableShape objects
@@ -109,5 +109,5 @@ public class PositionablePolygonXml extends PositionableShapeXml {
         loadCommonAttributes(ps, Editor.MARKERS, element);
     }
 
-    static Logger log = Logger.getLogger(PositionablePolygonXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionablePolygonXml.class.getName());
 }

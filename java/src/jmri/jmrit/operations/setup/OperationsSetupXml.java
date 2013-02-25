@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.setup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import jmri.jmrit.operations.OperationsXml;
@@ -99,6 +100,6 @@ public class OperationsSetupXml extends OperationsXml {
 
 	private String operationsFileName = "Operations.xml"; // NOI18N
 
-	static Logger log = Logger.getLogger(OperationsSetupXml.class.getName());
+	static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
 
 }

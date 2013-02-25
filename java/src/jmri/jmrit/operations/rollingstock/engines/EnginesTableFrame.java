@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -316,6 +317,6 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		}
 	}
 
-	static Logger log = Logger.getLogger(EnginesTableFrame.class
+	static Logger log = LoggerFactory.getLogger(EnginesTableFrame.class
 			.getName());
 }

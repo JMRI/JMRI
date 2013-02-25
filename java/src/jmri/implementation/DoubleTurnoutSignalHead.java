@@ -2,7 +2,8 @@
 
 package jmri.implementation;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.NamedBeanHandle;
 
@@ -101,7 +102,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
 	public void setRed(NamedBeanHandle<Turnout> t) {mRed=t;}
 	public void setGreen(NamedBeanHandle<Turnout> t) {mGreen=t;}
 
-    static Logger log = Logger.getLogger(DoubleTurnoutSignalHead.class.getName());
+    static Logger log = LoggerFactory.getLogger(DoubleTurnoutSignalHead.class.getName());
 }
 
 /* @(#)DoubleTurnoutSignalHead.java */

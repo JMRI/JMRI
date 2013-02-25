@@ -77,7 +77,8 @@ import jmri.util.swing.ResizableImagePanel;
 import jmri.util.swing.WindowInterface;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.swing.multipane.TwoPaneTBWindow;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A window for Roster management.
@@ -101,7 +102,7 @@ import org.apache.log4j.Logger;
  */
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
-    static Logger log = Logger.getLogger(RosterFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
     static int openWindowInstances = 0;
     protected boolean allowQuit = true;
     protected String baseTitle = "Roster";
@@ -461,7 +462,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     if (rtable.getSelectedRosterEntries().length == 1 && rtable.getTable().getSelectedRow() >= 0) {
-                        log.debug(rtable.getTable().getSelectedRow());
+                        log.debug("Selected row ", rtable.getTable().getSelectedRow());
                         locoSelected(rtable.getModel().getValueAt(rtable.getTable().getSelectedRow(), RosterTableModel.IDCOL).toString());
                     } else if (rtable.getSelectedRosterEntries().length > 1 || rtable.getTable().getSelectedRow() < 0) {
                         locoSelected(null);

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -239,6 +240,6 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 			update();
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(ShowCarsInTrainFrame.class.getName());
 }

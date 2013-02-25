@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.cbus.swing.eventtable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 import jmri.util.davidflanagan.HardcopyWriter;
 
@@ -235,5 +236,5 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
     
-    static Logger log = Logger.getLogger(CbusEventTablePane.class.getName());
+    static Logger log = LoggerFactory.getLogger(CbusEventTablePane.class.getName());
 }

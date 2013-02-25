@@ -25,7 +25,8 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
@@ -316,5 +317,5 @@ public class VSDControl extends JPanel {
     }
 
 
-    private static final Logger log = Logger.getLogger(VSDControl.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDControl.class.getName());
 }

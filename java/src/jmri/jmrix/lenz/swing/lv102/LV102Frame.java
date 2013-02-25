@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz.swing.lv102;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import javax.swing.*;
 
@@ -60,6 +61,6 @@ public class LV102Frame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static Logger log = Logger.getLogger(LV102Frame.class.getName());
+    static Logger log = LoggerFactory.getLogger(LV102Frame.class.getName());
 
 }

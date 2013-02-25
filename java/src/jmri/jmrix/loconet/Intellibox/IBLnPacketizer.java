@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.Intellibox;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.NoSuchElementException;
 
 import jmri.jmrix.loconet.LnPacketizer;
@@ -270,7 +271,7 @@ public class IBLnPacketizer extends LnPacketizer {
 
     }
 
-    static Logger log = Logger.getLogger(IBLnPacketizer.class.getName());
+    static Logger log = LoggerFactory.getLogger(IBLnPacketizer.class.getName());
 }
 
 /* @(#)LnPacketizer.java */

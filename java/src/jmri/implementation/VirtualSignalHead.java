@@ -2,7 +2,8 @@
 
 package jmri.implementation;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A signal head that exists only within the program.
@@ -33,7 +34,7 @@ public class VirtualSignalHead extends DefaultSignalHead {
         super.dispose();
     }
 
-    static Logger log = Logger.getLogger(VirtualSignalHead.class.getName());
+    static Logger log = LoggerFactory.getLogger(VirtualSignalHead.class.getName());
 }
 
 /* @(#)VirtualSignalHead.java */

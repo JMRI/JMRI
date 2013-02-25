@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.adapters.gridconnect;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.can.CanReply;
 
@@ -170,7 +171,7 @@ public class GridConnectReply extends AbstractMRReply {
         return (byte)b;
     }
    
-    static Logger log = Logger.getLogger(GridConnectReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(GridConnectReply.class.getName());
 }
 
 /* @(#)GridConnectReply.java */

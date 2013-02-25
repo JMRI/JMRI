@@ -2,7 +2,8 @@
 
 package jmri.util.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.io.File;
 import javax.swing.*;
@@ -190,5 +191,5 @@ public class JMenuUtil extends GuiUtilBase {
         return kcode;
     }
     
-    static Logger log = Logger.getLogger(JMenuUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(JMenuUtil.class.getName());
 }

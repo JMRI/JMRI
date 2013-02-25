@@ -1,7 +1,8 @@
 package jmri.jmrit.picker;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -389,7 +390,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         return new EntryExitPickModel();
     }
 
-    static final Logger log = Logger.getLogger(PickListModel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(PickListModel.class.getName());
 }
 
     class TurnoutPickModel extends PickListModel {

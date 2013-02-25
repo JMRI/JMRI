@@ -4,7 +4,8 @@ package jmri.jmrit.display;
 
 //import java.awt.event.MouseListener;
 //import java.awt.event.MouseMotionListener;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.MouseEvent;
 
 import javax.swing.*;
@@ -228,5 +229,5 @@ public class PositionableJComponent extends JComponent implements Positionable {
     
     public jmri.NamedBean getNamedBean() { return null; }
     
-    static Logger log = Logger.getLogger(PositionableJComponent.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableJComponent.class.getName());
 }

@@ -1,7 +1,8 @@
 // JmriServer.java
 package jmri.jmris;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -234,5 +235,5 @@ public class JmriServer {
     public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
     	outStream.writeBytes("");
     }
-    static Logger log = Logger.getLogger(JmriServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriServer.class.getName());
 }

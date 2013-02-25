@@ -2,7 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Scale;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import java.io.File;
@@ -236,7 +237,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		return _instance;
 	}		
   
-    static Logger log = Logger.getLogger(OptionsFile.class.getName());
+    static Logger log = LoggerFactory.getLogger(OptionsFile.class.getName());
 }
 
 /* @(#)OptionsFile.java */

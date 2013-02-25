@@ -2,7 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.Scale;
 import jmri.util.*;
@@ -1966,6 +1967,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		}
 	}
    
-    static Logger log = Logger.getLogger(DispatcherFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(DispatcherFrame.class.getName());
 
 }

@@ -19,7 +19,8 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.net.URI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -359,6 +360,6 @@ class VSDecoderPreferencesPane extends javax.swing.JPanel implements PropertyCha
     }
 
     // Unused - yet.
-    //private static final Logger log = Logger.getLogger(VSDecoderPreferencesPane.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(VSDecoderPreferencesPane.class.getName());
 
 }

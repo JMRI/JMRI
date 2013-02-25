@@ -2,7 +2,8 @@
 
 package jmri.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -303,5 +304,5 @@ public class JmriInsets {
         return -1;
     }
     
-    static Logger log = Logger.getLogger(JmriInsets.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriInsets.class.getName());
 }

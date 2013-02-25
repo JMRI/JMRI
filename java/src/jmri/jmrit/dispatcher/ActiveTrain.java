@@ -2,7 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
@@ -516,7 +517,7 @@ public class ActiveTrain {
 		pcs.removePropertyChangeListener(l);
 		}
 	
-    static Logger log = Logger.getLogger(ActiveTrain.class.getName());
+    static Logger log = LoggerFactory.getLogger(ActiveTrain.class.getName());
 }
 
 /* @(#)ActiveTrain.java */

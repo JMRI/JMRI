@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
@@ -115,7 +116,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
 
     }
 
-    static Logger log = Logger.getLogger(PaneServiceProgFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(PaneServiceProgFrame.class.getName());
 
 }
 

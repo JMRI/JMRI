@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -33,6 +34,6 @@ public class CbusTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
         return loadTurnouts(turnouts);
     }
 
-    static Logger log = Logger.getLogger(CbusTurnoutManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(CbusTurnoutManagerXml.class.getName());
 
 }

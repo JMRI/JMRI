@@ -3,7 +3,8 @@ package jmri.util.swing;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for actions that will work with multiple JMRI GUIs.
@@ -22,7 +23,7 @@ abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
     protected WindowInterface.Hint hint = WindowInterface.Hint.DEFAULT;
     protected WindowInterface wi;
     protected Object context = null;
-    static Logger log = Logger.getLogger(JmriAbstractAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriAbstractAction.class.getName());
 
     /**
      * Enhanced constructor for placing the pane in various GUIs

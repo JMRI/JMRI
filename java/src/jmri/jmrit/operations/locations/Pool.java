@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Pool extends BeanBase {
 	public static final String LISTCHANGE_CHANGED_PROPERTY = "listChange"; // NOI18N
 	public static final String DISPOSE = "dispose"; // NOI18N
 
-	static Logger log = Logger.getLogger(Pool.class);
+	static Logger log = LoggerFactory.getLogger(Pool.class);
 
 	// stores tracks for this pool
 	protected List<Track> _tracks = new ArrayList<Track>();

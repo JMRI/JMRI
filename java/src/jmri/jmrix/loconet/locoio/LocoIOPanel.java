@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.locoio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -294,6 +295,6 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
         openButton     = null;
     }
 
-    static Logger log = Logger.getLogger(LocoIOPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoIOPanel.class.getName());
 
 }

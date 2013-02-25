@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionListener;
 import java.util.List;
 import javax.swing.*;
@@ -159,6 +160,6 @@ public class KnownLocoSelPane extends LocoSelPane  {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");
     }
 
-    static Logger log = Logger.getLogger(KnownLocoSelPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(KnownLocoSelPane.class.getName());
 
 }

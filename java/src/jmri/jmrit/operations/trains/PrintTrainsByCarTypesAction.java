@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 
 import jmri.util.davidflanagan.*;
@@ -99,5 +100,5 @@ public class PrintTrainsByCarTypesAction  extends AbstractAction {
 		}
 	}        	
  
-    static Logger log = Logger.getLogger(PrintTrainsByCarTypesAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(PrintTrainsByCarTypesAction.class.getName());
 }

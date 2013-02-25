@@ -2,7 +2,8 @@
 
 package jmri.jmrix.qsi;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -371,7 +372,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return m.frame();
     }
         
-    static Logger log = Logger.getLogger(QsiMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(QsiMessage.class.getName());
     
 }
 

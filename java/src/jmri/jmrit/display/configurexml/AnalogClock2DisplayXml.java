@@ -2,7 +2,8 @@
 
 package jmri.jmrit.display.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.*;
 import jmri.configurexml.*;
 import jmri.jmrit.display.AnalogClock2Display;
@@ -91,6 +92,6 @@ public class AnalogClock2DisplayXml
         ed.putItem(l);
     }
 
-    static Logger log = org.apache.log4j.Logger
+    static Logger log = LoggerFactory
     .getLogger(AnalogClock2DisplayXml.class.getName());
 }

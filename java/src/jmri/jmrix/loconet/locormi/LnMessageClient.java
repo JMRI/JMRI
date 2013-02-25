@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.locormi;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.SystemConnectionMemo;
 
@@ -134,14 +135,14 @@ public class LnMessageClient extends LnTrafficRouter {
         try {
             serverName = java.net.InetAddress.getLocalHost().getHostName();
         } catch (java.net.UnknownHostException e) {
-            log.fatal("Unknown local host name", e);
+            log.error("Unknown local host name", e);
             return;
         }
         try {
             LnMessageClient lnClient = new LnMessageClient() ;
             lnClient.configureRemoteConnection( serverName, 60 );
         } catch (jmri.jmrix.loconet.LocoNetException e) {
-            log.fatal("Loconet error", e);
+            log.error("Loconet error", e);
             return;
         }
 
@@ -150,5 +151,5 @@ public class LnMessageClient extends LnTrafficRouter {
             new jmri.util.WaitHandler("");  // handle synchronization, spurious wake, interruption
     }
 
-    static Logger log = Logger.getLogger(LnMessageClient.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnMessageClient.class.getName());
 }

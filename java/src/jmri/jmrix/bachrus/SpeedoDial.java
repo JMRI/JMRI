@@ -2,7 +2,8 @@
 
 package jmri.jmrix.bachrus;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -308,6 +309,6 @@ public class SpeedoDial extends JPanel {
         secString = "MPH";
     }
 
-    static Logger log = Logger.getLogger(SpeedoDial.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpeedoDial.class.getName());
 }
 

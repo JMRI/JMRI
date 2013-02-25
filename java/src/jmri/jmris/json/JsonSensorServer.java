@@ -11,7 +11,8 @@ import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JSON Web Socket interface between the JMRI Sensor manager and a network
@@ -24,7 +25,7 @@ public class JsonSensorServer extends AbstractSensorServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    static Logger log = Logger.getLogger(JsonSensorServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonSensorServer.class.getName());
 
     public JsonSensorServer(JmriConnection connection) {
         super();

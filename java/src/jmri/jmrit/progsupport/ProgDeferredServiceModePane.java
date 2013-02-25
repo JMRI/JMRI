@@ -2,7 +2,8 @@
 
 package jmri.jmrit.progsupport;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import javax.swing.*;
 import jmri.*;
@@ -170,5 +171,5 @@ public class ProgDeferredServiceModePane extends ProgModeSelector implements jav
         }
     }
 
-    static Logger log = Logger.getLogger(ProgDeferredServiceModePane.class.getName());
+    static Logger log = LoggerFactory.getLogger(ProgDeferredServiceModePane.class.getName());
 }

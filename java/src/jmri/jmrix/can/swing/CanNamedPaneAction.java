@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -49,7 +50,7 @@ public class CanNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static Logger log = Logger.getLogger(CanNamedPaneAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(CanNamedPaneAction.class.getName());
 }
 
 /* @(#)CbusNamedPaneAction.java */

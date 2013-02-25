@@ -2,7 +2,8 @@
 
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
 
 /**
@@ -68,7 +69,7 @@ public class SRCPCommandStation implements CommandStation {
         return adaptermemo.getSystemPrefix();
     }
 
-	static Logger log = Logger.getLogger(SRCPCommandStation.class.getName());
+	static Logger log = LoggerFactory.getLogger(SRCPCommandStation.class.getName());
 
 }
 

@@ -1,14 +1,11 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.*;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
-import jmri.jmrit.logix.OBlock;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,15 +16,14 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.PathIterator;
 import java.awt.geom.AffineTransform;
-import java.util.Hashtable;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
+import org.slf4j.LoggerFactory;
 
 /**
  * PositionableShape is item drawn by java.awt.Graphics2D.
@@ -438,5 +434,5 @@ public class PositionableShape extends PositionableJComponent
          _controlSensor = null;
      }
      
-    static Logger log = Logger.getLogger(PositionableShape.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableShape.class.getName());
 }

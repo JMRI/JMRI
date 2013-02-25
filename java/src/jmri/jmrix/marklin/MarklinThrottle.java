@@ -1,6 +1,7 @@
 package jmri.jmrix.marklin;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccThrottle;
 import jmri.Throttle;
@@ -399,6 +400,6 @@ public class MarklinThrottle extends AbstractThrottle implements MarklinListener
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(MarklinThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(MarklinThrottle.class.getName());
 
 }

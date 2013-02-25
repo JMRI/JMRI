@@ -1,6 +1,7 @@
 package jmri.jmrix.debugthrottle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -63,7 +64,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
         return false;
     }
 
-    static Logger log = Logger.getLogger(DebugThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class.getName());
 
 
 }

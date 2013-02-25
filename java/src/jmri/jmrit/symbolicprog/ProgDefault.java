@@ -9,7 +9,8 @@ import java.util.jar.JarEntry;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import jmri.util.XmlFilenameFilter;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Functions for use with programmer files, including the default file name. <P>
@@ -99,5 +100,5 @@ public class ProgDefault {
     static {
         defaultProgFile = null;
     }
-    static Logger log = Logger.getLogger(ProgDefault.class);
+    static Logger log = LoggerFactory.getLogger(ProgDefault.class);
 }

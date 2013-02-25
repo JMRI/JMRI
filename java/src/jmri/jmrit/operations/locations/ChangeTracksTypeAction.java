@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
 import java.awt.event.*;
 
@@ -123,5 +124,5 @@ class ChangeTracksFrame extends OperationsFrame{
 		dispose();
 	}
 	
-	static Logger log = Logger.getLogger(ChangeTracksFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(ChangeTracksFrame.class.getName());
 }

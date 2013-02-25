@@ -11,7 +11,8 @@
 
 package jmri.jmrix.nce;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 import jmri.Consist;
@@ -461,6 +462,6 @@ public class NceConsist extends jmri.DccConsist implements jmri.jmrix.nce.NceLis
 		}
 	}
 
-	static Logger log = Logger.getLogger(NceConsist.class.getName());
+	static Logger log = LoggerFactory.getLogger(NceConsist.class.getName());
 
 }

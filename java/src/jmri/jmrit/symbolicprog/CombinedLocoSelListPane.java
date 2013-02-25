@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
@@ -288,6 +289,6 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane  {
     ListSelectionListener mMfgListener;
 
 
-        static Logger log = Logger.getLogger(CombinedLocoSelListPane.class.getName());
+        static Logger log = LoggerFactory.getLogger(CombinedLocoSelListPane.class.getName());
 
 }

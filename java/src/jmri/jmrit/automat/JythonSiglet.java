@@ -2,7 +2,8 @@
 
 package jmri.jmrit.automat;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -121,7 +122,7 @@ public class JythonSiglet extends Siglet {
     java.lang.reflect.Method exec;
 
     // initialize logging
-    static Logger log = Logger.getLogger(JythonSiglet.class.getName());
+    static Logger log = LoggerFactory.getLogger(JythonSiglet.class.getName());
 
 }
 

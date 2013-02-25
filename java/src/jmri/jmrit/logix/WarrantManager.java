@@ -3,7 +3,8 @@
 
 package jmri.jmrit.logix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractManager;
 
 /**
@@ -112,7 +113,7 @@ public class WarrantManager extends AbstractManager
         return (_instance);
     }
 
-    static Logger log = Logger.getLogger(WarrantManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(WarrantManager.class.getName());
 }
 
 /* @(#)WarrantManager.java */

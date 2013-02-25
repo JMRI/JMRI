@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.jmrix.AbstractThrottleManager;
@@ -89,5 +90,5 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     public DccLocoAddress getActiveAddress() { return activeAddress; }
 
     // initialize logging
-    static Logger log = Logger.getLogger(LnPr2ThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnPr2ThrottleManager.class.getName());
 }

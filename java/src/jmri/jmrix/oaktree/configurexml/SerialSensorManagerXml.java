@@ -1,6 +1,7 @@
 package jmri.jmrix.oaktree.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 import jmri.jmrix.oaktree.*;
 
@@ -35,5 +36,5 @@ public class SerialSensorManagerXml extends jmri.managers.configurexml.AbstractS
         return loadSensors(sensors);
     }
 
-    static Logger log = Logger.getLogger(SerialSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialSensorManagerXml.class.getName());
 }

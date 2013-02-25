@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz.liusb;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetInitilizationManager;
@@ -262,6 +263,6 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
     
-    static Logger log = Logger.getLogger(LIUSBAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(LIUSBAdapter.class.getName());
 
 }

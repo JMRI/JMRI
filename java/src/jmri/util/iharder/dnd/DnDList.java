@@ -1,6 +1,7 @@
 package jmri.util.iharder.dnd;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An extension of {@link javax.swing.JList} that supports drag and drop
@@ -235,6 +236,6 @@ implements  java.awt.dnd.DropTargetListener,
         else evt.rejectDrop();
     }   // end drop
 
-    static Logger log = Logger.getLogger(DnDList.class.getName());
+    static Logger log = LoggerFactory.getLogger(DnDList.class.getName());
   
 }   // end class DnDList

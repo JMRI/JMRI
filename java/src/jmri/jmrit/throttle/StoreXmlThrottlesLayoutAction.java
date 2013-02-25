@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.StoreXmlConfigAction;
 import jmri.jmrit.*;
 import java.awt.event.*;
@@ -98,6 +99,6 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 	}
 
 	// initialize logging
-	static Logger log = Logger.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(StoreXmlThrottlesLayoutAction.class.getName());
 
 }

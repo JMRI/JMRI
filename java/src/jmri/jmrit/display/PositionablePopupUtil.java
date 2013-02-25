@@ -2,7 +2,8 @@
 
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 
 import java.awt.*;
@@ -684,5 +685,5 @@ public class PositionablePopupUtil {
         }
     }
     
-    static Logger log = Logger.getLogger(PositionablePopupUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionablePopupUtil.class.getName());
 }

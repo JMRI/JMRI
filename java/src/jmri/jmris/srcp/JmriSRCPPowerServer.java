@@ -2,7 +2,8 @@
 
 package jmri.jmris.srcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 
 import jmri.PowerManager;
@@ -58,6 +59,6 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
      }
 
 
-    static Logger log = Logger.getLogger(JmriSRCPPowerServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriSRCPPowerServer.class.getName());
 
 }

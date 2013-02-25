@@ -1,6 +1,7 @@
 package jmri.jmrit.roster.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
@@ -542,7 +543,7 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
 
         @Override
         public void treeWillExpand(TreeExpansionEvent e) throws ExpandVetoException {
-            log.debug(_tree.getSelectionRows());
+            log.debug("Selected rows ", _tree.getSelectionRows());
         }
 
         @Override
@@ -591,5 +592,5 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         }
     }
     // initialize logging
-    static Logger log = Logger.getLogger(RosterGroupsPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(RosterGroupsPanel.class.getName());
 }

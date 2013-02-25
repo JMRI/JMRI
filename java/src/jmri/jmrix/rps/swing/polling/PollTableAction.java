@@ -2,7 +2,8 @@
 
 package jmri.jmrix.rps.swing.polling;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -40,7 +41,7 @@ public class PollTableAction 			extends AbstractAction {
 
 	}
 
-	static Logger log = Logger.getLogger(PollTableAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(PollTableAction.class.getName());
 
 }
 

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -225,6 +226,6 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 		return Calendar.getInstance().getTime().toString();
 	}
 
-	static Logger log = Logger.getLogger(TrainLogger.class
+	static Logger log = LoggerFactory.getLogger(TrainLogger.class
 			.getName());
 }

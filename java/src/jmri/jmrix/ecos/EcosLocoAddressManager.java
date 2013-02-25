@@ -1,6 +1,7 @@
 package jmri.jmrix.ecos;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.ecos.utilities.*;
 import java.util.Enumeration;
 import jmri.jmrit.roster.Roster;
@@ -817,5 +818,5 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         //monitorLocos(monitorState);
     }
     
-    static Logger log = Logger.getLogger(EcosLocoAddressManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosLocoAddressManager.class.getName());
 }

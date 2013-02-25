@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.List;
@@ -201,5 +202,5 @@ public class TrainIcon extends LocoIcon {
 			}
 		}
 	}
-	static Logger log = Logger.getLogger(LocoIcon.class.getName());
+	static Logger log = LoggerFactory.getLogger(LocoIcon.class.getName());
 }

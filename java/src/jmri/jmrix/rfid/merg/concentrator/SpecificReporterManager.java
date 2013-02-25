@@ -2,7 +2,8 @@
 
 package jmri.jmrix.rfid.merg.concentrator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -70,7 +71,7 @@ public class SpecificReporterManager extends RfidReporterManager {
         report.notify(idTag);
     }
 
-    private static final Logger log = Logger.getLogger(SpecificReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SpecificReporterManager.class.getName());
 
 }
 

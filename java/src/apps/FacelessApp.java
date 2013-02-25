@@ -2,7 +2,8 @@
 
 package apps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.web.server.WebServerManager;
 
@@ -125,7 +126,7 @@ public class FacelessApp {
 	}
 	
 
-    static Logger log = Logger.getLogger(FacelessApp.class.getName());
+    static Logger log = LoggerFactory.getLogger(FacelessApp.class.getName());
 }
 
 

@@ -3,7 +3,8 @@
 package jmri.jmrit.audio.swing;
 
 //import java.awt.Dimension;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -293,7 +294,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         }
     }
 
-    private static final Logger log = Logger.getLogger(AudioBufferFrame.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AudioBufferFrame.class.getName());
 
 }
 

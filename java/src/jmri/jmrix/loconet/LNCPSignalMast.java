@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.DccSignalMast;
 import jmri.NmraPacket;
 
@@ -131,7 +132,7 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
         return true;
     }
 
-    static Logger log = Logger.getLogger(LNCPSignalMast.class.getName());
+    static Logger log = LoggerFactory.getLogger(LNCPSignalMast.class.getName());
     
 }
 

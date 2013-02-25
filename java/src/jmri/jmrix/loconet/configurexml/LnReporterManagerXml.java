@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -33,6 +34,6 @@ public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractRep
         return loadReporters(reporters);
     }
 
-    static Logger log = Logger.getLogger(LnReporterManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnReporterManagerXml.class.getName());
 
 }

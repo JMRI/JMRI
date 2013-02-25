@@ -2,7 +2,8 @@
 
 package jmri.jmrix.powerline.cm11;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
@@ -111,7 +112,7 @@ public class SpecificReply extends SerialReply {
         }
     }
 
-    static Logger log = Logger.getLogger(SpecificReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpecificReply.class.getName());
 
 }
 

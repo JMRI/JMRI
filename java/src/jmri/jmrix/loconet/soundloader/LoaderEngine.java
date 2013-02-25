@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.soundloader;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.spjfile.SpjFile;
@@ -339,6 +340,6 @@ public class LoaderEngine {
     public void dispose() {
     }
     
-    static Logger log = Logger.getLogger(LoaderEngine.class.getName());
+    static Logger log = LoggerFactory.getLogger(LoaderEngine.class.getName());
 
 }

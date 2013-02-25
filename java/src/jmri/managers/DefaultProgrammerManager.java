@@ -2,7 +2,8 @@
 
 package jmri.managers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -60,6 +61,6 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      */
     public boolean isGlobalProgrammerAvailable() {return true;}
 
-    static Logger log = Logger.getLogger(DefaultProgrammerManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultProgrammerManager.class.getName());
 }
 /* @(#)DefaultProgrammerManager.java */

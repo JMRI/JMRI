@@ -2,7 +2,8 @@
 
 package jmri.jmrix.rfid;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -176,7 +177,7 @@ public class RfidTrafficController extends AbstractMRTrafficController implement
 
     public String getRange() { return null; }
       
-    private static final Logger log = Logger.getLogger(RfidTrafficController.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(RfidTrafficController.class.getName());
 }
 
 

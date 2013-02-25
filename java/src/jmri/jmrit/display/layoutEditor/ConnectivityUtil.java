@@ -1,17 +1,17 @@
 // jmri.jmrit.display.ConnectivityUtil.java
 package jmri.jmrit.display.layoutEditor;
 
-import org.apache.log4j.Logger;
-import java.util.ResourceBundle;
 import java.util.ArrayList;
-
+import java.util.ResourceBundle;
 import jmri.Block;
+import jmri.EntryPoint;
 import jmri.InstanceManager;
-import jmri.Turnout;
 import jmri.SignalHead;
 import jmri.SignalMast;
-import jmri.EntryPoint;
+import jmri.Turnout;
 import jmri.jmrit.blockboss.BlockBossLogic;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ConnectivityUtil provides methods supporting use of layout connectivity available 
@@ -2698,5 +2698,5 @@ public class ConnectivityUtil
 
 
 	// initialize logging
-    static Logger log = Logger.getLogger(ConnectivityUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConnectivityUtil.class.getName());
 }

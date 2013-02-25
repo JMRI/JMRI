@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.cbus;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 
 import jmri.jmrix.can.*;
@@ -101,7 +102,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     
 	protected void turnoutPushbuttonLockout(boolean locked) {}
 
-	static Logger log = Logger.getLogger(CbusTurnout.class.getName());
+	static Logger log = LoggerFactory.getLogger(CbusTurnout.class.getName());
 }
 
 /* @(#)CbusTurnout.java */

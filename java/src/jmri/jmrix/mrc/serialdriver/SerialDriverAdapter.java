@@ -2,7 +2,8 @@
 
 package jmri.jmrix.mrc.serialdriver;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.mrc.MrcPortController;
 import jmri.jmrix.mrc.MrcTrafficController;
 
@@ -177,7 +178,7 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
-    static Logger log = Logger.getLogger(SerialDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }
 

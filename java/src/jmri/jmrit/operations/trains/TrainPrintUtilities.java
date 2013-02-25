@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Frame;
 import java.io.BufferedReader;
@@ -323,6 +324,6 @@ public class TrainPrintUtilities {
 		return ""; // no default printer specified
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(TrainPrintUtilities.class.getName());
 }

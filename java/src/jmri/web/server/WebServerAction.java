@@ -5,7 +5,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Action to start a web server
@@ -16,7 +17,7 @@ import org.apache.log4j.Logger;
 public class WebServerAction extends JmriAbstractAction {
 
     ServerThread serverThread = null;
-    static Logger log = Logger.getLogger(WebServerAction.class);
+    static Logger log = LoggerFactory.getLogger(WebServerAction.class);
 
     public WebServerAction(String s, WindowInterface wi) {
         super(s, wi);

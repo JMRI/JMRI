@@ -1,6 +1,7 @@
 package jmri.jmrit.display.panelEditor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.util.JmriJFrame;
@@ -1054,7 +1055,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     Element el = adapter.store(copied);
                     adapter.load(el, this);
                 } catch (Exception ex) {
-                    log.debug(ex);
+                    log.debug(ex.getLocalizedMessage(), ex);
                 }
                 /*We remove the original item from the list, so we end up with
                 just the new items selected and allow the items to be moved around */
@@ -1218,5 +1219,5 @@ public class PanelEditor extends Editor implements ItemListener {
    /******************************************************/
 
     // initialize logging
-    static Logger log = Logger.getLogger(PanelEditor.class.getName());
+    static Logger log = LoggerFactory.getLogger(PanelEditor.class.getName());
 }

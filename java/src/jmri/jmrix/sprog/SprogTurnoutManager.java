@@ -2,7 +2,8 @@
 
 package jmri.jmrix.sprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 
 /**
@@ -42,7 +43,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
     static SprogTurnoutManager _instance = null;
 
-    static Logger log = Logger.getLogger(SprogTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SprogTurnoutManager.class.getName());
 
 }
 

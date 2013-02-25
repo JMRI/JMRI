@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 /* Represents a JComboBox as a JPanel containing just the "on" button
@@ -28,6 +29,6 @@ public class ComboOnRadioButton extends ComboRadioButtons {
 	}
 
 	// initialize logging	
-    static Logger log = Logger.getLogger(ComboOnRadioButton.class.getName());
+    static Logger log = LoggerFactory.getLogger(ComboOnRadioButton.class.getName());
 
 }

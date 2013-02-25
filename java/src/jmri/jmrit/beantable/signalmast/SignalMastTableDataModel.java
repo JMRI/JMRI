@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable.signalmast;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 import jmri.jmrit.beantable.BeanTableDataModel;
@@ -261,7 +262,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     public String getClassDescription() { return rb.getString("TitleSignalMastTable"); }
     
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
-    static final Logger log = Logger.getLogger(SignalMastTableDataModel.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SignalMastTableDataModel.class.getName());
 
 }
 

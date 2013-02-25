@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.SignalHead;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract interface between a JMRI signal head and a network connection
@@ -20,7 +21,7 @@ abstract public class AbstractSignalHeadServer {
 
     protected ArrayList<String> signalHeads = null;
     protected String newState = "";
-    static Logger log = Logger.getLogger(AbstractSignalHeadServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractSignalHeadServer.class.getName());
 
     public AbstractSignalHeadServer() {
         signalHeads = new ArrayList<String>();

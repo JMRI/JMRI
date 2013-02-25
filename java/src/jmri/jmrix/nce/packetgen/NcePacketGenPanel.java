@@ -2,7 +2,8 @@
 
 package jmri.jmrix.nce.packetgen;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.*;
 import jmri.jmrix.nce.*;
 
@@ -199,6 +200,6 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 		return replyLen;
 	}
 
-	static Logger log = Logger.getLogger(NcePacketGenPanel.class.getName());
+	static Logger log = LoggerFactory.getLogger(NcePacketGenPanel.class.getName());
 }
 

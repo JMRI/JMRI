@@ -1,6 +1,7 @@
 package jmri.jmrix.internal.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -24,6 +25,6 @@ public class InternalTurnoutManagerXml extends jmri.managers.configurexml.Intern
         turnouts.setAttribute("class",this.getClass().getName());
     }
 
-    static Logger log = Logger.getLogger(InternalTurnoutManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(InternalTurnoutManagerXml.class.getName());
 
 }

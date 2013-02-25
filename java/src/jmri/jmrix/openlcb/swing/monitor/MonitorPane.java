@@ -2,7 +2,8 @@
 
 package jmri.jmrix.openlcb.swing.monitor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.swing.CanPanelInterface;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -164,6 +165,6 @@ public class MonitorPane extends jmri.jmrix.AbstractMonPane implements CanListen
         }
     }
     
-    static Logger log = Logger.getLogger(MonitorPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(MonitorPane.class.getName());
 
 }

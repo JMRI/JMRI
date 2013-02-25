@@ -2,7 +2,8 @@
 
 package jmri.jmrit.automat;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 
 /**
@@ -98,7 +99,7 @@ public class JythonAutomaton extends AbstractAutomaton {
     java.lang.reflect.Method exec;
 
     // initialize logging
-    static Logger log = Logger.getLogger(JythonAutomaton.class.getName());
+    static Logger log = LoggerFactory.getLogger(JythonAutomaton.class.getName());
 
 }
 

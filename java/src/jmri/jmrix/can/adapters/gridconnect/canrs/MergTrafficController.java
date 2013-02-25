@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.*;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -66,7 +67,7 @@ public class MergTrafficController extends GcTrafficController {
         return reply;
     }
         
-    static Logger log = Logger.getLogger(MergTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(MergTrafficController.class.getName());
 }
 
 

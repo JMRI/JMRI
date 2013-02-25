@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -659,6 +660,6 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		}
 	}
 
-	static Logger log = Logger.getLogger(EngineEditFrame.class
+	static Logger log = LoggerFactory.getLogger(EngineEditFrame.class
 			.getName());
 }

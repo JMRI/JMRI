@@ -4,7 +4,8 @@
 
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from XNet messages.  The "XNetInterface"
@@ -87,7 +88,7 @@ public class XNetPacketizer extends XNetTrafficController {
 	}
      }
 
-	static Logger log = Logger.getLogger(XNetPacketizer.class.getName());
+	static Logger log = LoggerFactory.getLogger(XNetPacketizer.class.getName());
 }
 
 /* @(#)XNetPacketizer.java */

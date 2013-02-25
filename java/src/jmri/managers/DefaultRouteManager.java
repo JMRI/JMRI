@@ -2,7 +2,8 @@
 
 package jmri.managers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.managers.AbstractManager;
 import jmri.implementation.DefaultRoute;
@@ -107,7 +108,7 @@ public class DefaultRouteManager extends AbstractManager
         return (_instance);
     }
 
-    static Logger log = Logger.getLogger(DefaultRouteManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class.getName());
 }
 
 /* @(#)DefaultRouteManager.java */

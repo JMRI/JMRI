@@ -16,12 +16,13 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JsonServerPreferencesPanel extends JPanel implements PreferencesPanel {
 
     private static final long serialVersionUID = 5452568391598728906L;
-    static Logger log = Logger.getLogger(JsonServerPreferencesPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonServerPreferencesPanel.class.getName());
     private JSpinner heartbeatIntervalSpinner;
     private JTextField port;
     private JButton btnSave;

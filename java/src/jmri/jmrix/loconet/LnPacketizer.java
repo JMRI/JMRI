@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.LinkedList;
@@ -524,7 +525,7 @@ public class LnPacketizer extends LnTrafficController {
 
     }
 
-    static Logger log = Logger.getLogger(LnPacketizer.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnPacketizer.class.getName());
 }
 
 /* @(#)LnPacketizer.java */

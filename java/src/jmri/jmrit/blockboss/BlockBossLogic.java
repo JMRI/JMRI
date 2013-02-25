@@ -2,7 +2,8 @@
 
 package jmri.jmrit.blockboss;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Sensor;
@@ -946,7 +947,7 @@ public class BlockBossLogic extends Siglet {
         return b;
     }
 
-    static Logger log = Logger.getLogger(BlockBossLogic.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockBossLogic.class.getName());
 }
 
 /* @(#)BlockBossLogic.java */

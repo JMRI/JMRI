@@ -2,7 +2,8 @@
 
 package jmri.jmrit.display.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.SignalMast;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
@@ -145,6 +146,6 @@ public class SignalMastIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SIGNALS, element);
     }
     
-    static Logger log = Logger.getLogger(SignalMastIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalMastIconXml.class.getName());
 
 }

@@ -43,7 +43,8 @@ import jmri.jmrit.vsdecoder.listener.VSDListener;
 import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.jmrit.vsdecoder.swing.VSDManagerFrame;
 import jmri.util.FileUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // VSDecoderFactory
 //
@@ -646,6 +647,6 @@ public class VSDecoderManager implements PropertyChangeListener {
 	fireMyEvent(new VSDManagerEvent(this, VSDManagerEvent.EventType.PROFILE_LIST_CHANGE, new_entries));
     }
 
-    private static final Logger log = Logger.getLogger(VSDecoderManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(VSDecoderManager.class.getName());
 
 }

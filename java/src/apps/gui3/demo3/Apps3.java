@@ -2,7 +2,8 @@
 
 package apps.gui3.demo3;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.util.JmriJFrame;
 
@@ -404,7 +405,7 @@ public class Apps3 {
         // TODO: splash(false);
     }
     
-    static Logger log = Logger.getLogger(Apps3.class.getName());
+    static Logger log = LoggerFactory.getLogger(Apps3.class.getName());
     
 }
 

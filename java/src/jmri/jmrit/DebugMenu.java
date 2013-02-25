@@ -2,7 +2,8 @@
 
 package jmri.jmrit;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.util.*;
 
@@ -53,7 +54,7 @@ public class DebugMenu extends JMenu {
 
     }
 
-    static Logger log = Logger.getLogger(DebugMenu.class.getName());
+    static Logger log = LoggerFactory.getLogger(DebugMenu.class.getName());
 }
 
 

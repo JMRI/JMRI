@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
@@ -550,6 +551,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(LocoNetThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoNetThrottle.class.getName());
 
 }

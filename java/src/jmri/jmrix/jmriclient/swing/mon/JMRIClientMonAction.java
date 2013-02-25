@@ -2,7 +2,8 @@
 
 package jmri.jmrix.jmriclient.swing.mon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -40,7 +41,7 @@ public class JMRIClientMonAction extends AbstractAction {
 		f.setVisible(true);
 	}
 
-	static Logger log = Logger.getLogger(JMRIClientMonAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(JMRIClientMonAction.class.getName());
 
 }
 

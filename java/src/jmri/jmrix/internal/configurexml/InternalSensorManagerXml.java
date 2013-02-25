@@ -1,6 +1,7 @@
 package jmri.jmrix.internal.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -24,5 +25,5 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Interna
         sensors.setAttribute("class",this.getClass().getName());
     }
 
-    static Logger log = Logger.getLogger(InternalSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(InternalSensorManagerXml.class.getName());
 }

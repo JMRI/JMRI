@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
@@ -462,5 +463,5 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         return clone;
     }
 
-    static Logger log = Logger.getLogger(TurnoutIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(TurnoutIcon.class.getName());
 }

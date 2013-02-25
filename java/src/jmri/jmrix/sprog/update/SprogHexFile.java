@@ -1,6 +1,7 @@
 package jmri.jmrix.sprog.update;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 import javax.swing.*;
 
@@ -411,7 +412,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
     }
   }
 
-  static Logger log = org.apache.log4j.Logger
+  static Logger log = LoggerFactory
   .getLogger(SprogHexFile.class.getName());
 
 }

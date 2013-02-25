@@ -2,7 +2,8 @@
 
 package jmri.jmrix.powerline.cp290;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialTrafficController;
 import jmri.jmrix.powerline.cp290.Constants;
@@ -51,7 +52,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
         return "Recv[" + getNumDataElements() + "]: " + test + "\n";
 	}
 	
-    static Logger log = Logger.getLogger(SpecificReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpecificReply.class.getName());
 
 }
 

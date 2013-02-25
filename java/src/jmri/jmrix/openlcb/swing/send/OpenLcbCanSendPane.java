@@ -2,7 +2,8 @@
 
 package jmri.jmrix.openlcb.swing.send;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.StringUtil;
 import jmri.util.JmriJFrame;
 
@@ -634,6 +635,6 @@ public class OpenLcbCanSendPane extends jmri.jmrix.can.swing.CanPanel implements
     
     // private data
     private TrafficController tc = null; //was CanInterface
-    static Logger log = Logger.getLogger(OpenLcbCanSendPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(OpenLcbCanSendPane.class.getName());
 
 }

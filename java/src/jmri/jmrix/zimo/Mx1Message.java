@@ -2,7 +2,8 @@
 
 package jmri.jmrix.zimo;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
@@ -50,7 +51,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     // create messages of a particular form
 
 	// initialize logging
-    static Logger log = Logger.getLogger(Mx1Message.class.getName());
+    static Logger log = LoggerFactory.getLogger(Mx1Message.class.getName());
 
 }
 

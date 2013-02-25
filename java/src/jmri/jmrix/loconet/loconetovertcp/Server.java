@@ -16,7 +16,8 @@ import jmri.implementation.QuietShutDownTask;
 import jmri.util.FileUtil;
 import jmri.util.SocketUtil;
 import jmri.util.zeroconf.ZeroConfService;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
@@ -253,5 +254,5 @@ public class Server {
             return clients.size();
         }
     }
-    static Logger log = Logger.getLogger(Server.class.getName());
+    static Logger log = LoggerFactory.getLogger(Server.class.getName());
 }

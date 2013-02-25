@@ -2,7 +2,8 @@
 
 package jmri.implementation;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -132,7 +133,7 @@ public class DefaultIdTag extends AbstractIdTag {
         }
     }
 
-    private static final Logger log = Logger.getLogger(DefaultIdTag.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(DefaultIdTag.class.getName());
 
 }
 

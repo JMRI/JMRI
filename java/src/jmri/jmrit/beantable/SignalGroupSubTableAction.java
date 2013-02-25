@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.SignalGroup;
 import jmri.Turnout;
@@ -871,6 +872,6 @@ public class SignalGroupSubTableAction {
         }
     }
     
-    static final Logger log = Logger.getLogger(SignalGroupSubTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SignalGroupSubTableAction.class.getName());
 }
 /* @(#)SignalGroupSubTableAction.java */

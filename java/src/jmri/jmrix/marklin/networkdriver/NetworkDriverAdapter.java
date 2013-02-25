@@ -2,7 +2,8 @@
 
 package jmri.jmrix.marklin.networkdriver;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.marklin.*;
 import java.net.*;
 import jmri.jmrix.ConnectionStatus;
@@ -136,6 +137,6 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         adaptermemo = null;
     }
     
-    static Logger log = Logger.getLogger(NetworkDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

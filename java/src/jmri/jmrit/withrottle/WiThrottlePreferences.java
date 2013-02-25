@@ -1,7 +1,8 @@
 package jmri.jmrit.withrottle;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -44,7 +45,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
             try{
                 setEStopDelay(Integer.valueOf(a.getValue()));
             }catch (NumberFormatException e){
-                log.debug(e);
+                log.debug(e.getLocalizedMessage(), e);
             }
         if ((a = child.getAttribute("isUseMomF2")) != null )  setUseMomF2(a.getValue().equalsIgnoreCase("true"));
     	if ((a = child.getAttribute("isUseJmdns")) != null )  setUseJmdns(a.getValue().equalsIgnoreCase("true"));
@@ -191,6 +192,6 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         useWiFiConsist = value;
     }
 
-    private static Logger log = Logger.getLogger(WiThrottlePreferences.class.getName());
+    private static Logger log = LoggerFactory.getLogger(WiThrottlePreferences.class.getName());
 
 }

@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -465,5 +466,5 @@ public class Portal  {
         return ("Portal \""+_portalName+"\" from block \""+getFromBlockName()+"\" to block \""+getToBlockName()+"\""); 
     }
     
-    static Logger log = Logger.getLogger(Portal.class.getName());
+    static Logger log = LoggerFactory.getLogger(Portal.class.getName());
 }

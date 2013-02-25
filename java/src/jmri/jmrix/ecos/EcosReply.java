@@ -2,7 +2,8 @@
 
 package jmri.jmrix.ecos;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.List;
 /**
@@ -212,7 +213,7 @@ public class EcosReply extends jmri.jmrix.AbstractMRReply {
         return line.substring(startval, endval);
     }
     
-    static Logger log = Logger.getLogger(EcosReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosReply.class.getName());
 
 }
 

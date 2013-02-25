@@ -1,6 +1,7 @@
 package jmri.jmrit.jython;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import org.python.util.PythonInterpreter;
@@ -88,5 +89,5 @@ public class JynstrumentFactory {
 		return className;
 	}
 
-	static Logger log = Logger.getLogger(JynstrumentFactory.class.getName());
+	static Logger log = LoggerFactory.getLogger(JynstrumentFactory.class.getName());
 }

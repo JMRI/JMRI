@@ -2,7 +2,8 @@
 
 package jmri.jmrit.audio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.FloatControl;
@@ -392,7 +393,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         }
     }
 
-    private static final Logger log = Logger.getLogger(JavaSoundAudioSource.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JavaSoundAudioSource.class.getName());
 
     private static class JavaSoundAudioChannel {
 

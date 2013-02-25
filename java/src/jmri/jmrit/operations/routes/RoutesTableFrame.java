@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.routes;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
@@ -133,6 +134,6 @@ public class RoutesTableFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static Logger log = Logger.getLogger(RoutesTableFrame.class
+	static Logger log = LoggerFactory.getLogger(RoutesTableFrame.class
 			.getName());
 }

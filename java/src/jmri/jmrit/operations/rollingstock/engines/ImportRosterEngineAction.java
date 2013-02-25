@@ -1,7 +1,8 @@
 // ImportEngineRosterAction.java
 
 package jmri.jmrit.operations.rollingstock.engines;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 
@@ -25,6 +26,6 @@ public class ImportRosterEngineAction extends AbstractAction {
 		mb.start();
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(ImportRosterEngineAction.class.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractLightManager;
 import jmri.Light;
 
@@ -113,7 +114,7 @@ public class XNetLightManager extends AbstractLightManager {
         return null;
     }
 
-    static Logger log = Logger.getLogger(XNetLightManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetLightManager.class.getName());
 
 }
 

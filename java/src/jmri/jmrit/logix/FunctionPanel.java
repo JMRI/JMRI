@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -475,5 +476,5 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	}
 
 
-    static Logger log = Logger.getLogger(FunctionPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(FunctionPanel.class.getName());
 }

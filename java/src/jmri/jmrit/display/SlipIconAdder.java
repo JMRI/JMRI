@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
@@ -631,6 +632,6 @@ public class SlipIconAdder extends IconAdder {
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(SlipIconAdder.class.getName());
+    static Logger log = LoggerFactory.getLogger(SlipIconAdder.class.getName());
 }
 

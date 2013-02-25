@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
@@ -1404,7 +1405,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      }
 
      // initialize logging    
-     static Logger log = Logger.getLogger(XNetMessage.class.getName());
+     static Logger log = LoggerFactory.getLogger(XNetMessage.class.getName());
 
 }
 

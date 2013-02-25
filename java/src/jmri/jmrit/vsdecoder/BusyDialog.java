@@ -19,7 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18410 $
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -67,6 +68,6 @@ class BusyDialog extends JDialog {
     }
 
     // Unused, for now.  Commented out to avoid the compiler warning.
-    //private static final Logger log = Logger.getLogger(VSDecoderPane.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(VSDecoderPane.class.getName());
 
 }

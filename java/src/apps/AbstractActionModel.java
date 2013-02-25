@@ -2,7 +2,8 @@
 
 package apps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 import java.util.Enumeration;
 //import java.util.ArrayList;
@@ -129,7 +130,7 @@ public abstract class AbstractActionModel{
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
     // initialize logging
-    static Logger log = Logger.getLogger(AbstractActionModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractActionModel.class.getName());
 
 }
 

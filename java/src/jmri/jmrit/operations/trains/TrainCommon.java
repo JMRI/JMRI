@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -864,5 +865,5 @@ public class TrainCommon {
 		return sbuf.toString();
 	}
 
-	static Logger log = Logger.getLogger(TrainCommon.class.getName());
+	static Logger log = LoggerFactory.getLogger(TrainCommon.class.getName());
 }

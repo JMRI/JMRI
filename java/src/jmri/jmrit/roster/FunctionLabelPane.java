@@ -2,7 +2,8 @@
 
 package jmri.jmrit.roster;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -359,6 +360,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
 
     }
 
-    static Logger log = Logger.getLogger(FunctionLabelPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(FunctionLabelPane.class.getName());
 
 }

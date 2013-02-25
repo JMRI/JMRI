@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBeanHandle;
@@ -301,5 +302,5 @@ public class MemoryComboIcon extends PositionableJPanel
         namedMemory = null;
     }
 
-    static Logger log = Logger.getLogger(MemoryComboIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryComboIcon.class.getName());
 }

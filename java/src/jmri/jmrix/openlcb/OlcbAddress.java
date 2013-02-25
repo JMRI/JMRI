@@ -2,7 +2,8 @@
 
 package jmri.jmrix.openlcb;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.regex.*;
 
 import jmri.jmrix.can.CanReply;
@@ -175,7 +176,7 @@ public class OlcbAddress {
         return retval;
     }
 
-    static Logger log = Logger.getLogger(OlcbAddress.class.getName());
+    static Logger log = LoggerFactory.getLogger(OlcbAddress.class.getName());
 
 }
 

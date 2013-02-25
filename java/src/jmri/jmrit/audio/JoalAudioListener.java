@@ -2,7 +2,8 @@
 
 package jmri.jmrit.audio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import net.java.games.joal.AL;
 
@@ -183,7 +184,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         this.dispose();
     }
 
-    private static final Logger log = Logger.getLogger(JoalAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JoalAudioListener.class.getName());
 
 }
 

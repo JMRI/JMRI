@@ -2,7 +2,8 @@
 
 package apps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.jmrit.jython.Jynstrument;
@@ -1092,7 +1093,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     
     private static final String jmriLog ="****** JMRI log *******";
 
-    static Logger log = Logger.getLogger(Apps.class.getName());
+    static Logger log = LoggerFactory.getLogger(Apps.class.getName());
     
 }
 

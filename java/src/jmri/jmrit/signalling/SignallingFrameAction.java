@@ -2,7 +2,8 @@
 
 package jmri.jmrit.signalling;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
@@ -39,7 +40,7 @@ public class SignallingFrameAction extends AbstractAction {
 			}
 		f.setVisible(true);	
 	}
-   static Logger log = Logger.getLogger(SignallingFrameAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(SignallingFrameAction.class.getName());
 }
 
 

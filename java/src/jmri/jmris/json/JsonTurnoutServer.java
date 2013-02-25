@@ -11,7 +11,8 @@ import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI turnout manager and a network
@@ -24,7 +25,7 @@ public class JsonTurnoutServer extends AbstractTurnoutServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    static Logger log = Logger.getLogger(JsonTurnoutServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonTurnoutServer.class.getName());
 
     public JsonTurnoutServer(JmriConnection connection) {
         this.connection = connection;

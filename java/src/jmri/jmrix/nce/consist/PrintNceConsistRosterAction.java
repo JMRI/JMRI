@@ -2,7 +2,8 @@
 
 package jmri.jmrix.nce.consist;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -70,5 +71,5 @@ public class PrintNceConsistRosterAction  extends AbstractAction {
         writer.close();
     }
 
-    static Logger log = Logger.getLogger(PrintNceConsistRosterAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(PrintNceConsistRosterAction.class.getName());
 }

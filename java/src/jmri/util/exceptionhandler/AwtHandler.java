@@ -2,7 +2,8 @@
 
 package jmri.util.exceptionhandler;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to log exceptions that rise to the top of 
@@ -22,5 +23,5 @@ public class AwtHandler {
         log.error("Unhandled AWT Exception: "+t, t);
     }
     
-    static Logger log = Logger.getLogger(AwtHandler.class.getName());
+    static Logger log = LoggerFactory.getLogger(AwtHandler.class.getName());
 }

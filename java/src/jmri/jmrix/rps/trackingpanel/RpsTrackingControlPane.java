@@ -2,7 +2,8 @@
 
 package jmri.jmrix.rps.trackingpanel;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -85,5 +86,5 @@ public class RpsTrackingControlPane extends JPanel {
     public JTextField blYf;
     double trX, trY, blX, blY;
     
-    static Logger log = Logger.getLogger(RpsTrackingControlPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(RpsTrackingControlPane.class.getName());
 }

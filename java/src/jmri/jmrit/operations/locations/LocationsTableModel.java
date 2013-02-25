@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.*;
 
 import javax.swing.*;
@@ -241,6 +242,6 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         removePropertyChangeLocations();
     }
 
-    static Logger log = Logger.getLogger(LocationsTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocationsTableModel.class.getName());
 }
 

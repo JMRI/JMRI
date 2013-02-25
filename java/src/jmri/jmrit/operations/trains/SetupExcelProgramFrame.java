@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -108,6 +109,6 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static Logger log = Logger.getLogger(SetupExcelProgramFrame.class
+	static Logger log = LoggerFactory.getLogger(SetupExcelProgramFrame.class
 			.getName());
 }

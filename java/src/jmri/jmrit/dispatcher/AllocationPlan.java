@@ -2,7 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Section;
 
 /**
@@ -135,7 +136,7 @@ public class AllocationPlan {
 		// does nothing for now
 	}
 
-    static Logger log = Logger.getLogger(AllocationPlan.class.getName());
+    static Logger log = LoggerFactory.getLogger(AllocationPlan.class.getName());
 }
 
 /* @(#)AllocationPlan.java */

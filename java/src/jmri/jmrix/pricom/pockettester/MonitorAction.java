@@ -2,7 +2,8 @@
 
 package jmri.jmrix.pricom.pockettester;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -39,7 +40,7 @@ public abstract class MonitorAction extends AbstractAction  {
 
     abstract void connect(DataListener l);
     
-    static Logger log = Logger.getLogger(MonitorAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(MonitorAction.class.getName());
 
 }
 

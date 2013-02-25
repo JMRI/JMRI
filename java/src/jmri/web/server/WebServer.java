@@ -13,7 +13,8 @@ import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import jmri.util.FileUtil;
 import jmri.util.zeroconf.ZeroConfService;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
@@ -37,7 +38,7 @@ public final class WebServer implements LifeCycle.Listener {
     protected ZeroConfService zeroConfService = null;
     private WebServerPreferences preferences = null;
     protected ShutDownTask shutDownTask = null;
-    static Logger log = Logger.getLogger(WebServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     protected WebServer() {
         preferences = WebServerManager.getWebServerPreferences();

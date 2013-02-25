@@ -2,7 +2,8 @@
 
 package jmri.jmrix.sprog.console;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
@@ -27,7 +28,7 @@ public class SprogConsoleAction extends AbstractAction {
 			}
 		f.setVisible(true);
 	}
-   static Logger log = Logger.getLogger(SprogConsoleAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(SprogConsoleAction.class.getName());
 }
 
 

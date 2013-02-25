@@ -2,7 +2,8 @@
 
 package jmri.managers.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Conditional;
 import jmri.ConditionalAction;
@@ -369,5 +370,5 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         return InstanceManager.conditionalManagerInstance().getXMLOrder();
     }
 
-    static Logger log = Logger.getLogger(DefaultConditionalManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultConditionalManagerXml.class.getName());
 }

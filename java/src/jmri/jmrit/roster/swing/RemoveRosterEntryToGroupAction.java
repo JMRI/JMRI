@@ -2,7 +2,8 @@
 
 package jmri.jmrit.roster.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import jmri.util.JmriJFrame;
@@ -104,7 +105,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(RemoveRosterEntryToGroupAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(RemoveRosterEntryToGroupAction.class.getName());
 
     public void okPressed() {
         String group = rosterBox.getSelectedRosterGroup();

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
@@ -350,5 +351,5 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		OperationsXml.save();
 	}
 	
-	static Logger log = Logger.getLogger(OperationsFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
 }

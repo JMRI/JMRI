@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -276,6 +277,6 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 		}
 	}
 
-	static Logger log = Logger.getLogger(NceConsistEngines.class
+	static Logger log = LoggerFactory.getLogger(NceConsistEngines.class
 			.getName());
 }

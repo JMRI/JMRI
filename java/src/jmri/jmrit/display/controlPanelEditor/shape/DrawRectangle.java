@@ -1,18 +1,17 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Rectangle2D;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <P>
@@ -130,5 +129,5 @@ public class DrawRectangle extends DrawFrame{
 //		pos.makeShape();
     }
    
-    static Logger log = Logger.getLogger(DrawRectangle.class.getName());
+    static Logger log = LoggerFactory.getLogger(DrawRectangle.class.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmris.srcp.parser;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 
 /* This class provides an interface between the JavaTree/JavaCC 
@@ -336,6 +337,6 @@ public class SRCPVisitor implements SRCPParserVisitor {
     return node.childrenAccept(this,data);
   }
 
-  static Logger log = Logger.getLogger(SRCPVisitor.class.getName());
+  static Logger log = LoggerFactory.getLogger(SRCPVisitor.class.getName());
 
 }

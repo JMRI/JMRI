@@ -7,7 +7,8 @@ import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract interface between the JMRI power manager and a 
@@ -105,6 +106,6 @@ abstract public class AbstractPowerServer implements PropertyChangeListener {
      abstract public void sendErrorStatus() throws IOException;
      abstract public void parseStatus(String statusString) throws JmriException, IOException;
 
-    static Logger log = Logger.getLogger(AbstractPowerServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractPowerServer.class.getName());
 
 }

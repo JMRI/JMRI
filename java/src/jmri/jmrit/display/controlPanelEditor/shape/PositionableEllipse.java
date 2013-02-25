@@ -1,15 +1,15 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
-
-import java.awt.event.ActionEvent;
 import java.awt.Shape;
-import javax.swing.JPopupMenu;
+import java.awt.event.ActionEvent;
 
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
+import javax.swing.JPopupMenu;
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * PositionableRoundRect.
@@ -93,5 +93,5 @@ public class PositionableEllipse extends PositionableShape {
         return true;
     }
 
-    static Logger log = Logger.getLogger(PositionableEllipse.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableEllipse.class.getName());
 }

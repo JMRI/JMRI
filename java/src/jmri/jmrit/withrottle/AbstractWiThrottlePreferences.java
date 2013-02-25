@@ -1,6 +1,7 @@
 package jmri.jmrit.withrottle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import jmri.jmrit.XmlFile;
 import org.jdom.Document;
@@ -69,6 +70,6 @@ abstract public class AbstractWiThrottlePreferences {
 
     public static class AbstractWiThrottlePreferencesXml extends XmlFile{}
 
-    private static Logger log = Logger.getLogger(AbstractWiThrottlePreferences.class.getName());
+    private static Logger log = LoggerFactory.getLogger(AbstractWiThrottlePreferences.class.getName());
 
 }

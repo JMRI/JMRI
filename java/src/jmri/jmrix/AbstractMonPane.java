@@ -2,7 +2,8 @@
 
 package jmri.jmrix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -505,5 +506,5 @@ public abstract class AbstractMonPane extends JmriPanel  {
     StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500 ;
     
-    private static final Logger log = Logger.getLogger(AbstractMonFrame.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 
 /**
@@ -81,7 +82,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
        }
     }
 
-    static Logger log = Logger.getLogger(EliteXNetTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutManager.class.getName());
 
 }
 

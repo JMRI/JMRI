@@ -2,7 +2,8 @@
 
 package jmri.jmrix.jmriclient;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -89,7 +90,7 @@ public class JMRIClientTrafficController extends AbstractMRTrafficController
     protected void setInstance() { /*do nothing*/ }
   public JMRIClientTrafficController instance() { return this; }
 
-    static Logger log = Logger.getLogger(JMRIClientTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(JMRIClientTrafficController.class.getName());
 }
 
 /* @(#)JMRIClientTrafficController.java */

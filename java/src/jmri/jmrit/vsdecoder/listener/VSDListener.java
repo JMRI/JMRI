@@ -1,6 +1,7 @@
 package jmri.jmrit.vsdecoder.listener;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import java.util.List;
 import jmri.AudioManager;
@@ -78,6 +79,6 @@ public class VSDListener {
 	_listener.setPosition(p);
     }
 
-    static Logger log = Logger.getLogger(VSDListener.class.getName());
+    static Logger log = LoggerFactory.getLogger(VSDListener.class.getName());
 
 }

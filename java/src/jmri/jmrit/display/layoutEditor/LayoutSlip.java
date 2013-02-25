@@ -1,6 +1,7 @@
 package jmri.jmrit.display.layoutEditor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 import jmri.Turnout;
 import jmri.SignalMast;
@@ -1150,6 +1151,6 @@ public class LayoutSlip extends LayoutTurnout
     
     }
 
-    static Logger log = Logger.getLogger(LayoutSlip.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutSlip.class.getName());
 
 }

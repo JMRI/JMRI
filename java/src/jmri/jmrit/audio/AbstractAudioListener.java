@@ -2,7 +2,8 @@
 
 package jmri.jmrit.audio;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.InstanceManager;
@@ -238,7 +239,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
                 + ", meters/unit=" + this.getMetersPerUnit();
     }
 
-    private static final Logger log = Logger.getLogger(AbstractAudioListener.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioListener.class.getName());
 
     /**
      * An internal class used to create a new thread to monitor and maintain

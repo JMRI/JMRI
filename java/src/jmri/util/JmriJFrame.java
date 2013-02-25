@@ -2,7 +2,8 @@
 
 package jmri.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Set;
 import javax.swing.AbstractAction;
 import javax.swing.InputMap;
@@ -879,5 +880,5 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return this;
     }
 
-    static private Logger log = Logger.getLogger(JmriJFrame.class.getName());
+    static private Logger log = LoggerFactory.getLogger(JmriJFrame.class.getName());
 }

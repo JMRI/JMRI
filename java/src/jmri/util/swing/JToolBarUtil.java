@@ -2,7 +2,8 @@
 
 package jmri.util.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.io.File;
 import org.jdom.*;
@@ -47,5 +48,5 @@ public class JToolBarUtil extends GuiUtilBase {
         
     }
     
-    static Logger log = Logger.getLogger(JToolBarUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(JToolBarUtil.class.getName());
 }

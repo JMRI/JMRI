@@ -19,7 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.*;
 import jmri.util.swing.*;
@@ -100,7 +101,7 @@ public class VSDOptionPanel extends JmriPanel {
     }
 
     // Unused as yet.  Commented out to hide the compiler warning.
-    //private static final Logger log = Logger.getLogger(VSDOptionPanel.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(VSDOptionPanel.class.getName());
 
     
 }

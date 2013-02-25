@@ -14,7 +14,8 @@ import jmri.Throttle;
 import jmri.ThrottleListener;
 import static jmri.jmris.json.JSON.*;
 import jmri.jmrit.roster.Roster;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
@@ -22,7 +23,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
     private String throttleId;
     private Throttle throttle;
     private ObjectMapper mapper;
-    static final Logger log = Logger.getLogger(JsonThrottle.class);
+    static final Logger log = LoggerFactory.getLogger(JsonThrottle.class);
 
     public JsonThrottle(String throttleId, JsonNode data, JsonThrottleServer server) throws JmriException {
         this.throttleId = throttleId;
@@ -198,7 +199,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             }
             this.sendMessage(data);
         } catch (Exception e) {
-            log.debug(e, e);
+            log.debug(e.getLocalizedMessage(), e);
         }
     }
 

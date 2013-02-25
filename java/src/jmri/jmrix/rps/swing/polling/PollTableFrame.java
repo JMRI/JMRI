@@ -2,7 +2,8 @@
  
 package jmri.jmrix.rps.swing.polling;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.util.ResourceBundle;
 
@@ -55,5 +56,5 @@ public class PollTableFrame extends jmri.util.JmriJFrame  {
         setModifiedFlag(false);
     }
     
-    static Logger log = Logger.getLogger(PollTableFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(PollTableFrame.class.getName());
 }

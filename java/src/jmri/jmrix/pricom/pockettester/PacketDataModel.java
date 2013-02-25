@@ -2,7 +2,8 @@
 
 package jmri.jmrix.pricom.pockettester;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -261,6 +262,6 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
         return s.substring(23, s.length()-1);
     }
     
-    static Logger log = Logger.getLogger(PacketDataModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(PacketDataModel.class.getName());
 
 }

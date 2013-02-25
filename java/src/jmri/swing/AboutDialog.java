@@ -1,7 +1,8 @@
 // AboutDialog.java
 package jmri.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -95,5 +96,5 @@ public class AboutDialog extends JDialog {
         c.setAlignmentX(Component.CENTER_ALIGNMENT); // doesn't work
         p.add(c);
     }
-    private static final Logger log = Logger.getLogger(AboutDialog.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AboutDialog.class.getName());
 }

@@ -1,18 +1,17 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.Ellipse2D;
-
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <P>
@@ -128,5 +127,5 @@ public class DrawEllipse extends DrawFrame{
 //		pos.makeShape();
     }
    
-    static Logger log = Logger.getLogger(DrawEllipse.class.getName());
+    static Logger log = LoggerFactory.getLogger(DrawEllipse.class.getName());
 }

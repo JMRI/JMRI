@@ -2,7 +2,8 @@
 
 package jmri.jmrix.ncemonitor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -501,7 +502,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    static Logger log = Logger.getLogger(NcePacketMonitorPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(NcePacketMonitorPanel.class.getName());
 
     /**
      * Internal class to handle the separate character-receive thread

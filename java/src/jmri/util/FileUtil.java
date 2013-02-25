@@ -13,7 +13,8 @@ import java.security.CodeSource;
 import java.util.Arrays;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with Files. <P> We needed a place to
@@ -74,7 +75,7 @@ public class FileUtil {
     /* path to the user's files directory */
     static private String userFilesPath = null;
     // initialize logging
-    static private Logger log = Logger.getLogger(FileUtil.class.getName());
+    static private Logger log = LoggerFactory.getLogger(FileUtil.class.getName());
 
     /**
      * Get the resource file corresponding to a name. There are five cases: <UL>

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 /**
@@ -112,7 +113,7 @@ public class TrainInfo {
 	protected String getMaxTrainLength() {return maxTrainLength;}
 
     
-    static Logger log = Logger.getLogger(TrainInfo.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrainInfo.class.getName());
 }
 
 /* @(#)TrainInfo.java */

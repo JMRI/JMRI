@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import java.awt.event.ActionListener;
@@ -81,5 +82,5 @@ public class IndexedComboCheckBox extends JCheckBox {
     }
 
         // initialize logging
-    static Logger log = Logger.getLogger(IndexedComboCheckBox.class.getName());
+    static Logger log = LoggerFactory.getLogger(IndexedComboCheckBox.class.getName());
 }

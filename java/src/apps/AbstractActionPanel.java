@@ -2,7 +2,8 @@
 
 package apps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
@@ -155,7 +156,7 @@ abstract public class AbstractActionPanel extends JPanel {
         }
     }
     
-    static Logger log = Logger.getLogger(AbstractActionPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractActionPanel.class.getName());
 }
 
 

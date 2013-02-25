@@ -19,7 +19,8 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.util.FileUtil;
 import jmri.util.StringUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
@@ -1046,7 +1047,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
     public final static String ALLENTRIES = Bundle.getMessage("ALLENTRIES");
     // initialize logging
-    static Logger log = Logger.getLogger(Roster.class.getName());
+    static Logger log = LoggerFactory.getLogger(Roster.class.getName());
 
     /**
      * Get the default roster group.

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.nce.networkdriver;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.nce.NceNetworkPortController;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
@@ -64,6 +65,6 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         adaptermemo = null;
     }
 
-    static Logger log = Logger.getLogger(NetworkDriverAdapter.class.getName());
+    static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

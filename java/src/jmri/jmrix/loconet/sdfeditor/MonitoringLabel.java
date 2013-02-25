@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.sdfeditor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -28,6 +29,6 @@ public class MonitoringLabel extends javax.swing.JTextArea implements java.beans
         setText(evt.getNewValue().toString());
     }
     
-    static Logger log = Logger.getLogger(MonitoringLabel.class.getName());
+    static Logger log = LoggerFactory.getLogger(MonitoringLabel.class.getName());
 
 }

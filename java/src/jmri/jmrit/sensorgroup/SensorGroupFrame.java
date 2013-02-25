@@ -2,7 +2,8 @@
 
 package jmri.jmrit.sensorgroup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Conditional;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
@@ -393,5 +394,5 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         clear();
     }
     
-    static Logger log = Logger.getLogger(SensorGroupFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(SensorGroupFrame.class.getName());
 }

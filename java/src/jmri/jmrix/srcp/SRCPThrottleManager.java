@@ -1,6 +1,7 @@
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
@@ -80,6 +81,6 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
         //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
-    static Logger log = Logger.getLogger(SRCPThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SRCPThrottleManager.class.getName());
 
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.jmriclient;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Turnout;
 
 /**
@@ -35,7 +36,7 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
         return t;
     }
 
-    static Logger log = Logger.getLogger(JMRIClientTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(JMRIClientTurnoutManager.class.getName());
 
 }
 

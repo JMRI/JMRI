@@ -23,7 +23,8 @@ import javax.swing.JRadioButton;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServerManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A simple servlet that returns a JMRI window as a PNG image or enclosing HTML
@@ -447,5 +448,5 @@ public class JmriJFrameServlet extends HttpServlet {
     	}
     }
     
-    static Logger log = Logger.getLogger(JmriJFrameServlet.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriJFrameServlet.class.getName());
 }

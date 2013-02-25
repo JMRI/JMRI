@@ -2,7 +2,8 @@
 
 package jmri.managers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
@@ -135,7 +136,7 @@ public abstract class AbstractAudioManager extends AbstractManager
      */
     abstract protected Audio createNewAudio(String systemName, String userName) throws AudioException;
 
-    private static final Logger log = Logger.getLogger(AbstractAudioManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class.getName());
 }
 
 /* @(#)AbstractAudioManager.java */

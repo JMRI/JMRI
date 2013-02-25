@@ -1,6 +1,5 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -21,11 +20,10 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-
 import jmri.NamedBeanHandle;
-import jmri.Sensor;
 import jmri.jmrit.display.Editor.TargetPane;
-import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //import javax.swing.JRadioButton;
 
@@ -246,5 +244,5 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	abstract protected boolean makeFigure();
 	abstract protected void updateFigure(PositionableShape pos);
  
-    static Logger log = Logger.getLogger(DrawFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(DrawFrame.class.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.catalog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -853,6 +854,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         }
     }
 
-    static Logger log = Logger.getLogger(CatalogPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(CatalogPanel.class.getName());
 }
 

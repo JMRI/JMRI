@@ -2,7 +2,8 @@
 
 package jmri.progdebugger;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.DefaultProgrammerManager;
 import jmri.Programmer;
 import java.util.Hashtable;
@@ -64,7 +65,7 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
      */
     public boolean isAddressedModePossible() {return true;}
 
-    static Logger log = Logger.getLogger(DebugProgrammerManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DebugProgrammerManager.class.getName());
 }
 
 

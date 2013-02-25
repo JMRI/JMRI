@@ -2,7 +2,8 @@
 
 package jmri.jmrit.dispatcher;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.beans.PropertyChangeListener;
@@ -1172,7 +1173,7 @@ public class AutoActiveTrain implements ThrottleListener {
         }
     }
 	
-    static Logger log = Logger.getLogger(AutoActiveTrain.class.getName());
+    static Logger log = LoggerFactory.getLogger(AutoActiveTrain.class.getName());
 }
 
 /* @(#)AutoActiveTrain.java */

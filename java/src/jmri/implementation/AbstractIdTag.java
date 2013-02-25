@@ -2,7 +2,8 @@
 
 package jmri.implementation;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.Date;
 import jmri.Reporter;
 import jmri.IdTag;
@@ -65,7 +66,7 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
         return (mUserName==null || mUserName.length()==0)?getTagID():mUserName;
     }
 
-//    private static final Logger log = Logger.getLogger(AbstractIdTag.class.getName());
+//    private static final Logger log = LoggerFactory.getLogger(AbstractIdTag.class.getName());
 
 }
 

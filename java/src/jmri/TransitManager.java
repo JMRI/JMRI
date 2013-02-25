@@ -2,7 +2,8 @@
 
 package jmri;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractManager;
 
 import java.util.ArrayList;
@@ -166,7 +167,7 @@ public class TransitManager extends AbstractManager
         return (_instance);
     }
 	
-    static Logger log = Logger.getLogger(TransitManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(TransitManager.class.getName());
 }
 
 

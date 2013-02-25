@@ -19,7 +19,8 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import jmri.AudioException;
 import jmri.AudioManager;
@@ -302,6 +303,6 @@ class SoundBite extends VSDSound {
     }
 
 
-    private static final Logger log = Logger.getLogger(SoundBite.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(SoundBite.class.getName());
 }    
 	

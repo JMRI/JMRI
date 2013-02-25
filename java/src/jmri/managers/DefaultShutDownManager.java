@@ -2,7 +2,8 @@
 
 package jmri.managers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
@@ -130,7 +131,7 @@ public class DefaultShutDownManager implements ShutDownManager {
 
     ArrayList<ShutDownTask> tasks = new ArrayList<ShutDownTask>();
     
-    static Logger log = Logger.getLogger(DefaultShutDownManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class.getName());
 }
 
 /* @(#)DefaultShutDownManager.java */

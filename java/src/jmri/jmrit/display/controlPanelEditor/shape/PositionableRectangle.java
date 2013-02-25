@@ -1,14 +1,14 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 
 import java.awt.event.ActionEvent;
-import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.awt.Shape;
 import javax.swing.JPopupMenu;
+import org.slf4j.LoggerFactory;
 
 /**
  * PositionableRoundRect.
@@ -75,5 +75,5 @@ public class PositionableRectangle extends PositionableShape {
         return true;
     }
 
-    static Logger log = Logger.getLogger(PositionableRectangle.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableRectangle.class.getName());
 }

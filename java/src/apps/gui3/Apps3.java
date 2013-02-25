@@ -23,7 +23,8 @@ import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
 import jmri.util.swing.FontComboUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -296,7 +297,7 @@ public abstract class Apps3 extends AppsBase {
         });
     }
 
-    static Logger log = Logger.getLogger(Apps3.class.getName());
+    static Logger log = LoggerFactory.getLogger(Apps3.class.getName());
     
 }
 

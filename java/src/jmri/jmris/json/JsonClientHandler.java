@@ -9,7 +9,8 @@ import jmri.JmriException;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
 import jmri.web.server.WebServerManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JsonClientHandler {
 
@@ -26,7 +27,7 @@ public class JsonClientHandler {
     private JsonTurnoutServer turnoutServer;
     private JmriConnection connection;
     private ObjectMapper mapper;
-    private static Logger log = Logger.getLogger(JsonClientHandler.class);
+    private static Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
     public JsonClientHandler(JmriConnection connection) {
         this.connection = connection;

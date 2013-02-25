@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Frame;
 import java.awt.event.*;
 import java.text.MessageFormat;
@@ -55,6 +56,6 @@ public class PrintTrainManifestAction extends AbstractAction {
 		}
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(PrintTrainManifestAction.class.getName());
 }

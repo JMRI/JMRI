@@ -5,7 +5,8 @@
 
 package jmri.managers.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -323,5 +324,5 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         return InstanceManager.signalMastLogicManagerInstance().getXMLOrder();
     }
 
-    static Logger log = Logger.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManagerXml.class.getName());
 }

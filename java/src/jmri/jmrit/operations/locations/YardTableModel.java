@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.*;
 import javax.swing.*;
 import jmri.jmrit.operations.setup.Control;
@@ -63,6 +64,6 @@ public class YardTableModel extends TrackTableModel {
 		}
 	}
 
-	static Logger log = Logger.getLogger(YardTableModel.class
+	static Logger log = LoggerFactory.getLogger(YardTableModel.class
 			.getName());
 }

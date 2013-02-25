@@ -1,6 +1,7 @@
 package jmri.jmrix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import jmri.BasicRosterEntry;
 import jmri.LocoAddress;
@@ -646,5 +647,5 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         }
     }
     
-    static Logger log = Logger.getLogger(AbstractThrottleManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractThrottleManager.class.getName());
 }

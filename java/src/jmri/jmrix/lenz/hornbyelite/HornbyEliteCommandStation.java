@@ -4,7 +4,8 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -29,7 +30,7 @@ public class HornbyEliteCommandStation extends jmri.jmrix.lenz.LenzCommandStatio
     /*
      * We need to register for logging
      */
-    static Logger log = Logger.getLogger(HornbyEliteCommandStation.class.getName());
+    static Logger log = LoggerFactory.getLogger(HornbyEliteCommandStation.class.getName());
     
 }
 

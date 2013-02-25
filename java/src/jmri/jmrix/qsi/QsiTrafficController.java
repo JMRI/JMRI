@@ -2,7 +2,8 @@
 
 package jmri.jmrix.qsi;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
@@ -320,7 +321,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
          else return false;
        }
 
-	static Logger log = Logger.getLogger(QsiTrafficController.class.getName());
+	static Logger log = LoggerFactory.getLogger(QsiTrafficController.class.getName());
 }
 
 

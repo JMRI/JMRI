@@ -1,7 +1,8 @@
 // FactoryResetAction.java
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import javax.swing.JFrame;
@@ -51,5 +52,5 @@ public class FactoryResetAction extends AbstractAction {
         }
 
     }
-    static Logger log = Logger.getLogger(FactoryResetAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(FactoryResetAction.class.getName());
 }

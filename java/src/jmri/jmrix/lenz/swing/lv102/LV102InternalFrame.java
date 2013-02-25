@@ -2,7 +2,8 @@
 
 package jmri.jmrix.lenz.swing.lv102;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -697,6 +698,6 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
         }      
     }
 
-    static Logger log = Logger.getLogger(LV102InternalFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(LV102InternalFrame.class.getName());
 
 }

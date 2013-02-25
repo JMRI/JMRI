@@ -2,7 +2,8 @@
 
  package jmri.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -45,7 +46,7 @@ public class JmriJFrameAction extends AbstractAction {
         }
      }
      
-    static Logger log = Logger.getLogger(JmriJFrameAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriJFrameAction.class.getName());
 }
 
 /* @(#)JmriJFrameAction.java */

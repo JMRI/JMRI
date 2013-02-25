@@ -10,7 +10,8 @@ import jmri.JmriException;
 import jmri.jmris.AbstractMemoryServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JSON Web Socket interface between the JMRI Memory manager and a network
@@ -23,7 +24,7 @@ public class JsonMemoryServer extends AbstractMemoryServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    static Logger log = Logger.getLogger(JsonMemoryServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonMemoryServer.class.getName());
 
     public JsonMemoryServer(JmriConnection connection) {
         super();

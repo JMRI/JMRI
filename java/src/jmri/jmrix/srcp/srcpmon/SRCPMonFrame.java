@@ -2,7 +2,8 @@
 
 package jmri.jmrix.srcp.srcpmon;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.srcp.SRCPListener;
 import jmri.jmrix.srcp.SRCPMessage;
 import jmri.jmrix.srcp.SRCPReply;
@@ -44,6 +45,6 @@ public class SRCPMonFrame extends jmri.jmrix.AbstractMonFrame implements SRCPLis
           reply(new SRCPReply(n));
 	}
 
-   static Logger log = Logger.getLogger(SRCPMonFrame.class.getName());
+   static Logger log = LoggerFactory.getLogger(SRCPMonFrame.class.getName());
 
 }

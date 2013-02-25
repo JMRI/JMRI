@@ -2,7 +2,8 @@
 
 package jmri.jmrix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -58,6 +59,6 @@ public abstract class AbstractMessage implements Message {
     // contents (private)
     protected int _nDataChars = 0;
 
-    private static Logger log = Logger.getLogger(AbstractMessage.class.getName());
+    private static Logger log = LoggerFactory.getLogger(AbstractMessage.class.getName());
 
 }

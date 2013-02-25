@@ -2,7 +2,8 @@
 
 package jmri.jmrix.cmri.serial;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.Turnout;
 import jmri.JmriException;
@@ -292,7 +293,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
     }
 
-    static Logger log = Logger.getLogger(SerialTurnoutManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class.getName());
 
 }
 

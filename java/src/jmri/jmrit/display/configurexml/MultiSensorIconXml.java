@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.MultiSensorIcon;
@@ -175,6 +176,6 @@ public class MultiSensorIconXml extends PositionableLabelXml {
     }
     
 
-    static Logger log = Logger.getLogger(MultiSensorIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(MultiSensorIconXml.class.getName());
 
 }

@@ -20,6 +20,8 @@ import java.util.ResourceBundle;
 import java.util.ArrayList;
 
 import javax.swing.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A LayoutTurnout corresponds to a turnout on the layout. A LayoutTurnout is an
@@ -2454,6 +2456,6 @@ public class LayoutTurnout
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutTurnout.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutTurnout.class.getName());
 
 }

@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Reporter;
 
@@ -156,5 +157,5 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     }
 
 
-    static Logger log = Logger.getLogger(ReporterIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(ReporterIcon.class.getName());
 }

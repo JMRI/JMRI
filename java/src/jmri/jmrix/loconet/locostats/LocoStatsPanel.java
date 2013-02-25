@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.locostats;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.*;
 import jmri.jmrix.loconet.swing.*;
 import jmri.util.StringUtil;
@@ -285,5 +286,5 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
         }
     }
     
-    static Logger log = Logger.getLogger(LocoStatsPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoStatsPanel.class.getName());
 }

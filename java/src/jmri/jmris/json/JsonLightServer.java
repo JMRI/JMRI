@@ -10,7 +10,8 @@ import jmri.Light;
 import jmri.jmris.AbstractLightServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Simple Server interface between the JMRI light manager and a network
@@ -23,7 +24,7 @@ public class JsonLightServer extends AbstractLightServer {
 
     private JmriConnection connection = null;
     private ObjectMapper mapper = null;
-    static Logger log = Logger.getLogger(JsonLightServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonLightServer.class.getName());
 
     public JsonLightServer(JmriConnection connection) {
         this.connection = connection;

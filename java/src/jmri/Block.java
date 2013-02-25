@@ -1,6 +1,7 @@
 package jmri;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -714,5 +715,5 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 	return(PhysicalLocation.getBeanPhysicalLocation(this));
     }
 
-    static Logger log = Logger.getLogger(Block.class.getName());
+    static Logger log = LoggerFactory.getLogger(Block.class.getName());
 }

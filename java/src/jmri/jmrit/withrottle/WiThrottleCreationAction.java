@@ -8,7 +8,8 @@ package jmri.jmrit.withrottle;
  *
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 
@@ -67,6 +68,6 @@ public class WiThrottleCreationAction extends JmriAbstractAction{
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    static Logger log = Logger.getLogger(WiThrottleCreationAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(WiThrottleCreationAction.class.getName());
 
 }

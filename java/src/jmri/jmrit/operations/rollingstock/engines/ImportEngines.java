@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -478,6 +479,6 @@ public class ImportEngines extends Thread {
 		}
 	}
 
-	static Logger log = Logger.getLogger(ImportEngines.class
+	static Logger log = LoggerFactory.getLogger(ImportEngines.class
 			.getName());
 }

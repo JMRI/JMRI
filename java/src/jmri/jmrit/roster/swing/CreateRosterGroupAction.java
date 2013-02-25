@@ -2,7 +2,8 @@
 
 package jmri.jmrit.roster.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -106,5 +107,5 @@ public class CreateRosterGroupAction extends JmriAbstractAction {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(CreateRosterGroupAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(CreateRosterGroupAction.class.getName());
 }

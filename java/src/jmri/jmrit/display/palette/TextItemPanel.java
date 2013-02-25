@@ -20,7 +20,8 @@ import java.awt.dnd.DragSourceEvent;
 import java.awt.dnd.DragSourceListener;
 import java.io.IOException;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -143,5 +144,5 @@ public class TextItemPanel extends ItemPanel /*implements ActionListener */{
         }
     }
 
-    static Logger log = Logger.getLogger(TextItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(TextItemPanel.class.getName());
 }

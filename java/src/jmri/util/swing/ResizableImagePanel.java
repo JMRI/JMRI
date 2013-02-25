@@ -1,6 +1,7 @@
 package jmri.util.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -273,5 +274,5 @@ public class ResizableImagePanel extends JPanel implements ComponentListener {
     	}
     }
     
-    static private Logger log = Logger.getLogger(ResizableImagePanel.class.getName());
+    static private Logger log = LoggerFactory.getLogger(ResizableImagePanel.class.getName());
 }

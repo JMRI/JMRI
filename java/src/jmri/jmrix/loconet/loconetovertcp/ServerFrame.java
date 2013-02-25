@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.loconetovertcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.ChangeListener;
@@ -167,5 +168,5 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
 
   static ServerFrame self ;
 
-  static Logger log = Logger.getLogger( ServerFrame.class.getName());
+  static Logger log = LoggerFactory.getLogger( ServerFrame.class.getName());
 }

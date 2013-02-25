@@ -2,7 +2,8 @@
 
 package jmri.jmrix.maple;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 import jmri.JmriException;
 
@@ -176,7 +177,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             tmpSName = createSystemName(curAddress, prefix);
         } catch (JmriException ex) {
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
+                    showErrorMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false);
             return null;
         }
         //Check to determine if the systemName is in use, return null if it is,
@@ -196,7 +197,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
 
-    static Logger log = Logger.getLogger(SerialSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialSensorManager.class.getName());
 }
 
 /* @(#)SerialSensorManager.java */

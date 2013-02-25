@@ -2,7 +2,8 @@
 
 package jmri.jmrix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -100,5 +101,5 @@ public abstract class AbstractNode {
 
     boolean needSend = true;          // 'true' if something has changed that requires data to be sent
     
-    private static Logger log = Logger.getLogger(AbstractNode.class.getName());
+    private static Logger log = LoggerFactory.getLogger(AbstractNode.class.getName());
 }

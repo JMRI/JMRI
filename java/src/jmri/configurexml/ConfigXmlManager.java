@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.revhistory.FileHistory;
 
@@ -20,7 +21,8 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
 
-import org.apache.log4j.Level;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides the mechanisms for storing an entire layout configuration
@@ -247,7 +249,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 Element e = elementFromObject(o);
                 if (e!=null) root.addContent(e);
             } catch (java.lang.Exception e) {
-                storingErrorEncountered (null, "storing to file", Level.ERROR,
+                storingErrorEncountered (null, "storing to file",
                                           "Unknown error (Exception)", null,null,e);
                 result = false;
             }
@@ -264,7 +266,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (e!=null) root.addContent(e);
             } catch (java.lang.Exception e) {
                 result = false;
-                storingErrorEncountered (((XmlAdapter)o), "storing to file", Level.ERROR,
+                storingErrorEncountered (((XmlAdapter)o), "storing to file",
                                           "Unknown error (Exception)", null,null,e);
             }
         }
@@ -280,7 +282,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                 if (e!=null) root.addContent(e);
             } catch (java.lang.Exception e) {
                 result = false;
-                storingErrorEncountered ((XmlAdapter)o, "storing to file", Level.ERROR, 
+                storingErrorEncountered ((XmlAdapter)o, "storing to file", 
                                           "Unknown error (Exception)", null,null,e);
             }
         }
@@ -319,12 +321,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
             writeXML(file, doc);
         } catch (java.io.FileNotFoundException ex3) {
-            storingErrorEncountered (null, "storing to file "+file.getName(), Level.ERROR,
+            storingErrorEncountered (null, "storing to file "+file.getName(),
                                       "File not found " + file.getName(), null,null,ex3);
             log.error("FileNotFound error writing file: "+ex3.getLocalizedMessage());
             return false;
         } catch (java.io.IOException ex2) {
-            storingErrorEncountered (null, "storing to file "+file.getName(), Level.ERROR,
+            storingErrorEncountered (null, "storing to file "+file.getName(),
                               "IO error writing file " + file.getName(), null,null,ex2);
             log.error("IO error writing file: "+ex2.getLocalizedMessage());
             return false;
@@ -599,12 +601,12 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                             result = false;
                     }
                 } catch (Exception e) {
-                    creationErrorEncountered(adapter, "load(" + url.getFile() + ")", Level.ERROR,
+                    creationErrorEncountered(adapter, "load(" + url.getFile() + ")",
                             "Unexpected error (Exception)", null, null, e);
 
                     result = false;  // keep going, but return false to signal problem
                 } catch (Throwable et) {
-                    creationErrorEncountered(adapter, "in load(" + url.getFile() + ")", Level.ERROR,
+                    creationErrorEncountered(adapter, "in load(" + url.getFile() + ")",
                             "Unexpected error (Throwable)", null, null, et);
 
                     result = false;  // keep going, but return false to signal problem
@@ -614,15 +616,15 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         } catch (java.io.FileNotFoundException e1) {
             // this returns false to indicate un-success, but not enough
             // of an error to require a message
-            creationErrorEncountered(null, "opening file " + url.getFile(), Level.ERROR,
+            creationErrorEncountered(null, "opening file " + url.getFile(),
                     "File not found", null, null, e1);
             result = false;
         } catch (org.jdom.JDOMException e) {
-            creationErrorEncountered(null, "parsing file " + url.getFile(), Level.ERROR,
+            creationErrorEncountered(null, "parsing file " + url.getFile(),
                     "Parse error", null, null, e);
             result = false;
         } catch (java.lang.Exception e) {
-            creationErrorEncountered(null, "loading from file " + url.getFile(), Level.ERROR,
+            creationErrorEncountered(null, "loading from file " + url.getFile(),
                     "Unknown error (Exception)", null, null, e);
             result = false;
         } finally {
@@ -746,11 +748,11 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     if (!loadStatus)
                         result = false;
                 } catch (Exception e) {
-                    creationErrorEncountered(adapter, "deferred load(" + url.getFile() + ")", Level.ERROR,
+                    creationErrorEncountered(adapter, "deferred load(" + url.getFile() + ")",
                             "Unexpected error (Exception)", null, null, e);
                     result = false;  // keep going, but return false to signal problem
                 } catch (Throwable et) {
-                    creationErrorEncountered(adapter, "in deferred load(" + url.getFile() + ")", Level.ERROR,
+                    creationErrorEncountered(adapter, "in deferred load(" + url.getFile() + ")",
                             "Unexpected error (Throwable)", null, null, et);
                     result = false;  // keep going, but return false to signal problem
                 }
@@ -816,14 +818,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     static public void creationErrorEncountered (
                 XmlAdapter adapter,
                 String operation,
-                org.apache.log4j.Level level,
                 String description, 
                 String systemName, 
                 String userName, 
                 Throwable exception)
     {
         // format and log a message (note reordered from arguments)
-        ErrorMemo e = new ErrorMemo(level,
+        ErrorMemo e = new ErrorMemo(
                             adapter, operation, description, 
                             systemName, userName, exception, "loading");
 
@@ -854,14 +855,13 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     static public void storingErrorEncountered (
                 XmlAdapter adapter,
                 String operation,
-                org.apache.log4j.Level level,
                 String description, 
                 String systemName, 
                 String userName, 
                 Throwable exception)
     {
         // format and log a message (note reordered from arguments)
-        ErrorMemo e = new ErrorMemo(level,
+        ErrorMemo e = new ErrorMemo(
                             adapter, operation, description, 
                             systemName, userName, exception, "storing");
 
@@ -872,6 +872,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     static public void setErrorHandler(ErrorHandler handler) { ConfigXmlManager.handler = handler; }
     
     // initialize logging
-    static Logger log = Logger.getLogger(ConfigXmlManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConfigXmlManager.class.getName());
 }
 

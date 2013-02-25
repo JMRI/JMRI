@@ -34,7 +34,8 @@ import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 import jmri.jmrit.XmlFile;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 public class VSDFile extends ZipFile {
@@ -381,6 +382,6 @@ public class VSDFile extends ZipFile {
 	return(true);
     }
 	// initialize logging
-	static Logger log = Logger.getLogger(VSDFile.class.getName());
+	static Logger log = LoggerFactory.getLogger(VSDFile.class.getName());
 
 }

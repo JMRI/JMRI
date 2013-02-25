@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.util.PhysicalLocationPanel;
 import jmri.util.PhysicalLocation;
@@ -263,7 +264,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 	
     }
 
-    static Logger log = org.apache.log4j.Logger
+    static Logger log = LoggerFactory
 	.getLogger(SetPhysicalLocationAction.class.getName());
 }
 

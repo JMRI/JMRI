@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -1264,5 +1265,5 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return nextSpeed;
     }
 
-    static Logger log = Logger.getLogger(Warrant.class.getName());
+    static Logger log = LoggerFactory.getLogger(Warrant.class.getName());
 }

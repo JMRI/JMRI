@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -121,7 +122,7 @@ public class PaneProgAction 			extends AbstractAction {
         f.setVisible(true);
     }
 
-    static Logger log = Logger.getLogger(PaneProgAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(PaneProgAction.class.getName());
 
 }
 

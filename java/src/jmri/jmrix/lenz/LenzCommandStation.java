@@ -4,7 +4,8 @@
 
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -227,7 +228,7 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
     /*
      * We need to register for logging
      */
-    static Logger log = Logger.getLogger(LenzCommandStation.class.getName());
+    static Logger log = LoggerFactory.getLogger(LenzCommandStation.class.getName());
     
 }
 

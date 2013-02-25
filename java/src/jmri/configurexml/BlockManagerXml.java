@@ -2,7 +2,8 @@
 
 package jmri.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.BeanSetting;
 import jmri.Block;
 import jmri.BlockManager;
@@ -324,9 +325,8 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         } catch (org.jdom.DataConversionException e) {
             log.error("Could not parse path attribute");
         } catch (NullPointerException e) {
-            creationErrorEncountered (org.apache.log4j.Level.ERROR,
-                                        "Block Path entry in file missing required attribute",
-                                        block.getSystemName(),block.getUserName(),null);
+            creationErrorEncountered ("Block Path entry in file missing required attribute",
+                                      block.getSystemName(),block.getUserName(),null);
         }
         
         Block toBlock = null;
@@ -372,5 +372,5 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
         return InstanceManager.blockManagerInstance().getXMLOrder();
     }
 
-    static Logger log = Logger.getLogger(BlockManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockManagerXml.class.getName());
 }

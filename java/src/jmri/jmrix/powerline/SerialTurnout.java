@@ -2,7 +2,8 @@
 
 package jmri.jmrix.powerline;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -86,7 +87,7 @@ public class SerialTurnout extends AbstractTurnout {
         tc.sendX10Sequence(out, null);
     }
 
-    static Logger log = Logger.getLogger(SerialTurnout.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

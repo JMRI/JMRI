@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.pm4;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 
 import javax.swing.*;
@@ -209,6 +210,6 @@ public class PM4Panel extends jmri.jmrix.loconet.AbstractBoardProgPanel {
                                             "Faster (PM42 only)", "Fastest (PM42 only)"});
     JCheckBox rev4  = new JCheckBox();
 
-    static Logger log = Logger.getLogger(PM4Panel.class.getName());
+    static Logger log = LoggerFactory.getLogger(PM4Panel.class.getName());
 
 }

@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 
 import jmri.jmrit.operations.locations.Location;
@@ -299,6 +300,6 @@ public class Engine extends RollingStock {
 		}
 	}
 
-	static Logger log = Logger.getLogger(Engine.class.getName());
+	static Logger log = LoggerFactory.getLogger(Engine.class.getName());
 
 }

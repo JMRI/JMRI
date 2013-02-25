@@ -11,7 +11,8 @@ import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -25,7 +26,7 @@ public class WebServerManager {
     static private WebServerManager instance = null;
     private WebServerPreferences preferences;
     private WebServer server;
-    static Logger log = Logger.getLogger(WebServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(WebServer.class.getName());
 
     private WebServerManager() {
         if (InstanceManager.getDefault(WebServerPreferences.class) == null) {

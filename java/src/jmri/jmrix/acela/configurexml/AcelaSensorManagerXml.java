@@ -2,7 +2,8 @@
 
 package jmri.jmrix.acela.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 import jmri.jmrix.acela.*;
 
@@ -39,8 +40,7 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         try { 
             AcelaSensorManager.instance();
         } catch (Exception e) {
-            creationErrorEncountered (org.apache.log4j.Level.ERROR,
-                                      "Could not create Acela Sensor Manager",
+            creationErrorEncountered ("Could not create Acela Sensor Manager",
                                       null,null,null);
             
             return false;
@@ -50,7 +50,7 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
         return loadSensors(sensors);
     }
 
-    static Logger log = Logger.getLogger(AcelaSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaSensorManagerXml.class.getName());
 }
 
 /* @(#)AcelaSensorManagerXml.java */

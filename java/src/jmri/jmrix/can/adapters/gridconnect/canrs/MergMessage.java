@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canrs;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.can.CanMessage;
 
 import jmri.jmrix.can.adapters.gridconnect.GridConnectMessage;
@@ -108,7 +109,7 @@ public class MergMessage extends GridConnectMessage {
         }
     }
 
-    static Logger log = Logger.getLogger(MergMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(MergMessage.class.getName());
 }
 
 /* @(#)MergMessage.java */

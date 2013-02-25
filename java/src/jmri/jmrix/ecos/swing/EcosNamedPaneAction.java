@@ -2,7 +2,8 @@
 
 package jmri.jmrix.ecos.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
@@ -49,7 +50,7 @@ public class EcosNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
         return p;
     }
 
-    static Logger log = Logger.getLogger(EcosNamedPaneAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosNamedPaneAction.class.getName());
 }
 
 /* @(#)EcosNamedPaneAction.java */

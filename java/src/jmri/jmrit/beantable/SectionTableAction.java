@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Section;
@@ -1357,7 +1358,7 @@ public class SectionTableAction extends AbstractTableAction {
     
     public String getClassDescription() { return rb.getString("TitleSectionTable"); }
 
-    static final Logger log = Logger.getLogger(SectionTableAction.class.getName());
+    static final Logger log = LoggerFactory.getLogger(SectionTableAction.class.getName());
 }
 
 /* @(#)SectionTableAction.java */

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.powerline.simulator;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -114,7 +115,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             try {
                 wait(250);
             } catch (InterruptedException ex) {
-                Logger.getLogger(SpecificTrafficController.class.getName()).log(Level.SEVERE, null, ex);
+                LoggerFactory.getLogger(SpecificTrafficController.class.getName()).log(Level.SEVERE, null, ex);
             }
  */
         }
@@ -261,7 +262,7 @@ public class SpecificTrafficController extends SerialTrafficController {
 	        }
         }
     }
-    static Logger log = Logger.getLogger(SpecificTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
 }
 
 

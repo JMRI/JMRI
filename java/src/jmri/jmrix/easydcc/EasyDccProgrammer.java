@@ -2,7 +2,8 @@
 
 package jmri.jmrix.easydcc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 import java.util.Vector;
@@ -244,7 +245,7 @@ public class EasyDccProgrammer extends AbstractProgrammer implements EasyDccList
         return _controller;
     }
 
-    static Logger log = Logger.getLogger(EasyDccProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccProgrammer.class.getName());
 
 }
 

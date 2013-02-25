@@ -2,7 +2,8 @@
 
 package jmri.jmrix.sprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
@@ -242,7 +243,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
  
        private boolean unsolicited;
 
-	static Logger log = Logger.getLogger(SprogTrafficController.class.getName());
+	static Logger log = LoggerFactory.getLogger(SprogTrafficController.class.getName());
 
 	/**
 	 * serialEvent - respond to an event triggered by RXTX. In this case

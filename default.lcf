@@ -78,7 +78,7 @@ log4j.category.org.eclipse.jetty=WARN
 
 # Examples of changing priority of specific categories (classes, packages):
 #
-# log4j.category.jmri=DEBUG
+log4j.category.jmri=DEBUG
 # log4j.category.jmri.jmrit.beantable.LogixTableAction=DEBUG
 # log4j.category.jmri.jmrit.display=DEBUG
 # log4j.category.jmri.jmrit.display.IndicatorTurnoutIcon=DEBUG

@@ -10,7 +10,8 @@ package jmri.jmrix.loconet.locormi;
  * @version $Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import jmri.jmrix.loconet.*;
 import javax.swing.AbstractAction;
@@ -18,7 +19,7 @@ import java.awt.event.ActionEvent;
 
 public class LnMessageClientAction extends AbstractAction
 {
-	static Logger log = Logger.getLogger(LnMessageClientAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(LnMessageClientAction.class.getName());
 
   public LnMessageClientAction( String s )
   {

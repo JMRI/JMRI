@@ -2,7 +2,8 @@
 
 package jmri;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Generates an NMRA packet containing the correct payload to enable or
@@ -132,8 +133,7 @@ public class PushbuttonPacket {
 		return CVdata;
 	}
 
-	static Logger log = org.apache.log4j.Logger
-	.getLogger(PushbuttonPacket.class.getName());
+	static Logger log = LoggerFactory.getLogger(PushbuttonPacket.class.getName());
 }
 
 

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.internal;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the InternalSensorManager interface.
@@ -17,7 +18,7 @@ public class InternalSensorManager extends jmri.managers.InternalSensorManager {
         this.prefix = prefix;
     }
         
-    static Logger log = Logger.getLogger(InternalSensorManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(InternalSensorManager.class.getName());
 }
 
 /* @(#)InternalSensorManager.java */

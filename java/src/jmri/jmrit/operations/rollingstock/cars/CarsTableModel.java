@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -676,6 +677,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		}
 	}
 
-	static Logger log = Logger.getLogger(CarsTableModel.class
+	static Logger log = LoggerFactory.getLogger(CarsTableModel.class
 			.getName());
 }

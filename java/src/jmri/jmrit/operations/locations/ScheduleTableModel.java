@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.*;
 
 import javax.swing.*;
@@ -672,6 +673,6 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	}
 
-	static Logger log = Logger.getLogger(ScheduleTableModel.class
+	static Logger log = LoggerFactory.getLogger(ScheduleTableModel.class
 			.getName());
 }

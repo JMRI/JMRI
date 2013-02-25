@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.davidflanagan.*;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
 import java.awt.event.*;
@@ -184,5 +185,5 @@ public class PrintCvAction  extends AbstractAction {
         writer.close();
     }
 
-    static Logger log = Logger.getLogger(PrintCvAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(PrintCvAction.class.getName());
 }

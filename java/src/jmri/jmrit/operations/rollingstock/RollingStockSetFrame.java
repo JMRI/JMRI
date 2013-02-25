@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.text.MessageFormat;
@@ -769,6 +770,6 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		}
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(RollingStockSetFrame.class.getName());
 }

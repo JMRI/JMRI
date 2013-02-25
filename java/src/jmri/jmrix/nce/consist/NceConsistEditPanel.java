@@ -2,7 +2,8 @@
 
 package jmri.jmrix.nce.consist;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -2121,6 +2122,6 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		+ " " + shortHandConvertDTD(cre.getLoco6Direction());
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(NceConsistEditPanel.class.getName());
 }

@@ -55,7 +55,8 @@ import jmri.jmrix.JmrixConfigPane;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 import apps.AppConfigBase;
@@ -908,6 +909,6 @@ public class TabbedPreferences extends AppConfigBase {
 		}
 	}
 
-	static Logger log = Logger.getLogger(TabbedPreferences.class.getName());
+	static Logger log = LoggerFactory.getLogger(TabbedPreferences.class.getName());
 
 }

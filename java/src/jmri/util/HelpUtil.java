@@ -2,7 +2,8 @@
 
 package jmri.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.AboutAction;
 import javax.help.HelpBroker;
 import javax.help.HelpSet;
@@ -200,5 +201,5 @@ public class HelpUtil {
     static HelpBroker globalHelpBroker;
     
     // initialize logging
-    static private Logger log = Logger.getLogger(HelpUtil.class.getName());
+    static private Logger log = LoggerFactory.getLogger(HelpUtil.class.getName());
 }

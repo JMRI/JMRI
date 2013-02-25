@@ -1,6 +1,7 @@
 package jmri.jmrix.can.cbus.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -37,5 +38,5 @@ public class CbusSensorManagerXml extends jmri.managers.configurexml.AbstractSen
 		return result;
     }
 
-    static Logger log = Logger.getLogger(CbusSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(CbusSensorManagerXml.class.getName());
 }

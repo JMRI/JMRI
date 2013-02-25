@@ -1,6 +1,7 @@
 package jmri.jmrix.xpa;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
@@ -208,6 +209,6 @@ public class XpaThrottle extends AbstractThrottle {
     protected void throttleDispose(){ finishRecord(); }
     
     // initialize logging
-    static Logger log = Logger.getLogger(XpaThrottle.class.getName());
+    static Logger log = LoggerFactory.getLogger(XpaThrottle.class.getName());
 
 }

@@ -2,7 +2,8 @@
 
 package jmri.implementation;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.NamedBeanHandle;
 
@@ -833,8 +834,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         firePropertyChange("TurnoutStraightSpeedChange", oldSpeed, s);
     }
     
-	static Logger log = org.apache.log4j.Logger
-	.getLogger(AbstractTurnout.class.getName());
+	static Logger log = LoggerFactory.getLogger(AbstractTurnout.class.getName());
 }
 
 /* @(#)AbstractTurnout.java */

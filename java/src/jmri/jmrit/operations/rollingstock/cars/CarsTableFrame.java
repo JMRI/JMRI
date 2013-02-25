@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import javax.swing.event.TableModelListener;
 import javax.swing.event.TableModelEvent;
@@ -389,6 +390,6 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		numCars.setText(showNumber + "/" + totalNumber);
 	}
 
-	static Logger log = Logger.getLogger(CarsTableFrame.class
+	static Logger log = LoggerFactory.getLogger(CarsTableFrame.class
 			.getName());
 }

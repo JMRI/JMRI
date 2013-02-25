@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -582,13 +583,13 @@ public class ListedTableFrame extends BeanTableFrame {
                 item.getAAClass().setFrame(frame);
                 buildMenus(item);
             } catch (Exception ex){
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
             }
             list.ensureIndexIsVisible(index);
             list.setSelectedIndex(index);
         }
     }
     
-    static Logger log = Logger.getLogger(ListedTableFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(ListedTableFrame.class.getName());
 }
 

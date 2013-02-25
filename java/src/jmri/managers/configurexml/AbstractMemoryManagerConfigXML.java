@@ -1,6 +1,7 @@
 package jmri.managers.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -148,5 +149,5 @@ public abstract class AbstractMemoryManagerConfigXML extends AbstractNamedBeanMa
         m.setValue(value);
     }
 
-    static Logger log = Logger.getLogger(AbstractMemoryManagerConfigXML.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractMemoryManagerConfigXML.class.getName());
 }

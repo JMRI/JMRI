@@ -2,7 +2,8 @@
 
 package apps;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Application for running JMRI server functions without a graphical interface.
@@ -48,5 +49,5 @@ public class JmriFaceless extends apps.AppsBase {
         new JmriFaceless(args);
     }
 
-    static Logger log = Logger.getLogger(JmriFaceless.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriFaceless.class.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrit;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 
 import java.awt.event.*;
@@ -45,5 +46,5 @@ public class LogixLoadAction extends AbstractAction {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(LogixLoadAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(LogixLoadAction.class.getName());
 }

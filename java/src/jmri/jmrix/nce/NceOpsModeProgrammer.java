@@ -2,7 +2,8 @@
 
 package jmri.jmrix.nce;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -121,7 +122,7 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(NceOpsModeProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceOpsModeProgrammer.class.getName());
 
 }
 

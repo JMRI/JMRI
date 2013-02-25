@@ -1,6 +1,7 @@
 package jmri.jmrit.withrottle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import jmri.Consist;
 import jmri.DccLocoAddress;
@@ -80,6 +81,6 @@ public class WiFiConsistManager extends AbstractConsistManager {
                 listeners.remove(listener);
     }
 
-    static Logger log = Logger.getLogger(WiFiConsistManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(WiFiConsistManager.class.getName());
 
 }

@@ -1,6 +1,7 @@
 package jmri.jmrit.signalling;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Sensor;
 import jmri.NamedBean;
 import jmri.InstanceManager;
@@ -550,7 +551,7 @@ public class EntryExitPairs implements jmri.Manager{
             try {
                 nxPoint.getSensor().setKnownState(sensorState);
             } catch (jmri.JmriException ex){
-                log.error(ex);
+                log.error(ex.getLocalizedMessage(), ex);
             }
             nxPoint.addSensorList();
         }
@@ -675,5 +676,5 @@ public class EntryExitPairs implements jmri.Manager{
     };
     
     // initialize logging
-    static Logger log = Logger.getLogger(EntryExitPairs.class.getName());
+    static Logger log = LoggerFactory.getLogger(EntryExitPairs.class.getName());
 }

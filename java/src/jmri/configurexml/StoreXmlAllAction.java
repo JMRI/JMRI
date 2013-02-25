@@ -2,7 +2,8 @@
 
 package jmri.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
@@ -49,5 +50,5 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(StoreXmlAllAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(StoreXmlAllAction.class.getName());
 }

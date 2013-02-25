@@ -2,7 +2,8 @@
 
 package jmri.managers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.managers.AbstractManager;
 import jmri.implementation.DefaultSignalGroup;
@@ -109,7 +110,7 @@ public class DefaultSignalGroupManager extends AbstractManager
         deregister(s);
     }
 
-    static Logger log = Logger.getLogger(DefaultSignalGroupManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class.getName());
 }
 
 /* @(#)DefaultSignalGroupManager.java */

@@ -1,7 +1,8 @@
 
 package jmri.jmrit.display.palette;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.awt.FlowLayout;
 import java.util.Hashtable;
@@ -157,5 +158,5 @@ public abstract class ItemPanel extends JPanel {
         return newMap;
     }
     
-    static Logger log = Logger.getLogger(ItemPanel.class.getName());
+    static Logger log = LoggerFactory.getLogger(ItemPanel.class.getName());
 }

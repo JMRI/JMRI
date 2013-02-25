@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -431,7 +432,7 @@ public class LocoNetSlot {
         stat = val & 0x7F;
     }
 
-    static Logger log = Logger.getLogger(LocoNetSlot.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoNetSlot.class.getName());
 }
 
 

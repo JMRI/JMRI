@@ -1,6 +1,7 @@
 package jmri.managers;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.SignalMastLogic;
 import jmri.implementation.DefaultSignalMastLogic;
@@ -387,7 +388,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                         sml.useLayoutEditor(true, (SignalMast)validDestMast.get(i));
                     } catch (jmri.JmriException ex){
                         //log.debug("we shouldn't get an exception here!");
-                        log.debug(ex);
+                        log.debug(ex.getLocalizedMessage(), ex);
                     }
                 }
             }
@@ -479,5 +480,5 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         }
     }
     
-    static Logger log = Logger.getLogger(DefaultSignalMastLogicManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class.getName());
 }

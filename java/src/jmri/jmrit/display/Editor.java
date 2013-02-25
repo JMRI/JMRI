@@ -1,6 +1,7 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.util.List;
 
@@ -2664,5 +2665,5 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     abstract protected void copyItem(Positionable p);
 
     // initialize logging
-    static Logger log = Logger.getLogger(Editor.class.getName());
+    static Logger log = LoggerFactory.getLogger(Editor.class.getName());
 }

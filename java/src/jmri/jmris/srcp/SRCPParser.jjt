@@ -11,7 +11,8 @@ PARSER_BEGIN(SRCPParser)
 
 package jmri.jmris.srcp.parser;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /* 
  * This file defines a JavaTree/JavaCC parser implementation for
@@ -26,7 +27,7 @@ import org.apache.log4j.Logger;
 
 public class SRCPParser {
   
-   static Logger log = Logger.getLogger(SRCPParser.class.getName());
+   static Logger log = LoggerFactory.getLogger(SRCPParser.class.getName());
 
   }
 

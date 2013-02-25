@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.routes;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -237,6 +238,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		removePropertyChangeRoutes();
 	}
 
-	static Logger log = Logger.getLogger(RoutesTableModel.class
+	static Logger log = LoggerFactory.getLogger(RoutesTableModel.class
 			.getName());
 }

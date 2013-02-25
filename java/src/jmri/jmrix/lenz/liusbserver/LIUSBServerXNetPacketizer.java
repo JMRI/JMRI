@@ -4,7 +4,8 @@
 
 package jmri.jmrix.lenz.liusbserver;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.lenz.XNetPacketizer;
 
 import jmri.jmrix.AbstractMRMessage;
@@ -77,7 +78,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
 
 
 
-static Logger log = Logger.getLogger(LIUSBServerXNetPacketizer.class.getName());
+static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizer.class.getName());
 }
 
 /* @(#)XnTcpXNetPacketizer.java */

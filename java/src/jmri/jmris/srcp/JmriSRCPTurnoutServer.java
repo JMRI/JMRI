@@ -2,7 +2,8 @@
 
 package jmri.jmris.srcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 
 import jmri.Turnout;
@@ -125,6 +126,6 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
      }
 
 
-    static Logger log = Logger.getLogger(JmriSRCPTurnoutServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriSRCPTurnoutServer.class.getName());
 
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.qsi;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Carries the reply to an QsiMessage
@@ -152,7 +153,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     // contents (private)
     private boolean _isBoot = false;
     
-    static Logger log = Logger.getLogger(QsiReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(QsiReply.class.getName());
 }
 
 /* @(#)QsiReply.java */

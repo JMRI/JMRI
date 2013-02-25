@@ -3,14 +3,15 @@ package jmri.jmris.json;
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JsonServerManager {
 
     static private JsonServerManager instance = null;
     private JsonServerPreferences preferences;
     private JsonServer server;
-    static Logger log = Logger.getLogger(JsonServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonServer.class.getName());
 
     private JsonServerManager() {
         if (InstanceManager.getDefault(JsonServerPreferences.class) == null) {

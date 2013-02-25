@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.List;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
@@ -40,7 +41,7 @@ public class WebServerPreferences extends Bean {
     private boolean rebuildIndex = false;
     private String railRoadName = WebServer.getString("DefaultRailroadName");
     private int port = 12080;
-    private static Logger log = Logger.getLogger(WebServerPreferences.class.getName());
+    private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
     public WebServerPreferences(String fileName) {
         openFile(fileName);
@@ -55,14 +56,14 @@ public class WebServerPreferences extends Bean {
             try {
                 setClickDelay(Integer.valueOf(a.getValue()));
             } catch (NumberFormatException e) {
-                log.debug(e);
+                log.debug(e.getLocalizedMessage(), e);
             }
         }
         if ((a = child.getAttribute(RefreshDelay)) != null) {
             try {
                 setRefreshDelay(Integer.valueOf(a.getValue()));
             } catch (NumberFormatException e) {
-                log.debug(e);
+                log.debug(e.getLocalizedMessage(), e);
             }
         }
         if ((a = child.getAttribute(UseAjax)) != null) {

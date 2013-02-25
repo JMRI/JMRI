@@ -10,7 +10,8 @@
 
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
@@ -524,6 +525,6 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
         tc.sendXNetMessage(msg,this);
     }
 
-	static Logger log = Logger.getLogger(XNetConsist.class.getName());
+	static Logger log = LoggerFactory.getLogger(XNetConsist.class.getName());
 
 }

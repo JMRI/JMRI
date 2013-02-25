@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.routes;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsXml;
@@ -94,6 +95,6 @@ public class RouteManagerXml extends OperationsXml {
 	
     private String operationsFileName = "OperationsRouteRoster.xml"; // NOI18N
 
-    static Logger log = Logger.getLogger(RouteManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(RouteManagerXml.class.getName());
 
 }

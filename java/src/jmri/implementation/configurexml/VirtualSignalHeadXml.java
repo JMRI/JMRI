@@ -1,6 +1,7 @@
 package jmri.implementation.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.VirtualSignalHead;
@@ -63,5 +64,5 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         log.error("Invalid method called");
     }
 
-    static Logger log = Logger.getLogger(VirtualSignalHeadXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(VirtualSignalHeadXml.class.getName());
 }

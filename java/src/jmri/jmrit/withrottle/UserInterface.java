@@ -11,7 +11,8 @@ package jmri.jmrit.withrottle;
  */
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GraphicsEnvironment;
@@ -53,7 +54,7 @@ import jmri.util.FileUtil;
 //	listen() has to run in a separate thread.
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager {
 
-    static Logger log = Logger.getLogger(UserInterface.class.getName());
+    static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     JMenuBar menuBar;
@@ -431,7 +432,7 @@ class ServerThread extends Thread {
         log.debug("Leaving serverThread.run()");
     }
 
-    static Logger log = Logger.getLogger(ServerThread.class.getName());
+    static Logger log = LoggerFactory.getLogger(ServerThread.class.getName());
 }
 
  	  	 

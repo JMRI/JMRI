@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.routes;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
 
@@ -151,6 +152,6 @@ public class RouteCopyFrame extends OperationsFrame {
 		super.dispose();
 	}
 
-	static Logger log = Logger.getLogger(RouteCopyFrame.class
+	static Logger log = LoggerFactory.getLogger(RouteCopyFrame.class
 			.getName());
 }

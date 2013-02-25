@@ -2,7 +2,8 @@
 
 package jmri.jmrix.maple;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting output to Maple HMI's
@@ -133,7 +134,7 @@ public class OutputBits {
 	}
 	static OutputBits mInstance = null; // package access for tests
 
-    static Logger log = Logger.getLogger(OutputBits.class.getName());
+    static Logger log = LoggerFactory.getLogger(OutputBits.class.getName());
 }
 
 /* @(#)OutputBits.java */

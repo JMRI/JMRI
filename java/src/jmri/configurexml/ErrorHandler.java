@@ -1,6 +1,7 @@
 package jmri.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Default operation for reporting errors while loading.
@@ -25,8 +26,8 @@ public class ErrorHandler {
         if (e.adapter!=null) m += " in adaptor of type "+e.adapter.getClass().getName();
         if (e.exception!=null) m += " Exception: "+e.exception.toString();
         
-        if (e.exception != null) log.log(e.level, m, e.exception);
-        else log.log(e.level, m);
+        if (e.exception != null) log.error(m, e.exception);
+        else log.error(m);
     }
     
     /**
@@ -38,6 +39,6 @@ public class ErrorHandler {
     public void done() {}
     
     // initialize logging
-    static Logger log = Logger.getLogger(ErrorHandler.class.getName());
+    static Logger log = LoggerFactory.getLogger(ErrorHandler.class.getName());
 }
 

@@ -2,7 +2,8 @@
 
 package jmri.implementation;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.NamedBeanHandle;
 
@@ -117,7 +118,7 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         return validStateNames;
     }
 
-    static Logger log = Logger.getLogger(QuadOutputSignalHead.class.getName());
+    static Logger log = LoggerFactory.getLogger(QuadOutputSignalHead.class.getName());
 }
 
 /* @(#)QuadOutputSignalHead.java */

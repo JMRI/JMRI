@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.cmdstnconfig;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.*;
 import org.jdom.*;
 import java.util.*;
@@ -89,5 +90,5 @@ static void dumpNode( Element node, int depth )
   }
 
   // initialize logging
-  static private Logger log = Logger.getLogger(XmlConfig.class.getName());
+  static private Logger log = LoggerFactory.getLogger(XmlConfig.class.getName());
 }

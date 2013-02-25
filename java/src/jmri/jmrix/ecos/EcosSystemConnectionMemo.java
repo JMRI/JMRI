@@ -1,7 +1,8 @@
 // EcosSystemConnectionMemo.java
 
 package jmri.jmrix.ecos;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
@@ -164,7 +165,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         super.dispose();
     }
     
-    static Logger log = Logger.getLogger(EcosSystemConnectionMemo.class.getName());
+    static Logger log = LoggerFactory.getLogger(EcosSystemConnectionMemo.class.getName());
 }
 
 

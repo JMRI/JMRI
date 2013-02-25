@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -373,6 +374,6 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = Logger.getLogger(Schedule.class.getName());
+	static Logger log = LoggerFactory.getLogger(Schedule.class.getName());
 
 }

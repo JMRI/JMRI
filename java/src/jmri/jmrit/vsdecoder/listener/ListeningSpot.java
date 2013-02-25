@@ -26,7 +26,8 @@ package jmri.jmrit.vsdecoder.listener;
  * @version			$Revision: 21510 $
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 import jmri.util.PhysicalLocation;
@@ -251,6 +252,6 @@ public class ListeningSpot {
 	    _lookAt = parseVector3d(e.getAttributeValue("look_at"));
 	}
     }
-    private static final Logger log = Logger.getLogger(ListeningSpot.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ListeningSpot.class.getName());
 
 }

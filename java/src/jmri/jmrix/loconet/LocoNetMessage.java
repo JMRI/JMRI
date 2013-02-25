@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 import jmri.jmrix.loconet.LnConstants;
 
@@ -328,7 +329,7 @@ public class LocoNetMessage implements Serializable {
 		static char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } ;
 
     // initialize logging
-    static Logger log = Logger.getLogger(LocoNetMessage.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoNetMessage.class.getName());
 
 }
 

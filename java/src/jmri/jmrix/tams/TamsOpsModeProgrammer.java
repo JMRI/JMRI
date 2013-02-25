@@ -2,7 +2,8 @@
 
 package jmri.jmrix.tams;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -103,7 +104,7 @@ public class TamsOpsModeProgrammer extends TamsProgrammer  {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(TamsOpsModeProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsOpsModeProgrammer.class.getName());
 
 }
 

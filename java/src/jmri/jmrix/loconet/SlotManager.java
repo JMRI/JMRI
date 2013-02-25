@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
 import jmri.ProgListener;
 import jmri.Programmer;
@@ -1107,7 +1108,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     }
     
     // initialize logging
-    static Logger log = Logger.getLogger(SlotManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(SlotManager.class.getName());
 }
 
 

@@ -79,5 +79,5 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown(); 
     }
 
-	// static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconTest.class.getName());
+	// static private org.apache.log4j.Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
 }

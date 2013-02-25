@@ -1,6 +1,7 @@
 package jmri.jmrit.logix.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Iterator;
@@ -449,5 +450,5 @@ public class OBlockManagerXml // extends XmlFile
         return InstanceManager.oBlockManagerInstance().getXMLOrder();
     }
 
-    static Logger log = Logger.getLogger(OBlockManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(OBlockManagerXml.class.getName());
 }

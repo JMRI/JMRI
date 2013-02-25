@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Manager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -162,6 +163,6 @@ abstract public class AbstractTableAction extends AbstractAction {
 
     protected abstract void addPressed(ActionEvent e);
     
-    static Logger log = Logger.getLogger(AbstractTableAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractTableAction.class.getName());
 }
 /* @(#)AbstractTableAction.java */

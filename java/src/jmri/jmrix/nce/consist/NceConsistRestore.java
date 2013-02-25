@@ -2,7 +2,8 @@
 
 package jmri.jmrix.nce.consist;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import java.io.*;
@@ -254,6 +255,6 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 		}
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 	.getLogger(NceConsistRestore.class.getName());
 }

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.roster.swing;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.Frame;
 import java.util.ResourceBundle;
@@ -166,6 +167,6 @@ public class RosterMenu extends JMenu {
     }
 
 	// initialize logging
-    static Logger log = Logger.getLogger(RosterMenu.class.getName());
+    static Logger log = LoggerFactory.getLogger(RosterMenu.class.getName());
 
 }

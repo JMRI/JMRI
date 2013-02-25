@@ -2,7 +2,8 @@
 
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.*;
 
 import java.util.ArrayList;
@@ -194,6 +195,6 @@ public class PaneSet {
         re.writeFile(cvModel, iCvModel, variableModel );
     }
     
-    static Logger log = Logger.getLogger(PaneSet.class.getName());
+    static Logger log = LoggerFactory.getLogger(PaneSet.class.getName());
 }
 

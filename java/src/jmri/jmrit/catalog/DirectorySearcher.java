@@ -1,7 +1,8 @@
 // ImageIndexEditor.java
 package jmri.jmrit.catalog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -295,6 +296,6 @@ public class DirectorySearcher {
         cancelLooking();
     }
 
-    static Logger log = Logger.getLogger(DirectorySearcher.class.getName());
+    static Logger log = LoggerFactory.getLogger(DirectorySearcher.class.getName());
 }
 

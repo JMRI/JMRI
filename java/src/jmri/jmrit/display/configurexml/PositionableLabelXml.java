@@ -1,6 +1,7 @@
 package jmri.jmrit.display.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.configurexml.*;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
@@ -476,5 +477,5 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         return icon;
     }
     
-    static Logger log = Logger.getLogger(PositionableLabelXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(PositionableLabelXml.class.getName());
 }

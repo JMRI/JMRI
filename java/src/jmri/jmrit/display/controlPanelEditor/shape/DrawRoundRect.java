@@ -1,14 +1,13 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
-import org.apache.log4j.Logger;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.geom.RoundRectangle2D;
-
 import javax.swing.*;
-
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -97,5 +96,5 @@ public class DrawRoundRect extends DrawRectangle {
 //	   pos.makeShape();
 	}
 
-    static Logger log = Logger.getLogger(DrawRoundRect.class.getName());
+    static Logger log = LoggerFactory.getLogger(DrawRoundRect.class.getName());
 }

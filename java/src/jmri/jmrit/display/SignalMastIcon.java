@@ -2,7 +2,8 @@
 
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 import jmri.jmrit.display.palette.SignalMastItemPanel;
@@ -491,5 +492,5 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         super.dispose();
     }
 
-    static Logger log = Logger.getLogger(SignalMastIcon.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalMastIcon.class.getName());
 }

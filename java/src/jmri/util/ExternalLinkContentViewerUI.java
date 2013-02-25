@@ -2,7 +2,8 @@
 
 package jmri.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.net.*;
 import javax.swing.*;
 import javax.swing.event.*;
@@ -76,6 +77,6 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
         }
     }
     
-    static private Logger log = Logger.getLogger(ExternalLinkContentViewerUI.class.getName());
+    static private Logger log = LoggerFactory.getLogger(ExternalLinkContentViewerUI.class.getName());
 }
 

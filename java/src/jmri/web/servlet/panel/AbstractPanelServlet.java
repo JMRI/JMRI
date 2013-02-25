@@ -18,7 +18,8 @@ import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -35,7 +36,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
 	private static final long serialVersionUID = 3134679703461026038L;
 	protected static final String JSON_CONTENT_TYPE = "application/json; charset=utf-8";
 	protected static final String XML_CONTENT_TYPE = "application/xml; charset=utf-8";
-    static Logger log = Logger.getLogger(AbstractPanelServlet.class.getName());
+    static Logger log = LoggerFactory.getLogger(AbstractPanelServlet.class.getName());
 
     abstract protected String getPanelType();
 

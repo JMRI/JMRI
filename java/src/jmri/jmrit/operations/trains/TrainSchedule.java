@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -150,7 +151,7 @@ public class TrainSchedule {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = Logger.getLogger(TrainSchedule.class
+	static Logger log = LoggerFactory.getLogger(TrainSchedule.class
 			.getName());
 
 }

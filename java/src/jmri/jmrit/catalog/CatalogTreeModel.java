@@ -2,7 +2,8 @@
 
 package jmri.jmrit.catalog;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 
@@ -121,6 +122,6 @@ public class CatalogTreeModel extends DefaultTreeModel {
     static final String resourceRoot = "resources";
     static final String fileRoot = FileUtil.getUserFilesPath()+"resources";
 
-    static Logger log = Logger.getLogger(CatalogTreeModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(CatalogTreeModel.class.getName());
 }
 

@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.locormi;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.lang.Thread;
 import jmri.jmrix.loconet.LocoNetMessage;
 
@@ -10,7 +11,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
  */
 class LnMessageClientPollThread extends Thread{
     LnMessageClient parent = null ;
-   	static Logger log = Logger.getLogger(LnMessageClientPollThread.class.getName());
+   	static Logger log = LoggerFactory.getLogger(LnMessageClientPollThread.class.getName());
 
     LnMessageClientPollThread( LnMessageClient lnParent ){
         parent = lnParent ;

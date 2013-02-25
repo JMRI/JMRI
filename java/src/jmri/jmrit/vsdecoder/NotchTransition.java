@@ -1,6 +1,7 @@
 package jmri.jmrit.vsdecoder;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /* NotchTransition
  *
@@ -55,6 +56,6 @@ class NotchTransition extends SoundBite {
     public void setNextNotch(int p) { next_notch = p; }
 
     //Unused for now... commented out to hide the warning.
-    //private static final Logger log = Logger.getLogger(NotchTransition.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(NotchTransition.class.getName());
  
  }

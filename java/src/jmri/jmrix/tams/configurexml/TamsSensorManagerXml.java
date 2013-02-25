@@ -1,6 +1,7 @@
 package jmri.jmrix.tams.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 /**
@@ -35,5 +36,5 @@ public class TamsSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         return loadSensors(sensors);
     }
 
-    static Logger log = Logger.getLogger(TamsSensorManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(TamsSensorManagerXml.class.getName());
 }

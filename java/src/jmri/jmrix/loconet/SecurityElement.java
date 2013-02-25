@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 /**
@@ -778,7 +779,7 @@ public class SecurityElement implements LocoNetListener {
         pcs.removePropertyChangeListener(l);
     }
 
-    static Logger log = Logger.getLogger(SecurityElement.class.getName());
+    static Logger log = LoggerFactory.getLogger(SecurityElement.class.getName());
 
 }
 

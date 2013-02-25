@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -323,6 +324,6 @@ public class EngineManager extends RollingStockManager{
     	super.firePropertyChange(p, old, n);
     }
 
-    static Logger log = Logger.getLogger(EngineManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(EngineManager.class.getName());
 }
 

@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.setup;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -96,6 +97,6 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 		}
 	}
 
-	static Logger log = org.apache.log4j.Logger
+	static Logger log = LoggerFactory
 			.getLogger(OperationsSetupFrame.class.getName());
 }

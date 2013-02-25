@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractReporter;
 import jmri.PhysicalLocationReporter;
 import jmri.util.PhysicalLocation;
@@ -202,7 +203,7 @@ public class LnReporter extends AbstractReporter implements LocoNetListener, Phy
          return (((a2 & 0x0f) * 128) + (a1 & 0x7f) + 1) == _number;
     }
     
-    static Logger log = Logger.getLogger(LnReporter.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnReporter.class.getName());
 
  }
 

@@ -3,7 +3,8 @@
  */
 package jmri.configurexml.turnoutoperations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 import java.lang.Integer;
@@ -70,5 +71,5 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
         return result;
 	}
 	
-    static Logger log = Logger.getLogger(CommonTurnoutOperationXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(CommonTurnoutOperationXml.class.getName());
 }

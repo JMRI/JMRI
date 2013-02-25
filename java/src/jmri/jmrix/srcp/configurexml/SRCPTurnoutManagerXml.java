@@ -1,6 +1,7 @@
 package jmri.jmrix.srcp.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 
 import jmri.jmrix.srcp.SRCPTurnoutManager;
@@ -37,5 +38,5 @@ public class SRCPTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
     }
 
 	// initialize logging
-    static Logger log = Logger.getLogger(SRCPTurnoutManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(SRCPTurnoutManagerXml.class.getName());
 }

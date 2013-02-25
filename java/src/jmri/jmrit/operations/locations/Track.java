@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -2036,6 +2037,6 @@ public class Track {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = Logger.getLogger(Track.class.getName());
+	static Logger log = LoggerFactory.getLogger(Track.class.getName());
 
 }

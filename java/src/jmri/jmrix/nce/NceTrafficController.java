@@ -2,7 +2,8 @@
 
 package jmri.jmrix.nce;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.CommandStation;
 import jmri.JmriException;
 
@@ -440,7 +441,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return adaptermemo.getSystemPrefix();
     }
     
-    static Logger log = Logger.getLogger(NceTrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceTrafficController.class.getName());
 }
 
 

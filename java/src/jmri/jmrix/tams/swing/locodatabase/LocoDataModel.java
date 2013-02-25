@@ -2,7 +2,8 @@
 
 package jmri.jmrix.tams.swing.locodatabase;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.tams.TamsMessage;
@@ -227,7 +228,7 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
                 locolist = new ArrayList<String[]>();
                 String msg = r.toString();
                 String[] rawlocolist = msg.split("\\r");
-                log.info(rawlocolist.length);
+                log.info("Raw loco list length: " + rawlocolist.length);
                 for(String loco:rawlocolist){
                     log.info(loco);
                     if(!loco.equals("*END*")){
@@ -244,6 +245,6 @@ public class LocoDataModel extends javax.swing.table.AbstractTableModel implemen
         memo.getTrafficController().sendTamsMessage(m, this);
     }
 
-    static Logger log = Logger.getLogger(LocoDataModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoDataModel.class.getName());
 
 }

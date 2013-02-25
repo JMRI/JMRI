@@ -2,7 +2,8 @@
 
 package jmri.jmrix.direct;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 
 /**
@@ -147,7 +148,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
         return s;
     }
 
-    static Logger log = Logger.getLogger(Message.class.getName());
+    static Logger log = LoggerFactory.getLogger(Message.class.getName());
 
 }
 

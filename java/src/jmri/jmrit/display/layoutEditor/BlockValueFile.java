@@ -2,7 +2,8 @@
 
 package jmri.jmrit.display.layoutEditor;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrit.XmlFile;
 import java.io.File;
 import jmri.BlockManager;
@@ -167,7 +168,7 @@ public class BlockValueFile extends XmlFile {
 	
 		       
     // initialize logging
-    static Logger log = Logger.getLogger(BlockValueFile.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockValueFile.class.getName());
 
 }
 	

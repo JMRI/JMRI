@@ -6,7 +6,8 @@
 
 package jmri.jmrix.lenz;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 import java.util.Vector;
@@ -473,7 +474,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 		return _controller;
 	}
 
-   static Logger log = Logger.getLogger(XNetProgrammer.class.getName());
+   static Logger log = LoggerFactory.getLogger(XNetProgrammer.class.getName());
 
 }
 

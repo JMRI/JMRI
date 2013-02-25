@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 /**
@@ -69,7 +70,7 @@ abstract public class ConfigurationManager {
     
     abstract protected ResourceBundle getActionModelResourceBundle();
 
-    static Logger log = Logger.getLogger(ConfigurationManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConfigurationManager.class.getName());
 }
 
 /* @(#)ConfigurationManager.java */

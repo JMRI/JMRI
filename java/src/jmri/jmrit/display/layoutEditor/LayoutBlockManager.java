@@ -1,20 +1,22 @@
 // jmri.jmrit.display.LayoutBlockManager.java
 package jmri.jmrit.display.layoutEditor;
 
-import jmri.managers.AbstractManager;
-import jmri.Sensor;
-import jmri.Block;
-import jmri.Memory;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.NamedBeanHandle;
-import jmri.NamedBean;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
+import jmri.Block;
+import jmri.InstanceManager;
+import jmri.Memory;
+import jmri.NamedBean;
+import jmri.NamedBeanHandle;
+import jmri.Sensor;
+import jmri.SignalHead;
+import jmri.SignalMast;
+import jmri.Turnout;
+import jmri.managers.AbstractManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a Manager to handle LayoutBlocks
@@ -2161,7 +2163,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
         return lastRoutingChange;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LayoutBlockManager.class.getName());
+    static Logger log = LoggerFactory.getLogger(LayoutBlockManager.class.getName());
 }
 
 /* @(#)LayoutBlockManager.java */

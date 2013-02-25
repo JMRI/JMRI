@@ -2,7 +2,8 @@
 
 package jmri.jmrix.nce;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 import jmri.jmrix.AbstractProgrammer;
 
@@ -267,7 +268,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         temp.programmingOpReply(value, status);
     }
 
-    static Logger log = Logger.getLogger(NceProgrammer.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceProgrammer.class.getName());
 
 }
 

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.cbus;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractSensor;
 import jmri.Sensor;
 
@@ -128,7 +129,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
         super.dispose();
     }
 
-    static Logger log = Logger.getLogger(CbusSensor.class.getName());
+    static Logger log = LoggerFactory.getLogger(CbusSensor.class.getName());
 
 }
 

@@ -5,7 +5,8 @@
 package apps.PacketScript;
 
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.Apps;
 
 import java.text.MessageFormat;
@@ -75,7 +76,7 @@ public class PacketScript extends Apps {
         splash(false);
     }
 
-    static Logger log = Logger.getLogger(PacketScript.class.getName());
+    static Logger log = LoggerFactory.getLogger(PacketScript.class.getName());
 }
 
 

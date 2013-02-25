@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -501,6 +502,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		}
 	}
 
-	static Logger log = Logger.getLogger(EnginesTableModel.class
+	static Logger log = LoggerFactory.getLogger(EnginesTableModel.class
 			.getName());
 }

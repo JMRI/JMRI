@@ -21,7 +21,8 @@ package jmri.jmrit.beantable.oblock;
  * @version     $Revision$
  */
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
 
 import java.beans.PropertyChangeEvent;
@@ -338,5 +339,5 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
        }
     }
 
-    static Logger log = Logger.getLogger(BlockPathTableModel.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockPathTableModel.class.getName());
 }

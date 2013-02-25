@@ -1,6 +1,7 @@
 package jmri.jmrit.throttle;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.*;
 
 import java.awt.*;
@@ -634,7 +635,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
                 
 	}
 	
-	static Logger log = Logger.getLogger(AddressPanel.class.getName());
+	static Logger log = LoggerFactory.getLogger(AddressPanel.class.getName());
 
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt == null) return;

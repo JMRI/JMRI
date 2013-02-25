@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock.cars;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.File;
 
 import org.jdom.Document;
@@ -116,6 +117,6 @@ public class CarManagerXml extends OperationsXml {
 	}
     private String operationsFileName = "OperationsCarRoster.xml"; // NOI18N
 
-    static Logger log = Logger.getLogger(CarManagerXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(CarManagerXml.class.getName());
 
 }

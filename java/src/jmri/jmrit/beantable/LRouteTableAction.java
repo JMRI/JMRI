@@ -2,7 +2,8 @@
 
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -2805,7 +2806,7 @@ public class LRouteTableAction extends AbstractTableAction {
     protected String getClassName() { return LRouteTableAction.class.getName(); }
     public String getClassDescription() { return rbx.getString("Title"); }
     
-	static final Logger log = org.apache.log4j.Logger
+	static final Logger log = LoggerFactory
 			.getLogger(LRouteTableAction.class.getName());
 }
 /* @(#)RouteTableAction.java */

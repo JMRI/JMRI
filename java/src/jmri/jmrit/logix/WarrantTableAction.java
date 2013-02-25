@@ -1,7 +1,8 @@
 package jmri.jmrit.logix;
 
 //import java.util.ArrayList;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.Color;
 import java.awt.Font;
@@ -1093,5 +1094,5 @@ public class WarrantTableAction extends AbstractAction {
 
     }
 
-    static Logger log = Logger.getLogger(WarrantTableAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(WarrantTableAction.class.getName());
 }

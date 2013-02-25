@@ -2,7 +2,8 @@
 
 package jmri.jmrix.loconet.almbrowser;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -38,7 +39,7 @@ public class AlmBrowserAction 			extends AbstractAction {
 
 	}
 
-	static Logger log = Logger.getLogger(AlmBrowserAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(AlmBrowserAction.class.getName());
 
 }
 

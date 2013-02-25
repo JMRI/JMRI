@@ -2,7 +2,8 @@
 
 package jmri.jmrit.operations.trains;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.io.File;
 import java.text.MessageFormat;
@@ -3482,6 +3483,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		pcs.firePropertyChange(p, old, n);
 	}
 
-	static Logger log = Logger.getLogger(Train.class.getName());
+	static Logger log = LoggerFactory.getLogger(Train.class.getName());
 
 }

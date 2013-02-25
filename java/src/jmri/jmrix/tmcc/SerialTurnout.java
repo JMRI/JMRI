@@ -2,7 +2,8 @@
 
 package jmri.jmrix.tmcc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractTurnout;
 import jmri.Turnout;
 
@@ -64,7 +65,7 @@ public class SerialTurnout extends AbstractTurnout {
         SerialTrafficController.instance().sendSerialMessage(m, null);
     }
 
-    static Logger log = Logger.getLogger(SerialTurnout.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialTurnout.class.getName());
 }
 
 /* @(#)SerialTurnout.java */

@@ -2,7 +2,8 @@
 
 package jmri.jmrix.cmri.serial;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -49,7 +50,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         return index;
     }
 
-    static Logger log = Logger.getLogger(SerialReply.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialReply.class.getName());
 
 }
 

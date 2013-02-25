@@ -2,7 +2,8 @@
 
 package jmri.jmrix.grapevine;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.DefaultSignalHead;
 
 /**
@@ -115,7 +116,7 @@ public class SerialSignalHead extends DefaultSignalHead {
     int output;         // output connector number, 0-23
     int bank;           // bank number, 0-3
 
-    static Logger log = Logger.getLogger(SerialSignalHead.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialSignalHead.class.getName());
 }
 
 /* @(#)SerialSignalHead.java */

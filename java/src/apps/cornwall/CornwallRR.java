@@ -2,7 +2,8 @@
 
 package apps.cornwall;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import apps.Apps;
 
 import java.text.MessageFormat;
@@ -79,7 +80,7 @@ public class CornwallRR extends Apps {
         loadFile("CornwallMain.xml");
     }
 
-    static Logger log = Logger.getLogger(CornwallRR.class.getName());
+    static Logger log = LoggerFactory.getLogger(CornwallRR.class.getName());
 }
 
 

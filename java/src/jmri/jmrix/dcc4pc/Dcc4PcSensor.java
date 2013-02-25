@@ -2,7 +2,8 @@
 
 package jmri.jmrix.dcc4pc;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.implementation.AbstractSensor;
 //import jmri.Sensor;
 
@@ -94,7 +95,7 @@ public class Dcc4PcSensor extends AbstractSensor {
         return packetLength;
     }*/
  
-    static Logger log = Logger.getLogger(Dcc4PcSensor.class.getName());
+    static Logger log = LoggerFactory.getLogger(Dcc4PcSensor.class.getName());
 }
 
 /* @(#)Dcc4PcSensor.java */

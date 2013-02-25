@@ -1,6 +1,7 @@
 package jmri.implementation;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
@@ -246,7 +247,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             try {
                 dest.useLayoutEditor(false);
             } catch (jmri.JmriException e){
-                log.error(e);
+                log.error(e.getLocalizedMessage(), e);
             }
         }
     }
@@ -270,7 +271,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
             /*We don't care which layout editor panel the signalmast is on, just so long as
             as the routing is done via layout blocks*/
-            log.debug(layout.size());
+            // TODO: what is this?
+            log.debug(Integer.toString(layout.size()));
             for(int i = 0; i<layout.size(); i++){
                 if(log.isDebugEnabled())
                     log.debug(layout.get(i).getLayoutName());
@@ -795,7 +797,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     }
     
     /**
-     * Evaluates the destinatin signal mast appearance and sets ours accordingly
+     * Evaluates the destination signal mast appearance and sets ours accordingly
      */
     void setMastAppearance(){
         synchronized(this){
@@ -1265,8 +1267,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     }
                 }
             }
-            
-            log.debug(autoBlocks.size());
+            // TODO: what is this?
+            log.debug(Integer.toString(autoBlocks.size()));
             firePropertyChange("autoblocks", null, this.destination);
         }
 
@@ -1942,7 +1944,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             List<LayoutBlock> protectingBlocks = new ArrayList<LayoutBlock>();
             // We don't care which layout editor panel the signalmast is on, just so long as
             // as the routing is done via layout blocks
-            log.debug(layout.size());
+            // TODO: what is this?
+            log.debug(Integer.toString(layout.size()));
             LayoutBlock remoteProtectingBlock = null;
             for(int i = 0; i<layout.size(); i++){
                 if(log.isDebugEnabled())
@@ -2082,7 +2085,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         }
                     }
                     if(log.isDebugEnabled())
-                        log.debug(block.size());
+                        // TODO: what is this?
+                        log.debug(Integer.toString(block.size()));
                     if(useLayoutEditorBlocks)
                         setAutoBlocks(block);
                     else
@@ -2386,8 +2390,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if (e.getPropertyName().equals("state")) {
                     int now = ((Integer) e.getNewValue()).intValue();
                     if(log.isDebugEnabled()){
-                        log.debug(isBlockIncluded(block));
-                        log.debug(autoBlocks.containsKey(block));
+                        // TODO: what is this?
+                        log.debug(Boolean.toString(isBlockIncluded(block)));
+                        log.debug(Boolean.toString(autoBlocks.containsKey(block)));
                     }
                     if (isBlockIncluded(block)){
                         if(log.isDebugEnabled()){
@@ -2592,5 +2597,5 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
     }
     
-    static Logger log = Logger.getLogger(DefaultSignalMastLogic.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogic.class.getName());
 }

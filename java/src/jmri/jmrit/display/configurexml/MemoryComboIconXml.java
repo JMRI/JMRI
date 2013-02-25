@@ -1,7 +1,8 @@
 
 package jmri.jmrit.display.configurexml;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.util.List;
 
 import jmri.jmrit.display.Editor;
@@ -114,5 +115,5 @@ public class MemoryComboIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
-    static Logger log = Logger.getLogger(MemoryComboIconXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(MemoryComboIconXml.class.getName());
 }

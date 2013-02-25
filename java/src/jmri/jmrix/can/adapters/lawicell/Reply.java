@@ -2,7 +2,8 @@
 
 package jmri.jmrix.can.adapters.lawicell;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.can.CanReply;
 
@@ -138,7 +139,7 @@ public class Reply extends AbstractMRReply {
         return (byte)b;
     }
    
-    static Logger log = Logger.getLogger(Reply.class.getName());
+    static Logger log = LoggerFactory.getLogger(Reply.class.getName());
 }
 
 /* @(#)Reply.java */

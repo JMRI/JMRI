@@ -1,6 +1,7 @@
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 public class LightTableTabAction extends AbstractTableTabAction {
@@ -30,5 +31,5 @@ public class LightTableTabAction extends AbstractTableTabAction {
         return "package.jmri.jmrit.beantable.LightTable";
     }
     
-    static Logger log = Logger.getLogger(LightTableTabAction.class.getName());
+    static Logger log = LoggerFactory.getLogger(LightTableTabAction.class.getName());
 }

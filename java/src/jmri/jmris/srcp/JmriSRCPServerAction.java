@@ -2,7 +2,8 @@
 
 package jmri.jmris.srcp;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -27,7 +28,7 @@ import java.awt.event.ActionEvent;
 		//f.setVisible(true);
                 JmriSRCPServer.instance().start();
 	}
-   static Logger log = Logger.getLogger(JmriSRCPServerAction.class.getName());
+   static Logger log = LoggerFactory.getLogger(JmriSRCPServerAction.class.getName());
 }
 
 

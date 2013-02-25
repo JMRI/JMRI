@@ -38,7 +38,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Common elements for the Conductor and Yardmaster Frames.
@@ -523,5 +524,5 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 				+ " old: "+e.getOldValue()+ " new: "+e.getNewValue()); // NOI18N
 	}
 	
-	static Logger log = Logger.getLogger(CommonConductorYardmasterFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(CommonConductorYardmasterFrame.class.getName());
 }
