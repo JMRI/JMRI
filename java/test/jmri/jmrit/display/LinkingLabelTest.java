@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import java.awt.*;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -46,6 +45,9 @@ public class LinkingLabelTest extends jmri.util.SwingTestCase {
 
         panel.pack();
         panel.setVisible(true);
+        
+        jf.dispose();
+        panel.dispose();
         
 	}
 

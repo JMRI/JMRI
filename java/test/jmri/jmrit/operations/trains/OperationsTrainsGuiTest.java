@@ -145,7 +145,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		e4.setModel("FT");
 
 		TrainEditFrame trainEditFrame = new TrainEditFrame();
-		trainEditFrame.setTitle("Test Add Train Frame");
+		trainEditFrame.setTitle("Test Edit Train Frame");
 		trainEditFrame.initComponents(null);
 		// fill in name and description fields
 		trainEditFrame.trainNameTextField.setText("Test Train Name");
@@ -153,7 +153,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		trainEditFrame.commentTextArea.setText("Test Train Comment");
 		getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.addTrainButton));
 		jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
-
+		
 		TrainManager tmanager = TrainManager.instance();
 		Train t = tmanager.getTrainByName("Test Train Name");
 
@@ -189,7 +189,11 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// confirm panel creation
 		JmriJFrame ref = JmriJFrame.getFrame("Edit Route");
 		Assert.assertNotNull("route add frame", ref);
-
+		
+		// increase screen size so clear and set buttons are shown
+		trainEditFrame.setLocation(10, 0);
+		trainEditFrame.setSize(trainEditFrame.getWidth(), trainEditFrame.getHeight() + 200);
+		
 		// test car types using the clear and set buttons
 		getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.clearButton));
 		jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread

@@ -43,6 +43,8 @@ public class SerialMonFrameTest extends TestCase {
         m = new SerialReply();
         m.setElement(0, 0x21);
         f.reply(m);
+        
+        f.dispose();
     }
     
     

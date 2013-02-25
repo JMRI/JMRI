@@ -466,6 +466,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				if (Setup.isAllowReturnToStagingEnabled()) {
 					returnStagingCheckBox.setEnabled(false);
 					returnStagingCheckBox.setSelected(true);
+					returnStagingCheckBox.setToolTipText(Bundle.getMessage("TipReturnToStaging"));
 				} else {
 					returnStagingCheckBox.setEnabled(true);
 				}

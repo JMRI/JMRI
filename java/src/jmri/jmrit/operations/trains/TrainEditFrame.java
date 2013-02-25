@@ -905,12 +905,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void packFrame() {
 		setVisible(false);
+		setMinimumSize(new Dimension(550, Control.panelHeight));
 		pack();
 		if (getWidth() < 550)
 			setSize(550, getHeight());
 		if (getHeight() < Control.panelHeight)
 			setSize(getWidth(), Control.panelHeight);
-		setMinimumSize(new Dimension(550, Control.panelHeight));
 		setVisible(true);
 	}
 

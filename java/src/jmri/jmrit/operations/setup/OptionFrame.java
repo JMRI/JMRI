@@ -104,6 +104,7 @@ public class OptionFrame extends OperationsFrame {
 		saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
 		rfidTextField.setToolTipText(Bundle.getMessage("EnterNameRfidTip"));
 		valueTextField.setToolTipText(Bundle.getMessage("EnterNameValueTip"));
+		stagingTurnCheckBox.setToolTipText(Bundle.getMessage("AlsoAvailablePerTrain"));
 
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 

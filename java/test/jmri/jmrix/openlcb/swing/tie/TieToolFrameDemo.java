@@ -19,6 +19,9 @@ public class TieToolFrameDemo extends TestCase {
         f.initComponents();
         f.pack();
         f.setVisible(true);
+        
+        // close frame
+        f.dispose();
     }
     
     // from here down is testing infrastructure
