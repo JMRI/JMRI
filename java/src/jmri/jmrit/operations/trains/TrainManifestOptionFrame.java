@@ -150,13 +150,12 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 			fc.setDialogTitle(Bundle.getMessage("FindDesiredImage"));
 			// when reusing the chooser, make sure new files are included
 			fc.rescanCurrentDirectory();
-		}
-
-		int retVal = fc.showOpenDialog(null);
-		// handle selection or cancel
-		if (retVal == JFileChooser.APPROVE_OPTION) {
-			File file = fc.getSelectedFile();
-			return file;
+			int retVal = fc.showOpenDialog(null);
+			// handle selection or cancel
+			if (retVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				return file;
+			}
 		}
 		return null;
 	}

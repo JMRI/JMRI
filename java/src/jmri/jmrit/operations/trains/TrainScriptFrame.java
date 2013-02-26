@@ -389,14 +389,13 @@ public class TrainScriptFrame extends OperationsFrame {
             fc.setDialogTitle(Bundle.getMessage("FindDesiredScriptFile"));
             // when reusing the chooser, make sure new files are included
             fc.rescanCurrentDirectory();
-        }
-
-        int retVal = fc.showOpenDialog(null);
-        // handle selection or cancel
-        if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = fc.getSelectedFile();
-            // Run the script from it's filename
-            return file;
+            int retVal = fc.showOpenDialog(null);
+            // handle selection or cancel
+            if (retVal == JFileChooser.APPROVE_OPTION) {
+                File file = fc.getSelectedFile();
+                // Run the script from it's filename
+                return file;
+            }
         }
         return null;
     }
