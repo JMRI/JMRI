@@ -140,7 +140,7 @@ SourceForge.net provides project hosting:<ul>
 <a href="http://sourceforge.net/tracker/?group_id=26788&atid=388316">Feature Requests</a>, and
 <a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">Patches</a>.
 <li>SourceForge-hosted <a href="http://jmri.svn.sourceforge.net/svnroot/jmri/">Subversion Repository</a>
-which you can <a href="https://sourceforge.net/apps/trac/jmri/browser">browse through</a>.
+which you can <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/">browse through</a>.
 </ul>
 
 <h2>Code</h2>
@@ -150,7 +150,7 @@ All of the JMRI code is available from Subversion.  See the
 pages for more information on how to do that. 
 <p>
 If you just want to look at the contents of a few files, you can 
-<a href="https://sourceforge.net/apps/trac/jmri/browser">browse the
+<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/">browse the
 Subversion repository</a> over the web.
 
 <h2>Building Your Own Copy</h2>
