@@ -4,6 +4,11 @@ package jmri.jmrit.operations.routes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.*;
 
 import javax.swing.*;
@@ -518,16 +523,42 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
 	private void setComment(int row) {
 		log.debug("Set comment for row " + row);
-		RouteLocation rl = _route.getLocationById(list.get(row));
-		Object comment = JOptionPane.showInputDialog(
-				null,
-				Bundle.getMessage("Comment"),
-				MessageFormat.format(Bundle.getMessage("EnterCommentLocation"),
-						new Object[] { rl.getName() }), JOptionPane.PLAIN_MESSAGE, null, null,
-				rl.getComment());
-		if (comment == null)
-			return;
-		rl.setComment((String) comment);
+		final RouteLocation rl = _route.getLocationById(list.get(row));
+		// Create comment panel
+		final JDialog dialog = new JDialog();
+		dialog.setLayout(new BorderLayout());
+		dialog.setTitle(Bundle.getMessage("Comment") + " " + rl.getName());
+		final JTextArea commentTextArea = new JTextArea(5, 100);
+		JScrollPane commentScroller = new JScrollPane(commentTextArea);
+		dialog.add(commentScroller, BorderLayout.CENTER);
+		commentTextArea.setText(rl.getComment());
+		
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+		dialog.add(buttonPane, BorderLayout.SOUTH);
+		
+		JButton okayButton = new JButton(Bundle.getMessage("Okay"));
+		okayButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rl.setComment(commentTextArea.getText());
+				dialog.dispose();				
+				return;
+			}
+		});
+		buttonPane.add(okayButton);
+	
+		JButton cancelButton = new JButton(Bundle.getMessage("Cancel"));
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dialog.dispose();
+				return;
+			}
+		});
+		buttonPane.add(cancelButton);
+		
+		dialog.setModal(true);
+		dialog.pack();
+		dialog.setVisible(true);
 	}
 
 	private JComboBox getYesNoComboBox() {
