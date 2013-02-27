@@ -40,7 +40,7 @@ public class AnalogClock2DisplayXml
         element.setAttribute("y", "" + p.getY());
         element.setAttribute("scale", "" + p.getScale());
         String link = p.getUrl();
-        if (link!=null || link.trim().length()>0) {
+        if (link!=null && link.trim().length()>0) {
             element.setAttribute("link", link);        	
         }
 
