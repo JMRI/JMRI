@@ -1,6 +1,7 @@
 package jmri.jmrit.display.controlPanelEditor.shape;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -16,6 +17,7 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+//import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.PathIterator;
 import java.awt.geom.AffineTransform;
@@ -23,7 +25,6 @@ import java.awt.geom.AffineTransform;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import org.slf4j.LoggerFactory;
 
 /**
  * PositionableShape is item drawn by java.awt.Graphics2D.
@@ -47,7 +48,6 @@ public class PositionableShape extends PositionableJComponent
     public PositionableShape(Editor editor) {
     	super(editor);
     	setName("Graphic");
-//    	setOpaque(false);
     }
 
     public PositionableShape(Editor editor, Shape shape) {
@@ -82,7 +82,7 @@ public class PositionableShape extends PositionableJComponent
     }
 
     public void setFillColor(Color c) {
-    	if (c==null || _alpha==0) {
+    	if (c==null) {
     		_fillColor = null;
     	} else {
         	_fillColor = new Color(c.getRed(), c.getGreen(), c.getBlue(), _alpha);    		
@@ -133,20 +133,13 @@ public class PositionableShape extends PositionableJComponent
      * Rotate shape 
      */
     public void rotate(int deg) {
-    	_degrees = deg;
+    	_degrees = deg%360;
     	if (_degrees==0) {
     		_transform = null;
      	} else {
-//     		Rectangle bd = getBounds();
      		float w = _sW;
      		float h = _sH;
-     		/*
-        	_transform = AffineTransform.getTranslateInstance(w, h);
-        	_transform.rotate(deg*Math.PI/180);
-        	_transform.translate(-w, -h); 
-        	*/
             double rad = _degrees*Math.PI/180.0;
-//            AffineTransform _transform = null;
             if (0<=_degrees && _degrees<90 || -360<_degrees && _degrees<=-270){
             	_transform = AffineTransform.getTranslateInstance(h*Math.sin(rad), 0.0);
             } else if (90<=_degrees && _degrees<180 || -270<_degrees && _degrees<=-180) {
@@ -157,16 +150,14 @@ public class PositionableShape extends PositionableJComponent
             	_transform = AffineTransform.getTranslateInstance(0.0, -w*Math.sin(rad));
             }
             AffineTransform r = AffineTransform.getRotateInstance(rad);
-            _transform.concatenate(r);
-            
+            _transform.concatenate(r);          
     	}
     	updateSize();
     }
 
     public void paint(Graphics g) {
 //		if (log.isDebugEnabled())
-//			log.debug("PositionalShape Paint: " +this.getClass().getName()+" Hidden= "+isHidden());
-        
+//			log.debug("PositionalShape Paint: " +this.getClass().getName()+" Hidden= "+isHidden());        
     	if (!getEditor().isEditable() && isHidden()) {
     		return;
     	}
@@ -247,68 +238,16 @@ public class PositionableShape extends PositionableJComponent
         	r = new Rectangle(Math.round(minX), Math.round(minY), Math.round(maxX-minX), Math.round(maxY-minY));
     	}
         setSize(r.width, r.height);
-//        setSize(maxWidth(), maxHeight());    		
     }
-/*
-    public Rectangle getBounds() {
-    	return getBounds(null);
-    }
-    public Rectangle getBounds(Rectangle r) {
-    	r = getMyBounds();
-    	return new Rectangle(0, 0, r.width, r.height);
-    }
-    *
-    public Rectangle getMyBounds() {
-    	Rectangle r;
-    	if (_shape!=null) {
-        	r = _shape.getBounds();    		
-    	} else {
-        	r = super.getBounds();    		
-    	}
-    	r = new Rectangle(r.x-_lineWidth/2, r.y-_lineWidth/2, r.width+_lineWidth, r.height+_lineWidth);
-    	if (_transform!=null) {
-    		float[] pts = new float[8];
-    		pts[0] = r.x; 
-    		pts[1] = r.y; 
-    		pts[2] = r.x+r.width; 
-    		pts[3] = r.y; 
-    		pts[4] = r.x+r.width; 
-    		pts[5] = r.y+r.height; 
-    		pts[6] = r.x; 
-    		pts[7] = r.y+r.height;
-    		_transform.transform(pts, 0, pts, 0, 4);
-    		float minX = pts[0];
-    		float maxX = pts[0];
-    		float minY = pts[1];
-    		float maxY = pts[1];
-    		for (int i=2; i<pts.length; i+=2) {
-    			minX = Math.min(minX, pts[i]);
-    			maxX = Math.max(maxX, pts[i]);
-    			minY = Math.min(minY, pts[i+1]);
-    			maxY = Math.max(maxY, pts[i+1]);
-    		}
-        	r = new Rectangle(Math.round(minX), Math.round(minY), Math.round(maxX-minX), Math.round(maxY-minY));
-    	}
-    	return r;
-    }
-    */
+    
     public int maxWidth() {
        	return getSize().width;
-//       	return getMyBounds().width;
     }
       
     public int maxHeight() {
     	return getSize().height;
-//    	return getMyBounds().height;
     }
-/*    
-    public int getX() {
-    	return super.getX() - getMyBounds().x;
-    }
-    public int getY() {
-    	return super.getY() - getMyBounds().y;
-    }
-*/
+
     public boolean showPopUp(JPopupMenu popup) {
         return false;
     }
@@ -359,7 +298,7 @@ public class PositionableShape extends PositionableJComponent
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    _editFrame.closingEvent();    	
+                    _editFrame.closingEvent();
                 }
         });
         panel0.add(cancelButton);
@@ -384,7 +323,6 @@ public class PositionableShape extends PositionableJComponent
             Rectangle bd = getBounds();
 //            repaint(0, 0, 0, bd.width+2*_lineWidth, bd.height+2*_lineWidth);
             repaint(0, -_lineWidth, -_lineWidth, bd.width+2*_lineWidth, bd.height+2*_lineWidth);
-//            repaint(0, bd.x-_lineWidth, bd.y-_lineWidth, bd.width+2*_lineWidth, bd.height+2*_lineWidth);
         }
 	}
 

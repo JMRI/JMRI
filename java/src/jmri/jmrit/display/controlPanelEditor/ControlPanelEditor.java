@@ -1335,6 +1335,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _highlightcomponent = null;
         TargetPane targetPane = (TargetPane)getTargetPanel();
         targetPane.setDefaultColors();
+        targetPane.validate();
         setSelectionGroup(null);
     }
 

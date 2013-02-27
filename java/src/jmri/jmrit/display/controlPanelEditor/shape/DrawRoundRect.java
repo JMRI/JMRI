@@ -61,6 +61,8 @@ public class DrawRoundRect extends DrawRectangle {
 		ControlPanelEditor ed = _parent.getEditor();
 		Rectangle r = ed.getSelectRect();
 		if (r!=null) {
+        	_width = r.width;
+        	_height = r.height;
 			RoundRectangle2D.Double rr = new RoundRectangle2D.Double(0, 0, r.width, r.height, _radius, _radius);
 			PositionableRoundRect ps = new PositionableRoundRect(ed, rr);
 			ps.setLocation(r.x, r.y);
