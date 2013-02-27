@@ -134,6 +134,7 @@ public class Track {
 	public static final String TYPE = Bundle.getMessage("type");
 	public static final String ROAD = Bundle.getMessage("road");
 	public static final String LOAD = Bundle.getMessage("load");
+	public static final String CAPACITY = Bundle.getMessage("capacity");
 
 	// For property change
 	public static final String TYPES_CHANGED_PROPERTY = "trackRollingStockTypes"; // NOI18N
@@ -1189,6 +1190,13 @@ public class Track {
 			log.debug("Rolling stock (" + rs.toString() + ") not accepted at location ("
 					+ getLocation().getName() + ", " + getName() + ") no room!"); // NOI18N
 			return LENGTH + " (" + length + ")";
+		}
+		// a spur with a schedule can overload in aggressive mode, check track capacity
+		if (Setup.isBuildAggressive() && !getScheduleId().equals("")
+				&& getUsedLength() + getReserved() > getLength()) {
+			log.debug("Can't set (" + rs.toString() + ") due to exceeding maximum capacity for track ("
+					+ getName() + ")"); // NOI18N
+			return CAPACITY;
 		}
 		return OKAY;
 	}

@@ -1766,7 +1766,7 @@ public class TrainBuilder extends TrainCommon {
 						Router.instance().getStatus() }));
 					// don't move car if routing issue was track space but not departing staging
 					if ((!Router.instance().getStatus().startsWith(Track.LENGTH) && !Router.instance()
-							.getStatus().startsWith(Car.CAPACITY))
+							.getStatus().startsWith(Track.CAPACITY))
 							|| (car.getLocationName().equals(departLocation.getName()) && departStageTrack != null))
 						// move this car, routing failed!
 						findDestinationAndTrack(car, rl, routeIndex, routeList.size());

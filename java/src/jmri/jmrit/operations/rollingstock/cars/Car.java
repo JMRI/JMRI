@@ -12,7 +12,6 @@ import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainSchedule;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
@@ -60,7 +59,6 @@ public class Car extends RollingStock {
 	// return status when placing cars at a location or destination
 	public static final String SCHEDULE = Bundle.getMessage("schedule");
 	public static final String CUSTOM = Bundle.getMessage("custom");
-	public static final String CAPACITY = Bundle.getMessage("capacity");
 
 	public Car() {
 
@@ -422,14 +420,6 @@ public class Car extends RollingStock {
 		String status = super.testDestination(destination, track);
 		if (!status.equals(Track.OKAY))
 			return status;
-		// a spur with a schedule can overload in aggressive mode, check track capacity
-		if (Setup.isBuildAggressive() && track != null && !track.getScheduleId().equals("")) {
-			if (track.getUsedLength() > track.getLength()) {
-				log.debug("Can't set (" + toString() + ") due to exceeding maximum capacity for track ("
-						+ track.getName() + ")"); // NOI18N
-				return CAPACITY;
-			}
-		}
 		// now check to see if the track has a schedule
 		return testSchedule(track);
 	}
