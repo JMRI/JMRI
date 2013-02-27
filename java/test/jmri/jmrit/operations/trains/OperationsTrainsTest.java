@@ -3362,6 +3362,7 @@ public class OperationsTrainsTest extends TestCase {
 		// request a loaded car and load it with Tin
 		sch1Item3.setLoad("L");
 		sch1Item3.setShip("Tin");
+		CarLoads.instance().addName("Gon", "Tin"); // Allows c13 which is part of a kernel to get a new load
 
 		Schedule sch2 = smanager.newSchedule("Schedule 2");
 		ScheduleItem sch2Item1 = sch2.addItem("Coil Car");
@@ -3703,6 +3704,8 @@ public class OperationsTrainsTest extends TestCase {
 		sch1Item1.setLoad("Metal 1"); // request these loads from staging
 		sch1Item2.setLoad("Metal 2");
 		sch1Item3.setLoad("Metal 3");
+		
+		CarLoads.instance().addName("Gon", "Metal 3");		// Allows c13 which is part of a kernel to get a new load
 
 		train1.setRoute(rte3);
 		train1.setName("BCW");

@@ -732,9 +732,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					List<Car> cars = _car.getKernel().getCars();
 					for (int i = 0; i < cars.size(); i++) {
 						Car c = cars.get(i);
-						if (c.getType().equals(_car.getType())
-								|| _car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-								|| _car.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
+						if (CarLoads.instance().containsName(c.getType(), _car.getLoad()))
 							c.setLoad(_car.getLoad());
 					}
 				}

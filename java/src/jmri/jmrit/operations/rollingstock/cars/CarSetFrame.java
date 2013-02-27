@@ -305,24 +305,23 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		return true;
 	}
 	
-	protected boolean updateGroup(List<RollingStock> list){
-		for(int i=0; i<list.size(); i++){
-			Car car = (Car)list.get(i);
+	protected boolean updateGroup(List<RollingStock> list) {
+		for (int i = 0; i < list.size(); i++) {
+			Car car = (Car) list.get(i);
 			if (car == _car)
 				continue;
 			// make all cars in kernel the same
-			if (!ignoreRWECheckBox.isSelected()){
+			if (!ignoreRWECheckBox.isSelected()) {
 				car.setReturnWhenEmptyDestination(_car.getReturnWhenEmptyDestination());
 				car.setReturnWhenEmptyDestTrack(_car.getReturnWhenEmptyDestTrack());
 			}
-			if (!ignoreFinalDestinationCheckBox.isSelected()){
+			if (!ignoreFinalDestinationCheckBox.isSelected()) {
 				car.setFinalDestination(_car.getFinalDestination());
 				car.setFinalDestinationTrack(_car.getFinalDestinationTrack());
 			}
 			// update car load
-			if (!ignoreLoadCheckBox.isSelected() && car.getType().equals(_car.getType()) 
-					|| _car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-					|| _car.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
+			if (!ignoreLoadCheckBox.isSelected()
+					&& CarLoads.instance().containsName(car.getType(), _car.getLoad()))
 				car.setLoad(_car.getLoad());
 		}
 		return super.updateGroup(list);

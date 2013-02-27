@@ -691,11 +691,9 @@ public class Car extends RollingStock {
 				c.setFinalDestination(getFinalDestination());
 				c.setFinalDestinationTrack(getFinalDestinationTrack());
 				c.setLoadGeneratedFromStaging(isLoadGeneratedFromStaging());
-				if (c.getType().equals(getType()) || getLoad().equals(carLoads.getDefaultEmptyName())
-						|| getLoad().equals(carLoads.getDefaultLoadName()))
+				if (CarLoads.instance().containsName(c.getType(), getLoad()))
 					c.setLoad(getLoad());
-				if (c.getType().equals(getType()) || getNextLoad().equals(carLoads.getDefaultEmptyName())
-						|| getNextLoad().equals(carLoads.getDefaultLoadName()))
+				if (CarLoads.instance().containsName(c.getType(), getNextLoad()))
 					c.setNextLoad(getNextLoad());
 			}
 		}
