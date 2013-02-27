@@ -138,7 +138,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         SignalHead sh = jmri.InstanceManager.signalHeadManagerInstance().getSignalHead(name);
 
         if (sh != null) {
-            l.setSignalHead(new NamedBeanHandle<SignalHead>(name, sh));
+            l.setSignalHead(name);
         } else {
             log.error("SignalHead named '"+attr.getValue()+"' not found.");
         //    ed.loadFailed();
