@@ -244,7 +244,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 						MessageFormat.format(Bundle.getMessage("rsDoYouWantSchedule"),new Object[]{car.toString()}),
 						MessageFormat.format(Bundle.getMessage("rsSpurHasSchedule"),new Object[]{track.getName(), track.getScheduleName()}),					
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-					String results = car.testSchedule(track);
+					String results = track.checkSchedule(car);
 					if (!results.equals(Track.OKAY)){
 						JOptionPane.showMessageDialog(this,
 								MessageFormat.format(Bundle.getMessage("rsNotAbleToApplySchedule"),new Object[]{results}),
@@ -258,7 +258,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 						return false;
 					}
 					// now apply schedule to car
-					car.scheduleNext(track);
+					track.scheduleNext(car);
 					// change load to ship load
 					if (!car.getNextLoad().equals("")){
 						car.setLoad(car.getNextLoad());

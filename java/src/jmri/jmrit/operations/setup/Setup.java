@@ -236,7 +236,7 @@ public class Setup {
 	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length
 	private static boolean allowLocalInterchangeMoves = false;	// when true local interchange to interchange moves are allowed
 	private static boolean allowLocalYardMoves = false;		// when true local yard to yard moves are allowed
-	private static boolean allowLocalSidingMoves = false;	// when true local spur to spur moves are allowed
+	private static boolean allowLocalSpurMoves = false;	// when true local spur to spur moves are allowed
 	
 	private static boolean trainIntoStagingCheck = true;	// when true staging track must accept train's rolling stock types and roads
 	private static boolean trackImmediatelyAvail = false; 	// when true staging track is immediately available for arrivals after a train is built
@@ -382,12 +382,12 @@ public class Setup {
 		allowLocalYardMoves = enabled;
 	}
 	
-	public static boolean isLocalSidingMovesEnabled(){
-		return allowLocalSidingMoves;
+	public static boolean isLocalSpurMovesEnabled(){
+		return allowLocalSpurMoves;
 	}
 	
-	public static void setLocalSidingMovesEnabled(boolean enabled){
-		allowLocalSidingMoves = enabled;
+	public static void setLocalSpurMovesEnabled(boolean enabled){
+		allowLocalSpurMoves = enabled;
 	}
 	
 	public static boolean isTrainIntoStagingCheckEnabled(){
@@ -1543,7 +1543,7 @@ public class Setup {
     	values.setAttribute(Xml.AGGRESSIVE, isBuildAggressive()?Xml.TRUE:Xml.FALSE);
     	
     	values.setAttribute(Xml.ALLOW_LOCAL_INTERCHANGE, isLocalInterchangeMovesEnabled()?Xml.TRUE:Xml.FALSE);
-    	values.setAttribute(Xml.ALLOW_LOCAL_SIDING, isLocalSidingMovesEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.ALLOW_LOCAL_SPUR, isLocalSpurMovesEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.ALLOW_LOCAL_YARD, isLocalYardMovesEnabled()?Xml.TRUE:Xml.FALSE);
     	
     	values.setAttribute(Xml.STAGING_RESTRICTION_ENABLED, isTrainIntoStagingCheckEnabled()?Xml.TRUE:Xml.FALSE);
@@ -1960,10 +1960,10 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("noLocalInterchange: "+enable);
         		setLocalInterchangeMovesEnabled(enable.equals(Xml.TRUE));
         	}
-        	if((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_SIDING)) != null) {
+        	if((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_SPUR)) != null) {
         		String enable = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("noLocalSiding: "+enable);
-        		setLocalSidingMovesEnabled(enable.equals(Xml.TRUE));
+        		if (log.isDebugEnabled()) log.debug("noLocalSpur: "+enable);
+        		setLocalSpurMovesEnabled(enable.equals(Xml.TRUE));
         	}
         	if((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_LOCAL_YARD)) != null) {
         		String enable = a.getValue();

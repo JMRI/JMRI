@@ -1,4 +1,4 @@
-//SidingTableModel.java
+//SpurTableModel.java
 
 package jmri.jmrit.operations.locations;
 
@@ -14,20 +14,20 @@ import jmri.jmrit.operations.setup.Control;
  * @author Daniel Boudreau Copyright (C) 2008
  * @version $Revision$
  */
-public class SidingTableModel extends TrackTableModel {
+public class SpurTableModel extends TrackTableModel {
 
-	public SidingTableModel() {
+	public SpurTableModel() {
 		super();
 	}
 
 	public void initTable(JTable table, Location location) {
-		super.initTable(table, location, Track.SIDING);
+		super.initTable(table, location, Track.SPUR);
 	}
 
 	public String getColumnName(int col) {
 		switch (col) {
 		case NAMECOLUMN:
-			return Bundle.getMessage("SidingName");
+			return Bundle.getMessage("SpurName");
 		}
 		return super.getColumnName(col);
 	}
@@ -37,11 +37,11 @@ public class SidingTableModel extends TrackTableModel {
 		if (tef != null) {
 			tef.dispose();
 		}
-		tef = new SidingEditFrame();
-		String sidingId = tracksList.get(row);
-		Track siding = _location.getTrackById(sidingId);
-		tef.initComponents(_location, siding);
-		tef.setTitle(Bundle.getMessage("EditSiding"));
+		tef = new SpurEditFrame();
+		String spurId = tracksList.get(row);
+		Track spur = _location.getTrackById(spurId);
+		tef.initComponents(_location, spur);
+		tef.setTitle(Bundle.getMessage("EditSpur"));
 		focusEditFrame = true;
 	}
 
@@ -53,17 +53,17 @@ public class SidingTableModel extends TrackTableModel {
 		super.propertyChange(e);
 		if (e.getSource().getClass().equals(Track.class)) {
 			String type = ((Track) e.getSource()).getLocType();
-			if (type.equals(Track.SIDING)) {
-				String sidingId = ((Track) e.getSource()).getId();
-				int row = tracksList.indexOf(sidingId);
+			if (type.equals(Track.SPUR)) {
+				String spurId = ((Track) e.getSource()).getId();
+				int row = tracksList.indexOf(spurId);
 				if (Control.showProperty && log.isDebugEnabled())
-					log.debug("Update spur table row: " + row + " id: " + sidingId);
+					log.debug("Update spur table row: " + row + " id: " + spurId);
 				if (row >= 0)
 					fireTableRowsUpdated(row, row);
 			}
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(SidingTableModel.class
+	static Logger log = LoggerFactory.getLogger(SpurTableModel.class
 			.getName());
 }

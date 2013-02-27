@@ -490,9 +490,9 @@ public class OperationsTrainsTest extends TestCase {
 		Location A = lmanager.newLocation("A");
 		Location B = lmanager.newLocation("B");
 		Location C = lmanager.newLocation("C");
-		Track At = A.addTrack("track", Track.SIDING);
-		Track Bt = B.addTrack("track", Track.SIDING);
-		Track Ct = C.addTrack("track", Track.SIDING);
+		Track At = A.addTrack("track", Track.SPUR);
+		Track Bt = B.addTrack("track", Track.SPUR);
+		Track Ct = C.addTrack("track", Track.SPUR);
 		At.setLength(300);
 		Bt.setLength(300);
 		Ct.setLength(300);
@@ -656,7 +656,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1 Name", "Foxboro", l1.getName());
 		Assert.assertEquals("Location 1 Initial Length", 0, l1.getLength());
 
-		Track l1s1 = l1.addTrack("Foxboro Siding", Track.SIDING);
+		Track l1s1 = l1.addTrack("Foxboro Siding", Track.SPUR);
 		l1s1.setLength(600);
 		Assert.assertEquals("Location 1s1 Name", "Foxboro Siding", l1s1.getName());
 		Assert.assertEquals("Location 1s1 LocType", "Siding", l1s1.getLocType());
@@ -674,14 +674,14 @@ public class OperationsTrainsTest extends TestCase {
 		Location l2 = lmanager.newLocation("Acton");
 		Assert.assertEquals("Location 2 Name", "Acton", l2.getName());
 
-		Track l2s1 = l2.addTrack("Acton Siding 1", Track.SIDING);
+		Track l2s1 = l2.addTrack("Acton Siding 1", Track.SPUR);
 		l2s1.setLength(543);
 		l2s1.setMoves(1);
 		Assert.assertEquals("Location 2s1 Name", "Acton Siding 1", l2s1.getName());
-		Assert.assertEquals("Location 2s1 LocType", Track.SIDING, l2s1.getLocType());
+		Assert.assertEquals("Location 2s1 LocType", Track.SPUR, l2s1.getLocType());
 		Assert.assertEquals("Location 2s1 Length", 543, l2s1.getLength());
 
-		Track l2s2 = l2.addTrack("Acton Siding 2", Track.SIDING);
+		Track l2s2 = l2.addTrack("Acton Siding 2", Track.SPUR);
 		l2s2.setLength(345);
 
 		Assert.assertEquals("Acton Length", 888, l2.getLength());
@@ -2844,13 +2844,13 @@ public class OperationsTrainsTest extends TestCase {
 		loc1trk2.addTypeName("Flat Car");
 
 		Track loc1trk3;
-		loc1trk3 = loc1.addTrack("Westford Siding 3", Track.SIDING);
+		loc1trk3 = loc1.addTrack("Westford Siding 3", Track.SPUR);
 		loc1trk3.setTrainDirections(0); // Only local moves allowed
 		loc1trk3.setLength(300);
 		loc1trk3.addTypeName("Flat Car");
 
 		Track loc1trk4;
-		loc1trk4 = loc1.addTrack("Westford Siding 4", Track.SIDING);
+		loc1trk4 = loc1.addTrack("Westford Siding 4", Track.SPUR);
 		loc1trk4.setTrainDirections(0); // Only local moves allowed
 		loc1trk4.setLength(300);
 		loc1trk4.addTypeName("Flat Car");
@@ -3394,21 +3394,21 @@ public class OperationsTrainsTest extends TestCase {
 		loc1trk2.deleteTypeName("Coil Car");
 
 		Track loc1trk3;
-		loc1trk3 = loc1.addTrack("Westford Express 3", Track.SIDING);
+		loc1trk3 = loc1.addTrack("Westford Express 3", Track.SPUR);
 		loc1trk3.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk3.setLength(300);
 		loc1trk3.deleteTypeName("Gon");
 		loc1trk3.deleteTypeName("Coil Car");
 
 		Track loc1trk4;
-		loc1trk4 = loc1.addTrack("Westford Express 4", Track.SIDING);
+		loc1trk4 = loc1.addTrack("Westford Express 4", Track.SPUR);
 		loc1trk4.setTrainDirections(Track.WEST + Track.EAST);
 		loc1trk4.setLength(300);
 		loc1trk4.deleteTypeName("Gon");
 		loc1trk4.deleteTypeName("Coil Car");
 
 		Track loc2trk1;
-		loc2trk1 = loc2.addTrack("Chelmsford Freight 1", Track.SIDING);
+		loc2trk1 = loc2.addTrack("Chelmsford Freight 1", Track.SPUR);
 		loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk1.setLength(900);
 		loc2trk1.deleteTypeName("Coil Car");
@@ -3417,7 +3417,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk1.setScheduleItemId(sch1.getItemsBySequenceList().get(1));
 
 		Track loc2trk2;
-		loc2trk2 = loc2.addTrack("Chelmsford Freight 2", Track.SIDING);
+		loc2trk2 = loc2.addTrack("Chelmsford Freight 2", Track.SPUR);
 		loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk2.setLength(900);
 		loc2trk2.deleteTypeName("Coil Car");
@@ -3433,7 +3433,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk3.deleteTypeName("Coil Car");
 
 		Track loc2trk4;
-		loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SIDING);
+		loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SPUR);
 		loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk4.setLength(900);
 		loc2trk4.setScheduleId(sch2.getId());
@@ -3820,7 +3820,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk3.deleteTypeName("XCaboose");
 
 		Track loc2trk4;
-		loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SIDING);
+		loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SPUR);
 		loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk4.setLength(900);
 		loc2trk4.deleteTypeName("Gon");
@@ -5564,7 +5564,7 @@ public class OperationsTrainsTest extends TestCase {
 
 		Location loc2 = lmanager.newLocation("New Arlington");
 
-		Track loc2trk1 = loc2.addTrack("Arlington Siding", Track.SIDING);
+		Track loc2trk1 = loc2.addTrack("Arlington Siding", Track.SPUR);
 		loc2trk1.setLength(50);
 
 		Location loc3 = lmanager.newLocation("New Boston");
@@ -5729,7 +5729,7 @@ public class OperationsTrainsTest extends TestCase {
 		// add 2 yard tracks to siding at Arlington
 		Track loc2trk2 = loc2.addTrack("Arlington Yard 1", Track.YARD);
 		loc2trk2.setLength(50); // only enough room for one car
-		Track loc2trk3 = loc2.addTrack("Arlington Alternate Track", Track.SIDING);
+		Track loc2trk3 = loc2.addTrack("Arlington Alternate Track", Track.SPUR);
 		loc2trk3.setLength(100); // only enough room for two cars
 
 		// set the alternate for Arlington siding

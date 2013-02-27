@@ -152,7 +152,7 @@ public class Router extends TrainCommon {
 					new Object[] { car.toString(), clone.getDestinationName(),
 				clone.getDestinationTrackName(), _status }));
 			// check to see if an alternative track was specified
-			if ((_status.startsWith(Track.LENGTH) || _status.startsWith(Car.SCHEDULE)) && car.getLocation() != clone.getDestination()
+			if ((_status.startsWith(Track.LENGTH) || _status.startsWith(Track.SCHEDULE)) && car.getLocation() != clone.getDestination()
 					&& clone.getDestinationTrack() != null
 					&& clone.getDestinationTrack().getAlternativeTrack() != null) {
 				String status = car.setDestination(clone.getDestination(), clone.getDestinationTrack()
@@ -179,8 +179,8 @@ public class Router extends TrainCommon {
 			// check to see if spur was full, if so, forward to yard if possible
 			if (Setup.isForwardToYardEnabled() && _status.startsWith(Track.LENGTH)
 					&& car.getLocation() != clone.getDestination()) {
-				// log.debug("Siding full, searching for a yard at destination ("+clone.getDestinationName()+")");
-				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSidingFull"),
+				// log.debug("Spur full, searching for a yard at destination ("+clone.getDestinationName()+")");
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterSpurFull"),
 						new Object[] { clone.getDestinationTrackName(), clone.getDestinationName() }));
 				Location dest = clone.getDestination();
 				List<String> yards = dest.getTrackIdsByMovesList(Track.YARD);

@@ -124,7 +124,7 @@ public class Xml {
 	static final String AGGRESSIVE = "aggressive"; // NOI18N
 	
 	static final String ALLOW_LOCAL_INTERCHANGE = "allowLocalInterchange"; // NOI18N
-	static final String ALLOW_LOCAL_SIDING = "allowLocalSiding"; // NOI18N
+	static final String ALLOW_LOCAL_SPUR = "allowLocalSiding"; // NOI18N
 	static final String ALLOW_LOCAL_YARD = "allowLocalYard"; // NOI18N
 	
 	static final String STAGING_RESTRICTION_ENABLED = "stagingRestrictionEnabled"; // NOI18N

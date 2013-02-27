@@ -1197,7 +1197,7 @@ public class TrainBuilder extends TrainCommon {
 				}
 			}
 			if (c.getTrack().getLocType().equals(Track.INTERCHANGE)
-					|| c.getTrack().getLocType().equals(Track.SIDING)) {
+					|| c.getTrack().getLocType().equals(Track.SPUR)) {
 				if (c.getTrack().getPickupOption().equals(Track.TRAINS)
 						|| c.getTrack().getPickupOption().equals(Track.EXCLUDE_TRAINS)) {
 					if (c.getTrack().acceptsPickupTrain(train)) {
@@ -1514,7 +1514,7 @@ public class TrainBuilder extends TrainCommon {
 							}
 							if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 									&& (departStageTrack.isAddLoadsEnabled()
-											|| departStageTrack.isAddLoadsAnySidingEnabled() || departStageTrack
+											|| departStageTrack.isAddLoadsAnySpurEnabled() || departStageTrack
 												.isAddCustomLoadsAnyStagingTrackEnabled())) {
 								addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("blockNotAbleCarTypeGenerate"), new Object[] {
@@ -2085,7 +2085,7 @@ public class TrainBuilder extends TrainCommon {
 	 * @return true if able to drop.
 	 */
 	private boolean checkTrainCanDrop(Car car, Track track) {
-		if (track.getLocType().equals(Track.INTERCHANGE) || track.getLocType().equals(Track.SIDING)) {
+		if (track.getLocType().equals(Track.INTERCHANGE) || track.getLocType().equals(Track.SPUR)) {
 			if (track.getDropOption().equals(Track.TRAINS)
 					|| track.getDropOption().equals(Track.EXCLUDE_TRAINS)) {
 				if (track.acceptsDropTrain(train)) {
@@ -2244,7 +2244,7 @@ public class TrainBuilder extends TrainCommon {
 							&& !car.isPassenger()
 							&& (!car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()) || !departStageTrack
 									.isAddLoadsEnabled()
-									&& !departStageTrack.isAddLoadsAnySidingEnabled()
+									&& !departStageTrack.isAddLoadsAnySpurEnabled()
 									&& !departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled())
 							&& !train.acceptsLoad(car.getLoad(), car.getType())) {
 						addLine(buildReport, THREE, MessageFormat.format(Bundle
@@ -2490,10 +2490,10 @@ public class TrainBuilder extends TrainCommon {
 				|| car.getLoad().equals(CarLoads.instance().getDefaultLoadName())
 				|| car.getDestination() != null || car.getFinalDestination() != null)
 			return routeToSpurFound; // no schedule found for this car
-		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchForSiding"),
+		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSearchForSpur"),
 				new Object[] { car.toString(), car.getLoad(),
 						car.getLocationName() + ", " + car.getTrackName() }));
-		List<Track> tracks = locationManager.getTracks(Track.SIDING);
+		List<Track> tracks = locationManager.getTracks(Track.SPUR);
 		log.debug("Found " + tracks.size() + " spurs");
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
@@ -2520,7 +2520,7 @@ public class TrainBuilder extends TrainCommon {
 			if (!status.equals(Track.OKAY)) {
 				// if the track has an alternate track don't abort if the issue was space
 				if (!status.startsWith(Track.LENGTH) || track.getAlternativeTrack() == null
-						|| !car.testSchedule(track).equals(Track.OKAY))
+						|| !track.checkSchedule(car).equals(Track.OKAY))
 					continue;
 			}
 
@@ -2565,7 +2565,7 @@ public class TrainBuilder extends TrainCommon {
 			car.setFinalDestination(null);
 			car.setFinalDestinationTrack(null);
 		}
-		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCouldNotFindSiding"),
+		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCouldNotFindSpur"),
 				new Object[] { car.toString(), car.getLoad() }));
 		return routeToSpurFound; // done
 	}
@@ -2579,17 +2579,17 @@ public class TrainBuilder extends TrainCommon {
 	 */
 	private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException {
 		if (car.getTrack() == null || !car.getTrack().getLocType().equals(Track.STAGING)
-				|| !car.getTrack().isAddLoadsAnySidingEnabled()
+				|| !car.getTrack().isAddLoadsAnySpurEnabled()
 				|| !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 				|| car.getDestination() != null || car.getFinalDestination() != null) {
-			log.debug("No load search for car (" + car.toString() + ") isAddLoadsAnySidingEnabled: " // NOI18N
-					+ (car.getTrack().isAddLoadsAnySidingEnabled() ? "true" : "false") // NOI18N
+			log.debug("No load search for car (" + car.toString() + ") isAddLoadsAnySpurEnabled: " // NOI18N
+					+ (car.getTrack().isAddLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
 					+ ", car load: (" + car.getLoad() + ")"); // NOI18N
 			return false; // no load generated for this car
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSearchTrackNewLoad"),
 				new Object[] { car.toString(), car.getType(), car.getLoad(), car.getTrackName() }));
-		List<Track> tracks = locationManager.getTracks(Track.SIDING);
+		List<Track> tracks = locationManager.getTracks(Track.SPUR);
 		log.debug("Found " + tracks.size() + " spurs");
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
@@ -2663,7 +2663,7 @@ public class TrainBuilder extends TrainCommon {
 				|| car.getDestination() != null || car.getFinalDestination() != null) {
 			log.debug("No load search for car (" + car.toString()
 					+ ") isAddCustomLoadsAnyStagingTrackEnabled: " // NOI18N
-					+ (car.getTrack().isAddLoadsAnySidingEnabled() ? "true" : "false") // NOI18N
+					+ (car.getTrack().isAddLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
 					+ ", car load: (" + car.getLoad() + ")"); // NOI18N
 			return false;
 		}
@@ -2963,8 +2963,8 @@ public class TrainBuilder extends TrainCommon {
 						String status = car.testDestination(car.getDestination(), testTrack);
 						// is the testTrack a spur with a schedule and alternate track?
 						if (!status.equals(Track.OKAY) && status.startsWith(Track.LENGTH)
-								&& car.testSchedule(testTrack).equals(Track.OKAY)
-								&& testTrack.getLocType().equals(Track.SIDING)
+								&& testTrack.checkSchedule(car).equals(Track.OKAY)
+								&& testTrack.getLocType().equals(Track.SPUR)
 								&& testTrack.getAlternativeTrack() != null) {
 							addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 									.getMessage("buildTrackHasAlternate"), new Object[] {
@@ -2973,7 +2973,7 @@ public class TrainBuilder extends TrainCommon {
 									.getAlternativeTrack());
 							if (altStatus.equals(Track.OKAY)
 							// "CUSTOM" and "LOAD" are in the status message, must use contains
-									|| (altStatus.contains(Car.CUSTOM) && altStatus.contains(Track.LOAD))) {
+									|| (altStatus.contains(Track.CUSTOM) && altStatus.contains(Track.LOAD))) {
 								addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("buildUseAlternateTrack"), new Object[] { car.toString(),
 										testTrack.getAlternativeTrack().getName() }));
@@ -3210,7 +3210,7 @@ public class TrainBuilder extends TrainCommon {
 						&& rldSave == null
 						&& !departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled()
 						&& (departStageTrack.isAddLoadsEnabled() || departStageTrack
-								.isAddLoadsAnySidingEnabled())) {
+								.isAddLoadsAnySpurEnabled())) {
 					// try and generate a load for this car into staging
 					if (generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack)) {
 						trackTemp = terminateStageTrack;
@@ -3253,7 +3253,7 @@ public class TrainBuilder extends TrainCommon {
 							&& !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
 							&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())) {
 						addLine(buildReport, FIVE, MessageFormat.format(Bundle
-								.getMessage("buildSidingScheduleLoad"), new Object[] { testTrack.getName(),
+								.getMessage("buildSpurScheduleLoad"), new Object[] { testTrack.getName(),
 								car.getLoad() }));
 						// is car part of kernel?
 						car.updateKernel();
@@ -3266,10 +3266,10 @@ public class TrainBuilder extends TrainCommon {
 							&& (!status.startsWith(Track.TYPE)) // can't generate load for spur that doesn't accept this
 																// car type
 							&& (!status.startsWith(Track.LENGTH)) // can't generate load for spur that is full
-							&& testTrack.getLocType().equals(Track.SIDING)
+							&& testTrack.getLocType().equals(Track.SPUR)
 							&& !testTrack.getScheduleId().equals("")
 							&& (car.getTrack().isAddLoadsEnabled() || car.getTrack()
-									.isAddLoadsAnySidingEnabled())
+									.isAddLoadsAnySpurEnabled())
 							&& car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())) {
 						// can we use this track?
 						if (!testTrack.isSpaceAvailable(car)) {
@@ -3308,11 +3308,11 @@ public class TrainBuilder extends TrainCommon {
 						continue;
 					}
 					// No local moves from spur to spur
-					if (train.isLocalSwitcher() && !Setup.isLocalSidingMovesEnabled()
-							&& testTrack.getLocType().equals(Track.SIDING)
-							&& car.getTrack().getLocType().equals(Track.SIDING)) {
+					if (train.isLocalSwitcher() && !Setup.isLocalSpurMovesEnabled()
+							&& testTrack.getLocType().equals(Track.SPUR)
+							&& car.getTrack().getLocType().equals(Track.SPUR)) {
 						addLine(buildReport, FIVE, MessageFormat.format(Bundle
-								.getMessage("buildNoSidingToSidingMove"),
+								.getMessage("buildNoSpurToSpurMove"),
 								new Object[] { testTrack.getName() }));
 						continue;
 					}

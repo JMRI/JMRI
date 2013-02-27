@@ -46,7 +46,7 @@ public class OptionFrame extends OperationsFrame {
 	JCheckBox trainLoggerCheckBox = new JCheckBox(Bundle.getMessage("EnableTrainLogging"));
 
 	JCheckBox localInterchangeCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalInterchange"));
-	JCheckBox localSidingCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalSiding"));
+	JCheckBox localSpurCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalSpur"));
 	JCheckBox localYardCheckBox = new JCheckBox(Bundle.getMessage("AllowLocalYard"));
 
 	JCheckBox trainIntoStagingCheckBox = new JCheckBox(Bundle.getMessage("TrainIntoStaging"));
@@ -75,7 +75,7 @@ public class OptionFrame extends OperationsFrame {
 
 		// load checkboxes
 		localInterchangeCheckBox.setSelected(Setup.isLocalInterchangeMovesEnabled());
-		localSidingCheckBox.setSelected(Setup.isLocalSidingMovesEnabled());
+		localSpurCheckBox.setSelected(Setup.isLocalSpurMovesEnabled());
 		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
 		// staging options
 		trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
@@ -132,7 +132,7 @@ public class OptionFrame extends OperationsFrame {
 				.getMessage("BorderLayoutSwitcherService")));
 
 		addItemLeft(pSwitcher, localInterchangeCheckBox, 1, 1);
-		addItemLeft(pSwitcher, localSidingCheckBox, 1, 2);
+		addItemLeft(pSwitcher, localSpurCheckBox, 1, 2);
 		addItemLeft(pSwitcher, localYardCheckBox, 1, 3);
 		addItemLeft(pBuild, pSwitcher, 1, 1);
 
@@ -238,7 +238,7 @@ public class OptionFrame extends OperationsFrame {
 			Setup.setBuildAggressive(buildAggressive.isSelected());
 			// Local moves?
 			Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
-			Setup.setLocalSidingMovesEnabled(localSidingCheckBox.isSelected());
+			Setup.setLocalSpurMovesEnabled(localSpurCheckBox.isSelected());
 			Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
 			// Staging options
 			Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());

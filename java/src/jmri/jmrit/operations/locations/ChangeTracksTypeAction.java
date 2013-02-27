@@ -40,7 +40,7 @@ public class ChangeTracksTypeAction extends AbstractAction {
 class ChangeTracksFrame extends OperationsFrame{
 		
 	// radio buttons
-    JRadioButton sidingRadioButton = new JRadioButton(Bundle.getMessage("Siding"));
+    JRadioButton spurRadioButton = new JRadioButton(Bundle.getMessage("Spur"));
     JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yard"));
     JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getMessage("Interchange"));
     JRadioButton stagingRadioButton = new JRadioButton(Bundle.getMessage("Staging")); 
@@ -69,7 +69,7 @@ class ChangeTracksFrame extends OperationsFrame{
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
     	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("TrackType"),new Object[]{_location.getName()})));
-    	addItem(p1, sidingRadioButton, 0, 0);
+    	addItem(p1, spurRadioButton, 0, 0);
     	addItem(p1, yardRadioButton, 1, 0);
     	addItem(p1, interchangeRadioButton, 2, 0);
     	addItem(p1, stagingRadioButton, 3, 0);
@@ -77,7 +77,7 @@ class ChangeTracksFrame extends OperationsFrame{
     	
     	// group and set current track type
     	ButtonGroup group = new ButtonGroup();
-    	group.add(sidingRadioButton);
+    	group.add(spurRadioButton);
     	group.add(yardRadioButton);
     	group.add(interchangeRadioButton);
     	group.add(stagingRadioButton);
@@ -96,8 +96,8 @@ class ChangeTracksFrame extends OperationsFrame{
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){	
 			// check to see if button has changed
-			if (sidingRadioButton.isSelected()){
-				changeTracks(Track.SIDING);
+			if (spurRadioButton.isSelected()){
+				changeTracks(Track.SPUR);
 			} else if (yardRadioButton.isSelected()){
 				changeTracks(Track.YARD);
 			} else if (interchangeRadioButton.isSelected()){

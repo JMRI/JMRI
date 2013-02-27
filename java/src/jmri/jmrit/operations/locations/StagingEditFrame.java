@@ -90,7 +90,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 			emptyCheckBox.setSelected(_track.isSetLoadEmptyEnabled());
 			emptyCustomCheckBox.setSelected(_track.isRemoveLoadsEnabled());
 			loadCheckBox.setSelected(_track.isAddLoadsEnabled());
-			loadAnyCheckBox.setSelected(_track.isAddLoadsAnySidingEnabled());
+			loadAnyCheckBox.setSelected(_track.isAddLoadsAnySpurEnabled());
 			loadAnyStagingCheckBox.setSelected(_track.isAddCustomLoadsAnyStagingTrackEnabled());
 			pShipLoadOption.setVisible(loadCheckBox.isSelected() 
 					|| loadAnyCheckBox.isSelected() || loadAnyStagingCheckBox.isSelected());	// show which loads this track can ship
@@ -119,7 +119,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		track.setLoadEmptyEnabled(emptyCheckBox.isSelected());
 		track.setRemoveLoadsEnabled(emptyCustomCheckBox.isSelected());
 		track.setAddLoadsEnabled(loadCheckBox.isSelected());
-		track.setAddLoadsAnySidingEnabled(loadAnyCheckBox.isSelected());
+		track.setAddLoadsAnySpurEnabled(loadAnyCheckBox.isSelected());
 		track.setAddCustomLoadsAnyStagingTrackEnabled(loadAnyStagingCheckBox.isSelected());
 		track.setBlockCarsEnabled(blockCarsCheckBox.isSelected());
 		super.saveTrack(track);

@@ -442,14 +442,14 @@ public class OperationsCarsTest extends TestCase {
         c6.setLength("14");
         
         Location l1 = new Location("id1", "B");
-        Track l1t1 = l1.addTrack("A",Track.SIDING);
-        Track l1t2 = l1.addTrack("B",Track.SIDING);
+        Track l1t1 = l1.addTrack("A",Track.SPUR);
+        Track l1t2 = l1.addTrack("B",Track.SPUR);
         Location l2 = new Location("id2", "C");
-        Track l2t1 = l2.addTrack("B",Track.SIDING);
-        Track l2t2 = l2.addTrack("A",Track.SIDING);
+        Track l2t1 = l2.addTrack("B",Track.SPUR);
+        Track l2t2 = l2.addTrack("A",Track.SPUR);
         Location l3 = new Location("id3", "A");
-        Track l3t1 = l3.addTrack("B",Track.SIDING);
-        Track l3t2 = l3.addTrack("A",Track.SIDING);
+        Track l3t1 = l3.addTrack("B",Track.SPUR);
+        Track l3t2 = l3.addTrack("A",Track.SPUR);
 
         // add track lengths       
         l1t1.setLength(100);

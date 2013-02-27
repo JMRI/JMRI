@@ -38,7 +38,7 @@ public class ChangeTrackTypeAction extends AbstractAction {
 class ChangeTrackFrame extends OperationsFrame{
 		
 	// radio buttons
-    JRadioButton sidingRadioButton = new JRadioButton(Bundle.getMessage("Siding"));
+    JRadioButton spurRadioButton = new JRadioButton(Bundle.getMessage("Spur"));
     JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yard"));
     JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getMessage("Interchange"));
     ButtonGroup group = new ButtonGroup();
@@ -67,18 +67,18 @@ class ChangeTrackFrame extends OperationsFrame{
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
     	p1.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("TrackType"),new Object[]{trackName})));
-    	addItem(p1, sidingRadioButton, 0, 0);
+    	addItem(p1, spurRadioButton, 0, 0);
     	addItem(p1, yardRadioButton, 1, 0);
     	addItem(p1, interchangeRadioButton, 2, 0);
     	addItem(p1, saveButton, 1, 1);
     	
     	// group and set current track type
     	_trackType = tef._track.getLocType();
-    	group.add(sidingRadioButton);
+    	group.add(spurRadioButton);
     	group.add(yardRadioButton);
     	group.add(interchangeRadioButton);
     	
-    	sidingRadioButton.setSelected(_trackType.equals(Track.SIDING));
+    	spurRadioButton.setSelected(_trackType.equals(Track.SPUR));
     	yardRadioButton.setSelected(_trackType.equals(Track.YARD));
     	interchangeRadioButton.setSelected(_trackType.equals(Track.INTERCHANGE));
     	
@@ -99,8 +99,8 @@ class ChangeTrackFrame extends OperationsFrame{
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){	
 			// check to see if button has changed
-			if (sidingRadioButton.isSelected() && !_trackType.equals(Track.SIDING)){
-				changeTrack(Track.SIDING);
+			if (spurRadioButton.isSelected() && !_trackType.equals(Track.SPUR)){
+				changeTrack(Track.SPUR);
 			} else if (yardRadioButton.isSelected() && !_trackType.equals(Track.YARD)){
 				changeTrack(Track.YARD);
 			} else if (interchangeRadioButton.isSelected() && !_trackType.equals(Track.INTERCHANGE)){

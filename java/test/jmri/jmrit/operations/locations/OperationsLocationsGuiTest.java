@@ -209,7 +209,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	public void testSidingEditFrame(){		
 		LocationManager lManager = LocationManager.instance();
 		Location l = lManager.getLocationByName("Test Loc C");
-		SidingEditFrame f = new SidingEditFrame();
+		SpurEditFrame f = new SpurEditFrame();
 		f.setTitle("Test Siding Add Frame");
 		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
 		f.initComponents(l, null);
@@ -440,7 +440,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		// check location name
 		Assert.assertEquals("name", "Test Loc C", f.locationNameTextField.getText());
 		
-		Assert.assertEquals("number of sidings", 3, f.sidingModel.getRowCount());
+		Assert.assertEquals("number of sidings", 3, f.spurModel.getRowCount());
 		Assert.assertEquals("number of interchanges", 2, f.interchangeModel.getRowCount());
 		Assert.assertEquals("number of yards", 4, f.yardModel.getRowCount());
 		Assert.assertEquals("number of staging tracks", 0, f.stagingModel.getRowCount());
@@ -459,7 +459,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		// check location name
 		Assert.assertEquals("name", "Test Loc A", f.locationNameTextField.getText());
 		
-		Assert.assertEquals("number of sidings", 0, f.sidingModel.getRowCount());
+		Assert.assertEquals("number of sidings", 0, f.spurModel.getRowCount());
 		Assert.assertEquals("number of interchanges", 0, f.interchangeModel.getRowCount());
 		Assert.assertEquals("number of yards", 0, f.yardModel.getRowCount());
 		Assert.assertEquals("number of staging tracks", 4, f.stagingModel.getRowCount());
@@ -534,7 +534,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	public void testScheduleComboBoxes(){
 		LocationManager lm = LocationManager.instance();
 		Location l = lm.newLocation("new test location");
-		Track t = l.addTrack("track 1", Track.SIDING);
+		Track t = l.addTrack("track 1", Track.SPUR);
 		
 		ScheduleManager sm = ScheduleManager.instance();
 		
@@ -570,13 +570,13 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("3 First schedule name", sch1, box.getItemAt(1));
 		Assert.assertEquals("3 First schedule name", sch2, box.getItemAt(2));
 		
-		JComboBox box2 = sm.getSidingsByScheduleComboBox(s1);
+		JComboBox box2 = sm.getSpursByScheduleComboBox(s1);
 		Assert.assertEquals("First siding name", null, box2.getItemAt(0));
 		
 		// now add a schedule to siding
 		t.setScheduleId(sch1.getId());
 		
-		JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
+		JComboBox box3 = sm.getSpursByScheduleComboBox(s1);
 		LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);
 		
 		Assert.assertEquals("Location track pair location", l, ltp.getLocation()); 

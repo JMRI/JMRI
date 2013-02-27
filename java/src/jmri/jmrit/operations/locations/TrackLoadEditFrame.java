@@ -332,7 +332,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		loadAndTypeCheckBox.setEnabled(enabled);
 		
 		boolean en = enabled && (_track.isAddCustomLoadsAnyStagingTrackEnabled()
-				|| _track.isAddLoadsAnySidingEnabled()
+				|| _track.isAddLoadsAnySpurEnabled()
 				|| _track.isAddLoadsEnabled());
 		
 		shipLoadNameAll.setEnabled(en);

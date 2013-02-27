@@ -78,12 +78,12 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Location 1 Name", "Acton MA", Acton.getName());
 		Assert.assertEquals("Location 1 Initial Length", 0, Acton.getLength());
 
-		Track AS1 = Acton.addTrack("Acton Siding 1", Track.SIDING);
+		Track AS1 = Acton.addTrack("Acton Siding 1", Track.SPUR);
 		AS1.setLength(300);
 		Assert.assertEquals("Location AS1 Name", "Acton Siding 1", AS1.getName());
 		Assert.assertEquals("Location AS1 Length", 300, AS1.getLength());
 		
-		Track AS2 = Acton.addTrack("Acton Siding 2", Track.SIDING);
+		Track AS2 = Acton.addTrack("Acton Siding 2", Track.SPUR);
 		AS2.setLength(300);
 		Assert.assertEquals("Location AS2 Name", "Acton Siding 2", AS2.getName());
 		Assert.assertEquals("Location AS2 Length", 300, AS2.getLength());
@@ -103,12 +103,12 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Location 1 Name", "Bedford MA", Bedford.getName());
 		Assert.assertEquals("Location 1 Initial Length", 0, Bedford.getLength());
 
-		Track BS1 = Bedford.addTrack("Bedford Siding 1", Track.SIDING);
+		Track BS1 = Bedford.addTrack("Bedford Siding 1", Track.SPUR);
 		BS1.setLength(300);
 		Assert.assertEquals("Location BS1 Name", "Bedford Siding 1", BS1.getName());
 		Assert.assertEquals("Location BS1 Length", 300, BS1.getLength());
 		
-		Track BS2 = Bedford.addTrack("Bedford Siding 2", Track.SIDING);
+		Track BS2 = Bedford.addTrack("Bedford Siding 2", Track.SPUR);
 		BS2.setLength(300);
 		Assert.assertEquals("Location BS2 Name", "Bedford Siding 2", BS2.getName());
 		Assert.assertEquals("Location BS2 Length", 300, BS2.getLength());
@@ -127,12 +127,12 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Location 1 Name", "Clinton MA", Clinton.getName());
 		Assert.assertEquals("Location 1 Initial Length", 0, Clinton.getLength());
 
-		Track CS1 = Clinton.addTrack("Clinton Siding 1", Track.SIDING);
+		Track CS1 = Clinton.addTrack("Clinton Siding 1", Track.SPUR);
 		CS1.setLength(300);
 		Assert.assertEquals("Location CS1 Name", "Clinton Siding 1", CS1.getName());
 		Assert.assertEquals("Location CS1 Length", 300, CS1.getLength());
 		
-		Track CS2 = Clinton.addTrack("Clinton Siding 2", Track.SIDING);
+		Track CS2 = Clinton.addTrack("Clinton Siding 2", Track.SPUR);
 		CS2.setLength(300);
 		Assert.assertEquals("Location CS2 Name", "Clinton Siding 2", CS2.getName());
 		Assert.assertEquals("Location CS2 Length", 300, BS2.getLength());
@@ -148,9 +148,9 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Track CI Length", 500, CI.getLength());
 		
 		Location Danbury = lmanager.newLocation("Danbury MA");
-		Track DS1 = Danbury.addTrack("Danbury Siding 1", Track.SIDING);
+		Track DS1 = Danbury.addTrack("Danbury Siding 1", Track.SPUR);
 		DS1.setLength(300);
-		Track DS2 = Danbury.addTrack("Danbury Siding 2", Track.SIDING);
+		Track DS2 = Danbury.addTrack("Danbury Siding 2", Track.SPUR);
 		DS2.setLength(300);		
 		Track DY = Danbury.addTrack("Danbury Yard", Track.YARD);
 		DY.setLength(400);		
@@ -158,9 +158,9 @@ public class OperationsCarRouterTest extends TestCase {
 		DI.setLength(500);
 		
 		Location Essex = lmanager.newLocation("Essex MA");
-		Track ES1 = Essex.addTrack("Essex Siding 1", Track.SIDING);
+		Track ES1 = Essex.addTrack("Essex Siding 1", Track.SPUR);
 		ES1.setLength(300);	
-		Track ES2 = Essex.addTrack("Essex Siding 2", Track.SIDING);
+		Track ES2 = Essex.addTrack("Essex Siding 2", Track.SPUR);
 		ES2.setLength(300);		
 		Track EY = Essex.addTrack("Essex Yard", Track.YARD);
 		EY.setLength(400);		
@@ -168,9 +168,9 @@ public class OperationsCarRouterTest extends TestCase {
 		EI.setLength(500);
 		
 		Location Foxboro = lmanager.newLocation("Foxboro MA");
-		Track FS1 = Foxboro.addTrack("Foxboro Siding 1", Track.SIDING);
+		Track FS1 = Foxboro.addTrack("Foxboro Siding 1", Track.SPUR);
 		FS1.setLength(300);	
-		Track FS2 = Foxboro.addTrack("Foxboro Siding 2", Track.SIDING);
+		Track FS2 = Foxboro.addTrack("Foxboro Siding 2", Track.SPUR);
 		FS2.setLength(300);		
 		Track FY = Foxboro.addTrack("Foxboro Yard", Track.YARD);
 		FY.setLength(400);		
@@ -900,7 +900,7 @@ public class OperationsCarRouterTest extends TestCase {
 		Car c4 = cmanager.getByRoadAndNumber("BB", "4");
 		
 		Location Essex = lmanager.getLocationByName("Essex MA");
-		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SIDING);
+		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SPUR);
 		Location Foxboro = lmanager.getLocationByName("Foxboro MA");
 		
 		Location Gulf = lmanager.newLocation("Gulf");
@@ -1084,13 +1084,13 @@ public class OperationsCarRouterTest extends TestCase {
 		Location Essex = lmanager.getLocationByName("Essex MA");
 		Location Foxboro = lmanager.getLocationByName("Foxboro MA");
 		
-		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SIDING);
-		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SIDING);
-		Track DS1 = Danbury.getTrackByName("Danbury Siding 1", Track.SIDING);
-		Track DS2 = Danbury.getTrackByName("Danbury Siding 2", Track.SIDING);
-		Track ES1 = Essex.getTrackByName("Essex Siding 1", Track.SIDING);
-		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SIDING);
-		Track FS1 = Foxboro.getTrackByName("Foxboro Siding 1", Track.SIDING);
+		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SPUR);
+		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SPUR);
+		Track DS1 = Danbury.getTrackByName("Danbury Siding 1", Track.SPUR);
+		Track DS2 = Danbury.getTrackByName("Danbury Siding 2", Track.SPUR);
+		Track ES1 = Essex.getTrackByName("Essex Siding 1", Track.SPUR);
+		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SPUR);
+		Track FS1 = Foxboro.getTrackByName("Foxboro Siding 1", Track.SPUR);
 		
 		// create schedules
 		ScheduleManager scheduleManager = ScheduleManager.instance();
@@ -1418,12 +1418,12 @@ public class OperationsCarRouterTest extends TestCase {
 		Location Essex = lmanager.getLocationByName("Essex MA");
 		//Location Foxboro = lmanager.getLocationByName("Foxboro MA");
 		
-		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SIDING);
-		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SIDING);
-		Track DS1 = Danbury.getTrackByName("Danbury Siding 1", Track.SIDING);
-		Track DS2 = Danbury.getTrackByName("Danbury Siding 2", Track.SIDING);
-		Track ES1 = Essex.getTrackByName("Essex Siding 1", Track.SIDING);
-		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SIDING);
+		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SPUR);
+		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SPUR);
+		Track DS1 = Danbury.getTrackByName("Danbury Siding 1", Track.SPUR);
+		Track DS2 = Danbury.getTrackByName("Danbury Siding 2", Track.SPUR);
+		Track ES1 = Essex.getTrackByName("Essex Siding 1", Track.SPUR);
+		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SPUR);
 		//Track FS1 = Foxboro.getTrackByName("Foxboro Siding 1", Track.SIDING);
 		
 		// create schedules
@@ -1632,12 +1632,12 @@ public class OperationsCarRouterTest extends TestCase {
 		Location Essex = lmanager.getLocationByName("Essex MA");
 		//Location Foxboro = lmanager.getLocationByName("Foxboro MA");
 		
-		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SIDING);
-		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SIDING);
-		Track DS1 = Danbury.getTrackByName("Danbury Siding 1", Track.SIDING);
-		Track DS2 = Danbury.getTrackByName("Danbury Siding 2", Track.SIDING);
-		Track ES1 = Essex.getTrackByName("Essex Siding 1", Track.SIDING);
-		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SIDING);
+		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SPUR);
+		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SPUR);
+		Track DS1 = Danbury.getTrackByName("Danbury Siding 1", Track.SPUR);
+		Track DS2 = Danbury.getTrackByName("Danbury Siding 2", Track.SPUR);
+		Track ES1 = Essex.getTrackByName("Essex Siding 1", Track.SPUR);
+		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SPUR);
 		//Track FS1 = Foxboro.getTrackByName("Foxboro Siding 1", Track.SIDING);
 		
 		// create schedules
@@ -1792,14 +1792,14 @@ public class OperationsCarRouterTest extends TestCase {
 		Location Essex = lmanager.getLocationByName("Essex MA");
 		Location Foxboro = lmanager.getLocationByName("Foxboro MA");
 		
-		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SIDING);
-		Track BS1 = Bedford.getTrackByName("Bedford Siding 1", Track.SIDING);
-		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SIDING);
-		Track DS1 = Danbury.getTrackByName("Danbury Siding 1", Track.SIDING);
-		Track DS2 = Danbury.getTrackByName("Danbury Siding 2", Track.SIDING);
-		Track ES1 = Essex.getTrackByName("Essex Siding 1", Track.SIDING);
+		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SPUR);
+		Track BS1 = Bedford.getTrackByName("Bedford Siding 1", Track.SPUR);
+		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SPUR);
+		Track DS1 = Danbury.getTrackByName("Danbury Siding 1", Track.SPUR);
+		Track DS2 = Danbury.getTrackByName("Danbury Siding 2", Track.SPUR);
+		Track ES1 = Essex.getTrackByName("Essex Siding 1", Track.SPUR);
 		//Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SIDING);
-		Track FS1 = Foxboro.getTrackByName("Foxboro Siding 1", Track.SIDING);
+		Track FS1 = Foxboro.getTrackByName("Foxboro Siding 1", Track.SPUR);
 		
 		// create schedules
 		ScheduleManager scheduleManager = ScheduleManager.instance();
@@ -2252,12 +2252,12 @@ public class OperationsCarRouterTest extends TestCase {
 		Location Acton = lmanager.getLocationByName("Acton MA");
 		Location Bedford = lmanager.getLocationByName("Bedford MA");
 		Location Clinton = lmanager.getLocationByName("Clinton MA");
-		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SIDING);
+		Track CS1 = Clinton.getTrackByName("Clinton Siding 1", Track.SPUR);
 		
-		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SIDING);
+		Track AS1 = Acton.getTrackByName("Acton Siding 1", Track.SPUR);
 		AS1.setTrainDirections(Track.NORTH+Track.SOUTH);
-		Track AS2 = Acton.getTrackByName("Acton Siding 2", Track.SIDING);
-		Track AS3 = Acton.addTrack("Acton Siding 3", Track.SIDING);
+		Track AS2 = Acton.getTrackByName("Acton Siding 2", Track.SPUR);
+		Track AS3 = Acton.addTrack("Acton Siding 3", Track.SPUR);
 		AS3.setLength(300);
 		Track AY = Acton.getTrackByName("Acton Yard", Track.YARD);
 		Track AI = Acton.getTrackByName("Acton Interchange", Track.INTERCHANGE);

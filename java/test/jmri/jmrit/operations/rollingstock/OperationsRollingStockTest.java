@@ -117,7 +117,7 @@ public class OperationsRollingStockTest extends TestCase {
 
 		/* Place Rolling Stock on layout */
 		Location testlocation1 = new Location("Loc1", "Test Town");
-		Track testtrack1 = testlocation1.addTrack("Testees Office", Track.SIDING);
+		Track testtrack1 = testlocation1.addTrack("Testees Office", Track.SPUR);
 
 		testtrack1.deleteTypeName("TESTTYPE");
 		testresult = rs1.setLocation(testlocation1, testtrack1);

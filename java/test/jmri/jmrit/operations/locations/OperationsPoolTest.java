@@ -259,8 +259,8 @@ public class OperationsPoolTest extends TestCase {
 		Location l = locMan.newLocation("TestTrackPoolsLocation");
 		Track t1 = l.addTrack("Yard 1", Track.YARD);
 		Track t2 = l.addTrack("Yard 2", Track.YARD);
-		Track t3 = l.addTrack("Siding 1", Track.SIDING);
-		Track t4 = l.addTrack("Siding 2", Track.SIDING);
+		Track t3 = l.addTrack("Siding 1", Track.SPUR);
+		Track t4 = l.addTrack("Siding 2", Track.SPUR);
 		Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
 		Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
 		Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);

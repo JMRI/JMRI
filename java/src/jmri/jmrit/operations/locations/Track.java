@@ -11,6 +11,8 @@ import org.jdom.Element;
 
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.TrainSchedule;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -84,7 +86,7 @@ public class Track {
 	private static final int SWAP_GENERIC_LOADS = 1;
 	private static final int EMPTY_SCHEDULE_LOADS = 2;
 	private static final int GENERATE_SCHEDULE_LOADS = 4;
-	private static final int GENERATE_SCHEDULE_LOADS_ANY_SIDING = 8;
+	private static final int GENERATE_SCHEDULE_LOADS_ANY_SPUR = 8;
 	private static final int EMPTY_GENERIC_LOADS = 16;
 	private static final int GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK = 32;
 
@@ -102,7 +104,7 @@ public class Track {
 	public static final String STAGING = "Staging";
 	public static final String INTERCHANGE = "Interchange";
 	public static final String YARD = "Yard";
-	public static final String SIDING = "Siding";
+	public static final String SPUR = "Siding";	// NOI18N note that early code used Siding as the spur type
 
 	// train directions serviced by this track
 	public static final int EAST = 1;
@@ -135,6 +137,9 @@ public class Track {
 	public static final String ROAD = Bundle.getMessage("road");
 	public static final String LOAD = Bundle.getMessage("load");
 	public static final String CAPACITY = Bundle.getMessage("capacity");
+	public static final String SCHEDULE = Bundle.getMessage("schedule");
+	public static final String CUSTOM = Bundle.getMessage("custom");
+
 
 	// For property change
 	public static final String TYPES_CHANGED_PROPERTY = "trackRollingStockTypes"; // NOI18N
@@ -151,7 +156,7 @@ public class Track {
 	public static final String LOADS_CHANGED_PROPERTY = "trackLoads"; // NOI18N
 	public static final String POOL_CHANGED_PROPERTY = "trackPool"; // NOI18N
 	public static final String PLANNEDPICKUPS_CHANGED_PROPERTY = "plannedPickUps"; // NOI18N
-	public static final String LOAD_OPTIONS_CHANGED_PROPERTY = "trackLoadOptions";
+	public static final String LOAD_OPTIONS_CHANGED_PROPERTY = "trackLoadOptions"; // NOI18N
 
 	public Track(String id, String name, String type, Location location) {
 		log.debug("New track " + name + " " + id);
@@ -338,7 +343,7 @@ public class Track {
 		if (car.getKernel() != null)
 			carLength = car.getKernel().getLength();
 		// ignore reservation factor unless car is departing staging
-		if (car.getTrack() != null && car.getTrack().getLocType().equals(Track.STAGING))
+		if (car.getTrack() != null && car.getTrack().getLocType().equals(STAGING))
 			return (getLength() * getReservationFactor() / 100 - (getReservedInRoute() + carLength) >= 0);
 		// if there's alternate, include that length in the calculation
 		int trackLength = getLength();
@@ -1219,7 +1224,7 @@ public class Track {
 	 * @return Service order: Track.NORMAL, Track.FIFO, Track.LIFO
 	 */
 	public String getServiceOrder() {
-		if (getLocType().equals(SIDING) || getLocType().equals(STAGING))
+		if (getLocType().equals(SPUR) || getLocType().equals(STAGING))
 			return NORMAL;
 		return _order;
 	}
@@ -1259,7 +1264,7 @@ public class Track {
 
 	public String getScheduleId() {
 		// Only spurs can have a schedule
-		if (!getLocType().equals(Track.SIDING))
+		if (!getLocType().equals(SPUR))
 			return "";
 		// old code only stored schedule name, so create id if needed.
 		if (_scheduleId.equals("") && !_scheduleName.equals("")) {
@@ -1338,7 +1343,7 @@ public class Track {
 			return;
 		setScheduleCount(0);
 		// is the schedule in match mode?
-		if (getScheduleMode() == Track.MATCH)
+		if (getScheduleMode() == MATCH)
 			return;
 		// go to the next item on the schedule
 		getNextScheduleItem();
@@ -1476,6 +1481,200 @@ public class Track {
 		}
 		return status;
 	}
+	
+	public String checkSchedule(Car car) {
+		// does car already have this destination?
+		if (car.getDestinationTrack() == this)
+			return OKAY;
+		if (getScheduleId().equals("")) {
+			// does car have a scheduled load?
+			if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+					|| car.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
+				return OKAY; // no
+			// can't place a car with a scheduled load at a spur
+			else if (!getLocType().equals(SPUR))
+				return OKAY;
+			else
+				return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD,
+						car.getLoad() });
+		}
+		// only spurs can have a schedule
+		if (!getLocType().equals(SPUR))
+			return OKAY;
+		log.debug("Track (" + getName() + ") has schedule (" + getScheduleName() + ") mode "
+				+ getScheduleMode());
+
+		ScheduleItem si = getCurrentScheduleItem();
+		if (si == null) {
+			log.error("Could not find schedule item id (" + getScheduleItemId() + ") for schedule ("
+					+ getScheduleName() + ")"); // NOI18N
+			return SCHEDULE + " ERROR"; // NOI18N
+		}
+		if (getScheduleMode() == SEQUENTIAL)
+			return checkScheduleItem(si, car);
+		// schedule in is match mode search entire schedule for a match
+		return searchSchedule(car);
+	}
+
+	private static final boolean debugFlag = false;
+
+	private String searchSchedule(Car car) {
+		car.setScheduleId("");	// clear the schedule id
+		if (debugFlag)
+			log.debug("Search match for car " + toString() + " type (" + car.getType() + ") load (" + car.getLoad()
+					+ ")");
+		for (int i = 0; i < getSchedule().getSize(); i++) {
+			ScheduleItem si = getNextScheduleItem();
+			if (debugFlag)
+				log.debug("Item id (" + si.getId() + ") requesting type (" + si.getType() + ") " + "load ("
+						+ si.getLoad() + ") final dest (" + si.getDestinationName() + ") track (" // NOI18N
+						+ si.getDestinationTrackName() + ")"); // NOI18N
+			String status = checkScheduleItem(si, car);
+			if (status.equals(OKAY)) {
+				log.debug("Found item match (" + si.getId() + ") car (" + car.toString() + ") load ("
+						+ si.getLoad() + ") ship (" + si.getShip() + ") " + "destination (" // NOI18N
+						+ si.getDestinationName() + ", " + si.getDestinationTrackName() + ")"); // NOI18N
+				car.setScheduleId(si.getId());	// remember which item was a match
+				return OKAY;
+			} else {
+				if (debugFlag)
+					log.debug("Item id (" + si.getId() + ") status (" + status + ")");
+			}
+		}
+		if (debugFlag)
+			log.debug("No Match");
+		return SCHEDULE + " " +Bundle.getMessage("noMatch");
+	}
+
+	private String checkScheduleItem(ScheduleItem si, Car car) {
+		if (!si.getTrainScheduleId().equals("")
+				&& !TrainManager.instance().getTrainScheduleActiveId().equals(si.getTrainScheduleId())) {
+			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(si.getTrainScheduleId());
+			if (sch != null)
+				return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCarOnly")
+						+ " (" + sch.getName() + ")";
+		}
+		// Check for correct car type, road, load
+		if (!car.getType().equals(si.getType())) {
+			return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCar") + " "
+					+ TYPE + " (" + si.getType() + ")";
+		}
+		if (!si.getRoad().equals("") && !car.getRoad().equals(si.getRoad())) {
+			return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCar") + " "
+					+ TYPE + " (" + si.getType() + ") " + ROAD + " (" + si.getRoad() + ")";
+		}
+		if (!si.getLoad().equals("") && !car.getLoad().equals(si.getLoad())) {
+			return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCar") + " "
+					+ TYPE + " (" + si.getType() + ") " + LOAD + " (" + si.getLoad() + ")";
+		}
+		return OKAY;
+	}
+	
+	/**
+	 * Check to see if track has schedule and if it does will schedule the next item in the list. Load the car with the
+	 * next schedule load if one exists, and set the car's final destination if there's one in the schedule.
+	 * 
+	 * @return Track.OKAY or Track.SCHEDULE
+	 * @param track
+	 */
+	public String scheduleNext(Car car) {
+		if (getScheduleId().equals("") && car.getDestination() != null
+				&& car.getDestination().equals(car.getFinalDestination()) && car.getDestinationTrack() != null
+				&& (car.getDestinationTrack().equals(car.getFinalDestinationTrack()) || car.getFinalDestinationTrack() == null)) {
+			car.setFinalDestination(null);
+			car.setFinalDestinationTrack(null);
+		}
+		// check for schedule, only spurs can have a schedule
+		if (getScheduleId().equals("") || getSchedule() == null)
+			return OKAY;
+		// is car part of a kernel?
+		if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+			log.debug("Car (" + car.toString() + ") is part of kernel (" + car.getKernelName() + ")");
+			return OKAY;
+		}
+		if (!car.getScheduleId().equals("")) {
+			log.debug("Car (" + car.toString() + ") has schedule id " + car.getScheduleId());
+			Schedule sch = getSchedule();
+			if (sch != null) {
+				String id = car.getScheduleId();
+				ScheduleItem si = sch.getItemById(id);
+					// save id for error message
+				car.setScheduleId("");
+				if (si != null) {
+					loadNext(si, car);
+					return OKAY;
+				}
+				log.debug("Schedule id " + car.getScheduleId() + " not valid for track (" + getName() + ")");
+				return SCHEDULE + " ERROR id " + id + " not valid for track ("+ getName() + ")"; // NOI18N
+			}
+		}
+		if (getScheduleMode() == MATCH && !searchSchedule(car).equals(OKAY)) {
+			return SCHEDULE +MessageFormat.format(Bundle.getMessage("matchMessage"), new Object[] {getScheduleName()});
+		}
+		ScheduleItem currentSi = getCurrentScheduleItem();
+		log.debug("Destination track (" + getName() + ") has schedule (" + getScheduleName()
+				+ ") item id: " + getScheduleItemId() + " mode: " + getScheduleMode()); // NOI18N
+		if (currentSi != null
+				&& (currentSi.getTrainScheduleId().equals("") || TrainManager.instance()
+						.getTrainScheduleActiveId().equals(currentSi.getTrainScheduleId()))
+				&& car.getType().equals(currentSi.getType())
+				&& (currentSi.getRoad().equals("") || car.getRoad().equals(currentSi.getRoad()))
+				&& (currentSi.getLoad().equals("") || car.getLoad().equals(currentSi.getLoad()))) {
+			loadNext(currentSi, car);
+			car.setScheduleId("");
+			// bump schedule
+			bumpSchedule();
+		} else if (currentSi != null) {
+//			log.debug("Car (" + toString() + ") type (" + getType() + ") road (" + getRoad() + ") load ("
+//					+ getLoad() + ") arrived out of sequence, needed type (" + currentSi.getType() // NOI18N
+//					+ ") road (" + currentSi.getRoad() + ") load (" + currentSi.getLoad() + ")"); // NOI18N		
+			// build return message
+			String timetableName = "";
+			String currentTimetableName = "";
+			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
+					TrainManager.instance().getTrainScheduleActiveId());
+			if (sch != null)
+				timetableName = sch.getName();
+			sch = TrainScheduleManager.instance().getScheduleById(currentSi.getTrainScheduleId());
+			if (sch != null)
+				currentTimetableName = sch.getName();
+			String mode = Bundle.getMessage("sequential");
+			if (getScheduleMode() == 1)
+				mode = Bundle.getMessage("match");
+			return SCHEDULE
+					+ MessageFormat.format(Bundle.getMessage("sequentialMessage"), new Object[] {
+							getScheduleName(), mode,  car.toString(), car.getType(), timetableName,
+							car.getRoad(), car.getLoad(), currentSi.getType(), currentTimetableName,  currentSi.getRoad(),
+							currentSi.getLoad() });
+		} else {
+			log.error("ERROR Track " + getName() + " current schedule item is null!");
+			return SCHEDULE + " ERROR Track " + getName() + " current schedule item is null!"; // NOI18N
+		}
+		return OKAY;
+	}
+
+	private void loadNext(ScheduleItem scheduleItem, Car car) {
+		if (scheduleItem == null) {
+			log.debug("schedule item is null!, id " + getScheduleId());
+			return;
+		}
+		// set the car's next load
+		car.setNextLoad(scheduleItem.getShip());
+		// set the car's final destination and track
+		car.setFinalDestination(scheduleItem.getDestination());
+		car.setFinalDestinationTrack(scheduleItem.getDestinationTrack());
+		// set the wait count
+		car.setNextWait(scheduleItem.getWait());
+		// bump hit count for this schedule item
+		scheduleItem.setHits(scheduleItem.getHits() + 1);
+
+		log.debug("Car (" + car.toString() + ") type (" + car.getType() + ") next load (" + car.getNextLoad()
+				+ ") final destination (" + car.getFinalDestinationName() + ", " + car.getFinalDestinationTrackName() // NOI18N
+				+ ") next wait: " + car.getWait()); // NOI18N
+		// set all cars in kernel to the next load
+		car.updateKernel();
+	}
+
 
 	/**
 	 * Enable changing the car generic load state when car arrives at this track.
@@ -1553,17 +1752,17 @@ public class Track {
 	 * @param enable
 	 *            when true, add Scheduled loads from cars
 	 */
-	public void setAddLoadsAnySidingEnabled(boolean enable) {
-		boolean old = isAddLoadsAnySidingEnabled();
+	public void setAddLoadsAnySpurEnabled(boolean enable) {
+		boolean old = isAddLoadsAnySpurEnabled();
 		if (enable)
-			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS_ANY_SIDING;
+			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS_ANY_SPUR;
 		else
-			_loadOptions = _loadOptions & 0xFFFF - GENERATE_SCHEDULE_LOADS_ANY_SIDING;
+			_loadOptions = _loadOptions & 0xFFFF - GENERATE_SCHEDULE_LOADS_ANY_SPUR;
 		setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
 	}
 
-	public boolean isAddLoadsAnySidingEnabled() {
-		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS_ANY_SIDING));
+	public boolean isAddLoadsAnySpurEnabled() {
+		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS_ANY_SPUR));
 	}
 
 	/**
@@ -1636,7 +1835,6 @@ public class Track {
 	 * @param e
 	 *            Consist XML element
 	 */
-	private boolean debugFlag = false;
 
 	public Track(Element e, Location location) {
 		_location = location;

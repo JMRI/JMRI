@@ -32,8 +32,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     private static final int IDCOLUMN = 0;
     private static final int NAMECOLUMN = IDCOLUMN+1;
     private static final int SCH_STATUSCOLUMN = NAMECOLUMN+1;
-    private static final int SIDINGSCOLUMN = SCH_STATUSCOLUMN+1;
-    private static final int STATUSCOLUMN = SIDINGSCOLUMN+1;
+    private static final int SPURCOLUMN = SCH_STATUSCOLUMN+1;
+    private static final int STATUSCOLUMN = SPURCOLUMN+1;
     private static final int EDITCOLUMN = STATUSCOLUMN+1;
     private static final int DELETECOLUMN = EDITCOLUMN+1;
     
@@ -105,7 +105,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
 		table.getColumnModel().getColumn(SCH_STATUSCOLUMN).setPreferredWidth(80);
-		table.getColumnModel().getColumn(SIDINGSCOLUMN).setPreferredWidth(350);
+		table.getColumnModel().getColumn(SPURCOLUMN).setPreferredWidth(350);
 		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(90);
@@ -120,8 +120,8 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         case IDCOLUMN: return Bundle.getMessage("Id");
         case NAMECOLUMN: return Bundle.getMessage("Name");
         case SCH_STATUSCOLUMN: return Bundle.getMessage("Status");
-        case SIDINGSCOLUMN: return Bundle.getMessage("Sidings");
-        case STATUSCOLUMN: return Bundle.getMessage("StatusSiding");
+        case SPURCOLUMN: return Bundle.getMessage("Spurs");
+        case STATUSCOLUMN: return Bundle.getMessage("StatusSpur");
         case EDITCOLUMN: return Bundle.getMessage("Edit");
         case DELETECOLUMN: return Bundle.getMessage("Delete");
         default: return "unknown"; // NOI18N
@@ -133,7 +133,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         case IDCOLUMN: return String.class;
         case NAMECOLUMN: return String.class;
         case SCH_STATUSCOLUMN: return String.class;
-        case SIDINGSCOLUMN: return JComboBox.class;
+        case SPURCOLUMN: return JComboBox.class;
         case STATUSCOLUMN: return String.class;
         case EDITCOLUMN: return JButton.class;
         case DELETECOLUMN: return JButton.class;
@@ -145,7 +145,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         switch (col) {
         case EDITCOLUMN: 
         case DELETECOLUMN:
-        case SIDINGSCOLUMN:
+        case SPURCOLUMN:
         	return true;
         default: 
         	return false;
@@ -171,15 +171,15 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         case IDCOLUMN: return s.getId();
         case NAMECOLUMN: return s.getName();
         case SCH_STATUSCOLUMN: return getScheduleStatus(row);
-        case SIDINGSCOLUMN: {
-        	JComboBox box = manager.getSidingsByScheduleComboBox(s);
+        case SPURCOLUMN: {
+        	JComboBox box = manager.getSpursByScheduleComboBox(s);
         	String index = comboSelect.get(sysList.get(row));
         	if (index != null){
         		box.setSelectedIndex(Integer.parseInt(index));
         	}
         	return box;
         }
-        case STATUSCOLUMN: return getSidingStatus(row);
+        case STATUSCOLUMN: return getSpurStatus(row);
         case EDITCOLUMN: return Bundle.getMessage("Edit");
         case DELETECOLUMN: return Bundle.getMessage("Delete");
         default: return "unknown "+col; // NOI18N
@@ -192,7 +192,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         	break;
         case DELETECOLUMN: deleteSchedule(row);
     		break;
-        case SIDINGSCOLUMN: selectJComboBox(value, row);
+        case SPURCOLUMN: selectJComboBox(value, row);
         	break;
         default:
             break;
@@ -243,7 +243,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     
     private LocationTrackPair getLocationTrackPair(int row){
        	Schedule s = manager.getScheduleById(sysList.get(row));
-       	JComboBox box = manager.getSidingsByScheduleComboBox(s);
+       	JComboBox box = manager.getSpursByScheduleComboBox(s);
     	String index = comboSelect.get(sysList.get(row));
     	LocationTrackPair ltp;
     	if (index != null){
@@ -256,7 +256,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     
     private String getScheduleStatus(int row){
     	Schedule sch = manager.getScheduleById(sysList.get(row));
-       	JComboBox box = manager.getSidingsByScheduleComboBox(sch); 
+       	JComboBox box = manager.getSpursByScheduleComboBox(sch); 
        	for (int i=0; i<box.getItemCount(); i++){
            	LocationTrackPair ltp = (LocationTrackPair)box.getItemAt(i);
            	String status = ltp.getTrack().checkScheduleValid();
@@ -266,7 +266,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
        	return Bundle.getMessage("Okay");
     }
     
-    private String getSidingStatus(int row){
+    private String getSpurStatus(int row){
      	LocationTrackPair ltp = getLocationTrackPair(row);
     	if (ltp == null)
     		return "";

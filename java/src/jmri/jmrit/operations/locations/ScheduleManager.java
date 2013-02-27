@@ -313,18 +313,18 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	 * @param schedule The schedule for this JComboBox. 
 	 * @return JComboBox with a list of spurs using schedule.
 	 */
-	public JComboBox getSidingsByScheduleComboBox(Schedule schedule){
+	public JComboBox getSpursByScheduleComboBox(Schedule schedule){
 		JComboBox box = new JComboBox();
     	// search all spurs for that use schedule
     	LocationManager manager = LocationManager.instance();
     	List<String> locations = manager.getLocationsByNameList();
     	for (int j=0; j<locations.size(); j++){
 			Location location = manager.getLocationById(locations.get(j));
-			List<String> sidings = location.getTrackIdsByNameList(Track.SIDING);
-			for (int k=0; k<sidings.size(); k++){
-				Track siding = location.getTrackById(sidings.get(k));
-				if (siding.getScheduleId().equals(schedule.getId())){
-					LocationTrackPair ltp = new LocationTrackPair(location, siding);
+			List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
+			for (int k=0; k<spurs.size(); k++){
+				Track spur = location.getTrackById(spurs.get(k));
+				if (spur.getScheduleId().equals(schedule.getId())){
+					LocationTrackPair ltp = new LocationTrackPair(location, spur);
 					box.addItem(ltp);
 				}
 			}

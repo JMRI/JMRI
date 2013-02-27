@@ -179,7 +179,7 @@ public class OperationsLocationsTest extends TestCase {
 	public void testScheduleManager(){
 		LocationManager lm = LocationManager.instance();
 		Location l = lm.newLocation("new test location");
-		Track t = l.addTrack("track 1", Track.SIDING);
+		Track t = l.addTrack("track 1", Track.SPUR);
 		
 		ScheduleManager sm = ScheduleManager.instance();
 		
@@ -316,7 +316,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Constant STAGING", "Staging", Track.STAGING);
 		Assert.assertEquals("Location Track Constant INTERCHANGE", "Interchange", Track.INTERCHANGE);
 		Assert.assertEquals("Location track Constant YARD", "Yard", Track.YARD);
-		Assert.assertEquals("Location Track Constant SIDING", "Siding", Track.SIDING);
+		Assert.assertEquals("Location Track Constant SIDING", "Siding", Track.SPUR);
 
 		Assert.assertEquals("Location Track Constant EAST", 1, Track.EAST);
 		Assert.assertEquals("Location Track Constant WEST", 2, Track.WEST);
@@ -636,10 +636,10 @@ public class OperationsLocationsTest extends TestCase {
 	// test Track schedule support
 	public void testTrackScheduleSupport() {
 		Location l = new Location("Location Test id", "Location Test Name");
-		Track t = new Track("Test id", "Test Name", Track.SIDING, l);
+		Track t = new Track("Test id", "Test Name", Track.SPUR, l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Car Type", Track.SIDING, t.getLocType());
+		Assert.assertEquals("Location Track Car Type", Track.SPUR, t.getLocType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		t.setScheduleId("Test Schedule Id");
@@ -744,7 +744,7 @@ public class OperationsLocationsTest extends TestCase {
 	
 	public void testTrackOrder(){
 		Location l = LocationManager.instance().newLocation("TestOrder");
-		Track t = l.addTrack("New track 1", Track.SIDING);		
+		Track t = l.addTrack("New track 1", Track.SPUR);		
 		Assert.assertEquals("Location", l, t.getLocation());
 		
 		// sidings and staging don't support this feature
@@ -846,7 +846,7 @@ public class OperationsLocationsTest extends TestCase {
 		l.addTypeName("Stock");
 		l.addTypeName("Tank Oil");
 
-		Track t = l.addTrack("new track", Track.SIDING);
+		Track t = l.addTrack("new track", Track.SPUR);
 
 		Assert.assertEquals("Location Accepts Type Name BoxCar", true, l.acceptsTypeName("BoxCar"));
 		Assert.assertEquals("Location Accepts Type Name boxCar", false, l.acceptsTypeName("boxCar"));
@@ -909,7 +909,7 @@ public class OperationsLocationsTest extends TestCase {
 		Location l = LocationManager.instance().newLocation("Test Name 2");
 		Assert.assertEquals("Location Name", "Test Name 2", l.getName());
 
-		Track t = l.addTrack("new track", Track.SIDING);		
+		Track t = l.addTrack("new track", Track.SPUR);		
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		t.setRoadOption(Track.INCLUDEROADS);
@@ -1066,8 +1066,8 @@ public class OperationsLocationsTest extends TestCase {
 		Location l = locMan.newLocation("TestPriority Location");
 		Track t1 = l.addTrack("Yard 1", Track.YARD);
 		Track t2 = l.addTrack("Yard 2", Track.YARD);
-		Track t3 = l.addTrack("Siding 1", Track.SIDING);
-		Track t4 = l.addTrack("Siding 2", Track.SIDING);
+		Track t3 = l.addTrack("Siding 1", Track.SPUR);
+		Track t4 = l.addTrack("Siding 2", Track.SPUR);
 		Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
 		Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
 		Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);
@@ -1102,7 +1102,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("3rd track", t6 ,l.getTrackById(tracks.get(2)));
 		
 		// get siding tracks ids
-		tracks = l.getTrackIdsByMovesList(Track.SIDING);
+		tracks = l.getTrackIdsByMovesList(Track.SPUR);
 		
 		Assert.assertEquals("number of tracks", 2 , tracks.size());		
 		Assert.assertEquals("1st track", t4 ,l.getTrackById(tracks.get(0)));
@@ -1166,7 +1166,7 @@ public class OperationsLocationsTest extends TestCase {
 		Location l3 = manager.newLocation("Test Location 3");
 		
 		Track t1 = l1.addTrack("A Yard", Track.YARD);
-		Track t2 = l1.addTrack("A Siding", Track.SIDING);
+		Track t2 = l1.addTrack("A Siding", Track.SPUR);
 		Track t3 =l2.addTrack("An Interchange", Track.INTERCHANGE);
 		Track t4 =l3.addTrack("A Stage", Track.STAGING);
 		

@@ -32,9 +32,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	YardTableModel yardModel = new YardTableModel();
 	JTable yardTable = new JTable(yardModel);
 	JScrollPane yardPane;
-	SidingTableModel sidingModel = new SidingTableModel();
-	JTable sidingTable = new JTable(sidingModel);
-	JScrollPane sidingPane;
+	SpurTableModel spurModel = new SpurTableModel();
+	JTable spurTable = new JTable(spurModel);
+	JScrollPane spurPane;
 	InterchangeTableModel interchangeModel = new InterchangeTableModel();
 	JTable interchangeTable = new JTable(interchangeModel);
 	JScrollPane interchangePane;
@@ -59,7 +59,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	JButton deleteLocationButton = new JButton(Bundle.getMessage("DeleteLocation"));
 	JButton addLocationButton = new JButton(Bundle.getMessage("AddLocation"));
 	JButton addYardButton = new JButton(Bundle.getMessage("AddYard"));
-	JButton addSidingButton = new JButton(Bundle.getMessage("AddSiding"));
+	JButton addSpurButton = new JButton(Bundle.getMessage("AddSpur"));
 	JButton addInterchangeButton = new JButton(Bundle.getMessage("AddInterchange"));
 	JButton addStagingButton = new JButton(Bundle.getMessage("AddStaging"));
 	
@@ -74,7 +74,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JRadioButton stageRadioButton = new JRadioButton(Bundle.getMessage("Staging"));
     JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getMessage("Interchange"));
     JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yards"));
-    JRadioButton sidingRadioButton = new JRadioButton(Bundle.getMessage("Sidings"));
+    JRadioButton spurRadioButton = new JRadioButton(Bundle.getMessage("Spurs"));
         
 	// text field
 	JTextField locationNameTextField = new JTextField(20);
@@ -110,9 +110,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     	yardPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     	yardPane.setBorder(BorderFactory.createTitledBorder(""));
         	
-    	sidingPane = new JScrollPane(sidingTable);
-    	sidingPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	sidingPane.setBorder(BorderFactory.createTitledBorder(""));
+    	spurPane = new JScrollPane(spurTable);
+    	spurPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	spurPane.setBorder(BorderFactory.createTitledBorder(""));
     	
     	interchangePane = new JScrollPane(interchangeTable);
     	interchangePane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -124,7 +124,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     	
     	// button group
 		ButtonGroup opsGroup = new ButtonGroup();
-		opsGroup.add(sidingRadioButton);
+		opsGroup.add(spurRadioButton);
 		opsGroup.add(yardRadioButton);
 		opsGroup.add(interchangeRadioButton);
 		opsGroup.add(stageRadioButton);
@@ -137,14 +137,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			locationNameTextField.setText(_location.getName());
 			commentTextArea.setText(_location.getComment());
 	      	yardModel.initTable(yardTable, location);
-	      	sidingModel.initTable(sidingTable, location);
+	      	spurModel.initTable(spurTable, location);
 	      	interchangeModel.initTable(interchangeTable, location);
 	      	stagingModel.initTable(stagingTable, location);
 	      	_location.addPropertyChangeListener(this);
 	      	locationName = _location.getName();
 			if (_location.getLocationOps() == Location.NORMAL){
-				if (sidingModel.getRowCount()>0)
-					sidingRadioButton.setSelected(true);
+				if (spurModel.getRowCount()>0)
+					spurRadioButton.setSelected(true);
 				else if (yardModel.getRowCount()>0)
 					yardRadioButton.setSelected(true);
 				else if (interchangeModel.getRowCount()>0)
@@ -152,14 +152,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 				else if (stagingModel.getRowCount()>0)
 					stageRadioButton.setSelected(true);
 				else
-					sidingRadioButton.setSelected(true);
+					spurRadioButton.setSelected(true);
 			}else{
 				stageRadioButton.setSelected(true);
 			}
 			setTrainDirectionBoxes();
 		} else {
 			enableButtons(false);
-			sidingRadioButton.setSelected(true);
+			spurRadioButton.setSelected(true);
 		}
 		
 		setVisibleLocations();
@@ -201,7 +201,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		JPanel pOp = new JPanel();
 		pOp.setLayout(new GridBagLayout());
 		pOp.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Ops")));
-		pOp.add(sidingRadioButton);
+		pOp.add(spurRadioButton);
 		pOp.add(yardRadioButton);
 		pOp.add(interchangeRadioButton);
 		pOp.add(stageRadioButton);
@@ -225,8 +225,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		getContentPane().add(pOp);
        	getContentPane().add(yardPane);
        	getContentPane().add(addYardButton);
-       	getContentPane().add(sidingPane);
-       	getContentPane().add(addSidingButton);
+       	getContentPane().add(spurPane);
+       	getContentPane().add(addSpurButton);
        	getContentPane().add(interchangePane);
        	getContentPane().add(addInterchangeButton);
        	getContentPane().add(stagingPane);
@@ -242,14 +242,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		addButtonAction(addLocationButton);
 		addButtonAction(saveLocationButton);
 		addButtonAction(addYardButton);
-		addButtonAction(addSidingButton);
+		addButtonAction(addSpurButton);
 		addButtonAction(addInterchangeButton);
 		addButtonAction(addStagingButton);
 		
 		// add tool tips
 		autoSelectButton.setToolTipText(Bundle.getMessage("TipAutoSelect"));
 		
-		addRadioButtonAction(sidingRadioButton);
+		addRadioButtonAction(spurRadioButton);
 		addRadioButtonAction(yardRadioButton);
 		addRadioButtonAction(interchangeRadioButton);
 		addRadioButtonAction(stageRadioButton);
@@ -288,7 +288,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 	
 	YardEditFrame yef = null;
-	SidingEditFrame sef = null;
+	SpurEditFrame sef = null;
 	InterchangeEditFrame ief = null;
 	StagingEditFrame stef = null;
 	
@@ -299,10 +299,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			yef.initComponents(_location, null);
 			yef.setTitle(Bundle.getMessage("AddYard"));
 		}
-		if (ae.getSource() == addSidingButton){
-			sef = new SidingEditFrame();
+		if (ae.getSource() == addSpurButton){
+			sef = new SpurEditFrame();
 			sef.initComponents(_location, null);
-			sef.setTitle(Bundle.getMessage("AddSiding"));
+			sef.setTitle(Bundle.getMessage("AddSpur"));
 		}
 		if (ae.getSource() == addInterchangeButton){
 			ief = new InterchangeEditFrame();
@@ -351,7 +351,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			}
 			
 			yardModel.dispose();
-			sidingModel.dispose();
+			spurModel.dispose();
 			interchangeModel.dispose();
 			stagingModel.dispose();
 			
@@ -402,7 +402,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			return;
 		Location location = manager.newLocation(locationNameTextField.getText());
 		yardModel.initTable(yardTable, location);
-      	sidingModel.initTable(sidingTable, location);
+      	spurModel.initTable(spurTable, location);
       	interchangeModel.initTable(interchangeTable, location);
       	stagingModel.initTable(stagingTable, location);
 		_location = location;
@@ -420,7 +420,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		_location.setName(locationNameTextField.getText());
 		_location.setComment(commentTextArea.getText());
 
-		if (sidingRadioButton.isSelected() || yardRadioButton.isSelected() || interchangeRadioButton.isSelected()){
+		if (spurRadioButton.isSelected() || yardRadioButton.isSelected() || interchangeRadioButton.isSelected()){
 			_location.setLocationOps(Location.NORMAL);
 		}
 		if (stageRadioButton.isSelected()){
@@ -474,7 +474,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		setButton.setEnabled(enabled);
 		autoSelectButton.setEnabled(enabled);
 		addYardButton.setEnabled(enabled);
-		addSidingButton.setEnabled(enabled);
+		addSpurButton.setEnabled(enabled);
 		addInterchangeButton.setEnabled(enabled);
 		addStagingButton.setEnabled(enabled);
 		saveLocationButton.setEnabled(enabled);
@@ -482,7 +482,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// the inverse!
 		addLocationButton.setEnabled(!enabled);
 		// enable radio buttons
-		sidingRadioButton.setEnabled(enabled);
+		spurRadioButton.setEnabled(enabled);
 		yardRadioButton.setEnabled(enabled);
 		interchangeRadioButton.setEnabled(enabled);
 		stageRadioButton.setEnabled(enabled);
@@ -502,24 +502,24 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		addStagingButton.setVisible(stageRadioButton.isSelected());
 		yardPane.setVisible(yardRadioButton.isSelected());
 		addYardButton.setVisible(yardRadioButton.isSelected());
-		sidingPane.setVisible(sidingRadioButton.isSelected());
-		addSidingButton.setVisible(sidingRadioButton.isSelected());
+		spurPane.setVisible(spurRadioButton.isSelected());
+		addSpurButton.setVisible(spurRadioButton.isSelected());
 	}
 	
 	private void setEnabledLocations(){
-		if (sidingModel.getRowCount()>0 || yardModel.getRowCount()>0 || interchangeModel.getRowCount()>0){
+		if (spurModel.getRowCount()>0 || yardModel.getRowCount()>0 || interchangeModel.getRowCount()>0){
 			if(stageRadioButton.isSelected())
-				sidingRadioButton.setSelected(true);
+				spurRadioButton.setSelected(true);
 			stageRadioButton.setEnabled(false);
 		}
 		else if (stagingModel.getRowCount()>0){
 			stageRadioButton.setSelected(true);
-			sidingRadioButton.setEnabled(false);
+			spurRadioButton.setEnabled(false);
 			yardRadioButton.setEnabled(false);
 			interchangeRadioButton.setEnabled(false);
 		} 
 		else {
-			sidingRadioButton.setEnabled(true);
+			spurRadioButton.setEnabled(true);
 			yardRadioButton.setEnabled(true);
 			interchangeRadioButton.setEnabled(true);
 			stageRadioButton.setEnabled(true);
@@ -680,7 +680,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		CarTypes.instance().removePropertyChangeListener(this);
 		EngineTypes.instance().removePropertyChangeListener(this);
 		yardModel.dispose();
-		sidingModel.dispose();
+		spurModel.dispose();
 		interchangeModel.dispose();
 		stagingModel.dispose();
 		if (lctf != null)

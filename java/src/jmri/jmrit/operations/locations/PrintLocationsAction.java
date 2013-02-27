@@ -136,15 +136,15 @@ public class PrintLocationsAction extends AbstractAction {
 				}
 			}
 
-			List<String> sidings = location.getTrackIdsByNameList(Track.SIDING);
-			if (sidings.size() > 0) {
+			List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
+			if (spurs.size() > 0) {
 				// header
-				writer.write(SPACE + Bundle.getMessage("SidingName") + NEW_LINE);
-				for (int k = 0; k < sidings.size(); k++) {
-					Track siding = location.getTrackById(sidings.get(k));
-					writer.write(getTrackString(siding));
-					numberCars += siding.getNumberCars();
-					numberEngines += siding.getNumberEngines();
+				writer.write(SPACE + Bundle.getMessage("SpurName") + NEW_LINE);
+				for (int k = 0; k < spurs.size(); k++) {
+					Track spur = location.getTrackById(spurs.get(k));
+					writer.write(getTrackString(spur));
+					numberCars += spur.getNumberCars();
+					numberEngines += spur.getNumberEngines();
 				}
 			}
 
@@ -198,7 +198,7 @@ public class PrintLocationsAction extends AbstractAction {
 	private void printSchedulesSelected() throws IOException {
 		List<String> locations = manager.getLocationsByNameList();
 		String s = padOutString(Bundle.getMessage("Schedules"), MAX_NAME_LENGTH) + " " + Bundle.getMessage("Location") + " - "
-				+ Bundle.getMessage("SidingName") + NEW_LINE;
+				+ Bundle.getMessage("SpurName") + NEW_LINE;
 		writer.write(s);
 		ScheduleManager sm = ScheduleManager.instance();
 		List<String> schedules = sm.getSchedulesByNameList();
@@ -206,13 +206,13 @@ public class PrintLocationsAction extends AbstractAction {
 			Schedule schedule = sm.getScheduleById(schedules.get(i));
 			for (int j = 0; j < locations.size(); j++) {
 				Location location = manager.getLocationById(locations.get(j));
-				List<String> sidings = location.getTrackIdsByNameList(Track.SIDING);
-				for (int k = 0; k < sidings.size(); k++) {
-					Track siding = location.getTrackById(sidings.get(k));
-					if (siding.getScheduleId().equals(schedule.getId())) {
+				List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
+				for (int k = 0; k < spurs.size(); k++) {
+					Track spur = location.getTrackById(spurs.get(k));
+					if (spur.getScheduleId().equals(schedule.getId())) {
 						// pad out schedule name
-						s = padOutString(schedule.getName(), MAX_NAME_LENGTH) + " " + location.getName() + " - " + siding.getName();
-						String status = siding.checkScheduleValid();
+						s = padOutString(schedule.getName(), MAX_NAME_LENGTH) + " " + location.getName() + " - " + spur.getName();
+						String status = spur.checkScheduleValid();
 						if (!status.equals("")) {
 							StringBuffer buf = new StringBuffer(s);
 							for (int m = s.length(); m < 63; m++) {
@@ -227,22 +227,22 @@ public class PrintLocationsAction extends AbstractAction {
 						writer.write(s);
 						// show the schedule's mode
 						String mode = Bundle.getMessage("Sequential");
-						if (siding.getScheduleMode() == Track.MATCH)
+						if (spur.getScheduleMode() == Track.MATCH)
 							mode = Bundle.getMessage("Match");
 						s = padOutString("", MAX_NAME_LENGTH)+ SPACE
 								+ Bundle.getMessage("ScheduleMode") + ": " + mode  + NEW_LINE;
 						writer.write(s);
 						// show alternate track if there's one
-						if (siding.getAlternativeTrack() != null) {
+						if (spur.getAlternativeTrack() != null) {
 							s = padOutString("", MAX_NAME_LENGTH)+ SPACE
-									+ MessageFormat.format(Bundle.getMessage("AlternateTrackName"), new Object[] { siding
+									+ MessageFormat.format(Bundle.getMessage("AlternateTrackName"), new Object[] { spur
 											.getAlternativeTrack().getName() }) + NEW_LINE;
 							writer.write(s);
 						}
 						// show custom loads from staging if not 100%
-						if (siding.getReservationFactor() != 100) {
+						if (spur.getReservationFactor() != 100) {
 							s = padOutString("", MAX_NAME_LENGTH)+ SPACE
-									+ MessageFormat.format(Bundle.getMessage("PercentageStaging"), new Object[] { siding
+									+ MessageFormat.format(Bundle.getMessage("PercentageStaging"), new Object[] { spur
 											.getReservationFactor() }) + NEW_LINE;
 							writer.write(s);
 						}
@@ -276,11 +276,11 @@ public class PrintLocationsAction extends AbstractAction {
 				printTrackInfo(location, yards);
 			}
 
-			List<String> sidings = location.getTrackIdsByNameList(Track.SIDING);
-			if (sidings.size() > 0) {
-				s = SPACE + Bundle.getMessage("SidingName") + NEW_LINE;
+			List<String> spurs = location.getTrackIdsByNameList(Track.SPUR);
+			if (spurs.size() > 0) {
+				s = SPACE + Bundle.getMessage("SpurName") + NEW_LINE;
 				writer.write(s);
-				printTrackInfo(location, sidings);
+				printTrackInfo(location, spurs);
 			}
 
 			List<String> interchanges = location.getTrackIdsByNameList(Track.INTERCHANGE);
@@ -334,7 +334,7 @@ public class PrintLocationsAction extends AbstractAction {
 				writer.write(SPACE
 						+ MessageFormat.format(Bundle.getMessage("SpurTrackThatAccept"),
 								new Object[] { type }) + NEW_LINE);
-				int trackLength = getTrackLengthAcceptType(locations, type, Track.SIDING);
+				int trackLength = getTrackLengthAcceptType(locations, type, Track.SPUR);
 				if (trackLength > 0)
 					writer.write(SPACE
 							+ MessageFormat.format(Bundle.getMessage("TotalLengthSpur"), new Object[] { type,
@@ -608,7 +608,7 @@ public class PrintLocationsAction extends AbstractAction {
 
 	private String getCarOrder(Track track) {
 		// only yards and interchanges have the car order option
-		if (track.getLocType().equals(Track.SIDING) || track.getLocType().equals(Track.STAGING)
+		if (track.getLocType().equals(Track.SPUR) || track.getLocType().equals(Track.STAGING)
 				|| track.getServiceOrder().equals(Track.NORMAL))
 			return "";
 		if (track.getServiceOrder().equals(Track.FIFO))
@@ -719,7 +719,7 @@ public class PrintLocationsAction extends AbstractAction {
 
 	private String getSchedule(Track track) {
 		// only spurs have schedules
-		if (!track.getLocType().equals(Track.SIDING) || track.getSchedule() == null)
+		if (!track.getLocType().equals(Track.SPUR) || track.getSchedule() == null)
 			return "";
 		StringBuffer buf = new StringBuffer(TAB
 				+ TAB

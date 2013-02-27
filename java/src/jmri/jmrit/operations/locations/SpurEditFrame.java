@@ -1,4 +1,4 @@
-// SidingEditFrame.java
+// SpurEditFrame.java
 
 package jmri.jmrit.operations.locations;
 
@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * @version $Revision$
  */
 
-public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
+public class SpurEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
 
 	// labels, buttons, etc. for spurs
 	JLabel textSchedule = new JLabel(Bundle.getMessage("DeliverySchedule"));
@@ -32,12 +32,12 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 
 	JPanel panelSchedule = panelOpt4;
 
-	public SidingEditFrame() {
+	public SpurEditFrame() {
 		super();
 	}
 
 	public void initComponents(Location location, Track track) {
-		_type = Track.SIDING;
+		_type = Track.SPUR;
 
 		// setup the optional panel with schedule stuff
 		panelSchedule.setLayout(new GridBagLayout());
@@ -55,11 +55,11 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Sidings", true); // NOI18N
 
 		// override text strings for tracks
-		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainSiding")));
-		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesSiding")));
-		deleteTrackButton.setText(Bundle.getMessage("DeleteSiding"));
-		addTrackButton.setText(Bundle.getMessage("AddSiding"));
-		saveTrackButton.setText(Bundle.getMessage("SaveSiding"));
+		panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainSpur")));
+		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesSpur")));
+		deleteTrackButton.setText(Bundle.getMessage("DeleteSpur"));
+		addTrackButton.setText(Bundle.getMessage("AddSpur"));
+		saveTrackButton.setText(Bundle.getMessage("SaveSpur"));
 
 		// Select the spur's Schedule
 		updateScheduleComboBox();
@@ -153,6 +153,6 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		super.propertyChange(e);
 	}
 
-	static Logger log = LoggerFactory.getLogger(SidingEditFrame.class
+	static Logger log = LoggerFactory.getLogger(SpurEditFrame.class
 			.getName());
 }
