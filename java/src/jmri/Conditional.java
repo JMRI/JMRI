@@ -186,7 +186,8 @@ public interface Conditional extends NamedBean {
 	public static final int ACTION_SET_BLOCK_IN_SERVICE = 47;
 	public static final int ACTION_MANUAL_RUN_WARRANT = 48;
     public static final int ACTION_SET_TRAIN_NAME = 49;
-    public static final int NUM_ACTION_TYPES = 49;
+    public static final int ACTION_SET_BLOCK_VALUE = 50;
+    public static final int NUM_ACTION_TYPES = 50;
 
 /**************************************************************************************/
 /* New Variable and Action type scheme for Logix UI
@@ -394,7 +395,8 @@ public interface Conditional extends NamedBean {
                                         ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_OUT_OF_SERVICE = 46;
                                         ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_IN_SERVICE = 47;
                                         ITEM_TYPE_WARRANT,      // ACTION_MANUAL_RUN_WARRANT 48
-                                        ITEM_TYPE_WARRANT       // ACTION_SET_TRAIN_NAME 49
+                                        ITEM_TYPE_WARRANT,      // ACTION_SET_TRAIN_NAME 49
+                                        ITEM_TYPE_OBLOCK		//ACTION_SET_BLOCK_VALUE
                                  };
 
     // Map Sensor Type comboBox items to Sensor action types
@@ -462,7 +464,7 @@ public interface Conditional extends NamedBean {
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") 
     public final static int[] ITEM_TO_OBLOCK_ACTION = {ACTION_DEALLOCATE_BLOCK,
-    			ACTION_SET_BLOCK_ERROR, ACTION_CLEAR_BLOCK_ERROR,
+    			ACTION_SET_BLOCK_VALUE, ACTION_SET_BLOCK_ERROR, ACTION_CLEAR_BLOCK_ERROR,
 	            ACTION_SET_BLOCK_OUT_OF_SERVICE, ACTION_SET_BLOCK_IN_SERVICE };
 
     // Map Signal Head Type comboBox items to Signal Head action types

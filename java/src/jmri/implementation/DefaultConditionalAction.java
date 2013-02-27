@@ -448,6 +448,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                return (rbx.getString("ActionSetSignalMastDark"));                
             case Conditional.ACTION_SET_SIGNALMAST_LIT:
                return (rbx.getString("ActionClearSignalMastDark"));                
+            case Conditional.ACTION_SET_BLOCK_VALUE:
+                return (rbx.getString("ActionSetBlockValue"));                
             case Conditional.ACTION_SET_BLOCK_ERROR:
                return (rbx.getString("ActionSetBlockError"));                
             case Conditional.ACTION_CLEAR_BLOCK_ERROR:
@@ -786,6 +788,10 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + ", \""+_actionString+"\" "+rbx.getString("onWarrant")+
                         " \""+_deviceName+"\".";
                     break;
+                case Conditional.ACTION_SET_BLOCK_VALUE:
+                    str = str + ", \""+_actionString+"\" "+rbx.getString("onBlock")+
+                    " \""+_deviceName+"\".";
+                break;
             }
         }
         switch (_type)

@@ -1009,6 +1009,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (allocateNextBlock(getBlockAt(_idxCurrentOrder+1))) {
                 currentSpeed = getNextSpeed();        	
             }
+            float len = getBlockAt(_idxCurrentOrder).getLengthIn();
+            if ("Stop".equals(currentSpeed) && 0<len && len<6) {
+            	currentSpeed = "EStop";
+            }
             if (_engineer!=null) {
                 _engineer.synchNotify(block); // notify engineer of control point
                 _engineer.rampSpeedTo(currentSpeed, 0);
@@ -1051,15 +1055,26 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                             +" for warrant= "+getDisplayName());
         if (idx < _idxCurrentOrder) {
             // block is behind train.  Assume we have left.
-            block.deAllocate(this);
+            //block.deAllocate(this);
         	_idxLastOrder = idx;
-        	/* Only deallocate block train has just left, blocks ahead could loop back over
+        	/* Only deallocate block train will not use block again, blocks ahead could loop back over
         	 * blocks previously traversed.  Don't disturb re-allocation of blocks ahead.
+        	 * Previous Dark blocks do need deallocation
+        	 */ 
             for (int i=idx; i>-1; i--) {
             	OBlock prevBlock = getBlockAt(i);
-            	prevBlock.deAllocate(this);
-            	_idxLastOrder = i;
-            }	*/
+        		boolean dealloc = true;
+        		for (int j=idx+1; j<_orders.size(); j++) {
+        			if (prevBlock.equals(getBlockAt(j))) {
+        				dealloc = false;
+        				break;
+        			}
+        		}
+        		if (dealloc) {
+                	prevBlock.deAllocate(this);            			
+        		}
+//            	_idxLastOrder = i;
+            }
         } else if (idx==_idxCurrentOrder) {
             // Train not visible if current block goes inactive
         	if (_idxCurrentOrder+1<_orders.size()) {
@@ -1160,6 +1175,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             	speed = _currentSpeed;        		
         	}
         }
+        OBlock block = bo.getBlock();
+/*        float len = block.getLengthIn();
+        if ("Stop".equals(speed) && 0 <len && len < 6.0 ) {
+        	speed = "EStop";
+        }*/
         _exitSpeed = exitSpeed;
         if(_debug) log.debug("getCurrentSpeedAt("+index+"): speed= \""+speed+"\" for warrant= "+getDisplayName());
         return speed;
@@ -1246,19 +1266,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         	// _stoppingBlock has been set to nextBlock
             nextSpeed = "Stop";
         }
-        if (nextSpeed!=null) {
-        	if (!"Stop".equals(nextSpeed)) {
-            	_currentSpeed = nextSpeed;        		
-        	}
-        } else {
-        	if (_exitSpeed!=null) {
-        		// saved exit speed from last block
-        		nextSpeed = _exitSpeed;        		
-        	} else {
-            	// continue as before
-        		nextSpeed = _currentSpeed;        		
-        	}
-        }
+    	if (!"Stop".equals(nextSpeed)) {
+        	_currentSpeed = nextSpeed;        		
+/*    	} else {
+ //   		float len = getBlockAt(_idxCurrentOrder).getLengthIn();
+    		float len = nextBlock.getLengthIn();
+    		if (0<len && len<6) {
+    			nextSpeed = "EStop";
+    		}  */ 		
+    	}
         _exitSpeed = exitSpeed;
         if(_debug) log.debug("getNextSpeed(): Entrance speed for \""+nextBlock.getDisplayName()+"\"= \""+
         						nextSpeed+"\" for warrant= "+getDisplayName());

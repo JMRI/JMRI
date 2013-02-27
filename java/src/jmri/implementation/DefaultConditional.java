@@ -1170,8 +1170,18 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
 						}
 						break;
-					case Conditional.ACTION_SET_BLOCK_ERROR:
+					case Conditional.ACTION_SET_BLOCK_VALUE:
                         OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+						if (b == null) {
+							errorList.add("invalid block name in action - "+action.getDeviceName());
+						}
+						else {
+                            b.setValue(getActionString(action));
+                            actionCount++;
+						}
+						break;
+					case Conditional.ACTION_SET_BLOCK_ERROR:
+                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}

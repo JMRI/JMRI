@@ -149,13 +149,18 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         setState(DARK);
     }
     
-    // override to determine if not DARK
-    public void setSensor(String pName){
-        super.setSensor(pName);
+	/*
+	 * return true if a Sensor is set
+	 */
+   // override to determine if not DARK
+    public boolean setSensor(String pName){
+        boolean ret =super.setSensor(pName);
         if(getSensor()!=null){
             setState(getSensor().getState() & ~DARK);
+            return true;
         }
         if (log.isDebugEnabled()) log.debug("setSensor block \""+getDisplayName()+"\" state= "+getState());
+        return false;
     }
     
     // override to determine if not DARK
@@ -167,7 +172,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         if (log.isDebugEnabled()) log.debug("setSensor block \""+getDisplayName()+"\" state= "+getState());
     }
 
-    public void setErrorSensor(String pName) {
+    /*
+     * retuen true if successful
+     */
+    public boolean setErrorSensor(String pName) {
         if (getErrorSensor() != null) {
             getErrorSensor().removePropertyChangeListener(this);
         }
@@ -177,6 +185,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             if (sensor != null) {
                 _errNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor);
                 getErrorSensor().addPropertyChangeListener(this, _errNamedSensor.getName(), "OBlock Error Sensor " + getDisplayName());
+                return true;
             } else {
                 _errNamedSensor = null;
                 if (pName!=null && pName.length()>0) {
@@ -186,6 +195,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         } else {
             log.error("No SensorManager for this protocol");
         }
+        return false;
     }
     
     public Sensor getErrorSensor() {

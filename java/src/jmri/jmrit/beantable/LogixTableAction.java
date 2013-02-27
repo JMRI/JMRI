@@ -2951,6 +2951,9 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ITEM_TYPE_OBLOCK:
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
                                 Conditional.ITEM_TO_OBLOCK_ACTION, actionType)+1);
+                if (actionType==Conditional.ACTION_SET_BLOCK_VALUE) {
+                    _shortActionString.setText(_curAction.getActionString());                	
+                }
                 break;
             case Conditional.ITEM_TYPE_AUDIO:
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
@@ -3316,6 +3319,13 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 _namePanel.setToolTipText(rbx.getString("NameHintOBlock"));
                 _namePanel.setVisible(true);
+                if (actionType==Conditional.ACTION_SET_BLOCK_VALUE) {
+                    p = (JPanel)_shortTextPanel.getComponent(0);
+                    l = (JLabel)p.getComponent(0);
+                    _shortTextPanel.setToolTipText(rbx.getString("DataHintBlockValue"));
+                    l.setText(rbx.getString("LabelBlockValue"));
+                    _shortTextPanel.setVisible(true);                	
+                }
                 break;
             case Conditional.ITEM_TYPE_AUDIO:
                 for(int i=0; i<Conditional.ITEM_TO_AUDIO_ACTION.length; i++) {
@@ -4106,6 +4116,9 @@ public class LogixTableAction extends AbstractTableAction {
                 actionType = Conditional.ITEM_TO_OBLOCK_ACTION[selection-1];
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
+                if (actionType==Conditional.ACTION_SET_BLOCK_VALUE) {
+                    _curAction.setActionString(actionString);                	
+                }
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
                 actionType = Conditional.ITEM_TO_CLOCK_ACTION[selection-1];

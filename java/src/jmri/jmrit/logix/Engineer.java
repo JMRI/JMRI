@@ -541,71 +541,77 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         public void run() {
             _lock.lock();
             try {
-                float endSpeed = getLastSpeedCommand(_idxCurrentCommand);
-                endSpeed = modifySpeed(endSpeed, endSpeedType);
                 String old = _speedType;
                 _speedType = endSpeedType;   // transition
+                
                 if (log.isDebugEnabled()) log.debug("rampSpeed from \""+old+"\" to \""+endSpeedType+
-                					"\" on warrant "+_warrant.getDisplayName());
-                float speed = _throttle.getSpeedSetting();
-                _warrant.fireRunStatus("SpeedRestriction", old, 
-                                   (endSpeed > speed ? "increasing" : "decreasing"));
+    					"\" on warrant "+_warrant.getDisplayName());
 
                 synchronized(this) {
-                    if (!_speedType.equals("Stop")) {
+                    if (!_speedType.equals("Stop") && !_speedType.equals("EStop")) {
                         notify();
                         _waitForClear = false;
                     } else {
                     	_waitForClear = true;
                     }
                 }
-
-                float incr = Math.max(_throttle.getSpeedIncrement(), _minSpeed);
-                switch (_throttle.getSpeedStepMode()) {
-                    case DccThrottle.SpeedStepMode14:
-                        break;
-                    case DccThrottle.SpeedStepMode27:
-                    case DccThrottle.SpeedStepMode28:
-                        incr *= 2;
-                        break;
-                    default:    // SpeedStepMode128
-                        incr *= 4;
-                        break;
-                }
-                jmri.implementation.SignalSpeedMap map = Warrant.getSpeedMap();
-                incr *= map.getNumSteps();
-                int delay = map.getStepDelay();
-
-                if (endSpeed > speed) {
-                    synchronized(this) {
-                        while (speed < endSpeed) {
-                            speed += incr;
-                            if (speed > endSpeed) { // don't overshoot
-                                speed = endSpeed;
-                            }
-                            setSpeed(speed);
-                            try {
-                                wait(delay);
-                            } catch (InterruptedException ie) {
-                                log.error("InterruptedException "+ie);
-                            }
-                        }
-                    }
+                if (endSpeedType.equals("EStop")) {
+                    setSpeed(-1);
+                    setSpeed(0);               	
                 } else {
-                    synchronized(this) {
-                        while (speed > endSpeed) {
-                            speed -= incr;
-                            if (speed < endSpeed) { // don't undershoot
-                                speed = endSpeed;
-                            }
-                            setSpeed(speed);
-                            try {
-                                wait(delay);
-                            } catch (InterruptedException ie) {
-                                log.error("InterruptedException "+ie);
+                    float endSpeed = getLastSpeedCommand(_idxCurrentCommand);
+                    endSpeed = modifySpeed(endSpeed, endSpeedType);
+                    float speed = _throttle.getSpeedSetting();
+                    _warrant.fireRunStatus("SpeedRestriction", old, 
+                                       (endSpeed > speed ? "increasing" : "decreasing"));
+
+                    float incr = Math.max(_throttle.getSpeedIncrement(), _minSpeed);
+                    switch (_throttle.getSpeedStepMode()) {
+                        case DccThrottle.SpeedStepMode14:
+                            break;
+                        case DccThrottle.SpeedStepMode27:
+                        case DccThrottle.SpeedStepMode28:
+                            incr *= 2;
+                            break;
+                        default:    // SpeedStepMode128
+                            incr *= 4;
+                            break;
+                    }
+                    jmri.implementation.SignalSpeedMap map = Warrant.getSpeedMap();
+                    incr *= map.getNumSteps();
+                    int delay = map.getStepDelay();
+
+                    if (endSpeed > speed) {
+                        synchronized(this) {
+                            while (speed < endSpeed) {
+                                speed += incr;
+                                if (speed > endSpeed) { // don't overshoot
+                                    speed = endSpeed;
+                                }
+                                setSpeed(speed);
+                                try {
+                                    wait(delay);
+                                } catch (InterruptedException ie) {
+                                    log.error("InterruptedException "+ie);
+                                }
                             }
                         }
-                    }
+                    } else {
+                        synchronized(this) {
+                            while (speed > endSpeed) {
+                                speed -= incr;
+                                if (speed < endSpeed) { // don't undershoot
+                                    speed = endSpeed;
+                                }
+                                setSpeed(speed);
+                                try {
+                                    wait(delay);
+                                } catch (InterruptedException ie) {
+                                    log.error("InterruptedException "+ie);
+                                }
+                            }
+                        }
+                    }                	
                 }
                 _warrant.fireRunStatus("SpeedRestriction", old, _speedType);
             } finally {

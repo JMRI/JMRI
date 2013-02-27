@@ -216,7 +216,9 @@ public class IndicatorTrackIcon extends PositionableIcon
 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.setStatus(block, state);
-        _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);
+        if ((state & OBlock.OCCUPIED)!=0) {
+            _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);        	
+        }
         if (_status.equals("DontUseTrack")) {
         	setControlling(false);
         }

@@ -115,16 +115,20 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 	static final public int GRADUAL = 0x01;
 	static final public int TIGHT = 0x02;
 	static final public int SEVERE = 0x04;
-    
-    public void setSensor(String pName){
+
+	/*
+	 * return true if a Sensor is set
+	 */
+    public boolean setSensor(String pName){
         if(pName==null || pName.equals("")){
             setNamedSensor(null);
-            return;
+            return false;
         }
         if (InstanceManager.sensorManagerInstance()!=null) {
             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
             if (sensor != null) {
                 setNamedSensor(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));
+                return true;
             } else {
                 setNamedSensor(null);
                 log.error("Sensor '"+pName+"' not available");
@@ -132,6 +136,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         } else {
             log.error("No SensorManager for this protocol");
         }
+        return false;
     }
     
     public void setNamedSensor(NamedBeanHandle<Sensor> s) {

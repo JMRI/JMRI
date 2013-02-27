@@ -834,6 +834,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 selection = null;
             }
         }
+        if (!isEditable() && selection!=null && selection.isHidden()) {
+        	return null;
+        }
         return selection;
     }
 
