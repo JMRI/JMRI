@@ -2024,14 +2024,17 @@ if needed.
 <A NAME="EditRoute"></A>
 <H3>Edit Route</H3>
 
-Each location has the train's departure direction, number of desired car
-moves, and whether car pick ups and or car set outs are allowed at that
-location. A car move can be a car pick up or car set out at that location.
-For example, 5 moves can be 5 pick ups, or 5 set outs, or any combination of
-5 pick ups or set outs. Picking up or dropping off a group of cars or a
-<A	HREF="#Kernel">kernel</A> represents one move.
+   Each location has the train's departure direction, number of desired car moves, and whether car
+   pick ups and or car set outs are allowed at that location. A car move can be a car pick up or car
+   set out at that location. For example, 5 moves can be 5 pick ups, or 5 set outs, or any
+   combination of 5 pick ups or set outs. Picking up or dropping off a group of cars or a
+   <A HREF="#Kernel">kernel</A> represents one move. When entering the desired number of car moves,
+   enter reasonable numbers that reflect what you want the program to do for you. For example, if
+   you want your train to depart with 15 cars, then 15 is the correct value for your moves at the
+   start of the route. At the end of the route, if you want 12 cars in the train when it terminates,
+   then 12 is the right value for the move count for the last location in your train's route.
 
-<P>If you want to delay the departure of the train from a location
+   <P>If you want to delay the departure of the train from a location
 or increase the train's travel time,
 enter the number of minutes desired in the "Wait" cell.  Another choice
 is to specify the train's departure time from a location.</P>
@@ -2628,14 +2631,16 @@ caboose.
     cabooses and cars with FRED are removed from the available car list.</P>
 
    <P>Next the program will assign cars to the train starting from the departure location. Each
-    car goes through the process of finding a track along the route that will accept the car.
-    Another count assigned to a track is used to determine if the track has been serviced recently.
-    Tracks with the least amount of service get priority. A car can have several track choices and
-    the one with the highest priority will be assigned as the car's destination. The process
-    continues until the number of car moves requested by a location is met, or the available cars
-    being processed by the program is used up. Once the car moves requested for a location is met,
-    the next location in the route is processed. This continues until all locations in a train's
-    route have been processed.</P>
+    car goes through the process of searching for a track at each location along the train's route
+    that will accept the car. Another count assigned to a track is used to determine if the track
+    has been serviced recently. Tracks with the least amount of service get priority. Once the
+    program finds a track at a location, the search continues until all locations in the train's
+    route are checked. If the program finds more than one location for the car, it will use the
+    number of moves requested in the train's route and the number of cars already assigned to a
+    location to determine which destination is the most appropriate. The process continues until the
+    number of car moves requested by a location is met, or the available cars being processed by the
+    program is used up. Once the car moves requested for a location is met, the next location in the
+    route is examined. This continues until all locations in a train's route have been processed.</P>
 
    <P>
     In <A HREF="#SettingsOptions">aggressive mode</A> , the program when figuring out destinations
