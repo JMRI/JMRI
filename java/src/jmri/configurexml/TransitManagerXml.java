@@ -49,53 +49,55 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
             while (iter.hasNext()) {
                 String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
-                log.debug("Transit system name is "+sname);
-                Transit x = tm.getBySystemName(sname);
-                Element elem = new Element("transit")
-                            .setAttribute("systemName", sname);
-                
-                // store common part
-                storeCommon(x, elem);
-                
-				// save child transitsection entries
-				ArrayList<TransitSection> tsList = x.getTransitSectionList();
-				Element tsElem = null;
-				for (int k = 0; k<tsList.size(); k++) {
-					TransitSection ts = tsList.get(k);
-					if (ts!=null) {						
-						tsElem = new Element ("transitsection");
-                        Section tSection = ts.getSection();
-                        if (tSection!=null) tsElem.setAttribute("sectionname",tSection.getSystemName());
-                        else tsElem.setAttribute("sectionname","null");
-						tsElem.setAttribute("sequence",Integer.toString(ts.getSequenceNumber()));
-						tsElem.setAttribute("direction",Integer.toString(ts.getDirection()));
-						tsElem.setAttribute("alternate",""+(ts.isAlternate()?"yes":"no"));                
-						// save child transitsectionaction entries if any
-						ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
-						if (tsaList.size()>0) {
-							Element tsaElem = null;
-							for (int m = 0; m<tsaList.size(); m++) {
-								TransitSectionAction tsa = tsaList.get(m);
-								if (tsa!=null) {						
-									tsaElem = new Element ("transitsectionaction");
-									tsaElem.setAttribute("whencode",Integer.toString(tsa.getWhenCode()));
-									tsaElem.setAttribute("whatcode",Integer.toString(tsa.getWhatCode()));
-									tsaElem.setAttribute("whendata",Integer.toString(tsa.getDataWhen()));
-									tsaElem.setAttribute("whenstring",tsa.getStringWhen());
-									tsaElem.setAttribute("whatdata1",Integer.toString(tsa.getDataWhat1()));
-									tsaElem.setAttribute("whatdata2",Integer.toString(tsa.getDataWhat2()));
-									tsaElem.setAttribute("whatstring",tsa.getStringWhat());									
-									tsElem.addContent(tsaElem);
-								}
-							}
-						}
-						elem.addContent(tsElem);
-					}
-				}
-								
-				transits.addContent(elem);
-			}
-		}
+                else {
+                    log.debug("Transit system name is "+sname);
+                    Transit x = tm.getBySystemName(sname);
+                    Element elem = new Element("transit")
+                                .setAttribute("systemName", sname);
+
+                    // store common part
+                    storeCommon(x, elem);
+
+                    // save child transitsection entries
+                    ArrayList<TransitSection> tsList = x.getTransitSectionList();
+                    Element tsElem = null;
+                    for (int k = 0; k<tsList.size(); k++) {
+                        TransitSection ts = tsList.get(k);
+                        if (ts!=null) {						
+                            tsElem = new Element ("transitsection");
+                            Section tSection = ts.getSection();
+                            if (tSection!=null) tsElem.setAttribute("sectionname",tSection.getSystemName());
+                            else tsElem.setAttribute("sectionname","null");
+                            tsElem.setAttribute("sequence",Integer.toString(ts.getSequenceNumber()));
+                            tsElem.setAttribute("direction",Integer.toString(ts.getDirection()));
+                            tsElem.setAttribute("alternate",""+(ts.isAlternate()?"yes":"no"));                
+                            // save child transitsectionaction entries if any
+                            ArrayList<TransitSectionAction> tsaList = ts.getTransitSectionActionList();
+                            if (tsaList.size()>0) {
+                                Element tsaElem = null;
+                                for (int m = 0; m<tsaList.size(); m++) {
+                                    TransitSectionAction tsa = tsaList.get(m);
+                                    if (tsa!=null) {						
+                                        tsaElem = new Element ("transitsectionaction");
+                                        tsaElem.setAttribute("whencode",Integer.toString(tsa.getWhenCode()));
+                                        tsaElem.setAttribute("whatcode",Integer.toString(tsa.getWhatCode()));
+                                        tsaElem.setAttribute("whendata",Integer.toString(tsa.getDataWhen()));
+                                        tsaElem.setAttribute("whenstring",tsa.getStringWhen());
+                                        tsaElem.setAttribute("whatdata1",Integer.toString(tsa.getDataWhat1()));
+                                        tsaElem.setAttribute("whatdata2",Integer.toString(tsa.getDataWhat2()));
+                                        tsaElem.setAttribute("whatstring",tsa.getStringWhat());									
+                                        tsElem.addContent(tsaElem);
+                                    }
+                                }
+                            }
+                            elem.addContent(tsElem);
+                        }
+                    }
+
+                    transits.addContent(elem);
+                }
+            }
+        }
 		return (transits);	
 	}
 

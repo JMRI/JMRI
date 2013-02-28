@@ -894,8 +894,9 @@ public class RouteTableAction extends AbstractTableAction {
         if (g==null) {
             // should never get here
             log.error("Unknown failure to create Route with System Name: "+sName);
+        } else {
+            g.deActivateRoute();
         }
-        g.deActivateRoute();
         return g;
     }
 

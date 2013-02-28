@@ -66,19 +66,23 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             while (iter.hasNext()) {
                 String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
-                Block b = tm.getBySystemName(sname);
-                // the following null check is to catch a null pointer exception that sometimes was found to happen
-				if (b==null) log.error("Null block during store - sname = "+sname);
-                Element elem = new Element("block")
-                            .setAttribute("systemName", sname);
-                elem.addContent(new Element("systemName").addContent(sname));
-                // the following null check is to catch a null pointer exception that sometimes was found to happen
-                if( (b!=null) && (b.getUserName()!=null) && (!b.getUserName().equals("")))
-                    elem.addContent(new Element("userName").addContent(b.getUserName()));
-                if (log.isDebugEnabled()) log.debug("initial store Block "+sname);
-                
-                // and put this element out
-                blocks.addContent(elem);
+                else {
+                    Block b = tm.getBySystemName(sname);
+                    // the following null check is to catch a null pointer exception that sometimes was found to happen
+                    if (b==null) log.error("Null block during store - sname = "+sname);
+                    else {
+                        Element elem = new Element("block")
+                                    .setAttribute("systemName", sname);
+                        elem.addContent(new Element("systemName").addContent(sname));
+                        // the following null check is to catch a null pointer exception that sometimes was found to happen
+                        if((b.getUserName()!=null) && (!b.getUserName().equals("")))
+                            elem.addContent(new Element("userName").addContent(b.getUserName()));
+                        if (log.isDebugEnabled()) log.debug("initial store Block "+sname);
+
+                        // and put this element out
+                        blocks.addContent(elem);
+                    }
+                }
             }
            
             // write out again with contents

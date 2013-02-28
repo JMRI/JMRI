@@ -47,74 +47,76 @@ public class SectionManagerXml extends jmri.managers.configurexml.AbstractNamedB
             while (iter.hasNext()) {
                 String sname = iter.next();
                 if (sname==null) log.error("System name null during store");
-                log.debug("Section system name is "+sname);
-                Section x = tm.getBySystemName(sname);
-                Element elem = new Element("section")
-                            .setAttribute("systemName", sname);
-                
-                // store common part
-                storeCommon(x, elem);
-				
-				String txt = x.getForwardBlockingSensorName();
-				if ( (txt!=null) && (!txt.equals("")) )
-					elem.setAttribute("fsensorname",txt);
-				txt = x.getReverseBlockingSensorName();
-				if ( (txt!=null) && (!txt.equals("")) )
-					elem.setAttribute("rsensorname",txt);
-				txt = x.getForwardStoppingSensorName();
-				if ( (txt!=null) && (!txt.equals("")) )
-					elem.setAttribute("fstopsensorname",txt);
-				txt = x.getReverseStoppingSensorName();
-				if ( (txt!=null) && (!txt.equals("")) )
-					elem.setAttribute("rstopsensorname",txt);
-					
-				// save child block entries
-				int index = 0;
-				Block b = x.getBlockBySequenceNumber(index);
-				Element bElem = null;
-				while (b!=null) {
-					bElem = new Element ("blockentry");
-					bElem.setAttribute("sName",b.getSystemName());
-					bElem.setAttribute("order",Integer.toString(index));
-					elem.addContent(bElem);					
-					index ++;
-					b = x.getBlockBySequenceNumber(index);
-				}
-                // save child entry points
-				List<EntryPoint> epList = x.getEntryPointList();
-				Element epElem = null;
-				EntryPoint ep = null;
-				for (int i = 0; i<epList.size(); i++) {
-					ep = epList.get(i);
-					if (ep!=null) {
-						epElem = new Element ("entrypoint");						
-						// add some protection against a reading problem
-						if (ep.getFromBlock() == null) {
-						    log.error("Unexpected null getFromBlock while storing ep "+i+" in Section "+sname+", skipped");
-						    break;
-					    }					    
-						if (ep.getFromBlock().getSystemName() == null) {
-						    log.error("Unexpected null in FromBlock systemName while storing ep "+i+" in Section "+sname+", skipped");
-						    break;
-					    }
-						epElem.setAttribute("fromblock",ep.getFromBlock().getSystemName());
-						if (ep.getBlock() == null) {
-						    log.error("Unexpected null getBlock while storing ep "+i+" in Section "+sname+", skipped");
-						    break;
-					    }					    
-						if (ep.getBlock().getSystemName() == null) {
-						    log.error("Unexpected null in Block systemName while storing ep "+i+" in Section "+sname+", skipped");
-						    break;
-					    }							
-						epElem.setAttribute("toblock",ep.getBlock().getSystemName());
-						epElem.setAttribute("direction",Integer.toString(ep.getDirection()));
-						epElem.setAttribute("fixed",""+(ep.isFixed()?"yes":"no"));
-						epElem.setAttribute("fromblockdirection",""+ep.getFromBlockDirection());
-						elem.addContent(epElem);
-					}
-				}
-					
-				sections.addContent(elem);
+                else {
+                    log.debug("Section system name is "+sname);
+                    Section x = tm.getBySystemName(sname);
+                    Element elem = new Element("section")
+                                .setAttribute("systemName", sname);
+
+                    // store common part
+                    storeCommon(x, elem);
+
+                    String txt = x.getForwardBlockingSensorName();
+                    if ( (txt!=null) && (!txt.equals("")) )
+                        elem.setAttribute("fsensorname",txt);
+                    txt = x.getReverseBlockingSensorName();
+                    if ( (txt!=null) && (!txt.equals("")) )
+                        elem.setAttribute("rsensorname",txt);
+                    txt = x.getForwardStoppingSensorName();
+                    if ( (txt!=null) && (!txt.equals("")) )
+                        elem.setAttribute("fstopsensorname",txt);
+                    txt = x.getReverseStoppingSensorName();
+                    if ( (txt!=null) && (!txt.equals("")) )
+                        elem.setAttribute("rstopsensorname",txt);
+
+                    // save child block entries
+                    int index = 0;
+                    Block b = x.getBlockBySequenceNumber(index);
+                    Element bElem = null;
+                    while (b!=null) {
+                        bElem = new Element ("blockentry");
+                        bElem.setAttribute("sName",b.getSystemName());
+                        bElem.setAttribute("order",Integer.toString(index));
+                        elem.addContent(bElem);					
+                        index ++;
+                        b = x.getBlockBySequenceNumber(index);
+                    }
+                    // save child entry points
+                    List<EntryPoint> epList = x.getEntryPointList();
+                    Element epElem = null;
+                    EntryPoint ep = null;
+                    for (int i = 0; i<epList.size(); i++) {
+                        ep = epList.get(i);
+                        if (ep!=null) {
+                            epElem = new Element ("entrypoint");						
+                            // add some protection against a reading problem
+                            if (ep.getFromBlock() == null) {
+                                log.error("Unexpected null getFromBlock while storing ep "+i+" in Section "+sname+", skipped");
+                                break;
+                            }					    
+                            if (ep.getFromBlock().getSystemName() == null) {
+                                log.error("Unexpected null in FromBlock systemName while storing ep "+i+" in Section "+sname+", skipped");
+                                break;
+                            }
+                            epElem.setAttribute("fromblock",ep.getFromBlock().getSystemName());
+                            if (ep.getBlock() == null) {
+                                log.error("Unexpected null getBlock while storing ep "+i+" in Section "+sname+", skipped");
+                                break;
+                            }					    
+                            if (ep.getBlock().getSystemName() == null) {
+                                log.error("Unexpected null in Block systemName while storing ep "+i+" in Section "+sname+", skipped");
+                                break;
+                            }							
+                            epElem.setAttribute("toblock",ep.getBlock().getSystemName());
+                            epElem.setAttribute("direction",Integer.toString(ep.getDirection()));
+                            epElem.setAttribute("fixed",""+(ep.isFixed()?"yes":"no"));
+                            epElem.setAttribute("fromblockdirection",""+ep.getFromBlockDirection());
+                            elem.addContent(epElem);
+                        }
+                    }
+
+                    sections.addContent(elem);
+                }
 			}
 		}
 		return (sections);	
