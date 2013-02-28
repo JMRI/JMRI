@@ -207,8 +207,10 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 		while (iter.hasNext()) {
 			String sName = iter.next();
 			if (sName==null) log.error("System name null during 1st initialization of LayoutBlocks");
-			LayoutBlock b = getBySystemName(sName); 
-			b.initializeLayoutBlock();
+                        else {
+                            LayoutBlock b = getBySystemName(sName); 
+                            b.initializeLayoutBlock();
+                        }
 		}	
 		// cycle through all LayoutBlocks, updating Paths of associated jmri.Blocks
 		badBeanErrors = 0;
@@ -216,10 +218,12 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 		while (iter.hasNext()) {
 			String sName = iter.next();
 			if (sName==null) log.error("System name null during 2nd initialization of LayoutBlocks");
-			log.debug("LayoutBlock initialization - system name = "+sName);
-			LayoutBlock b = getBySystemName(sName); 
-			b.updatePaths();
-			if (b.getBlock().getValue()!=null) b.getBlock().setValue(null);
+                        else {
+                	    log.debug("LayoutBlock initialization - system name = "+sName);
+        		    LayoutBlock b = getBySystemName(sName); 
+                            b.updatePaths();
+                            if (b.getBlock().getValue()!=null) b.getBlock().setValue(null);
+                        }
 		}
 		if (badBeanErrors>0) {
 			JOptionPane.showMessageDialog(null,""+badBeanErrors+" "+rb.getString("Warn2"),

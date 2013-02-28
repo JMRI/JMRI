@@ -526,6 +526,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	public void updatePathsUsingPanel(LayoutEditor panel) {
         if (panel==null) {
             log.error("Null panel in call to updatePathsUsingPanel");
+            return;
 		}
 		ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(_instance);
         updateBlockPaths(c, panel);
