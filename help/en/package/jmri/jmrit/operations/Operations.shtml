@@ -1174,11 +1174,12 @@ cars with those loads. </P>
 
 <img src="images/ShowSchedulesByCarTypeAndLoad.png">
 
-<P>You can access this useful tool from the Schedules window.  It allows you to select a car type, and then
-any load that you've created for the that type of car.  The window then shows which schedules by location are receiving
-or shipping that specific car load.</P>
+   <P>You can access this useful tool from the Schedules window. The Schedules window can be
+    found under "Tools" in the Locations window. It allows you to select a car type, and then any
+    load that you've created for the that type of car. The window then shows which schedules by
+    location are receiving or shipping that specific car load.</P>
 
-<P>If you want a list of custom car loads for each of your car types, you can use the "Print Car Loads" or
+   <P>If you want a list of custom car loads for each of your car types, you can use the "Print Car Loads" or
 "Preview Car Loads" found under Tools in the "Show schedules by car type and load" window.</P>
 
    <A NAME="Interchange"></A>
