@@ -1358,7 +1358,7 @@ public class TrainBuilder extends TrainCommon {
 			if (carIndex < 500)
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarAtLocWithMoves"),
 						new Object[] { c.toString(), (c.getLocationName() + ", " + c.getTrackName()),
-								c.getMoves(), c.getPriority() }));
+								c.getMoves(), c.getLoadPriority() }));
 			if (carIndex == 500)
 				addLine(buildReport, FIVE, Bundle.getMessage("buildOnlyFirst500Cars"));
 			// use only the lead car in a kernel for building trains
@@ -2820,11 +2820,11 @@ public class TrainBuilder extends TrainCommon {
 						+ testCar.getOrder()); // NOI18N
 				if (car.getTrack().getServiceOrder().equals(Track.FIFO)
 						&& bestCar.getOrder() > testCar.getOrder()
-						&& bestCar.getPriority().equals(testCar.getPriority()))
+						&& bestCar.getLoadPriority().equals(testCar.getLoadPriority()))
 					bestCar = testCar;
 				if (car.getTrack().getServiceOrder().equals(Track.LIFO)
 						&& bestCar.getOrder() < testCar.getOrder()
-						&& bestCar.getPriority().equals(testCar.getPriority()))
+						&& bestCar.getLoadPriority().equals(testCar.getLoadPriority()))
 					bestCar = testCar;
 			}
 		}

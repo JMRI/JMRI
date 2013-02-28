@@ -1481,7 +1481,12 @@ public class Track {
 		}
 		return status;
 	}
-	
+	/**
+	 * Checks to see if car can be placed on this spur using this schedule.  Returns
+	 * OKAY if the schedule can service the car.
+	 * @param car
+	 * @return Track.OKAY track.CUSTOM track.SCHEDULE
+	 */
 	public String checkSchedule(Car car) {
 		// does car already have this destination?
 		if (car.getDestinationTrack() == this)
@@ -1516,10 +1521,9 @@ public class Track {
 		return searchSchedule(car);
 	}
 
-	private static final boolean debugFlag = false;
+	private static boolean debugFlag = false;
 
 	private String searchSchedule(Car car) {
-		car.setScheduleId("");	// clear the schedule id
 		if (debugFlag)
 			log.debug("Search match for car " + toString() + " type (" + car.getType() + ") load (" + car.getLoad()
 					+ ")");
@@ -1543,6 +1547,7 @@ public class Track {
 		}
 		if (debugFlag)
 			log.debug("No Match");
+		car.setScheduleId("");	// clear the car's schedule id
 		return SCHEDULE + " " +Bundle.getMessage("noMatch");
 	}
 
@@ -1574,10 +1579,11 @@ public class Track {
 	 * Check to see if track has schedule and if it does will schedule the next item in the list. Load the car with the
 	 * next schedule load if one exists, and set the car's final destination if there's one in the schedule.
 	 * 
+	 * @param car
 	 * @return Track.OKAY or Track.SCHEDULE
-	 * @param track
 	 */
 	public String scheduleNext(Car car) {
+		// clean up the car's final destination if sent to that destination and there isn't a schedule
 		if (getScheduleId().equals("") && car.getDestination() != null
 				&& car.getDestination().equals(car.getFinalDestination()) && car.getDestinationTrack() != null
 				&& (car.getDestinationTrack().equals(car.getFinalDestinationTrack()) || car.getFinalDestinationTrack() == null)) {
@@ -1592,13 +1598,13 @@ public class Track {
 			log.debug("Car (" + car.toString() + ") is part of kernel (" + car.getKernelName() + ")");
 			return OKAY;
 		}
+		// a car has a schedule id if the schedule was in match mode
 		if (!car.getScheduleId().equals("")) {
 			log.debug("Car (" + car.toString() + ") has schedule id " + car.getScheduleId());
 			Schedule sch = getSchedule();
 			if (sch != null) {
-				String id = car.getScheduleId();
+				String id = car.getScheduleId();	// save id for error message
 				ScheduleItem si = sch.getItemById(id);
-					// save id for error message
 				car.setScheduleId("");
 				if (si != null) {
 					loadNext(si, car);
@@ -1882,7 +1888,7 @@ public class Track {
 		else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
 			String names = a.getValue();
 			String[] types = names.split("%%"); // NOI18N
-			if (log.isDebugEnabled() && debugFlag)
+			if (debugFlag)
 				log.debug("track (" + getName() + ") accepts car types: " + names);
 			setTypeNames(types);
 		}
@@ -1941,7 +1947,7 @@ public class Track {
 		else if ((a = e.getAttribute(Xml.DROP_IDS)) != null) {
 			String names = a.getValue();
 			String[] ids = names.split("%%"); // NOI18N
-			if (log.isDebugEnabled() && debugFlag)
+			if (debugFlag)
 				log.debug("track (" + getName() + ") has drop ids : " + names);
 			setDropIds(ids);
 		}
@@ -1965,7 +1971,7 @@ public class Track {
 		else if ((a = e.getAttribute(Xml.PICKUP_IDS)) != null) {
 			String names = a.getValue();
 			String[] ids = names.split("%%"); // NOI18N
-			if (log.isDebugEnabled() && debugFlag)
+			if (debugFlag)
 				log.debug("track (" + getName() + ") has pickup ids : " + names);
 			setPickupIds(ids);
 		}
@@ -1989,7 +1995,7 @@ public class Track {
 		else if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
 			String names = a.getValue();
 			String[] roads = names.split("%%"); // NOI18N
-			if (log.isDebugEnabled() && debugFlag)
+			if (debugFlag)
 				log.debug("track (" + getName() + ") " + getRoadOption() + " car roads: " + names);
 			setRoadNames(roads);
 		}

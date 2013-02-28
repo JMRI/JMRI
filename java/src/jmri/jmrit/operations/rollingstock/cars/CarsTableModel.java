@@ -489,7 +489,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		case COLORCOLUMN: {
 			if (showColor)
 				return c.getColor();
-			else if (c.getPriority().equals(CarLoad.PRIORITY_HIGH))
+			else if (c.getLoadPriority().equals(CarLoad.PRIORITY_HIGH))
 				return c.getLoad() + " " + Bundle.getMessage("(P)");
 			else
 				return c.getLoad();

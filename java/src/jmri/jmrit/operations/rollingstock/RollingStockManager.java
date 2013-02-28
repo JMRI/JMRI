@@ -582,7 +582,7 @@ public class RollingStockManager {
     	// move high priority ids to the start
     	for (int i=0; i<list.size(); i++){
     		rs = getById(list.get(i));
-    		if (rs.getPriority().equals(CarLoad.PRIORITY_HIGH)){
+    		if (rs.getLoadPriority().equals(CarLoad.PRIORITY_HIGH)){
     			out.add(list.get(i));
     			list.remove(i);
     			i--;   			

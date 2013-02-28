@@ -820,7 +820,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	}
 
 	// normally overridden
-	public String getPriority() {
+	public String getLoadPriority() {
 		return "";
 	}
 
