@@ -81,8 +81,10 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
     // copy one
     @SuppressWarnings("null")
 	public  SprogMessage(SprogMessage m) {
-        if (m == null)
+        if (m == null){
             log.error("copy ctor of null message");
+            return;
+        }
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];

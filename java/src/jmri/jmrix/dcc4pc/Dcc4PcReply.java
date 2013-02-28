@@ -46,8 +46,10 @@ public class Dcc4PcReply extends AbstractMRReply {
 	@SuppressWarnings("null")
 	public  Dcc4PcReply(Dcc4PcReply m) {
           this();
-		if (m == null)
+		if (m == null){
 			log.error("copy ctor of null message");
+                        return;
+                }
 		_nDataChars = m._nDataChars;
                 if (m.isUnsolicited()) super.setUnsolicited();
 		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];

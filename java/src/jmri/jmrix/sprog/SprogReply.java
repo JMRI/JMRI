@@ -36,8 +36,10 @@ public class SprogReply extends AbstractMRReply {
 	@SuppressWarnings("null")
 	public  SprogReply(SprogReply m) {
           this();
-		if (m == null)
+		if (m == null){
 			log.error("copy ctor of null message");
+                        return;
+                }
 		_nDataChars = m._nDataChars;
                 _isBoot = m._isBoot;
                 if (m.isUnsolicited()) super.setUnsolicited();

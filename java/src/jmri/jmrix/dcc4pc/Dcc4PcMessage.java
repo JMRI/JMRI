@@ -61,8 +61,10 @@ public class Dcc4PcMessage  extends jmri.jmrix.AbstractMRMessage {
     // copy one
     @SuppressWarnings("null")
 	public  Dcc4PcMessage(Dcc4PcMessage m) {
-        if (m == null)
+        if (m == null){
             log.error("copy ctor of null message");
+            return;
+        }
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
