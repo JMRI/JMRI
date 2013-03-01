@@ -88,9 +88,9 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     JButton powerLight;
     // Load the power lights as icons to be placed in an invisible JButton so the light 
     // can be clicked to change the power status
-    NamedIcon powerOnIcon = new NamedIcon("resources/GreenPowerLED.gif", "resources/GreenPowerLED.gif");
-    NamedIcon powerOffIcon = new NamedIcon("resources/RedPowerLED.gif", "resources/RedPowerLED.gif");
-    NamedIcon powerXIcon = new NamedIcon("resources/YellowPowerLED.gif", "resources/YellowPowerLED.gif");
+    NamedIcon powerOnIcon = new NamedIcon("resources/icons/throttles/GreenPowerLED.gif", "GreenPowerLED");
+    NamedIcon powerOffIcon = new NamedIcon("resources/icons/throttles/RedPowerLED.gif", "RedPowerLED");
+    NamedIcon powerXIcon = new NamedIcon("resources/icons/throttles/YellowPowerLED.gif", "YellowPowerLED");
     NamedIcon directionOnIcon = new NamedIcon("resources/icons/USS/sensor/amber-on.gif", "amber-on");
     NamedIcon directionOffIcon = new NamedIcon("resources/icons/USS/sensor/amber-off.gif", "amber-off");
     NamedIcon stopIcon = new NamedIcon("resources/icons/USS/sensor/red-on.gif", "red-on");
