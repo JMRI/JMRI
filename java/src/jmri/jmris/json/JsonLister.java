@@ -12,6 +12,7 @@ import jmri.JmriException;
 import jmri.Light;
 import jmri.Memory;
 import jmri.Metadata;
+import jmri.PowerManager;
 import jmri.Reporter;
 import jmri.Route;
 import jmri.Sensor;
@@ -270,10 +271,25 @@ public class JsonLister {
         try {
             data.put(STATE, InstanceManager.powerManagerInstance().getPower());
         } catch (JmriException e) {
-            data.put(STATE, -1);
+            root = handleError(500, Bundle.getMessage("ErrorPower"));
             log.error("Unable to get Power state." + e);
         }
         return root;
+    }
+
+    static public void setPower(int state) throws JsonException {
+        switch (state) {
+            case PowerManager.OFF:
+            case PowerManager.ON:
+                try {
+                    InstanceManager.powerManagerInstance().setPower(state);
+                } catch (JmriException ex) {
+                    throw new JsonException(500, ex);
+                }
+                break;
+            default:
+                throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", POWER, state));
+        }
     }
 
     static public JsonNode getRailroad() {
@@ -554,9 +570,7 @@ public class JsonLister {
             data.put(INVERTED, turnout.getInverted());
             data.put(STATE, turnout.getKnownState());
         } catch (NullPointerException e) {
-            root.put(TYPE, ERROR);
-            data.put(CODE, 404);
-            data.put(MESSAGE, Bundle.getMessage("ErrorObject", TURNOUT, name));
+            handleError(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
             log.error("Unable to get turnout [" + name + "]." + e);
         }
         return root;
@@ -570,6 +584,25 @@ public class JsonLister {
             turnouts.add(getTurnout(name));
         }
         return root;
+    }
+
+    static public void setTurnout(String name, int state) throws JsonException {
+        try {
+            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
+            switch (state) {
+                case Turnout.THROWN:
+                case Turnout.CLOSED:
+                    turnout.setState(state);
+                    break;
+                default:
+                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", TURNOUT, state));
+            }
+        } catch (NullPointerException e) {
+            log.error("Unable to get turnout [" + name + "]." + e);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
+        } catch (JmriException ex) {
+            throw new JsonException(500, ex);
+        }
     }
 
     static public JsonNode getUnknown(String type) {
@@ -618,5 +651,14 @@ public class JsonLister {
             rlan.add(rln); //add this routeLocation to the routeLocation array
         }
         return rlan;  //return array of routeLocations
+    }
+
+    static protected ObjectNode handleError(int code, String message) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, ERROR);
+        ObjectNode data = root.putObject(DATA);
+        data.put(CODE, code);
+        data.put(MESSAGE, message);
+        return root;
     }
 }
