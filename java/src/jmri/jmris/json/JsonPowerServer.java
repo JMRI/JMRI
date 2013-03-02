@@ -46,10 +46,14 @@ public class JsonPowerServer extends AbstractPowerServer {
 
     @Override
     public void sendErrorStatus() throws IOException {
+        this.sendErrorStatus(500);
+    }
+
+    public void sendErrorStatus(int status) throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, ERROR);
         ObjectNode data = root.putObject(ERROR);
-        data.put(CODE, -1);
+        data.put(CODE, status);
         data.put(MESSAGE, Bundle.getMessage("ErrorPower"));
         this.connection.sendMessage(this.mapper.writeValueAsString(root));
     }
@@ -70,7 +74,7 @@ public class JsonPowerServer extends AbstractPowerServer {
             case PowerManager.UNKNOWN:
                 break;
             default:
-                this.sendErrorStatus();
+                this.sendErrorStatus(400);
                 break;
         }
         this.sendStatus(InstanceManager.powerManagerInstance().getPower());
