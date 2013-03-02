@@ -18,10 +18,10 @@ import static jmri.jmris.json.JSON.*;
 import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonLister;
 import jmri.jmris.json.JsonServerManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -88,7 +88,7 @@ public class JsonServlet extends WebSocketServlet {
         String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
             String name = (rest.length > 2) ? rest[2] : null;
-            JsonNode reply = null;
+            JsonNode reply;
             if (type.equals(CARS)) {
                 reply = JsonLister.getCars();
             } else if (type.equals(ENGINES)) {
@@ -156,7 +156,12 @@ public class JsonServlet extends WebSocketServlet {
                 log.warn("Type \"" + type + "\" unknown.");
                 reply = JsonLister.getUnknown(type);
             }
-            response.getWriter().write(this.mapper.writeValueAsString(reply));
+            int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
+            if (code == 200) {
+                response.getWriter().write(this.mapper.writeValueAsString(reply));
+            } else {
+                response.sendError(code, this.mapper.writeValueAsString(reply));
+            }
         } else {
             response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("HeadFormat"), // NOI18N
                     ResourceBundle.getBundle("jmri.web.server.Html").getString("HTML5DocType"), // NOI18N

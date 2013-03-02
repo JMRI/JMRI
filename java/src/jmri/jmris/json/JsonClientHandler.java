@@ -90,7 +90,7 @@ public class JsonClientHandler {
                 this.connection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, GOODBYE)));
                 this.connection.close();
             } else if (type.equals(LIST)) {
-                JsonNode reply = null;
+                JsonNode reply;
                 String list = root.path(LIST).asText();
                 if (list.equals(CARS)) {
                     reply = JsonLister.getCars();
@@ -121,7 +121,7 @@ public class JsonClientHandler {
                 } else if (list.equals(TURNOUTS)) {
                     reply = JsonLister.getTurnouts();
                 } else {
-                    this.sendErrorMessage(0, Bundle.getMessage("ErrorUnknownList", list));
+                    this.sendErrorMessage(404, Bundle.getMessage("ErrorUnknownList", list));
                     return;
                 }
                 //if (log.isDebugEnabled()) log.debug("Sending to client: " + this.mapper.writeValueAsString(reply));
@@ -152,16 +152,16 @@ public class JsonClientHandler {
                 } else if (type.equals(TURNOUT)) {
                     this.turnoutServer.parseRequest(data);
                 } else {
-                    this.sendErrorMessage(0, Bundle.getMessage("ErrorUnknownType", type));
+                    this.sendErrorMessage(404, Bundle.getMessage("ErrorUnknownType", type));
                 }
             } else {
-                this.sendErrorMessage(0, Bundle.getMessage("ErrorMissingData"));
+                this.sendErrorMessage(500, Bundle.getMessage("ErrorMissingData"));
             }
         } catch (JsonProcessingException pe) {
             log.warn("Exception processing \"" + string + "\"\n" + pe.getMessage());
-            this.sendErrorMessage(0, Bundle.getMessage("ErrorProcessingJSON", pe.getLocalizedMessage()));
+            this.sendErrorMessage(500, Bundle.getMessage("ErrorProcessingJSON", pe.getLocalizedMessage()));
         } catch (JmriException je) {
-            this.sendErrorMessage(0, Bundle.getMessage("ErrorUnsupportedOperation", je.getLocalizedMessage()));
+            this.sendErrorMessage(500, Bundle.getMessage("ErrorUnsupportedOperation", je.getLocalizedMessage()));
         }
     }
 

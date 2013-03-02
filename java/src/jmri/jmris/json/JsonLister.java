@@ -140,7 +140,7 @@ public class JsonLister {
             data.put(COMMENT, location.getComment());
         } catch (NullPointerException e) {
             root.put(TYPE, ERROR);
-            data.put(CODE, -1);
+            data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", LOCATION, id));
             log.error("Unable to get location id=" + id + ".", e);
         }
@@ -183,7 +183,7 @@ public class JsonLister {
             }
         } catch (NullPointerException e) {
             root.put(TYPE, ERROR);
-            data.put(CODE, -1);
+            data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", MEMORY, name));
             log.error("Unable to get memory: " + name + ".");
         }
@@ -360,7 +360,7 @@ public class JsonLister {
             data.put(STATE, (s.provideSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.provideSensor(route.getTurnoutsAlignedSensor())).getKnownState() : Route.UNKNOWN);
         } catch (NullPointerException e) {
             root.put(TYPE, ERROR);
-            data.put(CODE, -1);
+            data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", ROUTE, name));
             log.error("Unable to get route." + e);
         }
@@ -390,7 +390,7 @@ public class JsonLister {
             data.put(STATE, sensor.getKnownState());
         } catch (NullPointerException e) {
             root.put(TYPE, ERROR);
-            data.put(CODE, -1);
+            data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", SENSOR, name));
             log.error("Unable to get sensor." + e);
         }
@@ -428,7 +428,7 @@ public class JsonLister {
             data.put(APPEARANCE_NAME, signalHead.getAppearanceName());
         } catch (NullPointerException e) {
             root.put(TYPE, ERROR);
-            data.put(CODE, -1);
+            data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
             log.error("Unable to get signalHead [" + name + "].", e);
         }
@@ -473,7 +473,7 @@ public class JsonLister {
             }
         } catch (NullPointerException e) {
             root.put(TYPE, ERROR);
-            data.put(CODE, -1);
+            data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
             log.error("Unable to get signalMast [" + name + "].", e);
         }
@@ -525,7 +525,7 @@ public class JsonLister {
 
         } catch (NullPointerException e) {
             root.put(TYPE, ERROR);
-            data.put(CODE, -1);
+            data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", TRAIN, id));
             log.error("Unable to get train id= " + id + ".", e);
         }
@@ -555,7 +555,7 @@ public class JsonLister {
             data.put(STATE, turnout.getKnownState());
         } catch (NullPointerException e) {
             root.put(TYPE, ERROR);
-            data.put(CODE, -1);
+            data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", TURNOUT, name));
             log.error("Unable to get turnout [" + name + "]." + e);
         }
@@ -576,7 +576,7 @@ public class JsonLister {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ERROR);
         ObjectNode data = root.putObject(DATA);
-        data.put(CODE, -1);
+        data.put(CODE, 404);
         data.put(MESSAGE, Bundle.getMessage("ErrorUnknownType", type));
         return root;
     }
