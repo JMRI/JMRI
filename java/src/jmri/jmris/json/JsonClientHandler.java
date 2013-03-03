@@ -20,6 +20,7 @@ public class JsonClientHandler {
     private JsonPowerServer powerServer;
     private JsonProgrammerServer programmerServer;
     private JsonReporterServer reporterServer;
+    private JsonRouteServer routeServer;
     private JsonSensorServer sensorServer;
     private JsonSignalHeadServer signalHeadServer;
     private JsonSignalMastServer signalMastServer;
@@ -38,6 +39,7 @@ public class JsonClientHandler {
         this.powerServer = new JsonPowerServer(this.connection);
         this.programmerServer = new JsonProgrammerServer(this.connection);
         this.reporterServer = new JsonReporterServer(this.connection);
+        this.routeServer = new JsonRouteServer(this.connection);
         this.sensorServer = new JsonSensorServer(this.connection);
         this.signalHeadServer = new JsonSignalHeadServer(this.connection);
         this.signalMastServer = new JsonSignalMastServer(this.connection);
@@ -147,6 +149,8 @@ public class JsonClientHandler {
                     this.reporterServer.parseRequest(data);
                 } else if (type.equals(ROSTER_ENTRY)) {
                     this.connection.sendMessage(this.mapper.writeValueAsString(JsonLister.getRosterEntry(data.path(NAME).asText())));
+                } else if (type.equals(ROUTE)) {
+                    this.routeServer.parseRequest(data);
                 } else if (type.equals(THROTTLE)) {
                     this.throttleServer.parseRequest(data);
                 } else if (type.equals(TURNOUT)) {

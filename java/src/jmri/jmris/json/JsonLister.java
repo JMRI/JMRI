@@ -393,6 +393,22 @@ public class JsonLister {
         return root;
     }
 
+    static public void setRoute(String name, int state) throws JsonException {
+        try {
+            Route route = InstanceManager.routeManagerInstance().getRoute(name);
+            switch (state) {
+                case Sensor.ACTIVE:
+                    route.setRoute();
+                    break;
+                default:
+                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", ROUTE, state));
+            }
+        } catch (NullPointerException ex) {
+            log.error("Unable to get route [" + name + "].");
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", ROUTE, name));
+        }
+    }
+
     static public JsonNode getSensor(String name) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SENSOR);
