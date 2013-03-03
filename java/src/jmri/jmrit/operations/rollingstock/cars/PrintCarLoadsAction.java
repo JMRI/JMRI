@@ -83,6 +83,8 @@ public class PrintCarLoadsAction extends AbstractAction {
 				writer.write(s);
 				for (int i = 0; i < carTypes.length; i++) {
 					List<CarLoad> loads = list.get(carTypes[i]);
+					if (loads == null)
+						continue;
 					boolean printType = true;
 					for (int j = 0; j < loads.size(); j++) {
 						StringBuffer buf = new StringBuffer(TAB);
