@@ -154,7 +154,7 @@ public class JsonServlet extends WebSocketServlet {
                         } else if (type.equals(ROUTE)) {
                             //JsonLister.setRoute(name, state);
                         } else if (type.equals(SENSOR)) {
-                            //JsonLister.setSensor(name, state);
+                            JsonLister.setSensor(name, state);
                         } else if (type.equals(SIGNAL_HEAD)) {
                             //JsonLister.setSignalHead(name, state);
                         } else if (type.equals(SIGNAL_MAST)) {

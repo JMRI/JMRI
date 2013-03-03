@@ -423,6 +423,25 @@ public class JsonLister {
         return root;
     }
 
+    static public void setSensor(String name, int state) throws JsonException {
+        try {
+            Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
+            switch (state) {
+                case Sensor.ACTIVE:
+                case Sensor.INACTIVE:
+                    sensor.setState(state);
+                    break;
+                default:
+                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SENSOR, state));
+            }
+        } catch (NullPointerException e) {
+            log.error("Unable to get turnout [" + name + "]." + e);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", SENSOR, name));
+        } catch (JmriException ex) {
+            throw new JsonException(500, ex);
+        }
+    }
+
     static public JsonNode getSignalHead(String name) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_HEAD);
