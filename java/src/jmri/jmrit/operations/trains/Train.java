@@ -1377,6 +1377,33 @@ public class Train implements java.beans.PropertyChangeListener {
 											.getTrainDirection()) == 0
 											|| !rs.getDestinationTrack().acceptsDropTrain(this))
 										continue;
+								} else if (rLoc.getLocation().getLocationOps() == Location.STAGING
+										&& getStatus().equals(BUILDING) && getTerminationTrack() != null
+										&& getTerminationTrack().getLocation() == rLoc.getLocation()) {
+									if (debugFlag)
+										log.debug("Car (" + rs.toString()
+												+ ") destination is staging, check train (" + getName()	// NOI18N
+												+ ") termination track (" + getTerminationTrack().getName()	// NOI18N
+												+ ")");
+									String status = rs.testDestination(getTerminationTrack().getLocation(),
+											getTerminationTrack());
+									if (!status.equals(Track.OKAY))
+										continue;
+								} else if (rLoc.getLocation().getLocationOps() == Location.STAGING) {
+									// need to find if there's a track in staging that is willing to accept this car
+									String status = "";
+									List<String> trackIds = rLoc.getLocation().getTrackIdsByIdList();
+									for (int i=0; i<trackIds.size(); i++) {
+										Track track = rLoc.getLocation().getTrackById(trackIds.get(i));
+										if (!track.acceptsDropTrain(this))
+											continue;
+										// will the track accept this car?
+										status = rs.testDestination(track.getLocation(), track);
+										if (status.equals(Track.OKAY))
+											break;	// yes, done
+									}
+									if (!status.equals(Track.OKAY))
+										continue;
 								}
 								// is this a local move?
 								if (rs.getLocationName().equals(rs.getDestinationName())
