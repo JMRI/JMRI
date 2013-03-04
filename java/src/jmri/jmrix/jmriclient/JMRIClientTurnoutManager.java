@@ -36,6 +36,16 @@ public class JMRIClientTurnoutManager extends jmri.managers.AbstractTurnoutManag
         return t;
     }
 
+    /*
+     * JMRIClient Turnouts can take arbitrary names to match the names used
+     * on the server.
+     */
+    @Override
+    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException{
+        return prefix+typeLetter()+curAddress;
+    }
+
+
     static Logger log = LoggerFactory.getLogger(JMRIClientTurnoutManager.class.getName());
 
 }
