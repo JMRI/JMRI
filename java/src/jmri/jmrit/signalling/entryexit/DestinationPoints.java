@@ -3,6 +3,7 @@ package jmri.jmrit.signalling.entryexit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.LinkedHashMap;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -135,7 +136,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
         boolean isRouteToPointSet() { return point.isRouteToPointSet(); }
         
         LayoutBlock getFacing() { return point.getFacing(); }
-        LayoutBlock getProtecting() { return point.getProtecting(); }
+        List<LayoutBlock> getProtecting() { return point.getProtecting(); }
         
         int getEntryExitType(){
             return entryExitType;
@@ -159,7 +160,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                     int now = ((Integer) e.getNewValue()).intValue();
                     
                     if (now==Block.OCCUPIED){
-                        LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blk);
+                        LayoutBlock lBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
                         //If the block was previously active or inactive then we will 
                         //reset the useExtraColor, but not if it was previously unknown or inconsistent.
                         lBlock.setUseExtraColor(false);
@@ -179,7 +180,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 int now = ((Integer) e.getNewValue()).intValue();
                 
                 if (now==Block.OCCUPIED){
-                    LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blk);
+                    LayoutBlock lBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
                     //If the block was previously active or inactive then we will 
                     //reset the useExtraColor, but not if it was previously unknown or inconsistent.
                     lBlock.setUseExtraColor(false);
@@ -670,59 +671,176 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                     return;
                 } else {
                     LayoutBlock startlBlock = src.getStart();
-                    LayoutBlock protectLBlock = src.getSourceProtecting();
-                    LayoutBlock destinationLBlock;
-
-                    if(!reverseDirection){
-                        //We have a problem, the destination point is already setup with a route, therefore we would need to 
-                        //check some how that a route hasn't been set to it.
-                        destinationLBlock = getFacing();
-                    } else {
+                    class BestPath {
+                        LayoutBlock srcProtecting = null;
+                        LayoutBlock srcStart = null;
+                        LayoutBlock destination = null;
                         
-                        protectLBlock = getFacing();
-                        startlBlock = getProtecting();
-                        destinationLBlock = src.getStart();
-                        if(log.isDebugEnabled())
-                            log.debug("reverse set destination is set going for " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());
-                        try{
-                            if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, src.getSourceProtecting(), src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)){
-                                startlBlock = getFacing();
-                                protectLBlock = getProtecting();
-                                if(log.isDebugEnabled())
-                                    log.debug("That didn't work so try  " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());
-                                if(!InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, src.getSourceProtecting(), src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)){
-                                    log.error("No route found");
-                                    JOptionPane.showMessageDialog(null, "No Valid path found");
-                                    src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                                    point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
-                                    return;
-                                }
-                            } else if(InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().checkValidDest(getFacing(), getProtecting(), src.getSourceProtecting(), src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)){
-                                //Both paths are valid, so will go for setting the shortest
-                                int distance = startlBlock.getBlockHopCount(destinationLBlock.getBlock(), protectLBlock.getBlock());
-                                int distance2 = getFacing().getBlockHopCount(destinationLBlock.getBlock(), getProtecting().getBlock());
-                                if(distance > distance2){
-                                    //The alternative route is shorter we shall use that
+                        BestPath(LayoutBlock startPro, LayoutBlock sourceProtecting, LayoutBlock destinationBlock, ArrayList<LayoutBlock> blocks){
+                            srcStart = startPro;
+                            srcProtecting = sourceProtecting;
+                            destination = destinationBlock;
+                            listOfBlocks = blocks;
+                        }
+                        LayoutBlock getStartBlock() { return srcStart; }
+                        LayoutBlock getProtectingBlock() { return srcProtecting; }
+                        LayoutBlock getDestinationBlock() { return destination; }
+                        
+                        ArrayList<LayoutBlock> listOfBlocks = new ArrayList<LayoutBlock>(0);
+                        String errorMessage = "";
+                        ArrayList<LayoutBlock> getListOfBlocks(){
+                            return listOfBlocks;
+                        }
+                        void setErrorMessage(String msg){
+                            errorMessage = msg;
+                        }
+                        String getErrorMessage(){
+                            return errorMessage;
+                        }
+                    }
+                    ArrayList<BestPath> pathList = new ArrayList<BestPath>(2);
+                    LayoutBlock protectLBlock;
+                    LayoutBlock destinationLBlock;
+                    //Need to work out around here the best one.
+                    for(LayoutBlock srcProLBlock: src.getSourceProtecting()){
+                        protectLBlock = srcProLBlock;
+                        if(!reverseDirection){
+                            //We have a problem, the destination point is already setup with a route, therefore we would need to 
+                            //check some how that a route hasn't been set to it.
+                            destinationLBlock = getFacing();
+                            ArrayList<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                            String errorMessage = null;
+                            try {
+                                blocks  = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*/);
+                            } catch (Exception e){
+                                errorMessage = e.getMessage();
+                                //can be considered normal if no free route is found
+                            }
+                            BestPath toadd = new BestPath(startlBlock, protectLBlock, destinationLBlock, blocks);
+                            toadd.setErrorMessage(errorMessage);
+                            pathList.add(toadd);
+                        } else {
+                            startlBlock = srcProLBlock;
+                            protectLBlock = getFacing();
+
+                            destinationLBlock = src.getStart();
+                            if(log.isDebugEnabled())
+                                log.debug("reverse set destination is set going for " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());
+                            try{
+                                LayoutBlock srcPro = src.getSourceProtecting().get(0);  //Don't care what block the facing is protecting
+                                    //Need to add a check for the lengths of the returned lists, then choose the most appropriate
+                                if(!InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, srcPro, src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)){
                                     startlBlock = getFacing();
-                                    protectLBlock = getProtecting();
+                                    protectLBlock = srcProLBlock;
+                                    if(log.isDebugEnabled())
+                                        log.debug("That didn't work so try  " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " + protectLBlock.getDisplayName());
+                                    if(!InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(startlBlock, protectLBlock, srcPro, src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)){
+                                        log.error("No route found");
+                                        JOptionPane.showMessageDialog(null, "No Valid path found");
+                                        src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE );
+                                        point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE );
+                                        return;
+                                    } else {
+                                        ArrayList<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                                        String errorMessage = null;
+                                        try {
+                                            blocks  = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*/);
+                                        } catch (Exception e){
+                                            errorMessage = e.getMessage();
+                                            //can be considered normal if no free route is found
+                                        }
+                                        BestPath toadd = new BestPath(startlBlock, protectLBlock, destinationLBlock, blocks);
+                                        toadd.setErrorMessage(errorMessage);
+                                        pathList.add(toadd);
+                                    }
+                                } else if(InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().checkValidDest(getFacing(), srcProLBlock, srcPro, src.getStart(), LayoutBlockConnectivityTools.SENSORTOSENSOR)){
+                                    //Both paths are valid, so will go for setting the shortest
+                                    int distance = startlBlock.getBlockHopCount(destinationLBlock.getBlock(), protectLBlock.getBlock());
+                                    int distance2 = getFacing().getBlockHopCount(destinationLBlock.getBlock(), srcProLBlock.getBlock());
+                                    if(distance > distance2){
+                                        //The alternative route is shorter we shall use that
+                                        startlBlock = getFacing();
+                                        protectLBlock = srcProLBlock;
+                                    }
+                                    ArrayList<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                                    String errorMessage = "";
+                                    try {
+                                        blocks  = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.NONE);
+                                    } catch (Exception e){
+                                        //can be considered normal if no free route is found
+                                        errorMessage = e.getMessage();
+                                    }
+                                    BestPath toadd = new BestPath(startlBlock, protectLBlock, destinationLBlock, blocks);
+                                    toadd.setErrorMessage(errorMessage);
+                                    pathList.add(toadd);
+                                } else {
+                                    ArrayList<LayoutBlock> blocks = new ArrayList<LayoutBlock>();
+                                    String errorMessage = "";
+                                    try {
+                                        blocks  = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.NONE);
+                                    } catch (Exception e){
+                                        //can be considered normal if no free route is found
+                                        errorMessage = e.getMessage();
+                                    }
+                                    BestPath toadd = new BestPath(startlBlock, protectLBlock, destinationLBlock, blocks);
+                                    toadd.setErrorMessage(errorMessage);
+                                    pathList.add(toadd);                                                                        
+                                }
+                            } catch (jmri.JmriException ex){
+                                JOptionPane.showMessageDialog(null, ex.getMessage());
+                                log.error("Exception " + ex.getMessage());
+                                src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                                point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
+                                return;
+                            }
+                        }
+                    }
+                    if(pathList.isEmpty()){
+                        return;
+                    }
+                    BestPath pathToUse = null;
+                    if(pathList.size()==1){
+                        if(!pathList.get(0).getListOfBlocks().isEmpty()){
+                            pathToUse = pathList.get(0);
+                        }
+                    } else {
+                        /*Need to filter out the remaining routes, in theory this should only ever be two.
+                          We simply pick at this stage the one with the least number of blocks as being preferred.
+                          This could be expanded at some stage to look at either the length or the metric*/
+                        int noOfBlocks=0;
+                        for(BestPath bp:pathList){
+                            if(!bp.getListOfBlocks().isEmpty()){
+                                if(noOfBlocks==0 || bp.getListOfBlocks().size()<noOfBlocks){
+                                    noOfBlocks = bp.getListOfBlocks().size();
+                                    pathToUse = bp;
                                 }
                             }
-                        } catch (jmri.JmriException ex){
-                            JOptionPane.showMessageDialog(null, ex.getMessage());
-                            log.error("Exception " + ex.getMessage());
+                        }
+                    }
+                    if(pathToUse==null){
+                        //No valid paths found so will quit
+                        if(pathList.get(0).getListOfBlocks().isEmpty()){
+                            JOptionPane.showMessageDialog(null, pathList.get(0).getErrorMessage());
+                            //Considered normal if not a valid through path
+                            log.error(mUserName + " " + pathList.get(0).getErrorMessage());
                             src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                             point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
                             return;
-                        }
+                        }                            
                     }
+                    startlBlock = pathToUse.getStartBlock();
+                    protectLBlock = pathToUse.getProtectingBlock();
+                    destinationLBlock = pathToUse.getDestinationBlock();
+                    routeDetails = pathToUse.getListOfBlocks();
+
                     if(log.isDebugEnabled()){
                         log.debug("Path chossen " + startlBlock.getDisplayName() + " " + destinationLBlock.getDisplayName() + " " +  protectLBlock.getDisplayName());
                     }
                     synchronized(this){
                         destination = destinationLBlock;
                     }
-                    try{
-                        routeDetails = InstanceManager.layoutBlockManagerInstance().getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*/);
+                    /*try{
+                        routeDetails = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*//*);
                     } catch (jmri.JmriException e){
                         JOptionPane.showMessageDialog(null, e.getMessage());
                             //Considered normal if not a valid through path
@@ -730,7 +848,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                             src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                             point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
                             return;
-                    }
+                    }*/
                     if (log.isDebugEnabled()){
                         for(LayoutBlock blk : routeDetails){
                             log.debug(blk.getDisplayName());

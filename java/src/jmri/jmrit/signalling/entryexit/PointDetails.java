@@ -2,6 +2,8 @@ package jmri.jmrit.signalling.entryexit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
@@ -29,6 +31,7 @@ public class PointDetails {
     LayoutEditor panel = null;
     LayoutBlock facing;
     LayoutBlock protecting;
+    ArrayList<LayoutBlock> protectingBlocks;
     private NamedBean refObj;
     private Object refLoc;
     private Sensor sensor;
@@ -40,13 +43,13 @@ public class PointDetails {
     Source sourceRoute;
     transient Hashtable<DestinationPoints, Source> destinations = new Hashtable<DestinationPoints, Source>(5);
     
-    public PointDetails(LayoutBlock facing, LayoutBlock protecting){
+    public PointDetails(LayoutBlock facing, List<LayoutBlock> protecting){
         this.facing=facing;
-        this.protecting = protecting;
+        this.protectingBlocks = (ArrayList)protecting;
     }
     
     LayoutBlock getFacing(){ return facing; }
-    LayoutBlock getProtecting(){ return protecting; }
+    List<LayoutBlock> getProtecting(){ return protectingBlocks; }
     
     //This might be better off a ref to the source pointdetail.
     boolean routeToSet = false;
@@ -69,8 +72,9 @@ public class PointDetails {
         if(sensor!=null)
             sensor.removePropertyChangeListener(nxButtonListener);
         sensor = sen;
-        if(sensor!=null)
+        if(sensor!=null){
             sensor.addPropertyChangeListener(nxButtonListener);
+        }
     }
     
     void addSensorList(){
@@ -180,7 +184,6 @@ public class PointDetails {
         sourceRoute=null;
         if(destinations.size()==0) {
             stopFlashSensor();
-            sensor.removePropertyChangeListener(nxButtonListener);
             setSensor(null);
         }
     }
@@ -637,7 +640,7 @@ public class PointDetails {
                 PointDetails tmp = (PointDetails)obj;
                 if(tmp.getFacing()!=this.facing)
                     return false;
-                if(tmp.getProtecting()!=this.protecting)
+                if(!tmp.getProtecting().equals(this.protecting))
                     return false;
                 if(tmp.getPanel()!=this.panel)
                     return false;

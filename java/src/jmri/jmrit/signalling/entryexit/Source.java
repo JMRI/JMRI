@@ -3,6 +3,7 @@ package jmri.jmrit.signalling.entryexit;
 import jmri.NamedBean;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.List;
 import jmri.SignalMast;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -47,17 +48,20 @@ public class Source {
         }
     }
     
-    public Source(PointDetails point){
+    public Source(PointDetails point/*, ArrayList<LayoutBlock> protectingBlock*/){
         if(point.getSensor()!=null){
             addSourceObject(point.getSensor());
         } else {
             addSourceObject(point.getSignal());
         }
+        //protectingBlocks = protectingBlock;
         point.setSource(this);
         sourceSignal = point.getSignal();
         pd = point;
         createPopUpMenu();
     }
+    
+    //ArrayList<LayoutBlock> protectingBlocks;
     
     void createPopUpMenu(){
         if(entryExitPopUp!=null)
@@ -125,7 +129,7 @@ public class Source {
         return pd.getFacing();
     }
     
-    LayoutBlock getSourceProtecting(){
+    List<LayoutBlock> getSourceProtecting(){
         return pd.getProtecting();
     }
     

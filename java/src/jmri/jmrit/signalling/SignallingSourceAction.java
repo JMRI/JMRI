@@ -25,7 +25,7 @@ public class SignallingSourceAction extends AbstractAction {
     }
     
     public SignallingSourceAction(String s, jmri.SignalMast source) {
-        super(s);
+        super(s + " : " + source.getDisplayName());
         this.source=source;
     }
     

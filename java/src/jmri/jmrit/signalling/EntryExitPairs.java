@@ -87,7 +87,7 @@ public class EntryExitPairs implements jmri.Manager{
     public EntryExitPairs(){
         if(InstanceManager.configureManagerInstance()!=null)
             InstanceManager.configureManagerInstance().registerUser(this);
-        InstanceManager.layoutBlockManagerInstance().addPropertyChangeListener(propertyBlockManagerListener);
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).addPropertyChangeListener(propertyBlockManagerListener);
         
         glassPane.setOpaque(false);
         glassPane.setLayout(null);
@@ -104,7 +104,7 @@ public class EntryExitPairs implements jmri.Manager{
 
     HashMap<PointDetails, Source> nxpair = new HashMap<PointDetails, Source>();
     
-    public void addNXSourcePoint(LayoutBlock facing, LayoutBlock protecting, NamedBean loc, LayoutEditor panel){
+    public void addNXSourcePoint(LayoutBlock facing, List<LayoutBlock> protecting, NamedBean loc, LayoutEditor panel){
         PointDetails point = providePoint(facing, protecting, panel);
         point.setRefObject(loc);
     }
@@ -236,17 +236,17 @@ public class EntryExitPairs implements jmri.Manager{
     private PointDetails providePoint(NamedBean source, LayoutEditor panel){
         PointDetails sourcePoint = getPointDetails(source, panel);
         if(sourcePoint==null){
-            LayoutBlock facing = InstanceManager.layoutBlockManagerInstance().getFacingBlockByNamedBean(source, panel);
-            LayoutBlock protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByNamedBean(source, panel);
+            LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, panel);
+            List<LayoutBlock> protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectingBlocksByNamedBean(source, panel);
             /*if(source instanceof SignalMast){
-                facing = InstanceManager.layoutBlockManagerInstance().getFacingBlockByMast((SignalMast)source, panel);
-                protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast((SignalMast)source, panel);
+                facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByMast((SignalMast)source, panel);
+                protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlockByMast((SignalMast)source, panel);
             } else if (source instanceof Sensor) {
-                facing = InstanceManager.layoutBlockManagerInstance().getFacingBlockBySensor((Sensor)source, panel);
-                protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlockBySensor((Sensor)source, panel);
+                facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockBySensor((Sensor)source, panel);
+                protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlockBySensor((Sensor)source, panel);
             } else if (source instanceof SignalHead){
-                facing = InstanceManager.layoutBlockManagerInstance().getFacingBlock((SignalHead)source, panel);
-                protecting = InstanceManager.layoutBlockManagerInstance().getProtectedBlock((SignalHead)source, panel);
+                facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlock((SignalHead)source, panel);
+                protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlock((SignalHead)source, panel);
             }*/
             if((facing==null) && (protecting==null)){
                 log.error("Unable to find facing and protecting block");
@@ -328,7 +328,7 @@ public class EntryExitPairs implements jmri.Manager{
    /**
     * Returns a point if already exists, or creates a new one if not.
     */
-    private PointDetails providePoint(LayoutBlock source, LayoutBlock protecting, LayoutEditor panel){
+    private PointDetails providePoint(LayoutBlock source, List<LayoutBlock> protecting, LayoutEditor panel){
         PointDetails sourcePoint = getPointDetails(source, protecting, panel);
         if(sourcePoint==null){
             sourcePoint = new PointDetails(source, protecting);
@@ -570,7 +570,7 @@ public class EntryExitPairs implements jmri.Manager{
     /*
     * Returns either an existing point, or creates a new one as required.
     */
-    PointDetails getPointDetails(LayoutBlock source, LayoutBlock destination, LayoutEditor panel){
+    PointDetails getPointDetails(LayoutBlock source, List<LayoutBlock> destination, LayoutEditor panel){
         PointDetails newPoint = new PointDetails(source, destination);
         newPoint.setPanel(panel);
         for (int i = 0; i<pointDetails.size(); i++){
@@ -626,7 +626,7 @@ public class EntryExitPairs implements jmri.Manager{
     public void automaticallyDiscoverEntryExitPairs(LayoutEditor editor, int interlockType) throws JmriException{
         //This is almost a duplicate of that in the DefaultSignalMastLogicManager
         runWhenStablised=false;
-        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.layoutBlockManagerInstance();
+        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
         if(!lbm.isAdvancedRoutingEnabled()){
             throw new JmriException("advanced routing not enabled");
         }
