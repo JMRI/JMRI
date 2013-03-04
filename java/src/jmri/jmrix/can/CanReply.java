@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.AbstractMRReply;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+
 /**
  * Base class for replies in a CANbus based message/reply protocol.
  * <P>
@@ -51,9 +53,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     
     // copy one
     @SuppressWarnings("null")
-	public  CanReply(CanReply m) {
-        if (m == null)
-            log.error("copy ctor of null message");
+	public  CanReply(@NonNull CanReply m) {
         _header = m._header;
         _isExtended = m._isExtended;
         _isRtr = m._isRtr;
@@ -66,9 +66,7 @@ public class CanReply extends AbstractMRReply implements CanMutableFrame {
     
     // copy type
     @SuppressWarnings("null")
-	public  CanReply(CanMessage m) {
-        if (m == null)
-            log.error("copy ctor of null message");
+	public  CanReply(@NonNull CanMessage m) {
         _header = m._header;
         _isExtended = m._isExtended;
         _isRtr = m._isRtr;

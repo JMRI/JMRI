@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.Programmer;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+
 /**
  * Encodes a message for direct DCC
  * <P>
@@ -25,9 +27,7 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
 
     // copy one
     @SuppressWarnings("null")
-	public  Message(Message m) {
-        if (m == null)
-            log.error("copy ctor of null message");
+	public  Message(@NonNull Message m) {
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
