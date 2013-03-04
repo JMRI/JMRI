@@ -129,6 +129,22 @@ public class JsonLister {
         return root;
     }
 
+    static public void setLight(String name, int state) throws JsonException {
+        switch (state) {
+            case Light.OFF:
+            case Light.ON:
+                try {
+                    InstanceManager.lightManagerInstance().getLight(name).setState(state);
+                } catch (NullPointerException e) {
+                    log.error("Unable to get light [" + name + "].", e);
+                    throw new JsonException(404, Bundle.getMessage("ErrorObject", LIGHT, name));
+                }
+                break;
+            default:
+                throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", LIGHT, state));
+        }
+    }
+
     static public JsonNode getLocation(String id) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LOCATION);
@@ -189,6 +205,19 @@ public class JsonLister {
             log.error("Unable to get memory: " + name + ".");
         }
         return root;
+    }
+
+    static public void setMemory(String name, String value, String valueType) throws JsonException {
+        try {
+            if (NULL.equals(valueType)) {
+                InstanceManager.memoryManagerInstance().getMemory(name).setValue(null);
+            } else {
+                InstanceManager.memoryManagerInstance().getMemory(name).setValue(value);
+            }
+        } catch (NullPointerException ex) {
+            log.error("Unable to get memory [" + name + "].");
+            throw new JsonException(500, ex);
+        }
     }
 
     static public JsonNode getMetadata() {
@@ -272,7 +301,7 @@ public class JsonLister {
             data.put(STATE, InstanceManager.powerManagerInstance().getPower());
         } catch (JmriException e) {
             root = handleError(500, Bundle.getMessage("ErrorPower"));
-            log.error("Unable to get Power state." + e);
+            log.error("Unable to get Power state.", e);
         }
         return root;
     }
@@ -322,6 +351,18 @@ public class JsonLister {
             reporters.add(getReporter(name));
         }
         return root;
+    }
+
+    static public void setReporter(String name, String value, String valueType) throws JsonException {
+        try {
+            if (NULL.equals(valueType)) {
+                InstanceManager.reporterManagerInstance().getReporter(name).setReport(null);
+            } else {
+                InstanceManager.reporterManagerInstance().getReporter(name).setReport(value);
+            }
+        } catch (NullPointerException ex) {
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", ROUTE, name));
+        }
     }
 
     static public JsonNode getRosterEntry(String id) {
@@ -378,7 +419,7 @@ public class JsonLister {
             root.put(TYPE, ERROR);
             data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", ROUTE, name));
-            log.error("Unable to get route." + e);
+            log.error("Unable to get route.", e);
         }
         return root;
     }
@@ -424,7 +465,7 @@ public class JsonLister {
             root.put(TYPE, ERROR);
             data.put(CODE, 404);
             data.put(MESSAGE, Bundle.getMessage("ErrorObject", SENSOR, name));
-            log.error("Unable to get sensor." + e);
+            log.error("Unable to get sensor.", e);
         }
         return root;
     }
@@ -445,13 +486,13 @@ public class JsonLister {
             switch (state) {
                 case Sensor.ACTIVE:
                 case Sensor.INACTIVE:
-                    sensor.setState(state);
+                    sensor.setKnownState(state);
                     break;
                 default:
                     throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SENSOR, state));
             }
         } catch (NullPointerException e) {
-            log.error("Unable to get turnout [" + name + "]." + e);
+            log.error("Unable to get sensor [" + name + "].", e);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", SENSOR, name));
         } catch (JmriException ex) {
             throw new JsonException(500, ex);
@@ -494,6 +535,27 @@ public class JsonLister {
             signalHeads.add(getSignalHead(name));
         }
         return root;
+    }
+
+    static public void setSignalHead(String name, int state) throws JsonException {
+        try {
+            SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+            boolean isValid = false;
+            for (int validState : signalHead.getValidStates()) {
+                if (state == validState) {
+                    isValid = true;
+                    break;
+                }
+            }
+            if (isValid && state != SignalHead.INCONSISTENT && state != SignalHead.UNKNOWN) {
+                signalHead.setAppearance(state);
+            } else {
+                throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SIGNAL_HEAD, state));
+            }
+        } catch (NullPointerException e) {
+            log.error("Unable to get signal head [" + name + "].", e);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
+        }
     }
 
     static public JsonNode getSignalMast(String name) {
@@ -539,6 +601,28 @@ public class JsonLister {
             signalMasts.add(getSignalMast(name));
         }
         return root;
+    }
+
+    // TODO: test for HELD and DARK aspects
+    static public void setSignalMast(String name, String value, String valueType) throws JsonException {
+        try {
+            SignalMast signalMast = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+            boolean isValid = false;
+            for (String validValue : signalMast.getValidAspects()) {
+                if (value.equals(validValue)) {
+                    isValid = true;
+                    break;
+                }
+            }
+            if (isValid) {
+                signalMast.setAspect(value);
+            } else {
+                throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SIGNAL_MAST, value));
+            }
+        } catch (NullPointerException e) {
+            log.error("Unable to get signal mast [" + name + "].", e);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
+        }
     }
 
     static public JsonNode getTrain(String id) {
@@ -606,7 +690,7 @@ public class JsonLister {
             data.put(STATE, turnout.getKnownState());
         } catch (NullPointerException e) {
             handleError(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
-            log.error("Unable to get turnout [" + name + "]." + e);
+            log.error("Unable to get turnout [" + name + "].", e);
         }
         return root;
     }
@@ -627,16 +711,14 @@ public class JsonLister {
             switch (state) {
                 case Turnout.THROWN:
                 case Turnout.CLOSED:
-                    turnout.setState(state);
+                    turnout.setCommandedState(state);
                     break;
                 default:
                     throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", TURNOUT, state));
             }
         } catch (NullPointerException e) {
-            log.error("Unable to get turnout [" + name + "]." + e);
+            log.error("Unable to get turnout [" + name + "].", e);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
-        } catch (JmriException ex) {
-            throw new JsonException(500, ex);
         }
     }
 

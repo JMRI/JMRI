@@ -135,4 +135,7 @@ public final class JSON {
     public static final String F = "F"; // NOI18N
     /* JSON Sensor and Turnout Tokens */
     public static final String INVERTED = "inverted"; // NOI18N
+    /* JSON value types */
+    public static final String NULL = "null"; // NOI18N
+    public static final String INTEGER = "int"; // NOI18N
 }

@@ -87,9 +87,11 @@ public class JsonServlet extends WebSocketServlet {
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
         int state = -1;
-        if (request.getParameter("state") != null) {
-            state = Integer.parseInt(request.getParameter("state"));
+        if (request.getParameter(STATE) != null) {
+            state = Integer.parseInt(request.getParameter(STATE));
         }
+        String value = request.getParameter(VALUE);
+        String valueType = request.getParameter(TYPE);
         String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
             String name = (rest.length > 2) ? rest[2] : null;
@@ -142,13 +144,9 @@ public class JsonServlet extends WebSocketServlet {
                         } else if (type.equals(ENGINE)) {
                             //JsonLister.setEngine(name,state);
                         } else if (type.equals(LIGHT)) {
-                            //JsonLister.setLight(name,state);
+                            JsonLister.setLight(name,state);
                         } else if (type.equals(LOCATION)) {
                             //JsonLister.setLocation(name, state);
-                        } else if (type.equals(MEMORY)) {
-                            //JsonLister.setMemory(name, state);
-                        } else if (type.equals(REPORTER)) {
-                            //JsonLister.setReporter(name, state);
                         } else if (type.equals(ROSTER_ENTRY)) {
                             //JsonLister.setRosterEntry(name, state);
                         } else if (type.equals(ROUTE)) {
@@ -156,13 +154,35 @@ public class JsonServlet extends WebSocketServlet {
                         } else if (type.equals(SENSOR)) {
                             JsonLister.setSensor(name, state);
                         } else if (type.equals(SIGNAL_HEAD)) {
-                            //JsonLister.setSignalHead(name, state);
-                        } else if (type.equals(SIGNAL_MAST)) {
-                            //JsonLister.setSignalMast(name, state);
+                            JsonLister.setSignalHead(name, state);
                         } else if (type.equals(TRAIN)) {
                             //JsonLister.setTrain(name, state);
                         } else if (type.equals(TURNOUT)) {
                             JsonLister.setTurnout(name, state);
+                        } else {
+                            // not a settable item
+                            throw new JsonException(400, type + " is not a settable type"); // need to I18N
+                        }
+                    } else if (value != null) {
+                        if (type.equals(CAR)) {
+                            //JsonLister.setCar(name, state);
+                        } else if (type.equals(ENGINE)) {
+                            //JsonLister.setEngine(name,state);
+                        } else if (type.equals(LOCATION)) {
+                            //JsonLister.setLocation(name, state);
+                        } else if (type.equals(MEMORY)) {
+                            JsonLister.setMemory(name, value, valueType);
+                        } else if (type.equals(REPORTER)) {
+                            JsonLister.setReporter(name, value, valueType);
+                        } else if (type.equals(ROSTER_ENTRY)) {
+                            //JsonLister.setRosterEntry(name, state);
+                        } else if (type.equals(SIGNAL_MAST)) {
+                            JsonLister.setSignalMast(name, value, valueType);
+                        } else if (type.equals(TRAIN)) {
+                            //JsonLister.setTrain(name, state);
+                        } else {
+                            // not a settable item
+                            throw new JsonException(400, type + " is not a settable type"); // need to I18N
                         }
                     }
                     if (type.equals(CAR)) {
