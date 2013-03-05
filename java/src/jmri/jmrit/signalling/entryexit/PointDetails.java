@@ -3,7 +3,6 @@ package jmri.jmrit.signalling.entryexit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Map.Entry;
 
@@ -30,8 +29,7 @@ public class PointDetails {
     //May want to look at putting a listener on the refLoc to listen to updates to blocks, signals and sensors attached to it
     LayoutEditor panel = null;
     LayoutBlock facing;
-    LayoutBlock protecting;
-    ArrayList<LayoutBlock> protectingBlocks;
+    List<LayoutBlock> protectingBlocks;
     private NamedBean refObj;
     private Object refLoc;
     private Sensor sensor;
@@ -45,7 +43,7 @@ public class PointDetails {
     
     public PointDetails(LayoutBlock facing, List<LayoutBlock> protecting){
         this.facing=facing;
-        this.protectingBlocks = (ArrayList)protecting;
+        this.protectingBlocks = protecting;
     }
     
     LayoutBlock getFacing(){ return facing; }
@@ -640,7 +638,7 @@ public class PointDetails {
                 PointDetails tmp = (PointDetails)obj;
                 if(tmp.getFacing()!=this.facing)
                     return false;
-                if(!tmp.getProtecting().equals(this.protecting))
+                if(!tmp.getProtecting().equals(this.protectingBlocks))
                     return false;
                 if(tmp.getPanel()!=this.panel)
                     return false;
@@ -653,7 +651,7 @@ public class PointDetails {
         int hash = 7;
         hash = 37 * hash + (this.panel != null ? this.panel.hashCode() : 0);
         hash = 37 * hash + (this.facing != null ? this.facing.hashCode() : 0);
-        hash = 37 * hash + (this.protecting != null ? this.protecting.hashCode() : 0);
+        hash = 37 * hash + (this.protectingBlocks != null ? this.protectingBlocks.hashCode() : 0);
         return hash;
     }
     

@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import jmri.SignalMast;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalMastIcon;
-import jmri.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
 

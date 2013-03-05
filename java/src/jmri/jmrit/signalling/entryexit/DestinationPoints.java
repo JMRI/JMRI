@@ -826,7 +826,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                             src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                             point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
                             return;
-                        }                            
+                        }
+                        pathToUse = pathList.get(0);
                     }
                     startlBlock = pathToUse.getStartBlock();
                     protectLBlock = pathToUse.getProtectingBlock();

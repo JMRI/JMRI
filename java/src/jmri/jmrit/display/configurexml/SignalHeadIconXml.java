@@ -8,7 +8,6 @@ import jmri.SignalHead;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SignalHeadIcon;
-import jmri.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
 import java.util.List;

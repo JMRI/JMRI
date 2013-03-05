@@ -1,8 +1,6 @@
 // AboutAction.java
 package apps;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.swing.AboutDialog;

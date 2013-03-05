@@ -4,13 +4,6 @@ package jmri.jmrix.can.adapters.gridconnect.net;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
-import jmri.jmrix.can.TrafficController;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.can.ConfigurationManager;
-import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
-
-import java.util.Vector;
 
 /**
  * Implements NetworkDriverAdapter for the MERG system network connection.

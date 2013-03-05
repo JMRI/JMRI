@@ -14,7 +14,6 @@ import java.awt.event.MouseEvent;
 
 import jmri.NamedBeanHandle;
 import jmri.InstanceManager;
-import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.swing.JmriBeanComboBox;
 
 import java.util.ResourceBundle;

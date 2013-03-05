@@ -14,7 +14,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
-import jmri.util.JmriJFrame;
 
 /**
  * A splash screen for showing during JMRI startup

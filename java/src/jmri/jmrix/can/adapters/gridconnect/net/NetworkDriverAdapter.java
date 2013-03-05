@@ -10,8 +10,6 @@ import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.can.ConfigurationManager;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
 
-import java.util.Vector;
-
 /**
  * Implements SerialPortAdapter for the OpenLCB system network connection.
  * <P>This connects via a telnet connection.
