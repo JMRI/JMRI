@@ -2,15 +2,11 @@
 
 package jmri.jmrit.roster;
 
+import java.awt.Component;
+import jmri.util.FileUtil;
+import org.jdom.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.Component;
-import java.awt.event.ActionEvent;
-
-import javax.swing.Action;
-import jmri.util.FileUtil;
-
-import org.jdom.Element;
 
 /**
  * Export a roster element as a new definition file.
@@ -46,14 +42,17 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         super(pName, pWho);
     }
     
+    @Override
     protected boolean selectFrom() {
         return selectExistingFromEntry();
     }
 
+    @Override
     boolean selectTo() {
         return selectNewToFile();
     }
 
+    @Override
     boolean doTransfer() {
 
         // read the file for the "from" entry and write it out
@@ -66,7 +65,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
 
         // read it
         LocoFile lf = new LocoFile();  // used as a temporary
-        Element lroot = null;
+        Element lroot;
         try {
             lroot = (Element)lf.rootFromName(mFullFromFilename).clone();
         } catch (Exception e) {
@@ -87,6 +86,7 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
         return true;
     }
 
+    @Override
     void updateRoster() {
         // exported entry is NOT added to Roster
     }
@@ -94,30 +94,4 @@ public class ExportRosterItemAction extends AbstractRosterItemAction  {
     // initialize logging
     static Logger log = LoggerFactory.getLogger(ExportRosterItemAction.class.getName());
 
-    /**
-     * Main entry point to run as standalone tool. This doesn't work
-     * so well yet:  It should take an optional command line argument,
-     * and should terminate when done, or at least let you delete
-     * another file.
-     */
-    public static void main(String s[]) {
-
-    	// initialize log4j - from logging control file (lcf) only
-    	// if can find it!
-    	String logFile = "default.lcf";
-    	try {
-            if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-            } else {
-                org.apache.log4j.BasicConfigurator.configure();
-            }
-        }
-        catch (java.lang.NoSuchMethodError e) { System.out.println("Exception starting logging: "+e); }
-
-        // log.info("CopyRosterItemAction starts");
-
-        // fire the action
-        Action a = new ExportRosterItemAction("Export Roster Item", new javax.swing.JFrame());
-        a.actionPerformed(new ActionEvent(a, 0, "dummy"));
-    }
 }

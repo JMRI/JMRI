@@ -1,13 +1,10 @@
 // DeleteRosterItemAction.java
 package jmri.jmrit.roster;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ResourceBundle;
-import javax.swing.Action;
 import javax.swing.Icon;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -16,6 +13,8 @@ import jmri.jmrit.roster.swing.RosterEntryComboBox;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Remove a locomotive from the roster.
@@ -162,33 +161,6 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
     }
     // initialize logging
     static Logger log = LoggerFactory.getLogger(DeleteRosterItemAction.class.getName());
-
-    /**
-     * Main entry point to run as standalone tool. This doesn't work so well
-     * yet: It should take an optional command line argument, and should
-     * terminate when done, or at least let you delete another file.
-     */
-    public static void main(String s[]) {
-
-        // initialize log4j - from logging control file (lcf) only
-        // if can find it!
-        String logFile = "default.lcf";
-        try {
-            if (new java.io.File(logFile).canRead()) {
-                org.apache.log4j.PropertyConfigurator.configure("default.lcf");
-            } else {
-                org.apache.log4j.BasicConfigurator.configure();
-            }
-        } catch (java.lang.NoSuchMethodError e) {
-            System.out.println("Exception starting logging: " + e);
-        }
-
-        // log.info("DeleteRosterItemAction starts");
-
-        // fire the action
-        Action a = new DeleteRosterItemAction("Delete Roster Item", new javax.swing.JFrame());
-        a.actionPerformed(new ActionEvent(a, 0, "dummy"));
-    }
 
     // never invoked, because we overrode actionPerformed above
     @Override

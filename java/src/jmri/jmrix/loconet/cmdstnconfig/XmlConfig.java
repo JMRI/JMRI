@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.cmdstnconfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.*;
 import org.jdom.*;
 import java.util.*;
 
@@ -57,35 +56,6 @@ static void dumpNode( Element node, int depth )
     while( children.hasNext() )
     {
       dumpNode(children.next(), depth );
-    }
-  }
-
-  public static void main(String[] args)
-  {
-    String logFile = "default.lcf";
-
-    try {
-        if (new java.io.File(logFile).canRead()) {
-            org.apache.log4j.PropertyConfigurator.configure(logFile);
-        } else {
-            org.apache.log4j.BasicConfigurator.configure();
-            org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.ERROR);
-        }
-    }
-    catch (java.lang.NoSuchMethodError e) { log.error("Exception starting logging: "+e); }
-
-    XmlConfig xmlconfig1 = new XmlConfig();
-    Element root ;
-    try
-    {
-      root = xmlconfig1.rootFromName("digitrax-cs-config.xml");
-      dumpNodes( root );
-    }
-    catch (IOException ex) {
-      log.warn( "Command Station Config XML File Not Found", ex );
-    }
-    catch (JDOMException ex) {
-      log.warn( "XML Error", ex );
     }
   }
 

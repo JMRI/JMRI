@@ -1070,7 +1070,7 @@
             depends="debug"
             description="rebuild the decoder index into the preferences directory">
         <antcall target="-run-jmri-application">
-             <param name="application.classname" value="jmri.jmrit.decoderdefn.DecoderIndexCreateAction"/>
+             <param name="application.classname" value="jmri.jmrit.decoderdefn.DecoderIndexBuilder"/>
         </antcall>
     </target>
 
