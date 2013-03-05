@@ -32,7 +32,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     
 	/** record the single instance **/
 	private static TrainScheduleManager _instance = null;
-	private static int _id = 0;
+	private int _id = 0;
 
 	public static synchronized TrainScheduleManager instance() {
 		if (_instance == null) {
