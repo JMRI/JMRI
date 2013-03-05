@@ -25,14 +25,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Provide JSON formatted responses for requests to GET requests for information
+ * from the JMRI Web Server.
  *
- * @author rhwood
+ * Note that unlike the XMLIO server, this server does not monitor items in
+ * response to a GET or POST request, but does provide a WebSocket for clients
+ * capable of using WebSockets to provide that capability.
+ *
+ * @author rhwood Copyright (C) 2012, 2013
  */
 public class JsonServlet extends WebSocketServlet {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -671593634343578915L;
     private ObjectMapper mapper;
     private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<JsonWebSocket>();
@@ -68,11 +71,17 @@ public class JsonServlet extends WebSocketServlet {
     }
 
     /**
-     * handle HTTP get requests for json data examples: /json/sensor/IS22
-     * (return data for sensor with systemname "IS22" /json/sensors (returns
-     * list of all sensors known to JMRI) example responses:
-     * {"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}
-     * {"type":"list","list":[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]}
+     * handle HTTP get requests for json data examples:
+     * <ul>
+     * <li>/json/sensor/IS22 (return data for sensor with systemname
+     * "IS22")</li>
+     * <li>/json/sensors (returns a list of all sensors known to JMRI)</li>
+     * </ul>
+     * sample responses:
+     * <ul>
+     * <li>{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}</li>
+     * <li>{"type":"list","list":[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]}</li>
+     * </ul>
      * note that data will vary for each type
      */
     @Override
@@ -91,6 +100,7 @@ public class JsonServlet extends WebSocketServlet {
             state = Integer.parseInt(request.getParameter(STATE));
         }
         String value = request.getParameter(VALUE);
+        String location = request.getParameter(LOCATION);
         String valueType = request.getParameter(TYPE);
         String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
@@ -139,24 +149,14 @@ public class JsonServlet extends WebSocketServlet {
             } else if (name != null) {
                 try {
                     if (state != -1) {
-                        if (type.equals(CAR)) {
-                            //JsonLister.setCar(name, state);
-                        } else if (type.equals(ENGINE)) {
-                            //JsonLister.setEngine(name,state);
-                        } else if (type.equals(LIGHT)) {
-                            JsonLister.setLight(name,state);
-                        } else if (type.equals(LOCATION)) {
-                            //JsonLister.setLocation(name, state);
-                        } else if (type.equals(ROSTER_ENTRY)) {
-                            //JsonLister.setRosterEntry(name, state);
+                        if (type.equals(LIGHT)) {
+                            JsonLister.setLight(name, state);
                         } else if (type.equals(ROUTE)) {
                             JsonLister.setRoute(name, state);
                         } else if (type.equals(SENSOR)) {
                             JsonLister.setSensor(name, state);
                         } else if (type.equals(SIGNAL_HEAD)) {
                             JsonLister.setSignalHead(name, state);
-                        } else if (type.equals(TRAIN)) {
-                            //JsonLister.setTrain(name, state);
                         } else if (type.equals(TURNOUT)) {
                             JsonLister.setTurnout(name, state);
                         } else {
@@ -164,25 +164,22 @@ public class JsonServlet extends WebSocketServlet {
                             throw new JsonException(400, type + " is not a settable type"); // need to I18N
                         }
                     } else if (value != null) {
-                        if (type.equals(CAR)) {
-                            //JsonLister.setCar(name, state);
-                        } else if (type.equals(ENGINE)) {
-                            //JsonLister.setEngine(name,state);
-                        } else if (type.equals(LOCATION)) {
-                            //JsonLister.setLocation(name, state);
-                        } else if (type.equals(MEMORY)) {
+                        if (type.equals(MEMORY)) {
                             JsonLister.setMemory(name, value, valueType);
                         } else if (type.equals(REPORTER)) {
                             JsonLister.setReporter(name, value, valueType);
-                        } else if (type.equals(ROSTER_ENTRY)) {
-                            //JsonLister.setRosterEntry(name, state);
                         } else if (type.equals(SIGNAL_MAST)) {
                             JsonLister.setSignalMast(name, value, valueType);
-                        } else if (type.equals(TRAIN)) {
-                            //JsonLister.setTrain(name, state);
                         } else {
                             // not a settable item
                             throw new JsonException(400, type + " is not a settable type"); // need to I18N
+                        }
+                    } else if (location != null) {
+                        if (type.equals(TRAIN)) {
+                            JsonLister.setTrainLocation(name, location);
+                        } else {
+                            // not a settable item
+                            throw new JsonException(400, "location cannot be set for type " + type); // need to I18N
                         }
                     }
                     if (type.equals(CAR)) {

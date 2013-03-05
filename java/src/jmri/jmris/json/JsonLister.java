@@ -677,6 +677,11 @@ public class JsonLister {
         return root;
     }
 
+    static public void setTrainLocation(String id, String location) {
+        Train train = TrainManager.instance().getTrainById(id);
+        train.move(location);
+    }
+
     static public JsonNode getTurnout(String name) {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TURNOUT);
