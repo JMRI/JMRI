@@ -382,10 +382,17 @@ public class Router extends TrainCommon {
 							+ ", " + track.getName() + ")"); // NOI18N
 				return true;
 			}
-//			if (!status.equals(Track.OKAY))
-//				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-//						.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
-//						track.getLocation().getName(), track.getName(), status }));
+			if (status.startsWith(Track.LENGTH) && firstTrain != null) {
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("RouterRoute2ForCar"), new Object[] { car.toString(),
+					car.getLocationName(), car.getTrackName(), testCar.getDestinationName(),
+					testCar.getDestinationTrackName(), car.getFinalDestinationName(),
+					car.getFinalDestinationTrackName() }));
+
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
+						track.getLocation().getName(), track.getName(), status }));
+			}
 
 			// restore car's destination
 			testCar.setDestination(saveDestation);
@@ -404,9 +411,13 @@ public class Router extends TrainCommon {
 	 * "other" and "last" location/tracks to create a route for the car.
 	 */
 	private boolean setCarDestinationMultipleTrains(Car car) {
-		if (lastLocationTracks.size() == 0)
+		if (lastLocationTracks.size() == 0) {
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCouldNotFind"), new Object[] {car.getFinalDestinationName()}));
 			return false;
-		log.debug("Multiple train routing begins");
+		}
+		
+		addLine(_buildReport, SEVEN, Bundle.getMessage("RouterMultipleTrains"));
+//		log.debug("Multiple train routing begins");
 		Car testCar = clone(car); // reload
 		// build the "first" and "other" location/tracks
 		// start with interchanges

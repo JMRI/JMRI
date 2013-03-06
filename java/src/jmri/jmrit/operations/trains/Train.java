@@ -1307,7 +1307,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!acceptsTypeName(rs.getType()) || !acceptsBuiltDate(rs.getBuilt())
 				|| !acceptsOwnerName(rs.getOwner()) || !acceptsRoadName(rs.getRoad())) {
 			if (debugFlag)
-				log.debug("Car (" + rs.toString() + ") not serviced by train");
+				log.debug("Car (" + rs.toString() + ") not serviced by train "+getName());
 			return false;
 		}
 		int length = Integer.parseInt(rs.getLength()) + Car.COUPLER;
@@ -1406,7 +1406,8 @@ public class Train implements java.beans.PropertyChangeListener {
 										break; // yes, done
 								}
 								if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
-									log.debug("Destination ("+rs.getDestinationName()+") can not service car ("+rs.toString()+")");
+									if (debugFlag)
+										log.debug("Destination ("+rs.getDestinationName()+") can not service car ("+rs.toString()+") using train ("+getName()+")");
 									continue;
 								}
 							}
