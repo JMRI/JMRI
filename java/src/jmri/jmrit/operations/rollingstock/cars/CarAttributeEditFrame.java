@@ -133,6 +133,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 	}
 
 	// add, delete, or replace button
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("edit frame button activated");
 		if (ae.getSource() == addButton) {

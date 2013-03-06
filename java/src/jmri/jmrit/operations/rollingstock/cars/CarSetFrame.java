@@ -400,6 +400,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			trainBox.setSelectedItem(_car.getTrain());
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	public void setDestinationEnabled(boolean enable) {
 		enableDestination = !enableDestination;
 		enableComponents(!locationUnknownCheckBox.isSelected());
