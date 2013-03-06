@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="John Crellin" version="9.2" lastUpdated="20130211"/>
   <version author="Michael Mosher" version="9" lastUpdated="20070730"/>
   <version author="Michael Mosher" version="8" lastUpdated="20061204"/>
   <version author="Michael Mosher" version="7" lastUpdated="20060921"/>
@@ -29,6 +30,7 @@
   <!-- Version 8 - High ver to 40 -->
   <!-- Version 9 - Added CV 23&24, & auto mars to light fx & re-itemize for better layout -->
   <!-- Version 9.1 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 9.2 20130211 Added Forward and Reverse trim to a new pane called TCS Other(jcrellin0661@gmail.com) -->
   <decoder>
     <family name="TCS X Series Decoders" mfg="Train Control Systems">
       <model model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
@@ -2136,6 +2138,16 @@
         </enumVal>
         <label>F6 controls output Motor</label>
       </variable>
+      <variable label="Forward Trim" CV="66" item="Forward Motor Trim" default="128" comment="Range 0-256">
+        <decVal max="256"/>
+        <label>Forward Motor Trim</label>
+        <comment>Range 0-256</comment>
+      </variable>
+      <variable label="Reverse Trim" CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
+        <decVal max="256"/>
+        <label>Reverse Motor Trim</label>
+        <comment>Range 0-256</comment>
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="2"/>
@@ -2247,6 +2259,7 @@
       </label>
     </column>
     <name>Momentum</name>
+    
   </pane>
   <pane name="Misc">
     <column>
@@ -2256,5 +2269,15 @@
       </label>
     </column>
     <name>Misc</name>
+  </pane>
+  <pane name="TCS Other">
+    <column>
+      <display item="Forward Motor Trim"/>
+      <display item="Reverse Motor Trim"/>
+      <label label="Values above 128 increase speed.  Values below 128 decrease speed">
+        <label>Values above 128 increase speed.  Values below 128 decrease speed</label>
+      </label>
+    </column>
+    <name>TCS Other</name>
   </pane>
 </decoder-config>
