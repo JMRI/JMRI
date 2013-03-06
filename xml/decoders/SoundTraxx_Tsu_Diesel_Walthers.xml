@@ -14,14 +14,31 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20111229"/>
-  <version author="Michael Mosher" version="2" lastUpdated="20130208"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20130220"/>
+  <version author="Michael Mosher" version="3" lastUpdated="20130220"/>
   <!-- This file contains the Tsunami definitions for Walthers OEM diesel locomotives	-->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.						-->
   <!-- version 2	make more use of extrenal includes -->
+  <!-- version 3	Add F7, GP60, & SD9 models -->
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Walthers OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Walthers Proto2000 Tsunami diesel decoders">
       <model model="E8" numOuts="4" numFns="14" connector="other" productID="E8" >
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="F7 El Capitan" numOuts="4" numFns="14" connector="other" productID="F7" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -51,17 +68,94 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
+      <model model="SD9 BNSF" numOuts="4" numFns="14" connector="other" productID="SD9BNSF" >
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="SD9 SOU" numOuts="4" numFns="14" connector="other" productID="SD9SOU" >
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="SD9 SP" numOuts="4" numFns="14" connector="other" productID="SD9SP" >
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="SD9 CR" numOuts="4" numFns="14" connector="other" productID="SD9SP" >
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Configuration Variable (CV) information follows -->
     <variables>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="3" tooltip="Sets the Primary (short, 2 digit) address">
+        <shortAddressVal/>
+        <label>Primary Address (1-127)</label>
+      </variable>
       <variable label="Start Voltage (0-255)" CV="2" item="Vstart" default="0" tooltip="Sets the starting voltage at throttle speed step 1">
         <decVal/>
         <label>Start Voltage (0-255)</label>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <variable label="Acceleration Rate (0-255)" CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+        <decVal/>
+        <label>Acceleration Rate (0-255)</label>
+      </variable>
+      <variable label="Braking Rate (0-255)" CV="4" item="Decel" default="0" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+        <decVal/>
+        <label>Braking Rate (0-255)</label>
+      </variable>
+      <variable label="Manufacturer Version ID" CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier (read only)">
+        <decVal/>
+        <label>Manufacturer Version ID</label>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
       <variable label="BEMF Cutout (0-127 or 128-255)" CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;     to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
         <label>BEMF Cutout (0-127 or 128-255)</label>
@@ -107,9 +201,61 @@
         <decVal/>
         <label>CV Lock ID Code (0-7)</label>
       </variable>
+      <variable label="Extended Address (0001-9999)" CV="17" item="Long Address" tooltip="Sets the Extended (long, 4 digit) address">
+        <longAddressVal/>
+        <label>Extended Address (0001-9999)</label>
+      </variable>
       <!-- Consisting Information follows -->
-      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
+      <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
+        <decVal max="127"/>
+        <label>Consist Address (0-127)</label>
+        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
+      </variable>
+      <variable label="Loco Direction In Consist" CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
+        <label>Loco Direction In Consist</label>
+        <comment>A consist address over 127 will also set this bit</comment>
+      </variable>
+      <variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F1</label>
+      </variable>
+      <variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F2</label>
+      </variable>
+      <variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F3</label>
+      </variable>
+      <variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F4</label>
+      </variable>
+      <variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F5</label>
+      </variable>
+      <variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F6</label>
+      </variable>
+      <variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F7</label>
+      </variable>
+      <variable label="Consist Address Activation for F8" CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F8</label>
+      </variable>
+      <variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F0(f) in Forward</label>
+      </variable>
+      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F0(r) in Reverse</label>
+      </variable>
       <variable label="Consist Address Active for F9" CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active for F9</label>
@@ -134,6 +280,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29address.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable label="CV Lock Enable" CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 3" default="0" tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLock.xml"/>
@@ -577,7 +724,13 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17HL.xml"/>
         <label>Headlight F0(f) Rule 17 Mode</label>
       </variable>
-      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs"
+		include="E8,F7,GP60">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>Headlight F0(f) Light Type</label>
+      </variable>
+      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" tooltip="Provides special compensation for lighting effect contrast when using LEDs"
+		include="SD9BNSF,SD9SOU,SD9SP">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Headlight F0(f) Light Type</label>
       </variable>
@@ -597,11 +750,28 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17RL.xml"/>
         <label>Backup Light F0(r) Rule 17 Mode</label>
       </variable>
-      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="Backup Light F0(r) Light Type" CV="50" default="0" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs"
+		include="E8,F7,GP60">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="2" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
+      <variable label="Backup Light F0(r) Light Type" CV="50" default="1" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs"
+		include="SD9BNSF,SD9SOU,SD9SP">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>Backup Light F0(r) Light Type</label>
+      </variable>
+      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="0" minOut="3" tooltip="Determines the effect generated from the FX5 light output"
+		include="GP60,SD9SOU,SD9SP">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5 Effect Selection</label>
+      </variable>
+      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="2" minOut="3" tooltip="Determines the effect generated from the FX5 light output"
+		include="E8,F7">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX5 Effect Selection</label>
+      </variable>
+      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="2" minOut="3" tooltip="Determines the effect generated from the FX5 light output"
+		include="SD9BNSF">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
       </variable>
@@ -617,7 +787,13 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX5.xml"/>
         <label>FX5 Rule 17 Mode</label>
       </variable>
-      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" default="0" tooltip="Provides special compensation for lighting effect contrast when using LEDs"
+		include="GP60,SD9SOU,SD9SP">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX5 Light Type</label>
+      </variable>
+      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" default="1" tooltip="Provides special compensation for lighting effect contrast when using LEDs"
+		include="E8,F7,SD9BNSF">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX5 Light Type</label>
       </variable>
@@ -661,7 +837,18 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX5B Light Type</label>
       </variable>
-      <variable label="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="9" minOut="4" tooltip="Determines the second effect associated with the FX6B light output">
+      <variable label="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="0" minOut="4" tooltip="Determines the second effect associated with the FX6B light output"
+		include="E8,F7,GP60,SD9SOU">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6B Effect Selection</label>
+      </variable>
+      <variable label="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="3" minOut="4" tooltip="Determines the second effect associated with the FX6B light output"
+		include="SD9SP">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
+        <label>FX6B Effect Selection</label>
+      </variable>
+      <variable label="FX6B Effect Selection" CV="54" mask="XXXXVVVV" default="7" minOut="4" tooltip="Determines the second effect associated with the FX6B light output"
+		include="SD9BNSF">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6B Effect Selection</label>
       </variable>
@@ -677,7 +864,13 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX6.xml"/>
         <label>FX6 Rule 17 Mode</label>
       </variable>
-      <variable label="FX6B Light Type" CV="54" mask="VXXXXXXX" default="0" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="FX6B Light Type" CV="54" mask="VXXXXXXX" default="0" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs"
+		exclude="SD9SP">
+        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
+        <label>FX6B Light Type</label>
+      </variable>
+      <variable label="FX6B Light Type" CV="54" mask="VXXXXXXX" default="0" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs"
+		include="SD9SP">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX6B Light Type</label>
       </variable>
@@ -685,19 +878,19 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Forward Directional Control</label>
       </variable>
-      <variable label="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="4" default="0" tooltip="Used to configure the directionality of FX5A function output">
+      <variable label="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX" minOut="4" default="1" tooltip="Used to configure the directionality of FX5A function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5 Reverse Directional Control</label>
       </variable>
-      <variable label="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" minOut="4" default="0" tooltip="Used to configure the directionality of FX5B function output">
+      <variable label="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX" minOut="4" default="1" tooltip="Used to configure the directionality of FX5B function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5B Forward Directional Control</label>
       </variable>
-      <variable label="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" minOut="4" default="0" tooltip="Used to configure the directionality of FX5B function output">
+      <variable label="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX" minOut="4" default="1" tooltip="Used to configure the directionality of FX5B function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX5B Reverse Directional Control</label>
       </variable>
-      <variable label="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" minOut="4" default="0" tooltip="Used to configure the directionality of FX6A function output">
+      <variable label="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX" minOut="4" default="1" tooltip="Used to configure the directionality of FX6A function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX6 Forward Directional Control</label>
       </variable>
@@ -705,7 +898,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX6 Reverse Directional Control</label>
       </variable>
-      <variable label="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" minOut="4" default="0" tooltip="Used to configure the directionality of FX6B function output">
+      <variable label="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX" minOut="4" default="1" tooltip="Used to configure the directionality of FX6B function output">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX6B Forward Directional Control</label>
       </variable>
@@ -713,6 +906,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>FX6B Reverse Directional Control</label>
       </variable>
+<!--   CV58 not in any Walthers factory file from Soundtraxx
       <variable label="FX5 Lighting Overide" CV="58" mask="XXXXXXXV" minOut="4" default="0" tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX5.xml"/>
         <label>FX5 Lighting Overide</label>
@@ -721,6 +915,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumOverideFX6.xml"/>
         <label>FX6 Lighting Overide</label>
       </variable>
+-->
       <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
@@ -826,19 +1021,49 @@
         <label>Alternate Airhorn Select</label>
       </variable>
       <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" tooltip="Selects which airhorn to use"
+		include="F7">
+        <enumVal>
+          <enumChoice choice="Leslie S5T">
+            <choice>Leslie S3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A125+A200">
+            <choice>Leslie A125+A200</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan M3">
+            <choice>Nathan M3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn"
+		include="F7">
+        <enumVal>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A125+A200">
+            <choice>Leslie A125+A200</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan M3">
+            <choice>Nathan M3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Airhorn Select</label>
+      </variable>
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" tooltip="Selects which airhorn to use"
 		include="GP60">
         <enumVal>
-          <enumChoice choice="Horn 1">
-            <choice>Horn 1</choice>
+          <enumChoice choice="Leslie S3L">
+            <choice>Leslie S3L</choice>
           </enumChoice>
-          <enumChoice choice="Horn 2">
-            <choice>Horn 2</choice>
-          </enumChoice>
-          <enumChoice choice="Horn 3">
-            <choice>Horn 3</choice>
-          </enumChoice>
-          <enumChoice choice="Horn 4">
-            <choice>Horn 4</choice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
           </enumChoice>
         </enumVal>
         <label>Airhorn Select</label>
@@ -849,14 +1074,68 @@
           <enumChoice choice="Short Horn">
             <choice>Short Horn</choice>
           </enumChoice>
-          <enumChoice choice="Horn 2">
-            <choice>Horn 2</choice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
           </enumChoice>
-          <enumChoice choice="Horn 3">
-            <choice>Horn 3</choice>
+        </enumVal>
+        <label>Alternate Airhorn Select</label>
+      </variable>
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="2" tooltip="Selects which airhorn to use"
+		include="SD9BNSF">
+        <enumVal>
+          <enumChoice choice="Leslie S3L">
+            <choice>Leslie S3L</choice>
           </enumChoice>
-          <enumChoice choice="Horn 4">
-            <choice>Horn 4</choice>
+          <enumChoice choice="Leslie A200+S5T">
+            <choice>Leslie A200+S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200+S2M">
+            <choice>Leslie A200+S2M</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="1" tooltip="Selects which airhorn to use"
+		include="SD9SOU">
+        <enumVal>
+          <enumChoice choice="Leslie S3L">
+            <choice>Leslie S3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200+S5T">
+            <choice>Leslie A200+S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200+S2M">
+            <choice>Leslie A200+S2M</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" tooltip="Selects which airhorn to use"
+		include="SD9SP">
+        <enumVal>
+          <enumChoice choice="Leslie S3L">
+            <choice>Leslie S3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200+S5T">
+            <choice>Leslie A200+S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200+S2M">
+            <choice>Leslie A200+S2M</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn"
+		include="SD9BNSF,SD9SOU,SD9SP">
+        <enumVal>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200+S5T">
+            <choice>Leslie A200+S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200+S2M">
+            <choice>Leslie A200+S2M</choice>
           </enumChoice>
         </enumVal>
         <label>Alternate Airhorn Select</label>
@@ -886,7 +1165,13 @@
         <decVal/>
         <label>Airhorn Volume</label>
       </variable>
-      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="128" tooltip="Sets the volume of the bell">
+      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="90" tooltip="Sets the volume of the bell"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal/>
+        <label>Bell Volume</label>
+      </variable>
+      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="128" tooltip="Sets the volume of the bell"
+		include="E8,F7">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
@@ -898,7 +1183,13 @@
         <decVal/>
         <label>Air Compressor Volume</label>
       </variable>
-      <variable label="Dynamic Brake Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="92" tooltip="Sets the volume of the dynamic brakes">
+      <variable label="Dynamic Brake Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="92" tooltip="Sets the volume of the dynamic brakes"
+		include="E8,F7">
+        <decVal/>
+        <label>Dynamic Brake Volume</label>
+      </variable>
+      <variable label="Dynamic Brake Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="120" tooltip="Sets the volume of the dynamic brakes"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
         <decVal/>
         <label>Dynamic Brake Volume</label>
       </variable>
@@ -926,36 +1217,84 @@
       <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
       <!-- appear on pane definitions in this file -->
       <!-- Equalizer Controls follow -->
-      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
+      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" tooltip="Selects one of six equalizer presets or selects a user adjustable profile"
+		include="E8,F7">
+         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
+        <label>Equalizer Control</label>
+      </variable>
+      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="7" tooltip="Selects one of six equalizer presets or selects a user adjustable profile"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
          <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEQ.xml"/>
         <label>Equalizer Control</label>
       </variable>
       <!-- Individual Cut/Boost Controls follow -->
-      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="E8,F7">
         <decVal/>
         <label>62 Hz Cut/Boost</label>
       </variable>
-      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal/>
+        <label>62 Hz Cut/Boost</label>
+      </variable>
+      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="E8,F7">
         <decVal/>
         <label>125 Hz Cut/Boost</label>
       </variable>
-      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal/>
+        <label>125 Hz Cut/Boost</label>
+      </variable>
+      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="E8,F7">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
       </variable>
-      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal/>
+        <label>250 Hz Cut/Boost</label>
+      </variable>
+      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="E8,F7">
         <decVal/>
         <label>500 Hz Cut/Boost</label>
       </variable>
-      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal/>
+        <label>500 Hz Cut/Boost</label>
+      </variable>
+      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="E8,F7">
         <decVal/>
         <label>1K Hz Cut/Boost</label>
       </variable>
-      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal/>
+        <label>1K Hz Cut/Boost</label>
+      </variable>
+      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="E8,F7">
         <decVal/>
         <label>2K Hz Cut/Boost</label>
       </variable>
-      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal/>
+        <label>2K Hz Cut/Boost</label>
+      </variable>
+      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="E8,F7">
+        <decVal/>
+        <label>4K Hz Cut/Boost</label>
+      </variable>
+      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
         <decVal/>
         <label>4K Hz Cut/Boost</label>
       </variable>
@@ -1044,11 +1383,23 @@
       </variable>
       <!-- End of variables for file-specific panes -->
       <!-- Advanced Motor Control Features follow -->
-      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation"
+		include="E8,F7">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal/>
+        <label>Motor Kp Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation"
+		include="E8,F7">
+        <decVal/>
+        <label>Motor Ki Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
@@ -1056,13 +1407,30 @@
         <decVal/>
         <label>Motor Control Intensity (0-255)</label>
       </variable>
-      <variable label="Motor Control Sample Period (0-31)" CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="15" tooltip="Specifies the time period in mS (milliseconds) between measurements">
+      <variable label="Motor Control Sample Period (0-31)" CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="15" tooltip="Specifies the time period in mS (milliseconds) between measurements"
+		include="E8,F7">
         <decVal max="31"/>
         <label>Motor Control Sample Period (0-31)</label>
       </variable>
-      <variable label="Motor Control Sample Aperture Time (0-255)" CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="15" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+      <variable label="Motor Control Sample Period (0-31)" CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="15" tooltip="Specifies the time period in mS (milliseconds) between measurements"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal max="31"/>
+        <label>Motor Control Sample Period (0-31)</label>
+      </variable>
+      <variable label="Motor Control Sample Aperture Time (0-255)" CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="15" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation"
+		include="E8,F7">
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
+      </variable>
+      <variable label="Motor Control Sample Aperture Time (0-255)" CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="15" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation"
+		include="GP60,SD9BNSF,SD9SOU,SD9SP">
+        <decVal/>
+        <label>Motor Control Sample Aperture Time (0-255)</label>
+      </variable>
+      <variable label="Analog Mode Engine Sound Start" CV="218" mask="VVVVVVVV" item="Sound Group 3 Option 8" default="20" 
+		exclude="E8">
+        <decVal/>
+        <label>Analog Mode Engine Sound Start</label>
       </variable>
       <!-- highest used so far: -->
       <!-- "Advanced Group 1 Option 8" -->
@@ -1070,7 +1438,7 @@
       <!-- "Sound Option 18"  -->
       <!-- "Sound Group 1 Option (none yet)" -->
       <!-- "Sound Group 2 Option (none yet)" -->
-      <!-- "Sound Group 3 Option 7" -->
+      <!-- "Sound Group 3 Option 8" -->
       <!-- "Sound Setting 25" -->
     </variables>
     <resets>

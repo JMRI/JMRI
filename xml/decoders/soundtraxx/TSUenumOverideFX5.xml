@@ -16,7 +16,7 @@
   <enumChoice choice="Normal FX5 operation">
     <choice>Normal FX5 operation</choice>
   </enumChoice>
-  <enumChoice choice="When FX5 is on, HL, BL and FX6 turn off">
-    <choice>When FX5 is on, HL, BL and FX6 turn off</choice>
+  <enumChoice choice="When FX5 is on, headlight, backup light and FX6 turn off">
+    <choice>When FX5 is on, headlight, backup light and FX6 turn off</choice>
   </enumChoice>
 </enumVal>
