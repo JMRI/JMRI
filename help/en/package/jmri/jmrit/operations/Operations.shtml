@@ -1217,9 +1217,12 @@ cars with those loads. </P>
    pick them up. You should configure the classification track to service the same car types and
    roads that the train services, otherwise you could end up with orphan cars.
 
-   <P>Note that it is okay to create more classification tracks then there are physical tracks
-    in your classification yard. The cars can share the same "slough" track until its time to
-    finally sort them into their various trains.</P>
+   <P>
+    Note that it is okay to create more classification tracks then there are physical tracks in your
+    classification yard. The cars can share the same "slough" track until its time to finally sort
+    them into their various trains. You can also use the <A HREF="#Pools">Track Pools</A> feature to
+    share the track space in your yard.
+   </P>
 
    <A NAME="Staging"></A>
    <H3>Staging Tracks</H3>
