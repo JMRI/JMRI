@@ -19,8 +19,22 @@ public class NamedBeanComparator extends SystemNameComparator {
     public NamedBeanComparator() {
     }
 
-    public int compare(Object nb1, Object nb2) {
-        return super.compare( ((NamedBean)nb1).getSystemName(), ((NamedBean)nb2).getSystemName());
+    public int compare(Object ob1, Object ob2) {
+    	String uName1 = ((NamedBean)ob1).getUserName();
+    	String uName2 = ((NamedBean)ob2).getUserName();
+    	if (uName2==null || uName2.trim().length()==0) {	
+        	if (uName1==null || uName1.trim().length()==0) {
+        		return super.compare(ob1, ob2);
+        	} else {
+        		return -1;
+        	}
+    	} else {    		
+        	if (uName1==null || uName1.trim().length()==0) {
+        		return 1;
+        	} else {
+                return uName1.compareTo(uName2);        		
+        	}
+    	}
     }
 }
 
