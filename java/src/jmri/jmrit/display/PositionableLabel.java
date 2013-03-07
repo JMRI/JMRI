@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.palette.ItemPalette;
 import java.awt.Dimension;
 
 import java.awt.Container;

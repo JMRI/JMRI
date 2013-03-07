@@ -3,7 +3,6 @@ package jmri.jmrit.display.configurexml;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
-import java.awt.Color;
 
 import org.jdom.Attribute;
 import org.jdom.Element;

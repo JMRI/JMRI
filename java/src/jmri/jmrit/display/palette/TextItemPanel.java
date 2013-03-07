@@ -1,12 +1,5 @@
 package jmri.jmrit.display.palette;
 
-//import java.awt.Color;
-//import java.awt.event.ActionListener;
-//import java.awt.event.ActionEvent;
-
-//import java.awt.datatransfer.Transferable; 
-
-import java.awt.FlowLayout;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -27,17 +20,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-//import javax.swing.TransferHandler;
 
-
-//import java.util.Hashtable;
-//import java.util.Iterator;
-
-import javax.swing.*;
-
-//import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.LinkingLabel;
 import jmri.jmrit.display.PositionableLabel;

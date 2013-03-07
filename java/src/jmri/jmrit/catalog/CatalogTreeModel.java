@@ -4,7 +4,6 @@ package jmri.jmrit.catalog;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.XmlFile;
 import java.io.File;
 
 import javax.swing.tree.DefaultMutableTreeNode;

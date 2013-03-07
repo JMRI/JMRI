@@ -5,7 +5,6 @@ package jmri.util.swing;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-import java.io.File;
 import javax.swing.*;
 import org.jdom.*;
 import java.beans.PropertyChangeListener;

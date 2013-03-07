@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 
 import java.awt.event.*;
-import java.util.*;
 
 import javax.swing.*;
 

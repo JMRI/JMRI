@@ -34,7 +34,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.CatalogPanel;
