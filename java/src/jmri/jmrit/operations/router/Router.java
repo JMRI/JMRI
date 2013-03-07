@@ -308,7 +308,7 @@ public class Router extends TrainCommon {
 		List<Track> tracks = LocationManager.instance().getTracks(trackType);// restrict to yards, interchanges, or staging
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
-			String status = testCar.testLocation(track.getLocation(), track);
+			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
 				continue;
 			if (debugFlag)
@@ -416,8 +416,7 @@ public class Router extends TrainCommon {
 			return false;
 		}
 		
-		addLine(_buildReport, SEVEN, Bundle.getMessage("RouterMultipleTrains"));
-//		log.debug("Multiple train routing begins");
+		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterMultipleTrains"), new Object[] {car.getFinalDestinationName()}));
 		Car testCar = clone(car); // reload
 		// build the "first" and "other" location/tracks
 		// start with interchanges
@@ -432,7 +431,7 @@ public class Router extends TrainCommon {
 			loadTracks(car, testCar, tracks);	
 		}
 		if (firstLocationTracks.size() == 0) {
-			log.debug("No first location tracks, routing done");
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCouldNotFindLoc"), new Object[] {car.getLocationName()}));
 			return false;
 		}
 		// tracks that could be the very next destination for the car
@@ -684,7 +683,7 @@ public class Router extends TrainCommon {
 	private void loadTracks(Car car, Car testCar, List<Track> tracks) {
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
-			String status = testCar.testLocation(track.getLocation(), track);
+			String status = track.accepts(testCar);
 			if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
 				if (debugFlag)
 					log.debug("Found " + track.getLocType() + " track (" + track.getLocation().getName() + ", "
