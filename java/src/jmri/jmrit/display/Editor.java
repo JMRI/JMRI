@@ -16,7 +16,6 @@ import javax.swing.*;
 import javax.swing.Timer;  // disambiguate java.util.Timer
 import javax.swing.event.ListSelectionEvent;
 
-import jmri.CatalogTree;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Reporter;
@@ -2287,13 +2286,19 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _selectionGroup = new ArrayList <Positionable>();
         }
         boolean removed = false;
-        if (selection.getDisplayLevel()>BKG || event.isControlDown()) {
-            if (_selectionGroup.contains(selection)) {
-                removed = _selectionGroup.remove(selection);
-            } else {
-                if (event.isShiftDown()) {
+        if (event.isControlDown()) {
+        	if (selection.getDisplayLevel()>BKG) {
+                if (_selectionGroup.contains(selection)) {
+                    removed = _selectionGroup.remove(selection);
+                } else {
                     _selectionGroup.add(selection);
-                }
+                }        		
+        	} else if (event.isShiftDown()) {
+                if (_selectionGroup.contains(selection)) {
+                    removed = _selectionGroup.remove(selection);
+                } else {
+                    _selectionGroup.add(selection);
+                }        		
             }
         }
         if (_debug) {
