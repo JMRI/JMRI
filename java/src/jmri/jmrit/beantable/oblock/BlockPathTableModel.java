@@ -222,10 +222,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     if (_block.getPathByName(strValue)!=null) {
                         msg = java.text.MessageFormat.format(
                                 rbo.getString("DuplPathName"), strValue); 
-                    } else {
-                        path.setName(strValue);
-                        fireTableRowsUpdated(row,row);
-                    }
+                     }
+                    path.setName(strValue);
+                    fireTableRowsUpdated(row,row);
                 }
                 break;
             case TO_PORTAL_COLUMN:

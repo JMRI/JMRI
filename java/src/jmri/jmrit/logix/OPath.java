@@ -91,8 +91,15 @@ public class OPath extends jmri.Path  {
 
     public void setName(String name) { 
         if (name == null || name.length()==0) { return; }
-        if (_name.equals(name)) { return; }
-        _name = name; 
+        _name = name;
+        if (_fromPortal!=null) {
+        	if (_fromPortal.addPath(this)) {
+        		return;
+        	}
+        }
+        if (_toPortal!=null) {
+        	_toPortal.addPath(this);
+        }
     }
     
     public String getName() { return _name; }

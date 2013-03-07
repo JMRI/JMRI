@@ -51,11 +51,8 @@ public class Portal  {
             log.error("Path \""+path.getName()+"\" has no block.");
             return false;
         }
-        //if (log.isDebugEnabled()) log.debug("addPath: "+toString());
         if (!this.equals(path.getFromPortal()) &&
                 !this.equals(path.getToPortal()) ){
-        //    log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
-        //        "\" does not pass through Portal \""+_portalName+"\".");
             return false;
         }
         if (_fromBlock != null && _fromBlock.equals(block)) {
@@ -66,9 +63,6 @@ public class Portal  {
             if (!_toPaths.contains(path))  {
                 return addPath(_toPaths, path);
             }
-        } else {
-        //    log.warn("Path \""+path.getName()+"\" in block \""+block.getSystemName()+
-        //        "\" is not in either of the blocks of Portal \""+_portalName+"\".");
         }
         // path already in one of the path lists
         return true;
@@ -448,6 +442,29 @@ public class Portal  {
         return true;
     }
 
+    /**
+     * Check if path connects to Portal
+     * @param path
+     * @return
+     */
+    public boolean isValidPath(OPath path) {
+    	String name = path.getName();
+    	for (int i=0; i<_toPaths.size(); i++) {
+    		if (_toPaths.get(i).getName()==name) {
+    			return true;
+    		}
+    	}
+    	for (int i=0; i<_fromPaths.size(); i++) {
+    		if (_fromPaths.get(i).getName()==name) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    /**
+     * Check portal has both blocks
+     * @return
+     */
     public boolean isValid() {
         return (_fromBlock!=null && _toBlock!=null);
     }
