@@ -47,7 +47,9 @@
         <xs:element name="turnouticon"       type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensoricon"        type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memoryicon"        type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="memoryInputIcon"   type="EditorMemoryInputIconType"   minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalheadicon"    type="EditorSignalHeadIconType"    minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalmasticon"     type="EditorSignalMastIconType"    minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="reportericon"      type="EditorReporterIconType"      minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutturnout"     type="EditorLayoutTurnoutType"     minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="multisensoricon"   type="EditorMultiSensorIconType"   minOccurs="0" maxOccurs="unbounded" />
@@ -69,6 +71,10 @@
       <xs:attribute name="showtooltips" type="yesNoType" default="yes"/>
       <xs:attribute name="panelmenu" type="yesNoType" default="yes"/>
       <xs:attribute name="scrollable" type="scrollableType"/>
+      <xs:attribute name="redBackground" type="xs:int" />
+      <xs:attribute name="greenBackground" type="xs:int" />
+      <xs:attribute name="blueBackground" type="xs:int" />
+      <xs:attribute name="state" type="xs:int" />
 
     </xs:complexType>
 

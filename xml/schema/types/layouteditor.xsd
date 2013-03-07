@@ -46,6 +46,7 @@
         <xs:element name="turnouticon"        type="EditorTurnoutIconType"       minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensoricon"         type="EditorSensorIconType"        minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memoryicon"         type="EditorMemoryIconType"        minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="memoryInputIcon"    type="EditorMemoryInputIconType"   minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalheadicon"     type="EditorSignalHeadIconType"    minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="signalmasticon"     type="EditorSignalMastIconType"    minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="reportericon"       type="EditorReporterIconType"      minOccurs="0" maxOccurs="unbounded" />
