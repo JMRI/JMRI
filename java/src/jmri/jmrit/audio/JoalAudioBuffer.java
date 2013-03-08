@@ -10,7 +10,6 @@ import net.java.games.joal.AL;
 import net.java.games.joal.ALException;
 import net.java.games.joal.util.ALut;
 import java.io.InputStream;
-import java.util.HashMap;
 
 /**
  * JOAL implementation of the Audio Buffer sub-class.

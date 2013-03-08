@@ -9,6 +9,7 @@
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The xmlio element name is used to send changes to xmlio server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
+ *    An internal heartbeat sensor is used to avoid one browser holding multiple server connections (refresh, links, etc.)
  *  Loop: 	1) request panel and process the returned panel xml, placing/drawing widgets on panel, and saving info as needed
  *  		2) send list of current states to server and wait for changes
  *  		3) receive change? set related widget(s) states, redraw widget(s), and go back to 2)
@@ -18,7 +19,7 @@
  *  TODO: handle turnoutdrawunselectedleg = "yes" for crossovers
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
- *  TODO: research movement of locoicons
+ *  TODO: research movement of locoicons (will require "promoting" locoicon to system entity)
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
  *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
@@ -29,7 +30,6 @@
  *  TODO: deal with mouseleave, mouseout, touchout, etc. Slide off Stop button on rb1 for example.
  *  TODO: make turnout, levelXing occupancy work like LE panels (more than just checking A)
  *  TODO: draw dashed curves
- *  TODO: figure out FireFox issue using size of alt text for rotation of unloaded images
  *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: improve visual of multisensorclick by sending all state changes in one message
@@ -359,17 +359,7 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 						break;
 					case "linkinglabel" :
 						$url = $(this).find('url').text();
-						$widget['url'] = $url; //default to using url value as is 		
-						if ($url.toLowerCase().indexOf("frame:") == 0) {
-							$frameName = $url.substring(6); //if "frame" found, remove it
-							$frameType = $gPanelList[$frameName];  //find panel type in panel list
-							if ($frameType == undefined) {  
-								$url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver  
-							} else {  
-								$url = "?name=" + $frameType + "/" + $frameName; //format for panel server  
-							}
-						}
-						$widget['text'] = "<a href='" + $url + "' >" + $widget.text + "</a>"; //add link around text
+						$widget['url'] = $url; //just store url value in widget, for use in click handler 		
 						if ($widget.forcecontroloff != "true") {
 							$widget.classes += 		$widget.element + " clickable ";
 						}
@@ -478,11 +468,14 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 			}  //end of function
 	);  //end of each
 
-	//hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor
-	$('.clickable:not(.momentary):not(.multisensoricon)').bind(UPEVENT, $handleClick);
+	//hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor and linkinglabel
+	$('.clickable:not(.momentary):not(.multisensoricon):not(.linkinglabel)').bind(UPEVENT, $handleClick);
 	
 	//hook up mouseup state change function to multisensor (special handling)
 	$('.clickable.multisensoricon').bind(UPEVENT, $handleMultiClick);
+	
+	//hook up mouseup function to linkinglabel (special handling)
+	$('.clickable.linkinglabel').bind(UPEVENT, $handleLinkingLabelClick);
 	
 	//momentary widgets always go active on mousedown, and inactive on mouseup, current state is ignored
 	$('.clickable.momentary').bind(DOWNEVENT, function(e) {
@@ -491,17 +484,18 @@ var $processPanelXML = function($returnedData, $success, $xhr) {
 		$sendElementChange($gWidgets[this.id].element, $gWidgets[this.id].name, INACTIVE);  //send inactive on up
 	});
 	
-	$drawAllDrawnWidgets(); //draw all the widgets once more, to address some bidrectional dependencies in the xml
+	$drawAllDrawnWidgets(); //draw all the drawn widgets once more, to address some bidirectional dependencies in the xml
 	$('div#workingMessage').hide();
 	$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>'); //send initial states to xmlio server
 	endAndStartTimer(); //initiate the heartbeat timer
+
 //	window.setTimeout(function(){  //wait three seconds and then redraw icon widgets, to (hopefully) give them a chance to load
 //		$drawAllIconWidgets();  //TODO: not working, as non-FF browsers will scale objects _again_
 //	}, 3000);
 
 };    	
 
-//perform regular click-handling, bound to click event for clickable, non-momentary widgets.
+//perform regular click-handling, bound to click event for clickable, non-momentary widgets, except for multisensor and linkinglabel.
 function $handleClick(e) {
 	var $widget = $gWidgets[this.id];
     var $newState = $getNextState($widget);  //determine next state from current state
@@ -549,6 +543,23 @@ function $handleMultiClick(e) {
 		}
 	};
 };
+
+//perform click-handling of linkinglabel widgets (3 cases: complete url or frame:<name> where name is a panel or a frame)
+function $handleLinkingLabelClick(e) {
+	var $widget = $gWidgets[this.id];
+	var $url = $widget.url; 
+	if ($url.toLowerCase().indexOf("frame:") == 0) {
+		$frameName = $url.substring(6); //if "frame" found, remove it
+		$frameType = $gPanelList[$frameName];  //find panel type in panel list
+		if ($frameType == undefined) {  
+			$url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver  
+		} else {  
+			$url = "?name=" + $frameType + "/" + $frameName; //format for panel server  
+		}
+	}
+	window.location = $url;  //navigate to the specified url
+};
+
 
 //draw a Circle (color and width are optional)
 function $drawCircle($ptx, $pty, $radius, $color, $width) {
@@ -690,19 +701,6 @@ function $drawIcon($widget) {
 		$imgHtml = "<img id=" + $widget.id + " class='" + $widget.classes +
 		"' src='" + $widget["icon"+$widget['state']] + "' " + $hoverText + "/>"
 
-		//if url is set for icon, wrap image in <a> tag
-		if ($widget.url  != undefined) {
-			if ($url.toLowerCase().indexOf("frame:") == 0) {
-				$frameName = $url.substring(6); //if "frame" found, remove it
-				$frameType = $gPanelList[$frameName];  //find panel type in panel list
-				if ($frameType == undefined) {  
-					$url = "/frame/" + $frameName + ".html"; //not in list, open using frameserver  
-				} else {  
-					$url = "?name=" + $frameType + "/" + $frameName; //format for panel server  
-				}
-			}
-			$imgHtml = "<a href='" + $url + "' >" + $imgHtml + "</a>"; //add link around icon
-		}
 		$("div#panelArea").append($imgHtml);  //put the html in the panel
 
 		//add in overlay text if specified  (append "overlay" to id to keep them unique)
@@ -1219,7 +1217,7 @@ var $sendXMLIOList = function($commandstr){
 			$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
 		},
 		async: true,
-		timeout: $gTimeout * 3 * 1000,  //triple the time timeout
+		timeout: $gTimeout * 3 * 1000,  //triple the heartbeat timeout
 		dataType: 'xml' //<--dataType
 	});
 };
@@ -1382,7 +1380,7 @@ var $requestPanelXML = function($panelName){
 //preload all images referred to by the widget
 var $preloadWidgetImages = function($widget) {
 	for (k in $widget) {
-		if (k.indexOf('icon') == 0 && $widget[k] != undefined) { //if attribute names starts with 'icon', it's an image, so preload it
+		if (k.indexOf('icon') == 0 && $widget[k] != undefined && $widget[k] != "yes") { //if attribute names starts with 'icon', it's an image, so preload it
 			$("<img src='" + $widget[k]  + "'/>");		}
 	};
 };    	
@@ -1432,7 +1430,7 @@ var $getWidgetFamily = function($widget) {
 	return; //unrecognized widget returns undefined
 };    	
 
-var timer;  //persistent var used by this function
+var timer;  //persistent timer object used by this function
 function endAndStartTimer() {
 	window.clearTimeout(timer);
 	if ($gWidgets["ISXMLIOHEARTBEAT"] != undefined) { //don't bother if widgets not loaded
@@ -1512,7 +1510,7 @@ $(document).ready(function() {
 		$widget['safeName']	= $widget['name'];
 		$widget['state'] = UNKNOWN;
 		$gWidgets[$widget.id] = $widget;
-
+		
 		//add a widget to retrieve current fastclock rate
 		$widget = new Array();
 		$widget['element'] = "memory";
@@ -1523,11 +1521,19 @@ $(document).ready(function() {
 		$gWidgets[$widget.id] = $widget;
 
 		//request actual xml of panel, and process it on return
-		// NOTE: uses settimeout to release control and allow panel list to populate
+		// NOTE: uses settimeout simply to release control and allow panel list to populate
 		setTimeout(function() {
 			$requestPanelXML($panelName);
 		},
 		100);
+		
+		//queue a change to the heartbeat sensor, to insure previous instances of this page are not left hanging
+		setTimeout(function() {
+			var $nextState = $getNextState($gWidgets["ISXMLIOHEARTBEAT"]);
+			$gWidgets["ISXMLIOHEARTBEAT"].state = $nextState; 
+			$sendElementChange("sensor", "ISXMLIOHEARTBEAT", $nextState)
+		},
+		1000);  //one second
 	}
 	
 });

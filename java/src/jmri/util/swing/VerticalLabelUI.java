@@ -2,8 +2,6 @@
 
 package jmri.util.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;

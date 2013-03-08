@@ -1757,8 +1757,8 @@ public class TrainBuilder extends TrainCommon {
 					continue;
 				}
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle
-						.getMessage("buildCarRoutingBegins"), new Object[] { car.toString(),
-					car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
+						.getMessage("buildCarRoutingBegins"), new Object[] { car.toString(), car.getType(),
+					car.getLoad(), car.getLocationName(), car.getTrackName(), car.getFinalDestinationName(),
 					car.getFinalDestinationTrackName() }));
 				if (!Router.instance().setDestination(car, train, buildReport)) {
 					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
@@ -2609,6 +2609,8 @@ public class TrainBuilder extends TrainCommon {
 				car.setLoad(oldCarLoad);
 				continue;
 			}
+			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrySpurLoad"),
+					new Object[] { track.getLocation().getName(), track.getName(), car.getLoad() }));
 			if (!track.isSpaceAvailable(car)) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
 						new Object[] { car.toString(), track.getLocation().getName(), track.getName(),

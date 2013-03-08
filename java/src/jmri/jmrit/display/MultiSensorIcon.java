@@ -5,9 +5,8 @@ import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Sensor;
-//import jmri.jmrit.picker.PickListModel;
+
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.display.palette.MultiSensorItemPanel;
 import jmri.jmrit.picker.PickListModel;
 

@@ -4,7 +4,6 @@ package jmri.jmrit.audio;
 
 import jmri.Audio;
 import javax.vecmath.Vector3f;
-import java.util.List;
 import java.util.Queue;
 
 

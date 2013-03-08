@@ -14,11 +14,13 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20100430"/>
   <version author="Michael Mosher" version="2" lastUpdated="20100717"/>
+  <version author="John Crellin" version="2.2" lastUpdated="20130212"/>
   <!-- V1: - Created from TCS_bemf -->
   <!-- V2: - Added EU621 & LL8 decoders -->
   <!-- Version 2.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 2.2- 20130212 Added Forward and reverse Trim. Updated version option -->
   <decoder>
-    <family name="TCS V51+" mfg="Train Control Systems" comment="TCS Ver 51 on" lowVersionID="51" highVersionID="52">
+    <family name="TCS V51+" mfg="Train Control Systems" comment="TCS Ver 51 on" lowVersionID="51" highVersionID="99">
       <model model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
@@ -1917,6 +1919,16 @@
       <variable label="Year of Decoder Manufacture" CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
         <decVal/>
       </variable>
+      <variable label="Forward Trim" CV="66" item="Forward Motor Trim" default="128" comment="Range 0-256">
+        <decVal max="256"/>
+        <label>Forward Motor Trim</label>
+        <comment>Range 0-256</comment>
+      </variable>
+      <variable label="Reverse Trim" CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
+        <decVal max="256"/>
+        <label>Reverse Motor Trim</label>
+        <comment>Range 0-256</comment>
+      </variable>  
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="2"/>
@@ -1977,6 +1989,11 @@
   </pane>
   <pane name="TCS">
     <column>
+      <display item="Forward Motor Trim"/>
+      <display item="Reverse Motor Trim"/>
+      <label label="Values above 128 increase speed.  Values below 128 decrease speed"/>
+      <label label=" "/>
+      <label label=" "/>
       <label label="TCS decoders support a decoder locking feature"/>
       <label label="useful when several decoders are used in one loco"/>
       <label label="on the same address, e.g. for adding sound"/>

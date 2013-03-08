@@ -349,9 +349,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 					Car car = carManager.getById(carList.get(k));
 					// determine if car is a pick up from the right track
 					if (car.getTrack() != null
-							&& (!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
-									car.getTrack().getName())
-									.equals(TrainCommon.splitString(track.getName())))
+							&& (!Setup.isSortByTrackEnabled() || car.getTrack().getName().equals(track.getName()))
 							&& car.getRouteLocation() == rl && car.getRouteDestination() == rld
 							&& car.getRouteDestination() != rl) {
 						// yes we have a pick up
@@ -390,16 +388,12 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 				Car car = carManager.getById(carList.get(j));
 				if (!car.getTrackName().equals("")
 						&& car.getDestinationTrack() != null
-						&& (!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
-								car.getDestinationTrack().getName()).equals(
-								TrainCommon.splitString(track.getName())))
+						&& (!Setup.isSortByTrackEnabled() || car.getDestinationTrack().getName().equals(track.getName()))
 						&& (car.getRouteLocation() != rl && car.getRouteDestination() == rl)
 						|| (car.getTrackName().equals("")
 								&& car.getDestinationTrack() != null
-								&& (!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
-										car.getDestinationTrack().getName()).equals(
-										TrainCommon.splitString(track.getName()))) && car
-								.getRouteDestination() == rl)) {
+								&& (!Setup.isSortByTrackEnabled() || car.getDestinationTrack().getName().equals(track.getName())) 
+								&& car.getRouteDestination() == rl)) {
 					setoutPane.setVisible(true);
 					if (!rollingStock.contains(car)) {
 						rollingStock.add(car);
@@ -427,8 +421,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 					}
 				// local move?
 				} else if (!car.getTrackName().equals("") && car.getDestinationTrack() != null 
-						&&(!Setup.isSortByTrackEnabled() || TrainCommon.splitString(
-						car.getDestinationTrack().getName()).equals(TrainCommon.splitString(track.getName())))
+						&&(!Setup.isSortByTrackEnabled() || car.getDestinationTrack().getName().equals(track.getName()))
 						&& car.getRouteLocation() == rl
 						&& car.getRouteDestination() == rl) {
 					movePane.setVisible(true);

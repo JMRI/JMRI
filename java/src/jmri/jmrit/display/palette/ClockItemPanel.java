@@ -26,8 +26,6 @@ import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.AnalogClock2Display;
-import jmri.jmrit.display.LinkingLabel;
-import jmri.jmrit.display.PositionableLabel;
 
 /**
 *  ItemPanel for for plain icons and backgrounds 

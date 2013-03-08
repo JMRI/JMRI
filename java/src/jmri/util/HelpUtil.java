@@ -16,7 +16,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.util.Locale;
 
 import java.net.URL;

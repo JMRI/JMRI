@@ -3,10 +3,10 @@
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!-- $Id: enum-NormRev.xml 22114 2012-12-30 02:14:28Z jacobsen $ -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <enumChoice choice="forward">
-    <choice>forward</choice>
+  <enumChoice choice="normal">
+    <choice>normal</choice>
   </enumChoice>
-  <enumChoice choice="reverse">
-    <choice>reverse</choice>
+  <enumChoice choice="reversed">
+    <choice>reversed</choice>
   </enumChoice>
 </enumVal>

@@ -55,7 +55,7 @@ import jmri.util.HelpUtil;
  * 
  */
 
-public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner, KeyListener {
+public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner/*, KeyListener*/ {
 
     public boolean _debug;
     protected JMenuBar _menuBar;
@@ -135,7 +135,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         InstanceManager.configureManagerInstance().registerUser(this);
         pack();
         setVisible(true);
-        addKeyListener(this);
+ //       addKeyListener(this);
     }
     
     public void setDrawFrame(jmri.jmrit.display.controlPanelEditor.shape.DrawFrame f) {
@@ -860,9 +860,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         return null;
     }
     
-    /*********** KeyListener *********/
+    /*********** KeyListener *********
     public void keyTyped(KeyEvent e) {
-    }
+    }*/
+    // override
     public void keyPressed(KeyEvent e) {
     	if (_selectionGroup==null) {
     		return;
@@ -871,19 +872,23 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         int y = 0;
         switch (e.getKeyCode()){
         	case KeyEvent.VK_UP: 
-        	case KeyEvent.VK_KP_UP: 
+        	case KeyEvent.VK_KP_UP:
+        	case KeyEvent.VK_NUMPAD8:
             	y=-1;
                 break;
             case KeyEvent.VK_DOWN: 
             case KeyEvent.VK_KP_DOWN: 
+        	case KeyEvent.VK_NUMPAD2:
             	y=1;
                 break;
             case KeyEvent.VK_LEFT: 
             case KeyEvent.VK_KP_LEFT: 
+        	case KeyEvent.VK_NUMPAD4:
             	x=-1;
                 break;
             case KeyEvent.VK_RIGHT: 
             case KeyEvent.VK_KP_RIGHT: 
+        	case KeyEvent.VK_NUMPAD6:
             	x=1;
                 break;
         }
@@ -892,7 +897,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         repaint();
     }
-    public void keyReleased(KeyEvent e) {}
+//    public void keyReleased(KeyEvent e) {}
     
     /*********** Mouse ***************/
 
@@ -985,8 +990,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_pastePending && _dragging) {
                 pasteItems();
             }
+            _currentSelection = selection;
         }
-        _currentSelection = null;
         _selectRect = null;
 
         // if not sending MouseClicked, do it here
@@ -999,6 +1004,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _targetPanel.repaint(); // needed for ToolTip
 //        if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+
 //        " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
+        if (_currentSelection!=null && (_selectionGroup==null || _selectionGroup.size()==0)) {
+        	if (_selectionGroup==null) _selectionGroup = new ArrayList <Positionable>();
+        	_selectionGroup.add(_currentSelection);
+        }
     }
 
     long _clickTime;

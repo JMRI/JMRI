@@ -1217,9 +1217,12 @@ cars with those loads. </P>
    pick them up. You should configure the classification track to service the same car types and
    roads that the train services, otherwise you could end up with orphan cars.
 
-   <P>Note that it is okay to create more classification tracks then there are physical tracks
-    in your classification yard. The cars can share the same "slough" track until its time to
-    finally sort them into their various trains.</P>
+   <P>
+    Note that it is okay to create more classification tracks then there are physical tracks in your
+    classification yard. The cars can share the same "slough" track until its time to finally sort
+    them into their various trains. You can also use the <A HREF="#Pools">Track Pools</A> feature to
+    share the track space in your yard.
+   </P>
 
    <A NAME="Staging"></A>
    <H3>Staging Tracks</H3>
@@ -1424,22 +1427,41 @@ terminated into staging.</P>
 If you want to change the track type to a spur, interchange or yard, in the edit track
 window, select Tools-&gt;Change Track Type.  Select the desired track type and press "Save".
 
-<A NAME="Pools"></A>
-<H3>Track Pools</H3>
+   <A NAME="Pools"></A>
+   <H3>Track Pools</H3>
 
-The program allows you to "pool" a set of tracks at a location. Tracks
-in a pool share their track lengths with each other. This is useful if
-you've divided a location into track segments and you want each segment to
-adjust its length based on the program's demands. To create and place a
-track into a pool, select Tools-&gt;Pools in one of the track edit
-windows. Enter a name for your pool and press the "Add" button. You can
-also specify the minimum length for the track. A minimum track length
-prevents the other tracks in the pool from acquiring all of the track's
-length. Next select a pool name for the track and press "Save". The
-bottom of the pool window will show the other tracks that are in the
-track's pool. 
+   The program allows you to "pool" a set of tracks at a location. Tracks in a pool share their
+   track lengths with each other. This is useful if you've divided a location into track segments
+   and you want each segment to adjust its length based on the program's demands. To create and
+   place a track into a pool, select Tools-&gt;Pools in one of the track edit windows. Enter a name
+   for your pool and press the "Add" button. You can also specify the minimum length for the track.
+   A minimum track length prevents the other tracks in the pool from acquiring all of the track's
+   length. Next select a pool name for the track and press "Save". The bottom of the pool window
+   will show the other tracks that are in the track's pool. The program on restart, will
+   automatically delete any pools that aren't assigned to a track.
 
-<A NAME="PlannedPickUps"></A>
+   <p>In most cases a "pool" is used to share track space with two or more industries. For
+    example, let's say you have a spur that services two industries, and it can hold four 50' cars,
+    or is roughly 220' feet long. Now you could enter into operations a track length of say 110' for
+    industry 1, and another 110' for industry 2. The program could set out up to 2 cars on each of
+    the tracks serving each industry.</p>
+    
+   <p>But let's say you want to have up to 4 cars shipped to either industry. If you "pool" the
+    two industry tracks, the program can borrow space from the other industry if needed. So now the
+    program could set out up to four cars at each industry, but no more than four cars total.</p>
+    
+   <p>If you don't set a minimum, then one industry could hog all of the track. By setting a
+    minimum of say 55' for each industry, it means that the most anyone industry is going to get is
+    three cars. There will always be space available for at least one car at each industry. Note
+    that the maximum number of cars in all cases is four. It is only how the cars are distributed
+    that changes when setting a minimum.</p>
+    
+   <p>One other use of a "pool" is with regard to schedules. For the power user, you might find
+    that a single schedule assigned to a spur doesn't quite do what you want. But if the track could
+    have several schedules, it would do what is needed. By entering multiple spurs with schedules
+    shared via a pool, you can create any car sequence imaginable for your industry.</p>
+
+   <A NAME="PlannedPickUps"></A>
 <H3>Planned Pick Ups</H3>
 
    The program when searching for tracks to set out cars, checks to see if there's space available for

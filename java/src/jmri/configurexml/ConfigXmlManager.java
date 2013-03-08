@@ -1,7 +1,5 @@
 package jmri.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrit.revhistory.FileHistory;
 
@@ -761,8 +759,6 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         log.debug("Done processing deferred load list with result: "+result);
         return result;
     }
-
-    private static final String fileLocation = "layout"+File.separator;
 
     /**
      * Find a file by looking

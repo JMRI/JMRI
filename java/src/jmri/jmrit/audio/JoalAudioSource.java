@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import net.java.games.joal.AL;
-import java.util.List;
 import java.util.Queue;
 
 /**

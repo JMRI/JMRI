@@ -204,11 +204,11 @@ public class WarrantTableAction extends AbstractAction {
             _hasErrors = true;
             return;
         }
-        List <Portal> pList = b.getPortals();
+        List <Portal> portalList = b.getPortals();
         // make list of names of all portals.  Then remove those we check, leaving the orphans
-        ArrayList <String> portalList =new ArrayList <String>();
-        for (int i=0; i<pList.size(); i++) {
-            Portal portal = pList.get(i);
+        ArrayList <String> portalNameList =new ArrayList <String>();
+        for (int i=0; i<portalList.size(); i++) {
+            Portal portal = portalList.get(i);
             if (portal.getFromPaths().size()==0) {
                 _textArea.append(Bundle.getMessage("BlockPortalNoPath", portal.getName(),
                                      portal.getFromBlockName()));
@@ -223,7 +223,7 @@ public class WarrantTableAction extends AbstractAction {
                 _hasErrors = true;
                 return;
             }
-            portalList.add(portal.getName());
+            portalNameList.add(portal.getName());
         }
         for (int i=0; i<pathList.size(); i++) {
             OPath path = (OPath)pathList.get(i);
@@ -242,7 +242,7 @@ public class WarrantTableAction extends AbstractAction {
                     msg = fromPortal.getName();
                 }
                 hasPortal = true;
-                portalList.remove(fromPortal.getName());
+                portalNameList.remove(fromPortal.getName());
             }
             Portal toPortal = path.getToPortal();
             if (toPortal!=null) {
@@ -250,7 +250,7 @@ public class WarrantTableAction extends AbstractAction {
                      msg = toPortal.getName();
                  }
                  hasPortal = true;
-                 portalList.remove(toPortal.getName());
+                 portalNameList.remove(toPortal.getName());
                  if (fromPortal!=null && fromPortal.equals(toPortal)) {
                      _textArea.append(Bundle.getMessage("PathWithDuplicatePortal",
                     		 path.getName(), b.getDisplayName()));
@@ -267,13 +267,34 @@ public class WarrantTableAction extends AbstractAction {
                 _textArea.append("\n");
                 _hasErrors = true;
             }
+            // check that path's portals have the path in their lists
+            boolean validPath;
+            if (toPortal!=null) {
+            	if (fromPortal!=null) {
+            		validPath = toPortal.isValidPath(path) && fromPortal.isValidPath(path);
+            	} else {
+            		validPath = toPortal.isValidPath(path);
+            	}
+            }else {
+            	if (fromPortal!=null) {
+            		validPath = fromPortal.isValidPath(path);
+            	} else {
+            		validPath = false;
+            	}            	
+            }
+            if (!validPath) {            	
+                _textArea.append(Bundle.getMessage("PathNotConnectedToPortal", 
+                		path.getName(), b.getDisplayName()));
+                _textArea.append("\n");
+                _hasErrors =true;
+            }
         }
-        if (portalList.size() > 0) {
+        for (int i=0; i<portalNameList.size(); i++) {
             _textArea.append(Bundle.getMessage("BlockPortalNoPath", 
-            		portalList.get(0), b.getDisplayName()));
+            		portalNameList.get(i), b.getDisplayName()));
             _textArea.append("\n");
             _hasErrors = true;
-        }            
+        }
     }
     public static boolean showPathPortalErrors() {
         if (!_hasErrors) { return false; }
@@ -670,7 +691,7 @@ public class WarrantTableAction extends AbstractAction {
     {
         public static final int WARRANT_COLUMN = 0;
         public static final int ROUTE_COLUMN =1;
-        public static final int TRAIN_ID_COLUMN = 2;
+        public static final int TRAIN_NAME_COLUMN = 2;
         public static final int ADDRESS_COLUMN = 3;
         public static final int ALLOCATE_COLUMN = 4;
         public static final int DEALLOC_COLUMN = 5;
@@ -727,7 +748,7 @@ public class WarrantTableAction extends AbstractAction {
             switch (col) {
                 case WARRANT_COLUMN: return Bundle.getMessage("Warrant");
                 case ROUTE_COLUMN: return Bundle.getMessage("Route");
-                case TRAIN_ID_COLUMN: return Bundle.getMessage("TrainId");
+                case TRAIN_NAME_COLUMN: return Bundle.getMessage("TrainName");
                 case ADDRESS_COLUMN: return Bundle.getMessage("DccAddress");
                 case ALLOCATE_COLUMN: return Bundle.getMessage("Allocate");
                 case DEALLOC_COLUMN: return Bundle.getMessage("Deallocate");
@@ -744,7 +765,7 @@ public class WarrantTableAction extends AbstractAction {
             switch (col) {
                 case WARRANT_COLUMN:
                     return false;
-                case TRAIN_ID_COLUMN:
+                case TRAIN_NAME_COLUMN:
                 case ADDRESS_COLUMN:
                 case ROUTE_COLUMN:
                 case ALLOCATE_COLUMN:
@@ -764,7 +785,7 @@ public class WarrantTableAction extends AbstractAction {
             switch (col) {
                 case WARRANT_COLUMN:  return String.class;
                 case ROUTE_COLUMN:    return String.class;  // JComboBox.class;
-                case TRAIN_ID_COLUMN: return String.class;
+                case TRAIN_NAME_COLUMN: return String.class;
                 case ADDRESS_COLUMN:  return String.class;
                 case ALLOCATE_COLUMN: return JButton.class;
                 case DEALLOC_COLUMN:  return JButton.class;
@@ -781,7 +802,7 @@ public class WarrantTableAction extends AbstractAction {
         public int getPreferredWidth(int col) {
             switch (col) {
                 case WARRANT_COLUMN:
-                case TRAIN_ID_COLUMN:
+                case TRAIN_NAME_COLUMN:
                     return new JTextField(13).getPreferredSize().width;
                 case ROUTE_COLUMN:
                     return new JTextField(25).getPreferredSize().width;
@@ -824,8 +845,8 @@ public class WarrantTableAction extends AbstractAction {
                         return Bundle.getMessage("Origin", bo.getBlock().getDisplayName());
                     }
                     break;
-                case TRAIN_ID_COLUMN:
-                    return w.getTrainId();
+                case TRAIN_NAME_COLUMN:
+                    return w.getTrainName();
                 case ADDRESS_COLUMN:
                     if (w.getDccAddress()!=null) {
                         return w.getDccAddress().toString();
@@ -890,8 +911,8 @@ public class WarrantTableAction extends AbstractAction {
                 case WARRANT_COLUMN:
                 case ROUTE_COLUMN:
                     return;
-                case TRAIN_ID_COLUMN:
-                    w.setTrainId((String)value);
+                case TRAIN_NAME_COLUMN:
+                    w.setTrainName((String)value);
                     break;
                 case ADDRESS_COLUMN:
                     String addr = (String)value;

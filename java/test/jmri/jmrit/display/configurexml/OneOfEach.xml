@@ -66,9 +66,9 @@
     </sensor>
   </sensors>
   <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
-    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH0" userName="Virtual">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH0" userName="Virtual 0">
       <systemName>IH0</systemName>
-      <userName>Virtual</userName>
+      <userName>Virtual 0</userName>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml" systemName="IH1" userName="Double">
       <systemName>IH1</systemName>
@@ -76,9 +76,9 @@
       <turnoutname defines="green" />
       <turnoutname defines="red" />
     </signalhead>
-    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH10" userName="Virtual">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IH10" userName="Virtual 10">
       <systemName>IH10</systemName>
-      <userName>Virtual</userName>
+      <userName>Virtual 10</userName>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.LsDecSignalHeadXml" systemName="IH2" userName="LDT">
       <systemName>IH2</systemName>
@@ -342,7 +342,7 @@
         <rotation>2</rotation>
       </inconsistent>
     </turnouticon>
-    <signalheadicon signalhead="Virtual" x="409" y="138" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="Virtual 0" x="409" y="138" level="9" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="true" clickmode="0" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <held url="program:resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </held>

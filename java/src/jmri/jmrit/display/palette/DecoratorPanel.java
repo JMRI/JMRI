@@ -4,10 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Font;
-//import java.awt.Dimension;
 
-//import java.awt.event.ActionListener;
-//import java.awt.event.ActionEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
@@ -20,12 +17,6 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
-import java.awt.datatransfer.Transferable; 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.*;
-import java.io.IOException;
-//import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -33,7 +24,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 
 import jmri.jmrit.display.*;
-//import jmri.jmrit.display.PositionablePropertiesUtil.TextDetails;
+
 import jmri.jmrit.display.palette.TextItemPanel.DragDecoratorLabel;
 
 /**

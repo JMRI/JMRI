@@ -1307,7 +1307,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!acceptsTypeName(rs.getType()) || !acceptsBuiltDate(rs.getBuilt())
 				|| !acceptsOwnerName(rs.getOwner()) || !acceptsRoadName(rs.getRoad())) {
 			if (debugFlag)
-				log.debug("Car (" + rs.toString() + ") not serviced by train");
+				log.debug("Car (" + rs.toString() + ") not serviced by train "+getName());
 			return false;
 		}
 		int length = Integer.parseInt(rs.getLength()) + Car.COUPLER;
@@ -1363,83 +1363,83 @@ public class Train implements java.beans.PropertyChangeListener {
 					if (debugFlag)
 						log.debug("Car (" + rs.toString() + ") can be picked up by train (" + getName()
 								+ ") from (" + rs.getLocationName() + ", " + rs.getTrackName() + ")"); // NOI18N
-					if (rs.getDestination() != null) {
-						// now check car's destination
-						for (int k = j; k < rLocations.size(); k++) {
-							rLoc = route.getLocationById(rLocations.get(k));
-							if (rLoc.getName().equals(rs.getDestinationName())
-									&& rLoc.canDrop()
-									&& rLoc.getMaxCarMoves() > 0
-									&& !skipsLocation(rLoc.getId())
-									&& (rs.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0) {
-								if (rs.getDestinationTrack() != null) {
-									if ((rs.getDestinationTrack().getTrainDirections() & rLoc
-											.getTrainDirection()) == 0
-											|| !rs.getDestinationTrack().acceptsDropTrain(this))
-										continue;
-								} else if (rLoc.getLocation().getLocationOps() == Location.STAGING
-										&& getStatus().equals(BUILDING) && getTerminationTrack() != null
-										&& getTerminationTrack().getLocation() == rLoc.getLocation()) {
-									if (debugFlag)
-										log.debug("Car (" + rs.toString()
-												+ ") destination is staging, check train (" + getName()	// NOI18N
-												+ ") termination track (" + getTerminationTrack().getName()	// NOI18N
-												+ ")");
-									String status = rs.testDestination(getTerminationTrack().getLocation(),
-											getTerminationTrack());
-									if (!status.equals(Track.OKAY))
-										continue;
-								} else if (rLoc.getLocation().getLocationOps() == Location.STAGING) {
-									// need to find if there's a track in staging that is willing to accept this car
-									String status = "";
-									List<String> trackIds = rLoc.getLocation().getTrackIdsByIdList();
-									for (int i=0; i<trackIds.size(); i++) {
-										Track track = rLoc.getLocation().getTrackById(trackIds.get(i));
-										if (!track.acceptsDropTrain(this))
-											continue;
-										// will the track accept this car?
-										status = rs.testDestination(track.getLocation(), track);
-										if (status.equals(Track.OKAY))
-											break;	// yes, done
-									}
-									if (!status.equals(Track.OKAY))
-										continue;
-								}
-								// is this a local move?
-								if (rs.getLocationName().equals(rs.getDestinationName())
-										&& !isAllowLocalMovesEnabled()) {
-									if (debugFlag)
-										log.debug("Local moves is disabled");
-									continue;
-								}
-								// check to see if moves are available
-								if (getStatus().equals(BUILDING)) {
-									if (rLoc.getMaxCarMoves() - rLoc.getCarMoves() <= 0) {
-										if (debugFlag)
-											log.debug("No available moves for destination " + rLoc.getName());
-										continue;
-									}
-								}
-								if (debugFlag)
-									log.debug("Car (" + rs.toString() + ") can be dropped by train ("
-											+ getName() + ") to (" + rs.getDestinationName() + ", " // NOI18N
-											+ rs.getDestinationTrackName() + ")");
-								return true;
-							}
-							// check to see if train length is okay
-							if (getStatus().equals(BUILDING)
-									&& rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
-								if (debugFlag)
-									log.debug("Car (" + rs.toString()
-											+ ") exceeds maximum train length when departing (" // NOI18N
-											+ rLoc.getName() + ")");
-								return false;
-							}
-						}
-					} else {
+					if (rs.getDestination() == null) {
 						if (debugFlag)
 							log.debug("Car (" + rs.toString() + ") does not have a destination");
 						return true;
+					}
+					// now check car's destination
+					for (int k = j; k < rLocations.size(); k++) {
+						rLoc = route.getLocationById(rLocations.get(k));
+						if (rLoc.getName().equals(rs.getDestinationName()) && rLoc.canDrop()
+								&& rLoc.getMaxCarMoves() > 0 && !skipsLocation(rLoc.getId())
+								&& (rs.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0) {
+							// found a destination, now check destination track
+							if (rs.getDestinationTrack() != null) {
+								if ((rs.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
+										|| !rs.getDestinationTrack().acceptsDropTrain(this))
+									continue;
+							} else if (rLoc.getLocation().getLocationOps() == Location.STAGING
+									&& getStatus().equals(BUILDING) && getTerminationTrack() != null
+									&& getTerminationTrack().getLocation() == rLoc.getLocation()) {
+								if (debugFlag)
+									log.debug("Car (" + rs.toString()
+											+ ") destination is staging, check train (" + getName() // NOI18N
+											+ ") termination track (" + getTerminationTrack().getName() // NOI18N
+											+ ")");
+								String status = rs.testDestination(getTerminationTrack().getLocation(),
+										getTerminationTrack());
+								if (!status.equals(Track.OKAY))
+									continue;
+							} else {
+								// determine if there's a track that is willing to accept this car
+								String status = "";
+								List<String> trackIds = rLoc.getLocation().getTrackIdsByIdList();
+								for (int i = 0; i < trackIds.size(); i++) {
+									Track track = rLoc.getLocation().getTrackById(trackIds.get(i));
+									if ((track.getTrainDirections() & rLoc.getTrainDirection()) == 0
+											|| !track.acceptsDropTrain(this))
+										continue;
+									// will the track accept this car?
+									status = track.accepts(rs);
+									if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH))
+										break; // yes, done
+								}
+								if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
+									if (debugFlag)
+										log.debug("Destination ("+rs.getDestinationName()+") can not service car ("+rs.toString()+") using train ("+getName()+")");
+									continue;
+								}
+							}
+							// is this a local move?
+							if (rs.getLocationName().equals(rs.getDestinationName())
+									&& !isAllowLocalMovesEnabled()) {
+								if (debugFlag)
+									log.debug("Local moves is disabled");
+								continue;
+							}
+							// check to see if moves are available
+							if (getStatus().equals(BUILDING)
+									&& rLoc.getMaxCarMoves() - rLoc.getCarMoves() <= 0) {
+								if (debugFlag)
+									log.debug("No available moves for destination " + rLoc.getName());
+								continue;
+							}
+							if (debugFlag)
+								log.debug("Car (" + rs.toString() + ") can be dropped by train (" + getName()
+										+ ") to (" + rs.getDestinationName() + ", " // NOI18N
+										+ rs.getDestinationTrackName() + ")");
+							return true;
+						}
+						// check to see if train length is okay
+						if (getStatus().equals(BUILDING)
+								&& rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
+							if (debugFlag)
+								log.debug("Car (" + rs.toString()
+										+ ") exceeds maximum train length when departing (" // NOI18N
+										+ rLoc.getName() + ")");
+							return false;
+						}
 					}
 				}
 			}

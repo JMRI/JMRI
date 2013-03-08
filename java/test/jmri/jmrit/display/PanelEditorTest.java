@@ -36,6 +36,16 @@ public class PanelEditorTest extends TestCase {
         
 	}
 
+	public void testShow3() throws Exception {
+	    jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager(){
+	    };
+	    
+	    // load and display
+	    File f = new File("java/test/jmri/jmrit/display/configurexml/OneOfEach.3.3.3.xml");
+        cm.load(f);
+        
+	}
+
 	// from here down is testing infrastructure
 
 	public PanelEditorTest(String s) {

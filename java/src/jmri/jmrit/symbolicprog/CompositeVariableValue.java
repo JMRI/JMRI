@@ -180,7 +180,9 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     /** 
      * Do end of initialization processing.
      */
-    @SuppressWarnings("null")
+    @SuppressWarnings("null")     
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_ON_SOME_PATH",
+                                                    justification="we want to force an exception")
 	public void lastItem() {
         // configure the representation object
         _defaultColor = _value.getBackground();

@@ -1533,7 +1533,7 @@ public class Setup {
     	values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
     	
-        if (getManifestLogoURL() != ""){
+        if (!getManifestLogoURL().equals("")){
         	values = new Element(Xml.MANIFEST_LOGO);
         	values.setAttribute(Xml.NAME, getManifestLogoURL());
         	e.addContent(values);
