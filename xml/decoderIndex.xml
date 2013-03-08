@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130308-1653-jake on Fri Mar 08 08:53:38 PST 2013 $Id$-->
-  <decoderIndex version="264">
+  <!--Written by JMRI version 20130308-1729-jake on Fri Mar 08 09:29:17 PST 2013 $Id$-->
+  <decoderIndex version="266">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -276,6 +276,20 @@
           <output name="Injector" />
           <output name="Brakes" />
         </model>
+      </family>
+      <family name="Light Unit" mfg="Broadway Limited Imports, LLC" file="BLI_Light.xml">
+        <model model="Light Unit" numOuts="5" numFns="15">
+          <versionCV lowVersionID="1" highVersionID="1" />
+          <output name="L1" />
+          <output name="L2" />
+          <output name="L3" />
+          <output name="L4" />
+          <output name="L5" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">L1-L4</functionlabel>
+          <functionlabel num="7" lockable="true">L5</functionlabel>
+        </functionlabels>
       </family>
       <family name="E-Z Command decoders" mfg="Bachmann Trains" file="Bachmann_EZDCC.xml">
         <model model="2 function decoder (36-552)" numOuts="2" numFns="0" maxMotorCurrent="1A" formFactor="HO" connector="NMRAmedium" lowVersionID="46" nmraWarrant="yes" nmraWarrantStart="2006-04">
