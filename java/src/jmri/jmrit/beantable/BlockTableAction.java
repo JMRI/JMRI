@@ -104,6 +104,7 @@ public class BlockTableAction extends AbstractTableAction {
             static public final int CURRENTREPCOL = REPORTERCOL+1;
             static public final int PERMISCOL = CURRENTREPCOL+1;
             static public final int SPEEDCOL = PERMISCOL+1;
+            static public final int EDIT = SPEEDCOL+1;
             
         	public String getValue(String name) {
         		if (name == null) {
@@ -133,7 +134,7 @@ public class BlockTableAction extends AbstractTableAction {
 
             //Permissive and speed columns are temp disabled
     		public int getColumnCount(){ 
-    		    return SPEEDCOL+1;
+    		    return EDIT+1;
      		}
 
     		public Object getValueAt(int row, int col) {
@@ -204,6 +205,8 @@ public class BlockTableAction extends AbstractTableAction {
                 }
                 else if (col==CURRENTREPCOL){
                     return Boolean.valueOf(b.isReportingCurrent());
+                } else if (col==EDIT){  //
+                    return AbstractTableAction.rb.getString("ButtonEdit");
                 }
                 else return super.getValueAt(row, col);
 			}    		
@@ -260,21 +263,25 @@ public class BlockTableAction extends AbstractTableAction {
                 else if (col==SENSORCOL){
                     String strSensor = (String)((JComboBox)value).getSelectedItem();
                     b.setSensor(strSensor);
-                    if(b.getSensor()!=null && b.getSensor().getReporter()!=null){
-                        String msg = java.text.MessageFormat.format(rb
-                                .getString("BlockAssignReporter"), new Object[] { b.getSensor().getDisplayName(), b.getSensor().getReporter().getDisplayName() });
-                        if(JOptionPane.showConfirmDialog(addFrame,
-                                                             msg,rb.getString("BlockAssignReporterTitle"),
-                                                             JOptionPane.YES_NO_OPTION)==0)
-                            b.setReporter(b.getSensor().getReporter());
-                    }
-                    fireTableRowsUpdated(row,row);
                     return;
                 }
                 else if (col==CURRENTREPCOL){
                     boolean boo = ((Boolean) value).booleanValue();
                     b.setReportingCurrent(boo);
                     fireTableRowsUpdated(row,row);
+                } else if (col==EDIT){
+                        class WindowMaker implements Runnable {
+                        Block b;
+                        WindowMaker(Block b){
+                            this.b = b;
+                        }
+                        public void run() {
+                                editButton(b); // don't really want to stop Route w/o user action
+                            }
+                        }
+                    WindowMaker t = new WindowMaker(b);
+					javax.swing.SwingUtilities.invokeLater(t);
+                    //editButton(b);
                 }
 				else super.setValueAt(value, row, col);					
     		}
@@ -290,6 +297,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==REPORTERCOL) return rb.getString("BlockReporter");
                 if (col==SENSORCOL) return rb.getString("BlockSensor");
                 if (col==CURRENTREPCOL) return rb.getString("BlockReporterCurrent");
+                if (col==EDIT) return Bundle.getMessage("ButtonEdit");
         		return super.getColumnName(col);
         	}
 
@@ -304,6 +312,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==REPORTERCOL) return String.class;
                 if (col==SENSORCOL) return JComboBox.class;
                 if (col==CURRENTREPCOL) return Boolean.class;
+                if(col==EDIT) return JButton.class;
     			else return super.getColumnClass(col);
 		    }
 
@@ -317,6 +326,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==REPORTERCOL) return new JTextField(8).getPreferredSize().width;
                 if (col==SENSORCOL) return new JTextField(8).getPreferredSize().width;
                 if (col==CURRENTREPCOL) return new JTextField(7).getPreferredSize().width;
+                if (col==EDIT) return new JTextField(7).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
 
@@ -333,6 +343,7 @@ public class BlockTableAction extends AbstractTableAction {
                 else if (col==REPORTERCOL) return true;
                 else if (col==SENSORCOL) return true;
                 else if (col==CURRENTREPCOL) return true;
+                else if (col==EDIT) return true;
 				else return super.isCellEditable(row,col);
 			}
 			
@@ -376,6 +387,11 @@ public class BlockTableAction extends AbstractTableAction {
                 jmri.InstanceManager.sensorManagerInstance().removePropertyChangeListener(this);
             }
         };
+    }
+    
+    void editButton(Block b){
+        beanEdit.setBean(b);
+        beanEdit.actionPerformed(null);
     }
     
     private void updateSensorList(){
@@ -696,6 +712,7 @@ public class BlockTableAction extends AbstractTableAction {
         }
     }
     
+    jmri.jmrit.beantable.beanedit.BlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.BlockEditAction();
     @Override
     public void dispose() {
     jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceState(getClassName(), "LengthUnitMetric",centimeterBox.isSelected());
