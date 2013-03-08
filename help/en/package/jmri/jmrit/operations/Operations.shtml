@@ -604,6 +604,7 @@ Here's a list of the current codes and descriptions:
 <tr><td>NW</td><td>No Work</td></tr>
 <tr><td>PC</td><td>Pick up car</td><td>See below</td></tr>
 <tr><td>PL</td><td>Pick up loco</td><td>See below</td></tr>
+<tr><td>PRNTR</td><td>Printer Name</td><td>Name</td></tr>
 <tr><td>RC</td><td>Route Comment</td><td>Comment</td></tr>
 <tr><td>RLC</td><td>Route Location Comment</td><td>Comment</td></tr>
 <tr><td>RH</td><td>Remove Helpers</td></tr>
@@ -804,24 +805,27 @@ Locations are places on your railroad that trains visit to pick up or
 set out cars and locomotives. Locations can be cities, towns, stations, or just
 places where trains need to work cars. Select
 "Tools-&gt;Operations-&gt;Locations" to add or edit the locations on your
-railroad. 
+railroad.
 
-<P>
-<img src="images/Locations.png">
-</P>
-   <P>The "Locations" window shows all of the places that your trains can work. For each
-    location the window shows the total length of all tracks at that location, the amount of track
-    used by your rolling stock, the quantity of rolling stock, and the number of pick ups and set
-    outs of your rolling stock that are scheduled for that location. The "Yardmaster" button
-    produces a window that allows you to see the scheduled pick ups and set outs by train. Only
-    trains that have work for the location are shown.</P>
+   <P>
+    <img src="images/Locations.png">
+   </P>
+   <P>
+    The "Locations" window shows all of the places that your trains can work. For each location the
+    window shows the total length of all tracks at that location, the amount of track used by your
+    rolling stock, the quantity of rolling stock, and the number of pick ups and set outs of your
+    rolling stock that are scheduled for that location. The "Yardmaster" button produces a window <A
+     HREF="#SwitchList">(Switch List)</A> that allows you to see the scheduled pick ups and set outs
+    by train. Only trains that have work for the location are available.
+   </P>
+
    <P>To add a location, press the "Add" button located on the bottom of the "Locations" window.
     A new window should appear.</P>
    <P>
-<img src="images/EditLocation.png">
-</P>
+    <img src="images/EditLocation.png">
+   </P>
 
-<P>In the "Add Location" window, enter the name of the location in
+   <P>In the "Add Location" window, enter the name of the location in
 box across from "Name". The location name must be unique; the program
 will not allow two locations with identical names. However, if you want
 more than one location to have the same name for your manifests and
@@ -896,15 +900,13 @@ cm if you want to convert from centimeters to meters. Press the "Add
 Yard Track" button at the bottom of the window and the disabled fields
 should now appear.
 
-<H3>Rolling Stock Serviced</H3>
+   <H3>Rolling Stock Serviced</H3>
 
-You can control what type of rolling stock the yard can service. Note
-that the yard rolling stock is restricted to the ones that the location
-can service. If the rolling stock that you wish doesn't appear for a
-yard, confirm that the location's rolling stock types are properly
-selected. If the rolling stock type you want doesn't exist for a
-location, you will have to create the type using the "Cars" window, see
-<A HREF="#Cars">Cars</A> below.
+   You can control what type of rolling stock the yard can service. Note that the yard rolling stock
+   is restricted to the ones that the location can service. If the rolling stock that you wish
+   doesn't appear for a yard, confirm that the location's rolling stock types are properly selected.
+   If the rolling stock type you want doesn't exist for a location, you will have to create the type
+   using the <A HREF="#Cars">Cars</A> window and editing any car.
 
    <H3>Road Names Serviced</H3>
 
@@ -1189,7 +1191,7 @@ cars with those loads. </P>
    classification/interchange track. A classification/interchange track can be used for
    classification, the movement of cars within the same railroad, and an interchange, the movement
    of cars between railroads. Cars dropped off to a classification/interchange track by a train on a
-   given route will not be picked up by any train using that route. Another train with a different
+   given route will not be picked up by any train using that same route. Another train with a different
    route is required to pick up the cars. For example, you might have a branch line that picks up
    and set out cars from a terminal. By defining the track as a classification/interchange track,
    once the branch line train delivers the cars, they will remain there until the main line train
@@ -1203,7 +1205,7 @@ cars with those loads. </P>
     track's car types to the same ones that the train services, otherwise you can have cars stranded
     on the classification/interchange track. Given the complexity of this type of track, it is
     strongly recommended that you not use classification/interchange tracks until you get
-    comfortable with how the program builds trains and you've read and understood the train build
+    comfortable with how the program builds trains and you've read and can understand the train build
     reports.</P>
 
    <A NAME="CreateClassificationYard"></A>
@@ -1229,7 +1231,7 @@ cars with those loads. </P>
 
    Staging tracks are normally used to represent locations that generate traffic to and from your
    layout. Many times physical access to staging tracks is limited, therefore the program places
-   significant restrictions on how staging tracks are used. A "Staging" track is one that holds one
+   significant restrictions on how staging tracks are used. A "staging track" holds one
    complete train. Once a train arrives on a staging track, the cars and locomotives remain together
    until the train departs the staging track. The program never modifies a train sitting on a
    staging track. In order for a train to depart staging, the program must find new locations for
@@ -1440,23 +1442,23 @@ window, select Tools-&gt;Change Track Type.  Select the desired track type and p
    will show the other tracks that are in the track's pool. The program on restart, will
    automatically delete any pools that aren't assigned to a track.
 
-   <p>In most cases a "pool" is used to share track space with two or more industries. For
-    example, let's say you have a spur that services two industries, and it can hold four 50' cars,
-    or is roughly 220' feet long. Now you could enter into operations a track length of say 110' for
-    industry 1, and another 110' for industry 2. The program could set out up to 2 cars on each of
-    the tracks serving each industry.</p>
-    
-   <p>But let's say you want to have up to 4 cars shipped to either industry. If you "pool" the
-    two industry tracks, the program can borrow space from the other industry if needed. So now the
-    program could set out up to four cars at each industry, but no more than four cars total.</p>
-    
+   <p>A "pool" can be used to share track space with two or more industries. For example, let's
+    say you have a spur that services two industries, and it can hold four 50' cars, or is roughly
+    220' feet long. Now you could enter into operations a track length of say 110' for industry 1,
+    and another 110' for industry 2. The program could set out up to two cars on each of the tracks
+    serving each industry.</p>
+
+   <p>But let's say you want to have up to four cars shipped to either industry. If you "pool"
+    the two industry tracks, the program can borrow space from the other industry if needed. So now
+    the program could set out up to four cars at each industry, but no more than four cars total.</p>
+
    <p>If you don't set a minimum, then one industry could hog all of the track. By setting a
     minimum of say 55' for each industry, it means that the most anyone industry is going to get is
     three cars. There will always be space available for at least one car at each industry. Note
     that the maximum number of cars in all cases is four. It is only how the cars are distributed
     that changes when setting a minimum.</p>
-    
-   <p>One other use of a "pool" is with regard to schedules. For the power user, you might find
+
+   <p>Anther use of a "pool" is with regard to schedules. For the power user, you might find
     that a single schedule assigned to a spur doesn't quite do what you want. But if the track could
     have several schedules, it would do what is needed. By entering multiple spurs with schedules
     shared via a pool, you can create any car sequence imaginable for your industry.</p>
@@ -1664,7 +1666,7 @@ be applied to this car!
    <P>When the utility checkbox is selected, it instructions the program when printing manifests
     and switch lists to not show the individual car's road and road number, but rather the quantity of cars
     needed of that type. For example, prototype trains when shipping coal don't normally list the
-    cars in the train by the car's road number but instead show the number of cars, the type of car,
+    cars in the train by the car's road number but instead shows the number of cars, the type of car,
     and the car's load on the train's manifest.</P>
 
    <P>If you use the utility feature, it is strongly recommended that you select the utility
@@ -2299,9 +2301,10 @@ car roads, load, owners, and built dates the train will service.
    pick up and then a set out of a car at the same location. When you use custom loads, the program
    can create local moves based on the car's custom load. So if you had a car sitting on a track
    with a custom load, and you also had a spur with a schedule at the same location requesting that
-   load, the train's manifest could show the pull and spot as a local move. If you don't want your
-   train to perform local moves when a car has a custom load, deselect this option.   
-   
+   load, the train's manifest could show the pull and spot as a local move. The same goes for a
+   car with a final destination that's at the car's current location. So if you don't want your train to
+   perform local moves when a car has a custom load or a local final destination, deselect this option.
+
    <H4>Allow cars to travel from origin to terminal</H4>
 
    Normally the program allows cars to travel from the train's departure location (origin) to its
@@ -2372,7 +2375,7 @@ change", either keeps the caboose if one was assigned to the train, or
 departs without a caboose if there wasn't one assigned to the train. The
 third option, "Change caboose", will set out the caboose if one was
 assigned to the train, and then add a new one to the train. This last
-option becomes "Add caboose" if the train is traveling without a
+option becomes "Add caboose" if the train was traveling without a
 caboose.
 
 <P>You can also request helper locomotives for those long up hill battles that your train
@@ -2410,11 +2413,11 @@ caboose.
    </P>
    <P>The window shows the train's route along with every location and track that can be
     serviced by the train. To the right of each track is the current status for the car type
-    currently selected in the drop down menu. If the track status is "OK" then this train can pick
-    up and set out this type of car to that specific track. If the track status is "Pick up" or "Set
+    currently selected in the drop down menu. If the status is "OK" then this train can pick
+    up and set out this type of car to that specific track. If the status is "Pick up" or "Set
     out" then the train can only pick up or set out cars to this particular track. A status that
     begins with an "X" means that the train will not service the track. The following table provides
-    a summary of the various track statuses.</P>
+    a summary of the various statuses.</P>
 
    <table>
     <tr>
@@ -2718,6 +2721,9 @@ caboose.
    <P>The switch list menu also lets you add a comment to the switch list for a location and
     select which printer to use when printing out the switch list. Note that the program when
     printing out manifests will also use the printer associated the train's departure location.</P>
+    
+    <P>You can also get a paperless version of a switch list by activating the appropriate Yardmaster
+    window for a <A HREF="#Locations">location.</A> </P> 
 
    <H3>Switch List Options</H3>
 
