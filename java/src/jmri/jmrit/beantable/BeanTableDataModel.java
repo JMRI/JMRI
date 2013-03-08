@@ -95,7 +95,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 try{
                     fireTableRowsUpdated(row, row);
                 } catch (Exception ex){
-                    log.error(ex.toString());
+                    log.error("Property Change " + ex.toString());
                 }
             }
         }
