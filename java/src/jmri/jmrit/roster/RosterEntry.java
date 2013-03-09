@@ -834,8 +834,14 @@ public class RosterEntry implements jmri.BasicRosterEntry {
      * @param cvModel Model to load, must exist
      */
     public void loadCvModel(CvTableModel cvModel, IndexedCvTableModel iCvModel) {
-        if (cvModel == null) log.error("loadCvModel must be given a non-null argument");
-        if (mRootElement == null) log.error("loadCvModel called before readFile() succeeded");
+        if (cvModel == null) {
+            log.error("loadCvModel must be given a non-null argument");
+            return;
+        }
+        if (mRootElement == null) {
+            log.error("loadCvModel called before readFile() succeeded");
+            return;
+        }
         try{
             LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel);
         } catch (Exception ex){
