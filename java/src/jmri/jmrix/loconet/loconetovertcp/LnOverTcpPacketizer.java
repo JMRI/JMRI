@@ -127,6 +127,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
 
                             // Decide length
               switch((opCode & 0x60) >> 5) {
+              default:  // not really possible, but this closes selection for FindBugs  
               case 0:     /* 2 byte message */
                   msg = new LocoNetMessage(2);
                   break;
@@ -145,8 +146,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                   msg = new LocoNetMessage(byte2);
                   break;
               }
-              if (msg == null)
-              	log.error("msg is null!");
+
               // message exists, now fill it
               msg.setOpCode(opCode);
               msg.setElement(1, byte2);
