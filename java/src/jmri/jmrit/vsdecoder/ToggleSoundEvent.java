@@ -85,8 +85,10 @@ public class ToggleSoundEvent extends SoundEvent implements PropertyChangeListen
 	log.debug("new ButtonTrigger " + bt + " name " + bt.getName() + " type " + this.getButtonType());
 	if (bt != null)
 	    log.debug("name " + bt.getName() + " type " + this.getButtonType().toString());
-	if (button == null)
+	if (button == null) {
 	    log.error("BUTTON SHOULD NOT BE NULL");
+	    return bt;
+	}
 	button.addActionListener(bt);
 	return(bt);
     }
