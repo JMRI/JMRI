@@ -25,8 +25,10 @@ public class SpeedoReply {
 	@SuppressWarnings("null")
 	public  SpeedoReply(SpeedoReply m) {
           this();
-		if (m == null)
+		if (m == null) {
 			log.error("copy ctor of null message");
+		    return;
+		}
 		_nDataChars = m._nDataChars;
         unsolicited = m.unsolicited;
 		for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
