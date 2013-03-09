@@ -984,6 +984,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
     public void countUr92sAndQueryDuplexIdentityInfo() {
         if (thisone == null) {
             log.error("called countUR92sAndQueryDuplexInfo before thisone is initialized");
+            return;
         }
         if ((waitingForIplReply == true) ||
                 (swingTmrIplQuery == null) ||
