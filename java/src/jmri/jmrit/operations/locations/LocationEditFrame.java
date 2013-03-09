@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * Frame for user edit of location
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  * @version $Revision$
  */
 
@@ -418,22 +418,11 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (!checkName(Bundle.getMessage("save")))
 			return;
 		_location.setName(locationNameTextField.getText());
-		_location.setComment(commentTextArea.getText());
-
-		if (spurRadioButton.isSelected() || yardRadioButton.isSelected() || interchangeRadioButton.isSelected()){
-			_location.setLocationOps(Location.NORMAL);
-		}
-		if (stageRadioButton.isSelected()){
-			_location.setLocationOps(Location.STAGING);
-		}
-		/* all JMRI window position and size are now saved
-		// save frame size and position
-		manager.setLocationEditFrame(this);
-		*/
+		_location.setComment(commentTextArea.getText());		
+		setLocationOps();
 		// save location file
 		OperationsXml.save();
 	}
-	
 
 	/**
 	 * 
@@ -456,6 +445,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			return false;
 		}
 		return true;
+	}
+	
+	private void setLocationOps() {
+		if (stageRadioButton.isSelected())
+			_location.setLocationOps(Location.STAGING);
+		else
+			_location.setLocationOps(Location.NORMAL);
 	}
 	
 	private void reportLocationExists(String s){
@@ -491,6 +487,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	}
 	
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
+		setLocationOps();
 		setVisibleLocations();
 	}
 	
@@ -518,7 +515,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			yardRadioButton.setEnabled(false);
 			interchangeRadioButton.setEnabled(false);
 		} 
-		else {
+		else if (_location != null) {
 			spurRadioButton.setEnabled(true);
 			yardRadioButton.setEnabled(true);
 			interchangeRadioButton.setEnabled(true);
