@@ -20,7 +20,7 @@
 
 <!ELEMENT locations (location)*>
 <!ELEMENT location (types | track)*>
-<!ELEMENT track (types | carLoads | carRoads |dropIds | pickupIds | comments)*>
+<!ELEMENT track (types | carLoads | carRoads | carShipLoads | dropIds | pickupIds | comments)*>
 
 
 <!ELEMENT schedules (schedule)*>
@@ -56,6 +56,7 @@
 <!ATTLIST track carRoadOption	CDATA #IMPLIED> 
 <!ATTLIST track carRoads		CDATA #IMPLIED>
 <!ATTLIST track carLoadOption	CDATA #IMPLIED> 
+<!ATTLIST track carShipLoadOption	CDATA #IMPLIED> 
 <!ATTLIST track carLoads		CDATA #IMPLIED>
 <!ATTLIST track dropOption		CDATA #IMPLIED> 
 <!ATTLIST track dropIds			CDATA #IMPLIED> 
@@ -114,6 +115,9 @@
 <!ELEMENT carLoads (carLoad*)*>
 <!ELEMENT carLoad EMPTY>
 <!ATTLIST carLoad name				CDATA #IMPLIED> 
+
+<!ELEMENT carShipLoads (carLoad*)*>
+<!ELEMENT carShipLoad EMPTY>
 
 <!ELEMENT carRoads (carRoad*)*>
 <!ELEMENT carRoad EMPTY>
