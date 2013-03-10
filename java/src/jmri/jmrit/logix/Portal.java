@@ -445,7 +445,6 @@ public class Portal  {
     /**
      * Check if path connects to Portal
      * @param path
-     * @return
      */
     public boolean isValidPath(OPath path) {
     	String name = path.getName();
@@ -463,7 +462,6 @@ public class Portal  {
     }
     /**
      * Check portal has both blocks
-     * @return
      */
     public boolean isValid() {
         return (_fromBlock!=null && _toBlock!=null);
