@@ -7,8 +7,9 @@ import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import jmri.jmrit.XmlFile;
@@ -119,8 +120,9 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 		PrintWriter fileOut;
 
 		try {
-			// FileWriter is set to append
-			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(_fileLogger, true)), true);
+			// FileOutputStream is set to append
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+					_fileLogger, true), "UTF-8")), true);
 		} catch (IOException e) {
 			log.error("Exception while opening log file: " + e.getLocalizedMessage());
 			return;

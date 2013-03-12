@@ -7,10 +7,17 @@ import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Frame;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.swing.ImageIcon;
@@ -76,9 +83,12 @@ public class TrainPrintUtilities {
 		// now get the build file to print
 		BufferedReader in;
 		try {
-			in = new BufferedReader(new FileReader(file));
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 		} catch (FileNotFoundException e) {
-			log.debug("Build file doesn't exist");
+			log.error("Build file doesn't exist");
+			return;
+		} catch (UnsupportedEncodingException e) {
+			log.error("Doesn't support UTF-8 encoding");
 			return;
 		}
 		String line = " ";
@@ -168,18 +178,27 @@ public class TrainPrintUtilities {
 	public static void editReport(File file, String name) {
 		// make a new file with the build report levels removed
 		BufferedReader in;
+//		try {
+//			in = new BufferedReader(new FileReader(file));
+//		} catch (FileNotFoundException e) {
+//			log.debug("Build report file doesn't exist");
+//			return;
+//		}
 		try {
-			in = new BufferedReader(new FileReader(file));
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
 		} catch (FileNotFoundException e) {
-			log.debug("Build report file doesn't exist");
+			log.error("Build file doesn't exist");
+			return;
+		} catch (UnsupportedEncodingException e) {
+			log.error("Doesn't support UTF-8 encoding");
 			return;
 		}
-		java.io.PrintWriter out;
+		PrintWriter out;
 		File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(
 				Bundle.getMessage("Report") + " " + name);
 		try {
-			out = new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(
-					buildReport)), true);
+			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(buildReport), "UTF-8")), true);
 		} catch (IOException e) {
 			log.error("Can not create build report file");
 			return;

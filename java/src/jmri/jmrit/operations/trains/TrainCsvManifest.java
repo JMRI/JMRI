@@ -4,8 +4,9 @@ package jmri.jmrit.operations.trains;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -38,7 +39,8 @@ public class TrainCsvManifest extends TrainCsvCommon {
 		PrintWriter fileOut;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file)), true);
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(file), "UTF-8")), true);
 		} catch (IOException e) {
 			log.error("can not open train csv manifest file");
 			return;

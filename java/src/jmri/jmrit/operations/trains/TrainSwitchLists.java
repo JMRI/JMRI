@@ -6,8 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -61,7 +62,8 @@ public class TrainSwitchLists extends TrainCommon {
 
 		PrintWriter fileOut;
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new FileWriter(file, append)), true);
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
+					file, append), "UTF-8")), true);
 		} catch (IOException e) {
 			log.error("can not open switchlist file");
 			return;

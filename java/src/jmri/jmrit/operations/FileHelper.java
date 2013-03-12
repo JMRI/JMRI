@@ -1,8 +1,9 @@
 package jmri.jmrit.operations;
 
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import jmri.util.FileUtil;
 
@@ -15,25 +16,25 @@ import jmri.util.FileUtil;
 
 public class FileHelper {
 
-	/**
-	 * Simple helper method to just append a text string to the end of the given
-	 * filename. The file will be created if it does not exist.
-	 */
-	public static void appendTextToFile(String fileName, String text)
-			throws IOException {
-
-		FileWriter out = new FileWriter(fileName, true);
-		PrintWriter pw = new PrintWriter(out);
-
-		pw.println(text);
-
-		pw.close();
-	}
+//	/**
+//	 * Simple helper method to just append a text string to the end of the given
+//	 * filename. The file will be created if it does not exist.
+//	 */
+//	public static void appendTextToFile(String fileName, String text)
+//			throws IOException {
+//
+//		FileWriter out = new FileWriter(fileName, true);
+//		PrintWriter pw = new PrintWriter(out);
+//
+//		pw.println(text);
+//
+//		pw.close();
+//	}
 
 	public static void appendTextToFile(File file, String text)
 			throws IOException {
-		FileWriter out = new FileWriter(file, true);
-		PrintWriter pw = new PrintWriter(out);
+		PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(
+				file, true), "UTF-8"));
 
 		pw.println(text);
 

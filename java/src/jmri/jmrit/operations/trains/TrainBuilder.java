@@ -112,7 +112,8 @@ public class TrainBuilder extends TrainCommon {
 		// create build status file
 		File file = TrainManagerXml.instance().createTrainBuildReportFile(train.getName());
 		try {
-			buildReport = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8")), true);
+			buildReport = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(file), "UTF-8")), true);
 		} catch (IOException e) {
 			log.error("can not open build status file");
 			return;
