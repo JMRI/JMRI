@@ -594,7 +594,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 					rb.getString("DIALOG_NceConsist"), JOptionPane.ERROR_MESSAGE);
 			return;
 		} else {
-			if (adrButton.getText() == rb.getString("KeyLONG")) {
+			if (adrButton.getText().equals(rb.getString("KeyLONG"))) {
 				if (Integer.parseInt(locoTextField.getText()) < 128) {
 					adrButton.setText(rb.getString("KeySHORT"));
 				}
@@ -637,7 +637,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			return;
 		}
 		cmdButton.setEnabled(true);
-		if (dirButton.getText() == rb.getString("KeyFWD")) {
+		if (dirButton.getText().equals(rb.getString("KeyFWD"))) {
 			dirButton.setText(rb.getString("KeyREV"));
 		} else {
 			dirButton.setText(rb.getString("KeyFWD"));
@@ -695,7 +695,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 
 		}
 		log.debug("load consist " + entry + " from roster ");
-		if (entry == "") {
+		if (entry.equals("")) {
 			changeButtons(false);
 			consistNum = getConsist(); // reload panel
 			return;
@@ -1637,7 +1637,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 					NceBinaryCommand.LOCO_CMD_DELETE_LOCO_CONSIST, (byte) 0);
 		} else {
 			// ADD button has been pressed
-			if (dirButton.getText() == rb.getString("KeyQUESTION")) {
+			if (dirButton.getText().equals(rb.getString("KeyQUESTION"))) {
 				JOptionPane.showMessageDialog(this,
 						rb.getString("DIALOG_SetDirB4Consist"),
 						rb.getString("DIALOG_NceConsist"), JOptionPane.ERROR_MESSAGE);
@@ -1737,7 +1737,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 		int locoAddr = getLocoAddr (locoTextField, adrButton);
 
 		// ADD loco to consist
-		if (dirButton.getText() == rb.getString("KeyQUESTION")) {
+		if (dirButton.getText().equals(rb.getString("KeyQUESTION"))) {
 			JOptionPane.showMessageDialog(this,
 					rb.getString("DIALOG_SetDirB4Consist"), rb.getString("DIALOG_NceConsist"),
 					JOptionPane.ERROR_MESSAGE);
@@ -2087,7 +2087,9 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 					rb.getString("DIALOG_ConsistWasLoaded"),
 					rb.getString("DIALOG_NceConsist"), JOptionPane.WARNING_MESSAGE);
 			break;
-		}
+		default:
+			log.error("Error code out of range");
+		}	
 		errorCode = 0;
 	}
 	

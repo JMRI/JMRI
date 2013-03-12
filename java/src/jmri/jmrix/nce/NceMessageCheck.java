@@ -50,6 +50,8 @@ public class NceMessageCheck {
             case NceBinaryCommand.OPS_PROG_LOCO_CMD: checkOPS_PROG_CMD(memo, m);
             break;
             case NceBinaryCommand.OPS_PROG_ACCY_CMD: checkOPS_PROG_CMD(memo, m);
+            break;
+            default:
             }
         }
 	}

@@ -196,6 +196,8 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 		case 0x8F:
 			replyLen = 16;
 			break;
+		default:
+			replyLen = 1;
 		}
 		return replyLen;
 	}
