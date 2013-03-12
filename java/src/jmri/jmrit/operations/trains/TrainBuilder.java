@@ -4,8 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -111,7 +112,7 @@ public class TrainBuilder extends TrainCommon {
 		// create build status file
 		File file = TrainManagerXml.instance().createTrainBuildReportFile(train.getName());
 		try {
-			buildReport = new PrintWriter(new BufferedWriter(new FileWriter(file)), true);
+			buildReport = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8")), true);
 		} catch (IOException e) {
 			log.error("can not open build status file");
 			return;
