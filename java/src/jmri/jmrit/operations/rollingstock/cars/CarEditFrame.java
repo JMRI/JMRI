@@ -726,8 +726,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			_car.setLoad(loadComboBox.getSelectedItem().toString());
 			// check to see if car is part of kernel, and ask if all the other cars in the kernel should be changed
 			if (_car.getKernel() != null && !oldLoad.equals(loadComboBox.getSelectedItem())) {
-				if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("carInKernel"),
-						Bundle.getMessage("carPartKernel"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
+						Bundle.getMessage("carInKernel"), new Object[] { _car.toString() }), Bundle
+						.getMessage("carPartKernel"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					// go through the entire list and change the loads for all cars
 					List<Car> cars = _car.getKernel().getCars();
 					for (int i = 0; i < cars.size(); i++) {

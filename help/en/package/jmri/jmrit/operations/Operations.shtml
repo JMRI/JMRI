@@ -187,7 +187,7 @@ you can successfully build trains to your liking.</P>
 
 <P>Now enter some <A HREF="#CarsEdit">cars</A> into the operations
 database, don't bother entering locomotives for now. Be sure to place the
-cars on a track using the <A HREF="#CarsSet">set car location</A>. The
+cars on a track using the <A HREF="#CarsSet">set car</A> window. The
 program works best if you keep at least 50% of your tracks empty, so
 don't place too many cars on tracks until you understand how the program
 builds trains.</P>
@@ -1797,12 +1797,12 @@ force a car to a specific destination using the specified train.
    </P>
 
    <P>
-    In the upper right hand corner of the Set Car Location window is a checkbox labeled "Location
+    In the upper right hand corner of the set car window is a checkbox labeled "Location
     Unknown". Selecting the location unknown checkbox does several things. First the program will
     ignore the car when building new trains. Second, on manifests and switch lists, the program will
     list all of the misplaced cars. Now your operators can help you find cars that have been <A
      HREF="#MisplacedCarsComment">misplaced</A>. And finally, when this checkbox is selected, the
-    other fields in the set car location window are disabled.
+    other fields in the set car window are disabled.
    </P>
    <P>The "Out of Service" checkbox when selected instructs the program to ignore the car when
     building new trains. Many operators have a RIP (Repair In Place) track and use this feature to
@@ -1851,7 +1851,7 @@ force a car to a specific destination using the specified train.
 If you want to change the location, destinations, status, or train
 assignment for a group of cars use the "Set Cars" tool found under
 "Tools" in the <A HREF="#Cars">Cars</A> window. The tool works the same
-way as the <A HREF="#CarsSet">Set Car Location</A> as described above,
+way as the <A HREF="#CarsSet">Set Car</A> as described above,
 except that multiple cars are modified. Select the cars you want to
 change in the table and then select "Set Cars". The first car selected
 becomes the default, and if you press the "Change" button, all of the

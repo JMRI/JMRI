@@ -292,11 +292,10 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		}
 		checkTrain(car);
 		// is this car part of a kernel?
-		if (car.getKernel() != null){
-			if (JOptionPane.showConfirmDialog(this,
-					Bundle.getMessage("carInKernel"),
-					Bundle.getMessage("carPartKernel"),
-					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+		if (car.getKernel() != null) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("carInKernel"),
+					new Object[] { car.toString() }), Bundle.getMessage("carPartKernel"),
+					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 				List<RollingStock> list = car.getKernel().getGroup();
 				if (!updateGroup(list))
 					return false;
