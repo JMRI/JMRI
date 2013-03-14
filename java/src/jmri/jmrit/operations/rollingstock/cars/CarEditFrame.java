@@ -721,20 +721,19 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					_car.getKernel().setLead(_car);
 			}
 		}
-		if (loadComboBox.getSelectedItem() != null) {
-			String oldLoad = _car.getLoad();
+		if (loadComboBox.getSelectedItem() != null && !_car.getLoad().equals(loadComboBox.getSelectedItem())) {
 			_car.setLoad(loadComboBox.getSelectedItem().toString());
 			// check to see if car is part of kernel, and ask if all the other cars in the kernel should be changed
-			if (_car.getKernel() != null && !oldLoad.equals(loadComboBox.getSelectedItem())) {
+			if (_car.getKernel() != null) {
 				if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
 						Bundle.getMessage("carInKernel"), new Object[] { _car.toString() }), Bundle
 						.getMessage("carPartKernel"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					// go through the entire list and change the loads for all cars
 					List<Car> cars = _car.getKernel().getCars();
 					for (int i = 0; i < cars.size(); i++) {
-						Car c = cars.get(i);
-						if (CarLoads.instance().containsName(c.getType(), _car.getLoad()))
-							c.setLoad(_car.getLoad());
+						Car car = cars.get(i);
+						if (CarLoads.instance().containsName(car.getType(), _car.getLoad()))
+							car.setLoad(_car.getLoad());
 					}
 				}
 			}
@@ -744,40 +743,57 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car.setRfid(rfidTextField.getText());
 		autoTrackCheckBox.setEnabled(true);
 		if (locationBox.getSelectedItem() != null) {
-			if (locationBox.getSelectedItem().equals("")) {
-				_car.setLocation(null, null);
-			} else if (trackLocationBox.getSelectedItem() == null
-					|| trackLocationBox.getSelectedItem().equals("")) {
+			if (!locationBox.getSelectedItem().equals("") && (trackLocationBox.getSelectedItem() == null
+					|| trackLocationBox.getSelectedItem().equals(""))) {
 				JOptionPane.showMessageDialog(this, Bundle.getMessage("rsFullySelect"),
 						Bundle.getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
-
 			} else {
 				// update location only if it has changed
 				if (_car.getLocation() == null
 						|| !_car.getLocation().equals(locationBox.getSelectedItem())
 						|| _car.getTrack() == null
 						|| !_car.getTrack().equals(trackLocationBox.getSelectedItem())) {
-					String status = _car.setLocation((Location) locationBox.getSelectedItem(),
-							(Track) trackLocationBox.getSelectedItem());
-					if (!status.equals(Track.OKAY)) {
-						log.debug("Can't set car's location because of " + status);
-						JOptionPane.showMessageDialog(this, MessageFormat.format(
-								Bundle.getMessage("rsCanNotLocMsg"), new Object[] { _car.toString(),
-										status }), Bundle.getMessage("rsCanNotLoc"),
-								JOptionPane.ERROR_MESSAGE);
-						// does the user want to force the rolling stock to this track?
-						int results = JOptionPane.showOptionDialog(this, MessageFormat.format(
-								Bundle.getMessage("rsForce"), new Object[] { _car.toString(),
-										(Track) trackLocationBox.getSelectedItem() }),
-								MessageFormat.format(Bundle.getMessage("rsOverride"),
-										new Object[] { status }), JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE, null, null, null);
-						if (results == JOptionPane.YES_OPTION) {
-							log.debug("Force rolling stock to track");
-							_car.setLocation((Location) locationBox.getSelectedItem(),
-									(Track) trackLocationBox.getSelectedItem(), true);
+					setLocation(_car);
+					// is this car part of a kernel?
+					if (_car.getKernel() != null) {
+						if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
+								Bundle.getMessage("carInKernel"), new Object[] { _car.toString() }), Bundle
+								.getMessage("carPartKernel"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+							// go through the entire list and change the location for all cars
+							List<Car> cars = _car.getKernel().getCars();
+							for (int i = 0; i < cars.size(); i++) {
+								Car car = cars.get(i);
+								if (car != _car)
+									setLocation(car);
+							}
 						}
 					}
+				}
+			}
+		}
+	}
+	
+	private void setLocation(Car car) {
+		if (locationBox.getSelectedItem().equals("")) {
+			car.setLocation(null, null);
+		} else {
+			String status = car.setLocation((Location) locationBox.getSelectedItem(),
+					(Track) trackLocationBox.getSelectedItem());
+			if (!status.equals(Track.OKAY)) {
+				log.debug("Can't set car's location because of " + status);
+				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("rsCanNotLocMsg"),
+						new Object[] { car.toString(), status }), Bundle.getMessage("rsCanNotLoc"),
+						JOptionPane.ERROR_MESSAGE);
+				// does the user want to force the rolling stock to this track?
+				int results = JOptionPane.showOptionDialog(this, MessageFormat.format(Bundle
+						.getMessage("rsForce"), new Object[] { car.toString(),
+						(Track) trackLocationBox.getSelectedItem() }), MessageFormat.format(Bundle
+						.getMessage("rsOverride"), new Object[] { status }), JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, null, null);
+				if (results == JOptionPane.YES_OPTION) {
+					log.debug("Force rolling stock to track");
+					car.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
+							.getSelectedItem(), true);
 				}
 			}
 		}
