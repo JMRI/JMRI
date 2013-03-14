@@ -4,6 +4,7 @@ package jmri.jmrit.beantable.signalmast;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.*;
 import jmri.util.StringUtil;
 
@@ -263,8 +264,10 @@ public class AddSignalMastPanel extends JPanel {
                 while(aspects.hasMoreElements()){
                     String key = aspects.nextElement();
                     DCCAspectPanel dccPanel = dccAspect.get(key);
-                    dccPanel.setAspectId(dmast.getOutputForAppearance(key));
                     dccPanel.setAspectDisabled(dmast.isAspectDisabled(key));
+                    if(!dmast.isAspectDisabled(key))
+                        dccPanel.setAspectId(dmast.getOutputForAppearance(key));
+                    
                 }
             }
             java.util.List<Object> connList = jmri.InstanceManager.getList(jmri.CommandStation.class);
@@ -1034,7 +1037,11 @@ public class AddSignalMastPanel extends JPanel {
     void copyFromAnotherDCCMastAspect(String strMast){
         DccSignalMast mast = (DccSignalMast)InstanceManager.signalMastManagerInstance().getNamedBean(strMast);
         for(String aspect: dccAspect.keySet()){
-            dccAspect.get(aspect).setAspectId(mast.getOutputForAppearance(aspect));
+            if(mast.isAspectDisabled(aspect)){
+                dccAspect.get(aspect).setAspectDisabled(true);
+            } else {
+                dccAspect.get(aspect).setAspectId(mast.getOutputForAppearance(aspect));
+            }
         }
     }
     

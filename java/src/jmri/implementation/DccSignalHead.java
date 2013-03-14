@@ -12,6 +12,7 @@
 
 package jmri.implementation;
 
+import java.util.HashMap;
 import jmri.*;
 
 /**
@@ -41,6 +42,7 @@ public class DccSignalHead extends AbstractSignalHead {
   public DccSignalHead( String sys, String user ) {
     super(sys, user);
     configureHead(sys);
+    
   }
 
   public DccSignalHead( String sys ) {
@@ -49,6 +51,16 @@ public class DccSignalHead extends AbstractSignalHead {
   }
 
   void configureHead(String sys){
+    //Set the default appearances
+    appearanceToOutput.put(new Integer(SignalHead.RED),0);
+    appearanceToOutput.put(new Integer(SignalHead.YELLOW),1);
+    appearanceToOutput.put(new Integer(SignalHead.GREEN),2);
+    appearanceToOutput.put(new Integer(SignalHead.LUNAR),3);
+    appearanceToOutput.put(new Integer(SignalHead.FLASHRED),4);
+    appearanceToOutput.put(new Integer(SignalHead.FLASHYELLOW),5);
+    appearanceToOutput.put(new Integer(SignalHead.FLASHGREEN),6);
+    appearanceToOutput.put(new Integer(SignalHead.FLASHLUNAR),7);
+    appearanceToOutput.put(new Integer(SignalHead.DARK),8);
     //New method seperates the system name and address using $
     if(sys.contains("$")){
         dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$")+1, sys.length()));
@@ -120,7 +132,12 @@ public class DccSignalHead extends AbstractSignalHead {
       int aspect = 8 ;  // SignalHead.DARK, but default set below
 
       if( getLit() ) {
-        switch( mAppearance ){
+        Integer app = new Integer(mAppearance);
+        if(appearanceToOutput.containsKey(app))
+            aspect = appearanceToOutput.get(app);
+        else
+            log.error("Unknown appearance " + mAppearance+" displays DARK");
+/*        switch( mAppearance ){
           case SignalHead.DARK:        aspect = 8 ; break;
           case SignalHead.RED:         aspect = 0 ; break;
           case SignalHead.YELLOW:      aspect = 1 ; break;
@@ -133,14 +150,47 @@ public class DccSignalHead extends AbstractSignalHead {
           default :                    aspect = 8;
                                        log.error("Unknown appearance " + mAppearance+" displays DARK");
                                        break;
-        }
+        }*/
       }
-
-      c.sendPacket( NmraPacket.altAccSignalDecoderPkt( dccSignalDecoderAddress, aspect ), 3);
+        
+        if(useAddressOffSet)
+            c.sendPacket( NmraPacket.accSignalDecoderPkt( dccSignalDecoderAddress, aspect ), 3);
+        else
+            c.sendPacket( NmraPacket.altAccSignalDecoderPkt( dccSignalDecoderAddress, aspect ), 3);
     }
   }
   
-  CommandStation c;
+    CommandStation c;
+  
+    boolean useAddressOffSet = false;
+    
+    public void useAddressOffSet(boolean boo){
+        useAddressOffSet = boo;
+    }
+    
+    public boolean useAddressOffSet() {
+        return useAddressOffSet;
+    }
+  
+    protected HashMap<Integer, Integer> appearanceToOutput = new HashMap<Integer, Integer>();
 
-  int dccSignalDecoderAddress ;
+    public int getOutputForAppearance(int appearance){
+        Integer app = new Integer(appearance);
+        if(!appearanceToOutput.containsKey(app)){
+            log.error("Trying to get appearance " + appearance + " but it has not been configured");
+            return -1;
+        }
+        return appearanceToOutput.get(app);
+    }
+    
+    public void setOutputForAppearance(int appearance, int number){
+        Integer app = new Integer(appearance);
+        if(appearanceToOutput.containsKey(app)){
+            log.debug("Appearance " + appearance + " is already defined as " + appearanceToOutput.get(app));
+            appearanceToOutput.remove(app);
+        }
+        appearanceToOutput.put(app, number);
+    }
+    
+    int dccSignalDecoderAddress ;
 }
