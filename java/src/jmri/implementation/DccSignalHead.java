@@ -52,15 +52,15 @@ public class DccSignalHead extends AbstractSignalHead {
 
   void configureHead(String sys){
     //Set the default appearances
-    appearanceToOutput.put(new Integer(SignalHead.RED),0);
-    appearanceToOutput.put(new Integer(SignalHead.YELLOW),1);
-    appearanceToOutput.put(new Integer(SignalHead.GREEN),2);
-    appearanceToOutput.put(new Integer(SignalHead.LUNAR),3);
-    appearanceToOutput.put(new Integer(SignalHead.FLASHRED),4);
-    appearanceToOutput.put(new Integer(SignalHead.FLASHYELLOW),5);
-    appearanceToOutput.put(new Integer(SignalHead.FLASHGREEN),6);
-    appearanceToOutput.put(new Integer(SignalHead.FLASHLUNAR),7);
-    appearanceToOutput.put(new Integer(SignalHead.DARK),8);
+    appearanceToOutput.put(Integer.valueOf(SignalHead.RED),getDefaultNumberForApperance(SignalHead.RED));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.YELLOW),getDefaultNumberForApperance(SignalHead.YELLOW));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.GREEN),getDefaultNumberForApperance(SignalHead.GREEN));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.LUNAR),getDefaultNumberForApperance(SignalHead.LUNAR));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHRED),getDefaultNumberForApperance(SignalHead.FLASHRED));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHYELLOW),getDefaultNumberForApperance(SignalHead.FLASHYELLOW));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHGREEN),getDefaultNumberForApperance(SignalHead.FLASHGREEN));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.FLASHLUNAR),getDefaultNumberForApperance(SignalHead.FLASHLUNAR));
+    appearanceToOutput.put(Integer.valueOf(SignalHead.DARK),getDefaultNumberForApperance(SignalHead.DARK));
     //New method seperates the system name and address using $
     if(sys.contains("$")){
         dccSignalDecoderAddress = Integer.parseInt(sys.substring(sys.indexOf("$")+1, sys.length()));
@@ -132,7 +132,7 @@ public class DccSignalHead extends AbstractSignalHead {
       int aspect = 8 ;  // SignalHead.DARK, but default set below
 
       if( getLit() ) {
-        Integer app = new Integer(mAppearance);
+        Integer app = Integer.valueOf(mAppearance);
         if(appearanceToOutput.containsKey(app))
             aspect = appearanceToOutput.get(app);
         else
@@ -175,7 +175,7 @@ public class DccSignalHead extends AbstractSignalHead {
     protected HashMap<Integer, Integer> appearanceToOutput = new HashMap<Integer, Integer>();
 
     public int getOutputForAppearance(int appearance){
-        Integer app = new Integer(appearance);
+        Integer app = Integer.valueOf(appearance);
         if(!appearanceToOutput.containsKey(app)){
             log.error("Trying to get appearance " + appearance + " but it has not been configured");
             return -1;
@@ -184,12 +184,28 @@ public class DccSignalHead extends AbstractSignalHead {
     }
     
     public void setOutputForAppearance(int appearance, int number){
-        Integer app = new Integer(appearance);
+        Integer app = Integer.valueOf(appearance);
         if(appearanceToOutput.containsKey(app)){
             log.debug("Appearance " + appearance + " is already defined as " + appearanceToOutput.get(app));
             appearanceToOutput.remove(app);
         }
         appearanceToOutput.put(app, number);
+    }
+    
+    public static int getDefaultNumberForApperance(int i){
+        switch( i ){
+          case SignalHead.DARK:        return 8 ;
+          case SignalHead.RED:         return 0 ;
+          case SignalHead.YELLOW:      return 1 ;
+          case SignalHead.GREEN:       return 2 ;
+          case SignalHead.LUNAR:       return 3 ;
+          case SignalHead.FLASHRED:    return 4 ;
+          case SignalHead.FLASHYELLOW: return 5 ;
+          case SignalHead.FLASHGREEN:  return 6 ;
+          case SignalHead.FLASHLUNAR:  return 7 ;
+          default :                    return 8;
+        }
+    
     }
     
     int dccSignalDecoderAddress ;
