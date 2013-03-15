@@ -41,7 +41,7 @@ public class JsonMemoryServer extends AbstractMemoryServer {
         root.put(TYPE, MEMORY);
         ObjectNode data = root.putObject(DATA);
         data.put(NAME, memoryName);
-        data.put(STATE, status);
+        data.put(VALUE, status);
         this.connection.sendMessage(this.mapper.writeValueAsString(root));
     }
 
@@ -63,12 +63,12 @@ public class JsonMemoryServer extends AbstractMemoryServer {
 
     public void parseRequest(JsonNode data) throws JmriException, IOException {
         String name = data.path(NAME).asText();
-        String state = data.path(STATE).asText();
-        if ("".equals(state)) {  // if not passed, retrieve current and respond
-            state = InstanceManager.memoryManagerInstance().provideMemory(name).getValue().toString();
-            this.sendStatus(name, state);
+        String value = data.path(VALUE).asText();
+        if ("".equals(value)) {  // if not passed, retrieve current and respond
+            value = InstanceManager.memoryManagerInstance().provideMemory(name).getValue().toString();
+            this.sendStatus(name, value);
         } else { //else set the value to the value passed in
-            this.setMemoryValue(name, state);
+            this.setMemoryValue(name, value);
         }
         this.addMemoryToList(name);
     }
