@@ -1,18 +1,17 @@
 // JmriServer.java
 package jmri.jmris;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is the main JMRI Server implementation.
@@ -125,6 +124,7 @@ public class JmriServer {
             listenSocket = socket;
         }
 
+        @Override
         public void run() {
             // Listen for connection requests
             try {
@@ -151,7 +151,6 @@ public class JmriServer {
                 }
             } catch (IOException e) {
                 log.error("socket in ThreadedServer won't close");
-                return;
             }
         }
     } // end of newClientListener class
@@ -192,6 +191,7 @@ public class JmriServer {
             clientThread = null;
         }
 
+        @Override
         public void run() {
             // handle a client.
             try {
@@ -203,7 +203,6 @@ public class JmriServer {
                 }
                 // Unregister with the server
                 removeClient(this);
-                return;
             } catch (java.lang.NullPointerException ex) {
                 // When we get an IO exception here, we're done with this client
                 if (log.isDebugEnabled()) {
@@ -211,7 +210,6 @@ public class JmriServer {
                 }
                 // Unregister with the server
                 removeClient(this);
-                return;
             }
         }
     } // end of clientListener class.
