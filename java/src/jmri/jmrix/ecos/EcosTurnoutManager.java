@@ -564,7 +564,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         et.dispose();
         EcosMessage em = new EcosMessage("release("+et.getObject()+",view)");
         tc.sendEcosMessage(em, this);
-        _tecos.remove(et.getObject());
+        _tecos.remove(Integer.valueOf(et.getObject()));
         addingTurnouts = false;
     }
 
@@ -610,7 +610,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     }
     
     public Turnout getByEcosObject(int ecosObject) { 
-        return _tecos.get(ecosObject);
+        return _tecos.get(Integer.valueOf(ecosObject));
     }
       
     public void refreshItems(){
