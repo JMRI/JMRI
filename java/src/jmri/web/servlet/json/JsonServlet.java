@@ -88,7 +88,6 @@ public class JsonServlet extends WebSocketServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType("text/html"); // NOI18N
         response.setHeader("Connection", "Keep-Alive"); // NOI18N
         response.setDateHeader("Date", now.getTime()); // NOI18N
         response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
@@ -104,6 +103,7 @@ public class JsonServlet extends WebSocketServlet {
         String valueType = request.getParameter(TYPE);
         String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
+            response.setContentType("application/json"); // NOI18N
             String name = (rest.length > 2) ? rest[2] : null;
             JsonNode reply;
             if (type.equals(CARS)) {
@@ -226,6 +226,7 @@ public class JsonServlet extends WebSocketServlet {
                 response.sendError(code, this.mapper.writeValueAsString(reply));
             }
         } else {
+            response.setContentType("text/html"); // NOI18N
             response.getWriter().println(String.format(ResourceBundle.getBundle("jmri.web.server.Html").getString("HeadFormat"), // NOI18N
                     ResourceBundle.getBundle("jmri.web.server.Html").getString("HTML5DocType"), // NOI18N
                     "JSON Console", // NOI18N
