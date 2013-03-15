@@ -112,7 +112,7 @@ of tools and can be found under the main menu heading
        <UL>
         <LI><A HREF="#LocomotiveModels">Locomotive Models</A></LI>
        </UL></LI>
-      <LI><A HREF="#LocomotivesSet">Locomotive Set</A></LI>
+      <LI><A HREF="#LocomotivesSet">Set Locomotive</A></LI>
       <LI><A HREF="#SynchronizeWithNCEConsists">Synchronize with NCE Consists</A></LI>
      </UL></LI>
     <LI><A HREF="#Routes">Routes</A>
@@ -163,110 +163,113 @@ open the "operations" directory and then open the "Operations Demo
 Panel" xml file.
 </P>
 
-<A NAME="QuickStartHelp"></A>
-<H3>Quick Start Help</H3>
+   <A NAME="QuickStartHelp"></A>
+   <H3>Quick Start Help</H3>
 
-In the top level menu for JMRI find the "Tools-&gt;Operations" menu. There
-are six items in this menu. We recommend that you start with <A
-	HREF="#Settings">Settings</A> and work your way down to <A
-	HREF="#Trains">Trains</A>. We also recommend that when defining your
-locations that you first use yard and spur tracks, and try staging and
-classification/interchange tracks when you're more comfortable with how the program
-operates.
+   In the top level menu for JMRI find the "Tools-&gt;Operations" menu. There are six items in this
+   menu. We recommend that you start with
+   <A HREF="#Settings">Settings</A> and work your way down to <A
+    HREF="#Trains">Trains</A>. We also recommend that when defining your locations that you first
+   use yard and spur tracks, and try staging and classification/interchange tracks when you're more
+   comfortable with how the program operates.
 
-<P>If this is your first time using a computer generated car forwarding
-program, it is best to start off small and gradually work your way
-through the various options and features available. Start by entering
-only three or four <A HREF="#Locations">locations</A> with each location
-having only two or three tracks. Keep things simple and don't modify the
-location and track defaults by making them restrictive with regards to
-the type of cars or locomotives that they will service. Also, the track and
-location default is to allow a train to service the location and track
-by trains traveling in any direction. Don't change the defaults until
-you can successfully build trains to your liking.</P>
+   <P>
+    If this is your first time using a computer generated car forwarding program, it is best to
+    start off small and gradually work your way through the various options and features available.
+    Start by entering only three or four <A HREF="#Locations">locations</A> with each location
+    having only two or three tracks. Keep things simple and don't modify the location and track
+    defaults by making them restrictive with regards to the type of cars or locomotives that they
+    will service. Also, the track and location default is to allow a train to service the location
+    and track by trains traveling in any direction. Don't change the defaults until you can
+    successfully build trains to your liking.
+   </P>
 
-<P>Now enter some <A HREF="#CarsEdit">cars</A> into the operations
-database, don't bother entering locomotives for now. Be sure to place the
-cars on a track using the <A HREF="#CarsSet">set car</A> window. The
-program works best if you keep at least 50% of your tracks empty, so
-don't place too many cars on tracks until you understand how the program
-builds trains.</P>
+   <P>
+    Now enter some <A HREF="#CarsEdit">cars</A> into the operations database, don't bother entering
+    locomotives for now. Be sure to place the cars on a track using either the <A HREF="#CarsEdit">edit
+     car</A> or the <A HREF="#CarsSet">set car</A> window. The program works best if you keep at least
+    50% of your tracks empty, so don't place too many cars on tracks until you understand how the
+    program builds trains.
+   </P>
 
-<P>Now create a simple <A HREF="#Routes">route</A> for your first
-train to follow. Enter each of your locations in the route, and keep it
-simple by only entering each of your locations once in the route.  For now
-don't modify the route in any way, just use the "Add Location" button.</P>
+   <P>
+    Now create a simple <A HREF="#Routes">route</A> for your first train to follow. Enter each of
+    your locations in the route, and keep it simple by only entering each of your locations once in
+    the route. For now don't modify the route in any way, just use the "Add Location" button.
+   </P>
 
-<P>Now you're ready to create your first <A HREF="#Trains">train</A>.
-Be sure to select the route you created for your first train. Leave all
-of the train checkboxes alone which means the train will service all car and
-locomotive types. Leave the "Option train requirements" for locomotives and caboose area alone for
-now. Save the train, close the window, and return to the Trains window.
-Press the <A HREF="#BuildingTrains">Build</A> button for the train. It
-should build. Now pressing the "Print" or "Preview" button will produce a
-manifest for your train. Review the manifest and you should see that the
-train serviced all car types. If you examine the <A HREF="#Cars">Cars</A>
-window you can see that cars are now assigned to your train.</P>
+   <P>
+    Now you're ready to create your first <A HREF="#Trains">train</A>. Be sure to select the route
+    you created for your first train. Leave all of the train checkboxes alone which means the train
+    will service all car and locomotive types. Leave the "Option train requirements" for locomotives
+    and caboose area alone for now. Save the train, close the window, and return to the Trains
+    window. Press the <A HREF="#BuildingTrains">Build</A> button for the train. It should build. Now
+    pressing the "Print" or "Preview" button will produce a manifest for your train. Review the
+    manifest and you should see that the train serviced all car types. If you examine the <A
+     HREF="#Cars">Cars</A> window you can see that cars are now assigned to your train.
+   </P>
 
-<P>Now try limiting the car types that the train will service by
-modifying some of the car types checkboxes in the <A HREF="#Trains">Edit Train
-</A> window. Use the train <A HREF="#TrainReset">reset</A> to release
-the cars that were assigned to the train so you can build it again
-without moving the train. With the new car types restriction in place,
-you should see that the train will only pick up and set out car types that
-are selected in the Edit Train window.</P>
+   <P>
+    Now try limiting the car types that the train will service by modifying some of the car types
+    checkboxes in the <A HREF="#Trains">Edit Train </A> window. Use the train <A HREF="#TrainReset">reset</A>
+    to release the cars that were assigned to the train so you can build it again without moving the
+    train. With the new car types restriction in place, you should see that the train will only pick
+    up and set out car types that are selected in the Edit Train window.
+   </P>
 
-<P>Now try restricting your <A HREF="#Yards">tracks</A> to only
-certain types of cars by modifying the car types serviced for a track.
-Now when you build the train, the train will only set out of cars to tracks
-that are willing to accept them.</P>
+   <P>
+    Now try restricting your <A HREF="#Yards">tracks</A> to only certain types of cars by modifying
+    the car types serviced for a track. Now when you build the train, the train will only set out of
+    cars to tracks that are willing to accept them.
+   </P>
 
-<P>Press the <A HREF="#TrainMove">Move</A> button located in the <A
-	HREF="#Trains">Trains </A> window and you will see that the train's
-location will change to the next in the route. You will also see that
-the <A HREF="#Cars">Cars</A> window will update to show the cars
-serviced by the train moving to their new location as the trains moves
-from location to location.</P>
+   <P>
+    Press the <A HREF="#TrainMove">Move</A> button located in the <A HREF="#Trains">Trains </A>
+    window and you will see that the train's location will change to the next in the route. You will
+    also see that the <A HREF="#Cars">Cars</A> window will update to show the cars serviced by the
+    train moving to their new location as the trains moves from location to location.
+   </P>
 
-<P>Now enter some <A HREF="#Locomotives">locomotives</A> into the
-operations database, and change the train requirements to require one
-locomotive. Place some of your locomotives on a track located at the
-start of the route. Note that if you want two or more locomotives
-servicing your train, that the locomotives must be in a <A
-	HREF="#LocomotivesAdd">consist</A>. The last location in your route
-must have a track that will service the locomotive <A
-	HREF="#LocomotiveModels">type</A> or the build will fail.</P>
+   <P>
+    Now enter some <A HREF="#Locomotives">locomotives</A> into the operations database, and change
+    the train requirements to require one locomotive. Place some of your locomotives on a track
+    located at the start of the route. Note that if you want two or more locomotives servicing your
+    train, that the locomotives must be in a <A HREF="#LocomotivesAdd">consist</A>. The last
+    location in your route must have a track that will service the locomotive <A
+     HREF="#LocomotiveModels">type</A> or the build will fail.
+   </P>
 
-<P>If you want a caboose or car with FRED for your train, first
-configure some of your cars to be a caboose by selecting the caboose or
-FRED <A HREF="#CabooseFredHazardous">checkbox</A> in the Edit Car
-window. Now change the Optional train requirements radio button to Caboose or FRED.
-Be sure that the last location on your trains route has a track that
-will accept the caboose car or the train will not build properly.</P>
+   <P>
+    If you want a caboose or car with FRED for your train, first configure some of your cars to be a
+    caboose by selecting the caboose or FRED <A HREF="#CabooseFredHazardous">checkbox</A> in the
+    Edit Car window. Now change the Optional train requirements radio button to Caboose or FRED. Be
+    sure that the last location on your trains route has a track that will accept the caboose car or
+    the train will not build properly.
+   </P>
 
-<P>If you keep building your first train and moving it, eventually
-all of your cars will end up at the last location in your route! Create
-another route that is the inverse of your first train. Go to the <A
-	HREF="#Routes">Routes</A> window and under the "Tools" menu select
-"Copy Route". Select your original route, check the "Invert" checkbox,
-enter a name for this route, and then the "Copy" button.  Now create a
-second train that uses this route to move cars in the opposite direction
-of your first train.</P>
+   <P>
+    If you keep building your first train and moving it, eventually all of your cars will end up at
+    the last location in your route! Create another route that is the inverse of your first train.
+    Go to the <A HREF="#Routes">Routes</A> window and under the "Tools" menu select "Copy Route".
+    Select your original route, check the "Invert" checkbox, enter a name for this route, and then
+    the "Copy" button. Now create a second train that uses this route to move cars in the opposite
+    direction of your first train.
+   </P>
 
-<P>You should now be well on your way with regards to JMRI
-operations. Help is also available at the <A
-	HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list</A></P>
+   <P>
+    You should now be well on your way with regards to JMRI operations. Help is also available at
+    the <A HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list</A>
+   </P>
 
-<A NAME="BritishRailways"></A>
-<H3>British Railways</H3>
+   <A NAME="BritishRailways"></A>
+   <H3>British Railways</H3>
 
-The program supports an alternate set of railway terminology for our
-British modelers. To use British terminologies, change the JMRI Display
-Locale to English (United Kingdom). With British terminology, trains
-travel Up/Down and East/West, and some British railway names and wagon
-types are provided to get you started. 
-
-<A NAME="Settings"></A>
+   The program supports an alternate set of railway terminology for our British modelers. To use
+   British terminologies, change the JMRI Display Locale to English (United Kingdom). With British
+   terminology, trains travel Up/Down and East/West, and some British railway names and wagon types
+   are provided to get you started. 
+   
+   <A NAME="Settings"></A>
 <H2>Settings</H2>
 
 The Settings window contains general parameters for the operations
@@ -797,15 +800,13 @@ different format for your switch lists.
    trouble shooting a problem much easier for you.  For example, say you have a car that isn't moving.
    Using the editor's find feature, you could search the build report using the car's road number
    and quickly find why the car isn't being picked up by the train.</P>
-   
-<A NAME="Locations"></A>
-<H2>Locations</H2>
 
-Locations are places on your railroad that trains visit to pick up or
-set out cars and locomotives. Locations can be cities, towns, stations, or just
-places where trains need to work cars. Select
-"Tools-&gt;Operations-&gt;Locations" to add or edit the locations on your
-railroad.
+   <A NAME="Locations"></A>
+   <H2>Locations</H2>
+
+   Locations are places on your railroad that trains visit to pick up or set out cars and
+   locomotives. Locations can be cities, towns, stations, or just places where trains need to work
+   cars. Select "Tools-&gt;Operations-&gt;Locations" to add or edit the locations on your railroad.
 
    <P>
     <img src="images/Locations.png">
@@ -825,80 +826,66 @@ railroad.
     <img src="images/EditLocation.png">
    </P>
 
-   <P>In the "Add Location" window, enter the name of the location in
-box across from "Name". The location name must be unique; the program
-will not allow two locations with identical names. However, if you want
-more than one location to have the same name for your manifests and
-switch lists, add a hyphen and a number to the locations name. For
-example, "Boston-1" and "Boston-2" will print as "Boston". The program
-will remove the hyphen and number when printing manifests and switch
-lists.</P>
+   <P>In the "Add Location" window, enter the name of the location in box across from "Name".
+    The location name must be unique; the program will not allow two locations with identical names.
+    However, if you want more than one location to have the same name for your manifests and switch
+    lists, add a hyphen and a number to the locations name. For example, "Boston-1" and "Boston-2"
+    will print as "Boston". The program will remove the hyphen and number when printing manifests
+    and switch lists.</P>
 
-<P>Now press the "Add Location" button at
-the bottom of the window. The various fields that were disabled should
-now appear.
-</P>
-<P>Each location can have several <A HREF="#Yards">yard</A>, 
-<A HREF="#Sidings">spur</A>, <A HREF="#Interchange">classification/interchange</A> or
-<A HREF="#Staging">staging</A> tracks. Yards are where cars and locomotives are placed for
-temporary storage. A spur can be an industry or any place where a car
-is loaded or unloaded.  A classification/interchange track is used to exchange cars
-between trains, or to create a classification yard which is used to build
-trains.  Staging tracks represent distant locations where trains can travel between to service
-the layout.
+   <P>Now press the "Add Location" button at the bottom of the window. The various fields that
+    were disabled should now appear.</P>
+   <P>
+    Each location can have several <A HREF="#Yards">yard</A>, <A HREF="#Sidings">spur</A>, <A
+     HREF="#Interchange">classification/interchange</A> or <A HREF="#Staging">staging</A> tracks.
+    Yards are where cars and locomotives are placed for temporary storage. A spur can be an industry
+    or any place where a car is loaded or unloaded. A classification/interchange track is used to
+    exchange cars between trains, or to create a classification yard which is used to build trains.
+    Staging tracks represent distant locations where trains can travel between to service the
+    layout.
+   
+   <P>For a train to service a location, there must be at least one track for that location. See
+    below how to add tracks to your location.</P>
+   <P>The tables show the length of the tracks, the amount of track that is occupied (Used) by
+    cars and locomotives, the total number of cars and locomotives (Rolling Stock) at each location,
+    the number of cars and locomotives that will be picked up (Pick ups) by trains, and the number
+    of cars and locomotives that will be delivered (Set outs) by trains.</P>
 
-<P>
-For a train to service a location, there must be
-at least one track for that location. See below how to add tracks to
-your location.</P>
-<P>The tables show the length of the tracks, the amount of track
-that is occupied (Used) by cars and locomotives, the total number of cars
-and locomotives (Rolling Stock) at each location, the number of cars and
-locomotives that will be picked up (Pick ups) by trains, and the number of
-cars and locomotives that will be delivered (Set outs) by trains.</P>
+   <H3>Location Service Direction</H3>
 
-<H3>Location Service Direction</H3>
+   You can decide which train direction the location can service. For example, if only east bound
+   trains can access the location select "East" and deselect the other directions. This can be
+   useful if you want to only support trailing point switching for a given location. If a location
+   can support multiple directions then select the ones that are appropriate.
 
-You can decide which train direction the location can service. For
-example, if only east bound trains can access the location select
-"East" and deselect the other directions. This can be useful if you
-want to only support trailing point switching for a given location. If a
-location can support multiple directions then select the ones that are
-appropriate.
+   <H3>Location Rolling Stock</H3>
 
-<H3>Location Rolling Stock</H3>
+   You can control the rolling stock a location can service. Press the "Clear All" button to
+   deselect all types, or "Select All" to select all types, then select or deselect the rolling
+   stock you wish the location to accept. After configuring the tracks for a location, you can use
+   the "Auto Select" button to have the location reflect the rolling stock serviced by the various
+   tracks.
 
-You can control the rolling stock a location can service. Press the
-"Clear All" button to deselect all types, or "Select All" to select all
-types, then select or deselect the rolling stock you wish the location
-to accept. After configuring the tracks for a location, you can use the
-"Auto Select" button to have the location reflect the rolling stock
-serviced by the various tracks.
+   <H3>Location Comment</H3>
 
-<H3>Location Comment</H3> 
+   You can enter an optional comment for your location. If you want the comment to print on your
+   manifests you must select the print location comments
+   <A HREF="#ManifestComments">option</A>. <A NAME="Yards"></A>
+   <H3>Yards</H3>
 
-You can enter an optional comment for your location.  If you want the comment
-to print on your manifests you must select the print location comments
-<A HREF="#ManifestComments">option</A>.
+   A yard is used to store cars and locomotives. A car's load status does not change when delivered
+   to a yard track. To add a yard, select the "Yards" radio button and then press the "Add Yard
+   Track" button.
 
-<A NAME="Yards"></A>
-<H3>Yards</H3>
+   <P>
+    <img src="images/AddYard.png">
+   </P>
 
-A yard is used to store cars and locomotives. A car's load status
-does not change when delivered to a yard track. To add a yard, select
-the "Yards" radio button and then press the "Add Yard Track" button.
-
-<P>
-<img src="images/AddYard.png">
-</P>
-
-Now enter the name of
-the yard along with the length of the track in scale feet or in actual
-inches. Append a double quote (") to the length when entering actual
-inches and the program will convert the length into scale feet. Append
-cm if you want to convert from centimeters to meters. Press the "Add
-Yard Track" button at the bottom of the window and the disabled fields
-should now appear.
+   Now enter the name of the yard along with the length of the track in scale feet or in actual
+   inches. Append a double quote (") to the length when entering actual inches and the program will
+   convert the length into scale feet. Append cm if you want to convert from centimeters to meters.
+   Press the "Add Yard Track" button at the bottom of the window and the disabled fields should now
+   appear.
 
    <H3>Rolling Stock Serviced</H3>
 
@@ -906,7 +893,8 @@ should now appear.
    is restricted to the ones that the location can service. If the rolling stock that you wish
    doesn't appear for a yard, confirm that the location's rolling stock types are properly selected.
    If the rolling stock type you want doesn't exist for a location, you will have to create the type
-   using the <A HREF="#Cars">Cars</A> window and editing any car.
+   using the
+   <A HREF="#Cars">Cars</A> window and editing any car.
 
    <H3>Road Names Serviced</H3>
 
@@ -926,111 +914,102 @@ should now appear.
 
    <H3>Pick Up Car Order</H3>
 
-There are three options for picking up cars from the yard. "Normal" uses
-the car's move count to determine the order cars are removed from the
-yard, "FIFO" (First In First Out), and "LIFO" (Last In First Out).  LIFO is
-useful if you have a single ended yard that you use to service cars.  For
-example storing empty coal cars, it would make more sense to pull an empty
-coal car from the front of the line rather than digging one out from the middle of
-the yard.
+   There are three options for picking up cars from the yard. "Normal" uses the car's move count to
+   determine the order cars are removed from the yard, "FIFO" (First In First Out), and "LIFO" (Last
+   In First Out). LIFO is useful if you have a single ended yard that you use to service cars. For
+   example storing empty coal cars, it would make more sense to pull an empty coal car from the
+   front of the line rather than digging one out from the middle of the yard.
 
-<H3>Comment</H3>
+   <H3>Comment</H3>
 
-You can enter an optional comment for the yard.
+   You can enter an optional comment for the yard.
 
-<H3>Save Yard Track</H3>
+   <H3>Save Yard Track</H3>
 
-Press the "Save Yard Track" to save your work. The program will create a
-file (OperationsLocationRoster.xml) in your JMRI directory in a folder
-called "operations". The program will also create a backup file
-containing the last settings for all of your locations. 
+   Press the "Save Yard Track" to save your work. The program will create a file
+   (OperationsLocationRoster.xml) in your JMRI directory in a folder called "operations". The
+   program will also create a backup file containing the last settings for all of your locations.
+   <A NAME="Sidings"></A>
+   <H3>Spurs</H3>
 
-<A	NAME="Sidings"></A>
-<H3>Spurs</H3>
+   A spur is used to service an industry. To add a spur, press the "Add Spur" button. Spurs are very
+   similar to
+   <A HREF="#Yards">Yards</A> , so see above for more information. When entering the length of the
+   spur, enter the length of the cars that will service the industry plus the coupler lengths. For
+   example, let's say you have an industry that can service two 50' boxcars, the track length in
+   this case is 100' plus 8' for the couplers (4' for each car), for a total of 108'. You could
+   optionally round up the length to 110' or more.
+   
+   <P>When a car is placed at a spur the car's load status is modified. The program provides two
+    load names for all cars, the default empty or "E", and the default load or "L". If a car has one
+    of these loads when it arrives at a spur, the load name will change to the other, i.e. "E"
+    becomes "L" and "L" becomes "E".</P>
 
-A spur is used to service an industry. To add a spur, press the "Add
-Spur" button. Spurs are very similar to <A HREF="#Yards">Yards</A> ,
-so see above for more information. You can if you wish schedule the
-order that cars will be delivered to a spur, or demand cars with
-certain loads. See <A HREF="#Schedules">Schedules</A> below for more
-information. 
-<P>When a car is placed at a spur the car's load status is modified.  The program
-provides two load names for all cars, the default empty or "E", and the default load
-or "L".  If a car has one of these loads when it arrives at a spur, the load name
-will change to the other, i.e. "E" becomes "L" and "L" becomes "E".</P>
+   <P>
+    You can if you wish schedule the order that cars will be delivered to a spur, or demand cars
+    with certain loads. See <A HREF="#Schedules">Schedules</A> below for more information.
+   </P>
 
-<A NAME="Schedules"></A>
-<H3>Schedules</H3>
+   <A NAME="Schedules"></A>
+   <H3>Schedules</H3>
 
    If you would like to see cars delivered in a particular sequence, or with a specific load for
    delivery or shipping, the program allows you to apply a schedule to a spur. This is an optional
    feature and shouldn't be used until you become very familiar with how the program generates
    manifests and switch lists. A schedule provides very fine control on the order types of cars will
    be delivered to a spur. You can specify the car type, when it can be delivered, the car's road
-   name and load. You can also decide the car's new load and destination. For example, if you wanted two
-   SP boxcars to be delivered followed by a tank car loaded with "Oil", you can create a schedule
-   that will do exactly that.
+   name and load. You can also decide the car's new load and destination. For example, if you wanted
+   two SP boxcars to be delivered followed by a tank car loaded with "Oil", you can create a
+   schedule that will do exactly that.
+
+   <P>To create a schedule press the "Edit" button next to "Optional Schedule" pull down menu on
+    the "Edit Spur Track" window. Pressing the "Edit" button should create the "Add Schedule"
+    window.</P>
+   <P>
+    <img src="images/EditSchedule.png">
+   </P>
+   <P>
+    Enter a name for your schedule and press the "Add Schedule" button on the bottom of the window.
+    Multiple spurs can use the same schedule as long as the spurs use the same car types and roads.
+    Now add your first delivery for this spur by selecting a car type in the menu box found in the
+    lower left corner of the window and pressing the "Add car type" button. A new item should appear
+    in your schedule containing the type of car, a pull down menu for road names, and a count of 1.
+    You can if you wish specify a particular road for the type of car you entered, or leave it blank
+    if you don't care about the road name. You can also specify the car load received and shipped.
+    You can also control if the car will be delivered during the session. Select from the
+    "Timetable" pull down menu the train timetable you want. When a train timetable is selected, a
+    car will only be delivered when that train timetable is active. See Trains-&gt;Tools-&gt;<A
+     HREF="#Timetable">Timetable</A> to select the train timetable for your session.
+   </P>
+
+   <P>If you wanted more than one car type to be delivered consecutively, increase the count to
+    the number that you wish. The maximum count is 100 and the minimum is 1. In the schedule shown
+    above, the schedule is requesting two SP Boxcars in a row, then a TankOil car with with a load
+    of "L(Oil)". After the TankOil car is delivered the schedule starts from the beginning, again
+    requesting two SP Boxcars followed by a TankOil car. The wait field allows you determine how
+    many trains will visit the location before picking up the car. Useful if you want a car to
+    remain still for several operating sessions.</P>
+
+   <P>Repeat selecting the car types and pressing to "Add car type" until your have a delivery
+    schedule you like. Press "Save Schedule" and close the schedule window when you are done. Note
+    only car types and roads that are accepted by this spur are available. If a car type or road
+    isn't available, check the car types and roads for this spur and location.</P>
+   <P>The schedule controls when and what cars will be delivered and the car order. It makes the
+    spur more restrictive, only cars demanded by the schedule will be delivered to the spur. Looking
+    at the schedule you will see a pointer in the table under the heading "Current", the pointer
+    shows the next car type that the program wants to place at the spur. When the program finds that
+    car and sets the car's destination to this spur, the pointer will move the next item in the
+    schedule. After servicing the last item in the schedule, the pointer will return to the first
+    item in the schedule.</P>
 
    <P>
-To create a
-schedule press the "Edit" button next to "Optional Schedule" pull down 
-menu on the "Edit Spur Track" window. Pressing the
-"Edit" button should create the "Add Schedule" window.</P>
-<P>
-<img src="images/EditSchedule.png">
-</P>
-<P>Enter a name for your schedule and press the "Add Schedule"
-button on the bottom of the window. Multiple spurs can use the same
-schedule as long as the spurs use the same car types and roads. Now
-add your first delivery for this spur by selecting a car type in the
-menu box found in the lower left corner of the window and pressing the
-"Add car type" button. A new item should appear in your schedule
-containing the type of car, a pull down menu for road names, and a count
-of 1. You can if you wish specify a particular road for the type of car
-you entered, or leave it blank if you don't care about the road name.
-You can also specify the car load received and shipped. You can also
-control if the car will be delivered during the session. Select from the
-"Timetable" pull down menu the train timetable you want. When a train timetable
-is selected, a car will only be delivered when that train timetable is active.
-See Trains-&gt;Tools-&gt;<A HREF="#Timetable">Timetable</A> to select
-the train timetable for your session.</P>
-
-<P> If you wanted more than one car type to be delivered consecutively,
-increase the count to the number that you wish. The maximum count is 100
-and the minimum is 1. In the schedule shown above, the schedule is requesting two
-SP Boxcars in a row, then a TankOil car with with a load of "L(Oil)".  After
-the TankOil car is delivered the schedule starts from the beginning, again requesting
-two SP Boxcars followed by a TankOil car.
-The wait field allows you determine how many trains
-will visit the location before picking up the car.  Useful if you want
-a car to remain still for several operating sessions.</P>
-
-<P>Repeat selecting the car types and pressing to
-"Add car type" until your have a delivery schedule you like. Press "Save
-Schedule" and close the schedule window when you are done.
-Note only car types and roads that are accepted by this spur
-are available. If a car type or road isn't available, check the car
-types and roads for this spur and location.
-</P>
-<P>The schedule controls when and what cars will be delivered and the car
-order. It makes the spur more restrictive, only cars demanded by the 
-schedule will be delivered to the spur. Looking at the schedule you
-will see a pointer in the table under the heading "Current", the pointer
-shows the
-next car type that the program wants to place at the spur. When
-the program finds that car and sets the car's destination to this
-spur, the pointer will move the next item in the schedule.  After servicing
-the last item in the schedule, the pointer will return to the first item
-in the schedule.</P>
-
-<P>If you want custom <A HREF="#CarLoad">loads</A> for your cars,
-you can create them using the <A HREF="#EditCarLoads">Edit Car
-Attributes</A> for car "Load". Each new load is associated with the car
-type. For example you can have "Screws" for a boxcar, and "Oil" for a
-tank car. The program will deliver cars with a custom load to a
-spur that has a schedule that also requests that particular load.
-However, cars with a custom load can still be placed at yards,
-staging, and interchanges.</P>
+    If you want custom <A HREF="#CarLoad">loads</A> for your cars, you can create them using the <A
+     HREF="#EditCarLoads">Edit Car Attributes</A> for car "Load". Each new load is associated with
+    the car type. For example you can have "Screws" for a boxcar, and "Oil" for a tank car. The
+    program will deliver cars with a custom load to a spur that has a schedule that also requests
+    that particular load. However, cars with a custom load can still be placed at yards, staging,
+    and interchanges.
+   </P>
 
    <P>
     You can if you wish, specify the ship to destination for a car once it has been serviced by the
@@ -1039,72 +1018,62 @@ staging, and interchanges.</P>
      Destination</A> in the various car windows.
    </P>
 
-   <P>You can optionally use your <A HREF="#StagingAndCarLoads">staging
-tracks</A> to empty cars with a custom load, and you can also optionally
-have the program place custom loads into cars using staging tracks. If
-you want to specify staging as the car's destination, do not select a
-track, let the program determine which is the appropriate track in
-staging to use. Otherwise, if you did select a track, that track would
-become unavailable for other cars. To prevent overloading a spur with
-cars with custom loads from staging, the program will normally limit the
-number of cars in route to a track with a schedule to the available track space. So
-if you have space for three cars, the most the program would normally
-generate for you from staging is three cars. However, if you need to
-adjust the number of cars in route to a spur with a schedule, select
-in the edit schedule window "Tools-&gt;Options". A new window should
-appear, and adjust the "Percentage of custom loads generated by
-staging". The default value is 100% which means only generate enough
-cars to fill 100% of the available track space. If you only want half of
-your car loads to come from staging, set the value to 50%, and if you
-don't want staging to ever generate a custom load car for the spur,
-set the value to 0%. Sometimes it is appropriate to overload a spur
-with cars, if you want this, increase the value up to 1000%. BTW 1000%
-means send 10 times the available space in cars to this spur. If you
-enter this value, you hopefully have 10 times the spur's available
-track space in a storage yard that is near by!</P>
+   <P>
+    You can optionally use your <A HREF="#StagingAndCarLoads">staging tracks</A> to empty cars with
+    a custom load, and you can also optionally have the program place custom loads into cars using
+    staging tracks. If you want to specify staging as the car's destination, do not select a track,
+    let the program determine which is the appropriate track in staging to use. Otherwise, if you
+    did select a track, that track would become unavailable for other cars. To prevent overloading a
+    spur with cars with custom loads from staging, the program will normally limit the number of
+    cars in route to a track with a schedule to the available track space. So if you have space for
+    three cars, the most the program would normally generate for you from staging is three cars.
+    However, if you need to adjust the number of cars in route to a spur with a schedule, select in
+    the edit schedule window "Tools-&gt;Options". A new window should appear, and adjust the
+    "Percentage of custom loads generated by staging". The default value is 100% which means only
+    generate enough cars to fill 100% of the available track space. If you only want half of your
+    car loads to come from staging, set the value to 50%, and if you don't want staging to ever
+    generate a custom load car for the spur, set the value to 0%. Sometimes it is appropriate to
+    overload a spur with cars, if you want this, increase the value up to 1000%. BTW 1000% means
+    send 10 times the available space in cars to this spur. If you enter this value, you hopefully
+    have 10 times the spur's available track space in a storage yard that is near by!
+   </P>
 
-<P>The other option in the edit schedule tools menu is the ability to 
-specify an alternate track.  The program when it finds a spur full
-will send new cars to the track you specify in the alternate track
-pull down menu.  If you don't specify an alternate, the program will
-try to find a yard at that location.  The alternate track feature
-can be used to create an "Off Spot" track for your cars.  To prevent
-the program from placing cars on the off spot track that aren't destined 
-to your industry, use the "Select loads serviced by track" to only accept
-cars with loads that your industry is demanding.</P>
+   <P>The other option in the edit schedule tools menu is the ability to specify an alternate
+    track. The program when it finds a spur full will send new cars to the track you specify in the
+    alternate track pull down menu. If you don't specify an alternate, the program will try to find
+    a yard at that location. The alternate track feature can be used to create an "Off Spot" track
+    for your cars. To prevent the program from placing cars on the off spot track that aren't
+    destined to your industry, use the "Select loads serviced by track" to only accept cars with
+    loads that your industry is demanding.</P>
 
-<P>Schedules can operate in one of two modes, sequential as
-described above, or in match mode. Match mode eliminates the sequential
-aspects of a schedule. In match mode, the program will search the entire
-schedule to find a car type and load that matches the car that the
-program is trying to place. In match mode the pointer shows the last car
-that the program found acceptable for the spur. To change the schedule
-to match mode, select "Match" in the edit schedule window
-and press "Save". Match mode is useful when the order
-cars arrive isn't important, but you still want to ship cars with a
-specific load, provide the car's final destination, or have the car wait
-for a specific number of trains at the spur. In match mode the
-schedule item count is ignored as it isn't used. All of the other fields
-are available, and you can have the same type of car several times, with
-each item in the schedule looking for a specific receive load. Also in
-match mode the car type selection box advances automatically to the next
-car type when adding a car type. This makes it easy to quickly add car
-types to the table.</P>
+   <P>Schedules can operate in one of two modes, sequential as described above, or in match
+    mode. Match mode eliminates the sequential aspects of a schedule. In match mode, the program
+    will search the entire schedule to find a car type and load that matches the car that the
+    program is trying to place. In match mode the pointer shows the last car that the program found
+    acceptable for the spur. To change the schedule to match mode, select "Match" in the edit
+    schedule window and press "Save". Match mode is useful when the order cars arrive isn't
+    important, but you still want to ship cars with a specific load, provide the car's final
+    destination, or have the car wait for a specific number of trains at the spur. In match mode the
+    schedule item count is ignored as it isn't used. All of the other fields are available, and you
+    can have the same type of car several times, with each item in the schedule looking for a
+    specific receive load. Also in match mode the car type selection box advances automatically to
+    the next car type when adding a car type. This makes it easy to quickly add car types to the
+    table.</P>
 
-<P>You can also access your schedules from the Locations Tools menu.
-The Schedules table provides status for each schedule. Since you can
-assign a schedule to multiple spurs, the table also provides
-additional status for each of the spurs that use that particular
-schedule. The table also allows you the edit a schedule once its been
-assigned to a spur.</P>
+   <P>You can also access your schedules from the Locations Tools menu. The Schedules table
+    provides status for each schedule. Since you can assign a schedule to multiple spurs, the table
+    also provides additional status for each of the spurs that use that particular schedule. The
+    table also allows you the edit a schedule once its been assigned to a spur.</P>
 
-<P>A very useful tool is the <A HREF="#ShowSchedulesByCarTypeAndLoad">show schedules by car type
-and load</A> which can be found under Tools in the Schedules window. This tool allows you to select
-a car type and the car's load to quickly see which spurs with schedules will ship and receive
-cars with those loads. </P>
+   <P>
+    A very useful tool is the <A HREF="#ShowSchedulesByCarTypeAndLoad">show schedules by car
+     type and load</A> which can be found under Tools in the Schedules window. This tool allows you to
+    select a car type and the car's load to quickly see which spurs with schedules will ship and
+    receive cars with those loads.
+   </P>
 
-<A	NAME="SchedulesAndLoads"></A>
-<H3>Schedules and Loads</H3>
+   <A NAME="SchedulesAndLoads"></A>
+   <H3>Schedules and Loads</H3>
 
    You've entered all of your cars, tracks, and trains and have been playing with the program for
    awhile. You're happy with where the cars end up, but watching the car movements generated by the
@@ -1117,13 +1086,12 @@ cars with those loads. </P>
     The program provides every car with two loads, an "L" and "E". These are called the default load
     and empty respectively. You can't delete them, but you can rename them if you wish. For every
     car type, you can create additional loads. For example, let's say you have an industry that
-    needs paper loaded in boxcars. You could create this
-    <A HREF="#EditCarLoads">load</A> for your boxcars and name it "L(paper)" or just "paper". Now at
-    the spur that serves your paper industry, you need to create a schedule. In this schedule, the
-    first item you enter is a boxcar, and then select as the receive load, L(paper). If the train
-    that services this industry departs from staging, you're basically done. The program when
-    building a train from
-    <A HREF="#StagingAndCarLoads">staging</A>, will search for an empty boxcar, and if found, will
+    needs paper loaded in boxcars. You could create this <A HREF="#EditCarLoads">load</A> for your
+    boxcars and name it "L(paper)" or just "paper". Now at the spur that serves your paper industry,
+    you need to create a schedule. In this schedule, the first item you enter is a boxcar, and then
+    select as the receive load, L(paper). If the train that services this industry departs from
+    staging, you're basically done. The program when building a train from <A
+     HREF="#StagingAndCarLoads">staging</A>, will search for an empty boxcar, and if found, will
     create the load L(paper) for you. Once the car's load is created for that industry, the program
     will set the car's destination to that industry. When the car gets delivered, the program will
     remove the paper load, and the car's load status will become empty or "E".
@@ -1142,9 +1110,9 @@ cars with those loads. </P>
     want the car go to. Even if it takes several trains to get the car there, the program will
     figure out the best route. Note that when the schedule specifies the ship to destination and
     spur, that the spur doesn't need a schedule to accept the car with the custom load "L(print)".</P>
-   <P>
-    Now, if you created another schedule at the destination spur, you could forward the car again. By
-    stringing a series of schedules and loads together you can create any car sequence you want.</P>
+   <P>Now, if you created another schedule at the destination spur, you could forward the car
+    again. By stringing a series of schedules and loads together you can create any car sequence you
+    want.</P>
 
    <P>Another interesting way to move cars is to ship a custom load, but not specify a
     destination. The program when it finds a car with a custom load, but no destination, will check
@@ -1172,17 +1140,18 @@ cars with those loads. </P>
     optional and not necessary if you want to create a simple car sequence.</P>
 
    <A NAME="ShowSchedulesByCarTypeAndLoad"></A>
-<H3>Show Schedules by Car Type and Load</H3>
+   <H3>Show Schedules by Car Type and Load</H3>
 
-<img src="images/ShowSchedulesByCarTypeAndLoad.png">
+   <img src="images/ShowSchedulesByCarTypeAndLoad.png">
 
    <P>You can access this useful tool from the Schedules window. The Schedules window can be
     found under "Tools" in the Locations window. It allows you to select a car type, and then any
     load that you've created for the that type of car. The window then shows which schedules by
     location are receiving or shipping that specific car load.</P>
 
-   <P>If you want a list of custom car loads for each of your car types, you can use the "Print Car Loads" or
-"Preview Car Loads" found under Tools in the "Show schedules by car type and load" window.</P>
+   <P>If you want a list of custom car loads for each of your car types, you can use the "Print
+    Car Loads" or "Preview Car Loads" found under Tools in the "Show schedules by car type and load"
+    window.</P>
 
    <A NAME="Interchange"></A>
    <H3>Classification/Interchange Tracks</H3>
@@ -1191,22 +1160,22 @@ cars with those loads. </P>
    classification/interchange track. A classification/interchange track can be used for
    classification, the movement of cars within the same railroad, and an interchange, the movement
    of cars between railroads. Cars dropped off to a classification/interchange track by a train on a
-   given route will not be picked up by any train using that same route. Another train with a different
-   route is required to pick up the cars. For example, you might have a branch line that picks up
-   and set out cars from a terminal. By defining the track as a classification/interchange track,
-   once the branch line train delivers the cars, they will remain there until the main line train
-   stops to service the classification/interchange track.
+   given route will not be picked up by any train using that same route. Another train with a
+   different route is required to pick up the cars. For example, you might have a branch line that
+   picks up and set out cars from a terminal. By defining the track as a classification/interchange
+   track, once the branch line train delivers the cars, they will remain there until the main line
+   train stops to service the classification/interchange track.
 
    <P>The car's load status does not change when placed at a classification/interchange track.</P>
 
    <P>If you want more control on how your classification/interchange track will operate, you
     can optionally specify which trains or routes can pick up or set out cars. If you restrict which
-    trains or routes can pull cars from a classification/interchange track, you must also restrict the
-    track's car types to the same ones that the train services, otherwise you can have cars stranded
-    on the classification/interchange track. Given the complexity of this type of track, it is
-    strongly recommended that you not use classification/interchange tracks until you get
-    comfortable with how the program builds trains and you've read and can understand the train build
-    reports.</P>
+    trains or routes can pull cars from a classification/interchange track, you must also restrict
+    the track's car types to the same ones that the train services, otherwise you can have cars
+    stranded on the classification/interchange track. Given the complexity of this type of track, it
+    is strongly recommended that you not use classification/interchange tracks until you get
+    comfortable with how the program builds trains and you've read and can understand the train
+    build reports.</P>
 
    <A NAME="CreateClassificationYard"></A>
    <H3>How to Create a Classification Yard</H3>
@@ -1231,12 +1200,11 @@ cars with those loads. </P>
 
    Staging tracks are normally used to represent locations that generate traffic to and from your
    layout. Many times physical access to staging tracks is limited, therefore the program places
-   significant restrictions on how staging tracks are used. A "staging track" holds one
-   complete train. Once a train arrives on a staging track, the cars and locomotives remain together
-   until the train departs the staging track. The program never modifies a train sitting on a
-   staging track. In order for a train to depart staging, the program must find new locations for
-   all of the locomotives and cars sitting on the staging track. No locos or cars can be left
-   behind.
+   significant restrictions on how staging tracks are used. A "staging track" holds one complete
+   train. Once a train arrives on a staging track, the cars and locomotives remain together until
+   the train departs the staging track. The program never modifies a train sitting on a staging
+   track. In order for a train to depart staging, the program must find new locations for all of the
+   locomotives and cars sitting on the staging track. No locos or cars can be left behind.
 
    <P>Due to the complexity of staging tracks, it is strongly recommended that you not use
     staging tracks until you become comfortable with how the program builds trains including the
@@ -1293,55 +1261,50 @@ cars with those loads. </P>
     that staging track. See <A HREF="#TrainRequires">Optional Train Requirements</A> for more info.
    </P>
 
-   <P>You can if you wish, optionally control which staging tracks a
-train will arrive on and depart. Note that the default "Any" allows any
-train to arrive or depart on the staging track, so if you want to
-restrict a train to a specific track or tracks, you must configure all
-of the staging tracks at that location.</P>
+   <P>You can if you wish, optionally control which staging tracks a train will arrive on and
+    depart. Note that the default "Any" allows any train to arrive or depart on the staging track,
+    so if you want to restrict a train to a specific track or tracks, you must configure all of the
+    staging tracks at that location.</P>
 
-<P>You can as an <A HREF="#PromptDepartureTrack">option</A>, have
-the program ask you which track you want to use when departing from,
-or arriving into staging.</P>
+   <P>
+    You can as an <A HREF="#PromptDepartureTrack">option</A>, have the program ask you which track
+    you want to use when departing from, or arriving into staging.
+   </P>
 
-<A	NAME="StagingAndCarLoads"></A>
-<H3>Staging and Car loads</H3>
+   <A NAME="StagingAndCarLoads"></A>
+   <H3>Staging and Car loads</H3>
 
-Staging tracks can optionally swap the car default loads from empty to
-loaded, and loaded to empty. Select the "Swap default Loads and Empties"
-if you want your cars loads to change when arriving at the staging
-track. You can if you want, ask the program to empty cars as they
-enter staging. Select the "Empty cars with default loads" to change a
-car's load status to empty. If you're using custom loads, you can remove
-the custom load when the cars arrive at the staging track. Select the
-"Empty cars with custom loads" box if you want to replace your custom
-loads with the default empty.
+   Staging tracks can optionally swap the car default loads from empty to loaded, and loaded to
+   empty. Select the "Swap default Loads and Empties" if you want your cars loads to change when
+   arriving at the staging track. You can if you want, ask the program to empty cars as they enter
+   staging. Select the "Empty cars with default loads" to change a car's load status to empty. If
+   you're using custom loads, you can remove the custom load when the cars arrive at the staging
+   track. Select the "Empty cars with custom loads" box if you want to replace your custom loads
+   with the default empty.
 
-<P>The program provides three options for placing custom loads into
-cars when they depart staging. The first option is called "Generate
-custom loads for spurs serviced by this train". If the first option is
-selected, the program will only check spurs with schedules along the
-departure train's route. The program will only generate enough car loads
-to fill the spur's track. When the first option is selected, the program
-ignores values over 100% for the schedule's "Percentage of custom loads generated by staging" 
-and doesn't use the "Alternate Track" feature.</P>
+   <P>The program provides three options for placing custom loads into empty cars when they depart
+    staging. The first option is called "Generate custom loads for spurs serviced by this train". If
+    the first option is selected, the program will only check spurs with schedules along the
+    departure train's route. The program will only generate enough car loads to fill the spur's
+    track. When the first option is selected, the program ignores values over 100% for the
+    schedule's "Percentage of custom loads generated by staging" and doesn't use the "Alternate
+    Track" feature.</P>
 
-<P>If the second option is selected, "Generate custom loads for any
-spur (multiple trains)", the program will check all spurs with a
-schedule for a request. The program when determining now many car loads
-to generate, will consider the value in the "Percentage of custom loads
-generated by staging". Also, if the spur is full or becomes full, the
-program will send cars to the "Alternate Track", and then to any yard
-tracks at the spur's location.</P>
+   <P>If the second option is selected, "Generate custom loads for any spur (multiple trains)",
+    the program will check all spurs with a schedule for a request. The program when determining now
+    many car loads to generate, will consider the value in the "Percentage of custom loads generated
+    by staging". Also, if the spur is full or becomes full, the program will send cars to the
+    "Alternate Track", and then to any yard tracks at the spur's location.</P>
 
-<P>Both options work the same with regards to placing custom car
-loads into cars, only the number of cars loaded and the number of
-spurs considered by the program changes. If a schedule demands a
-certain car type, and that car type is departing staging, and the car's
-load is default empty, the program will place the custom load into that
-car if the appropriate option is selected.</P>
+   <P>Both options work the same with regards to placing custom car loads into empty cars, only the
+    number of cars loaded and the number of spurs considered by the program changes. If a schedule
+    demands a certain car type, and that car type is departing staging, and the car's load is
+    default empty, the program will place the custom load into that car if the appropriate option is
+    selected.</P>
 
-<P>For a spur to request a custom load, the spur must have a <A
-	HREF="#Schedules">schedule</A>.</P>
+   <P>
+    For a spur to request a custom load, the spur must have a <A HREF="#Schedules">schedule</A>.
+   </P>
 
    <P>
     To restrict which loads the program will place into your cars, you can use the staging track's
@@ -1353,16 +1316,16 @@ car if the appropriate option is selected.</P>
 
    <P>The program provides another feature with regards to car loads. If the train departs from
     staging and also terminates into staging, the program will automatically generate the
-    appropriate load for your cars that depart and terminate into staging. To use this feature, one
-    of the two "Generate custom loads ..." from staging must be selected for the departure track.
-    Use the "Load Options" under "Tools" to control which loads the program will generate for you.
-    You can also use the terminating staging track's "Load Options" to
-    control which type of loads the program will generate from the departure staging track.</P>
+    appropriate load for your empty cars that depart and terminate into staging. To use this
+    feature, one of the two "Generate custom loads ..." from staging must be selected for the
+    departure track. Use the "Load Options" under "Tools" to control which loads the program will
+    generate for you. You can also use the terminating staging track's "Load Options" to control
+    which type of loads the program will generate from the departure staging track.</P>
 
    <P>The third option "Generate custom loads for any staging track" will try and place custom
-    loads into your cars by searching for destinations that are staging tracks. First, if the train
-    departing staging is also terminating into staging, the program will try a place a custom load
-    into an empty car that meets the train's load requirements, and the train's departure and
+    loads into your empty cars by searching for destinations that are staging tracks. First, if the
+    train departing staging is also terminating into staging, the program will try a place a custom
+    load into an empty car that meets the train's load requirements, and the train's departure and
     terminal staging track's load requirements. If there isn't a terminal staging track for the
     train, or the program was unsuccessful in adding a custom load to the car that meets the
     terminal staging track requirements, the program will then search for other staging tracks that
@@ -1377,58 +1340,47 @@ car if the appropriate option is selected.</P>
    <A NAME="BlockingCarsFromStaging"></A>
    <H3>Blocking Cars from Staging</H3>
 
-The program provides a very simplistic algorithm to block cars from
-staging. Since cars that have been sent to staging can reside
-anywhere in the train, the program uses the last location where the
-cars where picked up to block an outgoing train from staging. So for example, if
-a train that terminated into staging had three stops, A, B, and C, 
-the cars from A would be blocked together when the next
-train departed staging. The same goes for previous pick ups from B and C,
-those cars would remain together. The program when attempting to find
-destinations for the cars departing staging, starts with the largest
-block of cars, and then checks the departure train's route, and attempts to send the
-largest block to the location requesting the most moves. After doing
-that, the program does the same with the next block of cars, it finds
-the second location in the route and sends the cars there. This is a
-very simplistic approach to blocking cars, it assumes that cars previously
-picked up at a location were placed into the train as a group. This
-blocking feature doesn't consider where in the train the cars are, as
-some operators when picking up cars, will add the cars to any part of
-the train. So the first stop in the departure train's route may not have the
-cars at the head of the train, but they should be in a group,
-somewhere in the train. The first time you depart staging with this
-feature on, the cars will not be blocked for you, you need to first
-terminate a new train into staging, those cars will have the blocking
-tags assigned to them. To enable this feature, see Edit Staging
-Track, "Optional Car Blocking" in the lower right corner of the
-window.  There are many reasons why this option will not block cars
-correctly.  See the train's build report for more details.
+   The program provides a very simplistic algorithm to block cars from staging. Since cars that have
+   been sent to staging can reside anywhere in the train, the program uses the last location where
+   the cars where picked up to block an outgoing train from staging. So for example, if a train that
+   terminated into staging had three stops, A, B, and C, the cars from A would be blocked together
+   when the next train departed staging. The same goes for previous pick ups from B and C, those
+   cars would remain together. The program when attempting to find destinations for the cars
+   departing staging, starts with the largest block of cars, and then checks the departure train's
+   route, and attempts to send the largest block to the location requesting the most moves. After
+   doing that, the program does the same with the next block of cars, it finds the second location
+   in the route and sends the cars there. This is a very simplistic approach to blocking cars, it
+   assumes that cars previously picked up at a location were placed into the train as a group. This
+   blocking feature doesn't consider where in the train the cars are, as some operators when picking
+   up cars, will add the cars to any part of the train. So the first stop in the departure train's
+   route may not have the cars at the head of the train, but they should be in a group, somewhere in
+   the train. The first time you depart staging with this feature on, the cars will not be blocked
+   for you, you need to first terminate a new train into staging, those cars will have the blocking
+   tags assigned to them. To enable this feature, see Edit Staging Track, "Optional Car Blocking" in
+   the lower right corner of the window. There are many reasons why this option will not block cars
+   correctly. See the train's build report for more details.
+   <A NAME="LoopingTrainsThroughStaging"></A>
+   <H3>Looping Trains through Staging</H3>
 
-<A NAME="LoopingTrainsThroughStaging"></A>
-<H3>Looping Trains through Staging</H3>
+   Sometimes for operations a train enters staging at one location (call it A) and then later
+   departs at another location (call it B). From an operations perspective locations A and B are
+   locations not directly connected by trains. So we need to relocate locomotives and cars from
+   location A to B so the train's manifest can make sense. One way to do this is to terminate the
+   train into staging at location A. Then create a "virtual" train that simply moves the cars from
+   location A staging to location B staging. Doing this causes the program to "move" the train and
+   its cars from A to B which is really the same physical track. Later you can build a train that
+   departs location B, and the manifest will show that the train originated from B and not A.
 
-Sometimes for operations a train enters staging at one location (call it
-A) and then later departs at another location (call it B). From an
-operations perspective locations A and B are locations not directly
-connected by trains. So we need to relocate locomotives and cars from
-location A to B so the train's manifest can make sense. One way to do
-this is to terminate the train into staging at location A. Then create a
-"virtual" train that simply moves the cars from location A staging to
-location B staging. Doing this causes the program to "move" the train
-and its cars from A to B which is really the same physical track. Later
-you can build a train that departs location B, and the manifest will
-show that the train originated from B and not A.
+   <p>
+    You can automate the restaging of a train by creating a <A HREF="#TrainScripts">script</A> that
+    is activated when the train is terminated into staging.
+   </P>
 
-<p>You can automate the restaging of a train by creating a <A
-	HREF="#TrainScripts">script</A> that is activated when the train is
-terminated into staging.</P>
+   <A NAME="ChangeTrackType"></A>
+   <H3>Change Track Type</H3>
 
-<A NAME="ChangeTrackType"></A>
-<H3>Change Track Type</H3>
-
-If you want to change the track type to a spur, interchange or yard, in the edit track
-window, select Tools-&gt;Change Track Type.  Select the desired track type and press "Save".
-
+   If you want to change the track type to a spur, interchange or yard, in the edit track window,
+   select Tools-&gt;Change Track Type. Select the desired track type and press "Save".
    <A NAME="Pools"></A>
    <H3>Track Pools</H3>
 
@@ -1464,15 +1416,15 @@ window, select Tools-&gt;Change Track Type.  Select the desired track type and p
     shared via a pool, you can create any car sequence imaginable for your industry.</p>
 
    <A NAME="PlannedPickUps"></A>
-<H3>Planned Pick Ups</H3>
+   <H3>Planned Pick Ups</H3>
 
-   The program when searching for tracks to set out cars, checks to see if there's space available for
-   new cars. Sometimes due to the order that you're building your trains, you know better than the
-   program that certain cars will be picked up during your session, say by a train that will be
-   built later. This feature can be useful for classification/interchange tracks, especially if you want the
-   classification/interchange tracks to be more to the full side rather than empty side. Also if you are switching
-   cars to and from tracks that are basically full, using this option on one or more of the tracks
-   in question can increase car movement.
+   The program when searching for tracks to set out cars, checks to see if there's space available
+   for new cars. Sometimes due to the order that you're building your trains, you know better than
+   the program that certain cars will be picked up during your session, say by a train that will be
+   built later. This feature can be useful for classification/interchange tracks, especially if you
+   want the classification/interchange tracks to be more to the full side rather than empty side.
+   Also if you are switching cars to and from tracks that are basically full, using this option on
+   one or more of the tracks in question can increase car movement.
 
    <P>If you want the program to ignore some number of cars currently sitting on the track, you
     can use this feature to specify how many cars to ignore. The choices are 25%, 50%, 75% and 100%,
@@ -1491,275 +1443,245 @@ window, select Tools-&gt;Change Track Type.  Select the desired track type and p
     program, otherwise you will most likely overload your tracks when using this feature.</P>
 
    <A NAME="ModifyLocationsByCarType"></A>
-<H3>Modify Locations by Car Type</H3>
+   <H3>Modify Locations by Car Type</H3>
 
-This tool can be found under Locations-&gt;Tools. Use this tool to quickly
-modify the type of cars your locations and tracks will service. Very
-useful when adding a new car type to your roster.
+   This tool can be found under Locations-&gt;Tools. Use this tool to quickly modify the type of
+   cars your locations and tracks will service. Very useful when adding a new car type to your
+   roster.
 
-<P><img src="images/ModifyLocationsByCarType.png"></P>
+   <P>
+    <img src="images/ModifyLocationsByCarType.png">
+   </P>
 
-<P>First select the car type you wish to modify. The window will
-then show which locations and tracks can service that car type. Select
-or deselect the locations and tracks you want to service, and press the
-"Save" button to modify your locations and tracks. You can also copy how
-an existing car is serviced by your locations and apply those rules to
-another car. To make a car type behave like another, first select the
-car your would like to copy, then select the "copy" checkbox, the car
-type will now appear to the right of the checkbox, then select the type
-of car you want to modify, and press "Save" to have both car types
-serviced by the same locations and tracks.</P>
+   <P>First select the car type you wish to modify. The window will then show which locations
+    and tracks can service that car type. Select or deselect the locations and tracks you want to
+    service, and press the "Save" button to modify your locations and tracks. You can also copy how
+    an existing car is serviced by your locations and apply those rules to another car. To make a
+    car type behave like another, first select the car your would like to copy, then select the
+    "copy" checkbox, the car type will now appear to the right of the checkbox, then select the type
+    of car you want to modify, and press "Save" to have both car types serviced by the same
+    locations and tracks.</P>
 
-<A NAME="Cars"></A>
-<H2>Cars</H2>
+   <A NAME="Cars"></A>
+   <H2>Cars</H2>
 
-The cars window allows you to edit your car roster. You can enter a car's
-road, number, type, and length. The program will automatically calculate the
-car's weight based on length and the scale your modeling. You can
-optionally add the car's color, build date, load and owner. If you want
-a group of cars to be switched as a unit, you can create a "kernel". You
-can assign any number of cars to a kernel but the type of the first car
-assigned will be used by the program to determine if the kernel is
-allowed at a location. The entire length of the kernel is used to
-determine if the cars in the kernel will fit. Note that the program also
-includes space for the car's couplers when calculating the length of a
-kernel.
+   The cars window allows you to edit your car roster. You can enter a car's road, number, type, and
+   length. The program will automatically calculate the car's weight based on length and the scale
+   your modeling. You can optionally add the car's color, build date, load and owner. If you want a
+   group of cars to be switched as a unit, you can create a "kernel". You can assign any number of
+   cars to a kernel but the type of the first car assigned will be used by the program to determine
+   if the kernel is allowed at a location. The entire length of the kernel is used to determine if
+   the cars in the kernel will fit. Note that the program also includes space for the car's couplers
+   when calculating the length of a kernel.
 
-<P>
-<img src="images/Cars.png">
-</P>
-<H3>Add, Save, Find Buttons</H3>
+   <P>
+    <img src="images/Cars.png">
+   </P>
+   <H3>Add, Save, Find Buttons</H3>
 
-There are three buttons located at the bottom of the Cars window. The
-"Add" button allows you to add a car to your roster. The "Save" button
-stores the cars roster to disk. It also saves the Cars window position
-and size, and any changes you made to the table widths.  The "Find" button
-and the adjacent text window can be used to find a car by its road number.  You
-can use the wild card "*" when entering a car number.  For example if you
-want to find all cars with numbers that ended with 345, enter *345, and press
-find.  Each time you press find, the next car with a road number ending with
-"345" will be highlighted.
+   There are three buttons located at the bottom of the Cars window. The "Add" button allows you to
+   add a car to your roster. The "Save" button stores the cars roster to disk. It also saves the
+   Cars window position and size, and any changes you made to the table widths. The "Find" button
+   and the adjacent text window can be used to find a car by its road number. You can use the wild
+   card "*" when entering a car number. For example if you want to find all cars with numbers that
+   ended with 345, enter *345, and press find. Each time you press find, the next car with a road
+   number ending with "345" will be highlighted.
+   <A NAME="ImportingCars"></A>
+   <H3>Importing Cars from a File</H3>
 
-<A NAME="ImportingCars"></A>
-<H3>Importing Cars from a File</H3>
+   If you already have a list of cars in a database, you can import the cars into the program. The
+   import function requires an ACSII text file, with one line for each car. The car import requires
+   four attributes and the order is car number, road name, type, and length. All four car attributes
+   are required for the import to work correctly. The following shows two examples of the correct
+   format:
 
-If you already have a list of cars in a database, you can import the
-cars into the program. The import function requires an ACSII text file,
-with one line for each car. The car import requires four attributes and
-the order is car number, road name, type, and length. All four
-car attributes are required for the import to work correctly. The
-following shows two examples of the correct format:
+   <P>
+    336 GCR Flat 40 <BR>655578 UP Boxcar 40
+   </P>
 
-<P>336 GCR Flat 40
- <BR>655578 UP Boxcar 40</P>
+   <P>Each line can start with a space and multiple spaces between fields is okay. Optionally
+    you can include additional attributes in the following order, weight, color, owner name, date
+    built, and location. The location can have two fields, the location name followed by the
+    location's spur or yard name separated by a hyphen. The following shows two examples of the
+    correct format:</P>
 
-<P>Each line can start with a space and multiple spaces between
-fields is okay. Optionally you can include additional attributes in the
-following order, weight, color, owner name, date built, and location. The location can
-have two fields, the location name followed by the location's spur or
-yard name separated by a hyphen. The following shows two examples of the
-correct format:</P>
+   <P>
+    336 GCR Flat 40 3.8 Black AT 1930 Home Town USA - George's Oil Terminal <BR>655578 UP
+    Boxcar 40 3.8 Yellow DB 1934 York - York Freight
+   </P>
 
-<P>336 GCR Flat 40 3.8 Black AT 1930 Home Town USA - George's Oil Terminal
-<BR>655578 UP Boxcar 40 3.8 Yellow DB 1934 York - York Freight</P>
+   <P>If you prefer to use comma delimiters instead of spaces, use a file with a .csv extension
+    or place the word "comma" at the start of your import file and use commas instead of spaces. The
+    following are two examples of importing cars with comma deliminters.</P>
+   <P>
+    comma <BR> 336,GCR,Flat Car,40,3.8,Black,AT,1930,Home Town USA,-,George's Oil Terminal <BR>
+    655578,UP,Tank Car,40,3.8,Yellow,DB,1934,York,-,York Freight
+   </P>
+   <P>You need to be very careful with spaces when importing a comma delimitated file. The
+    program will include leading and trailing spaces if they exist between the commas.</P>
 
-<P>If you prefer to use comma delimiters instead of spaces, use a file with
-a .csv extension or place
-the word "comma" at the start of your import file and use commas instead
-of spaces. The following are two examples of importing cars with comma
-deliminters.</P>
-<P>comma <BR>
-336,GCR,Flat Car,40,3.8,Black,AT,1930,Home Town USA,-,George's Oil
-Terminal <BR>
-655578,UP,Tank Car,40,3.8,Yellow,DB,1934,York,-,York Freight</P>
-<P>You need to be very careful with spaces when importing a comma
-delimitated file. The program will include leading and trailing spaces
-if they exist between the commas.</P>
+   <P>
+    If you enter 0 for the car's weight, the program will automatically calculate the car weight for
+    you based on the car's length and the <A HREF="#Scale">scale</A> you've selected.
+   </P>
 
-<P>If you enter 0 for the car's weight, the program will automatically calculate the
-car weight for you based on the car's length and the <A HREF="#Scale">scale</A> you've selected.</P>
+   <P>To import a file, use the "Tools" menu in the upper left hand corner of the
+    Tools-&gt;Operations-&gt;Cars menu. Then select "Tools-&gt;Roster-&gt;Import from file". Note
+    that the program will only add cars that don't exist in the program's car roster. It the car
+    already exists, the import will be skipped by the program.</P>
 
-<P>To import a file, use the "Tools" menu in the upper left hand
-corner of the Tools-&gt;Operations-&gt;Cars menu. Then select
-"Tools-&gt;Roster-&gt;Import from file". Note that the program will only
-add cars that don't exist in the program's car roster. It the car
-already exists, the import will be skipped by the program.</P>
+   <P>
+    During the import, if a car's location or track doesn't exist in the program's database, the
+    program will prompt you to create them. This way not only are you importing your cars, but also
+    the car's locations and tracks. The program will set new track to a length of 1000', and will
+    set the track type to yard. After the import you can edit the track and set the track's correct
+    length and <A HREF="#ChangeTrackType">type</A>.
+   </P>
 
-<P>During the import, if a car's location or track doesn't exist in
-the program's database, the program will prompt you to create them. This
-way not only are you importing your cars, but also the car's locations
-and tracks. The program will set new track to a length of 1000', and
-will set the track type to yard. After the import you can edit the track
-and set the track's correct length and <A HREF="#ChangeTrackType">type</A>.</P>
+   <P>To improve the speed of the car import, you can close the cars window. It takes
+    significantly more processor cycles to update the cars window than to actually import the cars.</P>
 
-<P>To improve the speed of the car import, you can close the cars
-window. It takes significantly more processor cycles to update the cars
-window than to actually import the cars.</P>
+   <P>After importing your cars, you must save them if you want to keep them as part of your
+    roster. Use the Cars "Save" button or select any car by pressing the edit button and then press
+    the "Save" button that can be found at the bottom right of the "Edit Car" window.</P>
 
-<P>After importing your cars, you must save them if you want to keep
-them as part of your roster. Use the Cars "Save" button or select any
-car by pressing the edit button and then press the "Save" button that
-can be found at the bottom right of the "Edit Car" window.</P>
+   <A NAME="CarsEdit"></A>
+   <H3>Adding Cars to your Roster</H3>
 
-<A NAME="CarsEdit"></A>
-<H3>Adding Cars to your Roster</H3>
+   To manually add a car to your roster, press the "Add" button located at the bottom of the
+   "Tools-&gt;Operations-&gt;Cars" window.
 
-To manually add a car to your roster, press the "Add" button located at
-the bottom of the "Tools-&gt;Operations-&gt;Cars" window. 
+   <P>
+    <img src="images/EditCar.png">
+   </P>
+   <P>Then select the road for the car. If the desired road doesn't exist, press the "Edit"
+    button to the right of the road select menu box. This will allow you to add a new road or delete
+    any that you don't need.</P>
 
-<P>
-<img src="images/EditCar.png">
-</P>
-<P>
+   <H3>Road Number</H3>
 
-Then select the road
-for the car. If the desired road doesn't exist, press the "Edit" button
-to the right of the road select menu box. This will allow you to add a new
-road or delete any that you don't need.</P>
+   Now enter the car's road number in the text box. The program requires a unique road name and
+   number for each car. If you have cars with identical roads and numbers, simply add a -1, -2, etc.
+   to each of the car numbers. The program when printing out the manifest or switch list will drop
+   the -1, -2, etc. from the car's road number.
+   <A NAME="CarTypeLengthWeight"></A>
+   <H3>Car Type, Length, Weight</H3>
 
-<H3>Road Number</H3>
+   Select the car's type and length from the menu boxes. Use the "Edit" button to the right of the
+   menu boxes to add or delete car types, or lengths that you want to add or remove. The car's
+   weight is automatically calculated, but you can enter a different weight if necessary. When
+   entering the length of a car, enter the length of the body and not the total length. For example,
+   a forty foot boxcar has a length of 40 feet. The program when calculating lengths will add two
+   feet to each end of a car for the couplers. Therefore when you place a forty foot car at a spur,
+   it will consume 44 feet of track.
 
-Now enter the car's road number in the text box. The program requires a
-unique road name and number for each car. If you have cars with
-identical roads and numbers, simply add a -1, -2, etc. to each of the
-car numbers. The program when printing out the manifest or switch list
-will drop the -1, -2, etc. from the car's road number.
+   <H3>Car subType</H3>
 
-<A NAME="CarTypeLengthWeight"></A>
-<H3>Car Type, Length, Weight</H3>
+   <P>The program supports the ability to add a subType to your car types. Adding a "-subType"
+    to your car type will create a new type of car. The "-subType" is not printed on the manifest or
+    switch lists. For example you might have coal cars with loads and coal cars that are empty. If
+    you enter the car type as HopCoal-C for your cars with coal, and HopCoal-E for the empties, the
+    program can use this information to assign and deliver cars to their appropriate trains and
+    locations respectively.</P>
 
-Select the car's type and length from the menu boxes. Use the "Edit"
-button to the right of the menu boxes to add or delete car types, or
-lengths that you want to add or remove. The car's weight is
-automatically calculated, but you can enter a different weight if
-necessary. When entering the length of a car, enter the length of the
-body and not the total length. For example, a forty foot boxcar has a
-length of 40 feet. The program when calculating lengths will add two
-feet to each end of a car for the couplers. Therefore when you place a
-forty foot car at a spur, it will consume 44 feet of track.
+   <A NAME="CabooseFredHazardous"></A>
+   <H3>Passenger, Caboose, FRED, Utility, and Hazardous Checkboxes</H3>
 
-<H3>Car subType</H3>
-
-<P>The program supports the ability to add a subType to
-your car types. Adding a "-subType" to your car type will create a new
-type of car. The "-subType" is not printed on the manifest or switch
-lists. For example you might have coal cars with loads and coal cars
-that are empty. If you enter the car type as HopCoal-C for your cars
-with coal, and HopCoal-E for the empties, the program can use this
-information to assign and deliver cars to their appropriate trains and
-locations respectively.</P>
-
-<A	NAME="CabooseFredHazardous"></A>
-<H3>Passenger, Caboose, FRED, Utility, and Hazardous Checkboxes</H3>
-
-If the car is used in passenger service select the passenger checkbox. The
-program will place passenger cars towards the rear of a mixed service
-(combination of passenger and freight cars) train. If the car is a
-caboose, has a FRED (Flashing Rear End Device), or is hazardous, select
-the proper checkbox. The program uses the caboose and FRED functions to
-place the car at the end of a train when the train requires a caboose or
-car with FRED. The hazardous checkbox will cause the program to add a
-<A HREF="#HazardousComment">note</A> to the switch list that the car is transporting hazardous
-materials. Your railroad's policy regarding hazardous materials can than
-be applied to this car!
+   If the car is used in passenger service select the passenger checkbox. The program will place
+   passenger cars towards the rear of a mixed service (combination of passenger and freight cars)
+   train. If the car is a caboose, has a FRED (Flashing Rear End Device), or is hazardous, select
+   the proper checkbox. The program uses the caboose and FRED functions to place the car at the end
+   of a train when the train requires a caboose or car with FRED. The hazardous checkbox will cause
+   the program to add a
+   <A HREF="#HazardousComment">note</A> to the switch list that the car is transporting hazardous
+   materials. Your railroad's policy regarding hazardous materials can than be applied to this car!
 
    <P>When the utility checkbox is selected, it instructions the program when printing manifests
-    and switch lists to not show the individual car's road and road number, but rather the quantity of cars
-    needed of that type. For example, prototype trains when shipping coal don't normally list the
-    cars in the train by the car's road number but instead shows the number of cars, the type of car,
-    and the car's load on the train's manifest.</P>
+    and switch lists to not show the individual car's road and road number, but rather the quantity
+    of cars needed of that type. For example, prototype trains when shipping coal don't normally
+    list the cars in the train by the car's road number but instead shows the number of cars, the
+    type of car, and the car's load on the train's manifest.</P>
 
    <P>If you use the utility feature, it is strongly recommended that you select the utility
-    feature for all cars of a given type. Since the car's road and number isn't displayed on the manifests
-    and switch list, any car of that type can be placed into a train. Later if you try and find a
-    car by its road number, it could very well have been shipped out on an earlier train. So you
-    have to decide, use road numbers or or not for a given type of car.</P>
+    feature for all cars of a given type. Since the car's road and number isn't displayed on the
+    manifests and switch list, any car of that type can be placed into a train. Later if you try and
+    find a car by its road number, it could very well have been shipped out on an earlier train. So
+    you have to decide, use road numbers or or not for a given type of car.</P>
 
    <H3>Car Location</H3>
 
-Now set the car's location on the layout. If the car is off the layout,
-set the location to none (blank space).
+   Now set the car's location on the layout. If the car is off the layout, set the location to none
+   (blank space).
+   <A NAME="CarLoad"></A>
+   <H3>Car Loads</H3>
 
-<A	NAME="CarLoad"></A>
-<H3>Car Loads</H3>
+   You can optionally set the load state of the car. Select E for empty or L for loaded. You can
+   also create your own custom
+   <A HREF="#EditCarLoads">car loads</A>, but there are restrictions. Normally spurs with
+   <A HREF="#Schedules">Schedules</A> are used to load or unload cars with custom loads that you've
+   created. You can also use
+   <A HREF="#StagingAndCarLoads">staging tracks</A> to load or unload your car with custom loads. It
+   is also suggested that you use a format similar to L(commodity) to describe your loads. For
+   example a load of tools could be entered as "L(Tools)" or just "Tools" if desired.
+   <A NAME="Kernel"></A>
+   <H3>Kernel, or Group of Cars</H3>
 
-You can optionally set the load state of the car. Select E for empty or
-L for loaded. You can also create your own custom <A HREF="#EditCarLoads">car loads</A>,
-but there are restrictions. Normally spurs with <A HREF="#Schedules">Schedules</A> are used to
-load or unload cars with custom loads that you've created. You can also use
-<A HREF="#StagingAndCarLoads">staging tracks</A> to load or unload your car with custom loads.
-It is also suggested
-that you use a format similar to L(commodity) to describe your loads.
-For example a load of tools could be entered as "L(Tools)" or just "Tools" if desired.
+   If wish this car to be part of a kernel which is a group of cars that you want to switch as one
+   unit, press "Edit" across from "Kernel" and enter a kernel name. Then select the kernel from the
+   menu box. The first car you assign to the kernel becomes the lead car. The program when searching
+   for a track to set out the kernel will only use the lead car's attributes when determining if the
+   track can accept the kernel. However, the program does use the entire length of the kernel to
+   determine if the group of cars will fit on the destination track.
 
-<A	NAME="Kernel"></A>
-<H3>Kernel, or Group of Cars</H3>
+   <H3>Optional Fields</H3>
 
-If wish this car to be part of a kernel which is a group of cars that
-you want to switch as one unit, press "Edit" across from "Kernel" and
-enter a kernel name. Then select the kernel from the menu box. The first
-car you assign to the kernel becomes the lead car. The program when
-searching for a track to set out the kernel will only use the lead car's
-attributes when determining if the track can accept the kernel. However,
-the program does use the entire length of the kernel to determine if the
-group of cars will fit on the destination track.
+   Finally you can optionally enter the color, build date, owner and comment for this car. The build
+   date can be entered as a four digit year, or in the format of month-year.
 
-<H3>Optional Fields</H3>
+   <H3>Save</H3>
 
-Finally you can optionally enter the color, build date, owner and comment for
-this car.  The build date can be entered as a four digit year, or in the format of
-month-year.  
+   Press "Save" to store the car's settings. The program will create a file
+   (OperationsCarRoster.xml) in your JMRI directory in a folder called "operations". A backup file
+   with the last settings for all of your cars is also created each time the "Save" button is
+   pressed.
+   <A NAME="EditCarAttributes"></A>
+   <H3>Edit Car Attributes</H3>
 
-<H3>Save</H3>
+   To the right of each of the car attributes (Road, Type, Length, Color, Kernel, Load, Owner) is an
+   "Edit" button. Use this to add, delete, or replace the available attributes for a car.
 
-Press "Save" to store the car's settings. The program will create a file
-(OperationsCarRoster.xml) in your JMRI directory in a folder called
-"operations". A backup file with the last settings for all of your cars
-is also created each time the "Save" button is pressed. 
+   <P>
+    <img src="images/EditCarAttribute.png">
+   </P>
 
-<A	NAME="EditCarAttributes"></A>
-<H3>Edit Car Attributes</H3>
+   <H3>Add Button</H3>
 
-To the right of each of the car attributes (Road, Type, Length, Color,
-Kernel, Load, Owner) is an "Edit" button. Use this to add, delete, or replace
-the available attributes for a car.
+   To add a new car attribute, enter the desired text in the text box and press the "Add" button.
+   When you first enter a new car attribute it will show up at the start of the list. Later when
+   your restart the program it will be sorted in the correct order.
 
-<P>
-<img src="images/EditCarAttribute.png">
-</P>
+   <H3>Delete Button</H3>
 
-<H3>Add Button</H3>
+   To delete a car attribute, select the attribute you want to delete in the menu box and press the
+   "Delete" button.
 
-To add a new car attribute, enter the desired text in the text box and
-press the "Add" button.  When you first enter a new car attribute it will
-show up at the start of the list.  Later when your restart the program it
-will be sorted in the correct order.
+   <H3>Replace Button</H3>
 
-<H3>Delete Button</H3>
+   If you need to change a specific car attribute (road, type, color, etc) in your entire car
+   roster, you can use the "Replace" button found at the bottom right of the edit car attribute
+   window. For example, if you wish to change the car road name attribute "UP" to "UPS" for all of
+   your cars. Press the "Edit" button for any of your cars in the Cars window, and then press the
+   "Edit" button across from Road in the "Car Edit" window. Enter the new road "UPS" in the text
+   box, select "UP" in the menu box, and press "Replace". All cars with "UP" as their road will now
+   have "UPS" as their road name.
+   <A NAME="EditCarLoads"></A>
+   <H3>Edit Car Loads</H3>
 
-To delete a car attribute, select the attribute you want to delete in
-the menu box and press the "Delete" button.
+   To edit a car's load, press the Load "Edit" button in the Edit Car window.
 
-<H3>Replace Button</H3>
-
-If you need to change a specific car attribute (road, type, color, etc)
-in your entire car roster, you can use the "Replace" button found at the
-bottom right of the edit car attribute window. For example, if you wish
-to change the car road name attribute "UP" to "UPS" for all of your
-cars. Press the "Edit" button for any of your cars in the Cars window,
-and then press the "Edit" button across from Road in the "Car Edit"
-window. Enter the new road "UPS" in the text box, select "UP" in the menu
-box, and press "Replace". All cars with "UP" as their road will now have
-"UPS" as their road name.
-
-<A	NAME="EditCarLoads"></A>
-<H3>Edit Car Loads</H3>
-
-To edit a car's load, press the Load "Edit" button in the Edit Car window.
-
-<P>
-<img src="images/EditCarLoads.png">
-</P>
+   <P>
+    <img src="images/EditCarLoads.png">
+   </P>
    <P>
     In addition to the Add, Delete, and Replace buttons and fields described above in the <A
      HREF="#EditCarAttributes">Car Edit Attributes</A> section, the edit car loads window allows you
@@ -1781,13 +1703,13 @@ To edit a car's load, press the Load "Edit" button in the Edit Car window.
     by your operators.</P>
 
    <A NAME="CarsSet"></A>
-<H3>Set Car</H3>
+   <H3>Set Car</H3>
 
-After creating a car, you can set the car's location, and optionally the
-car's destination and train by using the "Set" button found for each car
-in the <A HREF="#Cars">Cars</A> window. Normally the car's destination and assigned
-train are generated by the program, but you can use these fields to
-force a car to a specific destination using the specified train.
+   After creating a car, you can set the car's location, and optionally the car's destination and
+   train by using the "Set" button found for each car in the
+   <A HREF="#Cars">Cars</A> window. Normally the car's destination and assigned train are generated
+   by the program, but you can use these fields to force a car to a specific destination using the
+   specified train.
 
    <P>You can remove a car that has been assigned to a train by simply pressing the "Save"
     button. You can also add a car to an already built train that hasn't departed its first
@@ -1797,10 +1719,10 @@ force a car to a specific destination using the specified train.
    </P>
 
    <P>
-    In the upper right hand corner of the set car window is a checkbox labeled "Location
-    Unknown". Selecting the location unknown checkbox does several things. First the program will
-    ignore the car when building new trains. Second, on manifests and switch lists, the program will
-    list all of the misplaced cars. Now your operators can help you find cars that have been <A
+    In the upper right hand corner of the set car window is a checkbox labeled "Location Unknown".
+    Selecting the location unknown checkbox does several things. First the program will ignore the
+    car when building new trains. Second, on manifests and switch lists, the program will list all
+    of the misplaced cars. Now your operators can help you find cars that have been <A
      HREF="#MisplacedCarsComment">misplaced</A>. And finally, when this checkbox is selected, the
     other fields in the set car window are disabled.
    </P>
@@ -1846,18 +1768,16 @@ force a car to a specific destination using the specified train.
     do that for you unless you are adding a car to an already built train.</P>
 
    <A NAME="SetCars"></A>
-<H3>Set Cars</H3>
+   <H3>Set Cars</H3>
 
-If you want to change the location, destinations, status, or train
-assignment for a group of cars use the "Set Cars" tool found under
-"Tools" in the <A HREF="#Cars">Cars</A> window. The tool works the same
-way as the <A HREF="#CarsSet">Set Car</A> as described above,
-except that multiple cars are modified. Select the cars you want to
-change in the table and then select "Set Cars". The first car selected
-becomes the default, and if you press the "Change" button, all of the
-other selected cars will have the same settings as the
-default car. Be sure to press "Save" in the Cars window if you want to
-keep your changes.
+   If you want to change the location, destinations, status, or train assignment for a group of cars
+   use the "Set Cars" tool found under "Tools" in the
+   <A HREF="#Cars">Cars</A> window. The tool works the same way as the
+   <A HREF="#CarsSet">Set Car</A> as described above, except that multiple cars are modified. Select
+   the cars you want to change in the table and then select "Set Cars". The first car selected
+   becomes the default, and if you press the "Change" button, all of the other selected cars will
+   have the same settings as the default car. Be sure to press "Save" in the Cars window if you want
+   to keep your changes.
 
    <H3>Tools</H3>
 
@@ -1868,14 +1788,14 @@ keep your changes.
    cars in your roster using the "Delete all cars" option.
 
    <p>The "Reset move count all cars" will zero out all of the cars move counts. In normal use
-    you should never reset the car move counts. The program uses the move counts to
-    determine which cars have difficulty finding valid destination tracks. Cars with low move counts
-    eventually get higher priority over cars with larger move counts. By servicing the lower move count
-    cars first, the difficult car moves eventually get made by the program. Reseting car moves foils
-    this algorithm. The only valid time for reseting the move counts is when you add new cars to
-    your roster and you don't want your new cars to have priority over your old cars. However in
-    most cases, folks do want to see the new cars riding the first train out of town, so don't reset
-    the car moves if you want to put your new additions immediately to work!</p>
+    you should never reset the car move counts. The program uses the move counts to determine which
+    cars have difficulty finding valid destination tracks. Cars with low move counts eventually get
+    higher priority over cars with larger move counts. By servicing the lower move count cars first,
+    the difficult car moves eventually get made by the program. Reseting car moves foils this
+    algorithm. The only valid time for reseting the move counts is when you add new cars to your
+    roster and you don't want your new cars to have priority over your old cars. However in most
+    cases, folks do want to see the new cars riding the first train out of town, so don't reset the
+    car moves if you want to put your new additions immediately to work!</p>
 
    You can also preview and print your car roster. The preview and print features use the same "Sort
    by" radio buttons as the cars window. One of the more useful sorts is by "Location", this allows
@@ -1888,214 +1808,195 @@ keep your changes.
     location or track.</P>
 
    <A NAME="Locomotives"></A>
-<H2>Locomotives</H2>
+   <H2>Locomotives</H2>
 
-The locomotives window allows you to edit your locomotive roster. You can enter
-a locomotive's number, road, model, type, and length. You can optionally
-add the locomotive's build date and owner. If you want a group of locomotives to
-be assigned as a unit, you can create a "consist". The locomotive type is
-used by the program to determine where locomotives are picked up and or
-stored at the various locations on your layout. Some of default locomotive
-types are electric, diesel, gas turbine, and steam.
+   The locomotives window allows you to edit your locomotive roster. You can enter a locomotive's
+   number, road, model, type, and length. You can optionally add the locomotive's build date and
+   owner. If you want a group of locomotives to be assigned as a unit, you can create a "consist".
+   The locomotive type is used by the program to determine where locomotives are picked up and or
+   stored at the various locations on your layout. Some of default locomotive types are electric,
+   diesel, gas turbine, and steam.
 
-<P>
-<img src="images/Locomotives.png">
-</P>
+   <P>
+    <img src="images/Locomotives.png">
+   </P>
 
-<A NAME="ImportLocomotives"></A>
-<H3>Import Locomotives</H3>
+   <A NAME="ImportLocomotives"></A>
+   <H3>Import Locomotives</H3>
 
-If you already have a list of locomotives in your JMRI roster or in a
-database, you can import the locomotives into the program. To get your
-locomotives from your JMRI roster, select "Import from JMRI roster" from the
-Tools-&gt;Operations-&gt;Locomotives-&gt;Tools menu. Only locomotives that don't exist
-will be added to the programs locomotive roster. This way you can use this
-tool any time you add locomotives to your JMRI locomotive roster. The JMRI locomotive
-roster doesn't have the length field, so a default length is entered for
-you. You should correct the locomotive length if you want the program to
-correctly calculate your train lengths.
+   If you already have a list of locomotives in your JMRI roster or in a database, you can import
+   the locomotives into the program. To get your locomotives from your JMRI roster, select "Import
+   from JMRI roster" from the Tools-&gt;Operations-&gt;Locomotives-&gt;Tools menu. Only locomotives
+   that don't exist will be added to the programs locomotive roster. This way you can use this tool
+   any time you add locomotives to your JMRI locomotive roster. The JMRI locomotive roster doesn't
+   have the length field, so a default length is entered for you. You should correct the locomotive
+   length if you want the program to correctly calculate your train lengths.
 
-<H3>Import Locomotives from a File</H3>
+   <H3>Import Locomotives from a File</H3>
 
-The import from file function requires an ACSII text file, with one line
-for each locomotive. The locomotive import requires four attributes and
-order is locomotive number, road name, model, and length. All four attributes
-are required for the import to work correctly. The following
-shows two examples of the correct format:
+   The import from file function requires an ACSII text file, with one line for each locomotive. The
+   locomotive import requires four attributes and order is locomotive number, road name, model, and
+   length. All four attributes are required for the import to work correctly. The following shows
+   two examples of the correct format:
 
-<P>236 UP RS4 40 <BR>
-5578 SP SW1200 42</P>
-<P>Each line can start with a space and multiple spaces between
-fields is okay. Optionally you can include additional attributes in the
-following order, owner name, date built, and location. The location can
-have two fields, the location name followed by the location's spur or
-yard name separated by a hyphen. The following shows two examples of the
-correct format:</P>
+   <P>
+    236 UP RS4 40 <BR> 5578 SP SW1200 42
+   </P>
+   <P>Each line can start with a space and multiple spaces between fields is okay. Optionally
+    you can include additional attributes in the following order, owner name, date built, and
+    location. The location can have two fields, the location name followed by the location's spur or
+    yard name separated by a hyphen. The following shows two examples of the correct format:</P>
 
-<BR>
-236 UP RS4 40 AT 1930 Home Town USA - Engine Terminal <BR>
-5578 SP SW1200 42 DB 1934 York - York Engine Yard
+   <BR> 236 UP RS4 40 AT 1930 Home Town USA - Engine Terminal
+   <BR> 5578 SP SW1200 42 DB 1934 York - York Engine Yard
 
-<P>If you prefer to use comma delimiters instead of spaces, use a file with
-a .csv extension or place
-the word "comma" at the start of your import file and use commas instead
-of spaces. The following are two examples of importing locomotives with
-comma deliminters.</P>
-<P>comma <BR>
-236,UP,RS 4,40,AT,1930,Home Town USA,-,Engine Terminal <BR>
-5578,SP,SW 1200,42,DB,1934,Town of York,-,York Engine Yard</P>
-<P>You need to be very careful with spaces when importing a comma
-delimitated file. The program will include leading and trailing spaces
-if they exist between the commas.</P>
-<P>To import a file, use the "Tools" menu in the upper left hand
-corner of the Tools-&gt;Operations-&gt;Locomotives menu. Select
-"Tools-&gt;Roster-&gt;Import. Note that the program will only add locomotives that
-don't exist in the program's locomotive roster. It the locomotive already
-exists, it will be skipped by the program.</P>
+   <P>If you prefer to use comma delimiters instead of spaces, use a file with a .csv extension
+    or place the word "comma" at the start of your import file and use commas instead of spaces. The
+    following are two examples of importing locomotives with comma deliminters.</P>
+   <P>
+    comma <BR> 236,UP,RS 4,40,AT,1930,Home Town USA,-,Engine Terminal <BR> 5578,SP,SW
+    1200,42,DB,1934,Town of York,-,York Engine Yard
+   </P>
+   <P>You need to be very careful with spaces when importing a comma delimitated file. The
+    program will include leading and trailing spaces if they exist between the commas.</P>
+   <P>To import a file, use the "Tools" menu in the upper left hand corner of the
+    Tools-&gt;Operations-&gt;Locomotives menu. Select "Tools-&gt;Roster-&gt;Import. Note that the
+    program will only add locomotives that don't exist in the program's locomotive roster. It the
+    locomotive already exists, it will be skipped by the program.</P>
 
-<P>After importing your locomotives, you must save them if you want to
-keep them as part of your roster. Press the "Save" button located at the
-bottom of the Locomotives window, or select any locomotive by pressing the edit
-button and then press the "Save" button that can be found at the bottom
-right of the "Edit Locomotive" window.</P>
+   <P>After importing your locomotives, you must save them if you want to keep them as part of
+    your roster. Press the "Save" button located at the bottom of the Locomotives window, or select
+    any locomotive by pressing the edit button and then press the "Save" button that can be found at
+    the bottom right of the "Edit Locomotive" window.</P>
 
-<A NAME="LocomotivesAdd"></A>
-<H3>Adding Locomotives to your Roster</H3>
+   <A NAME="LocomotivesAdd"></A>
+   <H3>Adding Locomotives to your Roster</H3>
 
-To manually add a locomotive to your roster, press the "Add" button located
-at the bottom of the "Locomotives" window. Then select the road for the
-locomotive. If the desired road doesn't exist, press the "Edit" button
-across from the road select menu box. This will allow you to add a new
-road or delete any that you don't need. Now enter the locomotive's number,
-model, type, length and horsepower. The locomotive's horsepower, the train's
-weight, and track grade is used by the program to calculate how many
-locomotives are required when using the "Auto" feature when building trains.
+   To manually add a locomotive to your roster, press the "Add" button located at the bottom of the
+   "Locomotives" window. Then select the road for the locomotive. If the desired road doesn't exist,
+   press the "Edit" button across from the road select menu box. This will allow you to add a new
+   road or delete any that you don't need. Now enter the locomotive's number, model, type, length
+   and horsepower. The locomotive's horsepower, the train's weight, and track grade is used by the
+   program to calculate how many locomotives are required when using the "Auto" feature when
+   building trains.
 
-<p>Now set the locomotive's location on the layout. If the locomotive is off
-the layout, set the location to none (blank space). If wish this locomotive
-to be part of a consist, press "Edit" across from "Consist" and enter a
-consist name. Then select the consist name from the menu box. Finally
-you can optionally enter the build date, owner and comment for this
-locomotive.</P>
+   <p>Now set the locomotive's location on the layout. If the locomotive is off the layout, set
+    the location to none (blank space). If wish this locomotive to be part of a consist, press
+    "Edit" across from "Consist" and enter a consist name. Then select the consist name from the
+    menu box. Finally you can optionally enter the build date, owner and comment for this
+    locomotive.</P>
 
-<A	NAME="LocomotiveModels"></A>
-<H3>Locomotive Models</H3>
+   <A NAME="LocomotiveModels"></A>
+   <H3>Locomotive Models</H3>
 
-The program allows you organize your locomotives by model. Each model can
-only have one locomotive type, length, weight and horsepower rating
-associated with it. For example, if you assign the model name "RS11" to
-a set of locomotives, when you change the length of one of the "RS11"s, the
-length will also change for the others.
+   The program allows you organize your locomotives by model. Each model can only have one
+   locomotive type, length, weight and horsepower rating associated with it. For example, if you
+   assign the model name "RS11" to a set of locomotives, when you change the length of one of the
+   "RS11"s, the length will also change for the others.
 
-<H3>Save</H3>
+   <H3>Save</H3>
 
-Press "Save" to store the locomotive's settings. The program will create a
-file (OperationsEngineRoster.xml) in your JMRI directory in a folder
-called "operations". A backup file with the last settings for all of
-your locomotives is also created each time the "Save" button is pressed. 
+   Press "Save" to store the locomotive's settings. The program will create a file
+   (OperationsEngineRoster.xml) in your JMRI directory in a folder called "operations". A backup
+   file with the last settings for all of your locomotives is also created each time the "Save"
+   button is pressed.
+   <A NAME="LocomotivesSet"></A>
+   <H3>Set Locomotive</H3>
 
-<A	NAME="LocomotivesSet"></A>
-<H3>Locomotive Set</H3>
+   After creating a locomotive, you can set the locomotive's location, and optionally the
+   locomotive's destination and train. Normally the locomotive's destination and assigned train are
+   generated by the program, but you can use these fields to force a locomotive to a specific
+   location using a specified train.
+   <A NAME="SynchronizeWithNCEConsists"></A>
+   <H3>Synchronize with NCE Consists</H3>
 
-After creating a locomotive, you can set the locomotive's location, and
-optionally the locomotive's destination and train. Normally the locomotive's
-destination and assigned train are generated by the program, but you can
-use these fields to force a locomotive to a specific location using a
-specified train.
+   If you are using NCE as your DCC command station, you can have the program synchronize your
+   consist numbers with your locomotives. The program will read all of the consists out of the NCE
+   system and then will search for matching locomotives in your operations roster. The program will
+   assign the consist name nce_xxx where xxx is the consist number. To synchronize your consists,
+   select "Synchronize with NCE Consists" under the "Tools" menu.
+   <A NAME="Routes"></A>
+   <H2>Routes</H2>
 
-<A NAME="SynchronizeWithNCEConsists"></A>
-<H3>Synchronize with NCE Consists</H3>
-
-If you are using NCE as your DCC command station, you can have the
-program synchronize your consist numbers with your locomotives. The program
-will read all of the consists out of the NCE system and then will search
-for matching locomotives in your operations roster. The program will assign
-the consist name nce_xxx where xxx is the consist number. To synchronize
-your consists, select "Synchronize with NCE Consists" under the "Tools"
-menu. 
-
-<A NAME="Routes"></A>
-<H2>Routes</H2>
-
-A route is a list of locations that a train will visit. Later you can
-decide if the train stops at a location for work. Routes can be point to
-point or out and back. To build a route, select
-"Tools-&gt;Operations-&gt;Routes".  The Routes window also provides route status,
-for example, "Orphan" means the route hasn't been assigned to a train.
+   A route is a list of locations that a train will visit. Later you can decide if the train stops
+   at a location for work. Routes can be point to point or out and back. To build a route, select
+   "Tools-&gt;Operations-&gt;Routes". The Routes window also provides route status, for example,
+   "Orphan" means the route hasn't been assigned to a train.
 
 
-<P><img src="images/Routes.png"></P>
+   <P>
+    <img src="images/Routes.png">
+   </P>
 
-<P>Then press the "Add" button located at the bottom of the window.</P>
+   <P>Then press the "Add" button located at the bottom of the window.</P>
 
-<P><img src="images/EditRoute.png"></P>
+   <P>
+    <img src="images/EditRoute.png">
+   </P>
 
-<P>
-Enter the route name and an optional comment. This comment is shown in
-the routes window, and <A HREF="#ManifestComments">optionally</A> on
-your manifests. Each route must have unique name. Then press the "Add
-Route" button located at the bottom of the window. Now select the
-location the train will depart by selecting the location in the menu box
-located at the left bottom side of the window. Press "Add Location". Now
-build your route by selecting the next location the train will visit,
-select all locations that the train will pass through even if the train
-will not work the location. This way your train's engineer will know
-when reading his manifest the towns he will be traveling through. Each
-time you add a location to the route, the table shows the order in which
-the train will visit. You can move a location up or down in the sequence
-if needed.
-</P>
+   <P>
+    Enter the route name and an optional comment. This comment is shown in the routes window, and <A
+     HREF="#ManifestComments">optionally</A> on your manifests. Each route must have unique name.
+    Then press the "Add Route" button located at the bottom of the window. Now select the location
+    the train will depart by selecting the location in the menu box located at the left bottom side
+    of the window. Press "Add Location". Now build your route by selecting the next location the
+    train will visit, select all locations that the train will pass through even if the train will
+    not work the location. This way your train's engineer will know when reading his manifest the
+    towns he will be traveling through. Each time you add a location to the route, the table shows
+    the order in which the train will visit. You can move a location up or down in the sequence if
+    needed.
+   </P>
 
-<A NAME="EditRoute"></A>
-<H3>Edit Route</H3>
+   <A NAME="EditRoute"></A>
+   <H3>Edit Route</H3>
 
    Each location has the train's departure direction, number of desired car moves, and whether car
    pick ups and or car set outs are allowed at that location. A car move can be a car pick up or car
    set out at that location. For example, 5 moves can be 5 pick ups, or 5 set outs, or any
    combination of 5 pick ups or set outs. Picking up or dropping off a group of cars or a
-   <A HREF="#Kernel">kernel</A> represents one move. When entering the desired number of car moves,
+   <A HREF="#Kernel">kernel</A> represents one move. To modify the number of moves for a location,
+   click directly on the cell in the route table. When entering the desired number of car moves,
    enter reasonable numbers that reflect what you want the program to do for you. For example, if
    you want your train to depart with 15 cars, then 15 is the correct value for your moves at the
    start of the route. At the end of the route, if you want 12 cars in the train when it terminates,
    then 12 is the right value for the move count for the last location in your train's route.
 
-   <P>If you want to delay the departure of the train from a location
-or increase the train's travel time,
-enter the number of minutes desired in the "Wait" cell.  Another choice
-is to specify the train's departure time from a location.</P>
+   <P>If you want to delay the departure of the train from a location or increase the train's
+    travel time, enter the number of minutes desired in the "Wait" cell. Another choice is to
+    specify the train's departure time from a location.</P>
 
-<P>You can also adjust the <A HREF="#MaximumTrainLength">maximum train length</A> that can depart each
-location. The grade is used to determine how many locomotives the train will
-require for that segment.</P>
+   <P>
+    You can also adjust the <A HREF="#MaximumTrainLength">maximum train length</A> that can depart
+    each location. The grade is used to determine how many locomotives the train will require for
+    that segment.
+   </P>
 
-<P>The X and Y are the coordinates on your dispatcher's panel for
-the optional train icon. You can set the coordinates here, use the <A
-	HREF="#SetTrainIconCoordinates">Set Train Icon Coordinates</A> tool, or
-use the "SetX&amp;Y" train icon popup menu to teach the program where you
-want the train icon placed when the train is at the specified location.
-Leave the X and Y coordinates at zero if you want to manually move the
-icon or you're not using the icon feature.</P>
+   <P>
+    The X and Y are the coordinates on your dispatcher's panel for the optional train icon. You can
+    set the coordinates here, use the <A HREF="#SetTrainIconCoordinates">Set Train Icon
+     Coordinates</A> tool, or use the "SetX&amp;Y" train icon popup menu to teach the program where you
+    want the train icon placed when the train is at the specified location. Leave the X and Y
+    coordinates at zero if you want to manually move the icon or you're not using the icon feature.
+   </P>
 
-<A NAME="RouteComment"></A>
-<p>Each location in the route can also have an optional comment that
-will appear on the train manifests.  Press the "Add" button under the
-table heading "Comment" to add a comment to a location.</p>
+   <A NAME="RouteComment"></A>
+   <p>Each location in the route can also have an optional comment that will appear on the train
+    manifests. Press the "Add" button under the table heading "Comment" to add a comment to a
+    location.</p>
 
-<H3>Save Route</H3>
+   <H3>Save Route</H3>
 
-Press "Save Route" to save your route. The program will create a file
-(OperationsRouteRoster.xml) in your JMRI directory in a folder called
-"operations". A backup file with the last settings for all of your
-routes is also created each time the "Save Route" button is pressed. 
-<A	NAME="CopyRoute"></A>
-<H3>Copy Route</H3>
+   Press "Save Route" to save your route. The program will create a file (OperationsRouteRoster.xml)
+   in your JMRI directory in a folder called "operations". A backup file with the last settings for
+   all of your routes is also created each time the "Save Route" button is pressed.
+   <A NAME="CopyRoute"></A>
+   <H3>Copy Route</H3>
 
-In the Route window select "Tools-&gt;Copy Route" to make a copy of your
-route. Enter the name of the new route and select the route that you
-want to copy. If you want the route reversed check the "Invert" box.
-
-<A NAME="PassengerTrainRoute"></A>
-<H3>Passenger Train Route</H3>
+   In the Route window select "Tools-&gt;Copy Route" to make a copy of your route. Enter the name of
+   the new route and select the route that you want to copy. If you want the route reversed check
+   the "Invert" box.
+   <A NAME="PassengerTrainRoute"></A>
+   <H3>Passenger Train Route</H3>
 
    Normally passenger trains run on a schedule based on departure times. If you want your manifests
    to show the departure times for your train, create a route in which you specify the departure
@@ -2103,69 +2004,57 @@ want to copy. If you want the route reversed check the "Invert" box.
    "Departure Time" in the Display box. Now select the departure time for each location in the
    train's route. The manifest statement "No work at xxx" isn't appropriate for a passenger train.
    To eliminate this statement, simply add a comment to each location in the train's route. Use the
-   Edit Route window, and for each location, you can add a comment or edit an existing one. 
-   
-<A NAME="RouteFeatures"></A>
-<H3>Route Features</H3>
+   Edit Route window, and for each location, you can add a comment or edit an existing one.
+   <A NAME="RouteFeatures"></A>
+   <H3>Route Features</H3>
 
-One very powerful feature of routes is the ability to specify the same
-location more than once. When the same location name is used back to
-back, the train's manifest will print as though the train only arrived
-and departed once. Note that names "Danville", "Danville-1", and
-"Danville-2" are all the same with regards to the manifest and switch
-list printouts, but the program deals with them as though they were
-different locations.
+   One very powerful feature of routes is the ability to specify the same location more than once.
+   When the same location name is used back to back, the train's manifest will print as though the
+   train only arrived and departed once. Note that names "Danville", "Danville-1", and "Danville-2"
+   are all the same with regards to the manifest and switch list printouts, but the program deals
+   with them as though they were different locations.
 
-<P>For example, you can control if there are set outs or pick ups at any
-location in the route. Therefore if you wanted to only set out 3 cars,
-you could specify only set outs and 3 moves. But what if you wanted to
-set out 3 cars and pick up 7 cars. If you specify 10 moves for a
-location it can be any combination of 10 pick ups and set outs. Using
-"Danville" as our location, we can in our route specify "Danville"
-twice, back to back. In the first "Danville" we can specify 3 set outs
-only. In the second "Danville" we can specify 7 pick ups only. Now the
-program will "try" and meet your request by picking up to 7 cars and
-dropping off up to 3 cars.</P>
+   <P>For example, you can control if there are set outs or pick ups at any location in the
+    route. Therefore if you wanted to only set out 3 cars, you could specify only set outs and 3
+    moves. But what if you wanted to set out 3 cars and pick up 7 cars. If you specify 10 moves for
+    a location it can be any combination of 10 pick ups and set outs. Using "Danville" as our
+    location, we can in our route specify "Danville" twice, back to back. In the first "Danville" we
+    can specify 3 set outs only. In the second "Danville" we can specify 7 pick ups only. Now the
+    program will "try" and meet your request by picking up to 7 cars and dropping off up to 3 cars.</P>
 
-<P>Another example, the program will not allow you to have staging
-tracks and other types of tracks (spurs, yards, interchanges) at the
-same location. But using the names above, we could assign yard and
-spur tracks to "Danville", and then as long as "Danville-1" was the
-last or first location in a route, assign staging tracks to "Danville-1".
-Now when the train terminates at Danville, the yard and spur tracks are
-serviced, and then the train terminates into staging at "Danville-1".</P>
+   <P>Another example, the program will not allow you to have staging tracks and other types of
+    tracks (spurs, yards, interchanges) at the same location. But using the names above, we could
+    assign yard and spur tracks to "Danville", and then as long as "Danville-1" was the last or
+    first location in a route, assign staging tracks to "Danville-1". Now when the train terminates
+    at Danville, the yard and spur tracks are serviced, and then the train terminates into staging
+    at "Danville-1".</P>
 
-<P>Another example. Let's say we have a mainline train that will
-service Danville. At Danville we have a yard and several spurs. We
-want the mainline train to service Danville's yard, but not the spurs.
-We don't want to use a switcher to service the spurs at
-Danville. However, we do want locals to service them! We need to tell
-the program which tracks in Danville are service by which trains.</P>
+   <P>Another example. Let's say we have a mainline train that will service Danville. At
+    Danville we have a yard and several spurs. We want the mainline train to service Danville's
+    yard, but not the spurs. We don't want to use a switcher to service the spurs at Danville.
+    However, we do want locals to service them! We need to tell the program which tracks in Danville
+    are service by which trains.</P>
 
-<P>Solution, we create a yard in "Danville", and create spurs in
-"Danville-1". The mainline train has "Danville" in it's route. The
-locals will service "Danville" and "Danville-1". Now the dilemma, do the
-locals service "Danville-1" or "Danville" first? Not an issue, we create
-a route for the locals that services "Danville-1", then "Danville", and
-then "Danville-1". At the first "Danville-1" we request only pick ups at
-the spurs, at "Danville" we specify both pick ups and set outs to the
-yard, and at the second "Danville-1" we specify only set outs. </P>
+   <P>Solution, we create a yard in "Danville", and create spurs in "Danville-1". The mainline
+    train has "Danville" in it's route. The locals will service "Danville" and "Danville-1". Now the
+    dilemma, do the locals service "Danville-1" or "Danville" first? Not an issue, we create a route
+    for the locals that services "Danville-1", then "Danville", and then "Danville-1". At the first
+    "Danville-1" we request only pick ups at the spurs, at "Danville" we specify both pick ups and
+    set outs to the yard, and at the second "Danville-1" we specify only set outs.</P>
 
-<P>Another solution is to simply use the spur's ability to select which trains
-can service the track.</P>
+   <P>Another solution is to simply use the spur's ability to select which trains can service
+    the track.</P>
 
-<A	NAME="SetTrainIconCoordinates"></A>
-<H3>Set Train Icon Coordinates</H3>
+   <A NAME="SetTrainIconCoordinates"></A>
+   <H3>Set Train Icon Coordinates</H3>
 
-Use this tool to set the default X and Y coordinates of your train icons
-for each location. The tool allows you to specify the icon coordinates
-based on the train's direction. You can also update all of your existing
-routes and locations with these new coordinates. As an alternative, you
-can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to
-create coordinates unique to a specific route. 
-
-<A NAME="Trains"></A>
-<H2>Trains</H2>
+   Use this tool to set the default X and Y coordinates of your train icons for each location. The
+   tool allows you to specify the icon coordinates based on the train's direction. You can also
+   update all of your existing routes and locations with these new coordinates. As an alternative,
+   you can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to create coordinates
+   unique to a specific route.
+   <A NAME="Trains"></A>
+   <H2>Trains</H2>
 
    Now that we've created our routes we need trains to move cars! Create a train by selecting
    "Tools-&gt;Operations-&gt;Trains" from the top level menu.
@@ -2193,88 +2082,85 @@ create coordinates unique to a specific route.
 
    <P>The "Preview" checkbox when selected, allows you to preview rather than printing your
     train's manifest or build report.</P>
-    
-    <P>One of the most important buttons is the "Save Builds" button.  When pressed, the program saves
-    all the files that have been modified by building and moving your trains.  Pressing this button
-    allows you to shut down the program and resume exactly where you left the program.</P>
+
+   <P>One of the most important buttons is the "Save Builds" button. When pressed, the program
+    saves all the files that have been modified by building and moving your trains. Pressing this
+    button allows you to shut down the program and resume exactly where you left the program.</P>
 
    <P>Press the "Add" button to create a train.</P>
-   
-<P><img src="images/EditTrain.png"></P>
-<P>Enter the train's name and optional description, and then press
-the "Add Train" button. Both will show up on the train's manifest. The
-train's name will also show up on the train icon, so short names work
-best. Then select the route that this train will travel. There's an Edit
-button to the right of the route that allows you to directly edit the
-selected route. Once a route is selected a list of locations that the
-train will visit should appear. You can deselect any location that you
-don't want the train to work.</P>
 
-<H3>Train Departure Time</H3>
+   <P>
+    <img src="images/EditTrain.png">
+   </P>
+   <P>Enter the train's name and optional description, and then press the "Add Train" button.
+    Both will show up on the train's manifest. The train's name will also show up on the train icon,
+    so short names work best. Then select the route that this train will travel. There's an Edit
+    button to the right of the route that allows you to directly edit the selected route. Once a
+    route is selected a list of locations that the train will visit should appear. You can deselect
+    any location that you don't want the train to work.</P>
 
-Select the time that this train will depart the first location in its
-route. You can use the departure time to sort your trains in the order
-that you want them built when using the <A HREF="#BuildingTrains">Build
-Selected Trains</A> button.  Note that if the train's route has a departure
-time for the first location, the route's departure time is used and the
-train departure time selection is disabled.
+   <H3>Train Departure Time</H3>
 
-<H3>Train Rolling Stock</H3>
+   Select the time that this train will depart the first location in its route. You can use the
+   departure time to sort your trains in the order that you want them built when using the
+   <A HREF="#BuildingTrains">Build Selected Trains</A> button. Note that if the train's route has a
+   departure time for the first location, the route's departure time is used and the train departure
+   time selection is disabled.
 
-You can determine what type of cars and locomotives the train will service.
-Select the rolling stock the train will carry by clicking on the
-appropriate checkboxes. A checked box means the train will service this
-type of rolling stock. 
+   <H3>Train Rolling Stock</H3>
 
-<A NAME="TrainRequires"></A>
-<H3>Optional Train Requirements</H3>
+   You can determine what type of cars and locomotives the train will service. Select the rolling
+   stock the train will carry by clicking on the appropriate checkboxes. A checked box means the
+   train will service this type of rolling stock.
+   <A NAME="TrainRequires"></A>
+   <H3>Optional Train Requirements</H3>
 
-You can control the number of locomotives that will be assigned to this
-train, and optionally, the locomotive's model and road name. If you want two
-or more locomotives assigned to a train, the locomotives must be part of a <A
-	HREF="#LocomotivesAdd">consist</A>. If you select "Auto", the program will
-calculate the number of locomotives required for this train based on the
-weight of the train, the track grade, and the horsepower of the locomotives.
+   You can control the number of locomotives that will be assigned to this train, and optionally,
+   the locomotive's model and road name. If you want two or more locomotives assigned to a train,
+   the locomotives must be part of a
+   <A HREF="#LocomotivesAdd">consist</A>. If you select "Auto", the program will calculate the
+   number of locomotives required for this train based on the weight of the train, the track grade,
+   and the horsepower of the locomotives.
 
-<P>You can also require a <A HREF="#CabooseFredHazardous">caboose
-or car with FRED (Flashing Rear End Device)</A> as the last car in the
-train, and you can optionally specify the road name for the caboose or
-car with FRED. If you leave the road name blank, the program will try
-and find a caboose with the same road name as the locomotive.</P>
+   <P>
+    You can also require a <A HREF="#CabooseFredHazardous">caboose or car with FRED (Flashing
+     Rear End Device)</A> as the last car in the train, and you can optionally specify the road name for
+    the caboose or car with FRED. If you leave the road name blank, the program will try and find a
+    caboose with the same road name as the locomotive.
+   </P>
 
-<A NAME="TrainReset"></A>
-<H3>Reset Train</H3>
+   <A NAME="TrainReset"></A>
+   <H3>Reset Train</H3>
 
-The "Reset Train" button allows you to remove locomotives and cars that have
-been assigned to a train. Useful when you want to try various build
-options and don't what to physically move locomotives and cars on the
-railroad.
+   The "Reset Train" button allows you to remove locomotives and cars that have been assigned to a
+   train. Useful when you want to try various build options and don't what to physically move
+   locomotives and cars on the railroad.
 
-<H3>Save Train</H3>
+   <H3>Save Train</H3>
 
-Press "Save Train" to save your train. The program will create a file
-(OperationsTrainRoster.xml) in your JMRI directory in a folder called
-"operations". A backup file with the last settings for all of your
-trains is also created each time the "Save Train" button is pressed. 
+   Press "Save Train" to save your train. The program will create a file (OperationsTrainRoster.xml)
+   in your JMRI directory in a folder called "operations". A backup file with the last settings for
+   all of your trains is also created each time the "Save Train" button is pressed.
+   <A NAME="TrainBuildOptions"></A>
+   <H3>Train Build Options</H3>
 
-<A NAME="TrainBuildOptions"></A>
-<H3> Train Build Options</H3>
+   In the edit train window menu under "Tools-&gt;Train Build Options" are additional options for
+   building a train. You can control which car roads, load, owners, and built dates the train will
+   service.
 
-In the edit train window menu under "Tools-&gt;Train Build Options"
-are additional options for building a train. You can control which
-car roads, load, owners, and built dates the train will service.
+   <P>You can also specify a locomotive change in route or add helper locomotives.</P>
 
-<P>You can also specify a locomotive change in route or add helper locomotives.</P>
+   <P>
+    <img src="images/TrainBuildOptions.png">
+   </P>
 
-<P><img src="images/TrainBuildOptions.png"></P>
-
-<H3>Options</H3>
+   <H3>Options</H3>
 
    <H4>Use normal mode when building this train</H4>
 
    You can request that the program use normal mode when building the train. This is useful when a
    train departs staging. In normal mode, all of the cars in staging are set out first, where in
-   aggressive mode, the cars in staging are set out last.  Selecting this option when you have build
+   aggressive mode, the cars in staging are set out last. Selecting this option when you have build
    failures out of staging, it could fix the failure.
 
    <H4>Send all car pick ups to terminal</H4>
@@ -2292,8 +2178,9 @@ car roads, load, owners, and built dates the train will service.
    rather than having the program report that cars in staging couldn't be delivered to destinations
    on the layout. Selecting this option allows a turn to transport cars to and from the same staging
    location. Note that when this options is selected, that the program will only return cars to
-   staging when destinations are not available on the layout. You can also set this option for all turns, 
-   see <A HREF="#SettingsOptions"> Options</A>.
+   staging when destinations are not available on the layout. You can also set this option for all
+   turns, see
+   <A HREF="#SettingsOptions"> Options</A>.
 
    <H4>Allow local moves when a car has a custom load</H4>
 
@@ -2301,39 +2188,36 @@ car roads, load, owners, and built dates the train will service.
    pick up and then a set out of a car at the same location. When you use custom loads, the program
    can create local moves based on the car's custom load. So if you had a car sitting on a track
    with a custom load, and you also had a spur with a schedule at the same location requesting that
-   load, the train's manifest could show the pull and spot as a local move. The same goes for a
-   car with a final destination that's at the car's current location. So if you don't want your train to
-   perform local moves when a car has a custom load or a local final destination, deselect this option.
+   load, the train's manifest could show the pull and spot as a local move. The same goes for a car
+   with a final destination that's at the car's current location. So if you don't want your train to
+   perform local moves when a car has a custom load or a local final destination, deselect this
+   option.
 
    <H4>Allow cars to travel from origin to terminal</H4>
 
    Normally the program allows cars to travel from the train's departure location (origin) to its
    last location (terminal). Deselect this option if you don't want the train to carry cars from the
    train's origin to the terminal.
-   
    <A NAME="TrainRoadNames"></A>
-<H3>Train Road Names</H3>
+   <H3>Train Road Names</H3>
 
-You can control the road names that the train will service. Select under
-the "Edit Train-&gt;Tools" menu the "Train Build Options". This will bring
-up a new window with several options.
+   You can control the road names that the train will service. Select under the "Edit
+   Train-&gt;Tools" menu the "Train Build Options". This will bring up a new window with several
+   options.
 
-<P>If the train will service any road name, select the "Accept all"
-radio button. If you want to accept only some road names, select "Accept
-only" radio button. Then use the menu of road names and "Add Road"
-button to make a list of road names that the train will service. To
-remove a road name from your list, select the road name from the menu
-and use the "Delete Road" button.</P>
+   <P>If the train will service any road name, select the "Accept all" radio button. If you want
+    to accept only some road names, select "Accept only" radio button. Then use the menu of road
+    names and "Add Road" button to make a list of road names that the train will service. To remove
+    a road name from your list, select the road name from the menu and use the "Delete Road" button.</P>
 
-<P>To build a list of road names that the train will not service,
-select the "Exclude" radio button. Use the menu of road names and the
-"Add Road" button to build a list of roads that this train will not
-service.</P>
+   <P>To build a list of road names that the train will not service, select the "Exclude" radio
+    button. Use the menu of road names and the "Add Road" button to build a list of roads that this
+    train will not service.</P>
 
-<P>Press the "Save Train" button to update the train build options
-and close the window when your done.</P>
+   <P>Press the "Save Train" button to update the train build options and close the window when
+    your done.</P>
 
-<H3>Train Car Loads</H3>
+   <H3>Train Car Loads</H3>
 
    You can decide which car loads the train will service. There are two pull down menus, the first
    one is the type of car, and the second the type of load serviced by the car type selected. Use
@@ -2343,42 +2227,35 @@ and close the window when your done.</P>
 
    <H3>Train Owners</H3>
 
-You can decide which rolling stock the train will service by owner name.
-The control is similar to <A HREF="#TrainRoadNames">Train Road Names</A>,
-see above.
+   You can decide which rolling stock the train will service by owner name. The control is similar
+   to
+   <A HREF="#TrainRoadNames">Train Road Names</A>, see above.
 
-<H3>Train Built Dates</H3>
+   <H3>Train Built Dates</H3>
 
-You can control which rolling stock the train will service by their
-built date. If you want only locomotives and cars built after a certain
-year, select the "After" radio button and enter a four digit year in the
-text box. If you only want locomotives and cars built before a certain year,
-select the "Before" radio button and enter a four digit year in the text
-box. And if you want to specify a period, select the "Range" radio
-button and enter the after and before years you want the train to
-service. 
+   You can control which rolling stock the train will service by their built date. If you want only
+   locomotives and cars built after a certain year, select the "After" radio button and enter a four
+   digit year in the text box. If you only want locomotives and cars built before a certain year,
+   select the "Before" radio button and enter a four digit year in the text box. And if you want to
+   specify a period, select the "Range" radio button and enter the after and before years you want
+   the train to service.
 
-<H3>Optional Train Requirements</H3>
+   <H3>Optional Train Requirements</H3>
 
-You can have up to two locomotive changes while the train is in route.
-Select "Locomotive change" where you want the change to happen in your
-route, and how many new locomotives should be assigned to the train. You
-can optionally select the new locomotives model and road. At the
-locomotive change location, the previously assigned locomotives will be
-removed from the train.
+   You can have up to two locomotive changes while the train is in route. Select "Locomotive change"
+   where you want the change to happen in your route, and how many new locomotives should be
+   assigned to the train. You can optionally select the new locomotives model and road. At the
+   locomotive change location, the previously assigned locomotives will be removed from the train.
 
-<P>The program also gives you three options with regards to the
-train's caboose. The first option, "Remove caboose", will set out the
-caboose if one was assigned to the train. The train will then depart the
-specified location without a caboose. The second option, "No caboose
-change", either keeps the caboose if one was assigned to the train, or
-departs without a caboose if there wasn't one assigned to the train. The
-third option, "Change caboose", will set out the caboose if one was
-assigned to the train, and then add a new one to the train. This last
-option becomes "Add caboose" if the train was traveling without a
-caboose.
-
-<P>You can also request helper locomotives for those long up hill battles that your train
+   <P>The program also gives you three options with regards to the train's caboose. The first
+    option, "Remove caboose", will set out the caboose if one was assigned to the train. The train
+    will then depart the specified location without a caboose. The second option, "No caboose
+    change", either keeps the caboose if one was assigned to the train, or departs without a caboose
+    if there wasn't one assigned to the train. The third option, "Change caboose", will set out the
+    caboose if one was assigned to the train, and then add a new one to the train. This last option
+    becomes "Add caboose" if the train was traveling without a caboose.
+   
+   <P>You can also request helper locomotives for those long up hill battles that your train
     might experience. The current code only adds a comment to the manifest requesting helper service
     starting at the location you select, and removes the helper service at the second location
     specified by you.</P>
@@ -2389,7 +2266,6 @@ caboose.
    You can optionally have a unique railroad name and logo for each train in your roster. You can
    also decide if your manifests show the train's arrival and departure times. Use the "Edit
    Train-&gt;Tools-&gt;Manifest Options" to set these options.
-   
    <A NAME="TrainScripts"></A>
    <H3>Scripts</H3>
 
@@ -2413,11 +2289,11 @@ caboose.
    </P>
    <P>The window shows the train's route along with every location and track that can be
     serviced by the train. To the right of each track is the current status for the car type
-    currently selected in the drop down menu. If the status is "OK" then this train can pick
-    up and set out this type of car to that specific track. If the status is "Pick up" or "Set
-    out" then the train can only pick up or set out cars to this particular track. A status that
-    begins with an "X" means that the train will not service the track. The following table provides
-    a summary of the various statuses.</P>
+    currently selected in the drop down menu. If the status is "OK" then this train can pick up and
+    set out this type of car to that specific track. If the status is "Pick up" or "Set out" then
+    the train can only pick up or set out cars to this particular track. A status that begins with
+    an "X" means that the train will not service the track. The following table provides a summary
+    of the various statuses.</P>
 
    <table>
     <tr>
@@ -2577,10 +2453,8 @@ caboose.
    unrealistic car movements between spurs (industries). However, if you want a spur to spur move,
    use a
    <A HREF="#Schedules">Schedule</A> to force the car move. You can also disable this restriction
-   see <A HREF="#AllowLocalCarMovements">Options.</A> 
-    
-    
-    <A NAME="BuildingTrains"></A>
+   see <A
+    HREF="#AllowLocalCarMovements">Options.</A> <A NAME="BuildingTrains"></A>
    <H2>Building Trains</H2>
 
    To build one train, press the "Build" button in the row for the desired train in the
@@ -2608,7 +2482,6 @@ caboose.
    select which day you want by selecting the appropriate radio button. Then press the "Apply"
    button to update the Trains build checkboxes. Use the "Save" button to store any changes you made
    to the timetable.
-   
    <A NAME="TroubleShootingBuildingTrains"></A>
    <H2>Problems Building Trains How to Fix</H2>
 
@@ -2721,9 +2594,11 @@ caboose.
    <P>The switch list menu also lets you add a comment to the switch list for a location and
     select which printer to use when printing out the switch list. Note that the program when
     printing out manifests will also use the printer associated the train's departure location.</P>
-    
-    <P>You can also get a paperless version of a switch list by activating the appropriate Yardmaster
-    window for a <A HREF="#Locations">location.</A> </P> 
+
+   <P>
+    You can also get a paperless version of a switch list by activating the appropriate Yardmaster
+    window for a <A HREF="#Locations">location.</A>
+   </P>
 
    <H3>Switch List Options</H3>
 
@@ -2807,7 +2682,6 @@ caboose.
    you should terminate a train only after it actually arrives at the final destination in the
    train's route. To terminate several trains, select the trains you wish to terminate in the build
    column and press the "Terminate" button at the bottom of the Trains window.
-   
    <A NAME="SaveBuilds"></A>
    <H3>Save Builds</H3>
 
@@ -2817,7 +2691,6 @@ caboose.
    down JMRI, otherwise you will lose all of the changes that the operations program made to move a
    train to the next location. Pressing the "Save Builds" button before quitting JMRI allows the
    operations program to resume exactly at the point where you pressed the "Save Builds" button.
-   
    <A NAME="BuildingMultipleTrainsSession"></A>
    <H2>Building Multiple Trains for a Session</H2>
 
