@@ -35,6 +35,7 @@ public class JsonReporterServer extends AbstractReporterServer {
     /*
      * Protocol Specific Abstract Functions
      */
+    @Override
     public void sendReport(String reporterName, Object r) throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, REPORTER);
@@ -48,6 +49,7 @@ public class JsonReporterServer extends AbstractReporterServer {
         this.connection.sendMessage(this.mapper.writeValueAsString(root));
     }
 
+    @Override
     public void sendErrorStatus(String reporterName) throws IOException {
         ObjectNode root = this.mapper.createObjectNode();
         root.put(TYPE, ERROR);
@@ -58,12 +60,15 @@ public class JsonReporterServer extends AbstractReporterServer {
         this.connection.sendMessage(this.mapper.writeValueAsString(root));
     }
 
+    @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
         this.parseRequest(this.mapper.readTree(statusString).path(DATA));
     }
 
     public void parseRequest(JsonNode data) throws JmriException, IOException {
-        this.setReporterReport(data.path(NAME).asText(), data.path(REPORT).asText());
+        if (!data.path(REPORT).isMissingNode()) {
+            this.setReporterReport(data.path(NAME).asText(), data.path(REPORT).asText());
+        }
         Reporter reporter = jmri.InstanceManager.reporterManagerInstance().provideReporter(data.path(NAME).asText());
         this.addReporterToList(reporter.getSystemName());
         this.sendReport(reporter.getSystemName(), reporter.getCurrentReport());
