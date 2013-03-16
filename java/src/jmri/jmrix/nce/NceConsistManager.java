@@ -85,7 +85,7 @@ public class NceConsistManager extends jmri.jmrix.AbstractConsistManager impleme
     
     public void startConsistReader(){
     	// read command station memory (not USB and not simulator) Can't determine if simulator selected, but can determine if port name is the default
-    	if (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_NONE && !memo.getNceTrafficController().getPortName().equals(JmrixConfigPane.NONE_SELECTED)
+    	if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE && !memo.getNceTrafficController().getPortName().equals(JmrixConfigPane.NONE_SELECTED)
     			&& memo.getNceTrafficController().getCommandOptions() > NceTrafficController.OPTION_1999)
     		new NceConsistReader().start();
     }

@@ -83,7 +83,7 @@ public class NceConnectionStatus implements NceListener {
 	// Future version of PowerCab V1.61 - 6.3.4
 	// Future version of SB3 V1.61 - 6.3.5
 	//
-	// NOTE: The USB port can not read CS memory
+	// NOTE: The USB port can not read CS memory, unless greater than 7.* version
 	
 	private static final int VV_USB = 6; 		// Revision of USB EPROM VV.MM.mm = 6.3.x
 	private static final int VV_USB_V7 = 7;		// 2012 revision of USB EPROM VV.MM.mm = 7.3.x

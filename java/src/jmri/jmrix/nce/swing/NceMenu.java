@@ -19,6 +19,11 @@ import jmri.jmrix.nce.NceTrafficController;
 public class NceMenu extends JMenu {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 7065069034402845776L;
+
+	/**
      * Create a NCE menu.
      * And loads the NceSystemConnectionMemo to the various actions.
      * Actions will open new windows.
@@ -45,7 +50,11 @@ public class NceMenu extends JMenu {
             } else {
             	NceNamedPaneAction a = new NceNamedPaneAction( rb.getString(item.name), wi, item.load, memo);
                 add(a);
-                a.setEnabled(item.enable.equals(ALL) || (item.enable.equals(PH) && memo.getNceUSB() == NceTrafficController.USB_SYSTEM_NONE));               	
+                if ((item.enable & memo.getNceUsbCmdGroups()) != 0) {
+                    a.setEnabled(true);  
+                } else {
+                    a.setEnabled(false);  
+                }             	
             }
         }
         
@@ -54,32 +63,29 @@ public class NceMenu extends JMenu {
         
         add(new javax.swing.JSeparator());
     }
-    
-    // Enable or disable menu items based on system connection
-    private static final String ALL = "All NCE connections";
-    private static final String PH = "NCE Power House Only";
-        
+
     private Item[] panelItems = new Item[] {
-        new Item("MenuItemCommandMonitor", "jmri.jmrix.nce.ncemon.NceMonPanel", ALL),
-        new Item("MenuItemSendCommand", "jmri.jmrix.nce.packetgen.NcePacketGenPanel", ALL),
-        new Item("MenuItemMacroCommand", "jmri.jmrix.nce.macro.NceMacroGenPanel", ALL),
-        new Item("MenuItemMacroEdit", "jmri.jmrix.nce.macro.NceMacroEditPanel", PH),
-        new Item("MenuItemConsistEdit", "jmri.jmrix.nce.consist.NceConsistEditPanel", PH),
-        new Item("MenuItemTrackPacketMonitor", "jmri.jmrix.ncemonitor.NcePacketMonitorPanel", ALL),
-        new Item("MenuItemClockMon", "jmri.jmrix.nce.clockmon.ClockMonPanel", PH),
-        new Item("MenuItemShowCabs", "jmri.jmrix.nce.cab.NceShowCabPanel", PH),
-        new Item("MenuItemBoosterProg", "jmri.jmrix.nce.boosterprog.BoosterProgPanel", ALL)
+        new Item("MenuItemCommandMonitor", "jmri.jmrix.nce.ncemon.NceMonPanel", ~NceTrafficController.USB_CMDS_NONE),
+        new Item("MenuItemSendCommand", "jmri.jmrix.nce.packetgen.NcePacketGenPanel", ~NceTrafficController.USB_CMDS_NONE),
+        new Item("MenuItemMacroCommand", "jmri.jmrix.nce.macro.NceMacroGenPanel", ~NceTrafficController.USB_CMDS_NONE),
+        new Item("MenuItemMacroEdit", "jmri.jmrix.nce.macro.NceMacroEditPanel", NceTrafficController.USB_CMDS_MEM),
+        new Item("MenuItemConsistEdit", "jmri.jmrix.nce.consist.NceConsistEditPanel", NceTrafficController.USB_CMDS_MEM),
+        new Item("MenuItemTrackPacketMonitor", "jmri.jmrix.ncemonitor.NcePacketMonitorPanel", ~NceTrafficController.USB_CMDS_NONE),
+        new Item("MenuItemClockMon", "jmri.jmrix.nce.clockmon.ClockMonPanel", NceTrafficController.USB_CMDS_CLOCK),
+        new Item("MenuItemShowCabs", "jmri.jmrix.nce.cab.NceShowCabPanel", NceTrafficController.USB_CMDS_MEM),
+        new Item("MenuItemBoosterProg", "jmri.jmrix.nce.boosterprog.BoosterProgPanel", ~NceTrafficController.USB_CMDS_NONE),
+        new Item("MenuItemUsbInt", "jmri.jmrix.nce.usbinterface.UsbInterfacePanel", NceTrafficController.USB_CMDS_MEM)
     };
     
     static class Item {
-        Item(String name, String load, String enable) {
+        Item(String name, String load, long enable) {
             this.name = name;
             this.load = load;
             this.enable = enable;
         }
         String name;
         String load;
-        String enable;
+        long enable;
     }
 }
 

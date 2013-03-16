@@ -38,6 +38,8 @@ public class UsbDriverAdapter extends NcePortController {
         super();
         option1Name = "System";
         options.put(option1Name, new Option("System:", option1Values, false));
+        option2Name = "USB Version";
+        options.put(option2Name, new Option("USB Version", option2Values, false));
         adaptermemo = new NceSystemConnectionMemo();
     }
 
@@ -112,7 +114,9 @@ public class UsbDriverAdapter extends NcePortController {
 
     }
 
-    String[] option1Values = new String[]{"PowerCab", "Smart Booster SB3", "Power Pro"};
+    String[] option1Values = new String[]{"PowerCab", "SB3/SB3a", "Power Pro", "Twin", "SB5"};
+    String[] option2Values = new String[]{"V6.x.x", "V7.x.x"};
+    
     /**
      * set up all of the other objects to operate with an NCE command
      * station connected to this port
@@ -124,17 +128,58 @@ public class UsbDriverAdapter extends NcePortController {
         
         // set binary mode
         adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
-        
+
         //set the system the USB is connected to
-        if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
-                adaptermemo.setNceUSB(NceTrafficController.USB_SYSTEM_POWERCAB);
-        } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {
-                adaptermemo.setNceUSB(NceTrafficController.USB_SYSTEM_SB3);
+        if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[1])) {
+        	// is new firmware, determine functions available
+        	if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB5);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_MEM &
+                		NceTrafficController.USB_CMDS_AUI_READ |
+                		NceTrafficController.USB_CMDS_OPS_PGM);
+        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {
+        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_MEM &
+                		NceTrafficController.USB_CMDS_AUI_READ |
+                		NceTrafficController.USB_CMDS_OPS_PGM);
+        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {
+        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_AUI_READ);
+        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {
+        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_MEM |
+                		NceTrafficController.USB_CMDS_AUI_READ |
+                		NceTrafficController.USB_CMDS_OPS_PGM);
+        	} else {
+        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_MEM |
+                		NceTrafficController.USB_CMDS_AUI_READ |
+                		NceTrafficController.USB_CMDS_PROGTRACK |
+                		NceTrafficController.USB_CMDS_OPS_PGM);
+        	}
         } else{
-                adaptermemo.setNceUSB(NceTrafficController.USB_SYSTEM_POWERHOUSE);
+        	// old firmware, original functions
+        	if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {
+        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB5);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_OPS_PGM);
+        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {
+        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_OPS_PGM);
+        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {
+        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_NONE);
+        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {
+        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_ACCYADDR250 |
+                		NceTrafficController.USB_CMDS_OPS_PGM);
+        	} else {
+        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
+                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_PROGTRACK |
+                		NceTrafficController.USB_CMDS_OPS_PGM);
+        	}
         }
         
-        tc.connectPort(this); 
+        tc.connectPort(this);
         
         adaptermemo.configureManagers();
 

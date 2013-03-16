@@ -14,7 +14,12 @@ import jmri.implementation.AbstractSensor;
  */
 public class NceSensor extends AbstractSensor {
 
-    public NceSensor(String systemName) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 4481645243243035759L;
+
+	public NceSensor(String systemName) {
         super(systemName);
     }
 

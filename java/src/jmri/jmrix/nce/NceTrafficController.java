@@ -164,8 +164,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	/**
 	 * Create commands compatible with a NCE USB connected to a PowerHouse
 	 */
-	static public final int USB_SYSTEM_POWERHOUSE = 4;
+	static public final int USB_SYSTEM_POWERHOUSE = 3;
+	
+	/**
+	 * Create commands compatible with a NCE USB with >=7.* connected to a Twin
+	 */
+	static public final int USB_SYSTEM_TWIN = 4;
 
+	/**
+	 * Create commands compatible with a NCE USB with SB5
+	 */
+	static public final int USB_SYSTEM_SB5 = 5;
+		
 	private int usbSystem = USB_SYSTEM_NONE;
 	private boolean usbSystemSet = false;
 
@@ -176,6 +186,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	 * <LI>{@link #USB_SYSTEM_POWERCAB}
 	 * <LI>{@link #USB_SYSTEM_SB3}
 	 * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+	 * <LI>{@link #USB_SYSTEM_TWIN}
+	 * <LI>{@link #USB_SYSTEM_SB5}
 	 * </UL>
 	 * 
 	 * @param val
@@ -196,10 +208,87 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	 * <LI>{@link #USB_SYSTEM_POWERCAB}
 	 * <LI>{@link #USB_SYSTEM_SB3}
 	 * <LI>{@link #USB_SYSTEM_POWERHOUSE}
+	 * <LI>{@link #USB_SYSTEM_TWIN}
+	 * <LI>{@link #USB_SYSTEM_SB5}
 	 * </UL>
 	 * 
 	 */
 	public int getUsbSystem() {return usbSystem;}
+	
+	/**
+	 * Initializer for supported USB command groups
+	 */
+	static public final long USB_CMDS_NONE = 0;
+	
+	/**
+	 * Limit max accy decoder to addr 250
+	 */
+	static public final long USB_CMDS_ACCYADDR250 = 0x0001;
+	
+	/**
+	 * Supports programming track and related commands
+	 */
+	static public final long USB_CMDS_PROGTRACK = 0x0002;
+			
+	/**
+	 * Supports read AIU status commands 0x9B
+	 */
+	static public final long USB_CMDS_AUI_READ = 0x004;
+	
+	/**
+	 * Supports USB read/write memory commands 0xB3 -> 0xB5
+	 */
+	static public final long USB_CMDS_MEM = 0x008;
+	
+	/**
+	 * Support USB Ops Mode Pgm commands 0xAE -> 0xAF
+	 */
+	static public final long USB_CMDS_OPS_PGM = 0x0010;
+	
+	/**
+	 * Support USB Clock commands 0x82 -> 0x87
+	 */
+	static public final long USB_CMDS_CLOCK = 0x0020;
+	
+		
+	private long usbCmdGroups = USB_CMDS_NONE;
+	private boolean usbCmdGroupsSet = false;
+
+	/**
+	 * Set  the types of commands valid for the NCE USB and connected system
+	 * <UL>
+	 * <LI>{@link #USB_CMDGROUPS_NONE}
+	 * <LI>{@link #USB_CMDS_ACCYADDR250)
+	 * <LI>{@link #USB_CMDS_PROGTRACK)
+	 * <LI>{@link #USB_CMDS_AUI_READ)
+	 * <LI>{@link #USB_CMDS_MEM)
+	 * <LI>(@line #USB_CMDS_OPS_PGM)
+	 * </UL>
+	 * 
+	 * @param val
+	 */
+	public void setUsbCmdGroups(long val) {
+		usbCmdGroups = val;
+		if (usbCmdGroupsSet) {
+			log.warn("setUsbCmdGroups called more than once");
+			//new Exception().printStackTrace();
+		}
+		usbCmdGroupsSet = true;
+	}
+
+	/**
+	 * Get the types of commands valid for the NCE USB and connected system
+	 * <UL>
+	 * <LI>{@link #USB_CMDGROUPS_NONE}
+	 * <LI>{@link #USB_CMDS_ACCYADDR250)
+	 * <LI>{@link #USB_CMDS_PROGTRACK)
+	 * <LI>{@link #USB_CMDS_AUI_READ)
+	 * <LI>{@link #USB_CMDS_MEM)
+	 * <LI>(@line #USB_CMDS_OPS_PGM)
+	 * </UL>
+	 * 
+	 */
+	public long getUsbCmdGroups() {return usbCmdGroups;}
 	
 	private boolean nceProgMode = false;					// Do not use exit program mode unless active
 	

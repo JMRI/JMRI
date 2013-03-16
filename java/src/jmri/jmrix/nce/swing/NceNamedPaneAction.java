@@ -21,6 +21,11 @@ import jmri.util.swing.*;
 public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = -7955184289782860199L;
+
+	/**
      * Enhanced constructor for placing the pane in various 
      * GUIs
      */

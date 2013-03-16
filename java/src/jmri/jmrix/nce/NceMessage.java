@@ -142,10 +142,15 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    /**
+     * enter programming track mode
+     * @param tc
+     * @return
+     */
     public static NceMessage getProgMode(NceTrafficController tc) {
-		// not supported by USB connected to SB3 or PH
-		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
-				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE){
+		// test if supported on current connection
+		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE &&
+				(tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_PROGTRACK) != NceTrafficController.USB_CMDS_PROGTRACK){
 			log.error("attempt to send unsupported binary command ENTER_PROG_CMD to NCE USB");
 //			return null;
 		}
@@ -163,6 +168,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 		}
 		return m;
 	}
+    
     /**
     * Apparently the binary "exitProgrammingMode" command can crash the 
     * command station if the EPROM was built before 2006.  This
@@ -198,12 +204,18 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
+    /**
+     * Read Paged mode CV on programming track
+     * @param tc
+     * @param cv
+     * @return
+     */
     public static NceMessage getReadPagedCV(NceTrafficController tc, int cv) {
-		// not supported by USB connected to SB3 or PH
-		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
-				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE){
+		// test if supported on current connection
+		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE &&
+				(tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_PROGTRACK) != NceTrafficController.USB_CMDS_PROGTRACK){
 			log.error("attempt to send unsupported binary command READ_PAGED_CV_CMD to NCE USB");
-			return null;
+//			return null;
 		}
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(3);
@@ -226,12 +238,19 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
         }
     }
 
+    /**
+     * write paged mode CV to programming track
+     * @param tc
+     * @param cv
+     * @param val
+     * @return
+     */
     public static NceMessage getWritePagedCV(NceTrafficController tc, int cv, int val) {
-		// not supported by USB connected to SB3 or PH
-		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3
-				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE){
+		// test if supported on current connection
+		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE &&
+				(tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_PROGTRACK) != NceTrafficController.USB_CMDS_PROGTRACK){
 			log.error("attempt to send unsupported binary command WRITE_PAGED_CV_CMD to NCE USB");
-			return null;
+//			return null;
 		}
         if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
             NceMessage m = new NceMessage(4);

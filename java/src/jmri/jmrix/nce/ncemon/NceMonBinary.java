@@ -277,6 +277,34 @@ public class NceMonBinary {
 			}
 			break;	
 		}
+		case (NceBinaryCommand.USB_SET_CAB_CMD): {
+			if (m.getNumDataElements() == 2){
+				return MessageFormat.format(rb.getString("Usb_Set_Cab_Op1"),
+						new Object[] {m.getElement(1)});
+			}
+			break;
+		}
+		case (NceBinaryCommand.USB_MEM_POINTER_CMD): {
+			if (m.getNumDataElements() == 3){
+				return MessageFormat.format(rb.getString("Usb_Set_Mem_Ptr_Cmd"),
+						new Object[] {m.getElement(1), m.getElement(2)});
+			}
+			break;
+		}
+		case (NceBinaryCommand.USB_MEM_WRITE_CMD): {
+			if (m.getNumDataElements() == 2){
+				return MessageFormat.format(rb.getString("Usb_Mem_Write_Cmd"),
+						new Object[] {m.getElement(1)});
+			}
+			break;
+		}
+		case (NceBinaryCommand.USB_MEM_READ_CMD): {
+			if (m.getNumDataElements() == 2){
+				return MessageFormat.format(rb.getString("Usb_Mem_Read_Cmd"),
+						new Object[] {m.getElement(1)});
+			}
+			break;
+		}
 		}	
 		// 2nd pass, check for messages that have a data reply
 		replyType = REPLY_DATA;

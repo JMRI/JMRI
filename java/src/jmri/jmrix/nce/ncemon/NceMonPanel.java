@@ -23,7 +23,9 @@ import javax.swing.JOptionPane;
 
 public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListener, NcePanelInterface{
 
-    public NceMonPanel() {
+	private static final long serialVersionUID = 6106790197336170348L;
+
+	public NceMonPanel() {
         super();
     }
     
@@ -100,7 +102,10 @@ public class NceMonPanel extends jmri.jmrix.AbstractMonPane implements NceListen
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.jmrix.nce.swing.NceNamedPaneAction {
-        public Default() {
+
+		private static final long serialVersionUID = -7644336249246783644L;
+
+		public Default() {
             super("Nce Command Monitor", 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 NceMonPanel.class.getName(), 
