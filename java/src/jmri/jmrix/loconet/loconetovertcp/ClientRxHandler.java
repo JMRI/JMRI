@@ -93,8 +93,10 @@ public void run(){
                 msg = new LocoNetMessage(byte2);
                 break;
             }
-            if (msg == null)
+            if (msg == null) {
             	log.error("msg is null!");
+            	return;
+            }
             // message exists, now fill it
             msg.setOpCode(opCode);
             msg.setElement(1, byte2);
