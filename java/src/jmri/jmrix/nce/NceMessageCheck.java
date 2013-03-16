@@ -23,35 +23,59 @@ public class NceMessageCheck {
             /* NCE USB can now address the full range of accessory addresses dboudreau 1/18/2012
             case NceBinaryCommand.ACC_CMD: checkACC_CMD(memo, m);
             break;*/
-            case NceBinaryCommand.READ1_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.READ16_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.WRITEn_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.WRITE1_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.WRITE2_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.WRITE4_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.WRITE8_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.STOP_CLOCK_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.START_CLOCK_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.SET_CLOCK_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.CLOCK_1224_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.CLOCK_RATIO_CMD: checkAccessory_CMD(memo, m);
-            break;
-            case NceBinaryCommand.OPS_PROG_LOCO_CMD: checkOPS_PROG_CMD(memo, m);
-            break;
-            case NceBinaryCommand.OPS_PROG_ACCY_CMD: checkOPS_PROG_CMD(memo, m);
-            break;
+            case NceBinaryCommand.READ1_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.READ16_CMD: 
+        		checkSerial_CMD(memo, m);
+        		break;
+            case NceBinaryCommand.WRITEn_CMD:
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.WRITE1_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.WRITE2_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.WRITE4_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.WRITE8_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.STOP_CLOCK_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.START_CLOCK_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.SET_CLOCK_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.CLOCK_1224_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.CLOCK_RATIO_CMD: 
+            	checkSerial_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.OPS_PROG_LOCO_CMD: 
+            	checkOPS_PROG_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.OPS_PROG_ACCY_CMD: 
+            	checkOPS_PROG_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.USB_MEM_POINTER_CMD: 
+            	checkUsbMem_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.USB_MEM_READ_CMD: 
+            	checkUsbMem_CMD(memo, m);
+            	break;
+            case NceBinaryCommand.USB_MEM_WRITE_CMD: 
+            	checkUsbMem_CMD(memo, m);
+            	break;
             default:
+            	break;
             }
         }
 	}
@@ -70,21 +94,33 @@ public class NceMessageCheck {
 	}
 	*/
 	
-	private static void checkAccessory_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
-	   	if (memo.getNceUSB() != NceTrafficController.USB_SYSTEM_NONE){
-    		log.debug("attempt to send unsupported binary command to NCE USB");
-    		throw new JmriException("attempt to send unsupported binary command to NCE USB");
+	private static void checkSerial_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
+	   	if ( memo.getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
+	   		String txt = "attempt to send unsupported binary command to NCE USB: " + Integer.toHexString(m.getOpCode()).toUpperCase();
+    		log.debug(txt);
+    		throw new JmriException(txt);
     	}
 	}
 	
 	private static void checkOPS_PROG_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
 		// ONLY USB connected to PowerCab or SB3 can send this message
-		if (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_POWERCAB
-				|| memo.getNceUSB() == NceTrafficController.USB_SYSTEM_SB3)
+		if (memo.getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
+				&& (memo.getNceUsbCmdGroups() & NceTrafficController.USB_CMDS_OPS_PGM) == NceTrafficController.USB_CMDS_NONE)
 			return;
-		log.debug("attempt to send unsupported binary command");
-		throw new JmriException("attempt to send unsupported binary command");
+   		String txt = "attempt to send unsupported binary command: " + Integer.toHexString(m.getOpCode()).toUpperCase();
+		log.debug(txt);
+		throw new JmriException(txt);
 
+	}
+	
+	private static void checkUsbMem_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
+		// ONLY 7.* USB connected to >-1.65  can send this message
+		if (memo.getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
+				&& (memo.getNceUsbCmdGroups() & NceTrafficController.USB_CMDS_MEM) != NceTrafficController.USB_CMDS_NONE)
+			return;
+   		String txt = "attempt to send unsupported binary command: " + Integer.toHexString(m.getOpCode()).toUpperCase();
+		log.debug(txt);
+		throw new JmriException(txt);
 	}
 	
 	static Logger log = LoggerFactory.getLogger(NceMessageCheck.class.getName());
