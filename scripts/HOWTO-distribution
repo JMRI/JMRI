@@ -170,7 +170,7 @@ Final release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.2/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.3/ws/jmri/dist/release/*zip*/release.zip"
     unzip archive.zip
     cd release
     scp JMRI.* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"    
@@ -212,14 +212,9 @@ Final release steps:
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 2.11.8 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 3.3.3 of JMRI/DecoderPro is available for download"
 
-( ) Mail announcement to jmri-announce@lists.sourceforge.net
-
-( ) News item from JMRI sourceforge page, Develop tab
-
-	Title is of the form "JMRI 2.11.8 test version is available";
-	text is pretty much directly taken from the release note
+( ) If production release, mail announcement to jmri-announce@lists.sourceforge.net
 
 ( ) If a production version, update the SF automatic download icon by selecting default in FRS
 
