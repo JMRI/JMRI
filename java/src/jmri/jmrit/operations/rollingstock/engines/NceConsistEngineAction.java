@@ -38,7 +38,7 @@ public class NceConsistEngineAction extends AbstractAction {
 			// find NceConnection that is serial
 			for (int i=0; i<memos.size(); i++){
 				NceSystemConnectionMemo memo = (NceSystemConnectionMemo)memos.get(i);
-				if (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_NONE){
+				if (memo.getNceUsbSystem() == NceTrafficController.USB_SYSTEM_NONE){
 					tc = memo.getNceTrafficController();
 				}
 			}
