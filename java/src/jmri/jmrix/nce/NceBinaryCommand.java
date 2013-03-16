@@ -281,7 +281,7 @@ public class NceBinaryCommand {
 
 		byte[] retVal = new byte[2];
 		retVal[0] = (byte) (USB_MEM_WRITE_CMD);// write 2 bytes command
-		retVal[1] = (byte) (data); 	//  data
+		retVal[1] = (data); 	//  data
 
 		return retVal;
 	}
