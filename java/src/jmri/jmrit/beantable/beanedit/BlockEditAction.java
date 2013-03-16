@@ -32,7 +32,7 @@ public class BlockEditAction extends BeanEditAction {
 	private String tightText = Bundle.getMessage("BlockTight");
 	private String severeText = Bundle.getMessage("BlockSevere");
 	public String[] curveOptions = {noneText, gradualText, tightText, severeText};
-    static java.util.Vector<String> speedList = new java.util.Vector<String>();
+    static final java.util.Vector<String> speedList = new java.util.Vector<String>();
     
     protected void createPanels(){
         super.createPanels();
