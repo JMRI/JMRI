@@ -68,7 +68,13 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
         } else if ( u.getProtocol().equalsIgnoreCase("file") ) {
             // if file not present, fall back to web browser
             // first, get file name
-            java.io.File file = new java.io.File(u.getFile());
+    		String pathName = u.getFile();
+        	if (u.getPath().contains("%20") && SystemType.isWindows()) { 
+        		log.debug("Windows machine with space in path name! "+pathName);
+        		// need to have the actual space in the path name for get file to work properly
+        		pathName = pathName.replace("%20", " ");
+        	}
+        	java.io.File file = new java.io.File(pathName);
             if (!file.exists()) {
                 URI uri = new URI("http://jmri.org/"+u.getFile());
                 log.debug("fallback to browser with "+uri);
