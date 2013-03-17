@@ -96,6 +96,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      */
     static public final int OPTION_2006 = 20;
     /**
+     * Create commands compatible with the 1.28 EPROM.
+     *<P>
+     * For PowerCab/SB3 original pre-Nov 2012
+     */
+    static public final int OPTION_1_28 = 30;
+    /**
+     * Create commands compatible with the 1.65 EPROM.
+     *<P>
+     * For PowerCab/SB5/Twin update post-Nov 2012
+     */
+    static public final int OPTION_1_65 = 40;
+    /**
      * Create all commands in the binary format.
      */
     static public final int OPTION_FORCE_BINARY = 10000;
@@ -115,6 +127,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      *<LI>{@link #OPTION_1999}
      *<LI>{@link #OPTION_2004}
      *<LI>{@link #OPTION_2006}
+     *<LI>{@link #OPTION_1_28}
+     *<LI>{@link #OPTION_1_65}
      *<LI>{@link #OPTION_FORCE_BINARY}
      *</UL>
      *
@@ -140,6 +154,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      *<LI>{@link #OPTION_1999}
      *<LI>{@link #OPTION_2004}
      *<LI>{@link #OPTION_2006}
+     *<LI>{@link #OPTION_1_28}
+     *<LI>{@link #OPTION_1_65}
      *<LI>{@link #OPTION_FORCE_BINARY}
      *</UL>
      *
@@ -250,6 +266,10 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	 */
 	static public final long USB_CMDS_CLOCK = 0x0020;
 	
+	/**
+	 * Support USB Interface commands 0xB1
+	 */
+	static public final long USB_CMDS_USB = 0x0040;
 		
 	private long usbCmdGroups = USB_CMDS_NONE;
 	private boolean usbCmdGroupsSet = false;

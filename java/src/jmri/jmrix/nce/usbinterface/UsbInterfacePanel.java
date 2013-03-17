@@ -36,10 +36,14 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 	private int foundCabId = -1;
 	private int minCabNum = -1;		// either the USB or serial size depending on what we connect to
 	private int maxCabNum = -1;		// either the USB or serial size depending on what we connect to
+	private int minCabSetNum = -1;
+	private int maxCabSetNum = -1;
+	private boolean supportGet = false;	// can only get cab data if memory commands are supported
 
 	private static final int CAB_MIN_USB = 2;			// USB cabs start at 2
 	private static final int CAB_MIN_PRO = 2;			// Serial cabs start at 2
-	private static final int CAB_MAX_USB = 10;			// There are up to 10 cabs on 1.65
+	private static final int CAB_MAX_USB_128 = 4;			// There are up to 10 cabs on 1.28
+	private static final int CAB_MAX_USB_165 = 10;			// There are up to 10 cabs on 1.65
 	private static final int CAB_MAX_PRO = 64;			// There are up to 64 cabs
 	private static int SER_CAB_FLAGS1 = 101;		// NCE flag 1
 	private static int USB_CAB_FLAGS1 = 70;			// NCE flag 1
@@ -53,8 +57,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 	private static final int REPLY_1 = 1;			// reply length of 1 byte
 	private static final int REPLY_2 = 2;			// reply length of 2 byte
 	private static final int REPLY_4 = 4;			// reply length of 4 byte
-	
-    
+	    
 	Thread NceCabUpdateThread;
 	
     private NceTrafficController tc = null;
@@ -106,10 +109,18 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
         minCabNum = CAB_MIN_PRO;
         maxCabNum = CAB_MAX_PRO;
+        minCabSetNum = CAB_MIN_PRO + 1;
+        maxCabSetNum = CAB_MAX_PRO;
         if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
         		(tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_MEM) != 0) {
         	minCabNum = CAB_MIN_USB;
-        	maxCabNum = CAB_MAX_USB;
+        	maxCabNum = CAB_MAX_USB_165;
+        	supportGet = true;
+        }
+        if (tc.getCommandOptions() >= NceTrafficController.OPTION_1_65) {
+        	maxCabSetNum = CAB_MAX_USB_165;
+        } else {
+        	maxCabSetNum = CAB_MAX_USB_128;
         }
         // general GUI config
 
@@ -119,54 +130,61 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     	p1.setLayout(new GridBagLayout());
     	p1.setPreferredSize(new Dimension(400, 75));
         oldCabId.setText(" ");
-    	addItem(p1, new JLabel(rb.getString("LabelCurrentCabId")), 1, 1);
-    	addItem(p1, oldCabId, 2, 1);
-    	addItem(p1, getButton, 3, 1);
+        if (supportGet) {
+        	addItem(p1, new JLabel(rb.getString("LabelCurrentCabId")), 1, 1);
+        	addItem(p1, oldCabId, 2, 1);
+        	addItem(p1, getButton, 3, 1);
+        	addButtonAction(getButton);
+        } else {
+        	addItem(p1, new JLabel(rb.getString("LabelGetNotSupported")), 2, 1);
+        }
 
     	addItem(p1, new JLabel(rb.getString("LabelCurrentCabId")), 1, 2);
         newCabId.setText(" ");
     	addItem(p1, newCabId, 2, 2);
     	addItem(p1, setButton, 3, 2);
+    	add(p1);
 
         JPanel p2 = new JPanel();
     	p2.setLayout(new GridBagLayout());
     	addItem(p2, new JLabel(rb.getString("LabelStatus")), 1, 1);
         statusText.setText(" ");
     	addItem(p2, statusText, 2, 1);
-    	
-        JPanel p3 = new JPanel();
-    	p3.setLayout(new GridBagLayout());
-
-    	addItem(p3, new JLabel(rb.getString("LabelWarning1")), 1, 1);
-    	addItem(p3, new JLabel(rb.getString("LabelWarning2")), 1, 2);
-    	
-    	add(p1);
     	add(p2);
-    	add(p3);
+
+        if (supportGet) {
+	        JPanel p3 = new JPanel();
+	    	p3.setLayout(new GridBagLayout());
+
+	    	addItem(p3, new JLabel(rb.getString("LabelWarning1")), 1, 1);
+	    	addItem(p3, new JLabel(rb.getString("LabelWarning2")), 1, 2);
+	    	add(p3);
+        }
     	
-    	addButtonAction(getButton);
     	addButtonAction(setButton);
     	
     	refreshPanel();
     }
 
     private void refreshPanel(){
-    	// Set up a separate thread to read CS memory
-        if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive())	
-        	return; // thread is already running
-    	statusText.setText(rb.getString("StatusReadingMemory"));
-    	NceCabUpdateThread = new Thread(new Runnable() {
-    		public void run() {
-            	if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
-            		cabUpdateSerial();
-            	} else {
-            		cabUpdateUsb();
-            	}
-    		}
-    	});
-    	NceCabUpdateThread.setName(rb.getString("ThreadTitle"));
-    	NceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
-    	NceCabUpdateThread.start();
+    	if (supportGet) {
+        	// Set up a separate thread to read CS memory
+            if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive())	
+            	return; // thread is already running
+        	statusText.setText(rb.getString("StatusReadingMemory"));
+        	NceCabUpdateThread = new Thread(new Runnable() {
+        		public void run() {
+                	if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
+                		cabUpdateSerial();
+                	} else {
+                		cabUpdateUsb();
+                	}
+        		}
+        	});
+        	NceCabUpdateThread.setName(rb.getString("ThreadTitle"));
+        	NceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
+        	NceCabUpdateThread.start();
+    	}
     }
     
     private boolean firstTime = true; // wait for panel to display
@@ -282,12 +300,16 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
        	recChar = -1;
        	// read cab type by reading the FLAGS1 byte
        	int i = Integer.parseInt(newCabId.getText().trim());
-        statusText.setText(MessageFormat.format(rb.getString("StatusSetIdStart"), i));
-		writeUsbCabId(i);
-       	if (!waitNce())
-    		return;
-
-        statusText.setText(MessageFormat.format(rb.getString("StatusSetIdFinished"), i));
+       	if ((i >= minCabSetNum) && (i <= maxCabSetNum)) {
+	        statusText.setText(MessageFormat.format(rb.getString("StatusSetIdStart"), i));
+			writeUsbCabId(i);
+	       	if (!waitNce())
+	    		return;
+	
+	        statusText.setText(MessageFormat.format(rb.getString("StatusSetIdFinished"), i));
+       	} else {
+	        statusText.setText(MessageFormat.format(rb.getString("StatusInvalidCabId"), i, minCabSetNum, maxCabSetNum));
+       	}
     	this.setVisible(true);
     	this.repaint();
     }

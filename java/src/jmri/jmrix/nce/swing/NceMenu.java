@@ -74,7 +74,7 @@ public class NceMenu extends JMenu {
         new Item("MenuItemClockMon", "jmri.jmrix.nce.clockmon.ClockMonPanel", NceTrafficController.USB_CMDS_CLOCK),
         new Item("MenuItemShowCabs", "jmri.jmrix.nce.cab.NceShowCabPanel", NceTrafficController.USB_CMDS_MEM),
         new Item("MenuItemBoosterProg", "jmri.jmrix.nce.boosterprog.BoosterProgPanel", NceTrafficController.USB_CMDS_NONE),
-        new Item("MenuItemUsbInt", "jmri.jmrix.nce.usbinterface.UsbInterfacePanel", NceTrafficController.USB_CMDS_MEM)
+        new Item("MenuItemUsbInt", "jmri.jmrix.nce.usbinterface.UsbInterfacePanel", NceTrafficController.USB_CMDS_USB)
     };
     
     static class Item {
