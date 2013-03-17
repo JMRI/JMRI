@@ -69,7 +69,7 @@ public class ExternalLinkContentViewerUI extends BasicContentViewerUI {
             // if file not present, fall back to web browser
             // first, get file name
     		String pathName = u.getFile();
-        	if (u.getPath().contains("%20") && SystemType.isWindows()) { 
+        	if (pathName.contains("%20") && SystemType.isWindows()) { 
         		log.debug("Windows machine with space in path name! "+pathName);
         		// need to have the actual space in the path name for get file to work properly
         		pathName = pathName.replace("%20", " ");
