@@ -365,15 +365,15 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	checkBoxShowAllFunctions.setSelected(true);
     	checkBoxShowDisplayText.setToolTipText(rb.getString("CheckBoxShowDisplayToolTip"));
     	checkBoxShowDisplayText.setSelected(true);
-    	checkBoxShowAllOneLine.setToolTipText(rb.getString("CheckBoxShowAllOneLineToolTip"));
-    	checkBoxShowAllOneLine.setSelected(true);
+    	//checkBoxShowAllOneLine.setToolTipText(rb.getString("CheckBoxShowAllOneLineToolTip"));
+    	//checkBoxShowAllOneLine.setSelected(true);
     	addItem(p1, refreshButton, 2, 1);
     	addItem(p1, checkBoxShowActive, 4, 1);
     	addItem(p1, checkBoxShowAllFunctions, 6, 1);
     	addItem(p1, space1, 1, 2);
     	addItem(p1, textStatus, 2, 2);
     	addItem(p1, checkBoxShowDisplayText, 4, 2);
-    	addItem(p1, checkBoxShowAllOneLine, 6, 2);
+    	//addItem(p1, checkBoxShowAllOneLine, 6, 2);
     	
     	JScrollPane cabScrollPane = new JScrollPane(cabTable);
     	cabTable.setFillsViewportHeight(true);
@@ -381,7 +381,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	cabModel.setShowAllCabs(checkBoxShowActive.isSelected());
     	cabModel.setShowAllFunctions(checkBoxShowAllFunctions.isSelected());
     	cabModel.setShowCabDisplay(checkBoxShowDisplayText.isSelected());
-    	cabModel.setShowAllOneLine(checkBoxShowAllOneLine.isSelected());
+    	//cabModel.setShowAllOneLine(checkBoxShowAllOneLine.isSelected());
     	for (int col = 0; col < cabTable.getColumnCount(); col++) {
     		int width = cabModel.getPreferredWidth(col);
     		TableColumn c = cabTable.getColumnModel().getColumn(col);

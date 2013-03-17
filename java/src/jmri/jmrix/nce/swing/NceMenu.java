@@ -68,12 +68,12 @@ public class NceMenu extends JMenu {
         new Item("MenuItemCommandMonitor", "jmri.jmrix.nce.ncemon.NceMonPanel", ~NceTrafficController.USB_CMDS_NONE),
         new Item("MenuItemSendCommand", "jmri.jmrix.nce.packetgen.NcePacketGenPanel", ~NceTrafficController.USB_CMDS_NONE),
         new Item("MenuItemMacroCommand", "jmri.jmrix.nce.macro.NceMacroGenPanel", ~NceTrafficController.USB_CMDS_NONE),
-        new Item("MenuItemMacroEdit", "jmri.jmrix.nce.macro.NceMacroEditPanel", NceTrafficController.USB_CMDS_MEM),
-        new Item("MenuItemConsistEdit", "jmri.jmrix.nce.consist.NceConsistEditPanel", NceTrafficController.USB_CMDS_MEM),
+        new Item("MenuItemMacroEdit", "jmri.jmrix.nce.macro.NceMacroEditPanel", NceTrafficController.USB_CMDS_NONE),
+        new Item("MenuItemConsistEdit", "jmri.jmrix.nce.consist.NceConsistEditPanel", NceTrafficController.USB_CMDS_NONE),
         new Item("MenuItemTrackPacketMonitor", "jmri.jmrix.ncemonitor.NcePacketMonitorPanel", ~NceTrafficController.USB_CMDS_NONE),
         new Item("MenuItemClockMon", "jmri.jmrix.nce.clockmon.ClockMonPanel", NceTrafficController.USB_CMDS_CLOCK),
         new Item("MenuItemShowCabs", "jmri.jmrix.nce.cab.NceShowCabPanel", NceTrafficController.USB_CMDS_MEM),
-        new Item("MenuItemBoosterProg", "jmri.jmrix.nce.boosterprog.BoosterProgPanel", ~NceTrafficController.USB_CMDS_NONE),
+        new Item("MenuItemBoosterProg", "jmri.jmrix.nce.boosterprog.BoosterProgPanel", NceTrafficController.USB_CMDS_NONE),
         new Item("MenuItemUsbInt", "jmri.jmrix.nce.usbinterface.UsbInterfacePanel", NceTrafficController.USB_CMDS_MEM)
     };
     

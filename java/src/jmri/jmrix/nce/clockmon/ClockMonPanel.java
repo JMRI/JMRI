@@ -63,8 +63,14 @@ import javax.swing.*;
  */
 public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NcePanelInterface, NceListener {
 
-    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.clockmon.ClockMonBundle");
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -388876083150227345L;
+
+	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.clockmon.ClockMonBundle");
     
+	private boolean extraDebug = false;
     public static final int CS_CLOCK_MEM_ADDR = 0xDC00;
     public static final int CS_CLOCK_MEM_SIZE = 0x10;
     public static final int CS_CLOCK_SCALE = 0x00;
@@ -510,8 +516,8 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         log.error("clockmon message received: " + m);
     }  
     
-    public void reply(NceReply r) {
-    	if (log.isDebugEnabled() && false){
+	public void reply(NceReply r) {
+    	if (log.isDebugEnabled() && extraDebug){
             log.debug("nceReplyCatcher() waiting: " + waiting +
         		" watingForRead: " + waitingForCmdRead +
         		" waitingForCmdTime: " + waitingForCmdTime +
@@ -737,7 +743,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         alarmSyncUpdate.setDelay(delay);
         alarmSyncUpdate.setInitialDelay(delay);
         alarmSyncUpdate.start();
-        if (log.isDebugEnabled() && false) {
+        if (log.isDebugEnabled() && extraDebug) {
             log.debug("alarmSyncStart delay: " + delay + " @ " + now);
         }
     }
@@ -765,7 +771,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     private void alarmDisplayStates() {
 		int priorState = 0;
 		do {
-			if (log.isDebugEnabled() && false){
+			if (log.isDebugEnabled() && extraDebug){
 				log.debug("alarmDisplayStates: before: " + alarmDisplayStateCounter + " " + internalClock.getTime());
 			}
 			priorState = alarmDisplayStateCounter;
@@ -792,7 +798,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 	            updateInternalClockDisplay();
 	    		break;
 	    	}
-			if (log.isDebugEnabled() && false){
+			if (log.isDebugEnabled() && extraDebug){
 				log.debug("alarmDisplayStates: after: " + alarmDisplayStateCounter + " " + internalClock.getTime());
 			}
 		} while (priorState != alarmDisplayStateCounter);
@@ -827,7 +833,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         int ss = now.getSeconds();
         int mm = now.getMinutes();
         int hh = now.getHours();
-        if (log.isDebugEnabled() && false) {
+        if (log.isDebugEnabled() && extraDebug) {
             log.debug("getIntTime: " + hh + ":" + mm + ":" + ss + "." + ms);
         }
         return((hh * 60 * 60) + (mm * 60) + ss + (ms / 1000));
@@ -847,7 +853,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         Date now = internalClock.getTime();
         int priorState = internalSyncInitStateCounter;
         do {
-            if (log.isDebugEnabled() && internalSyncInitStateCounter != 0 && false){
+            if (log.isDebugEnabled() && internalSyncInitStateCounter != 0 && extraDebug){
                 log.debug("internalSyncInitStates begin: " + internalSyncInitStateCounter + " @ " + now);
             }
 	        priorState = internalSyncInitStateCounter;
@@ -960,7 +966,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 	            // initialization complete
 	        	internalSyncInitStateCounter = 0;
 	            internalSyncRunStateCounter = 1;
-	            if (log.isDebugEnabled() && false){
+	            if (log.isDebugEnabled() && extraDebug){
 	                log.debug("internalSyncState: init done");
 	            }
 	            break;
@@ -978,7 +984,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         double nceTime = 0;
         double diffTime = 0;
         Date now = internalClock.getTime();
-        if (log.isDebugEnabled() && internalSyncRunStateCounter != 0 && false){
+        if (log.isDebugEnabled() && internalSyncRunStateCounter != 0 && extraDebug){
             log.debug("internalSyncRunStates: " + internalSyncRunStateCounter + " @ " + now);
         }
         int priorState = internalSyncRunStateCounter;
@@ -1006,7 +1012,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 	            nceTime = getNceTime();
 	            intTime = getIntTime();
 	            diffTime = intTime - nceTime;
-	            if (log.isDebugEnabled() && false) {
+	            if (log.isDebugEnabled() && extraDebug) {
                     log.debug("syncStates2 begin. NCE: " +
     					(nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) +
     					rb.getString("LabelTimeSep") +
@@ -1059,7 +1065,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 	            }
 	            priorOffsetErrors.add(new Double(diffTime));
 	            recomputeOffset();
-	            if (log.isDebugEnabled() && false) {
+	            if (log.isDebugEnabled() && extraDebug) {
 	                log.debug("syncState compute offset. NCE: " +
 	                          (nceLastHour / 10) + (nceLastHour - ((nceLastHour / 10) * 10)) +
 	                          rb.getString("LabelTimeSep") +
@@ -1165,7 +1171,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         if (syncInterval > 58) {
         	syncInterval = 58;
         }
-        if (log.isDebugEnabled() && false) {
+        if (log.isDebugEnabled() && extraDebug) {
            	Date now = internalClock.getTime();
             String txt = "";
             for (int i = 0; i < priorOffsetErrors.size(); i++) {
@@ -1209,7 +1215,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         if (syncInterval < 40) {
             syncInterval = 40;
         }
-        if (log.isDebugEnabled() && false) {
+        if (log.isDebugEnabled() && extraDebug) {
             String txt = "";
             for (int i = 0; i < priorDiffs.size(); i++) {
                 txt = txt + " " + priorDiffs.get(i);
@@ -1273,7 +1279,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                 nceSyncInitStates();
             }
         }
-        if (log.isDebugEnabled() && false) {
+        if (log.isDebugEnabled() && extraDebug) {
             String txt = "";
             for (int i = priorDiffs.size() - 1; i >= 0 ; i--) {
                 txt = txt + " " + threeDigits.format(priorDiffs.get(i));
@@ -1359,7 +1365,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     private void nceSyncInitStates() {
         int priorState = 0;
         do {
-            if (log.isDebugEnabled() && false) {
+            if (log.isDebugEnabled() && extraDebug) {
                 log.debug("Before nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
             }
 	        priorState = nceSyncInitStateCounter;
@@ -1421,7 +1427,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 	            updateInternalClockDisplay();
 	            break;
 	        }
-	        if (log.isDebugEnabled() && false) {
+	        if (log.isDebugEnabled() && extraDebug) {
 	            log.debug("After nceSyncInitStateCounter: " + nceSyncInitStateCounter + " " + internalClock.getTime());
 	        }
         } while (priorState != nceSyncInitStateCounter);
@@ -1430,7 +1436,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         double intTime = 0;
         double nceTime = 0;
         double diffTime = 0;
-        if (log.isDebugEnabled() && false) {
+        if (log.isDebugEnabled() && extraDebug) {
             log.debug("Before nceSyncRunStateCounter: " + nceSyncRunStateCounter + " " + internalClock.getTime());
         }
         int priorState = 0;
@@ -1479,7 +1485,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
 	            nceSyncRunStateCounter = 0;
 	        }
         } while (priorState != nceSyncRunStateCounter);
-        if (log.isDebugEnabled() && false) {
+        if (log.isDebugEnabled() && extraDebug) {
             log.debug("After nceSyncRunStateCounter: " + nceSyncRunStateCounter + " " + internalClock.getTime());
         }
     }
@@ -1558,7 +1564,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             double diffTime = nceTime - intTime;
             txt = txt + " " + rb.getString("ClockError");
             txt = txt + " " + threeDigits.format(diffTime);
-            if (log.isDebugEnabled() && false){
+            if (log.isDebugEnabled() && extraDebug){
                 log.debug("intTime: " + intTime + " nceTime: " + nceTime + " diffTime: " + diffTime);
             }
         }
