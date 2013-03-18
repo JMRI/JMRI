@@ -60,5 +60,5 @@ static void dumpNode( Element node, int depth )
   }
 
   // initialize logging
-  static private Logger log = LoggerFactory.getLogger(XmlConfig.class.getName());
+  //static private Logger log = LoggerFactory.getLogger(XmlConfig.class.getName());
 }
