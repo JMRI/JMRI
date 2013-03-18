@@ -42,7 +42,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
 
     public static final DataFlavor rosterEntryFlavor = new DataFlavor(ArrayList.class, "RosterEntryIDs");
 
-    public final DataFlavor[] flavors = {
+    static final DataFlavor[] flavors = {
         RosterEntrySelection.rosterEntryFlavor
     };
     
@@ -72,8 +72,8 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
         return new RosterEntrySelection(Ids);
     }
 
-    synchronized DataFlavor[] getTransferDataFlavors() {
-        return flavors;
+    public synchronized DataFlavor[] getTransferDataFlavors() {
+        return java.util.Arrays.copyOf(flavors, flavors.length);
     }
 
     public boolean isDataFlavorSupported(DataFlavor df) {
