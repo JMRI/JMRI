@@ -105,7 +105,7 @@ public class NceMessageCheck {
 	private static void checkOPS_PROG_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
 		// ONLY USB connected to PowerCab or SB3 can send this message
 		if (memo.getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
-				&& (memo.getNceUsbCmdGroups() & NceTrafficController.USB_CMDS_OPS_PGM) == NceTrafficController.USB_CMDS_NONE)
+				&& (memo.getNceCmdGroups() & NceTrafficController.CMDS_OPS_PGM) == NceTrafficController.CMDS_NONE)
 			return;
    		String txt = "attempt to send unsupported binary command: " + Integer.toHexString(m.getOpCode()).toUpperCase();
 		log.debug(txt);
@@ -116,7 +116,7 @@ public class NceMessageCheck {
 	private static void checkUsbMem_CMD(NceSystemConnectionMemo memo, NceMessage m) throws JmriException{
 		// ONLY 7.* USB connected to >-1.65  can send this message
 		if (memo.getNceUsbSystem() != NceTrafficController.USB_SYSTEM_NONE
-				&& (memo.getNceUsbCmdGroups() & NceTrafficController.USB_CMDS_MEM) != NceTrafficController.USB_CMDS_NONE)
+				&& (memo.getNceCmdGroups() & NceTrafficController.CMDS_MEM) != NceTrafficController.CMDS_NONE)
 			return;
    		String txt = "attempt to send unsupported binary command: " + Integer.toHexString(m.getOpCode()).toUpperCase();
 		log.debug(txt);

@@ -35,7 +35,7 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
 	 */
     public boolean isGlobalProgrammerAvailable() {
 		if (tc != null && (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)) {
-			if ((tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_PROGTRACK) == 0)
+			if ((tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) == 0)
 				return false;
 			else
 				return true;

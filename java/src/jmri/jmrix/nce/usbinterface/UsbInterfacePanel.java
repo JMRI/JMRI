@@ -112,7 +112,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         minCabSetNum = CAB_MIN_PRO + 1;
         maxCabSetNum = CAB_MAX_PRO;
         if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
-        		(tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_MEM) != 0) {
+        		(tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
         	minCabNum = CAB_MIN_USB;
         	maxCabNum = CAB_MAX_USB_165;
         	supportGet = true;

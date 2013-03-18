@@ -341,7 +341,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         minCabNum = CAB_MIN_PRO;
         maxCabNum = CAB_MAX_PRO;
         if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) &&
-        		(tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_MEM) != 0) {
+        		(tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
         	minCabNum = CAB_MIN_USB;
         	maxCabNum = CAB_MAX_USB;
         }

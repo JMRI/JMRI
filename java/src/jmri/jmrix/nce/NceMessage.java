@@ -150,7 +150,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage getProgMode(NceTrafficController tc) {
 		// test if supported on current connection
 		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE &&
-				(tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_PROGTRACK) != NceTrafficController.USB_CMDS_PROGTRACK){
+				(tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK){
 			log.error("attempt to send unsupported binary command ENTER_PROG_CMD to NCE USB");
 //			return null;
 		}
@@ -213,7 +213,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage getReadPagedCV(NceTrafficController tc, int cv) {
 		// test if supported on current connection
 		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE &&
-				(tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_PROGTRACK) != NceTrafficController.USB_CMDS_PROGTRACK){
+				(tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK){
 			log.error("attempt to send unsupported binary command READ_PAGED_CV_CMD to NCE USB");
 //			return null;
 		}
@@ -248,7 +248,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     public static NceMessage getWritePagedCV(NceTrafficController tc, int cv, int val) {
 		// test if supported on current connection
 		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE &&
-				(tc.getUsbCmdGroups() & NceTrafficController.USB_CMDS_PROGTRACK) != NceTrafficController.USB_CMDS_PROGTRACK){
+				(tc.getCmdGroups() & NceTrafficController.CMDS_PROGTRACK) != NceTrafficController.CMDS_PROGTRACK){
 			log.error("attempt to send unsupported binary command WRITE_PAGED_CV_CMD to NCE USB");
 //			return null;
 		}

@@ -50,7 +50,7 @@ public class NceMenu extends JMenu {
             } else {
             	NceNamedPaneAction a = new NceNamedPaneAction( rb.getString(item.name), wi, item.load, memo);
                 add(a);
-                if ((item.enable & memo.getNceUsbCmdGroups()) != 0) {
+                if ((item.enable & memo.getNceCmdGroups()) != 0) {
                     a.setEnabled(true);  
                 } else {
                     a.setEnabled(false);  
@@ -65,16 +65,16 @@ public class NceMenu extends JMenu {
     }
 
     private Item[] panelItems = new Item[] {
-        new Item("MenuItemCommandMonitor", "jmri.jmrix.nce.ncemon.NceMonPanel", ~NceTrafficController.USB_CMDS_NONE),
-        new Item("MenuItemSendCommand", "jmri.jmrix.nce.packetgen.NcePacketGenPanel", ~NceTrafficController.USB_CMDS_NONE),
-        new Item("MenuItemMacroCommand", "jmri.jmrix.nce.macro.NceMacroGenPanel", ~NceTrafficController.USB_CMDS_NONE),
-        new Item("MenuItemMacroEdit", "jmri.jmrix.nce.macro.NceMacroEditPanel", NceTrafficController.USB_CMDS_NONE),
-        new Item("MenuItemConsistEdit", "jmri.jmrix.nce.consist.NceConsistEditPanel", NceTrafficController.USB_CMDS_NONE),
-        new Item("MenuItemTrackPacketMonitor", "jmri.jmrix.ncemonitor.NcePacketMonitorPanel", ~NceTrafficController.USB_CMDS_NONE),
-        new Item("MenuItemClockMon", "jmri.jmrix.nce.clockmon.ClockMonPanel", NceTrafficController.USB_CMDS_CLOCK),
-        new Item("MenuItemShowCabs", "jmri.jmrix.nce.cab.NceShowCabPanel", NceTrafficController.USB_CMDS_MEM),
-        new Item("MenuItemBoosterProg", "jmri.jmrix.nce.boosterprog.BoosterProgPanel", NceTrafficController.USB_CMDS_NONE),
-        new Item("MenuItemUsbInt", "jmri.jmrix.nce.usbinterface.UsbInterfacePanel", NceTrafficController.USB_CMDS_USB)
+        new Item("MenuItemCommandMonitor", "jmri.jmrix.nce.ncemon.NceMonPanel", ~NceTrafficController.CMDS_NONE),
+        new Item("MenuItemSendCommand", "jmri.jmrix.nce.packetgen.NcePacketGenPanel", ~NceTrafficController.CMDS_NONE),
+        new Item("MenuItemMacroCommand", "jmri.jmrix.nce.macro.NceMacroGenPanel", ~NceTrafficController.CMDS_NONE),
+        new Item("MenuItemMacroEdit", "jmri.jmrix.nce.macro.NceMacroEditPanel", NceTrafficController.CMDS_NONE),
+        new Item("MenuItemConsistEdit", "jmri.jmrix.nce.consist.NceConsistEditPanel", NceTrafficController.CMDS_NONE),
+        new Item("MenuItemTrackPacketMonitor", "jmri.jmrix.ncemonitor.NcePacketMonitorPanel", ~NceTrafficController.CMDS_NONE),
+        new Item("MenuItemClockMon", "jmri.jmrix.nce.clockmon.ClockMonPanel", NceTrafficController.CMDS_CLOCK),
+        new Item("MenuItemShowCabs", "jmri.jmrix.nce.cab.NceShowCabPanel", NceTrafficController.CMDS_MEM),
+        new Item("MenuItemBoosterProg", "jmri.jmrix.nce.boosterprog.BoosterProgPanel", NceTrafficController.CMDS_NONE),
+        new Item("MenuItemUsbInt", "jmri.jmrix.nce.usbinterface.UsbInterfacePanel", NceTrafficController.CMDS_USB)
     };
     
     static class Item {

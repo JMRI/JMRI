@@ -124,8 +124,10 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
             // setting binary mode
             adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
+            adaptermemo.setNceCmdGroups(~NceTrafficController.CMDS_USB);
         } else {
             adaptermemo.configureCommandStation(NceTrafficController.OPTION_2004);
+            adaptermemo.setNceCmdGroups(~NceTrafficController.CMDS_USB);
         }
         
         tc.connectPort(this); 

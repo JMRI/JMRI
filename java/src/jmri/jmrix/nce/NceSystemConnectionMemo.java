@@ -36,11 +36,11 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     		return getNceTrafficController().getUsbSystem(); 
     	return NceTrafficController.USB_SYSTEM_NONE;} // error no connection!
     
-    public void setNceUsbCmdGroups(long result) { getNceTrafficController().setUsbCmdGroups(result); }
-    public long getNceUsbCmdGroups() { 
+    public void setNceCmdGroups(long result) { getNceTrafficController().setCmdGroups(result); }
+    public long getNceCmdGroups() { 
     	if (getNceTrafficController() != null)
-    		return getNceTrafficController().getUsbCmdGroups(); 
-    	return NceTrafficController.USB_CMDS_NONE;} // error no connection!
+    		return getNceTrafficController().getCmdGroups(); 
+    	return NceTrafficController.CMDS_NONE;} // error no connection!
     
     /**
      * Provides access to the TrafficController for this

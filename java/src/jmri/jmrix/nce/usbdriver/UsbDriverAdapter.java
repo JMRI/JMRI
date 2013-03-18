@@ -131,68 +131,68 @@ public class UsbDriverAdapter extends NcePortController {
         	// is new firmware, determine functions available
         	if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {	//SB5
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB5);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_MEM |
-                		NceTrafficController.USB_CMDS_AUI_READ |
-                		NceTrafficController.USB_CMDS_OPS_PGM |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_MEM |
+                		NceTrafficController.CMDS_AUI_READ |
+                		NceTrafficController.CMDS_OPS_PGM |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_65);
 
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {	//TWIN
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_MEM |
-                		NceTrafficController.USB_CMDS_AUI_READ |
-                		NceTrafficController.USB_CMDS_PROGTRACK |
-                		NceTrafficController.USB_CMDS_OPS_PGM |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_MEM |
+                		NceTrafficController.CMDS_AUI_READ |
+                		NceTrafficController.CMDS_PROGTRACK |
+                		NceTrafficController.CMDS_OPS_PGM |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_65);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {	//PowerPro
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_OPS_PGM |
-                		NceTrafficController.USB_CMDS_AUI_READ |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
+                		NceTrafficController.CMDS_AUI_READ |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {	//SB3
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_OPS_PGM |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
         	} else {	//PowerCab
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_MEM |
-                		NceTrafficController.USB_CMDS_AUI_READ |
-                		NceTrafficController.USB_CMDS_PROGTRACK |
-                		NceTrafficController.USB_CMDS_OPS_PGM |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_MEM |
+                		NceTrafficController.CMDS_AUI_READ |
+                		NceTrafficController.CMDS_PROGTRACK |
+                		NceTrafficController.CMDS_OPS_PGM |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_65);
         	}
         } else {
         	// old firmware, original functions
         	if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB5);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_OPS_PGM |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_OPS_PGM |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_NONE |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_NONE |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_ACCYADDR250 |
-                		NceTrafficController.USB_CMDS_OPS_PGM |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_ACCYADDR250 |
+                		NceTrafficController.CMDS_OPS_PGM |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
         	} else {
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
-                tc.setUsbCmdGroups(NceTrafficController.USB_CMDS_PROGTRACK |
-                		NceTrafficController.USB_CMDS_OPS_PGM |
-                		NceTrafficController.USB_CMDS_USB);
+                tc.setCmdGroups(NceTrafficController.CMDS_PROGTRACK |
+                		NceTrafficController.CMDS_OPS_PGM |
+                		NceTrafficController.CMDS_USB);
                 adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
         	}
         }
