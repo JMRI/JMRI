@@ -615,7 +615,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
             }
         }
         // in any case, go OCCUPIED
-	if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+next.getBlock().getSystemName() + "(informational. No state change)");
+	if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+(next!=null ? next.getBlock().getSystemName() : "(no next block)")+ "(informational. No state change)");
 	return(next);
     }
 
