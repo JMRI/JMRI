@@ -100,7 +100,7 @@
  * Writing zero to FLAGS1 will remove the cab from the 'active' list
  * 
  * @author Dan Boudreau Copyright (C) 2009, 2010
- * @author Ken Cameron Copyright (C) 2012
+ * @author Ken Cameron Copyright (C) 2012,2013
  * @version $Revision$
  */
 
@@ -158,6 +158,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	private static final int CAB_MAX_USB = 10;			// There are up to 10 cabs
 	private static final int CAB_MAX_PRO = 64;			// There are up to 64 cabs
 	private static final int CAB_LINE_LEN = 16;			// display line length of 16 bytes	
+	private static final int CAB_MAX_CABDATA = 65;		// Size for arrays. One more than highest cab number
 
 	private static final int REPLY_1 = 1;			// reply length of 1 byte
 	private static final int REPLY_2 = 2;			// reply length of 2 byte
@@ -207,18 +208,18 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
 	Thread NceCabUpdateThread;	
 	
-	private int[] cabFlag1Array = new int[CAB_MAX_PRO];
-	private Calendar[] cabLastChangeArray = new Calendar[CAB_MAX_PRO];
-	private int[] cabSpeedArray = new int[CAB_MAX_PRO];
-	private int[] cabFlagsArray = new int[CAB_MAX_PRO];
-	private int[] cabLocoArray = new int[CAB_MAX_PRO];
-	private int[] cabConsistArray = new int[CAB_MAX_PRO];
-	private int[] cabF0Array = new int[CAB_MAX_PRO];
-	private int[] cabF5Array = new int[CAB_MAX_PRO];
-	private int[] cabF13Array = new int[CAB_MAX_PRO];
-	private int[] cabF21Array = new int[CAB_MAX_PRO];
-	private int[][] cabLine1Array = new int[CAB_MAX_PRO][CAB_LINE_LEN];
-	private int[][] cabLine2Array = new int[CAB_MAX_PRO][CAB_LINE_LEN];
+	private int[] cabFlag1Array = new int[CAB_MAX_CABDATA];
+	private Calendar[] cabLastChangeArray = new Calendar[CAB_MAX_CABDATA];
+	private int[] cabSpeedArray = new int[CAB_MAX_CABDATA];
+	private int[] cabFlagsArray = new int[CAB_MAX_CABDATA];
+	private int[] cabLocoArray = new int[CAB_MAX_CABDATA];
+	private int[] cabConsistArray = new int[CAB_MAX_CABDATA];
+	private int[] cabF0Array = new int[CAB_MAX_CABDATA];
+	private int[] cabF5Array = new int[CAB_MAX_CABDATA];
+	private int[] cabF13Array = new int[CAB_MAX_CABDATA];
+	private int[] cabF21Array = new int[CAB_MAX_CABDATA];
+	private int[][] cabLine1Array = new int[CAB_MAX_CABDATA][CAB_LINE_LEN];
+	private int[][] cabLine2Array = new int[CAB_MAX_CABDATA][CAB_LINE_LEN];
 	
 	// member declarations
 	JLabel textNumber = new JLabel(rb.getString("Number"));
@@ -298,7 +299,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	String		lastChange;
     }
 
-    dataRow[] cabData = new dataRow[CAB_MAX_PRO];
+    dataRow[] cabData = new dataRow[CAB_MAX_CABDATA];
 
     nceCabTableModel cabModel = new nceCabTableModel(cabData);
     JTable cabTable = new JTable(cabModel);
@@ -1583,7 +1584,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    protected int getCabIdForRow(int row) {
 	    	int activeRows = -1;
 	    	if (!getShowAllCabs()) {
-	    		for (int i = 1; i <= maxCabNum; i++) {
+	    		for (int i = 1; i < maxCabNum; i++) {
 	    			if ((cabFlag1Array[i] & FLAGS1_MASK_CABISACTIVE) == FLAGS1_CABISACTIVE) {
 	    				activeRows++;
 	    				if (row == activeRows) {
