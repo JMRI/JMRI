@@ -2340,7 +2340,9 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingNotTrain"),
 					new Object[] { terminateStageTrack.getName() }));
 			return false;
-		} else if (!terminateStageTrack.getDropOption().equals(Track.ANY)) {
+		// if track is setup to accept a specific train or route, then ignore other track restrictions
+		} else if (terminateStageTrack.getDropOption().equals(Track.TRAINS)
+				|| terminateStageTrack.getDropOption().equals(Track.ROUTES)) {
 			addLine(buildReport, SEVEN, MessageFormat.format(
 					Bundle.getMessage("buildTrainCanTerminateTrack"), new Object[] { train.getName(),
 							terminateStageTrack.getName() }));
