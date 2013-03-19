@@ -249,7 +249,7 @@ public class OptionFrame extends OperationsFrame {
 			// Car routing enabled?
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			// Options
-			Setup.setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
+			TrainManager.instance().setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
 			Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
 			Setup.setValueEnabled(valueCheckBox.isSelected());
 			Setup.setValueLabel(valueTextField.getText());

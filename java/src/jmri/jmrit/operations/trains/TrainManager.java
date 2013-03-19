@@ -21,6 +21,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Manages trains.
@@ -55,7 +56,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public static final String OPEN_FILE_CHANGED_PROPERTY = "TrainsOpenFile"; // NOI18N
 	public static final String RUN_FILE_CHANGED_PROPERTY = "TrainsRunFile"; // NOI18N
 	public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
+	public static final String GENERATE_CSV_CHANGED_PROPERTY = "TrainsGenerateCSV"; // NOI18N
 	public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
+	
 
 	public TrainManager() {
 	}
@@ -726,6 +729,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
 		}
 		return trains;
+	}
+	
+	public void setGenerateCsvManifestEnabled(boolean enabled) {
+		boolean old = Setup.isGenerateCsvManifestEnabled();
+		Setup.setGenerateCsvManifestEnabled(enabled);
+		firePropertyChange(GENERATE_CSV_CHANGED_PROPERTY, old, enabled);
 	}
 
 	

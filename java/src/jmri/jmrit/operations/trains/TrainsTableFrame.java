@@ -45,18 +45,10 @@ import jmri.util.com.sun.TableSorter;
  * Frame for adding and editing the train roster for operations.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013
  * @version $Revision$
  */
 public class TrainsTableFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
-
-	// public static final String NAME = Bundle.getMessage("Name"); // Sort by choices
-	// public static final String TIME = Bundle.getMessage("Time");
-	// public static final String DEPARTS = Bundle.getMessage("Departs");
-	// public static final String TERMINATES = Bundle.getMessage("Terminates");
-	// public static final String ROUTE = Bundle.getMessage("Route");
-	// public static final String STATUS = Bundle.getMessage("Status");
-	// public static final String ID = Bundle.getMessage("Id");
 
 	public static final String MOVE = Bundle.getMessage("Move");
 	public static final String TERMINATE = Bundle.getMessage("Terminate");
@@ -235,10 +227,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		showAllBox.setSelected(trainsModel.isShowAll());
 
 		// show open files only if create csv is enabled
-		openFileBox.setVisible(Setup.isGenerateCsvManifestEnabled());
-		openFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
-		runFileBox.setVisible(Setup.isGenerateCsvManifestEnabled());
-		runFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
+		updateRunAndOpenButtons();
 
 		addCheckBoxAction(buildMsgBox);
 		addCheckBoxAction(buildReportBox);
@@ -553,6 +542,14 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		}
 		printSwitchButton.setBackground(Color.GREEN);
 	}
+	
+	// show open files only if create csv is enabled
+	private void updateRunAndOpenButtons() {
+		openFileBox.setVisible(Setup.isGenerateCsvManifestEnabled());
+		openFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
+		runFileBox.setVisible(Setup.isGenerateCsvManifestEnabled());
+		runFileButton.setVisible(Setup.isGenerateCsvManifestEnabled());
+	}
 
 	private synchronized void addPropertyChangeLocations() {
 		List<String> locations = locationManager.getLocationsByIdList();
@@ -622,6 +619,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		if (e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY))
 			updateSwitchListButton();
+		if (e.getPropertyName().equals(TrainManager.GENERATE_CSV_CHANGED_PROPERTY))
+				updateRunAndOpenButtons();
 	}
 
 	static Logger log = LoggerFactory.getLogger(TrainsTableFrame.class
