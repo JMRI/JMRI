@@ -46,6 +46,7 @@ public class I18NTest extends TestCase {
         return new TestSuite(I18NTest.class);
     }
 
+    /* Referenced in disabled test above 
     private Map<String, Integer> getUnfinishedI18NModules() throws IOException {
         Properties props = new Properties();
         InputStream is = new FileInputStream(new File("java/test/jmri/util/i18n_known_errors.properties"));
@@ -65,7 +66,7 @@ public class I18NTest extends TestCase {
         }
         return result;
     }
-
+    */
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {"-noloading", I18NTest.class.getName()};
