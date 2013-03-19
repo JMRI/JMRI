@@ -203,7 +203,7 @@ public class SignalTableModel extends AbstractTableModel {
     		} else {
             	msg = java.text.MessageFormat.format(
                         rbo.getString("PortalBlockConflict"), portal.getName(),
-                        toBlock.getDisplayName());    			
+                        (toBlock != null ? toBlock.getDisplayName() : "(null to-block reference)"));    			
     		}
         } else if (fromBlock!=null && toBlock!=null) {
         	Portal p = _parent.getPortalModel().getPortal(fromBlock, toBlock);
