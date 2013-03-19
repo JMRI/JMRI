@@ -188,7 +188,7 @@ public class PortalTableModel extends AbstractTableModel {
             	 } else {
                      msg = java.text.MessageFormat.format(rbo.getString("PortalNeedsBlock"), name);            		 
             	 }
-             } else if (fromBlock != null && fromBlock.equals(toBlock)) {
+             } else if (fromBlock.equals(toBlock)) {
                  msg = java.text.MessageFormat.format(
                          rbo.getString("SametoFromBlock"), fromBlock.getDisplayName());
              } else if (getPortalByName(name)==null) {            	 
