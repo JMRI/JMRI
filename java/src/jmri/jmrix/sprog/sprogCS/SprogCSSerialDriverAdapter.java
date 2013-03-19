@@ -29,6 +29,7 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 
     public SprogCSSerialDriverAdapter() {
         super(SprogMode.OPS);
+        options.put("TrackPowerState", new Option("Track Power At StartUp:", new String[]{"Powered Off", "Powered On"}, true));
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
         adaptermemo.setUserName("SPROG Command Station");
     }
@@ -45,8 +46,14 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         adaptermemo.setSprogTrafficController(control);
         adaptermemo.configureCommandStation();
         adaptermemo.configureManagers();
-        
         jmri.jmrix.sprog.ActiveFlagCS.setActive();
+        if(getOptionState("TrackPowerState")!=null  && getOptionState("TrackPowerState").equals("Powered On")){
+            try {
+                adaptermemo.getPowerManager().setPower(jmri.PowerManager.ON);
+            } catch (jmri.JmriException e){
+                log.error(e.toString());
+            }
+        }
 
     }
 
