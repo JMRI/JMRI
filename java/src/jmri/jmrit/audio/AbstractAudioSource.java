@@ -99,7 +99,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public boolean queueBuffers(Queue<AudioBuffer> audioBuffers) {
 	// Note: Cannot queue buffers to a Source that has a bound buffer.
 	if (!_bound) {
-	    this.pendingBufferQueue = new LinkedList(audioBuffers);
+	    this.pendingBufferQueue = new LinkedList<AudioBuffer>(audioBuffers);
 	    activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_QUEUE_BUFFERS));
 	    activeAudioFactory.getCommandThread().interrupt();
 	    if (log.isDebugEnabled())
