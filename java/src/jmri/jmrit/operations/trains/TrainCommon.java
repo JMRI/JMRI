@@ -776,11 +776,11 @@ public class TrainCommon {
 		return " (" + Bundle.getMessage("ErrorPrintOptions") + ") "; // maybe user changed locale
 	}
 
-	public static String getDate() {
+	public static String getDate(boolean isModelYear) {
 		Calendar calendar = Calendar.getInstance();
 
 		String year = Setup.getYearModeled();
-		if (year.equals(""))
+		if (year.equals("") || !isModelYear)
 			year = Integer.toString(calendar.get(Calendar.YEAR));
 		year = year.trim();
 

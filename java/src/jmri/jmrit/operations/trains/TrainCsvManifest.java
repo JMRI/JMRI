@@ -57,7 +57,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 			logoURL = train.getManifestLogoURL();
 		if (!logoURL.equals(""))
 			addLine(fileOut, LOGO + logoURL);
-		addLine(fileOut, VT + getDate());
+		addLine(fileOut, VT + getDate(true));
 		// train comment can have multiple lines
 		if (!train.getComment().equals("")) {
 			String[] comments = train.getComment().split("\n"); // NOI18N

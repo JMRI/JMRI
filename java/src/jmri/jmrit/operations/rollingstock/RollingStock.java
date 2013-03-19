@@ -503,7 +503,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 					setSavedRouteId(getTrain().getRoute().getId());
 				if (getRouteDestination() != null) {
 					setMoves(getMoves()+1);
-					setLastDate(TrainCommon.getDate());
+					setLastDate(TrainCommon.getDate(false));
 				}
 				setRouteLocation(null);
 				setRouteDestination(null);

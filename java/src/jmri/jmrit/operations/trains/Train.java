@@ -2842,7 +2842,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			runScripts(getMoveScripts());
 		} else {
 			log.debug("Train (" + getName() + ") terminated");
-			setStatus(TERMINATED + " " + TrainCommon.getDate());
+			setStatus(TERMINATED + " " + TrainCommon.getDate(false));
 			setBuilt(false);
 			// run termination scripts
 			runScripts(getTerminationScripts());

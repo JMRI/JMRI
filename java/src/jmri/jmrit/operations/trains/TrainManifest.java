@@ -54,7 +54,7 @@ public class TrainManifest extends TrainCommon {
 		newLine(fileOut, MessageFormat.format(Bundle.getMessage("ManifestForTrain"), new Object[] {
 				train.getName(), train.getDescription() }));
 
-		String valid = MessageFormat.format(Bundle.getMessage("Valid"), new Object[] { getDate() });
+		String valid = MessageFormat.format(Bundle.getMessage("Valid"), new Object[] { getDate(true) });
 
 		if (Setup.isPrintTimetableNameEnabled()) {
 			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(

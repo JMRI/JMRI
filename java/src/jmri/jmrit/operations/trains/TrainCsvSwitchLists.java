@@ -50,7 +50,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 
 		addLine(fileOut, LN+ESC+splitString(location.getName())+ESC);
 		addLine(fileOut, PRNTR + ESC + location.getDefaultPrinterName() + ESC);
-		addLine(fileOut, VT+getDate());
+		addLine(fileOut, VT+getDate(true));
 		
 		// get a list of trains
 		List<String> trains = trainManager.getTrainsByTimeList();

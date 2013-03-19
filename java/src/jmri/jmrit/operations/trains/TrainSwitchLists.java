@@ -75,7 +75,7 @@ public class TrainSwitchLists extends TrainCommon {
 		newLine(fileOut, MessageFormat.format(Bundle.getMessage("SwitchListFor"),
 				new Object[] { splitString(location.getName()) }));
 
-		String valid = MessageFormat.format(Bundle.getMessage("Valid"), new Object[] { getDate() });
+		String valid = MessageFormat.format(Bundle.getMessage("Valid"), new Object[] { getDate(true) });
 
 		if (Setup.isPrintTimetableNameEnabled()) {
 			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
