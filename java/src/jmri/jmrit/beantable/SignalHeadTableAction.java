@@ -1934,6 +1934,8 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         number = Integer.parseInt(jtf.getText());
                         ((DccSignalHead)curS).setOutputForAppearance(((DccSignalHead)curS).getValidStates()[i], number);
                     } catch (Exception ex){
+                        //in theory the checkDCCAspectValue should of already of caught a number conversion error.
+                        log.error(ex.toString());
                     }
                 } else {
                     return;
