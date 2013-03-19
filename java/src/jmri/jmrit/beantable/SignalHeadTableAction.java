@@ -1088,7 +1088,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
             s.setUserName(userName.getText());
             for(int i = 0; i<dccAspect.length; i++){
                 JTextField jtf = dccAspect[i];
-                int state = DccSignalHead.getDefaultValidStates()[i];
                 int number = 0;
                 if(checkDCCAspectValue(jtf.getText(),DccSignalHead.getDefaultValidStateNames()[i])){
                     try {
@@ -1929,7 +1928,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
         else if (className.equals("jmri.implementation.DccSignalHead")){
             for(int i = 0; i<dccAspectEdt.length; i++){
                 JTextField jtf = dccAspectEdt[i];
-                int state = DccSignalHead.getDefaultValidStates()[i];
                 int number = 0;
                 if(checkDCCAspectValue(jtf.getText(),DccSignalHead.getDefaultValidStateNames()[i])){
                     try {
