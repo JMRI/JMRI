@@ -288,11 +288,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	 * Set  the types of commands valid connected system
 	 * <UL>
 	 * <LI>{@link #CMDS_NONE}
-	 * <LI>{@link #CMDS_ACCYADDR250)
-	 * <LI>{@link #CMDS_PROGTRACK)
-	 * <LI>{@link #CMDS_AUI_READ)
-	 * <LI>{@link #CMDS_MEM)
-	 * <LI>(@line #CMDS_OPS_PGM)
+	 * <LI>{@link #CMDS_ACCYADDR250}
+	 * <LI>{@link #CMDS_PROGTRACK}
+	 * <LI>{@link #CMDS_AUI_READ}
+	 * <LI>{@link #CMDS_MEM}
+	 * <LI>{@link #CMDS_OPS_PGM}
 	 * </UL>
 	 * 
 	 * @param val
@@ -310,11 +310,11 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	 * Get the types of commands valid for the NCE USB and connected system
 	 * <UL>
 	 * <LI>{@link #CMDS_NONE}
-	 * <LI>{@link #CMDS_ACCYADDR250)
-	 * <LI>{@link #CMDS_PROGTRACK)
-	 * <LI>{@link #CMDS_AUI_READ)
-	 * <LI>{@link #CMDS_MEM)
-	 * <LI>(@line #CMDS_OPS_PGM)
+	 * <LI>{@link #CMDS_ACCYADDR250}
+	 * <LI>{@link #CMDS_PROGTRACK}
+	 * <LI>{@link #CMDS_AUI_READ}
+	 * <LI>{@link #CMDS_MEM}
+	 * <LI>{@link #CMDS_OPS_PGM}
 	 * </UL>
 	 * 
 	 */
