@@ -65,15 +65,15 @@ public class NceMenu extends JMenu {
     }
 
     private Item[] panelItems = new Item[] {
-        new Item("MenuItemCommandMonitor", "jmri.jmrix.nce.ncemon.NceMonPanel", ~NceTrafficController.CMDS_NONE),
-        new Item("MenuItemSendCommand", "jmri.jmrix.nce.packetgen.NcePacketGenPanel", ~NceTrafficController.CMDS_NONE),
-        new Item("MenuItemMacroCommand", "jmri.jmrix.nce.macro.NceMacroGenPanel", ~NceTrafficController.CMDS_NONE),
-        new Item("MenuItemMacroEdit", "jmri.jmrix.nce.macro.NceMacroEditPanel", NceTrafficController.CMDS_NONE),
-        new Item("MenuItemConsistEdit", "jmri.jmrix.nce.consist.NceConsistEditPanel", NceTrafficController.CMDS_NONE),
-        new Item("MenuItemTrackPacketMonitor", "jmri.jmrix.ncemonitor.NcePacketMonitorPanel", ~NceTrafficController.CMDS_NONE),
+        new Item("MenuItemCommandMonitor", "jmri.jmrix.nce.ncemon.NceMonPanel", NceTrafficController.CMDS_ALL_SYS),
+        new Item("MenuItemSendCommand", "jmri.jmrix.nce.packetgen.NcePacketGenPanel", NceTrafficController.CMDS_ALL_SYS),
+        new Item("MenuItemMacroCommand", "jmri.jmrix.nce.macro.NceMacroGenPanel", NceTrafficController.CMDS_ALL_SYS),
+        new Item("MenuItemMacroEdit", "jmri.jmrix.nce.macro.NceMacroEditPanel", NceTrafficController.CMDS_NOT_USB),
+        new Item("MenuItemConsistEdit", "jmri.jmrix.nce.consist.NceConsistEditPanel", NceTrafficController.CMDS_NOT_USB),
+        new Item("MenuItemTrackPacketMonitor", "jmri.jmrix.ncemonitor.NcePacketMonitorPanel", NceTrafficController.CMDS_ALL_SYS),
         new Item("MenuItemClockMon", "jmri.jmrix.nce.clockmon.ClockMonPanel", NceTrafficController.CMDS_CLOCK),
         new Item("MenuItemShowCabs", "jmri.jmrix.nce.cab.NceShowCabPanel", NceTrafficController.CMDS_MEM),
-        new Item("MenuItemBoosterProg", "jmri.jmrix.nce.boosterprog.BoosterProgPanel", NceTrafficController.CMDS_NONE),
+        new Item("MenuItemBoosterProg", "jmri.jmrix.nce.boosterprog.BoosterProgPanel", NceTrafficController.CMDS_NOT_USB),
         new Item("MenuItemUsbInt", "jmri.jmrix.nce.usbinterface.UsbInterfacePanel", NceTrafficController.CMDS_USB)
     };
     

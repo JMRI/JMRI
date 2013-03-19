@@ -254,7 +254,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	/**
 	 * Supports USB read/write memory commands 0xB3 -> 0xB5
 	 */
-	static public final long CMDS_MEM = 0x008;
+	static public final long CMDS_MEM = 0x0008;
 	
 	/**
 	 * Support Ops Mode Pgm commands 0xAE -> 0xAF
@@ -270,6 +270,16 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	 * Support USB Interface commands 0xB1
 	 */
 	static public final long CMDS_USB = 0x0040;
+	
+	/**
+	 * Disable for USB commands
+	 */
+	static public final long CMDS_NOT_USB = 0x0080;
+	
+	/**
+	 * All Connections Support commands
+	 */
+	static public final long CMDS_ALL_SYS = 0x0100;
 		
 	private long cmdGroups = CMDS_NONE;
 	private boolean cmdGroupsSet = false;
