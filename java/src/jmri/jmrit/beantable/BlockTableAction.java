@@ -59,8 +59,8 @@ public class BlockTableAction extends AbstractTableAction {
         }
 		inchBox.setSelected(true);
 		centimeterBox.setSelected(false);
-        
-        if(jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getPreferenceState(getClassName(), "LengthUnitMetric")){
+
+        if(jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getSimplePreferenceState(getClassName()+ ":LengthUnitMetric")){
             inchBox.setSelected(false);
             centimeterBox.setSelected(true);
         }
@@ -715,7 +715,7 @@ public class BlockTableAction extends AbstractTableAction {
     jmri.jmrit.beantable.beanedit.BlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.BlockEditAction();
     @Override
     public void dispose() {
-    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceState(getClassName(), "LengthUnitMetric",centimeterBox.isSelected());
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setSimplePreferenceState(getClassName() + ":LengthUnitMetric",centimeterBox.isSelected());
         super.dispose();
     }
 
