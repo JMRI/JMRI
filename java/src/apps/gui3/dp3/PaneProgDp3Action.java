@@ -558,10 +558,10 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             re.setDccAddress(""+address);
             re.setLongAddress(!shortAddr);
             re.writeFile(cvModel, iCvModel, variableModel );
+        
+            // mark this as a success
+            variableModel.setFileDirty(false);
         }
-        // mark this as a success
-        variableModel.setFileDirty(false);
-
         // and store an updated roster file
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
         Roster.writeRosterFile();
@@ -608,9 +608,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             bottom.remove(writeChangesButton);
             writeAllButton.setText(SymbolicProgBundle.getMessage("ButtonWrite"));
             readAllButton.setText(SymbolicProgBundle.getMessage("ButtonRead"));
-            synchronized(this){
-                bottom.add(saveBasicRoster);
-            }
+            bottom.add(saveBasicRoster);
             bottom.revalidate();
             readAllButton.removeItemListener(l2);
             readAllButton.addItemListener(l2 = new ItemListener() {
@@ -675,9 +673,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         }
         
         public void dispose(){
-            synchronized(this){
-                bottom.remove(saveBasicRoster);
-            }
+            bottom.remove(saveBasicRoster);
             super.dispose();
         }
     
