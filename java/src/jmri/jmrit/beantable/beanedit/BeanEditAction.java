@@ -23,10 +23,8 @@ import java.awt.BorderLayout;
  */
 
 abstract class BeanEditAction extends AbstractAction {
-
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.signalling.SignallingBundle");
     
-	public BeanEditAction(String s) {
+    public BeanEditAction(String s) {
         super(s);
     }
     
@@ -40,6 +38,10 @@ abstract class BeanEditAction extends AbstractAction {
         this.bean = bean;
     }
     
+    /**
+    *  Call to create all the different tabs that will be added
+    *  to the frame
+    */
     protected void createPanels(){
         bei.add(basicDetails());
     }
@@ -48,6 +50,10 @@ abstract class BeanEditAction extends AbstractAction {
     JTextArea commentField = new JTextArea(3,30);
     JScrollPane commentFieldScroller = new JScrollPane(commentField);
     
+    /**
+    *  Creates a generic panel that holds the basic bean information
+    *  System Name, User Name and Comment
+    */
     EditBeanItem basicDetails(){
     
         ArrayList<Item> items = new ArrayList<Item>();
@@ -58,7 +64,6 @@ abstract class BeanEditAction extends AbstractAction {
         basic.setName("Basic");
         basic.setLayout(new BoxLayout(basic, BoxLayout.Y_AXIS));
 
-        userNameField.setText(bean.getUserName());
         items.add(new Item(userNameField, Bundle.getMessage("ColumnUserName"), null));
         
         items.add(new Item(commentFieldScroller, Bundle.getMessage("ColumnComment"), null));
@@ -87,8 +92,18 @@ abstract class BeanEditAction extends AbstractAction {
         return basic;
     }
     
-    ArrayList<EditBeanItem> bei = new ArrayList<EditBeanItem>(5);
+    abstract protected String helpTarget();
+    
+    protected ArrayList<EditBeanItem> bei = new ArrayList<EditBeanItem>(5);
     JmriJFrame f;
+    
+    protected Component selectedTab = null;
+    private JTabbedPane detailsTab = new JTabbedPane();
+    
+    public void setSelectedComponent(Component c){
+        selectedTab=c;
+    }
+    
     public void actionPerformed(ActionEvent e) {
         if(bean==null){
             log.error("No bean set so unable to edit a null bean");  //IN18N
@@ -96,10 +111,10 @@ abstract class BeanEditAction extends AbstractAction {
         }
         if(f==null){
             f = new JmriJFrame("Edit " + getBeanType() + " " + bean.getDisplayName(), false,false);
-            
+            f.addHelpMenu(helpTarget(), true);
             java.awt.Container containerPanel = f.getContentPane();
             createPanels();
-            JTabbedPane detailsTab = new JTabbedPane();
+            //JTabbedPane detailsTab = new JTabbedPane();
             for(EditBeanItem bi:bei){
                 detailsTab.addTab(bi.getName(), bi);
             }
@@ -129,22 +144,19 @@ abstract class BeanEditAction extends AbstractAction {
             buttons.add(okBut);
             buttons.add(cancelBut);
             containerPanel.add(buttons, BorderLayout.SOUTH);
-            /*try {
-                f.initComponents(bean);
-                }
-            catch (Exception ex) {
-                log.error("Exception: "+ex.toString());// NOI18N
-                ex.printStackTrace();
-                }*/
-        } else {
-            for(EditBeanItem bi:bei){
-                bi.resetField();
-            }
         }
+        for(EditBeanItem bi:bei){
+            bi.resetField();
+        }
+        if(selectedTab!=null)
+            detailsTab.setSelectedComponent(selectedTab);
         f.pack();
 		f.setVisible(true);
 	}
     
+    /**
+    *  Sets out the panel based upon the items passed in via the ArrayList
+    */
     protected void addToPanel(JPanel panel, ArrayList<Item> items){
         GridBagLayout gbLayout = new GridBagLayout();
         GridBagConstraints cL = new GridBagConstraints();
@@ -152,12 +164,11 @@ abstract class BeanEditAction extends AbstractAction {
         GridBagConstraints cR = new GridBagConstraints();
         cL.fill = GridBagConstraints.HORIZONTAL;
         cL.insets = new Insets(2, 0, 0, 15);
-        cR.insets = new Insets(2, 0, 15, 15);
+        cR.insets = new Insets(0, 10, 15, 15);
         cD.insets = new Insets(2, 0, 0, 0);
         cD.anchor = GridBagConstraints.NORTHWEST;
         cL.anchor = GridBagConstraints.NORTHWEST;
-        
-        //Dimension minFieldDim = new Dimension(30, 20);
+
         int y = 0;
         JPanel p = new JPanel();
         
@@ -175,7 +186,6 @@ abstract class BeanEditAction extends AbstractAction {
                 cD.gridx = 1;
                 cD.gridy = y;
 
-                //it.getComponent().setMinimumSize(minFieldDim);
                 gbLayout.setConstraints(it.getComponent(), cD);
 
                 p.add(it.getComponent(), cD);
@@ -193,7 +203,6 @@ abstract class BeanEditAction extends AbstractAction {
             if(it.getHelp()!=null){
                 JTextPane help = new JTextPane();
                 help.setText(it.getHelp());
-                //help.setMinimumSize(minFieldDim);
                 gbLayout.setConstraints(help, cR);
                 formatTextAreaAsLabel(help);
                 p.add(help, cR);
@@ -233,6 +242,9 @@ abstract class BeanEditAction extends AbstractAction {
     abstract protected NamedBean getBySystemName(String name);
     abstract protected NamedBean getByUserName(String name);
     
+    /**
+    * Generic method to change the user name of a Bean
+    */
     public void renameBean(String _newName){
         NamedBean nBean = bean;
         String oldName = nBean.getUserName();
@@ -251,7 +263,7 @@ abstract class BeanEditAction extends AbstractAction {
                 msg = java.text.MessageFormat.format(Bundle.getMessage("WarningUserName"),
                         new Object[] { ("" + value) });
                 JOptionPane.showMessageDialog(null, msg,
-                        AbstractTableAction.rb.getString("WarningTitle"),
+                        Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -286,7 +298,10 @@ abstract class BeanEditAction extends AbstractAction {
             nbMan.updateBeanFromUserToSystem(nBean);
         }
     }
-
+    
+    /**
+    * Generic method to remove the user name from a bean.
+    */
     public void removeName(){
         String msg = java.text.MessageFormat.format(Bundle.getMessage("UpdateToSystemName"),
                 new Object[] { getBeanType()});
@@ -299,11 +314,22 @@ abstract class BeanEditAction extends AbstractAction {
         bean.setUserName(null);
     }
     
-    static class Item {
+    /**
+    * Class used to define the items used with in a panel
+    */
+    protected static class Item {
         String help;
         String description;
         JComponent component;
-        Item (JComponent component, String description, String help){
+        /**
+        * Create the item structure to be added.
+        * If the component and description are null, then the help text
+        * will be displayed across the width of the panel.
+        * @component Optional Contains the item to be edited
+        * @description Optional Contains the text for the label that will be to the left of the component
+        * @help Optional Contains the help or hint text, that will be displayed to the right of the component
+        */
+        public Item (JComponent component, String description, String help){
             this.component = component;
             this.description = description;
             this.help = help;

@@ -12,20 +12,28 @@ public class EditBeanItem extends JPanel{
         super();
     }
     
+
     public void saveItem(){
-        save.actionPerformed(null);
+        if(save!=null)
+            save.actionPerformed(null);
     }
     
     public void resetField(){
-        reset.actionPerformed(null);
+        if(reset!=null)
+            reset.actionPerformed(null);
         
     }
 
-    
+    /**
+     *  Set the action to be performed when the save button is pressed
+     */
     public void setSaveItem(AbstractAction save){
         this.save = save;
     }
     
+    /**
+     *  Set the action to be performed when the cancel button is pressed
+     */
     public void setResetItem(AbstractAction reset){
         this.reset = reset;
     }

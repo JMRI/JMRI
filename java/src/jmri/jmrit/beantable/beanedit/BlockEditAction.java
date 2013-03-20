@@ -6,11 +6,13 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Block;
 import jmri.util.swing.JmriBeanComboBox;
+import jmri.Sensor;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DecimalFormat;
 
 import javax.swing.*;
 
@@ -25,14 +27,16 @@ import java.util.ResourceBundle;
  */
 public class BlockEditAction extends BeanEditAction {
     
-    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    
     private String noneText = Bundle.getMessage("BlockNone");
 	private String gradualText = Bundle.getMessage("BlockGradual");
 	private String tightText = Bundle.getMessage("BlockTight");
 	private String severeText = Bundle.getMessage("BlockSevere");
 	public String[] curveOptions = {noneText, gradualText, tightText, severeText};
     static final java.util.Vector<String> speedList = new java.util.Vector<String>();
+    
+    private DecimalFormat twoDigit = new DecimalFormat("0.00");
+    
+    public String helpTarget() { return "package.jmri.jmrit.beantable.BlockAddEdit"; } //IN18N
     
     protected void createPanels(){
         super.createPanels();
@@ -92,6 +96,8 @@ public class BlockEditAction extends BeanEditAction {
     JCheckBox permissiveField = new JCheckBox();
     JComboBox speedField;
     
+    JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
+    JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
 
     String defaultBlockSpeedText;
     
@@ -119,16 +125,15 @@ public class BlockEditAction extends BeanEditAction {
             public void keyReleased(KeyEvent keyEvent) {
                 String text = lengthField.getText();
                 if (!validateNumericalInput(text)){
-                    String msg = java.text.MessageFormat.format(Bundle.getMessage("ShouldBeNumber"), new Object[] { rb.getString("BlockLengthColName") });
-                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(rb.getString("ErrorTitle"), msg, "Block Details", "length", false, false);
+                    String msg = java.text.MessageFormat.format(Bundle.getMessage("ShouldBeNumber"), new Object[] { Bundle.getMessage("BlockLengthColName") });
+                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"), msg, "Block Details", "length", false, false);
                 }
             }
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
         
-        JRadioButton inch = new JRadioButton(Bundle.getMessage("LengthInches"));
-        JRadioButton cm = new JRadioButton(Bundle.getMessage("LengthCentimeters"));
+
         ButtonGroup rg = new ButtonGroup();
         rg.add(inch);
         rg.add(cm);
@@ -137,7 +142,21 @@ public class BlockEditAction extends BeanEditAction {
         p.add(inch);
         p.add(cm);
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-
+        inch.setSelected(true);
+        
+		inch.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+                    cm.setSelected(!inch.isSelected());
+                    updateLength();
+				}
+			});
+		cm.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+                    inch.setSelected(!cm.isSelected());
+                    updateLength();
+                }
+			});
+        
         items.add(new Item(p, Bundle.getMessage("BlockLengthUnits"), Bundle.getMessage("BlockLengthUnitsText")));
         items.add(new Item(curvatureField, Bundle.getMessage("BlockCurveColName"), ""));
         items.add(new Item(speedField = new JComboBox(speedList), Bundle.getMessage("BlockSpeedColName"), Bundle.getMessage("BlockMaxSpeedText")));
@@ -164,6 +183,13 @@ public class BlockEditAction extends BeanEditAction {
                 if (!speedList.contains(speed) && !speed.contains(Bundle.getMessage("UseGlobal"))){
                     speedList.add(speed);
                 }
+                String length = lengthField.getText();
+                float len = Float.valueOf(length).floatValue();
+                if (inch.isSelected()) 
+                    blk.setLength(len*25.4f);
+                else
+                    blk.setLength(len*10.0f);
+                blk.setPermissiveWorking(permissiveField.isSelected());
             }
         });
         basic.setResetItem(new AbstractAction(){
@@ -183,12 +209,27 @@ public class BlockEditAction extends BeanEditAction {
 
                 speedField.setEditable(true);
                 speedField.setSelectedItem(speed);
-
+                double len = 0.0;
+                if (inch.isSelected())
+                    len = blk.getLengthIn();
+                else 
+                    len = blk.getLengthCm();
+                lengthField.setText(twoDigit.format(len));
                 permissiveField.setSelected(((Block)bean).getPermissiveWorking());
             }
         });
         addToPanel(basic, items);
         return basic;
+    }
+    
+    private void updateLength(){
+        double len = 0.0;
+        Block blk = (Block) bean;
+        if (inch.isSelected())
+            len = blk.getLengthIn();
+        else 
+            len = blk.getLengthCm();
+        lengthField.setText(twoDigit.format(len));
     }
     
     JmriBeanComboBox sensorField;
@@ -219,7 +260,47 @@ public class BlockEditAction extends BeanEditAction {
                 }
             }
         });
+        
+        sensorDebounceGlobalCheck.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                if(sensorDebounceGlobalCheck.isSelected()){
+                    sensorDebounceInactiveField.setEnabled(false);
+                    sensorDebounceActiveField.setEnabled(false);
+                } else {
+                    sensorDebounceInactiveField.setEnabled(true);
+                    sensorDebounceActiveField.setEnabled(true);
+                }
+            }
+        });
 
+        sensorDebounceInactiveField.addKeyListener( new KeyListener() {
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+            public void keyReleased(KeyEvent keyEvent) {
+                String text = sensorDebounceInactiveField.getText();
+                if (!validateNumericalInput(text)){
+                    String msg = java.text.MessageFormat.format(Bundle.getMessage("ShouldBeNumber"), new Object[] { Bundle.getMessage("SensorInActiveDebounce") });
+                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"), msg, "Block Details", "Inactive", false, false);
+                }
+            }
+            public void keyTyped(KeyEvent keyEvent) {
+            }
+        });
+        
+        sensorDebounceActiveField.addKeyListener( new KeyListener() {
+            public void keyPressed(KeyEvent keyEvent) {
+            }
+            public void keyReleased(KeyEvent keyEvent) {
+                String text = sensorDebounceActiveField.getText();
+                if (!validateNumericalInput(text)){
+                    String msg = java.text.MessageFormat.format(Bundle.getMessage("ShouldBeNumber"), new Object[] { Bundle.getMessage("SensorActiveDebounce") });
+                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"), msg, "Block Details", "Active", false, false);
+                }
+            }
+            public void keyTyped(KeyEvent keyEvent) {
+            }
+        });
+        
         items.add(new Item(null, null, Bundle.getMessage("SensorDebounceText")));
         items.add(new Item(sensorDebounceGlobalCheck,Bundle.getMessage("SensorDebounceUseGlobalText"), null));
         items.add(new Item(sensorDebounceInactiveField,Bundle.getMessage("SensorInActiveDebounce"), Bundle.getMessage("SensorInActiveDebounceText")));
@@ -234,6 +315,18 @@ public class BlockEditAction extends BeanEditAction {
                     lBlk.validateSensor(sensorField.getSelectedDisplayName(), null);
                 else
                     blk.setSensor(sensorField.getSelectedDisplayName());
+                if(sensorField.getSelectedBean()!=null){
+                    Sensor sen = (Sensor) sensorField.getSelectedBean();
+                    
+                    String timeVal = sensorDebounceActiveField.getText();
+                    int time = Integer.valueOf(timeVal).intValue();
+                    sen.setSensorDebounceGoingActiveTimer(time);
+                    
+                    timeVal = sensorDebounceInactiveField.getText();
+                    time = Integer.valueOf(timeVal).intValue();
+                    sen.setSensorDebounceGoingInActiveTimer(time);
+                    sen.useDefaultTimerSettings(sensorDebounceGlobalCheck.isSelected());
+                }
             }
         });
         basic.setResetItem(new AbstractAction(){
@@ -245,6 +338,11 @@ public class BlockEditAction extends BeanEditAction {
                     sensorDebounceGlobalCheck.setEnabled(false);
                     sensorDebounceInactiveField.setEnabled(false);
                     sensorDebounceActiveField.setEnabled(false);
+                } else {
+                    Sensor sen = (Sensor) sensorField.getSelectedBean();
+                    sensorDebounceGlobalCheck.setSelected(sen.useDefaultTimerSettings());
+                    sensorDebounceActiveField.setText(""+sen.getSensorDebounceGoingActiveTimer());
+                    sensorDebounceInactiveField.setText(""+sen.getSensorDebounceGoingInActiveTimer());
                 }
             }
         });
