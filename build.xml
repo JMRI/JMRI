@@ -400,6 +400,7 @@
             <classpath refid="compile.class.path"/>
             <compilerarg value="-Xlint:-serial"/>
             <compilerarg value="-Xlint:-deprecation"/>
+            <compilerarg value="-Xlint:unchecked"/>
         </javac>
     </target>
 
