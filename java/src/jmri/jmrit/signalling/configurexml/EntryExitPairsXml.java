@@ -214,6 +214,9 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
     }
     
     public int loadOrder(){
+        if(jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class)==null){
+            jmri.InstanceManager.store(new EntryExitPairs(), EntryExitPairs.class);
+        }
         return jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getXMLOrder();
     }
 

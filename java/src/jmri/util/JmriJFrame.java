@@ -208,9 +208,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
         int refNo = 1;
         String ref = initref;
-        for(int i = 0; i<list.size();i++){
-            JmriJFrame j = list.get(i);
-            if(j!=this && j.getWindowFrameRef().equals(ref)){
+        for(JmriJFrame j:list){
+            if(j!=this && j.getWindowFrameRef()!=null && j.getWindowFrameRef().equals(ref)){
                 ref = initref+":"+refNo;
                 refNo++;
             }
