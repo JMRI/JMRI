@@ -24,8 +24,6 @@ package jmri.jmrit.vsdecoder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.nio.ByteBuffer;
-import java.nio.ShortBuffer;
-import jmri.util.FileUtil;
 import net.java.games.joal.AL;
 import net.java.games.joal.ALException;
 import net.java.games.joal.util.ALut;
@@ -37,7 +35,6 @@ import java.util.ArrayList;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.jmrit.audio.AudioBuffer;
-import jmri.jmrit.audio.JoalAudioBuffer;
 
 public class AudioUtil {
         //------------------------

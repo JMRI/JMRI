@@ -26,7 +26,6 @@ package jmri.jmrit.vsdecoder.swing;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.ResourceBundle;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JToggleButton;

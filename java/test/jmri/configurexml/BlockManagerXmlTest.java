@@ -22,7 +22,6 @@ import jmri.Memory;
 import jmri.Path;
 import jmri.Sensor;
 
-import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;

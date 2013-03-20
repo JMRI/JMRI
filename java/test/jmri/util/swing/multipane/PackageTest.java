@@ -4,7 +4,6 @@ package jmri.util.swing.multipane;
 
 import junit.framework.*;
 
-import java.io.File;
 import javax.swing.*;
 
 import jmri.util.swing.*;

@@ -6,7 +6,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Hashtable;
-import java.util.ResourceBundle;
 import java.util.Enumeration;
 import jmri.InstanceManager;
 import jmri.Route;

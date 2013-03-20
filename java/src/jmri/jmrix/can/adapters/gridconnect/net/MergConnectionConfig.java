@@ -5,7 +5,6 @@ package jmri.jmrix.can.adapters.gridconnect.net;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ResourceBundle;
-import jmri.jmrix.can.ConfigurationManager;
 
 /**
  * Definition of objects to handle configuring a connection

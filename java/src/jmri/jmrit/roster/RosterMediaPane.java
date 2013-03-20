@@ -19,7 +19,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
-import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import jmri.util.swing.EditableResizableImagePanel;
 

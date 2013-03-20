@@ -3,7 +3,6 @@
 package jmri;
 
 import jmri.ProgListener;
-import java.beans.PropertyChangeListener;
 
 /**
  * Scaffold implementation of Programmer Listener interface for testing.

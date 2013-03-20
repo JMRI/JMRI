@@ -2,7 +2,6 @@
 
 package jmri.jmrit.decoderdefn;
 
-import org.apache.log4j.Logger;
 import javax.swing.*;
 import junit.framework.Test;
 import junit.framework.TestCase;

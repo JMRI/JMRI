@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;

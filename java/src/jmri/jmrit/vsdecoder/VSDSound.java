@@ -19,8 +19,6 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision$
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom.Element;
 import java.awt.event.ActionListener;
 import javax.swing.Timer;

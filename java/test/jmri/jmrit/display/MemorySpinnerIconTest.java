@@ -1,6 +1,5 @@
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
 import jmri.util.JmriJFrame;
 
 import junit.framework.Assert;

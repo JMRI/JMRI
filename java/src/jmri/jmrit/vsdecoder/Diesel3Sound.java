@@ -33,7 +33,6 @@ import jmri.AudioManager;
 import jmri.AudioException;
 import jmri.util.PhysicalLocation;
 import jmri.jmrit.audio.AudioBuffer;
-import jmri.jmrit.audio.JoalAudioBuffer;
 
 
 // Usage:

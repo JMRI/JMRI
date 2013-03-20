@@ -2,7 +2,6 @@
 
 package jmri.util.swing;
 
-import org.apache.log4j.Logger;
 import java.util.List;
 import junit.framework.Test;
 import junit.framework.TestCase;

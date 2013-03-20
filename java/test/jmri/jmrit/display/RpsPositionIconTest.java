@@ -1,7 +1,6 @@
 // RpsPositionIconTest.java
 package jmri.jmrit.display;
 
-import org.apache.log4j.Logger;
 import javax.swing.*;
 
 import junit.framework.Assert;

@@ -5,7 +5,6 @@ import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 import java.rmi.RemoteException;
 
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.util.zeroconf.ZeroConfService;

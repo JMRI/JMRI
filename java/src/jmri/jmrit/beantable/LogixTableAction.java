@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import jmri.*;
 import jmri.implementation.*;
 import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 

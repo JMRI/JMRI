@@ -10,7 +10,6 @@ import jmri.AudioManager;
 import jmri.InstanceManager;
 import javax.vecmath.Vector3f;
 import jmri.implementation.AbstractAudio;
-import java.util.List;
 import java.util.Queue;
 import java.util.LinkedList;
 

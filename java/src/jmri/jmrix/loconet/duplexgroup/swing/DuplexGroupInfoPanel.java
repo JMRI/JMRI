@@ -9,8 +9,6 @@ package jmri.jmrix.loconet.duplexgroup.swing;
  * @author B. Milhaupt Copyright 2010, 2011
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.duplexgroup.*;
 import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;

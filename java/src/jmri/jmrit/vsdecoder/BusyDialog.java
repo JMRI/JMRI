@@ -19,8 +19,6 @@ package jmri.jmrit.vsdecoder;
  * @version			$Revision: 18410 $
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.Dimension;

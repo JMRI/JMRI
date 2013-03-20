@@ -20,7 +20,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JToggleButton;
 
-import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import jmri.util.swing.ResizableImagePanel;
 

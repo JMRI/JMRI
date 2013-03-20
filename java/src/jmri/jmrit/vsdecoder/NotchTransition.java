@@ -1,8 +1,5 @@
 package jmri.jmrit.vsdecoder;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /* NotchTransition
  *
  * This class holds the information needed about a transitional sound

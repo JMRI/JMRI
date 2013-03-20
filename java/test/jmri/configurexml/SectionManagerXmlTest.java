@@ -2,7 +2,6 @@
 
 package jmri.configurexml;
 
-import org.apache.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Block;

@@ -2,14 +2,12 @@ package jmri.jmrit.logix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.ResourceBundle;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
-import jmri.Conditional;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;

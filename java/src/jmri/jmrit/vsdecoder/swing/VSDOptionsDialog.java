@@ -24,9 +24,6 @@ package jmri.jmrit.vsdecoder.swing;
  * @version			$Revision: 21510 $
  */
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.ResourceBundle;
 import javax.swing.*;
 import jmri.jmrit.operations.trains.TrainManager;
 

@@ -4,8 +4,6 @@ package jmri.implementation;
 
 import jmri.CommandStation;
 import jmri.InstanceManager;
-import jmri.SignalHead;
-import jmri.NamedBeanHandle;
 import jmri.util.JUnitUtil;
 
 import junit.framework.Assert;

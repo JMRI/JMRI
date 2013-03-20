@@ -23,7 +23,6 @@ import java.util.Enumeration;
 import java.lang.reflect.Method;
 
 import java.io.File;
-import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 
 

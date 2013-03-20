@@ -2,8 +2,6 @@
 
 package jmri.implementation.swing;
 
-//import junit.framework.Assert;
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

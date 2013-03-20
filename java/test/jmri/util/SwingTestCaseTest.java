@@ -2,7 +2,6 @@
 
 package jmri.util;
 
-import org.apache.log4j.Logger;
 import javax.swing.*;
 import junit.framework.*;
 import junit.extensions.jfcunit.finder.*;

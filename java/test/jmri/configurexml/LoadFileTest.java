@@ -3,7 +3,6 @@
 package jmri.configurexml;
 
 import org.apache.log4j.Logger;
-import jmri.jmrit.XmlFile;
 import java.io.*;
 
 import junit.framework.Assert;

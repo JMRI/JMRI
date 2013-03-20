@@ -15,7 +15,6 @@ import jmri.util.StringUtil;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.logging.Level;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellEditor;

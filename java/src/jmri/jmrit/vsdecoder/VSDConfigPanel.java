@@ -45,8 +45,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.VariableTableModel;
-import jmri.jmrit.XmlFile;
-import jmri.util.FileUtil;
 
 
 @SuppressWarnings("serial")

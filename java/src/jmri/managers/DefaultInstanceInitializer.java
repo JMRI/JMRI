@@ -6,7 +6,6 @@ import jmri.*;
 
 import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
-import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.roster.RosterIconFactory;
 
 /**
