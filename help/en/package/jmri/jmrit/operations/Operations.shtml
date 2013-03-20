@@ -476,31 +476,24 @@ recommended that you select normal when you first begin using the
 program. Normal builds guarantee that when a car is delivered (set out)
 by a train that there will be track space available for the car.
 
-<P>
-Aggressive builds makes the car's track space available as soon as a
-car is scheduled for a pick up. Therefore there can be instances where a
-train was to pick up a car to vacate the track, but a "later"
-train arrives early with a set out to that track and the car hasn't been
-picked up. However, more often than not the same train will perform the
-pick up and set out thus minimizing the number of conflicts. Aggressive also
-performs a two pass determination of car movements. The net effect is
-that more cars are moved within a given train. Aggressive also tends to
-deliver cars to all of the available spurs. The smaller the spur,
-yard, or interchange the more likely that the program will assign cars
-to that track.
-</P>
-<P>
-Note that once you've built a train, the build option can not be changed until
-all trains are terminated or reset. 
-</P>
+   <P>Aggressive builds makes the car's track space available as soon as a car is scheduled for
+    a pick up. Therefore there can be instances where a train was to pick up a car to vacate the
+    track, but a "later" train arrives early with a set out to that track and the car hasn't been
+    picked up. However, more often than not the same train will perform the pick up and set out thus
+    minimizing the number of conflicts. Aggressive also performs a two pass determination of car
+    movements. The net effect is that more cars are moved within a given train. Aggressive also
+    tends to deliver cars to all of the available spurs. The smaller the spur, yard, or interchange
+    the more likely that the program will assign cars to that track.</P>
+   <P>Note that once you've built a train, the build option can not be changed until all trains
+    are terminated or reset.</P>
 
-<A NAME="AllowLocalCarMovements"></A>
-<H3>Switcher Service</H3>
+   <A NAME="AllowLocalCarMovements"></A>
+   <H3>Switcher Service</H3>
 
-The next set of options control local car movements when using
-<A HREF="#SwitcherService">switcher</A> to service a location. Normally it is better not to allow a
-   car to move from one spur directly to another spur at the same location. This type of move can be
-   very unrealistic, picture moving a boxcar from a shoe manufacture directly to an auto
+   The next set of options control local car movements when using
+   <A HREF="#SwitcherService">switcher</A> to service a location. Normally it is better not to allow
+   a car to move from one spur directly to another spur at the same location. This type of move can
+   be very unrealistic, picture moving a boxcar from a shoe manufacture directly to an auto
    manufacture. Also moving a car from one yard track to another can have your operators wondering
    what kind of busy work is being generated! But if you need these types of moves, select the
    appropriate checkbox.
@@ -516,6 +509,9 @@ The next set of options control local car movements when using
    based on the train's rolling stock restrictions. However, if you want certain car types, car
    loads, or road names to be transported by a train, but not delivered to staging, deselect this
    feature.
+   
+   <P>If you specify a certain train or route to be accepted by a staging track, this option is ignored, and
+   you can then control which car types, loads, and road are to be accepted by the staging track.</P>
    
    <A NAME="MakeDepartureTrackAvailable"></A>
    <H4>Make departure track available after train is built</H4>
