@@ -77,7 +77,7 @@ public class JsonRouteServer extends AbstractRouteServer {
                     this.setRoute(name);
                     break;
                 default:
-                    this.sendStatus(name, InstanceManager.routeManagerInstance().getRoute(name).getTurnoutsAlgdSensor().getKnownState());
+                    this.sendStatus(name, route.getTurnoutsAlgdSensor().getKnownState());
                     break;
             }
             this.addRouteToList(name);
