@@ -277,7 +277,7 @@ class Diesel3Sound extends EngineSound {
 		    min_notch = n;
 		}
 	    }
-	    log.debug("No Idle Notch Specified.  Choosing Notch (" + min_notch.getNotch() + ") to be the Idle Notch.");
+	    log.debug("No Idle Notch Specified.  Choosing Notch (" + (min_notch != null ? min_notch.getNotch() : "min_notch not set") + ") to be the Idle Notch.");
 	    min_notch.setIdleNotch(true);
 	}
 
