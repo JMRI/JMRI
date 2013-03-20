@@ -174,9 +174,9 @@ public class PortalTableModel extends AbstractTableModel {
         		 return;
         	 }
              // Note: Portal ctor will add this Portal to each of its 'from' & 'to' Blocks.
-             OBlock fromBlock = InstanceManager.oBlockManagerInstance()
+             OBlock fromBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class)
                                          .getOBlock(tempRow[FROM_BLOCK_COLUMN]);
-             OBlock toBlock = InstanceManager.oBlockManagerInstance()
+             OBlock toBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class)
                                          .getOBlock(tempRow[TO_BLOCK_COLUMN]);
              if (fromBlock==null || toBlock==null) {
             	 if (fromBlock==null && tempRow[FROM_BLOCK_COLUMN]!=null) {
@@ -212,7 +212,7 @@ public class PortalTableModel extends AbstractTableModel {
  
         switch(col) {
             case FROM_BLOCK_COLUMN:
-                OBlock block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
+                OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock((String)value);
                 if (block==null) {
                     msg = java.text.MessageFormat.format(
                         rbo.getString("NoSuchBlock"), (String)value);
@@ -251,7 +251,7 @@ public class PortalTableModel extends AbstractTableModel {
                 }
                 break;
             case TO_BLOCK_COLUMN:
-                block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
+                block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock((String)value);
                 if (block==null) {
                     msg = java.text.MessageFormat.format(
                         rbo.getString("NoSuchBlock"), (String)value);
@@ -307,7 +307,7 @@ public class PortalTableModel extends AbstractTableModel {
                     i--;
                 }
             }
-            OBlockManager manager = InstanceManager.oBlockManagerInstance();
+            OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
             String[] sysNames = manager.getSystemNameArray();
             for (int i = 0; i < sysNames.length; i++) {
                 manager.getBySystemName(sysNames[i]).removePortal(portal);
@@ -359,14 +359,14 @@ public class PortalTableModel extends AbstractTableModel {
         return null;
     }
 
-    private int getPortalIndex(String name) {
+/*    private int getPortalIndex(String name) {
         for (int i=0; i<_portalList.size(); i++) {
             if (_portalList.get(i).getName().equals(name) ) {
                 return i;
             }
         }
         return -1;
-    }
+    }*/
 
     public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();

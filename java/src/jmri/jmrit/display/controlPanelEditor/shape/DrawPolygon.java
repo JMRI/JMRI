@@ -48,7 +48,7 @@ public class DrawPolygon extends DrawFrame{
     	PathIterator iter = ps.getPathIterator(null);
         float[] coord = new float[6];
     	while (!iter.isDone()) {
-     		int type = iter.currentSegment(coord);
+     		/*int type = */iter.currentSegment(coord);
        		Point pt = new Point(Math.round(coord[0])+loc.x, Math.round(coord[1])+loc.y);
 			_vertex.add(pt);
 			_hitVertex.add(new Rectangle(pt.x-NEAR, pt.y-NEAR, 2*NEAR, 2*NEAR));

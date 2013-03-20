@@ -284,7 +284,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         }
 
         ok = false;
-        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         for (int j = 0; j < sysNames.length; j++) {
             OBlock block = manager.getBySystemName(sysNames[j]);
@@ -368,7 +368,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         return false;
     }
 
-    private void checkPortalIcons() {
+/*    private void checkPortalIcons() {
         java.util.List<Portal> portals = _homeBlock.getPortals();
         Hashtable<String, PortalIcon> iconMap = _parent.getPortalIconMap();
         if (log.isDebugEnabled()) log.debug("checkPortalIcons: "+_homeBlock.getDisplayName()+
@@ -384,7 +384,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                 return;
             }
         }
-    }
+    }*/
     
     /**
     * Check if icon is placed on the icons of a block
