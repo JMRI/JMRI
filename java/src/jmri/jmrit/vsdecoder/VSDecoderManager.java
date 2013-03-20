@@ -77,7 +77,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private VSDecoder default_decoder = null;  // shortcut pointer to the default decoder (do we need this?)
 
     private static int vsdecoderID = 0;
-    private static int listenerID = 0;
+    //private static int listenerID = 0; // for future use
 
     // Unused?
     //private PhysicalLocation listener_position;
@@ -128,12 +128,14 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     // To be used in the future
+    /*
     private String getNextListenerID() {
 	// ListenerID initialized to zero, pre-incremented before return...
 	// first returned ID value is 1.
 	// Prefix is added by the VSDListener constructor
 	return("VSDecoderID" + (++listenerID)); // NOI18N
     }
+    */
 
     @Deprecated
     public VSDecoder getVSDecoder(String profile_name) {
