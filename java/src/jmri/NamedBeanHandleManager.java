@@ -54,7 +54,7 @@ public class NamedBeanHandleManager extends jmri.managers.AbstractManager implem
         NamedBeanHandle<T> temp = new NamedBeanHandle<T>(name, bean);
         
         for (NamedBeanHandle<T> h : namedBeanHandles ) {
-            if (temp.equals((NamedBeanHandle<T>)h)){
+            if (temp.equals(h)){
                 temp = null;
                 return h;
             }
