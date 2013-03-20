@@ -218,7 +218,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 samplePanel.add(sample);
                 this.add(makeTextPanel("Inconsistent", sample, INCONSISTENT_FONT));
         	} 
-        } else if (pos!=null) {
+        } else { // not a SensorIcon
         	PositionableLabel sample = new PositionableLabel(text, _editor);
             sample.setPopupUtility(_util);
             sample.setForeground(pos.getForeground());
