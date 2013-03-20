@@ -271,14 +271,18 @@ class Diesel3Sound extends EngineSound {
 	// all have unique notch numbers.
 	if (idle_notch == null) {
 	    D3Notch min_notch = null;
-	    // No, this is not a terribly efficient "min" operation.  But that's oK.
+	    // No, this is not a terribly efficient "min" operation.  But that's OK.
 	    for (D3Notch n : notch_sounds.values()) {
-		if ((min_notch == null) || (n.getNotch() < min_notch.getNotch())) {
-		    min_notch = n;
-		}
+		    if ((min_notch == null) || (n.getNotch() < min_notch.getNotch())) {
+		        min_notch = n;
+		    }
 	    }
 	    log.debug("No Idle Notch Specified.  Choosing Notch (" + (min_notch != null ? min_notch.getNotch() : "min_notch not set") + ") to be the Idle Notch.");
-	    min_notch.setIdleNotch(true);
+	    if (min_notch != null) {
+	        min_notch.setIdleNotch(true);
+	    } else {
+	        log.warn("Could not set idle notch because min_notch was still null");
+	    }
 	}
 
 	// Kick-start the loop thread.
