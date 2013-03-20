@@ -84,19 +84,19 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     JTextField  _destBlockBox = new JTextField();
     JTextField  _viaBlockBox =  new JTextField();
     JTextField  _avoidBlockBox =  new JTextField();
-    JComboBox   _originPathBox = new JComboBox();
-    JComboBox   _destPathBox = new JComboBox();
-    JComboBox   _viaPathBox = new JComboBox();
-    JComboBox   _avoidPathBox = new JComboBox();
-    JComboBox   _originPortalBox = new JComboBox();     // exit
-    JComboBox   _destPortalBox = new JComboBox();       // entrance
+    JComboBox _originPathBox = new JComboBox();
+    JComboBox _destPathBox = new JComboBox();
+    JComboBox _viaPathBox = new JComboBox();
+    JComboBox _avoidPathBox = new JComboBox();
+    JComboBox _originPortalBox = new JComboBox();     // exit
+    JComboBox _destPortalBox = new JComboBox();       // entrance
     int _thisActionEventId;     // id for the listener of the above items
 
     JTabbedPane _tabbedPane;
     JPanel      _routePanel;
     JPanel      _commandPanel;
     RosterEntry _train;
-    JComboBox   _rosterBox = new JComboBox();
+    JComboBox _rosterBox = new JComboBox();
     JTextField  _dccNumBox = new JTextField();
     JTextField  _trainNameBox = new JTextField();
     JTextField  _throttleFactorBox =  new JTextField();
@@ -120,7 +120,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     */
     public WarrantFrame(String warrantName) {
         super(false, false);
-        _warrant = InstanceManager.warrantManagerInstance().getWarrant(warrantName);
+        _warrant = InstanceManager.getDefault(WarrantManager.class).getWarrant(warrantName);
         _create = false;
         setup();
         init();
@@ -368,7 +368,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             }
         });
 
-        int numBlocks = InstanceManager.oBlockManagerInstance().getSystemNameList().size();
+        int numBlocks = InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size();
         if (numBlocks/6 > _maxBlocks) {
             _maxBlocks = numBlocks/6;
         }
@@ -857,7 +857,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                InstanceManager.warrantManagerInstance().deregister(_warrant);
+                InstanceManager.getDefault(WarrantManager.class).deregister(_warrant);
                 WarrantTableAction.updateWarrantMenu();
                 dispose();
             }
@@ -1081,7 +1081,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             }
         }
         textBox.setText(text);
-        OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(text);
+        OBlock block = InstanceManager.getDefault(OBlockManager.class).getOBlock(text);
         if (block == null && text.length()>0) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("BlockNotFound", text),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -1654,7 +1654,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
     protected void stopRunTrain() {
     	_warrant.deAllocate();
-        String msg = _warrant.setRunMode(Warrant.MODE_NONE, null, null, null, false);
+        _warrant.setRunMode(Warrant.MODE_NONE, null, null, null, false);
         _warrant.removePropertyChangeListener(this);
         if (_learnThrottle!=null) {
         	if (_learnThrottle.getSpeedSetting()>0.0) {
@@ -1681,9 +1681,9 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         String property = e.getPropertyName();
-        if (log.isDebugEnabled()) log.debug("propertyChange \""+property+
-                                            "\" old= "+e.getOldValue()+" new= "+e.getNewValue()+
-                                            " source= "+e.getSource().getClass().getName());
+//        if (log.isDebugEnabled()) log.debug("propertyChange \""+property+
+//                                            "\" old= "+e.getOldValue()+" new= "+e.getNewValue()+
+//                                            " source= "+e.getSource().getClass().getName());
         if (property.equals("RouteSearch"))  {
             _searchStatus.setText(Bundle.getMessage("FinderStatus",
                            new Object[] {e.getOldValue(), e.getNewValue()}));
@@ -1791,7 +1791,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         if (log.isDebugEnabled()) log.debug("warrant saved _train "+(_train != null)+", name= "+_trainNameBox.getText());
 
         if (_create) {
-            InstanceManager.warrantManagerInstance().register(_warrant);
+            InstanceManager.getDefault(WarrantManager.class).register(_warrant);
             WarrantTableAction.updateWarrantMenu(); 
         }
         //dispose();
@@ -1808,7 +1808,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             int n = 0;
             while (_warrant==null) {
                 n++;
-                _warrant = InstanceManager.warrantManagerInstance().createNewWarrant(sysName+n, sysName+n);
+                _warrant = InstanceManager.getDefault(WarrantManager.class).createNewWarrant(sysName+n, sysName+n);
             }
             _userNameBox.setText("");
             _sysNameBox.setText(sysName+n);
@@ -1963,7 +1963,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             OBlock block = null;
             switch (col) {
                 case BLOCK_COLUMN:
-                    block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
+                    block = InstanceManager.getDefault(OBlockManager.class).getOBlock((String)value);
                     if (block != null) { bo.setBlock(block); }
                     break;
                 case ENTER_PORTAL_COL: 
@@ -2212,7 +2212,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         }
                     } else if ("RUN WARRANT".equals(cmd)) {
                         try {
-                            int num = Integer.parseInt((String)value);
+                            Integer.parseInt((String)value);
                             ts.setValue((String)value);
                         } catch (NumberFormatException nfe) {
                         	msg  = Bundle.getMessage("badValue", value, cmd);
@@ -2237,7 +2237,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         msg = Bundle.getMessage("cannotChangeBlock", (String)value); 
                     } else if ("RUN WARRANT".equals(cmd)) {
                         try {
-                            Warrant w = InstanceManager.warrantManagerInstance().getWarrant((String)value);
+                            Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant((String)value);
                             if (w != null) {
                                 ts.setBlockName((String)value);
                             } else {
@@ -2266,7 +2266,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         private String getPreviousBlockName(int row) {
         	for (int i=row; i>0; i--) {
         		String name = _throttleCommands.get(i-1).getBlockName();
-                OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(name);
+                OBlock b = InstanceManager.getDefault(OBlockManager.class).getOBlock(name);
                 if (b!=null) {
                 	return name;
                 }

@@ -21,6 +21,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.WarrantTableAction;
 
 /**
  * Provides the abstract base and store functionality for
@@ -346,6 +347,13 @@ public class OBlockManagerXml // extends XmlFile
             for (int k=0; k<portals.size(); k++) {
                 block.addPortal(loadPortal(portals.get(k)));
             }
+        }
+        // Build data structure for blocks to know with whon they share turnouts.
+        // check whether any turnouts are shared between two blocks;
+        String[] sysNames = _manager.getSystemNameArray();
+        for (int i=0; i<sysNames.length; i++)
+        {
+            WarrantTableAction.checkSharedTurnouts(_manager.getOBlock(sysNames[i]));        	
         }
         // patch in Paths to Portals
         //addPathsToPortals();

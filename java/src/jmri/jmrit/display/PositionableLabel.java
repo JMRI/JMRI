@@ -735,9 +735,6 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
     
     public int getDegrees() {
-    	if (_icon && _namedIcon!=null) {
-    		return _namedIcon.getDegrees();
-    	}
         return _degrees;
     }
     

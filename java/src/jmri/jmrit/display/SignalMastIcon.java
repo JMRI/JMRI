@@ -32,6 +32,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
     public SignalMastIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(editor);
+        _control = true;
         debug = log.isDebugEnabled();
     }
     

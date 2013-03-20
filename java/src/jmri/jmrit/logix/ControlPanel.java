@@ -490,7 +490,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
     }
     
-    private void speedSetting(float speed) {
+/*    private void speedSetting(float speed) {
         // multiply by MAX_SPEED, and round to find the new slider setting.
         int newSliderSetting = java.lang.Math.round(speed * MAX_SPEED) ;
         if (log.isDebugEnabled()) {log.debug( "speedSetting: new speed float: " + speed + " slider pos: " + newSliderSetting ) ;}
@@ -498,7 +498,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.repaint();
         if(speedSpinner!=null)
             speedSpinner.setValue(Integer.valueOf(newSliderSetting));
-    }
+    }*/
 
     /**
      * Configure the active Speed Step modes based on what is supported by 

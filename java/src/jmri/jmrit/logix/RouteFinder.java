@@ -127,8 +127,8 @@ public class RouteFinder implements Runnable {
                 if (log.isDebugEnabled()) log.debug("makeLevel "+level+" block= "+pBlock.getDisplayName()
                                                 +", path= "+pOrder.getPathName()+" meets "+paths.size()+" portal paths");
                 if (paths.size()==0) {
-                    log.error("Portal \""+pName+"\" does not have any exit paths into the next block! (\""+
-                              exitPortal.getOpposingBlock(pBlock).getDisplayName()+"\").");
+                    log.error("Portal \""+pName+"\" "+(exitPortal.getOpposingBlock(pBlock)==null ? 
+                    		"is malformed! Only one block!" : "does not have any paths into the next block!"));
                 }
                 // walk all paths
                 for (int k=0; k<paths.size(); k++) {

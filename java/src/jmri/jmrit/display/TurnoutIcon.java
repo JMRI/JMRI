@@ -273,6 +273,7 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
             Entry<Integer, NamedIcon> entry = it.next();
             entry.getValue().rotate(deg, this);
         }
+        setDegrees(deg);
         displayState(turnoutState());
     }
 

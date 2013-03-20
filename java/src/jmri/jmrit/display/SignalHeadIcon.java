@@ -43,6 +43,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
 
     public SignalHeadIcon(Editor editor){
         super(editor);
+        _control = true;
     }
 
     public Positionable deepClone() {

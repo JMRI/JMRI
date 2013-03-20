@@ -408,6 +408,14 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         else
             l.setEditable(false);
         
+        a = element.getAttribute("degrees");
+        if ( a!=null && l instanceof PositionableLabel) {
+        	try {
+                int deg = a.getIntValue();
+                ((PositionableLabel)l).setDegrees(deg);
+            } catch (org.jdom.DataConversionException dce) {}
+        }
+        
         Element elem = element.getChild("toolTip");
         if (elem!=null) {
             ToolTip tip = l.getTooltip();

@@ -15,6 +15,7 @@ import java.awt.FlowLayout;
 //import java.util.EventObject;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import javax.swing.AbstractAction;
 import javax.swing.Box;
@@ -40,7 +41,6 @@ import javax.swing.JTextField;
 
 import javax.swing.table.AbstractTableModel;
 import java.beans.PropertyChangeListener;
-import java.util.Iterator;
 /*
 import javax.swing.TransferHandler;
 import java.awt.datatransfer.Transferable; 
@@ -48,6 +48,7 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 */
+import jmri.BeanSetting;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.NamedBean;
@@ -121,7 +122,7 @@ public class WarrantTableAction extends AbstractAction {
             f.setVisible(true);
         }
         initPathPortalCheck();
-        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         for (int i = 0; i < sysNames.length; i++) {
             OBlock block = manager.getBySystemName(sysNames[i]);
@@ -141,7 +142,7 @@ public class WarrantTableAction extends AbstractAction {
                 openWarrantFrame(e.getActionCommand());
             }
         };
-        WarrantManager manager = InstanceManager.warrantManagerInstance();
+        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         String[] sysNames = manager.getSystemNameArray();
          
         for (int i = 0; i < sysNames.length; i++) {
@@ -188,6 +189,7 @@ public class WarrantTableAction extends AbstractAction {
     * are written.
     */
     public static void checkPathPortals(OBlock b) {
+    	if (log.isDebugEnabled()) log.debug("checkPathPortals for "+b.getDisplayName());
         // warn user of incomplete blocks and portals
         if (_textArea==null) {
             _textArea = new javax.swing.JTextArea(10, 50);
@@ -224,8 +226,9 @@ public class WarrantTableAction extends AbstractAction {
             }
             portalNameList.add(portal.getName());
         }
-        for (int i=0; i<pathList.size(); i++) {
-            OPath path = (OPath)pathList.get(i);
+        Iterator <Path> iter = pathList.iterator();
+        while (iter.hasNext()) {
+            OPath path = (OPath)iter.next();
             OBlock block = (OBlock)path.getBlock();
             if  (block==null || !block.equals(b)) {
                 _textArea.append(Bundle.getMessage("PathWithBadBlock", path.getName(), b.getDisplayName()));
@@ -266,7 +269,7 @@ public class WarrantTableAction extends AbstractAction {
                 _textArea.append("\n");
                 _hasErrors = true;
             }
-            // check that path's portals have the path in their lists
+            // check that the path's portals have the path in their lists
             boolean validPath;
             if (toPortal!=null) {
             	if (fromPortal!=null) {
@@ -294,7 +297,70 @@ public class WarrantTableAction extends AbstractAction {
             _textArea.append("\n");
             _hasErrors = true;
         }
+        // check whether any turnouts are shared between two blocks;
+        checkSharedTurnouts(b);
     }
+    
+    public static boolean checkSharedTurnouts(OBlock block) {
+    	boolean hasShared = false;
+        OBlockManager manager = InstanceManager.getDefault(OBlockManager.class);
+        String[] sysNames = manager.getSystemNameArray();
+        List <Path> pathList = block.getPaths();
+        Iterator <Path> iter = pathList.iterator();
+        while (iter.hasNext()) {
+            OPath path = (OPath)iter.next();
+            for (int i=0; i < sysNames.length; i++) {
+            	if (block.getSystemName().equals(sysNames[i])) {
+            		continue;
+            	}
+                OBlock b = manager.getBySystemName(sysNames[i]);
+                Iterator <Path> it = b.getPaths().iterator();
+                while (it.hasNext()) {
+                    boolean shared = sharedTO(path, (OPath)it.next());
+                	if (shared) {
+                		hasShared =true;
+                        break;
+                	}
+                }
+            }
+        }
+        return hasShared;
+    }
+    private static boolean sharedTO(OPath myPath, OPath path) {
+        List<BeanSetting> myTOs = myPath.getSettings();
+    	Iterator <BeanSetting> iter = myTOs.iterator();
+        List<BeanSetting> tos = path.getSettings();
+        boolean ret = false;
+    	while (iter.hasNext()) {
+    		BeanSetting mySet = iter.next();
+    		NamedBean myTO = mySet.getBean();
+			int myState = mySet.getSetting();
+    		Iterator <BeanSetting> it = tos.iterator();
+    		while (it.hasNext()) {
+    			BeanSetting set = it.next();
+    			NamedBean to = set.getBean();
+    			if(myTO.equals(to)) {
+    				// turnouts are equal.  check if settings are compatible.
+    				OBlock myBlock = (OBlock)myPath.getBlock();
+    				int state = set.getSetting();
+    				OBlock block = (OBlock)path.getBlock();
+//    				String note = "WARNING: ";
+    				if (myState!=state) {
+                       ret = myBlock.addSharedTurnout(myPath, block, path);
+/*                       _textArea.append(note+Bundle.getMessage("sharedTurnout", myPath.getName(), myBlock.getDisplayName(), 
+                       		 myTO.getDisplayName(), (myState==jmri.Turnout.CLOSED ? "Closed":"Thrown"),
+                       		 path.getName(), block.getDisplayName(), to.getDisplayName(), 
+                       		 (state==jmri.Turnout.CLOSED ? "Closed":"Thrown")));
+                      _textArea.append("\n");
+    				} else {
+    					note = "Note: "; */
+    				}  					
+    			}
+    		}
+    	}
+    	return ret;
+    }
+    
     public static boolean showPathPortalErrors() {
         if (!_hasErrors) { return false; }
         if (_textArea==null) {
@@ -411,11 +477,12 @@ public class WarrantTableAction extends AbstractAction {
                 userName = null;
             }
             boolean failed = false;
-            Warrant w = InstanceManager.warrantManagerInstance().getBySystemName(sysName);
+            WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
+            Warrant w = manager.getBySystemName(sysName);
             if (w != null) {
                 failed = true;
             } else {
-                w = InstanceManager.warrantManagerInstance().getByUserName(userName);
+                w = manager.getByUserName(userName);
                 if (w != null) {
                     failed = true;
                 } else {
@@ -465,7 +532,7 @@ public class WarrantTableAction extends AbstractAction {
     */
     synchronized public static JMenu makeWarrantMenu() {
         _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
-        if (jmri.InstanceManager.oBlockManagerInstance().getSystemNameList().size() > 1) {
+        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
             updateWarrantMenu();
         } else {
         	return null;
@@ -479,7 +546,8 @@ public class WarrantTableAction extends AbstractAction {
     static final String halt = Bundle.getMessage("Halt");
     static final String resume = Bundle.getMessage("Resume");
     static final String abort = Bundle.getMessage("Abort");
-    static final String[] controls = {halt, resume, abort};
+    static final String retry = Bundle.getMessage("Retry");
+    static final String[] controls = {halt, resume, retry, abort};
 
     class TableFrame  extends jmri.util.JmriJFrame // implements ActionListener 
     {
@@ -611,7 +679,7 @@ public class WarrantTableAction extends AbstractAction {
     }
 
     private void concatenate() {
-        WarrantManager manager = InstanceManager.warrantManagerInstance();
+        WarrantManager manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
         Warrant startW = manager.getWarrant(_startWarrant.getText().trim());
         Warrant endW = manager.getWarrant(_endWarrant.getText().trim());
         if (startW==null || endW==null) {
@@ -707,7 +775,7 @@ public class WarrantTableAction extends AbstractAction {
 
         public WarrantTableModel() {
             super();
-            _manager = InstanceManager.warrantManagerInstance();
+            _manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
             _manager.addPropertyChangeListener(this);   // for adds and deletes
         }
 
@@ -1027,8 +1095,7 @@ public class WarrantTableAction extends AbstractAction {
                                     w.deAllocate();
                                     return;
                                 }
-                                block.setPath(bo.getPathName(), w);
-                                msg = null;
+                                msg = block.setPath(bo.getPathName(), w);
                             } else {
                                 if (log.isDebugEnabled()) log.debug("block.allocate(w)= "+msg2);
                                 msg = Bundle.getMessage("OriginBlockNotSet", msg2);
@@ -1058,6 +1125,8 @@ public class WarrantTableAction extends AbstractAction {
                                 s = Warrant.HALT; 
                             } else if (setting.equals(resume)) {
                                 s = Warrant.RESUME; 
+                            } else if (setting.equals(retry)) {
+                                s = Warrant.RETRY;
                             } else if (setting.equals(abort)) {
                                 s = Warrant.ABORT;
                             }

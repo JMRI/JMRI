@@ -32,6 +32,7 @@ import javax.swing.border.Border;
 import javax.swing.table.*;
 import java.awt.Component;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import jmri.Audio;
 import jmri.util.FileUtil;
@@ -2790,9 +2791,9 @@ public class LogixTableAction extends AbstractTableAction {
             case Conditional.ITEM_TYPE_OBLOCK:
                 _variableNameField.setText(_curVariable.getName());
                 //_variableStateBox.removeAllItems();
-                Enumeration<String> names = OBlock.getLocalStatusNames();
-                while (names.hasMoreElements()) {
-                    _variableStateBox.addItem(names.nextElement());
+                Iterator<String> names = OBlock.getLocalStatusNames();
+                while (names.hasNext()) {
+                    _variableStateBox.addItem(names.next());
                 }
                 _variableStateBox.setSelectedItem(OBlock.getLocalStatusName(_curVariable.getDataString()));
                 _variableStateBox.setVisible(true);
@@ -3635,9 +3636,9 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableNamePanel.setToolTipText(rbx.getString("NameHintOBlock"));
                 _variableNamePanel.setVisible(true);
                 _variableStateBox.removeAllItems();
-                Enumeration<String> names = OBlock.getLocalStatusNames();
-                while (names.hasMoreElements()) {
-                    _variableStateBox.addItem(names.nextElement());
+                Iterator<String> names = OBlock.getLocalStatusNames();
+                while (names.hasNext()) {
+                    _variableStateBox.addItem(names.next());
                 }
                 _variableStatePanel.setVisible(true);
                 break;

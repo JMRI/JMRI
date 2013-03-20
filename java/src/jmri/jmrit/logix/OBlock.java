@@ -2,9 +2,10 @@ package jmri.jmrit.logix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Map.Entry;
 import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -75,9 +76,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     static final public int DARK = 0x01;        // Block has no Sensor, same as UNKNOWN
     static final public int TRACK_ERROR = 0x80; // Block has Error
 
-    static final Hashtable<String, Integer> _oldstatusMap = new Hashtable<String, Integer>();
-    static final Hashtable<String, Integer> _statusMap = new Hashtable<String, Integer>();
-    static final Hashtable<String, String> _statusNameMap = new Hashtable<String, String>();
+    static final HashMap<String, Integer> _oldstatusMap = new HashMap<String, Integer>();
+    static final HashMap<String, Integer> _statusMap = new HashMap<String, Integer>();
+    static final HashMap<String, String> _statusNameMap = new HashMap<String, String>();
 
     static void loadStatusMap() {
     	_statusMap.put("unoccupied", Integer.valueOf(UNOCCUPIED));
@@ -106,12 +107,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         _statusNameMap.put(Bundle.getMessage("powerError"), "powerError");    	
     }
 
-    public static Enumeration<String> getLocalStatusNames() {
+    public static Iterator<String> getLocalStatusNames() {
     	if (_statusNameMap.size()==0) {
     		loadStatusNameMap();
     	}
-        Enumeration<String> keys = _statusNameMap.keys();
-        return keys;
+        return _statusNameMap.keySet().iterator();
     }
 
     public static String getLocalStatusName(String str) {
@@ -136,6 +136,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private float _scaleRatio   = 87.1f;
     private boolean _metric     = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
+    // path keys a list of Blocks whose paths conflict with the path.  These Blocks key 
+    // a list of their conflicting paths.
+    private HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO = 
+    		new HashMap<String, List<HashMap<OBlock, List<OPath>>>>();
+    private boolean _occupationPending;	// autoTrain is about to enter this block
     
     public OBlock(String systemName) {
         super(systemName);
@@ -155,10 +160,10 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         boolean ret =super.setSensor(pName);
         if(getSensor()!=null){
             setState(getSensor().getState() & ~DARK);
-            return true;
+            ret = true;
         }
         if (log.isDebugEnabled()) log.debug("setSensor block \""+getDisplayName()+"\" state= "+getState());
-        return false;
+        return ret;
     }
     
     // override to determine if not DARK
@@ -223,6 +228,123 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 firePropertyChange("path", Integer.valueOf(oldState), Integer.valueOf(getState()));
             }
         }
+    }
+
+    /**
+     * This block shares a turnout (e.g. a crossover) with another block.  Typically
+     *  one JMRI turnout driving two switches where each switch is in a digfferent block.
+     * @param key a path in this block
+     * @param block another block
+     * @param path a path in that block sharing a turnout with key
+     */
+    public boolean addSharedTurnout(OPath key, OBlock block, OPath path) {
+    	List<HashMap<OBlock, List<OPath>>> blockList = _sharedTO.get(key.getName());
+    	if (blockList!=null) {
+    		Iterator<HashMap<OBlock, List<OPath>>> iter = blockList.iterator();
+    		while (iter.hasNext()) {
+    			HashMap<OBlock, List<OPath>> map = iter.next();
+    			Iterator<Entry<OBlock, List<OPath>>> it = map.entrySet().iterator();
+    			while (it.hasNext()) {
+    				Entry<OBlock, List<OPath>> entry = it.next();
+    				OBlock b = entry.getKey();
+    				if (b.equals(block)) {
+    	    			List<OPath> pathList = entry.getValue();
+        				if (pathList.contains(path)) {
+        					return false;
+        				} else {
+        					pathList.add(path);
+        					return true;
+        				}     					
+    				} else {
+    					List<OPath>  pathList = new ArrayList<OPath>();
+    					pathList.add(path);
+     					map.put(block, pathList);
+    					return true;    					
+    				}				
+    			}
+    		}
+    		HashMap<OBlock, List<OPath>> map = new HashMap<OBlock, List<OPath>>();
+    		List<OPath>pathList = new ArrayList<OPath>();
+			pathList.add(path);
+			map.put(block, pathList);
+    		blockList.add(map);
+			return true;
+    	} else {
+    		List<OPath>pathList = new ArrayList<OPath>();
+			pathList.add(path);
+    		HashMap<OBlock, List<OPath>> map = new HashMap<OBlock, List<OPath>>();
+			map.put(block, pathList);
+    		blockList = new ArrayList<HashMap<OBlock, List<OPath>>>();
+    		blockList.add(map);
+			_sharedTO.put(key.getName(), blockList);
+			return true;
+    	}
+    }
+    protected String checkSharedTO() {
+    	List<HashMap<OBlock, List<OPath>>> blockList = _sharedTO.get(_pathName);
+    	if (blockList!=null) {
+    		Iterator<HashMap<OBlock, List<OPath>>> iter = blockList.iterator();
+    		if (log.isDebugEnabled()) log.debug("Path "+_pathName+" in block \""+getDisplayName()+
+    				"\" has turnouts thwown from "+blockList.size()+" other blocks");
+    		while (iter.hasNext()) {
+    			HashMap<OBlock, List<OPath>> map = iter.next();
+    			Iterator<Entry<OBlock, List<OPath>>> it = map.entrySet().iterator();
+    			while (it.hasNext()) {
+    				Entry<OBlock, List<OPath>> entry = it.next();
+    				OBlock block = entry.getKey();
+            		if (log.isDebugEnabled()) log.debug("\tBlock \""+block.getDisplayName()+
+            				"\" has "+entry.getValue().size()+" paths");
+    				Iterator<OPath> i = entry.getValue().iterator();
+    				while (i.hasNext()) {
+    					OPath path = i.next();
+                		if (log.isDebugEnabled()) log.debug("\t\tBlock \""+block.getDisplayName()+
+                				"\" and path \""+path.getName()+"\".");
+    					// call sharing block to check for conflict
+    					String name = block.isPathSet(path.getName());
+    					if (name!=null) {
+    						if (_warrant.setShareTOBlock(block)){
+        			            return Bundle.getMessage("pathIsSet", _pathName, getDisplayName(),
+        			            		_warrant.getDisplayName(), path.getName(), 
+        			            		block.getDisplayName(), name);    							
+    						}
+    					}
+    				}
+    			}
+    		}
+    		
+    	}
+    	return null;
+    }
+    /**
+     * The train is in the block prior to this block and is likely to enter this 
+     * block soon.
+     */
+    protected boolean isOccupationPending() {
+    	return _occupationPending;
+    }
+    /**
+     * turnouts controlled by this block must not be changed by any other block
+     * @param set
+     */
+    protected void  setOccupationPending(boolean set) {
+    	_occupationPending = set;
+    }
+    /**
+     * Another block sharing a turnout with this block queries whether turnout
+     * is in use.
+     * @param path that uses a common shared turnout
+     * @return
+     */
+    protected String isPathSet(String path) {
+    	String msg =null;
+    	if (_warrant != null) {
+    		if (path.equals(_pathName)/* && _occupationPending*/) {
+    			msg = _warrant.getDisplayName();
+    		}
+    	}
+    	if (log.isDebugEnabled()) log.debug("is Path \""+path+"\" set in block \""+getDisplayName()+
+    			"\"? "+(msg!=null)+" this _pathName= \""+_pathName+"\".");
+    	return msg;
     }
 
     protected Warrant getWarrant() { return _warrant; }
@@ -309,7 +431,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     /**
-    * Note path name may be set if block is not allocated to a warrant
+    * Note path name may be set if block is not allocated to a warrant.  For use by Circuitbuilder Only.
     * @return error message
     */
     public String allocate(String pathName) {
@@ -335,8 +457,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     * Remove listener regardless of ownership
     */
     public String deAllocate(Warrant warrant) {
-        if (log.isDebugEnabled()) log.debug("deAllocate block \""+getDisplayName()+
-        				"\" from warrant \""+warrant.getDisplayName()+"\"");
+        //if (log.isDebugEnabled()) log.debug("deAllocate block \""+getDisplayName()+
+        //				"\" from warrant \""+warrant.getDisplayName()+"\"");
         if (_warrant!=null) {
         	if (!_warrant.equals(warrant)) {
         		return "cannot deAllocate. warrant \""+_warrant.getDisplayName()+
@@ -351,6 +473,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 path.setTurnouts(0, false, lockState, false);
             }
         }
+        _occupationPending = false;
         _warrant = null;
         _pathName = null;
         setValue(null);
@@ -530,8 +653,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     * @param warrant warrant the block is allocated to
     * @return error message if the call fails.  null if the call succeeds
     */
-    public String setPath(String pathName, Warrant warrant) {
-        if (log.isDebugEnabled()) log.debug("setPath: on OBlock \""+getSystemName()+" path to \""+
+    protected String setPath(String pathName, Warrant warrant) {
+        if (log.isDebugEnabled()) log.debug("setPath: OBlock \""+getDisplayName()+"\", path  \""+
                                             pathName+"\" for warrant "+warrant.getDisplayName());
         String msg = null;
         if (_warrant!=null && !_warrant.equals(warrant)) {
@@ -539,29 +662,30 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
             return msg; 
         }
         pathName = pathName.trim();
-        _warrant = warrant;
         OPath path = getPathByName(pathName);
         if (path==null) {
             msg = Bundle.getMessage("PathNotFound", pathName, getDisplayName()); 
-            return msg; 
         } else {
-            if (_warrant!=null) {
-            	// Sanity check
-            	String p = warrant.getRoutePathInBlock(this);
-                if (!pathName.equals(p)) {
-                    log.error("path \""+pathName+"\" for block \""+getDisplayName()+
-                    		"\" does not agree with path \""+p+"\" in route of warrant \""+
-                    		warrant.getDisplayName()+"\"."); 
-                }
+        	// Sanity check
+        	String p = warrant.getRoutePathInBlock(this);
+            if (!pathName.equals(p)) {
+                log.error("path \""+pathName+"\" for block \""+getDisplayName()+
+                		"\" does not agree with path \""+p+"\" in route of warrant \""+
+                		warrant.getDisplayName()+"\"."); 
             }
             _pathName = pathName;
-            int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT; 
-            path.setTurnouts(0, true, lockState, true);
-            firePropertyChange("path", Integer.valueOf(0), Integer.valueOf(getState()));
+            _warrant = warrant;
+            setState(getState() | ALLOCATED);
+            msg = checkSharedTO();		// does a callback to the warrant to set up a wait
+            if (msg==null) {
+                int lockState = Turnout.CABLOCKOUT & Turnout.PUSHBUTTONLOCKOUT; 
+                path.setTurnouts(0, true, lockState, true);
+                firePropertyChange("path", Integer.valueOf(0), Integer.valueOf(getState()));            	
+            }
         }
         return msg;
     }
-
+    
     /**
     * Call for Circuit Builder to make icon color changes for its GUI
     */
@@ -616,7 +740,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         for (int i=0; i<pathList.size(); i++) {
             removePath(pathList.get(i));
         }
-        jmri.InstanceManager.oBlockManagerInstance().deregister(this);
+        jmri.InstanceManager.getDefault(OBlockManager.class).deregister(this);
         super.dispose();
     }
    

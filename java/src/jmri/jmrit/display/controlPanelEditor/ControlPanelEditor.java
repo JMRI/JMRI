@@ -212,6 +212,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             HelpUtil.getGlobalHelpBroker().enableHelpOnButton(aboutItem, "package.jmri.jmrit.logix.OBlockTable", null);
             _warrantMenu.add(aboutItem);
         }
+        _warrantMenu.add(new jmri.jmrit.logix.TrackerTableAction(ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle").getString("MenuTrackers"))); 
     	_menuBar.add(_warrantMenu, 0);
     }
     
@@ -791,7 +792,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
      * After construction, initialize all the widgets to their saved config settings.
      */
     public void initView() {
-//        editableBox.setSelected(isEditable());
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
         //showCoordinatesBox.setSelected(showCoordinates());
@@ -924,9 +924,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown()) {
           /*  if (!event.isControlDown()) */{
                 if (_currentSelection!=null) {
-                    if (!event.isControlDown() && !event.isShiftDown()) {
-                        _currentSelection.doMousePressed(event);
-                    }
+                    _currentSelection.doMousePressed(event);
                     if (isEditable()) {
                         if ( !event.isControlDown() &&
                              (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
@@ -972,9 +970,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (selection!=null) {
-                if (!event.isControlDown() && !event.isShiftDown()) {
-                    selection.doMouseReleased(event);
-                }
+                selection.doMouseReleased(event);
             }
             boolean circuitBuilder =_circuitBuilder.doMouseReleased(selection, event);
             // when dragging, don't change selection group
@@ -990,16 +986,20 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 if (_selectRect!=null && !circuitBuilder) {
                     makeSelectionGroup(event);
                 }
-            }
-            if (_pastePending && _dragging) {
-                pasteItems();
-            }
-            _currentSelection = selection;
-            if (!circuitBuilder) {
-            	if (_currentSelection!=null && (_selectionGroup==null || _selectionGroup.size()==0)) {
-            		if (_selectionGroup==null) _selectionGroup = new ArrayList <Positionable>();
-            	_selectionGroup.add(_currentSelection);
-            	}        	
+                if (_pastePending && _dragging) {
+                    pasteItems();
+                }
+                _currentSelection = selection;            	
+                if (!circuitBuilder) {
+                	if (_currentSelection!=null && (_selectionGroup==null || _selectionGroup.size()==0)) {
+                		if (_selectionGroup==null) _selectionGroup = new ArrayList <Positionable>();
+                		_selectionGroup.add(_currentSelection);
+                	}        	
+                }
+            } else {
+            	_selectionGroup = null;
+            	_currentSelection = null;
+                _highlightcomponent = null;
             }
         }
         _selectRect = null;
@@ -1041,11 +1041,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
         } else {
             if (selection!=null) {
-                if (!_circuitBuilder.doMouseClicked(selection, event) && 
-                		!event.isControlDown() && !event.isShiftDown() ) {
+                if (!_circuitBuilder.doMouseClicked(selection, event)) {
                     selection.doMouseClicked(event);
                 }
             }
+        }
+        if (!isEditable()) {
+        	_selectionGroup = null;
+        	_currentSelection = null;
+            _highlightcomponent = null;
         }
         _targetPanel.repaint(); // needed for ToolTip
     }
@@ -1094,11 +1098,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     _highlightcomponent = null;
                 } else {
                     moveItem(_currentSelection, deltaX, deltaY);
-                    // don't highlight LocoIcon in edit mode
-                    if (isEditable()) {
-                        _highlightcomponent = new Rectangle(_currentSelection.getX(), _currentSelection.getY(), 
-                                                            _currentSelection.maxWidth(), _currentSelection.maxHeight());
-                    }
                 }
             } else {
                 if ((isEditable() && _selectionGroup==null && !_shapeDrawer.doMouseDragged(event))) {

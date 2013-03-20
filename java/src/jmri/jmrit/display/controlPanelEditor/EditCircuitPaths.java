@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.BeanSetting;
 import jmri.Path;
+import jmri.Turnout;
 import jmri.jmrit.display.*;
 
 import java.awt.*;
@@ -283,6 +284,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 if (paths!=null) {
                 	for (int j=0; j<paths.size(); j++) {
                         if (name.equals(paths.get(j))) {
+                        	((IndicatorTrack)pos).setControlling(true);
                             _pathGroup.add(pos);
                         }
                 	}
@@ -305,8 +307,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
      */
     protected void updatePath(boolean pathChanged) {
         // to avoid ConcurrentModificationException now set data
-        for (int i=0; i<_pathGroup.size(); i++) {
-            Positionable pos = _pathGroup.get(i);
+        Iterator <Positionable> iter = _pathGroup.iterator();
+        while (iter.hasNext()) {
+        	Positionable pos = iter.next();
             if (pos instanceof IndicatorTrack) {
                 ((IndicatorTrack)pos).addPath(TEST_PATH);
             } else {
@@ -351,31 +354,51 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                                 Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
+        ArrayList<BeanSetting> settings = new ArrayList<BeanSetting>();      
         Portal fromPortal = null;
         Portal toPortal = null;
         boolean hasTrack = false;
-        boolean hasPortalIcon = false;
-        OPath path = getBlockPath(name);	// is this path already defined?
-        ArrayList<BeanSetting> settings = new ArrayList<BeanSetting>();
-        for (int i=0; i<_pathGroup.size(); i++) {
-            Positionable pos = _pathGroup.get(i);
-            if (pos instanceof PortalIcon) {
-                if (toPortal==null) {
-                    toPortal = ((PortalIcon)pos).getPortal(); 
-                } else if (fromPortal==null) {
-                    fromPortal = ((PortalIcon)pos).getPortal(); 
+        int portalIconCount = 0;
+        Iterator <Positionable> iter = _parent.getCircuitGroup().iterator();
+        while (iter.hasNext()) {
+        	Positionable pos = iter.next();
+        	if (_pathGroup.contains(pos)) {
+                if (pos instanceof PortalIcon) {
+                    if (toPortal==null) {
+                        toPortal = ((PortalIcon)pos).getPortal(); 
+                    } else if (fromPortal==null) {
+                        fromPortal = ((PortalIcon)pos).getPortal(); 
+                    }
+                    portalIconCount++;
+                } else if (pos instanceof IndicatorTrack) {
+                    hasTrack = true;
+                    if (pos instanceof IndicatorTurnoutIcon) {
+                        jmri.Turnout t = ((IndicatorTurnoutIcon)pos).getTurnout();
+                        String turnoutName = ((IndicatorTurnoutIcon)pos).getNamedTurnout().getName();
+                        int state = t.getKnownState();
+                        if (state!=Turnout.CLOSED && state!=Turnout.THROWN) {
+                            JOptionPane.showMessageDialog(this, Bundle.getMessage("turnoutNotSet", t.getDisplayName()),
+                                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+                            return;
+                        }
+                        settings.add(new BeanSetting(t, turnoutName, state));
+                    }
+                    ((IndicatorTrack)pos).addPath(name);
                 }
-                hasPortalIcon = true;
-            } else if (pos instanceof IndicatorTrack) {
-                hasTrack = true;
-                if (pos instanceof IndicatorTurnoutIcon) {
-                    jmri.Turnout t = ((IndicatorTurnoutIcon)pos).getTurnout();
-                    String turnoutName = ((IndicatorTurnoutIcon)pos).getNamedTurnout().getName();
-                    settings.add(new BeanSetting(t, turnoutName, t.getKnownState()));
-                }
-                ((IndicatorTrack)pos).addPath(name);
-            }
+        	} else {
+                if (pos instanceof IndicatorTrack) {
+                    ((IndicatorTrack)pos).removePath(name);
+                } else {
+                    ((PortalIcon)pos).setStatus(PortalIcon.BLOCK);
+                }        		        		
+        	}
+        }     
+        if (portalIconCount>2) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("tooManyPortals"),
+                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            return;
         }
+        OPath path = getBlockPath(name);	// is this path already defined?
         if (path==null) {
         	// new path - otherwise edit of exiting path's icons
             path = new OPath(_block, name);
@@ -405,7 +428,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                                 Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return;
         }
-        if (!hasPortalIcon) {
+        if (portalIconCount==0) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("noPortalIcons"),
                     Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);     	
         }
