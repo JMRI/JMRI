@@ -192,8 +192,15 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
     
     private void changeCabId() {
-       	int i = Integer.parseInt(newCabId.getText().trim());
-		processMemory(true, supportGet, i);
+    	int i = -1;
+    	boolean tryRefresh = false;
+    	try {
+           	i = Integer.parseInt(newCabId.getText().trim());
+           	tryRefresh = supportGet;
+    		processMemory(true, tryRefresh, i);
+    	} catch (Exception e) {
+    		// presume it failed to convert.
+    	}
     }
 
     private void processMemory(boolean doSet, boolean doGet, int cabId) {
@@ -201,7 +208,12 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         	setRequested = true;
         	setCabId = cabId;
         	if (supportGet) {
-            	priorCabId = Integer.parseInt(oldCabId.getText().trim());
+            	try {
+            		priorCabId = Integer.parseInt(oldCabId.getText().trim());
+            	} catch (Exception e) {
+            		// presume it failed to convert.
+            		priorCabId = -1;
+            	}
         	}
     	}
     	if (doGet) {

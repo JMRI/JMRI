@@ -190,6 +190,15 @@ public class SimulatorAdapter extends NcePortController implements
 		
 		// setting binary mode
         adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
+        tc.setCmdGroups(NceTrafficController.CMDS_MEM |
+        		NceTrafficController.CMDS_AUI_READ |
+        		NceTrafficController.CMDS_PROGTRACK |
+        		NceTrafficController.CMDS_OPS_PGM |
+        		NceTrafficController.CMDS_USB |
+        		NceTrafficController.CMDS_NOT_USB |
+        		NceTrafficController.CMDS_CLOCK |
+        		NceTrafficController.CMDS_ALL_SYS);
+        tc.setUsbSystem(NceTrafficController.USB_SYSTEM_NONE);
                 
         adaptermemo.configureManagers();
         

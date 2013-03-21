@@ -215,6 +215,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	private int[] cabSpeedArray = new int[CAB_MAX_CABDATA];
 	private int[] cabFlagsArray = new int[CAB_MAX_CABDATA];
 	private int[] cabLocoArray = new int[CAB_MAX_CABDATA];
+	private boolean[] cabLongShortArray = new boolean[CAB_MAX_CABDATA];
 	private int[] cabConsistArray = new int[CAB_MAX_CABDATA];
 	private int[] cabF0Array = new int[CAB_MAX_CABDATA];
 	private int[] cabF5Array = new int[CAB_MAX_CABDATA];
@@ -230,6 +231,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	// member declarations
 	JLabel textNumber = new JLabel(rb.getString("Number"));
     JLabel textCab = new JLabel(rb.getString("Type"));
+    JLabel textAddrType = new JLabel(rb.getString("AddrType"));
     JLabel textAddress = new JLabel(rb.getString("Loco"));
     JLabel textSpeed = new JLabel(rb.getString("Speed"));
     JLabel textConsist = new JLabel(rb.getString("Consist"));
@@ -265,6 +267,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	int			cab;
     	String		type;
     	JButton 	buttonPurgeCab;
+    	String		longShort;
     	int			loco;
     	int			speed; 
     	String		dir;
@@ -909,6 +912,17 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		        	readChar = recChar;
 		        	if (log.isDebugEnabled()) log.debug("Read address high character "+readChar);
 		        	int locoAddress = (readChar & 0x3F) * 256;
+		        	boolean aType = ((readChar & 0xC0) == 0xC0) ? true : false;
+		        	if (cabLongShortArray[currCabId] != aType) {
+		        		foundChange++;
+		        		if (log.isDebugEnabled()) log.debug(currCabId + ": Long " + aType + "<->" + cabLongShortArray[currCabId]);
+		        	}
+		        	cabLongShortArray[currCabId] = aType;
+		        	if (aType) {
+		        		cabData[currCabId].longShort = rb.getString("IsLongAddr");
+		        	} else {
+		        		cabData[currCabId].longShort = rb.getString("IsShortAddr");
+		        	}
 		        	// read the low address byte
             		readUsbCabMemoryN(1);
 		        	if (!waitNce())
@@ -1548,6 +1562,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 			rb.getString("ColHeaderCabId"),
 			rb.getString("ColHeaderType"),
 			rb.getString("ColHeaderPurge"),
+			rb.getString("ColHeaderLongShort"),
 			rb.getString("ColHeaderLoco"),
 			rb.getString("ColHeaderSpeed"),
 			rb.getString("ColHeaderDir"),
@@ -1658,78 +1673,80 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    	case 2:
     			return rb.getString("ButtonPurgeCab");
 	    	case 3:
-        		return r.loco;
+	    		return r.longShort;
 	    	case 4:
-	        	return r.speed;
+        		return r.loco;
 	    	case 5:
-        		return r.dir;
+	        	return r.speed;
 	    	case 6:
-        		return r.mode;
+        		return r.dir;
 	    	case 7:
-	        	return r.consist;
+        		return r.mode;
 	    	case 8:
-	        	return r.F0;
+	        	return r.consist;
 	    	case 9:
-        		return r.F1;
+	        	return r.F0;
 	    	case 10:
-        		return r.F2;
+        		return r.F1;
 	    	case 11:
-        		return r.F3;
+        		return r.F2;
 	    	case 12:
-        		return r.F4;
+        		return r.F3;
 	    	case 13:
-	        	return r.F5;
+        		return r.F4;
 	    	case 14:
-	        	return r.F6;
+	        	return r.F5;
 	    	case 15:
-	        	return r.F7;
+	        	return r.F6;
 	    	case 16:
-	        	return r.F8;
+	        	return r.F7;
 	    	case 17:
+	        	return r.F8;
+	    	case 18:
 	        	return r.F9;
-    		case 18:
-    			return r.F10;
     		case 19:
-    			return r.F11;
+    			return r.F10;
     		case 20:
+    			return r.F11;
+    		case 21:
     			return r.F12;
-	    	case 21:
-        		return r.F13;
 	    	case 22:
-        		return r.F14;
+        		return r.F13;
 	    	case 23:
-	        	return r.F15;
+        		return r.F14;
 	    	case 24:
-	        	return r.F16;
+	        	return r.F15;
 	    	case 25:
-	        	return r.F17;
+	        	return r.F16;
 	    	case 26:
-	        	return r.F18;
+	        	return r.F17;
 	    	case 27:
+	        	return r.F18;
+	    	case 28:
 	        	return r.F19;
-    		case 28:
-    			return r.F20;
     		case 29:
-    			return r.F21;
+    			return r.F20;
     		case 30:
+    			return r.F21;
+    		case 31:
     			return r.F22;
-	    	case 31:
-        		return r.F23;
 	    	case 32:
-        		return r.F24;
+        		return r.F23;
 	    	case 33:
-	        	return r.F25;
+        		return r.F24;
 	    	case 34:
-	        	return r.F26;
+	        	return r.F25;
 	    	case 35:
-	        	return r.F27;
+	        	return r.F26;
 	    	case 36:
-	        	return r.F28;
+	        	return r.F27;
 	    	case 37:
-	    		return r.text1;
+	        	return r.F28;
 	    	case 38:
-	        	return r.text2;
+	    		return r.text1;
 	    	case 39:
+	        	return r.text2;
+	    	case 40:
 	        	return r.lastChange;
 	    	}
 	    	return null;
@@ -1743,11 +1760,11 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	    }
 	    
 		public Class<?> getColumnClass(int c) {
-	    	if (c == 0 || c == 3 || c == 4  || c == 5) {
+	    	if (c == 0 || c == 4 || c == 5  || c == 6) {
 	    		return Integer.class;
-	    	} else if (c == 1 || (c >= 6 && c <= 7) || (c >= 37 && c <= 39)){
+	    	} else if (c == 1 || c == 3 || (c >= 7 && c <= 8) || (c >= 38 && c <= 40)){
 	    		return String.class;
-	    	} else if (c >= 8 && c <= 36) {
+	    	} else if (c >= 9 && c <= 37) {
 	    		return Boolean.class;
 	    	} else if (c == 2) {
 	    		return JButton.class;
@@ -1764,13 +1781,15 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 				width = new JTextField(4).getPreferredSize().width;
 			} else if (col <= 2){
 				width = new JButton(rb.getString("ButtonPurgeCab")).getPreferredSize().width;
-			} else if (col <= 7){
+			} else if (col <= 3){
+				width = new JTextField(2).getPreferredSize().width;
+			} else if (col <= 8){
 				width = new JTextField(3).getPreferredSize().width;
-			} else if (col <= 36){
+			} else if (col <= 37){
 				width = new JCheckBox().getPreferredSize().width;
-			} else if (col <= 38){
-				width = new JTextField(10).getPreferredSize().width;
 			} else if (col <= 39){
+				width = new JTextField(10).getPreferredSize().width;
+			} else if (col <= 40){
 				width = new JTextField(6).getPreferredSize().width;
 			} else {
 				width = 0;
