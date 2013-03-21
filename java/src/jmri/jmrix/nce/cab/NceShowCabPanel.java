@@ -100,7 +100,7 @@
  * Writing zero to FLAGS1 will remove the cab from the 'active' list
  * 
  * @author Dan Boudreau Copyright (C) 2009, 2010
- * @author Ken Cameron Copyright (C) 2012,2013
+ * @author Ken Cameron Copyright (C) 2012, 2013
  * @version $Revision$
  */
 

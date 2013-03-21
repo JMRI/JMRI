@@ -27,6 +27,7 @@ import gnu.io.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
+ * @author ken cameron Copyright (C) 2013
  * @version $Revision$
  */
 public class UsbDriverAdapter extends NcePortController {

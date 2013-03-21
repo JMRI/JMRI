@@ -12,7 +12,7 @@ import jmri.jmrix.nce.NceTrafficController;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2010
  * converted to multiple connection
- * @author	kcameron	Copyright 2010
+ * @author	kcameron	Copyright 2010, 2013
  * @version     $Revision$
  */
 
