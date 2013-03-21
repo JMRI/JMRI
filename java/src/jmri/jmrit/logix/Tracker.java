@@ -148,7 +148,7 @@ public class Tracker extends java.beans.PropertyChangeSupport
     }
     
     class Runner implements Runnable {
-    	boolean _tracking = true;;
+    	boolean _tracking = true;
     	
     	void stopTrain() {
             synchronized(this) {
