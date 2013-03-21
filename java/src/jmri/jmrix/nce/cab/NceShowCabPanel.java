@@ -152,6 +152,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 													// intended for this module
 	private int minCabNum = -1;		// either the USB or serial size depending on what we connect to
 	private int maxCabNum = -1;		// either the USB or serial size depending on what we connect to
+	
+	private static final int firstTimeSleep = 3000;		// delay first operation to let panel build
 
 	private static final int CAB_MIN_USB = 2;			// USB cabs start at 2
 	private static final int CAB_MIN_PRO = 2;			// Serial cabs start at 2
@@ -534,7 +536,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	}
     	if (firstTime){
     		try {
-    			Thread.sleep(1000);	// wait for panel to display 
+    			Thread.sleep(firstTimeSleep);	// wait for panel to display 
     		} catch (InterruptedException e) {
     			e.printStackTrace();
     		}
@@ -556,7 +558,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	}
     	if (firstTime){
     		try {
-    			Thread.sleep(1000);	// wait for panel to display 
+    			Thread.sleep(firstTimeSleep);	// wait for panel to display 
     		} catch (InterruptedException e) {
     			e.printStackTrace();
     		}
@@ -580,7 +582,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     	if (firstTime){
     		try {
-    			Thread.sleep(1000);	// wait for panel to display 
+    			Thread.sleep(firstTimeSleep);	// wait for panel to display 
     		} catch (InterruptedException e) {
     			e.printStackTrace();
     		}
@@ -823,7 +825,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	
     	if (firstTime){
     		try {
-    			Thread.sleep(1000);	// wait for panel to display 
+    			Thread.sleep(firstTimeSleep);	// wait for panel to display 
     		} catch (InterruptedException e) {
     			e.printStackTrace();
     		}
