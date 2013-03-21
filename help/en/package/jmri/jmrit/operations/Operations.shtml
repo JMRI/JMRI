@@ -842,10 +842,16 @@ different format for your switch lists.
    
    <P>For a train to service a location, there must be at least one track for that location. See
     below how to add tracks to your location.</P>
+
    <P>The tables show the length of the tracks, the amount of track that is occupied (Used) by
-    cars and locomotives, the total number of cars and locomotives (Rolling Stock) at each location,
-    the number of cars and locomotives that will be picked up (Pick ups) by trains, and the number
-    of cars and locomotives that will be delivered (Set outs) by trains.</P>
+    cars and locomotives, the amount of track that is reserved, the total number of cars and
+    locomotives (Rolling Stock) at each location, the number of cars and locomotives that will be
+    picked up (Pick ups) by trains, and the number of cars and locomotives that will be delivered
+    (Set outs) by trains. When the program is building a train, the reserved value shows the amount
+    of track that is going to be consumed by set outs. In aggressive mode, the reserved value also
+    shows the amount of track that is going to be released by pick ups. Therefore a positive value
+    means that track space is going to be consumed by set outs, and a negative number means that
+    track space is going to be freed up by pick ups.</P>
 
    <H3>Location Service Direction</H3>
 
