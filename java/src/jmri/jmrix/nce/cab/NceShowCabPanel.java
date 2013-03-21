@@ -437,7 +437,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	// clear bit for active and cab type details
     	cabFlag1Array[cab] = 0;
     	processMemory(true, true, cab);
-        textStatus.setText(rb.getString("StatusCabPurged") + " " + cab);
     	return;
     }
 
@@ -547,9 +546,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	writeCabMemory1(purgeCabId, cabMemorySerial.CAB_FLAGS1, 0);
        	if (!waitNce())
     		return;
-    	// update the display
-    	refreshPanel();
-        textStatus.setText(rb.getString("StatusCabPurged") + " " + purgeCabId);
+        textStatus.setText(MessageFormat.format(rb.getString("StatusCabPurged"), purgeCabId));
         return;
     }
     
@@ -574,9 +571,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 		writeUsbCabMemory1(0);
     	if (!waitNce())
     		return;
-    	// update the display
-    	refreshPanel();
-        textStatus.setText(rb.getString("StatusCabPurged") + " " + purgeCabId);
+        textStatus.setText(MessageFormat.format(rb.getString("StatusCabPurged"), purgeCabId));
     	return;
     }
     
@@ -596,7 +591,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         // build table of cabs
         for (int currCabId=minCabNum; currCabId <= maxCabNum; currCabId++){
            	
-            textStatus.setText(rb.getString("StatusReadingCabId") + currCabId);
+        	textStatus.setText(MessageFormat.format(rb.getString("StatusProcessingCabId"), currCabId));
             cabData[currCabId].cab = currCabId;
            	int foundChange = 0;
            	recChar = -1;
@@ -817,7 +812,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
            	}
         }
      
-        textStatus.setText(MessageFormat.format(rb.getString("StatusReadingDone") + ", " + rb.getString("FoundCabs"), cabsFound));
+        textStatus.setText(rb.getString("StatusProcessingDone") + ". " + MessageFormat.format(rb.getString("StatusCabsFound"), cabsFound));
         cabModel.fireTableDataChanged();
     	this.setVisible(true);
     	this.repaint();
@@ -1638,6 +1633,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	
 	    public Object getValueAt(int row, int col) {
 	    	int cabId = getCabIdForRow(row);
+	    	if (cabId == -1 && !getShowAllCabs()) {
+	    		return null;	// no active rows
+	    	}
 	    	if (cabId < minCabNum || cabId > maxCabNum) {
 	    		log.error("getCabIdForRow(" + row + ") returned " + cabId);
 	    		return null;
