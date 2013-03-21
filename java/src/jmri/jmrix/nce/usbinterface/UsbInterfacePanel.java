@@ -44,7 +44,8 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
 	private static final int CAB_MIN_PRO = 2;			// Serial cabs start at 2
 	private static final int CAB_MAX_USB_128 = 4;			// There are up to 10 cabs on 1.28
 	private static final int CAB_MAX_USB_165 = 10;			// There are up to 10 cabs on 1.65
-	private static final int CAB_MAX_PRO = 64;			// There are up to 64 cabs
+	private static final int CAB_MAX_PRO = 63;			// There are up to 63 cabs
+	private static final int CAB_MAX_SB3 = 5;			// There are up to 5 cabs
 	private static int USB_CAB_FLAGS1 = 70;			// NCE flag 1
 	private static final int FLAGS1_CABID_USB = 0x80;		// bit 0=0, bit 7=1;
 	private static final int FLAGS1_CABISACTIVE = 0x02;	// if cab is active
@@ -117,8 +118,13 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         	minCabNum = CAB_MIN_USB;
         	maxCabNum = CAB_MAX_USB_165;
         	supportGet = true;
-        }
-        if (tc.getCommandOptions() >= NceTrafficController.OPTION_1_65) {
+        } else if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
+        	minCabNum = CAB_MIN_PRO;
+        	maxCabNum = CAB_MAX_PRO;
+        } else if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3) {
+        	minCabNum = CAB_MIN_PRO;
+        	maxCabNum = CAB_MAX_SB3;
+        } else if (tc.getCommandOptions() >= NceTrafficController.OPTION_1_65) {
         	maxCabSetNum = CAB_MAX_USB_165;
         } else {
         	maxCabSetNum = CAB_MAX_USB_128;
@@ -186,17 +192,17 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
     
     private void changeCabId() {
-    	if (supportGet) {
-           	int i = Integer.parseInt(newCabId.getText().trim());
-    		processMemory(true, supportGet, i);
-    	}
+       	int i = Integer.parseInt(newCabId.getText().trim());
+		processMemory(true, supportGet, i);
     }
 
     private void processMemory(boolean doSet, boolean doGet, int cabId) {
     	if (doSet) {
         	setRequested = true;
         	setCabId = cabId;
-        	priorCabId = Integer.parseInt(oldCabId.getText().trim());
+        	if (supportGet) {
+            	priorCabId = Integer.parseInt(oldCabId.getText().trim());
+        	}
     	}
     	if (doGet) {
         	getRequested = true;
