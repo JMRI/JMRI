@@ -89,7 +89,7 @@ public class LnPowerManager
         } else if (m.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
             // grab the track status any time that a slot read of a "normal" slot passes thru.
             // Ignore "reserved" and "master control" slots in slot numbers 120-127
-            if ((m.getElement(1) == 0x0E) || (m.getElement(2) < 120)) {
+            if ((m.getElement(1) == 0x0E) && (m.getElement(2) < 120)) {
                 int slotTrackStatus = 
                         ((m.getElement(7) & LnConstants.GTRK_POWER) == LnConstants.GTRK_POWER) ? ON : OFF;
                 if (power != slotTrackStatus) {
