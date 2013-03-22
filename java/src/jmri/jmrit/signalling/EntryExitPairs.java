@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Enumeration;
+import java.util.Iterator;
 import java.util.Hashtable;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -22,8 +23,6 @@ import jmri.jmrit.signalling.entryexit.*;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-
-//This needs refactorting to deal with multiple protecting blocks
 
 /**
  * Implements an Entry Exit based method of setting turnouts, setting up signal logic and the 
@@ -43,7 +42,6 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 public class EntryExitPairs implements jmri.Manager{
 
 	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
-    //static volatile EntryExitPairs _instance = null;
     
     public int routingMethod = LayoutBlockConnectivityTools.METRIC;
 
@@ -501,6 +499,7 @@ public class EntryExitPairs implements jmri.Manager{
     public final static int CANCELROUTE = 0;
     public final static int CLEARROUTE = 1;
     public final static int EXITROUTE = 2;
+    public final static int STACKROUTE = 2;
     
     
 
@@ -595,6 +594,100 @@ public class EntryExitPairs implements jmri.Manager{
             return valid.getDisplayName();
         }
         return "empty";
+    }
+    
+    ArrayList<StackDetails> stackList = new ArrayList<StackDetails>();
+    
+    synchronized public void stackNXRoute(DestinationPoints dp, boolean reverse){
+        if(isRouteStacked(dp, reverse))
+            return;
+        stackList.add(new StackDetails(dp, reverse));
+        checkTimer.start();
+        if(stackWindow==null)
+            stackWindow = new StackNXWindow();
+        stackWindow.updateGUI();
+        stackWindow.setVisible(true);
+    }
+    
+    public List<DestinationPoints> getStackedInterlocks(){
+        List<DestinationPoints> dpList = new ArrayList<DestinationPoints>();
+        for(StackDetails st:stackList){
+            dpList.add(st.getDestinationPoint());
+        }
+        return dpList;
+    }
+    
+    public boolean isRouteStacked(DestinationPoints dp, boolean reverse){
+        Iterator<StackDetails> iter = stackList.iterator();
+        while(iter.hasNext()){
+            StackDetails st = iter.next();
+            if(st.getDestinationPoint()==dp && st.getReverse()==reverse)
+                return true;
+        }
+        return false;
+    }
+    
+    synchronized public void cancelStackedRoute(DestinationPoints dp, boolean reverse){
+        Iterator<StackDetails> iter = stackList.iterator();
+        while(iter.hasNext()){
+            StackDetails st = iter.next();
+            if(st.getDestinationPoint()==dp && st.getReverse()==reverse)
+                iter.remove();
+        }
+        stackWindow.updateGUI();
+        if(stackList.isEmpty()){
+            stackWindow.setVisible(false);
+            checkTimer.stop();
+        }
+    }
+    
+    StackNXWindow stackWindow;
+    
+    class StackDetails{
+        DestinationPoints dp;
+        boolean reverse;
+        StackDetails(DestinationPoints dp, boolean reverse){
+            this.dp = dp;
+            this.reverse = reverse;
+        }
+        boolean getReverse(){
+            return reverse;
+        }
+        DestinationPoints getDestinationPoint(){
+            return dp;
+        }
+    
+    }
+    
+    javax.swing.Timer checkTimer  = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                checkRoute();
+            }
+        });
+
+    synchronized void checkRoute(){
+        checkTimer.stop();
+        //Iterator<StackDetails> iter = stackList.iterator();
+        StackDetails[] tmp = new StackDetails[stackList.size()];
+        //ArrayList<StackDetails> tmp = new ArrayList<StackDetails>(stackList.size());
+        //System.arraycopy(stackList,0, tmp,0, stackList.size());
+        stackList.toArray(tmp);
+        /*while(iter.hasNext()){
+            StackDetails st = iter.next();
+            */
+        for(StackDetails st:tmp){
+            if(!st.getDestinationPoint().isActive()){
+                //If the route is not alredy active then check
+                //If the route does get set then the setting process will remove the route from the stack
+                st.getDestinationPoint().setInterlockRoute(st.getReverse());
+            }
+        }
+
+        if(!stackList.isEmpty()){
+            checkTimer.start();
+        } else {
+            stackWindow.setVisible(false);
+        }
     }
     
     public void removePropertyChangeListener(PropertyChangeListener list, NamedBean obj, LayoutEditor panel){

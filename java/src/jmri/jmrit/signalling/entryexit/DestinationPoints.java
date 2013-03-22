@@ -90,7 +90,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
         }
         
         public String getDisplayName(){
-            return mSystemName;
+            return mUserName;
         }
         
         String getUniqueId(){
@@ -291,6 +291,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 cancelClearOptionBox();
                 return;*/
             }
+            if(manager.isRouteStacked(this, false))
+                manager.cancelStackedRoute(this, false);
             /*We put the setting of the route into a seperate thread and put a glass pane infront of the layout editor,
             the swing thread for flash the icons to carry on as without interuption */
             Runnable setRouteRun = new Runnable() {
@@ -450,15 +452,22 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             };
             Thread thrMain = new Thread(setRouteRun, "Entry Exit Set Route");
             thrMain.start();
+            try{
+                thrMain.join();
+            } catch (InterruptedException e){
+            }
+            
         }
         
         private JFrame cancelClearFrame;
         transient private Thread threadAutoClearFrame = null;
+        JButton jButton_Stack = new JButton("Stack");
         
         void cancelClearOptionBox(){
             if(cancelClearFrame==null){
                 JButton jButton_Clear = new JButton("Clear Down");
                 JButton jButton_Cancel = new JButton("Cancel");
+                
                 JButton jButton_Exit = new JButton("Exit");
                 JLabel jLabel = new JLabel("What would you like to do with this interlock?");
                 JLabel jIcon = new JLabel(javax.swing.UIManager.getIcon("OptionPane.questionIcon"));
@@ -471,6 +480,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 JPanel buttonsPanel = new JPanel();
                 buttonsPanel.add(jButton_Cancel);  
                 buttonsPanel.add(jButton_Clear);  
+                buttonsPanel.add(jButton_Stack);  
                 buttonsPanel.add(jButton_Exit);  
                 cont.add(buttonsPanel, BorderLayout.SOUTH);  
                 cancelClearFrame.pack();
@@ -489,6 +499,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                 cancelClearInterlock(EntryExitPairs.CANCELROUTE);
                             }
                         });
+                jButton_Stack.addActionListener( new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                cancelClearFrame.setVisible(false);
+                                threadAutoClearFrame.interrupt();
+                                cancelClearInterlock(EntryExitPairs.STACKROUTE);
+                            }
+                        });
                 jButton_Exit.addActionListener( new ActionListener() {
                             public void actionPerformed(ActionEvent e) {
                                 cancelClearFrame.setVisible(false);
@@ -497,7 +514,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                             }
                         });
                 src.getPoint().getPanel().setGlassPane(manager.getGlassPane());
+
             }
+            if(manager.isRouteStacked(this, false))
+                jButton_Stack.setEnabled(false);
+            else
+                jButton_Stack.setEnabled(true);
+                
             if(cancelClearFrame.isVisible()){
                 return;
             }
@@ -532,10 +555,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
         }
         
         void cancelClearInterlock(int cancelClear){
-            if (cancelClear==EntryExitPairs.EXITROUTE){
+            if ((cancelClear==EntryExitPairs.EXITROUTE) || (cancelClear==EntryExitPairs.STACKROUTE)){
                 src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                 point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
                 src.getPoint().getPanel().getGlassPane().setVisible(false);
+                if(cancelClear==EntryExitPairs.STACKROUTE){
+                    manager.stackNXRoute(this, false);
+                }
                 return;
             }
             src.setMenuEnabled(false);
@@ -644,8 +670,18 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             src.getPoint().getPanel().getGlassPane().setVisible(false);
         
         }
-    
+        
+        public void setInterlockRoute(boolean reverseDirection){
+            if(activeEntryExit)
+                return;
+            activeBean(reverseDirection, false);
+        }
+        
         void activeBean(boolean reverseDirection){
+            activeBean(reverseDirection, true);
+        }
+    
+        synchronized void activeBean(boolean reverseDirection, boolean showMessage){
             if(activeEntryExit){
                // log.debug(mUserName + "  Our route is active so this would go for a clear down but we need to check that the we can clear it down" + activeEndPoint);
                 if(!isEnabled()){
@@ -659,13 +695,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                     setRoute(false);
                 } else {
                     log.debug(mUserName + "  sourceSensor that has gone active doesn't match the active end point so will not clear");
-                    JOptionPane.showMessageDialog(null, "A conflicting route has already been set");
+                    if(showMessage) JOptionPane.showMessageDialog(null, "A conflicting route has already been set");
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
                 }
             } else {
                 if (isRouteToPointSet()){
                     log.debug(mUserName + "  route to this point is set therefore can not set another to it " /*+ destPoint.src.getPoint().getID()*/);
+                    if(showMessage && !manager.isRouteStacked(this, false)) handleNoCurrentRoute(reverseDirection, "Route already set to the destination point");
                     src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
                     return;
@@ -787,8 +824,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                     pathList.add(toadd);                                                                        
                                 }
                             } catch (jmri.JmriException ex){
-                                JOptionPane.showMessageDialog(null, ex.getMessage());
                                 log.error("Exception " + ex.getMessage());
+                                if(showMessage) JOptionPane.showMessageDialog(null, ex.getMessage());
                                 src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                                 point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
                                 return;
@@ -820,11 +857,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                     if(pathToUse==null){
                         //No valid paths found so will quit
                         if(pathList.get(0).getListOfBlocks().isEmpty()){
-                            JOptionPane.showMessageDialog(null, pathList.get(0).getErrorMessage());
-                            //Considered normal if not a valid through path
-                            log.error(mUserName + " " + pathList.get(0).getErrorMessage());
-                            src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                            point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
+                            if(showMessage){
+                                log.error(mUserName + " " + pathList.get(0).getErrorMessage());
+                                //Considered normal if not a valid through path
+                                handleNoCurrentRoute(reverseDirection, pathList.get(0).getErrorMessage());
+                                src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                                point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
+                            }
                             return;
                         }
                         pathToUse = pathList.get(0);
@@ -840,16 +879,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                     synchronized(this){
                         destination = destinationLBlock;
                     }
-                    /*try{
-                        routeDetails = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlockConnectivityTools().getLayoutBlocks(startlBlock, destinationLBlock, protectLBlock, false, 0x00/*jmri.jmrit.display.layoutEditor.LayoutBlockManager.MASTTOMAST*//*);
-                    } catch (jmri.JmriException e){
-                        JOptionPane.showMessageDialog(null, e.getMessage());
-                            //Considered normal if not a valid through path
-                            log.error(mUserName + " " + e.getMessage());
-                            src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                            point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
-                            return;
-                    }*/
+
                     if (log.isDebugEnabled()){
                         for(LayoutBlock blk : routeDetails){
                             log.debug(blk.getDisplayName());
@@ -863,6 +893,21 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 }
             }
         }
+        
+        void handleNoCurrentRoute(boolean reverse, String message){
+            Object[] options = {"Yes Stack",
+                                "No" };
+            int n = JOptionPane.showOptionDialog(null,
+                message + "\n Would you like to Stack the Route", "Route Not Clear",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[1]);
+            if(n ==0)
+                manager.stackNXRoute(this, reverse);
+        }
+        
         public void dispose(){
             enabled = false;
             setActiveEntryExit(false);
@@ -892,5 +937,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             firePropertyChange("active", oldvalue, getState());
             
         }
+        
         static Logger log = LoggerFactory.getLogger(DestinationPoints.class.getName());
     }
