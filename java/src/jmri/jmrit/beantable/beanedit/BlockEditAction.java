@@ -36,7 +36,7 @@ public class BlockEditAction extends BeanEditAction {
     
     private DecimalFormat twoDigit = new DecimalFormat("0.00");
     
-    public String helpTarget() { return "package.jmri.jmrit.beantable.BlockAddEdit"; } //IN18N
+    public String helpTarget() { return "package.jmri.jmrit.beantable.BlockEdit"; } //IN18N
     
     protected void createPanels(){
         super.createPanels();

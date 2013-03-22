@@ -3446,6 +3446,8 @@
 
 <mapID target="manual.DP3_2-14_manual.Programmer_Setup_newLoco" url="manual/DP3_2-14_manual/Programmer_Setup.shtml#newLoco"/>
 
+<mapID target="package.jmri.jmrit.beantable.BlockEdit" url="package/jmri/jmrit/beantable/BlockEdit.shtml"/>
+
 <mapID target="manual.3-2_DecoderPro3.Start_DCC_Hardware_Top" url="manual/3-2_DecoderPro3/Start_DCC_Hardware.shtml#Top"/>
 
 <mapID target="manual.JMRI_2-14_manual.Ops_AddCars_Top" url="manual/JMRI_2-14_manual/Ops_AddCars.shtml#Top"/>
@@ -5239,8 +5241,6 @@
 <mapID target="manual.JMRI_2-14_manual.Ops_Trains_buildbtn" url="manual/JMRI_2-14_manual/Ops_Trains.shtml#buildbtn"/>
 
 <mapID target="html.doc.Technical.I8N" url="html/doc/Technical/I8N.shtml"/>
-
-<mapID target="package.jmri.jmrix.nce.cab.NceShowCabFrame" url="package/jmri/jmrix/nce/cab/NceShowCabFrame.shtml"/>
 
 <mapID target="manual.3-0_DecoderPro3.Main_wangrow" url="manual/3-0_DecoderPro3/Main_wangrow.shtml"/>
 
