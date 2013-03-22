@@ -495,14 +495,18 @@ public class TurnoutTableAction extends AbstractTableAction {
                 JTable table = new JTable(srtr)  {
                     
                     public TableCellRenderer getCellRenderer(int row, int column) {
-                        if (column == SENSOR1COL || column == SENSOR2COL) {
-                            return getRenderer(row, column);
+                        //Convert the displayed index to the model index, rather than the displayed index
+                        int modelColumn = getColumnModel().getColumn(column).getModelIndex();
+                        if (modelColumn == SENSOR1COL || modelColumn == SENSOR2COL) {
+                            return getRenderer(row, modelColumn);
                         } else
                             return super.getCellRenderer(row, column);
                     }
                     public TableCellEditor getCellEditor(int row, int column) {
-                        if (column == SENSOR1COL || column == SENSOR2COL) {
-                            return getEditor(row, column);
+                        //Convert the displayed index to the model index, rather than the displayed index
+                        int modelColumn = getColumnModel().getColumn(column).getModelIndex();
+                        if (modelColumn == SENSOR1COL || modelColumn == SENSOR2COL) {
+                            return getEditor(row, modelColumn);
                         } else
                             return super.getCellEditor(row, column);
                     }

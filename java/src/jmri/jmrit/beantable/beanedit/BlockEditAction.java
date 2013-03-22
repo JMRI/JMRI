@@ -7,6 +7,7 @@ import jmri.NamedBean;
 import jmri.Block;
 import jmri.util.swing.JmriBeanComboBox;
 import jmri.Sensor;
+import jmri.Reporter;
 
 import java.awt.event.KeyListener;
 import java.awt.event.KeyEvent;
@@ -85,6 +86,14 @@ public class BlockEditAction extends BeanEditAction {
             public void actionPerformed(ActionEvent e) {
                 reporterField.setSelectedBean(((Block)bean).getReporter());
                 useCurrent.setSelected(((Block)bean).isReportingCurrent());
+            }
+        });
+        
+        reporter.setSaveItem(new AbstractAction(){
+            public void actionPerformed(ActionEvent e) {
+                Block blk = (Block) bean;
+                blk.setReporter((Reporter)reporterField.getSelectedBean());
+                blk.setReportingCurrent(useCurrent.isSelected());
             }
         });
         addToPanel(reporter, items);
