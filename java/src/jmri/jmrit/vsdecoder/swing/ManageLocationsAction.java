@@ -113,7 +113,7 @@ public class ManageLocationsAction extends AbstractAction {
 	    i = 0;
 	    for (String s : lnames) {
 		Location l = lmgr.getLocationById(s);
-		log.debug("i = " + i + "MLA " + s + " Name: " + l.getName() + " table " + opsTable[i]);
+		if (log.isDebugEnabled()) log.debug("i = " + i + "MLA " + s + " Name: " + l.getName() + " table " + java.util.Arrays.toString(opsTable[i]));
 		PhysicalLocation p = l.getPhysicalLocation();
 		Boolean use = new Boolean(false);
 		if (p == PhysicalLocation.Origin) {

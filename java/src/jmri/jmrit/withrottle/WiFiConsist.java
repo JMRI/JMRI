@@ -46,7 +46,7 @@ public class WiFiConsist extends DccConsist{
                                         conAddr,
                                         dirNorm);
         if (packet != null) {
-            log.debug(packet.toString());
+            if (log.isDebugEnabled()) log.debug(java.util.Arrays.toString(packet));
             jmri.InstanceManager.commandStationInstance().sendPacket(packet, 1);
         }
     }
