@@ -27,7 +27,7 @@ public class JmriServer {
     protected ZeroConfService service = null;
     protected ShutDownTask shutDownTask = null;
     private Thread listenThread = null;
-    protected ArrayList<clientListener> connectedClientThreads = new ArrayList<clientListener>();
+    protected ArrayList<ClientListener> connectedClientThreads = new ArrayList<ClientListener>();
     private static JmriServer _instance = null;
 
     public synchronized static JmriServer instance() {
@@ -63,7 +63,7 @@ public class JmriServer {
 
     // Maintain a vector of connected clients
     // Add a new client
-    private synchronized void addClient(clientListener client) {
+    private synchronized void addClient(ClientListener client) {
         if (!connectedClientThreads.contains(client)) {
             connectedClientThreads.add(client);
             client.start();
@@ -71,7 +71,7 @@ public class JmriServer {
     }
 
     //Remove a client
-    private synchronized void removeClient(clientListener client) {
+    private synchronized void removeClient(ClientListener client) {
         if (connectedClientThreads.contains(client)) {
             client.stop(this);
             connectedClientThreads.remove(client);
@@ -103,7 +103,7 @@ public class JmriServer {
     }
     
     public void stop() {
-    	for (clientListener client : this.connectedClientThreads) {
+    	for (ClientListener client : this.connectedClientThreads) {
     		client.stop(this);
     	}
         this.listenThread = null;
@@ -134,7 +134,7 @@ public class JmriServer {
                     if (log.isDebugEnabled()) {
                         log.debug(" Client Connected from IP " + clientSocket.getInetAddress() + " port " + clientSocket.getPort());
                     }
-                    addClient(new clientListener(clientSocket));
+                    addClient(new ClientListener(clientSocket));
                 }
             } catch (IOException e) {
                 log.error("IOException while Listening for clients");
@@ -156,14 +156,14 @@ public class JmriServer {
     } // end of newClientListener class
 
     // Internal class to handle a client
-    protected class clientListener implements Runnable {
+    protected class ClientListener implements Runnable {
 
         Socket clientSocket = null;
         DataInputStream inStream = null;
         DataOutputStream outStream = null;
         Thread clientThread = null;
 
-        public clientListener(Socket socket) {
+        public ClientListener(Socket socket) {
             if (log.isDebugEnabled()) {
                 log.debug("Starting new Client");
             }
@@ -212,7 +212,7 @@ public class JmriServer {
                 removeClient(this);
             }
         }
-    } // end of clientListener class.
+    } // end of ClientListener class.
 
     // Handle communication to a client through inStream and outStream
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
