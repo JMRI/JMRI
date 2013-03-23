@@ -9,7 +9,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -65,7 +65,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         elem.addContent(show);
         element.addContent(elem);
 
-        Hashtable<String, NamedIcon> iconMap = p.getIconMap();
+        HashMap<String, NamedIcon> iconMap = p.getIconMap();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         elem = new Element("iconmap");
         String family = p.getFamily();

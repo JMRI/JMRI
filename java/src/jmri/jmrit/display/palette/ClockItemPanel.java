@@ -12,7 +12,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import jmri.util.JmriJFrame;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -31,8 +31,6 @@ import jmri.jmrit.display.AnalogClock2Display;
 *  ItemPanel for for plain icons and backgrounds 
 */
 public class ClockItemPanel extends IconItemPanel {
-
-    Hashtable<String, NamedIcon> _iconMap;
 
     /**
     * Constructor for plain icons and backgrounds
@@ -53,7 +51,7 @@ public class ClockItemPanel extends IconItemPanel {
         return panel;
     }
 
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         _iconPanel = new JPanel();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {

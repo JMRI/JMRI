@@ -11,7 +11,7 @@ import java.awt.GridBagLayout;
 
 import java.awt.datatransfer.DataFlavor;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -33,7 +33,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     JPanel    _bottom2Panel;  // createIconFamilyButton - when all families deleted 
     JButton   _showIconsButton;
     JButton   _updateButton;
-    protected Hashtable<String, NamedIcon> _currentIconMap;
+    protected HashMap<String, NamedIcon> _currentIconMap;
 
     /**
     * Constructor types with multiple families and multiple icon families
@@ -69,7 +69,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     * Init for update of existing track block
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
-    public void init(ActionListener doneAction, Hashtable<String, NamedIcon> iconMap) {
+    public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         _update = true;
         if (iconMap!=null) {
             checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
@@ -104,19 +104,19 @@ public abstract class FamilyItemPanel extends ItemPanel {
     * families. if so, return.  if not, does user want to add it to families?
     * if so, add.  If not, save for return when updated.
     */
-    private void checkCurrentMap(Hashtable<String, NamedIcon> iconMap) {
+    private void checkCurrentMap(HashMap<String, NamedIcon> iconMap) {
         _currentIconMap = iconMap;
         if (log.isDebugEnabled()) log.debug("checkCurrentMap: for type \""+_itemType+"\", family \""+_family+"\"");
         if (_family!=null && _family.trim().length()>0) {
-            Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+            HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
             if (map!=null) {
                 return;     // Must assume no family names were changed
             }
         }
-        Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-        Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = families.entrySet().iterator();
+        HashMap <String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
+        Iterator<Entry<String, HashMap<String, NamedIcon>>> it = families.entrySet().iterator();
         while (it.hasNext()) {
-            Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
+            Entry<String, HashMap<String, NamedIcon>> entry = it.next();
             if (entry.getValue().size()==iconMap.size()) {
             	Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
             	boolean match = true;
@@ -157,7 +157,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
 
-        Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
+        HashMap <String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
             JPanel familyPanel = makeFamilyButtons(families.keySet().iterator(), (_currentIconMap==null));
             if (_currentIconMap==null) {
@@ -260,7 +260,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
         _bottom2Panel.setVisible(true);
     }
     
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         if (iconMap==null) {
             log.warn("iconMap is null for type "+_itemType+" family "+_family);
             return;
@@ -317,9 +317,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
         }
     }
 
-    abstract protected JLabel getDragger(DataFlavor flavor, Hashtable <String, NamedIcon> map);
+    abstract protected JLabel getDragger(DataFlavor flavor, HashMap <String, NamedIcon> map);
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
         }
@@ -485,7 +485,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
      * return icon set to panel icon display class
      * @return updating map
      */
-    public Hashtable <String, NamedIcon> getIconMap() {
+    public HashMap <String, NamedIcon> getIconMap() {
         if (_currentIconMap==null) {
         	_currentIconMap = ItemPalette.getIconMap(_itemType, _family);
             if (_currentIconMap==null) {

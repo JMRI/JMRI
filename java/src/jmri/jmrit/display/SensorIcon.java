@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
-import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -48,8 +48,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     static final public int INCONSISTENT_BACKGROUND_COLOR =  0x0B;
     private boolean debug = false;
 
-    protected Hashtable <String, Integer> _name2stateMap;       // name to state
-    protected Hashtable <Integer, String> _state2nameMap;       // state to name
+    protected HashMap <String, Integer> _name2stateMap;       // name to state
+    protected HashMap <Integer, String> _state2nameMap;       // state to name
 
     public SensorIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -219,13 +219,13 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     void makeIconMap() {
-        _iconMap = new Hashtable <String, NamedIcon>();
-        _name2stateMap = new Hashtable <String, Integer>();
+        _iconMap = new HashMap <String, NamedIcon>();
+        _name2stateMap = new HashMap <String, Integer>();
         _name2stateMap.put("BeanStateUnknown", Integer.valueOf(Sensor.UNKNOWN));
         _name2stateMap.put("BeanStateInconsistent", Integer.valueOf(Sensor.INCONSISTENT));
         _name2stateMap.put("SensorStateActive", Integer.valueOf(Sensor.ACTIVE));
         _name2stateMap.put("SensorStateInactive", Integer.valueOf(Sensor.INACTIVE));
-        _state2nameMap = new Hashtable <Integer, String>();
+        _state2nameMap = new HashMap <Integer, String>();
         _state2nameMap.put(Integer.valueOf(Sensor.UNKNOWN), "BeanStateUnknown");
         _state2nameMap.put(Integer.valueOf(Sensor.INCONSISTENT), "BeanStateInconsistent");
         _state2nameMap.put(Integer.valueOf(Sensor.ACTIVE), "SensorStateActive");
@@ -433,7 +433,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             }
         };
         // duplicate _iconMap map with unscaled and unrotated icons
-        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();
+        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();
         Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
@@ -452,10 +452,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
 
     void updateItem() {
-        Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
+    	HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setSensor(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
-        Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
+        HashMap <String, NamedIcon> iconMap = _itemPanel.getIconMap();
         if (iconMap!=null) {
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -491,10 +491,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     protected void edit() {
         makeIconEditorFrame(this, "Sensor", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
-        Enumeration <String> e = _iconMap.keys();
+        Iterator <String> e = _iconMap.keySet().iterator();
         int i = 0;
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
+        while (e.hasNext()) {
+            String key = e.next();
             _iconEditor.setIcon(i++, /*_state2nameMap.get(key)*/ key, _iconMap.get(key));
         }
         _iconEditor.makeIconPanel(false);
@@ -510,7 +510,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
     
     void updateSensor() {
-        Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
+    	HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setSensor(_iconEditor.getTableSelection().getDisplayName());
         Hashtable <String, NamedIcon> iconMap = _iconEditor.getIconMap();
 
@@ -618,9 +618,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         super.dispose();
     }
 
-    protected Hashtable<Integer, NamedIcon> cloneMap(Hashtable<Integer, NamedIcon> map,
+    protected HashMap<Integer, NamedIcon> cloneMap(HashMap<Integer, NamedIcon> map,
                                                              SensorIcon pos) {
-        Hashtable<Integer, NamedIcon> clone = new Hashtable<Integer, NamedIcon>();
+    	HashMap<Integer, NamedIcon> clone = new HashMap<Integer, NamedIcon>();
         if (map!=null) {
             Iterator<Entry<Integer, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {

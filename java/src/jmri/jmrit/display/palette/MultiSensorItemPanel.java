@@ -11,7 +11,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import javax.swing.table.TableColumn;
 import javax.swing.*;
@@ -65,7 +65,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         int size = 6;
         if (_family!=null) {
-            Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+            HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
             size = map.size();
         }
         _selectionModel.setPositionRange(size-3);
@@ -87,7 +87,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _selectionModel.clearSelection();
         int size = 6;
 //        if (_family!=null) {
-//            Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+//            HashMap<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
 //            size = map.size();
 //        }
         if (_currentIconMap!=null) {
@@ -96,7 +96,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _selectionModel.setPositionRange(size-3);
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "second");
     }
 
@@ -301,15 +301,15 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }
     }
 
-    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        Hashtable <String, NamedIcon> iconMap;
+        HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
+        public IconDragJLabel(DataFlavor flavor, HashMap <String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
         }

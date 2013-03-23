@@ -12,7 +12,7 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -67,7 +67,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     * Init for update of existing indicator turnout
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
-    public void init(ActionListener doneAction, Hashtable<String, NamedIcon> iconMap) {
+    public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         super.init(doneAction, iconMap);
         add(initTablePanel(_model, _editor), 0);
     }
@@ -216,15 +216,15 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         return _model.getBeanAt(row);
     }
 
-    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        Hashtable<String, NamedIcon> iconMap;
+        HashMap<String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
+        public IconDragJLabel(DataFlavor flavor, HashMap <String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
         }

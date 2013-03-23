@@ -35,14 +35,14 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon {
     public PortalIcon(String blockName, String portalName, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(editor);
-        OBlock block = jmri.InstanceManager.oBlockManagerInstance().getOBlock(blockName);
+        OBlock block = jmri.InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(blockName);
         _portal = block.getPortalByName(portalName);
         initMap();
     }
 
 
     private void initMap() {
-        _iconMap = new java.util.Hashtable<String, NamedIcon>();
+        _iconMap = new java.util.HashMap<String, NamedIcon>();
 
         String fileName = "resources/icons/throttles/RoundRedCircle20.png";
         NamedIcon icon = new NamedIcon(fileName, fileName);

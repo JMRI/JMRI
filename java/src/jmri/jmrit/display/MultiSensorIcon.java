@@ -21,7 +21,7 @@ import javax.swing.JPopupMenu;
 import jmri.NamedBeanHandle;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 /**
  * An icon to display a status of set of Sensors.
@@ -223,7 +223,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             }
         };
         // duplicate _iconMap map with unscaled and unrotated icons
-        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();       
+        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();       
         map.put("SensorStateInactive", inactive);
         map.put("BeanStateInconsistent", inconsistent);
         map.put("BeanStateUnknown", unknown);
@@ -241,7 +241,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     }
 
     void updateItem() {
-        Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
+    	HashMap <String, NamedIcon> iconMap = _itemPanel.getIconMap();
         ArrayList<NamedBean> selections = _itemPanel.getTableSelections();
         int[] positions = _itemPanel.getPositions();
         if (selections==null || selections.size()<positions.length) {

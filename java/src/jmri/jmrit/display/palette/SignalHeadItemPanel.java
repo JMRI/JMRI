@@ -2,7 +2,7 @@ package jmri.jmrit.display.palette;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -66,7 +66,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         return topPanel;
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "SignalHeadStateRed");
     }
     
@@ -83,8 +83,8 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         _showIconsButton.setText(Bundle.getMessage("HideIcons"));
     }
    
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> allIconsMap) {
-        Hashtable<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
+    protected void addIconsToPanel(HashMap<String, NamedIcon> allIconsMap) {
+        HashMap<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
         if (iconMap==null) {
             iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
@@ -120,7 +120,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
  //       hideIcons();
     }
 
-    protected Hashtable<String, NamedIcon> getFilteredIconMap(Hashtable<String, NamedIcon> allIconsMap) {
+    protected HashMap<String, NamedIcon> getFilteredIconMap(HashMap<String, NamedIcon> allIconsMap) {
         if (allIconsMap==null) {
             JOptionPane.showMessageDialog(_paletteFrame, 
                     Bundle.getMessage("FamilyNotFound", _itemType, _family), 
@@ -137,7 +137,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             if (states.length == 0) {
                 return allIconsMap;
             }
-            Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>(); 
+            HashMap<String, NamedIcon> iconMap = new HashMap<String, NamedIcon>(); 
             Iterator<Entry<String, NamedIcon>> it = allIconsMap.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();
@@ -159,15 +159,15 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
         return allIconsMap;
     }
 
-    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        Hashtable <String, NamedIcon> iconMap;
+        HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, Hashtable <String, NamedIcon> map) {
+        public IconDragJLabel(DataFlavor flavor, HashMap <String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
         }
@@ -187,7 +187,7 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
 
             SignalHeadIcon sh = new SignalHeadIcon(_editor);
             sh.setSignalHead(bean.getDisplayName());
-            Hashtable <String, NamedIcon> map = getFilteredIconMap(iconMap);
+            HashMap <String, NamedIcon> map = getFilteredIconMap(iconMap);
             Iterator<Entry<String, NamedIcon>> iter = map.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();

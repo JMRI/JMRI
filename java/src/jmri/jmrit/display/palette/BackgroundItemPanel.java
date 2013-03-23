@@ -43,6 +43,7 @@ public class BackgroundItemPanel extends IconItemPanel {
     		super.init(true);
     		add(initBottomPanel(), 2);
     		setSize(getPreferredSize());
+        	_initialized = true;
     	}
     }
 

@@ -1097,9 +1097,9 @@ public class LayoutEditorTools
         l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
 		l.setLocation(xLoc,yLoc);
 		if (rotation>0) {
-            java.util.Enumeration<String> e = l.getIconStateNames();
-            while (e.hasMoreElements()) {
-                l.getIcon(e.nextElement()).setRotation(rotation,l);
+            java.util.Iterator<String> e = l.getIconStateNames();
+            while (e.hasNext()) {
+                l.getIcon(e.next()).setRotation(rotation,l);
             }
 		}		
 		layoutEditor.putSignal(l);

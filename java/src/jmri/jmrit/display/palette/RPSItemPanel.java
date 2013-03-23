@@ -8,7 +8,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 //import java.awt.dnd.*;
 import java.io.IOException;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 //import javax.swing.JOptionPane;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -50,21 +50,21 @@ public class RPSItemPanel extends FamilyItemPanel {
     	}
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "active");
     }
     
     /*******************************************************/
 
-    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor, map);
     }
 
     protected class IconDragJLabel extends DragJLabel {
-        Hashtable <String, NamedIcon> iconMap;
+        HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
-        public IconDragJLabel(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+        public IconDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
         }

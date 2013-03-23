@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.FlowLayout;
-import java.util.Hashtable;
+import java.util.HashMap;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -75,7 +75,7 @@ public abstract class ItemPanel extends JPanel {
     */    
     protected void initIconFamiliesPanel(){
     }
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap){
+    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap){
     }
     protected void setFamily(String family) {
     }
@@ -123,8 +123,8 @@ public abstract class ItemPanel extends JPanel {
     static final String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "AllocatedTrack",
                                                 "PositionTrack", "DontUseTrack", "ErrorTrack"};
 
-    static protected Hashtable<String, NamedIcon> makeNewIconMap(String type) {
-        Hashtable <String, NamedIcon> newMap = new Hashtable <String, NamedIcon>();
+    static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
+        HashMap <String, NamedIcon> newMap = new HashMap <String, NamedIcon>();
         String[] names = null;
         if (type.equals("Turnout")) {
             names = TURNOUT;

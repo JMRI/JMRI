@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.List;
@@ -53,9 +52,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     static JTabbedPane _tabPane;
     static HashMap<String, ItemPanel> _tabIndex;
 
-    static HashMap<String, Hashtable<String, Hashtable<String, NamedIcon>>> _iconMaps;
+    static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
-    static HashMap<String, Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>>> _indicatorTOMaps;
+    static HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
     
     /**
     * Store palette icons in preferences file catalogTrees.xml 
@@ -74,20 +73,20 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         tree = manager.newCatalogTree("NXPI", "Item Palette");
         CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
         
-        Iterator<Entry<String, Hashtable<String, Hashtable<String, NamedIcon>>>> it = _iconMaps.entrySet().iterator();
+        Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> it = _iconMaps.entrySet().iterator();
         while (it.hasNext()) {
-            Entry<String, Hashtable<String, Hashtable<String, NamedIcon>>> entry = it.next();
+            Entry<String, HashMap<String, HashMap<String, NamedIcon>>> entry = it.next();
             root.add(store3levelMap(entry.getKey(), entry.getValue()));
             if (log.isDebugEnabled()) log.debug("Add type node "+entry.getKey());
         }
 
-        Iterator<Entry<String, Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>>>> its = _indicatorTOMaps.entrySet().iterator();
+        Iterator<Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>>> its = _indicatorTOMaps.entrySet().iterator();
         while (its.hasNext()) {
-            Entry<String, Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>>> entry = its.next();
+            Entry<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> entry = its.next();
             CatalogTreeNode typeNode = new CatalogTreeNode(entry.getKey());
-            Iterator<Entry<String, Hashtable<String, Hashtable<String, NamedIcon>>>> iter = entry.getValue().entrySet().iterator();
+            Iterator<Entry<String, HashMap<String, HashMap<String, NamedIcon>>>> iter = entry.getValue().entrySet().iterator();
             while (iter.hasNext()) {
-                Entry<String, Hashtable<String, Hashtable<String, NamedIcon>>> ent = iter.next();
+                Entry<String, HashMap<String, HashMap<String, NamedIcon>>> ent = iter.next();
                 typeNode.add(store3levelMap(ent.getKey(), ent.getValue()));
                 if (log.isDebugEnabled()) log.debug("Add IndicatorTO node "+ent.getKey());
             }
@@ -96,14 +95,14 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         }
     }
 
-    static CatalogTreeNode store3levelMap(String type, Hashtable<String, Hashtable<String, NamedIcon>> familyMap) {
+    static CatalogTreeNode store3levelMap(String type, HashMap<String, HashMap<String, NamedIcon>> familyMap) {
         CatalogTreeNode typeNode = new CatalogTreeNode(type);
-        Iterator<Entry<String, Hashtable<String, NamedIcon>>> iter = familyMap.entrySet().iterator();
+        Iterator<Entry<String, HashMap<String, NamedIcon>>> iter = familyMap.entrySet().iterator();
         while (iter.hasNext()) {
-            Entry<String, Hashtable<String, NamedIcon>> ent = iter.next();
+            Entry<String, HashMap<String, NamedIcon>> ent = iter.next();
             String family = ent.getKey();
             CatalogTreeNode familyNode = new CatalogTreeNode(family);
-            Hashtable <String, NamedIcon> iconMap = ent.getValue(); 
+            HashMap <String, NamedIcon> iconMap = ent.getValue(); 
             Iterator<Entry<String, NamedIcon>> iterat = iconMap.entrySet().iterator();
             while (iterat.hasNext()) {
                 Entry<String, NamedIcon> e = iterat.next();
@@ -120,9 +119,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     static public void loadIcons() {
         if (_iconMaps==null) {
 //        	long t = System.currentTimeMillis();
-            _iconMaps = new HashMap <String, Hashtable<String, Hashtable<String, NamedIcon>>>();
+            _iconMaps = new HashMap <String, HashMap<String, HashMap<String, NamedIcon>>>();
             _indicatorTOMaps = 
-                new HashMap<String, Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>>>();
+                new HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>>();
 
             if (!loadSavedIcons()) {
                 loadDefaultIcons();
@@ -144,13 +143,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 // detect this is a 4 level map collection. 
                 // not very elegant (i.e. extensible), but maybe all that's needed.
                 if (typeName.equals("IndicatorTO")) {
-                    Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> familyTOMap =
+                    HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap =
                                                 loadIndicatorFamilyMap(node);
                     if (log.isDebugEnabled()) log.debug("Add "+familyTOMap.size()+
                                     " indicatorTO families to item type "+typeName+" to _indicatorTOMaps.");
                     _indicatorTOMaps.put(typeName, familyTOMap); 
                 } else {
-                    Hashtable<String, Hashtable<String, NamedIcon>> familyMap = 
+                    HashMap<String, HashMap<String, NamedIcon>> familyMap = 
                                                 loadFamilyMap(node);
                     _iconMaps.put(typeName, familyMap); 
                     if (log.isDebugEnabled()) log.debug("Add item type "+typeName+" to _iconMaps.");
@@ -162,10 +161,10 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         return false;
     }
 
-    static Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> 
+    static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> 
                                         loadIndicatorFamilyMap(CatalogTreeNode node) {
-        Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> familyMap =
-                                new Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>>();
+        HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMap =
+                                new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();
         @SuppressWarnings("unchecked")
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
@@ -177,15 +176,15 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         return familyMap;
     }
 
-    static Hashtable<String, Hashtable<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node) {
-        Hashtable <String, Hashtable<String, NamedIcon>> familyMap =
-                 new Hashtable <String, Hashtable<String, NamedIcon>> ();
+    static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node) {
+        HashMap <String, HashMap<String, NamedIcon>> familyMap =
+                 new HashMap <String, HashMap<String, NamedIcon>> ();
         @SuppressWarnings("unchecked")
         Enumeration<CatalogTreeNode> ee = node.children();
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = ee.nextElement();
             String familyName = (String)famNode.getUserObject();
-            Hashtable <String, NamedIcon> iconMap = new Hashtable <String, NamedIcon> ();
+            HashMap <String, NamedIcon> iconMap = new HashMap <String, NamedIcon> ();
             List <CatalogTreeLeaf> list = famNode.getLeaves();
             int w = 0;
             int h = 0;
@@ -223,13 +222,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 // detect this is a 4 level map collection. 
                 // not very elegant (i.e. extensible), but maybe all that's needed.
                 if (typeName.equals("IndicatorTO")) {
-                    Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> familyTOMap =
+                    HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap =
                                                 loadDefaultIndicatorTOMap(families);
                     _indicatorTOMaps.put(typeName, familyTOMap); 
                     if (log.isDebugEnabled()) log.debug("Add "+familyTOMap.size()+
                                     " indicatorTO families to item type "+typeName+" to _indicatorTOMaps.");
                 } else {
-                    Hashtable<String, Hashtable<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families);
+                    HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families);
                     _iconMaps.put(typeName, familyMap); 
                     if (log.isDebugEnabled()) log.debug("Add "+familyMap.size()+
                                                         " families to item type "+typeName+" to _iconMaps.");
@@ -243,14 +242,14 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         }
     }
 
-    static Hashtable<String, Hashtable<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families)
+    static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families)
     {
-        Hashtable<String, Hashtable<String, NamedIcon>> familyMap =
-                new Hashtable<String, Hashtable<String, NamedIcon>> ();
+        HashMap<String, HashMap<String, NamedIcon>> familyMap =
+                new HashMap<String, HashMap<String, NamedIcon>> ();
         for (int k = 0; k < families.size(); k++) {
             String familyName = families.get(k).getName();
-            Hashtable <String, NamedIcon> iconMap = 
-                    new Hashtable <String, NamedIcon> ();     // Map of all icons of in family, familyName
+            HashMap <String, NamedIcon> iconMap = 
+                    new HashMap <String, NamedIcon> ();     // Map of all icons of in family, familyName
             @SuppressWarnings("unchecked")
             List<Element>iconfiles = families.get(k).getChildren();
             for (int j = 0; j < iconfiles.size(); j++) {
@@ -269,15 +268,15 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         return familyMap;
     }
 
-    static Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> loadDefaultIndicatorTOMap(List<Element> typeList)
+    static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> loadDefaultIndicatorTOMap(List<Element> typeList)
     {
-        Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> familyTOMap =
-                new Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> ();     // Map of all families of type, typeName
+        HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap =
+                new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> ();     // Map of all families of type, typeName
         for (int k = 0; k < typeList.size(); k++) {
             String familyName = typeList.get(k).getName();
             @SuppressWarnings("unchecked")
             List<Element> types = typeList.get(k).getChildren();
-            Hashtable<String, Hashtable<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types);
+            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types);
             familyTOMap.put(familyName, familyMap);
             if (log.isDebugEnabled()) log.debug("Add "+familyMap.size()+
                                 " IndicatorTO sub-families to item type "+familyName+" to IndicatorTO families.");
@@ -471,7 +470,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     /**
     * Adding a new Family of icons to the device type
     */
-    static protected boolean addFamily(java.awt.Frame frame, String type, String family, Hashtable<String, NamedIcon> iconMap) {
+    static protected boolean addFamily(java.awt.Frame frame, String type, String family, HashMap<String, NamedIcon> iconMap) {
         Iterator <String> iter = ItemPalette.getFamilyMaps(type).keySet().iterator();
         if (familyNameOK(frame, type, family, iter)) {
             getFamilyMaps(type).put(family, iconMap);
@@ -488,7 +487,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     /**
     * Getting all the Families of icons for a given device type
     */
-    static protected Hashtable<String, Hashtable<String, NamedIcon>> getFamilyMaps(String type) {
+    static protected HashMap<String, HashMap<String, NamedIcon>> getFamilyMaps(String type) {
         return _iconMaps.get(type);
     }
 
@@ -500,7 +499,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         _iconMaps.get(type).remove(family);
         ImageIndexEditor.indexChanged(true);
         if (log.isDebugEnabled()) {
-            Hashtable <String, Hashtable<String, NamedIcon>> families = getFamilyMaps(type);
+            HashMap <String, HashMap<String, NamedIcon>> families = getFamilyMaps(type);
             if (families!=null && families.size()>0) {
                 Iterator <String> it = families.keySet().iterator();
                 while (it.hasNext()) {
@@ -513,13 +512,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     /**
     * Getting a clone of the Family of icons for a given device type and family
     */
-    static protected Hashtable<String, NamedIcon> getIconMap(String type, String family) {
-        Hashtable <String, Hashtable<String, NamedIcon>> itemMap = _iconMaps.get(type);
+    static protected HashMap<String, NamedIcon> getIconMap(String type, String family) {
+        HashMap <String, HashMap<String, NamedIcon>> itemMap = _iconMaps.get(type);
         if (itemMap==null) {
             log.error("getIconMap failed. item type \""+type+"\" not found.");
             return null;
         }
-        Hashtable<String, NamedIcon> iconMap = itemMap.get(family);
+        HashMap<String, NamedIcon> iconMap = itemMap.get(family);
         if (iconMap==null) {
             log.error("getIconMap failed. family \""+family+"\" not found in item type \""+type+"\".");
             return null;
@@ -531,7 +530,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
 
     // add entire family
     static protected boolean addLevel4Family(java.awt.Frame frame, String type, String family,
-                                   Hashtable<String, Hashtable<String, NamedIcon>> iconMap) {
+                                   HashMap<String, HashMap<String, NamedIcon>> iconMap) {
         Iterator <String> iter = ItemPalette.getLevel4FamilyMaps(type).keySet().iterator();
         if (familyNameOK(frame, type, family, iter)) {
             getLevel4FamilyMaps(type).put(family, iconMap);
@@ -543,21 +542,21 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
 
     // add entire family
     static protected void addLevel4FamilyMap(String type, String family,
-                                   String key, Hashtable<String, NamedIcon> iconMap) {
-        Hashtable<String, Hashtable<String, NamedIcon>> familyMap = getLevel4Family(type, family);
+                                   String key, HashMap<String, NamedIcon> iconMap) {
+        HashMap<String, HashMap<String, NamedIcon>> familyMap = getLevel4Family(type, family);
         familyMap.put(key, iconMap);
         ImageIndexEditor.indexChanged(true);
     }
 
     // Currently only needed for IndicatorTO type
-    static protected Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> 
+    static protected HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> 
                                 getLevel4FamilyMaps(String type) {
         return _indicatorTOMaps.get(type);
     }
     // Currently only needed for IndicatorTO type
-    static protected Hashtable<String, Hashtable<String, NamedIcon>> 
+    static protected HashMap<String, HashMap<String, NamedIcon>> 
                                 getLevel4Family(String type, String family) {
-        Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> map = _indicatorTOMaps.get(type);
+        HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> map = _indicatorTOMaps.get(type);
         return map.get(family);
     }
 
@@ -575,8 +574,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     /**************************************************************************/
 
 
-    static protected Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map) {
-        Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
+    static protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map) {
+        HashMap<String, NamedIcon> clone = new HashMap<String, NamedIcon>();
         if (map!=null) {
             Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {

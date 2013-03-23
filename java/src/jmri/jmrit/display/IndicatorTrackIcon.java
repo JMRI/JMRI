@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import jmri.NamedBeanHandle;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -51,7 +51,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         super(editor);
         _pathUtil = new IndicatorTrackPaths();
         _status = "ClearTrack";
-        _iconMap = new Hashtable<String, NamedIcon>();
+        _iconMap = new HashMap<String, NamedIcon>();
     }
 
     public Positionable deepClone() {
@@ -70,7 +70,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         return super.finishClone(pos);
     }
 
-    public Hashtable<String, NamedIcon> getIconMap() {
+    public HashMap<String, NamedIcon> getIconMap() {
         return cloneMap(_iconMap, this);
     }
 
@@ -101,7 +101,7 @@ public class IndicatorTrackIcon extends PositionableIcon
          namedOccSensor = senHandle;
          if (namedOccSensor != null) {
              if (_iconMap==null) {
-                 _iconMap = new Hashtable<String, NamedIcon>();
+                 _iconMap = new HashMap<String, NamedIcon>();
              }
              Sensor sensor = getOccSensor();
              sensor.addPropertyChangeListener(this, namedOccSensor.getName(), "Indicator Track");
@@ -126,7 +126,7 @@ public class IndicatorTrackIcon extends PositionableIcon
              setOccBlockHandle(null);
              return;
          }
-         OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(pName);
+         OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(pName);
          if (block != null) {
              setOccBlockHandle(new NamedBeanHandle<OBlock>(pName, block));                
          } else {
@@ -140,7 +140,7 @@ public class IndicatorTrackIcon extends PositionableIcon
         namedOccBlock = blockHandle;
         if (namedOccBlock != null) {
             if (_iconMap==null) {
-                _iconMap = new Hashtable<String, NamedIcon>();
+                _iconMap = new HashMap<String, NamedIcon>();
             }
             OBlock block = getOccBlock();
             block.addPropertyChangeListener(this, namedOccBlock.getName(), "Indicator Track");
@@ -273,7 +273,7 @@ public class IndicatorTrackIcon extends PositionableIcon
             }
         };
         // duplicate _iconMap map with unscaled and unrotated icons
-        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();
+        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();
         Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
@@ -306,9 +306,9 @@ public class IndicatorTrackIcon extends PositionableIcon
         _pathUtil.setShowTrain(_trackPanel.getShowTrainName());
         _iconFamily = _trackPanel.getFamilyName();
         _pathUtil.setPaths(_trackPanel.getPaths());
-        Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
+        HashMap<String, NamedIcon> iconMap = _trackPanel.getIconMap();
         if (iconMap!=null) {
-            Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
+        	HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();

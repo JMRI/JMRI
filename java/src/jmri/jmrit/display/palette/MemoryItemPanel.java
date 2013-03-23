@@ -79,7 +79,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         _iconFamilyPanel.add(_dragIconPanel);
     }
 
-    protected void makeDndIconPanel(java.util.Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(java.util.HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
         }

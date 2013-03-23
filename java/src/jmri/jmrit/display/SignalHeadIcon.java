@@ -18,8 +18,8 @@ import javax.swing.JPopupMenu;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButtonMenuItem;
 
-import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import jmri.NamedBeanHandle;
@@ -54,9 +54,9 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     public Positionable finishClone(Positionable p) {
         SignalHeadIcon pos = (SignalHeadIcon)p;
         pos.setSignalHead(getNamedSignalHead().getName());
-        Enumeration <String> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
+        Iterator <String> e = _iconMap.keySet().iterator();
+        while (e.hasNext()) {
+            String key = e.next();
             pos.setIcon(key, _iconMap.get(key));
         }
         pos.setClickMode(getClickMode());
@@ -68,7 +68,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
 //    private SignalHead mHead;
     private NamedBeanHandle<SignalHead> namedHead;
     
-    Hashtable <String, NamedIcon> _saveMap;
+    HashMap <String, NamedIcon> _saveMap;
 
 
     /**
@@ -81,7 +81,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         }
         namedHead = sh;
         if (namedHead != null) {
-            _iconMap = new Hashtable <String, NamedIcon>();
+            _iconMap = new HashMap <String, NamedIcon>();
             _validKey = getSignalHead().getValidStateNames();
             displayState(headState());
             getSignalHead().addPropertyChangeListener(this, namedHead.getName(), "SignalHead Icon");
@@ -341,7 +341,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
         };
         // _iconMap keys with local names - Let SignalHeadItemPanel figure this out
         // duplicate _iconMap map with unscaled and unrotated icons
-        Hashtable<String, NamedIcon> map = new Hashtable<String, NamedIcon>();
+        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();
         Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
@@ -363,7 +363,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     	_saveMap = _iconMap; 	// setSignalHead() clears _iconMap.  we need a copy for setIcons()
         setSignalHead(_itemPanel.getTableSelection().getSystemName());
         setFamily(_itemPanel.getFamilyName());
-        Hashtable<String, NamedIcon> map1 = _itemPanel.getIconMap(); 
+        HashMap<String, NamedIcon> map1 = _itemPanel.getIconMap(); 
         if (map1!=null) {
             // map1 may be keyed with NamedBean names.  Convert to local name keys.
             // However perhaps keys are local - See above
@@ -397,10 +397,10 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     protected void edit() {
         makeIconEditorFrame(this, "SignalHead", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.signalHeadPickModelInstance());
-        Enumeration <String> e = _iconMap.keys();
+        Iterator <String> e = _iconMap.keySet().iterator();
         int i=0;
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
+        while (e.hasNext()) {
+            String key = e.next();
             _iconEditor.setIcon(i++, key, new NamedIcon(_iconMap.get(key)));
         }
          _iconEditor.makeIconPanel(false);
@@ -419,7 +419,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      * preserve the scale and rotation.
 	*/
     private void setIcons(Hashtable<String, NamedIcon> map) {
-        Hashtable<String, NamedIcon> tempMap = new Hashtable<String, NamedIcon>();        
+    	HashMap<String, NamedIcon> tempMap = new HashMap<String, NamedIcon>();        
         Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();

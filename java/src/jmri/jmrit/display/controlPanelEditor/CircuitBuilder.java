@@ -108,7 +108,7 @@ public class CircuitBuilder  {
 
     protected JMenu makeMenu() {
         _circuitMap = new Hashtable<OBlock, ArrayList<Positionable>>();
-        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         for (int i = 0; i < sysNames.length; i++) {
             OBlock block = manager.getBySystemName(sysNames[i]);
@@ -264,7 +264,7 @@ public class CircuitBuilder  {
 
     private void errorCheck() {
         WarrantTableAction.initPathPortalCheck();
-        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         for (int i = 0; i < sysNames.length; i++) {
             WarrantTableAction.checkPathPortals(manager.getBySystemName(sysNames[i]));
@@ -356,7 +356,7 @@ public class CircuitBuilder  {
 
     private void editCircuitError(String sysName) {
         if (editingOK()) {
-            _currentBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
+            _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysName);
             if (_currentBlock!=null) {
                 checkCircuits();
                 makeSelectionGroup(_currentBlock, null);
@@ -387,7 +387,7 @@ public class CircuitBuilder  {
 
     private void portalCircuitError(String sysName) {
         if (editingOK()) {
-            _currentBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysName);
+            _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysName);
             if (_currentBlock!=null) {
                 checkCircuits();
                 // check icons to be indicator type
@@ -597,7 +597,7 @@ public class CircuitBuilder  {
             if (uname!=null && uname.trim().length()==0) {
                 uname = null;
             }
-            _currentBlock = InstanceManager.oBlockManagerInstance().createNewOBlock(sysname, uname);
+            _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).createNewOBlock(sysname, uname);
             if (_currentBlock!=null) {
             	retOK = true;
             } else {
@@ -606,7 +606,7 @@ public class CircuitBuilder  {
                                 Bundle.getMessage("AskTitle"), JOptionPane.YES_NO_OPTION, 
                                 JOptionPane.QUESTION_MESSAGE);
                 if (result==JOptionPane.YES_OPTION) {
-                    _currentBlock = InstanceManager.oBlockManagerInstance().getBySystemName(sysname);
+                    _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysname);
                     if (_currentBlock==null) {
                     	retOK = false;
                     }
@@ -766,7 +766,7 @@ public class CircuitBuilder  {
         _bareBlock = new ArrayList<OBlock>();
         _convertBlock = new ArrayList<OBlock>();
         _portalMap = new Hashtable<String, Portal>();
-        OBlockManager manager = InstanceManager.oBlockManagerInstance();
+        OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         hasOBlocks = (sysNames.length>0);
         for (int i = 0; i < sysNames.length; i++) {
@@ -1048,10 +1048,10 @@ public class CircuitBuilder  {
         t.setTurnout( ((TurnoutIcon)_oldIcon).getNamedTurnout());
         t.setFamily(_trackTOPanel.getFamilyName());
 
-        Hashtable <String, Hashtable <String, NamedIcon>> iconMap = _trackTOPanel.getIconMaps();
-        Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
+        HashMap <String, HashMap <String, NamedIcon>> iconMap = _trackTOPanel.getIconMaps();
+        Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
-            Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
+            Entry<String, HashMap<String, NamedIcon>> entry = it.next();
             String status = entry.getKey();
             Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
             while (iter.hasNext()) {
@@ -1069,7 +1069,7 @@ public class CircuitBuilder  {
         t.setOccBlockHandle(new NamedBeanHandle<OBlock>(_currentBlock.getSystemName(), _currentBlock));       
         t.setFamily(_trackPanel.getFamilyName());
 
-        Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
+        HashMap<String, NamedIcon> iconMap = _trackPanel.getIconMap();
         if (iconMap!=null) {
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {

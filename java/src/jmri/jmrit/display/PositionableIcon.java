@@ -9,8 +9,7 @@ package jmri.jmrit.display;
  */
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -18,7 +17,7 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class PositionableIcon extends PositionableLabel {
 
-    protected Hashtable <String, NamedIcon> _iconMap;
+    protected HashMap <String, NamedIcon> _iconMap;
     protected String  _iconFamily;
     protected double _scale = 1.0;			// getScale, come from net result found in one of the icons
     protected int _rotate = 0;
@@ -64,8 +63,8 @@ public class PositionableIcon extends PositionableLabel {
         _iconFamily = family;
     }
 
-    public Enumeration<String> getIconStateNames() {
-        return _iconMap.keys(); 
+    public Iterator<String> getIconStateNames() {
+        return _iconMap.keySet().iterator(); 
     }
 
     public int maxHeight() {
@@ -147,9 +146,9 @@ public class PositionableIcon extends PositionableLabel {
         updateSize();
     }
 
-    protected Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map,
+    protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map,
                                                              PositionableLabel pos) {
-        Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
+    	HashMap<String, NamedIcon> clone = new HashMap<String, NamedIcon>();
         if (map!=null) {
             Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {

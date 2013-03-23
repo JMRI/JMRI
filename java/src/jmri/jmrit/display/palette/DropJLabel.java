@@ -13,7 +13,7 @@ import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
 import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import javax.swing.Icon;
 import javax.swing.JLabel;
@@ -29,7 +29,7 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class DropJLabel extends JLabel implements DropTargetListener {
 	private DataFlavor 				_dataFlavor;
-    private Hashtable <String, NamedIcon>   _iconMap;
+    private HashMap <String, NamedIcon>   _iconMap;
     private boolean 				_update;
     
     
@@ -43,7 +43,7 @@ public class DropJLabel extends JLabel implements DropTargetListener {
         new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
         //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");
     }
-    DropJLabel (Icon icon,  Hashtable <String, NamedIcon> iconMap, boolean update) {
+    DropJLabel (Icon icon,  HashMap <String, NamedIcon> iconMap, boolean update) {
     	this(icon);
     	_iconMap = iconMap;
     	_update = update;

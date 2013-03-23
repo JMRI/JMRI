@@ -10,7 +10,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -34,7 +34,7 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class IconDialog extends ItemDialog {
 
-    protected Hashtable <String, NamedIcon>   _iconMap;
+    protected HashMap <String, NamedIcon>   _iconMap;
     protected JPanel        _iconPanel;
     protected CatalogPanel  _catalog;
     protected JTextField    _familyName;
@@ -45,7 +45,7 @@ public class IconDialog extends ItemDialog {
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
-    public IconDialog(String type, String family, ItemPanel parent, Hashtable <String, NamedIcon> iconMap ) {
+    public IconDialog(String type, String family, ItemPanel parent, HashMap <String, NamedIcon> iconMap ) {
         super(type, family, Bundle.getMessage("ShowIconsTitle", type), parent, true);
         
         _iconMap = clone(iconMap);
@@ -221,7 +221,7 @@ public class IconDialog extends ItemDialog {
         panel.add(cancelButton);
     }
 
-    protected JPanel makeIconPanel(Hashtable<String, NamedIcon> iconMap) {
+    protected JPanel makeIconPanel(HashMap<String, NamedIcon> iconMap) {
         if (iconMap==null) {
             log.error("iconMap is null for type "+_type+" family "+_family);
             return null;
@@ -342,10 +342,10 @@ public class IconDialog extends ItemDialog {
         if (log.isDebugEnabled()) log.debug("Size: width= "+lastWidth+", height= "+lastHeight); 
     }
     
-    protected Hashtable<String, NamedIcon> clone(Hashtable<String, NamedIcon> map) {
-        Hashtable<String, NamedIcon> clone = null;
+    protected HashMap<String, NamedIcon> clone(HashMap<String, NamedIcon> map) {
+        HashMap<String, NamedIcon> clone = null;
         if (map!=null) {
-        	clone = new Hashtable<String, NamedIcon>();
+        	clone = new HashMap<String, NamedIcon>();
             Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
             while (it.hasNext()) {
                 Entry<String, NamedIcon> entry = it.next();

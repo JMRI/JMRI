@@ -14,7 +14,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -38,8 +38,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     private DetectionPanel  _detectPanel;
     private JPanel          _tablePanel;
     private JTextField 		_familyName;
-    protected Hashtable<String, Hashtable<String, NamedIcon>> _iconGroupsMap;
-    protected Hashtable<String, Hashtable<String, NamedIcon>> _updateGroupsMap;
+    protected HashMap<String, HashMap<String, NamedIcon>> _iconGroupsMap;
+    protected HashMap<String, HashMap<String, NamedIcon>> _updateGroupsMap;
     
     /**
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
@@ -56,10 +56,12 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     * initIconFamiliesPanel()
     */
     public void init() {
-        super.init();
-        _detectPanel= new DetectionPanel(this);
-        add(_detectPanel, 1);
-        add(_iconFamilyPanel, 2);
+    	if (!_initialized) {
+            super.init();
+            _detectPanel= new DetectionPanel(this);
+            add(_detectPanel, 1);
+            add(_iconFamilyPanel, 2);
+    	}
     }
 
     /**
@@ -74,7 +76,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     * Init for update of existing indicator turnout
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
-    public void initUpdate(ActionListener doneAction, Hashtable<String, Hashtable<String, NamedIcon>> iconMaps) {
+    public void initUpdate(ActionListener doneAction, HashMap<String, HashMap<String, NamedIcon>> iconMaps) {
         checkCurrentMaps(iconMaps);   // is map in families?, does user want to add it? etc
         super.init(doneAction, null);
         _detectPanel= new DetectionPanel(this);
@@ -87,10 +89,10 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     * families. if so, return.  if not, does user want to add it to families?
     * if so, add.  If not, save for return when updated.
     */
-    private void checkCurrentMaps(Hashtable<String, Hashtable<String, NamedIcon>> iconMaps) {
+    private void checkCurrentMaps(HashMap<String, HashMap<String, NamedIcon>> iconMaps) {
         _updateGroupsMap = iconMaps;
         if (_family!=null && _family.trim().length()>0) {
-            Hashtable<String, Hashtable<String, NamedIcon>> map = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
+            HashMap<String, HashMap<String, NamedIcon>> map = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
             if (map!=null) {
                 return;     // Must assume no family names were changed
             }
@@ -138,7 +140,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
 
-        Hashtable <String, Hashtable<String, Hashtable<String, NamedIcon>>> families = 
+        HashMap <String, HashMap<String, HashMap<String, NamedIcon>>> families = 
                             ItemPalette.getLevel4FamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
 
@@ -194,7 +196,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     /**
     * Make matrix of icons - each row has a button to change icons
     */
-    protected void addIcons2Panel(Hashtable<String, Hashtable<String, NamedIcon>> map) {
+    protected void addIcons2Panel(HashMap<String, HashMap<String, NamedIcon>> map) {
         GridBagLayout gridbag = new GridBagLayout();
         _iconPanel.setLayout(gridbag);
 
@@ -207,19 +209,19 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         c.gridheight = 1;
         c.gridy = -1;
 
-        Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = map.entrySet().iterator();
+        Iterator<Entry<String, HashMap<String, NamedIcon>>> it = map.entrySet().iterator();
         while (it.hasNext()) {
             c.gridx = 0;
             c.gridy++;
 
-            Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
+            Entry<String, HashMap<String, NamedIcon>> entry = it.next();
             String stateName = entry.getKey();
             JPanel panel = new JPanel();
             panel.add(new JLabel(ItemPalette.convertText(stateName)));
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
             c.gridx++;
-            Hashtable<String, NamedIcon> iconMap = entry.getValue();
+            HashMap<String, NamedIcon> iconMap = entry.getValue();
             Iterator<Entry<String, NamedIcon>> iter = iconMap.entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<String, NamedIcon> ent = iter.next();
@@ -361,7 +363,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         if (_tablePanel!=null) {
             _tablePanel.setVisible(false);        	
         }
-        _iconGroupsMap = new Hashtable<String, Hashtable<String, NamedIcon>>();
+        _iconGroupsMap = new HashMap<String, HashMap<String, NamedIcon>>();
         for (int i=0; i<STATUS_KEYS.length; i++) {
             _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout"));
         }
@@ -386,7 +388,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     /**
     *  _iconGroupsMap holds edit changes when done is pressed
     */
-    protected void updateIconGroupsMap(String key, Hashtable<String, NamedIcon> iconMap) {
+    protected void updateIconGroupsMap(String key, HashMap<String, NamedIcon> iconMap) {
         _iconGroupsMap.put(key, iconMap);
     }
 
@@ -443,7 +445,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _detectPanel.setPaths(paths);
     }
 
-    public Hashtable <String, Hashtable<String, NamedIcon>> getIconMaps() {
+    public HashMap <String, HashMap<String, NamedIcon>> getIconMaps() {
         if (_iconGroupsMap==null) {
         	_iconGroupsMap = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
             if (_iconGroupsMap==null) {
@@ -457,7 +459,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         return _iconGroupsMap;
     }
 
-    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IconDragJLabel(flavor);
     }
 
@@ -479,7 +481,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 return null;
             }
 
-            Hashtable <String, Hashtable <String, NamedIcon>> iconMap = getIconMaps();
+            HashMap <String, HashMap <String, NamedIcon>> iconMap = getIconMaps();
             if (iconMap==null) {
                 log.error("IconDragJLabel.getTransferData: iconMap is null!");
                 return null;
@@ -493,9 +495,9 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             t.setTurnout(bean.getSystemName());
             t.setFamily(_family);
 
-            Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
+            Iterator<Entry<String, HashMap<String, NamedIcon>>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
-                Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
+                Entry<String, HashMap<String, NamedIcon>> entry = it.next();
                 String status = entry.getKey();
                 Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
                 while (iter.hasNext()) {

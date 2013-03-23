@@ -12,7 +12,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.HashMap;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
@@ -85,7 +86,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
         _iconPanel.setVisible(false);
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_update) {
             return;
         }
@@ -155,7 +156,7 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
             return;
         }
         _family = _mast.getSignalSystem().getSystemName();
-        _currentIconMap = new java.util.Hashtable<String, NamedIcon>();
+        _currentIconMap = new HashMap<String, NamedIcon>();
         Enumeration<String> e = _mast.getAppearanceMap().getAspects();
         while (e.hasMoreElements()) {
             String s = _mast.getAppearanceMap().getProperty(e.nextElement(), "imagelink");
@@ -169,12 +170,12 @@ public class SignalMastItemPanel extends TableItemPanel implements ListSelection
 
     private NamedIcon getDragIcon() {
         if (_currentIconMap!=null) {
-            if (_currentIconMap.contains("Stop")) {
+            if (_currentIconMap.keySet().contains("Stop")) {
                 return _currentIconMap.get("Stop");
             }
-            Enumeration<String> e = _currentIconMap.keys();
-            if (e.hasMoreElements()) {
-                return _currentIconMap.get(e.nextElement());
+            Iterator<String> e = _currentIconMap.keySet().iterator();
+            if (e.hasNext()) {
+                return _currentIconMap.get(e.next());
             }
         }
         String fileName = "resources/icons/misc/X-red.gif";

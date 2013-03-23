@@ -3,7 +3,7 @@ package jmri.jmrit.display.palette;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -52,7 +52,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     * Init for update of existing track block
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
-    public void init(ActionListener doneAction, Hashtable<String, NamedIcon> iconMap) {
+    public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         super.init(doneAction, iconMap);
         _detectPanel= new DetectionPanel(this);
         add(_detectPanel, 0);
@@ -71,7 +71,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         }
     }
 
-    protected void makeDndIconPanel(Hashtable<String, NamedIcon> iconMap, String displayKey) {
+    protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         super.makeDndIconPanel(iconMap, "ClearTrack");
     }
 
@@ -115,15 +115,15 @@ public class IndicatorItemPanel extends FamilyItemPanel {
 
     /*******************************************************/
 
-    protected JLabel getDragger(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+    protected JLabel getDragger(DataFlavor flavor, HashMap<String, NamedIcon> map) {
         return new IndicatorDragJLabel(flavor, map);
     }
 
     protected class IndicatorDragJLabel extends DragJLabel {
-        Hashtable <String, NamedIcon> iconMap;
+        HashMap <String, NamedIcon> iconMap;
 
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // icon map is within package 
-        public IndicatorDragJLabel(DataFlavor flavor, Hashtable<String, NamedIcon> map) {
+        public IndicatorDragJLabel(DataFlavor flavor, HashMap<String, NamedIcon> map) {
             super(flavor);
             iconMap = map;
         }

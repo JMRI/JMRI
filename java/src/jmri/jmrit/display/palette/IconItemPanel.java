@@ -23,7 +23,7 @@ import java.awt.dnd.DropTargetListener;
 import java.io.IOException;
 
 import jmri.util.JmriJFrame;
-import java.util.Hashtable;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
@@ -48,8 +48,8 @@ import jmri.jmrit.display.LinkingLabel;
 */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 
-    Hashtable<String, NamedIcon> _iconMap;
-    Hashtable<String, NamedIcon> _tmpIconMap;
+    HashMap<String, NamedIcon> _iconMap;
+    HashMap<String, NamedIcon> _tmpIconMap;
     JPanel _iconPanel;
     JButton _catalogButton;
     CatalogPanel _catalog;
@@ -113,7 +113,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     * Override for plain icon & background and put all icons here
     */
     protected void initIconFamiliesPanel() {
-        Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
+        HashMap <String, HashMap<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
             if (families.size()!=1) {
                 log.warn("ItemType \""+_itemType+"\" has "+families.size()+" families.");
@@ -133,7 +133,7 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     /**
     *  Note caller must create _iconPanel before calling
     */
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap) {
         _iconPanel = new JPanel();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {

@@ -4,7 +4,7 @@ package jmri.jmrit.display.palette;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.Hashtable;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.jmrit.catalog.NamedIcon;
@@ -22,7 +22,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key, 
-    				Hashtable <String, NamedIcon> iconMap) {
+    				HashMap <String, NamedIcon> iconMap) {
         super(type, family, parent, iconMap);
         _key = key;
         _familyName.setText(_key);
@@ -53,7 +53,7 @@ public class IndicatorTOIconDialog extends IconDialog {
     protected void createNewFamily() {
         log.debug("createNewFamily: type= \""+_type+"\", family= \""+_family+"\" key= "+_key);
         //check text        
-        Hashtable<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
+        HashMap<String, NamedIcon> iconMap = ItemPanel.makeNewIconMap("Turnout");
         String key = _familyName.getText();
         ItemPalette.addLevel4FamilyMap(_type, _parent._family, key, iconMap);
         dispose();
@@ -98,7 +98,7 @@ public class IndicatorTOIconDialog extends IconDialog {
         return addFamily(_parent._family, _iconMap, subFamily);
     }
 
-    protected boolean addFamily(String family, Hashtable<String, NamedIcon> iconMap, String subFamily) {
+    protected boolean addFamily(String family, HashMap<String, NamedIcon> iconMap, String subFamily) {
         log.debug("addFamily _type= \""+_type+"\", family= \""+family+"\""+", key= \""+
                   _familyName.getText()+"\", _iconMap.size= "+_iconMap.size());
         IndicatorTOItemPanel parent = (IndicatorTOItemPanel)_parent;
