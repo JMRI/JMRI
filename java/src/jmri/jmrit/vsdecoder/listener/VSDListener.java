@@ -72,7 +72,7 @@ public class VSDListener {
 	// Set position here
     }
 
-    public void SetPosition(PhysicalLocation p) {
+    public void setPosition(PhysicalLocation p) {
 	if (_location == null)
 	    _location = new ListeningSpot();
 	_location.setLocation(p);
