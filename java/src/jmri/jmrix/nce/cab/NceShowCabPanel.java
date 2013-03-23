@@ -161,7 +161,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	private static final int CAB_MAX_PRO = 64;			// There are up to 64 cabs
 	private static final int CAB_LINE_LEN = 16;			// display line length of 16 bytes	
 	private static final int CAB_MAX_CABDATA = 65;		// Size for arrays. One more than highest cab number
-
+	private static final int CAB_AIU = 12;			// cab number for AIU data store
+	
 	private static final int REPLY_1 = 1;			// reply length of 1 byte
 	private static final int REPLY_2 = 2;			// reply length of 2 byte
 	private static final int REPLY_4 = 4;			// reply length of 4 byte
@@ -640,6 +641,10 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	        	cabData[currCabId].cab = currCabId;
 	          	if (cabType == FLAGS1_CABTYPE_AIU) {
 	          		// get the AIU data and map it to the function bits
+		        	readAiuData(currCabId);
+                   	if (!waitNce())
+                		return;
+		        	processAiuData(currCabId, recChars);
 	          	} else if (cabType == FLAGS1_CABTYPE_USB) {
 	          		// I don't have anything to do for the USB at this time
 	          	} else {
@@ -886,6 +891,10 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 	        	cabData[currCabId].cab = currCabId;
 	          	if (cabType == FLAGS1_CABTYPE_AIU) {
 	          		// get the AIU data and map it to the function bits
+		        	readAiuData(currCabId);
+                   	if (!waitNce())
+                		return;
+		        	processAiuData(currCabId, recChars);
 	          	} else if (cabType == FLAGS1_CABTYPE_USB) {
 	          		// I don't have anything to do for the USB at this time
 	          	} else {
@@ -1339,6 +1348,79 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     		cabData[currCabId].F28 = false;
     }
     
+    private void processAiuData(int currCabId, int[] ptr) {
+    	if ((ptr[1] & 0x01) == 0) {
+    		cabData[currCabId].F1 = true;
+    	} else {
+    		cabData[currCabId].F1 = false;
+    	}
+    	if ((ptr[1] & 0x02) == 0) {
+    		cabData[currCabId].F2 = true;
+    	} else {
+    		cabData[currCabId].F2 = false;
+    	}
+    	if ((ptr[1] & 0x04) == 0) {
+    		cabData[currCabId].F3 = true;
+    	} else {
+    		cabData[currCabId].F3 = false;
+    	}
+    	if ((ptr[1] & 0x08) == 0) {
+    		cabData[currCabId].F4 = true;
+    	} else {
+    		cabData[currCabId].F4 = false;
+    	}
+    	if ((ptr[1] & 0x10) == 0) {
+    		cabData[currCabId].F5 = true;
+    	} else {
+    		cabData[currCabId].F5 = false;
+    	}
+    	if ((ptr[1] & 0x20) == 0) {
+    		cabData[currCabId].F6 = true;
+    	} else {
+    		cabData[currCabId].F6 = false;
+    	}
+    	if ((ptr[1] & 0x40) == 0) {
+    		cabData[currCabId].F7 = true;
+    	} else {
+    		cabData[currCabId].F7 = false;
+    	}
+    	if ((ptr[1] & 0x80) == 0) {
+    		cabData[currCabId].F8 = true;
+    	} else {
+    		cabData[currCabId].F8 = false;
+    	}
+    	if ((ptr[0] & 0x01) == 0) {
+    		cabData[currCabId].F9 = true;
+    	} else {
+    		cabData[currCabId].F9 = false;
+    	}
+    	if ((ptr[0] & 0x02) == 0) {
+    		cabData[currCabId].F10 = true;
+    	} else {
+    		cabData[currCabId].F10 = false;
+    	}
+    	if ((ptr[0] & 0x04) == 0) {
+    		cabData[currCabId].F11 = true;
+    	} else {
+    		cabData[currCabId].F11 = false;
+    	}
+    	if ((ptr[0] & 0x08) == 0) {
+    		cabData[currCabId].F12 = true;
+    	} else {
+    		cabData[currCabId].F12 = false;
+    	}
+    	if ((ptr[0] & 0x10) == 0) {
+    		cabData[currCabId].F13 = true;
+    	} else {
+    		cabData[currCabId].F13 = false;
+    	}
+    	if ((ptr[0] & 0x20) == 0) {
+    		cabData[currCabId].F14 = true;
+    	} else {
+    		cabData[currCabId].F14 = false;
+    	}
+    }
+    
     // puts the thread to sleep while we wait for the read CS memory to complete
     private boolean waitNce(){
     	int count = 100;
@@ -1481,6 +1563,15 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     	waiting++;
 		byte[] bl = NceBinaryCommand.usbMemoryWrite1((byte)value);
 		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
+		tc.sendNceMessage(m, this);
+    }
+
+    // USB Read AIU 
+    private void readAiuData(int cabId) {
+		replyLen = REPLY_2;	// Expect 2 byte response
+    	waiting++;
+		byte[] bl = NceBinaryCommand.accAiu2Read(cabId);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
 		tc.sendNceMessage(m, this);
     }
     

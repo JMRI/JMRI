@@ -269,6 +269,15 @@ public class NceBinaryCommand {
 		return retVal;
 	}
 
+    public static byte[] accAiu2Read(int cabId) {
+
+		byte[] retVal = new byte[1+1];
+		retVal[0] = (byte) (READ_AUI2_CMD);// write 4 bytes command
+		retVal[1] = (byte) (cabId); 	// cab address
+
+		return retVal;
+	}
+
     public static byte[] usbSetCabId(int cab) {
 
 		byte[] retVal = new byte[2];
