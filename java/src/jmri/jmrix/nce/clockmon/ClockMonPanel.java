@@ -175,7 +175,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
     JTextField intPidGainI = new JTextField(7);
     JTextField intPidGainD = new JTextField(7);
     
-    java.beans.PropertyChangeListener minuteChangeListener ;
+    transient java.beans.PropertyChangeListener minuteChangeListener ;
     
     JButton setSyncButton = new JButton(rb.getString("SetSyncMode"));
     JButton setClockButton = new JButton(rb.getString("SetHoursMinutes"));
@@ -1172,14 +1172,19 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         	syncInterval = 58;
         }
         if (log.isDebugEnabled() && extraDebug) {
-           	Date now = internalClock.getTime();
-            String txt = "";
-            for (int i = 0; i < priorOffsetErrors.size(); i++) {
-                txt = txt + " " + priorOffsetErrors.get(i).doubleValue();
-            }
-            log.debug("priorOffsetErrors: " + txt);
-            log.debug("syncOffset: " + syncInterval + " avgDiff: " + avgDiff + " @ " + now.toString());
+            debugOutputForRecomputeOffset(avgDiff);
         }
+    }
+    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION",justification="Slow operation in debug OK for now")
+    private void debugOutputForRecomputeOffset(double avgDiff) {
+        Date now = internalClock.getTime();
+        String txt = "";
+        for (int i = 0; i < priorOffsetErrors.size(); i++) {
+            txt = txt + " " + priorOffsetErrors.get(i).doubleValue();
+        }
+        log.debug("priorOffsetErrors: " + txt);
+        log.debug("syncOffset: " + syncInterval + " avgDiff: " + avgDiff + " @ " + now.toString());
     }
     
     private void recomputeInternalSync() {
@@ -1216,17 +1221,22 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             syncInterval = 40;
         }
         if (log.isDebugEnabled() && extraDebug) {
-            String txt = "";
-            for (int i = 0; i < priorDiffs.size(); i++) {
-                txt = txt + " " + priorDiffs.get(i);
-            }
-            log.debug("priorDiffs: " + txt);
-            log.debug("syncInterval: " + syncInterval +
-                      " pCorr: " + fiveDigits.format(pCorr) +
-                      " iCorr: " + fiveDigits.format(iCorr) +
-                      " dCorr: " + fiveDigits.format(dCorr)
-                      );
+            debugOutputForRecomputeInternalSync(pCorr, iCorr, dCorr);
         }
+    }
+    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION",justification="Slow operation in debug OK for now")
+    private void debugOutputForRecomputeInternalSync(double pCorr, double iCorr, double dCorr) {
+        String txt = "";
+        for (int i = 0; i < priorDiffs.size(); i++) {
+            txt = txt + " " + priorDiffs.get(i);
+        }
+        log.debug("priorDiffs: " + txt);
+        log.debug("syncInterval: " + syncInterval +
+                  " pCorr: " + fiveDigits.format(pCorr) +
+                  " iCorr: " + fiveDigits.format(iCorr) +
+                  " dCorr: " + fiveDigits.format(dCorr)
+                  );
     }
     
     private void recomputeNceSync() {
@@ -1280,24 +1290,29 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             }
         }
         if (log.isDebugEnabled() && extraDebug) {
-            String txt = "";
-            for (int i = priorDiffs.size() - 1; i >= 0 ; i--) {
-                txt = txt + " " + threeDigits.format(priorDiffs.get(i));
-            }
-            log.debug("priorDiffs: " + txt);
-            txt = "";
-            for (int i = priorCorrections.size() - 1; i >= 0 ; i--) {
-                txt = txt + " " + threeDigits.format(priorCorrections.get(i));
-            }
-            log.debug("priorCorrections: " + txt);
-            log.debug("currError: " + fiveDigits.format(currError) +
-                      " pCorr: " + fiveDigits.format(pCorr) +
-                      " iCorr: " + fiveDigits.format(iCorr) +
-                      " dCorr: " + fiveDigits.format(dCorr) +
-                      " newInternalRate: " + threeDigits.format(newInternalRate));
+            debugOutputForRecomputeNceSync(pCorr, iCorr, dCorr, newInternalRate, currError);
         }
     }
-    
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION",justification="Slow operation in debug OK for now")
+    private void debugOutputForRecomputeNceSync(double pCorr, double iCorr, double dCorr, double newInternalRate, double currError) {
+        String txt = "";
+        for (int i = priorDiffs.size() - 1; i >= 0 ; i--) {
+            txt = txt + " " + threeDigits.format(priorDiffs.get(i));
+        }
+        log.debug("priorDiffs: " + txt);
+        txt = "";
+        for (int i = priorCorrections.size() - 1; i >= 0 ; i--) {
+            txt = txt + " " + threeDigits.format(priorCorrections.get(i));
+        }
+        log.debug("priorCorrections: " + txt);
+        log.debug("currError: " + fiveDigits.format(currError) +
+                  " pCorr: " + fiveDigits.format(pCorr) +
+                  " iCorr: " + fiveDigits.format(iCorr) +
+                  " dCorr: " + fiveDigits.format(dCorr) +
+                  " newInternalRate: " + threeDigits.format(newInternalRate));
+    }
+       
     private void changePollingSpeed(double newInterval) {
         if (newInterval < MIN_POLLING_INTERVAL || newInterval > MAX_POLLING_INTERVAL) {
             log.error(rb.getString("LogAlarmTimeIntervalError") + newInterval);
