@@ -449,12 +449,12 @@ public class Portal  {
     public boolean isValidPath(OPath path) {
     	String name = path.getName();
     	for (int i=0; i<_toPaths.size(); i++) {
-    		if (_toPaths.get(i).getName()==name) {
+    		if (_toPaths.get(i).getName().equals(name)) {
     			return true;
     		}
     	}
     	for (int i=0; i<_fromPaths.size(); i++) {
-    		if (_fromPaths.get(i).getName()==name) {
+    		if (_fromPaths.get(i).getName().equals(name)) {
     			return true;
     		}
     	}
