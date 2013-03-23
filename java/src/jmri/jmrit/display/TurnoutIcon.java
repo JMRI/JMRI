@@ -39,7 +39,6 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
     protected HashMap <Integer, NamedIcon> _iconStateMap;          // state int to icon
     protected HashMap <String, Integer> _name2stateMap;       // name to state
     protected HashMap <Integer, String> _state2nameMap;       // state to name
-    String  _iconFamily;
 
     public TurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
