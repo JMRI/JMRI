@@ -113,30 +113,17 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         InputStream in = null;
         OutputStream out = null;
         try {
-            try {
-                in = from.openConnection().getInputStream();
-              
-                // open for overwrite
-                out = new FileOutputStream(toFile);
-        
-                byte[] buf = new byte[1024];
-                int len;
-                while ((len = in.read(buf)) > 0){
-                    out.write(buf, 0, len);
-                }
-                // done
-                return true;
-            
-            }
-            finally {
-                try {
-                    if (in != null) in.close();
-                } catch (IOException e1) { log.error("exception closing in stream", e1);}
-                try {
-                    if (out != null) out.close();
-                } catch (IOException e2) { log.error("exception closing out stream", e2);}
-            }
+            in = from.openConnection().getInputStream();
           
+            // open for overwrite
+            out = new FileOutputStream(toFile);
+    
+            byte[] buf = new byte[1024];
+            int len;
+            while ((len = in.read(buf)) > 0){
+                out.write(buf, 0, len);
+            }
+            // done - finally cleans up
         }
         catch(FileNotFoundException ex){
             log.debug(""+ex);
@@ -148,6 +135,16 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
             JOptionPane.showMessageDialog(who,rb.getString("CopyError2"));
             return false;     
         }
+        finally {
+            try {
+                if (in != null) in.close();
+            } catch (IOException e1) { log.error("exception closing in stream", e1);}
+            try {
+                if (out != null) out.close();
+            } catch (IOException e2) { log.error("exception closing out stream", e2);}
+        }
+               
+        return true;      
       }
   
       boolean checkFile(URL url, JPanel who) {
