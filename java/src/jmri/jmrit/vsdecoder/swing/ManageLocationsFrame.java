@@ -150,7 +150,7 @@ public class ManageLocationsFrame extends JmriJFrame {
 	// Build Listener Locations Table
 	locData = new Object[1][7];
 	locData[0][0] = listenerLoc.getName();
-	locData[0][1] = new Boolean(true);
+	locData[0][1] = true;
 	locData[0][2] = listenerLoc.getLocation().x;
 	locData[0][3] = listenerLoc.getLocation().y;
 	locData[0][4] = listenerLoc.getLocation().z;

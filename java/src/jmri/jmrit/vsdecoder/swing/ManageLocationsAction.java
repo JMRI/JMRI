@@ -67,18 +67,18 @@ public class ManageLocationsAction extends AbstractAction {
 		    reporterMap.put(s, ((PhysicalLocationReporter)r).getPhysicalLocation());
 		    PhysicalLocation p = ((PhysicalLocationReporter)r).getPhysicalLocation();
 		    reporterTable[i][0] = s;
-		    reporterTable[i][1] = new Boolean(true);
+		    reporterTable[i][1] = true;
 		    reporterTable[i][2] = p.getX();
 		    reporterTable[i][3] = p.getY();
 		    reporterTable[i][4] = p.getZ();
-		    reporterTable[i][5] = new Boolean(p.isTunnel());
+		    reporterTable[i][5] = p.isTunnel();
 		} else {
 		    reporterTable[i][0] = s;
-		    reporterTable[i][1] = new Boolean(false);
+		    reporterTable[i][1] = false;
 		    reporterTable[i][2] = new Float(0.0f);
 		    reporterTable[i][3] = new Float(0.0f);
 		    reporterTable[i][4] = new Float(0.0f);
-		    reporterTable[i][5] = new Boolean(false);
+		    reporterTable[i][5] = false;
 		}
 		i++;
 	    }
@@ -96,11 +96,11 @@ public class ManageLocationsAction extends AbstractAction {
 		blockMap.put(s, ((PhysicalLocationReporter)b).getPhysicalLocation());
 		PhysicalLocation p = ((PhysicalLocationReporter)b).getPhysicalLocation();
 		blockTable[i][0] = s;
-		blockTable[i][1] = new Boolean(true);
+		blockTable[i][1] = true;
 		blockTable[i][2] = p.getX();
 		blockTable[i][3] = p.getY();
 		blockTable[i][4] = p.getZ();
-		blockTable[i][5] = new Boolean(p.isTunnel());
+		blockTable[i][5] = p.isTunnel();
 		i++;
 	    }
 
@@ -115,18 +115,18 @@ public class ManageLocationsAction extends AbstractAction {
 		Location l = lmgr.getLocationById(s);
 		if (log.isDebugEnabled()) log.debug("i = " + i + "MLA " + s + " Name: " + l.getName() + " table " + java.util.Arrays.toString(opsTable[i]));
 		PhysicalLocation p = l.getPhysicalLocation();
-		Boolean use = new Boolean(false);
+		Boolean use = false;
 		if (p == PhysicalLocation.Origin) {
 		    use = false;
 		} else {
 		    use = true;
 		}
 		opsTable[i][0] = l.getName();
-		opsTable[i][1] = new Boolean(use);
+		opsTable[i][1] = use;
 		opsTable[i][2] = p.getX();
 		opsTable[i][3] = p.getY();
 		opsTable[i][4] = p.getZ();
-		opsTable[i][5] = new Boolean(p.isTunnel());
+		opsTable[i][5] = p.isTunnel();
 		opsMap.put(l.getName(), l.getPhysicalLocation());
 		i++;
 	    }
