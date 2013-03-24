@@ -154,6 +154,10 @@ public class DecoderFile extends XmlFile {
     public String getFilename()  { return _filename; }
     public int getNumFunctions() { return _numFns; }
     public int getNumOutputs()   { return _numOuts; }
+    public boolean getShowable() { 
+        if (_element.getAttribute("show") == null) return true; // default
+        return ! (_element.getAttributeValue("show").equals("no"));
+    }
 
     public String getModelComment() { return _element.getAttributeValue("comment"); }
     public String getFamilyComment() { return ((Element)_element.getParent()).getAttributeValue("comment"); }
