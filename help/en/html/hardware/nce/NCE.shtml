@@ -149,8 +149,8 @@ BD20s is connected to pin 2. Therefore the Sensor ID would be:</P>
 <P>Sensor ID = 785</P>
 
 <p>In the hardware address field of the Add Sensor window you can enter in the 
-AIU Cab Address followed by the Pin Number seperated by a ":"<br>
-So for a sensor on AIU Cab Address 50, pin 2 you would enter the following : <b>50:2</b></p>
+AIU cab address followed by the pin number separated by a semicolon. 
+So for a sensor on AIU cab address 50, pin 2 you would enter the following: <b>50:2</b></p>
 
 <h3>Turnout Numbering</h3>
 JMRI can access accessory decoders as NCE Turnouts and Lights.
