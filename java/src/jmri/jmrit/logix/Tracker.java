@@ -161,8 +161,8 @@ public class Tracker extends java.beans.PropertyChangeSupport
 
             while (_tracking) {
                 synchronized(this) {
+                    _lock.lock();
                     try {
-                        _lock.lock();
                         wait();
                     } catch (InterruptedException ie) {
                         log.error("InterruptedException "+ie);
