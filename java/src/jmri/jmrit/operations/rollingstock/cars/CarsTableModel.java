@@ -60,7 +60,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	private static final int SHOWRFID = 4;
 	private static final int SHOWWAIT = 5;
 	private static final int SHOWLAST = 6;
-	private int showMoveCol = SHOWMOVES; // one of six possible columns to show
+	private int showMoveCol = SHOWMOVES; // one of seven possible columns to show
 
 	public final int SORTBYNUMBER = 1;
 	public final int SORTBYROAD = 2;

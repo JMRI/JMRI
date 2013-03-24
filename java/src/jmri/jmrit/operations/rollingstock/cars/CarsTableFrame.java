@@ -40,7 +40,7 @@ import jmri.util.com.sun.TableSorter;
  * Frame for adding and editing the car roster for operations.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013
  * @version $Revision$
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener {
@@ -115,25 +115,23 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		cp1.add(sortByNumber);
 		cp1.add(sortByRoad);
 		cp1.add(sortByType);
+		
 		JPanel clp = new JPanel();
 		clp.setBorder(BorderFactory.createTitledBorder(""));
 		clp.add(sortByColor);
 		clp.add(sortByLoad);
 		cp1.add(clp);
-		// cp1.add(sortByColor);
-		// cp1.add(sortByLoad);
 		cp1.add(sortByKernel);
 		cp1.add(sortByLocation);
+		
 		JPanel destp = new JPanel();
 		destp.setBorder(BorderFactory.createTitledBorder(""));
 		destp.add(sortByDestination);
 		destp.add(sortByFinalDestination);
 		destp.add(sortByRwe);
 		cp1.add(destp);
-		// cp1.add(sortByDestination);
-		// cp1.add(sortByFinalDestination);
-		// cp1.add(sortByRwe);
 		cp1.add(sortByTrain);
+		
 		JPanel movep = new JPanel();
 		movep.setBorder(BorderFactory.createTitledBorder(""));
 		movep.add(sortByMoves);
@@ -167,6 +165,11 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 		controlPanel.add(cp1);
 		controlPanel.add(cp2);
+		
+		// some tool tips
+		sortByFinalDestination.setToolTipText(Bundle.getMessage("FinalDestination"));
+		sortByRwe.setToolTipText(Bundle.getMessage("ReturnWhenEmpty"));
+		sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
 
 		JScrollPane controlPane = new JScrollPane(controlPanel);
 		// make sure control panel is the right size

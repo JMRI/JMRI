@@ -49,6 +49,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	private static final int SHOWOWNER = 2;
 	private static final int SHOWVALUE = 3;
 	private static final int SHOWRFID = 4;
+	private static final int SHOWLAST = 5;
 	private int showMoveCol = SHOWMOVES;
 
 	public EnginesTableModel() {
@@ -69,6 +70,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	public final int SORTBYOWNER = 10;
 	public final int SORTBYVALUE = 11;
 	public final int SORTBYRFID = 12;
+	public final int SORTBYLAST = 13;
 
 	private int _sort = SORTBYNUMBER;
 
@@ -93,6 +95,10 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			initTable();
 		} else if (sort == SORTBYRFID) {
 			showMoveCol = SHOWRFID;
+			fireTableStructureChanged();
+			initTable();
+		} else if (sort == SORTBYLAST) {
+			showMoveCol = SHOWLAST;
 			fireTableStructureChanged();
 			initTable();
 		} else
@@ -184,6 +190,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			list = manager.getByValueList();
 		else if (_sort == SORTBYRFID)
 			list = manager.getByRfidList();
+		else if (_sort == SORTBYLAST)
+			list = manager.getByLastDateList();
 		else
 			list = manager.getByNumberList();
 		return list;
@@ -272,6 +280,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 				return Setup.getValueLabel();
 			else if (showMoveCol == SHOWRFID)
 				return Setup.getRfidLabel();
+			else if (showMoveCol == SHOWLAST)
+				return Bundle.getMessage("LastMoved");
 			else
 				return Bundle.getMessage("Moves");
 		}
@@ -388,6 +398,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 				return eng.getValue();
 			else if (showMoveCol == SHOWRFID)
 				return eng.getRfid();
+			else if (showMoveCol == SHOWLAST)
+				return eng.getLastDate();
 			else
 				return eng.getMoves();
 		}
@@ -414,7 +426,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			if (esf != null)
 				esf.dispose();
 			esf = new EngineSetFrame();
-//			esf.setTitle(Bundle.getMessage("TitleEngineSet"));
 			esf.initComponents();
 			esf.loadEngine(engine);
 			esf.setVisible(true);
@@ -502,6 +513,5 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(EnginesTableModel.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(EnginesTableModel.class.getName());
 }

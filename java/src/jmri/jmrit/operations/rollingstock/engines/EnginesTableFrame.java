@@ -36,7 +36,7 @@ import jmri.util.com.sun.TableSorter;
  * Frame for adding and editing the engine roster for operations.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2011, 2012, 2013
  * @version $Revision$
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener {
@@ -65,6 +65,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	JRadioButton sortByOwner = new JRadioButton(Bundle.getMessage("Owner"));
 	JRadioButton sortByValue = new JRadioButton(Setup.getValueLabel());
 	JRadioButton sortByRfid = new JRadioButton(Setup.getRfidLabel());
+	JRadioButton sortByLast = new JRadioButton(Bundle.getMessage("Last"));
 	ButtonGroup group = new ButtonGroup();
 
 	// major buttons
@@ -116,15 +117,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			movep.add(sortByValue);
 		if (Setup.isRfidEnabled())
 			movep.add(sortByRfid);
+		movep.add(sortByLast);
 		cp1.add(movep);
-
-		// cp1.add(sortByMoves);
-		// cp1.add(sortByBuilt);
-		// cp1.add(sortByOwner);
-		// if(Setup.isValueEnabled())
-		// cp1.add(sortByValue);
-		// if(Setup.isRfidEnabled())
-		// cp1.add(sortByRfid);
 
 		// row 2
 		JPanel cp2 = new JPanel();
@@ -145,6 +139,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
 		controlPanel.add(cp1);
 		controlPanel.add(cp2);
+		
+		// some tool tips
+		sortByLast.setToolTipText(Bundle.getMessage("LastMoved"));
 
 		JScrollPane controlPane = new JScrollPane(controlPanel);
 		// make sure control panel is the right size
@@ -173,6 +170,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		addRadioButtonAction(sortByOwner);
 		addRadioButtonAction(sortByValue);
 		addRadioButtonAction(sortByRfid);
+		addRadioButtonAction(sortByLast);
 
 		group.add(sortByNumber);
 		group.add(sortByRoad);
@@ -186,6 +184,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		group.add(sortByOwner);
 		group.add(sortByValue);
 		group.add(sortByRfid);
+		group.add(sortByLast);
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -243,6 +242,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		}
 		if (ae.getSource() == sortByRfid) {
 			enginesModel.setSort(enginesModel.SORTBYRFID);
+		}
+		if (ae.getSource() == sortByLast) {
+			enginesModel.setSort(enginesModel.SORTBYLAST);
 		}
 		// clear any sorts by column
 		clearTableSort(enginesTable);
