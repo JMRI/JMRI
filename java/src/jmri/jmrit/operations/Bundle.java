@@ -23,7 +23,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * @version     $Revision: 17977 $
  * @since       3.3.1
  */
-public class Bundle extends jmri.Bundle {
+public class Bundle extends jmri.jmrit.Bundle {
 
     private final static String name = "jmri.jmrit.operations.JmritOperationsBundle"; // NOI18N
 
