@@ -170,7 +170,7 @@ public class WebServerManager {
             xmlFile.writeXML(WSFile, WSDoc);
 
         } catch (Exception ex) {
-            log.error("Error converting miniServer preferences to Web Server preferences: {}", ex);
+            log.error("Error converting miniServer preferences to Web Server preferences.", ex);
         }
     }
 }
