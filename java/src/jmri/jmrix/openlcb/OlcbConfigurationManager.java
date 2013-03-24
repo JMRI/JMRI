@@ -210,8 +210,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
     }
     
     protected ResourceBundle getActionModelResourceBundle(){
-        //No actions that can be loaded at startup)
-        return null;
+        return ResourceBundle.getBundle("jmri.jmrix.openlcb.OlcbActionListBundle");
     }
 
     /**
