@@ -11,11 +11,11 @@ import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -119,9 +119,8 @@ public class WebServerManager {
      }
      }
      */
-     
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="REC_CATCH_EXCEPTION",
-                justification="Catch is covering both JDOMException and IOException, FindBugs seems confused")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "REC_CATCH_EXCEPTION",
+            justification = "Catch is covering both JDOMException and IOException, FindBugs seems confused")
     private void preferencesFromMiniServerPreferences(File MSFile, File WSFile) {
         WebServerPreferences.WebServerPreferencesXml xmlFile = new WebServerPreferences.WebServerPreferencesXml();
         try {
@@ -157,21 +156,21 @@ public class WebServerManager {
             if (!parent.exists()) {
                 boolean created = parent.mkdir(); // directory known to not exist from previous conditional
                 if (!created) {
-                    log.error("Failed to create directory "+parent.toString() );
-                    throw new java.io.IOException("Failed to create directory "+parent.toString());
+                    log.error("Failed to create directory {}", parent.toString());
+                    throw new java.io.IOException("Failed to create directory " + parent.toString());
                 }
             }
 
             boolean created = WSFile.createNewFile(); // known to not exist or this method would not have been called
             if (!created) {
-                log.error("Failed to new create file "+WSFile.toString() );
-                throw new java.io.IOException("Failed to create new file "+WSFile.toString());
+                log.error("Failed to new create file {}", WSFile.toString());
+                throw new java.io.IOException("Failed to create new file " + WSFile.toString());
             }
 
             xmlFile.writeXML(WSFile, WSDoc);
 
         } catch (Exception ex) {
-            log.error("Error converting miniServer preferences to Web Server preferences: ex", ex);
+            log.error("Error converting miniServer preferences to Web Server preferences: {}", ex);
         }
     }
 }
