@@ -19,6 +19,10 @@ public class TrainsTableAction extends AbstractAction {
 		super(s);
 	}
 
+	public TrainsTableAction() {
+		this(Bundle.getMessage("MenuTrains"));
+	}
+
 	static TrainsTableFrame f = null;
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")

@@ -15,8 +15,13 @@ import javax.swing.AbstractAction;
  */
 public class OperationsSetupAction extends AbstractAction {
 
+    
     public OperationsSetupAction(String s) {
     	super(s);
+    }
+
+    public OperationsSetupAction() {
+    	this(Bundle.getMessage("MenuSetup"));
     }
 
     static OperationsSetupFrame f = null;

@@ -21,6 +21,10 @@ public class LocationsTableAction extends AbstractAction {
     	super(s);
     }
 
+    public LocationsTableAction() {
+    	this(Bundle.getMessage("MenuLocations"));
+    }
+
     static LocationsTableFrame f = null;
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void actionPerformed(ActionEvent e) {

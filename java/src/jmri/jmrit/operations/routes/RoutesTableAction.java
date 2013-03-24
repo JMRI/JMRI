@@ -20,6 +20,10 @@ public class RoutesTableAction extends AbstractAction {
     	super(s);
     }
 
+    public RoutesTableAction() {
+    	this(Bundle.getMessage("MenuRoutes"));
+    }
+
     static RoutesTableFrame f = null;
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void actionPerformed(ActionEvent e) {
