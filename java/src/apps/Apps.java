@@ -493,7 +493,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     
     protected void operationsMenu(JMenuBar menuBar, WindowInterface wi) {
-        menuBar.add(new jmri.jmrit.operations.OperationsMenu(rb.getString("MenuOperations")));
+        menuBar.add(new jmri.jmrit.operations.OperationsMenu());
     }
 
     protected void rosterMenu(JMenuBar menuBar, WindowInterface wi) {

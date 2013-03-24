@@ -72,8 +72,8 @@ public class ExportEngines extends XmlFile {
         PrintWriter fileOut;
 
 		try {
-			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),"UTF-8")),
-					true);
+			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),
+					"UTF-8")), true); // NOI18N
 		} catch (IOException e) {
 			log.error("can not open Engine roster CSV file");
 			return;

@@ -571,7 +571,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 					// set new pick up and set out locations
 					setRouteLocationAndDestination(rs, train, rl, rd);
 					log.debug("Add rolling stock (" + rs.toString() + ") to train " + train.getName()
-							+ " route pick up " + rl.getId() + " drop " + rd.getId());
+							+ " route pick up " + rl.getId() + " drop " + rd.getId());	// NOI18N
 				}
 			}
 		}

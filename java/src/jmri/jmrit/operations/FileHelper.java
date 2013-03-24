@@ -34,7 +34,7 @@ public class FileHelper {
 	public static void appendTextToFile(File file, String text)
 			throws IOException {
 		PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(
-				file, true), "UTF-8"));
+				file, true), "UTF-8"));	// NOI18N
 
 		pw.println(text);
 

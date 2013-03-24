@@ -83,7 +83,7 @@ public class TrainPrintUtilities {
 		// now get the build file to print
 		BufferedReader in;
 		try {
-			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));	// NOI18N
 		} catch (FileNotFoundException e) {
 			log.error("Build file doesn't exist");
 			return;
@@ -185,7 +185,7 @@ public class TrainPrintUtilities {
 //			return;
 //		}
 		try {
-			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));	// NOI18N
 		} catch (FileNotFoundException e) {
 			log.error("Build file doesn't exist");
 			return;
@@ -198,7 +198,7 @@ public class TrainPrintUtilities {
 				Bundle.getMessage("Report") + " " + name);
 		try {
 			out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(buildReport), "UTF-8")), true);
+					new FileOutputStream(buildReport), "UTF-8")), true);	// NOI18N
 		} catch (IOException e) {
 			log.error("Can not create build report file");
 			return;

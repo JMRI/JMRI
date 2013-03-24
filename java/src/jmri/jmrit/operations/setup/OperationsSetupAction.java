@@ -21,7 +21,7 @@ public class OperationsSetupAction extends AbstractAction {
     }
 
     public OperationsSetupAction() {
-    	this(Bundle.getMessage("MenuSetup"));
+    	this(Bundle.getMessage("MenuSetup"));	// NOI18N
     }
 
     static OperationsSetupFrame f = null;

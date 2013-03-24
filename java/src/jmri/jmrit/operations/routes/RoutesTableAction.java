@@ -21,7 +21,7 @@ public class RoutesTableAction extends AbstractAction {
     }
 
     public RoutesTableAction() {
-    	this(Bundle.getMessage("MenuRoutes"));
+    	this(Bundle.getMessage("MenuRoutes"));	// NOI18N
     }
 
     static RoutesTableFrame f = null;

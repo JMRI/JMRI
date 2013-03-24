@@ -22,7 +22,7 @@ public class LocationsTableAction extends AbstractAction {
     }
 
     public LocationsTableAction() {
-    	this(Bundle.getMessage("MenuLocations"));
+    	this(Bundle.getMessage("MenuLocations"));	// NOI18N
     }
 
     static LocationsTableFrame f = null;

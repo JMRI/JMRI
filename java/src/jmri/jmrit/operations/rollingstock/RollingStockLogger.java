@@ -182,7 +182,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		try {
 			// FileOutputStream is set to append
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-					fileLogger, true), "UTF-8")), true);
+					fileLogger, true), "UTF-8")), true);	// NOI18N
 		} catch (IOException e) {
 			log.error("Exception while opening log file: " + e.getLocalizedMessage());
 			return;

@@ -20,7 +20,7 @@ public class TrainsTableAction extends AbstractAction {
 	}
 
 	public TrainsTableAction() {
-		this(Bundle.getMessage("MenuTrains"));
+		this(Bundle.getMessage("MenuTrains"));	// NOI18N
 	}
 
 	static TrainsTableFrame f = null;

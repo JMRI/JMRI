@@ -122,7 +122,7 @@ public class TrainLogger extends XmlFile implements java.beans.PropertyChangeLis
 		try {
 			// FileOutputStream is set to append
 			fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(
-					_fileLogger, true), "UTF-8")), true);
+					_fileLogger, true), "UTF-8")), true);	// NOI18N
 		} catch (IOException e) {
 			log.error("Exception while opening log file: " + e.getLocalizedMessage());
 			return;
