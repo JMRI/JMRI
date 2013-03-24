@@ -72,6 +72,8 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         } else if (ConfigurationManager.TEST.equals(protocol)) {
             manager=new jmri.jmrix.can.nmranet.NmraConfigurationManager(this);
         }
+        // make sure appropriate actions in preferences
+        addToActionList();
     }
     
     /**
