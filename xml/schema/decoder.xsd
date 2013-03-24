@@ -218,6 +218,7 @@
             </xs:element>
           </xs:sequence>
           <xs:attribute name="model" type="xs:string" use="required"/>
+          <xs:attribute name="show" type="yesNoType" default="yes" />
           <xs:attribute name="options" type="xs:string" />
           <xs:attribute name="comment" type="xs:string" />
           <xs:attribute name="numFns" type="xs:int" />
