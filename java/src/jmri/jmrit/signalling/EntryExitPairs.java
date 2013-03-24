@@ -643,7 +643,7 @@ public class EntryExitPairs implements jmri.Manager{
     
     StackNXWindow stackWindow;
     
-    class StackDetails{
+    static class StackDetails{
         DestinationPoints dp;
         boolean reverse;
         StackDetails(DestinationPoints dp, boolean reverse){
