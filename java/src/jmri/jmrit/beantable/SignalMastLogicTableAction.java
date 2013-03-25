@@ -474,7 +474,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction{
         }
     }
     
-    protected PropertyChangeListener propertyGenerateListener = new PropertyChangeListener() {
+    protected transient PropertyChangeListener propertyGenerateListener = new PropertyChangeListener() {
         public void propertyChange(PropertyChangeEvent evt) {
             if (evt.getPropertyName().equals("autoGenerateComplete")){
                 if (signalMastLogicFrame!=null)
