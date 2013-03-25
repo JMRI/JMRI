@@ -1,6 +1,5 @@
 package jmri.jmrit.signalling.entryexit;
 
-import java.awt.CardLayout;
 import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import javax.swing.BoxLayout;

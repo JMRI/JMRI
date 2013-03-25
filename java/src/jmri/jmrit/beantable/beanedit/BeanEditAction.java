@@ -2,12 +2,10 @@
 
 package jmri.jmrit.beantable.beanedit;
 
-import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.NamedBean;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
 import java.util.ArrayList;
 import jmri.util.JmriJFrame;
 import javax.swing.*;

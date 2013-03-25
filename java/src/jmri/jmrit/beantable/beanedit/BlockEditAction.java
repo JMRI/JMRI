@@ -18,7 +18,6 @@ import java.text.DecimalFormat;
 import javax.swing.*;
 
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 
 /**
  * Provides an edit panel for a block object
