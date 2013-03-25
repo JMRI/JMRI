@@ -408,10 +408,9 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 			log.error("Location moves must be a number");
 			return;
 		}
-		if (moves <= 100) {
+		if (moves <= 500) {
 			rl.setMaxCarMoves(moves);
 		} else {
-			log.error("Location moves can not exceed 100");
 			JOptionPane.showMessageDialog(null, Bundle.getMessage("MaximumLocationMoves"),
 					Bundle.getMessage("CanNotChangeMoves"), JOptionPane.ERROR_MESSAGE);
 		}
