@@ -74,6 +74,8 @@ public final class SystemConsole extends JTextArea {
     private JmriJFrame frame = null;
 
     private JPopupMenu popup = new JPopupMenu();
+    
+    private JMenuItem copySelection = null;
 
     private JMenu wrapMenu = null;
     private ButtonGroup wrapGroup = null;
@@ -263,6 +265,16 @@ public final class SystemConsole extends JTextArea {
         frame.setAlwaysOnTop(alwaysOnTop.isSelected());
 
          // Define the pop-up menu
+        copySelection = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
+        copySelection.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent event) {
+                StringSelection text = new StringSelection(console.getSelectedText());
+                clipboard.setContents(text, text);
+            }
+        });
+        popup.add(copySelection);
+        
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("ButtonCopyClip"));
         menuItem.addActionListener(new ActionListener() {
             @Override
@@ -419,7 +431,7 @@ public final class SystemConsole extends JTextArea {
             }
             @Override
             @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_DEFAULT_ENCODING",
-                    justification="Can only be called from the same instance so default encoding OKLA")
+                    justification="Can only be called from the same instance so default encoding OK")
             public void write(byte[] b, int off, int len) throws IOException {
                 updateTextArea(new String(b, off, len), which);
             }
@@ -548,13 +560,17 @@ public final class SystemConsole extends JTextArea {
     private Map<Thread, StackTraceElement[]> traces;
     
     private void performStackTrace() {
+        System.out.println("----------- Begin Stack Trace -----------"); //NO18N
+        System.out.println("-----------------------------------------"); //NO18N
         traces = new HashMap<Thread, StackTraceElement[]>(Thread.getAllStackTraces());
         for(Thread thread: traces.keySet()) {
             System.out.println("["+thread.getId()+"] "+thread.getName());
             for(StackTraceElement el: thread.getStackTrace()) {
-                System.out.println(el);
+                System.out.println("  " + el);
             }
+            System.out.println("-----------------------------------------"); //NO18N
         }
+        System.out.println("-----------  End Stack Trace  -----------"); //NO18N
     }
 
     /**
@@ -628,6 +644,7 @@ public final class SystemConsole extends JTextArea {
 
         private void maybeShowPopup(MouseEvent e) {
             if (e.isPopupTrigger()) {
+                copySelection.setEnabled(console.getSelectionStart()!=console.getSelectionEnd());
                 popup.show(e.getComponent(), e.getX(), e.getY());
             }
         }
