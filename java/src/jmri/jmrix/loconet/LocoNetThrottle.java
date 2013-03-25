@@ -523,10 +523,10 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
                 speedIncrement=SPEED_STEP_28_INCREMENT;
                 log.debug("28 speed step change");
                 status=status&((~LnConstants.DEC_MODE_MASK)|
-                                LnConstants.STAT1_SL_SPDEX)
-                             | LnConstants.DEC_MODE_28;         // DEC_MODE_28 has a zero value, here for documentation
-                                                                // but it unfortunately shows a INT_VACUOUS_BIT_OPERATION
-                                                                // in Findbugs
+                                LnConstants.STAT1_SL_SPDEX);
+                             // | LnConstants.DEC_MODE_28;      // DEC_MODE_28 has a zero value, here for documentation
+                                                                // it unfortunately shows a INT_VACUOUS_BIT_OPERATION in Findbugs
+                                                                // and I don't want to annote that around this entire long method
              }
         else { // default to 128 speed step mode
                 speedIncrement=SPEED_STEP_128_INCREMENT;
