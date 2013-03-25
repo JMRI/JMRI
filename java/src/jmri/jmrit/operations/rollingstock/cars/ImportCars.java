@@ -6,9 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import javax.swing.JFileChooser;
@@ -69,11 +71,14 @@ public class ImportCars extends Thread {
 			return; // canceled
 		if (fc.getSelectedFile() == null)
 			return; // canceled
-		File f = fc.getSelectedFile();
+		File file = fc.getSelectedFile();
 		BufferedReader in;
 		try {
-			in = new BufferedReader(new FileReader(f));
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
 		} catch (FileNotFoundException e) {
+			return;
+		} catch (UnsupportedEncodingException e) {
+			log.error("UTF-8 encoding not supported");
 			return;
 		}
 
@@ -110,7 +115,7 @@ public class ImportCars extends Thread {
 		String[] inputLine;
 
 		// does the file name end with .csv?
-		if (f.getAbsolutePath().endsWith(".csv")) { // NOI18N
+		if (file.getAbsolutePath().endsWith(".csv")) { // NOI18N
 			log.info("Using comma as delimiter for import cars");
 			comma = true;
 		}
