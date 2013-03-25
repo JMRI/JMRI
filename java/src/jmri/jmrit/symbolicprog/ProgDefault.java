@@ -55,9 +55,9 @@ public class ProgDefault {
         } else {
             // create an array of file names from jmri.jar!xml/programmers, count entries
             List<String> sr = new ArrayList<String>();
-            Enumeration je = FileUtil.jmriJarFile().entries();
+            Enumeration<JarEntry> je = FileUtil.jmriJarFile().entries();
             while (je.hasMoreElements()) {
-                String name = ((JarEntry) je.nextElement()).getName();
+                String name = je.nextElement().getName();
                 if (name.startsWith("xml" + File.separator + "programmers") && name.endsWith(".xml")) {
                     sr.add(name.substring(name.lastIndexOf(File.separator)));
                 }

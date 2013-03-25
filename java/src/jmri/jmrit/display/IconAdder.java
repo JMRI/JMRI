@@ -673,10 +673,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
         CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
-        Enumeration e = root.children();
+        @SuppressWarnings("unchecked")
+		Enumeration<CatalogTreeNode> e = root.children();
         String name = _defaultIcons.toString();
         while (e.hasMoreElements()) {
-            CatalogTreeNode nChild = (CatalogTreeNode)e.nextElement();
+            CatalogTreeNode nChild = e.nextElement();
             if (name.equals(nChild.toString())) {
                 if (log.isDebugEnabled()) log.debug("Remove node "+nChild);
                 root.remove(nChild);
