@@ -2,6 +2,7 @@ package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
 import java.awt.Color;
 import jmri.NamedBeanHandle;
+import jmri.Sensor;
 import jmri.configurexml.*;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.ToolTip;
@@ -74,7 +75,7 @@ public class PositionableShapeXml extends AbstractXmlAdapter {
         element.setAttribute("lineWidth", ""+p.getLineWidth());
         element.setAttribute("alpha", ""+p.getAlpha());
 
-		NamedBeanHandle handle = p.getControlSensorHandle();
+		NamedBeanHandle<Sensor> handle = p.getControlSensorHandle();
 		if (handle!=null) {
 	        element.setAttribute("controlSensor", handle.getName());
 		}

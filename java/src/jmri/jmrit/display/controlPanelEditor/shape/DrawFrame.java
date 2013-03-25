@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import jmri.NamedBeanHandle;
+import jmri.Sensor;
 import jmri.jmrit.display.Editor.TargetPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -183,7 +184,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 		_lineSlider.setValue(_lineWidth);
 		_lineColor = ps.getLineColor();
 		_fillColor = ps.getFillColor();
-		NamedBeanHandle handle = ps.getControlSensorHandle();
+		NamedBeanHandle<Sensor> handle = ps.getControlSensorHandle();
 		if (handle!=null) {
 			_sensorName.setText(handle.getName());			
 		}

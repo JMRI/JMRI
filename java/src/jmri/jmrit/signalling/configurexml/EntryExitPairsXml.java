@@ -137,7 +137,6 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         }
 		// get attributes
         ArrayList<Object> loadedPanel = jmri.InstanceManager.configureManagerInstance().getInstanceList(LayoutEditor.class);
-        @SuppressWarnings("unchecked")
         List<Element> panelList = element.getChildren("layoutPanel");
         for(int k = 0; k<panelList.size(); k++){
             String panelName = panelList.get(k).getAttribute("name").getValue();

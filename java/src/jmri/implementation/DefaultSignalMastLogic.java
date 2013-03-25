@@ -1143,7 +1143,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             } else {
                     Enumeration<NamedBeanHandle<Turnout>> e = turnouts.keys();
                     while(e.hasMoreElements()){
-                        NamedBeanHandle nbh = e.nextElement();
+                        NamedBeanHandle<Turnout> nbh = e.nextElement();
                         NamedBeanSetting nbs = new NamedBeanSetting(nbh, turnouts.get(nbh));
                         userSetTurnouts.add(nbs);
                     }
@@ -1229,7 +1229,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 Enumeration<Block> e = blocks.keys();
                 while(e.hasMoreElements()){
                     Block blk = e.nextElement();
-                    NamedBeanHandle nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(blk.getDisplayName(), blk);
+                    NamedBeanHandle<?> nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(blk.getDisplayName(), blk);
                     NamedBeanSetting nbs = new NamedBeanSetting(nbh, blocks.get(blk));
                     userSetBlocks.add(nbs);
                 }
@@ -1291,7 +1291,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 Enumeration<SignalMast> e = masts.keys();
                 while(e.hasMoreElements()){
                     SignalMast mast = e.nextElement();
-                    NamedBeanHandle nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(mast.getDisplayName(), mast);
+                    NamedBeanHandle<?> nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(mast.getDisplayName(), mast);
                     NamedBeanSetting nbs = new NamedBeanSetting(nbh, masts.get(mast));
                     userSetMasts.add(nbs);
                 }
@@ -1358,7 +1358,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             } else {
                     Enumeration<NamedBeanHandle<Sensor>> e = sensors.keys();
                     while(e.hasMoreElements()){
-                        NamedBeanHandle nbh = e.nextElement();
+                        NamedBeanHandle<?> nbh = e.nextElement();
                         NamedBeanSetting nbs = new NamedBeanSetting(nbh, sensors.get(nbh));
                         userSetSensors.add(nbs);
                     }
@@ -1420,7 +1420,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         ArrayList<NamedBeanHandle<Turnout>> getNamedTurnouts(){
             ArrayList<NamedBeanHandle<Turnout>> out = new ArrayList<NamedBeanHandle<Turnout>>();
             for(NamedBeanSetting nbh:userSetTurnouts){
-                out.add(nbh.getNamedBean());
+                out.add((NamedBeanHandle<Turnout>) nbh.getNamedBean());
             }
             return out;
         }
@@ -1463,7 +1463,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         ArrayList<NamedBeanHandle<Sensor>> getNamedSensors(){
             ArrayList<NamedBeanHandle<Sensor>> out = new ArrayList<NamedBeanHandle<Sensor>>();
             for(NamedBeanSetting nbh:userSetSensors){
-                out.add(nbh.getNamedBean());
+                out.add((NamedBeanHandle<Sensor>) nbh.getNamedBean());
             }
             return out;
         }
@@ -2517,15 +2517,15 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         class NamedBeanSetting {
-            NamedBeanHandle namedBean;
+            NamedBeanHandle<?> namedBean;
             int setting = 0;
             String strSetting = null;
-            NamedBeanSetting(NamedBeanHandle namedBean, int setting){
+            NamedBeanSetting(NamedBeanHandle<?> namedBean, int setting){
                 this.namedBean = namedBean;
                 this.setting = setting;
             }
             
-            NamedBeanSetting (NamedBeanHandle namedBean, String setting){
+            NamedBeanSetting (NamedBeanHandle<?> namedBean, String setting){
                 this.namedBean = namedBean;
                 strSetting = setting;
             }
@@ -2534,7 +2534,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 return (NamedBean)namedBean.getBean();
             }
             
-            NamedBeanHandle getNamedBean(){
+            NamedBeanHandle<?> getNamedBean(){
                 return namedBean;
             }
             int getSetting(){
