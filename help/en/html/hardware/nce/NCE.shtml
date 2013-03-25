@@ -240,8 +240,8 @@ user's manual under "Setup Command Station".</P>
 
 <IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALIGN="right" ALT="NCE USB Interface" >
 
-<P>The NCE USB Interface can be connected to three NCE systems,
-Power Cab, SB3 (SmartBooster) or Power Pro. You must select the correct
+<P>The NCE USB Interface can be connected to all NCE systems,
+Power Cab, SB3 (SmartBooster), SB5, Twin or Power Pro. You must select the correct
 system from the preference menu for reliable operation.</P>
 
 <H3>Setup</H3>
@@ -321,9 +321,11 @@ system from the preference menu for reliable operation.</P>
 
 <P>The NCE USB Interface doesn't support all of the current JMRI
 features and functions. Some of the restrictions are based on the type
-of system the USB Adapter is connected to. The USB can't get information
-from AIUs, so they can't be used to get feedback from the layout. The
-turnout feedback mode MONITORING isn't available when using a USB, and
+of system the USB Adapter is connected to. The USB version 6.* can't get information
+from AIUs, so they can't be used to get feedback from the layout. The USB 7.* version
+when connected to a system with the 1.65 or higher firmware (PowerCab, SB5, Twin)
+the AIU cards can be used, but with restricted cab numbers as in the system manual.
+The turnout feedback mode MONITORING isn't available when using a USB, and
 the Clock functions found in tools are also not available. The USB when
 connected to a Power Pro system doesn't support any type of loco
 programming, and when connected to a SB3 only operation mode (no program
@@ -340,7 +342,7 @@ limitation when connected to a Power Pro.</P> -->
 
 <DL>
 	<DT>All systems:</DT>
-	<DD>No AIU support, No Turnout MONITORING, No Clock functions.</DD>
+	<DD>No Turnout MONITORING, No Clock functions.</DD>
 
 	<!--  <DT>Power Cab and SB3:</DT>
 	<DD>Can only access accessory addresses between 1 and 250.</DD> -->
@@ -350,6 +352,10 @@ limitation when connected to a Power Pro.</P> -->
 
 	<DT>Power Pro:</DT>
 	<DD>No loco programming</DD>
+	
+	<DT>AIU Support:</DT>
+	<DD>USB below 7.* version, no AIU support</DD>
+	<DD>USB version 7.* and above, system with version 1.65 and above firmware, AIU supported</DD>
 </DL>
 
 <a name="troubleShoot"></a>
