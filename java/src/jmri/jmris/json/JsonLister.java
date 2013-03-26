@@ -414,7 +414,7 @@ public class JsonLister {
             data.put(NAME, route.getSystemName());
             data.put(USERNAME, route.getUserName());
             data.put(COMMENT, route.getComment());
-            data.put(STATE, (s.provideSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.provideSensor(route.getTurnoutsAlignedSensor())).getKnownState() : Route.UNKNOWN);
+            data.put(STATE, (s.getSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.getSensor(route.getTurnoutsAlignedSensor())).getKnownState() : Route.UNKNOWN);
         } catch (NullPointerException e) {
             root.put(TYPE, ERROR);
             data.put(CODE, 404);
