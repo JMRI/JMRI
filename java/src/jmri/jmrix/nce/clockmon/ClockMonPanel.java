@@ -418,61 +418,61 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
                     issueReadAllRequest();
                 }
             }
-                                      );
+		);
         // install "set" button handler
         setClockButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     issueClockSet(Integer.parseInt(hours.getText().trim()),
                                   Integer.parseInt(minutes.getText().trim()),
                                   Integer.parseInt(seconds.getText().trim())
-                                  );
+                              );
                 }
             }
-                                          );
+		);
         // install "stop" clock button handler
         setStopNceButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     issueClockStop();
                 }
             }
-                                            );
+		);
         // install "start" clock button handler
         setStartNceButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     issueClockStart();
                 }
             }
-                                             );
+		);
         // install set fast clock ratio
         setRatioButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     changeNceClockRatio();
                 }
             }
-                                          );
+		);
         // install set 12/24 button
         set1224Button.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     issueClock1224(twentyFour.isSelected());
                 }
             }
-                                         );
+		);
         // install Sync Change Clock button
         setSyncButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     changeSyncMode();
                 }
             }
-                                         );
+        );
         
         // install "setPolling" button handler
         setPollingSpeedButton.addActionListener( new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    changePollingSpeed(Double.parseDouble(pollingSpeed.getText().trim())
-                                       );
+            public void actionPerformed(ActionEvent a) {
+                changePollingSpeed(Double.parseDouble(pollingSpeed.getText().trim()));
                 }
             }
-                                                 );
+		);
+        
         // install "setPid" button handler
         setPidButton.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -498,10 +498,10 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
             log.error("No Timebase Instance");
         }
         minuteChangeListener = new java.beans.PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    newInternalMinute();
-                }
-            } ;
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                newInternalMinute();
+            }
+        };
         if (minuteChangeListener == null){
             log.error("No minuteChangeListener");
         }
@@ -1186,7 +1186,7 @@ public class ClockMonPanel extends jmri.jmrix.nce.swing.NcePanel implements NceP
         log.debug("priorOffsetErrors: " + txt);
         log.debug("syncOffset: " + syncInterval + " avgDiff: " + avgDiff + " @ " + now.toString());
     }
-    
+     
     private void recomputeInternalSync() {
         //Date now = internalClock.getTime();
         double sumDiff = 0;
