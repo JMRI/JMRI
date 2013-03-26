@@ -18,6 +18,12 @@ public final class JSON {
     public static final String PONG = "pong"; // NOI18N
     public static final String GOODBYE = "goodbye"; // NOI18N
     public static final String NAME = "name"; // NOI18N
+    /* JSON methods */
+    public static final String METHOD = "method"; // NOI18N
+    public static final String DELETE = "delete"; // NOI18N
+    public static final String GET = "get"; // NOI18N
+    public static final String POST = "post"; // NOI18N
+    public static final String PUT = "put"; // NOI18N
     /* JSON common tokens */
     public static final String COMMENT = "comment"; // NOI18N
     public static final String USERNAME = "userName"; // NOI18N
