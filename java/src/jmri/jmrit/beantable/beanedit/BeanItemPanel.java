@@ -2,16 +2,18 @@ package jmri.jmrit.beantable.beanedit;
 
 import javax.swing.JPanel;
 import javax.swing.AbstractAction;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * Hold the information for each bean panel in a structured mannor.
  */
-public class EditBeanItem extends JPanel{
+public class BeanItemPanel extends JPanel{
 
-    public EditBeanItem(){
+    public BeanItemPanel(){
         super();
     }
-    
 
     public void saveItem(){
         if(save!=null)
@@ -40,6 +42,16 @@ public class EditBeanItem extends JPanel{
     
     AbstractAction save;
     AbstractAction reset;
+    
+    ArrayList<BeanEditItem> items = new ArrayList<BeanEditItem>();
+    
+    public void addItem(BeanEditItem bei){
+        items.add(bei);
+    }
+    
+    public List<BeanEditItem> getListOfItems(){
+        return items;
+    }
     
     String name;
     public void setName(String name){ this.name = name; }

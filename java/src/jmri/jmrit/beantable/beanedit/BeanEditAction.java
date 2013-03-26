@@ -3,13 +3,15 @@
 package jmri.jmrit.beantable.beanedit;
 
 import jmri.NamedBean;
+import javax.swing.*;
+import java.awt.*;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.List;
 import jmri.util.JmriJFrame;
-import javax.swing.*;
-import java.awt.*;
+
 import java.awt.BorderLayout;
 
 /**
@@ -40,10 +42,10 @@ abstract class BeanEditAction extends AbstractAction {
     *  Call to create all the different tabs that will be added
     *  to the frame
     */
-    protected void createPanels(){
-        bei.add(basicDetails());
+    protected void initPanels(){
+        basicDetails();
     }
-
+    
     JTextField userNameField = new JTextField(20);
     JTextArea commentField = new JTextArea(3,30);
     JScrollPane commentFieldScroller = new JScrollPane(commentField);
@@ -52,47 +54,53 @@ abstract class BeanEditAction extends AbstractAction {
     *  Creates a generic panel that holds the basic bean information
     *  System Name, User Name and Comment
     */
-    EditBeanItem basicDetails(){
-    
-        ArrayList<Item> items = new ArrayList<Item>();
-    
-        items.add(new Item(new JLabel(bean.getSystemName()), Bundle.getMessage("ColumnSystemName"), null));
+    BeanItemPanel basicDetails(){
+        BeanItemPanel basic = new BeanItemPanel();
         
-        EditBeanItem basic = new EditBeanItem();
         basic.setName("Basic");
         basic.setLayout(new BoxLayout(basic, BoxLayout.Y_AXIS));
-
-        items.add(new Item(userNameField, Bundle.getMessage("ColumnUserName"), null));
         
-        items.add(new Item(commentFieldScroller, Bundle.getMessage("ColumnComment"), null));
+        basic.addItem(new BeanEditItem(new JLabel(bean.getSystemName()), Bundle.getMessage("ColumnSystemName"), null));
+        
+        basic.addItem(new BeanEditItem(userNameField, Bundle.getMessage("ColumnUserName"), null));
+        
+        basic.addItem(new BeanEditItem(commentFieldScroller, Bundle.getMessage("ColumnComment"), null));
 
         basic.setSaveItem(new AbstractAction(){
-                public void actionPerformed(ActionEvent e) {
-                    if(bean.getUserName()==null && !userNameField.getText().equals("")){
-                        renameBean(userNameField.getText());
-                    } else if(bean.getUserName()!=null && !bean.getUserName().equals(userNameField.getText())){
-                        if(userNameField.getText().equals("")){
-                            removeName();
-                        } else {
-                            renameBean(userNameField.getText());
-                        }
-                    }
-                    bean.setComment(commentField.getText());
+            public void actionPerformed(ActionEvent e) {
+                saveBasicItems(e);
             }
         });
         basic.setResetItem(new AbstractAction(){
             public void actionPerformed(ActionEvent e) {
-                userNameField.setText(bean.getUserName());
-                commentField.setText(bean.getComment());
+                resetBasicItems(e);
             }
         });
-        addToPanel(basic, items);
+        bei.add(basic);
         return basic;
+    }
+    
+    protected void saveBasicItems(ActionEvent e){
+        if(bean.getUserName()==null && !userNameField.getText().equals("")){
+            renameBean(userNameField.getText());
+        } else if(bean.getUserName()!=null && !bean.getUserName().equals(userNameField.getText())){
+            if(userNameField.getText().equals("")){
+                removeName();
+            } else {
+                renameBean(userNameField.getText());
+            }
+        }
+        bean.setComment(commentField.getText());    
+    }
+    
+    protected void resetBasicItems(ActionEvent e){
+        userNameField.setText(bean.getUserName());
+        commentField.setText(bean.getComment());
     }
     
     abstract protected String helpTarget();
     
-    protected ArrayList<EditBeanItem> bei = new ArrayList<EditBeanItem>(5);
+    protected ArrayList<BeanItemPanel> bei = new ArrayList<BeanItemPanel>(5);
     JmriJFrame f;
     
     protected Component selectedTab = null;
@@ -111,9 +119,10 @@ abstract class BeanEditAction extends AbstractAction {
             f = new JmriJFrame("Edit " + getBeanType() + " " + bean.getDisplayName(), false,false);
             f.addHelpMenu(helpTarget(), true);
             java.awt.Container containerPanel = f.getContentPane();
-            createPanels();
-            //JTabbedPane detailsTab = new JTabbedPane();
-            for(EditBeanItem bi:bei){
+            initPanels();
+            
+            for(BeanItemPanel bi:bei){
+                addToPanel(bi, bi.getListOfItems());
                 detailsTab.addTab(bi.getName(), bi);
             }
             
@@ -122,20 +131,20 @@ abstract class BeanEditAction extends AbstractAction {
             JButton applyBut = new JButton(Bundle.getMessage("ButtonApply"));
             applyBut.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    save();
+                    applyButtonAction(e);
                 }
             });
             JButton okBut = new JButton(Bundle.getMessage("ButtonOK"));
             okBut.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    save();
+                    applyButtonAction(e);
                     f.dispose();
                 }
             });
             JButton cancelBut = new JButton(Bundle.getMessage("ButtonCancel"));
             cancelBut.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
-                    f.dispose();
+                    cancelButtonAction(e);
                 }
             });
             buttons.add(applyBut);
@@ -143,7 +152,7 @@ abstract class BeanEditAction extends AbstractAction {
             buttons.add(cancelBut);
             containerPanel.add(buttons, BorderLayout.SOUTH);
         }
-        for(EditBeanItem bi:bei){
+        for(BeanItemPanel bi:bei){
             bi.resetField();
         }
         if(selectedTab!=null)
@@ -152,10 +161,18 @@ abstract class BeanEditAction extends AbstractAction {
 		f.setVisible(true);
 	}
     
+    protected void applyButtonAction(ActionEvent e){
+        save();
+    }
+    
+    protected void cancelButtonAction(ActionEvent e){
+        f.dispose();
+    }
+    
     /**
     *  Sets out the panel based upon the items passed in via the ArrayList
     */
-    protected void addToPanel(JPanel panel, ArrayList<Item> items){
+    protected void addToPanel(JPanel panel, List<BeanEditItem> items){
         GridBagLayout gbLayout = new GridBagLayout();
         GridBagConstraints cL = new GridBagConstraints();
         GridBagConstraints cD = new GridBagConstraints();
@@ -170,7 +187,7 @@ abstract class BeanEditAction extends AbstractAction {
         int y = 0;
         JPanel p = new JPanel();
         
-        for(Item it:items){
+        for(BeanEditItem it:items){
             if(it.getDescription()!=null && it.getComponent()!=null){
                 JLabel decript = new JLabel(it.getDescription() + ":", JLabel.LEFT);
                 cL.gridx = 0;
@@ -218,7 +235,7 @@ abstract class BeanEditAction extends AbstractAction {
     }
     
     public void save(){
-        for(EditBeanItem bi:bei){
+        for(BeanItemPanel bi:bei){
             bi.saveItem();
         }
     }
@@ -312,40 +329,5 @@ abstract class BeanEditAction extends AbstractAction {
         bean.setUserName(null);
     }
     
-    /**
-    * Class used to define the items used with in a panel
-    */
-    protected static class Item {
-        String help;
-        String description;
-        JComponent component;
-        /**
-        * Create the item structure to be added.
-        * If the component and description are null, then the help text
-        * will be displayed across the width of the panel.
-        * @component Optional Contains the item to be edited
-        * @description Optional Contains the text for the label that will be to the left of the component
-        * @help Optional Contains the help or hint text, that will be displayed to the right of the component
-        */
-        public Item (JComponent component, String description, String help){
-            this.component = component;
-            this.description = description;
-            this.help = help;
-        }
-        
-        String getDescription(){
-            return description;
-        }
-    
-        String getHelp(){
-            return help;
-        }
-        
-        JComponent getComponent(){
-            return component;
-        }
-    
-    
-    }
-   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanEditAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanEditAction.class.getName());
 }

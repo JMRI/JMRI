@@ -117,7 +117,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     
     static public final int INVERTCOL = BeanTableDataModel.NUMCOLUMN;
     static public final int LOCKCOL = INVERTCOL+1;
-    static public final int KNOWNCOL = LOCKCOL+1;
+    static public final int EDITCOL = LOCKCOL+1;
+    static public final int KNOWNCOL = EDITCOL+1;
     static public final int MODECOL = KNOWNCOL+1;
     static public final int SENSOR1COL = MODECOL+1;
     static public final int SENSOR2COL = SENSOR1COL+1;
@@ -127,6 +128,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     static public final int LOCKDECCOL = LOCKOPRCOL+1;
     static public final int STRAIGHTCOL = LOCKDECCOL+1;
     static public final int DIVERGCOL = STRAIGHTCOL+1;
+    
     
     /**
      * Create the JTable DataModel, along with the changes
@@ -162,6 +164,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 else if (col==DIVERGCOL) return "Thrown Speed";
                 else if (col==STRAIGHTCOL) return "Closed Speed";
                 else if (col==VALUECOL) return "Cmd";  // override default title
+                else if (col==EDITCOL) return "";
 
                 else return super.getColumnName(col);
             }
@@ -176,6 +179,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 else if (col==SENSOR2COL) return JComboBox.class;
                 else if (col==OPSONOFFCOL) return JComboBox.class;
                 else if (col==OPSEDITCOL) return JButton.class;
+                else if (col==EDITCOL) return JButton.class;
                 else if (col==LOCKOPRCOL)  return JComboBox.class;
                 else if (col==LOCKDECCOL) return JComboBox.class;
                 else if (col==DIVERGCOL) return JComboBox.class;
@@ -196,6 +200,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     case SENSOR2COL : return new JTextField(5).getPreferredSize().width;
                     case OPSONOFFCOL : return new JTextField(14).getPreferredSize().width;
                     case OPSEDITCOL : return new JTextField(7).getPreferredSize().width;
+                    case EDITCOL : return new JTextField(7).getPreferredSize().width;
                     case DIVERGCOL : return new JTextField(14).getPreferredSize().width;
                     case STRAIGHTCOL : return new JTextField(14).getPreferredSize().width;
                     default: super.getPreferredWidth(col);
@@ -220,6 +225,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 else if (col==LOCKDECCOL) return true;
                 else if (col==DIVERGCOL) return true;
                 else if (col==STRAIGHTCOL) return true;
+                else if (col==EDITCOL) return true;
                 else return super.isCellEditable(row,col);
             }
 
@@ -265,7 +271,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                     return makeAutomationBox(t);
                 } else if (col==OPSEDITCOL ) {
                     return AbstractTableAction.rb.getString("EditTurnoutOperation");
-                } else if (col == LOCKDECCOL) {
+                } else if (col==EDITCOL ) {
+                    return Bundle.getMessage("ButtonEdit");
+                }else if (col == LOCKDECCOL) {
                     JComboBox c = new JComboBox(t.getValidDecoderNames());
                     c.setSelectedItem (t.getDecoderName());
                     c.addActionListener(new ActionListener(){
@@ -352,6 +360,18 @@ public class TurnoutTableAction extends AbstractTableAction {
                 } else if (col==OPSEDITCOL ) {
                     t.setInhibitOperation(false);
                     editTurnoutOperation(t, (JComboBox)getValueAt(row,OPSONOFFCOL));
+                } else if (col==EDITCOL ) {
+                    class WindowMaker implements Runnable {
+                        Turnout t;
+                        WindowMaker(Turnout t){
+                            this.t = t;
+                        }
+                        public void run() {
+                                editButton(t);
+                            }
+                        }
+                    WindowMaker w = new WindowMaker(t);
+					javax.swing.SwingUtilities.invokeLater(w);
                 } else if (col == LOCKOPRCOL) {
                     String lockOpName = (String) ((JComboBox) value)
                         .getSelectedItem();
@@ -370,18 +390,17 @@ public class TurnoutTableAction extends AbstractTableAction {
                     String decoderName = (String)((JComboBox)value).getSelectedItem();
                     t.setDecoderName(decoderName);
                 } else if (col==STRAIGHTCOL){
-                            
-                        String speed = (String)((JComboBox)value).getSelectedItem();
-                        try {
-                            t.setStraightSpeed(speed);
-                        } catch (jmri.JmriException ex) {
-                            JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
-                            return;
-                        }
-                        if ((!speedListClosed.contains(speed)) && !speed.contains("Global")){
-                            speedListClosed.add(speed);
-                        }
-                        fireTableRowsUpdated(row,row);
+                    String speed = (String)((JComboBox)value).getSelectedItem();
+                    try {
+                        t.setStraightSpeed(speed);
+                    } catch (jmri.JmriException ex) {
+                        JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + speed);
+                        return;
+                    }
+                    if ((!speedListClosed.contains(speed)) && !speed.contains("Global")){
+                        speedListClosed.add(speed);
+                    }
+                    fireTableRowsUpdated(row,row);
                 } else if (col==DIVERGCOL) {
                     
                     String speed = (String)((JComboBox)value).getSelectedItem();
@@ -430,6 +449,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
                 table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
                 setColumnToHoldButton(table,OPSEDITCOL,editButton());
+                setColumnToHoldButton(table,EDITCOL,editButton());
                 //Hide the following columns by default
                 XTableColumnModel columnModel = (XTableColumnModel)table.getColumnModel();
                 TableColumn column  = columnModel.getColumnByModelIndex(STRAIGHTCOL);
@@ -757,7 +777,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      * @param t	turnout
      * @param cb JComboBox
      */
-    private void setTurnoutOperation(Turnout t, JComboBox cb) {
+    protected void setTurnoutOperation(Turnout t, JComboBox cb) {
         switch (cb.getSelectedIndex())
             {
             case 0:			// Off
@@ -774,6 +794,13 @@ public class TurnoutTableAction extends AbstractTableAction {
                                       getOperation(((String)cb.getSelectedItem())));	
                 break;
             }
+    }
+    
+    void editButton(Turnout t){
+        if(beanEdit==null)
+            beanEdit = new jmri.jmrit.beantable.beanedit.TurnoutEditAction();
+        beanEdit.setBean(t);
+        beanEdit.actionPerformed(null);
     }
     
     /**
@@ -1220,6 +1247,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     
     private boolean noWarn = false;
 
+    jmri.jmrit.beantable.beanedit.TurnoutEditAction beanEdit;
+    
     protected String getClassName() { return TurnoutTableAction.class.getName(); }
     
     @Override
