@@ -41,6 +41,7 @@ public final class JSON {
     public static final String MEMORIES = "memories"; // NOI18N
     public static final String METADATA = "metadata"; // NOI18N
     public static final String PANELS = "panels"; // NOI18N
+    public static final String REPORTERS = "reporters"; // NOI18N
     public static final String ROSTER = "roster"; // NOI18N
     public static final String ROUTES = "routes"; // NOI18N
     public static final String SENSORS = "sensors"; // NOI18N
