@@ -200,7 +200,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// row 9
 		JPanel pOp = new JPanel();
 		pOp.setLayout(new GridBagLayout());
-		pOp.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Ops")));
+		pOp.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TracksAtLocation")));
 		pOp.add(spurRadioButton);
 		pOp.add(yardRadioButton);
 		pOp.add(interchangeRadioButton);
