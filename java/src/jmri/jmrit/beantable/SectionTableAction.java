@@ -1044,7 +1044,7 @@ public class SectionTableAction extends AbstractTableAction {
 					}
 				}
             });
-        JMenuItem setDirSensors = new JMenuItem(rbx.getString("SetupDirectionSensors")+" SSL...");
+        JMenuItem setDirSensors = new JMenuItem(rbx.getString("SetupDirectionSensors")+"...");
         toolsMenu.add(setDirSensors);
         setDirSensors.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -1067,8 +1067,7 @@ public class SectionTableAction extends AbstractTableAction {
 						}
 					}
 				}
-            });
-        
+            });		
         JMenuItem removeDirSensors = new JMenuItem(rbx.getString("RemoveDirectionSensors")+"...");
         toolsMenu.add(removeDirSensors);
         removeDirSensors.addActionListener(new ActionListener() {
@@ -1087,30 +1086,6 @@ public class SectionTableAction extends AbstractTableAction {
 							}
 							else if (n==0) {
 								JOptionPane.showMessageDialog(frame, rbx.getString("Message31"),
-									rbx.getString("MessageTitle"),JOptionPane.INFORMATION_MESSAGE);
-							}
-						}
-					}
-				}
-            });
-        JMenuItem setDirMastSensors = new JMenuItem(rbx.getString("SetupDirectionSensors")+" Masts...");
-        toolsMenu.add(setDirMastSensors);
-        setDirMastSensors.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (sectionManager!=null) {
-						if (initializeLayoutEditor(true)) {
-							int n = sectionManager.setupDirectionSensorsMasts(panel);
-							if (n>0) {
-								JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(
-									rbx.getString("Message27"),new Object[] {""+n}), 
-									rbx.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-							}
-							else if (n==-2) {
-								JOptionPane.showMessageDialog(frame, rbx.getString("Message30"),
-									rbx.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-							}
-							else if (n==0) {
-								JOptionPane.showMessageDialog(frame, rbx.getString("Message28"),
 									rbx.getString("MessageTitle"),JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
