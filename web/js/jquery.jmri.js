@@ -36,7 +36,7 @@
             // Getters and Setters
             jmri.getLight = function(name) {
                 if (!jmri.setLight(name, jmri.UNKNOWN)) {
-                    $.getJSON(jmri.url + "light/" + name, function(json) {
+                    $.getJSON(jmri.url + "lights/" + name, function(json) {
                         jmri.light(json.data.name, json.data.state);
                     });
                 }
@@ -56,7 +56,7 @@
             };
             jmri.getSensor = function(name) {
                 if (!jmri.setSensor(name, jmri.UNKNOWN)) {
-                    $.getJSON(jmri.url + "sensor/" + name, function(json) {
+                    $.getJSON(jmri.url + "sensors/" + name, function(json) {
                         jmri.sensor(json.data.name, json.data.state);
                     });
                 }
@@ -66,7 +66,7 @@
             };
             jmri.getTurnout = function(name) {
                 if (!jmri.setTurnout(name, jmri.UNKNOWN)) {
-                    $.getJSON(jmri.url + "turnout/" + name, function(json) {
+                    $.getJSON(jmri.url + "turnouts/" + name, function(json) {
                         jmri.turnout(json.data.name, json.data.state);
                     });
                 }
