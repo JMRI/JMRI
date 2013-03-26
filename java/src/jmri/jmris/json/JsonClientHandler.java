@@ -62,12 +62,20 @@ public class JsonClientHandler {
      * <code>{"type":"turnout","data":{"name":"LT14"}}</code> that are passed to
      * type-specific handlers. In addition to the initial response, these
      * requests will initiate "listeners", which will send updated responses
-     * every time the item's state changes.</li> <li>a heartbeat in the form
+     * every time the item's state changes.<ul>
+     * <li>an item's state can be set by adding a <strong>state</strong> node to the
+     * <em>data</em> node:
+     * <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code>
+     * <li>individual types can be created if a <strong>method</strong> node with the
+     * value <em>post</em> is included in the <em>data</em> node:
+     * <code>{"type":"turnout","data":{"name":"LT14","method":"post"}}</code>
+     * Note that not all types support this.</li></ul>
+     * </li><li>a heartbeat in the form
      * <code>*</code> or
      * <code>{"type":"ping"}</code>. The
      * <code>*</code> heartbeat gets no response, while the JSON heartbeat
      * causes a
-     * <code>{"type":"pong"}</code> response.</li> <li>a signoff in the form:
+     * <code>{"type":"pong"}</code> response.</li> <li>a sign off in the form:
      * <code>{"type":"goodbye"}</code> to which an identical response is sent
      * before the connection gets closed.</li>
      *
@@ -108,6 +116,8 @@ public class JsonClientHandler {
                     reply = JsonLister.getMetadata();
                 } else if (list.equals(PANELS)) {
                     reply = JsonLister.getPanels();
+                } else if (list.equals(REPORTERS)) {
+                    reply = JsonLister.getReporters();
                 } else if (list.equals(ROSTER)) {
                     reply = JsonLister.getRoster();
                 } else if (list.equals(ROUTES)) {
