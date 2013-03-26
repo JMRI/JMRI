@@ -64,6 +64,18 @@ public class JsonTurnoutServer extends AbstractTurnoutServer {
     public void parseRequest(JsonNode data) throws JmriException, IOException {
         int state = data.path(STATE).asInt(Turnout.UNKNOWN);
         String name = data.path(NAME).asText();
+        if (data.path(METHOD).asText().equals(POST)) {
+            Turnout turnout = this.initTurnout(name);
+            if (data.path(USERNAME).isTextual()) {
+                turnout.setUserName(data.path(USERNAME).asText());
+            }
+            if (data.path(INVERTED).isBoolean()) {
+                turnout.setInverted(data.path(INVERTED).asBoolean());
+            }
+            if (data.path(COMMENT).isTextual()) {
+                turnout.setComment(data.path(COMMENT).asText());
+            }
+        }
         switch (state) {
             case Turnout.THROWN:
                 this.throwTurnout(name);
@@ -72,7 +84,7 @@ public class JsonTurnoutServer extends AbstractTurnoutServer {
                 this.closeTurnout(name);
                 break;
             default:
-                this.sendStatus(name, InstanceManager.turnoutManagerInstance().provideTurnout(name).getKnownState());
+                this.sendStatus(name, InstanceManager.turnoutManagerInstance().getTurnout(name).getKnownState());
                 break;
         }
         this.addTurnoutToList(name);
