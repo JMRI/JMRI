@@ -499,7 +499,7 @@ public class EntryExitPairs implements jmri.Manager{
     public final static int CANCELROUTE = 0;
     public final static int CLEARROUTE = 1;
     public final static int EXITROUTE = 2;
-    public final static int STACKROUTE = 2;
+    public final static int STACKROUTE = 4;
     
     
 
