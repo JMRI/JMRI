@@ -696,7 +696,7 @@ public class JsonUtil {
             data.put(INVERTED, turnout.getInverted());
             data.put(STATE, turnout.getKnownState());
         } catch (NullPointerException e) {
-            handleError(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
+            root = handleError(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
             log.error("Unable to get turnout [" + name + "].", e);
         }
         return root;
