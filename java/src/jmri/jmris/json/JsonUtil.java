@@ -727,7 +727,7 @@ public class JsonUtil {
 
     static public void setTurnout(String name, JsonNode data) throws JsonException {
         try {
-            Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
             if (data.path(USERNAME).isTextual()) {
                 turnout.setUserName(data.path(USERNAME).asText());
             }
@@ -751,23 +751,6 @@ public class JsonUtil {
             }
         } catch (NullPointerException ex) {
             log.error("Unable to get turnout {}.", name, ex);
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
-        }
-    }
-
-    static public void setTurnout(String name, int state) throws JsonException {
-        try {
-            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);
-            switch (state) {
-                case Turnout.THROWN:
-                case Turnout.CLOSED:
-                    turnout.setCommandedState(state);
-                    break;
-                default:
-                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", TURNOUT, state));
-            }
-        } catch (NullPointerException e) {
-            log.error("Unable to get turnout [" + name + "].", e);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
         }
     }
