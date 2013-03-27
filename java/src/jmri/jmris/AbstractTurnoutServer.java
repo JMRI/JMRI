@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * Abstract interface between the a JMRI turnout and a network connection
  *
  * @author Paul Bender Copyright (C) 2010
+ * @author Randall Wood Copyright (C) 2013
  * @version $Revision$
  */
 abstract public class AbstractTurnoutServer {
@@ -93,7 +94,7 @@ abstract public class AbstractTurnoutServer {
 
         TurnoutListener(String turnoutName) {
             name = turnoutName;
-            turnout = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName);
+            turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
         }
 
         // update state as state of turnout changes

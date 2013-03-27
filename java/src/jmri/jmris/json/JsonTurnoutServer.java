@@ -13,7 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simple Server interface between the JMRI turnout manager and a network
+ * JSON Server interface between the JMRI turnout manager and a network
  * connection
  *
  * This server sends a message containing the turnout state whenever a turnout
@@ -51,13 +51,7 @@ public class JsonTurnoutServer extends AbstractTurnoutServer {
 
     @Override
     public void sendErrorStatus(String turnoutName) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, ERROR);
-        ObjectNode data = root.putObject(ERROR);
-        data.put(NAME, turnoutName);
-        data.put(CODE, -1);
-        data.put(MESSAGE, Bundle.getMessage("ErrorObject", TURNOUT, turnoutName));
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", TURNOUT, turnoutName))));
     }
 
     @Override

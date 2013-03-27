@@ -1,13 +1,11 @@
-//SimpleSensorServer.java
+//JsonSensorServer.java
 package jmri.jmris.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
-import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
@@ -18,14 +16,20 @@ import org.slf4j.LoggerFactory;
  * JSON Web Socket interface between the JMRI Sensor manager and a network
  * connection
  *
+ * This server sends a message containing the sensor state whenever a sensor
+ * that has been previously requested is open or thrown. When a client requests
+ * or updates a sensor, the server replies with all known sensor details, but
+ * only sends the new sensor state when sending a status update.
+ *
  * @author Paul Bender Copyright (C) 2010
+ * @author Randall Wood Copyright (C) 2013
  * @version $Revision: 21313 $
  */
 public class JsonSensorServer extends AbstractSensorServer {
 
     private JmriConnection connection;
     private ObjectMapper mapper;
-    static Logger log = LoggerFactory.getLogger(JsonSensorServer.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonSensorServer.class);
 
     public JsonSensorServer(JmriConnection connection) {
         super();
@@ -48,34 +52,22 @@ public class JsonSensorServer extends AbstractSensorServer {
 
     @Override
     public void sendErrorStatus(String sensorName) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, ERROR);
-        ObjectNode data = root.putObject(ERROR);
-        data.put(NAME, sensorName);
-        data.put(CODE, -1);
-        data.put(MESSAGE, Bundle.getMessage("ErrorObject", SENSOR, sensorName));
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", SENSOR, sensorName))));
     }
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        this.parseRequest(this.mapper.readTree(statusString).path(DATA));
+        throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException {
-        int state = data.path(STATE).asInt(Sensor.UNKNOWN);
+    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
         String name = data.path(NAME).asText();
-        switch (state) {
-            case Sensor.ACTIVE:
-                this.setSensorActive(name);
-                break;
-            case Sensor.INACTIVE:
-                this.setSensorInactive(name);
-                break;
-            default:
-                this.sendStatus(name, InstanceManager.sensorManagerInstance().provideSensor(name).getKnownState());
-                break;
+        if (data.path(METHOD).asText().equals(PUT)) {
+            JsonUtil.putSensor(name, data);
+        } else {
+            JsonUtil.setSensor(name, data);
         }
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getSensor(name)));
         this.addSensorToList(name);
     }
 }

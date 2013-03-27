@@ -1,4 +1,4 @@
-//SimpleReporterServer.java
+//JsonReporterServer.java
 package jmri.jmris.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import jmri.JmriException;
-import jmri.Reporter;
 import jmri.jmris.AbstractReporterServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
@@ -14,10 +13,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Simple Server interface between the JMRI reporter manager and a network
+ * JSON Server interface between the JMRI reporter manager and a network
  * connection
  *
+ * This server sends a message containing the reporter state whenever a reporter
+ * that has been previously requested changes state. When a client requests or
+ * updates a reporter, the server replies with all known reporter details, but
+ * only sends the new reporter state when sending a status update.
+ *
  * @author Paul Bender Copyright (C) 2011
+ * @author Randall Wood Copyright (C) 2013
  * @version $Revision: 21313 $
  */
 public class JsonReporterServer extends AbstractReporterServer {
@@ -51,26 +56,22 @@ public class JsonReporterServer extends AbstractReporterServer {
 
     @Override
     public void sendErrorStatus(String reporterName) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, ERROR);
-        ObjectNode data = root.putObject(ERROR);
-        data.put(NAME, reporterName);
-        data.put(CODE, -1);
-        data.put(MESSAGE, Bundle.getMessage("ErrorObject", REPORTER, reporterName));
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", REPORTER, reporterName))));
     }
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        this.parseRequest(this.mapper.readTree(statusString).path(DATA));
+        throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException {
-        if (!data.path(REPORT).isMissingNode()) {
-            this.setReporterReport(data.path(NAME).asText(), data.path(REPORT).asText());
+    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
+        String name = data.path(NAME).asText();
+        if (data.path(METHOD).asText().equals(PUT)) {
+            JsonUtil.putReporter(name, data);
+        } else {
+            JsonUtil.setReporter(name, data);
         }
-        Reporter reporter = jmri.InstanceManager.reporterManagerInstance().provideReporter(data.path(NAME).asText());
-        this.addReporterToList(reporter.getSystemName());
-        this.sendReport(reporter.getSystemName(), reporter.getCurrentReport());
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getReporter(name)));
+        this.addReporterToList(name);
     }
 }
