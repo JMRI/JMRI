@@ -94,8 +94,8 @@ public class BlockTableAction extends AbstractTableAction {
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
-
-        	static public final int DIRECTIONCOL = NUMCOLUMN;
+            static public final int EDITCOL = NUMCOLUMN;
+        	static public final int DIRECTIONCOL = EDITCOL+1;
 			static public final int LENGTHCOL = DIRECTIONCOL+1;
 			static public final int CURVECOL = LENGTHCOL+1;
             static public final int STATECOL = CURVECOL+1;
@@ -104,7 +104,6 @@ public class BlockTableAction extends AbstractTableAction {
             static public final int CURRENTREPCOL = REPORTERCOL+1;
             static public final int PERMISCOL = CURRENTREPCOL+1;
             static public final int SPEEDCOL = PERMISCOL+1;
-            static public final int EDIT = SPEEDCOL+1;
             
         	public String getValue(String name) {
         		if (name == null) {
@@ -134,7 +133,7 @@ public class BlockTableAction extends AbstractTableAction {
 
             //Permissive and speed columns are temp disabled
     		public int getColumnCount(){ 
-    		    return EDIT+1;
+    		    return SPEEDCOL+1;
      		}
 
     		public Object getValueAt(int row, int col) {
@@ -205,7 +204,7 @@ public class BlockTableAction extends AbstractTableAction {
                 }
                 else if (col==CURRENTREPCOL){
                     return Boolean.valueOf(b.isReportingCurrent());
-                } else if (col==EDIT){  //
+                } else if (col==EDITCOL){  //
                     return AbstractTableAction.rb.getString("ButtonEdit");
                 }
                 else return super.getValueAt(row, col);
@@ -269,7 +268,7 @@ public class BlockTableAction extends AbstractTableAction {
                     boolean boo = ((Boolean) value).booleanValue();
                     b.setReportingCurrent(boo);
                     fireTableRowsUpdated(row,row);
-                } else if (col==EDIT){
+                } else if (col==EDITCOL){
                         class WindowMaker implements Runnable {
                         Block b;
                         WindowMaker(Block b){
@@ -297,7 +296,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==REPORTERCOL) return rb.getString("BlockReporter");
                 if (col==SENSORCOL) return rb.getString("BlockSensor");
                 if (col==CURRENTREPCOL) return rb.getString("BlockReporterCurrent");
-                if (col==EDIT) return Bundle.getMessage("ButtonEdit");
+                if (col==EDITCOL) return Bundle.getMessage("ButtonEdit");
         		return super.getColumnName(col);
         	}
 
@@ -312,7 +311,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==REPORTERCOL) return String.class;
                 if (col==SENSORCOL) return JComboBox.class;
                 if (col==CURRENTREPCOL) return Boolean.class;
-                if(col==EDIT) return JButton.class;
+                if(col==EDITCOL) return JButton.class;
     			else return super.getColumnClass(col);
 		    }
 
@@ -326,7 +325,7 @@ public class BlockTableAction extends AbstractTableAction {
                 if (col==REPORTERCOL) return new JTextField(8).getPreferredSize().width;
                 if (col==SENSORCOL) return new JTextField(8).getPreferredSize().width;
                 if (col==CURRENTREPCOL) return new JTextField(7).getPreferredSize().width;
-                if (col==EDIT) return new JTextField(7).getPreferredSize().width;
+                if (col==EDITCOL) return new JTextField(7).getPreferredSize().width;
     			else return super.getPreferredWidth(col);
 		    }
 
@@ -343,7 +342,7 @@ public class BlockTableAction extends AbstractTableAction {
                 else if (col==REPORTERCOL) return true;
                 else if (col==SENSORCOL) return true;
                 else if (col==CURRENTREPCOL) return true;
-                else if (col==EDIT) return true;
+                else if (col==EDITCOL) return true;
 				else return super.isCellEditable(row,col);
 			}
 			
@@ -390,6 +389,7 @@ public class BlockTableAction extends AbstractTableAction {
     }
     
     void editButton(Block b){
+        jmri.jmrit.beantable.beanedit.BlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.BlockEditAction();
         beanEdit.setBean(b);
         beanEdit.actionPerformed(null);
     }
@@ -712,7 +712,6 @@ public class BlockTableAction extends AbstractTableAction {
         }
     }
     
-    jmri.jmrit.beantable.beanedit.BlockEditAction beanEdit = new jmri.jmrit.beantable.beanedit.BlockEditAction();
     @Override
     public void dispose() {
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setSimplePreferenceState(getClassName() + ":LengthUnitMetric",centimeterBox.isSelected());

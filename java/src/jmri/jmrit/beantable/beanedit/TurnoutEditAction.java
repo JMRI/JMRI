@@ -31,7 +31,6 @@ public class TurnoutEditAction extends BeanEditAction {
         oldAutomationSelection = ((Turnout)bean).getTurnoutOperation();
         oldModeSelection = ((Turnout)bean).getFeedbackModeName();
         super.actionPerformed(e);
-    
     }
     
     @Override
@@ -43,7 +42,6 @@ public class TurnoutEditAction extends BeanEditAction {
     }
     
     public String getBeanType() { return Bundle.getMessage("BeanNameTurnout"); }
-    public NamedBean getBySystemName(String name) { return InstanceManager.turnoutManagerInstance().getBySystemName(name);}
     public NamedBean getByUserName(String name) { return InstanceManager.turnoutManagerInstance().getByUserName(name);}
     
     JmriBeanComboBox reporterField;
@@ -209,7 +207,7 @@ public class TurnoutEditAction extends BeanEditAction {
     TurnoutOperation currentOperation;
     JTextField operationsName = new JTextField(10);
     
-    ActionListener automationSelectionListener = new ActionListener(){
+    transient ActionListener automationSelectionListener = new ActionListener(){
             public void actionPerformed(ActionEvent e) {
                 updateAutomationOptions();
             }

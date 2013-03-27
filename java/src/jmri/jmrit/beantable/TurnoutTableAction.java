@@ -797,8 +797,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     
     void editButton(Turnout t){
-        if(beanEdit==null)
-            beanEdit = new jmri.jmrit.beantable.beanedit.TurnoutEditAction();
+        jmri.jmrit.beantable.beanedit.TurnoutEditAction beanEdit = new jmri.jmrit.beantable.beanedit.TurnoutEditAction();
         beanEdit.setBean(t);
         beanEdit.actionPerformed(null);
     }
@@ -1246,8 +1245,6 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     
     private boolean noWarn = false;
-
-    jmri.jmrit.beantable.beanedit.TurnoutEditAction beanEdit;
     
     protected String getClassName() { return TurnoutTableAction.class.getName(); }
     

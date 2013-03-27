@@ -254,7 +254,7 @@ abstract class BeanEditAction extends AbstractAction {
     jmri.NamedBeanHandleManager nbMan = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
     
     abstract protected String getBeanType();
-    abstract protected NamedBean getBySystemName(String name);
+    /*abstract protected NamedBean getBySystemName(String name);*/
     abstract protected NamedBean getByUserName(String name);
     
     /**

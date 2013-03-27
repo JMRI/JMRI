@@ -6,7 +6,6 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.Block;
 import jmri.util.swing.JmriBeanComboBox;
-import jmri.Sensor;
 import jmri.Reporter;
 
 import java.awt.event.KeyListener;
@@ -45,7 +44,6 @@ public class BlockEditAction extends BeanEditAction {
     }
     
     public String getBeanType() { return Bundle.getMessage("BeanNameBlock"); }
-    public NamedBean getBySystemName(String name) { return jmri.InstanceManager.getDefault(jmri.BlockManager.class).getBySystemName(name);}
     public NamedBean getByUserName(String name) { return jmri.InstanceManager.getDefault(jmri.BlockManager.class).getByUserName(name);}
     
     JTextField userNameField = new JTextField(20);
@@ -240,77 +238,26 @@ public class BlockEditAction extends BeanEditAction {
     }
     
     JmriBeanComboBox sensorField;
-    JTextField sensorDebounceInactiveField = new JTextField(5);
-    JTextField sensorDebounceActiveField = new JTextField(5);
-    JCheckBox sensorDebounceGlobalCheck = new JCheckBox();//"Use global Debounce"/*rb.getString("OccupancySensorUseGlobal")*/);
     
     BeanItemPanel sensor() {
 
         BeanItemPanel basic = new BeanItemPanel();
         basic.setName(Bundle.getMessage("BeanNameSensor"));
-
+        
         sensorField = new JmriBeanComboBox(InstanceManager.sensorManagerInstance(), ((Block)bean).getSensor(), JmriBeanComboBox.DISPLAYNAME);
         sensorField.setFirstItemBlank(true);
         basic.addItem(new BeanEditItem(sensorField, Bundle.getMessage("BeanNameSensor"), Bundle.getMessage("BlockAssignSensorText")));
         
+        final SensorDebounceEditAction debounce = new SensorDebounceEditAction();
+        //debounce.setBean(bean);
+        debounce.sensorDebounce(basic);
+        
         sensorField.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                if(sensorField.getSelectedBean()==null){
-                    sensorDebounceGlobalCheck.setEnabled(false);
-                    sensorDebounceInactiveField.setEnabled(false);
-                    sensorDebounceActiveField.setEnabled(false);
-                } else {
-                    sensorDebounceGlobalCheck.setEnabled(true);
-                    sensorDebounceInactiveField.setEnabled(true);
-                    sensorDebounceActiveField.setEnabled(true);
-                }
+                debounce.setBean(sensorField.getSelectedBean());
+                debounce.resetDebounceItems(e);
             }
         });
-        
-        sensorDebounceGlobalCheck.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                if(sensorDebounceGlobalCheck.isSelected()){
-                    sensorDebounceInactiveField.setEnabled(false);
-                    sensorDebounceActiveField.setEnabled(false);
-                } else {
-                    sensorDebounceInactiveField.setEnabled(true);
-                    sensorDebounceActiveField.setEnabled(true);
-                }
-            }
-        });
-
-        sensorDebounceInactiveField.addKeyListener( new KeyListener() {
-            public void keyPressed(KeyEvent keyEvent) {
-            }
-            public void keyReleased(KeyEvent keyEvent) {
-                String text = sensorDebounceInactiveField.getText();
-                if (!validateNumericalInput(text)){
-                    String msg = java.text.MessageFormat.format(Bundle.getMessage("ShouldBeNumber"), new Object[] { Bundle.getMessage("SensorInActiveDebounce") });
-                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"), msg, "Block Details", "Inactive", false, false);
-                }
-            }
-            public void keyTyped(KeyEvent keyEvent) {
-            }
-        });
-        
-        sensorDebounceActiveField.addKeyListener( new KeyListener() {
-            public void keyPressed(KeyEvent keyEvent) {
-            }
-            public void keyReleased(KeyEvent keyEvent) {
-                String text = sensorDebounceActiveField.getText();
-                if (!validateNumericalInput(text)){
-                    String msg = java.text.MessageFormat.format(Bundle.getMessage("ShouldBeNumber"), new Object[] { Bundle.getMessage("SensorActiveDebounce") });
-                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).showInfoMessage(Bundle.getMessage("ErrorTitle"), msg, "Block Details", "Active", false, false);
-                }
-            }
-            public void keyTyped(KeyEvent keyEvent) {
-            }
-        });
-        
-        basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("SensorDebounceText")));
-        basic.addItem(new BeanEditItem(sensorDebounceGlobalCheck,Bundle.getMessage("SensorDebounceUseGlobalText"), null));
-        basic.addItem(new BeanEditItem(sensorDebounceInactiveField,Bundle.getMessage("SensorInActiveDebounce"), Bundle.getMessage("SensorInActiveDebounceText")));
-        basic.addItem(new BeanEditItem(sensorDebounceActiveField,Bundle.getMessage("SensorActiveDebounce"), Bundle.getMessage("SensorActiveDebounceText")));
         
         basic.setSaveItem(new AbstractAction(){
             public void actionPerformed(ActionEvent e) {
@@ -321,18 +268,7 @@ public class BlockEditAction extends BeanEditAction {
                     lBlk.validateSensor(sensorField.getSelectedDisplayName(), null);
                 else
                     blk.setSensor(sensorField.getSelectedDisplayName());
-                if(sensorField.getSelectedBean()!=null){
-                    Sensor sen = (Sensor) sensorField.getSelectedBean();
-                    
-                    String timeVal = sensorDebounceActiveField.getText();
-                    int time = Integer.valueOf(timeVal).intValue();
-                    sen.setSensorDebounceGoingActiveTimer(time);
-                    
-                    timeVal = sensorDebounceInactiveField.getText();
-                    time = Integer.valueOf(timeVal).intValue();
-                    sen.setSensorDebounceGoingInActiveTimer(time);
-                    sen.useDefaultTimerSettings(sensorDebounceGlobalCheck.isSelected());
-                }
+                debounce.saveDebounceItems(e);
             }
         });
         basic.setResetItem(new AbstractAction(){
@@ -340,21 +276,13 @@ public class BlockEditAction extends BeanEditAction {
                 Block blk = (Block)bean;
                 //From basic details
                 sensorField.setSelectedBean(blk.getSensor());
-                if(sensorField.getSelectedBean()==null){
-                    sensorDebounceGlobalCheck.setEnabled(false);
-                    sensorDebounceInactiveField.setEnabled(false);
-                    sensorDebounceActiveField.setEnabled(false);
-                } else {
-                    Sensor sen = (Sensor) sensorField.getSelectedBean();
-                    sensorDebounceGlobalCheck.setSelected(sen.useDefaultTimerSettings());
-                    sensorDebounceActiveField.setText(""+sen.getSensorDebounceGoingActiveTimer());
-                    sensorDebounceInactiveField.setText(""+sen.getSensorDebounceGoingInActiveTimer());
-                }
+                debounce.setBean(blk.getSensor());
+                debounce.resetDebounceItems(e);
             }
         });
 
         bei.add(basic);
         return basic;
     }
-
+    
 }
