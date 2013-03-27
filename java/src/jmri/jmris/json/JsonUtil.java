@@ -247,10 +247,12 @@ public class JsonUtil {
             if (data.path(COMMENT).isTextual()) {
                 memory.setComment(data.path(COMMENT).asText());
             }
-            if (data.path(VALUE).isNull()) {
-                memory.setValue(null);
-            } else {
-                memory.setValue(data.path(VALUE).asText());
+            if (!data.path(VALUE).isMissingNode()) {
+                if (data.path(VALUE).isNull()) {
+                    memory.setValue(null);
+                } else {
+                    memory.setValue(data.path(VALUE).asText());
+                }
             }
         } catch (NullPointerException ex) {
             log.error("Unable to get memory {}", name);
@@ -393,6 +395,15 @@ public class JsonUtil {
             reporters.add(getReporter(name));
         }
         return root;
+    }
+
+    static public void putReporter(String name, JsonNode data) throws JsonException {
+        try {
+            InstanceManager.reporterManagerInstance().provideReporter(name);
+        } catch (Exception ex) {
+            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", REPORTER, name));
+        }
+        setReporter(name, data);
     }
 
     static public void setReporter(String name, JsonNode data) throws JsonException {

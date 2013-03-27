@@ -333,6 +333,9 @@ public class JsonServlet extends WebSocketServlet {
                     } else if (type.equals(POWER)) {
                         JsonUtil.setPower(data);
                         reply = JsonUtil.getPower();
+                    } else if (type.equals(REPORTERS)) {
+                        JsonUtil.putReporter(name, data);
+                        reply = JsonUtil.getReporter(name);
                     } else if (type.equals(SENSORS)) {
                         JsonUtil.putSensor(name, data);
                         reply = JsonUtil.getSensor(name);
