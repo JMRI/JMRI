@@ -18,8 +18,8 @@ import org.slf4j.LoggerFactory;
  *
  * This server sends a message containing the turnout state whenever a turnout
  * that has been previously requested is open or thrown. When a client requests
- * a turnout, the server replies with all known turnout details, but only
- * contains the turnout state when sending a status update.
+ * or updates a turnout, the server replies with all known turnout details, but
+ * only sends the new turnout state when sending a status update.
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2012, 2013
