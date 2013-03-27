@@ -149,7 +149,10 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         firePropertyChange("UserName", old, s);
     }
 
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
+								justification="Sync of mUserName protected by ctor invocation") 
     protected String mUserName;
+    
     protected String mSystemName;
 
     protected void firePropertyChange(String p, Object old, Object n) { 
