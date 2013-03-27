@@ -134,14 +134,10 @@ public class JsonUtil {
     static public void putLight(String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.lightManagerInstance().provideLight(name);
-            setLight(name, data);
         } catch (Exception ex) {
-            if (ex.getClass().equals(JsonException.class)) {
-                throw (JsonException) ex;
-            } else {
-                throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
-            }
+            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
         }
+        setLight(name, data);
     }
 
     static public void setLight(String name, JsonNode data) throws JsonException {
@@ -231,6 +227,15 @@ public class JsonUtil {
             log.error("Unable to get memory {}", name);
         }
         return root;
+    }
+
+    static public void putMemory(String name, JsonNode data) throws JsonException {
+        try {
+            InstanceManager.memoryManagerInstance().provideMemory(name);
+        } catch (Exception ex) {
+            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", MEMORY, name));
+        }
+        setMemory(name, data);
     }
 
     static public void setMemory(String name, JsonNode data) throws JsonException {
@@ -540,6 +545,15 @@ public class JsonUtil {
         return root;
     }
 
+    static public void putSensor(String name, JsonNode data) throws JsonException {
+        try {
+            InstanceManager.sensorManagerInstance().provideSensor(name);
+        } catch (Exception ex) {
+            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
+        }
+        setTurnout(name, data);
+    }
+
     static public void setSensor(String name, JsonNode data) throws JsonException {
         try {
             Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
@@ -793,14 +807,10 @@ public class JsonUtil {
     static public void putTurnout(String name, JsonNode data) throws JsonException {
         try {
             InstanceManager.turnoutManagerInstance().provideTurnout(name);
-            setTurnout(name, data);
         } catch (Exception ex) {
-            if (ex.getClass().equals(JsonException.class)) {
-                throw (JsonException) ex;
-            } else {
-                throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
-            }
+            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
         }
+        setTurnout(name, data);
     }
 
     static public void setTurnout(String name, JsonNode data) throws JsonException {

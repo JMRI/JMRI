@@ -215,31 +215,31 @@ public class JsonServlet extends WebSocketServlet {
         String type = (rest.length > 1) ? rest[1] : null;
         String name = (rest.length > 2) ? rest[2] : null;
         JsonNode data;
-        if (request.getContentType().contains("application/json")) {
-            data = this.mapper.readTree(request.getReader());
-            if (!data.path(DATA).isMissingNode()) {
-                data = data.path(DATA);
+        JsonNode reply;
+        try {
+            if (request.getContentType().contains("application/json")) {
+                data = this.mapper.readTree(request.getReader());
+                if (!data.path(DATA).isMissingNode()) {
+                    data = data.path(DATA);
+                }
+            } else {
+                data = this.mapper.createObjectNode();
+                if (request.getParameter(STATE) != null) {
+                    ((ObjectNode) data).put(STATE, Integer.parseInt(request.getParameter(STATE)));
+                } else if (request.getParameter(LOCATION) != null) {
+                    ((ObjectNode) data).put(LOCATION, request.getParameter(LOCATION));
+                } else if (request.getParameter(VALUE) != null) {
+                    // values other than Strings should be sent in a JSON object
+                    ((ObjectNode) data).put(VALUE, request.getParameter(VALUE));
+                }
             }
-        } else {
-            data = this.mapper.createObjectNode();
-            if (request.getParameter(STATE) != null) {
-                ((ObjectNode) data).put(STATE, Integer.parseInt(request.getParameter(STATE)));
-            } else if (request.getParameter(LOCATION) != null) {
-                ((ObjectNode) data).put(LOCATION, request.getParameter(LOCATION));
-            } else if (request.getParameter(VALUE) != null) {
-                // values other than Strings should be sent in a JSON object
-                ((ObjectNode) data).put(VALUE, request.getParameter(VALUE));
-            }
-        }
-        if (type != null) {
-            JsonNode reply;
-            if (type.equals(POWER)) {
-                name = POWER;
-            } else if (name == null) {
-                name = data.path(NAME).asText();
-            }
-            if (name != null) {
-                try {
+            if (type != null) {
+                if (type.equals(POWER)) {
+                    name = POWER;
+                } else if (name == null) {
+                    name = data.path(NAME).asText();
+                }
+                if (name != null) {
                     if (type.equals(LIGHTS)) {
                         JsonUtil.setLight(name, data);
                         reply = JsonUtil.getLight(name);
@@ -274,19 +274,22 @@ public class JsonServlet extends WebSocketServlet {
                         log.warn("Type {} unknown.", type);
                         reply = JsonUtil.getUnknown(type);
                     }
-                } catch (JsonException ex) {
-                    reply = ex.getJsonMessage();
+                } else {
+                    log.error("Name must be defined.");
+                    throw new JsonException(400, "Name must be defined."); // Need to I18N
                 }
             } else {
                 log.warn("Type {} unknown.", type);
                 reply = JsonUtil.getUnknown(type);
             }
-            int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
-            if (code == 200) {
-                response.getWriter().write(this.mapper.writeValueAsString(reply));
-            } else {
-                response.sendError(code, this.mapper.writeValueAsString(reply));
-            }
+        } catch (JsonException ex) {
+            reply = ex.getJsonMessage();
+        }
+        int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
+        if (code == 200) {
+            response.getWriter().write(this.mapper.writeValueAsString(reply));
+        } else {
+            response.sendError(code, this.mapper.writeValueAsString(reply));
         }
     }
 
@@ -315,10 +318,24 @@ public class JsonServlet extends WebSocketServlet {
                 throw new JsonException(400, "PUT request must be a JSON object"); // need to I18N
             }
             if (type != null) {
+                if (type.equals(POWER)) {
+                    name = POWER;
+                } else if (name == null) {
+                    name = data.path(NAME).asText();
+                }
                 if (name != null) {
                     if (type.equals(LIGHTS)) {
                         JsonUtil.putLight(name, data);
                         reply = JsonUtil.getLight(name);
+                    } else if (type.equals(MEMORIES)) {
+                        JsonUtil.putMemory(name, data);
+                        reply = JsonUtil.getMemory(name);
+                    } else if (type.equals(POWER)) {
+                        JsonUtil.setPower(data);
+                        reply = JsonUtil.getPower();
+                    } else if (type.equals(SENSORS)) {
+                        JsonUtil.putSensor(name, data);
+                        reply = JsonUtil.getSensor(name);
                     } else if (type.equals(TURNOUTS)) {
                         JsonUtil.putTurnout(name, data);
                         reply = JsonUtil.getTurnout(name);
