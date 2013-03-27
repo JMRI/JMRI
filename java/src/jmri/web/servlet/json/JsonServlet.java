@@ -68,7 +68,7 @@ public class JsonServlet extends WebSocketServlet {
                     try {
                         socket.wsConnection.sendMessage(socket.mapper.writeValueAsString(socket.mapper.createObjectNode().put(TYPE, GOODBYE)));
                     } catch (Exception e) {
-                        log.warn("Unable to send goodbye while closing socket.\n" + e.getMessage());
+                        log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
                     }
                     socket.wsConnection.close();
                 }
@@ -147,7 +147,7 @@ public class JsonServlet extends WebSocketServlet {
                 } else if (type.equals(TURNOUTS)) {
                     reply = JsonUtil.getTurnouts();
                 } else {
-                    log.warn("Type \"" + type + "\" unknown.");
+                    log.warn("Type {} unknown.", type);
                     reply = JsonUtil.getUnknown(type);
                 }
             } else {
@@ -179,7 +179,7 @@ public class JsonServlet extends WebSocketServlet {
                 } else if (type.equals(TURNOUT) || type.equals(TURNOUTS)) {
                     reply = JsonUtil.getTurnout(name);
                 } else {
-                    log.warn("Type \"" + type + "\" unknown.");
+                    log.warn("Type {} unknown.", type);
                     reply = JsonUtil.getUnknown(type);
                 }
             }
@@ -231,85 +231,54 @@ public class JsonServlet extends WebSocketServlet {
                 ((ObjectNode) data).put(VALUE, request.getParameter(VALUE));
             }
         }
-        // remove following 7 lines once all JsonUtil.set* methods accept a JsonNode
-        int state = -1;
-        if (request.getParameter(STATE) != null) {
-            state = Integer.parseInt(request.getParameter(STATE));
-        }
-        String value = request.getParameter(VALUE);
-        String location = request.getParameter(LOCATION);
-        String valueType = request.getParameter(TYPE);
         if (type != null) {
             JsonNode reply;
             if (type.equals(POWER)) {
-                // power is uniquely global, so a name is not required
+                name = POWER;
+            } else if (name == null) {
+                name = data.path(NAME).asText();
+            }
+            if (name != null) {
                 try {
-                    JsonUtil.setPower(data);
-                    reply = JsonUtil.getPower();
-                } catch (JsonException ex) {
-                    reply = ex.getJsonMessage();
-                }
-            } else if (name != null) {
-                try {
-                    if (state != -1) {
-                        if (type.equals(ROUTES)) {
-                            JsonUtil.setRoute(name, state);
-                        } else if (type.equals(SENSORS)) {
-                            JsonUtil.setSensor(name, state);
-                        } else if (type.equals(SIGNAL_HEADS)) {
-                            JsonUtil.setSignalHead(name, state);
-                        } else {
-                            // not a settable item
-                            throw new JsonException(400, type + " is not a settable type"); // need to I18N
-                        }
-                    } else if (value != null) {
-                        if (type.equals(MEMORIES)) {
-                            JsonUtil.setMemory(name, value, valueType);
-                        } else if (type.equals(REPORTERS)) {
-                            JsonUtil.setReporter(name, value, valueType);
-                        } else if (type.equals(SIGNAL_MASTS)) {
-                            JsonUtil.setSignalMast(name, value, valueType);
-                        } else {
-                            // not a settable item
-                            throw new JsonException(400, type + " is not a settable type"); // need to I18N
-                        }
-                    } else if (location != null) {
-                        if (type.equals(TRAINS)) {
-                            JsonUtil.setTrainLocation(name, location);
-                        } else {
-                            // not a settable item
-                            throw new JsonException(400, "location cannot be set for type " + type); // need to I18N
-                        }
-                    }
                     if (type.equals(LIGHTS)) {
                         JsonUtil.setLight(name, data);
                         reply = JsonUtil.getLight(name);
                     } else if (type.equals(MEMORIES)) {
+                        JsonUtil.setMemory(name, data);
                         reply = JsonUtil.getMemory(name);
+                    } else if (type.equals(POWER)) {
+                        JsonUtil.setPower(data);
+                        reply = JsonUtil.getPower();
                     } else if (type.equals(REPORTERS)) {
+                        JsonUtil.setReporter(name, data);
                         reply = JsonUtil.getReporter(name);
                     } else if (type.equals(ROUTES)) {
+                        JsonUtil.setRoute(name, data);
                         reply = JsonUtil.getRoute(name);
                     } else if (type.equals(SENSORS)) {
+                        JsonUtil.setSensor(name, data);
                         reply = JsonUtil.getSensor(name);
                     } else if (type.equals(SIGNAL_HEADS)) {
+                        JsonUtil.setSignalHead(name, data);
                         reply = JsonUtil.getSignalHead(name);
                     } else if (type.equals(SIGNAL_MASTS)) {
+                        JsonUtil.setSignalMast(name, data);
                         reply = JsonUtil.getSignalMast(name);
                     } else if (type.equals(TRAINS)) {
+                        JsonUtil.setTrain(name, data);
                         reply = JsonUtil.getTrain(name);
                     } else if (type.equals(TURNOUTS)) {
                         JsonUtil.setTurnout(name, data);
                         reply = JsonUtil.getTurnout(name);
                     } else {
-                        log.warn("Type \"" + type + "\" unknown.");
+                        log.warn("Type {} unknown.", type);
                         reply = JsonUtil.getUnknown(type);
                     }
                 } catch (JsonException ex) {
                     reply = ex.getJsonMessage();
                 }
             } else {
-                log.warn("Type \"" + type + "\" unknown.");
+                log.warn("Type {} unknown.", type);
                 reply = JsonUtil.getUnknown(type);
             }
             int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
@@ -358,11 +327,11 @@ public class JsonServlet extends WebSocketServlet {
                         throw new JsonException(400, type + " is not a creatable type"); // need to I18N
                     }
                 } else {
-                    log.warn("Type \"" + type + "\" unknown.");
+                    log.warn("Type {} unknown.", type);
                     reply = JsonUtil.getUnknown(type);
                 }
             } else {
-                log.warn("Type \"" + type + "\" unknown.");
+                log.warn("Type {} unknown.", type);
                 reply = JsonUtil.getUnknown(type);
             }
         } catch (JsonException ex) {
