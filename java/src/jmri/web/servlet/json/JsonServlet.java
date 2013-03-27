@@ -3,6 +3,7 @@ package jmri.web.servlet.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -17,24 +18,34 @@ import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
 import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonException;
-import jmri.jmris.json.JsonUtil;
 import jmri.jmris.json.JsonServerManager;
+import jmri.jmris.json.JsonUtil;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide JSON formatted responses for requests to GET requests for information
+ * Provide JSON formatted responses for requests to requests for information
  * from the JMRI Web Server.
  *
  * Note that unlike the XMLIO server, this server does not monitor items in
- * response to a GET or POST request, but does provide a WebSocket for clients
- * capable of using WebSockets to provide that capability.
+ * response to a request, but does provide a WebSocket for clients capable of
+ * using WebSockets to provide that capability.
+ *
+ * This server responds to HTTP requests for objects in following manner:
+ * <table>
+ * <tr><th>Method</th><th>List</th><th>Object</th></tr>
+ * <tr><th>GET</th><td>Returns the list</td><td>Returns the object <em>if it
+ * already exists</em></td></tr>
+ * <tr><th>POST</th><td>Invalid</td><td>Modifies the object <em>if it already
+ * exists</em></td></tr>
+ * <tr><th>PUT</th><td>Invalid</td><td>Modifies the object, creating it if
+ * required</td></tr>
+ * </table>
  *
  * @author rhwood Copyright (C) 2012, 2013
  */
-// TODO: add POST handler for creating new objects in collections
 public class JsonServlet extends WebSocketServlet {
 
     private static final long serialVersionUID = -671593634343578915L;
@@ -191,9 +202,6 @@ public class JsonServlet extends WebSocketServlet {
     }
 
     @Override
-    // TODO: need to build JSON object from request parameters, and pass that to the setter instead
-    // this will allow setters to modify any attribute of the object that the JsonUtil is aware of
-    // and make the POST/create object support so much simpler
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
@@ -204,6 +212,26 @@ public class JsonServlet extends WebSocketServlet {
         response.setDateHeader("Expires", now.getTime()); // NOI18N
 
         String[] rest = request.getPathInfo().split("/"); // NOI18N
+        String type = (rest.length > 1) ? rest[1] : null;
+        String name = (rest.length > 2) ? rest[2] : null;
+        JsonNode data;
+        if (request.getContentType().contains("application/json")) {
+            data = this.mapper.readTree(request.getReader());
+            if (!data.path(DATA).isMissingNode()) {
+                data = data.path(DATA);
+            }
+        } else {
+            data = this.mapper.createObjectNode();
+            if (request.getParameter(STATE) != null) {
+                ((ObjectNode) data).put(STATE, Integer.parseInt(request.getParameter(STATE)));
+            } else if (request.getParameter(LOCATION) != null) {
+                ((ObjectNode) data).put(LOCATION, request.getParameter(LOCATION));
+            } else if (request.getParameter(VALUE) != null) {
+                // values other than Strings should be sent in a JSON object
+                ((ObjectNode) data).put(VALUE, request.getParameter(VALUE));
+            }
+        }
+        // remove following 7 lines once all JsonUtil.set* methods accept a JsonNode
         int state = -1;
         if (request.getParameter(STATE) != null) {
             state = Integer.parseInt(request.getParameter(STATE));
@@ -211,9 +239,7 @@ public class JsonServlet extends WebSocketServlet {
         String value = request.getParameter(VALUE);
         String location = request.getParameter(LOCATION);
         String valueType = request.getParameter(TYPE);
-        String type = (rest.length > 1) ? rest[1] : null;
         if (type != null) {
-            String name = (rest.length > 2) ? rest[2] : null;
             JsonNode reply;
             if (type.equals(POWER)) {
                 // power is uniquely global, so a name is not required
@@ -237,7 +263,7 @@ public class JsonServlet extends WebSocketServlet {
                         } else if (type.equals(SIGNAL_HEADS)) {
                             JsonUtil.setSignalHead(name, state);
                         } else if (type.equals(TURNOUTS)) {
-                            JsonUtil.setTurnout(name, state);
+                            JsonUtil.setTurnout(name, data);
                         } else {
                             // not a settable item
                             throw new JsonException(400, type + " is not a settable type"); // need to I18N
