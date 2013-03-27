@@ -508,6 +508,9 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             }
         }
     }
+
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
+								justification="saveBasicRoster protected by ctor invocation, Swing thread when needed") 
     JButton saveBasicRoster;
     
     /**
@@ -602,8 +605,6 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
     
     class ThisProgPane extends PaneProgPane{
         
-	    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
-								justification="OK to not sync here,saveBasicRoster protected by ctor invocation") 
         public ThisProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem){
             super(parent, name, pane, cvModel, icvModel, varModel, modelElem);
             bottom.remove(readChangesButton);
@@ -674,8 +675,6 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
             }
         }
         
-	    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
-								justification="OK to not sync here,saveBasicRoster protected on Swing thread") 
         public void dispose(){
             bottom.remove(saveBasicRoster);
             super.dispose();
