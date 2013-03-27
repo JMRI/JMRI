@@ -244,9 +244,7 @@ public class JsonServlet extends WebSocketServlet {
             if (type.equals(POWER)) {
                 // power is uniquely global, so a name is not required
                 try {
-                    if (state != -1) {
-                        JsonUtil.setPower(state);
-                    }
+                    JsonUtil.setPower(data);
                     reply = JsonUtil.getPower();
                 } catch (JsonException ex) {
                     reply = ex.getJsonMessage();
@@ -262,8 +260,6 @@ public class JsonServlet extends WebSocketServlet {
                             JsonUtil.setSensor(name, state);
                         } else if (type.equals(SIGNAL_HEADS)) {
                             JsonUtil.setSignalHead(name, state);
-                        } else if (type.equals(TURNOUTS)) {
-                            JsonUtil.setTurnout(name, data);
                         } else {
                             // not a settable item
                             throw new JsonException(400, type + " is not a settable type"); // need to I18N
@@ -304,6 +300,7 @@ public class JsonServlet extends WebSocketServlet {
                     } else if (type.equals(TRAINS)) {
                         reply = JsonUtil.getTrain(name);
                     } else if (type.equals(TURNOUTS)) {
+                        JsonUtil.setTurnout(name, data);
                         reply = JsonUtil.getTurnout(name);
                     } else {
                         log.warn("Type \"" + type + "\" unknown.");
@@ -347,7 +344,7 @@ public class JsonServlet extends WebSocketServlet {
                     data = data.path(DATA);
                 }
             } else {
-                throw new JsonException(400, "POST request must be a JSON object"); // need to I18N
+                throw new JsonException(400, "PUT request must be a JSON object"); // need to I18N
             }
             if (name == null || type == null) {
                 log.warn("Type \"" + type + "\" unknown.");

@@ -308,7 +308,8 @@ public class JsonUtil {
         return root;
     }
 
-    static public void setPower(int state) throws JsonException {
+    static public void setPower(JsonNode data) throws JsonException {
+        int state = data.path(STATE).asInt(PowerManager.UNKNOWN);
         switch (state) {
             case PowerManager.OFF:
             case PowerManager.ON:
@@ -317,6 +318,9 @@ public class JsonUtil {
                 } catch (JmriException ex) {
                     throw new JsonException(500, ex);
                 }
+                break;
+            case PowerManager.UNKNOWN:
+                // quietly ignore
                 break;
             default:
                 throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", POWER, state));

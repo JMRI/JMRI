@@ -2,14 +2,11 @@ package jmri.jmris.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
-import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmris.AbstractPowerServer;
 import jmri.jmris.JmriConnection;
-import static jmri.jmris.json.JSON.*;
 
 /**
  * Send power status over WebSockets as a JSON String
@@ -37,11 +34,11 @@ public class JsonPowerServer extends AbstractPowerServer {
 
     @Override
     public void sendStatus(int status) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, POWER);
-        ObjectNode data = root.putObject(DATA);
-        data.put(STATE, status);
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        this.sendStatus();
+    }
+
+    private void sendStatus() throws IOException {
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getPower()));
     }
 
     @Override
@@ -50,33 +47,18 @@ public class JsonPowerServer extends AbstractPowerServer {
     }
 
     public void sendErrorStatus(int status) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, ERROR);
-        ObjectNode data = root.putObject(ERROR);
-        data.put(CODE, status);
-        data.put(MESSAGE, Bundle.getMessage("ErrorPower"));
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(status, Bundle.getMessage("ErrorPower"))));
     }
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        this.parseRequest(this.mapper.readTree(statusString).path(DATA));
+        throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException {
-        switch (data.path(STATE).asInt(PowerManager.UNKNOWN)) {
-            case PowerManager.OFF:
-                this.setOffStatus();
-                break;
-            case PowerManager.ON:
-                this.setOnStatus();
-                break;
-            case PowerManager.UNKNOWN:
-                break;
-            default:
-                this.sendErrorStatus(400);
-                break;
+    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
+        if (this.mgrOK()) {
+            JsonUtil.setPower(data);
         }
-        this.sendStatus(InstanceManager.powerManagerInstance().getPower());
+        this.sendStatus();
     }
 }
