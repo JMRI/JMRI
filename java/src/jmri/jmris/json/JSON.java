@@ -86,6 +86,9 @@ public final class JSON {
     public static final String LAYOUT_PANEL = "Layout"; // NOI18N
     public static final String PANEL_PANEL = "Panel"; // NOI18N
     public static final String URL = "URL"; // NOI18N
+    public static final String FORMAT = "format"; // NOI18N
+    public static final String JSON = "json"; // NOI18N
+    public static final String XML = "xml"; // NOI18N
     /* JSON programmer tokens */
     public static final String MODE = "mode"; // NOI18N
     public static final String NODE_CV = "CV"; // NOI18N

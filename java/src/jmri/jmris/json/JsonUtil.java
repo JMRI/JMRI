@@ -269,7 +269,7 @@ public class JsonUtil {
         return root;
     }
 
-    static public JsonNode getPanels() {
+    static public JsonNode getPanels(String format) {
         List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
@@ -284,7 +284,7 @@ public class JsonUtil {
                     panel.put(TYPE, PANEL);
                     ObjectNode data = panel.putObject(DATA);
                     data.put(NAME, "ControlPanel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=json"); // NOI18N
+                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
                     data.put(USERNAME, title);
                     data.put(TYPE, CONTROL_PANEL);
                     panels.add(data);
@@ -300,7 +300,7 @@ public class JsonUtil {
                     panel.put(TYPE, PANEL);
                     ObjectNode data = panel.putObject(DATA);
                     data.put(NAME, "Panel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=json"); // NOI18N
+                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
                     data.put(USERNAME, title);
                     data.put(TYPE, PANEL_PANEL);
                     panels.add(data);
@@ -316,7 +316,7 @@ public class JsonUtil {
                     panel.put(TYPE, PANEL);
                     ObjectNode data = panel.putObject(DATA);
                     data.put(NAME, "Layout/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=json"); // NOI18N
+                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
                     data.put(USERNAME, title);
                     data.put(TYPE, LAYOUT_PANEL);
                     panels.add(data);

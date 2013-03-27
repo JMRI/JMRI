@@ -125,7 +125,7 @@ public class JsonServlet extends WebSocketServlet {
                 } else if (type.equals(METADATA)) {
                     reply = JsonUtil.getMetadata();
                 } else if (type.equals(PANELS)) {
-                    reply = JsonUtil.getPanels();
+                    reply = JsonUtil.getPanels((request.getParameter(FORMAT) != null) ? request.getParameter(FORMAT) : XML);
                 } else if (type.equals(POWER)) {
                     reply = JsonUtil.getPower();
                 } else if (type.equals(RAILROAD)) {

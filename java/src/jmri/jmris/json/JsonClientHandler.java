@@ -115,7 +115,7 @@ public class JsonClientHandler {
                 } else if (list.equals(METADATA)) {
                     reply = JsonUtil.getMetadata();
                 } else if (list.equals(PANELS)) {
-                    reply = JsonUtil.getPanels();
+                    reply = JsonUtil.getPanels((data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
                 } else if (list.equals(REPORTERS)) {
                     reply = JsonUtil.getReporters();
                 } else if (list.equals(ROSTER)) {
