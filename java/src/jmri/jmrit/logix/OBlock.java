@@ -333,7 +333,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Another block sharing a turnout with this block queries whether turnout
      * is in use.
      * @param path that uses a common shared turnout
-     * @return
+     * @return If warrant exists and path==pathname, return warrant display name, else null.
      */
     protected String isPathSet(String path) {
     	String msg =null;
