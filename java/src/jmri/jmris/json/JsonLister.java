@@ -710,6 +710,39 @@ public class JsonLister {
         return root;
     }
 
+    static public void putTurnout(String name, JsonNode data) throws JsonException {
+        try {
+            Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+            if (data.path(USERNAME).isTextual()) {
+                turnout.setUserName(data.path(USERNAME).asText());
+            }
+            if (data.path(INVERTED).isBoolean()) {
+                turnout.setInverted(data.path(INVERTED).asBoolean());
+            }
+            if (data.path(COMMENT).isTextual()) {
+                turnout.setComment(data.path(COMMENT).asText());
+            }
+            int state = data.path(STATE).asInt(Turnout.UNKNOWN);
+            switch (state) {
+                case Turnout.THROWN:
+                case Turnout.CLOSED:
+                    turnout.setCommandedState(state);
+                    break;
+                case Turnout.UNKNOWN:
+                    // leave state alone in this case
+                    break;
+                default:
+                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", TURNOUT, state));
+            }
+        } catch (Exception ex) {
+            if (ex.getClass().equals(JsonException.class)) {
+                throw (JsonException)ex;
+            } else {
+                throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
+            }
+        }
+    }
+
     static public void setTurnout(String name, int state) throws JsonException {
         try {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(name);

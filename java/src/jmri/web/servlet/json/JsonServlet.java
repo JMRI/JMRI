@@ -191,7 +191,10 @@ public class JsonServlet extends WebSocketServlet {
     }
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // TODO: need to build JSON object from request parameters, and pass that to the setter instead
+    // this will allow setters to modify any attribute of the object that the JsonLister is aware of
+    // and make the POST/create object support so much simpler
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Date now = new Date();
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("application/json"); // NOI18N
@@ -293,6 +296,58 @@ public class JsonServlet extends WebSocketServlet {
             } else {
                 response.sendError(code, this.mapper.writeValueAsString(reply));
             }
+        }
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        Date now = new Date();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json"); // NOI18N
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        response.setDateHeader("Date", now.getTime()); // NOI18N
+        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
+        response.setDateHeader("Expires", now.getTime()); // NOI18N
+
+        String[] rest = request.getPathInfo().split("/"); // NOI18N
+        String type = (rest.length > 1) ? rest[1] : null;
+        String name = (rest.length > 2) ? rest[2] : null;
+        JsonNode data;
+        JsonNode reply;
+        try {
+            if (request.getContentType().contains("application/json")) {
+                data = this.mapper.readTree(request.getReader());
+                if (!data.path(DATA).isMissingNode()) {
+                    data = data.path(DATA);
+                }
+            } else {
+                throw new JsonException(400, "POST request must be a JSON object"); // need to I18N
+            }
+            if (name == null || type == null) {
+                log.warn("Type \"" + type + "\" unknown.");
+                reply = JsonLister.getUnknown(type);
+            } else {
+                if (type.equals(TURNOUTS)) {
+                    JsonLister.putTurnout(name, data);
+                } else {
+                    // not a creatable item
+                    throw new JsonException(400, type + " is not a creatable type"); // need to I18N
+                }
+                if (type.equals(TURNOUTS)) {
+                    reply = JsonLister.getTurnout(name);
+                } else {
+                    log.warn("Type \"" + type + "\" unknown.");
+                    reply = JsonLister.getUnknown(type);
+                }
+            }
+        } catch (JsonException ex) {
+            reply = ex.getJsonMessage();
+        }
+        int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
+        if (code == 200) {
+            response.getWriter().write(this.mapper.writeValueAsString(reply));
+        } else {
+            response.sendError(code, this.mapper.writeValueAsString(reply));
         }
     }
 
