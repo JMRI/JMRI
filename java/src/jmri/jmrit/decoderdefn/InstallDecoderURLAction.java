@@ -109,6 +109,7 @@ public class InstallDecoderURLAction extends JmriAbstractAction {
         JOptionPane.showMessageDialog(who,rb.getString("CompleteOK"));
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="OBL_UNSATISFIED_OBLIGATION", justification="Looks like false positive")
     boolean copyfile(URL from, File toFile, JPanel who) {
         InputStream in = null;
         OutputStream out = null;
