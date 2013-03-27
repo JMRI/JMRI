@@ -34,6 +34,6 @@ public class JsonException extends Exception {
     }
 
     public JsonNode getJsonMessage() {
-        return JsonLister.handleError(this.code, this.getLocalizedMessage());
+        return JsonUtil.handleError(this.code, this.getLocalizedMessage());
     }
 }

@@ -17,7 +17,7 @@ import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
 import jmri.jmris.json.JsonClientHandler;
 import jmri.jmris.json.JsonException;
-import jmri.jmris.json.JsonLister;
+import jmri.jmris.json.JsonUtil;
 import jmri.jmris.json.JsonServerManager;
 import org.eclipse.jetty.websocket.WebSocket;
 import org.eclipse.jetty.websocket.WebSocketServlet;
@@ -102,74 +102,74 @@ public class JsonServlet extends WebSocketServlet {
             JsonNode reply;
             if (name == null) {
                 if (type.equals(CARS)) {
-                    reply = JsonLister.getCars();
+                    reply = JsonUtil.getCars();
                 } else if (type.equals(ENGINES)) {
-                    reply = JsonLister.getEngines();
+                    reply = JsonUtil.getEngines();
                 } else if (type.equals(LIGHTS)) {
-                    reply = JsonLister.getLights();
+                    reply = JsonUtil.getLights();
                 } else if (type.equals(LOCATIONS)) {
-                    reply = JsonLister.getLocations();
+                    reply = JsonUtil.getLocations();
                 } else if (type.equals(MEMORIES)) {
-                    reply = JsonLister.getMemories();
+                    reply = JsonUtil.getMemories();
                 } else if (type.equals(METADATA)) {
-                    reply = JsonLister.getMetadata();
+                    reply = JsonUtil.getMetadata();
                 } else if (type.equals(PANELS)) {
-                    reply = JsonLister.getPanels();
+                    reply = JsonUtil.getPanels();
                 } else if (type.equals(POWER)) {
-                    reply = JsonLister.getPower();
+                    reply = JsonUtil.getPower();
                 } else if (type.equals(RAILROAD)) {
-                    reply = JsonLister.getRailroad();
+                    reply = JsonUtil.getRailroad();
                 } else if (type.equals(REPORTERS)) {
-                    reply = JsonLister.getReporters();
+                    reply = JsonUtil.getReporters();
                 } else if (type.equals(ROSTER)) {
-                    reply = JsonLister.getRoster();
+                    reply = JsonUtil.getRoster();
                 } else if (type.equals(ROUTES)) {
-                    reply = JsonLister.getRoutes();
+                    reply = JsonUtil.getRoutes();
                 } else if (type.equals(SENSORS)) {
-                    reply = JsonLister.getSensors();
+                    reply = JsonUtil.getSensors();
                 } else if (type.equals(SIGNAL_HEADS)) {
-                    reply = JsonLister.getSignalHeads();
+                    reply = JsonUtil.getSignalHeads();
                 } else if (type.equals(SIGNAL_MASTS)) {
-                    reply = JsonLister.getSignalMasts();
+                    reply = JsonUtil.getSignalMasts();
                 } else if (type.equals(TRAINS)) {
-                    reply = JsonLister.getTrains();
+                    reply = JsonUtil.getTrains();
                 } else if (type.equals(TURNOUTS)) {
-                    reply = JsonLister.getTurnouts();
+                    reply = JsonUtil.getTurnouts();
                 } else {
                     log.warn("Type \"" + type + "\" unknown.");
-                    reply = JsonLister.getUnknown(type);
+                    reply = JsonUtil.getUnknown(type);
                 }
             } else {
                 // NOTE: use of singular paths is depricated and will be removed after 3.4 is released
                 if (type.equals(CAR) || type.equals(CARS)) {
-                    reply = JsonLister.getCar(name);
+                    reply = JsonUtil.getCar(name);
                 } else if (type.equals(ENGINE) || type.equals(ENGINES)) {
-                    reply = JsonLister.getEngine(name);
+                    reply = JsonUtil.getEngine(name);
                 } else if (type.equals(LIGHT) || type.equals(LIGHTS)) {
-                    reply = JsonLister.getLight(name);
+                    reply = JsonUtil.getLight(name);
                 } else if (type.equals(LOCATION) || type.equals(LOCATIONS)) {
-                    reply = JsonLister.getLocation(name);
+                    reply = JsonUtil.getLocation(name);
                 } else if (type.equals(MEMORY) || type.equals(MEMORIES)) {
-                    reply = JsonLister.getMemory(name);
+                    reply = JsonUtil.getMemory(name);
                 } else if (type.equals(REPORTER) || type.equals(REPORTERS)) {
-                    reply = JsonLister.getReporter(name);
+                    reply = JsonUtil.getReporter(name);
                 } else if (type.equals(ROSTER_ENTRY) || type.equals(ROSTER)) {
-                    reply = JsonLister.getRosterEntry(name);
+                    reply = JsonUtil.getRosterEntry(name);
                 } else if (type.equals(ROUTE) || type.equals(ROUTES)) {
-                    reply = JsonLister.getRoute(name);
+                    reply = JsonUtil.getRoute(name);
                 } else if (type.equals(SENSOR) || type.equals(SENSORS)) {
-                    reply = JsonLister.getSensor(name);
+                    reply = JsonUtil.getSensor(name);
                 } else if (type.equals(SIGNAL_HEAD) || type.equals(SIGNAL_HEADS)) {
-                    reply = JsonLister.getSignalHead(name);
+                    reply = JsonUtil.getSignalHead(name);
                 } else if (type.equals(SIGNAL_MAST) || type.equals(SIGNAL_MASTS)) {
-                    reply = JsonLister.getSignalMast(name);
+                    reply = JsonUtil.getSignalMast(name);
                 } else if (type.equals(TRAIN) || type.equals(TRAINS)) {
-                    reply = JsonLister.getTrain(name);
+                    reply = JsonUtil.getTrain(name);
                 } else if (type.equals(TURNOUT) || type.equals(TURNOUTS)) {
-                    reply = JsonLister.getTurnout(name);
+                    reply = JsonUtil.getTurnout(name);
                 } else {
                     log.warn("Type \"" + type + "\" unknown.");
-                    reply = JsonLister.getUnknown(type);
+                    reply = JsonUtil.getUnknown(type);
                 }
             }
             int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
@@ -192,7 +192,7 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     // TODO: need to build JSON object from request parameters, and pass that to the setter instead
-    // this will allow setters to modify any attribute of the object that the JsonLister is aware of
+    // this will allow setters to modify any attribute of the object that the JsonUtil is aware of
     // and make the POST/create object support so much simpler
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Date now = new Date();
@@ -219,9 +219,9 @@ public class JsonServlet extends WebSocketServlet {
                 // power is uniquely global, so a name is not required
                 try {
                     if (state != -1) {
-                        JsonLister.setPower(state);
+                        JsonUtil.setPower(state);
                     }
-                    reply = JsonLister.getPower();
+                    reply = JsonUtil.getPower();
                 } catch (JsonException ex) {
                     reply = ex.getJsonMessage();
                 }
@@ -229,66 +229,66 @@ public class JsonServlet extends WebSocketServlet {
                 try {
                     if (state != -1) {
                         if (type.equals(LIGHTS)) {
-                            JsonLister.setLight(name, state);
+                            JsonUtil.setLight(name, state);
                         } else if (type.equals(ROUTES)) {
-                            JsonLister.setRoute(name, state);
+                            JsonUtil.setRoute(name, state);
                         } else if (type.equals(SENSORS)) {
-                            JsonLister.setSensor(name, state);
+                            JsonUtil.setSensor(name, state);
                         } else if (type.equals(SIGNAL_HEADS)) {
-                            JsonLister.setSignalHead(name, state);
+                            JsonUtil.setSignalHead(name, state);
                         } else if (type.equals(TURNOUTS)) {
-                            JsonLister.setTurnout(name, state);
+                            JsonUtil.setTurnout(name, state);
                         } else {
                             // not a settable item
                             throw new JsonException(400, type + " is not a settable type"); // need to I18N
                         }
                     } else if (value != null) {
                         if (type.equals(MEMORIES)) {
-                            JsonLister.setMemory(name, value, valueType);
+                            JsonUtil.setMemory(name, value, valueType);
                         } else if (type.equals(REPORTERS)) {
-                            JsonLister.setReporter(name, value, valueType);
+                            JsonUtil.setReporter(name, value, valueType);
                         } else if (type.equals(SIGNAL_MASTS)) {
-                            JsonLister.setSignalMast(name, value, valueType);
+                            JsonUtil.setSignalMast(name, value, valueType);
                         } else {
                             // not a settable item
                             throw new JsonException(400, type + " is not a settable type"); // need to I18N
                         }
                     } else if (location != null) {
                         if (type.equals(TRAINS)) {
-                            JsonLister.setTrainLocation(name, location);
+                            JsonUtil.setTrainLocation(name, location);
                         } else {
                             // not a settable item
                             throw new JsonException(400, "location cannot be set for type " + type); // need to I18N
                         }
                     }
                     if (type.equals(LIGHTS)) {
-                        reply = JsonLister.getLight(name);
+                        reply = JsonUtil.getLight(name);
                     } else if (type.equals(MEMORIES)) {
-                        reply = JsonLister.getMemory(name);
+                        reply = JsonUtil.getMemory(name);
                     } else if (type.equals(REPORTERS)) {
-                        reply = JsonLister.getReporter(name);
+                        reply = JsonUtil.getReporter(name);
                     } else if (type.equals(ROUTES)) {
-                        reply = JsonLister.getRoute(name);
+                        reply = JsonUtil.getRoute(name);
                     } else if (type.equals(SENSORS)) {
-                        reply = JsonLister.getSensor(name);
+                        reply = JsonUtil.getSensor(name);
                     } else if (type.equals(SIGNAL_HEADS)) {
-                        reply = JsonLister.getSignalHead(name);
+                        reply = JsonUtil.getSignalHead(name);
                     } else if (type.equals(SIGNAL_MASTS)) {
-                        reply = JsonLister.getSignalMast(name);
+                        reply = JsonUtil.getSignalMast(name);
                     } else if (type.equals(TRAINS)) {
-                        reply = JsonLister.getTrain(name);
+                        reply = JsonUtil.getTrain(name);
                     } else if (type.equals(TURNOUTS)) {
-                        reply = JsonLister.getTurnout(name);
+                        reply = JsonUtil.getTurnout(name);
                     } else {
                         log.warn("Type \"" + type + "\" unknown.");
-                        reply = JsonLister.getUnknown(type);
+                        reply = JsonUtil.getUnknown(type);
                     }
                 } catch (JsonException ex) {
                     reply = ex.getJsonMessage();
                 }
             } else {
                 log.warn("Type \"" + type + "\" unknown.");
-                reply = JsonLister.getUnknown(type);
+                reply = JsonUtil.getUnknown(type);
             }
             int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
             if (code == 200) {
@@ -325,19 +325,19 @@ public class JsonServlet extends WebSocketServlet {
             }
             if (name == null || type == null) {
                 log.warn("Type \"" + type + "\" unknown.");
-                reply = JsonLister.getUnknown(type);
+                reply = JsonUtil.getUnknown(type);
             } else {
                 if (type.equals(TURNOUTS)) {
-                    JsonLister.putTurnout(name, data);
+                    JsonUtil.putTurnout(name, data);
                 } else {
                     // not a creatable item
                     throw new JsonException(400, type + " is not a creatable type"); // need to I18N
                 }
                 if (type.equals(TURNOUTS)) {
-                    reply = JsonLister.getTurnout(name);
+                    reply = JsonUtil.getTurnout(name);
                 } else {
                     log.warn("Type \"" + type + "\" unknown.");
-                    reply = JsonLister.getUnknown(type);
+                    reply = JsonUtil.getUnknown(type);
                 }
             }
         } catch (JsonException ex) {

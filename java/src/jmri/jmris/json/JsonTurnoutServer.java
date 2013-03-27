@@ -1,13 +1,11 @@
-//SimpleTurnoutServer.java
+//JsonTurnoutServer.java
 package jmri.jmris.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
-import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
@@ -18,7 +16,13 @@ import org.slf4j.LoggerFactory;
  * Simple Server interface between the JMRI turnout manager and a network
  * connection
  *
+ * This server sends a message containing the turnout state whenever a turnout
+ * that has been previously requested is open or thrown. When a client requests
+ * a turnout, the server replies with all known turnout details, but only
+ * contains the turnout state when sending a status update.
+ *
  * @author Paul Bender Copyright (C) 2010
+ * @author Randall Wood Copyright (C) 2012, 2013
  * @version $Revision: 21327 $
  */
 public class JsonTurnoutServer extends AbstractTurnoutServer {
@@ -62,22 +66,13 @@ public class JsonTurnoutServer extends AbstractTurnoutServer {
     }
 
     public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
-        int state = data.path(STATE).asInt(Turnout.UNKNOWN);
         String name = data.path(NAME).asText();
         if (data.path(METHOD).asText().equals(PUT)) {
-            JsonLister.putTurnout(name, data);
+            JsonUtil.putTurnout(name, data);
+        } else {
+            JsonUtil.setTurnout(name, data);
         }
-        switch (state) {
-            case Turnout.THROWN:
-                this.throwTurnout(name);
-                break;
-            case Turnout.CLOSED:
-                this.closeTurnout(name);
-                break;
-            default:
-                this.sendStatus(name, InstanceManager.turnoutManagerInstance().getTurnout(name).getKnownState());
-                break;
-        }
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getTurnout(name)));
         this.addTurnoutToList(name);
     }
 }

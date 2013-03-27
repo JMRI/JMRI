@@ -1,4 +1,4 @@
-// JsonLister.java
+// JsonUtil.java
 package jmri.jmris.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -42,13 +42,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * A set of static methods for converting certain objects to/from JSON
+ * representations
  *
  * @author rhwood
  */
-public class JsonLister {
+public class JsonUtil {
 
     private static ObjectMapper mapper = new ObjectMapper();
-    private static Logger log = LoggerFactory.getLogger(JsonLister.class);
+    private static Logger log = LoggerFactory.getLogger(JsonUtil.class);
 
     static public JsonNode getCar(String id) {
         ObjectNode root = mapper.createObjectNode();
@@ -712,6 +714,19 @@ public class JsonLister {
 
     static public void putTurnout(String name, JsonNode data) throws JsonException {
         try {
+            InstanceManager.turnoutManagerInstance().provideTurnout(name);
+            setTurnout(name, data);
+        } catch (Exception ex) {
+            if (ex.getClass().equals(JsonException.class)) {
+                throw (JsonException) ex;
+            } else {
+                throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
+            }
+        }
+    }
+
+    static public void setTurnout(String name, JsonNode data) throws JsonException {
+        try {
             Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout(name);
             if (data.path(USERNAME).isTextual()) {
                 turnout.setUserName(data.path(USERNAME).asText());
@@ -734,12 +749,9 @@ public class JsonLister {
                 default:
                     throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", TURNOUT, state));
             }
-        } catch (Exception ex) {
-            if (ex.getClass().equals(JsonException.class)) {
-                throw (JsonException)ex;
-            } else {
-                throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
-            }
+        } catch (NullPointerException ex) {
+            log.error("Unable to get turnout {}.", name, ex);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
         }
     }
 

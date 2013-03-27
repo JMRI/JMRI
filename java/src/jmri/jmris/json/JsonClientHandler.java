@@ -57,7 +57,7 @@ public class JsonClientHandler {
      * Currently JSON strings in four different forms are handled by this
      * method:<ul> <li>list requests in the form:
      * <code>{"type":"list","list":"trains"}</code> that are passed to the
-     * JsonLister for handling.</li> <li>individual item state requests in the
+     * JsonUtil for handling.</li> <li>individual item state requests in the
      * form:
      * <code>{"type":"turnout","data":{"name":"LT14"}}</code> that are passed to
      * type-specific handlers. In addition to the initial response, these
@@ -103,35 +103,35 @@ public class JsonClientHandler {
                 JsonNode reply;
                 String list = root.path(LIST).asText();
                 if (list.equals(CARS)) {
-                    reply = JsonLister.getCars();
+                    reply = JsonUtil.getCars();
                 } else if (list.equals(ENGINES)) {
-                    reply = JsonLister.getEngines();
+                    reply = JsonUtil.getEngines();
                 } else if (list.equals(LIGHTS)) {
-                    reply = JsonLister.getLights();
+                    reply = JsonUtil.getLights();
                 } else if (list.equals(LOCATIONS)) {
-                    reply = JsonLister.getLocations();
+                    reply = JsonUtil.getLocations();
                 } else if (list.equals(MEMORIES)) {
-                    reply = JsonLister.getMemories();
+                    reply = JsonUtil.getMemories();
                 } else if (list.equals(METADATA)) {
-                    reply = JsonLister.getMetadata();
+                    reply = JsonUtil.getMetadata();
                 } else if (list.equals(PANELS)) {
-                    reply = JsonLister.getPanels();
+                    reply = JsonUtil.getPanels();
                 } else if (list.equals(REPORTERS)) {
-                    reply = JsonLister.getReporters();
+                    reply = JsonUtil.getReporters();
                 } else if (list.equals(ROSTER)) {
-                    reply = JsonLister.getRoster();
+                    reply = JsonUtil.getRoster();
                 } else if (list.equals(ROUTES)) {
-                    reply = JsonLister.getRoutes();
+                    reply = JsonUtil.getRoutes();
                 } else if (list.equals(SENSORS)) {
-                    reply = JsonLister.getSensors();
+                    reply = JsonUtil.getSensors();
                 } else if (list.equals(SIGNAL_HEADS)) {
-                    reply = JsonLister.getSignalHeads();
+                    reply = JsonUtil.getSignalHeads();
                 } else if (list.equals(SIGNAL_MASTS)) {
-                    reply = JsonLister.getSignalMasts();
+                    reply = JsonUtil.getSignalMasts();
                 } else if (list.equals(TRAINS)) {
-                    reply = JsonLister.getTrains();
+                    reply = JsonUtil.getTrains();
                 } else if (list.equals(TURNOUTS)) {
-                    reply = JsonLister.getTurnouts();
+                    reply = JsonUtil.getTurnouts();
                 } else {
                     this.sendErrorMessage(404, Bundle.getMessage("ErrorUnknownList", list));
                     return;
@@ -158,7 +158,7 @@ public class JsonClientHandler {
                 } else if (type.equals(REPORTER)) {
                     this.reporterServer.parseRequest(data);
                 } else if (type.equals(ROSTER_ENTRY)) {
-                    this.connection.sendMessage(this.mapper.writeValueAsString(JsonLister.getRosterEntry(data.path(NAME).asText())));
+                    this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRosterEntry(data.path(NAME).asText())));
                 } else if (type.equals(ROUTE)) {
                     this.routeServer.parseRequest(data);
                 } else if (type.equals(THROTTLE)) {
