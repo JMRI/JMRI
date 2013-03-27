@@ -55,9 +55,9 @@ public class PositionableEllipse extends PositionableShape {
     		_transform = null;
     		makeShape();
      	} else {
-        	_transform = AffineTransform.getTranslateInstance(_width/2, _height/2);
+        	_transform = AffineTransform.getTranslateInstance(_width/2., _height/2.);
         	_transform.rotate(deg*Math.PI/180);
-        	_transform.translate(-_width/2, -_height/2);    		
+        	_transform.translate(-_width/2., -_height/2.);
     	}
     	updateSize();
     }
