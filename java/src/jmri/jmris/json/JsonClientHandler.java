@@ -176,6 +176,8 @@ public class JsonClientHandler {
             this.sendErrorMessage(500, Bundle.getMessage("ErrorProcessingJSON", pe.getLocalizedMessage()));
         } catch (JmriException je) {
             this.sendErrorMessage(500, Bundle.getMessage("ErrorUnsupportedOperation", je.getLocalizedMessage()));
+        } catch (JsonException je) {
+            this.sendErrorMessage(je);
         }
     }
 
@@ -190,11 +192,11 @@ public class JsonClientHandler {
     }
 
     private void sendErrorMessage(int code, String message) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, ERROR);
-        ObjectNode data = root.putObject(ERROR);
-        data.put(CODE, code);
-        data.put(MESSAGE, message);
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        JsonException ex = new JsonException(code, message);
+        this.sendErrorMessage(ex);
+    }
+
+    private void sendErrorMessage(JsonException ex) throws IOException {
+        this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
     }
 }

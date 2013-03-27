@@ -58,23 +58,14 @@ public class JsonTurnoutServer extends AbstractTurnoutServer {
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        this.parseRequest(this.mapper.readTree(statusString).path(DATA));
+        throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException {
+    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
         int state = data.path(STATE).asInt(Turnout.UNKNOWN);
         String name = data.path(NAME).asText();
-        if (data.path(METHOD).asText().equals(POST)) {
-            Turnout turnout = this.initTurnout(name);
-            if (data.path(USERNAME).isTextual()) {
-                turnout.setUserName(data.path(USERNAME).asText());
-            }
-            if (data.path(INVERTED).isBoolean()) {
-                turnout.setInverted(data.path(INVERTED).asBoolean());
-            }
-            if (data.path(COMMENT).isTextual()) {
-                turnout.setComment(data.path(COMMENT).asText());
-            }
+        if (data.path(METHOD).asText().equals(PUT)) {
+            JsonLister.putTurnout(name, data);
         }
         switch (state) {
             case Turnout.THROWN:
