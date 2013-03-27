@@ -2,13 +2,12 @@
 package jmri.jmris.simpleserver;
 
 import java.io.*;
-
 import jmri.JmriException;
 import jmri.Light;
 import jmri.jmris.AbstractLightServer;
+import org.eclipse.jetty.websocket.WebSocket.Connection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
 
 /**
  * Simple Server interface between the JMRI light manager and a network
@@ -60,11 +59,13 @@ public class SimpleLightServer extends AbstractLightServer {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Light ON");
             }
+            initLight(statusString.substring(index, statusString.indexOf(" ", index + 1)));
             lightOn(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         } else if (statusString.contains("OFF")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Light OFF");
             }
+            initLight(statusString.substring(index, statusString.indexOf(" ", index + 1)));
             lightOff(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         }
     }
