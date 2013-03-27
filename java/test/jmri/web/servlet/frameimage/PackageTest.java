@@ -1,13 +1,13 @@
 // PackageTest.java
 
-package jmri.web;
+package jmri.web.servlet.frameimage;
 
 import junit.framework.*;
 
 /**
- * Invokes complete set of tests in the jmri.web tree
+ * Invokes complete set of tests in the jmri.web.servlet.frameimage tree
  *
- * @author	    Bob Jacobsen  Copyright 2008
+ * @author	    Bob Jacobsen  Copyright 2013
  * @version         $Revision$
  */
 public class PackageTest extends TestCase {
@@ -25,9 +25,8 @@ public class PackageTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("jmri.web.PackageTest");   // no tests in this class itself
-        suite.addTest(jmri.web.servlet.PackageTest.suite());
-        suite.addTest(jmri.web.xmlio.PackageTest.suite());
+        TestSuite suite = new TestSuite("jmri.web.servlet.frameimage.PackageTest");   // no tests in this class itself
+        suite.addTest(JmriJFrameServletTest.suite());
         return suite;
     }
 
