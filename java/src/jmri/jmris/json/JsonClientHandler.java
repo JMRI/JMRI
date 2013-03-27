@@ -68,7 +68,7 @@ public class JsonClientHandler {
      * <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code>
      * <li>individual types can be created if a <strong>method</strong> node with the
      * value <em>post</em> is included in the <em>data</em> node:
-     * <code>{"type":"turnout","data":{"name":"LT14","method":"post"}}</code>
+     * <code>{"type":"turnout","data":{"name":"LT14","method":"put"}}</code>
      * Note that not all types support this.</li></ul>
      * </li><li>a heartbeat in the form
      * <code>*</code> or

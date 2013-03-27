@@ -58,11 +58,9 @@
                     updated responses every time the item's state changes.
                     <ul>
                         <li>an item's state can be set by adding a <strong>state</strong> node to the
-                            <em>data</em> node:
+                            <em>data</em> node in an HTTP POST request:
                             <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code>
-                        <li>individual types can be created if a <strong>method</strong> node with the
-                            value <em>post</em> is included in the <em>data</em> node:
-                            <code>{"type":"turnout","data":{"name":"LT14","method":"post"}}</code>
+                        <li>individual types can be created if the request is an HTTP PUT request.
                             Note that not all types support this.</li>
                     </ul>
                 </li>
