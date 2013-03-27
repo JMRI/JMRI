@@ -252,9 +252,7 @@ public class JsonServlet extends WebSocketServlet {
             } else if (name != null) {
                 try {
                     if (state != -1) {
-                        if (type.equals(LIGHTS)) {
-                            JsonUtil.setLight(name, state);
-                        } else if (type.equals(ROUTES)) {
+                        if (type.equals(ROUTES)) {
                             JsonUtil.setRoute(name, state);
                         } else if (type.equals(SENSORS)) {
                             JsonUtil.setSensor(name, state);
@@ -284,6 +282,7 @@ public class JsonServlet extends WebSocketServlet {
                         }
                     }
                     if (type.equals(LIGHTS)) {
+                        JsonUtil.setLight(name, data);
                         reply = JsonUtil.getLight(name);
                     } else if (type.equals(MEMORIES)) {
                         reply = JsonUtil.getMemory(name);
@@ -346,22 +345,25 @@ public class JsonServlet extends WebSocketServlet {
             } else {
                 throw new JsonException(400, "PUT request must be a JSON object"); // need to I18N
             }
-            if (name == null || type == null) {
-                log.warn("Type \"" + type + "\" unknown.");
-                reply = JsonUtil.getUnknown(type);
-            } else {
-                if (type.equals(TURNOUTS)) {
-                    JsonUtil.putTurnout(name, data);
-                } else {
-                    // not a creatable item
-                    throw new JsonException(400, type + " is not a creatable type"); // need to I18N
-                }
-                if (type.equals(TURNOUTS)) {
-                    reply = JsonUtil.getTurnout(name);
+            if (type != null) {
+                if (name != null) {
+                    if (type.equals(LIGHTS)) {
+                        JsonUtil.putLight(name, data);
+                        reply = JsonUtil.getLight(name);
+                    } else if (type.equals(TURNOUTS)) {
+                        JsonUtil.putTurnout(name, data);
+                        reply = JsonUtil.getTurnout(name);
+                    } else {
+                        // not a creatable item
+                        throw new JsonException(400, type + " is not a creatable type"); // need to I18N
+                    }
                 } else {
                     log.warn("Type \"" + type + "\" unknown.");
                     reply = JsonUtil.getUnknown(type);
                 }
+            } else {
+                log.warn("Type \"" + type + "\" unknown.");
+                reply = JsonUtil.getUnknown(type);
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();

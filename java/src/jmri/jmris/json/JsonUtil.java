@@ -131,19 +131,43 @@ public class JsonUtil {
         return root;
     }
 
-    static public void setLight(String name, int state) throws JsonException {
-        switch (state) {
-            case Light.OFF:
-            case Light.ON:
-                try {
+    static public void putLight(String name, JsonNode data) throws JsonException {
+        try {
+            InstanceManager.lightManagerInstance().provideLight(name);
+            setLight(name, data);
+        } catch (Exception ex) {
+            if (ex.getClass().equals(JsonException.class)) {
+                throw (JsonException) ex;
+            } else {
+                throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
+            }
+        }
+    }
+
+    static public void setLight(String name, JsonNode data) throws JsonException {
+        try {
+            Light light = InstanceManager.lightManagerInstance().getBySystemName(name);
+            if (data.path(USERNAME).isTextual()) {
+                light.setUserName(data.path(USERNAME).asText());
+            }
+            if (data.path(COMMENT).isTextual()) {
+                light.setComment(data.path(COMMENT).asText());
+            }
+            int state = data.path(STATE).asInt(Light.UNKNOWN);
+            switch (state) {
+                case Light.OFF:
+                case Light.ON:
                     InstanceManager.lightManagerInstance().getLight(name).setState(state);
-                } catch (NullPointerException e) {
-                    log.error("Unable to get light [" + name + "].", e);
-                    throw new JsonException(404, Bundle.getMessage("ErrorObject", LIGHT, name));
-                }
-                break;
-            default:
-                throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", LIGHT, state));
+                    break;
+                case Light.UNKNOWN:
+                    // silently ignore
+                    break;
+                default:
+                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", LIGHT, state));
+            }
+        } catch (NullPointerException e) {
+            log.error("Unable to get light {}", name, e);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", LIGHT, name));
         }
     }
 
