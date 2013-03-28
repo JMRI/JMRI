@@ -369,8 +369,9 @@ public class JmriJFrameServlet extends HttpServlet {
     // the parameter names to see if an image map was clicked
     void populateParameterMap(Map<String, String[]> map) {
         parameters.clear();
-        for (String key : map.keySet()) {
-            String[] value = map.get(key);
+        for (Map.Entry<String, String[]> entry : map.entrySet()) {
+            String[] value = entry.getValue();
+            String key = entry.getKey();
             if (value[0].contains("?")) {
                 // a user's click is in another key's value
                 String[] values = value[0].split("\\?");
