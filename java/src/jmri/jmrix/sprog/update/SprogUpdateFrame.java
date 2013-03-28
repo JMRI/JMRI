@@ -243,7 +243,7 @@ abstract public class SprogUpdateFrame
     protected void stateV4Reset() {
     }
 
-    protected void stateDefault() {
+    synchronized protected void stateDefault() {
         // Houston, we have a problem
         if (log.isDebugEnabled()) { log.debug("Reply in unknown state"); }
         bootState = BootState.IDLE;
@@ -348,21 +348,21 @@ abstract public class SprogUpdateFrame
   /**
    * Internal routine to restart timer with a long delay
    */
-  protected void startLongTimer() {
+  synchronized protected void startLongTimer() {
       restartTimer(LONG_TIMEOUT);
   }
 
   /**
    * Internal routine to stop timer, as all is well
    */
-  protected void stopTimer() {
+  synchronized protected void stopTimer() {
       if (timer!=null) timer.stop();
   }
 
   /**
    * Internal routine to handle timer starts & restarts
    */
-  protected void restartTimer(int delay) {
+  synchronized protected void restartTimer(int delay) {
       if (timer==null) {
           timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
               public void actionPerformed(java.awt.event.ActionEvent e) {
