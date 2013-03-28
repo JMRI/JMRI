@@ -260,18 +260,28 @@ public class JsonUtil {
         }
     }
 
+    static public JsonNode getMetadata(String name) {
+        String metadata = Metadata.getBySystemName(name);
+        ObjectNode root;
+        if (metadata != null) {
+            root = mapper.createObjectNode();
+            root.put(TYPE, METADATA);
+            ObjectNode data = root.putObject(DATA);
+            data.put(NAME, name);
+            data.put(VALUE, Metadata.getBySystemName(name));
+        } else {
+            root = handleError(404, Bundle.getMessage("ErrorObject", METADATA, name));
+        }
+        return root;
+    }
+
     static public JsonNode getMetadata() {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode metadatas = root.putArray(LIST);
         List<String> names = Metadata.getSystemNameList();
         for (String name : names) {
-            ObjectNode metadata = mapper.createObjectNode();
-            metadata.put(TYPE, METADATA);
-            ObjectNode data = metadata.putObject(DATA);
-            data.put(NAME, name);
-            data.put(VALUE, Metadata.getBySystemName(name));
-            metadatas.add(metadata);
+            metadatas.add(getMetadata(name));
         }
         return root;
     }

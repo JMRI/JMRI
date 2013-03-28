@@ -143,6 +143,8 @@ public class JsonClientHandler {
                     this.lightServer.parseRequest(data);
                 } else if (type.equals(MEMORY)) {
                     this.memoryServer.parseRequest(data);
+                } else if (type.equals(METADATA)) {
+                    this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMetadata(data.path(NAME).asText())));
                 } else if (type.equals(OPERATIONS)) {
                     this.operationsServer.parseRequest(data);
                 } else if (type.equals(POWER)) {
@@ -169,7 +171,7 @@ public class JsonClientHandler {
                     this.sendErrorMessage(404, Bundle.getMessage("ErrorUnknownType", type));
                 }
             } else {
-                this.sendErrorMessage(500, Bundle.getMessage("ErrorMissingData"));
+                this.sendErrorMessage(400, Bundle.getMessage("ErrorMissingData"));
             }
         } catch (JsonProcessingException pe) {
             log.warn("Exception processing \"" + string + "\"\n" + pe.getMessage());

@@ -162,6 +162,8 @@ public class JsonServlet extends WebSocketServlet {
                     reply = JsonUtil.getLocation(name);
                 } else if (type.equals(MEMORY) || type.equals(MEMORIES)) {
                     reply = JsonUtil.getMemory(name);
+                } else if (type.equals(METADATA)) {
+                    reply = JsonUtil.getMetadata(name);
                 } else if (type.equals(REPORTER) || type.equals(REPORTERS)) {
                     reply = JsonUtil.getReporter(name);
                 } else if (type.equals(ROSTER_ENTRY) || type.equals(ROSTER)) {
