@@ -14,7 +14,7 @@ import java.util.Map;
 public class JmriJFrameServletTest extends TestCase {
 
     public void testCtor() {
-        JmriJFrameServlet_ut out = new JmriJFrameServlet_ut();
+        new JmriJFrameServlet_ut();
     }
     
     public void testAccess() {
