@@ -135,7 +135,7 @@ public class JsonUtil {
         try {
             InstanceManager.lightManagerInstance().provideLight(name);
         } catch (Exception ex) {
-            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", TURNOUT, name));
+            throw new JsonException(500, Bundle.getMessage("ErrorCreatingObject", LIGHT, name));
         }
         setLight(name, data);
     }
@@ -178,10 +178,8 @@ public class JsonUtil {
             data.put(LENGTH, location.getLength());
             data.put(COMMENT, location.getComment());
         } catch (NullPointerException e) {
-            root.put(TYPE, ERROR);
-            data.put(CODE, 404);
-            data.put(MESSAGE, Bundle.getMessage("ErrorObject", LOCATION, id));
-            log.error("Unable to get location id=" + id + ".", e);
+            root = handleError(404, Bundle.getMessage("ErrorObject", LOCATION, id));
+            log.error("Unable to get location id={}.", id, e);
         }
         return root;
     }
@@ -221,9 +219,7 @@ public class JsonUtil {
                 data.put(VALUE, memory.getValue().toString());
             }
         } catch (NullPointerException e) {
-            root.put(TYPE, ERROR);
-            data.put(CODE, 404);
-            data.put(MESSAGE, Bundle.getMessage("ErrorObject", MEMORY, name));
+            root = handleError(404, Bundle.getMessage("ErrorObject", MEMORY, name));
             log.error("Unable to get memory {}", name);
         }
         return root;
@@ -486,9 +482,7 @@ public class JsonUtil {
             data.put(COMMENT, route.getComment());
             data.put(STATE, (s.getSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.getSensor(route.getTurnoutsAlignedSensor())).getKnownState() : Route.UNKNOWN);
         } catch (NullPointerException e) {
-            root.put(TYPE, ERROR);
-            data.put(CODE, 404);
-            data.put(MESSAGE, Bundle.getMessage("ErrorObject", ROUTE, name));
+            root = handleError(404, Bundle.getMessage("ErrorObject", ROUTE, name));
             log.error("Unable to get route.", e);
         }
         return root;
@@ -548,9 +542,7 @@ public class JsonUtil {
             data.put(INVERTED, sensor.getInverted());
             data.put(STATE, sensor.getKnownState());
         } catch (NullPointerException e) {
-            root.put(TYPE, ERROR);
-            data.put(CODE, 404);
-            data.put(MESSAGE, Bundle.getMessage("ErrorObject", SENSOR, name));
+            root = handleError(404, Bundle.getMessage("ErrorObject", SENSOR, name));
             log.error("Unable to get sensor.", e);
         }
         return root;
@@ -600,7 +592,7 @@ public class JsonUtil {
                     throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SENSOR, state));
             }
         } catch (NullPointerException e) {
-            log.error("Unable to get sensor [" + name + "].", e);
+            log.error("Unable to get sensor [{}].", name, e);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", SENSOR, name));
         } catch (JmriException ex) {
             throw new JsonException(500, ex);
@@ -627,10 +619,8 @@ public class JsonUtil {
             }
             data.put(APPEARANCE_NAME, signalHead.getAppearanceName());
         } catch (NullPointerException e) {
-            root.put(TYPE, ERROR);
-            data.put(CODE, 404);
-            data.put(MESSAGE, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
-            log.error("Unable to get signalHead [" + name + "].", e);
+            root = handleError(404, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
+            log.error("Unable to get signalHead [{}].", name, e);
         }
         return root;
     }
@@ -700,10 +690,8 @@ public class JsonUtil {
                 data.put(STATE, aspect);
             }
         } catch (NullPointerException e) {
-            root.put(TYPE, ERROR);
-            data.put(CODE, 404);
-            data.put(MESSAGE, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
-            log.error("Unable to get signalMast [" + name + "].", e);
+            root = handleError(404, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
+            log.error("Unable to get signalMast [{}].", name, e);
         }
         return root;
     }
@@ -735,7 +723,7 @@ public class JsonUtil {
                 throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SIGNAL_MAST, aspect));
             }
         } catch (NullPointerException e) {
-            log.error("Unable to get signal mast [" + name + "].", e);
+            log.error("Unable to get signal mast [{}].", name, e);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
         }
     }
@@ -774,10 +762,8 @@ public class JsonUtil {
             }
 
         } catch (NullPointerException e) {
-            root.put(TYPE, ERROR);
-            data.put(CODE, 404);
-            data.put(MESSAGE, Bundle.getMessage("ErrorObject", TRAIN, id));
-            log.error("Unable to get train id= " + id + ".", e);
+            root = handleError(404, Bundle.getMessage("ErrorObject", TRAIN, id));
+            log.error("Unable to get train id= {}.", id, e);
         }
         return root;
     }
@@ -810,7 +796,7 @@ public class JsonUtil {
             data.put(STATE, turnout.getKnownState());
         } catch (NullPointerException e) {
             root = handleError(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
-            log.error("Unable to get turnout [" + name + "].", e);
+            log.error("Unable to get turnout [{}].", name, e);
         }
         return root;
     }
@@ -865,12 +851,7 @@ public class JsonUtil {
     }
 
     static public JsonNode getUnknown(String type) {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, ERROR);
-        ObjectNode data = root.putObject(DATA);
-        data.put(CODE, 404);
-        data.put(MESSAGE, Bundle.getMessage("ErrorUnknownType", type));
-        return root;
+        return handleError(404, Bundle.getMessage("ErrorUnknownType", type));
     }
 
     static private ArrayNode getCarsForTrain(Train train) {
