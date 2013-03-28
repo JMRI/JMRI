@@ -2529,20 +2529,22 @@ public class TrainBuilder extends TrainCommon {
 			}
 
 			// check the number of in bound cars to this track
-			if (track.getScheduleMode() == Track.MATCH && !track.isSpaceAvailable(car)) {
-				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
-						new Object[] { car.toString(), track.getLocation().getName(), track.getName(),
-								track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
-								track.getReservationFactor() }));
-				// determine if this car can be routed to this track
+			if (!track.isSpaceAvailable(car)) {
+				// Now determine if we should move the car or just leave it where it is
+				String id = track.getScheduleItemId();	// save the tracks schedule item id
+				// determine if this car can be routed to the spur
 				car.setFinalDestination(track.getLocation());
 				car.setFinalDestinationTrack(track);
 				if (Router.instance().setDestination(car, train, buildReport))
 					routeToSpurFound = true; // if we don't find another spur, keep the car here for now
-				car.setDestination(null, null); // TODO this breaks schedules in sequential mode, so the schedule needs
-												// to be in match mode
+				car.setDestination(null, null); 
 				car.setFinalDestination(null);
 				car.setFinalDestinationTrack(null);
+				track.setScheduleItemId(id);	// restore id
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoDestTrackSpace"),
+						new Object[] { car.toString(), track.getLocation().getName(), track.getName(),
+								track.getNumberOfCarsInRoute(), track.getReservedInRoute(),
+								track.getReservationFactor() }));
 				continue;
 			}
 			// try to send car to this spur

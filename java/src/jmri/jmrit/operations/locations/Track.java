@@ -1610,7 +1610,7 @@ public class Track {
 					loadNext(si, car);
 					return OKAY;
 				}
-				log.debug("Schedule id " + car.getScheduleId() + " not valid for track (" + getName() + ")");
+				log.debug("Schedule id " + id + " not valid for track (" + getName() + ")");
 				return SCHEDULE + " ERROR id " + id + " not valid for track ("+ getName() + ")"; // NOI18N
 			}
 		}
