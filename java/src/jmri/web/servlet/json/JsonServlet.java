@@ -151,34 +151,33 @@ public class JsonServlet extends WebSocketServlet {
                     reply = JsonUtil.getUnknown(type);
                 }
             } else {
-                // NOTE: use of singular paths is depricated and will be removed after 3.4 is released
-                if (type.equals(CAR) || type.equals(CARS)) {
+                if (type.equals(CAR)) {
                     reply = JsonUtil.getCar(name);
-                } else if (type.equals(ENGINE) || type.equals(ENGINES)) {
+                } else if (type.equals(ENGINE)) {
                     reply = JsonUtil.getEngine(name);
-                } else if (type.equals(LIGHT) || type.equals(LIGHTS)) {
+                } else if (type.equals(LIGHT)) {
                     reply = JsonUtil.getLight(name);
-                } else if (type.equals(LOCATION) || type.equals(LOCATIONS)) {
+                } else if (type.equals(LOCATION)) {
                     reply = JsonUtil.getLocation(name);
-                } else if (type.equals(MEMORY) || type.equals(MEMORIES)) {
+                } else if (type.equals(MEMORY)) {
                     reply = JsonUtil.getMemory(name);
                 } else if (type.equals(METADATA)) {
                     reply = JsonUtil.getMetadata(name);
-                } else if (type.equals(REPORTER) || type.equals(REPORTERS)) {
+                } else if (type.equals(REPORTER)) {
                     reply = JsonUtil.getReporter(name);
                 } else if (type.equals(ROSTER_ENTRY) || type.equals(ROSTER)) {
                     reply = JsonUtil.getRosterEntry(name);
-                } else if (type.equals(ROUTE) || type.equals(ROUTES)) {
+                } else if (type.equals(ROUTE)) {
                     reply = JsonUtil.getRoute(name);
-                } else if (type.equals(SENSOR) || type.equals(SENSORS)) {
+                } else if (type.equals(SENSOR)) {
                     reply = JsonUtil.getSensor(name);
-                } else if (type.equals(SIGNAL_HEAD) || type.equals(SIGNAL_HEADS)) {
+                } else if (type.equals(SIGNAL_HEAD)) {
                     reply = JsonUtil.getSignalHead(name);
-                } else if (type.equals(SIGNAL_MAST) || type.equals(SIGNAL_MASTS)) {
+                } else if (type.equals(SIGNAL_MAST)) {
                     reply = JsonUtil.getSignalMast(name);
-                } else if (type.equals(TRAIN) || type.equals(TRAINS)) {
+                } else if (type.equals(TRAIN)) {
                     reply = JsonUtil.getTrain(name);
-                } else if (type.equals(TURNOUT) || type.equals(TURNOUTS)) {
+                } else if (type.equals(TURNOUT)) {
                     reply = JsonUtil.getTurnout(name);
                 } else {
                     log.warn("Type {} unknown.", type);
@@ -242,34 +241,34 @@ public class JsonServlet extends WebSocketServlet {
                     name = data.path(NAME).asText();
                 }
                 if (name != null) {
-                    if (type.equals(LIGHTS)) {
+                    if (type.equals(LIGHT)) {
                         JsonUtil.setLight(name, data);
                         reply = JsonUtil.getLight(name);
-                    } else if (type.equals(MEMORIES)) {
+                    } else if (type.equals(MEMORY)) {
                         JsonUtil.setMemory(name, data);
                         reply = JsonUtil.getMemory(name);
                     } else if (type.equals(POWER)) {
                         JsonUtil.setPower(data);
                         reply = JsonUtil.getPower();
-                    } else if (type.equals(REPORTERS)) {
+                    } else if (type.equals(REPORTER)) {
                         JsonUtil.setReporter(name, data);
                         reply = JsonUtil.getReporter(name);
-                    } else if (type.equals(ROUTES)) {
+                    } else if (type.equals(ROUTE)) {
                         JsonUtil.setRoute(name, data);
                         reply = JsonUtil.getRoute(name);
-                    } else if (type.equals(SENSORS)) {
+                    } else if (type.equals(SENSOR)) {
                         JsonUtil.setSensor(name, data);
                         reply = JsonUtil.getSensor(name);
-                    } else if (type.equals(SIGNAL_HEADS)) {
+                    } else if (type.equals(SIGNAL_HEAD)) {
                         JsonUtil.setSignalHead(name, data);
                         reply = JsonUtil.getSignalHead(name);
-                    } else if (type.equals(SIGNAL_MASTS)) {
+                    } else if (type.equals(SIGNAL_MAST)) {
                         JsonUtil.setSignalMast(name, data);
                         reply = JsonUtil.getSignalMast(name);
-                    } else if (type.equals(TRAINS)) {
+                    } else if (type.equals(TRAIN)) {
                         JsonUtil.setTrain(name, data);
                         reply = JsonUtil.getTrain(name);
-                    } else if (type.equals(TURNOUTS)) {
+                    } else if (type.equals(TURNOUT)) {
                         JsonUtil.setTurnout(name, data);
                         reply = JsonUtil.getTurnout(name);
                     } else {
@@ -326,22 +325,22 @@ public class JsonServlet extends WebSocketServlet {
                     name = data.path(NAME).asText();
                 }
                 if (name != null) {
-                    if (type.equals(LIGHTS)) {
+                    if (type.equals(LIGHT)) {
                         JsonUtil.putLight(name, data);
                         reply = JsonUtil.getLight(name);
-                    } else if (type.equals(MEMORIES)) {
+                    } else if (type.equals(MEMORY)) {
                         JsonUtil.putMemory(name, data);
                         reply = JsonUtil.getMemory(name);
                     } else if (type.equals(POWER)) {
                         JsonUtil.setPower(data);
                         reply = JsonUtil.getPower();
-                    } else if (type.equals(REPORTERS)) {
+                    } else if (type.equals(REPORTER)) {
                         JsonUtil.putReporter(name, data);
                         reply = JsonUtil.getReporter(name);
-                    } else if (type.equals(SENSORS)) {
+                    } else if (type.equals(SENSOR)) {
                         JsonUtil.putSensor(name, data);
                         reply = JsonUtil.getSensor(name);
-                    } else if (type.equals(TURNOUTS)) {
+                    } else if (type.equals(TURNOUT)) {
                         JsonUtil.putTurnout(name, data);
                         reply = JsonUtil.getTurnout(name);
                     } else {
