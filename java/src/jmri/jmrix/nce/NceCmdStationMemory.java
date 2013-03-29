@@ -24,6 +24,11 @@ public class NceCmdStationMemory {
     	public final static int CS_CONSIST_MEM = 0xF500; 	// start of NCE CS Consist memory
     	public final static int CS_CON_MEM_REAR = 0xF600; 	// start of rear consist locos
     	public final static int CS_CON_MEM_MID = 0xF700; 	// start of mid consist locos
+    	public final static int CS_CON_MIN = 1;
+    	public final static int CS_CON_MAX = 127;
+    	public final static int CS_MACRO_MEM = 0xC800;	// start of NCE CS Macro memory 
+    	public final static int CS_MAX_MACRO = 255;		// there are 256 possible macros
+    	public final static int CS_MACRO_SIZE = 20;		// 20 bytes per macro
 
     	public static final int NUM_CONSIST = 96;			// number of lines in the file
     	
@@ -51,7 +56,11 @@ public class NceCmdStationMemory {
 
     	public static final int CAB_NUM_CONSIST = 13;		// usb cab number for consist memory
     	public static final int NUM_CONSIST = 16;
-    	public static final int MIN_CONSIST_ID = 112;
+    	public static final int CS_CON_MAX = 127;
+    	public static final int CS_CON_MIN = 112;
+    	public static final int CAB_NUM_MACRO = 14;		// usb cab number for macros
+    	public static final int CS_MAX_MACRO = 16;		// there are 16 possible macros
+    	public final static int CS_MACRO_SIZE = 16;		// 16 bytes per macro
     	
     	public final static int CAB_LINE_1 = 0;		// start of first line for cab display
     	public final static int CAB_LINE_2 = 16;		// start of second line for cab display
