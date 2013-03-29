@@ -294,6 +294,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 			scheduleTable.clearSelection();
 		}
 		if (_track != null) {
+			if (!_track.getScheduleId().equals(_schedule.getId()))
+				LocationManager.instance().resetMoves();
 			_track.setScheduleId(_schedule.getId());
 			if (sequentialRadioButton.isSelected())
 				_track.setScheduleMode(Track.SEQUENTIAL);
