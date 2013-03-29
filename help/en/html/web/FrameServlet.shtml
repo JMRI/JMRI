@@ -41,6 +41,12 @@ enter a list of frames which are not to be allowed, and enable ajax
 refresh (recommended) or use the older meta-refresh.
 
 <p>
+You can override the defaults for individual pages by adding the following parms, set to 'yes' or 'no' to your URL:
+<ul><li><b>plain</b> (hide the footer links)</li>
+<li><b>protect</b> (protect the frame from user clicks, i.e. read-only image, but with refresh)</li>
+<li><b>ajax</b> (use ajax for updates)</li></ul>
+
+<p>
 The jmri/web/servlet/frameimage/JmriJFrameServlet.properties 
   <a href="https://jmri.svn.sourceforge.net/svnroot/jmri/trunk/jmri/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties" target=_new>
   [view]</a>
