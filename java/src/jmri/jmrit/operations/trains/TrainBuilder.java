@@ -2527,6 +2527,10 @@ public class TrainBuilder extends TrainCommon {
 						|| !track.checkSchedule(car).equals(Track.OKAY))
 					continue;
 			}
+			
+			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSetFinalDestination"),
+					new Object[] { car.toString(), car.getLoad(), track.getLocation().getName(),
+							track.getName() }));
 
 			// check the number of in bound cars to this track
 			if (!track.isSpaceAvailable(car)) {
@@ -2548,9 +2552,6 @@ public class TrainBuilder extends TrainCommon {
 				continue;
 			}
 			// try to send car to this spur
-			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSetFinalDestination"),
-					new Object[] { car.toString(), car.getLoad(), track.getLocation().getName(),
-							track.getName() }));
 			car.setFinalDestination(track.getLocation());
 			car.setFinalDestinationTrack(track);
 			// test to see if destination is reachable by this train
