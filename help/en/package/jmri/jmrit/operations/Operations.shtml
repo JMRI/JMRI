@@ -2561,9 +2561,10 @@ different format for your switch lists.
     destination. The program will use up to five trains to get the car to a destination.</P>
 
    <P>
-    Sometimes reading the build report can get tedious. If you want to use a <A
-     HREF="#BuildReportDetails">text editor</A> to search the report, the build reports can be found
-    in the directory JMRI-&gt;operations-&gt;buildstatus.
+    Sometimes reading the build report can get tedious. A text editor allows you to search the
+    report, you can select this option from the
+    <A HREF="#BuildReportDetails">Build Report Options</A> under Tools in the Setup or Trains window. You can also find the
+    build reports in the directory JMRI-&gt;operations-&gt;buildstatus.
    </P>
 
    <A NAME="PrintingManifests"></A>
