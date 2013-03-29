@@ -65,7 +65,7 @@ public class Sprogv4UpdateFrame
         }
     }
 
-    protected void stateSetBootSent() {
+    synchronized protected void stateSetBootSent() {
         // Only old SPROG v4 reach this state
         if (log.isDebugEnabled()) { log.debug("reply in SETBOOTSENT state"); }
         if (replyString.indexOf("L>") >= 0) {
@@ -85,7 +85,7 @@ public class Sprogv4UpdateFrame
         }
     }
 
-    protected void stateBootVerReqSent() {
+    synchronized protected void stateBootVerReqSent() {
         stopTimer();
         if (log.isDebugEnabled()) { log.debug("reply in VERREQSENT state " + replyString); }
         // Look for echo of extended address command
@@ -108,7 +108,7 @@ public class Sprogv4UpdateFrame
         }
     }
 
-    protected void stateWriteSent() {
+    synchronized protected void stateWriteSent() {
         stopTimer();
         if (log.isDebugEnabled()) { log.debug("reply in WRITESENT state"); }
         // Check for correct response to type of write that was sent
@@ -128,7 +128,7 @@ public class Sprogv4UpdateFrame
         }
     }
 
-    protected void stateEofSent() {
+    synchronized protected void stateEofSent() {
         // v4 end of file sent
         stopTimer();
         // Check for correct response to end of file
@@ -143,7 +143,7 @@ public class Sprogv4UpdateFrame
         tc.setSprogState(SprogState.NORMAL);
     }
 
-    protected void stateV4Reset() {
+    synchronized protected void stateV4Reset() {
           // v4 should have auto reset
           stopTimer();
           // Check for correct response to end of file
@@ -158,7 +158,7 @@ public class Sprogv4UpdateFrame
           tc.setSprogState(SprogState.NORMAL);
     }
 
-    protected void requestBoot() {
+    synchronized protected void requestBoot() {
         // Look for SPROG in boot mode by sending an extended address command
         // which should be echoed
         if (log.isDebugEnabled()) { log.debug("Request bootloader version"); }
@@ -170,7 +170,7 @@ public class Sprogv4UpdateFrame
         startLongTimer();
     }
 
-  protected void sendWrite() {
+  synchronized protected void sendWrite() {
     if (hexFile.getAddress() < 2 * 0x700) {
       //
       if (log.isDebugEnabled()) { log.debug("Send write Flash " + hexFile.getAddress()); }
@@ -194,7 +194,7 @@ public class Sprogv4UpdateFrame
     }
   }
 
-  protected void doneWriting() {
+  synchronized protected void doneWriting() {
     // Finished
     if (log.isDebugEnabled()) {  log.debug("Done writing"); }
     statusBar.setText("Write Complete");

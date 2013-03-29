@@ -77,7 +77,7 @@ public class SprogIIUpdateFrame
         }
     }
 
-    protected void frameCheck() {
+    synchronized protected void frameCheck() {
         // If SPROG II is in boot mode, check message framing and checksum
         if ((bootState != BootState.RESETSENT) && tc.isSIIBootMode() && !reply.strip()) {
             stopTimer();
@@ -97,7 +97,7 @@ public class SprogIIUpdateFrame
         }
     }
 
-    protected void stateBootVerReqSent() {
+    synchronized protected void stateBootVerReqSent() {
         stopTimer();
         if (log.isDebugEnabled()) { log.debug("reply in VERREQSENT state"); }
         // see if reply is the version
@@ -295,7 +295,7 @@ public class SprogIIUpdateFrame
     bootState = BootState.IDLE;
   }
 
-    public synchronized void programButtonActionPerformed(java.awt.event.ActionEvent e) {
+   synchronized public void programButtonActionPerformed(java.awt.event.ActionEvent e) {
         if (hexFile != null) {
             openFileChooserButton.setEnabled(false);
             programButton.setEnabled(false);
