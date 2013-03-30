@@ -716,8 +716,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				x = 0;
 			}
 		}
-//		addItem(typeCarPanelCheckBoxes, clearButton, 1, ++y);
-//		addItem(typeCarPanelCheckBoxes, setButton, 4, y);
 		
 		JPanel p = new JPanel();
 		p.add(clearButton);
@@ -821,6 +819,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
+	// the train's route shown as locations with checkboxes
 	private void updateLocationCheckboxes() {
 		locationCheckBoxes.clear();
 		locationPanelCheckBoxes.removeAll();
@@ -885,7 +884,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			ref.setTitle(ResourceBundle.getBundle(
 					"jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString( // NOI18N
 					"TitleRouteAdd")); // NOI18N
-			ref.initComponents(null);
+			ref.initComponents(null, _train);
 		}
 	}
 
@@ -983,6 +982,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)) {
 			updateDepartureTime();
+		}
+		if (e.getPropertyName().equals(Train.TRAIN_ROUTE_CHANGED_PROPERTY) && _train != null) {
+			routeBox.setSelectedItem(_train.getRoute());
 		}
 	}
 

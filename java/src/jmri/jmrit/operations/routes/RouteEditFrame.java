@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.OperationsFrame;
@@ -37,6 +38,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 	Route _route = null;
 	RouteLocation _routeLocation = null;
+	Train _train = null;
 
 	// major buttons
 	JButton addLocationButton = new JButton(Bundle.getMessage("AddLocation"));
@@ -68,6 +70,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 
 	public RouteEditFrame() {
 		super();
+	}
+	
+	public void initComponents(Route route, Train train) {
+		_train = train;
+		initComponents(route);
 	}
 
 	public void initComponents(Route route) {
@@ -280,6 +287,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		_route = route;
 		// enable checkboxes
 		enableButtons(true);
+		// assign route to a train?
+		if (_train != null)
+			_train.setRoute(route);
 		saveRoute();
 	}
 
