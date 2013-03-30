@@ -303,39 +303,40 @@ public class ManageLocationsFrame extends JmriJFrame {
 	    dispose();
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR", justification="only in slow debug") 
     private void saveTableValues() {
-	if ((Boolean)locModel.getValueAt(0,1)) {
-	    listenerLoc.setLocation((Double)locModel.getValueAt(0,2), 
-				    (Double)locModel.getValueAt(0,3),
-				    (Double)locModel.getValueAt(0,4));
-	    listenerLoc.setOrientation((Double)locModel.getValueAt(0,5),
-				       (Double)locModel.getValueAt(0,6));
-	    VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
-	}
-	
-	HashMap<String, PhysicalLocation> data = reporterModel.getDataMap();
-	ReporterManager mgr = jmri.InstanceManager.reporterManagerInstance();
-	for (String s : data.keySet()) {
-	    log.debug("Reporter: " + s + " Location: " + data.get(s));
-	    Reporter r = mgr.getByDisplayName(s);
-	    PhysicalLocation.setBeanPhysicalLocation(data.get(s), r);
-	}
+        if ((Boolean)locModel.getValueAt(0,1)) {
+            listenerLoc.setLocation((Double)locModel.getValueAt(0,2), 
+                        (Double)locModel.getValueAt(0,3),
+                        (Double)locModel.getValueAt(0,4));
+            listenerLoc.setOrientation((Double)locModel.getValueAt(0,5),
+                           (Double)locModel.getValueAt(0,6));
+            VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
+        }
+    
+        HashMap<String, PhysicalLocation> data = reporterModel.getDataMap();
+        ReporterManager mgr = jmri.InstanceManager.reporterManagerInstance();
+        for (String s : data.keySet()) {
+            log.debug("Reporter: " + s + " Location: " + data.get(s));
+            Reporter r = mgr.getByDisplayName(s);
+            PhysicalLocation.setBeanPhysicalLocation(data.get(s), r);
+        }
 
-	data = blockModel.getDataMap();
-	BlockManager bmgr = jmri.InstanceManager.blockManagerInstance();
-	for (String s : data.keySet()) {
-	    log.debug("Block: " + s + " Location: " + data.get(s));
-	    Block b = bmgr.getByDisplayName(s);
-	    PhysicalLocation.setBeanPhysicalLocation(data.get(s), b);
-	}
+        data = blockModel.getDataMap();
+        BlockManager bmgr = jmri.InstanceManager.blockManagerInstance();
+        for (String s : data.keySet()) {
+            log.debug("Block: " + s + " Location: " + data.get(s));
+            Block b = bmgr.getByDisplayName(s);
+            PhysicalLocation.setBeanPhysicalLocation(data.get(s), b);
+        }
 
-	data = opsModel.getDataMap();
-	LocationManager lmgr = LocationManager.instance();
-	for (String s : data.keySet()) {
-	    log.debug("OpsLocation: " + s + " Location: " + data.get(s));
-	    Location l = lmgr.getLocationByName(s);
-	    l.setPhysicalLocation(data.get(s));
-	}
+        data = opsModel.getDataMap();
+        LocationManager lmgr = LocationManager.instance();
+        for (String s : data.keySet()) {
+            log.debug("OpsLocation: " + s + " Location: " + data.get(s));
+            Location l = lmgr.getLocationByName(s);
+            l.setPhysicalLocation(data.get(s));
+        }
     }
 
     private void modeRadioButtonPressed(ActionEvent e) {
