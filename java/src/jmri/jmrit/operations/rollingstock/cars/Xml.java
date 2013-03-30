@@ -38,6 +38,7 @@ public class Xml {
 	static final String NEXT_DEST_TRACK_ID = "nextDestTrackId"; // NOI18N
 	static final String PREVIOUS_NEXT_DEST_ID = "previousNextDestId"; // NOI18N
 	static final String PREVIOUS_NEXT_DEST_TRACK_ID = "previousNextDestTrackId"; // NOI18N	
+	static final String PREVIOUS_SCHEDULE_ID = "previousScheduleId"; // NOI18N
 	static final String RWE_DEST_ID = "rweDestId"; // NOI18N
 	static final String RWE_DEST_TRACK_ID = "rweDestTrackId"; // NOI18N
 	

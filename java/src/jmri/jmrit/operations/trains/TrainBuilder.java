@@ -1118,6 +1118,7 @@ public class TrainBuilder extends TrainCommon {
 			// save final destination and track values in case of train reset
 			car.setPreviousFinalDestination(car.getFinalDestination());
 			car.setPreviousFinalDestinationTrack(car.getFinalDestinationTrack());
+			car.setPreviousScheduleId(car.getScheduleId());
 		}
 	}
 

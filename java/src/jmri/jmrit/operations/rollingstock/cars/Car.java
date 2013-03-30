@@ -42,6 +42,7 @@ public class Car extends RollingStock {
 	protected Track _finalDestTrack = null; // final track by schedule or router
 	protected Location _previousFinalDestination = null; // previous final destination (for train resets)
 	protected Track _previousFinalDestTrack = null; // previous final track (for train resets)
+	protected String _previousScheduleId = ""; // previous schedule id (for train resets)
 
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed"; // NOI18N property change descriptions
 	public static final String WAIT_CHANGED_PROPERTY = "Car wait changed"; // NOI18N
@@ -295,6 +296,14 @@ public class Car extends RollingStock {
 	public Track getPreviousFinalDestinationTrack() {
 		return _previousFinalDestTrack;
 	}
+	
+	public void setPreviousScheduleId(String id) {
+		_previousScheduleId = id;
+	}
+	
+	public String getPreviousScheduleId() {
+		return _previousScheduleId;
+	}
 
 	public void setReturnWhenEmptyDestination(Location destination) {
 		Location old = _rweDestination;
@@ -541,7 +550,7 @@ public class Car extends RollingStock {
 	}
 
 	protected void reset() {
-		setScheduleId("");
+		setScheduleId(getPreviousScheduleId());	// revert to previous
 		setNextLoad("");
 		setNextWait(0);
 		setFinalDestination(getPreviousFinalDestination()); // revert to previous
@@ -631,6 +640,9 @@ public class Car extends RollingStock {
 				&& (a = e.getAttribute(Xml.PREVIOUS_NEXT_DEST_TRACK_ID)) != null) {
 			setPreviousFinalDestinationTrack(getPreviousFinalDestination().getTrackById(a.getValue()));
 		}
+		if ((a = e.getAttribute(Xml.PREVIOUS_SCHEDULE_ID)) != null) {
+			setPreviousScheduleId(a.getValue());
+		}
 		if ((a = e.getAttribute(Xml.RWE_DEST_ID)) != null) {
 			_rweDestination = LocationManager.instance().getLocationById(a.getValue());
 		}
@@ -697,6 +709,10 @@ public class Car extends RollingStock {
 			e.setAttribute(Xml.PREVIOUS_NEXT_DEST_ID, getPreviousFinalDestination().getId());
 			if (getPreviousFinalDestinationTrack() != null)
 				e.setAttribute(Xml.PREVIOUS_NEXT_DEST_TRACK_ID, getPreviousFinalDestinationTrack().getId());
+		}
+		
+		if (!getPreviousScheduleId().equals("")) {
+			e.setAttribute(Xml.PREVIOUS_SCHEDULE_ID, getPreviousScheduleId());
 		}
 		if (getReturnWhenEmptyDestination() != null) {
 			e.setAttribute(Xml.RWE_DEST_ID, getReturnWhenEmptyDestination().getId());
