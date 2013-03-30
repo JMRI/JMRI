@@ -556,7 +556,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
             _speedOverride = true;
         }
-        
+            
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY", justification="Shared variable 'stop' not being seen by FindBugs for some reason") 
         void stop() {
         	stop = true;
         	synchronized(this) {

@@ -1369,6 +1369,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     // response from read
     int recChar = 0;
     int [] recChars = new int [16];
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY", justification="Thread wait from main transfer loop") 
 	public void reply(NceReply r) {
 		if (log.isDebugEnabled()) log.debug("Receive character");
 		if (waiting <= 0) {
