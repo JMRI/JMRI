@@ -255,6 +255,8 @@ public class Car extends RollingStock {
 	public void setFinalDestinationTrack(Track track) {
 		Track old = _finalDestTrack;
 		_finalDestTrack = track;
+		if (track == null)
+			setScheduleId("");
 		if ((old != null && !old.equals(track)) || (track != null && !track.equals(old))) {
 			if (old != null) {
 				old.removePropertyChangeListener(this);
@@ -472,8 +474,6 @@ public class Car extends RollingStock {
 			if (!status.equals(Track.OKAY))
 				return status;
 		}
-		if (track == null)
-			setScheduleId("");
 		// update final destination and load only when car reaches destination and was in train
 		if (destinationName.equals("") || (destination != null) || getTrain() == null)
 			return status;

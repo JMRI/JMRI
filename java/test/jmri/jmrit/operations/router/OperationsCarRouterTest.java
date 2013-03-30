@@ -1567,9 +1567,9 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// check car schedule ids
 		Assert.assertEquals("Car BA 3 schedule id", "", c3.getScheduleId());
-		Assert.assertEquals("Car BB 4 schedule id", "", c4.getScheduleId());
-		Assert.assertEquals("Car BC 5 schedule id", "", c5.getScheduleId());
-		Assert.assertEquals("Car BD 6 schedule id", "", c6.getScheduleId());
+		Assert.assertEquals("Car BB 4 schedule id", schAItem2.getId(), c4.getScheduleId());
+		Assert.assertEquals("Car BC 5 schedule id", schAItem3.getId(), c5.getScheduleId());
+		Assert.assertEquals("Car BD 6 schedule id", schAItem1.getId(), c6.getScheduleId());
 		
 		ActonToBedfordTrain.terminate();
 		// move the cars to Bedford
