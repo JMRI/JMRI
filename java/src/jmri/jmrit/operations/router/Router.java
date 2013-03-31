@@ -42,6 +42,7 @@ public class Router extends TrainCommon {
 	PrintWriter _buildReport = null; // build report
 
 	public boolean enable_staging = false; // using staging to route cars can be tricky, not recommended
+	public boolean enable_yard_search = false; // search for yard track even if an interchange track was found
 	private static boolean debugFlag = false;
 
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
@@ -214,10 +215,19 @@ public class Router extends TrainCommon {
 			otherLocationTracks.clear();
 			// first try using 2 trains and an interchange track to route the car
 			if (setCarDestinationInterchange(car)) {
-				log.debug("Was able to find route via interchange (" + car.getDestinationName() + ", "
-						+ car.getDestinationTrackName() + ") for car (" + car.toString() // NOI18N
-						+ ")");
-				// now try 2 trains and a yard track
+				if (enable_yard_search && _status.equals(STATUS_NOT_THIS_TRAIN)) {
+					log.debug("Was able to find a route via classification/interchange track, but not using train ("
+							+ _train.getName() + ") try again using yard tracks");
+					if (setCarDestinationYard(car)) {
+						log.debug("Was able to find route via yard (" + car.getDestinationName() + ", "
+								+ car.getDestinationTrackName() + ") for car (" + car.toString() + ")"); // NOI18N
+					}
+				} else {
+					log.debug("Was able to find route via interchange (" + car.getDestinationName() + ", "
+							+ car.getDestinationTrackName() + ") for car (" + car.toString() // NOI18N
+							+ ")");
+				}
+			// now try 2 trains and a yard track
 			} else if (setCarDestinationYard(car)) {
 				log.debug("Was able to find route via yard (" + car.getDestinationName() + ", "
 						+ car.getDestinationTrackName() + ") for car (" + car.toString() + ")"); // NOI18N
@@ -304,6 +314,7 @@ public class Router extends TrainCommon {
 			log.debug("Car's track is null! Can't route");
 			return false;
 		}
+		boolean foundRoute = false;
 		// now search for a yard or interchange that a train can pick up and deliver the car to its destination
 		List<Track> tracks = LocationManager.instance().getTracks(trackType);// restrict to yards, interchanges, or staging
 		for (int i = 0; i < tracks.size(); i++) {
@@ -311,6 +322,8 @@ public class Router extends TrainCommon {
 			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
 				continue;
+			if (saveTrack == track)
+				continue;	// don't use car's current track
 			if (debugFlag)
 				log.debug("Found " + trackType + " track (" + track.getLocation().getName() + ", "
 						+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
@@ -342,8 +355,8 @@ public class Router extends TrainCommon {
 			Train firstTrain = TrainManager.instance().getTrainForCar(testCar);
 			status = car.testDestination(track.getLocation(), track);
 			// Is there a "first" train for this car out of staging?
-			if (_train != null && !_train.servicesCar(testCar)
-					&& car.getTrack().getLocType().equals(Track.STAGING)) {
+			if (car.getTrack().getLocType().equals(Track.STAGING) && _train != null
+					&& !_train.servicesCar(testCar)) {
 				if (debugFlag)
 					log.debug("Train (" + _train.getName() + ") can not deliver car to ("
 							+ track.getLocation().getName() + ", " // NOI18N
@@ -366,7 +379,8 @@ public class Router extends TrainCommon {
 						(testCar.getDestinationName() + ", " + testCar
 								.getDestinationTrackName()) }));
 					_status = STATUS_NOT_THIS_TRAIN;
-					return true;	// found a route but it doesn't start with the specific train
+					foundRoute = true;	// found a route but it doesn't start with the specific train
+					continue;
 				}
 				// check to see if intermediate track is staging
 				if (track.getLocType().equals(Track.STAGING))
@@ -398,7 +412,7 @@ public class Router extends TrainCommon {
 			testCar.setDestination(saveDestation);
 			testCar.setDestinationTrack(saveDestTrack);
 		}
-		return false; // couldn't find two trains to service this car
+		return foundRoute;
 	}
 
 	/*
