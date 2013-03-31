@@ -66,7 +66,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		tc = t;
 		workingNumConsists = NceCmdStationMemory.CabMemorySerial.NUM_CONSIST;
 		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
-			workingNumConsists = NceCmdStationMemory.cabMemoryUsb.NUM_CONSIST;
+			workingNumConsists = NceCmdStationMemory.CabMemoryUsb.NUM_CONSIST;
 		}
 	}
 	
