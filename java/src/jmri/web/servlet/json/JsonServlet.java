@@ -280,7 +280,7 @@ public class JsonServlet extends WebSocketServlet {
                     throw new JsonException(400, "Name must be defined."); // Need to I18N
                 }
             } else {
-                log.warn("Type {} unknown.", type);
+                log.warn("Type not specified.");
                 reply = JsonUtil.getUnknown(type);
             }
         } catch (JsonException ex) {
@@ -352,7 +352,7 @@ public class JsonServlet extends WebSocketServlet {
                     reply = JsonUtil.getUnknown(type);
                 }
             } else {
-                log.warn("Type {} unknown.", type);
+                log.warn("Type not specified.");
                 reply = JsonUtil.getUnknown(type);
             }
         } catch (JsonException ex) {
