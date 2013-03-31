@@ -104,14 +104,14 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     public static VSDecoderManager instance() {
-	if (thread == null) {
-	    thread = VSDecoderManagerThread.instance(true);
-	}
-	return(VSDecoderManagerThread.manager());
+        if (thread == null) {
+            thread = VSDecoderManagerThread.instance(true);
+        }
+        return(VSDecoderManagerThread.manager());
     }
 
     public VSDecoderPreferences getVSDecoderPreferences() {
-	return(vsdecoderPrefs);
+        return(vsdecoderPrefs);
     }
 	
     public JmriJFrame provideManagerFrame() {

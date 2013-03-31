@@ -26,43 +26,44 @@ class VSDecoderManagerThread extends Thread {
     boolean is_running;
 
     private VSDecoderManagerThread() {
-	super();
-	is_running = false;
+        super();
+        is_running = false;
     }
 
     public static VSDecoderManagerThread instance(Boolean create) {
-	manager = new VSDecoderManager();
-	
-	return(instance());
+        manager = new VSDecoderManager();
+    
+        return(instance());
     }
 
     public static VSDecoderManagerThread instance() {
-	if (instance == null) {
-	    instance = new VSDecoderManagerThread();
-	    instance.start();
-	    
-	}
-	return(instance);
+        if (instance == null) {
+            VSDecoderManagerThread temp = new VSDecoderManagerThread();
+            temp.start();
+            instance = temp; // don't allow escape of VSDecoderManagerThread object until running
+        
+        }
+        return(instance);
     }
 
     public static VSDecoderManager manager() {
-	return(VSDecoderManagerThread.manager);
+        return(VSDecoderManagerThread.manager);
     }
 
     @Override
     public void run() {
-	is_running = true;
-	while (is_running) {
-	    // just nap.
-	    try {
-		sleep(20);
-	    } catch(InterruptedException e) {
-	    }
-	}
-	// all done.
+        is_running = true;
+        while (is_running) {
+            // just nap.
+            try {
+                sleep(20);
+            } catch(InterruptedException e) {
+            }
+        }
+        // all done.
     }
 
     public void kill() {
-	is_running = false;
+        is_running = false;
     }
 }
