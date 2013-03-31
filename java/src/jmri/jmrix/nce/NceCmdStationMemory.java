@@ -52,7 +52,7 @@ public class NceCmdStationMemory {
      * @author kcameron
      *
      */
-    public static class cabMemoryUsb {
+    public static class CabMemoryUsb {
 
     	public static final int CAB_NUM_CONSIST = 13;		// usb cab number for consist memory
     	public static final int NUM_CONSIST = 16;
