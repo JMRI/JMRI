@@ -425,16 +425,16 @@ public class SimulatorAdapter extends NcePortController implements
 				reply.setElement(i, turnoutMemory[offset+i]);
 			return reply;
 		}
-		if (nceMemoryAddress >= NceCmdStationMemory.cabMemorySerial.CS_CONSIST_MEM && nceMemoryAddress < NceCmdStationMemory.cabMemorySerial.CS_CONSIST_MEM+256*6){
+		if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM+256*6){
 			log.debug("Reading consist memory: "+Integer.toHexString(nceMemoryAddress));
-			int offset = nceMemoryAddress - NceCmdStationMemory.cabMemorySerial.CS_CONSIST_MEM;
+			int offset = nceMemoryAddress - NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
 			for (int i=0; i<num; i++)
 				reply.setElement(i, consistMemory[offset+i]);
 			return reply;
 		}
-		if (nceMemoryAddress >= NceCmdStationMemory.cabMemorySerial.CS_MACRO_MEM && nceMemoryAddress < NceCmdStationMemory.cabMemorySerial.CS_MACRO_MEM+256*20){
+		if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM+256*20){
 			log.debug("Reading macro memory: "+Integer.toHexString(nceMemoryAddress));
-			int offset = nceMemoryAddress-NceCmdStationMemory.cabMemorySerial.CS_MACRO_MEM;
+			int offset = nceMemoryAddress-NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
 			log.debug("offset:"+offset);
 			for (int i=0; i<num; i++)
 				reply.setElement(i, macroMemory[offset+i]);
@@ -460,15 +460,15 @@ public class SimulatorAdapter extends NcePortController implements
 			for (int i=0; i<num; i++)
 				turnoutMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
 		}
-		if (nceMemoryAddress >= NceCmdStationMemory.cabMemorySerial.CS_CONSIST_MEM && nceMemoryAddress < NceCmdStationMemory.cabMemorySerial.CS_CONSIST_MEM+256*6){
+		if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM+256*6){
 			log.debug("Writing consist memory: "+Integer.toHexString(nceMemoryAddress));
-			int offset = nceMemoryAddress-NceCmdStationMemory.cabMemorySerial.CS_CONSIST_MEM;
+			int offset = nceMemoryAddress-NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
 			for (int i=0; i<num; i++)
 				consistMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
 		}
-		if (nceMemoryAddress >= NceCmdStationMemory.cabMemorySerial.CS_MACRO_MEM && nceMemoryAddress < NceCmdStationMemory.cabMemorySerial.CS_MACRO_MEM+256*20){
+		if (nceMemoryAddress >= NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM && nceMemoryAddress < NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM+256*20){
 			log.debug("Writing macro memory: "+Integer.toHexString(nceMemoryAddress));
-			int offset = nceMemoryAddress-NceCmdStationMemory.cabMemorySerial.CS_MACRO_MEM;
+			int offset = nceMemoryAddress-NceCmdStationMemory.CabMemorySerial.CS_MACRO_MEM;
 			log.debug("offset:"+offset);
 			for (int i=0; i<num; i++)
 				macroMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);

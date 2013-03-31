@@ -824,11 +824,11 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 	 */
 	private void readConsistMemory(int consistNum, int eNum) {
 		locoNum = eNum;
-		int nceMemAddr = (consistNum * 2) + NceCmdStationMemory.cabMemorySerial.CS_CONSIST_MEM;
+		int nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
 		if (eNum == REAR)
-			nceMemAddr = (consistNum * 2) + NceCmdStationMemory.cabMemorySerial.CS_CON_MEM_REAR;
+			nceMemAddr = (consistNum * 2) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_REAR;
 		if (eNum == MID) 
-			nceMemAddr = (consistNum * 8) + NceCmdStationMemory.cabMemorySerial.CS_CON_MEM_MID;
+			nceMemAddr = (consistNum * 8) + NceCmdStationMemory.CabMemorySerial.CS_CON_MEM_MID;
 		byte[] bl = NceBinaryCommand.accMemoryRead(nceMemAddr);
 		sendNceMessage(bl, NceMessage.REPLY_16);
 	}

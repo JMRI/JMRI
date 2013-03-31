@@ -18,7 +18,7 @@ public class NceCmdStationMemory {
      * @author kcameron
      *
      */
-    public static class cabMemorySerial {
+    public static class CabMemorySerial {
 
     	public final static int CS_CAB_MEM_PRO = 0x8800;	// start of NCE CS cab context page for cab 0, PowerHouse/CS2
     	public final static int CS_CONSIST_MEM = 0xF500; 	// start of NCE CS Consist memory

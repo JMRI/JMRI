@@ -64,7 +64,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	
 	public NceConsistBackup(NceTrafficController t) {
 		tc = t;
-		workingNumConsists = NceCmdStationMemory.cabMemorySerial.NUM_CONSIST;
+		workingNumConsists = NceCmdStationMemory.CabMemorySerial.NUM_CONSIST;
 		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
 			workingNumConsists = NceCmdStationMemory.cabMemoryUsb.NUM_CONSIST;
 		}
@@ -152,7 +152,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 
 			if (fileValid) {
 				StringBuffer buf = new StringBuffer();
-				buf.append(":" + Integer.toHexString(NceCmdStationMemory.cabMemorySerial.CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
+				buf.append(":" + Integer.toHexString(NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
 
 				for (int i = 0; i < CONSIST_LNTH; i++) {
 					buf.append(" " + StringUtil.twoHexFromInt(nceConsistData[i++]));
@@ -220,7 +220,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	// Reads 16 bytes of NCE consist memory
 	private NceMessage readConsistMemory(int consistNum) {
 
-		int nceConsistAddr = (consistNum * CONSIST_LNTH) + NceCmdStationMemory.cabMemorySerial.CS_CONSIST_MEM;
+		int nceConsistAddr = (consistNum * CONSIST_LNTH) + NceCmdStationMemory.CabMemorySerial.CS_CONSIST_MEM;
 		replyLen = NceMessage.REPLY_16; 			// Expect 16 byte response
 		waiting++;
 		byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);
