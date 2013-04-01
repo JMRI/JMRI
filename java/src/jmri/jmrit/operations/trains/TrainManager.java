@@ -277,7 +277,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			log.error("TrainManager getTrainByName called before trains completely loaded!");
 		Train train;
 		Enumeration<Train> en = _trainHashTable.elements();
-		for (int i = 0; i < _trainHashTable.size(); i++) {
+		while (en.hasMoreElements()) {
 			train = en.nextElement();
 			// windows file names are case independent
 			if (train.getName().toLowerCase().equals(name.toLowerCase()))

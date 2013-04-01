@@ -61,7 +61,7 @@ public class RouteManager {
     public Route getRouteByName(String name) {
     	Route l;
     	Enumeration<Route> en =_routeHashTable.elements();
-    	for (int i = 0; i < _routeHashTable.size(); i++){
+    	while (en.hasMoreElements()) {
     		l = en.nextElement();
     		if (l.getName().equals(name))
     			return l;

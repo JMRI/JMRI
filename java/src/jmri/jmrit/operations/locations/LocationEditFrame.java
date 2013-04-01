@@ -71,7 +71,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	JCheckBox westCheckBox = new JCheckBox(Bundle.getMessage("West"));
 	
 	// radio buttons
-    JRadioButton stageRadioButton = new JRadioButton(Bundle.getMessage("Staging"));
+    JRadioButton stageRadioButton = new JRadioButton(Bundle.getMessage("StagingOnly"));
     JRadioButton interchangeRadioButton = new JRadioButton(Bundle.getMessage("Interchange"));
     JRadioButton yardRadioButton = new JRadioButton(Bundle.getMessage("Yards"));
     JRadioButton spurRadioButton = new JRadioButton(Bundle.getMessage("Spurs"));

@@ -66,7 +66,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     public TrainSchedule getScheduleByName(String name) {
     	TrainSchedule s;
     	Enumeration<TrainSchedule> en =_scheduleHashTable.elements();
-    	for (int i = 0; i < _scheduleHashTable.size(); i++){
+    	while (en.hasMoreElements()) {
     		s = en.nextElement();
     		if (s.getName().equals(name))
     			return s;

@@ -264,7 +264,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
 	private String getSelectedScheduleId() {
 		AbstractButton b;
 		Enumeration<AbstractButton> en = schGroup.getElements();
-		for (int i = 0; i < schGroup.getButtonCount(); i++) {
+		while (en.hasMoreElements()) {
 			b = en.nextElement();
 			if (b.isSelected()) {
 				log.debug("schedule radio button " + b.getText());

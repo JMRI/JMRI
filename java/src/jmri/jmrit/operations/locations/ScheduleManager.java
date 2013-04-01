@@ -64,7 +64,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     public Schedule getScheduleByName(String name) {
     	Schedule s;
     	Enumeration<Schedule> en =_scheduleHashTable.elements();
-    	for (int i = 0; i < _scheduleHashTable.size(); i++){
+    	while (en.hasMoreElements()) {
     		s = en.nextElement();
     		if (s.getName().equals(name))
     			return s;

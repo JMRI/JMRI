@@ -18,7 +18,7 @@ import jmri.util.table.ButtonRenderer;
 /**
  * Table Model for edit of locations used by operations
  *
- * @author Daniel Boudreau Copyright (C) 2008
+ * @author Daniel Boudreau Copyright (C) 2008, 2013
  * @version   $Revision$
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
@@ -28,13 +28,14 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     // Defines the columns
     public static final int IDCOLUMN   = 0;
     public static final int NAMECOLUMN   = 1;
-    public static final int LENGTHCOLUMN = 2;
-    public static final int USEDLENGTHCOLUMN = 3;
-    public static final int ROLLINGSTOCK = 4;
-    public static final int PICKUPS = 5;
-    public static final int DROPS = 6;
-    public static final int ACTIONCOLUMN = 7;
-    public static final int EDITCOLUMN = 8;
+    public static final int TRACKCOLUMN   = 2;
+    public static final int LENGTHCOLUMN = 3;
+    public static final int USEDLENGTHCOLUMN = 4;
+    public static final int ROLLINGSTOCK = 5;
+    public static final int PICKUPS = 6;
+    public static final int DROPS = 7;
+    public static final int ACTIONCOLUMN = 8;
+    public static final int EDITCOLUMN = 9;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -88,6 +89,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
+		table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(Math.max(60, new JLabel(getColumnName(LENGTHCOLUMN)).getPreferredSize().width+10));
 		table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(ROLLINGSTOCK).setPreferredWidth(Math.max(80, new JLabel(getColumnName(ROLLINGSTOCK)).getPreferredSize().width+10));
@@ -107,6 +109,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         switch (col) {
         case IDCOLUMN: return Bundle.getMessage("Id");
         case NAMECOLUMN: return Bundle.getMessage("Name");
+        case TRACKCOLUMN: return Bundle.getMessage("Track");
         case LENGTHCOLUMN: return Bundle.getMessage("Length");
         case USEDLENGTHCOLUMN: return Bundle.getMessage("Used");
         case ROLLINGSTOCK: return Bundle.getMessage("RollingStock");
@@ -122,6 +125,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         switch (col) {
         case IDCOLUMN: return String.class;
         case NAMECOLUMN: return String.class;
+        case TRACKCOLUMN: return String.class;
         case LENGTHCOLUMN: return String.class;
         case USEDLENGTHCOLUMN: return String.class;
         case ROLLINGSTOCK: return String.class;
@@ -143,38 +147,78 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    public synchronized Object getValueAt(int row, int col) {
-    	// Funky code to put the lef frame in focus after the edit table buttons is used.
-    	// The button editor for the table does a repaint of the button cells after the setValueAt code
-    	// is called which then returns the focus back onto the table.  We need the edit frame
-    	// in focus.
-    	if (focusLef){
-    		focusLef = false;
-    		lef.requestFocus();
-    	}
-    	if (ymf != null) {
-    		ymf.requestFocus();
-    		ymf = null;
-    	}
-    	if (row >= getRowCount())
-    		return "ERROR row "+row;	// NOI18N
-    	String locId = sysList.get(row);
-    	Location l = manager.getLocationById(locId);
-    	if (l == null)
-    		return "ERROR location unknown "+row;	// NOI18N
-        switch (col) {
-        case IDCOLUMN: return l.getId();
-        case NAMECOLUMN: return l.getName();
-        case LENGTHCOLUMN: return Integer.toString(l.getLength());
-        case USEDLENGTHCOLUMN: return Integer.toString(l.getUsedLength());
-        case ROLLINGSTOCK: return Integer.toString(l.getNumberRS());
-        case PICKUPS: return Integer.toString(l.getPickupRS());
-        case DROPS: return Integer.toString(l.getDropRS());
-        case ACTIONCOLUMN: return Bundle.getMessage("Yardmaster");
-        case EDITCOLUMN: return Bundle.getMessage("Edit");
-        default: return "unknown "+col;	// NOI18N
-        }
-    }
+	public synchronized Object getValueAt(int row, int col) {
+		// Funky code to put the lef frame in focus after the edit table buttons is used.
+		// The button editor for the table does a repaint of the button cells after the setValueAt code
+		// is called which then returns the focus back onto the table. We need the edit frame
+		// in focus.
+		if (focusLef) {
+			focusLef = false;
+			lef.requestFocus();
+		}
+		if (ymf != null) {
+			ymf.requestFocus();
+			ymf = null;
+		}
+		if (row >= getRowCount())
+			return "ERROR row " + row; // NOI18N
+		String locId = sysList.get(row);
+		Location l = manager.getLocationById(locId);
+		if (l == null)
+			return "ERROR location unknown " + row; // NOI18N
+		switch (col) {
+		case IDCOLUMN:
+			return l.getId();
+		case NAMECOLUMN:
+			return l.getName();
+		case TRACKCOLUMN:
+			return getTrackTypes(l);
+		case LENGTHCOLUMN:
+			return Integer.toString(l.getLength());
+		case USEDLENGTHCOLUMN:
+			return Integer.toString(l.getUsedLength());
+		case ROLLINGSTOCK:
+			return Integer.toString(l.getNumberRS());
+		case PICKUPS:
+			return Integer.toString(l.getPickupRS());
+		case DROPS:
+			return Integer.toString(l.getDropRS());
+		case ACTIONCOLUMN:
+			return Bundle.getMessage("Yardmaster");
+		case EDITCOLUMN:
+			return Bundle.getMessage("Edit");
+		default:
+			return "unknown " + col; // NOI18N
+		}
+	}
+	
+	private String getTrackTypes(Location location) {
+		if (location.getLocationOps() == Location.STAGING) {
+			return (Bundle.getMessage("Staging"));
+		} else {
+			boolean hasSpurs = location.hasSpurs();
+			boolean hasYards = location.hasYards();
+			boolean hasInterchanges = location.hasInterchanges();
+			// lots of combinations
+			if (hasSpurs && !hasYards && !hasInterchanges)
+				return Bundle.getMessage("Spurs");
+			if (!hasSpurs && hasYards && !hasInterchanges)
+				return Bundle.getMessage("Yards");
+			if (!hasSpurs && !hasYards && hasInterchanges)
+				return Bundle.getMessage("Class/Interchange");
+			if (hasSpurs || hasYards || hasInterchanges) {
+				StringBuffer sb = new StringBuffer();
+				if (hasInterchanges)
+					sb.append(Bundle.getMessage("Class/Interchange")+ " ");
+				if (hasSpurs)
+					sb.append(Bundle.getMessage("SpurAbrv")+ " ");
+				if (hasYards)
+					sb.append(Bundle.getMessage("YardAbrv")+ " ");
+				return sb.toString();
+			}			
+			return "";
+		}
+	}
 
     public void setValueAt(Object value, int row, int col) {
     	switch (col) {

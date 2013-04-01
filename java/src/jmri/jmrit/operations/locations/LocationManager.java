@@ -65,7 +65,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	public Location getLocationByName(String name) {
 		Location l;
 		Enumeration<Location> en = _locationHashTable.elements();
-		for (int i = 0; i < _locationHashTable.size(); i++) {
+		while (en.hasMoreElements()) {
 			l = en.nextElement();
 			if (l.getName().equals(name))
 				return l;
