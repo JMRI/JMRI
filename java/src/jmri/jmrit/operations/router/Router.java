@@ -697,41 +697,43 @@ public class Router extends TrainCommon {
 	private void loadTracks(Car car, Car testCar, List<Track> tracks) {
 		for (int i = 0; i < tracks.size(); i++) {
 			Track track = tracks.get(i);
+			if (track == car.getTrack())
+				continue;	// don't use car's current track
 			String status = track.accepts(testCar);
-			if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
+			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
+				continue;	// track doesn't accept this car
+			if (debugFlag)
+				log.debug("Found " + track.getLocType() + " track (" + track.getLocation().getName() + ", "
+						+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
+			// test to see if there's a train that can deliver the car to this location
+			testCar.setDestination(track.getLocation());
+			testCar.setDestinationTrack(track);
+			Train firstTrain = TrainManager.instance().getTrainForCar(testCar);
+			// Is there a train assigned to carry this car out of staging?
+			if (car.getTrack().getLocType().equals(Track.STAGING) && _train != null
+					&& !_train.servicesCar(testCar))
+				firstTrain = null;
+			if (firstTrain != null) {
 				if (debugFlag)
-					log.debug("Found " + track.getLocType() + " track (" + track.getLocation().getName() + ", "
-							+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
-				// test to see if there's a train that can deliver the car to this location
-				testCar.setDestination(track.getLocation());
-				testCar.setDestinationTrack(track);
-				Train firstTrain = TrainManager.instance().getTrainForCar(testCar);
-				// Is there a train assigned to carry this car out of staging?
-				if (_train != null && !_train.servicesCar(testCar)
-						&& car.getTrack().getLocType().equals(Track.STAGING))
-					firstTrain = null;
-				if (firstTrain != null) {
+					log.debug("Train (" + firstTrain.getName() + ") can service car (" + car.toString()
+							+ ") from " + track.getLocType() // NOI18N
+							+ " (" // NOI18N
+							+ testCar.getLocationName() + ", " + testCar.getTrackName() // NOI18N
+							+ ") to final destination (" + testCar.getDestinationName() // NOI18N
+							+ ", " + testCar.getDestinationTrackName() + ")");
+				if (status.equals(Track.OKAY))
+					firstLocationTracks.add(track);
+				else
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
+							track.getLocation().getName(), track.getName(), status }));
+			} else {
+				// don't add to other if already in last location list
+				if (!lastLocationTracks.contains(track)) {
 					if (debugFlag)
-						log.debug("Train (" + firstTrain.getName() + ") can service car ("
-								+ car.toString() + ") from " + track.getLocType()	// NOI18N
-								+ " (" // NOI18N
-								+ testCar.getLocationName() + ", " + testCar.getTrackName()	// NOI18N
-								+ ") to final destination (" + testCar.getDestinationName() // NOI18N
-								+ ", " + testCar.getDestinationTrackName() + ")");
-					if (status.equals(Track.OKAY))
-						firstLocationTracks.add(track);
-					else
-						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-								.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
-								track.getLocation().getName(), track.getName(), status }));
-				} else {
-					// don't add to other if already in last location list
-					if (!lastLocationTracks.contains(track)) {
-						if (debugFlag)
-							log.debug("Adding location (" + track.getLocation().getName() + ", " + track.getName()
-									+ ") to other locations"); // NOI18N
-						otherLocationTracks.add(track);
-					}
+						log.debug("Adding location (" + track.getLocation().getName() + ", "
+								+ track.getName() + ") to other locations"); // NOI18N
+					otherLocationTracks.add(track);
 				}
 			}
 		}
