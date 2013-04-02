@@ -735,7 +735,7 @@ public class AddSignalMastPanel extends JPanel {
         return false;
     }
     
-    void refreshHeadComboBox(){
+    protected void refreshHeadComboBox(){
         if(!rb.getString("HeadCtlMast").equals(signalMastDriver.getSelectedItem()))
             return;
         if(includeUsed.isSelected()){
