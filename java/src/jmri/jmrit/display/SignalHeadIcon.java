@@ -168,7 +168,7 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
     }
 
     public String getNameString() {
-        if (namedHead == null) name = Bundle.getMessage("NotConnected");
+        if (namedHead == null) return Bundle.getMessage("NotConnected");
         return namedHead.getName();
     }
 
