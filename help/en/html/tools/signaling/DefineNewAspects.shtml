@@ -264,6 +264,8 @@ All of the mappings, are contained within the &lt;aspectMappings&gt; tags, withi
 
 You can use the "Check XML File" and "Validate XML File"
 tools under the JMRI "Debug" window to check your files.
+(Note that you have to be connected to the internet to do this, 
+as the files refer to some checking resources that live on the JMRI web site.)
 The first checks the basic format: Are all the &lt; and &gt; 
 characters in the right place? Etc.  The second makes sure that 
 the right elements are in the right places, and is a little more
