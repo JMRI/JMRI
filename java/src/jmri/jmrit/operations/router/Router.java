@@ -330,12 +330,14 @@ public class Router extends TrainCommon {
 			// test to see if there's a train that can deliver the car to its final location
 			testCar.setLocation(track.getLocation());
 			testCar.setTrack(track);
+			testCar.setDestination(saveDestation);
+			testCar.setDestinationTrack(saveDestTrack);
 			Train nextTrain = TrainManager.instance().getTrainForCar(testCar);
 			if (nextTrain == null) {
 				if (debugFlag)
 					log.debug("Could not find a train to service car from " + trackType + " ("
 							+ track.getLocation().getName() + ", " + track.getName() + ") to destination ("	// NOI18N
-							+ car.getFinalDestinationName() + ")"); // NOI18N
+							+ testCar.getDestinationName() + " ," + testCar.getDestinationTrackName()+")"); // NOI18N
 				continue;
 			}
 			if (debugFlag)
@@ -407,10 +409,6 @@ public class Router extends TrainCommon {
 						.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
 						track.getLocation().getName(), track.getName(), status }));
 			}
-
-			// restore car's destination
-			testCar.setDestination(saveDestation);
-			testCar.setDestinationTrack(saveDestTrack);
 		}
 		return foundRoute;
 	}
