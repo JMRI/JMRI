@@ -1358,10 +1358,16 @@ public class TrainBuilder extends TrainCommon {
 		for (carIndex = 0; carIndex < carList.size(); carIndex++) {
 			Car c = carManager.getById(carList.get(carIndex));
 			// only print out the first 500 cars
-			if (carIndex < 500)
-				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarAtLocWithMoves"),
-						new Object[] { c.toString(), (c.getLocationName() + ", " + c.getTrackName()),
-								c.getMoves(), c.getLoadPriority() }));
+			if (carIndex < 500) {
+				if (c.getLoadPriority().equals(CarLoad.PRIORITY_LOW))
+					addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarAtLocWithMoves"),
+							new Object[] { c.toString(), c.getType(), (c.getLocationName() + ", " + c.getTrackName()),
+						c.getMoves() }));
+				else
+					addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarAtLocWithMovesPriority"),
+							new Object[] { c.toString(), c.getType(), (c.getLocationName() + ", " + c.getTrackName()),
+						c.getMoves(), c.getLoadPriority() }));
+			}
 			if (carIndex == 500)
 				addLine(buildReport, FIVE, Bundle.getMessage("buildOnlyFirst500Cars"));
 			// use only the lead car in a kernel for building trains
