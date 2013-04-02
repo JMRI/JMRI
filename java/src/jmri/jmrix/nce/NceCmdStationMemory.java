@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Contains the map for the command station and memory parts
  * 
  * @author	Ken Cameron  Copyright (C) 2013
- * @version     $Revision:$
+ * @version     $Revision: 23143 $
  */
 public class NceCmdStationMemory {
 
