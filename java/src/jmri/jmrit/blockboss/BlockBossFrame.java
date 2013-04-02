@@ -2,6 +2,7 @@
 
 package jmri.jmrit.blockboss;
 
+import jmri.SignalHead;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
@@ -675,15 +676,18 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
 
     void okPressed() {
         // check signal head exists
-        if (InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText())==null) {
+        if (sh==null && InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText())==null) {
             setTitle(rbt.getString("Simple_Signal_Logic"));
             JOptionPane.showMessageDialog(this,rbt.getString("Signal_head_")+outSignalField.getText()+rbt.getString("_is_not_defined_yet"));
             return;
         }
+        SignalHead head = sh;
+        if(sh==null)
+            head=InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText());
 
         // it does
         try {
-            BlockBossLogic b = BlockBossLogic.getStoppedObject(outSignalField.getText());
+            BlockBossLogic b = BlockBossLogic.getStoppedObject(head);
             b.setApproachSensor1(approachSensorField1.getText());
             if (buttonSingle.isSelected())
                 loadSingle(b);
@@ -795,19 +799,24 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
     void activate() {
         
         // check signal head exists
-        if (InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText())==null) {
+        if (sh==null &&InstanceManager.signalHeadManagerInstance().getSignalHead(outSignalField.getText())==null) {
             setTitle(rbt.getString("Simple_Signal_Logic"));
             return;
         }
         
         // find existing logic  
-        BlockBossLogic b = BlockBossLogic.getExisting(outSignalField.getText());
+        
+        BlockBossLogic b;// = BlockBossLogic.getExisting(outSignalField.getText());
+        if(sh!=null)
+            b = BlockBossLogic.getExisting(sh);
+        else
+            b = BlockBossLogic.getExisting(outSignalField.getText());
         if (b==null) {
             setTitle(rbt.getString("Simple_Signal_Logic"));
             return;
         }
         
-        setTitle(rbt.getString("Signal_logic_for_")+outSignalField.getText());
+        setTitle(rbt.getString("Signal_logic_for_")+ " " + outSignalField.getText());
 
         approachSensorField1.setText(b.getApproachSensor1());
         
@@ -877,12 +886,22 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         modeTrailDiv.repaint();
         modeFacing.repaint();
     }
+    
+    SignalHead sh = null;
+    public void setSignal(SignalHead sh){
+        this.sh=sh;
+        outSignalField.setText(sh.getDisplayName());
+        outSignalField.setEnabled(false);
+        activate();
+    }
 
     /**
      * Programmatically open the frame to edit a specific signal
      */
     public void setSignal(String name) {
+        sh = null;
         outSignalField.setText(name);
+        outSignalField.setEnabled(true);
         activate();
     }
     

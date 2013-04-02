@@ -13,7 +13,12 @@ import jmri.jmrit.automat.Siglet;
 import jmri.NamedBeanHandle;
 
 import java.util.Enumeration;
+/*import java.util.Iterator;
 import java.util.Hashtable;
+import java.util.HashMap; */
+import java.util.ArrayList;
+
+import java.util.Collections;
 
 /**
  * Drives the "simple signal" logic for one signal.
@@ -144,7 +149,7 @@ public class BlockBossLogic extends Siglet {
         super(name+rb.getString("_BlockBossLogic"));
         this.name = name;
         if (log.isTraceEnabled()) log.trace("Create BBL "+name);
-        driveSignal = new NamedBeanHandle<SignalHead> (name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        driveSignal = nbhm.getNamedBeanHandle (name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
         if (driveSignal.getBean() == null) log.warn(rb.getString("Signal_")+name+rb.getString("_was_not_found!"));
     }
 
@@ -155,6 +160,10 @@ public class BlockBossLogic extends Siglet {
      */
     public String getDrivenSignal() {
         return driveSignal.getName();
+    }
+    
+    public NamedBeanHandle<SignalHead> getDrivenSignalNamedBean(){
+        return driveSignal;
     }
     
     protected jmri.NamedBeanHandleManager nbhm = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class);
@@ -263,7 +272,7 @@ public class BlockBossLogic extends Siglet {
             watchedSignal1 = null;
             return;
         }
-        watchedSignal1 = new NamedBeanHandle<SignalHead>(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        watchedSignal1 = nbhm.getNamedBeanHandle(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
         if (watchedSignal1.getBean() == null) log.warn(rb.getString("Signal_")+name+rb.getString("_was_not_found!"));
         protectWithFlashing = useFlash;
     }
@@ -281,7 +290,7 @@ public class BlockBossLogic extends Siglet {
             watchedSignal1Alt = null;
             return;
         }
-        watchedSignal1Alt = new NamedBeanHandle<SignalHead>(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        watchedSignal1Alt = nbhm.getNamedBeanHandle(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
         if (watchedSignal1Alt.getBean() == null) log.warn(rb.getString("Signal_")+name+rb.getString("_was_not_found!"));
     }
     /**
@@ -298,7 +307,7 @@ public class BlockBossLogic extends Siglet {
             watchedSignal2 = null;
             return;
         }
-        watchedSignal2 = new NamedBeanHandle<SignalHead>(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        watchedSignal2 = nbhm.getNamedBeanHandle(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
         if (watchedSignal2.getBean() == null) log.warn(rb.getString("Signal_")+name+rb.getString("_was_not_found!"));
     }
     /**
@@ -315,7 +324,7 @@ public class BlockBossLogic extends Siglet {
             watchedSignal2Alt = null;
             return;
         }
-        watchedSignal2Alt = new NamedBeanHandle<SignalHead>(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
+        watchedSignal2Alt = nbhm.getNamedBeanHandle(name, InstanceManager.signalHeadManagerInstance().getSignalHead(name));
         if (watchedSignal2Alt.getBean() == null) log.warn(rb.getString("Signal_")+name+rb.getString("_was_not_found!"));
     }
     /**
@@ -559,7 +568,7 @@ public class BlockBossLogic extends Siglet {
                     if (e.getPropertyName().equals(rb.getString("Held")))
                         setOutput();
                 }
-            });
+            },driveSignal.getName(),"BlockBossLogic:"+name );
     }
     
     /**
@@ -872,18 +881,16 @@ public class BlockBossLogic extends Siglet {
         return;
     }
     
-    static Hashtable<String,BlockBossLogic> umap = null;
-    static Hashtable<String,BlockBossLogic> smap = null;
+    static ArrayList<BlockBossLogic> bblList = null;
     
     public static Enumeration<BlockBossLogic> entries() {
         setup(); // ensure we've been registered
-        return smap.elements();
+        return Collections.enumeration(bblList);
     }
     
     private static void setup() {
-        if (smap == null) {
-            smap = new Hashtable<String,BlockBossLogic>();
-            umap = new Hashtable<String,BlockBossLogic>();
+        if(bblList == null){
+            bblList = new ArrayList<BlockBossLogic>();
             InstanceManager.configureManagerInstance().registerConfig(new BlockBossLogic(), jmri.Manager.BLOCKBOSS);
         }
     }
@@ -892,9 +899,7 @@ public class BlockBossLogic extends Siglet {
      * Ensure that this BlockBossLogic object is available for later retrieval
      */
     public void retain() {
-        smap.put(driveSignal.getBean().getSystemName(), this);
-        if (driveSignal.getBean().getUserName()!=null)
-            umap.put(driveSignal.getBean().getUserName(), this);
+        bblList.add(this);
     }
     
     /**
@@ -904,28 +909,38 @@ public class BlockBossLogic extends Siglet {
      * @return never null
      */
     public static BlockBossLogic getStoppedObject(String signal) {
+        return getStoppedObject(InstanceManager.signalHeadManagerInstance().getSignalHead(signal));
+    }
+    
+    /**
+     * Return the BlockBossLogic item governing a specific signal,
+     * having removed it from use.
+     * @param signal
+     * @return never null
+     */
+    public static BlockBossLogic getStoppedObject(SignalHead sh){
         BlockBossLogic b = null;
-        setup(); // ensure we've been registered
-        if (smap.containsKey(signal)) {
-            b = smap.get(signal);
+        setup();
+        
+        for(BlockBossLogic bbl:bblList){
+            if(bbl.getDrivenSignalNamedBean().getBean()==sh){
+                b=bbl;
+                break;
+            }
         }
-        else if (umap.containsKey(signal)) {
-            b = umap.get(signal);
-        }
+        
         if (b != null) {
             // found an existing one, remove it from the map and stop its thread
-            smap.remove(b.driveSignal.getBean().getSystemName());
-            if (b.driveSignal.getBean().getUserName() != null) {
-                umap.remove(b.driveSignal.getBean().getUserName());
-            }
+            bblList.remove(b);
             b.stop();
             return b;
         }
         else {
             // no existing one, create a new one
-            return new BlockBossLogic(signal);
+            return new BlockBossLogic(sh.getDisplayName());
         }
     }
+    
     /**
      * Return the BlockBossLogic item governing a specific signal.
      * <P>
@@ -935,18 +950,21 @@ public class BlockBossLogic extends Siglet {
      * @return never null
      */
     public static BlockBossLogic getExisting(String signal) {
-        BlockBossLogic b;
-        setup(); // ensure we've been registered
-        if (smap.containsKey(signal)) {
-            b = smap.get(signal);
-        } else if (umap.containsKey(signal)) {
-            b = umap.get(signal);
-        } else {
-            b = new BlockBossLogic(signal);
-        }
-        return b;
+        return getExisting(InstanceManager.signalHeadManagerInstance().getSignalHead(signal));
     }
-
+    
+    public static BlockBossLogic getExisting(SignalHead sh) {
+        setup();
+        
+        for(BlockBossLogic bbl:bblList){
+            if(bbl.getDrivenSignalNamedBean().getBean()==sh){
+                return bbl;
+            }
+        }
+        
+        return (new BlockBossLogic(sh.getDisplayName()));
+    }
+    
     static Logger log = LoggerFactory.getLogger(BlockBossLogic.class.getName());
 }
 
