@@ -1344,8 +1344,9 @@ public class Train implements java.beans.PropertyChangeListener {
 					if (rs.getTrack() != null && !rs.getTrack().acceptsPickupTrain(this)) {
 						return false;
 					}
-					if (rs.getDestinationTrack() != null && rLoc.getName().equals(rs.getDestinationName())
-							&& !rs.getDestinationTrack().acceptsDropTrain(this)) {
+					if (rs.getDestination() != null && !rLoc.getName().equals(rs.getDestinationName()))
+						return false;
+					if (rs.getDestinationTrack() != null && !rs.getDestinationTrack().acceptsDropTrain(this)) {
 						return false;
 					}
 					if (debugFlag)
