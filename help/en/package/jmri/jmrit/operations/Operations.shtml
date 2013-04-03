@@ -767,13 +767,16 @@ different format for your switch lists.
 
    The program provides a comment for your operators to search for
    <A HREF="#CarsSet">misplaced</A> cars. You can modify the comment to your liking.
+   
    <A NAME="HazardousComment"></A>
    <H3>Hazardous Comment</H3>
 
    The program will add the "Hazardous Comment" to the manifests and switch lists when a car has the
    <A HREF="#CabooseFredHazardous">Hazardous</A> checkbox selected in the "Car Edit" window and the
    "Hazardous" message format is selected in your manifest and switch lists print options. You can
-   change the comment if desired, and press "Save" to keep the change. <A NAME="BuildReportDetails"></A>
+   change the comment if desired, and press "Save" to keep the change. 
+   
+   <A NAME="BuildReportDetails"></A>
    <H3>Build Report Options</H3>
 
    From the "Operations-&gt;Settings-&gt;Tools" menu select "Build Report Options" to open the build
@@ -792,11 +795,18 @@ different format for your switch lists.
    and why they are not picked up or set out. Be sure and press "Save" after changing the build
    report selection.</p>
 
-   <P>
-   You also have the option of using a text editor to view your build report.  A text editor can make
-   trouble shooting a problem much easier for you.  For example, say you have a car that isn't moving.
-   Using the editor's find feature, you could search the build report using the car's road number
-   and quickly find why the car isn't being picked up by the train.</P>
+   <P>You also have the option of using a text editor to view your build report. A text editor
+    can make trouble shooting a problem much easier for you. For example, say you have a car that
+    isn't moving. Using the editor's find feature, you could search the build report using the car's
+    road number and quickly find why the car isn't being picked up by the train. One of the tricks
+    when using a text editor is to increase the number of characters per line by reducing the font
+    size specified in the Build Report Options window.</P>
+
+   <p>
+    For most users, the "Very Detailed" setting is the most appropriate when reading a train's build
+    report. For information on the content of the build report please see <A
+     HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A>.
+   </p>
 
    <A NAME="Locations"></A>
    <H2>Locations</H2>
@@ -2465,7 +2475,7 @@ different format for your switch lists.
    To build one train, press the "Build" button in the row for the desired train in the
    <A HREF="#Trains">Trains</A> window. The button will become "Print" or "Preview" after the train
    is built. If you want to review how the train was built, select the "Build Reports" checkbox
-   before pressing the "Print" or "Preview" button for the desired train. If the "Preview Manifest"
+   before pressing the "Print" or "Preview" button for the desired train. If the "Preview"
    checkbox is selected, the program will generate the build report and manifest and present them in
    preview windows. If you want to build several trains without having to press individual buttons
    for each train, select the trains that you want built and press the "Build" button found at the
@@ -2487,16 +2497,22 @@ different format for your switch lists.
    select which day you want by selecting the appropriate radio button. Then press the "Apply"
    button to update the Trains build checkboxes. Use the "Save" button to store any changes you made
    to the timetable.
+   
    <A NAME="TroubleShootingBuildingTrains"></A>
    <H2>Problems Building Trains How to Fix</H2>
 
-   If you have a problem building a train you can select the "Build Reports" checkbox at the bottom
-   of the train window. When a build fails for any reason and the "Build Reports" checkbox is
-   selected, the program will send a report to your printer if the "Preview Manifests" isn't
-   selected; or to a preview window if the "Preview Manifest" is selected. The build report can
-   print out different levels of detail, from minimal to very detailed. See the Settings section
-   <A HREF="#BuildReportDetails"> Build Report Options</A> for more information on how to change the
-   build report detail level.
+   If you want to examine how a train was built, you can select the "Build Reports" checkbox at the
+   bottom of the train window, and then press the "Print" or "Preview" button for that train. The
+   program will then provide the train manifest and build report for your viewing. 
+
+   <p>
+    When a train build fails for any reason, the train action button becomes "Report" which allows
+    you to access the build report for that train. The program will send the report to your printer
+    if the "Preview" isn't selected, or to a preview window or text editor if the "Preview" is
+    selected. The build report can print out different levels of detail, from minimal to very
+    detailed. See the Settings section <A HREF="#BuildReportDetails"> Build Report Options</A> for
+    more information on how to change the build report detail level.
+   </p>
 
    <P>
     <img src="images/BuildReport.png">
@@ -2576,21 +2592,26 @@ different format for your switch lists.
    <P>
     Sometimes reading the build report can get tedious. A text editor allows you to search the
     report, you can select this option from the <A HREF="#BuildReportDetails">Build Report
-     Options</A> under Tools in the Setup or Trains window. One of the tricks when using a text
-     editor is to increase the number of characters per line by reducing the font size specified
-     in the Build Report Options window.
+     Options</A> under Tools in the Setup or Trains window.
    </P>
 
    <A NAME="PrintingManifests"></A>
    <H3>Printing Manifests</H3>
 
    After building a train, the "Build" button will become "Print" or "Preview" depending on the
-   state of the checkbox called "Preview Manifests" located in the lower right corner of the Trains
+   state of the checkbox called "Preview" located in the lower part of the Trains
    window. Pressing the "Print" button will print the manifest for that train. Pressing the
    "Preview" button will produce a window in which you can review the manifest. If you want to print
    manifests for several trains, select the trains you want in the build column and then press the
    "Print" or "Preview" button found at the bottom of the trains window. The program will then print
-   or preview manifests for all of the selected trains.
+   or preview manifests for all of the selected trains. You can modify the look of your manifests
+   from the
+   <A HREF="#PrintOptions">Manifest Print Options</A> window.
+
+   <p>You can also access a train's manifest and build report from the Tools menu in the edit
+    train window. The Tools menu option allows you to recover the manifest and build report for a
+    train that has been terminated. Useful if you've accidentally terminated a train before printing
+    out the train's manifest.</p>
 
    <P>
     <img src="images/Manifest.png">
@@ -2601,7 +2622,8 @@ different format for your switch lists.
 
    A switch list shows the work required to service all of the trains visiting that location.
    Normally a switch list is given to the person in charge of a yard or a location with many spurs
-   or industries.
+   or industries. You can modify the look of your switch lists from the
+   <A HREF="#PrintOptions">Manifest Print Options</A> window.
 
    <P>Press the "Switch List" button found at the bottom of the "Trains" window if you want a
     switch list for a given location. A menu will appear that allows you to select which locations
