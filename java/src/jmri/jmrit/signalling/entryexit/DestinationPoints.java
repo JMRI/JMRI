@@ -357,6 +357,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                                 Thread.sleep(250 + manager.turnoutSetDelay);
                                             } catch (InterruptedException ex) {
                                                 Thread.currentThread().interrupt();
+                                                log.error("interrupted while setting turnouts " + ex);
                                             }
                                           }
                                         };
@@ -365,7 +366,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                         try{
                                             thr.join();
                                         } catch (InterruptedException ex) {
-                                //            log.info("interrupted at join " + ex);
+                                            log.error("interrupted at join " + ex);
                                         }
                                     }
                                 }
@@ -436,10 +437,10 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                 setRouteFrom(true);
                                 setRouteTo(true);
                             }
-                        } else {
+                        } //else {
                             src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                            point.setNXButtonState( EntryExitPairs.NXBUTTONINACTIVE);
-                        }
+                            point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                        //}
                     } catch (RuntimeException ex) {
                         log.error("An error occured while setting the route");
                         ex.printStackTrace();
@@ -455,6 +456,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             try{
                 thrMain.join();
             } catch (InterruptedException e){
+                log.error("Interuption exception " + e.toString());
             }
             
         }
@@ -833,6 +835,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                         }
                     }
                     if(pathList.isEmpty()){
+                        log.debug("Path list empty so exiting");
                         return;
                     }
                     BestPath pathToUse = null;

@@ -522,6 +522,8 @@ public class LayoutBlockConnectivityTools{
     }
 
     private boolean canLBlockBeUsed(LayoutBlock lBlock){
+        if(lBlock==null)
+            return true;
         if (lBlock.getBlock().getPermissiveWorking())
             return true;
         if (lBlock.getState()==Block.OCCUPIED)
@@ -552,20 +554,23 @@ public class LayoutBlockConnectivityTools{
             if (blockindex!=-1){
                 block = currentLBlock.getRouteNextBlockAtIndex(blockindex);
                 LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(block);
+                
+                Block blocktoCheck = block;
+                if (block == currentBlock){
+                    log.debug("current block matches returned block therefore the next block is directly connected");
+                    blocktoCheck=destBlock;
+                }
+                
                 if ((block == currentBlock) && (currentLBlock.getThroughPathIndex(preBlock, destBlock)==-1)){
                     lastErrorMessage="block " + block.getDisplayName() + " is directly attached, however the route to the destination block " + destBlock.getDisplayName() + " can not be directly used";
                     log.debug(lastErrorMessage);
                 }
-                else if ((validateOnly) || (canLBlockBeUsed(lBlock))){
+                else if ((validateOnly) || (checkForDoubleCrossOver(preBlock, currentLBlock, blocktoCheck) && canLBlockBeUsed(lBlock))){
                     if(log.isDebugEnabled()){
                         log.debug(block.getDisplayName() + " not occupied & not reserved but we need to check if the anchor point between the two contains a signal or not");
                         log.debug(currentBlock.getDisplayName() + " " + block.getDisplayName());
                     }
-                    Block blocktoCheck = block;
-                    if (block == currentBlock){
-                        log.debug("current block matches returned block therefore the next block is directly connected");
-                        blocktoCheck=destBlock;
-                    }
+
                     jmri.NamedBean foundBean = null;
                     /* We change the logging level to fatal in the layout block manager as we are testing to make sure that no signalhead/mast exists
                        this would generate an error message that is expected.*/
@@ -600,6 +605,33 @@ public class LayoutBlockConnectivityTools{
             }
         }
         return -1;
+    }
+    
+    private boolean checkForDoubleCrossOver(Block prevBlock, LayoutBlock curBlock, Block nextBlock){
+        LayoutEditor le = curBlock.getMaxConnectedPanel();
+        ConnectivityUtil ct = le.getConnectivityUtil();
+        ArrayList<LayoutTurnout> turnoutList = ct.getTurnoutList(curBlock.getBlock(), prevBlock, nextBlock);
+        ArrayList<Integer> settingsList = ct.getTurnoutSettingList();
+        for (int i = 0; i<turnoutList.size(); i++) {
+            LayoutTurnout lt = turnoutList.get(i);
+            if(lt.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER){
+                if(settingsList.get(i)==jmri.Turnout.THROWN){
+                    jmri.Turnout t = lt.getTurnout();
+                    if(t.getKnownState()==jmri.Turnout.THROWN){
+                        if(lt.getLayoutBlock()==curBlock || lt.getLayoutBlockC()==curBlock){
+                            if(!canLBlockBeUsed(lt.getLayoutBlockB()) && !canLBlockBeUsed(lt.getLayoutBlockD())){
+                                return false;
+                            }
+                        } else if(lt.getLayoutBlockB()==curBlock || lt.getLayoutBlockD()==curBlock){
+                            if(!canLBlockBeUsed(lt.getLayoutBlock()) && !canLBlockBeUsed(lt.getLayoutBlockC())){
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return true;
     }
     
     /**
