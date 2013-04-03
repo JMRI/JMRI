@@ -223,9 +223,6 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     static class dataRow	{
     	int			cab;
     	String		type;
-    	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UUF_UNUSED_FIELD", 
-    	          justification="buttonPurgeCab is used, but Jenkins doesn't think so")
-    	JButton 	buttonPurgeCab;
     	String		longShort;
     	int			loco;
     	int			speed; 
