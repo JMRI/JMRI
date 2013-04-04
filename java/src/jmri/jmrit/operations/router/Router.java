@@ -112,7 +112,6 @@ public class Router extends TrainCommon {
 		// schedule.
 		_status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
 		if (!_status.equals(Track.OKAY)) {
-			// log.info("Final destination ("+car.getFinalDestinationName()+", "+car.getFinalDestinationTrackName()+"+) failed for car ("+car.toString()+") due to "+_status);
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNextDestFailed"),
 					new Object[] { car.getFinalDestinationName(), car.getFinalDestinationTrackName(), car.toString(),
 							_status }));
@@ -121,7 +120,7 @@ public class Router extends TrainCommon {
 		// check to see if car will move with new destination and a single train
 		Train testTrain = TrainManager.instance().getTrainForCar(clone);
 		// check to see if specific train can service car out of staging
-		if (_train != null && !_train.servicesCar(clone) && car.getTrack().getLocType().equals(Track.STAGING)) {
+		if (car.getTrack().getLocType().equals(Track.STAGING) && _train != null && !_train.servicesCar(clone)) {
 			log.debug("Car (" + car.toString() + ") destination (" + clone.getDestinationName() + ", "
 					+ clone.getDestinationTrackName() + ") is not serviced by train (" // NOI18N
 					+ _train.getName() + ") out of staging"); // NOI18N
@@ -133,10 +132,11 @@ public class Router extends TrainCommon {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCarSingleTrain"),
 						new Object[] { car.toString(), clone.getDestinationName(),
 								clone.getDestinationTrackName(), _train.getName() }));
-			} else
+			} else {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCarSingleTrain"),
 						new Object[] { car.toString(), clone.getDestinationName(),
 								clone.getDestinationTrackName(), testTrain.getName() }));
+			}
 			// now check to see if specific train can service car directly
 			if (_train != null && !trainServicesCar) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"),
