@@ -331,21 +331,22 @@ travel from one location to the another.  Later when you create a <A HREF="#Edit
 you will be able to increase or decrease the train's travel time between
 any two locations.
 
-<H3>Car Types</H3>
+   <H3>Car Types</H3>
 
-The program has two sets of car types for you to use. Descriptive
-provides type names like "Boxcar" and "Tankcar", and AAR provides type
-names like "XM" and "T" for boxcars and tank cars respectively. Select
-the one that you prefer.  You can add or delete car types by using
-the <A HREF="#CarTypeLengthWeight">car type edit</A> window.
-
-<H3>Unit of Length</H3>
+   The program has two sets of car types for you to use. Descriptive provides type names like
+   "Boxcar" and "Tankcar", and AAR provides type names like "XM" and "T" for boxcars and tank cars
+   respectively. Select the one that you prefer. You can add or delete car types by using the
+   <A HREF="#CarTypeLengthWeight">car type edit</A> window.
+   
+   <A NAME="UnitOfLength"></A>
+   <H3>Unit of Length</H3>
 
    You can use feet or meters when entering the length of your rolling stock and tracks. The program
-   will also convert from centimeters to meters when entering car, locomotive, or location lengths,
-   just append "cm" to any length.
+   can convert actual inches into scale feet when entering car, locomotive, or track lengths. Just
+   append a double quote (") to any length. The program can also convert from actual centimeters to
+   scale meters, just append "cm" to any length.
 
-<H3>Optional Year Modeled</H3>
+   <H3>Optional Year Modeled</H3>
 
 You can optionally enter the year you want printed on your train manifests.
 
@@ -1976,12 +1977,13 @@ different format for your switch lists.
 
    <P>If you want to delay the departure of the train from a location or increase the train's
     travel time, enter the number of minutes desired in the "Wait" cell. Another choice is to
-    specify the train's departure time from a location.</P>
+    specify the train's departure time from a location by selecting the "Departure Time" radio button
+    in the lower right hand corner of the edit route window.</P>
 
    <P>
-    You can also adjust the <A HREF="#MaximumTrainLength">maximum train length</A> that can depart
-    each location. The grade is used to determine how many locomotives the train will require for
-    that segment.
+    You can also adjust the <A HREF="#MaximumTrainLength">maximum train length</A> using <A
+     HREF="#UnitOfLength">(feet or meters)</A> that can depart each location. The grade is optional
+    and is used to determine how many locomotives the train will require for that segment.
    </P>
 
    <P>
