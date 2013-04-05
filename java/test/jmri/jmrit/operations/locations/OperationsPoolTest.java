@@ -311,9 +311,9 @@ public class OperationsPoolTest extends TestCase {
 		
 		// not able to place c3, not enough available track length
 		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+")", c3.setLocation(l, t1));
-		Assert.assertEquals("track length", 40+Car.COUPLER, t1.getLength());
+		Assert.assertEquals("track length", 40+Car.COUPLER + 100-(40+Car.COUPLER)-(25+Car.COUPLER), t1.getLength());
 		Assert.assertEquals("track length", 25+Car.COUPLER, t7.getLength());
-		Assert.assertEquals("track length", 100-(40+Car.COUPLER)-(25+Car.COUPLER), t3.getLength());
+		Assert.assertEquals("track length", 0, t3.getLength());
 		
 		// now test the minimum track length pool feature
 		// tracks t2 t4 t5 and t6 in the same pool 
@@ -331,8 +331,8 @@ public class OperationsPoolTest extends TestCase {
 
 		// not able to place c3, not enough available track length because of minimum for t5
 		Assert.assertEquals("Place c3", Track.LENGTH + " ("+(32+Car.COUPLER)+")", c3.setLocation(l, t2));
-		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 100, t2.getLength());
+		Assert.assertEquals("track length", 100, t5.getLength());	// minimum track length
 		Assert.assertEquals("track length", 0, t4.getLength());
 		Assert.assertEquals("track length", 0, t6.getLength());
 		
@@ -341,9 +341,9 @@ public class OperationsPoolTest extends TestCase {
 		
 		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(l, t2));
 		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 100, t5.getLength());	// minimum track length
 		Assert.assertEquals("track length", 0, t4.getLength());
-		Assert.assertEquals("track length", 50-(32+Car.COUPLER), t6.getLength());
+		Assert.assertEquals("track length", 150-(40+Car.COUPLER+25+Car.COUPLER+32+Car.COUPLER), t6.getLength());
 		
 		// now move the cars on t2 to t4 to test the minimum for t2
 		c1.setLocation(null,null);	// release the used track. TODO requestTrackLength() should have checked
@@ -351,18 +351,20 @@ public class OperationsPoolTest extends TestCase {
 		
 		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t4));
 		Assert.assertEquals("track length", 25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 100, t5.getLength());	// minimum track length
 		Assert.assertEquals("track length", 40+Car.COUPLER, t4.getLength());
-		Assert.assertEquals("track length", 50-(32+Car.COUPLER), t6.getLength());
+		// 250 feet total track length in pool, 100 minimum
+		Assert.assertEquals("track length", (250-100)-(40+Car.COUPLER+25+Car.COUPLER+32+Car.COUPLER), t6.getLength());
 		
 		c2.setLocation(null,null);
 		
-		// not enough track length for c2
-		Assert.assertEquals("Place c2", Track.LENGTH + " ("+(25+Car.COUPLER)+")", c2.setLocation(l, t4));
-		Assert.assertEquals("track length", 25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
-		Assert.assertEquals("track length", 40+Car.COUPLER, t4.getLength());
-		Assert.assertEquals("track length", 50-(32+Car.COUPLER), t6.getLength());			
+		// latest code change 4/4/2013 provides enough track length for c2
+		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t4));
+		Assert.assertEquals("track length", 50, t2.getLength());	// minimum track length
+		Assert.assertEquals("track length", 100, t5.getLength());	// minimum track length
+		Assert.assertEquals("track length", 25+Car.COUPLER+40+Car.COUPLER, t4.getLength());
+		// 250 feet total track length in pool, 150 minimum
+		Assert.assertEquals("track length", (250-150)-(40+Car.COUPLER+25+Car.COUPLER), t6.getLength());			
 	}
 
 	/**
