@@ -23,7 +23,7 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * @version     $Revision: 17977 $
  * @since       3.3.1
  */
-public class Bundle extends jmri.jmrix.nce.clockmon.Bundle {
+public class Bundle extends jmri.jmrix.nce.Bundle {
 
     private final static String name = "ClockMonBundle"; // NOI18N
 
