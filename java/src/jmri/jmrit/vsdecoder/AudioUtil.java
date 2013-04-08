@@ -242,7 +242,7 @@ public class AudioUtil {
 	    if (len < 3)
 		return(false);
 	    else
-		return((buf[len-3] < 128) && (buf[len-2] < 128) && (buf[len-1] >= 128));
+		return(((0xFF&buf[len-3]) < 128) && ((0xFF&buf[len-2]) < 128) && ((0xFF&buf[len-1]) >= 128));
 	} else if (format == AL.AL_FORMAT_MONO16) {
 	    if (len < 6) return(false);
 	    short[] sbuf = new short[len/2];
