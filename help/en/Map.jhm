@@ -1444,6 +1444,8 @@
 
 <mapID target="manual.3-2_DecoderPro.Main_TMCC" url="manual/3-2_DecoderPro/Main_TMCC.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ReadingBuildReport" url="package/jmri/jmrit/operations/Operations.shtml#ReadingBuildReport"/>
+
 <mapID target="manual.3-2_DecoderPro.Main_Roster_CreateRoster" url="manual/3-2_DecoderPro/Main_Roster.shtml#CreateRoster"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Sidings" url="package/jmri/jmrit/operations/Operations.shtml#Sidings"/>
@@ -3751,6 +3753,8 @@
 <mapID target="package.jmri.jmrit.beantable.SensorAddEdit" url="package/jmri/jmrit/beantable/SensorAddEdit.shtml"/>
 
 <mapID target="manual.3-0_DecoderPro3.dp3_Main_Throttle_Top" url="manual/3-0_DecoderPro3/dp3_Main_Throttle.shtml#Top"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_UnitOfLength" url="package/jmri/jmrit/operations/Operations.shtml#UnitOfLength"/>
 
 <mapID target="html.hardware.loconet.LocoNetworking" url="html/hardware/loconet/LocoNetworking.shtml"/>
 
