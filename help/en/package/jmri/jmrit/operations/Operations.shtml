@@ -26,39 +26,33 @@
 
 <H2>JMRI Operations</H2>
 
-The operations program allows you to create computer generated train
-manifests for your railroad. A train
-<A HREF="#PrintingManifests">manifest</A> details the work that a train
-will perform during an operations session. The manifest provides a list
-of car pick up and set outs and shows where the cars are located and
-where they should be eventually positioned on the railroad. The program
-allows you to build a roster of cars, define locations on the railroad,
-and routes for trains to travel. The car roster includes information
-about the car, including road name, number, type of car, color, length,
-weight, load, date built, and owner. Trains are assigned routes that
-define locations where cars can be picked up or set out. Features
-include the ability to control what car types, road names, and car loads
-a location can service, the available track space for a location, and
-the maximum length the train can be between any two locations on the
-train's route.
-<P>
-Locations can have spurs, yards, staging and classification/interchange tracks. Spurs
-are used to service industries, and can optionally have custom <A
-HREF="#Schedules">schedules</A> assigned to them. Trains can be
-configured to require a caboose or car with Flashing Rear End Device
-(FRED). The program generates manifests for each train and switch lists
-for any location. A <A HREF="#SwitchList">switch list</A> for a location shows the work for all of
-the trains that will visit that location. The program can also place
-icons representing trains on a JMRI panel. The icon can be taught to
-move in the panel along with the train from location to location.
-</P>
-<P>The operations program is included in the JMRI/DecoderPro suite
-of tools and can be found under the main menu heading
-"Tools-&gt;Operations".</P>
+   The operations program allows you to create computer generated train manifests for your railroad.
+   A train
+   <A HREF="#PrintingManifests">manifest</A> details the work that a crew will perform during an
+   operations session. The manifest provides a list of car pick up and set outs and shows where the
+   cars are located and where they should be eventually positioned on the railroad. The program
+   allows you to enter a roster of cars and locomotives, define locations (stations) on the
+   railroad, and routes for trains to travel. The car roster includes information about the car,
+   including road name, number, type of car, color, length, weight, load, date built, and owner.
+   Trains are assigned routes that define locations or stations where cars can be picked up or set
+   out. Features include the ability to control what car types, road names, and car loads a location
+   or industry can service, the available track space for a location, and the maximum length the
+   train can be between any two locations on the train's route.
+   <P>
+    Locations can have spurs, yards, staging and classification/interchange tracks. Spurs are used
+    to service industries, and can optionally have custom <A HREF="#Schedules">schedules</A>
+    assigned to them. Trains can be configured to require a caboose or car with Flashing Rear End
+    Device (FRED). The program generates manifests for each train and switch lists for any location.
+    A <A HREF="#SwitchList">switch list</A> for a location shows the work for all of the trains that
+    will visit that location. The program can also place icons representing trains on a JMRI panel.
+    The icon can be taught to move in the panel along with the train from location to location.
+   </P>
+   <P>The operations program is included in the JMRI/DecoderPro suite of tools and can be found
+    under the main menu heading "Tools-&gt;Operations".</P>
 
-<P>
-<img src="images/MainMenuDecoderPro.png">
-</P>
+   <P>
+    <img src="images/MainMenuDecoderPro.png">
+   </P>
    <H3>Table of Contents</H3>
    <UL>
     <LI><A HREF="#demo">Operations Demo Files</A></LI>
@@ -146,23 +140,19 @@ of tools and can be found under the main menu heading
    </UL>
 
    <A NAME="demo"></A>
-<H3>Operations Demo Files</H3>
+   <H3>Operations Demo Files</H3>
 
-The operations program provides a set of demo files to help introduce
-you to the some of the features and capabilities of this program. To
-load the demo files, first open the Operations Settings window
-"Tools-&gt;Operations-&gt;Settings", and in the upper left corner of the
-Setting window is the Tools menu, select "Load Demo Files". The program
-will create a <A HREF="#BackupRestore">backup</A> of your current
-configuration if you have one, and then loads the demo files. Restart
-JMRI to complete the demo load process.
+   The operations program provides a set of demo files to help introduce you to the some of the
+   features and capabilities of this program. To load the demo files, first open the Operations
+   Settings window "Tools-&gt;Operations-&gt;Settings", and in the upper left corner of the Setting
+   window is the Tools menu, select "Load Demo Files". The program will create a
+   <A HREF="#BackupRestore">backup</A> of your current configuration if you have one, and then loads
+   the demo files. Restart JMRI to complete the demo load process.
 
-<P>The program also supplies a simple panel to show how the train
-icons work. Load the panel before building the trains by selecting in
-the main JMRI menu, "Panels-&gt;Load Panels .." a window should appear and
-open the "operations" directory and then open the "Operations Demo
-Panel" xml file.
-</P>
+   <P>The program also supplies a simple panel to show how the train icons work. Load the panel
+    before building the trains by selecting in the main JMRI menu, "Panels-&gt;Load Panels .." a
+    window should appear and open the "operations" directory and then open the "Operations Demo
+    Panel" xml file.</P>
 
    <A NAME="QuickStartHelp"></A>
    <H3>Quick Start Help</H3>
@@ -331,21 +321,22 @@ travel from one location to the another.  Later when you create a <A HREF="#Edit
 you will be able to increase or decrease the train's travel time between
 any two locations.
 
-<H3>Car Types</H3>
+   <H3>Car Types</H3>
 
-The program has two sets of car types for you to use. Descriptive
-provides type names like "Boxcar" and "Tankcar", and AAR provides type
-names like "XM" and "T" for boxcars and tank cars respectively. Select
-the one that you prefer.  You can add or delete car types by using
-the <A HREF="#CarTypeLengthWeight">car type edit</A> window.
-
-<H3>Unit of Length</H3>
+   The program has two sets of car types for you to use. Descriptive provides type names like
+   "Boxcar" and "Tankcar", and AAR provides type names like "XM" and "T" for boxcars and tank cars
+   respectively. Select the one that you prefer. You can add or delete car types by using the
+   <A HREF="#CarTypeLengthWeight">car type edit</A> window.
+   
+   <A NAME="UnitOfLength"></A>
+   <H3>Unit of Length</H3>
 
    You can use feet or meters when entering the length of your rolling stock and tracks. The program
-   will also convert from centimeters to meters when entering car, locomotive, or location lengths,
-   just append "cm" to any length.
+   can convert actual inches into scale feet when entering car, locomotive, or track lengths. Just
+   append a double quote (") to any length. The program can also convert from actual centimeters to
+   scale meters, just append "cm" to any length.
 
-<H3>Optional Year Modeled</H3>
+   <H3>Optional Year Modeled</H3>
 
 You can optionally enter the year you want printed on your train manifests.
 
@@ -1976,12 +1967,13 @@ different format for your switch lists.
 
    <P>If you want to delay the departure of the train from a location or increase the train's
     travel time, enter the number of minutes desired in the "Wait" cell. Another choice is to
-    specify the train's departure time from a location.</P>
+    specify the train's departure time from a location by selecting the "Departure Time" radio button
+    in the lower right hand corner of the edit route window.</P>
 
    <P>
-    You can also adjust the <A HREF="#MaximumTrainLength">maximum train length</A> that can depart
-    each location. The grade is used to determine how many locomotives the train will require for
-    that segment.
+    You can also adjust the <A HREF="#MaximumTrainLength">maximum train length</A> using <A
+     HREF="#UnitOfLength">(feet or meters)</A> that can depart each location. The grade is optional
+    and is used to determine how many locomotives the train will require for that segment.
    </P>
 
    <P>

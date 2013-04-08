@@ -175,63 +175,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
 
     public JTable makeJTable(TableSorter srtr) {
         this.sorter = srtr;
-        JTable table = new JTable(sorter)  {
-            public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                boolean res = super.editCellAt(row, column, e);
-                java.awt.Component c = this.getEditorComponent();
-                if (c instanceof javax.swing.JTextField) {
-                    ( (JTextField) c).selectAll();
-                }
-                return res;
-            }
-            public TableCellRenderer getCellRenderer(int row, int column) {
-                if (column == VALUECOL) {
-                    return getRenderer(row);
-                } else
-                    return super.getCellRenderer(row, column);
-            }
-            public TableCellEditor getCellEditor(int row, int column) {
-                if (column == VALUECOL) {
-                    return getEditor(row);
-                } else
-                    return super.getCellEditor(row, column);
-            }
-            TableCellRenderer getRenderer(int row) {
-                TableCellRenderer retval = rendererMap.get(sorter.getValueAt(row,SYSNAMECOL));
-                if (retval == null) {
-                    // create a new one with right aspects
-                    retval = new MyComboBoxRenderer(getAspectVector(row));
-                    rendererMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
-                }
-                return retval;
-            }
-            Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
-
-            TableCellEditor getEditor(int row) {
-                TableCellEditor retval = editorMap.get(sorter.getValueAt(row,SYSNAMECOL));
-                if (retval == null) {
-                    // create a new one with right aspects
-                    retval = new MyComboBoxEditor(getAspectVector(row));
-                    editorMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
-                }
-                return retval;
-            }
-            Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
-
-            Vector<String> getAspectVector(int row) {
-                Vector<String> retval = boxMap.get(sorter.getValueAt(row,SYSNAMECOL));
-                if (retval == null) {
-                    // create a new one with right aspects
-                    Vector<String> v = InstanceManager.signalMastManagerInstance()
-                                        .getSignalMast((String)sorter.getValueAt(row,SYSNAMECOL)).getValidAspects();
-                    retval = v;
-                    boxMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
-                }
-                return retval;
-            }
-            Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
-            
-        };
+        table = new SignalMastJTable(sorter);
         
         table.getTableHeader().setReorderingAllowed(true);
         table.setColumnModel(new XTableColumnModel());
@@ -241,11 +185,98 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         return table;
     }
     
+    SignalMastJTable table;
+    
+    //The JTable is extended so that we can reset the available aspect in the drop down when required
+    class SignalMastJTable extends JTable{
+        
+        public SignalMastJTable(TableSorter srtr){
+            super(srtr);
+        }
+    
+        public void clearAspectVector(int row){
+            //Clear the old aspect combobox and forces it to be rebuilt
+            boxMap.remove(sorter.getValueAt(row,SYSNAMECOL));
+            editorMap.remove(sorter.getValueAt(row,SYSNAMECOL));
+            rendererMap.remove(sorter.getValueAt(row,SYSNAMECOL));
+        }
+        
+        public boolean editCellAt(int row, int column, java.util.EventObject e) {
+            boolean res = super.editCellAt(row, column, e);
+            java.awt.Component c = this.getEditorComponent();
+            if (c instanceof javax.swing.JTextField) {
+                ( (JTextField) c).selectAll();
+            }
+            return res;
+        }
+        public TableCellRenderer getCellRenderer(int row, int column) {
+            if (column == VALUECOL) {
+                return getRenderer(row);
+            } else
+                return super.getCellRenderer(row, column);
+        }
+        public TableCellEditor getCellEditor(int row, int column) {
+            if (column == VALUECOL) {
+                return getEditor(row);
+            } else
+                return super.getCellEditor(row, column);
+        }
+        TableCellRenderer getRenderer(int row) {
+            TableCellRenderer retval = rendererMap.get(sorter.getValueAt(row,SYSNAMECOL));
+            if (retval == null) {
+                // create a new one with right aspects
+                retval = new MyComboBoxRenderer(getAspectVector(row));
+                rendererMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
+            }
+            return retval;
+        }
+        Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
+
+        TableCellEditor getEditor(int row) {
+            TableCellEditor retval = editorMap.get(sorter.getValueAt(row,SYSNAMECOL));
+            if (retval == null) {
+                // create a new one with right aspects
+                retval = new MyComboBoxEditor(getAspectVector(row));
+                editorMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
+            }
+            return retval;
+        }
+        Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
+
+        Vector<String> getAspectVector(int row) {
+            Vector<String> retval = boxMap.get(sorter.getValueAt(row,SYSNAMECOL));
+            if (retval == null) {
+                // create a new one with right aspects
+                Vector<String> v = InstanceManager.signalMastManagerInstance()
+                                    .getSignalMast((String)sorter.getValueAt(row,SYSNAMECOL)).getValidAspects();
+                retval = v;
+                boxMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
+            }
+            return retval;
+        }
+        
+        Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
+    }
+    
+    
     protected String getBeanType(){
         return rbean.getString("BeanNameSignalMast");
     }
     
-        		 
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if(e.getPropertyName().indexOf("aspectEnabled")>=0 || e.getPropertyName().indexOf("aspectDisabled")>=0){
+            if(e.getSource() instanceof NamedBean){
+                String name = ((NamedBean)e.getSource()).getSystemName();
+                if (log.isDebugEnabled()) log.debug("Update cell "+sysNameList.indexOf(name)+","
+                                                    +VALUECOL+" for "+name);
+                // since we can add columns, the entire row is marked as updated
+                int row = sysNameList.indexOf(name);
+                table.clearAspectVector(row);
+            }
+        }
+        super.propertyChange(e);
+    }
+    
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
         if(e.getPropertyName().indexOf("Aspect")>=0 || e.getPropertyName().indexOf("Lit")>=0 
 		        || e.getPropertyName().indexOf("Held")>=0 || e.getPropertyName().indexOf("aspectDisabled")>=0

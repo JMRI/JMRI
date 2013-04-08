@@ -702,11 +702,11 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public void goingInactive() {
         if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
                                             "\" goes UNOCCUPIED. from state= "+getState());
+        setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
         if (_warrant!=null) {
             setValue(null);
             _warrant.goingInactive(this);
         }
-        setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
     }
 
      /**
@@ -719,9 +719,6 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
 //                                            "\" goes OCCUPIED. state= "+getState());
         if (_warrant!=null) {
             _warrant.goingActive(this);
-        } else if (_pathName!=null) {
-            // must be a manual path allocation.  unset unoccupied bit and set manual path detection
-            setState((getState() & ~UNOCCUPIED) | (OCCUPIED/* | RUNNING */));
         }
         if (log.isDebugEnabled()) log.debug("Block \""+getSystemName()+" went active, path= "+
                                             _pathName+", state= "+getState());

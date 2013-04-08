@@ -175,6 +175,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     protected int getCurrentCommandIndex() {
         return _idxCurrentCommand;
     }
+    
+    synchronized protected void setWaitforClear(boolean set) {
+    	_waitForClear = set;
+    }
 
     /**
     * If waiting to sync entrance to a block boundary with recorded wait time,

@@ -47,14 +47,7 @@ import jmri.jmrit.logix.OBlock;
         return _paths;
     }
 	protected void setPaths(ArrayList<String>paths) {
-		if (paths == null) {
-	        _paths = paths;			
-		} else {
-			_paths = new ArrayList<String>();			
-            for (int i=0; i<paths.size(); i++) {
-            	_paths.add(paths.get(i).trim());
-            }
-		}
+        _paths = paths;			
     }
 
 	protected void addPath(String path) {
