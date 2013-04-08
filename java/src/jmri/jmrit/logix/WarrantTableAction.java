@@ -18,10 +18,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -57,6 +59,8 @@ import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 
 /**
  * A WarrantAction contains the operating permissions and directives needed for
@@ -87,19 +91,25 @@ public class WarrantTableAction extends AbstractAction {
 
     static int STRUT_SIZE = 10;
     static JMenu _warrantMenu;
+    private static WarrantTableAction _instance;
     private static HashMap <String, WarrantFrame> _frameMap = new HashMap <String, WarrantFrame> ();
     private static TableFrame _tableFrame;
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
     private static JDialog _errorDialog;
-
-    JTextField  _startWarrant = new JTextField(30);
-    JTextField  _endWarrant = new JTextField(30);
+    private static NXFrame _nxFrame;
     JTextField  _status = new JTextField(90);
     Color _background;
 
     public WarrantTableAction(String menuOption) {
 	    super(Bundle.getMessage(menuOption));
+    }
+    
+    static WarrantTableAction getInstance() {
+    	if (_instance==null) {
+    		_instance = new WarrantTableAction("ShowWarrants");
+    	}
+    	return _instance;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -130,10 +140,23 @@ public class WarrantTableAction extends AbstractAction {
         }
         showPathPortalErrors();
     }
+    
+    /**
+    *  Note: _warrantMenu is static
+    */
+    synchronized public static JMenu makeWarrantMenu() {
+        _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
+        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
+            updateWarrantMenu();
+        } else {
+        	return null;
+        }
+        return _warrantMenu;
+    }
 
     synchronized public static void updateWarrantMenu() {
         _warrantMenu.removeAll();
-        _warrantMenu.add(new WarrantTableAction("ShowWarrants"));
+        _warrantMenu.add(getInstance());
         JMenu editWarrantMenu = new JMenu(Bundle.getMessage("EditWarrantMenu"));
         _warrantMenu.add(editWarrantMenu);
         ActionListener editWarrantAction = new ActionListener()
@@ -172,9 +195,29 @@ public class WarrantTableAction extends AbstractAction {
         frame.toFront();
     }
 
+    synchronized public static void openWarrantFrame(Warrant w) {
+    	String key = w.getDisplayName();
+        WarrantFrame frame = _frameMap.get(key);
+        if (frame==null) {
+            frame = new WarrantFrame(w);
+            _frameMap.put(key, frame);
+        }
+        if (log.isDebugEnabled()) log.debug("openWarrantFrame for "+key+", size= "+_frameMap.size());
+        frame.setVisible(true);
+        frame.toFront();
+    }
+
     synchronized public WarrantFrame getOpenWarrantFrame(String key) {
         return _frameMap.get(key);
     }
+    
+    synchronized static public void mouseClickedOnBlock(OBlock block) {
+    	if (_nxFrame!=null) {
+    		_nxFrame.mouseClickedOnBlock(block);
+    	}
+    }
+    
+    /******************** Error checking ************************/
 
     public static void initPathPortalCheck() {
         if (_errorDialog!=null) {
@@ -527,20 +570,6 @@ public class WarrantTableAction extends AbstractAction {
 
     }
 
-    /**
-    *  Note: _warrantMenu is static
-    */
-    synchronized public static JMenu makeWarrantMenu() {
-        _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
-        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
-            updateWarrantMenu();
-        } else {
-        	return null;
-        }
-        return _warrantMenu;
-    }
-
-
     /********************** Show Warrants Table *************************/
 
     static final String halt = Bundle.getMessage("Halt");
@@ -549,10 +578,16 @@ public class WarrantTableAction extends AbstractAction {
     static final String retry = Bundle.getMessage("Retry");
     static final String[] controls = {halt, resume, retry, abort};
 
-    class TableFrame  extends jmri.util.JmriJFrame // implements ActionListener 
+    class TableFrame  extends jmri.util.JmriJFrame 
     {
-        private WarrantTableModel     _model;
+        JTextField  _startWarrant = new JTextField(30);
+        JTextField  _endWarrant = new JTextField(30);
 
+        private WarrantTableModel     _model;
+        
+        WarrantTableModel getModel() {
+        	return _model;
+        }
 
         public TableFrame() 
         {
@@ -626,7 +661,7 @@ public class WarrantTableAction extends AbstractAction {
             
             panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
-            panel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
+            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             //JPanel p = new JPanel();
             //p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
             JPanel pp = new JPanel();
@@ -649,15 +684,38 @@ public class WarrantTableAction extends AbstractAction {
                     concatenate();
                 }
             });
-            //panel.add(p);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             panel.add(concatButton);
-            panel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
-            JPanel bottomPanel = new JPanel();
-            bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-            bottomPanel.add(new JLabel(Bundle.getMessage("JoinPrompt")));
-            bottomPanel.add(panel);
-            tablePanel.add(bottomPanel, BorderLayout.SOUTH);
+            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+
+            JPanel concatPanel = new JPanel();
+            concatPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                    Bundle.getMessage("JoinPrompt"),
+                    javax.swing.border.TitledBorder.CENTER,
+                    javax.swing.border.TitledBorder.TOP));
+            concatPanel.add(panel);
+
+            panel = new JPanel();
+            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+                    Bundle.getMessage("AutoWarrant"),
+                    javax.swing.border.TitledBorder.CENTER,
+                    javax.swing.border.TitledBorder.TOP));
+            JButton nxButton = new JButton(Bundle.getMessage("CreateNXWarrant"));
+            nxButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	nxAction();
+                }
+            });
+            panel.add(nxButton);
+            
+            pp = new JPanel();
+            pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+            pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+            pp.add(panel);
+            pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+            pp.add(concatPanel);
+            pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+            tablePanel.add(pp, BorderLayout.SOUTH);
 
             addWindowListener(new java.awt.event.WindowAdapter() {
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -676,37 +734,274 @@ public class WarrantTableAction extends AbstractAction {
             setVisible(true);
             pack();
         }
+        
+        private void nxAction() {
+        	_nxFrame = new NXFrame(this);
+        }
+        
+        private void concatenate() {
+            WarrantManager manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
+            Warrant startW = manager.getWarrant(_startWarrant.getText().trim());
+            Warrant endW = manager.getWarrant(_endWarrant.getText().trim());
+            if (startW==null || endW==null) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("BadWarrantNames"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            BlockOrder last = startW.getLastOrder();
+            BlockOrder next = endW.getfirstOrder();
+            if (last==null || next==null) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("EmptyRoutes"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            if (!last.getPathName().equals(next.getPathName())) {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("RoutesDontMatch", 
+                		startW.getDisplayName(), endW.getDisplayName()),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            CreateWarrantFrame f = new CreateWarrantFrame();
+            try {
+                f.initComponents();
+                f.concatenate(startW, endW);
+            } catch (Exception ex ) { log.error("error making CreateWarrantFrame", ex);}
+            f.setVisible(true);
+        }
     }
+    
+    class NXFrame extends WarrantRoute {
+    	TableFrame 	_parent;
+        JTextField  _dccNumBox = new JTextField();
+        JTextField  _speedBox = new JTextField();
+        JCheckBox	_forward = new JCheckBox(Bundle.getMessage("forward", true));
+        JTextField _searchDepth = new JTextField();
+        int _clickCount;
 
-    private void concatenate() {
-        WarrantManager manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
-        Warrant startW = manager.getWarrant(_startWarrant.getText().trim());
-        Warrant endW = manager.getWarrant(_endWarrant.getText().trim());
-        if (startW==null || endW==null) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("BadWarrantNames"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
+        NXFrame(TableFrame parent) {
+    		super();
+    		_parent = parent;
+    		_clickCount = 0;
+    		setTitle(Bundle.getMessage("AutoWarrant"));
+            JPanel mainPanel = new JPanel();
+            mainPanel.setLayout(new BorderLayout(10,10));
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+//            doSize(_dccNumBox, 50, 20);
+//            doSize(_speedBox, 50, 20);
+//            doSize(_searchDepth, 50, 20);
+            
+            panel.add(makeBlockPanels());
+            panel.add(Box.createVerticalStrut(STRUT_SIZE));
+            panel.add(WarrantFrame.makeTextBoxPanel(false, _dccNumBox, "DccAddress", true));
+            panel.add(Box.createVerticalStrut(STRUT_SIZE));
+            JPanel pp = new JPanel();
+            pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+            pp.add(WarrantFrame.makeTextBoxPanel(false, _speedBox, "Speed", true));
+            _forward.setSelected(true);
+            pp.add(_forward);
+            panel.add(pp);
+            panel.add(Box.createVerticalStrut(STRUT_SIZE));
+            panel.add(WarrantFrame.makeTextBoxPanel(false, _searchDepth, "SearchDepth", true));
+            panel.add(Box.createVerticalStrut(STRUT_SIZE));
+            _speedBox.setText("0.5");
+            _searchDepth.setText("10");
+            JPanel p = new JPanel();
+            JButton button = new JButton(Bundle.getMessage("ButtonRunNX"));
+            button.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                        	makeAndRunWarrant();
+                        }
+                    });
+            p.add(button);
+            button = new JButton(Bundle.getMessage("ButtonCancel"));
+            button.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                        	dispose();
+                        	_nxFrame = null;
+                        }
+                    });
+            p.add(button);
+            panel.add(p);
+            mainPanel.add(panel);
+            getContentPane().add(mainPanel);
+            addWindowListener(new java.awt.event.WindowAdapter() {
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    dispose();
+                    _nxFrame = null;
+                }
+            });
+            setLocation(parent.getLocation().x+200, parent.getLocation().y+100);
+            setAlwaysOnTop(true);
+            pack();
+            setVisible(true);      		
+    	}
+        
+        public void propertyChange(java.beans.PropertyChangeEvent e) {
+            String property = e.getPropertyName();
+//            if (log.isDebugEnabled()) log.debug("propertyChange \""+property+
+//                                                "\" old= "+e.getOldValue()+" new= "+e.getNewValue()+
+//                                                " source= "+e.getSource().getClass().getName());
+            if (property.equals("DnDrop")) {
+            	doAction(e.getSource());
+            }
         }
-        BlockOrder last = startW.getLastOrder();
-        BlockOrder next = endW.getfirstOrder();
-        if (last==null || next==null) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("EmptyRoutes"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
+ 
+        /**
+         * Callback from RouteFinder.findRoute()
+         */
+        public void selectedRoute(ArrayList<BlockOrder> orders) {
+        	String msg =null;
+        	String s = (""+Math.random()).substring(2);
+        	Warrant warrant = new Warrant("IW"+s, "NX"+s);
+            if (_dccNumBox.getText()==null || _dccNumBox.getText().length()==0){
+                msg = Bundle.getMessage("NoLoco");
+            } else {
+                String addr = _dccNumBox.getText();
+                if (addr!= null && addr.length() != 0) {
+                	addr = addr.toUpperCase().trim();
+                    try {
+                        boolean isLong = false;
+                        int dccNum = 0;
+                    	if (addr.endsWith("(L)")) {
+                    		isLong = true;
+                        	dccNum = Integer.parseInt(addr.substring(0, addr.length()-3));
+                    	} else if (!addr.endsWith("(S)")) {
+                    		// no suffix specified
+                    		dccNum = Integer.parseInt(addr);
+                    		Character ch = addr.charAt(0);
+                            isLong = (ch=='0' || addr.length()>3);  // leading zero means long
+                    	} else {
+                    		// short specified
+                        	dccNum = Integer.parseInt(addr.substring(0, addr.length()-3));
+                    	}
+                    	warrant.setDccAddress( new DccLocoAddress(dccNum, isLong));
+                    	warrant.setTrainName(addr);
+                    } catch (NumberFormatException nfe) {
+                        msg = Bundle.getMessage("BadDccAddress", addr);
+                    }
+                }
+            }
+            warrant.addBlockOrders(getOrders());
+            if (msg==null) {
+            	msg = makeCommands(warrant);           	
+            }
+            if (msg==null) {
+            	msg = runTrain(warrant);           	
+            }
+            if (msg!=null) {
+                JOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                warrant = null;
+            } else {
+            	_parent.getModel().addNXWarrant(warrant);
+            	_parent.getModel().fireTableDataChanged();
+            	dispose();
+            	_nxFrame = null;           	
+            }
         }
-        if (!last.getPathName().equals(next.getPathName())) {
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("RoutesDontMatch", 
-            		startW.getDisplayName(), endW.getDisplayName()),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
+        
+        private String makeCommands(Warrant w) {
+        	List<BlockOrder> orders = getOrders();
+        	String blockName = orders.get(0).getBlock().getDisplayName();
+        	w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(0, "F2", "true", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(1750, "F2", "false", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(1750, "F2", "false", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(0, "Forward", (_forward.isSelected()?"true":"false"), blockName));        		
+            String speed = _speedBox.getText();
+            try {
+            	float f = Float.parseFloat(speed);
+            	if (f>1.0 || f<0) {
+                    return Bundle.getMessage("badSpeed");            	            		
+            	}
+            } catch (NumberFormatException nfe) {
+                return Bundle.getMessage("badSpeed");            	
+            }
+        	w.addThrottleCommand(new ThrottleSetting(500, "Speed", speed, blockName));        		
+        	for (int i=1; i<orders.size(); i++) {
+        		w.addThrottleCommand(new ThrottleSetting(5000, "NoOp", "Enter Block", 
+        				orders.get(i).getBlock().getDisplayName()));        		
+        	}
+        	blockName = orders.get(orders.size()-1).getBlock().getDisplayName();
+        	w.addThrottleCommand(new ThrottleSetting(0, "Speed", "0.0", blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(500, "F2", "true", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(500, "F0", "false", blockName));
+        	return null;
         }
-        CreateWarrantFrame f = new CreateWarrantFrame();
-        try {
-            f.initComponents();
-            f.concatenate(startW, endW);
-        } catch (Exception ex ) { log.error("error making CreateWarrantFrame", ex);}
-        f.setVisible(true);
+	 
+        void mouseClickedOnBlock(OBlock block) {
+        	_clickCount++;
+        	switch (_clickCount) {
+        		case 1:
+            		_originBlockBox.setText(block.getDisplayName());
+            		setOriginBlock();
+            		break;
+        		case 2:
+            		_destBlockBox.setText(block.getDisplayName());
+                    setDestinationBlock();
+                    break;
+        		case 3 :
+        			_viaBlockBox.setText(block.getDisplayName());
+                    setViaBlock();
+                    break;
+        		case 4:
+            		_avoidBlockBox.setText(block.getDisplayName());
+                    setAvoidBlock();
+                    break;
+    			default:
+    				_clickCount= 0;       				
+        	}
+        }
+    	boolean makeAndRunWarrant() {
+            int depth = 10;
+            try {
+                depth = Integer.parseInt(_searchDepth.getText());
+            } catch (NumberFormatException nfe) {
+            }
+            String msg = findRoute(depth);
+            if (msg!=null) {
+                JOptionPane.showMessageDialog(this, msg,
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
+            return true;
+    	}
     }
+    
+    String runTrain(Warrant w) {
+    	String msg = null;
+        msg = w.allocateRoute(null);
+        if (msg!=null) {
+        	setStatusText(msg, Color.red);
+        }
+        String msg2 = w.setRoute(0, null);
+        if (msg==null && msg2!=null) {
+        	setStatusText(msg2, Color.red);
+        }
+        if (msg==null) {
+        	msg = w.checkRoute();
+        	if (msg!=null) {
+               	setStatusText(msg, Color.yellow);                        		
+        	}
+        }
+        if (msg==null) {
+        	msg = w.checkStartBlock();
+        	if (msg!=null) {
+               	setStatusText(msg, Color.yellow);                        		
+        	}
+        }
+        msg = w.checkForContinuation();
+        if (msg==null) {
+            msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+            msg = null;		// will be the same message that user OK'd to ignore
+        }
+    	return msg;
+    }
+    
+    /************************* Table ****************************************/
 
     static public class ComboBoxCellEditor extends DefaultCellEditor
     {
@@ -742,6 +1037,7 @@ public class WarrantTableAction extends AbstractAction {
             return comboBox; 
         }
     }
+    
     void setStatusText(String msg, Color c) {
     	if (Color.red.equals(c)) {
         	_status.setBackground(Color.white);   		
@@ -771,12 +1067,14 @@ public class WarrantTableAction extends AbstractAction {
         public static final int NUMCOLS = 12;
 
         WarrantManager _manager;
-        protected ArrayList <Warrant>       _warList;
+        private ArrayList <Warrant>       _warList;
+        private ArrayList <Warrant>       _warNX;	// temporary warrants appended to table
 
         public WarrantTableModel() {
             super();
             _manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
             _manager.addPropertyChangeListener(this);   // for adds and deletes
+            _warNX = new ArrayList<Warrant>();
         }
 
         public void init() {
@@ -799,8 +1097,22 @@ public class WarrantTableAction extends AbstractAction {
             if (log.isDebugEnabled()) log.debug("_warList has "+_warList.size()+" warrants");
         }
         
+        public void addNXWarrant(Warrant w) {
+        	_warList.add(w);
+        	_warNX.add(w);
+        	w.addPropertyChangeListener(this);
+        }
+        public void removeNXWarrant(Warrant w) {
+        	w.removePropertyChangeListener(this);
+        	_warList.remove(w);       	
+        	_warNX.remove(w);
+        }
+        
         public Warrant getWarrantAt(int index) {
-            return _warList.get(index);
+        	if (index>=_warList.size()) {
+        		return null;
+        	}
+    		return  _warList.get(index);
         }
 
         public int getRowCount () {
@@ -1046,31 +1358,7 @@ public class WarrantTableAction extends AbstractAction {
                             msg = Bundle.getMessage("EmptyRoute");
                             break;
                         }
-                        msg = w.allocateRoute(null);
-                        if (msg!=null) {
-                        	setStatusText(msg, Color.red);
-                        }
-                        String msg2 = w.setRoute(0, null);
-                        if (msg==null && msg2!=null) {
-                        	setStatusText(msg2, Color.red);
-                        }
-                        if (msg==null) {
-                        	msg = w.checkRoute();
-                        	if (msg!=null) {
-                               	setStatusText(msg, Color.yellow);                        		
-                        	}
-                        }
-                        if (msg==null) {
-                        	msg = w.checkStartBlock();
-                        	if (msg!=null) {
-                               	setStatusText(msg, Color.yellow);                        		
-                        	}
-                        }
-                        msg = w.checkForContinuation();
-                        if (msg==null) {
-                            msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
-                            msg = null;		// will be the same message that user OK'd to ignore
-                        }
+                    	msg = runTrain(w);
                     } else {
                     	setStatusText(Bundle.getMessage("TrainRunning", w.getDisplayName()), Color.red);
                     }
@@ -1142,7 +1430,7 @@ public class WarrantTableAction extends AbstractAction {
                     }
                     break;
                 case EDIT_COLUMN:
-                    WarrantTableAction.openWarrantFrame(w.getDisplayName());
+                    WarrantTableAction.openWarrantFrame(w);
                     break;
                 case DELETE_COLUMN:
                     if (w.getRunMode() == Warrant.MODE_NONE) {
@@ -1161,7 +1449,8 @@ public class WarrantTableAction extends AbstractAction {
         }
 
         public void propertyChange(java.beans.PropertyChangeEvent e) {
-            if (e.getPropertyName().equals("length")) {
+        	String property = e.getPropertyName();
+            if (property.equals("length")) {
                 // a NamedBean added or deleted
                 init();
                 fireTableDataChanged();
@@ -1170,7 +1459,22 @@ public class WarrantTableAction extends AbstractAction {
                 NamedBean bean = (NamedBean)e.getSource();
                 for (int i=0; i<_warList.size(); i++) {
                     if (bean.equals(_warList.get(i)))  {
-                        fireTableRowsUpdated(i, i);
+                    	
+                        if ( _warNX.contains(bean) && (
+                        	(property.equals("runMode") && e.getNewValue()==Integer.valueOf(Warrant.MODE_NONE))
+                        	|| (property.equals("controlChange") &&e.getNewValue()==Integer.valueOf(Warrant.ABORT))
+                        	)) {
+                        	removeNXWarrant((Warrant)bean);                       	
+                            try {
+                                Thread.sleep(50);
+                                fireTableRowsDeleted(i, i);
+                                Thread.sleep(50);                        	
+                            } catch (InterruptedException ie) {                       	
+                            }
+                        } else {
+                            fireTableRowsUpdated(i, i);
+                        }
+                        break;
                     }
                 }
                 if (e.getPropertyName().equals("blockChange")) {

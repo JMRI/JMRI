@@ -26,6 +26,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 
 /**
@@ -1043,6 +1044,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (selection!=null) {
                 if (!_circuitBuilder.doMouseClicked(selection, event)) {
                     selection.doMouseClicked(event);
+                }
+                if (selection instanceof IndicatorTrack) {
+                	WarrantTableAction.mouseClickedOnBlock(((IndicatorTrack)selection).getOccBlock());
                 }
             }
         }
