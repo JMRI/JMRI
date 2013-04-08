@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130308-1729-jake on Fri Mar 08 09:29:17 PST 2013 $Id$-->
-  <decoderIndex version="266">
+  <!--Written by JMRI version 20130408-0517-jake on Sun Apr 07 22:18:01 PDT 2013 $Id$-->
+  <decoderIndex version="268">
     <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4308,11 +4308,12 @@
         </functionlabels>
       </family>
       <family name="Non silent drive directional Lights" mfg="North Coast Engineering" lowVersionID="21" highVersionID="21" file="NCE_D102EU.xml">
-        <model model="D102EU" numOuts="2" numFns="0" />
-        <model model="DA102EU" numOuts="5" numFns="3" />
-        <model model="D104P2K" numOuts="4" numFns="2" />
-        <model model="D104KRS" numOuts="4" numFns="2" />
-        <model model="P2K-SW9" numOuts="3" numFns="1" />
+        <model model="D102EU" numOuts="2" numFns="2" />
+        <model model="DA102EU" numOuts="5" numFns="5" />
+        <model model="D104P2K" numOuts="4" numFns="4" />
+        <model model="D104KRS" numOuts="4" numFns="4" />
+        <model model="N103" numOuts="3" numFns="3" />
+        <model model="P2K-SW9" numOuts="3" numFns="3" />
       </family>
       <family name="Non silent drive non-directional lights" mfg="North Coast Engineering" lowVersionID="21" highVersionID="21" file="NCE_D102US.xml">
         <model model="D102US" numOuts="2" numFns="1" />
@@ -6810,6 +6811,20 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="TSU-AT1000 Cummins QSK19C x3 Genset" numOuts="4" numFns="14" connector="other" productID="828036" comment="Model 828036">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="TSU-AT1000 EMD 567" numOuts="4" numFns="14" connector="other" productID="828040" comment="Model 828040">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -7215,6 +7230,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Fans</functionlabel>
+          <functionlabel num="10" lockable="true">Air Comprssor</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tsunami Diesel Bowser OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Bowser Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Bowser.xml">
         <model model="Alco C-628" numOuts="4" numFns="14" connector="other" productID="Century">
@@ -7427,6 +7457,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Fans</functionlabel>
+          <functionlabel num="10" lockable="true">Air Comprssor</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tsunami Diesel Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Genesis.xml">
         <model model="DDA40X" numOuts="4" numFns="14" connector="other" productID="DD">
@@ -7609,6 +7654,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="GP38-2" numOuts="4" numFns="14" connector="other" productID="GP38">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="MP15AC" numOuts="4" numFns="14" connector="other" productID="MP15">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -7744,6 +7804,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Fans</functionlabel>
+          <functionlabel num="10" lockable="true">Air Comprssor</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tsunami Diesel Intermountain OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Intermountain Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_IMRC.xml">
         <model model="HO ES44AC" numOuts="4" numFns="14" connector="other" productID="ES">
@@ -7866,6 +7941,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Fans</functionlabel>
+          <functionlabel num="10" lockable="true">Air Comprssor</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tsunami Diesel Rapido OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are the Rapido OEM version Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Rapido.xml">
         <model model="FP9A - CN/VIA" numOuts="4" numFns="14" connector="9pin" productID="101" comment="CN configuration">
@@ -8005,6 +8095,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Fans</functionlabel>
+          <functionlabel num="10" lockable="true">Air Comprssor</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami steam decoders" file="SoundTraxx_Tsu_Steam.xml">
         <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other" productID="826001" comment="Model 826001">
@@ -8263,6 +8368,21 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Steam Release</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Water Stop</functionlabel>
+          <functionlabel num="10" lockable="true">Injectors</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tsunami Steam Bachmann OEM" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_Tsu_Steam_Bachmann.xml">
         <model model="HO 2-6-6-2" numOuts="2" numFns="14" connector="other" productID="2662">
@@ -8490,7 +8610,22 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
-        <model model="On30 2-4-4 Forney" numOuts="2" numFns="14" connector="other" productID="244">
+        <model model="On30 2-4-4 Forney" numOuts="2" numFns="14" connector="other" productID="o244">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="On30 2-4-4-2" numOuts="2" numFns="14" connector="other" productID="o2442">
           <versionCV lowVersionID="80" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -8550,6 +8685,21 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
+        <model model="On30 Heisler" numOuts="2" numFns="14" connector="other" productID="oheisler">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
         <model model="On30 2 Truck T Boiler Shay" numOuts="2" numFns="14" connector="other" productID="o2shay">
           <versionCV lowVersionID="80" />
           <output name="Whistle" />
@@ -8595,9 +8745,40 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Steam Release</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Water Stop</functionlabel>
+          <functionlabel num="10" lockable="true">Injectors</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tsunami Steam Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami steam decoders" file="SoundTraxx_Tsu_Steam_Genesis.xml">
         <model model="Bigboy 4-8-8-4" numOuts="4" numFns="14" connector="other" productID="BB">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Injector" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="FEF-3 4-8-4" numOuts="4" numFns="14" connector="other" productID="FEF">
           <versionCV lowVersionID="64" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -8645,6 +8826,21 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Steam Release</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Water Stop</functionlabel>
+          <functionlabel num="10" lockable="true">Injectors</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
       </family>
       <family name="Tsunami Steam Intermountain OEM" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_Tsu_Steam_IMRC.xml">
         <model model="HO SP AC12" numOuts="4" numFns="14" connector="other" productID="AC12">
@@ -8663,6 +8859,21 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Steam Release</functionlabel>
+          <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+          <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Water Stop</functionlabel>
+          <functionlabel num="10" lockable="true">Injectors</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
       </family>
       <family name="AC1" mfg="Spectrum Engineering" comment="AC1 is an animation accessory decoder with secondary OPS access as a LOCO" file="Spectrum_AC8824.xml">
         <model model="AC1" lowVersionID="16" highVersionID="16" />
