@@ -17,7 +17,6 @@
     <row>
       <label label="REVERB CONTROLS AND MIXER">
         <label>REVERB CONTROLS AND MIXER</label>
-	<label xml:lang="it">CONTROLLI RIVERBERO E MIXER</label>
       </label>
     </row>
     <label label=" ">
@@ -111,6 +110,18 @@
             <label> </label>
           </label>
           <display item="Air Pump Reverb Level" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="Prime Mover 3 Reverb Level" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Prime Mover 3 Reverb Level" layout="above" format="hslider"/>
         </row>
         <label label=" ">
           <label> </label>
