@@ -30,12 +30,19 @@ public class TrackerTableAction extends AbstractAction {
 
     static int STRUT_SIZE = 10;
     
-    private ArrayList<Tracker> _trackerList;
-    private TableFrame _frame;
+    private static TrackerTableAction _instance;
+    private static ArrayList<Tracker> _trackerList = new ArrayList<Tracker>();
+    private static TableFrame _frame;
     
     public TrackerTableAction(String menuOption) {
 	    super(menuOption);
-	    _trackerList = new ArrayList<Tracker>();
+	    _instance = this;
+    }
+    static TrackerTableAction getInstance() {
+    	if (_instance==null) {
+    		_instance = new TrackerTableAction("Tracker");
+    	}
+    	return _instance;
     }
     public void actionPerformed(ActionEvent e) {
     	if (_frame!=null) {
@@ -44,7 +51,12 @@ public class TrackerTableAction extends AbstractAction {
         	_frame = new TableFrame();    		
     	}
     }
-
+    synchronized static public void mouseClickedOnBlock(OBlock block) {
+    	if (_frame!=null) {
+    		_frame.mouseClickedOnBlock(block);
+    	}
+    }
+    
     /**
      * Holds a table of Trackers that follow adjacent occupancy.  Needs to be 
      * a singleton to be opened and closed for trackers to report to it
@@ -122,6 +134,15 @@ public class TrackerTableAction extends AbstractAction {
             tablePanel.add(p, BorderLayout.CENTER);
             p.add(button);
             
+            button = new JButton(Bundle.getMessage("MenuBlockPicker"));
+            button.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                    	openPickList();
+                    }
+            });
+            tablePanel.add(p, BorderLayout.CENTER);
+            p.add(button);
+            
             panel.add(p);
             tablePanel.add(panel, BorderLayout.CENTER);
             
@@ -129,7 +150,8 @@ public class TrackerTableAction extends AbstractAction {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     dispose();
                 }
-            });			
+            });
+            /*
             JMenuBar menuBar = new JMenuBar();
             JMenu trackerMenu = new JMenu(Bundle.getMessage("MenuTrackers"));
             JMenuItem newTracker = new JMenuItem(Bundle.getMessage("MenuNewTracker"));
@@ -156,6 +178,7 @@ public class TrackerTableAction extends AbstractAction {
             menuBar.add(trackerMenu);
             setJMenuBar(menuBar);
 //            addHelpMenu("package.jmri.jmrit.logix.Tracker", true);
+ */
             setContentPane(tablePanel);
             
             addWindowListener(new java.awt.event.WindowAdapter() {
@@ -168,7 +191,12 @@ public class TrackerTableAction extends AbstractAction {
             setVisible(true);
             pack();
         }
-    	/**
+        protected void mouseClickedOnBlock(OBlock block) {
+        	if (_dialog!=null) {
+        		_trainLocationBox.setText(block.getDisplayName());
+        	}
+        }
+   	/**
 	    * Create a new OBlock
 	    * Used by New to set up _editCircuitFrame
 	    * Sets _currentBlock to created new OBlock
@@ -234,6 +262,7 @@ public class TrackerTableAction extends AbstractAction {
                     public void actionPerformed(ActionEvent a) {
                         if (doDoneAction()) {
                             _dialog.dispose();
+                            _dialog = null;
                         }
                     }
             });

@@ -26,6 +26,7 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.logix.WarrantTableAction;
 import jmri.util.HelpUtil;
 
@@ -1047,6 +1048,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
                 if (selection instanceof IndicatorTrack) {
                 	WarrantTableAction.mouseClickedOnBlock(((IndicatorTrack)selection).getOccBlock());
+                	TrackerTableAction.mouseClickedOnBlock(((IndicatorTrack)selection).getOccBlock());
                 }
             }
         }
