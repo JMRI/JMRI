@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 /**
  * Frame for user edit of setup options
  * 
- * @author Dan Boudreau Copyright (C) 2010, 2011, 2012
+ * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
  * @version $Revision$
  */
 
@@ -39,6 +39,7 @@ public class OptionFrame extends OperationsFrame {
 
 	// check boxes
 	JCheckBox routerCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRouting"));
+	JCheckBox routerYardCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRoutingYard"));
 	JCheckBox valueCheckBox = new JCheckBox(Bundle.getMessage("EnableValue"));
 	JCheckBox rfidCheckBox = new JCheckBox(Bundle.getMessage("EnableRfid"));
 	JCheckBox carLoggerCheckBox = new JCheckBox(Bundle.getMessage("EnableCarLogging"));
@@ -56,8 +57,7 @@ public class OptionFrame extends OperationsFrame {
 	JCheckBox promptToTrackStagingCheckBox = new JCheckBox(Bundle.getMessage("PromptToStaging"));
 
 	JCheckBox generateCvsManifestCheckBox = new JCheckBox(Bundle.getMessage("GenerateCsvManifest"));
-	JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(
-			Bundle.getMessage("GenerateCsvSwitchList"));
+	JCheckBox generateCvsSwitchListCheckBox = new JCheckBox(Bundle.getMessage("GenerateCsvSwitchList"));
 
 	JCheckBox enableVsdCheckBox = new JCheckBox(Bundle.getMessage("EnableVSD"));
 
@@ -85,6 +85,7 @@ public class OptionFrame extends OperationsFrame {
 		promptFromTrackStagingCheckBox.setSelected(Setup.isPromptFromStagingEnabled());
 		// router
 		routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
+		routerYardCheckBox.setSelected(Setup.isCarRoutingViaYardsEnabled());
 		// logging options
 		carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
 		engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
@@ -115,8 +116,7 @@ public class OptionFrame extends OperationsFrame {
 		// Build Options panel
 		JPanel pBuild = new JPanel();
 		pBuild.setLayout(new BoxLayout(pBuild, BoxLayout.Y_AXIS));
-		pBuild.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutBuildOptions")));
+		pBuild.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutBuildOptions")));
 
 		JPanel pOpt = new JPanel();
 		pOpt.setLayout(new GridBagLayout());
@@ -128,8 +128,8 @@ public class OptionFrame extends OperationsFrame {
 		// Switcher Service
 		JPanel pSwitcher = new JPanel();
 		pSwitcher.setLayout(new GridBagLayout());
-		pSwitcher.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutSwitcherService")));
+		pSwitcher.setBorder(BorderFactory
+				.createTitledBorder(Bundle.getMessage("BorderLayoutSwitcherService")));
 
 		addItemLeft(pSwitcher, localInterchangeCheckBox, 1, 1);
 		addItemLeft(pSwitcher, localSpurCheckBox, 1, 2);
@@ -151,15 +151,14 @@ public class OptionFrame extends OperationsFrame {
 		// Router panel
 		JPanel pRouter = new JPanel();
 		pRouter.setLayout(new GridBagLayout());
-		pRouter.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutRouterOptions")));
+		pRouter.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutRouterOptions")));
 		addItemLeft(pRouter, routerCheckBox, 1, 0);
+		addItemLeft(pRouter, routerYardCheckBox, 1, 1);
 
 		// Logger panel
 		JPanel pLogger = new JPanel();
 		pLogger.setLayout(new GridBagLayout());
-		pLogger.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutLoggerOptions")));
+		pLogger.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutLoggerOptions")));
 		addItemLeft(pLogger, engineLoggerCheckBox, 1, 0);
 		addItemLeft(pLogger, carLoggerCheckBox, 1, 1);
 		addItemLeft(pLogger, trainLoggerCheckBox, 1, 2);
@@ -224,8 +223,8 @@ public class OptionFrame extends OperationsFrame {
 		// can't change the build option if there are trains built
 		if (TrainManager.instance().getAnyTrainBuilt()) {
 			setBuildOption(); // restore the correct setting
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotChangeBuild"),
-					Bundle.getMessage("MustTerminateOrReset"), JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotChangeBuild"), Bundle
+					.getMessage("MustTerminateOrReset"), JOptionPane.ERROR_MESSAGE);
 		}
 		// disable staging option if normal mode
 		stagingAvailCheckBox.setEnabled(buildAggressive.isSelected());
@@ -248,6 +247,7 @@ public class OptionFrame extends OperationsFrame {
 			Setup.setPromptToStagingEnabled(promptToTrackStagingCheckBox.isSelected());
 			// Car routing enabled?
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
+			Setup.setCarRoutingViaYardsEnabled(routerYardCheckBox.isSelected());
 			// Options
 			TrainManager.instance().setGenerateCsvManifestEnabled(generateCvsManifestCheckBox.isSelected());
 			Setup.setGenerateCsvSwitchListEnabled(generateCvsSwitchListCheckBox.isSelected());
@@ -268,6 +268,5 @@ public class OptionFrame extends OperationsFrame {
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(OptionFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(OptionFrame.class.getName());
 }

@@ -27,6 +27,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements
 
 		_toolMenu.add(new ChangeTrackTypeAction(this));
 		_toolMenu.add(new IgnoreUsedTrackAction(this));
+		_toolMenu.add(new TrackDestinationEditAction(this));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true); // NOI18N
 
 		// override text strings for tracks

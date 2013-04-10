@@ -25,8 +25,6 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 
 	Location _location = null;
 	Track _track = null;
-	String _type = "";
-//	JMenu _toolMenu = null;
 
 	// panels
 	JPanel pRoadControls = new JPanel();

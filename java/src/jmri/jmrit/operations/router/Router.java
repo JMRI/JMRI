@@ -41,7 +41,7 @@ public class Router extends TrainCommon {
 	private Train _train = null;
 	PrintWriter _buildReport = null; // build report
 
-	public boolean enable_staging = false; // using staging to route cars can be tricky, not recommended
+//	public boolean enable_staging = false; // using staging to route cars can be tricky, not recommended
 	public boolean enable_yard_search = false; // search for yard track even if an interchange track was found
 	private static boolean debugFlag = false;
 
@@ -275,7 +275,9 @@ public class Router extends TrainCommon {
 	 *         service the car's final destination.
 	 */
 	private boolean setCarDestinationYard(Car car) {
-		return setCarDestinationTwoTrains(car, Track.YARD);
+		if (Setup.isCarRoutingViaYardsEnabled())
+			return setCarDestinationTwoTrains(car, Track.YARD);
+		return false;
 	}
 
 	/**
@@ -287,8 +289,7 @@ public class Router extends TrainCommon {
 	 *         that could service the car's final destination.
 	 */
 	private boolean setCarDestinationStaging(Car car) {
-		enable_staging = Setup.isCarRoutingViaStagingEnabled();
-		if (enable_staging)
+		if (Setup.isCarRoutingViaStagingEnabled())
 			return setCarDestinationTwoTrains(car, Track.STAGING);
 		return false;
 	}
@@ -434,11 +435,13 @@ public class Router extends TrainCommon {
 		// start with interchanges
 		List<Track> tracks = LocationManager.instance().getTracks(Track.INTERCHANGE);
 		loadTracks(car, testCar, tracks);
-		// next load yards
-		tracks = LocationManager.instance().getTracks(Track.YARD);
-		loadTracks(car, testCar, tracks);
+		// next load yards if enabled
+		if (Setup.isCarRoutingViaYardsEnabled()) {
+			tracks = LocationManager.instance().getTracks(Track.YARD);
+			loadTracks(car, testCar, tracks);
+		}
 		// now staging if enabled
-		if (enable_staging) {
+		if (Setup.isCarRoutingViaStagingEnabled()) {
 			tracks = LocationManager.instance().getTracks(Track.STAGING);
 			loadTracks(car, testCar, tracks);	
 		}
@@ -686,6 +689,8 @@ public class Router extends TrainCommon {
 		clone.setType(car.getType());
 		clone.setLocation(car.getLocation());
 		clone.setTrack(car.getTrack());
+		clone.setFinalDestination(car.getFinalDestination());
+		// don't set the clone's final destination track, that will record the cars as being inbound
 		// next two items is where the clone is different
 		clone.setDestination(car.getFinalDestination());
 		clone.setDestinationTrack(car.getFinalDestinationTrack());
