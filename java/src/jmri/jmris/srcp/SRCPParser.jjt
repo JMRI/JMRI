@@ -76,6 +76,7 @@ TOKEN :
 | < PROTOCOL: (<A>|<F>|<L>|<P>|<S>|<N>|<M>|<Z>) >
 | < DRIVEMODE: ("="|"0"|"1"|"2") >
 | < DELAY: ("-")?(["0"-"9"])+>
+| < NMRA: (<N><M><R><A>) >
 
 // Device types
 | < FB: <F><B> >
@@ -349,7 +350,12 @@ SimpleNode wait_cmd():{}
 
 SimpleNode init():{}
 {
-  <INIT> bus() ( fb() | ga() | gl() | sm() | time() | power() )
+  <INIT> bus() ( fb() | 
+                 ga() address() protocol() | 
+                 gl() address() protocol() |  
+                 sm() <NMRA> | 
+                 time() nonzeroaddress() nonzeroaddress() | 
+                 power() )
   {
      log.debug("INIT Production");
      return jjtThis;
@@ -477,11 +483,12 @@ SimpleNode onoff():{Token t;}
   }
 }
 
-SimpleNode zeroone():{Token t;}
+SimpleNode zeroone():{SimpleNode s;}
 {
-  (zeroaddress() | nonzeroaddress())
+  (s=zeroaddress() | s=nonzeroaddress())
   {
      log.debug("ZeroOne Production ");
+     jjtThis.jjtSetValue(s.jjtGetValue());
      return jjtThis;
   }
 }
@@ -537,3 +544,13 @@ SimpleNode reg():{}
   {return jjtThis;}
 }
 
+SimpleNode protocol():{Token t;}
+{ 
+  t=<PROTOCOL>
+  {
+    log.debug("Protocol Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+
+  }
+}
