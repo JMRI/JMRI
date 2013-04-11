@@ -1148,12 +1148,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if(turnouts==null){
                 userSetTurnouts = new ArrayList<NamedBeanSetting>(0);
             } else {
-                    Enumeration<NamedBeanHandle<Turnout>> e = turnouts.keys();
-                    while(e.hasMoreElements()){
-                        NamedBeanHandle<Turnout> nbh = e.nextElement();
-                        NamedBeanSetting nbs = new NamedBeanSetting(nbh, turnouts.get(nbh));
-                        userSetTurnouts.add(nbs);
-                    }
+                userSetTurnouts = new ArrayList<NamedBeanSetting>();
+                Enumeration<NamedBeanHandle<Turnout>> e = turnouts.keys();
+                while(e.hasMoreElements()){
+                    NamedBeanHandle<Turnout> nbh = e.nextElement();
+                    NamedBeanSetting nbs = new NamedBeanSetting(nbh, turnouts.get(nbh));
+                    userSetTurnouts.add(nbs);
+                }
             }
             firePropertyChange("turnouts", null, this.destination);
         }
@@ -1233,6 +1234,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if(blocks==null){
                 userSetBlocks = new ArrayList<NamedBeanSetting>(0);
             } else {
+                userSetBlocks = new ArrayList<NamedBeanSetting>();
                 Enumeration<Block> e = blocks.keys();
                 while(e.hasMoreElements()){
                     Block blk = e.nextElement();
@@ -1293,6 +1295,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if(masts==null){
                 userSetMasts = new ArrayList<NamedBeanSetting>(0);
             } else {
+                userSetMasts = new ArrayList<NamedBeanSetting>();
                 Enumeration<SignalMast> e = masts.keys();
                 while(e.hasMoreElements()){
                     SignalMast mast = e.nextElement();
@@ -1361,12 +1364,13 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if(sensors==null){
                 userSetSensors = new ArrayList<NamedBeanSetting>(0);
             } else {
-                    Enumeration<NamedBeanHandle<Sensor>> e = sensors.keys();
-                    while(e.hasMoreElements()){
-                        NamedBeanHandle<?> nbh = e.nextElement();
-                        NamedBeanSetting nbs = new NamedBeanSetting(nbh, sensors.get(nbh));
-                        userSetSensors.add(nbs);
-                    }
+                userSetSensors = new ArrayList<NamedBeanSetting>();
+                Enumeration<NamedBeanHandle<Sensor>> e = sensors.keys();
+                while(e.hasMoreElements()){
+                    NamedBeanHandle<?> nbh = e.nextElement();
+                    NamedBeanSetting nbs = new NamedBeanSetting(nbh, sensors.get(nbh));
+                    userSetSensors.add(nbs);
+                }
             }
             firePropertyChange("sensors", null, this.destination);
         }

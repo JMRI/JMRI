@@ -44,6 +44,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
         for(int i = 0; i<sml.size(); i++){
             SignalMastLogic sm = sml.get(i);
             Element source = new Element("signalmastlogic");
+            source.setAttribute("source", sm.getSourceMast().getDisplayName());// added purely to make human reading of the xml easier
             source.addContent(new Element("sourceSignalMast").addContent(sm.getSourceMast().getDisplayName()));
             ArrayList<SignalMast> destination = sm.getDestinationList();
             if(destination.size()!=0){
@@ -51,6 +52,7 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                     SignalMast dest = destination.get(k);
                     if(sml.get(i).getStoreState(dest)!=SignalMastLogic.STORENONE){
                         Element elem = new Element("destinationMast");
+                        elem.setAttribute("destination", dest.getDisplayName()); // added purely to make human reading of the xml easier
                         elem.addContent(new Element("destinationSignalMast").addContent(dest.getDisplayName()));
                         elem.addContent(new Element("comment").addContent(sm.getComment(dest)));
                         if(sm.isEnabled(dest))

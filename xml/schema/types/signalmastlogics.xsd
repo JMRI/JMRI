@@ -54,6 +54,7 @@
         <xs:element name="sourceSignalMast" minOccurs="1" maxOccurs="1"/>
         <xs:element name="destinationMast" type="SignalMastLogicDestinationType" minOccurs="1" maxOccurs="unbounded" />
       </xs:sequence>
+      <xs:attribute name="source" type="xs:string"/>
     </xs:complexType>
     
     <xs:complexType name="SignalMastLogicDestinationType">
@@ -157,8 +158,8 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-
       </xs:sequence>
+      <xs:attribute name="destination" type="xs:string"/>
 
     </xs:complexType>
 
