@@ -147,7 +147,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 					public void propertyChange(java.beans.PropertyChangeEvent e) {
 						handleBlockChange(e);
 					}
-				});
+				},blockName,"Layout Block:"+blockName );
 			if (occupancyNamedSensor!=null) {			
 				block.setNamedSensor(occupancyNamedSensor);
 			}
