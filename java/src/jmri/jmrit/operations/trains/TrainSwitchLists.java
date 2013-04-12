@@ -69,14 +69,16 @@ public class TrainSwitchLists extends TrainCommon {
 			return;
 		}
 		// build header
-		if (!append)
+		if (!append) {
 			newLine(fileOut, Setup.getRailroadName());
-		newLine(fileOut);
-		newLine(fileOut, MessageFormat.format(Bundle.getMessage("SwitchListFor"),
-				new Object[] { splitString(location.getName()) }));
+			newLine(fileOut);
+			newLine(fileOut, MessageFormat.format(Bundle.getMessage("SwitchListFor"),
+					new Object[] { splitString(location.getName()) }));
+		} else if (Setup.isSwitchListPagePerTrainEnabled()) {
+			fileOut.write(formFeed);
+		}
 
 		String valid = MessageFormat.format(Bundle.getMessage("Valid"), new Object[] { getDate(true) });
-
 		if (Setup.isPrintTimetableNameEnabled()) {
 			TrainSchedule sch = TrainScheduleManager.instance().getScheduleById(
 					trainManager.getTrainScheduleActiveId());
@@ -104,29 +106,6 @@ public class TrainSwitchLists extends TrainCommon {
 				continue; // no route for this train
 			// determine if train works this location
 			boolean works = isThereWorkAtLocation(train, location);
-//			List<String> routeList = route.getLocationsBySequenceList();
-//			// first determine if there's any work at this location
-//			for (int r = 0; r < routeList.size(); r++) {
-//				RouteLocation rl = route.getLocationById(routeList.get(r));
-//				if (splitString(rl.getName()).equals(splitString(location.getName()))) {
-//					for (int k = 0; k < carList.size(); k++) {
-//						Car car = carManager.getById(carList.get(k));
-//						if (car.getRouteLocation() == rl || car.getRouteDestination() == rl) {
-//							works = true;
-//							break;
-//						}
-//					}
-//					for (int k = 0; k < enginesList.size(); k++) {
-//						Engine eng = engineManager.getById(enginesList.get(k));
-//						if (eng.getRouteLocation() == rl || eng.getRouteDestination() == rl) {
-//							works = true;
-//							break;
-//						}
-//					}
-//					if (works)
-//						break;
-//				}
-//			}
 			if (!works && !Setup.isSwitchListAllTrainsEnabled()) {
 				log.debug("No work for train (" + train.getName() + ") at location (" + location.getName()
 						+ ")");
@@ -336,13 +315,18 @@ public class TrainSwitchLists extends TrainCommon {
 			log.warn("Switch list file missing for location (" + location.getName() + ")");
 			return;
 		}
-		if (isPreview && Setup.isManifestEditorEnabled())
+		if (isPreview && Setup.isManifestEditorEnabled()) {
 			TrainPrintUtilities.openDesktopEditor(buildFile);
-		else
+		} else {
 			TrainPrintUtilities.printReport(buildFile, Bundle.getMessage("SwitchList") + " "
 					+ location.getName(), isPreview, Setup.getFontName(), false, Setup.getManifestLogoURL(),
 					location.getDefaultPrinterName(), Setup.getSwitchListOrientation(), Setup
 							.getManifestFontSize());
+		}
+		if (!isPreview) {
+			location.setStatus(Location.PRINTED);
+			location.setSwitchListState(Location.SW_PRINTED);
+		}
 	}
 
 	protected void newLine(PrintWriter file, String string) {

@@ -133,12 +133,14 @@ public class Pool extends BeanBase {
 					int min = t.getLength() - t.getMinimumLength();
 					if (min < available)
 						available = min;
-					// adjust track lengths and reduce the additional length needed
-					log.debug("Pool (" + getName() + ") incremental increase for track (" + track.getName()
-							+ ") length (" + available + ") decreasing (" + t.getName() + ")"); // NOI18N
-					t.setLength(t.getLength() - available);
-					track.setLength(track.getLength() + available);
-					additionalLength = additionalLength - available;
+					if (available > 0) {
+						// adjust track lengths and reduce the additional length needed
+						log.debug("Pool (" + getName() + ") incremental increase for track (" + track.getName()
+								+ ") length (" + available + ") decreasing (" + t.getName() + ")"); // NOI18N
+						t.setLength(t.getLength() - available);
+						track.setLength(track.getLength() + available);
+						additionalLength = additionalLength - available;
+					}
 				}
 			}
 		}

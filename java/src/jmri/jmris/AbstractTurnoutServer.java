@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Abstract interface between the a JMRI turnout and a network connection
  *
- * @author Paul Bender Copyright (C) 2010
+ * @author Paul Bender Copyright (C) 2010-2013
  * @author Randall Wood Copyright (C) 2013
  * @version $Revision$
  */
@@ -37,7 +37,7 @@ abstract public class AbstractTurnoutServer {
         if (!turnouts.contains(turnoutName)) {
             turnouts.add(turnoutName);
             InstanceManager.turnoutManagerInstance().getTurnout(turnoutName)
-                    .addPropertyChangeListener(new TurnoutListener(turnoutName));
+                    .addPropertyChangeListener(getListener(turnoutName));
         }
     }
 
@@ -56,8 +56,13 @@ abstract public class AbstractTurnoutServer {
     public void closeTurnout(String turnoutName) {
         // load address from switchAddrTextField
         try {
+            if(!turnouts.contains(turnoutName)) {
+               // enforce that initTurnout must be called before moving a
+               // turnout
+               sendErrorStatus(turnoutName);
+               return;
+            }
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-            addTurnoutToList(turnoutName);
             if (turnout == null) {
                 log.error("Turnout {} is not available", turnoutName);
             } else {
@@ -74,7 +79,12 @@ abstract public class AbstractTurnoutServer {
         // load address from switchAddrTextField
         try {
             Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
-            addTurnoutToList(turnoutName);
+            if(!turnouts.contains(turnoutName)) {
+               // enforce that initTurnout must be called before moving a
+               // turnout
+               sendErrorStatus(turnoutName);
+               return;
+            }
 
             if (turnout == null) {
                 log.error("Turnout {} is not available", turnoutName);
@@ -90,9 +100,13 @@ abstract public class AbstractTurnoutServer {
         }
     }
 
-    class TurnoutListener implements PropertyChangeListener {
+    protected TurnoutListener getListener(String turnoutName) {
+              return new TurnoutListener(turnoutName);
+    }
 
-        TurnoutListener(String turnoutName) {
+    protected class TurnoutListener implements PropertyChangeListener {
+
+        protected TurnoutListener(String turnoutName) {
             name = turnoutName;
             turnout = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
         }

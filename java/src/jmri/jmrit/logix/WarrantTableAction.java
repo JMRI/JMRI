@@ -59,8 +59,6 @@ import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
 
 /**
  * A WarrantAction contains the operating permissions and directives needed for

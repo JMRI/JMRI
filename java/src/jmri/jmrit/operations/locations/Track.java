@@ -62,6 +62,8 @@ public class Track {
 
 	protected String _loadOption = ALLLOADS; // receive track load restrictions
 	protected String _shipLoadOption = ALLLOADS; // ship track load restrictions
+	
+	protected String _destinationOption = ALL_DESTINATIONS; // track destination restriction
 
 	// schedule options
 	protected String _scheduleName = ""; // Schedule name if there's one
@@ -121,6 +123,11 @@ public class Track {
 	public static final String ALLLOADS = Bundle.getMessage("All"); // track services all loads
 	public static final String INCLUDELOADS = Bundle.getMessage("Include");
 	public static final String EXCLUDELOADS = Bundle.getMessage("Exclude");
+	
+	// destination options
+	public static final String ALL_DESTINATIONS = Bundle.getMessage("All"); // track services all loads
+	public static final String INCLUDE_DESTINATIONS = Bundle.getMessage("Include");
+	public static final String EXCLUDE_DESTINATIONS = Bundle.getMessage("Exclude");
 
 	// schedule modes
 	public static final int SEQUENTIAL = 0;
@@ -139,7 +146,7 @@ public class Track {
 	public static final String CAPACITY = Bundle.getMessage("capacity");
 	public static final String SCHEDULE = Bundle.getMessage("schedule");
 	public static final String CUSTOM = Bundle.getMessage("custom");
-
+	public static final String DESTINATION = Bundle.getMessage("destination");
 
 	// For property change
 	public static final String TYPES_CHANGED_PROPERTY = "trackRollingStockTypes"; // NOI18N
@@ -211,8 +218,6 @@ public class Track {
 		if (old != length)
 			setDirtyAndFirePropertyChange(LENGTH_CHANGED_PROPERTY, Integer.toString(old),
 					Integer.toString(length));
-		// set dirty, length can change if track is part of a pool
-		// LocationManagerXml.instance().setDirty(true);
 	}
 
 	public int getLength() {
@@ -1131,10 +1136,14 @@ public class Track {
 		} catch (Exception e) {
 			return LENGTH + " (" + rs.getLength() + ")";
 		}
-		// check for car in kernel
 		// @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="BC_UNCONFIRMED_CAST")
-		if (Car.class.isInstance(rs)) {
+		if (Car.class.isInstance(rs)) {			
 			Car car = (Car) rs;
+			// does this track service the car's final destination?
+			if (!acceptsDestination(car.getFinalDestination())) {
+				return DESTINATION + " (" + car.getFinalDestinationName()+ ")"; // no
+			}
+			// check for car in kernel
 			if (car.getKernel() != null && car.getKernel().isLead(car)) {
 				length = 0;
 				List<Car> cars = car.getKernel().getCars();
@@ -1214,8 +1223,6 @@ public class Track {
 		int old = _moves;
 		_moves = moves;
 		setDirtyAndFirePropertyChange("trackMoves", old, moves); // NOI18N
-		// set dirty
-		// LocationManagerXml.instance().setDirty(true);
 	}
 
 	/**
@@ -1828,6 +1835,44 @@ public class Track {
 			return getPool().getName();
 		return "";
 	}
+	
+	
+	List<String> _destinationIdList = new ArrayList<String>();
+	public boolean addDestination(Location destination) {
+		if (_destinationIdList.contains(destination.getId()))
+			return false;		
+		_destinationIdList.add(destination.getId());
+		setDirtyAndFirePropertyChange("add_track_destination", null, destination.getName());
+		return true;
+	}
+	
+	public void deleteDestination(Location destination) {
+		if (!_destinationIdList.contains(destination.getId()))
+			return;
+		_destinationIdList.remove(destination.getId());
+		setDirtyAndFirePropertyChange("delete_track_destination", destination.getName(), null);
+		return;
+	}
+	
+	public boolean acceptsDestination(Location destination) {
+		if (_destinationOption.equals(ALL_DESTINATIONS) || destination == null)
+			return true;
+		if (_destinationOption.equals(INCLUDE_DESTINATIONS))
+			return _destinationIdList.contains(destination.getId());
+		else
+			return !_destinationIdList.contains(destination.getId());
+	}
+	
+	public void setDestinationOption(String option) {
+		String old = _destinationOption;
+		_destinationOption = option;
+		if (!option.equals(old))
+			setDirtyAndFirePropertyChange("track_destination_option", old, option);
+	}
+	
+	public String getDestinationOption() {
+		return _destinationOption;
+	}
 
 	public void dispose() {
 		setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
@@ -2033,6 +2078,20 @@ public class Track {
 		if ((a = e.getAttribute(Xml.IGNORE_USED_PERCENTAGE)) != null)
 			_ignoreUsedLengthPercentage = Integer.parseInt(a.getValue());
 		
+		if ((a = e.getAttribute(Xml.TRACK_DESTINATION_OPTION)) != null) {
+			_destinationOption = a.getValue();
+		}
+		if (e.getChild(Xml.DESTINATIONS) != null) {
+			@SuppressWarnings("unchecked")
+			List<Element> destinations = e.getChild(Xml.DESTINATIONS).getChildren(Xml.DESTINATION);
+			for (int i = 0; i < destinations.size(); i++) {
+				Element destination = destinations.get(i);
+				if ((a = destination.getAttribute(Xml.ID)) != null) {
+					_destinationIdList.add(a.getValue());
+				}
+			}
+		}
+		
 		if (e.getChild(Xml.COMMENTS) != null) {
 			if (e.getChild(Xml.COMMENTS).getChild(Xml.BOTH) != null &&
 					( a = e.getChild(Xml.COMMENTS).getChild(Xml.BOTH).getAttribute(Xml.COMMENT)) != null) {
@@ -2216,6 +2275,24 @@ public class Track {
 		if (getIgnoreUsedLengthPercentage() > 0)
 			e.setAttribute(Xml.IGNORE_USED_PERCENTAGE,
 					Integer.toString(getIgnoreUsedLengthPercentage()));
+		e.setAttribute(Xml.TRACK_DESTINATION_OPTION, getDestinationOption());
+		if (!getDestinationOption().equals(ALL_DESTINATIONS)) {
+			// save destinations if they exist
+			if (_destinationIdList.size() > 0) {
+				Element destinations = new Element(Xml.DESTINATIONS);
+				for (int i = 0; i < _destinationIdList.size(); i++) {
+					String locId = _destinationIdList.get(i);
+					Location loc = LocationManager.instance().getLocationById(locId);
+					if (loc != null) {
+						Element destination = new Element(Xml.DESTINATION);
+						destination.setAttribute(Xml.ID, locId);
+						destination.setAttribute(Xml.NAME, loc.getName());
+						destinations.addContent(destination);
+					}
+				}
+				e.addContent(destinations);
+			}
+		}
 		// save manifest track comments if they exist
 		if (!getCommentBoth().equals("") || !getCommentPickup().equals("") || !getCommentSetout().equals("")) {
 			Element comments = new Element(Xml.COMMENTS);

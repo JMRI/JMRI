@@ -227,6 +227,7 @@ public class Setup {
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
 	private static String labelRfid = Bundle.getMessage("RFID");
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
+	private static boolean carRoutingYards = true; 		//when true enable car routing via yard tracks
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
 	private static boolean forwardToYardEnabled = true;	//when true forward car to yard if track is full
 	private static boolean carLogger = false;			//when true car logger is enabled
@@ -340,6 +341,14 @@ public class Setup {
 	
 	public static void setCarRoutingEnabled(boolean enabled){
 		carRoutingEnabled = enabled;
+	}
+	
+	public static boolean isCarRoutingViaYardsEnabled(){
+		return carRoutingYards;
+	}
+	
+	public static void setCarRoutingViaYardsEnabled(boolean enabled){
+		carRoutingYards = enabled;
 	}
 	
 	public static boolean isCarRoutingViaStagingEnabled(){
@@ -1411,6 +1420,7 @@ public class Setup {
     	values.setAttribute(Xml.SHOW_RFID, isRfidEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.RFID_LABEL, getRfidLabel());
     	values.setAttribute(Xml.CAR_ROUTING_ENABLED, isCarRoutingEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.CAR_ROUTING_VIA_YARDS, isCarRoutingViaYardsEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.CAR_ROUTING_VIA_STAGING, isCarRoutingViaStagingEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.FORWARD_TO_YARD, isForwardToYardEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled()?Xml.TRUE:Xml.FALSE);    	
@@ -1673,7 +1683,12 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("carRoutingEnabled: "+enable);
         		setCarRoutingEnabled(enable.equals(Xml.TRUE));
         	}
-         	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_VIA_STAGING))!= null){
+         	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_VIA_YARDS))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carRoutingViaYards: "+enable);
+        		setCarRoutingViaYardsEnabled(enable.equals(Xml.TRUE));
+        	}
+        	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_VIA_STAGING))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("carRoutingViaStaging: "+enable);
         		setCarRoutingViaStagingEnabled(enable.equals(Xml.TRUE));

@@ -3161,6 +3161,14 @@ public class TrainBuilder extends TrainCommon {
 				throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRouteLoc"),
 						new Object[] { train.getRoute().getName(), rld.getName() }));
 			}
+			// check to see if departure track has any restrictions
+			if (car.getFinalDestination() != null && !car.getTrack().acceptsDestination(testDestination)) {
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("buildDestinationNotServiced"), new Object[] { testDestination.getName(),
+						car.getTrackName() }));
+				continue;
+			}
+			
 			// don't move car to same location unless the route only has one location (local moves) or is passenger,
 			// caboose or car with FRED
 			if (splitString(rl.getName()).equals(splitString(rld.getName())) && !train.isLocalSwitcher()

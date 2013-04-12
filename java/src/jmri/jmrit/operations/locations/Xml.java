@@ -86,7 +86,10 @@ public class Xml {
 	static final String COMMENTS = "comments"; // NOI18N
 	static final String BOTH = "both"; // NOI18N
 	static final String PICKUP = "pickup"; // NOI18N
-	static final String SETOUT = "setout"; // NOI18N	
+	static final String SETOUT = "setout"; // NOI18N
+	static final String TRACK_DESTINATION_OPTION = "trackDestinationOption"; // NOI18N
+	static final String DESTINATIONS = "destinations"; // NOI18N
+	static final String DESTINATION = "destination"; // NOI18N
 
 	static final String SCHEDULE_ID = "scheduleId"; // NOI18N
 	static final String ITEM_ID = "itemId"; // NOI18N

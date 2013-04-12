@@ -46,6 +46,13 @@ abstract class BeanEditAction extends AbstractAction {
         basicDetails();
     }
     
+    protected void initPanelsFirst(){
+    
+    }
+    protected void initPanelsLast(){
+        usageDetails();
+    }
+    
     JTextField userNameField = new JTextField(20);
     JTextArea commentField = new JTextArea(3,30);
     JScrollPane commentFieldScroller = new JScrollPane(commentField);
@@ -78,6 +85,35 @@ abstract class BeanEditAction extends AbstractAction {
         });
         bei.add(basic);
         return basic;
+    }
+    
+    BeanItemPanel usageDetails(){
+        BeanItemPanel usage = new BeanItemPanel();
+        
+        usage.setName("Usage");
+        usage.setLayout(new BoxLayout(usage, BoxLayout.Y_AXIS));
+        
+        usage.addItem(new BeanEditItem(null, null, Bundle.getMessage("UsageText", bean.getDisplayName())));
+        
+        ArrayList<String> listeners = new ArrayList<String>();
+        for (String ref: bean.getListenerRefs()){
+            if(!listeners.contains(ref))
+                listeners.add(ref);
+        }
+                    
+        Object[] strArray = new Object[listeners.size()];
+        listeners.toArray(strArray);
+        JList list = new JList(strArray);
+        list.setLayoutOrientation(JList.VERTICAL);
+        list.setVisibleRowCount(-1);
+        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        JScrollPane listScroller = new JScrollPane(list);
+        listScroller.setPreferredSize(new Dimension(250, 80));
+        listScroller.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black)));
+        usage.addItem(new BeanEditItem(listScroller, "Location", null));
+        
+        bei.add(usage);
+        return usage;
     }
     
     protected void saveBasicItems(ActionEvent e){
@@ -119,7 +155,9 @@ abstract class BeanEditAction extends AbstractAction {
             f = new JmriJFrame("Edit " + getBeanType() + " " + bean.getDisplayName(), false,false);
             f.addHelpMenu(helpTarget(), true);
             java.awt.Container containerPanel = f.getContentPane();
+            initPanelsFirst();
             initPanels();
+            initPanelsLast();
             
             for(BeanItemPanel bi:bei){
                 addToPanel(bi, bi.getListOfItems());

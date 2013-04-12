@@ -11,6 +11,8 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import jmri.jmrit.operations.CommonConductorYardmasterFrame;
@@ -107,6 +109,17 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 			textSwitchListComment.setText(_location.getSwitchListComment());
 			pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(""));
 			updateTrainsComboBox();
+			
+			// The switch list must be accessed from the Trains window if running in consolidated mode
+			if (Setup.isSwitchListRealTime()) {
+				//	build menu
+				JMenuBar menuBar = new JMenuBar();
+				JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+				toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPrint"), _location, false));
+				toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPreview"), _location, true));
+				menuBar.add(toolMenu);
+				setJMenuBar(menuBar);
+			}
 		}
 
 		update();

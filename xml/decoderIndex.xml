@@ -3,9 +3,9 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130408-0517-jake on Sun Apr 07 22:18:01 PDT 2013 $Id$-->
-  <decoderIndex version="268">
-    <mfgList nmraListDate="2011-04-04" updated="2011-06-11" lastadd="77">
+  <!--Written by JMRI version 20130412-1344-jake on Fri Apr 12 06:45:17 PDT 2013 $Id$-->
+  <decoderIndex version="270">
+    <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="104">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -42,20 +42,29 @@
       <manufacturer mfg="Electric Railroad Company" mfgID="73" />
       <manufacturer mfg="Electronic Solutions Ulm GmbH" mfgID="151" />
       <manufacturer mfg="Electronik and Model Produktion" mfgID="35" />
+      <manufacturer mfg="Electroniscript" mfgID="94" />
       <manufacturer mfg="Elproma Electronics Poland" mfgID="225" />
       <manufacturer mfg="Fleischmann" mfgID="155" />
       <manufacturer mfg="GFB Designs" mfgID="46" />
       <manufacturer mfg="Gaugemaster" mfgID="65" />
+      <manufacturer mfg="GooVerModels" mfgID="81" />
+      <manufacturer mfg="HAG Modelleisenbahn AG" mfgID="81" />
+      <manufacturer mfg="HONS Model" mfgID="88" />
       <manufacturer mfg="Haber and Koenig Electronics GmbH" mfgID="111" />
+      <manufacturer mfg="Harman DCC" mfgID="98" />
+      <manufacturer mfg="Hattons Model Railways" mfgID="79" />
       <manufacturer mfg="Heljan A/S" mfgID="28" />
       <manufacturer mfg="Heller Modelbahn" mfgID="67" />
       <manufacturer mfg="Hornby" mfgID="48" />
+      <manufacturer mfg="Integrated Signal Systems" mfgID="102" />
       <manufacturer mfg="Intelligent Command Control" mfgID="133" />
       <manufacturer mfg="JMRI" mfgID="18" />
+      <manufacturer mfg="JSS-Elektronic" mfgID="83" />
       <manufacturer mfg="Joka Electronic" mfgID="49" />
       <manufacturer mfg="KAM Industries" mfgID="22" />
       <manufacturer mfg="KATO Precision Models" mfgID="40" />
       <manufacturer mfg="KRES GmbH" mfgID="58" />
+      <manufacturer mfg="Kevtronics cc" mfgID="93" />
       <manufacturer mfg="Kreischer Datatechnik" mfgID="21" />
       <manufacturer mfg="Krois-Modell" mfgID="52" />
       <manufacturer mfg="Kuehn Ing." mfgID="157" />
@@ -82,14 +91,17 @@
       <manufacturer mfg="Ngineering" mfgID="43" />
       <manufacturer mfg="Noarail" mfgID="63" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
+      <manufacturer mfg="PRICOM Design" mfgID="96" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="Passmann" mfgID="41" />
+      <manufacturer mfg="Pojezdy.EU" mfgID="89" />
       <manufacturer mfg="PpP Digital" mfgID="74" />
       <manufacturer mfg="ProfiLok Modellbahntechnik GmbH" mfgID="125" />
       <manufacturer mfg="Public-domain and DIY" mfgID="13" />
       <manufacturer mfg="QElectronics GmbH" mfgID="55" />
       <manufacturer mfg="QSIndustries" mfgID="113" />
       <manufacturer mfg="RR-CirKits" mfgID="87" />
+      <manufacturer mfg="Railflyer Model Prototypes, Inc." mfgID="84" />
       <manufacturer mfg="Railnet Solutions, LLC" mfgID="66" />
       <manufacturer mfg="Railstars Limited" mfgID="91" />
       <manufacturer mfg="RamFixx Technologies (Wangrow)" mfgID="15" />
@@ -102,18 +114,23 @@
       <manufacturer mfg="S Helper Service" mfgID="23" />
       <manufacturer mfg="SPROG DCC" mfgID="44" />
       <manufacturer mfg="Sanda Kan Industrial" mfgID="95" />
+      <manufacturer mfg="Shourt Line" mfgID="90" />
       <manufacturer mfg="Signaling Solution" mfgID="119" />
       <manufacturer mfg="Silicon Railway" mfgID="33" />
+      <manufacturer mfg="Spectrum Engineering" mfgID="80" />
       <manufacturer mfg="T4T - Technology for Trains GmbH" mfgID="20" />
       <manufacturer mfg="TCH Technology" mfgID="54" />
       <manufacturer mfg="Tam Valley Depot" mfgID="59" />
       <manufacturer mfg="Tams Elektronik GmbH" mfgID="62" />
+      <manufacturer mfg="Tawcrafts" mfgID="92" />
       <manufacturer mfg="Team Digital, LLC" mfgID="25" />
+      <manufacturer mfg="Tehnologistic (train-O-matic)" mfgID="78" />
       <manufacturer mfg="The Electric Railroad Company" mfgID="73" />
       <manufacturer mfg="Throttle-Up (SoundTraxx)" mfgID="141" />
       <manufacturer mfg="Train Control Systems" mfgID="153" />
       <manufacturer mfg="Train Modules" mfgID="61" />
       <manufacturer mfg="Train Technology" mfgID="2" />
+      <manufacturer mfg="TrainTech" mfgID="104" />
       <manufacturer mfg="Trix Modelleisenbahn" mfgID="131" />
       <manufacturer mfg="Uhlenbrock Elektronik" mfgID="85" />
       <manufacturer mfg="Umelec Ing Buero" mfgID="147" />
@@ -122,6 +139,7 @@
       <manufacturer mfg="W.S. Ataras Engineering" mfgID="119" />
       <manufacturer mfg="WP Railshops" mfgID="163" />
       <manufacturer mfg="Wangrow" mfgID="12" />
+      <manufacturer mfg="Wekomm Engineering, GmbH" mfgID="86" />
       <manufacturer mfg="ZTC" mfgID="132" />
       <manufacturer mfg="Zimo" mfgID="145" />
     </mfgList>

@@ -15,8 +15,11 @@ import org.slf4j.LoggerFactory;
  * Once started, this maintains a List of possible RosterEntrys as
  * it works through the identification progress.
  * 
- * Contains special case code for QSI (mfgID == 113),  
- * TCS (mfgID == 153) and Zimo (mfgID == 145)
+ * Contains special case code for 
+ *     QSI: mfgID == 113   write 254=>49, write 4=>50, 56 is high byte, 5=>50, 56 is low byte
+ *     Harman:  mfgID = 98 112 is high byte, 113 is low byte
+ *     TCS: mfgID == 153  249 is ID
+ *     Zimo: mfgID == 145   250 is ID
  * 
  * @author    Bob Jacobsen   Copyright (C) 2001, 2010
  * @author    Howard G. Penny   Copyright (C) 2005
@@ -62,6 +65,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder ID CV 250");
             readCV(250);
             return false;
+        } else if (mfgID == 98) {  // Harman
+            statusUpdate("Read decoder ID high CV 112");
+            readCV(112);
+            return false;
         }
         return true;
     }
@@ -77,6 +84,11 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         } else if (mfgID == 145) {
             productID = value;
             return true;
+        } else if (mfgID == 98) {
+            productIDhigh = value;
+            statusUpdate("Read decoder ID low CV 113");
+            readCV(113);
+            return false;
         }
         log.error("unexpected step 4 reached with value: "+value);
         return true;
@@ -87,6 +99,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read Product ID High Byte");
             readCV(56);
             return false;
+        } else if (mfgID == 98) {
+            productIDlow = value;
+            productID = (productIDhigh << 8) | productIDlow;
+            return true;
         }
         log.error("unexpected step 5 reached with value: "+value);
         return true;

@@ -33,7 +33,7 @@ import java.beans.PropertyChangeEvent;
 /**
  * Frame for user selection of switch lists
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2012
+ * @author Dan Boudreau Copyright (C) 2008, 2012, 2013
  * @version $Revision$
  */
 
@@ -246,8 +246,14 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			dispose();
 	}
 
-	private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv,
-			boolean isUpdate) {
+	/**
+	 * Print = all false;
+	 * @param isPreview true if print preview
+	 * @param isChanged true if print changes was requested
+	 * @param isCsv true if building a CSV switch list files
+	 * @param isUpdate true if only updating switch lists
+	 */
+	private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
 		TrainSwitchLists ts = new TrainSwitchLists();
 		for (int i = 0; i < locationCheckBoxes.size(); i++) {
 			String locationName = locationCheckBoxes.get(i).getName();
@@ -255,15 +261,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 			if (location.isSwitchListEnabled()) {
 				if (!isCsv) {
 					ts.buildSwitchList(location);
-					if (!isUpdate
-							&& !isChanged
-							|| (!isUpdate && isChanged && !location.getStatus().equals(
-									Location.PRINTED)))
+					// print or print changes
+					if (!isUpdate && !isChanged
+							|| (!isUpdate && isChanged && !location.getStatus().equals(Location.PRINTED)))
 						ts.printSwitchList(location, isPreview);
-					if (!isPreview) {
-						location.setStatus(Location.PRINTED);
-						location.setSwitchListState(Location.SW_PRINTED);
-					}
 				} else if (Setup.isGenerateCsvSwitchListEnabled()) {
 					TrainCsvSwitchLists tCSVs = new TrainCsvSwitchLists();
 					tCSVs.buildSwitchList(location);
