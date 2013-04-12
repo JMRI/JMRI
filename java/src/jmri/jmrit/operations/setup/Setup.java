@@ -1419,22 +1419,26 @@ public class Setup {
     	values.setAttribute(Xml.VALUE_LABEL, getValueLabel());
     	values.setAttribute(Xml.SHOW_RFID, isRfidEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.RFID_LABEL, getRfidLabel());
-    	values.setAttribute(Xml.CAR_ROUTING_ENABLED, isCarRoutingEnabled()?Xml.TRUE:Xml.FALSE);
-    	values.setAttribute(Xml.CAR_ROUTING_VIA_YARDS, isCarRoutingViaYardsEnabled()?Xml.TRUE:Xml.FALSE);
-    	values.setAttribute(Xml.CAR_ROUTING_VIA_STAGING, isCarRoutingViaStagingEnabled()?Xml.TRUE:Xml.FALSE);
-    	values.setAttribute(Xml.FORWARD_TO_YARD, isForwardToYardEnabled()?Xml.TRUE:Xml.FALSE);
-    	values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled()?Xml.TRUE:Xml.FALSE);    	
-       	values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled()?Xml.TRUE:Xml.FALSE);
-       	values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled()?Xml.TRUE:Xml.FALSE);
+       	values.setAttribute(Xml.LENGTH_UNIT, getLengthUnit());
+       	values.setAttribute(Xml.YEAR_MODELED, getYearModeled());
+       	// next seven manifest attributes for backward compatibility TODO remove in future release 2014
        	values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled()?Xml.TRUE:Xml.FALSE);
        	values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled()?Xml.TRUE:Xml.FALSE);
        	values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled()?Xml.TRUE:Xml.FALSE);
        	values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled()?Xml.TRUE:Xml.FALSE);
        	values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled()?Xml.TRUE:Xml.FALSE);
        	values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled()?Xml.TRUE:Xml.FALSE);
-       	values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled()?Xml.TRUE:Xml.FALSE);
-       	values.setAttribute(Xml.LENGTH_UNIT, getLengthUnit());
-       	values.setAttribute(Xml.YEAR_MODELED, getYearModeled());
+       	values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled()?Xml.TRUE:Xml.FALSE);     	
+    	// next four router attributes for backward compatibility TODO remove in future release 2014
+    	values.setAttribute(Xml.CAR_ROUTING_ENABLED, isCarRoutingEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.CAR_ROUTING_VIA_YARDS, isCarRoutingViaYardsEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.CAR_ROUTING_VIA_STAGING, isCarRoutingViaStagingEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.FORWARD_TO_YARD, isForwardToYardEnabled()?Xml.TRUE:Xml.FALSE);
+    	// next three logger attributes for backward compatibility TODO remove in future release 2014
+    	values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled()?Xml.TRUE:Xml.FALSE);    	
+       	values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled()?Xml.TRUE:Xml.FALSE);
+       	values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled()?Xml.TRUE:Xml.FALSE);
+
        	
        	e.addContent(values = new Element(Xml.PICKUP_ENG_FORMAT));
        	values.setAttribute(Xml.PREFIX, getPickupEnginePrefix());
@@ -1538,6 +1542,13 @@ public class Setup {
     	values.setAttribute(Xml.LENGTH, Integer.toString(getTabLength()));
     	
     	e.addContent(values = new Element(Xml.MANIFEST));
+       	values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled()?Xml.TRUE:Xml.FALSE);
+       	values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled()?Xml.TRUE:Xml.FALSE);
+       	values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled()?Xml.TRUE:Xml.FALSE);
+       	values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled()?Xml.TRUE:Xml.FALSE);
+       	values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled()?Xml.TRUE:Xml.FALSE);
+       	values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled()?Xml.TRUE:Xml.FALSE);
+       	values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled()?Xml.TRUE:Xml.FALSE);     	
     	values.setAttribute(Xml.TRUNCATE, isTruncateManifestEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled()?Xml.TRUE:Xml.FALSE);
@@ -1571,6 +1582,19 @@ public class Setup {
     	values.setAttribute(Xml.INDENT, isBuildReportIndentEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.FONT_SIZE, Integer.toString(getBuildReportFontSize()));
     	
+    	// new format for router options
+    	e.addContent(values = new Element(Xml.ROUTER));
+    	values.setAttribute(Xml.CAR_ROUTING_ENABLED, isCarRoutingEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.CAR_ROUTING_VIA_YARDS, isCarRoutingViaYardsEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.CAR_ROUTING_VIA_STAGING, isCarRoutingViaStagingEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.FORWARD_TO_YARD, isForwardToYardEnabled()?Xml.TRUE:Xml.FALSE);
+    	
+    	// new format for logger options
+    	e.addContent(values = new Element(Xml.LOGGER));
+    	values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled()?Xml.TRUE:Xml.FALSE);    	
+       	values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled()?Xml.TRUE:Xml.FALSE);
+       	values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled()?Xml.TRUE:Xml.FALSE);
+
        	e.addContent(values = new Element(Xml.OWNER));
     	values.setAttribute(Xml.NAME, getOwnerName());
      	
@@ -1678,27 +1702,18 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("rfidLabel: "+label);
         		setRfidLabel(label);
         	}
-           	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_ENABLED))!= null){
-        		String enable = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("carRoutingEnabled: "+enable);
-        		setCarRoutingEnabled(enable.equals(Xml.TRUE));
+         	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.LENGTH_UNIT))!= null){
+        		String unit = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("lengthUnit: "+unit);
+        		setLengthUnit(unit);
         	}
-         	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_VIA_YARDS))!= null){
-        		String enable = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("carRoutingViaYards: "+enable);
-        		setCarRoutingViaYardsEnabled(enable.equals(Xml.TRUE));
+         	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.YEAR_MODELED))!= null){
+        		String year = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("yearModeled: "+year);
+        		setYearModeled(year);
         	}
-        	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_VIA_STAGING))!= null){
-        		String enable = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("carRoutingViaStaging: "+enable);
-        		setCarRoutingViaStagingEnabled(enable.equals(Xml.TRUE));
-        	}
-        	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.FORWARD_TO_YARD))!= null){
-        		String enable = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("forwardToYard: "+enable);
-        		setForwardToYardEnabled(enable.equals(Xml.TRUE));
-        	}
-          	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_LOC_COMMENTS))!= null){
+           	// next seven attributes are for backward compatibility
+           	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_LOC_COMMENTS))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("printLocComments: "+enable);
         		setPrintLocationCommentsEnabled(enable.equals(Xml.TRUE));
@@ -1732,16 +1747,6 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("sortByTrack: "+enable);
         		setSortByTrackEnabled(enable.equals(Xml.TRUE));
-        	}
-         	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.LENGTH_UNIT))!= null){
-        		String unit = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("lengthUnit: "+unit);
-        		setLengthUnit(unit);
-        	}
-         	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.YEAR_MODELED))!= null){
-        		String year = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("yearModeled: "+year);
-        		setYearModeled(year);
         	}
         }
         if (operations.getChild(Xml.PICKUP_ENG_FORMAT) != null){
@@ -1937,6 +1942,41 @@ public class Setup {
         	}
         }
         if ((operations.getChild(Xml.MANIFEST) != null)){ 
+           	if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_LOC_COMMENTS))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest printLocComments: "+enable);
+        		setPrintLocationCommentsEnabled(enable.equals(Xml.TRUE));
+        	}
+          	if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_ROUTE_COMMENTS))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest printRouteComments: "+enable);
+        		setPrintRouteCommentsEnabled(enable.equals(Xml.TRUE));
+        	}
+          	if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_LOADS_EMPTIES))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest printLoadsEmpties: "+enable);
+        		setPrintLoadsAndEmptiesEnabled(enable.equals(Xml.TRUE));
+        	}
+          	if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_TIMETABLE))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest printTimetable: "+enable);
+        		setPrintTimetableNameEnabled(enable.equals(Xml.TRUE));
+        	}
+          	if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.USE12HR_FORMAT))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest use12hrFormat: "+enable);
+        		set12hrFormatEnabled(enable.equals(Xml.TRUE));
+        	}
+          	if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_VALID))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest printValid: "+enable);
+        		setPrintValidEnabled(enable.equals(Xml.TRUE));
+        	}
+          	if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.SORT_BY_TRACK))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("manifest sortByTrack: "+enable);
+        		setSortByTrackEnabled(enable.equals(Xml.TRUE));
+        	}
         	if((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.TRUNCATE))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("manifest truncate: "+enable);
@@ -2043,6 +2083,52 @@ public class Setup {
         		setBuildReportFontSize(Integer.parseInt(size));
         	}
         }
+        
+        if (operations.getChild(Xml.ROUTER) != null){
+         	if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.CAR_ROUTING_ENABLED))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carRoutingEnabled: "+enable);
+        		setCarRoutingEnabled(enable.equals(Xml.TRUE));
+        	}
+         	if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.CAR_ROUTING_VIA_YARDS))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carRoutingViaYards: "+enable);
+        		setCarRoutingViaYardsEnabled(enable.equals(Xml.TRUE));
+        	}
+        	if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.CAR_ROUTING_VIA_STAGING))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carRoutingViaStaging: "+enable);
+        		setCarRoutingViaStagingEnabled(enable.equals(Xml.TRUE));
+        	}
+        	if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.FORWARD_TO_YARD))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("forwardToYard: "+enable);
+        		setForwardToYardEnabled(enable.equals(Xml.TRUE));
+        	}
+        } else if (operations.getChild(Xml.SETTINGS) != null) {
+         	// the next four items are for backwards compatibility
+          	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_ENABLED))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carRoutingEnabled: "+enable);
+        		setCarRoutingEnabled(enable.equals(Xml.TRUE));
+        	}
+         	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_VIA_YARDS))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carRoutingViaYards: "+enable);
+        		setCarRoutingViaYardsEnabled(enable.equals(Xml.TRUE));
+        	}
+        	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_ROUTING_VIA_STAGING))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carRoutingViaStaging: "+enable);
+        		setCarRoutingViaStagingEnabled(enable.equals(Xml.TRUE));
+        	}
+        	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.FORWARD_TO_YARD))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("forwardToYard: "+enable);
+        		setForwardToYardEnabled(enable.equals(Xml.TRUE));
+        	}
+        }
+        
         if ((operations.getChild(Xml.OWNER) != null) 
         		&& (a = operations.getChild(Xml.OWNER).getAttribute(Xml.NAME))!= null){
         	String owner = a.getValue();
@@ -2102,7 +2188,6 @@ public class Setup {
         	}
         }
         
-        // logging has to be last, causes cars and engines to load
         if (operations.getChild(Xml.SETTINGS) != null){
           	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.AUTO_SAVE))!= null){
         		String enabled = a.getValue();
@@ -2114,7 +2199,26 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("autoBackup: "+enabled);
         		setAutoBackupEnabled(enabled.equals(Xml.TRUE));
         	}
-         // fixed by only configuring the booleans
+        }
+        
+        if (operations.getChild(Xml.LOGGER) != null){
+        	if ((a = operations.getChild(Xml.LOGGER).getAttribute(Xml.CAR_LOGGER))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carLogger: "+enable);
+        		carLogger = enable.equals(Xml.TRUE);
+        	}
+        	if ((a = operations.getChild(Xml.LOGGER).getAttribute(Xml.ENGINE_LOGGER))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("engineLogger: "+enable);
+        		engineLogger = enable.equals(Xml.TRUE);
+        	}
+           	if ((a = operations.getChild(Xml.LOGGER).getAttribute(Xml.TRAIN_LOGGER))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("trainLogger: "+enable);
+        		trainLogger = enable.equals(Xml.TRUE);
+        	}      	
+        } else if (operations.getChild(Xml.SETTINGS) != null){
+        	// for backward compatibility
         	if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_LOGGER))!= null){
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("carLogger: "+enable);

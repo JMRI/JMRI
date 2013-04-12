@@ -20,8 +20,10 @@
 
 <!ELEMENT locations (location)*>
 <!ELEMENT location (types | track)*>
-<!ELEMENT track (types | carLoads | carRoads | carShipLoads | dropIds | pickupIds | comments)*>
+<!ELEMENT track (types | carLoads | carRoads | carShipLoads | dropIds | pickupIds | destinations | comments)*>
 
+<!ELEMENT destinations (destination)*>
+<!ELEMENT destination EMPTY>
 
 <!ELEMENT schedules (schedule)*>
 <!ELEMENT schedule (item)*>
@@ -78,6 +80,10 @@
 <!ATTLIST track comment			CDATA #IMPLIED>
 <!ATTLIST track blockOptions	CDATA #IMPLIED>
 <!ATTLIST track ignoreUsedPercentage	CDATA #IMPLIED>
+<!ATTLIST track trackDestinationOption	CDATA #IMPLIED>
+
+<!ATTLIST destination id			CDATA #REQUIRED>          
+<!ATTLIST destination name			CDATA #IMPLIED>
 
 <!ATTLIST both comment			CDATA #IMPLIED>
 <!ATTLIST pickup comment		CDATA #IMPLIED>

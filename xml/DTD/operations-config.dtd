@@ -19,7 +19,7 @@
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
  | missingCarFormat | tab | manifest | vsd | reporters | switchList
  | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat 
- | pageOrientation | CATS | comments)*>
+ | pageOrientation | CATS | router | logger | comments)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
@@ -48,10 +48,13 @@
 <!ELEMENT switchListDropCarFormat EMPTY>
 <!ELEMENT switchListLocalFormat EMPTY>
 <!ELEMENT pageOrientation EMPTY>
+<!ELEMENT router EMPTY>
+<!ELEMENT logger EMPTY>
 <!ELEMENT CATS EMPTY>
 <!ELEMENT comments EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
+
 <!ATTLIST settings mainMenu			(true | false ) "false">
 <!ATTLIST settings closeOnSave		(true | false ) "false">     
 <!ATTLIST settings autoSave			(true | false ) "true">    
@@ -60,22 +63,28 @@
 <!ATTLIST settings trainLength		CDATA #IMPLIED>       
 <!ATTLIST settings maxEngines		CDATA #IMPLIED> 
 <!ATTLIST settings switchTime		CDATA #IMPLIED> 
-<!ATTLIST settings travelTime		CDATA #IMPLIED>
-<!ATTLIST settings showCarLength		(true | false ) "true">  
-<!ATTLIST settings showCarColor			(true | false ) "true">  
-<!ATTLIST settings showCarLoad			(true | false ) "false">  
-<!ATTLIST settings showCarDestination 	(true | false ) "false">  
-<!ATTLIST settings showValue 			(true | false ) "false">  
-<!ATTLIST settings showRfid 			(true | false ) "false"> 
-<!ATTLIST settings valueLabel			CDATA #IMPLIED> 
-<!ATTLIST settings rfidLabel			CDATA #IMPLIED> 
-<!ATTLIST settings carRoutingEnabled 	(true | false ) "true"> 
-<!ATTLIST settings carRoutingViaStaging (true | false ) "false">
-<!ATTLIST settings forwardToYard 		(true | false ) "true">
+<!ATTLIST settings travelTime		CDATA #IMPLIED>  
+<!ATTLIST settings showValue 		(true | false ) "false">  
+<!ATTLIST settings showRfid 		(true | false ) "false"> 
+<!ATTLIST settings valueLabel		CDATA #IMPLIED> 
+<!ATTLIST settings rfidLabel		CDATA #IMPLIED> 
+<!ATTLIST settings scale			CDATA #IMPLIED> 
+<!ATTLIST settings carTypes			CDATA #IMPLIED> 
+<!ATTLIST settings yearModeled		CDATA #IMPLIED> 
+<!ATTLIST settings lengthUnit		CDATA #IMPLIED>
+
+<!-- next 3 for backward compatibility -->
 <!ATTLIST settings carLogger 			(true | false ) "false">  
 <!ATTLIST settings engineLogger 		(true | false ) "false"> 
 <!ATTLIST settings trainLogger 			(true | false ) "false"> 
-<!ATTLIST settings addCarComment		(true | false ) "false">
+
+<!-- next 4 for backward compatibility -->
+<!ATTLIST settings carRoutingEnabled 	(true | false ) "true"> 
+<!ATTLIST settings carRoutingViaYards 	(true | false ) "true">
+<!ATTLIST settings carRoutingViaStaging (true | false ) "false">
+<!ATTLIST settings forwardToYard 		(true | false ) "true">
+
+<!-- next 7 for backward compatibility -->
 <!ATTLIST settings printLocComments		(true | false ) "false"> 
 <!ATTLIST settings printValid			(true | false ) "true"> 
 <!ATTLIST settings printRouteComments	(true | false ) "false"> 
@@ -83,10 +92,6 @@
 <!ATTLIST settings printTimetable		(true | false ) "false"> 
 <!ATTLIST settings use12hrFormat		(true | false ) "false"> 
 <!ATTLIST settings sortByTrack			(true | false ) "false"> 
-<!ATTLIST settings scale			CDATA #IMPLIED> 
-<!ATTLIST settings carTypes			CDATA #IMPLIED> 
-<!ATTLIST settings yearModeled		CDATA #IMPLIED> 
-<!ATTLIST settings lengthUnit		CDATA #IMPLIED>
 
 <!ATTLIST panel name				CDATA #IMPLIED>
 <!ATTLIST panel trainIconXY			(true | false ) "true"> 
@@ -111,9 +116,11 @@
 <!ATTLIST switchListDropCarFormat setting	CDATA #IMPLIED>
 <!ATTLIST switchListLocalFormat setting		CDATA #IMPLIED>
 <!ATTLIST missingCarFormat setting	CDATA #IMPLIED>
+
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
-<!ATTLIST manifestColors localColor	CDATA #IMPLIED>  
+<!ATTLIST manifestColors localColor	CDATA #IMPLIED>
+  
 <!ATTLIST manifestLogo name			CDATA #IMPLIED>  
 
 <!ATTLIST buildOptions aggressive					(true | false ) "false">
@@ -150,6 +157,13 @@
 <!ATTLIST tab enabled					(true | false ) "false"> 
 <!ATTLIST tab length					CDATA #IMPLIED>
 
+<!ATTLIST manifest printLocComments		(true | false ) "false"> 
+<!ATTLIST manifest printValid			(true | false ) "true"> 
+<!ATTLIST manifest printRouteComments	(true | false ) "false"> 
+<!ATTLIST manifest printLoadsEmpties 	(true | false ) "false"> 
+<!ATTLIST manifest printTimetable		(true | false ) "false"> 
+<!ATTLIST manifest use12hrFormat		(true | false ) "false"> 
+<!ATTLIST manifest sortByTrack			(true | false ) "false"> 
 <!ATTLIST manifest truncate				(true | false ) "false"> 
 <!ATTLIST manifest useDepartureTime		(true | false ) "false"> 
 <!ATTLIST manifest useEditor			(true | false ) "false"> 
@@ -163,6 +177,15 @@
 
 <!ATTLIST pageOrientation manifest		CDATA #IMPLIED>
 <!ATTLIST pageOrientation switchList	CDATA #IMPLIED>
+
+<!ATTLIST logger carLogger 				(true | false ) "false">  
+<!ATTLIST logger engineLogger 			(true | false ) "false"> 
+<!ATTLIST logger trainLogger 			(true | false ) "false"> 
+
+<!ATTLIST router carRoutingEnabled 		(true | false ) "true"> 
+<!ATTLIST router carRoutingViaYards 	(true | false ) "true">
+<!ATTLIST router carRoutingViaStaging 	(true | false ) "false">
+<!ATTLIST router forwardToYard 			(true | false ) "true">
 
 <!ATTLIST CATS exactLocationName		CDATA #IMPLIED> 
 
