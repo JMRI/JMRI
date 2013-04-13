@@ -1670,7 +1670,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
 		public Object getValueAt(int r, int c) {
 			int rx = r;
-			if (rx > activeTrainsList.size()) {
+			if (rx >= activeTrainsList.size()) {
 				return null;
 			}
 			ActiveTrain at = activeTrainsList.get(rx);
@@ -1805,7 +1805,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
 		public Object getValueAt(int r, int c) {
 			int rx = r;
-			if (rx > allocationRequests.size()) {
+			if (rx >= allocationRequests.size()) {
 				return null;
 			}
 			AllocationRequest ar = allocationRequests.get(rx);
@@ -1931,7 +1931,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
 		public Object getValueAt(int r, int c) {
 			int rx = r;
-			if (rx > allocatedSections.size()) {
+			if (rx >= allocatedSections.size()) {
 				return null;
 			}
 			AllocatedSection as = allocatedSections.get(rx);
