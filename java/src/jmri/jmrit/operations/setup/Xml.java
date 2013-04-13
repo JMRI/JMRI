@@ -61,6 +61,7 @@ public class Xml {
 	static final String CAR_ROUTING_VIA_YARDS = "carRoutingViaYards"; // NOI18N
 	static final String CAR_ROUTING_VIA_STAGING = "carRoutingViaStaging"; // NOI18N
 	static final String FORWARD_TO_YARD = "forwardToYard"; // NOI18N
+	static final String ONLY_ACTIVE_TRAINS = "onlyActiveTrains"; // NOI18N
 	
 	static final String LOGGER = "logger"; // NOI18N
 	static final String CAR_LOGGER = "carLogger"; // NOI18N
@@ -142,6 +143,7 @@ public class Xml {
 	static final String BUILD_REPORT = "buildReport"; // NOI18N
 	static final String LEVEL = "level"; // NOI18N
 	static final String INDENT = "indent"; // NOI18N
+	static final String ROUTER_LEVEL = "routerLevel"; // NOI18N
 	
 	static final String OWNER = "owner"; // NOI18N
 	

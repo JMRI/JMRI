@@ -389,8 +389,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		List<String> trains = getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = getTrainById(trains.get(i));
+			if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled())
+				continue;
 			// does this train service this car?
-			if (train.servicesCar(car))
+			if (train.services(car))
 				return train;
 		}
 		return null;
@@ -585,7 +587,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		List<String> trains = getTrainsByNameList();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = getTrainById(trains.get(i));
-			if (train.servicesCar(car))
+			if (train.services(car))
 				box.addItem(train);
 		}
 	}

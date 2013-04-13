@@ -1282,7 +1282,7 @@ public class TrainBuilder extends TrainCommon {
 					continue;
 				}
 				// does car have a wait count?
-				if (c.getWait() > 0 && train.servicesCar(c)) {
+				if (c.getWait() > 0 && train.services(c)) {
 					addLine(buildReport, SEVEN, MessageFormat.format(
 							Bundle.getMessage("buildExcludeCarWait"),
 							new Object[] { c.toString(), c.getType(),
@@ -2281,7 +2281,7 @@ public class TrainBuilder extends TrainCommon {
 					if (car.getDestination() != null) {
 						log.debug("Car (" + car.toString() + ") has a destination ("
 								+ car.getDestinationName() + ", " + car.getDestinationTrackName() + ")");
-						if (!train.servicesCar(car)) {
+						if (!train.services(car)) {
 							addLine(buildReport, THREE, MessageFormat.format(Bundle
 									.getMessage("buildStagingDepartCarDestination"), new Object[] {
 									departStageTrack.getName(), car.toString(), car.getDestinationName(),

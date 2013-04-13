@@ -191,7 +191,8 @@ public class Setup {
 	private static String hazardousMsg = "("+Bundle.getMessage("Hazardous")+")";
 	private static String logoURL ="";
 	private static String panelName ="Panel"; // NOI18N
-	private static String buildReportLevel = BUILD_REPORT_VERY_DETAILED;	
+	private static String buildReportLevel = BUILD_REPORT_VERY_DETAILED;
+	private static String routerBuildReportLevel = BUILD_REPORT_NORMAL;
 	private static int carSwitchTime = 3;		// how long it take to move a car
 	private static int travelTime = 4;// how long it take a train to move one location
 	private static String yearModeled = ""; 	// year being modeled
@@ -226,10 +227,13 @@ public class Setup {
 	private static String labelValue = Bundle.getMessage("Value");
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
 	private static String labelRfid = Bundle.getMessage("RFID");
+	
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
 	private static boolean carRoutingYards = true; 		//when true enable car routing via yard tracks
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
 	private static boolean forwardToYardEnabled = true;	//when true forward car to yard if track is full
+	private static boolean onlyActiveTrains	= false;	//when true only active trains are used for routing
+	
 	private static boolean carLogger = false;			//when true car logger is enabled
 	private static boolean engineLogger = false;		//when true engine logger is enabled
 	private static boolean trainLogger = false;			//when true train logger is enabled
@@ -365,6 +369,14 @@ public class Setup {
 	
 	public static void setForwardToYardEnabled(boolean enabled){
 		forwardToYardEnabled = enabled;
+	}
+	
+	public static boolean isOnlyActiveTrainsEnabled(){
+		return onlyActiveTrains;
+	}
+	
+	public static void setOnlyActiveTrainsEnabled(boolean enabled){
+		onlyActiveTrains = enabled;
 	}
 	
 	public static boolean isBuildAggressive(){
@@ -574,6 +586,14 @@ public class Setup {
 	
 	public static String getBuildReportLevel(){
 		return buildReportLevel;
+	}
+	
+	public static void  setRouterBuildReportLevel(String level){
+		routerBuildReportLevel = level;
+	}
+	
+	public static String getRouterBuildReportLevel(){
+		return routerBuildReportLevel;
 	}
 	
 	public static void setManifestEditorEnabled(boolean enable){
@@ -1429,11 +1449,10 @@ public class Setup {
        	values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled()?Xml.TRUE:Xml.FALSE);
        	values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled()?Xml.TRUE:Xml.FALSE);
        	values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled()?Xml.TRUE:Xml.FALSE);     	
-    	// next four router attributes for backward compatibility TODO remove in future release 2014
+    	// next three router attributes for backward compatibility TODO remove in future release 2014
     	values.setAttribute(Xml.CAR_ROUTING_ENABLED, isCarRoutingEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.CAR_ROUTING_VIA_YARDS, isCarRoutingViaYardsEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.CAR_ROUTING_VIA_STAGING, isCarRoutingViaStagingEnabled()?Xml.TRUE:Xml.FALSE);
-    	values.setAttribute(Xml.FORWARD_TO_YARD, isForwardToYardEnabled()?Xml.TRUE:Xml.FALSE);
     	// next three logger attributes for backward compatibility TODO remove in future release 2014
     	values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled()?Xml.TRUE:Xml.FALSE);    	
        	values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled()?Xml.TRUE:Xml.FALSE);
@@ -1578,6 +1597,7 @@ public class Setup {
     	
     	e.addContent(values = new Element(Xml.BUILD_REPORT));
     	values.setAttribute(Xml.LEVEL, getBuildReportLevel());
+    	values.setAttribute(Xml.ROUTER_LEVEL, getRouterBuildReportLevel());
     	values.setAttribute(Xml.USE_EDITOR, isBuildReportEditorEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.INDENT, isBuildReportIndentEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.FONT_SIZE, Integer.toString(getBuildReportFontSize()));
@@ -1588,6 +1608,7 @@ public class Setup {
     	values.setAttribute(Xml.CAR_ROUTING_VIA_YARDS, isCarRoutingViaYardsEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.CAR_ROUTING_VIA_STAGING, isCarRoutingViaStagingEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.FORWARD_TO_YARD, isForwardToYardEnabled()?Xml.TRUE:Xml.FALSE);
+    	values.setAttribute(Xml.ONLY_ACTIVE_TRAINS, isOnlyActiveTrainsEnabled()?Xml.TRUE:Xml.FALSE);
     	
     	// new format for logger options
     	e.addContent(values = new Element(Xml.LOGGER));
@@ -2064,8 +2085,13 @@ public class Setup {
         if (operations.getChild(Xml.BUILD_REPORT) != null){
         	if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.LEVEL)) != null) {
         		String level = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("buildReport: "+level);
+        		if (log.isDebugEnabled()) log.debug("buildReportLevel: "+level);
         		setBuildReportLevel(level);
+        	}
+           	if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.ROUTER_LEVEL)) != null) {
+        		String level = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("routerBuildReportLevel: "+level);
+        		setRouterBuildReportLevel(level);
         	}
         	if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.USE_EDITOR)) != null) {
         		String enable = a.getValue();
@@ -2104,6 +2130,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("forwardToYard: "+enable);
         		setForwardToYardEnabled(enable.equals(Xml.TRUE));
+        	}
+        	if ((a = operations.getChild(Xml.ROUTER).getAttribute(Xml.ONLY_ACTIVE_TRAINS))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("onlyActiveTrains: "+enable);
+        		setOnlyActiveTrainsEnabled(enable.equals(Xml.TRUE));
         	}
         } else if (operations.getChild(Xml.SETTINGS) != null) {
          	// the next four items are for backwards compatibility
