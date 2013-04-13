@@ -1749,16 +1749,15 @@ public class TrainBuilder extends TrainCommon {
 						&& !car.isCaboose()
 						&& !car.hasFred()
 						&& !car.isPassenger()
-						&& splitString(car.getLocationName()).equals(
-								splitString(departLocation.getName()))
-								&& splitString(car.getFinalDestinationName()).equals(
-										splitString(terminateLocation.getName()))) {
+						&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
+						&& splitString(car.getFinalDestinationName()).equals(splitString(terminateLocation.getName()))
+						&& !splitString(car.getLocationName()).equals(splitString(car.getFinalDestinationName()))) {
 					addLine(buildReport, FIVE, MessageFormat.format(Bundle
 							.getMessage("buildCarHasFinalDestination"), new Object[] { car.toString(),
-						departLocation.getName(), terminateLocation.getName() }));
+							departLocation.getName(), terminateLocation.getName() }));
 					addLine(buildReport, FIVE, MessageFormat.format(Bundle
 							.getMessage("buildThroughTrafficNotAllow"), new Object[] {
-						departLocation.getName(), terminateLocation.getName() }));
+							departLocation.getName(), terminateLocation.getName() }));
 					addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 					log.debug("Removing car (" + car.toString() + ") from list");
 					carList.remove(car.getId());
@@ -2521,8 +2520,8 @@ public class TrainBuilder extends TrainCommon {
 					&& !car.hasFred()
 					&& !car.isPassenger()
 					&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
-					&& splitString(track.getLocation().getName()).equals(
-							splitString(terminateLocation.getName()))) {
+					&& splitString(track.getLocation().getName()).equals(splitString(terminateLocation.getName()))
+					&& !splitString(departLocation.getName()).equals(splitString(terminateLocation.getName()))) {
 				log.debug("Skipping track (" + track.getName() + "), through cars not allowed to terminal (" // NOI18N
 						+ terminateLocation.getName() + ")");
 				continue;
@@ -2893,18 +2892,6 @@ public class TrainBuilder extends TrainCommon {
 			addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAlreadyAssigned"),
 					new Object[] { car.toString() }));
 		}
-		// is the car's destination the terminal and is that allowed?
-		if (!train.isAllowThroughCarsEnabled() && !train.isLocalSwitcher() && !car.isCaboose()
-				&& !car.hasFred() && !car.isPassenger()
-				&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
-				&& splitString(car.getDestinationName()).equals(splitString(terminateLocation.getName()))) {
-			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarHasFinalDestination"),
-					new Object[] { car.toString(), departLocation.getName(), terminateLocation.getName() }));
-			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildThroughTrafficNotAllow"),
-					new Object[] { departLocation.getName(), terminateLocation.getName() }));
-			addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
-			return true; // done
-		}
 		// now go through the route and try and find a location with
 		// the correct destination name
 		int locCount = 0;
@@ -2918,6 +2905,22 @@ public class TrainBuilder extends TrainCommon {
 			}
 			if (!rld.getName().equals(car.getDestinationName()))
 				continue;
+			// is the car's destination the terminal and is that allowed?
+			if (!train.isAllowThroughCarsEnabled()
+					&& k == routeList.size()-1
+					&& !train.isLocalSwitcher() 
+					&& !car.isCaboose()
+					&& !car.hasFred() 
+					&& !car.isPassenger()
+					&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
+					&& splitString(car.getDestinationName()).equals(splitString(terminateLocation.getName()))) {
+				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCarHasDestination"),
+						new Object[] { car.toString(), departLocation.getName(), terminateLocation.getName() }));
+				addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildThroughTrafficNotAllow"),
+						new Object[] { departLocation.getName(), terminateLocation.getName() }));
+				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+				return true; // done
+			}
 			locCount++; // show when this car would be dropped at location
 			log.debug("Car (" + car.toString() + ") found a destination in train's route");
 			// are drops allows at this location?
@@ -3211,8 +3214,11 @@ public class TrainBuilder extends TrainCommon {
 				break; // done with this route
 			}
 			// no through traffic from origin to terminal?
-			if (!train.isAllowThroughCarsEnabled() && !train.isLocalSwitcher() && !car.isCaboose()
-					&& !car.hasFred() && !car.isPassenger()
+			if (!train.isAllowThroughCarsEnabled() 
+					&& !train.isLocalSwitcher() 
+					&& !car.isCaboose()
+					&& !car.hasFred() 
+					&& !car.isPassenger()
 					&& splitString(car.getLocationName()).equals(splitString(departLocation.getName()))
 					&& splitString(rld.getName()).equals(splitString(terminateLocation.getName()))) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
