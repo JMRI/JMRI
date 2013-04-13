@@ -406,12 +406,12 @@ public class Location implements java.beans.PropertyChangeListener {
 	 */
 	public void addRS(RollingStock rs) {
 		setNumberRS(getNumberRS() + 1);
-		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
+		setUsedLength(getUsedLength() + rs.getTotalLength());
 	}
 
 	public void deleteRS(RollingStock rs) {
 		setNumberRS(getNumberRS() - 1);
-		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
+		setUsedLength(getUsedLength() - rs.getTotalLength());
 	}
 
 	/**

@@ -1311,10 +1311,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			return false;
 		}
 		
-		int length = Integer.parseInt(car.getLength()) + Car.COUPLER;
+		int length = car.getTotalLength();
 		// car can be a kernel so get total length
 		if (car.getKernel() != null)
-			length = car.getKernel().getLength();
+			length = car.getKernel().getTotalLength();
 		Route route = getRoute();
 		if (route != null) {
 			List<String> rLocations = route.getLocationsBySequenceList();
@@ -1450,7 +1450,7 @@ public class Train implements java.beans.PropertyChangeListener {
 								&& rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
 							if (debugFlag)
 								log.debug("Car (" + car.toString()
-										+ ") exceeds maximum train length when departing (" // NOI18N
+										+ ") exceeds maximum train length "+rLoc.getMaxTrainLength()+" when departing (" // NOI18N
 										+ rLoc.getName() + ")");
 							return false;
 						}
@@ -1580,7 +1580,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = CarManager.instance().getById(cars.get(i));
 			if (car.getRouteLocation() == rl && car.getRouteDestination() != rl) {
-				length = length + Integer.parseInt(car.getLength()) + Car.COUPLER;
+				length = length + car.getTotalLength();
 			}
 		}
 		return length;
@@ -1614,10 +1614,10 @@ public class Train implements java.beans.PropertyChangeListener {
 				for (int j = 0; j < cars.size(); j++) {
 					Car car = CarManager.instance().getById(cars.get(j));
 					if (car.getRouteLocation() == rl) {
-						length += Integer.parseInt(car.getLength()) + Car.COUPLER;
+						length += car.getTotalLength();
 					}
 					if (car.getRouteDestination() == rl) {
-						length += -(Integer.parseInt(car.getLength()) + Car.COUPLER);
+						length += -car.getTotalLength();
 					}
 				}
 				if (rl == routeLocation)

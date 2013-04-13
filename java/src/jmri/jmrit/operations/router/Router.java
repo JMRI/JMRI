@@ -42,11 +42,12 @@ public class Router extends TrainCommon {
 	private Train _train = null;
 	PrintWriter _buildReport = null; // build report
 
-//	public boolean enable_staging = false; // using staging to route cars can be tricky, not recommended
 	public boolean enable_yard_search = false; // search for yard track even if an interchange track was found
 	private static boolean debugFlag = false;
 
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
+	private boolean addtoReport = !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL) 
+			&& !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL);
 
 	/** record the single instance **/
 	private static Router _instance = null;
@@ -308,7 +309,7 @@ public class Router extends TrainCommon {
 		log.debug("Find " + trackType + " track for car (" + car.toString() + ") final destination ("
 				+ testCar.getDestinationName() + ", " // NOI18N
 				+ testCar.getDestinationTrackName() + ")");
-		if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL))
+		if (addtoReport)
 			addLine(_buildReport, SEVEN, "Find " + trackType + " track for car (" + car.toString() + ") final destination ("
 					+ testCar.getDestinationName() + ", " // NOI18N
 					+ testCar.getDestinationTrackName() + ")");
@@ -336,7 +337,7 @@ public class Router extends TrainCommon {
 			if (debugFlag)
 				log.debug("Found " + trackType + " track (" + track.getLocation().getName() + ", "
 						+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
-			if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL))
+			if (addtoReport)
 				addLine(_buildReport, SEVEN, "Found " + trackType + " track (" + track.getLocation().getName() + ", "
 						+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
 			// test to see if there's a train that can deliver the car to its final location
@@ -350,7 +351,7 @@ public class Router extends TrainCommon {
 					log.debug("Could not find a train to service car from " + trackType + " ("
 							+ track.getLocation().getName() + ", " + track.getName() + ") to destination ("	// NOI18N
 							+ testCar.getDestinationName() + " ," + testCar.getDestinationTrackName()+")"); // NOI18N
-				if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL))
+				if (addtoReport)
 					addLine(_buildReport, SEVEN, "Router could not find a train to service car from " + trackType + " ("
 							+ track.getLocation().getName() + ", " + track.getName() + ") to destination ("	// NOI18N
 							+ testCar.getDestinationName() + ", " + testCar.getDestinationTrackName()+")"); // NOI18N
@@ -363,7 +364,7 @@ public class Router extends TrainCommon {
 						+ testCar.getLocationName() + ", " + testCar.getTrackName()	// NOI18N
 						+ ") to final destination (" + testCar.getDestinationName() // NOI18N
 						+ ", " + testCar.getDestinationTrackName() + ")");
-			if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL))
+			if (addtoReport)
 				addLine(_buildReport, SEVEN, "Train (" + nextTrain.getName() + ") can service car ("
 						+ car.toString() + ") from " + trackType	// NOI18N
 						+ " (" // NOI18N
@@ -385,7 +386,7 @@ public class Router extends TrainCommon {
 					log.debug("Train (" + _train.getName() + ") can not deliver car to ("
 							+ track.getLocation().getName() + ", " // NOI18N
 							+ track.getName() + ")");
-				if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL))
+				if (addtoReport)
 					addLine(_buildReport, SEVEN, "Train (" + _train.getName() + ") can not deliver car to ("
 							+ track.getLocation().getName() + ", " // NOI18N
 							+ track.getName() + ")");
@@ -433,7 +434,7 @@ public class Router extends TrainCommon {
 								+ car.getLocationName() + ", " + car.getTrackName() + ") to "	// NOI18N
 								+ trackType + " (" + track.getLocation().getName() // NOI18N
 								+ ", " + track.getName() + ")"); // NOI18N
-					if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL))
+					if (addtoReport)
 						addLine(_buildReport, SEVEN, "Train (" + firstTrain.getName() + ") can service car ("
 								+ car.toString()
 								+ ") from current location (" // NOI18N
@@ -712,7 +713,7 @@ public class Router extends TrainCommon {
 		clone.setBuilt(car.getBuilt());
 		// modify clone car length if car is part of kernel
 		if (car.getKernel() != null)
-			clone.setLength(Integer.toString(car.getKernel().getLength()));
+			clone.setLength(Integer.toString(car.getKernel().getTotalLength()));
 		else
 			clone.setLength(car.getLength());
 		clone.setLoad(car.getLoad());

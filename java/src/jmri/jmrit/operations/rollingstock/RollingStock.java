@@ -184,6 +184,20 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public String getLength() {
 		return _length;
 	}
+	
+	/**
+	 * Returns the length of the rolling stock including the couplers
+	 * @return total length of the rolling stock
+	 */
+	public int getTotalLength() {
+		int length = 0;
+		try {
+			length = Integer.parseInt(getLength()) + RollingStock.COUPLER;
+		} catch (Exception e) {
+			log.error("Rolling stock ("+toString()+") length ("+getLength()+") is not valid ");
+		}
+		return length;
+	}
 
 	public void setColor(String color) {
 		String old = _color;

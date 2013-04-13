@@ -1862,7 +1862,7 @@ public class TrainBuilder extends TrainCommon {
 		// engine in consist?
 		if (engine.getConsist() != null) {
 			List<Engine> cEngines = engine.getConsist().getEngines();
-			length = engine.getConsist().getLength();
+			length = engine.getConsist().getTotalLength();
 			weightTons = engine.getConsist().getAdjustedWeightTons();
 			for (int j = 0; j < cEngines.size(); j++) {
 				Engine cEngine = cEngines.get(j);
@@ -1901,11 +1901,11 @@ public class TrainBuilder extends TrainCommon {
 		// don't update car's previous location if just re-staging car
 		if (routeList.size() > 2)
 			car.setLastLocationId(car.getLocationId());
-		int length = Integer.parseInt(car.getLength()) + Car.COUPLER;
+		int length = car.getTotalLength();
 		int weightTons = car.getAdjustedWeightTons();
 		// car could be part of a kernel
 		if (car.getKernel() != null) {
-			length = car.getKernel().getLength(); // includes couplers
+			length = car.getKernel().getTotalLength(); // includes couplers
 			weightTons = car.getKernel().getAdjustedWeightTons();
 			List<Car> kCars = car.getKernel().getCars();
 			addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarPartOfKernel"),
@@ -2029,9 +2029,9 @@ public class TrainBuilder extends TrainCommon {
 				carInTrain = false;
 			}
 			// car can be a kernel so get total length
-			int length = Integer.parseInt(car.getLength()) + Car.COUPLER;
+			int length = car.getTotalLength();
 			if (car.getKernel() != null)
-				length = car.getKernel().getLength();
+				length = car.getKernel().getTotalLength();
 			if (carInTrain && rlt.getTrainLength() + length > rlt.getMaxTrainLength()) {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle
 						.getMessage("buildCanNotPickupCarLength"), new Object[] { car.toString(), length }));

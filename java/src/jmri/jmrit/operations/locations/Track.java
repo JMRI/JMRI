@@ -251,7 +251,7 @@ public class Track {
 	public void addReservedInRoute(Car car) {
 		int old = _reservedInRoute;
 		_numberCarsInRoute++;
-		_reservedInRoute = old + Integer.parseInt(car.getLength()) + RollingStock.COUPLER;
+		_reservedInRoute = old + car.getTotalLength();
 		if (old != _reservedInRoute)
 			setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old),	// NOI18N
 					Integer.toString(_reservedInRoute)); // NOI18N
@@ -260,7 +260,7 @@ public class Track {
 	public void deleteReservedInRoute(Car car) {
 		int old = _reservedInRoute;
 		_numberCarsInRoute--;
-		_reservedInRoute = old - (Integer.parseInt(car.getLength()) + RollingStock.COUPLER);
+		_reservedInRoute = old - car.getTotalLength();
 		if (old != _reservedInRoute)
 			setDirtyAndFirePropertyChange("reservedInRoute", Integer.toString(old),	// NOI18N
 					Integer.toString(_reservedInRoute)); // NOI18N
@@ -344,9 +344,9 @@ public class Track {
 	 * @return true if space available.
 	 */
 	public boolean isSpaceAvailable(Car car) {
-		int carLength = Integer.parseInt(car.getLength()) + RollingStock.COUPLER;
+		int carLength = car.getTotalLength();
 		if (car.getKernel() != null)
-			carLength = car.getKernel().getLength();
+			carLength = car.getKernel().getTotalLength();
 		// ignore reservation factor unless car is departing staging
 		if (car.getTrack() != null && car.getTrack().getLocType().equals(STAGING))
 			return (getLength() * getReservationFactor() / 100 - (getReservedInRoute() + carLength) >= 0);
@@ -461,7 +461,7 @@ public class Track {
 			setNumberCars(getNumberCars() + 1);
 		else if (rs.getClass() == Engine.class)
 			setNumberEngines(getNumberEngines() + 1);
-		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
+		setUsedLength(getUsedLength() + rs.getTotalLength());
 	}
 
 	public void deleteRS(RollingStock rs) {
@@ -470,7 +470,7 @@ public class Track {
 			setNumberCars(getNumberCars() - 1);
 		else if (rs.getClass() == Engine.class)
 			setNumberEngines(getNumberEngines() - 1);
-		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
+		setUsedLength(getUsedLength() - rs.getTotalLength());
 	}
 
 	/**
@@ -480,7 +480,7 @@ public class Track {
 		int old = _pickupRS;
 		_pickupRS++;
 		if (Setup.isBuildAggressive())
-			setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
+			setReserved(getReserved() - rs.getTotalLength());
 		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), // NOI18N
 				Integer.toString(_pickupRS));
 	}
@@ -488,7 +488,7 @@ public class Track {
 	public void deletePickupRS(RollingStock rs) {
 		int old = _pickupRS;
 		if (Setup.isBuildAggressive())
-			setReserved(getReserved() + (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
+			setReserved(getReserved() + rs.getTotalLength());
 		_pickupRS--;
 		setDirtyAndFirePropertyChange("pickupRS", Integer.toString(old), // NOI18N
 				Integer.toString(_pickupRS));
@@ -510,16 +510,16 @@ public class Track {
 		int old = _dropRS;
 		_dropRS++;
 		setMoves(getMoves() + 1);
-		setReserved(getReserved() + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
-		_reservedDrops = _reservedDrops + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER;
+		setReserved(getReserved() + rs.getTotalLength());
+		_reservedDrops = _reservedDrops + rs.getTotalLength();
 		setDirtyAndFirePropertyChange("addDropRS", Integer.toString(old), Integer.toString(_dropRS)); // NOI18N
 	}
 
 	public void deleteDropRS(RollingStock rs) {
 		int old = _dropRS;
 		_dropRS--;
-		setReserved(getReserved() - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER));
-		_reservedDrops = _reservedDrops - (Integer.parseInt(rs.getLength()) + RollingStock.COUPLER);
+		setReserved(getReserved() - rs.getTotalLength());
+		_reservedDrops = _reservedDrops - rs.getTotalLength();
 		setDirtyAndFirePropertyChange("deleteDropRS", Integer.toString(old), // NOI18N
 				Integer.toString(_dropRS));
 	}

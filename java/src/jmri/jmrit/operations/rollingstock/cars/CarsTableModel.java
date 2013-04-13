@@ -478,84 +478,84 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		}
 		if (row >= sysList.size())
 			return "ERROR row " + row;	// NOI18N
-		Car c = manager.getById(sysList.get(row));
-		if (c == null)
+		Car car = manager.getById(sysList.get(row));
+		if (car == null)
 			return "ERROR car unknown " + row;	// NOI18N
 		switch (col) {
 		case NUMCOLUMN:
-			return c.getNumber();
+			return car.getNumber();
 		case ROADCOLUMN:
-			return c.getRoad();
+			return car.getRoad();
 		case COLORCOLUMN: {
 			if (showColor)
-				return c.getColor();
-			else if (c.getLoadPriority().equals(CarLoad.PRIORITY_HIGH))
-				return c.getLoad() + " " + Bundle.getMessage("(P)");
+				return car.getColor();
+			else if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH))
+				return car.getLoad() + " " + Bundle.getMessage("(P)");
 			else
-				return c.getLoad();
+				return car.getLoad();
 		}
 		case LENGTHCOLUMN:
-			return c.getLength();
+			return car.getLength();
 		case TYPECOLUMN: {
-			StringBuffer buf = new StringBuffer(c.getType());
-			if (c.isCaboose())
+			StringBuffer buf = new StringBuffer(car.getType());
+			if (car.isCaboose())
 				buf.append(" " + Bundle.getMessage("(C)"));
-			if (c.hasFred())
+			if (car.hasFred())
 				buf.append(" " + Bundle.getMessage("(F)"));
-			if (c.isPassenger())
+			if (car.isPassenger())
 				buf.append(" " + Bundle.getMessage("(P)"));
-			if (c.isUtility())
+			if (car.isUtility())
 				buf.append(" " + Bundle.getMessage("(U)"));
-			if (c.isHazardous())
+			if (car.isHazardous())
 				buf.append(" " + Bundle.getMessage("(H)"));
 			return buf.toString();
 		}
 		case KERNELCOLUMN: {
-			if (c.getKernel() != null && c.getKernel().isLead(c))
-				return c.getKernelName() + "*";
-			return c.getKernelName();
+			if (car.getKernel() != null && car.getKernel().isLead(car))
+				return car.getKernelName() + "*";
+			return car.getKernelName();
 		}
 		case LOCATIONCOLUMN: {
-			String s = c.getStatus();
-			if (!c.getLocationName().equals(""))
-				s = c.getStatus() + c.getLocationName() + " (" + c.getTrackName() + ")";
+			String s = car.getStatus();
+			if (!car.getLocationName().equals(""))
+				s = car.getStatus() + car.getLocationName() + " (" + car.getTrackName() + ")";
 			return s;
 		}
 		case DESTINATIONCOLUMN: {
 			String s = "";
 			if (showDest == SHOWDEST || showDest == SHOWFD) {
-				if (!c.getDestinationName().equals(""))
-					s = c.getDestinationName() + " (" + c.getDestinationTrackName() + ")";
-				if (!c.getFinalDestinationName().equals(""))
-					s = s + "->" + c.getFinalDestinationName();	// NOI18N
-				if (!c.getFinalDestinationTrackName().equals(""))
-					s = s + " (" + c.getFinalDestinationTrackName() + ")";
+				if (!car.getDestinationName().equals(""))
+					s = car.getDestinationName() + " (" + car.getDestinationTrackName() + ")";
+				if (!car.getFinalDestinationName().equals(""))
+					s = s + "->" + car.getFinalDestinationName();	// NOI18N
+				if (!car.getFinalDestinationTrackName().equals(""))
+					s = s + " (" + car.getFinalDestinationTrackName() + ")";
 			} else {
-				s = c.getReturnWhenEmptyDestName();
+				s = car.getReturnWhenEmptyDestName();
 			}
 			return s;
 		}
 		case TRAINCOLUMN: {
 			// if train was manually set by user add an asterisk
-			if (c.getTrain() != null && c.getRouteLocation() == null)
-				return c.getTrainName() + "*";
-			return c.getTrainName();
+			if (car.getTrain() != null && car.getRouteLocation() == null)
+				return car.getTrainName() + "*";
+			return car.getTrainName();
 		}
 		case MOVESCOLUMN: {
 			if (showMoveCol == SHOWBUILT)
-				return c.getBuilt();
+				return car.getBuilt();
 			else if (showMoveCol == SHOWOWNER)
-				return c.getOwner();
+				return car.getOwner();
 			else if (showMoveCol == SHOWVALUE)
-				return c.getValue();
+				return car.getValue();
 			else if (showMoveCol == SHOWRFID)
-				return c.getRfid();
+				return car.getRfid();
 			else if (showMoveCol == SHOWWAIT)
-				return c.getWait();
+				return car.getWait();
 			else if (showMoveCol == SHOWLAST)
-				return c.getLastDate();
+				return car.getLastDate();
 			else
-				return c.getMoves();
+				return car.getMoves();
 		}
 		case SETCOLUMN:
 			return Bundle.getMessage("Set");
