@@ -397,7 +397,11 @@ public class Router extends TrainCommon {
 				continue; // can't use this train
 			}
 			// find a train that will transport the car to the interim track
-			Train firstTrain = TrainManager.instance().getTrainForCar(testCar, _buildReport);
+			Train firstTrain = null;
+			if (_train != null && _train.services(testCar))
+				firstTrain = _train;
+			else
+				firstTrain = TrainManager.instance().getTrainForCar(testCar, _buildReport);
 			if (firstTrain != null) {
 				foundRoute = true;	// found a route
 				// found a two train route for this car, show the car's route
@@ -416,7 +420,7 @@ public class Router extends TrainCommon {
 				}
 				if (status.equals(Track.OKAY)) {
 					// only set car's destination if specific train can service car
-					if (_train != null && !_train.services(testCar)) {
+					if (_train != null && _train != firstTrain) {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("TrainDoesNotServiceCar"), new Object[] {
 							_train.getName(),
@@ -439,7 +443,7 @@ public class Router extends TrainCommon {
 								+ trackType + " (" + track.getLocation().getName() // NOI18N
 								+ ", " + track.getName() + ")"); // NOI18N
 					if (addtoReport)
-						addLine(_buildReport, SEVEN, "Train (" + firstTrain.getName() + ") can service car ("
+						addLine(_buildReport, SEVEN, "Train (" + firstTrain.getName() + ") can transport car ("
 								+ car.toString()
 								+ ") from current location (" // NOI18N
 								+ car.getLocationName() + ", " + car.getTrackName() + ") to "	// NOI18N
