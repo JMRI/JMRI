@@ -4,6 +4,8 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -385,14 +387,14 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * @param car
 	 * @return Train that can service car from its current location to the its destination.
 	 */
-	public Train getTrainForCar(Car car) {
+	public Train getTrainForCar(Car car, PrintWriter buildReport) {
 		List<String> trains = getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = getTrainById(trains.get(i));
 			if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled())
 				continue;
 			// does this train service this car?
-			if (train.services(car))
+			if (train.services(car, buildReport))
 				return train;
 		}
 		return null;

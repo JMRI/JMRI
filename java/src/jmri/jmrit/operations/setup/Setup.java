@@ -1449,10 +1449,6 @@ public class Setup {
        	values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled()?Xml.TRUE:Xml.FALSE);
        	values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled()?Xml.TRUE:Xml.FALSE);
        	values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled()?Xml.TRUE:Xml.FALSE);     	
-    	// next three router attributes for backward compatibility TODO remove in future release 2014
-    	values.setAttribute(Xml.CAR_ROUTING_ENABLED, isCarRoutingEnabled()?Xml.TRUE:Xml.FALSE);
-    	values.setAttribute(Xml.CAR_ROUTING_VIA_YARDS, isCarRoutingViaYardsEnabled()?Xml.TRUE:Xml.FALSE);
-    	values.setAttribute(Xml.CAR_ROUTING_VIA_STAGING, isCarRoutingViaStagingEnabled()?Xml.TRUE:Xml.FALSE);
     	// next three logger attributes for backward compatibility TODO remove in future release 2014
     	values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled()?Xml.TRUE:Xml.FALSE);    	
        	values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled()?Xml.TRUE:Xml.FALSE);
