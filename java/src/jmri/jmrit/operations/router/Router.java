@@ -219,6 +219,10 @@ public class Router extends TrainCommon {
 				_status = STATUS_NO_TRAINS;
 				return false; // maybe next time
 			}
+			if (addtoReport)
+				addLine(_buildReport, SEVEN, "Router could not find a train able to transport car (" // NOI18N
+						+ car.toString() + ") directly from (" + car.getLocationName() + ") to (" // NOI18N
+						+ car.getFinalDestinationName() + ") begin two train routing");// NOI18N
 			firstLocationTracks.clear();
 			lastLocationTracks.clear();
 			otherLocationTracks.clear();
@@ -309,7 +313,7 @@ public class Router extends TrainCommon {
 				+ testCar.getDestinationName() + ", " // NOI18N
 				+ testCar.getDestinationTrackName() + ")");
 		if (addtoReport)
-			addLine(_buildReport, SEVEN, "Find " + trackType + " track for car (" + car.toString() + ") final destination ("
+			addLine(_buildReport, SEVEN, "Router find " + trackType + " track for car (" + car.toString() + ") final destination ("
 					+ testCar.getDestinationName() + ", " // NOI18N
 					+ testCar.getDestinationTrackName() + ")");
 		// save car's location, track, destination, and destination track
@@ -351,8 +355,8 @@ public class Router extends TrainCommon {
 							+ track.getLocation().getName() + ", " + track.getName() + ") to destination ("	// NOI18N
 							+ testCar.getDestinationName() + " ," + testCar.getDestinationTrackName()+")"); // NOI18N
 				if (addtoReport)
-					addLine(_buildReport, SEVEN, "Router could not find a train to service car from " + trackType + " ("
-							+ track.getLocation().getName() + ", " + track.getName() + ") to destination ("	// NOI18N
+					addLine(_buildReport, SEVEN, "Router could not find a train to transport car from " + trackType + " ("
+							+ track.getLocation().getName() + ", " + track.getName() + ") to ("	// NOI18N
 							+ testCar.getDestinationName() + ", " + testCar.getDestinationTrackName()+")"); // NOI18N
 				continue;
 			}
