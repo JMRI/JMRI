@@ -868,7 +868,7 @@ public class WarrantTableAction extends AbstractAction {
                     		// no suffix specified
                     		dccNum = Integer.parseInt(addr);
                     		Character ch = addr.charAt(0);
-                            isLong = (ch=='0' || addr.length()>3);  // leading zero means long
+                            isLong = (ch=='0' || dccNum>255);  // leading zero means long
                     	} else {
                     		// short specified
                         	dccNum = Integer.parseInt(addr.substring(0, addr.length()-3));
@@ -900,6 +900,15 @@ public class WarrantTableAction extends AbstractAction {
         }
         
         private String makeCommands(Warrant w) {
+            String speed = _speedBox.getText();
+        	float f = Float.parseFloat(speed);
+            try {
+            	if (f>1.0 || f<0) {
+                    return Bundle.getMessage("badSpeed");            	            		
+            	}
+            } catch (NumberFormatException nfe) {
+                return Bundle.getMessage("badSpeed");            	
+            }
         	List<BlockOrder> orders = getOrders();
         	String blockName = orders.get(0).getBlock().getDisplayName();
         	w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
@@ -907,23 +916,40 @@ public class WarrantTableAction extends AbstractAction {
         	w.addThrottleCommand(new ThrottleSetting(1750, "F2", "false", blockName));
         	w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
         	w.addThrottleCommand(new ThrottleSetting(1750, "F2", "false", blockName));
-        	w.addThrottleCommand(new ThrottleSetting(0, "Forward", (_forward.isSelected()?"true":"false"), blockName));        		
-            String speed = _speedBox.getText();
-            try {
-            	float f = Float.parseFloat(speed);
-            	if (f>1.0 || f<0) {
-                    return Bundle.getMessage("badSpeed");            	            		
+        	w.addThrottleCommand(new ThrottleSetting(0, "Forward", 
+        										(_forward.isSelected()?"true":"false"), blockName));
+        	w.addThrottleCommand(new ThrottleSetting(0, "Speed", Float.toString(f/4), blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(3*f/8), blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(f/2), blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(3*f/4), blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(7*f/8), blockName));        		
+        	if (orders.size() > 2) {
+            	blockName = orders.get(1).getBlock().getDisplayName();
+        		w.addThrottleCommand(new ThrottleSetting(1000, "NoOp", "Enter Block", blockName));
+            	if (orders.size() > 3) {
+                	w.addThrottleCommand(new ThrottleSetting(0, "Speed", speed, blockName));            		
+                	for (int i=2; i<orders.size()-2; i++) {
+                		w.addThrottleCommand(new ThrottleSetting(5000, "NoOp", "Enter Block", 
+                									orders.get(i).getBlock().getDisplayName()));        		
+                	}
+                	blockName = orders.get(orders.size()-2).getBlock().getDisplayName();
+            		w.addThrottleCommand(new ThrottleSetting(5000, "NoOp", "Enter Block", blockName));        		            		
+            	} else {
+                	blockName = orders.get(orders.size()-2).getBlock().getDisplayName();
             	}
-            } catch (NumberFormatException nfe) {
-                return Bundle.getMessage("badSpeed");            	
-            }
-        	w.addThrottleCommand(new ThrottleSetting(500, "Speed", speed, blockName));        		
-        	for (int i=1; i<orders.size(); i++) {
-        		w.addThrottleCommand(new ThrottleSetting(5000, "NoOp", "Enter Block", 
-        				orders.get(i).getBlock().getDisplayName()));        		
-        	}
-        	blockName = orders.get(orders.size()-1).getBlock().getDisplayName();
-        	w.addThrottleCommand(new ThrottleSetting(0, "Speed", "0.0", blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(0, "Speed", Float.toString(7*f/8), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(3*f/4), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(5*f/8), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(f/2), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(3*f/8), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(f/3), blockName));        		
+         	}
+        	OBlock block = orders.get(orders.size()-1).getBlock();
+        	blockName = block.getDisplayName();
+    		w.addThrottleCommand(new ThrottleSetting(0, "NoOp", "Enter Block", blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(0, "Speed", Float.toString(f/4), blockName));
+        	f = Math.max(block.getLengthIn()-4, 0)*200;
+        	w.addThrottleCommand(new ThrottleSetting((int)f, "Speed", "0.0", blockName));        		
         	w.addThrottleCommand(new ThrottleSetting(500, "F2", "true", blockName));
         	w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
         	w.addThrottleCommand(new ThrottleSetting(500, "F0", "false", blockName));

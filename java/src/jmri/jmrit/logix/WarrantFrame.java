@@ -749,6 +749,7 @@ public class WarrantFrame extends WarrantRoute {
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 InstanceManager.getDefault(WarrantManager.class).deregister(_warrant);
+                _warrant.dispose();
                 WarrantTableAction.updateWarrantMenu();
                 dispose();
             }

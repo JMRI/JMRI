@@ -61,11 +61,11 @@ public class RollingStockGroup {
 		return _group;
 	}
 
-	public int getLength() {
+	public int getTotalLength() {
 		int length = 0;
 		for (int i=0; i<_group.size(); i++){
 			RollingStock rs = _group.get(i);
-			length = length + Integer.parseInt(rs.getLength()) + RollingStock.COUPLER;
+			length = length + rs.getTotalLength();
 		}
 		return length;
 	}

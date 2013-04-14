@@ -4,6 +4,8 @@ package jmri.jmrit.operations.setup;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -33,6 +35,10 @@ public class BuildReportOptionFrame extends OperationsFrame{
     JRadioButton buildReportNor = new JRadioButton(Bundle.getMessage("Normal"));
     JRadioButton buildReportMax = new JRadioButton(Bundle.getMessage("Detailed"));
     JRadioButton buildReportVD = new JRadioButton(Bundle.getMessage("VeryDetailed"));
+    
+    JRadioButton buildReportRouterNor = new JRadioButton(Bundle.getMessage("Normal"));
+    JRadioButton buildReportRouterMax = new JRadioButton(Bundle.getMessage("Detailed"));
+    JRadioButton buildReportRouterVD = new JRadioButton(Bundle.getMessage("VeryDetailed"));
     
     // check boxes
 	JCheckBox buildReportCheckBox = new JCheckBox(Bundle.getMessage("BuildReportEdit"));
@@ -77,6 +83,15 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		addItemLeft (pLevel, buildReportNor, 2, 0);
 		addItemLeft (pLevel, buildReportMax, 3, 0);
 		addItemLeft (pLevel, buildReportVD, 4, 0);
+		
+		JPanel pRouterLevel = new JPanel();
+		pRouterLevel.setLayout(new GridBagLayout());
+		pRouterLevel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BuildReportRouter")));
+		
+		// build report level radio buttons
+		addItemLeft (pRouterLevel, buildReportRouterNor, 2, 0);
+		addItemLeft (pRouterLevel, buildReportRouterMax, 3, 0);
+		addItemLeft (pRouterLevel, buildReportRouterVD, 4, 0);
 
 		// controls
 		JPanel pControl = new JPanel();
@@ -86,6 +101,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		
 		getContentPane().add(pReport);
 		getContentPane().add(pLevel);
+		getContentPane().add(pRouterLevel);
 		getContentPane().add(pFontSize);
 		getContentPane().add(pControl);
 		
@@ -99,7 +115,13 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		buildReportGroup.add(buildReportMax);
 		buildReportGroup.add(buildReportVD);
 		
+		ButtonGroup buildReportRouterGroup = new ButtonGroup();
+		buildReportRouterGroup.add(buildReportRouterNor);
+		buildReportRouterGroup.add(buildReportRouterMax);
+		buildReportRouterGroup.add(buildReportRouterVD);
+		
 		setBuildReportRadioButton();
+		setBuildReportRouterRadioButton();
 		
 		// load font sizes 7 through 14
 		for (int i = 7; i < 15; i++)
@@ -113,6 +135,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		addHelpMenu("package.jmri.jmrit.operations.Operations_BuildReportDetails", true); // NOI18N
 
 		pack();
+		setMinimumSize(new Dimension(400, 400));
 		setVisible(true);
 	}
 	
@@ -121,6 +144,7 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		if (ae.getSource() == saveButton){
 			// font size
 			Setup.setBuildReportFontSize((Integer) fontSizeComboBox.getSelectedItem());
+			
 			// build report level
 			if (buildReportMin.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);
@@ -130,6 +154,15 @@ public class BuildReportOptionFrame extends OperationsFrame{
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
 			else if (buildReportVD.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+			
+			// router build report level
+			if (buildReportRouterNor.isSelected())
+				Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
+			else if (buildReportRouterMax.isSelected())
+				Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
+			else if (buildReportRouterVD.isSelected())
+				Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+			
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			Setup.setBuildReportIndentEnabled(buildReportIndentCheckBox.isSelected());
 			
@@ -149,7 +182,12 @@ public class BuildReportOptionFrame extends OperationsFrame{
 		buildReportMax.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED));
 		buildReportVD.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
 	}
+	
+	private void setBuildReportRouterRadioButton(){
+		buildReportRouterNor.setSelected(Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL));
+		buildReportRouterMax.setSelected(Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED));
+		buildReportRouterVD.setSelected(Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
+	}
 
-	static Logger log = LoggerFactory
-	.getLogger(OperationsSetupFrame.class.getName());
+	static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
 }

@@ -282,7 +282,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
-			if (car.getLocation()!=null && car.getDestination()!=null && !train.servicesCar(car)){
+			if (car.getLocation()!=null && car.getDestination()!=null && !train.services(car)){
 				JOptionPane.showMessageDialog(this, 
 						MessageFormat.format(Bundle.getMessage("carTrainNotService"), new Object[] {train.getName()}),
 						Bundle.getMessage("rsNotMove"),

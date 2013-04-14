@@ -1423,6 +1423,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         						nextSpeed+"\" for warrant= "+getDisplayName());
         return nextSpeed;
     }
+    
+    public void dispose() {
+    	deAllocate();
+    	super.dispose();
+    }
 
     static Logger log = LoggerFactory.getLogger(Warrant.class.getName());
 }

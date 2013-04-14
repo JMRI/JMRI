@@ -302,19 +302,19 @@ public class OperationsCarsTest extends TestCase {
 		c3.setWeightTons("15");
 		c3.setLoad("E");
 
-		Assert.assertEquals("Kernel Initial Length", 0, k1.getLength());
+		Assert.assertEquals("Kernel Initial Length", 0, k1.getTotalLength());
 		Assert.assertEquals("Kernel Initial Weight Tons", 0, k1.getAdjustedWeightTons());
 
 		k1.add(c1);
-		Assert.assertEquals("Kernel Car 1 Length", 40+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car 1 Length", 40+Car.COUPLER, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car 1 Weight Tons", 10, k1.getAdjustedWeightTons());
 
 		k1.add(c2);
-		Assert.assertEquals("Kernel Car 2 Length", 40+Car.COUPLER+60+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car 2 Length", 40+Car.COUPLER+60+Car.COUPLER, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car 2 Weight Tons", 30, k1.getAdjustedWeightTons());
 
 		k1.add(c3);
-		Assert.assertEquals("Kernel Car 3 Length", 40+Car.COUPLER+60+Car.COUPLER+50+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car 3 Length", 40+Car.COUPLER+60+Car.COUPLER+50+Car.COUPLER, k1.getTotalLength());
 		// car 3 is empty, so only 5 tons, 15/3
 		Assert.assertEquals("Kernel Car 3 Weight Tons", 35, k1.getAdjustedWeightTons());
 
@@ -324,15 +324,15 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertFalse("Kernel Lead Car 3", k1.isLead(c3));
 
 		k1.delete(c2);
-		Assert.assertEquals("Kernel Car Delete 2 Length", 40+Car.COUPLER+50+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car Delete 2 Length", 40+Car.COUPLER+50+Car.COUPLER, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car Delete 2 Weight Tons", 15, k1.getAdjustedWeightTons());
 
 		k1.delete(c1);
-		Assert.assertEquals("Kernel Car Delete 1 Length", 50+Car.COUPLER, k1.getLength());
+		Assert.assertEquals("Kernel Car Delete 1 Length", 50+Car.COUPLER, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car Delete 1 Weight Tons", 5, k1.getAdjustedWeightTons());
 
 		k1.delete(c3);
-		Assert.assertEquals("Kernel Car Delete 3 Length", 0, k1.getLength());
+		Assert.assertEquals("Kernel Car Delete 3 Length", 0, k1.getTotalLength());
 		Assert.assertEquals("Kernel Car Delete 3 Weight Tons", 0, k1.getAdjustedWeightTons());
 
 	}
@@ -361,8 +361,8 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("Kernel Name for car 1 before", "TESTKERNELOLD", c1.getKernelName());
 		Assert.assertEquals("Kernel Name for car 2 before", "TESTKERNELOLD", c2.getKernelName());
 		Assert.assertEquals("Kernel Name for car 3 before", "TESTKERNELOLD", c3.getKernelName());
-		Assert.assertEquals("Kernel old length before", 40+4+60+4+50+4, kold.getLength());
-		Assert.assertEquals("Kernel new length before", 0, knew.getLength());
+		Assert.assertEquals("Kernel old length before", 40+4+60+4+50+4, kold.getTotalLength());
+		Assert.assertEquals("Kernel new length before", 0, knew.getTotalLength());
 		Assert.assertTrue("Kernel old Lead is Car 1 before", kold.isLead(c1));
 		Assert.assertFalse("Kernel old Lead is not Car 2 before", kold.isLead(c2));
 		Assert.assertFalse("Kernel old Lead is not Car 3 before", kold.isLead(c3));
@@ -376,8 +376,8 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("Kernel Name for car 1 after", "TESTKERNELNEW", c1.getKernelName());
 		Assert.assertEquals("Kernel Name for car 2 after", "TESTKERNELOLD", c2.getKernelName());
 		Assert.assertEquals("Kernel Name for car 3 after", "TESTKERNELOLD", c3.getKernelName());
-		Assert.assertEquals("Kernel old length after", 60+4+50+4, kold.getLength());
-		Assert.assertEquals("Kernel new length after", 40+4, knew.getLength());
+		Assert.assertEquals("Kernel old length after", 60+4+50+4, kold.getTotalLength());
+		Assert.assertEquals("Kernel new length after", 40+4, knew.getTotalLength());
 		Assert.assertFalse("Kernel old Lead is not Car 1 after", kold.isLead(c1));
 		Assert.assertTrue("Kernel old Lead is Car 2 after", kold.isLead(c2));
 		Assert.assertFalse("Kernel old Lead is not Car 3 after", kold.isLead(c3));
@@ -390,8 +390,8 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("Kernel Name for car 1 after3", "TESTKERNELNEW", c1.getKernelName());
 		Assert.assertEquals("Kernel Name for car 2 after3", "TESTKERNELOLD", c2.getKernelName());
 		Assert.assertEquals("Kernel Name for car 3 after3", "TESTKERNELNEW", c3.getKernelName());
-		Assert.assertEquals("Kernel old length after3", 60+4, kold.getLength());
-		Assert.assertEquals("Kernel new length after3", 40+4+50+4, knew.getLength());
+		Assert.assertEquals("Kernel old length after3", 60+4, kold.getTotalLength());
+		Assert.assertEquals("Kernel new length after3", 40+4+50+4, knew.getTotalLength());
 		Assert.assertFalse("Kernel old Lead is not Car 1 after3", kold.isLead(c1));
 		Assert.assertTrue("Kernel old Lead is Car 2 after3", kold.isLead(c2));
 		Assert.assertFalse("Kernel old Lead is not Car 3 after3", kold.isLead(c3));

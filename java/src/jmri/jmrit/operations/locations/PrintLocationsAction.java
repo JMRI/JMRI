@@ -322,7 +322,7 @@ public class PrintLocationsAction extends AbstractAction {
 				Car car = carManager.getById(cars.get(j));
 				if (car.getType().equals(type) && car.getLocation() != null) {
 					numberOfCars++;
-					totalTrackLength = totalTrackLength + Integer.parseInt(car.getLength()) + Car.COUPLER;
+					totalTrackLength = totalTrackLength + car.getTotalLength();
 				}
 			}
 			writer.write(MessageFormat.format(Bundle.getMessage("NumberTypeLength"), new Object[] {

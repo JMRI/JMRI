@@ -61,6 +61,7 @@
 <!ATTLIST car rweDestId				CDATA #IMPLIED> 
 <!ATTLIST car rweDestTrackId		CDATA #IMPLIED>
 <!ATTLIST car scheduleId			CDATA #IMPLIED> 
+<!ATTLIST car previousScheduleId	CDATA #IMPLIED> 
 <!ATTLIST car leadKernel			(true | false ) "false"> 
 <!ATTLIST car passenger				(true | false ) "false"> 
 <!ATTLIST car caboose				(true | false ) "false"> 
