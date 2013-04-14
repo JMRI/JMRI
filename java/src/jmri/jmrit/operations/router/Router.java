@@ -46,8 +46,7 @@ public class Router extends TrainCommon {
 	private static boolean debugFlag = false;
 
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
-	private boolean addtoReport = !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL) 
-			&& !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL);
+	private boolean addtoReport = false;
 
 	/** record the single instance **/
 	private static Router _instance = null;
@@ -91,6 +90,8 @@ public class Router extends TrainCommon {
 		_status = Track.OKAY;
 		_train = train;
 		_buildReport = buildReport;
+		addtoReport = !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL) 
+				&& !Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL);
 		log.debug("Car (" + car.toString() + ") at location (" + car.getLocationName() + ", "
 				+ car.getTrackName() + ") " + "final destination (" + car.getFinalDestinationName() // NOI18N
 				+ ", " + car.getFinalDestinationTrackName() + ") car routing begins"); // NOI18N
@@ -368,7 +369,7 @@ public class Router extends TrainCommon {
 						+ ") to final destination (" + testCar.getDestinationName() // NOI18N
 						+ ", " + testCar.getDestinationTrackName() + ")");
 			if (addtoReport)
-				addLine(_buildReport, SEVEN, "Train (" + nextTrain.getName() + ") can service car ("
+				addLine(_buildReport, SEVEN, "Train (" + nextTrain.getName() + ") can transport car ("
 						+ car.toString() + ") from " + trackType	// NOI18N
 						+ " (" // NOI18N
 						+ testCar.getLocationName() + ", " + testCar.getTrackName()	// NOI18N
@@ -390,7 +391,7 @@ public class Router extends TrainCommon {
 							+ track.getLocation().getName() + ", " // NOI18N
 							+ track.getName() + ")");
 				if (addtoReport)
-					addLine(_buildReport, SEVEN, "Train (" + _train.getName() + ") can not deliver car to ("
+					addLine(_buildReport, SEVEN, "Train (" + _train.getName() + ") can not transport car to ("
 							+ track.getLocation().getName() + ", " // NOI18N
 							+ track.getName() + ")");
 				continue; // can't use this train
