@@ -486,7 +486,7 @@ public class TrainCommon {
 	 * @param level print level
 	 * @param string string to write
 	 */
-	protected void addLine(PrintWriter file, String level, String string) {
+	protected static void addLine(PrintWriter file, String level, String string) {
 		if (log.isDebugEnabled())
 			log.debug(string);
 		if (file != null) {
@@ -497,7 +497,7 @@ public class TrainCommon {
 	}
 	
 	// only used by build report
-	private void printLine(PrintWriter file, String level, String string) {
+	private static void printLine(PrintWriter file, String level, String string) {
 		int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize());
 		if (string.length() > lineLengthMax) {
 //			log.debug("String is too long for " + Setup.PORTRAIT);
@@ -832,7 +832,7 @@ public class TrainCommon {
 		return getLineLength(orientation, Setup.getManifestFontSize());
 	}
 	
-	private int getLineLength(String orientation, int fontSize) {
+	private static int getLineLength(String orientation, int fontSize) {
 		// page size has been adjusted to account for margins of .5
 		Dimension pagesize = new Dimension(540, 792); // Portrait
 		if (orientation.equals(Setup.LANDSCAPE))
