@@ -36,6 +36,10 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
      */
     public Element store(Object o) {
         Element sensors = new Element("sensors");
+        return store(o, sensors);
+    }
+    
+    public Element store(Object o, Element sensors){
         setStoreElementClass(sensors);
         SensorManager tm = (SensorManager) o;
         if(tm.getDefaultSensorDebounceGoingActive()>0 || tm.getDefaultSensorDebounceGoingInActive()>0){

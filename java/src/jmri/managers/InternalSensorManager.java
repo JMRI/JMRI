@@ -18,9 +18,26 @@ public class InternalSensorManager extends AbstractSensorManager {
      * @return new null
      */
     protected Sensor createNewSensor(String systemName, String userName) {
-        return new AbstractSensor(systemName, userName){
+        Sensor sen = new AbstractSensor(systemName, userName){
             public void requestUpdateFromLayout(){}
         };
+        try {
+            sen.setKnownState(getDefaultStateForNewSensors());
+        } catch (jmri.JmriException ex){
+            log.error("An error occured while trying to set initial state for sensor " + sen.getDisplayName());
+            log.error(ex.toString());
+        }
+        return sen;
+    }
+    
+    int defaultState = Sensor.UNKNOWN;
+    
+    public void setDefaultStateForNewSensors(int defaultState){
+        this.defaultState=defaultState;
+    }
+    
+    public int getDefaultStateForNewSensors(){
+        return defaultState;
     }
     
     protected String prefix = "I";
