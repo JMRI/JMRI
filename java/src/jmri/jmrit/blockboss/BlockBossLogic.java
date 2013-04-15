@@ -915,7 +915,7 @@ public class BlockBossLogic extends Siglet {
     /**
      * Return the BlockBossLogic item governing a specific signal,
      * having removed it from use.
-     * @param signal
+     * @param sh
      * @return never null
      */
     public static BlockBossLogic getStoppedObject(SignalHead sh){
