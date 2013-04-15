@@ -152,23 +152,22 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 if (getSensor().getUserName()!=null)
                 {
                     String userName=getSensor().getUserName();
-                    if (activeText==null)
+                    if (activeText==null){
                         activeText=userName;
-                    if (inactiveText==null)
+                        textColorActive=Color.red;
+                    }
+                    if (inactiveText==null){
                         inactiveText = userName;
-                    if (inconsistentText==null)
+                        textColorInActive=Color.yellow;
+                    }
+                    if (inconsistentText==null){
                         inconsistentText=userName;
-                    if (unknownText==null)
+                        textColorUnknown=Color.black;
+                    }
+                    if (unknownText==null){
                         unknownText=userName;
-                } else {
-                    if (activeText==null)
-                        activeText=Bundle.getMessage("SensorActive");
-                    if (inactiveText==null)
-                        inactiveText = Bundle.getMessage("SensorInactive");
-                    if (inconsistentText==null)
-                        inconsistentText=Bundle.getMessage("Inconsistent");
-                    if (unknownText==null)
-                        unknownText=Bundle.getMessage("Unknown");
+                        textColorInconsistent=Color.blue;
+                    }
                 }
             }
             if (activeText==null) {
@@ -179,7 +178,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 inactiveText = Bundle.getMessage("SensorInactive");
                 textColorInActive=Color.yellow;
             }
-                //inactiveText = Bundle.getMessage("SensorInactive");
             if (inconsistentText==null)
                 inconsistentText=Bundle.getMessage("Inconsistent");
             if (unknownText==null)
@@ -796,12 +794,12 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
         _namedIcon = null;
         displayState(sensorState());
-//        setAttributes();
+        setAttributes();
 //        setSensor(handle);
         int deg = getDegrees();
         rotate(deg);
         if (deg!=0 && _text && !_icon) {
-            setSuperText(null);        	
+            setSuperText(null);
         }
     }
     
@@ -824,7 +822,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             log.error("one or other of the states passed for flash is null");
             return;
         } else if (state1==state2){
-            log.info("Both states to flash between are the same, therefore no flashing will occur");
+            log.debug("Both states to flash between are the same, therefore no flashing will occur");
             return;
         }
         int interval = (1000/tps)/2;
