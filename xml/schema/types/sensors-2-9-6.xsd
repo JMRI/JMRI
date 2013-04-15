@@ -34,6 +34,16 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
+        <xs:element name="defaultInitialState" minOccurs="0" maxOccurs="1">
+          <xs:simpleType>
+            <xs:restriction base="xs:token">
+              <xs:enumeration value="inactive"/>
+              <xs:enumeration value="active"/>
+              <xs:enumeration value="unknown"/>
+              <xs:enumeration value="inconsistent"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:element>
         <xs:element name="globalDebounceTimers" minOccurs="0" maxOccurs="1">
           <xs:complexType>
           <xs:sequence>
