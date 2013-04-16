@@ -32,8 +32,8 @@ public class InternalSensorManager extends AbstractSensorManager {
     
     static int defaultState = Sensor.UNKNOWN;
     
-    public synchronized void setDefaultStateForNewSensors(int defaultState){
-        this.defaultState=defaultState;
+    public synchronized void setDefaultStateForNewSensors(int defaultSetting){
+        defaultState=defaultSetting;
     }
     
     public synchronized int getDefaultStateForNewSensors(){
