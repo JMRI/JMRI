@@ -748,7 +748,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 			return cN;
 
 		if (consistSearchNext) {
-			readConsistMemory(cN - 7, LEAD);
+			readConsistMemory(cN - 1, LEAD);	// decrement consist number
 		} else {
 			readConsistMemory(cN, LEAD);
 		}
@@ -1453,7 +1453,7 @@ public class NceConsistEditPanel extends jmri.jmrix.nce.swing.NcePanel implement
 					if (consistNum > CONSIST_MAX)
 						consistNum = CONSIST_MIN;
 					consistTextField.setText(Integer.toString(consistNum));
-					// have we wraped? if yes, need to read NCE memory
+					// have we wrapped? if yes, need to read NCE memory
 					if (consistNum == CONSIST_MIN)
 						break;
 				}
