@@ -586,6 +586,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 //Go for the speed based initially on what the signal reports back, failing that based upon any Signal Mast Logic Speed.
                 String strSpeed = (String) _controllingSignalMast.getSignalSystem().getProperty(displayedAspect, "speed");
                 float speed = 0.0f;
+                log.info("signalmast gotten speed " + strSpeed);
                 if(strSpeed!=null){
                     try {
                         speed = new Float(strSpeed);
@@ -605,8 +606,11 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                 }
                 if(speed>0.0f){
-                    float increment = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed()/6f;
+                    float increment = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed()/7f;
                     int speedState = (int)Math.ceil(speed/increment);
+                    if(speedState <= 1){
+                        speedState = 2;
+                    }
                     setSpeed(speedState);
                     _activeTrain.setStatus(ActiveTrain.RUNNING);
                 
