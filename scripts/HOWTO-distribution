@@ -170,21 +170,19 @@ Final release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o archive.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.3/ws/jmri/dist/release/*zip*/release.zip"
-    unzip archive.zip
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.4/ws/jmri/dist/release/*zip*/release.zip"
+    unzip release.zip
     cd release
     scp JMRI.* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"    
         (the scp is needed even if on SF.net, so that the FRS system knows you've added something; using cp is NFG)
     (clean up and logout)
 
 ( ) Create and upload the JavaDocs
-    and XSLT'd decoder pages (you need to have Java 1.6 in ~/.ant/ant.conf)
+    and XSLT'd decoder pages
 
 	ant javadoc-uml uploadjavadoc
 	cd xml/XSLT
 	ant xslt upload
-
-	(no need to set ~/.ant/ant.conf back to Java 1.5 afterwards)
 
 ( ) Format the release note page, change date, etc
 
