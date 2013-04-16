@@ -30,13 +30,13 @@ public class InternalSensorManager extends AbstractSensorManager {
         return sen;
     }
     
-    int defaultState = Sensor.UNKNOWN;
+    static int defaultState = Sensor.UNKNOWN;
     
-    public void setDefaultStateForNewSensors(int defaultState){
+    public synchronized void setDefaultStateForNewSensors(int defaultState){
         this.defaultState=defaultState;
     }
     
-    public int getDefaultStateForNewSensors(){
+    public synchronized int getDefaultStateForNewSensors(){
         return defaultState;
     }
     
