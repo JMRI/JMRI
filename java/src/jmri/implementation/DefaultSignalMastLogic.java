@@ -224,6 +224,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         return destList.get(dest).isActive();
     }
+    
+    public SignalMast getActiveDestination(){
+        for(SignalMast sm:getDestinationList()){
+            if(destList.get(sm).isActive())
+                return sm;
+        }
+        return null;
+    }
     /**
      *
      * @param dest Destination SignalMast.

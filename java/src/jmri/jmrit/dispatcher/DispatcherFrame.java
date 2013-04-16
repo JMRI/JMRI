@@ -91,6 +91,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			
 	// Dispatcher options (saved to disk if user requests, and restored if present)
 	private LayoutEditor _LE = null;
+    public static final int SIGNALHEAD = 0x00;
+    public static final int SIGNALMAST = 0x01;
+    private int _SignalType = SIGNALHEAD;
 	private boolean _UseConnectivity = false;
 	private boolean _HasOccupancyDetection = false; // "true" if blocks have occupancy detection
 	private boolean _TrainsFromRoster = true;
@@ -105,7 +108,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private boolean _AlwaysSet = true;
 	private boolean _UseScaleMeters = false;  // "true" if scale meters, "false" for scale feet
 	private int _LayoutScale = Scale.HO;
-        private boolean _SupportVSDecoder = false;
+    private boolean _SupportVSDecoder = false;
 			
 	// operational instance variables
 	private ArrayList<ActiveTrain> activeTrainsList = new ArrayList<ActiveTrain>();  // list of ActiveTrain objects
@@ -871,18 +874,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				return null;
 			}
 			// check/set direction sensors in signal logic for all Sections in this Transit.
-			numErrors = t.checkSignals(_LE);
-			if (numErrors == 0) {
-				t.initializeBlockingSensors();
-			}
-			if (numErrors != 0) {
-				if (showErrorMessages) {
-					JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-						"Error36"),new Object[] {(""+numErrors) }), 
-								rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-				}
-				return null;
-			}
+            numErrors = t.checkSignals(_LE);
+            if (numErrors == 0) {
+                t.initializeBlockingSensors();
+            }
+            if (numErrors != 0) {
+                if (showErrorMessages) {
+                    JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+                        "Error36"),new Object[] {(""+numErrors) }), 
+                                rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+                }
+                return null;
+            }
+            //todo Need to set the same for signal masts
 			// this train is OK, activate the AutoTrains window, if needed
 			if (_autoTrainsFrame==null) {
 				_autoTrainsFrame = new AutoTrainsFrame(_instance);
@@ -1480,6 +1484,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	protected void setLayoutEditor(LayoutEditor editor) {_LE = editor;}
 	protected boolean getUseConnectivity() {return _UseConnectivity;}
 	protected void setUseConnectivity(boolean set) {_UseConnectivity = set;}
+    protected void setSignalType(int type) { _SignalType = type;}
+    protected int getSignalType() { return _SignalType; }
 	protected boolean getTrainsFromRoster() {return _TrainsFromRoster;}
 	protected void setTrainsFromRoster(boolean set) {_TrainsFromRoster = set;}
 	protected boolean getTrainsFromTrains() {return _TrainsFromTrains;}

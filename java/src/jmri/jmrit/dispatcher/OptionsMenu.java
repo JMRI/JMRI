@@ -108,6 +108,7 @@ public class OptionsMenu extends JMenu {
 	JRadioButton trainsFromRoster = new JRadioButton(rb.getString("TrainsFromRoster"));
 	JRadioButton trainsFromTrains = new JRadioButton(rb.getString("TrainsFromTrains"));
 	JRadioButton trainsFromUser = new JRadioButton(rb.getString("TrainsFromUser"));
+    JComboBox signalTypeBox;
 	JCheckBox detectionCheckBox = new JCheckBox(rb.getString("DetectionBox"));
 	JCheckBox shortNameCheckBox = new JCheckBox(rb.getString("ShortNameBox"));
 	JCheckBox nameInBlockCheckBox = new JCheckBox(rb.getString("NameInBlockBox"));
@@ -117,6 +118,8 @@ public class OptionsMenu extends JMenu {
 	JComboBox layoutScaleBox = new JComboBox();
 	JRadioButton scaleFeet = new JRadioButton(rb.getString("ScaleFeet"));
 	JRadioButton scaleMeters = new JRadioButton(rb.getString("ScaleMeters"));
+    
+    String[] signalTypes = {"SignalHeads/SSL", "SignalMasts"};
 	
 	private void optionWindowRequested(ActionEvent e) {
 		if (optionsFrame == null) {
@@ -130,6 +133,9 @@ public class OptionsMenu extends JMenu {
 			useConnectivityCheckBox.setToolTipText(rb.getString("UseConnectivityHint"));
 			p1.add(layoutEditorBox);
 			layoutEditorBox.setToolTipText(rb.getString("LayoutEditorHint"));
+            signalTypeBox = new JComboBox(signalTypes);
+            p1.add(signalTypeBox);
+            signalTypeBox.setToolTipText("LAYOUT EDITOR USES");
 			optionsPane.add(p1);
 			JPanel p2 = new JPanel();
 			p2.setLayout(new FlowLayout());
@@ -235,6 +241,7 @@ public class OptionsMenu extends JMenu {
 			layoutEditorBox.setVisible(false);
 		}
 		useConnectivityCheckBox.setSelected(dispatcher.getUseConnectivity());
+        signalTypeBox.setSelectedIndex(dispatcher.getSignalType());
 		trainsFromRoster.setSelected(dispatcher.getTrainsFromRoster());
 		trainsFromTrains.setSelected(dispatcher.getTrainsFromTrains());
 		trainsFromUser.setSelected(dispatcher.getTrainsFromUser());
@@ -264,6 +271,7 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setAutoAllocate(autoAllocateCheckBox.isSelected());
 		autoDispatchItem.setSelected(autoAllocateCheckBox.isSelected());
 		dispatcher.setAutoTurnouts(autoTurnoutsCheckBox.isSelected());
+        dispatcher.setSignalType(signalTypeBox.getSelectedIndex());
 		autoTurnoutsItem.setSelected(autoTurnoutsCheckBox.isSelected());
 		if (autoTurnoutsCheckBox.isSelected() && ( (layoutEditorList.size()==0) ||
 								(!useConnectivityCheckBox.isSelected()) ) ) {

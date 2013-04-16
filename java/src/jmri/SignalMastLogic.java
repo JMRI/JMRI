@@ -168,6 +168,11 @@ public interface SignalMastLogic {
      * Query if the signalmast logic to the destination signal mast is active.
      */
     public boolean isActive(SignalMast dest);
+    
+    /**
+    * return the active the active destination Signal Mast
+    */
+    public SignalMast getActiveDestination();
 
     public boolean isBlockIncluded(Block block, SignalMast destination);
 
