@@ -3,7 +3,7 @@ package jmri.managers.configurexml;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.jdom.Element;
-import jmri.managers.*;
+import jmri.managers.InternalSensorManager;
 
 /**
  * Provides load and store functionality for
@@ -32,9 +32,8 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
     public Element store(Object o) {
         Element sensors = new Element("sensors");
         
-        InternalSensorManager sm = (jmri.managers.InternalSensorManager)o;
         String defaultState;
-        switch(sm.getDefaultStateForNewSensors()){
+        switch(InternalSensorManager.getDefaultStateForNewSensors()){
             case jmri.Sensor.ACTIVE : defaultState = "active"; break;
             case jmri.Sensor.INACTIVE : defaultState = "inactive"; break;
             case jmri.Sensor.INCONSISTENT : defaultState = "inconsistent"; break;
@@ -59,12 +58,7 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
             } else if (state.equals("inconsistent")){
                 defaultState  = jmri.Sensor.INCONSISTENT;
             }
-            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) jmri.InstanceManager.sensorManagerInstance();
-            for(jmri.Manager sm:proxy.getManagerList()){
-                if(sm instanceof jmri.managers.InternalSensorManager){
-                    ((jmri.managers.InternalSensorManager)sm).setDefaultStateForNewSensors(defaultState);
-                }
-            }
+            InternalSensorManager.setDefaultStateForNewSensors(defaultState);
         }
         boolean load = loadSensors(sensors);
         

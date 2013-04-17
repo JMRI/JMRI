@@ -272,47 +272,32 @@ public class SensorTableAction extends AbstractTableAction {
     }
     
     protected void setDefaultState(JFrame _who){
-        jmri.managers.InternalSensorManager ism = null;
-        if(jmri.InstanceManager.sensorManagerInstance() instanceof jmri.managers.ProxySensorManager){
-            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) jmri.InstanceManager.sensorManagerInstance();
-            for(jmri.Manager sm:proxy.getManagerList()){
-                if(sm instanceof jmri.managers.InternalSensorManager){
-                    ism = ((jmri.managers.InternalSensorManager)sm);
-                    break;
-                }
-            }
+        String[] sensorStates = new String[]{ Bundle.getMessage("BeanStateUnknown"),  Bundle.getMessage("SensorStateInactive"), Bundle.getMessage("SensorStateActive"), Bundle.getMessage("BeanStateInconsistent")};
+        JComboBox stateCombo = new JComboBox(sensorStates);
+        switch(jmri.managers.InternalSensorManager.getDefaultStateForNewSensors()){
+            case jmri.Sensor.ACTIVE : stateCombo.setSelectedItem(Bundle.getMessage("SensorStateActive")); break;
+            case jmri.Sensor.INACTIVE : stateCombo.setSelectedItem(Bundle.getMessage("SensorStateInactive")); break;
+            case jmri.Sensor.INCONSISTENT : stateCombo.setSelectedItem(Bundle.getMessage("BeanStateInconsistent")); break;
+            default : stateCombo.setSelectedItem(Bundle.getMessage("BeanStateUnknown"));
         }
-        if(ism!=null){
-            String[] sensorStates = new String[]{ Bundle.getMessage("BeanStateUnknown"),  Bundle.getMessage("SensorStateInactive"), Bundle.getMessage("SensorStateActive"), Bundle.getMessage("BeanStateInconsistent")};
-            JComboBox stateCombo = new JComboBox(sensorStates);
-            switch(ism.getDefaultStateForNewSensors()){
-                case jmri.Sensor.ACTIVE : stateCombo.setSelectedItem(Bundle.getMessage("SensorStateActive")); break;
-                case jmri.Sensor.INACTIVE : stateCombo.setSelectedItem(Bundle.getMessage("SensorStateInactive")); break;
-                case jmri.Sensor.INCONSISTENT : stateCombo.setSelectedItem(Bundle.getMessage("BeanStateInconsistent")); break;
-                default : stateCombo.setSelectedItem(Bundle.getMessage("BeanStateUnknown"));
-            }
-            int retval = JOptionPane.showOptionDialog(_who,
-                                  Bundle.getMessage("SensorInitialStateMessageBox"), Bundle.getMessage("InitialSensorState"),
-                                  0, JOptionPane.INFORMATION_MESSAGE, null,
-                                  new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), stateCombo}, null );
-            if (retval != 1) {
-                return;
-            }
-            int defaultState = jmri.Sensor.UNKNOWN;
-            String selectedState = (String)stateCombo.getSelectedItem();
-            if(selectedState.equals(Bundle.getMessage("SensorStateActive"))){
-                defaultState = jmri.Sensor.ACTIVE;
-            } else if (selectedState.equals(Bundle.getMessage("SensorStateInactive"))){
-                defaultState = jmri.Sensor.INACTIVE;
-            } else if (selectedState.equals(Bundle.getMessage("BeanStateInconsistent"))){
-                defaultState  = jmri.Sensor.INCONSISTENT;
-            }
-            
-            ism.setDefaultStateForNewSensors(defaultState);
-            
-        } else {
-            JOptionPane.showMessageDialog(_who, Bundle.getMessage("SensorNoInternalManagerBox"), Bundle.getMessage("SensorNoInternalManagerTitle"), JOptionPane.ERROR_MESSAGE);
+        int retval = JOptionPane.showOptionDialog(_who,
+                              Bundle.getMessage("SensorInitialStateMessageBox"), Bundle.getMessage("InitialSensorState"),
+                              0, JOptionPane.INFORMATION_MESSAGE, null,
+                              new Object[]{Bundle.getMessage("ButtonCancel"), Bundle.getMessage("ButtonOK"), stateCombo}, null );
+        if (retval != 1) {
+            return;
         }
+        int defaultState = jmri.Sensor.UNKNOWN;
+        String selectedState = (String)stateCombo.getSelectedItem();
+        if(selectedState.equals(Bundle.getMessage("SensorStateActive"))){
+            defaultState = jmri.Sensor.ACTIVE;
+        } else if (selectedState.equals(Bundle.getMessage("SensorStateInactive"))){
+            defaultState = jmri.Sensor.INACTIVE;
+        } else if (selectedState.equals(Bundle.getMessage("BeanStateInconsistent"))){
+            defaultState  = jmri.Sensor.INCONSISTENT;
+        }
+        
+        jmri.managers.InternalSensorManager.setDefaultStateForNewSensors(defaultState);
         
     }
     
