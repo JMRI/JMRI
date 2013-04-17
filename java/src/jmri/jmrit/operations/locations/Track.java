@@ -146,7 +146,7 @@ public class Track {
 	public static final String CAPACITY = Bundle.getMessage("capacity");
 	public static final String SCHEDULE = Bundle.getMessage("schedule");
 	public static final String CUSTOM = Bundle.getMessage("custom");
-	public static final String DESTINATION = Bundle.getMessage("destination");
+	public static final String DESTINATION = Bundle.getMessage("carDestination");
 
 	// For property change
 	public static final String TYPES_CHANGED_PROPERTY = "trackRollingStockTypes"; // NOI18N

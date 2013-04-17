@@ -1441,18 +1441,16 @@ public class Train implements java.beans.PropertyChangeListener {
 									if (debugFlag)
 										log.debug("Destination (" + car.getDestinationName()
 												+ ") can not service car (" + car.toString()
-												+ ") using train (" + getName() + ")");
+												+ ") using train (" + getName() + ") no track available");
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName()	// NOI18N
 												+ ") can't deliver car (" + car.toString() + ") to destination ("	// NOI18N
-												+ car.getDestinationName() + ")");					// NOI18N																		
+												+ car.getDestinationName() + ") no tracks able to service car");	// NOI18N																		
 									continue;
 								}
 							}
 							// is this a local move?
-							if (!isAllowLocalMovesEnabled()
-									&& !car.isCaboose()
-									&& !car.hasFred()
+							if (!isAllowLocalMovesEnabled() && !car.isCaboose() && !car.hasFred()
 									&& !car.isPassenger()
 									&& car.getLocationName().equals(car.getDestinationName())) {
 								if (debugFlag)
@@ -1461,10 +1459,9 @@ public class Train implements java.beans.PropertyChangeListener {
 									TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() // NOI18N
 											+ ") can't perform local move for car (" + car.toString() // NOI18N
 											+ ") at destination (" + car.getDestinationName() + ")"); // NOI18N
-							continue;
+								continue;
 							}
-							if (!isAllowThroughCarsEnabled()
-									&& j == 0
+							if (!isAllowThroughCarsEnabled()									&& j == 0
 									&& k == rLocations.size() - 1
 									&& !isLocalSwitcher()
 									&& !car.isCaboose()

@@ -3170,6 +3170,18 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { train.getRoute().getName(), rld.getName() }));
 			}
 			
+
+			// any moves left at this location?
+			if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
+				addLine(buildReport, FIVE, MessageFormat.format(Bundle
+						.getMessage("buildNoAvailableMovesDest"), new Object[] { rld.getName() }));
+				continue;
+			}
+
+			noMoreMoves = false;
+			Location destinationTemp = null;
+			Track trackTemp = null;
+			
 			// don't move car to same location unless the route only has one location (local moves) or is passenger,
 			// caboose or car with FRED
 			if (splitString(rl.getName()).equals(splitString(rld.getName())) && !train.isLocalSwitcher()
@@ -3187,16 +3199,6 @@ public class TrainBuilder extends TrainCommon {
 					continue;
 				}
 			}
-			// any moves left at this location?
-			if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
-				addLine(buildReport, FIVE, MessageFormat.format(Bundle
-						.getMessage("buildNoAvailableMovesDest"), new Object[] { rld.getName() }));
-				continue;
-			}
-
-			noMoreMoves = false;
-			Location destinationTemp = null;
-			Track trackTemp = null;
 			
 			// check to see if departure track has any restrictions
 			if (car.getFinalDestination() != null && !car.getTrack().acceptsDestination(testDestination)) {
