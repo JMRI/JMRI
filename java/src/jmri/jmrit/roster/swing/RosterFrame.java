@@ -103,10 +103,10 @@ import org.slf4j.LoggerFactory;
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
     static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
-    static int openWindowInstances = 0;
+    static ArrayList<RosterFrame> frameInstances = new ArrayList<RosterFrame>();
     protected boolean allowQuit = true;
     protected String baseTitle = "Roster";
-    protected JmriAbstractAction newWindowAction = new RosterFrameAction("newWindow", this);
+    protected JmriAbstractAction newWindowAction;
 
     public RosterFrame() {
         this("Roster");
@@ -190,8 +190,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * this to prevent the DP3 from shutting down JMRI when the window is
      * closed.
      */
-    protected void allowQuit(boolean allowQuit) {
-        this.allowQuit = allowQuit;
+    protected void allowQuit(boolean quitAllowed) {
+        if(allowQuit!=quitAllowed){
+            newWindowAction = null;
+            allowQuit = quitAllowed;
+            groups.setNewWindowMenuAction(this.getNewWindowAction());
+        }
+        
         firePropertyChange("quit", "setEnabled", allowQuit);
         //if we are not allowing quit, ie opened from JMRI classic
         //then we must at least allow the window to be closed
@@ -314,12 +319,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     protected final void buildWindow() {
         //Additions to the toolbar need to be added first otherwise when trying to hide bits up during the initialisation they remain on screen
         additionsToToolBar();
-        openWindowInstances++;
-        if (openWindowInstances > 1) {
-            firePropertyChange("closewindow", "setEnabled", true);
-        } else {
-            firePropertyChange("closewindow", "setEnabled", false);
-        }
+        frameInstances.add(this);
         p = InstanceManager.getDefault(UserPreferencesManager.class);
         getTop().add(createTop());
         getBottom().setMinimumSize(summaryPaneDim);
@@ -389,7 +389,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 updateProgMode();
             }
         }
-
+        if (frameInstances.size() > 1) {
+            firePropertyChange("closewindow", "setEnabled", true);
+            allowQuit(frameInstances.get(0).isAllowQuit());
+        } else {
+            firePropertyChange("closewindow", "setEnabled", false);
+        }
     }
 
     boolean checkIfEntrySelected() {
@@ -400,20 +405,21 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return true;
     }
 
+    //@TODO The disabling of the closewindow menu item doesn't quite work as this in only invoked on the closing window, and not the one that is left
     void closeWindow(WindowEvent e) {
         saveWindowDetails();
         //Save any changes made in the roster entry details
         Roster.writeRosterFile();
-        if (allowQuit && openWindowInstances == 1) {
+        if (allowQuit && frameInstances.size() == 1) {
             handleQuit(e);
         } else {
             //As we are not the last window open or we are not allowed to quit the application then we will just close the current window
-            openWindowInstances--;
+            frameInstances.remove(this);
             super.windowClosing(e);
-            dispose();
-            if ((openWindowInstances == 1) && (allowQuit)) {
-                firePropertyChange("closewindow", "setEnabled", false);
+            if ((frameInstances.size() == 1) && (allowQuit)) {
+                frameInstances.get(0).firePropertyChange("closewindow", "setEnabled", false);
             }
+            dispose();
         }
     }
 
@@ -668,7 +674,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * @param allowQuit Set state to either close JMRI or just the roster window
      */
     public void setAllowQuit(boolean allowQuit) {
-        this.allowQuit(allowQuit);
+        allowQuit(allowQuit);
     }
 
     /**
@@ -696,6 +702,8 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * @return the newWindowAction
      */
     protected JmriAbstractAction getNewWindowAction() {
+        if(newWindowAction==null)
+            newWindowAction = new RosterFrameAction("newWindow", this, allowQuit);
         return newWindowAction;
     }
 
@@ -752,7 +760,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     void handleQuit(WindowEvent e) {
-        if (e != null && openWindowInstances == 1) {
+        if (e != null && frameInstances.size() == 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeDP3prompt";
             if (!p.getSimplePreferenceState(rememberWindowClose)) {
                 JPanel message = new JPanel();
@@ -775,6 +783,30 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             } else {
                 AppsBase.handleQuit();
             }
+        } else if (frameInstances.size() >1){
+            final String rememberWindowClose = this.getClass().getName() + ".closeMultipleDP3prompt";
+            if (!p.getSimplePreferenceState(rememberWindowClose)) {
+                JPanel message = new JPanel();
+                JLabel question = new JLabel(rb.getString("MessageLongMultipleCloseWarning"));
+                final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
+                remember.setFont(remember.getFont().deriveFont(10.0F));
+                message.setLayout(new BoxLayout(message, BoxLayout.Y_AXIS));
+                message.add(question);
+                message.add(remember);
+                int result = JOptionPane.showConfirmDialog(null,
+                        message,
+                        rb.getString("MessageShortCloseWarning"),
+                        JOptionPane.YES_NO_OPTION);
+                if (remember.isSelected()) {
+                    p.setSimplePreferenceState(rememberWindowClose, true);
+                }
+                if (result == JOptionPane.YES_OPTION) {
+                    AppsBase.handleQuit();
+                }
+            } else {
+                AppsBase.handleQuit();
+            }
+            //closeWindow(null);
         }
     }
 
@@ -927,7 +959,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             hideGroups();
         } else if (args[0].equals("quit")) {
             saveWindowDetails();
-            handleQuit(null);
+            handleQuit(new WindowEvent(this, frameInstances.size()));
         } else if (args[0].equals("closewindow")) {
             closeWindow(null);
         } else if (args[0].equals("newwindow")) {
