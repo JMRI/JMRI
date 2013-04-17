@@ -1180,6 +1180,15 @@
     destined to your industry, use the "Select loads serviced by track" to only accept cars with
     loads that your industry is demanding.</P>
 
+   <P>Specifying an alternate track for a schedule also changes the behavior of cars with custom
+    loads but without a final destination. When the program finds a car with a custom load, it will
+    search all spurs for a schedule that is demanding that car's type and load, and if found will
+    route the car there. However, if the track was full, the program would continue to search for a
+    track/schedule that can accept the car. If all tracks are full and no alternate track is
+    specified for any of the track/schedules, the program will attempt to move the car to another
+    location. If there's an alternate track specified, the program will only move the car when one
+    of the spurs can accept a new car, i.e. the track is no longer full.</P>
+
    <P>Schedules can operate in one of two modes, sequential as described above, or in match
     mode. Match mode eliminates the sequential aspects of a schedule. In match mode, the program
     will search the entire schedule to find a car type and load that matches the car that the
@@ -1545,7 +1554,7 @@
     the program could set out up to four cars at each industry, but no more than four cars total.</p>
 
    <p>If you don't set a minimum, then one industry could hog all of the track. By setting a
-    minimum of say 55' for each industry, it means that the most anyone industry is going to get is
+    minimum of say 55' for each industry, it means that the most any one industry is going to get is
     three cars. There will always be space available for at least one car at each industry. Note
     that the maximum number of cars in all cases is four. It is only how the cars are distributed
     that changes when setting a minimum.</p>
