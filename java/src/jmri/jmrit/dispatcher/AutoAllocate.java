@@ -1071,22 +1071,22 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 	ArrayList<LevelXing> _levelXingList = new ArrayList<LevelXing>();
 	
     private boolean isSignalHeldAtStartOfSection(AllocationRequest ar){
-        Section sec = ar.getSection();
-        if(sec==null){
+        
+        if(ar==null){
             return false;
         }
         
+        Section sec = ar.getSection();
         ActiveTrain mActiveTrain = ar.getActiveTrain();
         Section lastSec = mActiveTrain.getLastAllocatedSection();
-
-        if(lastSec==null){
+        
+        if(lastSec==null || mActiveTrain==null || sec ==null){
             return false;
         }
         
         if(!sec.equals(mActiveTrain.getNextSectionToAllocate())){
             log.error("Allocation request section does not match active train next section to allocate");
-            if(sec!=null)
-                log.error("Section to allocate " + sec.getDisplayName());
+            log.error("Section to allocate " + sec.getDisplayName());
             if(mActiveTrain.getNextSectionToAllocate()!=null)
                 log.error("Active Train expected " + mActiveTrain.getNextSectionToAllocate().getDisplayName());
             return false;
