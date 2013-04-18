@@ -112,14 +112,46 @@ public class AllocationRequest {
 	}
 		
 	public void dispose() {
-		if ( (mSectionListener!=null) && (mSection!=null) ) {
+        log.info("disposed called");
+        if ( (mSectionListener!=null) && (mSection!=null) ) {
 			mSection.removePropertyChangeListener(mSectionListener);
 		}
+        
+        if ( (mSignalMastListener!=null) && (mWaitingForSignalMast!=null) ) {
+            log.info("Remove mast listener");
+            mWaitingForSignalMast.removePropertyChangeListener(mSignalMastListener);
+        }
+        mSignalMastListener = null;
+        mWaitingForSignalMast = null;
 		mSectionListener = null;
 		mSection = null;
 		mActiveTrain = null;
     }
-			    
+    
+    private java.beans.PropertyChangeListener mSignalMastListener = null;
+    
+    private jmri.SignalMast mWaitingForSignalMast = null;
+    
+    public void setWaitingForSignalMast(jmri.SignalMast sm){
+        if(mSignalMastListener == null){
+            mSignalMastListener = new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent e) { 
+                    if (e.getPropertyName().equals("Held")) {
+                        if(!((Boolean) e.getNewValue()).booleanValue()){
+                            mWaitingForSignalMast.removePropertyChangeListener(mSignalMastListener);
+                            DispatcherFrame.instance().forceScanOfAllocation();
+                        }
+                    }
+                }
+            };
+        }
+        if(mWaitingForSignalMast!=null)
+            mWaitingForSignalMast.removePropertyChangeListener(mSignalMastListener);
+        mWaitingForSignalMast = sm;
+        if(mWaitingForSignalMast!=null)
+            mWaitingForSignalMast.addPropertyChangeListener(mSignalMastListener);
+    }
+    
     static Logger log = LoggerFactory.getLogger(AllocationRequest.class.getName());
 }
 

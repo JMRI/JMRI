@@ -467,6 +467,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		if (optionsMenu!=null) optionsMenu.initializeMenu();
 		if (_AutoAllocate) autoAllocate.scanAllocationRequestList(allocationRequests);
 	}
+    protected void forceScanOfAllocation(){
+        if (_AutoAllocate) autoAllocate.scanAllocationRequestList(allocationRequests);
+    }
 	private void handleAutoReleaseChanged(ActionEvent e) {
 		if (autoReleaseBox.isSelected()) checkAutoRelease();
 	}
@@ -1009,7 +1012,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				_atListeners.remove(m-1);
 			}
 		}
-		if (at.getAutoRun()) {		
+		if (at.getAutoRun()) {
 			AutoActiveTrain aat = at.getAutoActiveTrain();
 			_autoTrainsFrame.removeAutoActiveTrain(aat);
 			aat.terminate();

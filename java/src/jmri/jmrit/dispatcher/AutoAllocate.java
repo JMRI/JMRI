@@ -110,6 +110,7 @@ public class AutoAllocate {
 				log.error("error in allocation request list - AllocationRequest is null");
 				return;
 			}
+            if(DispatcherFrame.instance().getSignalType()==DispatcherFrame.SIGNALMAST && isSignalHeldAtStartOfSection(ar)) return;
 			if (getPlanThisTrain(ar.getActiveTrain())!=null) {
 				// this train is in an active Allocation Plan, anything to do now?
 				if (willAllocatingFollowPlan(ar,getPlanThisTrain(ar.getActiveTrain()))) {
@@ -190,7 +191,7 @@ public class AutoAllocate {
 						if (okToAllocate) {
 							if (allocateIfLessThanThreeAhead(ar)) return;
 						}
-					}		
+					}
 				}
 			}
 		}
@@ -1068,7 +1069,52 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 		return false;
 	}
 	ArrayList<LevelXing> _levelXingList = new ArrayList<LevelXing>();
-					
+	
+    private boolean isSignalHeldAtStartOfSection(AllocationRequest ar){
+        Section sec = ar.getSection();
+        if(sec==null){
+            return false;
+        }
+        
+        ActiveTrain mActiveTrain = ar.getActiveTrain();
+        Section lastSec = mActiveTrain.getLastAllocatedSection();
+
+        if(lastSec==null){
+            return false;
+        }
+        
+        if(!sec.equals(mActiveTrain.getNextSectionToAllocate())){
+            log.error("Allocation request section does not match active train next section to allocate");
+            if(sec!=null)
+                log.error("Section to allocate " + sec.getDisplayName());
+            if(mActiveTrain.getNextSectionToAllocate()!=null)
+                log.error("Active Train expected " + mActiveTrain.getNextSectionToAllocate().getDisplayName());
+            return false;
+        }
+
+        Block facingBlock;
+        Block protectingBlock;
+        if(ar.getSectionDirection()==jmri.Section.FORWARD){
+            protectingBlock = sec.getBlockBySequenceNumber(0);
+            facingBlock = lastSec.getBlockBySequenceNumber(lastSec.getNumBlocks()-1);
+        } else {
+            //Reverse
+            protectingBlock = sec.getBlockBySequenceNumber(sec.getNumBlocks()-1);
+            facingBlock = lastSec.getBlockBySequenceNumber(0);
+        }
+        if(protectingBlock == null || facingBlock == null){
+            return false;
+        }
+
+        jmri.SignalMast sm = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingSignalMast(facingBlock,protectingBlock);
+        if(sm!=null && sm.getHeld()){
+            ar.setWaitingForSignalMast(sm);
+            return true;
+        }
+        return false;
+    }
+
+    
     static Logger log = LoggerFactory.getLogger(AutoAllocate.class.getName());
 }
 

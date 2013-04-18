@@ -538,7 +538,7 @@ public class AutoActiveTrain implements ThrottleListener {
             switch (_controllingSignal.getAppearance()) {
                 case SignalHead.DARK:
                 case SignalHead.RED:
-                case SignalHead.FLASHRED:					
+                case SignalHead.FLASHRED:
                         // May get here from signal changing before Block knows it is occupied, so must 
                         //      check Block occupancy sensor, which must change before signal.
                         if (_conSignalProtectedBlock.getSensor().getState()==Block.OCCUPIED) {
@@ -583,9 +583,10 @@ public class AutoActiveTrain implements ThrottleListener {
                 setSpeed(RESTRICTED_SPEED);
                 _activeTrain.setStatus(ActiveTrain.RUNNING);
             } else {
+                //@TODO SignalMasts and the Logic behind them allow for a more granular set of speeds, we could do with an additional method to set the target speed
                 //Go for the speed based initially on what the signal reports back, failing that based upon any Signal Mast Logic Speed.
                 String strSpeed = (String) _controllingSignalMast.getSignalSystem().getProperty(displayedAspect, "speed");
-                float speed = 0.0f;
+                float speed = -1.0f;
                 if(strSpeed!=null){
                     try {
                         speed = new Float(strSpeed);
@@ -597,20 +598,33 @@ public class AutoActiveTrain implements ThrottleListener {
                             log.debug("Speed not found" + strSpeed);
                         }
                     }
-                } else {
-                    jmri.SignalMastLogic sml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(_controllingSignalMast);
-                    SignalMast des;
-                    if((des = sml.getActiveDestination())!=null){
-                        speed = sml.getMaximumSpeed(des);
-                    }
                 }
-                if(speed>0.0f){
+                jmri.SignalMastLogic sml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(_controllingSignalMast);
+                SignalMast des;
+                if(sml!=null && (des = sml.getActiveDestination())!=null){
+                    
+                    float smlSpeed = sml.getMaximumSpeed(des);
+                    if(speed < 0.0f || smlSpeed<0.0f && smlSpeed<speed)
+                        speed=smlSpeed;
+                }
+                
+                if(speed>-1.0f){
                     float increment = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed()/7f;
                     int speedState = (int)Math.ceil(speed/increment);
                     if(speedState <= 1){
                         speedState = 2;
                     }
-                    setSpeed(speedState);
+                    /* We should work on the basis that the speed required in the current block/section is governed by the signalmast
+                       that we have passed and not the one we are approaching when we are accelerating.
+                       However when we are deaccelerating we should be aiming to meet the speed required by the approaching signalmast
+                       whether that is to slow down or come to a complete stand still.
+                    */
+                    if(speedState<previousSpeedSet){
+                        setSpeed(speedState);
+                    } else {
+                        setSpeed(previousSpeedSet);
+                    }
+                    previousSpeedSet = speedState;
                     _activeTrain.setStatus(ActiveTrain.RUNNING);
                 
                 } else {
@@ -621,6 +635,9 @@ public class AutoActiveTrain implements ThrottleListener {
             }
         }
 	}
+    
+    int previousSpeedSet = NORMAL_SPEED;
+    
 	// called to cancel a stopping action that is in progress
 	private synchronized void cancelStopInCurrentSection() {
 		if (isStopping()) {
@@ -956,9 +973,12 @@ public class AutoActiveTrain implements ThrottleListener {
 		}
 	}
     
-	public void dispose() {
-		
-	}
+    public void dispose() {
+        if(_controllingSignalMast!=null && _conSignalMastListener!=null)
+            _controllingSignalMast.removePropertyChangeListener(_conSignalMastListener);
+        _controllingSignalMast = null;
+        _conSignalMastListener = null;
+    }
 
 // _________________________________________________________________________________________
 
