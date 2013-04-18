@@ -1072,17 +1072,19 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 	
     private boolean isSignalHeldAtStartOfSection(AllocationRequest ar){
         
-        if(ar==null){
+        if(ar==null)
             return false;
-        }
-        
+
         Section sec = ar.getSection();
         ActiveTrain mActiveTrain = ar.getActiveTrain();
+        
+        if(sec==null || mActiveTrain==null)
+            return false;
+        
         Section lastSec = mActiveTrain.getLastAllocatedSection();
         
-        if(lastSec==null || mActiveTrain==null || sec ==null){
+        if(lastSec == null)
             return false;
-        }
         
         if(!sec.equals(mActiveTrain.getNextSectionToAllocate())){
             log.error("Allocation request section does not match active train next section to allocate");
