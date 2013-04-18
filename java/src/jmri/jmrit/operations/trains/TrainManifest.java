@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Builds a train's manifest.
  * 
- * @author Daniel Boudreau Copyright (C) 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2011, 2012, 2013
  * @version $Revision: 1 $
  */
 public class TrainManifest extends TrainCommon {
@@ -129,10 +129,10 @@ public class TrainManifest extends TrainCommon {
 					
 					printTrackComments(fileOut, rl, carList);
 					
+					// add location comment
+					if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(""))
+						newLine(fileOut, rl.getLocation().getComment());					
 				}
-				// add location comment
-				if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(""))
-					newLine(fileOut, rl.getLocation().getComment());
 			}
 
 			// engine change or helper service?
@@ -208,6 +208,10 @@ public class TrainManifest extends TrainCommon {
 												new Object[] { train.getExpectedDepartureTime(rl) });
 						}
 						newLine(fileOut, s);
+						
+						// add location comment
+						if (Setup.isPrintLocationCommentsEnabled() && !rl.getLocation().getComment().equals(""))
+							newLine(fileOut, rl.getLocation().getComment());
 					}
 				}
 			} else {
