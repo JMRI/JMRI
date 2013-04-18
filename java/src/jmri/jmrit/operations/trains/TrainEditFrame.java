@@ -239,6 +239,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		numEnginesBox.addItem(Train.AUTO);
 		numEnginesBox.setMinimumSize(new Dimension(50, 20));
+		numEnginesBox.setToolTipText(Bundle.getMessage("TipNumberOfLocos"));
 		addItem(trainReq, textEngine, 1, 1);
 		addItem(trainReq, numEnginesBox, 2, 1);
 		addItem(trainReq, textModel, 3, 1);
@@ -255,8 +256,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(trainReq, roadEngineBox, 6, 1);
 
 		addItem(trainReq, noneRadioButton, 2, 2);
+		noneRadioButton.setToolTipText(Bundle.getMessage("TipNoCabooseOrFRED"));
 		addItem(trainReq, fredRadioButton, 3, 2);
+		fredRadioButton.setToolTipText(Bundle.getMessage("TipFRED"));
 		addItem(trainReq, cabooseRadioButton, 4, 2);
+		cabooseRadioButton.setToolTipText(Bundle.getMessage("TipCaboose"));
 		addItem(trainReq, textRoad3, 5, 2);
 		roadCabooseBox.setMinimumSize(new Dimension(120, 20));
 		roadCabooseBox.setToolTipText(Bundle.getMessage("RoadCabooseTip"));
