@@ -3621,6 +3621,8 @@ public class TrainBuilder extends TrainCommon {
 	private void reportCarsNotMoved(RouteLocation rl, int percent) {
 		if (!success || percent != 100)
 			return;
+		if (carIndex < 0)
+			carIndex = 0;
 		for (int i = carIndex; i < carList.size(); i++) {
 			Car car = carManager.getById(carList.get(i));
 			// find a car at this location that hasn't been given a destination
