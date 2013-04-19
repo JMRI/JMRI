@@ -2277,10 +2277,12 @@
    <H3>Optional Train Requirements</H3>
 
    You can control the number of locomotives that will be assigned to this train, and optionally,
-   the locomotive's model and road name. If you want two or more locomotives assigned to a train,
-   the locomotives must be part of a <A HREF="#LocomotivesAdd">consist</A>. If you select "Auto",
-   the program will calculate the number of locomotives required for this train based on the weight
-   of the train, the track grade, and the horsepower of the locomotives.
+   the locomotive's model and road name. If you don't want the program assigning locomotives to your
+   train, select 0 as the number of locos required. If you want two or more locomotives assigned to
+   a train, the locomotives must be part of a
+   <A HREF="#LocomotivesAdd">consist</A>. If you select "Auto", the program will calculate the
+   number of locomotives required for this train based on the weight of the train, the track grade,
+   and the horsepower of the locomotives.
 
    <P>
     You can also require a <A HREF="#CabooseFredHazardous">caboose or car with FRED (Flashing

@@ -1666,6 +1666,7 @@ public class TrainBuilder extends TrainCommon {
 			}
 			addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocReqMoves"),
 					new Object[] { rl.getName(), reqNumOfMoves, saveReqMoves, rl.getMaxCarMoves() }));
+			addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 			findDestinationsForCarsFromLocation(rl, routeIndex, false);
 			// perform a another pass if aggressive and there are requested moves
 			// this will perform local moves at this location, services off spot tracks
@@ -1678,9 +1679,12 @@ public class TrainBuilder extends TrainCommon {
 
 			if (routeIndex == 0)
 				checkDepartureForStaging(percent); // report ASAP that the build has failed
+			
 			addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildStatusMsg"), new Object[] {
 					(success ? Bundle.getMessage("Success") : Bundle.getMessage("Partial")),
 					Integer.toString(moves), Integer.toString(saveReqMoves), rl.getName(), train.getName() }));
+			
+			reportCarsNotMoved(rl, percent);
 		}
 		checkDepartureForStaging(percent); // covers the cases: no pick ups, wrong train direction and train skips,
 	}
@@ -3611,6 +3615,22 @@ public class TrainBuilder extends TrainCommon {
 				}
 			}
 		}
+	}
+	
+	// report any cars left at location
+	private void reportCarsNotMoved(RouteLocation rl, int percent) {
+		if (!success || percent != 100)
+			return;
+		for (int i = carIndex; i < carList.size(); i++) {
+			Car car = carManager.getById(carList.get(i));
+			// find a car at this location that hasn't been given a destination
+			if (!car.getLocationName().equals(rl.getName()) || car.getRouteDestination() != null)
+				continue;
+			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarIgnored"),
+					new Object[] { car.toString(), car.getType(), car.getLoad(), car.getLocationName(),
+							car.getTrackName() }));
+		}
+		addLine(buildReport, SEVEN, BLANK_LINE);
 	}
 
 	private void buildFailed(BuildFailedException e) {
