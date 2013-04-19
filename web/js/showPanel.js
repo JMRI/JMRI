@@ -16,12 +16,10 @@
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
  *  
- *  TODO: handle turnoutdrawunselectedleg = "yes" for crossovers
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
  *  TODO: research movement of locoicons (will require "promoting" locoicon to system entity)
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
- *  TODO: show list of available panels in footer, or add [Prev] [Next] links to navigate between panels
  *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
@@ -33,6 +31,7 @@
  *  TODO: finish indicatorXXicon logic, handling occupancy and error states
  *  TODO: handle inputs/selection on various memory widgets
  *  TODO: improve visual of multisensorclick by sending all state changes in one message
+ *  TODO: alignment of memoryIcons without fixed width is very different.  Recommended workaround is to use fixed width. 
  *   
  **********************************************************************************************/
 
@@ -1010,6 +1009,18 @@ var $getTextCSSFromObj = function($widget){
 	if ($widget.redBorder != undefined) {
 		$retCSS['border-color'] = "rgb(" + $widget.redBorder + "," + $widget.greenBorder + "," + $widget.blueBorder + ") ";;
 		$retCSS['border-style'] = 'solid';
+	}
+	if ($widget.fixedWidth != undefined) {
+		$adj = 0;
+		if ($widget.margin != undefined) { $adj = $widget.margin * 2; }  //margins are subtracted from JMRI fixedwidth 
+		$retCSS['width'] = ($widget.fixedWidth - $adj) + "px ";
+	}
+	if ($widget.justification != undefined) {
+		if ($widget.justification == "centre") {
+			$retCSS['text-align'] = "center";
+		} else {
+			$retCSS['text-align'] = $widget.justification;
+		}
 	}
 	if ($widget.style != undefined) {
 		switch ($widget.style) { //set font based on style attrib from xml
