@@ -877,17 +877,19 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				return null;
 			}
 			// check/set direction sensors in signal logic for all Sections in this Transit.
-            numErrors = t.checkSignals(_LE);
-            if (numErrors == 0) {
-                t.initializeBlockingSensors();
-            }
-            if (numErrors != 0) {
-                if (showErrorMessages) {
-                    JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-                        "Error36"),new Object[] {(""+numErrors) }), 
-                                rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+            if(getSignalType()==SIGNALHEAD){
+                numErrors = t.checkSignals(_LE);
+                if (numErrors == 0) {
+                    t.initializeBlockingSensors();
                 }
-                return null;
+                if (numErrors != 0) {
+                    if (showErrorMessages) {
+                        JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+                            "Error36"),new Object[] {(""+numErrors) }), 
+                                    rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+                    }
+                    return null;
+                }
             }
             //todo Need to set the same for signal masts
 			// this train is OK, activate the AutoTrains window, if needed
@@ -1180,6 +1182,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				ArrayList<Section> secList = at.getTransit().getSectionListBySeq(seqNum);
 				if (secList.size()==1) {
 					nextSection = secList.get(0);
+                    //check here to see if block is already assigned to an allocated section;
+                    if(getSignalType()==SIGNALMAST && !checkBlocksNotInAllocatedSection(nextSection, ar)){
+                        return null;
+                    }
 				}
 				else if (secList.size()>1) {
 					if (_AutoAllocate) {
@@ -1199,6 +1205,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				ArrayList<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
 				if (secList.size()==1) {
 					nextSection = secList.get(0);
+                    //check here to see if block is already assigned to an allocated section;
+                    if(getSignalType()==SIGNALMAST && !checkBlocksNotInAllocatedSection(secList.get(0), ar)){
+                        return null;
+                    }
 				}
 				else if (secList.size()>1) {
 					if (_AutoAllocate) {
@@ -1230,9 +1240,9 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			if ( (_UseConnectivity) && (ar.getSectionSeqNumber()!=-99) ) {
 				boolean turnoutsOK = true;  
 				if (_AutoTurnouts || at.getAutoRun()) {
-					// automatically set the turnouts for this section before allocation
-					turnoutsOK = autoTurnouts.setTurnoutsInSection(s,ar.getSectionSeqNumber(),nextSection,
-												at,_LE,_AlwaysSet);
+                        // automatically set the turnouts for this section before allocation
+                        turnoutsOK = autoTurnouts.setTurnoutsInSection(s,ar.getSectionSeqNumber(),nextSection,
+												at,_LE,_AlwaysSet);                    
 				}
 				else {
 					// check that turnouts are correctly set before allowing allocation to proceed
@@ -1284,7 +1294,50 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			log.error("Null Allocation Request provided in request to allocate a section");
 		}
 		return as;
-	}	
+	}
+    
+    /*
+    * This is used to determine if the blocks in a section we want to allocate are already allocated to a section, or if they are now free.
+    */
+    protected boolean checkBlocksNotInAllocatedSection(Section s, AllocationRequest ar){
+        for(AllocatedSection as :allocatedSections){
+            if(as.getSection()!=s){
+                ArrayList<Block> blas = as.getSection().getBlockList();
+                for(Block b: s.getBlockList()){
+                    if(blas.contains(b)){
+                        if(as.getSection().getOccupancy()==Block.OCCUPIED){
+                            //The next check looks to see if the block has already been passed or not and therefore ready for allocation.
+                            if(as.getSection().getState()==Section.FORWARD){
+                                for(int i = 0; i<blas.size(); i++){
+                                    //The block we get to is occupied therefore the subsequent blocks have not been entered
+                                    if(blas.get(i).getState()==Block.OCCUPIED){
+                                        ar.setWaitingOnBlock(b);
+                                        return false;
+                                    } else if (blas.get(i)==b){
+                                        break;
+                                    }
+                                }
+                            } else {
+                                for(int i = blas.size(); i>=0 ;i--){
+                                    //The block we get to is occupied therefore the subsequent blocks have not been entered
+                                    if(blas.get(i).getState()==Block.OCCUPIED){
+                                        ar.setWaitingOnBlock(b);
+                                        return false;
+                                    } else if (blas.get(i)==b){
+                                        break;
+                                    }
+                                }
+                            }
+                        } else if (as.getSection().getOccupancy()!=Section.FREE) {
+                            ar.setWaitingOnBlock(b);
+                            return false; 
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
 	// automatically make a choice of next section
 	private Section autoChoice(ArrayList<Section> sList, AllocationRequest ar) {
 		Section tSection = autoAllocate.autoNextSectionChoice(sList,ar);

@@ -120,7 +120,10 @@ public class AutoAllocate {
 			else if (!waitingForStartTime(ar)) {
 				// train isn't waiting, continue only if requested Section is currently free and not occupied
 				if ( (ar.getSection().getState()==Section.FREE) && 
-							(ar.getSection().getOccupancy()!=Section.OCCUPIED) ) {
+                        (ar.getSection().getOccupancy()!=Section.OCCUPIED) && 
+                            (_dispatcher.getSignalType()==DispatcherFrame.SIGNALHEAD || 
+                                (_dispatcher.getSignalType()==DispatcherFrame.SIGNALMAST && 
+                                    _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(), ar))) ) {
 					// requested Section is currently free and not occupied
 					ArrayList<ActiveTrain> activeTrainsList = _dispatcher.getActiveTrainsList();
 					if (activeTrainsList.size()==1) {
@@ -214,7 +217,11 @@ public class AutoAllocate {
 		}
 		// no prepared choice, or prepared choice failed, is there an unoccupied Section available
 		for (int i=0; i<sList.size(); i++) {
-			if ( (sList.get(i).getOccupancy()==Section.UNOCCUPIED) && (sList.get(i).getState()==Section.FREE) ) {
+			if ( (sList.get(i).getOccupancy()==Section.UNOCCUPIED) && 
+                    (sList.get(i).getState()==Section.FREE) && 
+                        (_dispatcher.getSignalType()==DispatcherFrame.SIGNALHEAD || 
+                            (_dispatcher.getSignalType()==DispatcherFrame.SIGNALMAST && 
+                                _dispatcher.checkBlocksNotInAllocatedSection(ar.getSection(), ar))) ) {
 				return sList.get(i);
 			}
 		}
