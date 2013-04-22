@@ -1165,6 +1165,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if(section!=null &&(!useLayoutEditor || !useLayoutEditorBlocks)){
                 log.warn("This Logic " + source.getDisplayName() + " to " + destination.getDisplayName() + " is not using the layout editor or its blocks, the associated section will not be populated correctly");
             }
+            if(section==null){
+                associatedSection = null;
+                return;
+            }
             associatedSection = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(section.getDisplayName(), section);
             if(!autoBlocks.isEmpty() && associatedSection!=null){
                 createSectionDetails();

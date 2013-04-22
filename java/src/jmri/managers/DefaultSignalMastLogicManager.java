@@ -402,29 +402,23 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         for(SignalMastLogic sml : getSignalMastLogicList()){
             
             jmri.jmrit.display.layoutEditor.LayoutBlock faceLBlock=sml.getFacingBlock();
-            Block faceBlock = null;
             if(faceLBlock!=null){
-                faceBlock = faceLBlock.getBlock();
                 for(SignalMast destMast: sml.getDestinationList()){
                     ArrayList<Block> blks = sml.getAutoBlocksBetweenMasts(destMast);
-                    boolean forward = true;
                     if(blks.size()!=0){
-                        Section matchsec = null;
-                        if(matchsec==null){
-                            Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName()+":"+destMast.getDisplayName());
-                            if(sec!=null){
-                                sec.setSectionType(Section.SIGNALMASTLOGIC);
-                                //Auto running requires forward/reverse sensors, but at this stage SML does not support that, so just create dummy internal ones for now.
-                                Sensor sen = InstanceManager.sensorManagerInstance().provideSensor("IS:"+sec.getSystemName()+":forward");
-                                sen.setUserName(sec.getSystemName()+":forward");
-                                
-                                sen = InstanceManager.sensorManagerInstance().provideSensor("IS:"+sec.getSystemName()+":reverse");
-                                sen.setUserName(sec.getSystemName()+":reverse");
-                                sec.setForwardBlockingSensorName(sec.getSystemName()+":forward");
-                                sec.setReverseBlockingSensorName(sec.getSystemName()+":reverse");
-                                sml.setAssociatedSection(sec, destMast);
-                                sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
-                            }
+                        Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName()+":"+destMast.getDisplayName());
+                        if(sec!=null){
+                            sec.setSectionType(Section.SIGNALMASTLOGIC);
+                            //Auto running requires forward/reverse sensors, but at this stage SML does not support that, so just create dummy internal ones for now.
+                            Sensor sen = InstanceManager.sensorManagerInstance().provideSensor("IS:"+sec.getSystemName()+":forward");
+                            sen.setUserName(sec.getSystemName()+":forward");
+                            
+                            sen = InstanceManager.sensorManagerInstance().provideSensor("IS:"+sec.getSystemName()+":reverse");
+                            sen.setUserName(sec.getSystemName()+":reverse");
+                            sec.setForwardBlockingSensorName(sec.getSystemName()+":forward");
+                            sec.setReverseBlockingSensorName(sec.getSystemName()+":reverse");
+                            sml.setAssociatedSection(sec, destMast);
+                            sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
                         }
                     }
                 }
