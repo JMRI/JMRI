@@ -13,6 +13,7 @@ import java.util.Set;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.Section;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
@@ -104,6 +105,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         source.addPropertyChangeListener(propertySourceMastListener);
         if(source.getAspect()==null)
             source.setAspect(stopAspect);
+        for(SignalMast sm:getDestinationList()){
+            DestinationMast destMast = destList.get(sm);
+            if(destMast.getAssociatedSection()!=null){
+                String oldUserName = destMast.getAssociatedSection().getUserName();
+                String newUserName = source.getDisplayName()+":"+sm.getDisplayName();
+                jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).renameBean(oldUserName, newUserName, ((NamedBean)destMast.getAssociatedSection()));
+            }
+        }
         firePropertyChange("updatedSource", oldMast, newMast);
     }
     
@@ -120,6 +129,11 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             setSignalAppearance();
         }
         destList.remove(oldMast);
+        if(destMast.getAssociatedSection()!=null){
+            String oldUserName = destMast.getAssociatedSection().getUserName();
+            String newUserName = source.getDisplayName()+":"+newMast.getDisplayName();
+            jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).renameBean(oldUserName, newUserName, destMast.getAssociatedSection());
+        }
         destList.put(newMast, destMast);
         firePropertyChange("updatedDestination", oldMast, newMast);
     }
@@ -355,6 +369,20 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             return false;
         }
         return destList.get(destination).useLayoutEditorBlocks();
+    }
+    
+    public Section getAssociatedSection(SignalMast destination){
+        if(!destList.containsKey(destination)){
+            return null;
+        }
+        return destList.get(destination).getAssociatedSection();
+    }
+    
+    public void setAssociatedSection(Section sec, SignalMast destination){
+        if(!destList.containsKey(destination)){
+            return;
+        }
+        destList.get(destination).setAssociatedSection(sec);
     }
     
     /**
@@ -1028,9 +1056,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     
     class DestinationMast{
         LayoutBlock destinationBlock = null;
-        LayoutBlock protectingBlock = null;
+        LayoutBlock protectingBlock = null; //this is the block that the source signal is protecting
         
-        //Hashtable<NamedBeanHandle<Turnout>, Integer> turnouts = new Hashtable<NamedBeanHandle<Turnout>, Integer>(0);
         ArrayList<NamedBeanSetting> userSetTurnouts = new ArrayList<NamedBeanSetting>(0);
         Hashtable<Turnout, Integer> autoTurnouts = new Hashtable<Turnout, Integer>(0);
         //Hashtable<Turnout, Boolean> turnoutThroats = new Hashtable<Turnout, Boolean>(0);
@@ -1062,6 +1089,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         boolean useLayoutEditorBlocks = false;
         boolean lockTurnouts = false;
         
+        NamedBeanHandle<Section> associatedSection = null;
+        
         DestinationMast(SignalMast destination){
             this.destination=destination;
             if(destination.getAspect()==null)
@@ -1077,10 +1106,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         LayoutBlock getProtectingBlock(){
             return protectingBlock;
         }
-        
-        /*LayoutBlock getProtectingBlock(){
-            return protectingBlock;
-        }*/
         
         String comment;
         
@@ -1134,6 +1159,41 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
 
         int getStoreState(){
             return store;
+        }
+        
+        void setAssociatedSection(Section section){
+            if(section!=null &&(!useLayoutEditor || !useLayoutEditorBlocks)){
+                log.warn("This Logic " + source.getDisplayName() + " to " + destination.getDisplayName() + " is not using the layout editor or its blocks, the associated section will not be populated correctly");
+            }
+            associatedSection = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(section.getDisplayName(), section);
+            if(!autoBlocks.isEmpty() && associatedSection!=null){
+                createSectionDetails();
+            }
+        }
+        
+        Section getAssociatedSection(){
+            if(associatedSection!=null)
+                return associatedSection.getBean();
+            return null;
+        }
+        
+        void createSectionDetails(){
+            getAssociatedSection().removeAllBlocksFromSection();
+            for(Block key:autoBlocks.keySet()){
+                getAssociatedSection().addBlock(key);
+            }
+            String dir = jmri.Path.decodeDirection(getFacingBlock().getNeighbourDirection(getProtectingBlock()));
+            jmri.EntryPoint ep = new jmri.EntryPoint(getProtectingBlock().getBlock(), getFacingBlock().getBlock(), dir);
+            ep.setTypeForward();
+            getAssociatedSection().addToForwardList(ep);
+            
+            LayoutBlock proDestLBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlockByNamedBean(destination, destinationBlock.getMaxConnectedPanel());
+            if(proDestLBlock!=null){
+                dir = jmri.Path.decodeDirection(proDestLBlock.getNeighbourDirection(destinationBlock));
+                ep = new jmri.EntryPoint(destinationBlock.getBlock(), proDestLBlock.getBlock(), dir);
+                ep.setTypeReverse();
+                getAssociatedSection().addToReverseList(ep);
+            }
         }
         
         boolean isTurnoutLockAllowed() { return lockTurnouts; }
@@ -1238,10 +1298,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
             }
             destMastInit = false;
-
-            if(blocks==null){
-                userSetBlocks = new ArrayList<NamedBeanSetting>(0);
-            } else {
+            
+            userSetBlocks = new ArrayList<NamedBeanSetting>(0);
+            if(blocks!=null){
                 userSetBlocks = new ArrayList<NamedBeanSetting>();
                 Enumeration<Block> e = blocks.keys();
                 while(e.hasMoreElements()){
@@ -1263,18 +1322,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             if(log.isDebugEnabled())
                 log.debug(destination.getDisplayName() + " setAutoBlocks Called");
             if (this.autoBlocks!=null){
-                Set<Block> blockKeys = autoBlocks.keySet();
-                //while ( blockKeys.hasMoreElements() )
-                for(Block key:blockKeys)
-                {
-               //Block key = blockKeys.nextElement();
+                for(Block key:autoBlocks.keySet()) {
                     key.removePropertyChangeListener(propertyBlockListener);
                 }
-                //minimumBlockSpeed = 0;
             }
             destMastInit = false;
             if (blocks==null){
                 this.autoBlocks= new LinkedHashMap<Block, Integer>(0);
+                
             } else {
                 this.autoBlocks=blocks;
                 //We shall remove the facing block in the list.
@@ -1283,6 +1338,27 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         autoBlocks.remove(facingBlock.getBlock());
                     }
                 }
+            }
+            if(getAssociatedSection()!=null){
+                createSectionDetails();
+                /*getAssociatedSection().removeAllBlocksFromSection();
+                for(Block key:autoBlocks.keySet()){
+                    getAssociatedSection().addBlock(key);
+                }
+                String dir = jmri.Path.decodeDirection(getFacingBlock().getNeighbourDirection(getProtectingBlock()));
+                jmri.EntryPoint ep = new jmri.EntryPoint(getProtectingBlock().getBlock(), getFacingBlock().getBlock(), dir);
+                ep.setTypeForward();
+                getAssociatedSection().addToForwardList(ep);
+                
+                //LayoutBlock destLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blks.get(blks.size()-1));
+                LayoutBlock proDestLBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlockByNamedBean(destination, destinationBlock.getMaxConnectedPanel());
+                if(proDestLBlock!=null){
+                    dir = jmri.Path.decodeDirection(proDestLBlock.getNeighbourDirection(destinationBlock));
+                    ep = new jmri.EntryPoint(destinationBlock.getBlock(), proDestLBlock.getBlock(), dir);
+                    ep.setTypeReverse();
+                    getAssociatedSection().addToReverseList(ep);
+                }*/
+                
             }
             firePropertyChange("autoblocks", null, this.destination);
         }
@@ -1398,6 +1474,17 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             for(NamedBeanSetting nbh:userSetSensors){
                 if (nbh.getBean().equals(sen.getBean())){
                     sen.getBean().removePropertyChangeListener(propertySensorListener);
+                    userSetSensors.remove(nbh);
+                    firePropertyChange("sensors", null, this.destination);
+                    return;
+                }
+            }
+        }
+        
+        void removeSensor(Sensor sen){
+            for(NamedBeanSetting nbh:userSetSensors){
+                if (nbh.getBean().equals(sen)){
+                    sen.removePropertyChangeListener(propertySensorListener);
                     userSetSensors.remove(nbh);
                     firePropertyChange("sensors", null, this.destination);
                     return;

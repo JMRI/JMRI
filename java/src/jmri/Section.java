@@ -839,7 +839,7 @@ public class Section extends AbstractNamedBean
 				}
 			}
 			if (tBlock!=null) {
-				LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+				LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 				if (lb!=null) dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
 			}
 			if (dir == EntryPoint.UNKNOWN) {	
@@ -852,7 +852,7 @@ public class Section extends AbstractNamedBean
 					tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock);
 				}
 				if (tBlock!=null) {
-					LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+					LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 					if (lb!=null) dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
 				}
 			}
@@ -913,6 +913,12 @@ public class Section extends AbstractNamedBean
 				if (dir!=EntryPoint.UNKNOWN) return dir;
 			}
 		}
+        if(!containsBlock(aBlock.getBlock()) &&  !containsBlock(bBlock.getBlock()) && !containsBlock(cBlock.getBlock()) && containsBlock(tBlock.getBlock())){
+            //is the turnout in a section of its own?
+            int dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, aBlock);
+            return dir;
+        }
+        
 		// should never get here
 		log.error("Unexpected error in getDirectionStandardTurnout when working with turnout "+
 							t.getTurnout().getSystemName());
@@ -958,7 +964,7 @@ public class Section extends AbstractNamedBean
 					tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
 				}
 				if (tBlock!=null) {
-					LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+					LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 					if (lb!=null) dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
 				}
 				else {
@@ -969,7 +975,7 @@ public class Section extends AbstractNamedBean
 						tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
 					}
 					if (tBlock!=null) {
-						LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+						LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 						if (lb!=null) dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
 					}
 				}
@@ -1022,7 +1028,7 @@ public class Section extends AbstractNamedBean
 					tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
 				}
 				if (tBlock!=null) {
-					LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+					LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 					if (lb!=null) dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
 				}				
 				else {
@@ -1033,7 +1039,7 @@ public class Section extends AbstractNamedBean
 						tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
 					}
 					if (tBlock!=null) {
-						LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+						LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 						if (lb!=null) dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
 					}
 				}
@@ -1112,7 +1118,7 @@ public class Section extends AbstractNamedBean
 					tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
 				}
 				if (tBlock!=null) {
-					LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+					LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 					if (lb!=null) dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
 				}
 				else {
@@ -1123,7 +1129,7 @@ public class Section extends AbstractNamedBean
 						tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
 					}
 					if (tBlock!=null) {
-						LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+						LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 						if (lb!=null) dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
 					}
 				}
@@ -1169,7 +1175,7 @@ public class Section extends AbstractNamedBean
 					tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
 				}
 				if (tBlock!=null) {
-					LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+					LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 					if (lb!=null) dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
 				}				
 				else {
@@ -1180,7 +1186,7 @@ public class Section extends AbstractNamedBean
 						tBlock = cUtil.getExitBlockForTrackNode(tn, exBlock.getBlock());
 					}
 					if (tBlock!=null) {
-						LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(tBlock.getUserName());
+						LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(tBlock.getUserName());
 						if (lb!=null) dir = checkLists(mForwardEntryPoints, mReverseEntryPoints, lb);
 					}
 				}
@@ -1348,7 +1354,7 @@ public class Section extends AbstractNamedBean
 				tBlock = cUtil.getExitBlockForTrackNode(tn, null);
 			}
 			if (tBlock!=null) {								
-				lb = InstanceManager.layoutBlockManagerInstance().
+				lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
 															getByUserName(tBlock.getUserName());
 				if (lb!=null) 
 					dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1360,7 +1366,7 @@ public class Section extends AbstractNamedBean
 					tBlock = cUtil.getExitBlockForTrackNode(tn, null);
 				}
 				if (tBlock!=null) {
-					lb = InstanceManager.layoutBlockManagerInstance().
+					lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
 															getByUserName(tBlock.getUserName());
 					if (lb!=null) {
 						dir = checkLists(mReverseEntryPoints, mForwardEntryPoints, lb);
@@ -1408,7 +1414,7 @@ public class Section extends AbstractNamedBean
 			log.error("Missing direction sensor in Section "+getSystemName());
 			return 1;
 		}
-		LayoutBlockManager layoutBlockManager = InstanceManager.layoutBlockManagerInstance();
+		LayoutBlockManager layoutBlockManager = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 		ConnectivityUtil cUtil = panel.getConnectivityUtil();
 		for (int i = 0; i<mBlockEntries.size(); i++) {
 			Block cBlock = mBlockEntries.get(i);
@@ -1562,7 +1568,7 @@ public class Section extends AbstractNamedBean
 					}
 					else {
 						errorCount++;
-					}					
+					}
 				}
 			}
 			ArrayList<LayoutTurnout> turnoutList = cUtil.getLayoutTurnoutsThisBlock(cBlock);
@@ -2041,7 +2047,7 @@ public class Section extends AbstractNamedBean
 		// validate Paths and Bean Settings if a Layout Editor panel is available
 		if (lePanel!=null) {
 			for (int i=0; i<(mBlockEntries.size()-1); i++) {
-				LayoutBlock lBlock = InstanceManager.layoutBlockManagerInstance().getByUserName(
+				LayoutBlock lBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(
 								getBlockBySequenceNumber(i).getUserName());
 				if (lBlock==null) {
 					log.error("Layout Block "+getBlockBySequenceNumber(i).getUserName()+
@@ -2149,7 +2155,7 @@ public class Section extends AbstractNamedBean
 	public void setAlternateColor(boolean set) {
 		for (int i=0; i<mBlockEntries.size(); i++) {
 			Block b = mBlockEntries.get(i);
-			LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(b.getUserName());
+			LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(b.getUserName());
 			if (lb!=null) lb.setUseExtraColor(set);
 		}
 	}		
@@ -2161,7 +2167,7 @@ public class Section extends AbstractNamedBean
 	public void setNameInBlocks(String name) {
 		for (int i=0; i<mBlockEntries.size(); i++) {
 			Block b = mBlockEntries.get(i);
-			LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(b.getUserName());
+			LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(b.getUserName());
 			if (lb!=null) {
 				Memory m = lb.getMemory();
 				if (m!=null) m.setValue(name);
@@ -2177,7 +2183,7 @@ public class Section extends AbstractNamedBean
 		for (int i=0; i<mBlockEntries.size(); i++) {
 			Block b = mBlockEntries.get(i);
 			if (b.getState()==Block.UNOCCUPIED) {
-				LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(b.getUserName());
+				LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(b.getUserName());
 				if (lb!=null) {
 					Memory m = lb.getMemory();
 					if (m!=null) m.setValue("  ");
@@ -2193,10 +2199,24 @@ public class Section extends AbstractNamedBean
 	public void suppressNameUpdate(boolean set) {
 		for (int i=0; i<mBlockEntries.size(); i++) {
 			Block b = mBlockEntries.get(i);
-			LayoutBlock lb = InstanceManager.layoutBlockManagerInstance().getByUserName(b.getUserName());
+			LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(b.getUserName());
 			if (lb!=null) lb.setSuppressNameUpdate(set);
 		}
 	}
+    
+    final public static int USERDEFINED = 0x01; //Default Save all the information
+    final public static int SIGNALMASTLOGIC = 0x02; //Save only the name, blocks will be added by the signalmast logic
+    final public static int DYNAMICADHOC = 0x00;  //created on an as required basis, not to be saved.
+    
+    int sectionType = USERDEFINED;
+    
+    public void setSectionType(int type){
+        sectionType = type;
+    }
+    
+    public int getSectionType(){
+        return sectionType;
+    }
 		
 		
     static final Logger log = LoggerFactory.getLogger(Section.class.getName());

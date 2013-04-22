@@ -64,21 +64,26 @@ public class SignalMastLogicTableAction extends AbstractTableAction{
     public void setMenuBar(BeanTableFrame f){
         final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
-        JMenu pathMenu = new JMenu(rb.getString("Pairs"));
+        JMenu pathMenu = new JMenu(Bundle.getMessage("Tools"));
         menuBar.add(pathMenu);
-        JMenuItem item = new JMenuItem(rb.getString("MenuItemAutoGen"));
+        JMenuItem item = new JMenuItem(Bundle.getMessage("MenuItemAutoGen"));
         pathMenu.add(item);
         item.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                     autoCreatePairs(finalF);
         	}
             });
+        item = new JMenuItem(Bundle.getMessage("MenuItemAutoGenSections"));
+        pathMenu.add(item);
+        item.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+               ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.signalMastLogicManagerInstance()).generateSection();
+        	}
+            });
     
     }
     
-    ArrayList<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;
-    //Hashtable<SignalMastLogic, ArrayList<SignalMast>> signalMastLogicList = null;
-    
+    ArrayList<Hashtable<SignalMastLogic, SignalMast>> signalMastLogicList = null;  
     
     protected void createModel() {
         m = new BeanTableDataModel() {

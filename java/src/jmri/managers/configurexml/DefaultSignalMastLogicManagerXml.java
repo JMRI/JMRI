@@ -18,6 +18,7 @@ import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
 import jmri.Block;
 import jmri.Sensor;
+import jmri.Section;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.NamedBeanHandle;
@@ -80,6 +81,9 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                         else
                             elem.addContent(new Element("useLayoutEditorBlocks").addContent("no"));
                         
+                        if(sm.getAssociatedSection(dest)!=null){
+                            elem.addContent(new Element("associatedSection").addContent(sm.getAssociatedSection(dest).getDisplayName()));
+                        }
                         if(sm.isTurnoutLockAllowed(dest))
                             elem.addContent(new Element("lockTurnouts").addContent("yes"));
                         else
@@ -229,6 +233,11 @@ public class DefaultSignalMastLogicManagerXml extends jmri.managers.configurexml
                     } catch (jmri.JmriException e){
                         //Considered normal if layout editor hasn't yet been set up.
                     }
+                }
+                
+                if(s.getChild("associatedSection")!=null){
+                    Section sect = InstanceManager.sectionManagerInstance().getSection(s.getChild("associatedSection").getText());
+                    logic.setAssociatedSection(sect, dest);
                 }
                 
                 Element turnoutElem = s.getChild("turnouts");

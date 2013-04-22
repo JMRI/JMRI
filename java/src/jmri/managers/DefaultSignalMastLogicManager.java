@@ -396,86 +396,40 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
         
         firePropertyChange("autoGenerateComplete", null, null);
     }
-
+    
     public void generateSection(){
         SectionManager sm = InstanceManager.sectionManagerInstance();
         for(SignalMastLogic sml : getSignalMastLogicList()){
+            
             jmri.jmrit.display.layoutEditor.LayoutBlock faceLBlock=sml.getFacingBlock();
-            //jmri.InstanceManager.layoutBlockManagerInstance().getProtectedBlockByMast(sml.
             Block faceBlock = null;
             if(faceLBlock!=null){
                 faceBlock = faceLBlock.getBlock();
-            } else {
-                log.debug("No facing block found");
-                break;
-            }
-            for(SignalMast destMast: sml.getDestinationList()){
-                ArrayList<Block> blks = sml.getAutoBlocksBetweenMasts(destMast);
-                boolean forward = true;
-                if(blks.size()!=0){
-                    Section matchsec = null;
-                    List<String> list = InstanceManager.sectionManagerInstance().getSystemNameList();
-                    for (String sName:list) {
-                        Section sec = InstanceManager.sectionManagerInstance().getBySystemName(sName);
-                        if(sec.getBlockList().equals(blks)){
-                            matchsec = sec;
-                            break;
-                        }
-                    }
-                    if(matchsec==null){
-                        ArrayList<Block> revblks = new ArrayList<Block>(blks.size());
-                        for(int i = blks.size(); i>0;i--){
-                            revblks.add(blks.get(i-1));
-                        }
-                        for (String sName:list) {
-                            Section sec = InstanceManager.sectionManagerInstance().getBySystemName(sName);
-                            if(sec.getBlockList().equals(revblks)){
-                                matchsec = sec;
-                                forward=false;
-                                break;
+                for(SignalMast destMast: sml.getDestinationList()){
+                    ArrayList<Block> blks = sml.getAutoBlocksBetweenMasts(destMast);
+                    boolean forward = true;
+                    if(blks.size()!=0){
+                        Section matchsec = null;
+                        if(matchsec==null){
+                            Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName()+":"+destMast.getDisplayName());
+                            if(sec!=null){
+                                sec.setSectionType(Section.SIGNALMASTLOGIC);
+                                //Auto running requires forward/reverse sensors, but at this stage SML does not support that, so just create dummy internal ones for now.
+                                Sensor sen = InstanceManager.sensorManagerInstance().provideSensor("IS:"+sec.getSystemName()+":forward");
+                                sen.setUserName(sec.getSystemName()+":forward");
+                                
+                                sen = InstanceManager.sensorManagerInstance().provideSensor("IS:"+sec.getSystemName()+":reverse");
+                                sen.setUserName(sec.getSystemName()+":reverse");
+                                sec.setForwardBlockingSensorName(sec.getSystemName()+":forward");
+                                sec.setReverseBlockingSensorName(sec.getSystemName()+":reverse");
+                                sml.setAssociatedSection(sec, destMast);
+                                sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
                             }
                         }
                     }
-                    if(matchsec==null){
-                        Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName()+":"+destMast.getDisplayName());
-                        for(Block blk: blks){
-                            sec.addBlock(blk);
-                        }
-                        Sensor sen = InstanceManager.sensorManagerInstance().provideSensor("IS"+sec.getSystemName()+"forward");
-                        sen.setUserName(sec.getSystemName()+"forward");
-                        sen = InstanceManager.sensorManagerInstance().provideSensor("IS"+sec.getSystemName()+"reverse");
-                        sen.setUserName(sec.getSystemName()+"reverse");
-                        sec.setForwardBlockingSensorName(sec.getSystemName()+"forward");
-                        sec.setReverseBlockingSensorName(sec.getSystemName()+"reverse");
-                        String dir = Path.decodeDirection(faceLBlock.getNeighbourDirection(sml.getProtectingBlock(destMast)));
-                        jmri.EntryPoint ep = new jmri.EntryPoint(sml.getProtectingBlock(destMast).getBlock(), faceBlock, dir);
-                        ep.setTypeForward();
-                        sec.addToForwardList(ep);
-
-                        LayoutBlock destLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blks.get(blks.size()-1));
-                        LayoutBlock proDestLBlock = InstanceManager.layoutBlockManagerInstance().getProtectedBlockByNamedBean(destMast, destLBlock.getMaxConnectedPanel());
-                        if(proDestLBlock!=null){
-                            dir = Path.decodeDirection(proDestLBlock.getNeighbourDirection(destLBlock));
-                            ep = new jmri.EntryPoint(destLBlock.getBlock(), proDestLBlock.getBlock(), dir);
-                            ep.setTypeReverse();
-                            sec.addToReverseList(ep);
-                        }
-                    } else {
-                        if(forward){
-                            String userName = "("+sml.getSourceMast().getDisplayName()+")" + matchsec.getUserName();
-                            matchsec.setUserName(userName);
-                        }
-                        String dir = Path.decodeDirection(faceLBlock.getNeighbourDirection(sml.getProtectingBlock(destMast)));
-                        jmri.EntryPoint ep = new jmri.EntryPoint(sml.getProtectingBlock(destMast).getBlock(), faceBlock, dir);
-                        if(forward){
-                            ep.setTypeForward();
-                            matchsec.addToForwardList(ep);
-                        } else {
-                            ep.setTypeReverse();
-                            matchsec.addToReverseList(ep);
-                        }
-                    }
                 }
+            } else {
+                log.info("No facing block found " + sml.getSourceMast().getDisplayName());
             }
         }
     }

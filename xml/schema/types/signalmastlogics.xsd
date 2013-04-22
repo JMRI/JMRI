@@ -75,6 +75,7 @@
         <xs:element name="useLayoutEditor" type="yesNoType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="useLayoutEditorTurnouts" type="yesNoType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="useLayoutEditorBlocks" type="yesNoType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="associatedSection" type="xs:string" minOccurs="0" maxOccurs="1" />
         <xs:element name="lockTurnouts" type="yesNoType" minOccurs="0" maxOccurs="unbounded" />
         
         <xs:element name="blocks" minOccurs="0" maxOccurs="1" >

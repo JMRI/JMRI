@@ -94,9 +94,13 @@ public interface SignalMastLogic {
      * where a signalmast can at a certain location can be replaced with another, while the
      * remainder of the configuration stays the same.
      */
-     public void replaceDestinationMast(SignalMast oldMast, SignalMast newMast);
+    public void replaceDestinationMast(SignalMast oldMast, SignalMast newMast);
     
     public void dispose();
+    
+    public Section getAssociatedSection(SignalMast destination);
+    
+    public void setAssociatedSection(Section sec, SignalMast destination);
 
     public int getAutoBlockState(Block block, SignalMast destination);
 
