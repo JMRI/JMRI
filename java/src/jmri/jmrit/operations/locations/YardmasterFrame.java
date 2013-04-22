@@ -13,6 +13,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import jmri.jmrit.operations.CommonConductorYardmasterFrame;
@@ -113,10 +114,16 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 			//	build menu
 			JMenuBar menuBar = new JMenuBar();
 			JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-			toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPrint"), _location, false));
-			toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPreview"), _location, true));
+			JMenuItem print = toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPrint"), _location, false));
+			JMenuItem preview = toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPreview"), _location, true));			
 			menuBar.add(toolMenu);
 			setJMenuBar(menuBar);
+			
+			// add tool tip if in consolidation mode: "Disabled when switch list is in consolidation mode"
+			if (!Setup.isSwitchListRealTime()) {
+				print.setToolTipText(Bundle.getMessage("TipDisabled"));
+				preview.setToolTipText(Bundle.getMessage("TipDisabled"));
+			}
 		}
 
 		update();
