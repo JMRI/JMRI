@@ -110,16 +110,13 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 			pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(""));
 			updateTrainsComboBox();
 			
-			// The switch list must be accessed from the Trains window if running in consolidated mode
-			if (Setup.isSwitchListRealTime()) {
-				//	build menu
-				JMenuBar menuBar = new JMenuBar();
-				JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-				toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPrint"), _location, false));
-				toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPreview"), _location, true));
-				menuBar.add(toolMenu);
-				setJMenuBar(menuBar);
-			}
+			//	build menu
+			JMenuBar menuBar = new JMenuBar();
+			JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
+			toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPrint"), _location, false));
+			toolMenu.add(new PrintSwitchListAction(Bundle.getMessage("MenuItemPreview"), _location, true));
+			menuBar.add(toolMenu);
+			setJMenuBar(menuBar);
 		}
 
 		update();
