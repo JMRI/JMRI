@@ -111,78 +111,82 @@ public class JsonServlet extends WebSocketServlet {
             response.setContentType("application/json"); // NOI18N
             String name = (rest.length > 2) ? rest[2] : null;
             JsonNode reply;
-            if (name == null) {
-                if (type.equals(CARS)) {
-                    reply = JsonUtil.getCars();
-                } else if (type.equals(ENGINES)) {
-                    reply = JsonUtil.getEngines();
-                } else if (type.equals(LIGHTS)) {
-                    reply = JsonUtil.getLights();
-                } else if (type.equals(LOCATIONS)) {
-                    reply = JsonUtil.getLocations();
-                } else if (type.equals(MEMORIES)) {
-                    reply = JsonUtil.getMemories();
-                } else if (type.equals(METADATA)) {
-                    reply = JsonUtil.getMetadata();
-                } else if (type.equals(PANELS)) {
-                    reply = JsonUtil.getPanels((request.getParameter(FORMAT) != null) ? request.getParameter(FORMAT) : XML);
-                } else if (type.equals(POWER)) {
-                    reply = JsonUtil.getPower();
-                } else if (type.equals(RAILROAD)) {
-                    reply = JsonUtil.getRailroad();
-                } else if (type.equals(REPORTERS)) {
-                    reply = JsonUtil.getReporters();
-                } else if (type.equals(ROSTER)) {
-                    reply = JsonUtil.getRoster();
-                } else if (type.equals(ROUTES)) {
-                    reply = JsonUtil.getRoutes();
-                } else if (type.equals(SENSORS)) {
-                    reply = JsonUtil.getSensors();
-                } else if (type.equals(SIGNAL_HEADS)) {
-                    reply = JsonUtil.getSignalHeads();
-                } else if (type.equals(SIGNAL_MASTS)) {
-                    reply = JsonUtil.getSignalMasts();
-                } else if (type.equals(TRAINS)) {
-                    reply = JsonUtil.getTrains();
-                } else if (type.equals(TURNOUTS)) {
-                    reply = JsonUtil.getTurnouts();
+            try {
+                if (name == null) {
+                    if (type.equals(CARS)) {
+                        reply = JsonUtil.getCars();
+                    } else if (type.equals(ENGINES)) {
+                        reply = JsonUtil.getEngines();
+                    } else if (type.equals(LIGHTS)) {
+                        reply = JsonUtil.getLights();
+                    } else if (type.equals(LOCATIONS)) {
+                        reply = JsonUtil.getLocations();
+                    } else if (type.equals(MEMORIES)) {
+                        reply = JsonUtil.getMemories();
+                    } else if (type.equals(METADATA)) {
+                        reply = JsonUtil.getMetadata();
+                    } else if (type.equals(PANELS)) {
+                        reply = JsonUtil.getPanels((request.getParameter(FORMAT) != null) ? request.getParameter(FORMAT) : XML);
+                    } else if (type.equals(POWER)) {
+                        reply = JsonUtil.getPower();
+                    } else if (type.equals(RAILROAD)) {
+                        reply = JsonUtil.getRailroad();
+                    } else if (type.equals(REPORTERS)) {
+                        reply = JsonUtil.getReporters();
+                    } else if (type.equals(ROSTER)) {
+                        reply = JsonUtil.getRoster();
+                    } else if (type.equals(ROUTES)) {
+                        reply = JsonUtil.getRoutes();
+                    } else if (type.equals(SENSORS)) {
+                        reply = JsonUtil.getSensors();
+                    } else if (type.equals(SIGNAL_HEADS)) {
+                        reply = JsonUtil.getSignalHeads();
+                    } else if (type.equals(SIGNAL_MASTS)) {
+                        reply = JsonUtil.getSignalMasts();
+                    } else if (type.equals(TRAINS)) {
+                        reply = JsonUtil.getTrains();
+                    } else if (type.equals(TURNOUTS)) {
+                        reply = JsonUtil.getTurnouts();
+                    } else {
+                        log.warn("Type {} unknown.", type);
+                        reply = JsonUtil.getUnknown(type);
+                    }
                 } else {
-                    log.warn("Type {} unknown.", type);
-                    reply = JsonUtil.getUnknown(type);
+                    if (type.equals(CAR)) {
+                        reply = JsonUtil.getCar(name);
+                    } else if (type.equals(ENGINE)) {
+                        reply = JsonUtil.getEngine(name);
+                    } else if (type.equals(LIGHT)) {
+                        reply = JsonUtil.getLight(name);
+                    } else if (type.equals(LOCATION)) {
+                        reply = JsonUtil.getLocation(name);
+                    } else if (type.equals(MEMORY)) {
+                        reply = JsonUtil.getMemory(name);
+                    } else if (type.equals(METADATA)) {
+                        reply = JsonUtil.getMetadata(name);
+                    } else if (type.equals(REPORTER)) {
+                        reply = JsonUtil.getReporter(name);
+                    } else if (type.equals(ROSTER_ENTRY) || type.equals(ROSTER)) {
+                        reply = JsonUtil.getRosterEntry(name);
+                    } else if (type.equals(ROUTE)) {
+                        reply = JsonUtil.getRoute(name);
+                    } else if (type.equals(SENSOR)) {
+                        reply = JsonUtil.getSensor(name);
+                    } else if (type.equals(SIGNAL_HEAD)) {
+                        reply = JsonUtil.getSignalHead(name);
+                    } else if (type.equals(SIGNAL_MAST)) {
+                        reply = JsonUtil.getSignalMast(name);
+                    } else if (type.equals(TRAIN)) {
+                        reply = JsonUtil.getTrain(name);
+                    } else if (type.equals(TURNOUT)) {
+                        reply = JsonUtil.getTurnout(name);
+                    } else {
+                        log.warn("Type {} unknown.", type);
+                        reply = JsonUtil.getUnknown(type);
+                    }
                 }
-            } else {
-                if (type.equals(CAR)) {
-                    reply = JsonUtil.getCar(name);
-                } else if (type.equals(ENGINE)) {
-                    reply = JsonUtil.getEngine(name);
-                } else if (type.equals(LIGHT)) {
-                    reply = JsonUtil.getLight(name);
-                } else if (type.equals(LOCATION)) {
-                    reply = JsonUtil.getLocation(name);
-                } else if (type.equals(MEMORY)) {
-                    reply = JsonUtil.getMemory(name);
-                } else if (type.equals(METADATA)) {
-                    reply = JsonUtil.getMetadata(name);
-                } else if (type.equals(REPORTER)) {
-                    reply = JsonUtil.getReporter(name);
-                } else if (type.equals(ROSTER_ENTRY) || type.equals(ROSTER)) {
-                    reply = JsonUtil.getRosterEntry(name);
-                } else if (type.equals(ROUTE)) {
-                    reply = JsonUtil.getRoute(name);
-                } else if (type.equals(SENSOR)) {
-                    reply = JsonUtil.getSensor(name);
-                } else if (type.equals(SIGNAL_HEAD)) {
-                    reply = JsonUtil.getSignalHead(name);
-                } else if (type.equals(SIGNAL_MAST)) {
-                    reply = JsonUtil.getSignalMast(name);
-                } else if (type.equals(TRAIN)) {
-                    reply = JsonUtil.getTrain(name);
-                } else if (type.equals(TURNOUT)) {
-                    reply = JsonUtil.getTurnout(name);
-                } else {
-                    log.warn("Type {} unknown.", type);
-                    reply = JsonUtil.getUnknown(type);
-                }
+            } catch (JsonException ex) {
+                reply = ex.getJsonMessage();
             }
             int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
             if (code == 200) {

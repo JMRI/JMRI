@@ -174,12 +174,12 @@ public class JsonUtil {
                     throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", LIGHT, state));
             }
         } catch (NullPointerException e) {
-            log.error("Unable to get light {}", name, e);
+            log.error("Unable to get light [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", LIGHT, name));
         }
     }
 
-    static public JsonNode getLocation(String id) {
+    static public JsonNode getLocation(String id) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LOCATION);
         ObjectNode data = root.putObject(DATA);
@@ -190,13 +190,13 @@ public class JsonUtil {
             data.put(LENGTH, location.getLength());
             data.put(COMMENT, location.getComment());
         } catch (NullPointerException e) {
-            root = handleError(404, Bundle.getMessage("ErrorObject", LOCATION, id));
-            log.error("Unable to get location id={}.", id, e);
+            log.error("Unable to get location id [{}].", id);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", LOCATION, id));
         }
         return root;
     }
 
-    static public JsonNode getLocations() {
+    static public JsonNode getLocations() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode locations = root.putArray(LIST);
@@ -206,7 +206,7 @@ public class JsonUtil {
         return root;
     }
 
-    static public JsonNode getMemories() {
+    static public JsonNode getMemories() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode memories = root.putArray(LIST);
@@ -216,7 +216,7 @@ public class JsonUtil {
         return root;
     }
 
-    static public JsonNode getMemory(String name) {
+    static public JsonNode getMemory(String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, MEMORY);
         ObjectNode data = root.putObject(DATA);
@@ -231,8 +231,8 @@ public class JsonUtil {
                 data.put(VALUE, memory.getValue().toString());
             }
         } catch (NullPointerException e) {
-            root = handleError(404, Bundle.getMessage("ErrorObject", MEMORY, name));
-            log.error("Unable to get memory {}", name);
+            log.error("Unable to get memory [{}].", name);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", MEMORY, name));
         }
         return root;
     }
@@ -263,12 +263,12 @@ public class JsonUtil {
                 }
             }
         } catch (NullPointerException ex) {
-            log.error("Unable to get memory {}", name);
-            throw new JsonException(500, ex);
+            log.error("Unable to get memory [{}].", name);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", MEMORY, name));
         }
     }
 
-    static public JsonNode getMetadata(String name) {
+    static public JsonNode getMetadata(String name) throws JsonException {
         String metadata = Metadata.getBySystemName(name);
         ObjectNode root;
         if (metadata != null) {
@@ -278,12 +278,13 @@ public class JsonUtil {
             data.put(NAME, name);
             data.put(VALUE, Metadata.getBySystemName(name));
         } else {
-            root = handleError(404, Bundle.getMessage("ErrorObject", METADATA, name));
+            log.error("Unable to get metadata [{}].", name);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", METADATA, name));
         }
         return root;
     }
 
-    static public JsonNode getMetadata() {
+    static public JsonNode getMetadata() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode metadatas = root.putArray(LIST);
@@ -351,7 +352,7 @@ public class JsonUtil {
         return root;
     }
 
-    static public JsonNode getPower() {
+    static public JsonNode getPower() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
@@ -368,8 +369,8 @@ public class JsonUtil {
                     break;
             }
         } catch (JmriException e) {
-            root = handleError(500, Bundle.getMessage("ErrorPower"));
             log.error("Unable to get Power state.", e);
+            throw new JsonException(500, Bundle.getMessage("ErrorPower"));
         }
         return root;
     }
@@ -494,7 +495,7 @@ public class JsonUtil {
         return root;
     }
 
-    static public JsonNode getRoute(String name) {
+    static public JsonNode getRoute(String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, ROUTE);
         ObjectNode data = root.putObject(DATA);
@@ -507,13 +508,13 @@ public class JsonUtil {
             // TODO: Completely insulate JSON state from Turnout state
             data.put(STATE, (s.getSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.getSensor(route.getTurnoutsAlignedSensor())).getKnownState() : UNKNOWN);
         } catch (NullPointerException e) {
-            root = handleError(404, Bundle.getMessage("ErrorObject", ROUTE, name));
-            log.error("Unable to get route.", e);
+            log.error("Unable to get route [{}].", name);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", ROUTE, name));
         }
         return root;
     }
 
-    static public JsonNode getRoutes() {
+    static public JsonNode getRoutes() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode routes = root.putArray(LIST);
@@ -550,12 +551,12 @@ public class JsonUtil {
                     throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", ROUTE, state));
             }
         } catch (NullPointerException ex) {
-            log.error("Unable to get route {}", name);
+            log.error("Unable to get route [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", ROUTE, name));
         }
     }
 
-    static public JsonNode getSensor(String name) {
+    static public JsonNode getSensor(String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SENSOR);
         ObjectNode data = root.putObject(DATA);
@@ -567,13 +568,13 @@ public class JsonUtil {
             data.put(INVERTED, sensor.getInverted());
             data.put(STATE, sensor.getKnownState());
         } catch (NullPointerException e) {
-            root = handleError(404, Bundle.getMessage("ErrorObject", SENSOR, name));
-            log.error("Unable to get sensor.", e);
+            log.error("Unable to get sensor [{}].", name);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", SENSOR, name));
         }
         return root;
     }
 
-    static public JsonNode getSensors() {
+    static public JsonNode getSensors() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode sensors = root.putArray(LIST);
@@ -619,14 +620,14 @@ public class JsonUtil {
                     throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SENSOR, state));
             }
         } catch (NullPointerException e) {
-            log.error("Unable to get sensor [{}].", name, e);
+            log.error("Unable to get sensor [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", SENSOR, name));
         } catch (JmriException ex) {
             throw new JsonException(500, ex);
         }
     }
 
-    static public JsonNode getSignalHead(String name) {
+    static public JsonNode getSignalHead(String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_HEAD);
         ObjectNode data = root.putObject(DATA);
@@ -646,13 +647,13 @@ public class JsonUtil {
             }
             data.put(APPEARANCE_NAME, signalHead.getAppearanceName());
         } catch (NullPointerException e) {
-            root = handleError(404, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
-            log.error("Unable to get signalHead [{}].", name, e);
+            log.error("Unable to get signalHead [{}].", name);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
         }
         return root;
     }
 
-    static public JsonNode getSignalHeads() {
+    static public JsonNode getSignalHeads() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode signalHeads = root.putArray(LIST);
@@ -686,12 +687,12 @@ public class JsonUtil {
                 throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SIGNAL_HEAD, state));
             }
         } catch (NullPointerException e) {
-            log.error("Unable to get signal head {}", name, e);
+            log.error("Unable to get signal head [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_HEAD, name));
         }
     }
 
-    static public JsonNode getSignalMast(String name) {
+    static public JsonNode getSignalMast(String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, SIGNAL_MAST);
         ObjectNode data = root.putObject(DATA);
@@ -718,13 +719,13 @@ public class JsonUtil {
                 data.put(STATE, aspect);
             }
         } catch (NullPointerException e) {
-            root = handleError(404, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
-            log.error("Unable to get signalMast [{}].", name, e);
+            log.error("Unable to get signalMast [{}].", name);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
         }
         return root;
     }
 
-    static public JsonNode getSignalMasts() {
+    static public JsonNode getSignalMasts() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode signalMasts = root.putArray(LIST);
@@ -751,12 +752,12 @@ public class JsonUtil {
                 throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SIGNAL_MAST, aspect));
             }
         } catch (NullPointerException e) {
-            log.error("Unable to get signal mast [{}].", name, e);
+            log.error("Unable to get signal mast [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", SIGNAL_MAST, name));
         }
     }
 
-    static public JsonNode getTrain(String id) {
+    static public JsonNode getTrain(String id) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TRAIN);
         ObjectNode data = root.putObject(DATA);
@@ -790,13 +791,13 @@ public class JsonUtil {
             }
 
         } catch (NullPointerException e) {
-            root = handleError(404, Bundle.getMessage("ErrorObject", TRAIN, id));
-            log.error("Unable to get train id= {}.", id, e);
+            log.error("Unable to get train id [{}].", id);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", TRAIN, id));
         }
         return root;
     }
 
-    static public JsonNode getTrains() {
+    static public JsonNode getTrains() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode trains = root.putArray(LIST);
@@ -811,7 +812,7 @@ public class JsonUtil {
         train.move(data.path(id).asText());
     }
 
-    static public JsonNode getTurnout(String name) {
+    static public JsonNode getTurnout(String name) throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, TURNOUT);
         ObjectNode data = root.putObject(DATA);
@@ -823,13 +824,13 @@ public class JsonUtil {
             data.put(INVERTED, turnout.getInverted());
             data.put(STATE, turnout.getKnownState());
         } catch (NullPointerException e) {
-            root = handleError(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
-            log.error("Unable to get turnout [{}].", name, e);
+            log.error("Unable to get turnout [{}].", name);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
         }
         return root;
     }
 
-    static public JsonNode getTurnouts() {
+    static public JsonNode getTurnouts() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode turnouts = root.putArray(LIST);
@@ -874,7 +875,7 @@ public class JsonUtil {
                     throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", TURNOUT, state));
             }
         } catch (NullPointerException ex) {
-            log.error("Unable to get turnout {}.", name, ex);
+            log.error("Unable to get turnout [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
         }
     }
@@ -903,7 +904,7 @@ public class JsonUtil {
         return elan;  //return array of engine data
     }
 
-    static private ArrayNode getRouteLocationsForTrain(Train train) {
+    static private ArrayNode getRouteLocationsForTrain(Train train) throws JsonException {
         ArrayNode rlan = mapper.createArrayNode();
         List<String> routeList = train.getRoute().getLocationsBySequenceList();
         for (int r = 0; r < routeList.size(); r++) {
