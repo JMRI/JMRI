@@ -92,6 +92,8 @@ public class RosterEntry implements jmri.BasicRosterEntry {
     protected String _iconFilePath = FileUtil.getUserResourcePath() ;  // force image copy to that folder
     protected String _URL = "";
     
+    protected RosterSpeedProfile _sp = null;
+    
 	/**
      * Construct a blank object.
      *
@@ -255,6 +257,18 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         else
             _protocol=LocoAddress.Protocol.DCC_SHORT;
         firePropertyChange("longaddress", old, Boolean.valueOf(b));
+    }
+    
+    public RosterSpeedProfile getSpeedProfile(){
+        return _sp;
+    }
+    
+    public void setSpeedProfile(RosterSpeedProfile sp){
+        if(sp.getRosterEntry()!=this){
+            log.error("Attempting to set a speed profile against the wrong roster entry");
+            return;
+        }
+        _sp=sp;
     }
 
     public boolean isLongAddress() {
@@ -441,6 +455,11 @@ public class RosterEntry implements jmri.BasicRosterEntry {
 
         loadFunctions(e.getChild("functionlabels"));
         loadAttributes(e.getChild("attributepairs"));
+        
+        if(e.getChild("speedprofile")!=null){
+            _sp = new RosterSpeedProfile(this);
+            _sp.load(e.getChild("speedprofile"));
+        }
 
     }
     
@@ -651,7 +670,6 @@ public class RosterEntry implements jmri.BasicRosterEntry {
         d.setAttribute("comment",getDecoderComment());
 
         e.addContent(d);
-
         if (_dccAddress.equals("")) {
             e.addContent( (new jmri.configurexml.LocoAddressXml()).store(null));  // store a null address
         } else {
@@ -709,6 +727,9 @@ public class RosterEntry implements jmri.BasicRosterEntry {
                 }
                 e.addContent(d);
             }
+        }
+        if(_sp!=null){
+            _sp.store(e);
         }
         return e;
     }

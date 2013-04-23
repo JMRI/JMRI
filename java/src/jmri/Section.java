@@ -564,7 +564,19 @@ public class Section extends AbstractNamedBean
 	public int getLengthI(boolean meters, int scale) {
 		return ((int)((getLengthF(meters,scale)+0.5f)));
 	}
-			
+	
+    /**
+    *   Gets the actual length of the Seciton in mm without any scaling
+    */
+    public int getActualLength(){
+        if (initializationNeeded) initializeBlocks();
+        int len = 0;
+        for(Block b: mBlockEntries){
+            len=len+((int)b.getLengthMm());
+        }
+        return len;
+    }
+    
 	/**
 	 * Get Block by its Sequence number in the Block list
 	 *  Blocks are numbered 0 to size-1; 

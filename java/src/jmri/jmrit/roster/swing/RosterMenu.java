@@ -16,6 +16,7 @@ import jmri.jmrit.roster.ExportRosterItemAction;
 import jmri.jmrit.roster.FullBackupExportAction;
 import jmri.jmrit.roster.ImportRosterItemAction;
 import jmri.jmrit.roster.PrintRosterAction;
+import jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction;
 
 /**
  * Provides a context-specific menu for handling the Roster.
@@ -61,57 +62,58 @@ public class RosterMenu extends JMenu {
     public RosterMenu(String pMenuName, int pMenuType, Component pWho) {
         super(pMenuName);
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle");
-
         // create the menu
 
-        AbstractAction dp3Action = new jmri.jmrit.roster.swing.RosterFrameAction(rb.getString("MenuItemRoster"), false);
+        AbstractAction dp3Action = new jmri.jmrit.roster.swing.RosterFrameAction(Bundle.getMessage("MenuItemRoster"), false);
         dp3Action.setEnabled(true);
 
-        AbstractAction createAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneNewProgAction(rb.getString("MenuItemCreate"));
+        AbstractAction createAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneNewProgAction(Bundle.getMessage("MenuItemCreate"));
         createAction.setEnabled(false);
 
-        AbstractAction editAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneEditAction(rb.getString("MenuItemEdit"));
+        AbstractAction editAction = new jmri.jmrit.symbolicprog.tabbedframe.PaneEditAction(Bundle.getMessage("MenuItemEdit"));
         editAction.setEnabled(false);
 
-        AbstractAction importAction = new ImportRosterItemAction(rb.getString("MenuItemImport"), pWho);
+        AbstractAction importAction = new ImportRosterItemAction(Bundle.getMessage("MenuItemImport"), pWho);
         importAction.setEnabled(false);
 
-        AbstractAction exportAction = new ExportRosterItemAction(rb.getString("MenuItemExport"), pWho);
+        AbstractAction exportAction = new ExportRosterItemAction(Bundle.getMessage("MenuItemExport"), pWho);
         exportAction.setEnabled(false);
 
-        AbstractAction copyAction = new CopyRosterItemAction(rb.getString("MenuItemCopy"), pWho);
+        AbstractAction copyAction = new CopyRosterItemAction(Bundle.getMessage("MenuItemCopy"), pWho);
         copyAction.setEnabled(false);
 
-        AbstractAction deleteAction = new DeleteRosterItemAction(rb.getString("MenuItemDelete"), pWho);
+        AbstractAction deleteAction = new DeleteRosterItemAction(Bundle.getMessage("MenuItemDelete"), pWho);
         deleteAction.setEnabled(false);
         
-        AbstractAction deleteGroupAction = new DeleteRosterGroupAction(rb.getString("MenuGroupDelete"), pWho);
+        AbstractAction deleteGroupAction = new DeleteRosterGroupAction(Bundle.getMessage("MenuGroupDelete"), pWho);
         deleteGroupAction.setEnabled(false);
         
-        AbstractAction createGroupAction = new CreateRosterGroupAction(rb.getString("MenuGroupCreate"), pWho);
+        AbstractAction createGroupAction = new CreateRosterGroupAction(Bundle.getMessage("MenuGroupCreate"), pWho);
         createGroupAction.setEnabled(false);
         
-        AbstractAction rosterEntryToGroupAction = new RosterEntryToGroupAction(rb.getString("MenuGroupAssociate"), pWho);
+        AbstractAction rosterEntryToGroupAction = new RosterEntryToGroupAction(Bundle.getMessage("MenuGroupAssociate"), pWho);
         rosterEntryToGroupAction.setEnabled(false);
         
-        AbstractAction removeRosterEntryToGroupAction = new RemoveRosterEntryToGroupAction(rb.getString("MenuGroupDisassociate"), pWho);
+        AbstractAction removeRosterEntryToGroupAction = new RemoveRosterEntryToGroupAction(Bundle.getMessage("MenuGroupDisassociate"), pWho);
         removeRosterEntryToGroupAction.setEnabled(false);
 
-        AbstractAction rosterGroupTableAction = new jmri.jmrit.roster.swing.rostergroup.RosterGroupTableAction(rb.getString("MenuGroupTable"));
+        AbstractAction rosterGroupTableAction = new jmri.jmrit.roster.swing.rostergroup.RosterGroupTableAction(Bundle.getMessage("MenuGroupTable"));
         rosterGroupTableAction.setEnabled(false); 
        
-        AbstractAction rosterExportAction = new FullBackupExportAction(rb.getString("MenuFullExport"), pWho);
+        AbstractAction rosterExportAction = new FullBackupExportAction(Bundle.getMessage("MenuFullExport"), pWho);
         rosterExportAction.setEnabled(false);
+        
+        AbstractAction speedProfileAction = new SpeedProfileAction(Bundle.getMessage("MenuSpeedProfile"));
+        speedProfileAction.setEnabled(false);
 
         // Need a frame here, but are not passed one
         Frame newFrame = new Frame();
-        AbstractAction printAction = new PrintRosterAction(rb.getString("MenuItemPrint"), newFrame, false);
+        AbstractAction printAction = new PrintRosterAction(Bundle.getMessage("MenuItemPrint"), newFrame, false);
         printAction.setEnabled(false);
-        AbstractAction previewAction = new PrintRosterAction(rb.getString("MenuItemPreview"), newFrame, true);
+        AbstractAction previewAction = new PrintRosterAction(Bundle.getMessage("MenuItemPreview"), newFrame, true);
         printAction.setEnabled(false);
         
-        JMenu groupMenu = new JMenu(rb.getString("MenuRosterGroups"));
+        JMenu groupMenu = new JMenu(Bundle.getMessage("MenuRosterGroups"));
         groupMenu.add(createGroupAction);
         groupMenu.add(deleteGroupAction);
         groupMenu.add(rosterGroupTableAction);
@@ -133,6 +135,7 @@ public class RosterMenu extends JMenu {
         add(groupMenu);
         addSeparator();
         add(rosterExportAction);
+        add(speedProfileAction);
 
         // activate the right items
         switch (pMenuType) {
@@ -151,6 +154,7 @@ public class RosterMenu extends JMenu {
                 previewAction.setEnabled(true);
                 rosterGroupTableAction.setEnabled(true);
                 rosterExportAction.setEnabled(true);
+                speedProfileAction.setEnabled(true);
                 break;
             case SELECTMENU:
                 printAction.setEnabled(true);
