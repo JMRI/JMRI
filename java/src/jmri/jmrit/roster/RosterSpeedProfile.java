@@ -54,12 +54,12 @@ public class RosterSpeedProfile {
     /**
     * forward and reverse values are in meters per second
     */
-    public void setSpeed(float speedStep, float forward, float reverse){
-        int iSpeedStep = Math.round(speedStep*1000);
-        if(!speeds.containsKey(iSpeedStep)){
-            speeds.put(iSpeedStep, new SpeedStep());
+    public void setSpeed(int speedStep, float forward, float reverse){
+        //int iSpeedStep = Math.round(speedStep*1000);
+        if(!speeds.containsKey(speedStep)){
+            speeds.put(speedStep, new SpeedStep());
         }
-        SpeedStep ss = speeds.get(iSpeedStep);
+        SpeedStep ss = speeds.get(speedStep);
         ss.setForwardSpeed(forward);
         ss.setReverseSpeed(reverse);
     }

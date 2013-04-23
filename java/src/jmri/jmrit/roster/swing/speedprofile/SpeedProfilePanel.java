@@ -155,7 +155,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorSensorNotFound", "Finish"));
                 setButtonStates(true);
                 return;
-            }        
+            }
         
         } else {
             Sensor tmpSen = null;
@@ -356,6 +356,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         if(profileStep>=4)
             t.setSpeedSetting(profileSpeed/2);
         calculateSpeed();
+        sourceLabel.setText(Bundle.getMessage("StatusLabelWaitingToClear"));
     }
     
 
