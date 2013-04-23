@@ -1804,6 +1804,8 @@
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_diyhwdataterm" url="html/hardware/loconet/StandaloneLocoNet.shtml#diyhwdataterm"/>
 
+<mapID target="package.jmri.jmrit.roster.swing.speedprofile.SpeedProfileFrame" url="package/jmri/jmrit/roster/swing/speedprofile/SpeedProfileFrame.shtml"/>
+
 <mapID target="manual.JMRI_2-14_manual.Basic_Mode_Top" url="manual/JMRI_2-14_manual/Basic_Mode.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.dispatcher.Dispatcher_automatic" url="package/jmri/jmrit/dispatcher/Dispatcher.shtml#automatic"/>
