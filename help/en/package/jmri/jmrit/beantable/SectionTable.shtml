@@ -174,6 +174,21 @@ in the same direction as entering at all other REVERSE Entry Points.</li>
 </UL>
 <p><b>WARNING: If Entry Points are not consistent strange behavior may result 
 when using the Section.</b></p>
+<H2>Using SignalMast Logic With Sections</H2>
+<p>If the signalling is based using Signal Masts, with the associated logic that has been generated 
+using the layout editor, then it is possible to also have sections automatically generated based 
+upon the logic.
+<p>The tool can be found in the <b>SignalMast Logic Table</b>|<b>Tools</b> | <b>Generate Sections</b>
+  Running this will create a Section for each Signal Mast Pair, it will place all the 
+"Automatically Generated" blocks in to the section in the 
+correct order, with the direction being set as FORWARD travel, going from the source to destination Mast.
+The block details are not saved when the panel is stored, but are re-created when the file is loaded.
+<p>The tool will also create forward and reverse direction sensors and places them in the section, however currently 
+the Signal Mast Logic does not use these and their creation is only there to allow validation of the section.
+<p>Sections generated with the tool will only have a pair of Entry Points and simply follows the path between the two signals
+<p>The details of the Optional Direction and Stopping Sensors are saved when the panel file is stored.
+<p>To use the Sections that have built this way you will need to set the <A HREF="../dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a> 
+to use SignalMast Logic via the <A HREF="../dispatcher/Options.shtml"><b>Options</b></a> menu.
 <a name="tools"><H2> Section Table Tools
 </H2>
 <P> The Section Table has a <b>Tools</b> menu to facilitate use of Sections. 
