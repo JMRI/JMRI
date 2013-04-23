@@ -53,6 +53,7 @@
    </P>
    <H3>Table of Contents</H3>
    <UL>
+    <LI><A HREF="#newUserAdvice">New User Advice</A></LI>
     <LI><A HREF="#demo">Operations Demo Files</A></LI>
     <LI><A HREF="#QuickStartHelp">Quick Start Help</A></LI>
     <LI><A HREF="#Settings">Settings</A>
@@ -137,6 +138,36 @@
     <LI><A HREF="#OperationWindows">Operation Windows</A></LI>
    </UL>
 
+   <A NAME="newUserAdvice"></A>
+   <H3>New User Advice</H3>
+
+   If you've never used a computer program to generate manifests and switch lists, we recommend that
+   you load and use the
+   <A HREF="#demo">demo files</A> provided. Please read the <A
+    HREF="#BuildReportDetails">build reports</A> for the demo trains in very detailed mode, even if
+   they build which they should since they are demo files. You should make changes to the demo
+   program and see what the results are. This is your chance to experiment with the program before
+   you enter your own data. You might want to print and save a demo train manifest and build report
+   for later reference.
+
+   <P>After playing with the demo files, you can begin entering your own data. We strongly
+    recommend that you get your trains to build to your liking without the use of staging tracks,
+    classification/interchange tracks, and especially schedules and custom loads. We find that users
+    attempting to use the advanced features before they understand how the program works tend to
+    need a lot of help getting the car movement they desire. So start off small and get your trains
+    to build correctly, read the build reports in the very detailed mode for your trains, even if
+    they build to your liking. You need to get proficient with the build reports before you start
+    using the more advanced features of the program. Once you get your trains to build correctly,
+    you can add staging tracks if you've designed staging into your layout. The other three advanced
+    features are completely optional and aren't needed for the majority of users. The next track
+    type to experiment with could be classification/interchange tracks. Once you get
+    classification/interchange tracks to work correctly, you could then introduce schedules for your
+    industries and custom loads for your cars. If you do decide to use schedules, the first thing to
+    understand is that you don't need schedules for all of your industries. So again start off small
+    and only do a couple of industries and see what the results are. Adding schedules can not
+    increase car movement, and in most cases will reduce car movement! So our advice is please learn
+    to walk before your try to run.</P>
+
    <A NAME="demo"></A>
    <H3>Operations Demo Files</H3>
 
@@ -156,10 +187,14 @@
    <H3>Quick Start Help</H3>
 
    In the top level menu for JMRI find the "Tools-&gt;Operations" menu. There are six items in this
-   menu. We recommend that you start with <A HREF="#Settings">Settings</A> and work your way down to
-   <A HREF="#Trains">Trains</A>. We also recommend that when defining your locations that you first
-   use yard and spur tracks, and try staging and classification/interchange tracks when you're more
-   comfortable with how the program operates.
+   menu. We recommend that you start with
+   <A HREF="#Settings">Settings</A> and work your way down to <A
+    HREF="#Trains">Trains</A>. Entering and requiring locomotives for your trains is completely
+   optional, and locomotives are not needed for the program to operate correctly. So if you want to
+   manually assign your locomotives to your trains, don't bother entering the locomotive data into
+   the program. We also recommend that when defining your locations that you first use yard and spur
+   tracks, and try staging and classification/interchange tracks when you're more comfortable with
+   how the program operates.
 
    <P>
     If this is your first time using a computer generated car forwarding program, it is best to
@@ -219,12 +254,13 @@
    </P>
 
    <P>
-    Now enter some <A HREF="#Locomotives">locomotives</A> into the operations database, and change
-    the train requirements to require one locomotive. Place some of your locomotives on a track
+    Now enter some <A HREF="#Locomotives">locomotives</A> into the operations database if you want
+    the program to assign locomotives to your trains. Place some of your locomotives on a track
     located at the start of the route. Note that if you want two or more locomotives servicing your
-    train, that the locomotives must be in a <A HREF="#LocomotivesAdd">consist</A>. The last
-    location in your route must have a track that will service the locomotive <A
-     HREF="#LocomotiveModels">type</A> or the build will fail.
+    train, that the locomotives must be in a <A HREF="#LocomotivesAdd">consist</A>. Note that the
+    last location in your route must have a track that will service the locomotive <A
+     HREF="#LocomotiveModels">type</A> or the build will fail. Now change the train requirements to
+    require one or more locomotives.
    </P>
 
    <P>
