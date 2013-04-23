@@ -232,7 +232,7 @@ public class RosterSpeedProfile {
     public void changeLocoSpeed(DccThrottle t, Block blk, float speed){
         float blockLength = blk.getLengthMm();
         if(blk==block){
-            distanceRemaining = distanceRemaining - getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), ((float)(System.nanoTime()-lastTimeTimerStarted)/1000000000));;
+            distanceRemaining = distanceRemaining - getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), ((float)(System.nanoTime()-lastTimeTimerStarted)/1000000000));
             blockLength = distanceRemaining;
             //Not entirely reliable at this stage as the loco could still be running and not completed the calculation of the distance, this could result in an over run
             log.debug("Block passed is the same as we are currently processing");
@@ -360,7 +360,7 @@ public class RosterSpeedProfile {
         if(stopTimer == null){ //At the start we will deduct the over run time if configured
             if(log.isDebugEnabled()) log.debug("Stop timer not configured so will add overrun " + distanceRemaining);
             if(_throttle.getIsForward()){
-                float extraAsDouble = (float)((getOverRunTimeForward()+extraDelay)/1000);
+                float extraAsDouble = (getOverRunTimeForward()+extraDelay)/1000;
                 if(log.isDebugEnabled()){
                     log.debug("Over run time to remove (Reverse) " + getOverRunTimeReverse());
                     log.debug(extraAsDouble);
@@ -369,7 +369,7 @@ public class RosterSpeedProfile {
                 distanceRemaining = distanceRemaining - olddistance;
                 time = time-getOverRunTimeForward();
             } else {
-                float extraAsDouble = (float)((getOverRunTimeReverse()+extraDelay)/1000);
+                float extraAsDouble = (getOverRunTimeReverse()+extraDelay)/1000;
                 if(log.isDebugEnabled()){
                     log.debug("Over run time to remove (Reverse) " + getOverRunTimeReverse());
                     log.debug(extraAsDouble);
