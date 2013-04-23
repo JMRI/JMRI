@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.SignalHead;
 import jmri.jmris.AbstractSignalHeadServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
@@ -64,8 +63,8 @@ public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 
     public void parseRequest(JsonNode data) throws JmriException, IOException {
         String name = data.path(NAME).asText();
-        int state = data.path(STATE).asInt(SignalHead.UNKNOWN);
-        if (state == SignalHead.UNKNOWN) {  //if unknown, retrieve current and respond
+        int state = data.path(STATE).asInt(UNKNOWN);
+        if (state == UNKNOWN) {  //if unknown, retrieve current and respond
             state = InstanceManager.signalHeadManagerInstance().getSignalHead(name).getAppearance();
             this.sendStatus(name, state);
         } else { //else set the appearance to the state passed-in

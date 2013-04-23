@@ -117,7 +117,17 @@ public class JsonUtil {
         data.put(NAME, light.getSystemName());
         data.put(USERNAME, light.getUserName());
         data.put(COMMENT, light.getComment());
-        data.put(STATE, light.getState());
+        switch (light.getState()) {
+            case Light.OFF:
+                data.put(STATE, OFF);
+                break;
+            case Light.ON:
+                data.put(STATE, ON);
+                break;
+            default:
+                data.put(STATE, UNKNOWN);
+                break;
+        }
         return root;
     }
 
@@ -149,13 +159,15 @@ public class JsonUtil {
             if (data.path(COMMENT).isTextual()) {
                 light.setComment(data.path(COMMENT).asText());
             }
-            int state = data.path(STATE).asInt(Light.UNKNOWN);
+            int state = data.path(STATE).asInt(UNKNOWN);
             switch (state) {
-                case Light.OFF:
-                case Light.ON:
-                    InstanceManager.lightManagerInstance().getLight(name).setState(state);
+                case OFF:
+                    InstanceManager.lightManagerInstance().getLight(name).setState(Light.OFF);
                     break;
-                case Light.UNKNOWN:
+                case ON:
+                    InstanceManager.lightManagerInstance().getLight(name).setState(Light.ON);
+                    break;
+                case UNKNOWN:
                     // silently ignore
                     break;
                 default:
@@ -344,7 +356,17 @@ public class JsonUtil {
         root.put(TYPE, POWER);
         ObjectNode data = root.putObject(DATA);
         try {
-            data.put(STATE, InstanceManager.powerManagerInstance().getPower());
+            switch (InstanceManager.powerManagerInstance().getPower()) {
+                case PowerManager.OFF:
+                    data.put(STATE, OFF);
+                    break;
+                case PowerManager.ON:
+                    data.put(STATE, ON);
+                    break;
+                default:
+                    data.put(STATE, UNKNOWN);
+                    break;
+            }
         } catch (JmriException e) {
             root = handleError(500, Bundle.getMessage("ErrorPower"));
             log.error("Unable to get Power state.", e);
@@ -353,21 +375,23 @@ public class JsonUtil {
     }
 
     static public void setPower(JsonNode data) throws JsonException {
-        int state = data.path(STATE).asInt(PowerManager.UNKNOWN);
-        switch (state) {
-            case PowerManager.OFF:
-            case PowerManager.ON:
-                try {
-                    InstanceManager.powerManagerInstance().setPower(state);
-                } catch (JmriException ex) {
-                    throw new JsonException(500, ex);
-                }
-                break;
-            case PowerManager.UNKNOWN:
-                // quietly ignore
-                break;
-            default:
-                throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", POWER, state));
+        int state = data.path(STATE).asInt(UNKNOWN);
+        try {
+            switch (state) {
+                case OFF:
+                    InstanceManager.powerManagerInstance().setPower(PowerManager.OFF);
+                    break;
+                case ON:
+                    InstanceManager.powerManagerInstance().setPower(PowerManager.ON);
+                    break;
+                case UNKNOWN:
+                    // quietly ignore
+                    break;
+                default:
+                    throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", POWER, state));
+            }
+        } catch (JmriException ex) {
+            throw new JsonException(500, ex);
         }
     }
 
@@ -480,7 +504,8 @@ public class JsonUtil {
             data.put(NAME, route.getSystemName());
             data.put(USERNAME, route.getUserName());
             data.put(COMMENT, route.getComment());
-            data.put(STATE, (s.getSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.getSensor(route.getTurnoutsAlignedSensor())).getKnownState() : Route.UNKNOWN);
+            // TODO: Completely insulate JSON state from Turnout state
+            data.put(STATE, (s.getSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.getSensor(route.getTurnoutsAlignedSensor())).getKnownState() : UNKNOWN);
         } catch (NullPointerException e) {
             root = handleError(404, Bundle.getMessage("ErrorObject", ROUTE, name));
             log.error("Unable to get route.", e);
@@ -516,9 +541,9 @@ public class JsonUtil {
             if (data.path(COMMENT).isTextual()) {
                 route.setComment(data.path(COMMENT).asText());
             }
-            int state = data.path(STATE).asInt(Route.UNKNOWN);
+            int state = data.path(STATE).asInt(UNKNOWN);
             switch (state) {
-                case Route.TOGGLE:
+                case TOGGLE:
                     route.setRoute();
                     break;
                 default:
@@ -579,13 +604,15 @@ public class JsonUtil {
             if (data.path(COMMENT).isTextual()) {
                 sensor.setComment(data.path(COMMENT).asText());
             }
-            int state = data.path(STATE).asInt(Sensor.UNKNOWN);
+            int state = data.path(STATE).asInt(UNKNOWN);
             switch (state) {
                 case Sensor.ACTIVE:
-                case Sensor.INACTIVE:
-                    sensor.setKnownState(state);
+                    sensor.setKnownState(Sensor.ACTIVE);
                     break;
-                case Sensor.UNKNOWN:
+                case INACTIVE:
+                    sensor.setKnownState(Sensor.INACTIVE);
+                    break;
+                case UNKNOWN:
                     // silently ignore
                     break;
                 default:
@@ -610,7 +637,7 @@ public class JsonUtil {
             data.put(COMMENT, signalHead.getComment());
             data.put(LIT, signalHead.getLit());
             data.put(APPEARANCE, signalHead.getAppearance());
-            data.put(HELD, signalHead.getHeld());
+            data.put(TOKEN_HELD, signalHead.getHeld());
             //state is appearance, plus a flag for held status
             if (signalHead.getHeld()) {
                 data.put(STATE, SignalHead.HELD);
@@ -644,7 +671,7 @@ public class JsonUtil {
             if (data.path(COMMENT).isTextual()) {
                 signalHead.setComment(data.path(COMMENT).asText());
             }
-            int state = data.path(STATE).asInt(SignalHead.UNKNOWN);
+            int state = data.path(STATE).asInt(UNKNOWN);
             boolean isValid = false;
             for (int validState : signalHead.getValidStates()) {
                 if (state == validState) {
@@ -652,7 +679,8 @@ public class JsonUtil {
                     break;
                 }
             }
-            if (isValid && state != SignalHead.INCONSISTENT && state != SignalHead.UNKNOWN) {
+            if (isValid && state != INCONSISTENT && state != UNKNOWN) {
+                // TODO: completely insulate JSON state from SignalHead state
                 signalHead.setAppearance(state);
             } else {
                 throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", SIGNAL_HEAD, state));
@@ -680,7 +708,7 @@ public class JsonUtil {
             }
             data.put(ASPECT, aspect);
             data.put(LIT, signalMast.getLit());
-            data.put(HELD, signalMast.getHeld());
+            data.put(TOKEN_HELD, signalMast.getHeld());
             //state is appearance, plus flags for held and dark statii
             if ((signalMast.getHeld()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
                 data.put(STATE, ASPECT_HELD);
@@ -832,13 +860,14 @@ public class JsonUtil {
             if (data.path(COMMENT).isTextual()) {
                 turnout.setComment(data.path(COMMENT).asText());
             }
-            int state = data.path(STATE).asInt(Turnout.UNKNOWN);
+            int state = data.path(STATE).asInt(UNKNOWN);
             switch (state) {
-                case Turnout.THROWN:
-                case Turnout.CLOSED:
-                    turnout.setCommandedState(state);
+                case THROWN:
+                    turnout.setCommandedState(Turnout.THROWN);
+                case CLOSED:
+                    turnout.setCommandedState(Turnout.CLOSED);
                     break;
-                case Turnout.UNKNOWN:
+                case UNKNOWN:
                     // leave state alone in this case
                     break;
                 default:

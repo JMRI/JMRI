@@ -132,7 +132,7 @@ public final class JSON {
     public static final String ASPECT_DARK = "Dark"; // NOI18N
     public static final String ASPECT_HELD = "Held"; // NOI18N
     public static final String ASPECT_UNKNOWN = "Unknown"; // NOI18N
-    public static final String HELD = "held"; // NOI18N
+    public static final String TOKEN_HELD = "held"; // NOI18N
     public static final String LIT = "lit"; // NOI18N
     /* JSON throttle tokens */
     public static final String ADDRESS = "address"; // NOI18N
@@ -148,4 +148,34 @@ public final class JSON {
     /* JSON value types */
     public static final String NULL = "null"; // NOI18N
     public static final String INTEGER = "int"; // NOI18N
+    /*
+     * JSON State (an unsigned integer)
+     */
+    /* Common state */
+    public static final int UNKNOWN = 0x00;
+    /* Light and PowerManager state */
+    public static final int ON = 0x02;
+    public static final int OFF = 0x04;
+    /* NamedBean state */
+    public static final int INCONSISTENT = 0x08;
+    /* Route state */
+    public static final int TOGGLE = 0x08;
+    /* Sensor state */
+    public static final int ACTIVE = 0x02;
+    public static final int INACTIVE = 0x04;
+    /* SignalHead state */
+    public static final int STATE_DARK = 0x00;
+    public static final int RED = 0x01;
+    public static final int FLASHRED = 0x02;
+    public static final int YELLOW = 0x04;
+    public static final int FLASHYELLOW = 0x08;
+    public static final int GREEN = 0x10;
+    public static final int FLASHGREEN = 0x20;
+    public static final int LUNAR = 0x40;
+    public static final int FLASHLUNAR = 0x80;
+    public static final int STATE_HELD = 0x100;
+
+    /* Turnout state */
+    public static final int CLOSED = 0x02;
+    public static final int THROWN = 0x04;
 }

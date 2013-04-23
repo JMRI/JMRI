@@ -8,7 +8,6 @@ import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Route;
-import jmri.Sensor;
 import jmri.jmris.AbstractRouteServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
@@ -68,12 +67,12 @@ public class JsonRouteServer extends AbstractRouteServer {
     }
 
     public void parseRequest(JsonNode data) throws JmriException, IOException {
-        int state = data.path(STATE).asInt(Sensor.UNKNOWN);
+        int state = data.path(STATE).asInt(UNKNOWN);
         String name = data.path(NAME).asText();
         try {
             Route route = InstanceManager.routeManagerInstance().getRoute(name);
             switch (state) {
-                case Sensor.ACTIVE:
+                case ACTIVE:
                     this.setRoute(name);
                     break;
                 default:
