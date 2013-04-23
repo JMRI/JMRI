@@ -38,7 +38,11 @@ public class JsonPowerServer extends AbstractPowerServer {
     }
 
     private void sendStatus() throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getPower()));
+        try {
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getPower()));
+        } catch (JsonException ex) {
+            this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
+        }
     }
 
     @Override
