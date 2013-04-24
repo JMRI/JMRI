@@ -112,7 +112,6 @@ public class AllocationRequest {
 	}
 		
 	public void dispose() {
-        log.info("disposed called");
         if ( (mSectionListener!=null) && (mSection!=null) ) {
 			mSection.removePropertyChangeListener(mSectionListener);
 		}
