@@ -231,6 +231,7 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
                 });
             }
             popup.add(aspect);
+            addTransitPopup(popup);
         }
         else {
             final java.util.Vector <String> aspects = getSignalMast().getValidAspects();
@@ -245,6 +246,52 @@ public class SignalMastIcon extends PositionableIcon implements java.beans.Prope
         }
         return true;
     }
+    
+    private void addTransitPopup(JPopupMenu popup){
+        if ((InstanceManager.sectionManagerInstance().getSystemNameList().size()) > 0 &&
+               jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()){
+            
+            if(tct == null){
+                tct = new jmri.jmrit.display.layoutEditor.TransitCreationTool();
+            }
+            popup.addSeparator();
+            String addString = Bundle.getMessage("MenuTransitCreate");
+            if(tct.isToolInUse())
+                addString = Bundle.getMessage("MenuTransitAddTo");
+            popup.add(new AbstractAction(addString){
+                public void actionPerformed(ActionEvent e) {
+                    try {
+                        tct.addNamedBean(getSignalMast());
+                    } catch (jmri.JmriException ex){
+                        JOptionPane.showMessageDialog(null, ex.getMessage(),Bundle.getMessage("TransitErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            });
+            if(tct.isToolInUse()){
+                popup.add(new AbstractAction(Bundle.getMessage("MenuTransitAddComplete")){
+                    public void actionPerformed(ActionEvent e) {
+                        Transit created;
+                        try {
+                            tct.addNamedBean(getSignalMast());
+                            created = tct.createTransit();
+                            JOptionPane.showMessageDialog(null, Bundle.getMessage("TransitCreatedMessage", created.getDisplayName()), Bundle.getMessage("TransitCreatedTitle"), JOptionPane.INFORMATION_MESSAGE);
+                        } catch (jmri.JmriException ex){
+                            JOptionPane.showMessageDialog(null, ex.getMessage(),Bundle.getMessage("TransitErrorTitle"), JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+                    }
+                });
+                popup.add(new AbstractAction(Bundle.getMessage("MenuTransitCancel")){
+                    public void actionPerformed(ActionEvent e) {
+                        tct.cancelTransitCreate();
+                    }
+                });
+            }
+            popup.addSeparator();
+        }
+    }
+    
+    static jmri.jmrit.display.layoutEditor.TransitCreationTool tct;
     
     private void setImageTypeList(ButtonGroup iconTypeGroup, JMenu iconSetMenu, final String item){
         JRadioButtonMenuItem im;
