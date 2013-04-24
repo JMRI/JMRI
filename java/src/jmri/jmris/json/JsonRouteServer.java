@@ -3,11 +3,8 @@ package jmri.jmris.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
-import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Route;
 import jmri.jmris.AbstractRouteServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
@@ -38,50 +35,27 @@ public class JsonRouteServer extends AbstractRouteServer {
      */
     @Override
     public void sendStatus(String routeName, int status) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, ROUTE);
-        ObjectNode data = root.putObject(DATA);
-        data.put(NAME, routeName);
-        data.put(STATE, status);
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        try {
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getRoute(routeName)));
+        } catch (JsonException ex) {
+            this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
+        }
     }
 
     @Override
     public void sendErrorStatus(String routeName) throws IOException {
-        this.sendErrorStatus(routeName, 500);
-    }
-
-    private void sendErrorStatus(String routeName, int code) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, ERROR);
-        ObjectNode data = root.putObject(ERROR);
-        data.put(NAME, routeName);
-        data.put(CODE, code);
-        data.put(MESSAGE, Bundle.getMessage("ErrorObject", ROUTE, routeName));
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", ROUTE, routeName))));
     }
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        this.parseRequest(this.mapper.readTree(statusString).path(DATA));
+        throw new JmriException("Overridden but unsupported method"); // NOI18N
     }
 
-    public void parseRequest(JsonNode data) throws JmriException, IOException {
-        int state = data.path(STATE).asInt(UNKNOWN);
+    public void parseRequest(JsonNode data) throws JmriException, IOException, JsonException {
         String name = data.path(NAME).asText();
-        try {
-            Route route = InstanceManager.routeManagerInstance().getRoute(name);
-            switch (state) {
-                case ACTIVE:
-                    this.setRoute(name);
-                    break;
-                default:
-                    this.sendStatus(name, route.getTurnoutsAlgdSensor().getKnownState());
-                    break;
-            }
-            this.addRouteToList(name);
-        } catch (NullPointerException ex) {
-            this.sendErrorStatus(name, 404);
-        }
+        JsonUtil.setRoute(name, data);
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMemory(name)));
+        this.addRouteToList(name);
     }
 }

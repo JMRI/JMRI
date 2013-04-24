@@ -3,7 +3,6 @@ package jmri.jmris.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import jmri.JmriException;
 import jmri.jmris.AbstractSensorServer;
@@ -42,12 +41,11 @@ public class JsonSensorServer extends AbstractSensorServer {
      */
     @Override
     public void sendStatus(String sensorName, int status) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, SENSOR);
-        ObjectNode data = root.putObject(DATA);
-        data.put(NAME, sensorName);
-        data.put(STATE, status);
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        try {
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getSensor(sensorName)));
+        } catch (JsonException ex) {
+            this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
+        }
     }
 
     @Override

@@ -109,29 +109,34 @@ public class JsonUtil {
         return root;
     }
 
-    static public JsonNode getLight(String name) {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIGHT);
-        ObjectNode data = root.putObject(DATA);
-        Light light = InstanceManager.lightManagerInstance().getLight(name);
-        data.put(NAME, light.getSystemName());
-        data.put(USERNAME, light.getUserName());
-        data.put(COMMENT, light.getComment());
-        switch (light.getState()) {
-            case Light.OFF:
-                data.put(STATE, OFF);
-                break;
-            case Light.ON:
-                data.put(STATE, ON);
-                break;
-            default:
-                data.put(STATE, UNKNOWN);
-                break;
+    static public JsonNode getLight(String name) throws JsonException {
+        try {
+            ObjectNode root = mapper.createObjectNode();
+            root.put(TYPE, LIGHT);
+            ObjectNode data = root.putObject(DATA);
+            Light light = InstanceManager.lightManagerInstance().getLight(name);
+            data.put(NAME, light.getSystemName());
+            data.put(USERNAME, light.getUserName());
+            data.put(COMMENT, light.getComment());
+            switch (light.getState()) {
+                case Light.OFF:
+                    data.put(STATE, OFF);
+                    break;
+                case Light.ON:
+                    data.put(STATE, ON);
+                    break;
+                default:
+                    data.put(STATE, UNKNOWN);
+                    break;
+            }
+            return root;
+        } catch (NullPointerException e) {
+            log.error("Unable to get light [{}].", name);
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", LIGHT, name));
         }
-        return root;
     }
 
-    static public JsonNode getLights() {
+    static public JsonNode getLights() throws JsonException {
         ObjectNode root = mapper.createObjectNode();
         root.put(TYPE, LIST);
         ArrayNode lights = root.putArray(LIST);
@@ -505,8 +510,26 @@ public class JsonUtil {
             data.put(NAME, route.getSystemName());
             data.put(USERNAME, route.getUserName());
             data.put(COMMENT, route.getComment());
-            // TODO: Completely insulate JSON state from Turnout state
-            data.put(STATE, (s.getSensor(route.getTurnoutsAlignedSensor()) != null) ? (s.getSensor(route.getTurnoutsAlignedSensor())).getKnownState() : UNKNOWN);
+            Sensor sensor = s.getSensor(route.getTurnoutsAlignedSensor());
+            if (sensor != null) {
+                switch (sensor.getKnownState()) {
+                    case Sensor.ACTIVE:
+                        data.put(STATE, ACTIVE);
+                        break;
+                    case Sensor.INACTIVE:
+                        data.put(STATE, INACTIVE);
+                        break;
+                    case Sensor.INCONSISTENT:
+                        data.put(STATE, INCONSISTENT);
+                        break;
+                    case Sensor.UNKNOWN:
+                    default:
+                        data.put(STATE, UNKNOWN);
+                        break;
+                }
+            } else {
+                data.put(STATE, UNKNOWN);
+            }
         } catch (NullPointerException e) {
             log.error("Unable to get route [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", ROUTE, name));
@@ -544,8 +567,13 @@ public class JsonUtil {
             }
             int state = data.path(STATE).asInt(UNKNOWN);
             switch (state) {
+                case ACTIVE:
                 case TOGGLE:
                     route.setRoute();
+                    break;
+                case INACTIVE:
+                case UNKNOWN:
+                    // silently ignore
                     break;
                 default:
                     throw new JsonException(400, Bundle.getMessage("ErrorUnknownState", ROUTE, state));
@@ -566,7 +594,21 @@ public class JsonUtil {
             data.put(USERNAME, sensor.getUserName());
             data.put(COMMENT, sensor.getComment());
             data.put(INVERTED, sensor.getInverted());
-            data.put(STATE, sensor.getKnownState());
+            switch (sensor.getKnownState()) {
+                case Sensor.ACTIVE:
+                    data.put(STATE, ACTIVE);
+                    break;
+                case Sensor.INACTIVE:
+                    data.put(STATE, INACTIVE);
+                    break;
+                case Sensor.INCONSISTENT:
+                    data.put(STATE, INCONSISTENT);
+                    break;
+                case Sensor.UNKNOWN:
+                default:
+                    data.put(STATE, UNKNOWN);
+                    break;
+            }
         } catch (NullPointerException e) {
             log.error("Unable to get sensor [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", SENSOR, name));

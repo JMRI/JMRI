@@ -3,7 +3,6 @@ package jmri.jmris.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import jmri.JmriException;
 import jmri.jmris.AbstractMemoryServer;
@@ -42,17 +41,16 @@ public class JsonMemoryServer extends AbstractMemoryServer {
      */
     @Override
     public void sendStatus(String memoryName, String status) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, MEMORY);
-        ObjectNode data = root.putObject(DATA);
-        data.put(NAME, memoryName);
-        data.put(VALUE, status);
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        try {
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMemory(memoryName)));
+        } catch (JsonException ex) {
+            this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
+        }
     }
 
     @Override
     public void sendErrorStatus(String memoryName) throws IOException {
-        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", TURNOUT, memoryName))));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", MEMORY, memoryName))));
     }
 
     @Override

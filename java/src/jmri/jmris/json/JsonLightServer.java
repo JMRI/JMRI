@@ -3,7 +3,6 @@ package jmri.jmris.json;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import jmri.JmriException;
 import jmri.jmris.AbstractLightServer;
@@ -15,10 +14,10 @@ import org.slf4j.LoggerFactory;
 /**
  * JSON Server interface between the JMRI light manager and a network connection
  *
- * This server sends a message containing the light state whenever a light
- * that has been previously requested is open or thrown. When a client requests
- * or updates a light, the server replies with all known light details, but
- * only sends the new light state when sending a status update.
+ * This server sends a message containing the light state whenever a light that
+ * has been previously requested is open or thrown. When a client requests or
+ * updates a light, the server replies with all known light details, but only
+ * sends the new light state when sending a status update.
  *
  * @author Paul Bender Copyright (C) 2010
  * @author Randall Wood Copyright (C) 2012, 2013
@@ -40,17 +39,16 @@ public class JsonLightServer extends AbstractLightServer {
      */
     @Override
     public void sendStatus(String lightName, int status) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, LIGHT);
-        ObjectNode data = root.putObject(DATA);
-        data.put(NAME, lightName);
-        data.put(STATE, status);
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        try {
+            this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getLight(lightName)));
+        } catch (JsonException ex) {
+            this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
+        }
     }
 
     @Override
     public void sendErrorStatus(String lightName) throws IOException {
-        this.sendStatus(lightName, -1);
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.handleError(500, Bundle.getMessage("ErrorObject", LIGHT, lightName))));
     }
 
     @Override
