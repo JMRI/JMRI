@@ -24,9 +24,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.JLabel;
+import javax.swing.JCheckBox;
+//import javax.swing.JComponent;
 import javax.swing.JTextField;
+import javax.swing.BoxLayout;
+import javax.swing.JDialog;
+import javax.swing.BorderFactory;
 import jmri.util.com.sun.TableSorter;
 import java.awt.event.MouseEvent;
+import java.awt.Component;
 
 public class SignalMastLogicTableAction extends AbstractTableAction{
 
@@ -419,7 +425,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction{
 
     @Override
     protected String helpTarget() {
-        return "package.jmri.jmrit.beantable.SignalMastLogicTable";
+        return "package.jmri.jmrit.beantable.SignalMastLogicTable";// NOI18N
     }
     
     protected void addPressed(ActionEvent e){
@@ -434,25 +440,30 @@ public class SignalMastLogicTableAction extends AbstractTableAction{
     
     void autoCreatePairs(jmri.util.JmriJFrame f) {
         if (!InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
-            int response = JOptionPane.showConfirmDialog(null, rb.getString("EnableLayoutBlockRouting"));
+            int response = JOptionPane.showConfirmDialog(null, Bundle.getMessage("EnableLayoutBlockRouting"));
             if (response == 0){
                 InstanceManager.layoutBlockManagerInstance().enableAdvancedRouting(true);
-                JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("LayoutBlockRoutingEnabled"));
+            } else {
+                return;
             }
         }
-        signalMastLogicFrame = new JmriJFrame("Discover Signal Mast Pairs", false, false);
+        signalMastLogicFrame = new JmriJFrame(Bundle.getMessage("DiscoverSignalMastPairs"), false, false);
         signalMastLogicFrame.setPreferredSize(null);
         JPanel panel1 = new JPanel();
-        sourceLabel = new JLabel("Discovering Signalmasts");
+        sourceLabel = new JLabel(Bundle.getMessage("DiscoveringSignalMastPairs"));
         panel1.add(sourceLabel);
         signalMastLogicFrame.add(panel1);
         signalMastLogicFrame.pack();
         signalMastLogicFrame.setVisible(true);
-        int retval = JOptionPane.showOptionDialog(f, rb.getString("AutoGenSignalMastLogicMessage"), rb.getString("AutoGenSignalMastLogicTitle"),
-                                                  JOptionPane.YES_NO_OPTION,
-                                                  JOptionPane.QUESTION_MESSAGE, null, null, null);
+        
+        final JCheckBox genSect = new JCheckBox(Bundle.getMessage("AutoGenSectionAfterLogic"));
+        genSect.setToolTipText(Bundle.getMessage("AutoGenSectionAfterLogicToolTip"));
+        Object[] params = {Bundle.getMessage("AutoGenSignalMastLogicMessage")," ", genSect}; 
+        int retval = JOptionPane.showConfirmDialog(f, params, Bundle.getMessage("AutoGenSignalMastLogicTitle"), 
+                                                  JOptionPane.YES_NO_OPTION);
+
         if (retval == 0) {
-            
             InstanceManager.signalMastLogicManagerInstance().addPropertyChangeListener(propertyGenerateListener);
             //This process can take some time, so we do not want to hog the GUI thread
             Runnable r = new Runnable() {
@@ -469,9 +480,12 @@ public class SignalMastLogicTableAction extends AbstractTableAction{
                 m.updateNameList();
                 suppressUpdate=false;
                 m.fireTableDataChanged();
+                if(genSect.isSelected()){
+                    ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.signalMastLogicManagerInstance()).generateSection();
+                }
               }
             };
-            Thread thr = new Thread(r, "Discover Signal Mast Logic");
+            Thread thr = new Thread(r, "Discover Signal Mast Logic");  // NOI18N
             thr.start();
             
         } else {
@@ -481,12 +495,12 @@ public class SignalMastLogicTableAction extends AbstractTableAction{
     
     protected transient PropertyChangeListener propertyGenerateListener = new PropertyChangeListener() {
         public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals("autoGenerateComplete")){
+            if (evt.getPropertyName().equals("autoGenerateComplete")){// NOI18N
                 if (signalMastLogicFrame!=null)
                     signalMastLogicFrame.setVisible(false);
                 InstanceManager.signalMastLogicManagerInstance().removePropertyChangeListener(this);
-                JOptionPane.showMessageDialog(null, "Generation of Signalling Pairs Completed");
-            } else if (evt.getPropertyName().equals("autoGenerateUpdate")){
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("SignalMastPairGenerationComplete"));
+            } else if (evt.getPropertyName().equals("autoGenerateUpdate")){// NOI18N
                 sourceLabel.setText((String)evt.getNewValue());
                 signalMastLogicFrame.pack();
                 signalMastLogicFrame.repaint();
