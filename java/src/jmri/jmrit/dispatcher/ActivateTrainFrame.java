@@ -415,11 +415,19 @@ public class ActivateTrainFrame {
 						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
 				cancelInitiateTrain(null);
 				return;
-			}				
+			}
 			trainName = (String)trainSelectBox.getSelectedItem();
 			RosterEntry r = trainBoxList.get(index);
 			dccAddress = r.getDccAddress();
 			tSource = ActiveTrain.ROSTER;
+            
+            if(trainTypeBox.getSelectedIndex()!=0 && 
+                (r.getAttribute("DisptacherTrainType")==null || 
+                   !r.getAttribute("DispatcherTrainType").equals(""+trainTypeBox.getSelectedItem()))){
+                r.putAttribute("DispatcherTrainType", ""+trainTypeBox.getSelectedItem());
+                r.updateFile();
+                Roster.writeRosterFile();
+            }
 		}
 		else if (_TrainsFromTrains) {
 			tSource = ActiveTrain.OPERATIONS;
@@ -539,7 +547,10 @@ public class ActivateTrainFrame {
 			selectedTransit = null;
 		}
 	}
+    
+    ActionListener trainSelectBoxListener = null;
 	private void initializeFreeTrainsCombo() {
+        trainSelectBox.removeActionListener(trainSelectBoxListener);
 		trainSelectBox.removeAllItems();
 		trainBoxList.clear();
 		if (_TrainsFromRoster) {
@@ -555,6 +566,17 @@ public class ActivateTrainFrame {
 					}
 				}
 			}
+            if(trainSelectBoxListener == null){
+                trainSelectBoxListener = new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        RosterEntry r = trainBoxList.get(trainSelectBox.getSelectedIndex());
+                        if(r.getAttribute("DispatcherTrainType")!=null && !r.getAttribute("DispatcherTrainType").equals("")){
+                            trainTypeBox.setSelectedItem(r.getAttribute("DispatcherTrainType"));
+                        }
+                    }
+                };
+            }
+            trainSelectBox.addActionListener(trainSelectBoxListener);
 		}
 		else if (_TrainsFromTrains) {
 			// initialize free trains from operations
