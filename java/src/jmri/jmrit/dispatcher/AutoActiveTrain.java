@@ -471,11 +471,17 @@ public class AutoActiveTrain implements ThrottleListener {
                                     cancelStopInCurrentSection();
                                     _stoppingForStopSignal = false;
                                 }
+                            } else if (e.getPropertyName().equals("Held")){
+                                if(!((Boolean) e.getNewValue()).booleanValue()){
+                                    cancelStopInCurrentSection();
+                                    _stoppingForStopSignal = false;
+                                }
+                                setSpeedBySignal();
                             }
                         }
                     });
                 if (log.isDebugEnabled()) log.debug("new current signalmast = "+sm.getSystemName());
-                setSpeedBySignal();			
+                setSpeedBySignal();
             }
             // Note: null signal head will result when exiting throat-to-throat blocks.
             else if (log.isDebugEnabled()) log.debug("new current signalmast is null - sometimes OK");
@@ -792,7 +798,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		}
 		if (task>NO_TASK) {
 			Runnable waitForStop = new WaitForTrainToStop(task);
-			Thread tWait = new Thread(waitForStop);
+			Thread tWait = new Thread(waitForStop, "Wait for stop " + _controllingSignalMast.getDisplayName());
 			tWait.start();
 		}
 	}
@@ -800,14 +806,22 @@ public class AutoActiveTrain implements ThrottleListener {
 		if (task<=0) return;
 		switch (task) {
 			case END_REVERSAL:
+            /*Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails  to stop the loco in the correct block
+                        if the first block we come to has a stopped or held signal*/
+                _previousBlock = _currentBlock;
 				_activeTrain.setTransitReversed(true);
 				_activeTrain.reverseAllAllocatedSections();
 				setEngineDirection();
 				setupNewCurrentSignal();
-				setSpeedBySignal();				
+				setSpeedBySignal();
 				break;
 			case BEGINNING_RESET:
 				if (_activeTrain.getResetWhenDone()) {
+                    if(_activeTrain.getReverseAtEnd()){
+                        /*Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails  to stop the loco in the correct block
+                        if the first block we come to has a stopped or held signal*/
+                        _previousBlock = _currentBlock;
+                    }
 					_activeTrain.setTransitReversed(false);
 					_activeTrain.resetAllAllocatedSections();
 					setEngineDirection();

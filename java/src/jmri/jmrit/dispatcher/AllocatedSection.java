@@ -210,7 +210,7 @@ public class AllocatedSection {
 				if (!isInActiveBlockList(b)) {
 					int occ = b.getState();
 					Runnable handleBlockChange = new RespondToBlockStateChange(b,occ,this);
-					Thread tBlockChange = new Thread(handleBlockChange);
+					Thread tBlockChange = new Thread(handleBlockChange, "Allocated Section Block Change on " + b.getDisplayName());
 					tBlockChange.start();
 					addToActiveBlockList(b);
 					if (DispatcherFrame.instance().getSupportVSDecoder())
