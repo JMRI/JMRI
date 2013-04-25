@@ -3623,11 +3623,17 @@ public class TrainBuilder extends TrainCommon {
 			return;
 		if (carIndex < 0)
 			carIndex = 0;
+		boolean printHeader = true;
 		for (int i = carIndex; i < carList.size(); i++) {
 			Car car = carManager.getById(carList.get(i));
 			// find a car at this location that hasn't been given a destination
 			if (!car.getLocationName().equals(rl.getName()) || car.getRouteDestination() != null)
 				continue;
+			if (printHeader) {
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildMovesCompleted"),
+						new Object[] { rl.getName() }));
+				printHeader = false;
+			}
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarIgnored"),
 					new Object[] { car.toString(), car.getType(), car.getLoad(), car.getLocationName(),
 							car.getTrackName() }));
