@@ -856,7 +856,10 @@ public class AutoActiveTrain implements ThrottleListener {
 	}		
 	private synchronized void setStopNow() {
 		setSpeed(STOP_SPEED);
-		if (_currentAllocatedSection.getNextSection()==null) {
+        if (_currentAllocatedSection == null){  // this may occur if the train is not in the selected block when initially created and the signal is held.
+            _activeTrain.setStatus(ActiveTrain.WAITING);
+        }
+		else if (_currentAllocatedSection.getNextSection()==null) {
 			_activeTrain.setStatus(ActiveTrain.DONE);
 		}
 		else {
