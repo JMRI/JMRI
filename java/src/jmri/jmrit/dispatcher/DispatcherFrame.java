@@ -774,7 +774,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		if (isInAllocatedSection(startBlock)) {
 			if (showErrorMessages) {
 				JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-						"Error5"),new Object[] { startBlockName }), rb.getString("ErrorTitle"),
+						"Error5"),new Object[] { startBlock.getDisplayName() }), rb.getString("ErrorTitle"),
 							JOptionPane.ERROR_MESSAGE);
 			}
 			log.error("Start block '"+startBlockName+"' in allocated Section, cannot create an Active Train");
@@ -783,7 +783,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		if ( _HasOccupancyDetection && (!(startBlock.getState()==Block.OCCUPIED)) ) {
 			if (showErrorMessages) {
 				JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-						"Error6"),new Object[] { startBlockName }), rb.getString("ErrorTitle"),
+						"Error6"),new Object[] { startBlock.getDisplayName() }), rb.getString("ErrorTitle"),
 							JOptionPane.ERROR_MESSAGE);
 			}
 			log.error("No train in start block '"+startBlockName+"', cannot create an Active Train");
