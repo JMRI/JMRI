@@ -176,6 +176,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 						if (options.getAttribute("usescalemeters").getValue().equals("no"))
 							dispatcher.setUseScaleMeters(false);
 					}
+                    if(options.getAttribute("userosterentryinblock")!=null){
+                        dispatcher.setRosterEntryInBlock(false);
+						if (options.getAttribute("userosterentryinblock").getValue().equals("yes"))
+							dispatcher.setRosterEntryInBlock(true);
+                    }
 				}
 			}
 		} 
@@ -217,6 +222,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		options.setAttribute("supportvsdecoder", ""+(dispatcher.getSupportVSDecoder()?"yes":"no"));
 		options.setAttribute("layoutscale", Scale.getShortScaleID(dispatcher.getScale()));
 		options.setAttribute("usescalemeters", ""+(dispatcher.getUseScaleMeters()?"yes":"no"));
+		options.setAttribute("userosterentryinblock", ""+(dispatcher.getRosterEntryInBlock()?"yes":"no"));
         if(dispatcher.getSignalType()==0x00){
             options.setAttribute("usesignaltype", "signalhead");
         } else {

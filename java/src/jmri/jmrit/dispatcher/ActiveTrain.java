@@ -214,6 +214,8 @@ public class ActiveTrain {
         if(mRoster==null && getTrainSource()==ROSTER){
             //Try to resolve the roster based upon the train name
             mRoster = jmri.jmrit.roster.Roster.instance().getEntryForId(getTrainName());
+        } else if (getTrainSource()!=ROSTER) {
+            mRoster=null;
         }
         return mRoster;
     }
@@ -351,7 +353,11 @@ public class ActiveTrain {
 				mSecondAllocatedSection = as.getSection();
 			}
 			if (DispatcherFrame.instance().getNameInAllocatedBlock()) {
-				as.getSection().setNameInBlocks(mTrainName);
+                if(DispatcherFrame.instance().getRosterEntryInBlock() && getRosterEntry()!=null){
+                    as.getSection().setNameInBlocks(getRosterEntry());
+                } else {
+                    as.getSection().setNameInBlocks(mTrainName);
+                }
 				as.getSection().suppressNameUpdate(true);
 			}
 			if (DispatcherFrame.instance().getExtraColorForAllocated()) {
@@ -479,8 +485,10 @@ public class ActiveTrain {
 				mNextSectionToAllocate, mNextSectionDirection, mNextSectionSeqNumber, true, null)) {	
 			log.error("Allocation request failed for first allocation of "+getActiveTrainName());
 		}
-		if (DispatcherFrame.instance().getShortNameInBlock()) {
-			mStartBlock.setValue(mTrainName);
+        if(DispatcherFrame.instance().getRosterEntryInBlock() && getRosterEntry()!=null){
+            mStartBlock.setValue(getRosterEntry());
+        } else if (DispatcherFrame.instance().getShortNameInBlock()) {
+            mStartBlock.setValue(mTrainName);
 		}
 		AllocationRequest ar = DispatcherFrame.instance().findAllocationRequestInQueue(mNextSectionToAllocate,
 				mNextSectionSeqNumber, mNextSectionDirection, this);

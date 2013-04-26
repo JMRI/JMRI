@@ -103,6 +103,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private boolean _AutoTurnouts = false;
 	private boolean _ShortActiveTrainNames = false;
 	private boolean _ShortNameInBlock = true;
+	private boolean _RosterEntryInBlock = false;
 	private boolean _ExtraColorForAllocated = true;
 	private boolean _NameInAllocatedBlock = false;
 	private boolean _AlwaysSet = true;
@@ -1588,6 +1589,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	}
 	protected boolean getShortNameInBlock() {return _ShortNameInBlock;}
 	protected void setShortNameInBlock(boolean set) {_ShortNameInBlock = set;}
+    protected boolean getRosterEntryInBlock() { return _RosterEntryInBlock; }
+    protected void setRosterEntryInBlock(boolean set) { _RosterEntryInBlock = set; }
 	protected boolean getExtraColorForAllocated() {return _ExtraColorForAllocated;}
 	protected void setExtraColorForAllocated(boolean set) {_ExtraColorForAllocated = set;}
 	protected boolean getNameInAllocatedBlock() {return _NameInAllocatedBlock;}
@@ -1609,7 +1612,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				fastClockWarn();
 			}
 		}
-		newTrainActive = false;		
+		newTrainActive = false;
 	}
 	private void fastClockWarn() {
 		if (fastClockSensor.getState()==Sensor.ACTIVE) return;

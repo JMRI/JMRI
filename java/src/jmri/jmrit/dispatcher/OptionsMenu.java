@@ -112,9 +112,10 @@ public class OptionsMenu extends JMenu {
 	JCheckBox detectionCheckBox = new JCheckBox(rb.getString("DetectionBox"));
 	JCheckBox shortNameCheckBox = new JCheckBox(rb.getString("ShortNameBox"));
 	JCheckBox nameInBlockCheckBox = new JCheckBox(rb.getString("NameInBlockBox"));
+	JCheckBox rosterInBlockCheckBox = new JCheckBox(rb.getString("RosterInBlockBox"));
 	JCheckBox extraColorForAllocatedCheckBox = new JCheckBox(rb.getString("ExtraColorForAllocatedBox"));
 	JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(rb.getString("NameInAllocatedBlockBox"));
-        JCheckBox supportVSDecoderCheckBox = new JCheckBox(rb.getString("SupportVSDecoder"));
+    JCheckBox supportVSDecoderCheckBox = new JCheckBox(rb.getString("SupportVSDecoder"));
 	JComboBox layoutScaleBox = new JComboBox();
 	JRadioButton scaleFeet = new JRadioButton(rb.getString("ScaleFeet"));
 	JRadioButton scaleMeters = new JRadioButton(rb.getString("ScaleMeters"));
@@ -135,7 +136,7 @@ public class OptionsMenu extends JMenu {
 			layoutEditorBox.setToolTipText(rb.getString("LayoutEditorHint"));
             signalTypeBox = new JComboBox(signalTypes);
             p1.add(signalTypeBox);
-            signalTypeBox.setToolTipText("LAYOUT EDITOR USES");
+            signalTypeBox.setToolTipText(rb.getString("SignalTypeHint"));
 			optionsPane.add(p1);
 			JPanel p2 = new JPanel();
 			p2.setLayout(new FlowLayout());
@@ -143,13 +144,30 @@ public class OptionsMenu extends JMenu {
 			p2.add(trainsFromRoster);
 			trainsFromRoster.setToolTipText(rb.getString("TrainsFromRosterHint"));
 			trainsGroup.add(trainsFromRoster);
+            
+            ActionListener useRosterEntryListener = new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    if(trainsFromRoster.isSelected()){
+                        rosterInBlockCheckBox.setEnabled(true);
+                        if(nameInBlockCheckBox.isSelected()  && e.getSource()==nameInBlockCheckBox)
+                            rosterInBlockCheckBox.setSelected(false);
+                        else if (rosterInBlockCheckBox.isSelected() && e.getSource()==rosterInBlockCheckBox)
+                            nameInBlockCheckBox.setSelected(false);
+                    } else {
+                        rosterInBlockCheckBox.setEnabled(false);
+                    }
+                }
+            };
+            trainsFromRoster.addActionListener(useRosterEntryListener);
 			p2.add(new JLabel("     "));
 			p2.add(trainsFromTrains);
 			trainsFromTrains.setToolTipText(rb.getString("TrainsFromTrainsHint"));
+            trainsFromTrains.addActionListener(useRosterEntryListener);
 			trainsGroup.add(trainsFromTrains);
 			p2.add(new JLabel("     "));
 			p2.add(trainsFromUser);
 			trainsFromUser.setToolTipText(rb.getString("TrainsFromUserHint"));
+            trainsFromUser.addActionListener(useRosterEntryListener);
 			trainsGroup.add(trainsFromUser);
 			optionsPane.add(p2);
 			JPanel p3 = new JPanel();
@@ -176,7 +194,15 @@ public class OptionsMenu extends JMenu {
 			p7.setLayout(new FlowLayout());
 			p7.add(nameInBlockCheckBox);
 			nameInBlockCheckBox.setToolTipText(rb.getString("NameInBlockBoxHint"));
+            nameInBlockCheckBox.addActionListener(useRosterEntryListener);
 			optionsPane.add(p7);
+			JPanel p7b = new JPanel();
+			p7b.setLayout(new FlowLayout());
+			p7b.add(rosterInBlockCheckBox);
+			rosterInBlockCheckBox.setToolTipText(rb.getString("RosterInBlockBoxHint"));
+            rosterInBlockCheckBox.addActionListener(useRosterEntryListener);
+			optionsPane.add(p7b);
+            
 			JPanel p10 = new JPanel();
 			p10.setLayout(new FlowLayout());
 			p10.add(extraColorForAllocatedCheckBox);
@@ -250,6 +276,7 @@ public class OptionsMenu extends JMenu {
 		autoTurnoutsCheckBox.setSelected(dispatcher.getAutoTurnouts());
 		shortNameCheckBox.setSelected(dispatcher.getShortActiveTrainNames());
 		nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());
+		rosterInBlockCheckBox.setSelected(dispatcher.getRosterEntryInBlock());
 		extraColorForAllocatedCheckBox.setSelected(dispatcher.getExtraColorForAllocated());
 		nameInAllocatedBlockCheckBox.setSelected(dispatcher.getNameInAllocatedBlock());
 		supportVSDecoderCheckBox.setSelected(dispatcher.getSupportVSDecoder());
@@ -282,6 +309,7 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setShortNameInBlock(nameInBlockCheckBox.isSelected());
 		dispatcher.setExtraColorForAllocated(extraColorForAllocatedCheckBox.isSelected());
 		dispatcher.setNameInAllocatedBlock(nameInAllocatedBlockCheckBox.isSelected());
+		dispatcher.setRosterEntryInBlock(rosterInBlockCheckBox.isSelected());
 		dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
 		dispatcher.setScale(layoutScaleBox.getSelectedIndex()+1);
 		dispatcher.setUseScaleMeters(scaleMeters.isSelected());

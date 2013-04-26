@@ -2186,7 +2186,22 @@ public class Section extends AbstractNamedBean
 			}			
 		}
 	}
-		
+    
+    /**
+	 * This function sets an object in the memories associated with blocks in this section.
+	 *    If Layout Editor panel is not present, Layout Blocks will not be present, and nothing will be set.
+	 */
+	public void setNameInBlocks(Object value) {
+		for (int i=0; i<mBlockEntries.size(); i++) {
+			Block b = mBlockEntries.get(i);
+			LayoutBlock lb = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getByUserName(b.getUserName());
+			if (lb!=null) {
+				Memory m = lb.getMemory();
+				if (m!=null) m.setValue(value);
+			}			
+		}
+	}
+	
 	/**
 	 * This function clears the string in the memories associated with unoccupied blocks in this section.
 	 *    If Layout Editor panel is not present, Layout Blocks will not be present, and nothing will be set.
