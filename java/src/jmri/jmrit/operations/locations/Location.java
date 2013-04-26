@@ -287,7 +287,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		boolean old = _switchList;
 		_switchList = switchList;
 		if (old != switchList)
-			setDirtyAndFirePropertyChange(SWITCHLIST_CHANGED_PROPERTY, old ? "true" : "false",
+			setDirtyAndFirePropertyChange(SWITCHLIST_CHANGED_PROPERTY, old ? "true" : "false",  // NOI18N
 					switchList ? "true" : "false"); // NOI18N
 	}
 

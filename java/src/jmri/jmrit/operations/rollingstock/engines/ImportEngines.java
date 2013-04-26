@@ -54,7 +54,7 @@ public class ImportEngines extends Thread {
 		File file = fc.getSelectedFile();
 		BufferedReader in;
 		try {
-			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+			in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
 		} catch (FileNotFoundException e) {
 			return;
 		} catch (IOException e) {

@@ -231,7 +231,7 @@ public class Router extends TrainCommon {
 			if (setCarDestinationInterchange(car)) {
 				if (enable_yard_search && _status.equals(STATUS_NOT_THIS_TRAIN)) {
 					log.debug("Was able to find a route via classification/interchange track, but not using train ("
-							+ _train.getName() + ") try again using yard tracks");
+							+ _train.getName() + ") try again using yard tracks"); // NOI18N
 					if (setCarDestinationYard(car)) {
 						log.debug("Was able to find route via yard (" + car.getDestinationName() + ", "
 								+ car.getDestinationTrackName() + ") for car (" + car.toString() + ")"); // NOI18N
@@ -315,7 +315,7 @@ public class Router extends TrainCommon {
 				+ testCar.getDestinationTrackName() + ")");
 		if (addtoReport)
 			addLine(_buildReport, SEVEN, "Router find " + trackType + " track for car (" + car.toString() + ") final destination ("
-					+ testCar.getDestinationName() + ", " // NOI18N
+					+ testCar.getDestinationName() + ", "
 					+ testCar.getDestinationTrackName() + ")");
 		// save car's location, track, destination, and destination track
 		Location saveLocation = testCar.getLocation();
@@ -343,7 +343,7 @@ public class Router extends TrainCommon {
 						+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
 			if (addtoReport)
 				addLine(_buildReport, SEVEN, "Router found " + trackType + " track (" + track.getLocation().getName() + ", "
-						+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
+						+ track.getName() + ") for car (" + car.toString() + ")");
 			// test to see if there's a train that can deliver the car to its final location
 			testCar.setLocation(track.getLocation());
 			testCar.setTrack(track);
@@ -357,8 +357,8 @@ public class Router extends TrainCommon {
 							+ testCar.getDestinationName() + " ," + testCar.getDestinationTrackName()+")"); // NOI18N
 				if (addtoReport)
 					addLine(_buildReport, SEVEN, "Router could not find a train to transport car from " + trackType + " ("
-							+ track.getLocation().getName() + ", " + track.getName() + ") to ("	// NOI18N
-							+ testCar.getDestinationName() + ", " + testCar.getDestinationTrackName()+")"); // NOI18N
+							+ track.getLocation().getName() + ", " + track.getName() + ") to ("
+							+ testCar.getDestinationName() + ", " + testCar.getDestinationTrackName()+")");
 				continue;
 			}
 			if (debugFlag)
@@ -370,10 +370,10 @@ public class Router extends TrainCommon {
 						+ ", " + testCar.getDestinationTrackName() + ")");
 			if (addtoReport)
 				addLine(_buildReport, SEVEN, "Train (" + nextTrain.getName() + ") can transport car ("
-						+ car.toString() + ") from " + trackType	// NOI18N
-						+ " (" // NOI18N
-						+ testCar.getLocationName() + ", " + testCar.getTrackName()	// NOI18N
-						+ ") to final destination (" + testCar.getDestinationName() // NOI18N
+						+ car.toString() + ") from " + trackType
+						+ " ("
+						+ testCar.getLocationName() + ", " + testCar.getTrackName()
+						+ ") to final destination (" + testCar.getDestinationName()
 						+ ", " + testCar.getDestinationTrackName() + ")");
 			// Save the "last" tracks for later use
 			lastLocationTracks.add(track);
@@ -392,7 +392,7 @@ public class Router extends TrainCommon {
 							+ track.getName() + ")");
 				if (addtoReport)
 					addLine(_buildReport, SEVEN, "Train (" + _train.getName() + ") can not transport car to ("
-							+ track.getLocation().getName() + ", " // NOI18N
+							+ track.getLocation().getName() + ", "
 							+ track.getName() + ")");
 				continue; // can't use this train
 			}
@@ -445,10 +445,10 @@ public class Router extends TrainCommon {
 					if (addtoReport)
 						addLine(_buildReport, SEVEN, "Train (" + firstTrain.getName() + ") can transport car ("
 								+ car.toString()
-								+ ") from current location (" // NOI18N
-								+ car.getLocationName() + ", " + car.getTrackName() + ") to "	// NOI18N
-								+ trackType + " (" + track.getLocation().getName() // NOI18N
-								+ ", " + track.getName() + ")"); // NOI18N
+								+ ") from current location ("
+								+ car.getLocationName() + ", " + car.getTrackName() + ") to "
+								+ trackType + " (" + track.getLocation().getName()
+								+ ", " + track.getName() + ")");
 					return true;	// the specific train and another train can carry the car to its destination
 				}
 			}

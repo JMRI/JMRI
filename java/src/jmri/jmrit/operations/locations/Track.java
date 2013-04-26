@@ -1842,7 +1842,7 @@ public class Track {
 		if (_destinationIdList.contains(destination.getId()))
 			return false;		
 		_destinationIdList.add(destination.getId());
-		setDirtyAndFirePropertyChange("add_track_destination", null, destination.getName());
+		setDirtyAndFirePropertyChange("add_track_destination", null, destination.getName()); // NOI18N
 		return true;
 	}
 	
@@ -1850,7 +1850,7 @@ public class Track {
 		if (!_destinationIdList.contains(destination.getId()))
 			return;
 		_destinationIdList.remove(destination.getId());
-		setDirtyAndFirePropertyChange("delete_track_destination", destination.getName(), null);
+		setDirtyAndFirePropertyChange("delete_track_destination", destination.getName(), null); // NOI18N
 		return;
 	}
 	
@@ -1867,7 +1867,7 @@ public class Track {
 		String old = _destinationOption;
 		_destinationOption = option;
 		if (!option.equals(old))
-			setDirtyAndFirePropertyChange("track_destination_option", old, option);
+			setDirtyAndFirePropertyChange("track_destination_option", old, option); // NOI18N
 	}
 	
 	public String getDestinationOption() {

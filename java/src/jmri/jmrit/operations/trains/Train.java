@@ -1327,7 +1327,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				|| !acceptsRoadName(car.getRoad())) {
 			if (addToReport)
 				TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() + ") can't service car (" + car.toString()
-						+ ")");// NOI18N
+						+ ")");
 			return false;
 		}
 		
@@ -1370,7 +1370,7 @@ public class Train implements java.beans.PropertyChangeListener {
 					}
 					if (debugFlag)
 						log.debug("Car (" + car.toString() + ") can be picked up by train (" + getName()
-								+ ") location (" + car.getLocationName() + ", " + car.getTrackName()
+								+ ") location (" + car.getLocationName() + ", " + car.getTrackName()// NOI18N
 								+ ") destination ("// NOI18N
 								+ car.getDestinationName() + ", "// NOI18N
 								+ car.getDestinationTrackName() + ")"); // NOI18N
@@ -1439,13 +1439,13 @@ public class Train implements java.beans.PropertyChangeListener {
 								}
 								if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
 									if (debugFlag)
-										log.debug("Destination (" + car.getDestinationName()
-												+ ") can not service car (" + car.toString()
-												+ ") using train (" + getName() + ") no track available");
+										log.debug("Destination (" + car.getDestinationName() // NOI18N
+												+ ") can not service car (" + car.toString() // NOI18N
+												+ ") using train (" + getName() + ") no track available"); // NOI18N
 									if (addToReport)
-										TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName()	// NOI18N
-												+ ") can't deliver car (" + car.toString() + ") to destination ("	// NOI18N
-												+ car.getDestinationName() + ") no tracks able to service car");	// NOI18N																		
+										TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName()
+												+ ") can't deliver car (" + car.toString() + ") to destination ("
+												+ car.getDestinationName() + ") no tracks able to service car");																		
 									continue;
 								}
 							}
@@ -1500,7 +1500,7 @@ public class Train implements java.beans.PropertyChangeListener {
 										+ rLoc.getName() + ")");
 							if (addToReport)
 								TrainCommon.addLine(buildReport, SEVEN, "Car (" + car.toString()
-										+ ") exceeds maximum train length "+rLoc.getMaxTrainLength()+" when departing (" // NOI18N
+										+ ") exceeds maximum train length "+rLoc.getMaxTrainLength()+" when departing ("
 										+ rLoc.getName() + ")");
 							return false;
 						}
