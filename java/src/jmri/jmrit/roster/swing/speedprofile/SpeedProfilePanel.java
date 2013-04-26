@@ -188,7 +188,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 setButtonStates(true);
                 return;
             }
-            if(tmpSen!=middleBlockSensor){
+            if(tmpSen!=middleBlockSensor.getSensor()){
                 middleBlockSensor.resetDetails();
                 middleBlockSensor = new SensorDetails(tmpSen);
             }
