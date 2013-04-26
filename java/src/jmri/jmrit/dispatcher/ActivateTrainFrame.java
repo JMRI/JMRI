@@ -497,7 +497,9 @@ public class ActivateTrainFrame {
 					startBlockSeq, endBlockName, endBlockSeq, autoRun, dccAddress, priority, 
 						resetWhenDone, reverseAtEnd, true, initiateFrame);
 		if (at==null) return;  // error message sent by createActiveTrain
-		at.setDelayedStart(delayedStart);
+		if(tSource == ActiveTrain.ROSTER)
+            at.setRosterEntry(trainBoxList.get(trainSelectBox.getSelectedIndex()));
+        at.setDelayedStart(delayedStart);
 		at.setDepartureTimeHr(departureTimeHours);
 		at.setDepartureTimeMin(departureTimeMinutes);
 		if (_dispatcher.isFastClockTimeGE(departureTimeHours,departureTimeMinutes)) {

@@ -151,6 +151,7 @@ public class ActiveTrain {
 	private jmri.Transit mTransit = null;
 	private String mTrainName = "";
 	private int mTrainSource = ROSTER;
+    private jmri.jmrit.roster.RosterEntry mRoster = null;
 	private int mStatus = WAITING;
 	private int mMode = DISPATCHED;
 	private boolean mTransitReversed = false;  // true if Transit is running in reverse
@@ -206,6 +207,16 @@ public class ActiveTrain {
 	// Note: Transit and Train may not be changed once an ActiveTrain is created.
 	public String getTrainName() { return mTrainName; }
 	public int getTrainSource() { return mTrainSource; }
+    public void setRosterEntry(jmri.jmrit.roster.RosterEntry re){
+        mRoster = re;
+    }
+    public jmri.jmrit.roster.RosterEntry getRosterEntry(){
+        if(mRoster==null && getTrainSource()==ROSTER){
+            //Try to resolve the roster based upon the train name
+            mRoster = jmri.jmrit.roster.Roster.instance().getEntryForId(getTrainName());
+        }
+        return mRoster;
+    }
 	public int getStatus() { return mStatus; }
 	public void setStatus(int status) {  
 		if ( (status==RUNNING) || (status==PAUSED) || (status==WAITING) || (status==WORKING) ||
