@@ -358,7 +358,7 @@ public class Router extends TrainCommon {
 							+ testCar.getDestinationName() + " ," + testCar.getDestinationTrackName()+")"); // NOI18N
 				if (addtoReport)
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-							.getMessage("RouterCouldNotFindTrain"), new Object[] { trackType,
+							.getMessage("RouterNotFindTrain"), new Object[] { trackType,
 							track.getLocation().getName(), track.getName(), testCar.getDestinationName(),
 							testCar.getDestinationTrackName() }));
 				continue;
