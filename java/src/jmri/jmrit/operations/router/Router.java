@@ -221,9 +221,9 @@ public class Router extends TrainCommon {
 				return false; // maybe next time
 			}
 			if (addtoReport)
-				addLine(_buildReport, SEVEN, "Router could not find a train able to transport car (" // NOI18N
-						+ car.toString() + ") directly from (" + car.getLocationName() + ") to (" // NOI18N
-						+ car.getFinalDestinationName() + ") begin two train routing");// NOI18N
+				addLine(_buildReport, SEVEN, MessageFormat
+						.format(Bundle.getMessage("RouterBeginTwoTrain"), new Object[] { car.toString(),
+								car.getLocationName(), car.getFinalDestinationName() }));
 			firstLocationTracks.clear();
 			lastLocationTracks.clear();
 			otherLocationTracks.clear();
@@ -314,9 +314,9 @@ public class Router extends TrainCommon {
 				+ testCar.getDestinationName() + ", " // NOI18N
 				+ testCar.getDestinationTrackName() + ")");
 		if (addtoReport)
-			addLine(_buildReport, SEVEN, "Router find " + trackType + " track for car (" + car.toString() + ") final destination ("
-					+ testCar.getDestinationName() + ", "
-					+ testCar.getDestinationTrackName() + ")");
+			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterFindTrack"),
+					new Object[] { trackType, car.toString(), testCar.getDestinationName(),
+							testCar.getDestinationTrackName() }));
 		// save car's location, track, destination, and destination track
 		Location saveLocation = testCar.getLocation();
 		Track saveTrack = testCar.getTrack();
@@ -342,8 +342,9 @@ public class Router extends TrainCommon {
 				log.debug("Found " + trackType + " track (" + track.getLocation().getName() + ", "
 						+ track.getName() + ") for car (" + car.toString() + ")"); // NOI18N
 			if (addtoReport)
-				addLine(_buildReport, SEVEN, "Router found " + trackType + " track (" + track.getLocation().getName() + ", "
-						+ track.getName() + ") for car (" + car.toString() + ")");
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterFoundTrack"),
+						new Object[] { trackType, track.getLocation().getName(), track.getName(),
+								car.toString() }));
 			// test to see if there's a train that can deliver the car to its final location
 			testCar.setLocation(track.getLocation());
 			testCar.setTrack(track);
@@ -356,9 +357,10 @@ public class Router extends TrainCommon {
 							+ track.getLocation().getName() + ", " + track.getName() + ") to destination ("	// NOI18N
 							+ testCar.getDestinationName() + " ," + testCar.getDestinationTrackName()+")"); // NOI18N
 				if (addtoReport)
-					addLine(_buildReport, SEVEN, "Router could not find a train to transport car from " + trackType + " ("
-							+ track.getLocation().getName() + ", " + track.getName() + ") to ("
-							+ testCar.getDestinationName() + ", " + testCar.getDestinationTrackName()+")");
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("RouterCouldNotFindTrain"), new Object[] { trackType,
+							track.getLocation().getName(), track.getName(), testCar.getDestinationName(),
+							testCar.getDestinationTrackName() }));
 				continue;
 			}
 			if (debugFlag)
@@ -369,12 +371,10 @@ public class Router extends TrainCommon {
 						+ ") to final destination (" + testCar.getDestinationName() // NOI18N
 						+ ", " + testCar.getDestinationTrackName() + ")");
 			if (addtoReport)
-				addLine(_buildReport, SEVEN, "Train (" + nextTrain.getName() + ") can transport car ("
-						+ car.toString() + ") from " + trackType
-						+ " ("
-						+ testCar.getLocationName() + ", " + testCar.getTrackName()
-						+ ") to final destination (" + testCar.getDestinationName()
-						+ ", " + testCar.getDestinationTrackName() + ")");
+				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("RouterTrainCanTransport"), new Object[] { nextTrain.getName(),
+						car.toString(), trackType, testCar.getLocationName(), testCar.getTrackName(),
+						testCar.getDestinationName(), testCar.getDestinationTrackName() }));
 			// Save the "last" tracks for later use
 			lastLocationTracks.add(track);
 			// now try to forward car to this interim location
@@ -391,9 +391,9 @@ public class Router extends TrainCommon {
 							+ track.getLocation().getName() + ", " // NOI18N
 							+ track.getName() + ")");
 				if (addtoReport)
-					addLine(_buildReport, SEVEN, "Train (" + _train.getName() + ") can not transport car to ("
-							+ track.getLocation().getName() + ", "
-							+ track.getName() + ")");
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanNot"),
+							new Object[] { _train.getName(), car.toString(), car.getLocationName(),
+									car.getTrackName(), track.getLocation().getName(), track.getName() }));
 				continue; // can't use this train
 			}
 			// find a train that will transport the car to the interim track
@@ -443,12 +443,10 @@ public class Router extends TrainCommon {
 								+ trackType + " (" + track.getLocation().getName() // NOI18N
 								+ ", " + track.getName() + ")"); // NOI18N
 					if (addtoReport)
-						addLine(_buildReport, SEVEN, "Train (" + firstTrain.getName() + ") can transport car ("
-								+ car.toString()
-								+ ") from current location ("
-								+ car.getLocationName() + ", " + car.getTrackName() + ") to "
-								+ trackType + " (" + track.getLocation().getName()
-								+ ", " + track.getName() + ")");
+						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("RouterTrainCanService"), new Object[] { firstTrain.getName(),
+								car.toString(), car.getLocationName(), car.getTrackName(), trackType,  
+								track.getLocation().getName(), track.getName() }));
 					return true;	// the specific train and another train can carry the car to its destination
 				}
 			}

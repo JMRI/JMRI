@@ -2467,6 +2467,8 @@ public class OperationsCarRouterTest extends TestCase {
 		FileUtil.createDirectory(FileUtil.getUserFilesPath()+OperationsSetupXml.getOperationsDirectoryName());
 
 		RouteManager.instance().dispose();
+		
+		Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 	}
 
 	public OperationsCarRouterTest(String s) {
