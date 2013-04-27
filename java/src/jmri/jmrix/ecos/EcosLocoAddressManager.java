@@ -570,6 +570,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                 EcosLocoAddress tmploco = null;
                                 //The first part of the messages is always the object id.
                                 strde = objectdetail[0];
+                                strde=strde.trim();
                                 int object = Integer.parseInt(strde);
                                 if ( (1000<=object) && (object<2000)) {
                                     tmploco = provideByEcosObject(strde);
