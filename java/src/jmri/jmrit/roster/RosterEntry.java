@@ -757,7 +757,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
 
     /**
      * Write the contents of this RosterEntry back to a file,
-     * preserving all existing decoder content.
+     * preserving all existing decoder CV content.
      * <p>
      * This writes the file back in place, with the same decoder-specific
      * content.
