@@ -113,7 +113,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
     {
        int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
        int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
-       int port = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
+       //int port = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
        int value = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(4)).jjtGetValue()));
 
        try {
@@ -203,23 +203,23 @@ public class SRCPVisitor implements SRCPParserVisitor {
     } 
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("GL")) {
         /* Initilize a new locomotive */
-       int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
-       int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+       //int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+       //int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
     } 
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("TIME")) {
         /* Initilize fast clock ratio */
-       int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+       //int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
         /* the two parameters form a ration of modeltime:realtime */
-       int modeltime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
-       int realtime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
+       //int modeltime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
+       //int realtime = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
     } 
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("SM")) {
         /* Initilize service mode */
-       int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+       //int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
     } 
     else if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("FB")) {
         /* Initilize feedback on a particular bus */
-       int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
+       //int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
     } 
 
     return data;
