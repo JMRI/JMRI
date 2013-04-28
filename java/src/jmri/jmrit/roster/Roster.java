@@ -1075,4 +1075,51 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         this.defaultRosterGroup = defaultRosterGroup;
         this.preferences.setProperty(Roster.class.getCanonicalName(), "defaultRosterGroup", defaultRosterGroup); // NOI18N
     }
+
+    /**
+     * Get an array of all the RosterEntry-containing files in the 
+     * target directory
+     */
+    static String[] getAllFileNames() {
+        // ensure preferences will be found for read
+        FileUtil.createDirectory(LocoFile.getFileLocation());
+
+        // create an array of file names from roster dir in preferences, count entries
+        int i;
+        int np = 0;
+        String[] sp = null;
+        if (log.isDebugEnabled()) log.debug("search directory "+LocoFile.getFileLocation());
+        File fp = new File(LocoFile.getFileLocation());
+        if (fp.exists()) {
+            sp = fp.list();
+            for (i=0; i<sp.length; i++) {
+                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
+                    np++;
+                }
+            }
+        } else {
+            log.warn(FileUtil.getUserFilesPath()+"roster directory was missing, though tried to create it");
+        }
+
+        // Copy the entries to the final array
+        String sbox[] = new String[np];
+        int n=0;
+        if (sp != null && np> 0)
+            for (i=0; i<sp.length; i++) {
+                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
+                    sbox[n++] = sp[i];
+                }
+            }
+        // The resulting array is now sorted on file-name to make it easier
+        // for humans to read
+        jmri.util.StringUtil.sort(sbox);
+
+        if (log.isDebugEnabled()) {
+            log.debug("filename list:");
+            for (i=0; i<sbox.length; i++)
+                log.debug("      "+sbox[i]);
+        }
+        return sbox;
+    }
+
 }
