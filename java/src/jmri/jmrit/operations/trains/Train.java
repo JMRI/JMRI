@@ -855,7 +855,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (!_typeList.contains(type))
 			return;
 		_typeList.remove(type);
-		log.debug("train " + getName() + " delete car type " + type);
+		log.debug("train (" + getName() + ") delete car type (" + type +")");
 		setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
 	}
 
@@ -1307,27 +1307,30 @@ public class Train implements java.beans.PropertyChangeListener {
 		return services(car, null);
 	}
 	
+	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
+	
 	protected boolean services(Car car, PrintWriter buildReport) {
-		String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 		boolean addToReport = Setup.getRouterBuildReportLevel().equals(SEVEN);
 		// check to see if train can carry car
 		if (!acceptsTypeName(car.getType())) {
 			if (addToReport)
-				TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() + ") can't service car (" + car.toString()// NOI18N
-						+ ") type (" + car.getType() + ")");// NOI18N
+				TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("trainCanNotServiceCarType"), new Object[] { getName(), car.toString(),
+						car.getType() }));
 			return false;
 		}
 		if (!acceptsLoad(car.getLoad(), car.getType())) {
 			if (addToReport)
-				TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() + ") can't service car (" + car.toString()// NOI18N
-						+ ") type (" + car.getType() + ") with load (" + car.getLoad() +")");// NOI18N
+				TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("trainCanNotServiceCarLoad"), new Object[] { getName(), car.toString(),
+						car.getType(), car.getLoad() }));
 			return false;
 		}
 		if (!acceptsBuiltDate(car.getBuilt()) || !acceptsOwnerName(car.getOwner())
 				|| !acceptsRoadName(car.getRoad())) {
 			if (addToReport)
-				TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() + ") can't service car (" + car.toString()
-						+ ")");
+				TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("trainCanNotServiceCar"), new Object[] { getName(), car.toString() }));
 			return false;
 		}
 		
@@ -1375,9 +1378,9 @@ public class Train implements java.beans.PropertyChangeListener {
 								+ car.getDestinationName() + ", "// NOI18N
 								+ car.getDestinationTrackName() + ")"); // NOI18N
 					if (addToReport)
-						TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() + ") can pick up car ("
-								+ car.toString() + ") from location (" + car.getLocationName() + ", "
-								+ car.getTrackName() + ")");
+						TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("trainCanPickUpCar"), new Object[] { getName(), car.toString(),
+								car.getLocationName(), car.getTrackName() }));
 					if (car.getDestination() == null) {
 						if (debugFlag)
 							log.debug("Car (" + car.toString() + ") does not have a destination");
@@ -1394,9 +1397,9 @@ public class Train implements java.beans.PropertyChangeListener {
 								if ((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
 										|| !car.getDestinationTrack().acceptsDropTrain(this)) {
 									if (addToReport)
-										TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName()	// NOI18N
-												+ ") can't deliver car (" + car.toString() + ") to track ("	// NOI18N
-												+ car.getDestinationTrackName() + ")");					// NOI18N																		
+										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+												.getMessage("trainCanNotDeliverToTrack"), new Object[] {
+												getName(), car.toString(), car.getDestinationName(), car.getDestinationTrackName() }));
 									continue;
 								}
 							} else if (rLoc.getLocation().getLocationOps() == Location.STAGING
@@ -1411,9 +1414,11 @@ public class Train implements java.beans.PropertyChangeListener {
 										getTerminationTrack());
 								if (!status.equals(Track.OKAY)) {
 									if (addToReport)
-										TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName()	// NOI18N
-												+ ") can't deliver car (" + car.toString() + ") to track ("	// NOI18N
-												+ getTerminationTrack().getName() + ")");					// NOI18N																		
+										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+												.getMessage("trainCanNotDeliverToTrack"), new Object[] {
+												getName(), car.toString(),
+												getTerminationTrack().getLocation().getName(),
+												getTerminationTrack().getName() }));
 									continue;
 								}
 							} else {
@@ -1443,9 +1448,9 @@ public class Train implements java.beans.PropertyChangeListener {
 												+ ") can not service car (" + car.toString() // NOI18N
 												+ ") using train (" + getName() + ") no track available"); // NOI18N
 									if (addToReport)
-										TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName()
-												+ ") can't deliver car (" + car.toString() + ") to destination ("
-												+ car.getDestinationName() + ") no tracks able to service car");																		
+										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+												.getMessage("trainCanNotDeliverNoTracks"), new Object[] { getName(),
+												car.toString(), car.getDestinationName() }));																		
 									continue;
 								}
 							}
@@ -1456,23 +1461,20 @@ public class Train implements java.beans.PropertyChangeListener {
 								if (debugFlag)
 									log.debug("Local moves is disabled");
 								if (addToReport)
-									TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() // NOI18N
-											+ ") can't perform local move for car (" + car.toString() // NOI18N
-											+ ") at destination (" + car.getDestinationName() + ")"); // NOI18N
+									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+											.getMessage("trainCanNotPerformLocalMove"), new Object[] {
+											getName(), car.toString(), car.getLocationName() }));
 								continue;
 							}
-							if (!isAllowThroughCarsEnabled()									&& j == 0
-									&& k == rLocations.size() - 1
-									&& !isLocalSwitcher()
-									&& !car.isCaboose()
-									&& !car.hasFred()
+							if (!isAllowThroughCarsEnabled() && j == 0 && k == rLocations.size() - 1
+									&& !isLocalSwitcher() && !car.isCaboose() && !car.hasFred()
 									&& !car.isPassenger()) {
 								if (debugFlag)
 									log.debug("Through car (" + car.toString() + ") not allowed");
 								if (addToReport)
-									TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() // NOI18N
-											+ ") doesn't carry cars from origin ("+car.getLocationName() // NOI18N
-											+ ") to terminal (" + car.getDestinationName() + ")"); // NOI18N
+									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+											.getMessage("trainDoesNotCarryOriginTerminal"), new Object[] {
+											getName(), car.getLocationName(), car.getDestinationName() }));
 								continue;
 							}
 							// check to see if moves are available
@@ -1481,8 +1483,9 @@ public class Train implements java.beans.PropertyChangeListener {
 								if (debugFlag)
 									log.debug("No available moves for destination " + rLoc.getName());
 								if (addToReport)
-									TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() // NOI18N
-											+ ") no available moves for destination (" + rLoc.getName() + ")"); // NOI18N
+									TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+											.getMessage("trainNoMoves"), new Object[] { getName(),
+											rLoc.getName() }));
 								continue;
 							}
 							if (debugFlag)
@@ -1499,16 +1502,16 @@ public class Train implements java.beans.PropertyChangeListener {
 										+ ") exceeds maximum train length "+rLoc.getMaxTrainLength()+" when departing (" // NOI18N
 										+ rLoc.getName() + ")");
 							if (addToReport)
-								TrainCommon.addLine(buildReport, SEVEN, "Car (" + car.toString()
-										+ ") exceeds maximum train length "+rLoc.getMaxTrainLength()+" when departing ("
-										+ rLoc.getName() + ")");
+								TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+										.getMessage("trainExceedsMaximumLength"), new Object[] {
+										getName(), rLoc.getMaxTrainLength(), rLoc.getName(), car.toString() }));
 							return false;
 						}
 					}
 					if (addToReport)
-						TrainCommon.addLine(buildReport, SEVEN, "Train (" + getName() + ") can't deliver car ("
-								+ car.toString() + ") to destination (" + car.getDestinationName() + ", "
-								+ car.getDestinationTrackName() + ")");
+						TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+								.getMessage("trainCanNotDeliverToDestination"), new Object[] { getName(),
+								car.toString(), car.getDestinationName(), car.getDestinationTrackName() }));
 				}
 			}
 		}

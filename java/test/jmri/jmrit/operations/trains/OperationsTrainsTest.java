@@ -6255,6 +6255,8 @@ public class OperationsTrainsTest extends TestCase {
 		// Need to clear out TrainManager global variables
 		TrainManager.instance().dispose();
 		LocationManager.instance().dispose();
+		
+		Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 	}
 
 	public OperationsTrainsTest(String s) {
