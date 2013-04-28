@@ -907,6 +907,7 @@ public class JsonUtil {
             switch (state) {
                 case THROWN:
                     turnout.setCommandedState(Turnout.THROWN);
+                    break;
                 case CLOSED:
                     turnout.setCommandedState(Turnout.CLOSED);
                     break;
