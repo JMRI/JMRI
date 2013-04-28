@@ -47,7 +47,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         String turnoutName = ((jmri.jmrix.SystemConnectionMemo) memo).getSystemPrefix()
                 + "T" + address;
         // busy loop, wait for turnout to settle before continuing.
-        while(InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState()!=InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState());
+        while(InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState()!=InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getCommandedState()) {}
         int Status = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName).getKnownState();
         if (Status == Turnout.THROWN) {
             output.writeBytes("100 INFO " + bus + " GA " + address + " 0 0\n\r");
