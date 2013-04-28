@@ -2,13 +2,16 @@
 
 package jmri.jmrit.roster;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.event.ActionEvent;
-import java.io.File;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.awt.event.ActionEvent;
+import java.io.File;
 import javax.swing.Icon;
+
 import jmri.util.FileUtil;
 
 import org.jdom.Element;
@@ -37,7 +40,7 @@ public class RecreateRosterAction extends JmriAbstractAction {
 
     public void actionPerformed(ActionEvent e) {
         Roster roster = new Roster();
-        String[] list = getFileNames();
+        String[] list = Roster.getAllFileNames();
         for (int i=0; i<list.length; i++) {
             // get next filename
             String fullFromFilename = list[i];
@@ -84,48 +87,6 @@ public class RecreateRosterAction extends JmriAbstractAction {
         Roster.resetInstance();
         Roster.instance();
 
-    }
-
-    String[] getFileNames() {
-        // ensure preferences will be found for read
-        FileUtil.createDirectory(LocoFile.getFileLocation());
-
-        // create an array of file names from roster dir in preferences, count entries
-        int i;
-        int np = 0;
-        String[] sp = null;
-        if (log.isDebugEnabled()) log.debug("search directory "+LocoFile.getFileLocation());
-        File fp = new File(LocoFile.getFileLocation());
-        if (fp.exists()) {
-            sp = fp.list();
-            for (i=0; i<sp.length; i++) {
-                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
-                    np++;
-                }
-            }
-        } else {
-            log.warn(FileUtil.getUserFilesPath()+"roster directory was missing, though tried to create it");
-        }
-
-        // Copy the entries to the final array
-        String sbox[] = new String[np];
-        int n=0;
-        if (sp != null && np> 0)
-            for (i=0; i<sp.length; i++) {
-                if (sp[i].endsWith(".xml") || sp[i].endsWith(".XML")) {
-                    sbox[n++] = sp[i];
-                }
-            }
-        // The resulting array is now sorted on file-name to make it easier
-        // for humans to read
-        jmri.util.StringUtil.sort(sbox);
-
-        if (log.isDebugEnabled()) {
-            log.debug("filename list:");
-            for (i=0; i<sbox.length; i++)
-                log.debug("      "+sbox[i]);
-        }
-        return sbox;
     }
     
     // never invoked, because we overrode actionPerformed above
