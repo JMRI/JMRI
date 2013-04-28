@@ -50,6 +50,15 @@ public class DecoderFile extends XmlFile {
         // store the default range of version id's
         setVersionRange(lowVersionID, highVersionID);
     }
+    public DecoderFile(String mfg, String mfgID, String model, String lowVersionID,
+                       String highVersionID, String family, String filename,
+                       int numFns, int numOuts, Element decoder, String replacementModel, String replacementFamily) {
+        this(mfg, mfgID, model, lowVersionID,
+                highVersionID, family, filename,
+                numFns, numOuts, decoder);
+        _replacementModel = replacementModel;
+        _replacementFamily = replacementFamily;
+    }
 
     // store acceptable version numbers
     boolean versions[] = new boolean[256];
@@ -143,6 +152,9 @@ public class DecoderFile extends XmlFile {
     String _family    = null;
     String _filename  = null;
     String _productID = null;
+    String _replacementModel = null;
+    String _replacementFamily = null;
+    
     int _numFns  = -1;
     int _numOuts  = -1;
     Element _element = null;
@@ -151,6 +163,8 @@ public class DecoderFile extends XmlFile {
     public String getMfgID()     { return _mfgID; }
     public String getModel()     { return _model; }
     public String getFamily()    { return _family; }
+    public String getReplacementModel()     { return _replacementModel; }
+    public String getReplacementFamily()    { return _replacementFamily; }
     public String getFilename()  { return _filename; }
     public int getNumFunctions() { return _numFns; }
     public int getNumOutputs()   { return _numOuts; }
