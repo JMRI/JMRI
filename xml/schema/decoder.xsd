@@ -252,6 +252,12 @@
           <xs:attribute name="extFnsNmraF13" type="yesNoType" />
           <xs:attribute name="extFnsNmraBSC" type="yesNoType" />
           <xs:attribute name="extFnsMRC" type="yesNoType" />
+          <xs:attribute name="replacementModel" type="xs:string" default="">
+            <xs:annotation><xs:documentation>Update Decoders will replace the current model with the one in this attribute if non-blank</xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="replacementFamily" type="xs:string" default="">
+            <xs:annotation><xs:documentation>Update Decoders will replace the current family with the one in this attribute if non-blank</xs:documentation></xs:annotation>
+          </xs:attribute>
         </xs:complexType>
       </xs:element>
       
