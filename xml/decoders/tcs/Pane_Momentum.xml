@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id:  $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - for Unified Software -->
+
+
+<pane name="Momentum">
+    <column>
+        <row>
+            <column>
+                <label label="If Accel 2 and 3 Rate and Starting Points are set to zero, then Accel Rate 1 applies to whole speed range"/>
+                <label label="If Decel 2 and 3 Rate and Ending Points are set to zero, then Decel Rate 1 applies to whole speed range"/>
+                <label label="If Brake Button Control active, Decel 2 Rate applies when button active and Decel 1 Rate applies to throttle reduction"/>
+                <label label=" "/>
+            </column>
+        </row>
+        <row>
+            <column>
+                <display item="Accel 2 Starting Point" format="hslider" label=""/>
+                <display item="Accel 2 Starting Point"/>
+                <label label=" "/>
+                <display item="Accel 3 Starting Point" format="hslider" label=""/>
+                <display item="Accel 3 Starting Point"/>
+            </column>
+            <column>
+                <display item="Accel 1 Rate" format="hslider" label=""/>
+                <display item="Accel 1 Rate"/>
+                <label label=" "/>
+                <display item="Accel 2 Rate" format="hslider" label=""/>
+                <display item="Accel 2 Rate"/>
+                <label label=" "/>
+                <display item="Accel 3 Rate" format="hslider" label=""/>
+                <display item="Accel 3 Rate"/>
+            </column>
+        </row>
+        <label label=" "/>
+        <separator/>
+        <label label=" "/>
+        <row>
+            <column>
+                <display item="Decel 3 Ending Point" format="hslider" label=""/>
+                <display item="Decel 3 Ending Point"/>
+                <label label=" "/>
+                <display item="Decel 2 Ending Point" format="hslider" label=""/>
+                <display item="Decel 2 Ending Point"/>
+            </column>
+            <column>
+                <display item="Decel 3 Rate" format="hslider" label=""/>
+                <display item="Decel 3 Rate"/>
+                <label label=" "/>
+                <display item="Decel 2 Rate" format="hslider" label=""/>
+                <display item="Decel 2 Rate"/>
+                <label label=" "/>
+                <display item="Decel 1 Rate" format="hslider" label=""/>
+                <display item="Decel 1 Rate"/>
+            </column>
+        </row>
+    </column>
+</pane>
+

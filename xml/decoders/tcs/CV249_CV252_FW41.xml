@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id:  $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - for Unified Software -->
+
+
+<variables>
+    <variable label="Decoder ID" item="decoderID" CV="249" default="0" readOnly="yes">
+        <decVal/>
+        <label>Decoder ID</label>
+    </variable>
+    <variable label="Month of Decoder Manufacture" CV="250" readOnly="yes" item="mfgMonth" tooltip="Date TCS made this decoder">
+        <decVal/>
+    </variable>
+    <variable label="Day of Decoder Manufacture" CV="251" readOnly="yes" item="mfgDay" tooltip="Date TCS made this decoder">
+        <decVal/>
+    </variable>
+    <variable label="Year of Decoder Manufacture" CV="252" readOnly="yes" item="mfgYear" tooltip="Date TCS made this decoder">
+        <decVal/>
+    </variable>
+</variables>

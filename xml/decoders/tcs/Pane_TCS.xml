@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id:  $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - for Unified Software -->
+
+
+<pane name="TCS">
+    <column>
+        <label label="TCS decoders support a decoder locking feature"/>
+        <label label="useful when several decoders are used in one loco"/>
+        <label label="on the same address, e.g. for adding sound"/>
+        <label label="TCS suggests values of 1=mobile, 2=sound, 3=light/function only"/>
+        <label label=" "/>
+        <display item="Decoder Lock ID number"/>
+        <label label="Set CV15 equal to this number to unlock the decoder for programming"/>
+        <label label=" "/>
+        <display item="Decoder Lock control number" label="Decoder Lock control, CV15"/>
+        <label label=" "/>
+        <display item="decoderID"/>
+        <display item="mfgMonth"/>
+        <display item="mfgDay"/>
+        <display item="mfgYear"/>
+        <label label=" "/>
+    </column>
+</pane>
+
