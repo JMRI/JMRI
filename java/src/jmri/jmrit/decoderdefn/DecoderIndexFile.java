@@ -361,6 +361,7 @@ public class DecoderIndexFile extends XmlFile {
         String filename = family.getAttribute("file").getValue();
         String parentLowVersID = ((attr = family.getAttribute("lowVersionID"))     != null ? attr.getValue() : null );
         String parentHighVersID = ((attr = family.getAttribute("highVersionID"))     != null ? attr.getValue() : null );
+        String replacementFamilyName   = ((attr = family.getAttribute("replacementFamily"))     != null ? attr.getValue() : null );
         String familyName   = ((attr = family.getAttribute("name"))     != null ? attr.getValue() : null );
         String mfg   = ((attr = family.getAttribute("mfg"))     != null ? attr.getValue() : null );
         String mfgID = null;
@@ -387,7 +388,8 @@ public class DecoderIndexFile extends XmlFile {
                                parentLowVersID, parentHighVersID,
                                familyName,
                                filename,
-                               -1, -1, modelElement); // numFns, numOuts, XML element equal
+                               -1, -1, modelElement, 
+                               replacementFamilyName, replacementFamilyName); // numFns, numOuts, XML element equal
                                             // to the first decoder
         decoderList.add(vFamilyDecoderFile);
 
@@ -397,11 +399,14 @@ public class DecoderIndexFile extends XmlFile {
             Element decoder = l.get(i);
             String loVersID = ( (attr = decoder.getAttribute("lowVersionID"))     != null ? attr.getValue() : parentLowVersID);
             String hiVersID = ( (attr = decoder.getAttribute("highVersionID"))     != null ? attr.getValue() : parentHighVersID);
+            String replacementModelName   = ((attr = decoder.getAttribute("replacementModel"))     != null ? attr.getValue() : null );
+            replacementFamilyName   = ((attr = decoder.getAttribute("replacementFamily"))     != null ? attr.getValue() : replacementFamilyName );
             int numFns   = ((attr = decoder.getAttribute("numFns"))     != null ? Integer.valueOf(attr.getValue()).intValue() : -1 );
             int numOuts   = ((attr = decoder.getAttribute("numOuts"))     != null ? Integer.valueOf(attr.getValue()).intValue() : -1 );
             DecoderFile df = new DecoderFile( mfg, mfgID,
                                               ( (attr = decoder.getAttribute("model"))     != null ? attr.getValue() : null ),
-                                              loVersID, hiVersID, familyName, filename, numFns, numOuts, decoder);
+                                              loVersID, hiVersID, familyName, filename, numFns, numOuts, decoder,
+                                              replacementModelName, replacementFamilyName);
             // and store it
             decoderList.add(df);
             // if there are additional version numbers defined, handle them too
