@@ -247,6 +247,10 @@ public class RosterSpeedProfile {
      */
     //@TODO if a section contains multiple blocks then we could calibrate the change of speed based upon the block status change.
     public void changeLocoSpeed(DccThrottle t, Section sec, float speed){
+        if(sec==section && speed == desiredSpeedStep){
+            if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this section");
+            return;
+        }
         float sectionLength = sec.getActualLength();
         if(log.isDebugEnabled()) log.debug("call to change speed via section " + sec.getDisplayName());
         if (sec==section){
@@ -269,15 +273,15 @@ public class RosterSpeedProfile {
             finishChange();
             return;
         }
-        int iSpeedStep = Math.round(speed*1000);
+        //int iSpeedStep = Math.round(speed*1000);
         
-        if(desiredSpeedStep == iSpeedStep){
+        if(desiredSpeedStep == speed){
             if(log.isDebugEnabled()) log.debug("Already setting to desired speed step");
             //finishChange();
             return;
         }
         if(log.isDebugEnabled()) log.debug("public change speed step by float " + speed);
-        if(log.isDebugEnabled()) log.debug("Desired Speed Step " + desiredSpeedStep + " asked for " + iSpeedStep);
+        if(log.isDebugEnabled()) log.debug("Desired Speed Step " + desiredSpeedStep + " asked for " + speed);
 
         if(stopTimer!=null){
             if(log.isDebugEnabled()) log.debug("stop timer valid so will cancel");
@@ -285,15 +289,15 @@ public class RosterSpeedProfile {
         }
         _throttle=t;
         stepIncrement = _throttle.getSpeedIncrement();
-        if(log.isDebugEnabled()) log.debug("Desired Speed Step " + desiredSpeedStep + " asked for " + iSpeedStep);
-        desiredSpeedStep = iSpeedStep;
-        int step = Math.round(_throttle.getSpeedSetting()*1000);
-        if(log.isDebugEnabled()) log.debug("calculated current step " + step + " required " + iSpeedStep + " current " + _throttle.getSpeedSetting() + " increment " + stepIncrement);
-        if(step==iSpeedStep){
+        if(log.isDebugEnabled()) log.debug("Desired Speed Step " + desiredSpeedStep + " asked for " + speed);
+        desiredSpeedStep = speed;
+        //int step = Math.round(_throttle.getSpeedSetting()*1000);
+        if(log.isDebugEnabled()) log.debug("calculated current step " + _throttle.getSpeedSetting() + " required " + speed + " current " + _throttle.getSpeedSetting() + " increment " + stepIncrement);
+        /*if(step==iSpeedStep){
             if(log.isDebugEnabled()) log.debug("Already at best speed ");
             finishChange();
             return;
-        }else if(step<iSpeedStep){
+        }else*/ if(_throttle.getSpeedSetting()<speed){
             increaseSpeed = true;
             if(log.isDebugEnabled()) log.debug("Going for acceleration");
         } else {
@@ -302,7 +306,7 @@ public class RosterSpeedProfile {
         }
         
         cancel = false;
-        changeLocoSpeedByStep(distance, iSpeedStep);
+        changeLocoSpeedByStep(distance, speed);
     }
     
     void changeLocoSpeedByStep(float distance, float speedStep){
@@ -323,16 +327,16 @@ public class RosterSpeedProfile {
         }
         
         float tCurrentSpeed = _throttle.getSpeedSetting();
-        //Convert float speed to a speedstep
+
         stepIncrement = _throttle.getSpeedIncrement();
         
-        int step = Math.round(tCurrentSpeed*1000);
-        if(log.isDebugEnabled()) log.debug("calculated step " + step + " required " + speedStep);
+        //int step = Math.round(tCurrentSpeed*1000);
+        //if(log.isDebugEnabled()) log.debug("calculated step " + step + " required " + speedStep);
 
         float spd = 0;
         float endspd = 0;
         //This needs to use floor or higher
-        if(step!=0){ // current speed
+        if(tCurrentSpeed!=0.0){ // current speed
             if(_throttle.getIsForward()){
                 spd = getForwardSpeed(tCurrentSpeed);
                 if(speedStep>0)
@@ -342,7 +346,7 @@ public class RosterSpeedProfile {
                 if(speedStep>0)
                     endspd = getReverseSpeed(speedStep);
             }
-        } else if (speedStep!=0) {
+        } else if (speedStep!=0.0) {
             if(_throttle.getIsForward()){
                 endspd = getForwardSpeed(speedStep);
             } else {
@@ -351,7 +355,7 @@ public class RosterSpeedProfile {
         }
 
         if(log.isDebugEnabled()) log.debug("end spd " + endspd + " spd " + spd);
-        double avgSpeed = ((endspd+spd)*0.5);
+        double avgSpeed = Math.abs((endspd+spd)*0.5);
         if(log.isDebugEnabled()) log.debug("avg Speed " + avgSpeed);
         
         double time = (distance/avgSpeed); //in seconds
