@@ -99,6 +99,17 @@ public class ActivateTrainFrame {
 	private JComboBox trainTypeBox = new JComboBox();	
 	// Note: See also items related to automatically running trains near the end of this module
 	
+    /**
+    * Open up a new train window, for a given roster entry located in a specific block
+    */
+    public void initiateTrain(ActionEvent e, RosterEntry re, Block b){
+        initiateTrain(e);
+        if(_TrainsFromRoster){
+            setComboBox(trainSelectBox, re.getId());
+            //Add in some bits of code as some point to filter down the transits that can be used.
+        }
+    }
+    
 	/**
 	 * Displays a window that allows a new ActiveTrain to be activated
 	 *
@@ -283,7 +294,7 @@ public class ActivateTrainFrame {
 		setAutoRunDefaults();
 		autoRunBox.setSelected(false);
 		initializeFreeTransitsCombo();
-		initializeFreeTrainsCombo();	
+		initializeFreeTrainsCombo();
 		initiateFrame.pack();
 		initiateFrame.setVisible(true);	
 	}
@@ -662,6 +673,11 @@ public class ActivateTrainFrame {
 			_dispatcher.newTrainDone(null);
 		}
 	}
+    
+    public void showActivateFrame(RosterEntry re){
+        showActivateFrame();
+    }
+    
 	private void loadTrainInfo(ActionEvent e) {
 		String[] names = _tiFile.getTrainInfoFileNames();
 		TrainInfo info = null;

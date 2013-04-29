@@ -10,6 +10,7 @@ import jmri.util.*;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.roster.RosterEntry;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -69,9 +70,8 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				log.error("Failed to create AutoAllocate object when constructing Dispatcher");
 		}
 		InstanceManager.sectionManagerInstance().initializeBlockingSensors();
-		atFrame = new ActivateTrainFrame(this);
-		if (atFrame==null)
-			log.error("Failed to create ActivateTrainFrame object when constructing Dispatcher");
+        getActiveTrainFrame();
+        
 		if (fastClock==null) {
 			log.error("Failed to instantiate a fast clock when constructing Dispatcher");
 		}
@@ -125,7 +125,17 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private AutoAllocate autoAllocate = null;
 	private OptionsMenu optionsMenu = null;
 	private ActivateTrainFrame atFrame = null;
+    public ActivateTrainFrame getActiveTrainFrame(){
+        if(atFrame == null){
+            atFrame = new ActivateTrainFrame(this);
+            if (atFrame==null)
+                log.error("Failed to create ActivateTrainFrame object when constructing Dispatcher");
+        }
+        return atFrame;
+    }
 	private boolean newTrainActive = false;
+    public boolean getNewTrainActive(){ return newTrainActive; }
+    public void setNewTrainActive(boolean boo){ newTrainActive=boo; }
 	private AutoTrainsFrame _autoTrainsFrame = null;
 	private Timebase fastClock = InstanceManager.timebaseInstance();
 	private Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
@@ -413,6 +423,13 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private ArrayList<Section> extraBoxList = new ArrayList<Section>();
 	private int atSelectedIndex = -1;
 	
+    public void allocateExtraSection(ActionEvent e, ActiveTrain at){
+        allocateExtraSection(e);
+        if (_ShortActiveTrainNames)
+            atSelectBox.setSelectedItem(at.getTrainName());
+        else
+            atSelectBox.setSelectedItem(at.getActiveTrainName());
+    }
 	// allocate an extra Section to an Active Train
 	private void allocateExtraSection(ActionEvent e) {
         if (extraFrame==null) {
@@ -1599,8 +1616,21 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	protected void setScale(int sc) {_LayoutScale = sc;}
 	protected ArrayList<ActiveTrain> getActiveTrainsList() {return activeTrainsList;}
 	protected ArrayList<AllocatedSection> getAllocatedSectionsList() {return allocatedSections;}
-        protected boolean getSupportVSDecoder() { return _SupportVSDecoder;}
-        protected void setSupportVSDecoder(boolean set) { _SupportVSDecoder = set; }
+    
+    public ActiveTrain getActiveTrainForRoster(RosterEntry re){
+        if(!_TrainsFromRoster){
+            return null;
+        }
+        for(ActiveTrain at:activeTrainsList){
+            if(at.getRosterEntry().equals(re))
+                return at;
+        }
+        return null;
+        
+    }
+    
+    protected boolean getSupportVSDecoder() { return _SupportVSDecoder;}
+    protected void setSupportVSDecoder(boolean set) { _SupportVSDecoder = set; }
 
 	// called by ActivateTrainFrame after a new train is all set up
 	//      Dispatcher side of activating a new train should be completed here
@@ -1638,6 +1668,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     static public DispatcherFrame instance() {
         if (_instance == null) {
             _instance = new DispatcherFrame();
+            jmri.InstanceManager.store(_instance, jmri.jmrit.dispatcher.DispatcherFrame.class);
         }
         return (_instance);
     }

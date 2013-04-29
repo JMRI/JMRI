@@ -224,6 +224,39 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     tf.getAddressPanel().setRosterEntry(re);
                 }
             });
+            //don't like the idea of refering specifically to the layout block manager for this, but it has to be done if we are to allow the panel editor to also assign trains to block, when used with a layouteditor
+            if((InstanceManager.sectionManagerInstance().getSystemNameList().size()) > 0 && jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory())!=null){
+                final jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
+                if(df!=null){
+                    final jmri.jmrit.dispatcher.ActiveTrain at = df.getActiveTrainForRoster(re);
+                    if(at!=null){
+                        popup.add(new AbstractAction(Bundle.getMessage("MenuTerminateTrain")) {
+                            public void actionPerformed(ActionEvent e) {
+                                df.terminateActiveTrain(at);
+                            }
+                        });
+                        popup.add(new AbstractAction(Bundle.getMessage("MenuAllocateExtra")) {
+                            public void actionPerformed(ActionEvent e) {
+                                //Just brings up the standard allocate extra frame, this could be expanded in the future 
+                                //As a point and click operation.
+                                df.allocateExtraSection(e, at);
+                            }
+                        });
+                    } else {
+                        popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
+                            public void actionPerformed(ActionEvent e) {
+                                if (!df.getNewTrainActive()) {
+                                    df.getActiveTrainFrame().initiateTrain(e, re, jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getBlockWithMemoryAssigned(getMemory()).getBlock());
+                                    df.setNewTrainActive(true);
+                                } else {
+                                    df.getActiveTrainFrame().showActivateFrame(re);
+                                }
+                            }
+                        
+                        });
+                    }
+                }
+            }
             return true;
         }
         return false;

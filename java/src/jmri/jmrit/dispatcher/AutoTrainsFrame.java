@@ -206,8 +206,13 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	}						
 	private void placeWindow() {
 		// get size and placement of Dispatcher Window, screen size, and window size
-		Point dispPt = _dispatcher.getLocationOnScreen();
-		Dimension dispDim = _dispatcher.getSize();
+        Point dispPt = new Point (0,0);
+        Dimension dispDim = new Dimension(0,0);
+        
+        if(_dispatcher.isShowing()){
+            dispPt = _dispatcher.getLocationOnScreen();
+            dispDim = _dispatcher.getSize();
+        }
         Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         int screenHeight = screenDim.height-120;
         int screenWidth = screenDim.width-20;
