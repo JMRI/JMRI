@@ -4,6 +4,8 @@ package jmri.jmrix.loconet.Intellibox;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Date;
 import java.util.NoSuchElementException;
 
 import jmri.jmrix.loconet.LnPacketizer;
@@ -145,7 +147,7 @@ public class IBLnPacketizer extends LnPacketizer {
                                LocoNetMessage msgForLater = thisMsg;
                                LnPacketizer myTC = thisTC;
                                public void run() {
-                                   myTC.notify(msgForLater);
+                                   myTC.notifyRcv(new Date(), msgForLater);
                                }
                            };
                        javax.swing.SwingUtilities.invokeLater(r);

@@ -9,6 +9,7 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LnNetworkPortController;
 import jmri.jmrix.loconet.LocoNetMessageException;
 
+import java.util.Date;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer ;
 /**
@@ -181,7 +182,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
                 LocoNetMessage msgForLater = thisMsg;
                 LnPacketizer myTC = thisTC;
                 public void run() {
-                    myTC.notify(msgForLater);
+                    myTC.notifyRcv(new Date(), msgForLater);
                 }
               };
               javax.swing.SwingUtilities.invokeLater(r);

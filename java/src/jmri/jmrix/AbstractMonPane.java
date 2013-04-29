@@ -4,6 +4,7 @@ package jmri.jmrix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -106,6 +107,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
     @Override
     public void initComponents() throws Exception {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        
         // the following code sets the frame's initial state
         clearButton.setText("Clear screen");
         clearButton.setVisible(true);
@@ -309,8 +311,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
         logFileChooser.setSelectedFile(new File("monitorLog.txt"));
 
         // connect to data source
-        init();
-
+        init();        
     }
 
     /**
@@ -318,7 +319,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
      * e.g. columns line up
      */
     public void setFixedWidthFont() {
-        monTextPane.setFont( new java.awt.Font( "Monospaced", java.awt.Font.PLAIN, monTextPane.getFont().getSize() ) );
+        monTextPane.setFont( new java.awt.Font(java.awt.Font.MONOSPACED, java.awt.Font.PLAIN, monTextPane.getFont().getSize()) );
     }
     
     /**
@@ -333,8 +334,16 @@ public abstract class AbstractMonPane extends JmriPanel  {
     public String getHelpTarget() {
         return "package.jmri.jmrix.AbstractMonFrame";
     }
+        
+    public void nextLineWithTime(Date timestamp, String line, String raw) {
+    	logLine(timestamp, line, raw);
+    }
     
     public void nextLine(String line, String raw) {
+    	logLine(new Date(), line, raw);
+    }
+        
+    private void logLine(Date timestamp, String line, String raw) {
     	
     	// handle display of traffic
     	// line is the traffic in 'normal form', raw is the "raw form"
@@ -343,7 +352,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
 
     	// display the timestamp if requested
     	if ( timeCheckBox.isSelected() ) {
-    		sb.append(df.format(new Date())).append( ": " ) ;
+    		sb.append(df.format(timestamp)).append( ": " ) ;
     	}
 
     	// display the raw data if available and requested

@@ -13,6 +13,7 @@ import jmri.jmrix.loconet.LocoNetMessageException;
 import jmri.jmrix.loconet.LocoNetInterface;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 
@@ -210,7 +211,7 @@ public class IBLnPacketizer extends LnPacketizer implements LocoNetInterface {
                                LocoNetMessage msgForLater = thisMsg;
                                LnPacketizer myTC = thisTC;
                                public void run() {
-                                   myTC.notify(msgForLater);
+                                   myTC.notifyRcv(new Date(), msgForLater);
                                }
                            };
                        javax.swing.SwingUtilities.invokeLater(r);

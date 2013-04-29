@@ -4,6 +4,8 @@ package jmri.jmrix.loconet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Date;
 import java.util.Vector;
 
 /**
@@ -63,6 +65,37 @@ public abstract class LnTrafficController implements LocoNetInterface {
             listeners.removeElement(l);
     	}
     }
+    
+    // The methods to implement adding and removing listeners
+    protected Vector<LnTrafficListenerFilter> trafficListeners = new Vector<LnTrafficListenerFilter>();
+
+    public synchronized void addTrafficListener(int mask, LnTrafficListener l) {
+        if (l == null) throw new java.lang.NullPointerException();
+
+        // add only if not already registered
+    	LnTrafficListenerFilter adapter = new LnTrafficListenerFilter(mask, l);
+        if (!trafficListeners.contains(adapter)) {
+            trafficListeners.addElement(adapter);
+        }
+    }
+
+    public synchronized void removeTrafficListener(int mask, LnTrafficListener l) {
+        if (l == null) throw new java.lang.NullPointerException();
+
+        LnTrafficListenerFilter filter = new LnTrafficListenerFilter(mask, l);
+    	if (trafficListeners.contains(filter)) {
+    		trafficListeners.remove(trafficListeners.indexOf(filter)).setFilter(mask);
+    	}
+    }
+
+    public synchronized void changeTrafficListener(int mask, LnTrafficListener l) {
+        if (l == null) throw new java.lang.NullPointerException();
+
+        LnTrafficListenerFilter filter = new LnTrafficListenerFilter(mask, l);
+    	if (trafficListeners.contains(filter)) {
+    		trafficListeners.get(trafficListeners.indexOf(filter)).setFilter(mask);
+    	}
+    }
 
     /**
      * Forward a LocoNetMessage to all registered listeners.
@@ -85,7 +118,7 @@ public abstract class LnTrafficController implements LocoNetInterface {
         synchronized(this) {
             v = (Vector<LocoNetListener>) listeners.clone();
         }
-        if (log.isDebugEnabled()) log.debug("notify of incoming LocoNet packet: "+m.toString());
+        if (log.isDebugEnabled()) log.debug("notify of LocoNet packet: "+m.toString());
         // forward to all listeners
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
@@ -94,7 +127,45 @@ public abstract class LnTrafficController implements LocoNetInterface {
         }
     }
     
-    /**
+	@SuppressWarnings("unchecked")
+	public void notifyRcv(Date timestamp, LocoNetMessage m) {
+        
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector<LnTrafficListenerFilter> v;
+        synchronized(this) {
+            v = (Vector<LnTrafficListenerFilter>) trafficListeners.clone();
+        }
+        if (log.isDebugEnabled()) log.debug("notify of incoming LocoNet packet: " + m.toString());
+        
+        // forward to all listeners
+        for (LnTrafficListenerFilter adapter : v) {
+        	adapter.fireRcv(timestamp, m);
+        }
+
+        // call the old notify for other listeners
+        notify(m);
+    }
+
+	@SuppressWarnings("unchecked")
+	public void notifyXmit(Date timestamp, LocoNetMessage m) {
+        
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector<LnTrafficListenerFilter> v;
+        synchronized(this) {
+            v = (Vector<LnTrafficListenerFilter>) trafficListeners.clone();
+        }
+        if (log.isDebugEnabled()) log.debug("notify of send LocoNet packet: " + m.toString());
+        
+        // forward to all listeners
+        for (LnTrafficListenerFilter adapter : v) {
+        	adapter.fireXmit(timestamp, m);
+        }
+        
+        // call the old notify for other listeners
+        notify(m);
+    }
+
+	/**
      * Is there a backlog of information for the outbound link?
      * This includes both in the program (e.g. the outbound queue)
      * and in the command station interface (e.g. flow control from the port)
