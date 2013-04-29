@@ -56,7 +56,7 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
                 replacementModel = (decoder.getReplacementModel() != null) ? decoder.getReplacementModel() : replacementModel;
             }
             
-            if (replacementModel != null && replacementModel != null) {
+            if (replacementModel != null && replacementFamily != null) {
                 System.out.println("   *** Will update");
         
                 // change the roster entry
