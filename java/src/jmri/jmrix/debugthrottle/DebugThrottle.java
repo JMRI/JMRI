@@ -41,6 +41,7 @@ public class DebugThrottle extends AbstractThrottle
         this.isForward    = true;
 
         this.address      = address;
+        setSpeedStepMode( jmri.DccThrottle.SpeedStepMode128 ); 
     }
 
     DccLocoAddress address;
