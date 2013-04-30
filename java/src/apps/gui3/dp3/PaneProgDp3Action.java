@@ -141,6 +141,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                             //re.writeFile(cvModel, iCvModel, variableModel );
                             // note that we're leaving the filename null
                             // add the new roster entry to the in-memory roster
+                            Roster.instance().addEntry(re);
                         } else {
                             try{
                                 saveRosterEntry();
@@ -150,6 +151,8 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
                         }
                         // create a dummy RosterEntry with the decoder info
                         startProgrammer(decoderFile, re, null);
+                        //Set our roster entry back to null so that a fresh roster entry can be created if needed
+                        re=null;
                     }
 
                 @Override
