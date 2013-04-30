@@ -3,6 +3,7 @@ package jmri.jmrit.roster;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
 import java.util.Map;
+import java.util.LinkedList;
 
 import java.awt.event.ActionEvent;
 
@@ -12,6 +13,9 @@ import java.util.List;
 import jmri.DccThrottle;
 import jmri.Section;
 import jmri.Block;
+import jmri.NamedBean;
+
+import java.beans.PropertyChangeListener;
 
 /**
  * A simple class to store a speed profile for a given loco
@@ -153,54 +157,31 @@ public class RosterSpeedProfile {
     * return the approximate distance travelled in millimeters for a give duration in seconds and speed step.
     */
     public float getDistanceTravelled(boolean isForward, float speedStep, float duration){
-
         float spd = getForwardSpeed(speedStep);
         
         if(!isForward){
             spd = getReverseSpeed(speedStep);
         }
-        
         return Math.abs(spd*duration);
     }
     
     float distanceRemaining = 0;
+    float distanceTravelled = 0;
     
     TreeMap<Integer, SpeedStep>  speeds= new TreeMap<Integer, SpeedStep>();
     
     DccThrottle _throttle;
     
-    float stepIncrement = 1;
-    float tIncrement = 0.0f;
-
     float desiredSpeedStep=-1;
     
     float extraDelay = 0.0f;
     
-    Section section = null;
-    Block block = null;
+    NamedBean referenced = null;
     
     javax.swing.Timer stopTimer = null;
     
     long lastTimeSpeedFinished = 0l;
     long lastTimeTimerStarted = 0l;
-    
-    //Add in  a method to record how long through a speed step change we are in.
-    //Also  add in a method to determin e how long  (time) it has been that we last finished a change of speed.
-    //Called after the stopTimer has finished, calculates distance travelled and then starts on the next change of speed
-    void changeSpeedStep(){
-        if(_throttle.getSpeedSetting()==desiredSpeedStep){
-            log.debug("At desired Speed step");
-            finishChange();
-            lastTimeSpeedFinished=System.nanoTime();
-            return;
-        }
-        float duration = ((float)(stopTimer.getDelay()+extraTime)/1000);
-        //log.info("Cal " + duration);
-        //log.info("Distance travelled at step " + _throttle.getSpeedSetting() + " " + getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), duration));
-        distanceRemaining = distanceRemaining-getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), duration);
-        
-        changeLocoSpeedByStep(distanceRemaining, desiredSpeedStep);
-    }
     
     boolean increaseSpeed = false;
     
@@ -213,13 +194,13 @@ public class RosterSpeedProfile {
         stopTimer=null;
         _throttle = null;
         distanceRemaining = 0;
-        stepIncrement = 0.0f;
         desiredSpeedStep=-1;
-        tIncrement = 0.0f;
-        cancel = false;
         extraDelay = 0.0f;
-        section = null;
-        block = null;
+        referenced = null;
+        synchronized(this){
+            distanceTravelled = 0;
+            stepQueue = new LinkedList<SpeedSetting>();
+        }
     }
     
     public void setExtraInitialDelay(float eDelay){
@@ -230,14 +211,18 @@ public class RosterSpeedProfile {
      *   Set speed of a throttle to a speeed set by a float, using the block for the length details
      */
     public void changeLocoSpeed(DccThrottle t, Block blk, float speed){
+        if(blk==referenced && speed == desiredSpeedStep){
+            if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this block");
+            return;
+        }
         float blockLength = blk.getLengthMm();
-        if(blk==block){
+        if(blk==referenced){
             distanceRemaining = distanceRemaining - getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), ((float)(System.nanoTime()-lastTimeTimerStarted)/1000000000));
             blockLength = distanceRemaining;
             //Not entirely reliable at this stage as the loco could still be running and not completed the calculation of the distance, this could result in an over run
             log.debug("Block passed is the same as we are currently processing");
         } else {
-            block = blk;
+            referenced = blk;
         }
         changeLocoSpeed(t, blockLength, speed);
     
@@ -247,18 +232,19 @@ public class RosterSpeedProfile {
      */
     //@TODO if a section contains multiple blocks then we could calibrate the change of speed based upon the block status change.
     public void changeLocoSpeed(DccThrottle t, Section sec, float speed){
-        if(sec==section && speed == desiredSpeedStep){
+        if(sec==referenced && speed == desiredSpeedStep){
             if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this section");
             return;
         }
         float sectionLength = sec.getActualLength();
         if(log.isDebugEnabled()) log.debug("call to change speed via section " + sec.getDisplayName());
-        if (sec==section){
+        if (sec==referenced){
             distanceRemaining = distanceRemaining - getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), ((float)(System.nanoTime()-lastTimeTimerStarted)/1000000000));
             sectionLength = distanceRemaining;
         } else {
-            section = sec;
+            referenced = sec;
         }
+        
         changeLocoSpeed(t, sectionLength, speed);
     }
     
@@ -273,11 +259,9 @@ public class RosterSpeedProfile {
             finishChange();
             return;
         }
-        //int iSpeedStep = Math.round(speed*1000);
         
         if(desiredSpeedStep == speed){
             if(log.isDebugEnabled()) log.debug("Already setting to desired speed step");
-            //finishChange();
             return;
         }
         if(log.isDebugEnabled()) log.debug("public change speed step by float " + speed);
@@ -288,16 +272,12 @@ public class RosterSpeedProfile {
             cancelSpeedChange();
         }
         _throttle=t;
-        stepIncrement = _throttle.getSpeedIncrement();
+        
         if(log.isDebugEnabled()) log.debug("Desired Speed Step " + desiredSpeedStep + " asked for " + speed);
         desiredSpeedStep = speed;
-        //int step = Math.round(_throttle.getSpeedSetting()*1000);
-        if(log.isDebugEnabled()) log.debug("calculated current step " + _throttle.getSpeedSetting() + " required " + speed + " current " + _throttle.getSpeedSetting() + " increment " + stepIncrement);
-        /*if(step==iSpeedStep){
-            if(log.isDebugEnabled()) log.debug("Already at best speed ");
-            finishChange();
-            return;
-        }else*/ if(_throttle.getSpeedSetting()<speed){
+        
+        if(log.isDebugEnabled()) log.debug("calculated current step " + _throttle.getSpeedSetting() + " required " + speed + " current " + _throttle.getSpeedSetting());
+        if(_throttle.getSpeedSetting()<speed){
             increaseSpeed = true;
             if(log.isDebugEnabled()) log.debug("Going for acceleration");
         } else {
@@ -305,15 +285,26 @@ public class RosterSpeedProfile {
             if(log.isDebugEnabled()) log.debug("Going for deceleration");
         }
         
-        cancel = false;
-        changeLocoSpeedByStep(distance, speed);
+        calculateStepDetails(speed, distance);
     }
     
-    void changeLocoSpeedByStep(float distance, float speedStep){
-        if(log.isDebugEnabled()) log.debug("=========================================================");
-        long startTime = System.nanoTime();
-        if(cancel)
-            return;
+    int extraTime = 0;
+    
+    void calculateStepDetails(float speedStep, float distance){
+    
+        float stepIncrement = _throttle.getSpeedIncrement();
+        if(log.isDebugEnabled()) log.debug("Desired Speed Step " + desiredSpeedStep + " asked for " + speedStep);
+        desiredSpeedStep = speedStep;
+        //int step = Math.round(_throttle.getSpeedSetting()*1000);
+        if(log.isDebugEnabled()) log.debug("calculated current step " + _throttle.getSpeedSetting() + " required " + speedStep + " current " + _throttle.getSpeedSetting() + " increment " + stepIncrement);
+        boolean increaseSpeed = false;
+        if(_throttle.getSpeedSetting()<speedStep){
+            increaseSpeed = true;
+            if(log.isDebugEnabled()) log.debug("Going for acceleration");
+        } else {
+            if(log.isDebugEnabled()) log.debug("Going for deceleration");
+        }
+        
         if(distance<=0){
             if(log.isDebugEnabled()) log.debug("Distance is less than 0 " + distance);
             _throttle.setSpeedSetting(speedStep);
@@ -322,149 +313,213 @@ public class RosterSpeedProfile {
         }
         
         distanceRemaining = distance;
+        float calculatedDistance = distance;
+        
         if(stopTimer!=null){
             stopTimer.stop();
         }
         
-        float tCurrentSpeed = _throttle.getSpeedSetting();
-
-        stepIncrement = _throttle.getSpeedIncrement();
+        float calculatingStep = _throttle.getSpeedSetting();
         
-        //int step = Math.round(tCurrentSpeed*1000);
-        //if(log.isDebugEnabled()) log.debug("calculated step " + step + " required " + speedStep);
-
-        float spd = 0;
         float endspd = 0;
-        //This needs to use floor or higher
-        if(tCurrentSpeed!=0.0){ // current speed
+        if(calculatingStep!=0.0 && desiredSpeedStep>0){ // current speed
             if(_throttle.getIsForward()){
-                spd = getForwardSpeed(tCurrentSpeed);
-                if(speedStep>0)
-                    endspd = getForwardSpeed(speedStep);
+                endspd = getForwardSpeed(desiredSpeedStep);
             } else {
-                spd = getReverseSpeed(tCurrentSpeed);
-                if(speedStep>0)
-                    endspd = getReverseSpeed(speedStep);
+                endspd = getReverseSpeed(desiredSpeedStep);
             }
-        } else if (speedStep!=0.0) {
+        } else if (desiredSpeedStep!=0.0) {
             if(_throttle.getIsForward()){
-                endspd = getForwardSpeed(speedStep);
+                endspd = getForwardSpeed(desiredSpeedStep);
             } else {
-                endspd = getReverseSpeed(speedStep);
+                endspd = getReverseSpeed(desiredSpeedStep);
             }
         }
-
-        if(log.isDebugEnabled()) log.debug("end spd " + endspd + " spd " + spd);
-        double avgSpeed = Math.abs((endspd+spd)*0.5);
-        if(log.isDebugEnabled()) log.debug("avg Speed " + avgSpeed);
         
-        double time = (distance/avgSpeed); //in seconds
-        time = time *1000; //covert it to milli seconds
-        if(log.isDebugEnabled()) log.debug("time before remove over run " + time);
-        if(stopTimer == null){ //At the start we will deduct the over run time if configured
-            if(log.isDebugEnabled()) log.debug("Stop timer not configured so will add overrun " + distanceRemaining);
-            if(_throttle.getIsForward()){
-                float extraAsDouble = (getOverRunTimeForward()+extraDelay)/1000;
-                if(log.isDebugEnabled()){
-                    log.debug("Over run time to remove (Reverse) " + getOverRunTimeReverse());
-                    log.debug(extraAsDouble);
+        boolean calculated = false;
+        
+        while(!calculated){
+            float spd = 0;
+            if(calculatingStep!=0.0){ // current speed
+                if(_throttle.getIsForward()){
+                    spd = getForwardSpeed(calculatingStep);
+                } else {
+                    spd = getReverseSpeed(calculatingStep);
                 }
-                float olddistance = getDistanceTravelled(true, tCurrentSpeed, extraAsDouble);
-                distanceRemaining = distanceRemaining - olddistance;
-                time = time-getOverRunTimeForward();
-            } else {
-                float extraAsDouble = (getOverRunTimeReverse()+extraDelay)/1000;
-                if(log.isDebugEnabled()){
-                    log.debug("Over run time to remove (Reverse) " + getOverRunTimeReverse());
-                    log.debug(extraAsDouble);
-                }
-                float olddistance = getDistanceTravelled(false, tCurrentSpeed, extraAsDouble);
-                distanceRemaining = distanceRemaining - olddistance;
-                time = time-getOverRunTimeReverse();
             }
-            if(log.isDebugEnabled()){
-                log.debug("Distance remaining " + distanceRemaining);
-                log.debug("Time after overrun removed " + time);
-            }
-        } else {
-            if(log.isDebugEnabled()) log.debug("Stop timer configured so will not add overrun");
-        }
+            
+            if(log.isDebugEnabled()) log.debug("end spd " + endspd + " spd " + spd);
+            double avgSpeed = Math.abs((endspd+spd)*0.5);
+            if(log.isDebugEnabled()) log.debug("avg Speed " + avgSpeed);
         
-        float speeddiff = _throttle.getSpeedSetting()-desiredSpeedStep;
-        float noSteps = speeddiff/stepIncrement;
-        if(log.isDebugEnabled()) log.debug("Speed diff " + speeddiff + " number of Steps " + noSteps + " step increment " + stepIncrement);
+            double time = (calculatedDistance/avgSpeed); //in seconds
+            time = time *1000; //covert it to milli seconds
+            if(log.isDebugEnabled()) log.debug("time before remove over run " + time);
+            if(stopTimer==null)
+                time = calculateInitialOverRun(time);//At the start we will deduct the over run time if configured
+            
+            float speeddiff = calculatingStep-desiredSpeedStep;
+            float noSteps = speeddiff/stepIncrement;
+            if(log.isDebugEnabled()) log.debug("Speed diff " + speeddiff + " number of Steps " + noSteps + " step increment " + stepIncrement);
 
-        int timePerStep = Math.abs((int)(time/noSteps));
-        
-        if(_throttle.getSpeedSetting()>(_throttle.getSpeedIncrement()*2)){
-            //We do not get reliable time results if the duration per speed step is less than 500ms
-            //therefore we calculate how many speed steps will fit in to 750ms.
-            if(timePerStep<=500  && timePerStep>0){
-                //thing tIncrement should be different not sure about this bit
-                float tmp = (750.0f/timePerStep);
-                stepIncrement = stepIncrement*tmp;
-                if(log.isDebugEnabled()) log.debug("time per step was " + timePerStep + " no of increments in 750 ms is " + tmp + " new step increment in " + stepIncrement);
-                
-                timePerStep = 750;
+            int timePerStep = Math.abs((int)(time/noSteps));
+            float calculatedStepInc = stepIncrement;
+            if(calculatingStep>(stepIncrement*2)){
+                //We do not get reliable time results if the duration per speed step is less than 500ms
+                //therefore we calculate how many speed steps will fit in to 750ms.
+                if(timePerStep<=500  && timePerStep>0){
+                    //thing tIncrement should be different not sure about this bit
+                    float tmp = (750.0f/timePerStep);
+                    calculatedStepInc = stepIncrement*tmp;
+                    if(log.isDebugEnabled()) log.debug("time per step was " + timePerStep + " no of increments in 750 ms is " + tmp + " new step increment in " + calculatedStepInc);
+                    
+                    timePerStep = 750;
+                }
+            }
+            if(log.isDebugEnabled()) log.debug("per interval " + timePerStep);
+            
+            //Calculate the new speed setting
+            if(increaseSpeed){
+                calculatingStep = calculatingStep + calculatedStepInc;
+                if(calculatingStep > 1.0f){
+                    calculatingStep = 1.0f;
+                    calculated = true;
+                }
+                if(calculatingStep>desiredSpeedStep){
+                    calculatingStep=desiredSpeedStep;
+                    calculated=true;
+                }
+            } else {
+                calculatingStep = calculatingStep - calculatedStepInc;
+                if(calculatingStep<stepIncrement){
+                    calculatingStep = 0.0f;
+                    calculated = true;
+                    timePerStep = 0;
+                }
+            }
+            if(log.isDebugEnabled()) log.debug("Speed Step current " + _throttle.getSpeedSetting() + " speed to set " + calculatingStep);
+            
+            SpeedSetting ss = new SpeedSetting(calculatingStep, timePerStep);
+            synchronized(this){
+                stepQueue.addLast(ss);
+            }
+            if(stopTimer == null){ //If this is the first time round then kick off the speed change
+                setNextStep();
+            }
+            
+            calculatedDistance = calculatedDistance - getDistanceTravelled(_throttle.getIsForward(), calculatingStep, ((float)(timePerStep/1000.0)));
+            
+            if(calculatedDistance<0 && !calculated){
+                log.error("distance remaining is now 0, but we have not reached desired speed setting");
+                ss = new SpeedSetting(desiredSpeedStep, 10);
+                synchronized(this){
+                    stepQueue.addLast(ss);
+                }
+                calculated = true;
             }
         }
-        if(log.isDebugEnabled()) log.debug("per interval " + timePerStep);
-        float speedtoset = _throttle.getSpeedSetting();
-        //Calculate the new speed setting
-        if(increaseSpeed){
-            speedtoset = speedtoset + stepIncrement;
-            if(speedtoset > 1.0f)
-                speedtoset = 1.0f;
-            if(_throttle.getSpeedSetting()>desiredSpeedStep)
-                speedtoset=desiredSpeedStep;
-        } else {
-            speedtoset = speedtoset - stepIncrement;
-            if(speedtoset<_throttle.getSpeedIncrement())
-                speedtoset = 0.0f;
-        }
-        if(log.isDebugEnabled()) log.debug("Speed Step current " + _throttle.getSpeedSetting() + " speed to set " + speedtoset);
-        
-        _throttle.setSpeedSetting(speedtoset);
-        long finishTime = System.nanoTime();
-        extraTime = ((int)(finishTime-startTime)/1000000);
-        //Extra time covers how long it has taken this method to compute and is then taken off of the time we wait before the next speed step.
-        //This might be better to remove the the potential distance travelled.
-        timePerStep = timePerStep-extraTime;
-        stopTimer = new javax.swing.Timer(timePerStep, new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                changeSpeedStep();
-            }
-        });
-        stopTimer.setRepeats(false);
-        if(cancel){
-            finishChange();
-            return;
-        }
-        lastTimeTimerStarted = System.nanoTime();
-        stopTimer.start();
-        
     }
-    int extraTime = 0;
+    
+    double calculateInitialOverRun(double time){
+        if(log.isDebugEnabled()) log.debug("Stop timer not configured so will add overrun " + distanceRemaining);
+        if(_throttle.getIsForward()){
+            float extraAsDouble = (getOverRunTimeForward()+extraDelay)/1000;
+            if(log.isDebugEnabled()){
+                log.debug("Over run time to remove (Forward) " + getOverRunTimeReverse());
+                log.debug(extraAsDouble);
+            }
+            float olddistance = getDistanceTravelled(true, _throttle.getSpeedSetting(), extraAsDouble);
+            distanceRemaining = distanceRemaining - olddistance;
+            time = time-getOverRunTimeForward();
+        } else {
+            float extraAsDouble = (getOverRunTimeReverse()+extraDelay)/1000;
+            if(log.isDebugEnabled()){
+                log.debug("Over run time to remove (Reverse) " + getOverRunTimeReverse());
+                log.debug(extraAsDouble);
+            }
+            float olddistance = getDistanceTravelled(false, _throttle.getSpeedSetting(), extraAsDouble);
+            distanceRemaining = distanceRemaining - olddistance;
+            time = time-getOverRunTimeReverse();
+        }
+        if(log.isDebugEnabled()){
+            log.debug("Distance remaining " + distanceRemaining);
+            log.debug("Time after overrun removed " + time);
+        }
+        return time;
+    
+    }
     
     void stopLocoTimeOut(DccThrottle t){
         log.debug("Stopping loco");
         t.setSpeedSetting(0f);
     }
     
-    boolean cancel = false;
     
     /**
     *  This method is called to cancel the existing change in speed.
     */
     public void cancelSpeedChange(){
-        cancel = true;
         if(stopTimer!=null && stopTimer.isRunning()){
             stopTimer.stop();
         }
         finishChange();
     }
     
+    synchronized void setNextStep(){
+        if(stepQueue.isEmpty()){
+            log.info("No more results");
+            finishChange();
+            return;
+        }
+        SpeedSetting ss = stepQueue.getFirst();
+        if(ss.getDuration()==0){
+            _throttle.setSpeedSetting(0);
+            finishChange();
+            return;
+        }
+        if(stopTimer!=null){
+            //Reduce the distanceRemaining and calculate the distance travelling
+            float distanceTravelledThisStep = getDistanceTravelled(_throttle.getIsForward(), _throttle.getSpeedSetting(), ((float)(stopTimer.getDelay()/1000.0)));
+            distanceTravelled = distanceTravelled + distanceTravelledThisStep;
+            distanceRemaining = distanceRemaining - distanceTravelledThisStep;
+        }
+        stepQueue.removeFirst();
+        _throttle.setSpeedSetting(ss.getSpeedStep());
+        stopTimer = new javax.swing.Timer(ss.getDuration(), new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setNextStep();
+            }
+        });
+        stopTimer.setRepeats(false);
+        lastTimeTimerStarted = System.nanoTime();
+        stopTimer.start();
     
+    }
+    
+    LinkedList<SpeedSetting> stepQueue = new LinkedList<SpeedSetting>();
+    
+    static class SpeedSetting{
+        
+        float step = 0.0f;
+        int duration = 0;
+        
+        SpeedSetting(float step, int duration){
+            this.step = step;
+            this.duration = duration;
+        }
+
+        float getSpeedStep(){
+            return step;
+        }
+        
+        int getDuration(){
+            return duration;
+        }
+    }
+    
+    /*
+    * The follow deals with the storage and loading of the speed profile for a roster entry.
+    */
     public void store(Element e){
         Element d = new Element("speedprofile");
         d.addContent(new Element("overRunTimeForward").addContent(Float.toString(getOverRunTimeForward())));
