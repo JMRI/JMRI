@@ -15,6 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Steve Lowens  sjlowens@comcast.net" version="1" lastUpdated="20121108"/>
   <version author="Michael Mosher" version="2" lastUpdated="20130220"/>
+  <version author="Stephen Lowens" version="3" lastUpdated="20130501"/>
   <!-- This file contains the Tsunami definitions for Rapido OEM Diesel locomotives	-->
   <!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.					-->
   <!--			Co-authored by Jack Shall & Michael Mosher.			-->
