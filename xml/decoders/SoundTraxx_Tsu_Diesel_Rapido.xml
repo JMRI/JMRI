@@ -52,6 +52,16 @@
         <output name="Brakes"/>
         <output name="Grade" label="Xing"/>
       </model>
+      <model model="F9B" numOuts="4" numFns="14" connector="9pin" productID="103" comment="CP_CN">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="STR8-2-8"/>
+        <output name="Dynamics"/>
+        <output name="Mute"/>
+        <output name="Brakes"/>
+        <output name="Grade" label="Xing"/>
+      </model>      
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <!-- Configuration Variable (CV) information follows -->
@@ -140,34 +150,68 @@
         <label>Loco Direction In Consist</label>
         <comment>A consist address over 127 will also set this bit</comment>
       </variable>
-      <variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
+      <variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F1</label>
       </variable>
-      <variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
+      <variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="1" minFn="1" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F1</label>
+      </variable>
+      <variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F2</label>
       </variable>
-      <variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
+      <variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="1" minFn="2" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F2</label>
+      </variable>
+
+      <variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F3</label>
       </variable>
-      <variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4">
+      <variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="1" minFn="3" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F3</label>
+      </variable>
+
+      <variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F4</label>
       </variable>
-      <variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5">
+      <variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="1" minFn="4" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F4</label>
+      </variable>
+
+      <variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F5</label>
       </variable>
-      <variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6">
+      <variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="1" minFn="5" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F5</label>
+      </variable>
+
+      <variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F6</label>
       </variable>
-      <variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7">
+      <variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="1" minFn="6" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F6</label>
+      </variable>
+
+      <variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F7</label>
       </variable>
+      <variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="1" minFn="7" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F7</label>
+      </variable>
+
       <variable label="Consist Address Activation for F8" CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0" minFn="8">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F8</label>
@@ -176,10 +220,15 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F0(f) in Forward</label>
       </variable>
-      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
+      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Activation for F0(r) in Reverse</label>
       </variable>
+      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="1" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Activation for F0(r) in Reverse</label>
+      </variable>
+
       <variable label="Consist Address Active for F9" CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active for F9</label>
@@ -188,14 +237,24 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active for F10</label>
       </variable>
-      <variable label="Consist Address Active for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
+      <variable label="Consist Address Active for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active for F11</label>
       </variable>
-      <variable label="Consist Address Active for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
+      <variable label="Consist Address Active for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="1" minFn="11" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active for F11</label>
+      </variable>
+
+      <variable label="Consist Address Active for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12" include="101,103">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active for F12</label>
       </variable>
+      <variable label="Consist Address Active for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="1" minFn="12" include="102">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active for F12</label>
+      </variable>
+
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
       <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumCurve.xml"/>
@@ -657,53 +716,53 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="14" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX5 light output">
+      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="14" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX5 light output" include="101,102">
         <!--  NOTE - TEST THIS TO SEE IF IT DOES ANYTHING WITH THE RAPIDO OEM VERSION -->
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX5 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX5 Phase Selection" CV="51" mask="XXXVXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable label="FX5 Phase Selection" CV="51" mask="XXXVXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects" include="101,102">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX5 Phase Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded" include="101,102">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX5 Grade Crossing Logic</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable label="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;" include="101,102">
        <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX5.xml"/>
         <label>FX5 Rule 17 Mode</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs" include="101,102">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX5 Light Type</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="0" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX6 light output">
+      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="0" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX6 light output" include="101,102">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumEffect.xml"/>
         <label>FX6 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects" include="101,102">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumPhase.xml"/>
         <label>FX6 Phase Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded" include="101,102">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>FX6 Grade Crossing Logic</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Rule 17 Mode" CV="52" mask="XVXXXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable label="FX6 Rule 17 Mode" CV="52" mask="XVXXXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;      is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;" include="101,102">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumR17FX6.xml"/>
         <label>FX6 Rule 17 Mode</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs" include="101,102">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumLightType.xml"/>
         <label>FX6 Light Type</label>
         <comment>Don't show this for the TSU-750 models</comment>
@@ -1063,7 +1122,7 @@
       </label>
       <label label="  ">
       </label>
-      <label label="Roof Lighting Effects: CN=5,  CP=3.">        
+      <label label="Roof Lighting Effects: CN=5,  CP=3. (FP9A only)">        
       </label>
       <label label="  ">	
       </label>
@@ -1073,9 +1132,9 @@
       </label>
       <label label="Definitions for the Tsunami Lighting Pane:">        
       </label>
-      <label label="   FX5 effects control white class lights.">        
+      <label label="   FX5 effects control white class lights. (FP9A only)">        
       </label>
-      <label label="   FX6 effects control ditch lights.">        
+      <label label="   FX6 effects control ditch lights. (FP9A only)">        
       </label>
       <label label="  ">	
       </label>
