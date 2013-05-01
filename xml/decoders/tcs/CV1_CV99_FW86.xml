@@ -1054,7 +1054,17 @@
             <variable label="Dimming Brightness" CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
                 <decVal/>
             </variable>
+            <variable label="Forward Trim" CV="66" item="Forward Motor Trim" default="128" comment="Range 0-256">
+                <decVal max="256"/>
+                <label>Forward Motor Trim</label>
+                <comment>Range 0-256</comment>
+            </variable>   
             <variable label="Speed Table" CV="67">
                 <speedTableVal/>
+            </variable>
+            <variable label="Reverse Trim" CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
+                <decVal max="256"/>
+                <label>Reverse Motor Trim</label>
+                <comment>Range 0-256</comment>
             </variable>
 </variables>
