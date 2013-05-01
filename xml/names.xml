@@ -108,7 +108,12 @@
 		<definition item="Packet Time-out Value" CV="11" />
 		<definition item="DC Brake Momentum" />
 
+		<definition item="Analog (DC) Mode" />
 		<definition item="Analog Vstart" />
+		<definition item="Analog Vhigh" />
+		<definition item="Analog (AC) Mode" />
+		<definition item="Analog (AC) Vstart" />
+		<definition item="Analog (AC) Vhigh" />
 
 		<definition item="Analog Power Conversion" CV="12" mask="XXXXXXXV" />
 		<definition item="Radio Power Conversion" CV="12" mask="XXXXXXVX" />

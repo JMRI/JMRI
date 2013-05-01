@@ -1,0 +1,407 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id: cv21.22.xml 22377 2013-01-12 06:28:11Z jacobsen $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
+        <shortAddressVal/>
+        <comment>Short address</comment>
+      </variable>
+      <variable label="Vstart" CV="2" default="3">
+        <decVal/>
+      </variable>
+      <variable label="Acceleration" CV="3" default="16" item="Accel">
+        <decVal/>
+      </variable>
+      <variable label="Deceleration" CV="4" default="12" item="Decel">
+        <decVal/>
+      </variable>
+      <variable label="Vhigh" CV="5" default="255">
+        <decVal/>
+      </variable>
+      <variable label="Vmid" CV="6" default="88">
+        <decVal/>
+      </variable>
+      <variable label="Decoder Version" CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+      </variable>
+      <variable label="Manufacturer ID" CV="8" readOnly="yes" default="151" item="Manufacturer">
+        <decVal/>
+      </variable>
+      <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - FL" CV="14" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Analog Mode Function Status - FL(f)</label>
+      </variable>
+      <variable label="Analog Mode Function Status - F9" CV="14" mask="XXXXXXVX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F10" CV="14" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F12" CV="14" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F13" CV="14" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F14" CV="14" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Analog Mode Function Status - F15" CV="14" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Decoder Lock ID number" CV="15" mask="XXXXVVVV" item="Advanced Group 1 Option 9" tooltip="CV15" default="0">
+        <decVal max="16"/>
+      </variable>
+      <variable label="Preset Lock ID number" CV="16" mask="XXXXVVVV" item="Advanced Group 1 Option 10" tooltip="CV16" default="0">
+        <decVal max="16"/>
+      </variable>
+      <variable label="Extended Address" CV="17" item="Long Address">
+        <longAddressVal/>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/esu/v4cv21.22.xml"/>
+      <variable label="Brake on Asymmetrical DCC - higher voltage on right rail" CV="27" mask="XXXXXXXV" item="Advanced Group 2 Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Brake on Asymmetrical DCC - higher voltage on left rail" CV="27" mask="XXXXXXVX" item="Advanced Group 2 Option 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Brake on Zimo HLU commands" CV="27" mask="XXXXXVXX" item="Advanced Group 2 Option 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Brake on DC, polarity against direction" CV="27" mask="XXXXVXXX" item="Advanced Group 2 Option 4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Brake on DC, polarity same direction" CV="27" mask="XXXVXXXX" item="Advanced Group 2 Option 5" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="RailCom Channel 1 Address Broadcast" CV="28" mask="XXXXXXXV" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 3" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="RailCom Channel 2 Data Transmission" CV="28" mask="XXXXXXVX" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="RailCom Plus Auto Loco Recognition" CV="28" mask="VXXXXXXX" include="54400,54499,54800,54899,5489,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Normal Direction of Motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
+        <enumVal>
+          <enumChoice choice="Forward">
+            <choice>Forward</choice>
+          </enumChoice>
+          <enumChoice choice="Reverse">
+            <choice>Reverse</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
+        <enumVal>
+          <enumChoice choice="14">
+            <choice>14</choice>
+          </enumChoice>
+          <enumChoice choice="28/128 (recommended)">
+            <choice>28/128 (recommended)</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Analog Operation Enabled" CV="29" mask="XXXXXVXX" default="1" item="Analog (DC) Operation">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Analog Conversion Mode</label>
+      </variable>
+      <variable label="RailCom Enable" CV="29" mask="XXXXVXXX" default="1" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra RailCom Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition">
+        <enumVal>
+          <enumChoice choice="Use Vstart, Vmid, Vhigh">
+            <choice>Use Vstart, Vmid, Vhigh</choice>
+          </enumChoice>
+          <enumChoice choice="Use Table">
+            <choice>Use Table</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Addressing Mode" CV="29" mask="XXVXXXXX" item="Address Format">
+        <enumVal>
+          <enumChoice choice="2 digit addressing">
+            <choice>2 digit addressing</choice>
+          </enumChoice>
+          <enumChoice choice="4 digit addressing">
+            <choice>4 digit addressing</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Index register H" CV="31" default="16">
+        <decVal/>
+      </variable>
+      <variable label="Index register L" CV="32" default="0">
+        <decVal/>
+      </variable>
+      <variable label="DCC Protocol" CV="47" mask="XXXXXXXV" default="1" item="ESU V4 Extra Protocols Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="M4 Protocol" CV="47" mask="XXXXXXVX" default="0" include="" item="ESU V4 Extra Protocols Option 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Marklin Motorola Protocol" CV="47" mask="XXXXXVXX" default="1" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Selectrix Protocol" CV="47" mask="XXXXVXXX" default="1" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Protocols Option 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Placeholder" CV="48" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC">
+         <decVal/>
+      </variable>   
+      <variable label="BEMF" CV="49" mask="XXXXXXXV" default="1" item="EMF Enable">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Motor PWM Frequency" CV="49" mask="XXXXXXVX" default="1">
+        <enumVal>
+          <enumChoice choice="20 kHz">
+            <choice>20 kHz</choice>
+          </enumChoice>
+          <enumChoice choice="40 kHz">
+            <choice>40 kHz</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Marklin Delta Mode" CV="49" mask="XXXXXVXX" default="0" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Compatibility Option 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Marklin Additional Addresses" CV="49" mask="VXXXVXXX" default="0" include="54400,54499,54800,54899,54898,LPV4,LPmV4" item="ESU V4 Extra Miscellaneous Option 3">
+        <enumVal>
+          <enumChoice choice="No additional addresses" value="0"/>
+          <enumChoice choice="Use 2 addresses" value="1"/>
+          <enumChoice choice="Use 3 addresses" value="16"/>
+          <enumChoice choice="Use 4 addresses" value="17"/>
+        </enumVal>
+      </variable>
+      <variable label="Automatic Speed Step Detection" CV="49" mask="XXXVXXXX" default="1" item="ESU V4 Extra Miscellaneous Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="LGB Function Button Mode" CV="49" mask="XXVXXXXX" default="0" exclude="LPmV4,LPmV4DCC" item="ESU V4 Extra Compatibility Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Zimo Manual Function" CV="49" mask="XVXXXXXX" default="0" item="ESU V4 Extra Compatibility Option 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>LGB Function Button Mode</label>
+      </variable>
+      <variable label="AC Analog Mode" CV="50" mask="XXXXXXXV" default="1" include="54400,54499,LPV4,LPV4DCC" item="Analog (AC) Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="DC Analog Mode" CV="50" mask="XXXXXXVX" default="1" item="Analog (DC) Mode">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="BEMF Parameter 'I' Slow" CV="51" default="0" item="EMF Option 4">
+        <decVal/>
+      </variable>
+      <variable label="BEMF Parameter 'K' Slow" CV="52" default="32" item="Motor Option 1">
+        <decVal/>
+      </variable>
+      <variable label="BEMF Reference Voltage" CV="53" default="140" item="EMF Control Reference">
+        <decVal/>
+      </variable>
+      <variable label="BEMF Parameter 'K'" CV="54" default="48" item="EMF Option 1">
+        <decVal/>
+      </variable>
+      <variable label="BEMF Parameter 'I'" CV="55" default="32" item="EMF Option 2">
+        <decVal/>
+      </variable>
+      <variable label="BEMF Dynamic Drive Control" CV="56" default="255" item="EMF Option 3">
+        <decVal/>
+        <label>BEMF Dynamic Drive Control'</label>
+      </variable>
+      <variable label="Time between 2 chuffs @ speed step 1" CV="57" default="143" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 3 Option 5" tooltip="Set to zero for cam input">
+        <decVal/>
+      </variable>
+      <variable label="Rate of decrease in time between 2 chuffs" CV="58" default="43" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 3 Option 6">
+        <decVal/>
+      </variable>
+      <variable label="Sound Speed Minimum" CV="59" default="128" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 3 Option 1">
+        <decVal/>
+      </variable>
+      <variable label="Sound Speed Maxium" CV="60" default="160" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 3 Option 2">
+        <decVal/>
+      </variable>
+      <variable label="Random Sound - Shortest Interval" CV="61" default="120" tooltip="Unit is 0.25 seconds" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 3 Option 3">
+        <decVal/>
+      </variable>
+      <variable label="Random Sound - Longest Interval" CV="62" default="200" tooltip="Unit is 0.25 seconds" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 3 Option 4">
+        <decVal/>
+      </variable>
+      <variable label="Master Volume" CV="63" default="180" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Setting 1" comment="Range 0-192">
+        <decVal max="192"/>
+        <comment>Range 0-192</comment>
+      </variable>
+      <variable label="Brake On Threshold" CV="64" default="100" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 4 Option 1">
+        <decVal/>
+      </variable>
+      <variable label="Brake Off Threshold" CV="65" default="25" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 4 Option 2">
+        <decVal/>
+      </variable>
+      <variable label="Forward Trim" CV="66" default="128" comment="Range 0-255">
+        <decVal/>
+        <comment>Range 0-255</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/esu/mfxSpeedTable.xml"/>
+      <variable label="Reverse Trim" CV="95" default="128" comment="Range 0-255">
+        <decVal/>
+        <comment>Range 0-255</comment>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <variable label="Blinking Rate" CV="112" default="30" tooltip="Unit is 0.0625 seconds" item="Global lighting option 1">
+        <decVal/>
+      </variable>
+      <variable label="Power Pack Maintain Time" CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Power Handling Slider 1">
+        <decVal/>
+      </variable>
+      <variable label="Remember Current Function States" CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Extra Power Handling Option 1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label xml:lang="fr">Sauvegarde fonction</label>
+      </variable>
+      <variable label="Remember Current Speed" CV="122" mask="XXXXXXVX" default="1" item="ESU V4 Extra Power Handling Option 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label xml:lang="fr">Sauvegarde vitesse actuelle</label>
+      </variable>
+      <variable label="ABC Mode slow speed" CV="123" default="100" item="Advanced Group 1 Option 5">
+        <decVal/>
+      </variable>
+      <variable label="Preserve Driving Direction when Changing from Analog to Digital" CV="124" mask="XXXXXXXV" default="0" item="ESU V4 Extra Miscellaneous Option 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Decoder Lock Enabled" CV="124" mask="XXXXXXVX" default="0" item="Advanced Group 1 Option 8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>Decoder Lock</label>
+      </variable>
+      <variable label="Delay Prime Mover Startup if Drive Sound Enabled" CV="124" mask="XXXXXVXX" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" default="1" item="ESU V4 Extra Miscellaneous Option 7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Serial protocol for C-Sinus" CV="124" mask="XXXXVXXX" default="0" include="54400,54499,54800,54899,54898,LPV4,LPV4DCC" item="ESU V4 Extra Compatibility Option 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Adaptive Regulation Frequency" CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Motor Overload Protection" CV="124" mask="XXVXXXXX" default="0" include="54400,54499" item="Motor Option 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+      <variable label="Start Volts in DC Mode" CV="125" default="90" item="Analog Vstart">
+        <decVal/>
+      </variable>
+      <variable label="Maximum Speed in DC mode" CV="126" default="130" item="Analog Vhigh">
+        <decVal/>
+      </variable>
+      <variable label="Start Volts in AC Mode" CV="127" default="90" include="54400,54499,LPV4,LPV4DCC" item="Analog (AC) Vstart">
+        <decVal/>
+      </variable>
+      <variable label="Maximum Speed in AC mode" CV="128" default="130" include="54400,54499,LPV4,LPV4DCC" item="Analog (AC) Vhigh">
+        <decVal/>
+      </variable>
+      <variable label="Analog Mode Function Hysteresis" CV="129" default="15" item="Radio Power Conversion">
+        <decVal/>
+      </variable>
+      <variable label="Analog Mode Motor Hysteresis" CV="130" default="5" item="Analog Power Conversion">
+        <decVal/>
+      </variable>
+      <variable label="Grade Crossing Hold Time" CV="132" default="80" item="Global lighting option 2">
+        <decVal/>
+      </variable>
+      <variable label="Faded Sound Volume" CV="133" default="128" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Setting 29">
+        <decVal/>
+      </variable>
+      <variable label="ABC detection threshold" CV="134" mask="XXVVVVVV" default="12" item="Advanced Group 1 Option 6">
+        <decVal min="4" max="32"/>
+      </variable>
+      <variable label="Fan Speed Trim" CV="138" default="128" include="54400,54499,54800,54899,54898" item="ESU V4 Extra Smoke Unit Slider 2">
+        <decVal/>
+        <label>Smoke Unit Minimum Steam Chuff Duration</label>
+      </variable>
+      <variable label="Temperature Trim" CV="139" default="128" include="54400,54499,54800,54899,54898" item="ESU V4 Extra Smoke Unit Slider 3">
+        <decVal/>
+        <label>Smoke Unit Maximum Steam Chuff Duration</label>
+      </variable>
+      <variable label="Power Off Timeout" CV="140" default="0" tooltip="Unit is 5 seconds" include="54400,54499,54800,54899,54898" item="ESU V4 Extra Smoke Unit Slider 1">
+        <decVal/>
+        <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
+      </variable>
+      <variable label="Minimum Steam Chuff Duration" CV="141" default="0" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra Smoke Chuffs Slider 2">
+        <decVal/>
+        <label>Smoke Unit Minimum Steam Chuff Duration</label>
+      </variable>
+      <variable label="Maximum Steam Chuff Duration" CV="142" default="0" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra Smoke Chuffs Slider 3">
+        <decVal/>
+        <label>Smoke Unit Maximum Steam Chuff Duration</label>
+      </variable>
+      <variable label="Chuff Duration rel. to trig. dist." CV="143" default="0" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="ESU V4 Extra Smoke Chuffs Slider 1">
+        <decVal/>
+        <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
+      </variable>
+      <variable label="Auto Uncoupling Speed" CV="246" default="0" item="ESU V4 Extra Auto Uncoupling Slider 1">
+        <decVal/>
+      </variable>
+      <variable label="Auto Uncoupling Remove Time" CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 3">
+        <decVal/>
+      </variable>
+      <variable label="Auto Uncoupling Push Time" CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 2">
+        <decVal/>
+      </variable>
+      <variable label="Min Steam Chuff Distance" CV="249" default="0" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 3 Option 7">
+        <decVal/>
+      </variable>
+      <variable label="Secondary Steam Chuff Trigger" CV="250" default="0" exclude="LPV4,LPV4DCC,LPmV4,LPmV4DCC" item="Sound Group 3 Option 8">
+        <decVal/>
+      </variable>
+      <variable label="Prime Mover Startup Delay if Virtual Drive Sound Enabled" CV="252" include="LPV4,LPV4DCC,LPmV4,LPmV4DCC" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Extra Miscellaneous Slider 1">
+        <decVal/>
+      </variable>
+      <variable label="Constant Brake Mode - Brake Rate" CV="253" default="0" item="Advanced Group 1 Option 1">
+        <decVal/>
+      </variable>
+      <variable label="Constant Brake Mode - Brake Distance Forward" CV="254" default="0" item="Advanced Group 1 Option 2">
+        <decVal/>
+      </variable>
+      <variable label="Constant Brake Mode - Brake Distance Backward" CV="255" default="0" item="Advanced Group 1 Option 3">
+        <decVal/>
+      </variable>
+      <variable label="Constant Brake Mode - Constant Brake Distance on speed step 0" CV="27" mask="VXXXXXXX" default="0" item="Advanced Group 1 Option 4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      </variable>
+</variables>

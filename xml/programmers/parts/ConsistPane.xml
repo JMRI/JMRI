@@ -100,9 +100,6 @@
                 <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Multi-trazione</tooltip>
                 </display>
 		<!-- the next two are special for certain sound decoders, generally wont appear -->
-				<display item="Consist Address Active For F12" tooltip="Determines whether the function will respond to the consist address">
-                <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Multi-trazione</tooltip>
-                </display>
 				<display item="Consist Address Active For F10 in Forward" tooltip="Determines whether the function will respond to the consist address">
                 <tooltip xml:lang="it">Determina se la Funzione risponde all'indirizzo Multi-trazione</tooltip>
                 </display>

@@ -7,7 +7,12 @@
             <tooltip xml:lang="ca">Determina si una locomotora pot funcionar en CC</tooltip>
             <tooltip xml:lang="it">Determina se una locomotiva può funzionare in CC</tooltip>
         </display>
-        <display item="Analog Vstart" tooltip="CV 60"/>
+         <display item="Analog (DC) Mode" tooltip="Determines whether loco can operate on conventional DC current"/>
+       <display item="Analog Vstart" tooltip="Sets the analog input voltage to be reached before the motor begins to move at programmed minimum speed"/>
+        <display item="Analog Vhigh" tooltip="Sets the analog input voltage at which the motor reaches programmed maximum speed"/>
+        <display item="Analog (AC) Mode" tooltip="Determines whether loco can operate on conventional AC current"/>
+        <display item="Analog (AC) Vstart" tooltip="Sets the analog AC input voltage to be reached before the motor begins to move at programmed minimum speed"/>
+        <display item="Analog (AC) Vhigh" tooltip="Sets the analog AC input voltage at which the motor reaches programmed maximum speed"/>
         <display item="Analog Power Conversion" tooltip="Sets the alternate power source to use when the short address is zero">
             <tooltip xml:lang="ca">Estableix la font de poder alternativa quan l'adreÁa curta Ès zero</tooltip>
             <tooltip xml:lang="it">Imposta la fonte di alimentazione alternativa quando l'indirizzo corto è Zero</tooltip>

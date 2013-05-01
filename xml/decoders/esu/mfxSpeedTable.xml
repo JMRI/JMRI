@@ -13,7 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-      <variable item="Speed Table" label="Table sets Speed Curve shape between Vstart &amp; Vhigh.             (Tip: If speed matching, set Vstart &amp; Vhigh before any other points.)" CV="67">
+      <variable item="Speed Table" label="Table values are scaled by Vstart, Vhigh, Forward &amp; Reverse Trim. If speed matching, set Vstart &amp; Vhigh before table mid-points." CV="67">
         <speedTableVal min="1" max="255" mfx="true"/>
         <label>Speed Table</label>
        <label xml:lang="it">Tabella Velocità</label>
