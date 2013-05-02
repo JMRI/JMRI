@@ -37,7 +37,7 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     public java.util.List<String> getSystemNameList()  { return null; }
     
-    public java.util.List<String> getNamedBeanList()  { return null; }
+    public java.util.List<NamedBean> getNamedBeanList()  { return null; }
 	
     public String[] getSystemNameArray() {return null; }
 
