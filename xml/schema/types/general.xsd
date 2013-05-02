@@ -230,6 +230,19 @@
     </xs:restriction>
   </xs:simpleType>
 
+  <xs:simpleType name="yesNoMaybeType">
+    <xs:annotation>
+        <xs:documentation>
+          General definition of string that's either "yes", "no" or "maybe".
+        </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:token">
+      <xs:enumeration value="yes"/>
+      <xs:enumeration value="no"/>
+      <xs:enumeration value="maybe"/>
+    </xs:restriction>
+  </xs:simpleType>
+
   <xs:simpleType name="yesNoDefaultType">
     <xs:annotation>
         <xs:documentation>
