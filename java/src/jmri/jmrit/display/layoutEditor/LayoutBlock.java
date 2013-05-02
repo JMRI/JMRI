@@ -653,7 +653,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	 */
 	void handleBlockChange(java.beans.PropertyChangeEvent e) {
 		// Update memory object if there is one
-		if ( (memory==null) && (memoryName!="") ) {
+		if ( (memory==null) && (!memoryName.equals("")) ) {
 			// initialize if needed 
 			memory = jmri.InstanceManager.memoryManagerInstance().
                             getMemory(memoryName);
