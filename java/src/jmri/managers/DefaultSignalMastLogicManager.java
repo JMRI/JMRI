@@ -260,6 +260,11 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public List<String> getSystemNameList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    public List<NamedBean> getNamedBeanList() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {

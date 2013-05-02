@@ -280,7 +280,7 @@ abstract public class AbstractProxyManager implements Manager {
         }
         return arr;
     }
-
+    
     /**
      * Get a list of all system names.
      */
@@ -290,6 +290,14 @@ abstract public class AbstractProxyManager implements Manager {
             ts.addAll(getMgr(i).getSystemNameList());
         }
         return new ArrayList<String>(ts);
+    }
+    
+    public List<NamedBean> getNamedBeanList() {
+        TreeSet<NamedBean> ts = new TreeSet<NamedBean>(new SystemNameComparator());
+        for (AbstractManager m:mgrs) {
+            ts.addAll(m.getNamedBeanList());
+        }
+        return new ArrayList<NamedBean>(ts);
     }
     
     // initialize logging

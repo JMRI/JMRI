@@ -210,6 +210,10 @@ public class EntryExitPairs implements jmri.Manager{
         return getEntryExitList();
     }
     
+    public List<NamedBean> getNamedBeanList() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
     public void register(NamedBean n) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
