@@ -2183,7 +2183,6 @@ public class Section extends AbstractNamedBean
 	 */
     public void setAlternateColorFromActiveBlock(boolean set){
         jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-        int index = 0;
         boolean beenSet = false;
         if(!set || getState()==FREE || getState()==UNKNOWN){
             setAlternateColor(set);
@@ -2243,6 +2242,44 @@ public class Section extends AbstractNamedBean
 			}			
 		}
 	}
+    
+    public void setNameFromActiveBlock(Object value){
+        jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+        boolean beenSet = false;
+        if(value==null || getState()==FREE || getState()==UNKNOWN){
+            setNameInBlocks(value);
+        } else if(getState()==FORWARD) {
+            for (int i=0; i<mBlockEntries.size(); i++) {
+                Block b = mBlockEntries.get(i);
+                if(b.getState()==Block.OCCUPIED){
+                    beenSet = true;
+                }
+                if(beenSet){
+                    LayoutBlock lb = lbm.getByUserName(b.getUserName());
+                    if (lb!=null){
+                        Memory m = lb.getMemory();
+                        if (m!=null) m.setValue(value);
+                    }
+                }
+            }
+        } else if(getState()==REVERSE) {
+            for (int i=mBlockEntries.size(); i<0; i--) {
+                Block b = mBlockEntries.get(i);
+                if(b.getState()==Block.OCCUPIED){
+                    beenSet = true;
+                }
+                if(beenSet){
+                    LayoutBlock lb = lbm.getByUserName(b.getUserName());
+                    if (lb!=null){
+                        Memory m = lb.getMemory();
+                        if (m!=null) m.setValue(value);
+                    }
+                }
+            }
+        }
+        if(!beenSet)
+            setNameInBlocks(value);
+    }
 	
 	/**
 	 * This function clears the string in the memories associated with unoccupied blocks in this section.
@@ -2256,7 +2293,7 @@ public class Section extends AbstractNamedBean
 				if (lb!=null) {
 					Memory m = lb.getMemory();
 					if (m!=null) m.setValue("  ");
-				}			
+				}
 			}
 		}
 	}

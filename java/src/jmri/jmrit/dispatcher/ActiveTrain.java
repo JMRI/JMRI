@@ -354,7 +354,7 @@ public class ActiveTrain {
 			}
 			if (DispatcherFrame.instance().getNameInAllocatedBlock()) {
                 if(DispatcherFrame.instance().getRosterEntryInBlock() && getRosterEntry()!=null){
-                    as.getSection().setNameInBlocks(getRosterEntry());
+                    as.getSection().setNameFromActiveBlock(getRosterEntry());
                 } else {
                     as.getSection().setNameInBlocks(mTrainName);
                 }
