@@ -189,11 +189,6 @@
           <label> </label>
         </label>
       </column>
-      <row>
-        <label label=" ">
-          <label> </label>
-        </label>
-      </row>
       </row> 
       <row>
           <label label="Brightness Values range from 1-48"/>

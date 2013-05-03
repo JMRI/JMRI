@@ -430,7 +430,7 @@
         <decVal min="1" max="48"/>
       </variable>
       <variable label="LB15" CV="143" mask="VVVVVVVV" default="25" item="Lamp R-H4 Brightness" comment="Brightness (Range 1-48)">
-        <decVal min="1" max="48"/>X
+        <decVal min="1" max="48"/>
       </variable>
       <variable label="LB16" CV="144" mask="VVVVVVVV" default="25" item="Lamp L-H4 Brightness" comment="Brightness (Range 1-48)">
         <decVal min="1" max="48"/>
