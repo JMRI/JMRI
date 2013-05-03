@@ -409,8 +409,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             jmri.jmrit.display.layoutEditor.LayoutBlock faceLBlock=sml.getFacingBlock();
             if(faceLBlock!=null){
                 for(SignalMast destMast: sml.getDestinationList()){
-                    ArrayList<Block> blks = sml.getAutoBlocksBetweenMasts(destMast);
-                    if(blks.size()!=0){
+                    if(sml.getAutoBlocksBetweenMasts(destMast).size()!=0){
                         Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName()+":"+destMast.getDisplayName());
                         if(sec!=null){
                             sec.setSectionType(Section.SIGNALMASTLOGIC);
