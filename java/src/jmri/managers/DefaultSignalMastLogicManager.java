@@ -422,7 +422,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                             sec.setForwardBlockingSensorName(sec.getSystemName()+":forward");
                             sec.setReverseBlockingSensorName(sec.getSystemName()+":reverse");
                             sml.setAssociatedSection(sec, destMast);
-                            sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
+                            //Not 100% sure about this for now so will comment out
+                            //sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
                         }
                     }
                 }
