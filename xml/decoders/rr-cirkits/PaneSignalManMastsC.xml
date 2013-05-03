@@ -1,0 +1,971 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2005, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - new file includes for Signalman files -->
+
+<!-- Panes to show Masts -->
+
+
+  <pane name="Masts C">
+    <column>
+      <row>
+        <column>
+          <label label="Select either 'Output mode' (a Serial command - Closed/Thrown plus a Mast #) OR 'DCC mode' (a Mast Address plus its Signal Aspect).">
+          </label>
+          <label label="All commands are entered as their actual Address numbers. For example to respond to LT9 Closed enter Command as 9 C.">
+          </label>
+          <label label=" ">
+          </label>
+          <label label="To use Bi-polar LEDs check the box between any paired color entry. Pairs must use adjacent output lines, either Lunar/Red, or Yellow/Green.">
+          </label>
+          <label label="To set the Bi-polar hue, adjust the individual brightnesses of the paired LEDs. Either Bi-polar color used by itself does not require a check.">
+          </label>
+          <label label=" ">
+          </label>
+        </column>
+      </row>
+      <separator/>
+      <separator/>
+      <row>       
+        <label label="Aspect#    Mode   ">
+           </label>
+        <label label="  Command     ">
+           </label>
+        <separator/>
+        <label label="  Lamp A  Phase/Flash    ">
+           </label>
+        <separator/>
+        <label label=" Bi-Polar ">
+           </label>
+        <separator/>
+        <label label="  Lamp B  Phase/Flash       ">
+           </label>
+        <separator/>
+        <label label="     Lamp C  Phase/Flash    ">
+           </label>
+        <separator/>
+        <label label=" Bi-Polar ">
+           </label>
+        <separator/>
+        <label label="  Lamp D  Phase/Flash    ">
+           </label>
+        <separator/>
+        <label label="   Lighting Effects             ">
+           </label>       
+      </row>
+		  <separator/>
+		  <separator/>
+      <row>
+         
+        <column>
+          <display item="MA17 Address Mode" format="offradiobutton" label="17: "/>
+        </column>
+        <column>
+          <display item="MA17 Address Mode" format="onradiobutton" label="    "/>
+        </column>
+        <label label="         ">
+           </label>
+         
+        <column>
+          <display item="MA17 A" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 A PR" tooltip="Lamp A action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 Bipolar AB" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA17 B" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 B PR" tooltip="Lamp B action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA17 C" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 C PR" tooltip="Lamp C action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 Bipolar CD" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA17 D" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 D PR" tooltip="Lamp D action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA17 Effect" label="Effect">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+      </row>
+      <row>
+         
+        <column>
+          <display item="MA17a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA17b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA17 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+        </column>
+        <column>
+          <display item="MA17 Group" tooltip="Selects the mast number" label="    ">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+        </column>
+        <label label="   ">
+           </label>
+         
+        <column>
+          <display item="MA17 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+        </column>
+        <column>
+          <display item="MA17 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+        </column>
+        <label label="     ">
+           </label>
+         
+      </row>
+      <separator/>
+      <row>
+         
+        <column>
+          <display item="MA18 Address Mode" format="offradiobutton" label="18: "/>
+        </column>
+        <column>
+          <display item="MA18 Address Mode" format="onradiobutton" label="    "/>
+        </column>
+        <label label="         ">
+           </label>
+         
+        <column>
+          <display item="MA18 A" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 A PR" tooltip="Lamp A action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 Bipolar AB" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA18 B" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 B PR" tooltip="Lamp B action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA18 C" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 C PR" tooltip="Lamp C action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 Bipolar CD" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA18 D" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 D PR" tooltip="Lamp D action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA18 Effect" label="Effect">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+      </row>
+      <row>
+         
+        <column>
+          <display item="MA18a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA18b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA18 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+        </column>
+        <column>
+          <display item="MA18 Group" tooltip="Selects the mast number" label="    ">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+        </column>
+        <label label="   ">
+           </label>
+         
+        <column>
+          <display item="MA18 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+        </column>
+        <column>
+          <display item="MA18 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+        </column>
+        <label label="     ">
+           </label>
+         
+      </row>
+      <separator/>
+      <row>
+         
+        <column>
+          <display item="MA19 Address Mode" format="offradiobutton" label="19: "/>
+        </column>
+        <column>
+          <display item="MA19 Address Mode" format="onradiobutton" label="    "/>
+        </column>
+        <label label="         ">
+           </label>
+         
+        <column>
+          <display item="MA19 A" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 A PR" tooltip="Lamp A action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 Bipolar AB" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA19 B" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 B PR" tooltip="Lamp B action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA19 C" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 C PR" tooltip="Lamp C action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 Bipolar CD" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA19 D" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 D PR" tooltip="Lamp D action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA19 Effect" label="Effect">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+      </row>
+      <row>
+         
+        <column>
+          <display item="MA19a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA19b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA19 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+        </column>
+        <column>
+          <display item="MA19 Group" tooltip="Selects the mast number" label="    ">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+        </column>
+        <label label="   ">
+           </label>
+         
+        <column>
+          <display item="MA19 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+        </column>
+        <column>
+          <display item="MA19 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+        </column>
+        <label label="     ">
+           </label>
+         
+      </row>
+      <separator/>
+      <row>
+         
+        <column>
+          <display item="MA20 Address Mode" format="offradiobutton" label="20: "/>
+        </column>
+        <column>
+          <display item="MA20 Address Mode" format="onradiobutton" label="    "/>
+        </column>
+        <label label="         ">
+           </label>
+         
+        <column>
+          <display item="MA20 A" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 A PR" tooltip="Lamp A action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 Bipolar AB" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA20 B" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 B PR" tooltip="Lamp B action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA20 C" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 C PR" tooltip="Lamp C action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 Bipolar CD" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA20 D" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 D PR" tooltip="Lamp D action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA20 Effect" label="Effect">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+      </row>
+      <row>
+         
+        <column>
+          <display item="MA20a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA20b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA20 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+        </column>
+        <column>
+          <display item="MA20 Group" tooltip="Selects the mast number" label="    ">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+        </column>
+        <label label="   ">
+           </label>
+         
+        <column>
+          <display item="MA20 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+        </column>
+        <column>
+          <display item="MA20 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+        </column>
+        <label label="     ">
+           </label>
+         
+      </row>
+      <separator/>
+      <row>
+         
+        <column>
+          <display item="MA21 Address Mode" format="offradiobutton" label="21: "/>
+        </column>
+        <column>
+          <display item="MA21 Address Mode" format="onradiobutton" label="    "/>
+        </column>
+        <label label="         ">
+           </label>
+         
+        <column>
+          <display item="MA21 A" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 A PR" tooltip="Lamp A action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 Bipolar AB" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA21 B" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 B PR" tooltip="Lamp B action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA21 C" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 C PR" tooltip="Lamp C action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 Bipolar CD" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA21 D" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 D PR" tooltip="Lamp D action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA21 Effect" label="Effect">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+      </row>
+      <row>
+         
+        <column>
+          <display item="MA21a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA21b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA21 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+        </column>
+        <column>
+          <display item="MA21 Group" tooltip="Selects the mast number" label="    ">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+        </column>
+        <label label="   ">
+           </label>
+         
+        <column>
+          <display item="MA21 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+        </column>
+        <column>
+          <display item="MA21 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+        </column>
+        <label label="     ">
+           </label>
+         
+      </row>
+      <separator/>
+      <row>
+         
+        <column>
+          <display item="MA22 Address Mode" format="offradiobutton" label="22: "/>
+        </column>
+        <column>
+          <display item="MA22 Address Mode" format="onradiobutton" label="    "/>
+        </column>
+        <label label="         ">
+           </label>
+         
+        <column>
+          <display item="MA22 A" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 A PR" tooltip="Lamp A action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 Bipolar AB" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA22 B" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 B PR" tooltip="Lamp B action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA22 C" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 C PR" tooltip="Lamp C action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 Bipolar CD" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA22 D" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 D PR" tooltip="Lamp D action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA22 Effect" label="Effect">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+      </row>
+      <row>
+         
+        <column>
+          <display item="MA22a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA22b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA22 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+        </column>
+        <column>
+          <display item="MA22 Group" tooltip="Selects the mast number" label="    ">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+        </column>
+        <label label="   ">
+           </label>
+         
+        <column>
+          <display item="MA22 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+        </column>
+        <column>
+          <display item="MA22 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+        </column>
+        <label label="     ">
+           </label>
+         
+      </row>
+      <separator/>
+      <row>
+         
+        <column>
+          <display item="MA23 Address Mode" format="offradiobutton" label="23: "/>
+        </column>
+        <column>
+          <display item="MA23 Address Mode" format="onradiobutton" label="    "/>
+        </column>
+        <label label="         ">
+           </label>
+         
+        <column>
+          <display item="MA23 A" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 A PR" tooltip="Lamp A action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 Bipolar AB" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA23 B" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 B PR" tooltip="Lamp B action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA23 C" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 C PR" tooltip="Lamp C action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 Bipolar CD" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA23 D" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 D PR" tooltip="Lamp D action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA23 Effect" label="Effect">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+      </row>
+      <row>
+         
+        <column>
+          <display item="MA23a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA23b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA23 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+        </column>
+        <column>
+          <display item="MA23 Group" tooltip="Selects the mast number" label="    ">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+        </column>
+        <label label="   ">
+           </label>
+         
+        <column>
+          <display item="MA23 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+        </column>
+        <column>
+          <display item="MA23 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+        </column>
+        <label label="     ">
+           </label>
+         
+      </row>
+      <separator/>
+      <row>
+         
+        <column>
+          <display item="MA24 Address Mode" format="offradiobutton" label="24: "/>
+        </column>
+        <column>
+          <display item="MA24 Address Mode" format="onradiobutton" label="    "/>
+        </column>
+        <label label="         ">
+           </label>
+         
+        <column>
+          <display item="MA24 A" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 A PR" tooltip="Lamp A action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 Bipolar AB" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA24 B" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 B PR" tooltip="Lamp B action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA24 C" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 C PR" tooltip="Lamp C action Type" label="">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 Bipolar CD" format="checkbox" tooltip="Check if a Bi-Polar LED Pair" label=" BP"/>
+        </column>
+         
+        <column>
+          <display item="MA24 D" tooltip="Select one of 16 available lamps" label=" ">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 D PR" tooltip="Lamp D action Type" label="">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+        <column>
+          <display item="MA24 Effect" label="Effect">
+          </display>
+        </column>
+        <label label=" ">
+           </label>
+         
+      </row>
+      <row>
+         
+        <column>
+          <display item="MA24a Address" tooltip="Enter the Mast Address" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA24b Address" tooltip="Enter the Serial command #" label="  ">
+         </display>
+        </column>
+        <column>
+          <display item="MA24 CT" tooltip="Respond to Closed/Thrown" label="       ">
+        	 </display>
+        </column>
+        <column>
+          <display item="MA24 Group" tooltip="Selects the mast number" label="    ">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 Aspect" tooltip="Signal Aspect" label=" ">
+          </display>
+        </column>
+        <label label="   ">
+           </label>
+         
+        <column>
+          <display item="MA24 Secondary Address" tooltip="Serial command #" label="   2nd Event">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 Secondary Polarity" tooltip="Serial Send/Receive" label="   Polarity ">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 Secondary Type" tooltip="Serial message Type" label="   ">
+          </display>
+        </column>
+        <column>
+          <display item="MA24 Transition" tooltip="Serial message sent at" label="   message">
+          </display>
+        </column>
+        <label label="     ">
+           </label>
+         
+      </row>
+      <separator/>
+      <separator/>
+      <row>
+        <column>
+          <display item="MAC Type" label="Type">
+            <label>Masts C Type</label>
+          </display>
+        </column>
+      </row>
+    </column>
+  </pane>
+
+      
+ 	  	 

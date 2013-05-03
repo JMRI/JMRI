@@ -14,14 +14,18 @@
 <!-- for more details.                                                      -->
 
 
-<!-- version 1 - new file includes for LNCP files -->
+<!-- version 1 - new file includes for Signalman files -->
 
-<!-- LocoNet/DCC choice for Masts -->
+<!-- Choices for evaluate Variable -->
 
 <enumVal>
-  <enumChoice choice="Serial"/>
-  <enumChoice choice="DCC"/>
+  <enumChoice choice="V1 AND V2 => true"/>
+  <enumChoice choice="V1 OR V2 => true"/>
+  <enumChoice choice="V1 AND V2 => false"/>
+  <enumChoice choice="V1 OR V2 => false"/>
+  <enumChoice choice="V1 AND V2 => change"/>
+  <enumChoice choice="V1 OR V2 => change"/>
+  <enumChoice choice="V1 THEN V2 => true"/>
+  <enumChoice choice="Reserved"/>
 </enumVal>
-
-      
  	  	 

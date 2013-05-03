@@ -16,12 +16,10 @@
 
 <!-- version 1 - new file includes for LNCP files -->
 
-<!-- LocoNet/DCC choice for Masts -->
+<!-- Mode choices for end of conditional block option -->
 
 <enumVal>
-  <enumChoice choice="Serial"/>
-  <enumChoice choice="DCC"/>
+  <enumChoice choice="Continue"/>
+  <enumChoice choice="End"/>
 </enumVal>
-
-      
  	  	 

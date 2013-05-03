@@ -16,12 +16,24 @@
 
 <!-- version 1 - new file includes for LNCP files -->
 
-<!-- LocoNet/DCC choice for Masts -->
+<!-- multiplier choices for delay -->
 
 <enumVal>
-  <enumChoice choice="Serial"/>
-  <enumChoice choice="DCC"/>
+  <enumChoice choice="00"/>
+  <enumChoice choice="01"/>
+  <enumChoice choice="02"/>
+  <enumChoice choice="03"/>
+  <enumChoice choice="04"/>
+  <enumChoice choice="05"/>
+  <enumChoice choice="06"/>
+  <enumChoice choice="07"/>
+  <enumChoice choice="08"/>
+  <enumChoice choice="09"/>
+  <enumChoice choice="10"/>
+  <enumChoice choice="11"/>
+  <enumChoice choice="12"/>
+  <enumChoice choice="13"/>
+  <enumChoice choice="14"/>
+  <enumChoice choice="15"/>
 </enumVal>
-
-      
  	  	 

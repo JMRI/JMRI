@@ -16,11 +16,11 @@
 
 <!-- version 1 - new file includes for LNCP files -->
 
-<!-- LocoNet/DCC choice for Masts -->
+<!-- Indexed Closed/Thrown choice for LocoNet -->
 
 <enumVal>
-  <enumChoice choice="Serial"/>
-  <enumChoice choice="DCC"/>
+  <enumChoice choice="C"/>
+  <enumChoice choice="T"/>
 </enumVal>
 
       

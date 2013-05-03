@@ -16,12 +16,10 @@
 
 <!-- version 1 - new file includes for LNCP files -->
 
-<!-- LocoNet/DCC choice for Masts -->
+<!-- Choices for evaluate Variable -->
 
 <enumVal>
-  <enumChoice choice="Serial"/>
-  <enumChoice choice="DCC"/>
+  <enumChoice choice="AND"/>
+  <enumChoice choice="OR"/>
 </enumVal>
-
-      
  	  	 

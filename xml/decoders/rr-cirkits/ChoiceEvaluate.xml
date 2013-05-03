@@ -16,12 +16,10 @@
 
 <!-- version 1 - new file includes for LNCP files -->
 
-<!-- LocoNet/DCC choice for Masts -->
+<!-- Indexed mode choices for evaluate Variable -->
 
 <enumVal>
-  <enumChoice choice="Serial"/>
-  <enumChoice choice="DCC"/>
+  <enumChoice choice="True"/>
+  <enumChoice choice="Eval"/>
 </enumVal>
-
-      
  	  	 
