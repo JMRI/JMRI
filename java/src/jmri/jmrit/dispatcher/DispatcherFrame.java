@@ -920,18 +920,20 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		}
 		else if (_UseConnectivity && (_LE != null) ) {
 			// not auto run, set up direction sensors in signals since use connectivity was requested
-			int numErrors = t.checkSignals(_LE);
-			if (numErrors == 0) {
-				t.initializeBlockingSensors();
-			}
-			if (numErrors != 0) {
-				if (showErrorMessages) {
-					JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
-						"Error36"),new Object[] {(""+numErrors) }), 
-								rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
-				}
-				return null;
-			}
+            if(getSignalType()==SIGNALHEAD){
+                int numErrors = t.checkSignals(_LE);
+                if (numErrors == 0) {
+                    t.initializeBlockingSensors();
+                }
+                if (numErrors != 0) {
+                    if (showErrorMessages) {
+                        JOptionPane.showMessageDialog(frame,java.text.MessageFormat.format(rb.getString(
+                            "Error36"),new Object[] {(""+numErrors) }), 
+                                    rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
+                    }
+                    return null;
+                }
+            }
 		}
 		// all information checks out - create	
 		ActiveTrain at = new ActiveTrain(t,trainID,tSource);

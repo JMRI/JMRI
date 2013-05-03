@@ -361,7 +361,7 @@ public class ActiveTrain {
 				as.getSection().suppressNameUpdate(true);
 			}
 			if (DispatcherFrame.instance().getExtraColorForAllocated()) {
-				as.getSection().setAlternateColor(true);
+                as.getSection().setAlternateColorFromActiveBlock(true);
 			}
 			refreshPanel();
 		}
