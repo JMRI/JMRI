@@ -8259,24 +8259,28 @@ public class LayoutEditorTools
         pt2y = pt2.getY();
 
         
-        double triX = pt2x-pt1x;
-        double triY = pt2y-pt1y;
+        int triX = (int)Math.round(pt2x-pt1x);
+        int triY = (int)Math.round(pt2y-pt1y);
         
-        log.debug("X" + triX + " Y" + triY);
+        if(log.isDebugEnabled()) log.debug("X " + triX + " Y " + triY);
         Point loc = new Point(0,0);
-        if(triX==0.0D){
+        if(triX==0 || triX ==360){
             //In a vertical Striaght Line
             if(eastbound){
+                log.debug("In a vertical striaghtline facing South");
                 loc = northToSouth(p, l, side, fromPoint);
             } else {
+                log.debug("In a vertical striaghtline facing North");
                 loc = southToNorth(p, l, side, fromPoint);
             }
         }
-        else if(triY==0.0D){
+        else if(triY==0 || triY==360){
             //In a Horizontal Straight Line
             if(eastbound){
+                log.debug("In a Horizontal striaghtline facing east");
                 loc = westToEast(p, l, side, fromPoint);
             } else {
+                log.debug("In a Horizontal striaghtline facing west");
                 loc = eastToWest(p, l, side, fromPoint);
             }
         }
@@ -8302,9 +8306,10 @@ public class LayoutEditorTools
             double rsq = Math.pow(radius,2);
             
             double anglefromdatum = Math.acos((rsq+rsq-Math.pow(chord, 2))/(2*radius*radius));
-            
-            log.debug("radius " + radius + " Chord " + chord);
-            log.debug("Angle from datum line " + Math.toDegrees(anglefromdatum));
+            if(log.isDebugEnabled()){
+                log.debug("radius " + radius + " Chord " + chord);
+                log.debug("Angle from datum line " + Math.toDegrees(anglefromdatum));
+            }
             double tanx = o / a;
             
             double angletan = Math.atan(tanx);
@@ -8313,7 +8318,7 @@ public class LayoutEditorTools
             int oldWidth = l.maxWidth();
             
             int rotate = ((int) Math.toDegrees(anglefromdatum));
-            log.debug(Math.toDegrees(angletan) + " " + a + " " + o + " " + Math.toDegrees(tanx));
+            if(log.isDebugEnabled()) log.debug(Math.toDegrees(angletan) + " " + a + " " + o + " " + Math.toDegrees(tanx));
 
             
             //pt1 is always our boundary point
@@ -9006,7 +9011,7 @@ public class LayoutEditorTools
 		SignalMast turnoutMastC = getSignalMastFromEntry(turnoutSignalMastC.getText(),false,setSignalsFrame);
 		SignalMast turnoutMastD = getSignalMastFromEntry(turnoutSignalMastD.getText(),false,setSignalsFrame);
 		// place signals as requested
-		if (turnoutSignalMastA.addToPanel()) {
+		if (turnoutSignalMastA.addToPanel() && (turnoutMast!=null)) {
 			if (isSignalMastOnPanel(turnoutMast) &&
 				(turnoutMast!=layoutTurnout.getSignalAMast())) {
 				JOptionPane.showMessageDialog(setSignalsFrame,
@@ -9253,13 +9258,16 @@ public class LayoutEditorTools
             }
             boolean east = false;
             if(end.getX()==p.getX()){
+                log.debug("X in both is the same");
                 if(end.getY()<p.getY()){
+                    log.debug("Y end point is less than our point");
                     east = true;
                 }
             } else if(end.getX()<p.getX()){
+                log.debug("end X point is less than our point");
                 east = true;
             }
-
+            log.debug("East set is " + east);
             setIconOnPanel(t, icon, east, p, end, right, fromPoint);
         }
         return;

@@ -57,7 +57,7 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final String NEW_LINE = "\n"; // NOI18N
-	
+
 	TrainManager manager;
 	TrainManagerXml managerXml;
 	RouteManager routeManager;
@@ -88,7 +88,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
 	JButton setButton = new JButton(Bundle.getMessage("Select"));
 	JButton JLabel = new JButton();
-	JButton resetButton = new JButton(Bundle.getMessage("ClearCars"));
+	JButton resetButton = new JButton(Bundle.getMessage("ResetTrain"));
 	JButton saveTrainButton = new JButton(Bundle.getMessage("SaveTrain"));
 	JButton deleteTrainButton = new JButton(Bundle.getMessage("DeleteTrain"));
 	JButton addTrainButton = new JButton(Bundle.getMessage("AddTrain"));
@@ -105,8 +105,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	// text area
 	JTextArea commentTextArea = new JTextArea(2, 70);
-	JScrollPane commentScroller = new JScrollPane(commentTextArea,
-			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	Dimension minScrollerDim = new Dimension(800, 42);
 
 	// for padding out panel
@@ -115,7 +115,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	JLabel space3 = new JLabel("       ");
 	JLabel space4 = new JLabel("       ");
 	JLabel space5 = new JLabel("       ");
-	JLabel space6 = new JLabel("       ");
 
 	// combo boxes
 	JComboBox hourBox = new JComboBox();
@@ -407,16 +406,14 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			if (train == null)
 				return;
 			if (!_train.reset()) {
-				JOptionPane.showMessageDialog(
-						this,
-						MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
-								new Object[] { train.getTrainTerminatesName() }),
-						Bundle.getMessage("CanNotDeleteTrain"), JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
+						new Object[] { train.getTrainTerminatesName() }), Bundle
+						.getMessage("CanNotDeleteTrain"), JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if (JOptionPane.showConfirmDialog(this,
-					MessageFormat.format(Bundle.getMessage("deleteMsg"), new Object[] { train.getName() }),
-					Bundle.getMessage("deleteTrain"), JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("deleteMsg"),
+					new Object[] { train.getName() }), Bundle.getMessage("deleteTrain"),
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				return;
 			}
 			routeBox.setSelectedItem("");
@@ -452,10 +449,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (ae.getSource() == resetButton) {
 			if (_train != null)
 				if (!_train.reset())
-					JOptionPane.showMessageDialog(
-							this,
-							MessageFormat.format(Bundle.getMessage("TrainIsInRoute"),
-									new Object[] { _train.getTrainTerminatesName() }),
+					JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+							.getMessage("TrainIsInRoute"), new Object[] { _train.getTrainTerminatesName() }),
 							Bundle.getMessage("CanNotResetTrain"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -492,11 +487,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			return;
 		if (numEnginesBox.getSelectedItem().equals(Train.AUTO)
 				&& !_train.getNumberEngines().equals(Train.AUTO)) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("AutoEngines"),
-					Bundle.getMessage("FeatureUnderDevelopment"), JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("AutoEngines"), Bundle
+					.getMessage("FeatureUnderDevelopment"), JOptionPane.INFORMATION_MESSAGE);
 		}
-		_train.setDepartureTime((String) hourBox.getSelectedItem(),
-				(String) minuteBox.getSelectedItem());
+		_train.setDepartureTime((String) hourBox.getSelectedItem(), (String) minuteBox.getSelectedItem());
 		_train.setNumberEngines((String) numEnginesBox.getSelectedItem());
 		if (_train.getNumberEngines().equals("0")) {
 			modelEngineBox.setSelectedIndex(0);
@@ -526,15 +520,14 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		String trainName = trainNameTextField.getText().trim();
 		if (trainName.equals("")) {
 			log.debug("Must enter a train name");
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"),
-					MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("MustEnterName"), MessageFormat.format(
+					Bundle.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (trainName.length() > Control.max_len_string_train_name) {
 			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainNameLess"),
-					new Object[] { Control.max_len_string_train_name + 1 }), MessageFormat.format(
-					Bundle.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
+					new Object[] { Control.max_len_string_train_name + 1 }), MessageFormat.format(Bundle
+					.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (trainName.contains(".") || trainName.contains("<") || trainName.contains(">") // NOI18N
@@ -543,9 +536,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				|| trainName.contains("*")) { // NOI18N
 			log.error("Train name must not contain reserved characters");
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameResChar") + NEW_LINE
-					+ Bundle.getMessage("ReservedChar"),
-					MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }),
-					JOptionPane.ERROR_MESSAGE);
+					+ Bundle.getMessage("ReservedChar"), MessageFormat.format(Bundle.getMessage("CanNot"),
+					new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 
@@ -558,27 +550,24 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			return true;
 		String type = EngineModels.instance().getModelType(model);
 		if (!_train.acceptsTypeName(type)) {
-			JOptionPane.showMessageDialog(this, MessageFormat.format(
-					Bundle.getMessage("TrainModelService"), new Object[] { model, type }), MessageFormat
-					.format(Bundle.getMessage("CanNot"), new Object[] { Bundle.getMessage("save") }),
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrainModelService"),
+					new Object[] { model, type }), MessageFormat.format(Bundle.getMessage("CanNot"),
+					new Object[] { Bundle.getMessage("save") }), JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
 		if (roadEngineBox.getItemCount() == 1) {
 			log.debug("No locos available that match the model selected!");
-			JOptionPane.showMessageDialog(
-					this,
-					MessageFormat.format(Bundle.getMessage("NoLocosModel"), new Object[] { model }),
-					MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"),
-							new Object[] { _train.getName() }), JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("NoLocosModel"),
+					new Object[] { model }), MessageFormat.format(Bundle.getMessage("TrainWillNotBuild"),
+					new Object[] { _train.getName() }), JOptionPane.WARNING_MESSAGE);
 		}
 		return true;
 	}
 
 	private boolean checkRoute() {
 		if (_train.getRoute() == null) {
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNeedsRoute"),
-					Bundle.getMessage("TrainNoRoute"), JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNeedsRoute"), Bundle
+					.getMessage("TrainNoRoute"), JOptionPane.WARNING_MESSAGE);
 			return false;
 		}
 		return true;
@@ -587,9 +576,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void reportTrainExists(String s) {
 		log.info("Can not " + s + ", train already exists");
-		JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"),
-				MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] { s }),
-				JOptionPane.ERROR_MESSAGE);
+		JOptionPane.showMessageDialog(this, Bundle.getMessage("TrainNameExists"), MessageFormat.format(Bundle
+				.getMessage("CanNot"), new Object[] { s }), JOptionPane.ERROR_MESSAGE);
 	}
 
 	private void enableButtons(boolean enabled) {
@@ -720,7 +708,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				x = 0;
 			}
 		}
-		
+
 		JPanel p = new JPanel();
 		p.add(clearButton);
 		p.add(setButton);
@@ -729,7 +717,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		gc.gridy = ++y;
 		typeCarPanelCheckBoxes.add(p, gc);
 
-		
 	}
 
 	private void updateEngineTypeCheckboxes() {
@@ -880,14 +867,14 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		Object selected = routeBox.getSelectedItem();
 		if (selected != null && !selected.equals("")) {
 			Route route = (Route) selected;
-			ref.setTitle(ResourceBundle.getBundle(
-					"jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString( // NOI18N
-					"TitleRouteEdit")); // NOI18N
+			ref.setTitle(ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle")
+					.getString( // NOI18N
+							"TitleRouteEdit")); // NOI18N
 			ref.initComponents(route);
 		} else {
-			ref.setTitle(ResourceBundle.getBundle(
-					"jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString( // NOI18N
-					"TitleRouteAdd")); // NOI18N
+			ref.setTitle(ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle")
+					.getString( // NOI18N
+							"TitleRouteAdd")); // NOI18N
 			ref.initComponents(null, _train);
 		}
 	}
@@ -955,8 +942,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		if (Control.showProperty && log.isDebugEnabled())
-			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
-					+ " new: " + e.getNewValue()); // NOI18N
+			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
+					+ e.getNewValue()); // NOI18N
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)) {
 			updateCarTypeCheckboxes();
@@ -992,6 +979,5 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
-	static Logger log = LoggerFactory.getLogger(TrainEditFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(TrainEditFrame.class.getName());
 }

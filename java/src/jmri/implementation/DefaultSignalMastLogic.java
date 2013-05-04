@@ -561,23 +561,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         if(!destList.containsKey(destination)){
             return new ArrayList<Block>();
         }
-        if(destList.get(destination).xingAutoBlocks.size()==0 && destList.get(destination).dblCrossOverAutoBlocks.size()==0){
-            return destList.get(destination).getAutoBlocks();
-        }
-        ArrayList<Block> returnList = destList.get(destination).getAutoBlocks();
-        for(Block blk:destList.get(destination).getAutoBlocks()){
-            if(destList.get(destination).xingAutoBlocks.contains(blk)){
-                returnList.remove(blk);
-            }
-        }
-        for(Block blk:destList.get(destination).getAutoBlocks()){
-            if(destList.get(destination).dblCrossOverAutoBlocks.contains(blk)){
-                returnList.remove(blk);
-            }
-        }
-        
-        return returnList;
-    
+        return destList.get(destination).getAutoBlocksBetweenMasts();
     }
 
     public ArrayList<Turnout> getTurnouts(SignalMast destination){
@@ -1183,7 +1167,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         
         void createSectionDetails(){
             getAssociatedSection().removeAllBlocksFromSection();
-            for(Block key:autoBlocks.keySet()){
+            for(Block key:getAutoBlocksBetweenMasts()){
                 getAssociatedSection().addBlock(key);
             }
             String dir = jmri.Path.decodeDirection(getFacingBlock().getNeighbourDirection(getProtectingBlock()));
@@ -1516,6 +1500,24 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
             return out;
         }
         
+        ArrayList<Block> getAutoBlocksBetweenMasts(){
+            if(destList.get(destination).xingAutoBlocks.size()==0 && destList.get(destination).dblCrossOverAutoBlocks.size()==0){
+                return getAutoBlocks();
+            }
+            ArrayList<Block> returnList = getAutoBlocks();
+            for(Block blk:getAutoBlocks()){
+                if(xingAutoBlocks.contains(blk)){
+                    returnList.remove(blk);
+                }
+            }
+            for(Block blk:getAutoBlocks()){
+                if(dblCrossOverAutoBlocks.contains(blk)){
+                    returnList.remove(blk);
+                }
+            }
+            
+            return returnList;
+        }
         ArrayList<Turnout> getTurnouts(){
             ArrayList<Turnout> out = new ArrayList<Turnout>();
             for(NamedBeanSetting nbh:userSetTurnouts){

@@ -5044,6 +5044,8 @@
 
 <mapID target="manual.3-0_DecoderPro3.Programmer_Multi_Decoder" url="manual/3-0_DecoderPro3/Programmer_Multi_Decoder.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_newUserAdvice" url="package/jmri/jmrit/operations/Operations.shtml#newUserAdvice"/>
+
 <mapID target="manual.3-2_JMRI_OPS_UsersGuide.index_Main" url="manual/3-2_JMRI_OPS_UsersGuide/index.shtml#Main"/>
 
 <mapID target="manual.DP3_2-14_manual.Main_LocoNet_Sounds" url="manual/DP3_2-14_manual/Main_LocoNet.shtml#Sounds"/>

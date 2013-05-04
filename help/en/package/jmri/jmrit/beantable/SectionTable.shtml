@@ -205,7 +205,8 @@ Entry Point</b>, but that feature is a planned future addition.  After testing i
 complete, a message is displayed giving the results of the testing. Detailed error 
 messages, if any, are placed in the JMRI error log.</p>
 </li>
-<li><p><b>Set Direction Sensors in Logic...</b> - When this item is selected, 
+<li><p><b>Set Direction Sensors in Logic...</b> (Not required when using SignalMast Logic)
+ - When this item is selected, 
 direction sensors defined for each Section are placed in the signal logic 
 of appropriate signal heads--those signal heads internal to the Section or 
 protecting entry to the Section. Direction sensors follow the allocation 
@@ -241,7 +242,8 @@ the most common reasons are 1) missing information (signal heads missing or
 signal logic not set up) or 2) errors in setting up Section Entry Point 
 directions.</p>
 </li>
-<li><b>Remove Direction Sensors from Logic...</b> - This tool assembles a list 
+<li><b>Remove Direction Sensors from Logic...</b> (Not required when using SignalMast Logic) 
+- This tool assembles a list 
 of all direction sensors defined in Sections currently in the Section Table, then 
 removes all sensors that are contained in this list from the Simple Signal Logic 
 (SSL) of all signal heads. This tool cancels the effect of the <b>Set Direction 

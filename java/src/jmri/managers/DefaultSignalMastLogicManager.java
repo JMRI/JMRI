@@ -260,6 +260,11 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public List<String> getSystemNameList() {
         throw new UnsupportedOperationException("Not supported yet.");
     }
+    
+    public List<NamedBean> getNamedBeanList() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+    
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
@@ -404,8 +409,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
             jmri.jmrit.display.layoutEditor.LayoutBlock faceLBlock=sml.getFacingBlock();
             if(faceLBlock!=null){
                 for(SignalMast destMast: sml.getDestinationList()){
-                    ArrayList<Block> blks = sml.getAutoBlocksBetweenMasts(destMast);
-                    if(blks.size()!=0){
+                    if(sml.getAutoBlocksBetweenMasts(destMast).size()!=0){
                         Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName()+":"+destMast.getDisplayName());
                         if(sec!=null){
                             sec.setSectionType(Section.SIGNALMASTLOGIC);
@@ -418,7 +422,8 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                             sec.setForwardBlockingSensorName(sec.getSystemName()+":forward");
                             sec.setReverseBlockingSensorName(sec.getSystemName()+":reverse");
                             sml.setAssociatedSection(sec, destMast);
-                            sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
+                            //Not 100% sure about this for now so will comment out
+                            //sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
                         }
                     }
                 }

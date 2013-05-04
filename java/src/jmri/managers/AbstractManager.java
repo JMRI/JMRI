@@ -205,6 +205,10 @@ abstract public class AbstractManager
         for (i=0; i<arr.length; i++) out.add(arr[i]);
         return out;
     }
+    
+    public List<NamedBean> getNamedBeanList() {
+        return new ArrayList<NamedBean>(_tsys.values());
+    }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {

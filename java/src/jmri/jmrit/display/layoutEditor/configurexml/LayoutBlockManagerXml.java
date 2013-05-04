@@ -60,7 +60,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                                 .setAttribute("systemName", sname);
                     elem.addContent(new Element("systemName").addContent(sname));
                     storeCommon(b, elem);
-                    if (b.getOccupancySensorName() != "") {
+                    if (!b.getOccupancySensorName().equals("")) {
                         elem.setAttribute("occupancysensor", b.getOccupancySensorName());
                     }
                     elem.setAttribute("occupiedsense", ""+b.getOccupiedSense());
@@ -68,7 +68,7 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
                     elem.setAttribute("occupiedcolor", LayoutBlock.colorToString(b.getBlockOccupiedColor()));
                     elem.setAttribute("extracolor", LayoutBlock.colorToString(b.getBlockExtraColor()));
                     layoutblocks.addContent(elem);
-                    if (b.getMemoryName() != "") {
+                    if (!b.getMemoryName().equals("")) {
                         elem.setAttribute("memory", b.getMemoryName());
                     }
                     if(!b.useDefaultMetric()){

@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130412-1344-jake on Fri Apr 12 06:45:17 PDT 2013 $Id$-->
-  <decoderIndex version="270">
+  <!--Written by JMRI version 3.3.5ish-20130504-1544-jake on Sat May 04 08:45:37 PDT 2013 $Id$-->
+  <decoderIndex version="272">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="104">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1337,7 +1337,7 @@
         </model>
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" file="ESU_LokPilotV4.0.xml">
-        <model model="LokPilot V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
+        <model model="LokPilot V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LPV4">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -1361,7 +1361,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
+        <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LPV4DCC">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -1380,7 +1380,7 @@
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC" -->
         </model>
-        <model model="LokPilot Micro V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes">
+        <model model="LokPilot Micro V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="LPmV4">
           <output name="1" label="Headlight" maxcurrent="150mA" />
           <output name="2" label="Rear light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="150mA" />
@@ -1404,7 +1404,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes">
+        <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="LPmV4DCC">
           <output name="1" label="Headlight" maxcurrent="150mA" />
           <output name="2" label="Rear light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="150mA" />
@@ -3000,6 +3000,45 @@
           <output name="2" label="Output B" />
           <output name="3" label="Omitted" />
           <output name="4" label="Output D" />
+        </model>
+      </family>
+      <family name="Harman Signalist Accessory Decoders" mfg="Harman DCC" file="Harman_Sig_decoders.xml">
+        <!--  <model model="SC1 version 0.18" numOuts="8" numFns="16" formFactor="HO" productID="V018">
+        <versionCV lowVersionID="224" highVersionID="255"/>
+        <output name="1" label="Output A"/>
+        <output name="2" label="Output B"/>
+        <output name="3" label="Output C"/>
+        <output name="4" label="Output D"/>
+        <output name="5" label="Output E"/>
+        <output name="6" label="Output F"/>
+        <output name="7" label="Output G"/>
+        <output name="8" label="Output H"/>
+      </model>
+	  -->
+        <model model="SC1 version 0.21" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57377">
+          <!-- possibly product ID will need to be both Hex numbers, ie. E021, which is decimal 57377  -->
+          <!-- productID=33 should match Version=021Hex  <versionCV lowVersionID="21" highVersionID="22"/> -->
+          <output name="1" label="Output A" />
+          <output name="2" label="Output B" />
+          <output name="3" label="Output C" />
+          <output name="4" label="Output D" />
+          <output name="5" label="Output E" />
+          <output name="6" label="Output F" />
+          <output name="7" label="Output G" />
+          <output name="8" label="Output H" />
+        </model>
+        <model model="SC1 version 0.23" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57379">
+          <!--productID=57379 should match Version=E023Hex    
+			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35) 
+			-->
+          <output name="1" label="Output A" />
+          <output name="2" label="Output B" />
+          <output name="3" label="Output C" />
+          <output name="4" label="Output D" />
+          <output name="5" label="Output E" />
+          <output name="6" label="Output F" />
+          <output name="7" label="Output G" />
+          <output name="8" label="Output H" />
         </model>
       </family>
       <family name="Sapphire-R8245" mfg="Hornby" highVersionID="10" lowVersionID="10" comment="Decoder with auntomous loco control and fuel/water simulation" file="Hornby8245_v2.xml">
@@ -5855,6 +5894,9 @@
       <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode" file="RR-CirKits-LNCP-basic.xml">
         <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
       </family>
+      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode" file="RR-CirKits-SignalMan-basic.xml">
+        <model model="SignalMan" comment="Signal Mast Driver" lowVersionID="10" />
+      </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
         <model model="TC-64" comment="64 line I/O" lowVersionID="06" />
       </family>
@@ -8003,6 +8045,16 @@
           <output name="Number" label="Boards" />
           <output name="Mute" />
           <output name="Class" label="Light" />
+          <output name="Brakes" />
+          <output name="Grade" label="Xing" />
+        </model>
+        <model model="F9B" numOuts="4" numFns="14" connector="9pin" productID="103" comment="CP_CN">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="STR8-2-8" />
+          <output name="Dynamics" />
+          <output name="Mute" />
           <output name="Brakes" />
           <output name="Grade" label="Xing" />
         </model>

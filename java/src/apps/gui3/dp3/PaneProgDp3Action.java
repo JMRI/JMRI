@@ -498,7 +498,7 @@ public class PaneProgDp3Action 			extends jmri.util.swing.JmriAbstractAction imp
         }
         else {
             // long address
-            if (extendAddr != null && !extendAddr.getValueString().equals(""))
+            if (!extendAddr.getValueString().equals(""))
                 longMode = true;
                 newAddr = extendAddr.getValueString();
         }

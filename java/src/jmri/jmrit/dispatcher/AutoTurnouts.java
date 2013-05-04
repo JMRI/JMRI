@@ -104,8 +104,11 @@ public class AutoTurnouts {
 			log.error("Invalid Section/sequence arguments when checking or setting turnouts");
 			return false;
 		}
+        // Did have this set to include SignalMasts as part of the && statement
+        //Sections created using Signal masts will generally only have a single entry/exit point.
 		// check for no turnouts in this section
-		if ( (s.getForwardEntryPointList().size()<=1) && (s.getReverseEntryPointList().size()<=1) ) {
+		if ( _dispatcher.getSignalType()==DispatcherFrame.SIGNALHEAD &&  (s.getForwardEntryPointList().size()<=1) && (s.getReverseEntryPointList().size()<=1) ) {
+            log.debug("No entry points lists");
 			// no possibility of turnouts
 			return true;
 		}
@@ -131,8 +134,13 @@ public class AutoTurnouts {
 			curBlock = at.getStartBlock();
 		}
 		else {
-			log.error("Error in turnout check/set request - initial Block and Section mismatch");
-			return false;
+			
+            if(_dispatcher.getSignalType()==DispatcherFrame.SIGNALMAST){
+                //This can be considered normal where SignalMast Logic is used.
+                return true;
+            }
+            log.error("Error in turnout check/set request - initial Block and Section mismatch");
+            return false;
 		}
 		int curBlockSeqNum = s.getBlockSequenceNumber(curBlock);   // sequence number of curBlock in Section
 		if (entryPt!=null) prevBlock = entryPt.getFromBlock();
