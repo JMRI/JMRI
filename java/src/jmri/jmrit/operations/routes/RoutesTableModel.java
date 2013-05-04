@@ -192,7 +192,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		if (ref != null)
 			ref.dispose();
 		ref = new RouteEditFrame();
-		ref.setTitle(Bundle.getMessage("TitleRouteEdit"));
 		Route route = manager.getRouteById(sysList.get(row));
 		ref.initComponents(route);
 		focusRef = true;

@@ -302,7 +302,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		// log.debug("train button activated");
 		if (ae.getSource() == addButton) {
 			TrainEditFrame f = new TrainEditFrame();
-			f.setTitle(Bundle.getMessage("TitleTrainAdd"));
+//			f.setTitle(Bundle.getMessage("TitleTrainAdd"));
 			f.initComponents(null);
 		}
 		if (ae.getSource() == buildButton) {

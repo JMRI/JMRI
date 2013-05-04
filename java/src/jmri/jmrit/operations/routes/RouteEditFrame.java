@@ -69,7 +69,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	public static final String DISPOSE = "dispose"; // NOI18N
 
 	public RouteEditFrame() {
-		super();
+		super(Bundle.getMessage("TitleRouteEdit"));
 	}
 	
 	public void initComponents(Route route, Train train) {
@@ -98,6 +98,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			routeModel.initTable(this, routeTable, route);
 			enableButtons(true);
 		} else {
+			setTitle(Bundle.getMessage("TitleRouteAdd"));
 			enableButtons(false);
 		}
 

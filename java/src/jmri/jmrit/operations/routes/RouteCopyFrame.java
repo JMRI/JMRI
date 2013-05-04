@@ -110,8 +110,6 @@ public class RouteCopyFrame extends OperationsFrame {
 
 			RouteEditFrame f = new RouteEditFrame();
 			f.initComponents(newRoute);
-			f.setTitle(Bundle.getMessage("TitleRouteEdit"));
-			f.setVisible(true);
 		}
 	}
 

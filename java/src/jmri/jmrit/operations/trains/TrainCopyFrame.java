@@ -105,8 +105,6 @@ public class TrainCopyFrame extends OperationsFrame {
 
 			TrainEditFrame f = new TrainEditFrame();
 			f.initComponents(newTrain);
-			f.setTitle(Bundle.getMessage("TitleTrainEdit"));
-			f.setVisible(true);
 		}
 	}
 

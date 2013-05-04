@@ -11,7 +11,6 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -50,7 +49,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Frame for user edit of a train
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2011, 2012
+ * @author Dan Boudreau Copyright (C) 2008, 2011, 2012, 2013
  * @version $Revision$
  */
 
@@ -128,7 +127,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	public static final String DISPOSE = "dispose"; // NOI18N
 
 	public TrainEditFrame() {
-		super();
+		super(Bundle.getMessage("TitleTrainEdit"));
 		// Set up the jtable in a Scroll Pane..
 		locationsPane = new JScrollPane(locationPanelCheckBoxes);
 		locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -328,6 +327,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 				route.addPropertyChangeListener(this);
 			}
 		} else {
+			setTitle(Bundle.getMessage("TitleTrainAdd"));
 			enableButtons(false);
 		}
 
@@ -867,14 +867,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		Object selected = routeBox.getSelectedItem();
 		if (selected != null && !selected.equals("")) {
 			Route route = (Route) selected;
-			ref.setTitle(ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle")
-					.getString( // NOI18N
-							"TitleRouteEdit")); // NOI18N
 			ref.initComponents(route);
 		} else {
-			ref.setTitle(ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle")
-					.getString( // NOI18N
-							"TitleRouteAdd")); // NOI18N
 			ref.initComponents(null, _train);
 		}
 	}
