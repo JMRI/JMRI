@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: NceShowCabFrame.shtml 0 2013-03-16 12:52:03Z ken_c $ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: NCE Cab Monitor</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Ken Cameron" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI Help NCE Cab Monitor ">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>NCE Cab Monitor</H1>
+<P>
+	This tool will show what each cab device is doing.
+	It can identify the type of cab, AIU, and other device.
+</P>
+<P>
+	You must press the refresh button for it to pull the status from the command station.
+	It takes about 10 seconds to poll all 64 addresses in the CS02, this lower speed is to
+	insure it doesn't interfere with other commands being processed.
+</P>
+<P>
+	The purge button will remove a cab id from the 'active' polling list.
+	This will reduce the frequency that the cab is polled which will improve the response
+	speed of the other active cabs.
+	Generally this only helps larger club type layouts with many active cabs.
+</P>
+</BODY>
+</HTML>
+
