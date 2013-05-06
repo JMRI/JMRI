@@ -96,7 +96,7 @@
                     // handle the initial handshake response from the server
                     hello: function(e) {
                         jmri.heartbeat = setInterval(function() {
-                            jmri.socket._send("*");
+                            jmri.socket.send("ping");
                         }, e.data.heartbeat);
                         jmri.version(e.data.JMRI);
                         jmri.railroad(e.data.railroad);

@@ -1,15 +1,18 @@
 // JsonServer.java
 package jmri.jmris.json;
 
+import com.fasterxml.jackson.core.JsonParser.Feature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.NoSuchElementException;
-import java.util.Scanner;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriConnection;
 import jmri.jmris.JmriServer;
+import static jmri.jmris.json.JSON.GOODBYE;
+import static jmri.jmris.json.JSON.TYPE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,7 +26,8 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonServer extends JmriServer {
 
-    static Logger log = LoggerFactory.getLogger(JsonServer.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonServer.class);
+    private ObjectMapper mapper;
 
     // Create a new server using the default port
     public JsonServer() {
@@ -32,6 +36,7 @@ public class JsonServer extends JmriServer {
 
     public JsonServer(int port, int timeout) {
         super(port, timeout);
+        this.mapper = new ObjectMapper().configure(Feature.AUTO_CLOSE_SOURCE, false);
         shutDownTask = new QuietShutDownTask("Stop JSON Server") { // NOI18N
             @Override
             public boolean execute() {
@@ -68,19 +73,18 @@ public class JsonServer extends JmriServer {
     // Handle communication to a client through inStream and outStream
     @Override
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
-        Scanner scanner = new Scanner(new InputStreamReader(inStream));
-        JsonClientHandler handler = new JsonClientHandler(new JmriConnection(outStream));
+        ObjectReader reader = this.mapper.reader();
+        JsonClientHandler handler = new JsonClientHandler(new JmriConnection(outStream), this.mapper);
 
         // Start by sending a welcome message
         handler.sendHello(this.timeout);
 
         while (true) {
-            scanner.skip("[\r\n]*"); // skip any stray end of line characters. // NOI18N
-            // Read the command from the client
             try {
-                handler.onMessage(scanner.nextLine());
+                handler.onMessage(reader.readTree(inStream));
+                // Read the command from the client
             } catch (IOException e) {
-                scanner.close();
+                // attempt to close the connection and throw the exception
                 handler.onClose();
                 throw e;
             } catch (NoSuchElementException nse) {
@@ -89,14 +93,11 @@ public class JsonServer extends JmriServer {
                 break;
             }
         }
-        scanner.close();
         handler.onClose();
     }
 
     @Override
     public void stopClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
-        // write a raw JSON string so we don't have to instanciate a handler for this
-        // or link the Server against the JSON token list
-        outStream.writeBytes("{'type':'goodbye'}"); // NOI18N
+        outStream.writeBytes(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, GOODBYE)));
     }
 }

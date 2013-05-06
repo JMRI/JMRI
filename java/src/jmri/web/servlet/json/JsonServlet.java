@@ -387,7 +387,7 @@ public class JsonServlet extends WebSocketServlet {
             this.jmriConnection = new JmriConnection(this.wsConnection);
             this.wsConnection.setMaxIdleTime(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
             this.mapper = new ObjectMapper();
-            this.handler = new JsonClientHandler(this.jmriConnection);
+            this.handler = new JsonClientHandler(this.jmriConnection, this.mapper);
             sockets.add(this);
             try {
                 this.handler.sendHello(this.wsConnection.getMaxIdleTime());
