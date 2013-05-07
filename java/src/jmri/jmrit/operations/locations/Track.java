@@ -1292,12 +1292,12 @@ public class Track {
 			Schedule schedule = ScheduleManager.instance().getScheduleById(id);
 			if (schedule == null) {
 				_scheduleName = "";
-				return;
+			} else {
+				// set the id to the first item in the list
+				if (schedule.getItemsBySequenceList().size() > 0)
+					setScheduleItemId(schedule.getItemsBySequenceList().get(0));
+				setScheduleCount(0);
 			}
-			// set the id to the first item in the list
-			if (schedule.getItemsBySequenceList().size() > 0)
-				setScheduleItemId(schedule.getItemsBySequenceList().get(0));
-			setScheduleCount(0);
 			setDirtyAndFirePropertyChange(SCHEDULE_CHANGED_PROPERTY, old, id);
 		}
 	}

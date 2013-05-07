@@ -46,7 +46,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name))
-			firePropertyChange("ScheduleName", old, name);	// NOI18N
+			setDirtyAndFirePropertyChange("ScheduleName", old, name);	// NOI18N
 	}
 	
 	// for combo boxes
@@ -66,7 +66,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		String old = _comment;
 		_comment = comment;
 		if (!old.equals(comment))
-			firePropertyChange("ScheduleComment", old, comment);	// NOI18N
+			setDirtyAndFirePropertyChange("ScheduleComment", old, comment);	// NOI18N
 	}
 	
 	public String getComment(){
@@ -74,7 +74,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 	}
 
     public void dispose(){
-    	firePropertyChange (DISPOSE, null, DISPOSE);
+    	setDirtyAndFirePropertyChange (DISPOSE, null, DISPOSE);
     }
  
     /**
@@ -92,7 +92,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     	Integer old = Integer.valueOf(_scheduleHashTable.size());
     	_scheduleHashTable.put(si.getId(), si);
 
-    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
+    	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
     	// listen for set out and pick up changes to forward
     	si.addPropertyChangeListener(this);
     	return si;
@@ -129,7 +129,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
         // find highest sequence number
         if (si.getSequenceId() > _sequenceNum)
         	_sequenceNum = si.getSequenceId();
-       	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
+       	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
         // listen for set out and pick up changes to forward
         si.addPropertyChangeListener(this);
     }
@@ -147,7 +147,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     		Integer old = Integer.valueOf(_scheduleHashTable.size());
     		_scheduleHashTable.remove(id);
     		resequenceIds();
-           	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
+           	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
      	}
     }
     
@@ -268,7 +268,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     		if (searchId < 1)
     			found = true;
     	}
-    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+    	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
     
     /**
@@ -301,7 +301,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     		if (searchId > _sequenceNum)
     			found = true;
     	}
-    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
+    	setDirtyAndFirePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null, Integer.toString(sequenceId));
     }
  	
    /**
@@ -310,8 +310,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
      *
      * @param e  Consist XML element
      */
-    public Schedule(org.jdom.Element e) {
-//        if (log.isDebugEnabled()) log.debug("ctor from element "+e);
+    public Schedule(Element e) {
         org.jdom.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null )  _id = a.getValue();
         else log.warn("no id attribute in schedule element when reading operations");
@@ -333,7 +332,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * @return Contents in a JDOM Element
      */
     public org.jdom.Element store() {
-        org.jdom.Element e = new org.jdom.Element(Xml.SCHEDULE);
+        Element e = new org.jdom.Element(Xml.SCHEDULE);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.NAME, getName());
         e.setAttribute(Xml.COMMENT, getComment());
@@ -353,7 +352,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
     				+ e.getPropertyName() + " from (" +e.getSource()+ ") old: " + e.getOldValue() + " new: "  // NOI18N
     				+ e.getNewValue());
     	// forward all schedule item changes
-    	firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+    	setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
     }
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
@@ -368,7 +367,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
 		pcs.removePropertyChangeListener(l);
 	}
 
-	protected void firePropertyChange(String p, Object old, Object n) {
+	protected void setDirtyAndFirePropertyChange(String p, Object old, Object n) {
    	   	// set dirty
     	LocationManagerXml.instance().setDirty(true);
 		pcs.firePropertyChange(p, old, n);
