@@ -9,6 +9,7 @@ import jmri.jmrit.XmlFile;
 import jmri.implementation.DefaultSignalSystem;
 
 import java.io.*;
+import java.lang.reflect.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -190,6 +191,40 @@ public class DefaultSignalSystemManager extends AbstractManager
                 s.setImageType(type);
             }
         }
+        //loadProperties(s, root);
+        if(root.getChild("properties")!=null){
+            for (Object next : root.getChild("properties").getChildren("property")) {
+                Element e = (Element) next;
+                
+                try {
+                    Class<?> cl;
+                    Constructor<?> ctor;
+                    // create key object
+                    cl = Class.forName(e.getChild("key").getAttributeValue("class"));
+                    ctor = cl.getConstructor(new Class<?>[] {String.class});
+                    Object key = ctor.newInstance(new Object[] {e.getChild("key").getText()});
+
+                    // create value object
+                    Object value = null;
+                    if (e.getChild("value") != null) {
+                        cl = Class.forName(e.getChild("value").getAttributeValue("class"));
+                        ctor = cl.getConstructor(new Class<?>[] {String.class});
+                        value = ctor.newInstance(new Object[] {e.getChild("value").getText()});
+                    }
+                    
+                    // store
+                    s.setProperty(key, value);
+                } catch (Exception ex) {
+                    log.error("Error loading properties", ex);
+                }
+            }
+        }
+    }
+    
+    void loadProperties(NamedBean t, Element elem) {
+        Element p = elem.getChild("properties");
+        if (p == null) return;
+        
     }
 
     /** 
