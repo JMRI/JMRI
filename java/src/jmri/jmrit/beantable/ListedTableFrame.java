@@ -40,8 +40,8 @@ public class ListedTableFrame extends BeanTableFrame {
     
     public boolean isMultipleInstances() { return true; }
 
-    static ArrayList<tabbedTableItemList> tabbedTableItemListArray = new ArrayList<tabbedTableItemList>();
-    ArrayList<tabbedTableItem> tabbedTableArray = new ArrayList<tabbedTableItem>();
+    static ArrayList<TabbedTableItemListArray> TabbedTableItemListArrayArray = new ArrayList<TabbedTableItemListArray>();
+    ArrayList<TabbedTableItem> tabbedTableArray = new ArrayList<TabbedTableItem>();
 
     final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
     JSplitPane cardHolder;
@@ -50,7 +50,7 @@ public class ListedTableFrame extends BeanTableFrame {
     JPanel buttonpanel;
     JPanel detailpanel;
     static boolean init = false;
-    tabbedTableItem itemBeingAdded = null;
+    TabbedTableItem itemBeingAdded = null;
     static int lastdivider;
     
 
@@ -93,13 +93,13 @@ public class ListedTableFrame extends BeanTableFrame {
         
         detailpanel = new JPanel();
         detailpanel.setLayout(new CardLayout());
-        tabbedTableArray = new ArrayList<tabbedTableItem>(tabbedTableItemListArray.size());
-        ArrayList<tabbedTableItemList> removeItem = new ArrayList<tabbedTableItemList>(5);
-        for(int x=0; x<tabbedTableItemListArray.size(); x++){
+        tabbedTableArray = new ArrayList<TabbedTableItem>(TabbedTableItemListArrayArray.size());
+        ArrayList<TabbedTableItemListArray> removeItem = new ArrayList<TabbedTableItemListArray>(5);
+        for(int x=0; x<TabbedTableItemListArrayArray.size(); x++){
             /* Here we add all the tables into the panel*/
-            tabbedTableItemList item = tabbedTableItemListArray.get(x);
+            TabbedTableItemListArray item = TabbedTableItemListArrayArray.get(x);
             try {
-                tabbedTableItem itemModel = new tabbedTableItem(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
+                TabbedTableItem itemModel = new TabbedTableItem(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
                 itemBeingAdded = itemModel;
                 detailpanel.add(itemModel.getPanel(), itemModel.getClassAsString());
                 tabbedTableArray.add(itemModel);
@@ -112,8 +112,8 @@ public class ListedTableFrame extends BeanTableFrame {
             }
         }
         
-        for(tabbedTableItemList dead : removeItem){
-            tabbedTableItemListArray.remove(dead);
+        for(TabbedTableItemListArray dead : removeItem){
+            TabbedTableItemListArrayArray.remove(dead);
         }
         
         list = new JList(new Vector<String>(getChoices()));
@@ -179,17 +179,17 @@ public class ListedTableFrame extends BeanTableFrame {
     }
     
     public void addTable(String aaClass, String choice, boolean stdModel){
-        tabbedTableItemList itemBeingAdded = null;
-        for(int x=0; x<tabbedTableItemListArray.size(); x++){
-            if(tabbedTableItemListArray.get(x).getClassAsString().equals(aaClass)){
+        TabbedTableItemListArray itemBeingAdded = null;
+        for(int x=0; x<TabbedTableItemListArrayArray.size(); x++){
+            if(TabbedTableItemListArrayArray.get(x).getClassAsString().equals(aaClass)){
                 log.info("Class " + aaClass + " is already added");
-                itemBeingAdded=tabbedTableItemListArray.get(x);
+                itemBeingAdded=TabbedTableItemListArrayArray.get(x);
                 break;
             }
         }
         if (itemBeingAdded==null){
-            itemBeingAdded = new tabbedTableItemList(aaClass, choice, stdModel);
-            tabbedTableItemListArray.add(itemBeingAdded);
+            itemBeingAdded = new TabbedTableItemListArray(aaClass, choice, stdModel);
+            TabbedTableItemListArrayArray.add(itemBeingAdded);
         }
     }
     
@@ -203,7 +203,7 @@ public class ListedTableFrame extends BeanTableFrame {
         super.dispose();
     }
     
-    void buildMenus(final tabbedTableItem item){
+    void buildMenus(final TabbedTableItem item){
         JMenuBar menuBar = new JMenuBar();
         ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
@@ -240,8 +240,8 @@ public class ListedTableFrame extends BeanTableFrame {
         
         JMenu viewMenu = new JMenu("View");
         menuBar.add(viewMenu);
-        for(int i=0; i<tabbedTableItemListArray.size(); i++){
-            final tabbedTableItemList itemList = tabbedTableItemListArray.get(i);
+        for(int i=0; i<TabbedTableItemListArrayArray.size(); i++){
+            final TabbedTableItemListArray itemList = TabbedTableItemListArrayArray.get(i);
             JMenuItem viewItem = new JMenuItem(itemList.getItemString());
             viewMenu.add(viewItem);
             viewItem.addActionListener(new ActionListener() {
@@ -262,7 +262,7 @@ public class ListedTableFrame extends BeanTableFrame {
         this.validate();
     }
     
-    tabbedTableItem lastSelectedItem = null;
+    TabbedTableItem lastSelectedItem = null;
     
     /* This is a bit of a bodge to add the contents to the bottom box and keep
      * it backwardly compatable with the original views, if the original views
@@ -280,8 +280,8 @@ public class ListedTableFrame extends BeanTableFrame {
     
     protected static ArrayList<String> getChoices() {
         ArrayList<String> choices = new ArrayList<String>();
-        for(int x=0; x<tabbedTableItemListArray.size(); x++){
-            choices.add(tabbedTableItemListArray.get(x).getItemString());
+        for(int x=0; x<TabbedTableItemListArrayArray.size(); x++){
+            choices.add(TabbedTableItemListArrayArray.get(x).getItemString());
         }
         return choices;
     }
@@ -299,7 +299,7 @@ public class ListedTableFrame extends BeanTableFrame {
         return lastdivider;
     }
     
-    static class tabbedTableItem {
+    static class TabbedTableItem {
         
         AbstractTableAction tableAction;
         String className;
@@ -315,7 +315,7 @@ public class ListedTableFrame extends BeanTableFrame {
         
         final JPanel dataPanel = new JPanel();
         
-        tabbedTableItem(String aaClass, String choice, boolean stdModel){
+        TabbedTableItem(String aaClass, String choice, boolean stdModel){
             className = aaClass;
             itemText = choice;
             standardModel=stdModel;
@@ -444,13 +444,13 @@ public class ListedTableFrame extends BeanTableFrame {
             dataScroll = null;
         }
     }
-    static class tabbedTableItemList {
+    static class TabbedTableItemListArray {
 
         String className;
         String itemText;
         boolean standardModel = true;
         
-        tabbedTableItemList(String aaClass, String choice, boolean stdModel){
+        TabbedTableItemListArray(String aaClass, String choice, boolean stdModel){
             className = aaClass;
             itemText = choice;
             standardModel=stdModel;
@@ -557,10 +557,10 @@ public class ListedTableFrame extends BeanTableFrame {
         }
 
         void openNewTableWindow(int index){
-            tabbedTableItem item = tabbedTableArray.get(index);
+            TabbedTableItem item = tabbedTableArray.get(index);
             class WindowMaker implements Runnable {
-                tabbedTableItem item;
-                WindowMaker(tabbedTableItem tItem){
+                TabbedTableItem item;
+                WindowMaker(TabbedTableItem tItem){
                     item = tItem;
                 }
                 public void run() {
@@ -574,7 +574,7 @@ public class ListedTableFrame extends BeanTableFrame {
 
         void selectListItem(int index){
             currentItemSelected = index;
-            tabbedTableItem item = tabbedTableArray.get(index);
+            TabbedTableItem item = tabbedTableArray.get(index);
             CardLayout cl = (CardLayout) (detailpanel.getLayout());
             cl.show(detailpanel, item.getClassAsString());
             frame.setTitle(item.getItemString());
