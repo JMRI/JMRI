@@ -69,7 +69,7 @@ public class CarManagerXml extends OperationsXml {
 	        CarColors.instance().store(root);
 	        CarLengths.instance().store(root);
 	        CarOwners.instance().store(root);
-	        root.addContent(CarLoads.instance().store());
+	        CarLoads.instance().store(root);
 	        CarManager.instance().store(root);
 
 	        writeXML(file, doc);
