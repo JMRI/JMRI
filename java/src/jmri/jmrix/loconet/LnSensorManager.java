@@ -29,8 +29,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
         updateAll();
     }
     
-    LnTrafficController tc;
-    String prefix = "L";
+    protected LnTrafficController tc;
+    protected String prefix = "L";
     
     public String getSystemPrefix() { return prefix; }
 

@@ -5,7 +5,6 @@ package jmri.jmrix.loconet.hexfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.LnPortController;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -49,6 +48,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         catch (java.io.IOException e) {
             log.error("init (pipe): Exception: "+e.toString());
         }
+        options.put("SensorDefaultState", new Option(Bundle.getMessage("DefaultSensorState") + ":", new String[]{Bundle.getMessage("BeanStateUnknown"), Bundle.getMessage("SensorStateInactive"), Bundle.getMessage("SensorStateActive")}, true));
         adaptermemo = new LocoNetSystemConnectionMemo();
     }
     
@@ -213,8 +213,8 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
 
     }
     
-    public LocoNetSystemConnectionMemo getAdapterMemo() { return adaptermemo; }
-    public LocoNetSystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+    public jmri.jmrix.loconet.LocoNetSystemConnectionMemo getAdapterMemo() { return adaptermemo; }
+    public jmri.jmrix.loconet.LocoNetSystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
     static Logger log = LoggerFactory.getLogger(LnHexFilePort.class.getName());
 }

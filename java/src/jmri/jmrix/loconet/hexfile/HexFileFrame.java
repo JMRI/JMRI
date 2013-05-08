@@ -164,7 +164,8 @@ public class HexFileFrame extends JmriJFrame {
         port.getAdapterMemo().configureCommandStation(true, false, "<unknown>",   // full featured by default
                                             false, false);
         port.getAdapterMemo().configureManagers();
-
+        LnSensorManager LnSensorManager = (LnSensorManager)port.getAdapterMemo().getSensorManager();
+        LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState"));
         // Install a debug programmer, replacing the existing LocoNet one
         port.getAdapterMemo().setProgrammerManager(
                 new jmri.progdebugger.DebugProgrammerManager(port.getAdapterMemo()));
