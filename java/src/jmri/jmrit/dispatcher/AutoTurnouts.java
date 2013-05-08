@@ -126,12 +126,22 @@ public class AutoTurnouts {
 		if (nextSection!=null) exitPt = s.getExitPointToSection(nextSection, direction);
 		Block curBlock = null;    // must be in the section
 		Block prevBlock = null;	  // must start outside the section or be null
+        int curBlockSeqNum = -1;   // sequence number of curBlock in Section
 		if (entryPt!=null) {
 			curBlock = entryPt.getBlock();
 			prevBlock = entryPt.getFromBlock();
+            curBlockSeqNum = s.getBlockSequenceNumber(curBlock);
 		}
 		else if (s.containsBlock(at.getStartBlock())) {
 			curBlock = at.getStartBlock();
+            curBlockSeqNum = s.getBlockSequenceNumber(curBlock);
+            //Get the previous block so that we can set the turnouts in the current block correctly.
+            if (direction==Section.FORWARD) {
+                prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum-1);
+            }
+            else if (direction==Section.REVERSE) {
+                prevBlock = s.getBlockBySequenceNumber(curBlockSeqNum+1);
+            }
 		}
 		else {
 			
@@ -142,39 +152,42 @@ public class AutoTurnouts {
             log.error("Error in turnout check/set request - initial Block and Section mismatch");
             return false;
 		}
-		int curBlockSeqNum = s.getBlockSequenceNumber(curBlock);   // sequence number of curBlock in Section
-		if (entryPt!=null) prevBlock = entryPt.getFromBlock();
+		
 		Block nextBlock = null;
 		// may be either in the section or the first block in the next section
 		int nextBlockSeqNum = -1;   // sequence number of nextBlock in Section (-1 indicates outside Section)
-		if (exitPt!=null) {
-			if (curBlock==exitPt.getBlock()) {
-				// next Block is outside of the Section
-				nextBlock = exitPt.getFromBlock();
-			}
-			else {
-				// next Block is inside the Section
-				if (direction==Section.FORWARD) {
-					nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum+1);
-					nextBlockSeqNum = curBlockSeqNum+1;
-				}
-				else if (direction==Section.REVERSE) {
-					nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum-1);
-					nextBlockSeqNum = curBlockSeqNum-1;
-				}
-				if ( (nextBlock==null) && (curBlock!=at.getEndBlock()) ) {
-					log.error("Error in block sequence numbers when setting/checking turnouts");
-					return false;
-				}
-			}
-		}
-		ArrayList<LayoutTurnout> turnoutList = null;
-		ArrayList<Integer> settingsList = null;		
+		if (exitPt!=null  && curBlock==exitPt.getBlock()) {
+            // next Block is outside of the Section
+            nextBlock = exitPt.getFromBlock();
+        } else {
+            // next Block is inside the Section
+            if (direction==Section.FORWARD) {
+                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum+1);
+                nextBlockSeqNum = curBlockSeqNum+1;
+            }
+            else if (direction==Section.REVERSE) {
+                nextBlock = s.getBlockBySequenceNumber(curBlockSeqNum-1);
+                nextBlockSeqNum = curBlockSeqNum-1;
+            }
+            if ( (nextBlock==null) && (curBlock!=at.getEndBlock()) ) {
+                log.error("Error in block sequence numbers when setting/checking turnouts");
+                return false;
+            }
+        }
+
+		ArrayList<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>();
+		ArrayList<Integer> settingsList = new ArrayList<Integer>();
 		// get turnouts by Block
 		boolean turnoutsOK = true;
 		while (curBlock!=null) {
-			turnoutList = ct.getTurnoutList(curBlock, prevBlock, nextBlock);
-			settingsList = ct.getTurnoutSettingList();
+            /*No point in getting the list if the previous block is null as it will return empty and generate an error, 
+            this will only happen on the first run.  Plus working on the basis that the turnouts in the current block would have already of 
+            been set correctly for the train to have arrived in the first place.
+            */
+            if(prevBlock!=null){
+                turnoutList = ct.getTurnoutList(curBlock, prevBlock, nextBlock);
+                settingsList = ct.getTurnoutSettingList();
+            }
 			// loop over turnouts checking and optionally setting turnouts
 			for (int i = 0; i<turnoutList.size(); i++) {
 				Turnout to = turnoutList.get(i).getTurnout();
