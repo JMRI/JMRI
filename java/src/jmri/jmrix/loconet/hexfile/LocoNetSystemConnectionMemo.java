@@ -27,7 +27,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.loconet.LocoNetSyste
             sensorManager = new jmri.jmrix.loconet.hexfile.LnSensorManager(getLnTrafficController(), getSystemPrefix());
         }
         
-        return (jmri.jmrix.loconet.LnSensorManager) sensorManager;
+        return /*(jmri.jmrix.loconet.LnSensorManager)*/ sensorManager;
     }
 
     static Logger log = LoggerFactory.getLogger(LocoNetSystemConnectionMemo.class.getName());   

@@ -32,7 +32,7 @@ public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager implemen
 
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor s = new LnSensor(systemName, userName, tc, prefix);
-        if(s!=null && defaultSensorState!=Sensor.UNKNOWN){
+        if(defaultSensorState!=Sensor.UNKNOWN){
             try {
                 s.setKnownState(defaultSensorState);
             } catch (JmriException e) { log.warn("Error setting state: "+e); }
