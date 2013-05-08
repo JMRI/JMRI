@@ -178,6 +178,12 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         if (parameters == null) return null;
         return parameters.keySet();
     }
+    
+    public void removeProperty(Object key){
+        if(parameters == null || key == null)
+            return;
+        parameters.remove(key);
+    }
 
     HashMap<Object, Object> parameters = null;
     

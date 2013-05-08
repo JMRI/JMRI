@@ -60,7 +60,14 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
     }
 
     public java.util.Set<Object> getPropertyKeys() {
+        if (parameters == null) return null;
         return parameters.keySet();
+    }
+    
+    public void removeProperty(Object key){
+        if(parameters == null || key == null)
+            return;
+        parameters.remove(key);
     }
 
     HashMap<Object, Object> parameters = null;
