@@ -154,29 +154,29 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                     String userName=getSensor().getUserName();
                     if (activeText==null){
                         activeText=userName;
-                        textColorActive=Color.red;
+                        //textColorActive=Color.red;
                     }
                     if (inactiveText==null){
                         inactiveText = userName;
-                        textColorInActive=Color.yellow;
+                        //textColorInActive=Color.yellow;
                     }
                     if (inconsistentText==null){
                         inconsistentText=userName;
-                        textColorUnknown=Color.black;
+                        //textColorUnknown=Color.black;
                     }
                     if (unknownText==null){
                         unknownText=userName;
-                        textColorInconsistent=Color.blue;
+                        //textColorInconsistent=Color.blue;
                     }
                 }
             }
             if (activeText==null) {
                 activeText=Bundle.getMessage("SensorActive");
-                textColorActive=Color.red;
+                //textColorActive=Color.red;
             }
             if (inactiveText==null) {
                 inactiveText = Bundle.getMessage("SensorInactive");
-                textColorInActive=Color.yellow;
+                //textColorInActive=Color.yellow;
             }
             if (inconsistentText==null)
                 inconsistentText=Bundle.getMessage("Inconsistent");
@@ -187,9 +187,9 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (textColorInActive==null)
                 textColorInActive=Color.yellow;
             if (textColorUnknown==null)
-                textColorUnknown=Color.black;
+                textColorUnknown=Color.blue;
             if (textColorInconsistent==null)
-                textColorInconsistent=Color.blue;
+                textColorInconsistent=Color.black;
             setOpaque(true);
         } else {
             setOpaque(false);
@@ -633,51 +633,50 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     }
     // The code below here is from the layoutsensoricon.
 
-    Color textColorActive = Color.black;
-    //Color clear = new Color(238,238,238);
-
+    Color textColorActive = Color.red;
+    
     public void setTextActive(Color color){
         textColorActive=color;
         displayState(sensorState());
     }
-
+    
     public Color getTextActive(){
         return textColorActive;
     }
-
-    Color textColorInActive = Color.black;
-
+    
+    Color textColorInActive = Color.yellow;
+    
     public void setTextInActive(Color color){
         textColorInActive=color;
         displayState(sensorState());
     }
-
+    
     public Color getTextInActive(){
         return textColorInActive;
     }
-
-    Color textColorUnknown = Color.black;
+    
+    Color textColorUnknown = Color.blue;
     public void setTextUnknown(Color color){
         textColorUnknown=color;
         displayState(sensorState());
     }
-
+    
     public Color getTextUnknown(){
         return textColorUnknown;
     }
-
+    
     Color textColorInconsistent = Color.black;
     public void setTextInconsistent(Color color){
         textColorInconsistent=color;
         displayState(sensorState());
     }
-
+    
     public Color getTextInconsistent(){
         return textColorInconsistent;
     }
-
+    
     Color backgroundColorActive = null;
-
+    
     public void setBackgroundActive(Color color){
         if (color==null)
             setOpaque(false);

@@ -70,7 +70,7 @@ public class SensorIconXml extends PositionableLabelXml {
         Element textElement = new Element("activeText");
         if(p.getActiveText()!=null)
             textElement.setAttribute("text", p.getActiveText());
-        if (!p.getTextActive().equals(Color.black)) {
+        if (!p.getTextActive().equals(Color.red)) {
             textElement.setAttribute("red", ""+p.getTextActive().getRed());
             textElement.setAttribute("green", ""+p.getTextActive().getGreen());
             textElement.setAttribute("blue", ""+p.getTextActive().getBlue());
@@ -84,7 +84,7 @@ public class SensorIconXml extends PositionableLabelXml {
         textElement = new Element("inactiveText");
         if(p.getInactiveText()!=null)
             textElement.setAttribute("text", p.getInactiveText());
-        if(!p.getTextInActive().equals(Color.black)){
+        if(!p.getTextInActive().equals(Color.yellow)){
             textElement.setAttribute("red", ""+p.getTextInActive().getRed());
             textElement.setAttribute("green", ""+p.getTextInActive().getGreen());
             textElement.setAttribute("blue", ""+p.getTextInActive().getBlue());
@@ -100,7 +100,7 @@ public class SensorIconXml extends PositionableLabelXml {
 
         if(p.getUnknownText()!=null)
             textElement.setAttribute("text", p.getUnknownText());
-        if(!p.getTextUnknown().equals(Color.black)){
+        if(!p.getTextUnknown().equals(Color.blue)){
             textElement.setAttribute("red", ""+p.getTextUnknown().getRed());
             textElement.setAttribute("green", ""+p.getTextUnknown().getGreen());
             textElement.setAttribute("blue", ""+p.getTextUnknown().getBlue());

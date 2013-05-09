@@ -242,6 +242,7 @@ public class ConnectivityUtil
                             }
                             else {
                                 log.error("Cannot determine turnout setting for "+ltx.getTurnoutName());
+                                log.error("lb " + lb + " nlb " + nlb + " connect B " + ((TrackSegment)ltx.getConnectB()).getLayoutBlock() + " connect C " + ((TrackSegment)ltx.getConnectC()).getLayoutBlock());
                                 companion.add(Integer.valueOf(Turnout.CLOSED));
                             }
                             break;

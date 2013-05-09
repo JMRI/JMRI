@@ -178,22 +178,18 @@ public class PositionablePropertiesUtil {
         
         JPanel fontSizePanel = new JPanel();
         fontSizePanel.setLayout(new BoxLayout(fontSizePanel, BoxLayout.Y_AXIS));
-        fontSizeChoice = new List(6);
-        int currentFontSize=0;
-        for (int i = 0; i < fontSizes.length; i++){
-           fontSizeChoice.add(fontSizes[i]);
-           if (fontSizes[i].equals(""+fontSize)){
-            currentFontSize=i;
-           }
-        }
+        fontSizeChoice = new JList(fontSizes);
         
-        fontSizeChoice.select(currentFontSize);
+        fontSizeChoice.setSelectedValue(""+fontSize, true);
+        fontSizeChoice.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane listScroller = new JScrollPane(fontSizeChoice);
+        listScroller.setPreferredSize(new Dimension(60, 80));
         
         JPanel FontPanel = new JPanel();
         fontSizeField= new JTextField(""+fontSize, fontSizeChoice.getWidth());
         fontSizeField.addKeyListener(PreviewKeyActionListener);
         fontSizePanel.add(fontSizeField);
-        fontSizePanel.add(fontSizeChoice);
+        fontSizePanel.add(listScroller);
         FontPanel.add(fontSizePanel);
         
         JPanel Style = new JPanel();
@@ -225,9 +221,10 @@ public class PositionablePropertiesUtil {
         bold.addActionListener(PreviewActionListener);
         italic.addActionListener(PreviewActionListener);
         //fontSizeChoice.addActionListener(PreviewActionListener);
-        fontSizeChoice.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent actionEvent) {
-                fontSizeField.setText(fontSizeChoice.getSelectedItem());
+        fontSizeChoice.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
+            public void valueChanged(javax.swing.event.ListSelectionEvent e) {
+                log.info("Action called");
+                fontSizeField.setText((String)fontSizeChoice.getSelectedValue());
                 preview();
             }
         });
@@ -725,7 +722,7 @@ public class PositionablePropertiesUtil {
     private JCheckBox italic = new JCheckBox("Italic", false);
     private JCheckBox bold = new JCheckBox("Bold", false);
     
-    protected List fontSizeChoice;
+    protected JList fontSizeChoice;
     
     protected String fontSizes[] = { "6", "8", "10", "11", "12", "14", "16",
     "20", "24", "28", "32", "36"};
