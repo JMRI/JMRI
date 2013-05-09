@@ -204,6 +204,10 @@ public class AutoActiveTrain implements ThrottleListener {
 			setSpeedBySignal();
 		}
 	}
+    
+    protected DccThrottle getThrottle(){
+        return _throttle;
+    }
 
 	public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason) {
 		log.error ("Throttle request failed for "+address+" because "+reason);
