@@ -9,13 +9,14 @@
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The xmlio element name is used to send changes to xmlio server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
- *    An internal heartbeat sensor is used to avoid one browser holding multiple server connections (refresh, links, etc.)
+ *    An internal (to JMRI) heartbeat sensor is used to avoid one browser holding multiple server connections (refresh, links, etc.)
  *  Loop: 	1) request panel and process the returned panel xml, placing/drawing widgets on panel, and saving info as needed
  *  		2) send list of current states to server and wait for changes
  *  		3) receive change? set related widget(s) states, redraw widget(s), and go back to 2)
  *  		4) browser user clicks on widget? send "set state" command and go to 3)
  *  		5) error? go back to 2) 
  *  
+ *  TODO: "grey-out" screen to indicate loss of server connection
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
  *  TODO: handle drawn ellipse (see LMRC APB)
  *  TODO: research movement of locoicons (will require "promoting" locoicon to system entity)
@@ -36,7 +37,7 @@
  **********************************************************************************************/
 
 //persistent (global) variables
-var $gTimeout = 45; //heartbeat timeout in seconds
+var $gTimeout = 5; //heartbeat timeout in seconds
 var $gWidgets = {}; //array of all widget objects, key=CSSId
 var $gPanelList = {}; 	//store list of available panels
 var $gPanel = {}; 	//store overall panel info
@@ -1262,6 +1263,13 @@ $(document).ajaxError(function(event,xhr,opt, exception){
 		$('div#messageText').text($msg);
 		$('div#workingMessage').show();
 		if (window.console) console.log($msg);
+		return;
+	}
+	if (xhr.statusText =="timeout") {
+		var $msg = "AJAX timeout " + opt.url + ", status= " + xhr.status + " " + xhr.statusText + " resending list....";
+		if (window.console) console.log($msg);
+		//try to resend current xml states to xmlio server, will "stall" and wait for changes if matched
+		$sendXMLIOList('<xmlio>' + $getXMLStateList() + '</xmlio>');
 	}
 });
 
