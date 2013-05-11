@@ -37,7 +37,7 @@
  **********************************************************************************************/
 
 //persistent (global) variables
-var $gTimeout = 5; //heartbeat timeout in seconds
+var $gTimeout = 45; //heartbeat timeout in seconds
 var $gWidgets = {}; //array of all widget objects, key=CSSId
 var $gPanelList = {}; 	//store list of available panels
 var $gPanel = {}; 	//store overall panel info
