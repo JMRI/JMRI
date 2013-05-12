@@ -11,11 +11,11 @@
 (function($){
     $.extend({
         websocket: function(url, s) {
-        	if (typeof(WebSocket) == "undefined") {
+        	if (typeof(WebSocket) === "undefined") {
         		WebSocket = (MozWebSocket) ? MozWebSocket : null;
         	}
             var ws = WebSocket ? new WebSocket( url ) : {
-                send: function(m){ return false },
+                send: function(m){ return false; },
                 close: function(){}
             };
             var settings = {
@@ -32,8 +32,15 @@
                 .bind('message', settings.message)
                 .bind('message', function(e){
                     var m = $.evalJSON(e.originalEvent.data);
-                    var h = settings.events[m.type];
-                    if (h) h.call(this, m);
+                    if ($.isArray(m)) {
+                        for (var i = 0; i < m.length; i++) {
+                            var h = settings.events[m[i].type];
+                            if (h) h.call(this, m[i]);
+                        }
+                    } else {
+                        var h = settings.events[m.type];
+                        if (h) h.call(this, m);
+                    }
                 });
             ws._send = ws.send;
             ws.send = function(type, data) {
@@ -41,8 +48,8 @@
                 m = $.extend(true, m, $.extend(true, {}, settings.options, m));
                 if (data) m['data'] = data;
                 return this._send($.toJSON(m));
-            }
-            $(window).unload(function(){ ws.close(); ws = null });
+            };
+            $(window).unload(function(){ ws.close(); ws = null; });
             return ws;
         }
     });
