@@ -15,6 +15,8 @@
             };
             jmri.light = function(name, state) {
             };
+            jmri.memory = function(name, value) {
+            };
             jmri.power = function(state) {
             };
             jmri.railroad = function(string) {
@@ -43,6 +45,13 @@
             };
             jmri.setLight = function(name, state) {
                 return jmri.socket.send("light", {name: name, state: state});
+            };
+            jmri.getMemory = function(name) {
+                if (!jmri.socket.send("memory", {name: name})) {
+                    $.getJSON(jmri.url + "memories/" + name, function(json) {
+                        jmri.memory(json.data.name, json.data.value);
+                    });
+                }
             };
             jmri.getPower = function() {
                 if (!jmri.setPower(jmri.UNKNOWN)) {
@@ -103,6 +112,9 @@
                     },
                     light: function(e) {
                         jmri.light(e.data.name, e.data.state);
+                    },
+                    memory: function(e) {
+                        jmri.memory(e.data.name, e.data.value);
                     },
                     // most events just call the user-defined handler
                     power: function(e) {
