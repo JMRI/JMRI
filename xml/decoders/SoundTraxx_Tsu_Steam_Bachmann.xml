@@ -528,6 +528,11 @@
         <decVal/>
         <label>CV Lock ID Code (0-7)</label>
       </variable>
+      <variable label="Long Address" CV="17" item="Extended Address" comment="4 digit address (Range 0001-9999)">
+        <longAddressVal/>
+        <label>Long Address</label>
+        <comment>4 digit address (Range 0001-9999)</comment>
+      </variable>
       <!-- Consisting Information follows -->
       <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
         <decVal max="127"/>
