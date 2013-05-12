@@ -56,9 +56,9 @@ public class JsonClientHandler {
      *
      * Currently JSON strings in four different forms are handled by this
      * method:<ul> <li>list requests in the form:
-     * <code>{"type":"list","list":"trains"}</code> that are passed to the
-     * JsonUtil for handling.</li> <li>individual item state requests in the
-     * form:
+     * <code>{"type":"list","list":"trains"}</code> or
+     * <code>{"list":"trains"}</code> that are passed to the JsonUtil for
+     * handling.</li> <li>individual item state requests in the form:
      * <code>{"type":"turnout","data":{"name":"LT14"}}</code> that are passed to
      * type-specific handlers. In addition to the initial response, these
      * requests will initiate "listeners", which will send updated responses
@@ -95,7 +95,7 @@ public class JsonClientHandler {
      * Process a JSON node and handle appropriately.
      *
      * See {@link #onMessage(java.lang.String) } for expected JSON objects.
-     * 
+     *
      * @see #onMessage(java.lang.String)
      * @param root
      * @throws IOException
@@ -103,6 +103,9 @@ public class JsonClientHandler {
     public void onMessage(JsonNode root) throws IOException {
         try {
             String type = root.path(TYPE).asText();
+            if (root.path(TYPE).isMissingNode() && root.path(LIST).isValueNode()) {
+                type = LIST;
+            }
             JsonNode data = root.path(DATA);
             if (type.equals(PING)) {
                 this.connection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, PONG)));

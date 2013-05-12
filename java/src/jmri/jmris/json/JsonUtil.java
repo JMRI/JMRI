@@ -73,11 +73,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getCars() {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode cars = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String id : CarManager.instance().getByIdList()) {
-            cars.add(getCar(id));
+            root.add(getCar(id));
         }
         return root;
     }
@@ -100,11 +98,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getEngines() {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode engines = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String id : EngineManager.instance().getByIdList()) {
-            engines.add(getEngine(id));
+            root.add(getEngine(id));
         }
         return root;
     }
@@ -137,11 +133,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getLights() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode lights = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.lightManagerInstance().getSystemNameList()) {
-            lights.add(getLight(name));
+            root.add(getLight(name));
         }
         return root;
     }
@@ -202,21 +196,17 @@ public class JsonUtil {
     }
 
     static public JsonNode getLocations() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode locations = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String locationID : LocationManager.instance().getLocationsByIdList()) {
-            locations.add(getLocation(locationID));
+            root.add(getLocation(locationID));
         }
         return root;
     }
 
     static public JsonNode getMemories() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode memories = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.memoryManagerInstance().getSystemNameList()) {
-            memories.add(getMemory(name));
+            root.add(getMemory(name));
         }
         return root;
     }
@@ -290,21 +280,17 @@ public class JsonUtil {
     }
 
     static public JsonNode getMetadata() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode metadatas = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         List<String> names = Metadata.getSystemNameList();
         for (String name : names) {
-            metadatas.add(getMetadata(name));
+            root.add(getMetadata(name));
         }
         return root;
     }
 
     static public JsonNode getPanels(String format) {
         List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode panels = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
         List<JmriJFrame> frames = JmriJFrame.getFrameList(ControlPanelEditor.class);
         for (JmriJFrame frame : frames) {
@@ -318,7 +304,7 @@ public class JsonUtil {
                     data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
                     data.put(USERNAME, title);
                     data.put(TYPE, CONTROL_PANEL);
-                    panels.add(data);
+                    root.add(data);
                 }
             }
         }
@@ -334,7 +320,7 @@ public class JsonUtil {
                     data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
                     data.put(USERNAME, title);
                     data.put(TYPE, PANEL_PANEL);
-                    panels.add(data);
+                    root.add(data);
                 }
             }
         }
@@ -350,7 +336,7 @@ public class JsonUtil {
                     data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
                     data.put(USERNAME, title);
                     data.put(TYPE, LAYOUT_PANEL);
-                    panels.add(data);
+                    root.add(data);
                 }
             }
         }
@@ -424,11 +410,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getReporters() {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode reporters = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.reporterManagerInstance().getSystemNameList()) {
-            reporters.add(getReporter(name));
+            root.add(getReporter(name));
         }
         return root;
     }
@@ -491,11 +475,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getRoster() {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode roster = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (RosterEntry re : Roster.instance().matchingList(null, null, null, null, null, null, null)) {
-            roster.add(getRosterEntry(re.getId()));
+            root.add(getRosterEntry(re.getId()));
         }
         return root;
     }
@@ -538,11 +520,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getRoutes() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode routes = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.routeManagerInstance().getSystemNameList()) {
-            routes.add(getRoute(name));
+            root.add(getRoute(name));
         }
         return root;
     }
@@ -617,11 +597,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getSensors() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode sensors = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.sensorManagerInstance().getSystemNameList()) {
-            sensors.add(getSensor(name));
+            root.add(getSensor(name));
         }
         return root;
     }
@@ -696,11 +674,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getSignalHeads() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode signalHeads = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.signalHeadManagerInstance().getSystemNameList()) {
-            signalHeads.add(getSignalHead(name));
+            root.add(getSignalHead(name));
         }
         return root;
     }
@@ -768,11 +744,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getSignalMasts() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode signalMasts = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.signalMastManagerInstance().getSystemNameList()) {
-            signalMasts.add(getSignalMast(name));
+            root.add(getSignalMast(name));
         }
         return root;
     }
@@ -840,11 +814,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getTrains() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode trains = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String trainID : TrainManager.instance().getTrainsByNameList()) {
-            trains.add(getTrain(trainID));
+            root.add(getTrain(trainID));
         }
         return root;
     }
@@ -873,11 +845,9 @@ public class JsonUtil {
     }
 
     static public JsonNode getTurnouts() throws JsonException {
-        ObjectNode root = mapper.createObjectNode();
-        root.put(TYPE, LIST);
-        ArrayNode turnouts = root.putArray(LIST);
+        ArrayNode root = mapper.createArrayNode();
         for (String name : InstanceManager.turnoutManagerInstance().getSystemNameList()) {
-            turnouts.add(getTurnout(name));
+            root.add(getTurnout(name));
         }
         return root;
     }
