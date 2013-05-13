@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.util.zeroconf.ZeroConfService;
@@ -96,8 +97,12 @@ public class JmriServer {
     }
 
     protected void advertise(String type) {
+        this.advertise(type, new HashMap<String, String>());
+    }
+
+    protected void advertise(String type, HashMap<String, String> properties) {
         if (this.service == null) {
-            this.service = ZeroConfService.create(type, this.portNo);
+            this.service = ZeroConfService.create(type, this.portNo, properties);
         }
         this.service.publish();
     }
