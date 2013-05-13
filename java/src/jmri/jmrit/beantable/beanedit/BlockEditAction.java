@@ -40,7 +40,7 @@ public class BlockEditAction extends BeanEditAction {
         super.initPanels();
         sensor();
         reporterDetails();
-        properties();
+        physcialDetails();
     }
     
     public String getBeanType() { return Bundle.getMessage("BeanNameBlock"); }
@@ -108,7 +108,7 @@ public class BlockEditAction extends BeanEditAction {
 
     String defaultBlockSpeedText;
     
-    BeanItemPanel properties(){
+    BeanItemPanel physcialDetails(){
         
         defaultBlockSpeedText = (Bundle.getMessage("UseGlobal") + " " + jmri.InstanceManager.getDefault(jmri.BlockManager.class).getDefaultSpeed());
         speedList.add(defaultBlockSpeedText);
@@ -119,7 +119,7 @@ public class BlockEditAction extends BeanEditAction {
             }
         }
         BeanItemPanel basic = new BeanItemPanel();
-        basic.setName(Bundle.getMessage("Properties"));
+        basic.setName(Bundle.getMessage("BlockPhysicalProperties"));
 
         basic.addItem(new BeanEditItem(null, null, Bundle.getMessage("BlockPropertiesText")));
         basic.addItem(new BeanEditItem(lengthField, Bundle.getMessage("BlockLengthColName"), Bundle.getMessage("BlockLengthText")));
