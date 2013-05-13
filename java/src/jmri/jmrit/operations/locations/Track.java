@@ -1618,7 +1618,8 @@ public class Track {
 					return OKAY;
 				}
 				log.debug("Schedule id " + id + " not valid for track (" + getName() + ")");
-				return SCHEDULE + " ERROR id " + id + " not valid for track ("+ getName() + ")"; // NOI18N
+				// user could have deleted the schedule item after build train, so not really an error
+				// return SCHEDULE + " ERROR id " + id + " not valid for track ("+ getName() + ")"; // NOI18N
 			}
 		}
 		if (getScheduleMode() == MATCH && !searchSchedule(car).equals(OKAY)) {
