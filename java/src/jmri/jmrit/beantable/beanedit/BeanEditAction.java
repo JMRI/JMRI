@@ -126,7 +126,7 @@ abstract class BeanEditAction extends AbstractAction {
         properties.setName(Bundle.getMessage("Properties"));
         properties.addItem(new BeanEditItem(null, null, Bundle.getMessage("NamedBeanPropertiesTableDescription")));
         properties.setLayout(new BoxLayout(properties, BoxLayout.Y_AXIS));
-        propertiesModel = new BeanPropertiesTableModel(bean);
+        propertiesModel = new BeanPropertiesTableModel();
         JTable jtAttributes = new JTable();
         jtAttributes.setModel(propertiesModel);
         JScrollPane jsp = new JScrollPane(jtAttributes);
@@ -262,6 +262,7 @@ abstract class BeanEditAction extends AbstractAction {
         for(BeanEditItem it:items){
             if(it.getDescription()!=null && it.getComponent()!=null){
                 JLabel decript = new JLabel(it.getDescription() + ":", JLabel.LEFT);
+                if(it.getDescription().equals("")) decript.setText("");
                 cL.gridx = 0;
                 cL.gridy = y;
                 cL.ipadx = 3;
@@ -413,9 +414,7 @@ abstract class BeanEditAction extends AbstractAction {
 			public Object key, value;
 		}
 
-		public BeanPropertiesTableModel(NamedBean r) { 
-			setModel(r);
-
+		public BeanPropertiesTableModel() { 
 			titles = new String[2];
 			titles[0] = Bundle.getMessage("NamedBeanPropertyName");
 			titles[1] = Bundle.getMessage("NamedBeanPropertyValue");
@@ -432,13 +431,14 @@ abstract class BeanEditAction extends AbstractAction {
 				} 
 			}
 			else{
-                log.info("Empty");
 				attributes = new Vector<KeyValueModel>(0);
             }
 			wasModified = false;
 		}
 
 		public void updateModel(NamedBean nb) {
+            if(!wasModified())
+                return; //No changed made
 			// add and update keys
 			for (int i=0; i<attributes.size(); i++) {
 				KeyValueModel kv = attributes.get(i);
@@ -453,7 +453,7 @@ abstract class BeanEditAction extends AbstractAction {
 					if (! keyExist(ite.next())) // not very efficient algorithm!
 						ite.remove();
 			}
-			wasModified = false;
+            wasModified = false;
 		}
 
 		private boolean keyExist(Object k) {
@@ -504,7 +504,7 @@ abstract class BeanEditAction extends AbstractAction {
 				}
 
 			if (col == 1) // update value
-				kv.value = (String) value;
+				kv.value = value;
 			if (row<attributes.size()) // existing one
 				attributes.set(row, kv);
 			else
