@@ -67,7 +67,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
      * Initialise the signal mast logic
      * @param source - The signalmast we are configuring
      */
-    public DefaultSignalMastLogic (SignalMast source){
+    public DefaultSignalMastLogic(SignalMast source){
         this.source = source;
         this.stopAspect = source.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DANGER);
         this.source.addPropertyChangeListener(propertySourceMastListener);
@@ -2452,7 +2452,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 if (e.getPropertyName().equals("KnownState")) {
                     int now = ((Integer) e.getNewValue()).intValue();
                     log.debug("current value " + now + " value we want " + getSensorState(sen));
-                    if (IsSensorIncluded(sen) && getSensorState(sen)!=now){
+                    if (isSensorIncluded(sen) && getSensorState(sen)!=now){
                         //if(log.isDebugEnabled())
                             log.debug("Sensor " + sen.getDisplayName() + " caused the signalmast to be set to danger");
                         //getSourceMast().setAspect(stopAspect);
@@ -2640,14 +2640,6 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 }
             }
         };*/
-        
-        protected boolean IsSensorIncluded(Sensor sen){
-            for(NamedBeanSetting nbh:userSetSensors){
-                if (nbh.getBean()==sen)
-                    return true;
-            }
-            return false;
-        }
         
         class NamedBeanSetting {
             NamedBeanHandle<?> namedBean;
