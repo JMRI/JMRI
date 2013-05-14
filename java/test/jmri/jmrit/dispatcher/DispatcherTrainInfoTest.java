@@ -27,7 +27,7 @@ public class DispatcherTrainInfoTest extends TestCase {
 		ti.setPriority("8");
 		ti.setRunAuto(true);
 		ti.setResetWhenDone(false);
-		ti.setDelayedStart(true);
+		ti.setDelayedStart(0x01);
 		ti.setDepartureTimeHr("10");
 		ti.setDepartureTimeMin("30");
 		ti.setTrainType("2");
@@ -52,7 +52,7 @@ public class DispatcherTrainInfoTest extends TestCase {
 		Assert.assertEquals("Priority",ti.getPriority(),"8");
 		Assert.assertTrue("Run Auto",ti.getRunAuto());
 		Assert.assertFalse("Reset When Done",ti.getResetWhenDone());
-		Assert.assertTrue("Delayed Start",ti.getDelayedStart());
+		Assert.assertEquals("Delayed Start",ti.getDelayedStart(),"yes");
 		Assert.assertEquals("Departure Time Hours",ti.getDepartureTimeHr(),"10");
 		Assert.assertEquals("Departure Time Minutes",ti.getDepartureTimeMin(),"30");
 		Assert.assertEquals("Train Type",ti.getTrainType(),"2");
