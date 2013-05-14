@@ -72,10 +72,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	JCheckBox hazardousCheckBox = new JCheckBox(Bundle.getMessage("Hazardous"));
 
 	// text field
-	JTextField roadNumberTextField = new JTextField(8);
-	JTextField builtTextField = new JTextField(8);
-	JTextField weightTextField = new JTextField(4);
-	JTextField weightTonsTextField = new JTextField(4);
+	JTextField roadNumberTextField = new JTextField(Control.max_len_string_road_number);
+	JTextField builtTextField = new JTextField(Control.max_len_string_built_name + 3);
+	JTextField weightTextField = new JTextField(Control.max_len_string_weight_name);
+	JTextField weightTonsTextField = new JTextField(Control.max_len_string_weight_name);
 	JTextField commentTextField = new JTextField(35);
 	JTextField valueTextField = new JTextField(8);
 	JTextField rfidTextField = new JTextField(16);

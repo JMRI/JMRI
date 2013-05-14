@@ -77,7 +77,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JRadioButton spurRadioButton = new JRadioButton(Bundle.getMessage("Spurs"));
         
 	// text field
-	JTextField locationNameTextField = new JTextField(20);
+	JTextField locationNameTextField = new JTextField(Control.max_len_string_location_name);
 	
 	// text area
 	JTextArea commentTextArea	= new JTextArea(2,80);

@@ -64,10 +64,10 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	// check boxes
 
 	// text field
-	JTextField roadNumberTextField = new JTextField(8);
-	JTextField builtTextField = new JTextField(8);
+	JTextField roadNumberTextField = new JTextField(Control.max_len_string_road_number);
+	JTextField builtTextField = new JTextField(Control.max_len_string_built_name + 3);
 	JTextField hpTextField = new JTextField(8);
-	JTextField weightTextField = new JTextField(4);
+	JTextField weightTextField = new JTextField(Control.max_len_string_weight_name);
 	JTextField commentTextField = new JTextField(35);
 	JTextField valueTextField = new JTextField(8);
 	JTextField rfidTextField = new JTextField(16);

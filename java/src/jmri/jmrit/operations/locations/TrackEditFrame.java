@@ -104,8 +104,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JComboBox comboBoxPickupRoutes = routeManager.getComboBox();
 
 	// text field
-	JTextField trackNameTextField = new JTextField(20);
-	JTextField trackLengthTextField = new JTextField(5);
+	JTextField trackNameTextField = new JTextField(Control.max_len_string_track_name);
+	JTextField trackLengthTextField = new JTextField(Control.max_len_string_track_length_name);
 
 	// text area
 	JTextArea commentTextArea = new JTextArea(2, 60);

@@ -3000,7 +3000,8 @@ public class TrainBuilder extends TrainCommon {
 							String altStatus = car.testDestination(car.getDestination(), testTrack
 									.getAlternativeTrack());
 							if (altStatus.equals(Track.OKAY)
-							// "CUSTOM" and "LOAD" are in the status message, must use contains
+							// "CUSTOM" and "LOAD" are in the status message if spur, must use contains
+							// the following code allows the alternate track to be a spur TODO other code only yard or interchange is correct
 									|| (altStatus.contains(Track.CUSTOM) && altStatus.contains(Track.LOAD))) {
 								addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("buildUseAlternateTrack"), new Object[] { car.toString(),
