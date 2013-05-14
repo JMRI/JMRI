@@ -409,7 +409,7 @@ abstract class BeanEditAction extends AbstractAction {
 		String titles[];
 		boolean wasModified;
 
-		private class KeyValueModel {
+		private static class KeyValueModel {
 			public KeyValueModel(Object k, Object v) { key=k; value=v; }
 			public Object key, value;
 		}
