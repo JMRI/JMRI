@@ -635,6 +635,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Track.LOADS_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)) {
 			fireTableDataChanged();
