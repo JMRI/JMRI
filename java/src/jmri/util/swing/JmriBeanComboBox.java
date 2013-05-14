@@ -229,6 +229,11 @@ public class JmriBeanComboBox extends JComboBox implements java.beans.PropertyCh
         updateComboBox(_lastSelected);
     }
     
+    public void setSelectedBean(String name){
+        NamedBean nBean = _manager.getNamedBean(name);
+        setSelectedBean(nBean);
+    }
+    
     List<NamedBean> exclude = new ArrayList<NamedBean>();
     
     public void excludeItems(List<NamedBean> exclude){
