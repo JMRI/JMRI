@@ -29,7 +29,7 @@ public class TrainCopyFrame extends OperationsFrame {
 	javax.swing.JLabel textTrainName = new javax.swing.JLabel(Bundle.getMessage("Name"));
 
 	// text field
-	javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(20);
+	javax.swing.JTextField trainNameTextField = new javax.swing.JTextField(Control.max_len_string_train_name);
 
 	// major buttons
 	javax.swing.JButton copyButton = new javax.swing.JButton(Bundle.getMessage("Copy"));

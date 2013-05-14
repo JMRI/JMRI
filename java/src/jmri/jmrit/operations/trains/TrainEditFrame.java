@@ -99,7 +99,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	ButtonGroup group = new ButtonGroup();
 
 	// text field
-	JTextField trainNameTextField = new JTextField(18);
+	JTextField trainNameTextField = new JTextField(Control.max_len_string_train_name);
 	JTextField trainDescriptionTextField = new JTextField(30);
 
 	// text area

@@ -30,7 +30,7 @@ public class RouteCopyFrame extends OperationsFrame {
 	javax.swing.JLabel textRouteName = new javax.swing.JLabel(Bundle.getMessage("RouteName"));
 
 	// text field
-	javax.swing.JTextField routeNameTextField = new javax.swing.JTextField(20);
+	javax.swing.JTextField routeNameTextField = new javax.swing.JTextField(Control.max_len_string_route_name);
 
 	// check boxes
 	javax.swing.JCheckBox invertCheckBox = new javax.swing.JCheckBox(Bundle.getMessage("Invert"));

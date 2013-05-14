@@ -59,7 +59,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	ButtonGroup groupTime = new ButtonGroup();
 
 	// text field
-	JTextField routeNameTextField = new JTextField(20);
+	JTextField routeNameTextField = new JTextField(Control.max_len_string_route_name);
 	JTextField commentTextField = new JTextField(35);
 
 	// combo boxes
