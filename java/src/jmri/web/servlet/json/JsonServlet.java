@@ -147,6 +147,10 @@ public class JsonServlet extends WebSocketServlet {
                         reply = JsonUtil.getTrains();
                     } else if (type.equals(TURNOUTS)) {
                         reply = JsonUtil.getTurnouts();
+                    } else if (type.equals(HELLO)) {
+                        reply = JsonUtil.getHello(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+                    } else if (type.equals(NETWORK_SERVICES)) {
+                        reply = JsonUtil.getNetworkServices();
                     } else {
                         log.warn("Type {} unknown.", type);
                         reply = JsonUtil.getUnknown(type);

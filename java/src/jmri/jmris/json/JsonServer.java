@@ -7,11 +7,14 @@ import com.fasterxml.jackson.databind.ObjectReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.NoSuchElementException;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriConnection;
 import jmri.jmris.JmriServer;
 import static jmri.jmris.json.JSON.GOODBYE;
+import static jmri.jmris.json.JSON.JSON;
+import static jmri.jmris.json.JSON.JSON_PROTOCOL_VERSION;
 import static jmri.jmris.json.JSON.TYPE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -67,7 +70,9 @@ public class JsonServer extends JmriServer {
 
     @Override
     protected void advertise() {
-        this.advertise("_jmri-json._tcp.local."); // NOI18N
+        HashMap<String, String> properties = new HashMap<String, String>();
+        properties.put(JSON, JSON_PROTOCOL_VERSION);
+        this.advertise("_jmri-json._tcp.local.", properties); // NOI18N
     }
 
     // Handle communication to a client through inStream and outStream

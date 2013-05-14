@@ -10,6 +10,13 @@ package jmri.jmris.json;
  */
 public final class JSON {
 
+    /* JMRI JSON protocol version
+     * This should be 1.0 before JMRI 3.4 ships
+     * Changes to the major number represent a backwards incompatible change,
+     * while changes to the minor number represent an
+     * addition to the protocol.
+     */
+    public static final String JSON_PROTOCOL_VERSION = "0.1"; // NOI18N
     /* JSON structure */
     public static final String TYPE = "type"; // NOI18N
     public static final String LIST = "list"; // NOI18N
@@ -39,7 +46,7 @@ public final class JSON {
     public static final String JMRI = "JMRI"; // NOI18N
     public static final String HEARTBEAT = "heartbeat"; // NOI18N
     public static final String RAILROAD = "railroad"; // NOI18N
-    /* JSON list types */
+   /* JSON list types */
     public static final String CARS = "cars"; // NOI18N
     public static final String ENGINES = "engines"; // NOI18N
     public static final String LIGHTS = "lights"; // NOI18N
@@ -55,6 +62,7 @@ public final class JSON {
     public static final String SIGNAL_MASTS = "signalMasts"; // NOI18N
     public static final String TRAINS = "trains"; // NOI18N
     public static final String TURNOUTS = "turnouts"; // NOI18N
+    public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
     /* JSON data types */
     public static final String CAR = "car"; // NOI18N
     public static final String ENGINE = "engine"; // NOI18N
@@ -148,6 +156,8 @@ public final class JSON {
     /* JSON value types */
     public static final String NULL = "null"; // NOI18N
     public static final String INTEGER = "int"; // NOI18N
+    /* JSON network services tokens */
+    public static final String PORT = "port"; // NOI18N
     /*
      * JSON State (an unsigned integer)
      */

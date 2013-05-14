@@ -3,12 +3,10 @@ package jmri.jmris.json;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import jmri.JmriException;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.*;
-import jmri.web.server.WebServerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -112,6 +110,8 @@ public class JsonClientHandler {
             } else if (type.equals(GOODBYE)) {
                 this.connection.sendMessage(this.mapper.writeValueAsString(this.mapper.createObjectNode().put(TYPE, GOODBYE)));
                 this.connection.close();
+            } else if (type.equals(HELLO)) {
+                this.sendHello(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
             } else if (type.equals(LIST)) {
                 JsonNode reply;
                 String list = root.path(LIST).asText();
@@ -145,6 +145,8 @@ public class JsonClientHandler {
                     reply = JsonUtil.getTrains();
                 } else if (list.equals(TURNOUTS)) {
                     reply = JsonUtil.getTurnouts();
+                } else if (list.equals(NETWORK_SERVICES)) {
+                    reply = JsonUtil.getNetworkServices();
                 } else {
                     this.sendErrorMessage(404, Bundle.getMessage("ErrorUnknownList", list));
                     return;
@@ -194,13 +196,7 @@ public class JsonClientHandler {
     }
 
     public void sendHello(int heartbeat) throws IOException {
-        ObjectNode root = this.mapper.createObjectNode();
-        root.put(TYPE, HELLO);
-        ObjectNode data = root.putObject(DATA);
-        data.put(JMRI, jmri.Version.name());
-        data.put(HEARTBEAT, Math.round(heartbeat * 0.9f));
-        data.put(RAILROAD, WebServerManager.getWebServerPreferences().getRailRoadName());
-        this.connection.sendMessage(this.mapper.writeValueAsString(root));
+        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getHello(heartbeat)));
     }
 
     private void sendErrorMessage(int code, String message) throws IOException {

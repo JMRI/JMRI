@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
+import java.util.Enumeration;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -37,6 +38,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JmriJFrame;
+import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -934,6 +936,34 @@ public class JsonUtil {
             rlan.add(rln); //add this routeLocation to the routeLocation array
         }
         return rlan;  //return array of routeLocations
+    }
+
+    static public JsonNode getHello(int heartbeat) {
+        ObjectNode root = mapper.createObjectNode();
+        root.put(TYPE, HELLO);
+        ObjectNode data = root.putObject(DATA);
+        data.put(JMRI, jmri.Version.name());
+        data.put(JSON, JSON_PROTOCOL_VERSION);
+        data.put(HEARTBEAT, Math.round(heartbeat * 0.9f));
+        data.put(RAILROAD, WebServerManager.getWebServerPreferences().getRailRoadName());
+        return root;
+    }
+
+    static public JsonNode getNetworkServices() {
+        ArrayNode root = mapper.createArrayNode();
+        for (ZeroConfService service : ZeroConfService.allServices()) {
+            ObjectNode ns = mapper.createObjectNode();
+            ns.put(NAME, service.name());
+            ns.put(PORT, service.serviceInfo().getPort());
+            ns.put(TYPE, service.type());
+            Enumeration<String> pe = service.serviceInfo().getPropertyNames();
+            while (pe.hasMoreElements()) {
+                String pn = pe.nextElement();
+                ns.put(pn, service.serviceInfo().getPropertyString(pn));
+            }
+            root.add(ns);
+        }
+        return root;
     }
 
     static protected ObjectNode handleError(int code, String message) {
