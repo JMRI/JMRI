@@ -971,6 +971,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		return at;
 	}
 	public void allocateNewActiveTrain(ActiveTrain at) {
+        if(at.getDelayedStart()==ActiveTrain.SENSORDELAY && at.getDelaySensor()!=null){
+            if(at.getDelaySensor().getState()!=jmri.Sensor.ACTIVE){
+                at.initializeDelaySensor();
+                return;
+            }
+        }
 		AllocationRequest ar = at.initializeFirstAllocation();
 		if (ar!=null) {
 			if ((ar.getSection()).containsBlock(at.getStartBlock())) {
@@ -1151,7 +1157,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		if (ar!=null) {
 			ActiveTrain at = ar.getActiveTrain();
 			Section s = ar.getSection();
-			if (s.getState()!=Section.FREE) return null;
+			if (s.getState()!=Section.FREE) { log.info("Section " + s.getDisplayName() + " not free"); log.info(""+s); return null; }
 			// skip occupancy check if this is the first allocation and the train is occupying the Section
 			boolean checkOccupancy = true;
 			if ( (at.getLastAllocatedSection()==null) && (s.containsBlock(at.getStartBlock())) ) {
@@ -1167,7 +1173,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				if (selectedValue == 1) return null;   // return without allocating if "No" response
 			}
 			// check if train has reached its start time if delayed start
-			if ( checkOccupancy && (!at.getStarted()) && at.getDelayedStart() ) {			
+			if ( checkOccupancy && (!at.getStarted()) && at.getDelayedStart()!=ActiveTrain.NODELAY  ) {
 				if (_AutoAllocate) return null;  // autoAllocate never overrides start time
 				int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
 						rb.getString("Question4"),rb.getString("WarningTitle"),
@@ -1204,6 +1210,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 					nextSection = secList.get(0);
                     //check here to see if block is already assigned to an allocated section;
                     if(getSignalType()==SIGNALMAST && !checkBlocksNotInAllocatedSection(nextSection, ar)){
+                        log.info("Block already in assigned section ");
                         return null;
                     }
 				}
@@ -1527,14 +1534,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		for (int i = delayedTrains.size()-1; i>=0; i--) {
 			ActiveTrain at = delayedTrains.get(i);
 			// check if this Active Train is waiting to start
-			if ( (!at.getStarted()) && at.getDelayedStart() ) {
+			if ( (!at.getStarted()) && at.getDelayedStart()!=ActiveTrain.NODELAY  ) {
 				// is it time to start? 
-				if (isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin())) {
-					// allow this train to start
-					at.setStarted();
-					delayedTrains.remove(i);
-					if (_AutoAllocate) autoAllocate.scanAllocationRequestList(allocationRequests); 
-				}
+                if(at.getDelayedStart()==ActiveTrain.TIMEDDELAY){
+                    if (isFastClockTimeGE(at.getDepartureTimeHr(), at.getDepartureTimeMin())) {
+                        // allow this train to start
+                        at.setStarted();
+                        delayedTrains.remove(i);
+                        if (_AutoAllocate) autoAllocate.scanAllocationRequestList(allocationRequests); 
+                    }
+                }
 			}
 		}
 	}
@@ -1639,7 +1648,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	protected void newTrainDone(ActiveTrain at) {
 		if (at!=null) {
 			// a new active train was created, check for delayed start
-			if (at.getDelayedStart() && (!at.getStarted()) ) {		
+			if (at.getDelayedStart()!=ActiveTrain.NODELAY && (!at.getStarted()) ) {		
 				delayedTrains.add(at);
 				fastClockWarn();
 			}

@@ -57,7 +57,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		_activeTrain = at;
 		at.setAutoActiveTrain(this);
 		_autoTrainAction = new AutoTrainAction(this);
-		_lbManager = InstanceManager.layoutBlockManagerInstance();
+		_lbManager = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
 	}
 	
 	static final ResourceBundle rb = ResourceBundle
@@ -829,7 +829,7 @@ public class AutoActiveTrain implements ThrottleListener {
 					_activeTrain.setTransitReversed(false);
 					_activeTrain.resetAllAllocatedSections();
 					setEngineDirection();
-					setupNewCurrentSignal();				
+					setupNewCurrentSignal();
 					setSpeedBySignal();
 				}
 				else {

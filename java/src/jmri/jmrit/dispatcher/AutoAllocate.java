@@ -1031,7 +1031,7 @@ log.info("auto allocating Section "+ar.getSection().getUserName());
 	private boolean waitingForStartTime (AllocationRequest ar) {
 		if (ar!=null) {
 			ActiveTrain at = ar.getActiveTrain();
-			if ( (!at.getStarted()) && at.getDelayedStart() ) return true;
+			if ( (!at.getStarted()) && at.getDelayedStart()!=ActiveTrain.NODELAY ) return true;
 		}
 		return false;
 	}

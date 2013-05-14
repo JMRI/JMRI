@@ -93,9 +93,16 @@ public class ActivateTrainFrame {
 	private JTextField priorityField = new JTextField(6);
 	private JCheckBox resetWhenDoneBox = new JCheckBox(rb.getString("ResetWhenDone"));
 	private JCheckBox reverseAtEndBox = new JCheckBox(rb.getString("ReverseAtEnd"));
-	private JCheckBox delayedStartBox = new JCheckBox(rb.getString("DelayedStart"));
+    int delayedStartInt[] = new int[]{ActiveTrain.NODELAY, ActiveTrain.TIMEDDELAY, ActiveTrain.SENSORDELAY};
+    String delayedStartString[] = new String[]{Bundle.getMessage("DelayedStartNone"), Bundle.getMessage("DelayedStartTimed"), Bundle.getMessage("DelayedStartSensor")};
+    private JComboBox delayedStartBox = new JComboBox(delayedStartString);
+    private jmri.util.swing.JmriBeanComboBox delaySensor = new jmri.util.swing.JmriBeanComboBox(jmri.InstanceManager.sensorManagerInstance());
+    
 	private JTextField departureHrField = new JTextField(2);
 	private JTextField departureMinField = new JTextField(2);
+    private JLabel departureTimeLabel = new JLabel(rb.getString("DepartureTime"));
+    private JLabel departureSepLabel = new JLabel(":");
+    
 	private JComboBox trainTypeBox = new JComboBox();	
 	// Note: See also items related to automatically running trains near the end of this module
 	
@@ -229,17 +236,26 @@ public class ActivateTrainFrame {
 			initiatePane.add(p8);
             JPanel p9 = new JPanel(); 
 			p9.setLayout(new FlowLayout());
+            p9.add(new JLabel(Bundle.getMessage("DelayedStart")));
 			p9.add(delayedStartBox);
 			delayedStartBox.setToolTipText(rb.getString("DelayedStartHint"));
-			p9.add(new JLabel("   "+rb.getString("DepartureTime")));
+            delayedStartBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    handleDelayStartClick(e);
+                }
+            });
+			p9.add(departureTimeLabel);
 			p9.add(departureHrField);
 			departureHrField.setText("08");
 			departureHrField.setToolTipText(rb.getString("DepartureTimeHrHint"));
-			p9.add(new JLabel(":"));
+			p9.add(departureSepLabel);
 			p9.add(departureMinField);
 			departureMinField.setText("00");
 			departureMinField.setToolTipText(rb.getString("DepartureTimeMinHint"));
-			initiatePane.add(p9);			
+            p9.add(delaySensor);
+            delaySensor.setFirstItemBlank(true);
+            handleDelayStartClick(null);
+			initiatePane.add(p9);
 			initiatePane.add(new JSeparator());
             JPanel p5 = new JPanel(); 
 			p5.setLayout(new FlowLayout());
@@ -335,8 +351,24 @@ public class ActivateTrainFrame {
 						javax.swing.JOptionPane.INFORMATION_MESSAGE);
 			return false;
 		}
-		return true;			
+		return true;
 	}
+    private void handleDelayStartClick(ActionEvent e){
+        departureHrField.setVisible(false);
+        departureMinField.setVisible(false);
+        departureTimeLabel.setVisible(false);
+        departureSepLabel.setVisible(false);
+        delaySensor.setVisible(false);
+        if (delayedStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartTimed"))){
+            departureHrField.setVisible(true);
+            departureMinField.setVisible(true);
+            departureTimeLabel.setVisible(true);
+            departureSepLabel.setVisible(true);
+        } else if (delayedStartBox.getSelectedItem().equals(Bundle.getMessage("DelayedStartSensor"))){
+            delaySensor.setVisible(true);
+        }
+    }
+    
 	private void handleAutoRunClick(ActionEvent e) {
 		if (autoRunBox.isSelected()) {
 			showAutoRunItems();
@@ -379,7 +411,7 @@ public class ActivateTrainFrame {
 		if (!checkResetWhenDone()) return;
 		boolean resetWhenDone = resetWhenDoneBox.isSelected();
 		boolean reverseAtEnd = reverseAtEndBox.isSelected();
-		boolean delayedStart = delayedStartBox.isSelected();
+		int delayedStart = delayModeFromBox(delayedStartBox);
 		int departureTimeHours = 8;
 		try {
 			departureTimeHours = Integer.parseInt(departureHrField.getText());
@@ -513,6 +545,7 @@ public class ActivateTrainFrame {
         at.setDelayedStart(delayedStart);
 		at.setDepartureTimeHr(departureTimeHours);
 		at.setDepartureTimeMin(departureTimeMinutes);
+        at.setDelaySensor((jmri.Sensor)delaySensor.getSelectedBean());
 		if (_dispatcher.isFastClockTimeGE(departureTimeHours,departureTimeMinutes)) {
 			at.setStarted();
 		}
@@ -701,6 +734,7 @@ public class ActivateTrainFrame {
 				log.error("JDOM Exception when reading train info file "+jde);
 			}
 		}
+        handleDelayStartClick(null);
 	}
 	private void saveTrainInfo(ActionEvent e) {
 		TrainInfo info = dialogToTrainInfo();
@@ -788,9 +822,11 @@ public class ActivateTrainFrame {
 		priorityField.setText(info.getPriority());
 		resetWhenDoneBox.setSelected(info.getResetWhenDone());
 		reverseAtEndBox.setSelected(info.getReverseAtEnd());
-		delayedStartBox.setSelected(info.getDelayedStart());
+        setDelayModeBox(info.getDelayedStart(), delayedStartBox);
+		//delayedStartBox.setSelected(info.getDelayedStart());
 		departureHrField.setText(info.getDepartureTimeHr());
 		departureMinField.setText(info.getDepartureTimeMin());
+        delaySensor.setSelectedBeanByName(info.getDelaySensor());
 		setComboBox(trainTypeBox,info.getTrainType());
 		autoRunBox.setSelected(info.getRunAuto());
 		autoTrainInfoToDialog(info);
@@ -815,7 +851,8 @@ public class ActivateTrainFrame {
 		info.setPriority(priorityField.getText());
 		info.setResetWhenDone(resetWhenDoneBox.isSelected());
 		info.setReverseAtEnd(reverseAtEndBox.isSelected());
-		info.setDelayedStart(delayedStartBox.isSelected());
+		info.setDelayedStart(delayModeFromBox(delayedStartBox));
+        info.setDelaySensor(delaySensor.getSelectedDisplayName());
 		info.setDepartureTimeHr(departureHrField.getText());
 		info.setDepartureTimeMin(departureMinField.getText());
 		info.setTrainType((String)trainTypeBox.getSelectedItem());
@@ -849,6 +886,22 @@ public class ActivateTrainFrame {
 		if (!found) box.setSelectedIndex(0);				
 		return found;
 	}
+    
+    int delayModeFromBox(JComboBox box) {
+        String mode = (String)box.getSelectedItem();
+        int result = jmri.util.StringUtil.getStateFromName(mode, delayedStartInt, delayedStartString);
+        
+        if (result<0) { 
+            log.warn("unexpected mode string in turnoutMode: "+mode);
+            throw new IllegalArgumentException();
+        }
+        return result;
+    }
+    
+    void setDelayModeBox(int mode, JComboBox box) {
+        String result = jmri.util.StringUtil.getNameFromState(mode, delayedStartInt, delayedStartString);
+        box.setSelectedItem(result);
+    }
 	
 	/**
 	 * The following are for items that are only for automatic running of ActiveTrains

@@ -242,6 +242,13 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                                 df.allocateExtraSection(e, at);
                             }
                         });
+                        if(at.getStatus()==jmri.jmrit.dispatcher.ActiveTrain.DONE){
+                            popup.add(new AbstractAction("Restart") {
+                                public void actionPerformed(ActionEvent e) {
+                                    at.allocateAFresh();
+                                }
+                            });
+                        }
                     } else {
                         popup.add(new AbstractAction(Bundle.getMessage("MenuNewTrain")) {
                             public void actionPerformed(ActionEvent e) {

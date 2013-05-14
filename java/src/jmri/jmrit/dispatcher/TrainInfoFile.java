@@ -139,9 +139,12 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                         }
                     }
                     if (traininfo.getAttribute("delayedstart") != null) {
-                        tInfo.setDelayedStart(true);
                         if (traininfo.getAttribute("delayedstart").getValue().equals("no")) {
-                            tInfo.setDelayedStart(false);
+                            tInfo.setDelayedStart(ActiveTrain.NODELAY);
+                        } else if (traininfo.getAttribute("delayedstart").getValue().equals("sensor")) {
+                            tInfo.setDelayedStart(ActiveTrain.SENSORDELAY);
+                        } else { //This covers the old versions of the file with "yes"
+                            tInfo.setDelayedStart(ActiveTrain.TIMEDDELAY);
                         }
                     }
                     if (traininfo.getAttribute("departuretimehr") != null) {
@@ -149,6 +152,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
                     }
                     if (traininfo.getAttribute("departuretimemin") != null) {
                         tInfo.setDepartureTimeMin(traininfo.getAttribute("departuretimemin").getValue());
+                    }
+                    if (traininfo.getAttribute("delayedSensor") != null) {
+                        tInfo.setDelaySensor(traininfo.getAttribute("delayedSensor").getValue());
                     }
                     if (traininfo.getAttribute("traintype") != null) {
                         tInfo.setTrainType(traininfo.getAttribute("traintype").getValue());
@@ -225,7 +231,14 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         traininfo.setAttribute("priority", tf.getPriority());
         traininfo.setAttribute("resetwhendone", "" + (tf.getResetWhenDone() ? "yes" : "no"));
         traininfo.setAttribute("reverseatend", "" + (tf.getReverseAtEnd() ? "yes" : "no"));
-        traininfo.setAttribute("delayedstart", "" + (tf.getDelayedStart() ? "yes" : "no"));
+        if(tf.getDelayedStart()==ActiveTrain.TIMEDDELAY){
+            traininfo.setAttribute("delayedstart", "timed");
+        } else if (tf.getDelayedStart()==ActiveTrain.SENSORDELAY){
+            traininfo.setAttribute("delayedstart", "sensor");
+            if(tf.getDelaySensor()!=null){
+                traininfo.setAttribute("delayedSensor",tf.getDelaySensor());
+            }
+        }
         traininfo.setAttribute("departuretimehr", tf.getDepartureTimeHr());
         traininfo.setAttribute("departuretimemin", tf.getDepartureTimeMin());
         traininfo.setAttribute("traintype", tf.getTrainType());

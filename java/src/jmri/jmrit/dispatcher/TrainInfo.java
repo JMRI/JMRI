@@ -40,9 +40,10 @@ public class TrainInfo {
 	boolean autoRun = false;
 	boolean resetWhenDone = false;
 	boolean reverseAtEnd = false;
-	boolean delayedStart = false;
+	int delayedStart = ActiveTrain.NODELAY;
 	String departureTimeHr = "08";
 	String departureTimeMin = "00";
+    String delaySensor = null;
 	String trainType = "";
 	
 	// instance variables for automatic operation
@@ -85,12 +86,14 @@ public class TrainInfo {
 	protected boolean getResetWhenDone() {return resetWhenDone;}
 	protected void setReverseAtEnd(boolean b) {reverseAtEnd = b;}
 	protected boolean getReverseAtEnd() {return reverseAtEnd;}
-	protected void setDelayedStart(boolean b) {delayedStart = b;}
-	protected boolean getDelayedStart() {return delayedStart;}
+	protected void setDelayedStart(int ds) {delayedStart = ds;}
+	protected int getDelayedStart() {return delayedStart;}
 	protected void setDepartureTimeHr(String s) {departureTimeHr = s;}
 	protected String getDepartureTimeHr() {return departureTimeHr;}
 	protected void setDepartureTimeMin(String s) {departureTimeMin = s;}
 	protected String getDepartureTimeMin() {return departureTimeMin;}
+    protected void setDelaySensor(String sen) { delaySensor = sen; }
+    protected String getDelaySensor() {return delaySensor; }
 	protected void setTrainType(String s) {trainType = s;}
 	protected String getTrainType() {return trainType;}
 	
