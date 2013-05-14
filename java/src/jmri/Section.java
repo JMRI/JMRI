@@ -662,6 +662,8 @@ public class Section extends AbstractNamedBean
 	 */
 	public String getBeginBlockName() {
 		if (initializationNeeded) initializeBlocks();
+        if(mFirstBlock==null)
+            return "unknown";
 		String s = mFirstBlock.getSystemName();
 		String uName = mFirstBlock.getUserName();
 		if ( (uName!=null) && (!uName.equals("")) )
@@ -670,6 +672,8 @@ public class Section extends AbstractNamedBean
 	}
 	public String getEndBlockName() {
 		if (initializationNeeded) initializeBlocks();
+        if(mLastBlock==null)
+            return "unknown";
 		String s = mLastBlock.getSystemName();
 		String uName = mLastBlock.getUserName();
 		if ( (uName!=null) && (!uName.equals("")) )
