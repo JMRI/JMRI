@@ -77,7 +77,10 @@ public class AboutDialog extends JDialog {
                 }
             }
         } else {
-            JLabel error = new JLabel("Unable to read connections list");
+            /**
+             * Internationalization fix - Jens E Christensen
+             */
+            JLabel error = new JLabel(Bundle.getMessage("ConnectionListReadError"));
             error.setForeground(Color.red);
             pane1.add(error);
         }
