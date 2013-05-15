@@ -26,24 +26,26 @@ public class DuplicateTest extends TestCase {
     public void testForDuplicateModels() throws JDOMException, IOException {
         File dir = new File("xml/decoders/");
         File[] files = dir.listFiles();
+        boolean failed = false;
         for (int i=0; i<files.length; i++) {
             if (files[i].getName().endsWith("xml")) {
-                check(files[i]);
+                failed = check(files[i]) || failed;
             }
         }
         System.out.println("checked total of "+models.size());
+        if (failed) Assert.fail("test failed, see System.err");
     }
     
     ArrayList<String> models = new ArrayList<String>();
     
     @SuppressWarnings("unchecked")
-    void check(File file) throws JDOMException, IOException {
+    boolean check(File file) throws JDOMException, IOException {
         Element root = readFile(file);
         
         // check to see if there's a decoder element
         if (root.getChild("decoder")==null) {
             log.warn("Does not appear to be a decoder file");
-            return;
+            return false;
         }
 
         String family = root.getChild("decoder").getChild("family").getAttributeValue("name")+"][";
@@ -59,7 +61,7 @@ public class DuplicateTest extends TestCase {
             }
             models.add(family+model);
         }
-        if (failed) Assert.fail("test failed, see System.err");
+        return failed;
     }
     
     Element readFile(File file) throws org.jdom.JDOMException, java.io.IOException {
