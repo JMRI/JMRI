@@ -52,7 +52,7 @@ public class DispatcherTrainInfoTest extends TestCase {
 		Assert.assertEquals("Priority",ti.getPriority(),"8");
 		Assert.assertTrue("Run Auto",ti.getRunAuto());
 		Assert.assertFalse("Reset When Done",ti.getResetWhenDone());
-		Assert.assertEquals("Delayed Start",ti.getDelayedStart(),"yes");
+		Assert.assertEquals("Delayed Start",ti.getDelayedStart(),1);
 		Assert.assertEquals("Departure Time Hours",ti.getDepartureTimeHr(),"10");
 		Assert.assertEquals("Departure Time Minutes",ti.getDepartureTimeMin(),"30");
 		Assert.assertEquals("Train Type",ti.getTrainType(),"2");

@@ -51,9 +51,7 @@ public class PackageTest extends TestCase {
             suite.addTest(jmri.jmrit.catalog.PackageTest.suite());
         }
         suite.addTest(jmri.jmrit.decoderdefn.PackageTest.suite());
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(jmri.jmrit.dispatcher.DispatcherTest.suite());
-        }
+        suite.addTest(jmri.jmrit.dispatcher.DispatcherTest.suite());
         suite.addTest(jmri.jmrit.display.PackageTest.suite());
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(jmri.jmrit.jython.JythonTest.suite());
