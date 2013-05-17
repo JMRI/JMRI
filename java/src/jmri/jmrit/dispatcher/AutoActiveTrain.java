@@ -343,7 +343,11 @@ public class AutoActiveTrain implements ThrottleListener {
 			else _forward = true;			
 		}	 
 	}
-	protected AllocatedSection getCurrentAllocatedSection() {return _currentAllocatedSection;}	
+	protected AllocatedSection getCurrentAllocatedSection() {return _currentAllocatedSection;}
+    protected void allocateAFresh(){
+        //Reset initialized flag
+        _initialized = false;
+    }
 	private void addAllocatedSection(AllocatedSection as) {
 		_allocatedSectionList.add(as);
 		if (!_initialized) { 
@@ -539,7 +543,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		if ( _pausingActive || ( (_activeTrain.getStatus()!=ActiveTrain.RUNNING) && 
 				(_activeTrain.getStatus()!=ActiveTrain.WAITING) ) || ((_controllingSignal==null) && DispatcherFrame.instance().getSignalType()==DispatcherFrame.SIGNALHEAD) || 
                   ((_controllingSignalMast==null) && DispatcherFrame.instance().getSignalType()==DispatcherFrame.SIGNALMAST) || 
-					(_activeTrain.getMode()!=ActiveTrain.AUTOMATIC) ) {		
+					(_activeTrain.getMode()!=ActiveTrain.AUTOMATIC) ) {
 			// train is pausing or not RUNNING or WAITING in AUTOMATIC mode, or no controlling signal, 
 			//			don't set speed based on controlling signal
 			return;

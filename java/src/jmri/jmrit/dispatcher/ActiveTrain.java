@@ -313,6 +313,7 @@ public class ActiveTrain {
                         if(((Integer) e.getNewValue()).intValue()==jmri.Sensor.ACTIVE){
                             getDelaySensor().removePropertyChangeListener(delaySensorListener);
                             DispatcherFrame.instance().allocateNewActiveTrain(at);
+                            
                             try{
                                 getDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
                             } catch (jmri.JmriException ex){
@@ -446,7 +447,7 @@ public class ActiveTrain {
 			if (as == mAllocatedSections.get(i)) index = i;
 		}
 		if (index<0) {
-			log.error("Attempt to remove an unallocated Section");
+			log.error("Attempt to remove an unallocated Section " + as.getSectionName());
 			return;
 		}
 		mAllocatedSections.remove(index);
@@ -472,9 +473,8 @@ public class ActiveTrain {
     * This resets the state of the ActiveTrain so that it can be reallocated.
     */
     public void allocateAFresh(){
+        setStatus(WAITING);
         setTransitReversed(false);
-        resetAllAllocatedSections();
-        clearAllocations();
         ArrayList<AllocatedSection> sectionsToRelease = new ArrayList<AllocatedSection>();
         for(AllocatedSection as:DispatcherFrame.instance().getAllocatedSectionsList()){
             if(as.getActiveTrain()==this){
@@ -487,6 +487,11 @@ public class ActiveTrain {
         }
         if(mLastAllocatedSection!=null){
             mLastAllocatedSection.setState(jmri.Section.FREE);
+        }
+        resetAllAllocatedSections();
+        clearAllocations();
+        if (mAutoRun) {
+            mAutoActiveTrain.allocateAFresh();
         }
         DispatcherFrame.instance().allocateNewActiveTrain(this);
     }
@@ -611,6 +616,9 @@ public class ActiveTrain {
 	}
 	
 	public void terminate() {
+        if(getDelaySensor()!=null && delaySensorListener!=null){
+            getDelaySensor().removePropertyChangeListener(delaySensorListener);
+        }
 		mTransit.setState(jmri.Transit.IDLE);
 	}
     
