@@ -1304,8 +1304,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 if(s.getProperty(property)!=null){
                     SignalMast toHold = InstanceManager.signalMastManagerInstance().getSignalMast(s.getProperty(property).toString());
                     if(toHold!=null){
-                        signalHeldByDispatcher=true;
-                        toHold.setHeld(true);
+                        if(!toHold.getHeld()){
+                            signalHeldByDispatcher=true;
+                            toHold.setHeld(true);
+                        }
                     }
                     
                 }
