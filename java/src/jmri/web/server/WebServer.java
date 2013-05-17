@@ -67,7 +67,7 @@ public final class WebServer implements LifeCycle.Listener {
             connector.setMaxIdleTime(5 * 60 * 1000); // 5 minutes
             connector.setSoLingerTime(-1);
             connector.setPort(preferences.getPort());
-            connector.setThreadPool(new ExecutorThreadPool(10, 1000, 10, TimeUnit.SECONDS));
+            server.setThreadPool(new ExecutorThreadPool(10, 1000, 10, TimeUnit.SECONDS));
             server.setConnectors(new Connector[]{connector});
 
             ContextHandlerCollection contexts = new ContextHandlerCollection();
