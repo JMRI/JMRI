@@ -416,10 +416,11 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     
     public void generateSection(){
         SectionManager sm = InstanceManager.sectionManagerInstance();
-        /*for(NamedBean nb:sm.getNamedBeanList()){
-            if(((Section) nb).getSectionType()==Section.SIGNALMASTLOGIC)
-                nb.removeProperty("intermediateSection");
-        }*/
+        for(NamedBean nb:sm.getNamedBeanList()){
+            /*if(((Section) nb).getSectionType()==Section.SIGNALMASTLOGIC)
+                nb.removeProperty("intermediateSection");*/
+            nb.removeProperty("forwardMast");
+        }
         for(SignalMastLogic sml : getSignalMastLogicList()){
             jmri.jmrit.display.layoutEditor.LayoutBlock faceLBlock=sml.getFacingBlock();
             if(faceLBlock!=null){
@@ -448,10 +449,10 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                             sec.setReverseBlockingSensorName(sec.getSystemName()+":reverse");
                         }
                         sml.setAssociatedSection(sec, destMast);
-                        
+                        sec.setProperty("forwardMast", destMast.getDisplayName());
                         /*boolean destIntermediate = false;
                         if(destMast.getProperty("intermediateSignal")!=null){
-                            destIntermediate = ((Boolean)sml.getSourceMast().getProperty("intermediateSignal")).booleanValue();
+                            destIntermediate = ((Boolean)destMast.getProperty("intermediateSignal")).booleanValue();
                         }
                         if(sourceIntermediate || destIntermediate){
                             sec.setProperty("intermediateSection", true);

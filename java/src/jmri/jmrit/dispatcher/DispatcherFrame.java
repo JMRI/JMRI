@@ -1119,7 +1119,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	}
 	// ensures there will not be any duplicate allocation requests
 	protected AllocationRequest findAllocationRequestInQueue(Section s, int seq, int dir, ActiveTrain at) {
-		for (int i = 0; i<allocationRequests.size(); i++) {
+        for (int i = 0; i<allocationRequests.size(); i++) {
 			AllocationRequest ar = allocationRequests.get(i);
 			if ( (ar.getActiveTrain() == at) && (ar.getSection() == s) && (ar.getSectionSeqNumber() == seq) &&
 						(ar.getSectionDirection() == dir) ) return ar;
@@ -1157,7 +1157,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		if (ar!=null) {
 			ActiveTrain at = ar.getActiveTrain();
 			Section s = ar.getSection();
-			if (s.getState()!=Section.FREE) { log.info("Section " + s.getDisplayName() + " not free"); log.info(""+s); return null; }
+			if (s.getState()!=Section.FREE) { return null; }
 			// skip occupancy check if this is the first allocation and the train is occupying the Section
 			boolean checkOccupancy = true;
 			if ( (at.getLastAllocatedSection()==null) && (s.containsBlock(at.getStartBlock())) ) {
@@ -1210,7 +1210,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 					nextSection = secList.get(0);
                     //check here to see if block is already assigned to an allocated section;
                     if(getSignalType()==SIGNALMAST && !checkBlocksNotInAllocatedSection(nextSection, ar)){
-                        log.info("Block already in assigned section ");
                         return null;
                     }
 				}
@@ -1296,6 +1295,27 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			}
 
 			s.setState(ar.getSectionDirection());
+            boolean signalHeldByDispatcher = false;
+            if(getSignalType()==SIGNALMAST && at.getLastAllocatedSection()!=null){  //We only start holding signals once the first one 
+                String property = "forwardMast";
+                if(s.getState()==Section.REVERSE){
+                    property = "reverseMast";
+                }
+                if(s.getProperty(property)!=null){
+                    SignalMast toHold = InstanceManager.signalMastManagerInstance().getSignalMast(s.getProperty(property).toString());
+                    if(toHold!=null){
+                        signalHeldByDispatcher=true;
+                        toHold.setHeld(true);
+                    }
+                    
+                }
+                
+                if(at.getLastAllocatedSection()!=null && at.getLastAllocatedSection().getProperty(property)!=null){
+                    SignalMast toRelease = InstanceManager.signalMastManagerInstance().getSignalMast(at.getLastAllocatedSection().getProperty(property).toString());
+                    if(toRelease!=null)
+                        toRelease.setHeld(false);
+                }
+            }
 			at.addAllocatedSection(as);
 			allocatedSections.add(as);
 			int ix = -1;
@@ -1313,9 +1333,16 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			}
 			if (extraFrame!=null) cancelExtraRequested(null);
 			if (_AutoAllocate) {
-				requestNextAllocation(at);
+                requestNextAllocation(at);
+                if(signalHeldByDispatcher){
+                    AllocationRequest nextAr = findAllocationRequestInQueue(nextSection, nextSectionSeqNo, at.getAllocationDirectionFromSectionAndSeq(nextSection,  nextSectionSeqNo), at);
+                    if(nextAr!=null){
+                        nextAr.setAutoDispatcherHeldMast(true);
+                    }
+                }
 				autoAllocate.scanAllocationRequestList(allocationRequests);
 			}
+
 		}
 		else {
 			log.error("Null Allocation Request provided in request to allocate a section");
