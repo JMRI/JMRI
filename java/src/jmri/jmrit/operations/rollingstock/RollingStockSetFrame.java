@@ -18,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -96,7 +97,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	protected JCheckBox ignoreTrainCheckBox = new JCheckBox(Bundle.getMessage("Ignore"));
 
 	// optional panels
-	protected JPanel pOptional = new JPanel();
+	protected JPanel pRWE = new JPanel();
 	protected JPanel pFinalDestination = new JPanel();
 
 	// Auto checkbox states
@@ -162,8 +163,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		pPanel.add(pLocation);
 
 		// optional panel return when empty
-		pOptional.setLayout(new BoxLayout(pOptional, BoxLayout.Y_AXIS));
-		pOptional.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptional")));
+		pRWE.setLayout(new BoxLayout(pRWE, BoxLayout.Y_AXIS));
+		pRWE.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptional")));
 
 		// row 5
 		JPanel pReturnWhenEmpty = new JPanel();
@@ -176,12 +177,13 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		addItem(pReturnWhenEmpty, destReturnWhenEmptyBox, 1, 1);
 		addItem(pReturnWhenEmpty, trackReturnWhenEmptyBox, 2, 1);
 		addItem(pReturnWhenEmpty, autoReturnWhenEmptyTrackCheckBox, 3, 1);
-		pOptional.add(pReturnWhenEmpty);
+		pRWE.add(pReturnWhenEmpty);
 
 		// optional panel 2
 		JPanel pOptional2 = new JPanel();
+		JScrollPane paneOptional2 = new JScrollPane(pOptional2);
 		pOptional2.setLayout(new BoxLayout(pOptional2, BoxLayout.Y_AXIS));
-		pOptional2.setBorder(BorderFactory.createTitledBorder(Bundle
+		paneOptional2.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getMessage("BorderLayoutOptionalProgram")));
 
 		// row 6
@@ -226,8 +228,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// add panels
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		getContentPane().add(pPanel);
-		getContentPane().add(pOptional);
-		getContentPane().add(pOptional2);
+		getContentPane().add(pRWE);
+		getContentPane().add(paneOptional2);
 		getContentPane().add(pButtons);
 
 		// Don't show ignore buttons

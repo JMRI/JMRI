@@ -72,7 +72,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true); // NOI18N
 		
 		// Only show nextDestination if routing enabled
-		pOptional.setVisible(true);
+		pRWE.setVisible(true);
 		pFinalDestination.setVisible(Setup.isCarRoutingEnabled());
 		
 		// add load fields
@@ -82,7 +82,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		addItem(pLoad, ignoreLoadCheckBox, 1, 0);
 		addItem(pLoad, loadComboBox, 2, 0);
 		addItem(pLoad, editLoadButton, 3, 0);
-		pOptional.add(pLoad);
+		pRWE.add(pLoad);
 		
 		// don't show ignore load checkbox
 		ignoreLoadCheckBox.setVisible(false);
