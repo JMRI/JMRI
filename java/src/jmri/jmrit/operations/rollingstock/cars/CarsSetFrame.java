@@ -14,7 +14,7 @@ import jmri.util.com.sun.TableSorter;
 /**
  * Frame for user to place a group of cars on the layout
  * 
- * @author Dan Boudreau Copyright (C) 2011
+ * @author Dan Boudreau Copyright (C) 2011, 2013
  * @version $Revision$
  */
 
@@ -87,8 +87,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 
 		int rows[] = _carsTable.getSelectedRows();
 		if (rows.length == 0)
-			JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"),
-					Bundle.getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
+					.getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
 
 		for (int i = 0; i < rows.length; i++) {
 			Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[i]));
@@ -98,9 +98,9 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			}
 			if (i == 0 && car != _car) {
 				log.debug("Default car isn't the first one selected");
-				if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-						Bundle.getMessage("doYouWantToChange"), new Object[] { car.toString() }),
-						Bundle.getMessage("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+						.getMessage("doYouWantToChange"), new Object[] { car.toString() }), Bundle
+						.getMessage("changeDefaultCar"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					super.loadCar(car); // new default car
 					break; // done, don't modify any of the cars selected
 				}
@@ -111,6 +111,5 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		return true;
 	}
 
-	static Logger log = LoggerFactory.getLogger(CarsSetFrame.class
-			.getName());
+	static Logger log = LoggerFactory.getLogger(CarsSetFrame.class.getName());
 }
