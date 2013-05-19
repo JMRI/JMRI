@@ -60,7 +60,7 @@
      <UL>
       <LI><A HREF="#Backup">Backup</A></LI>
       <LI><A HREF="#Restore">Restore</A></LI>
-      <LI><A HREF="#ResetDatabases">Reset Databases</A></LI>
+      <LI><A HREF="#ResetDatabase">Reset Database</A></LI>
       <LI><A HREF="#SettingsOptions">Options</A></LI>
      </UL></LI>
     <LI><A HREF="#PrintOptions">Manifest Print Options</A></LI>
@@ -150,23 +150,26 @@
    you enter your own data. You might want to print and save a demo train manifest and build report
    for later reference.
 
-   <P>After playing with the demo files, you can begin entering your own data. We strongly
-    recommend that you get your trains to build to your liking without the use of staging tracks,
-    classification/interchange tracks, and especially schedules and custom loads. We find that users
-    attempting to use the advanced features before they understand how the program works tend to
-    need a lot of help getting the car movement they desire. So start off small and get your trains
-    to build correctly, read the build reports in the very detailed mode for your trains, even if
-    they build to your liking. You need to get proficient with the build reports before you start
-    using the more advanced features of the program. Once you get your trains to build correctly,
-    you can add staging tracks if you've designed staging into your layout. The other three advanced
-    features are completely optional and aren't needed for the majority of users. The next track
-    type to experiment with could be classification/interchange tracks. Once you get
-    classification/interchange tracks to work correctly, you could then introduce schedules for your
-    industries and custom loads for your cars. If you do decide to use schedules, the first thing to
-    understand is that you don't need schedules for all of your industries. So again start off small
-    and only do a couple of industries and see what the results are. Adding schedules can not
-    increase car movement, and in most cases will reduce car movement! So our advice is please learn
-    to walk before your try to run.</P>
+   <P>
+    After playing with the demo files, you can <A HREF="#ResetDatabase">reset the database</A> and
+    begin entering your own data. We strongly recommend that you get your trains to build to your
+    liking without the use of staging tracks, classification/interchange tracks, and especially
+    schedules and custom loads. We find that users attempting to use the advanced features before
+    they understand how the program works tend to need a lot of help getting the car movement they
+    desire. So start off small and get your trains to build correctly, read the build reports in the
+    very detailed mode for your trains, even if they build to your liking. You need to get
+    proficient with the build reports before you start using the more advanced features of the
+    program. Once you get your trains to build correctly, you can add staging tracks if you've
+    designed staging into your layout. The other three advanced features are completely optional and
+    aren't needed for the majority of users. The next track type to experiment with could be
+    classification/interchange tracks. Once you get classification/interchange tracks to work
+    correctly, you could then introduce schedules for your industries and custom loads for your
+    cars. If you do decide to use schedules, the first thing to understand is that you don't need
+    schedules for all of your industries. So again start off small and only do a couple of
+    industries and see what the results are. Adding schedules can not increase car movement, and in
+    most cases will reduce car movement! So our advice is please learn to walk before your try to
+    run.
+   </P>
 
    <A NAME="demo"></A>
    <H3>Operations Demo Files</H3>
@@ -424,7 +427,7 @@
     made to the main operations files. This way, if anything gets messed up, there is a copy of the
     last known good data that can easily be restored to undo the damage. In normal operation, an
     automatic backup is made each time the program starts (if the "Auto Backup" setting is checked
-    on the Settings page), and right before a Restore, Reset Databases, or Load Demo Files operation
+    on the Settings page), and right before a Restore, Reset Database, or Load Demo Files operation
     is done.</p>
 
    <p>Regular backups are done only when the user requests it by either clicking the "Backup"
@@ -460,13 +463,13 @@
    <p>You must quit and restart JMRI to complete the restoration of the operation files.</p>
 
 
-   <A NAME="ResetDatabases"></A>
-   <H3>Reset Databases</H3>
+   <A NAME="ResetDatabase"></A>
+   <H3>Reset Database</H3>
 
-   <p>To reset the operation databases and remove them, use the "Reset Databases" option on the
+   <p>To reset the operation database and remove all operation files, use the "Reset Database" option on the
     Tools menu of the Operations Settings page. An automatic backup copy of the current operation
     files will be made before deleting the main files. The results will be that the settings, cars,
-    locomotives, locations, and trains databases will be purged. Note that after this is done and
+    locomotives, locations, and trains files will be purged. Note that after this is done and
     JMRI restarts, the "Operations" menu item on the main menu will no longer be visible, as there
     are no operations files to load. If you want to once again use the operations feature, you can
     either load the demo files or restore a previous backup. To do this, open the Operations
@@ -2907,7 +2910,7 @@
 
    Pressing the "Save Builds" button causes the program to update the train, car, locomotive, and
    location xml files. Any time you "Move" a train the operations program will make changes to the
-   train, car, locomotive, and location databases. These databases must be saved before you shut
+   train, car, locomotive, and location databases. The data must be saved before you shut
    down JMRI, otherwise you will lose all of the changes that the operations program made to move a
    train to the next location. Pressing the "Save Builds" button before quitting JMRI allows the
    operations program to resume exactly at the point where you pressed the "Save Builds" button. 
@@ -2925,12 +2928,13 @@
    you can restart the program and terminate the trains that completed their runs.
 
    <p>The correct time to terminate a train is when the train actually arrives at its
-    destination. Terminating a train before it completes it run means that the operation database
-    believes that the locomotives and cars have been delivered. It is better to build and print
-    twelve trains and then later find out that only nine trains completed their runs. You would then
-    terminate nine trains, and leave the other three for next time. Or if you wish you could reset
-    any trains that didn't depart from their terminal. Reseting trains really isn't necessary, the
-    trains that didn't run during this session could run the during the next session.</P>
+    destination. Terminating a train before it completes it run means that the operation program
+    incorrectly believes that the locomotives and cars have been delivered. It is better to build
+    and print twelve trains and then later find out that only nine trains completed their runs. You
+    would then terminate nine trains, and leave the other three for next time. Or if you wish you
+    could reset any trains that didn't depart from their terminal. Reseting trains really isn't
+    necessary, the trains that didn't run during this session could run the during the next session.</P>
+    
    <p>An alternate method is to build, print, and use the "Move" button for each train to track
     the actual movement of the trains during your session. As long as the trains on your layout
     match the locations in the program you can build a new train.</P>

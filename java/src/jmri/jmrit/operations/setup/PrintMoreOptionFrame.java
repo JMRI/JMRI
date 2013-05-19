@@ -35,7 +35,7 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 	// check boxes
 
 	// text field
-	JTextField tabTextField = new JTextField(10);
+	JTextField tabTextField = new JTextField(4);
 
 	// text area
 
