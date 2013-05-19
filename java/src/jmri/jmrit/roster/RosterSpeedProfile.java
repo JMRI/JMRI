@@ -312,11 +312,14 @@ public class RosterSpeedProfile {
             return;
         }
         
-        distanceRemaining = distance;
         float calculatedDistance = distance;
         
         if(stopTimer!=null){
             stopTimer.stop();
+            distanceRemaining = distance;
+        } else {
+            calculatedDistance = calculateInitialOverRun(distance);
+            distanceRemaining = calculatedDistance;
         }
         
         float calculatingStep = _throttle.getSpeedSetting();
@@ -354,10 +357,11 @@ public class RosterSpeedProfile {
         
             double time = (calculatedDistance/avgSpeed); //in seconds
             time = time *1000; //covert it to milli seconds
-            if(log.isDebugEnabled()) log.debug("time before remove over run " + time);
-            if(stopTimer==null)
+            /*if(stopTimer==null){
+                if(log.isDebugEnabled()) log.debug("time before remove over run " + time);
                 time = calculateInitialOverRun(time);//At the start we will deduct the over run time if configured
-            
+                if(log.isDebugEnabled()) log.debug("time after remove over run " + time);
+            }*/
             float speeddiff = calculatingStep-desiredSpeedStep;
             float noSteps = speeddiff/stepIncrement;
             if(log.isDebugEnabled()) log.debug("Speed diff " + speeddiff + " number of Steps " + noSteps + " step increment " + stepIncrement);
@@ -420,17 +424,19 @@ public class RosterSpeedProfile {
         }
     }
     
-    double calculateInitialOverRun(double time){
-        if(log.isDebugEnabled()) log.debug("Stop timer not configured so will add overrun " + distanceRemaining);
+    //The bit with the distance is not used
+    float calculateInitialOverRun(float distance){
+        if(log.isDebugEnabled()) log.debug("Stop timer not configured so will add overrun " + distance);
         if(_throttle.getIsForward()){
             float extraAsDouble = (getOverRunTimeForward()+extraDelay)/1000;
             if(log.isDebugEnabled()){
-                log.debug("Over run time to remove (Forward) " + getOverRunTimeReverse());
+                log.debug("Over run time to remove (Forward) " + getOverRunTimeForward());
                 log.debug(extraAsDouble);
             }
             float olddistance = getDistanceTravelled(true, _throttle.getSpeedSetting(), extraAsDouble);
-            distanceRemaining = distanceRemaining - olddistance;
-            time = time-getOverRunTimeForward();
+            distance = distance - olddistance;
+            //time = time-getOverRunTimeForward();
+            //time = time-(extraAsDouble*1000);
         } else {
             float extraAsDouble = (getOverRunTimeReverse()+extraDelay)/1000;
             if(log.isDebugEnabled()){
@@ -438,14 +444,15 @@ public class RosterSpeedProfile {
                 log.debug(extraAsDouble);
             }
             float olddistance = getDistanceTravelled(false, _throttle.getSpeedSetting(), extraAsDouble);
-            distanceRemaining = distanceRemaining - olddistance;
-            time = time-getOverRunTimeReverse();
+            distance = distance - olddistance;
+            //time = time-getOverRunTimeReverse();
+            //time = time-(extraAsDouble*1000);
         }
         if(log.isDebugEnabled()){
-            log.debug("Distance remaining " + distanceRemaining);
-            log.debug("Time after overrun removed " + time);
+            log.debug("Distance remaining " + distance);
+            //log.debug("Time after overrun removed " + time);
         }
-        return time;
+        return distance;
     
     }
     
@@ -467,7 +474,7 @@ public class RosterSpeedProfile {
     
     synchronized void setNextStep(){
         if(stepQueue.isEmpty()){
-            log.info("No more results");
+            log.debug("No more results");
             finishChange();
             return;
         }

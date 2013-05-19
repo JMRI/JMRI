@@ -103,7 +103,7 @@ public class AutoTrainAction {
 					case TransitSectionAction.TRAINSTART:
 						// when train starts - monitor in separate thread
 						Runnable monTrain = new MonitorTrain(tsa);
-						Thread tMonTrain = new Thread(monTrain);
+						Thread tMonTrain = new Thread(monTrain, "Monitor Train Transit Action");
 						tsa.setWaitingThread(tMonTrain);
 						tMonTrain.start();
 						break;
@@ -261,7 +261,7 @@ public class AutoTrainAction {
 		else {
 			// start thread to trigger delayed action execution
 			Runnable r = new TSActionDelay(tsa,delay);
-			Thread t = new Thread(r);
+			Thread t = new Thread(r, "Check Delay on Action");
 			tsa.setWaitingThread(t);
 			t.start();
 		}
