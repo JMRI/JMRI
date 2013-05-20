@@ -618,6 +618,15 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
 	if (log.isDebugEnabled()) log.debug("Block "+getSystemName()+" with direction "+Path.decodeDirection(getDirection())+" gets new value from "+(next!=null ? next.getBlock().getSystemName() : "(no next block)")+ "(informational. No state change)");
 	return(next);
     }
+    
+    /*
+     * This allows the layout block to inform any listerners to the block that the higher level layout block has been set to "useExtraColor" which is an 
+     * indication that it has been allocated to a section by the AutoDispatcher.  The value set is not retained in any form by the block, it is purely to
+     * trigger a propertyChangeEvent.
+     */
+    public void setAllocated(Boolean boo){
+        firePropertyChange("allocated", !boo, boo);
+    }
 
     // Methods to implmement PhysicalLocationReporter Interface
     //

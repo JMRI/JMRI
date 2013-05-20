@@ -179,6 +179,8 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
             stateUpdate();
         }
+        if(getBlock()!=null)
+            getBlock().setAllocated(b);
     }
 	public void incrementUse() {useCount ++;}
 	public void decrementUse() {
