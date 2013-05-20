@@ -7,7 +7,6 @@ import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -23,7 +22,7 @@ import org.eclipse.jetty.servlet.DefaultServlet;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.component.LifeCycle;
-import org.eclipse.jetty.util.thread.ExecutorThreadPool;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -67,7 +66,10 @@ public final class WebServer implements LifeCycle.Listener {
             connector.setMaxIdleTime(5 * 60 * 1000); // 5 minutes
             connector.setSoLingerTime(-1);
             connector.setPort(preferences.getPort());
-            server.setThreadPool(new ExecutorThreadPool(10, 1000, 10, TimeUnit.SECONDS));
+            QueuedThreadPool threadPool = new QueuedThreadPool();
+            threadPool.setName("WebServer");
+            threadPool.setMaxThreads(1000);
+            server.setThreadPool(threadPool);
             server.setConnectors(new Connector[]{connector});
 
             ContextHandlerCollection contexts = new ContextHandlerCollection();
