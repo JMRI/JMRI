@@ -95,6 +95,8 @@ public class PrintCarRosterAction extends AbstractAction {
 		String kernel = "";
 		String train = "";
 		String destination = "";
+		String finalDestination = "";
+		String returnWhenEmpty = "";
 		String value = "";
 		String rfid = "";
 		String last = "";
@@ -112,9 +114,14 @@ public class PrintCarRosterAction extends AbstractAction {
 				Car car = manager.getById(cars.get(i));
 				if (printCarsWithLocation.isSelected() && car.getLocation() == null)
 					continue; // car doesn't have a location skip
+				
 				location = "";
-				if (printCarLocation.isSelected() && car.getLocation() != null) {
-					location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
+				finalDestination = "";
+				returnWhenEmpty = "";
+				
+				if (printCarLocation.isSelected()) {
+					if (car.getLocation() != null)
+						location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
 					// reduce location name by one half of the track name
 					location = padAttribute(location, Control.max_len_string_location_name
 							+ Control.max_len_string_track_name / 2);
@@ -167,11 +174,24 @@ public class PrintCarRosterAction extends AbstractAction {
 				if (printCarDestination.isSelected())
 					destination = padAttribute(car.getDestinationName().trim(),
 							Control.max_len_string_location_name);
+				if (printCarFinalDestination.isSelected()) {
+					if (car.getFinalDestination() != null)
+						finalDestination = car.getFinalDestinationName().trim() + " - "
+								+ car.getFinalDestinationTrackName().trim();
+					finalDestination = padAttribute(finalDestination, Control.max_len_string_location_name);
+				}
+				if (printCarRWE.isSelected()) {
+					if (car.getReturnWhenEmptyDestination() != null)
+						returnWhenEmpty = car.getReturnWhenEmptyDestinationName().trim() + " - "
+								+ car.getReturnWhenEmptyDestTrackName().trim();
+					returnWhenEmpty = padAttribute(returnWhenEmpty, Control.max_len_string_location_name);
+				}
 				if (printCarComment.isSelected())
 					comment = car.getComment().trim();
 
 				String s = number + road + type + length + weight + color + load + kernel + owner + built
-						+ last + wait + value + rfid + location + train + destination + comment;
+						+ last + wait + value + rfid + location + train + destination + finalDestination 
+						+ returnWhenEmpty + comment;
 
 				if (s.length() > numberCharPerLine)
 					s = s.substring(0, numberCharPerLine);
@@ -210,6 +230,10 @@ public class PrintCarRosterAction extends AbstractAction {
 						Control.max_len_string_train_name / 2) : "")
 				+ (printCarDestination.isSelected() ? padAttribute(Bundle.getMessage("Destination"),
 						Control.max_len_string_location_name) : "")
+				+ (printCarFinalDestination.isSelected() ? padAttribute(
+						Bundle.getMessage("FinalDestination"), Control.max_len_string_location_name) : "")
+				+ (printCarRWE.isSelected() ? padAttribute(
+						Bundle.getMessage("ReturnWhenEmpty"), Control.max_len_string_location_name) : "")
 				+ (printCarComment.isSelected() ? Bundle.getMessage("Comment") : "");
 		if (s.length() > numberCharPerLine)
 			s = s.substring(0, numberCharPerLine);
@@ -246,6 +270,8 @@ public class PrintCarRosterAction extends AbstractAction {
 	JCheckBox printCarLocation = new JCheckBox(Bundle.getMessage("PrintCarLocation"));
 	JCheckBox printCarTrain = new JCheckBox(Bundle.getMessage("PrintCarTrain"));
 	JCheckBox printCarDestination = new JCheckBox(Bundle.getMessage("PrintCarDestination"));
+	JCheckBox printCarFinalDestination = new JCheckBox(Bundle.getMessage("PrintCarFinalDestination"));
+	JCheckBox printCarRWE = new JCheckBox(Bundle.getMessage("PrintCarReturnWhenEmpty"));
 	JCheckBox printCarComment = new JCheckBox(Bundle.getMessage("PrintCarComment"));
 	JCheckBox printSpace = new JCheckBox(Bundle.getMessage("PrintSpace"));
 	JCheckBox printPage = new JCheckBox(Bundle.getMessage("PrintPage"));
@@ -272,7 +298,8 @@ public class PrintCarRosterAction extends AbstractAction {
 
 			JPanel pPanel = new JPanel();
 			pPanel.setLayout(new GridBagLayout());
-			pPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrintOptions")));
+			JScrollPane panePanel = new JScrollPane(pPanel);
+			panePanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("PrintOptions")));
 			addItemLeft(pPanel, printCarsWithLocation, 0, 0);
 			addItemLeft(pPanel, printCarLength, 0, 1);
 			addItemLeft(pPanel, printCarWeight, 0, 2);
@@ -290,9 +317,11 @@ public class PrintCarRosterAction extends AbstractAction {
 			addItemLeft(pPanel, printCarLocation, 0, 12);
 			addItemLeft(pPanel, printCarTrain, 0, 13);
 			addItemLeft(pPanel, printCarDestination, 0, 14);
-			addItemLeft(pPanel, printCarComment, 0, 15);
-			addItemLeft(pPanel, printSpace, 0, 16);
-			addItemLeft(pPanel, printPage, 0, 17);
+			addItemLeft(pPanel, printCarFinalDestination, 0, 15);
+			addItemLeft(pPanel, printCarRWE, 0, 16);
+			addItemLeft(pPanel, printCarComment, 0, 17);
+			addItemLeft(pPanel, printSpace, 0, 18);
+			addItemLeft(pPanel, printPage, 0, 19);
 
 			// set defaults
 			printCarsWithLocation.setSelected(false);
@@ -310,6 +339,8 @@ public class PrintCarRosterAction extends AbstractAction {
 			printCarLocation.setSelected(true);
 			printCarTrain.setSelected(false);
 			printCarDestination.setSelected(false);
+			printCarFinalDestination.setSelected(false);
+			printCarRWE.setSelected(false);
 			printCarComment.setSelected(false);
 			printSpace.setSelected(false);
 			printPage.setSelected(false);
@@ -327,9 +358,11 @@ public class PrintCarRosterAction extends AbstractAction {
 			getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 			getContentPane().add(pSortBy);
 			getContentPane().add(pOrientation);
-			getContentPane().add(pPanel);
+			getContentPane().add(panePanel);
 			getContentPane().add(pButtons);
-			setPreferredSize(null);
+			
+			setMinimumSize(new Dimension(200, Control.panelHeight));
+			
 			pack();
 			setVisible(true);
 		}
