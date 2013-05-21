@@ -320,7 +320,7 @@ public class PrintLocationsAction extends AbstractAction {
 			int totalTrackLength = 0;
 			for (int j = 0; j < cars.size(); j++) {
 				Car car = carManager.getById(cars.get(j));
-				if (car.getType().equals(type) && car.getLocation() != null) {
+				if (car.getTypeName().equals(type) && car.getLocation() != null) {
 					numberOfCars++;
 					totalTrackLength = totalTrackLength + car.getTotalLength();
 				}

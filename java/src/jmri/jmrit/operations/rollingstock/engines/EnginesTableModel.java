@@ -359,13 +359,13 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		case NUMCOLUMN:
 			return eng.getNumber();
 		case ROADCOLUMN:
-			return eng.getRoad();
+			return eng.getRoadName();
 		case LENGTHCOLUMN:
 			return eng.getLength();
 		case MODELCOLUMN:
 			return eng.getModel();
 		case TYPECOLUMN:
-			return eng.getType();
+			return eng.getTypeName();
 		case CONSISTCOLUMN: {
 			if (eng.getConsist() != null && eng.getConsist().isLead(eng))
 				return eng.getConsistName() + "*";

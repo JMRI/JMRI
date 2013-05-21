@@ -337,11 +337,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	}
 
 	private String getType(ScheduleItem si) {
-		if (_track.acceptsTypeName(si.getType()))
-			return si.getType();
+		if (_track.acceptsTypeName(si.getTypeName()))
+			return si.getTypeName();
 		else
 			return MessageFormat
-					.format(Bundle.getMessage("NotValid"), new Object[] { si.getType() });
+					.format(Bundle.getMessage("NotValid"), new Object[] { si.getTypeName() });
 	}
 
 	private JComboBox getRoadComboBox(ScheduleItem si) {
@@ -352,15 +352,15 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		CarManager cm = CarManager.instance();
 		for (int i = 0; i < roads.length; i++) {
 			if (_track.acceptsRoadName(roads[i])) {
-				Car car = cm.getByTypeAndRoad(si.getType(), roads[i]);
+				Car car = cm.getByTypeAndRoad(si.getTypeName(), roads[i]);
 				if (car != null)
 					cb.addItem(roads[i]);
 			}
 		}
-		cb.setSelectedItem(si.getRoad());
-		if (!cb.getSelectedItem().equals(si.getRoad())) {
+		cb.setSelectedItem(si.getRoadName());
+		if (!cb.getSelectedItem().equals(si.getRoadName())) {
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
-					new Object[] { si.getRoad() });
+					new Object[] { si.getRoadName() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
@@ -385,12 +385,12 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	private JComboBox getLoadComboBox(ScheduleItem si) {
 		// log.debug("getLoadComboBox for ScheduleItem "+si.getType());
-		JComboBox cb = CarLoads.instance().getSelectComboBox(si.getType());
+		JComboBox cb = CarLoads.instance().getSelectComboBox(si.getTypeName());
 		filterLoads(si, cb); // remove loads not accepted by this track
-		cb.setSelectedItem(si.getLoad());
-		if (!cb.getSelectedItem().equals(si.getLoad())) {
+		cb.setSelectedItem(si.getReceiveLoadName());
+		if (!cb.getSelectedItem().equals(si.getReceiveLoadName())) {
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
-					new Object[] { si.getLoad() });
+					new Object[] { si.getReceiveLoadName() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
@@ -399,11 +399,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	private JComboBox getShipComboBox(ScheduleItem si) {
 		// log.debug("getShipComboBox for ScheduleItem "+si.getType());
-		JComboBox cb = CarLoads.instance().getSelectComboBox(si.getType());
-		cb.setSelectedItem(si.getShip());
-		if (!cb.getSelectedItem().equals(si.getShip())) {
+		JComboBox cb = CarLoads.instance().getSelectComboBox(si.getTypeName());
+		cb.setSelectedItem(si.getShipLoadName());
+		if (!cb.getSelectedItem().equals(si.getShipLoadName())) {
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
-					new Object[] { si.getShip() });
+					new Object[] { si.getShipLoadName() });
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
@@ -413,7 +413,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	private JComboBox getDestComboBox(ScheduleItem si) {
 		// log.debug("getDestComboBox for ScheduleItem "+si.getType());
 		JComboBox cb = LocationManager.instance().getComboBox();
-		filterDestinations(cb, si.getType());
+		filterDestinations(cb, si.getTypeName());
 		cb.setSelectedItem(si.getDestination());
 		if (si.getDestination() != null && !cb.getSelectedItem().equals(si.getDestination())) {
 			String notValid = MessageFormat.format(Bundle.getMessage("NotValid"),
@@ -430,7 +430,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		if (si.getDestination() != null) {
 			Location dest = si.getDestination();
 			dest.updateComboBox(cb);
-			filterTracks(dest, cb, si.getType(), si.getRoad(), si.getShip());
+			filterTracks(dest, cb, si.getTypeName(), si.getRoadName(), si.getShipLoadName());
 			cb.setSelectedItem(si.getDestinationTrack());
 			if (si.getDestinationTrack() != null
 					&& !cb.getSelectedItem().equals(si.getDestinationTrack())) {
@@ -504,7 +504,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		ScheduleItem si = _schedule.getItemById(_list.get(row));
 		String road = (String) ((JComboBox) value).getSelectedItem();
 		if (checkForNotValidString(road))
-			si.setRoad(road);
+			si.setRoadName(road);
 	}
 
 	// note this method looks for String "Not Valid <>"
@@ -512,7 +512,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		ScheduleItem si = _schedule.getItemById(_list.get(row));
 		String load = (String) ((JComboBox) value).getSelectedItem();
 		if (checkForNotValidString(load))
-			si.setLoad(load);
+			si.setReceiveLoadName(load);
 	}
 
 	// note this method looks for String "Not Valid <>"
@@ -520,7 +520,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		ScheduleItem si = _schedule.getItemById(_list.get(row));
 		String load = (String) ((JComboBox) value).getSelectedItem();
 		if (checkForNotValidString(load))
-			si.setShip(load);
+			si.setShipLoadName(load);
 	}
 
 	/*
@@ -604,7 +604,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	private void filterLoads(ScheduleItem si, JComboBox cb) {
 		for (int i = cb.getItemCount() - 1; i > 0; i--) {
 			String loadName = (String) cb.getItemAt(i);
-			if (!loadName.equals("") && !_track.acceptsLoad(loadName, si.getType()))
+			if (!loadName.equals("") && !_track.acceptsLoad(loadName, si.getTypeName()))
 				cb.removeItem(loadName);
 		}
 	}

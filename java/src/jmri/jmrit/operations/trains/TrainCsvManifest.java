@@ -147,7 +147,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 						fileOutCsvCar(fileOut, car, PC);
 						cars++;
 						newWork = true;
-						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(
+						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 								CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 					}
@@ -160,7 +160,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 					fileOutCsvCar(fileOut, car, SC);
 					cars--;
 					newWork = true;
-					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(
+					if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 							CarLoad.LOAD_TYPE_EMPTY))
 						emptyCars--;
 				}

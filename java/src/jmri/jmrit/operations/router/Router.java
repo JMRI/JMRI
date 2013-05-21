@@ -722,11 +722,11 @@ public class Router extends TrainCommon {
 			clone.setLength(Integer.toString(car.getKernel().getTotalLength()));
 		else
 			clone.setLength(car.getLength());
-		clone.setLoad(car.getLoad());
+		clone.setLoadName(car.getLoadName());
 		clone.setNumber(car.getNumber());
 		clone.setOwner(car.getOwner());
-		clone.setRoad(car.getRoad());
-		clone.setType(car.getType());
+		clone.setRoadName(car.getRoadName());
+		clone.setTypeName(car.getTypeName());
 		clone.setLocation(car.getLocation());
 		clone.setTrack(car.getTrack());
 		clone.setFinalDestination(car.getFinalDestination());

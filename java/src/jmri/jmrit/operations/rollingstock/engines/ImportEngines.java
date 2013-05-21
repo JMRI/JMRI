@@ -340,8 +340,8 @@ public class ImportEngines extends Thread {
 					engine.setModel(engineModel);
 					engine.setLength(engineLength);
 					// does this model already have a type?
-					if (engine.getType().equals(""))
-						engine.setType(defaultEngineType);
+					if (engine.getTypeName().equals(""))
+						engine.setTypeName(defaultEngineType);
 					// does this model already have a hp?
 					if (engine.getHp().equals(""))
 						engine.setHp(defaultEngineHp);
@@ -363,11 +363,11 @@ public class ImportEngines extends Thread {
 										.format(Bundle.getMessage("DoYouWantToAllowService"),
 												new Object[] { engineLocation, engineTrack,
 														(engineRoad + " " + engineNumber),
-														engine.getType() }), Bundle
+														engine.getTypeName() }), Bundle
 										.getMessage("ServiceEngineType"), JOptionPane.YES_NO_OPTION);
 								if (results == JOptionPane.YES_OPTION) {
-									l.addTypeName(engine.getType());
-									sl.addTypeName(engine.getType());
+									l.addTypeName(engine.getTypeName());
+									sl.addTypeName(engine.getTypeName());
 									status = engine.setLocation(l, sl);
 								} else {
 									break;

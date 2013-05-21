@@ -343,7 +343,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		List<String> cars = manager.getList();
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = manager.getById(cars.get(i));
-			if (car.getLoad().equals(item))
+			if (car.getLoadName().equals(item))
 				number++;
 		}
 		quanity.setText(Integer.toString(number));

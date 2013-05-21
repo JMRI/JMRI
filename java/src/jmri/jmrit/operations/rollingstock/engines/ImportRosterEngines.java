@@ -69,8 +69,8 @@ public class ImportRosterEngines extends Thread {
 					if (engine.getLength().equals(""))
 						engine.setLength(defaultEngineLength);
 					// does this model already have a type?
-					if (engine.getType().equals(""))
-						engine.setType(defaultEngineType);
+					if (engine.getTypeName().equals(""))
+						engine.setTypeName(defaultEngineType);
 					// does this model already have a hp?
 					if (engine.getHp().equals(""))
 						engine.setHp(defaultEngineHp);

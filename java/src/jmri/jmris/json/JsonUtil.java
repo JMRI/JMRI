@@ -60,14 +60,14 @@ public class JsonUtil {
         ObjectNode data = root.putObject(DATA);
         Car car = CarManager.instance().getById(id);
         data.put(ID, car.getId());
-        data.put(ROAD, car.getRoad());
+        data.put(ROAD, car.getRoadName());
         data.put(NUMBER, car.getNumber());
-        data.put(LOAD, car.getLoad());
+        data.put(LOAD, car.getLoadName());
         data.put(LOCATION, car.getRouteLocationId());
         data.put(LOCATION_TRACK, car.getTrackName());
         data.put(DESTINATION, car.getRouteDestinationId());
         data.put(DESTINATION_TRACK, car.getDestinationTrackName());
-        data.put(TYPE, car.getType());
+        data.put(TYPE, car.getTypeName());
         data.put(LENGTH, car.getLength());
         data.put(COLOR, car.getColor());
         data.put(COMMENT, car.getComment());
@@ -88,7 +88,7 @@ public class JsonUtil {
         ObjectNode data = root.putObject(DATA);
         Engine engine = EngineManager.instance().getById(id);
         data.put(ID, engine.getId());
-        data.put(ROAD, engine.getRoad());
+        data.put(ROAD, engine.getRoadName());
         data.put(NUMBER, engine.getNumber());
         data.put(LOCATION, engine.getRouteLocationId());
         data.put(LOCATION_TRACK, engine.getTrackName());

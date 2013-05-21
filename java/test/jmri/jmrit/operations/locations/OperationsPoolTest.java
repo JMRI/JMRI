@@ -288,15 +288,15 @@ public class OperationsPoolTest extends TestCase {
 		
 		Car c1 = new Car("C", "1");
 		c1.setLength("40");
-		c1.setType("Boxcar");	// location and track defaults should support type Boxcar
+		c1.setTypeName("Boxcar");	// location and track defaults should support type Boxcar
 		
 		Car c2 = new Car("C", "2");
 		c2.setLength("25");
-		c2.setType("Boxcar");	// location and track defaults should support type Boxcar
+		c2.setTypeName("Boxcar");	// location and track defaults should support type Boxcar
 		
 		Car c3 = new Car("C", "3");
 		c3.setLength("32");
-		c3.setType("Boxcar");	// location and track defaults should support type Boxcar
+		c3.setTypeName("Boxcar");	// location and track defaults should support type Boxcar
 		
 		// now place cars and see if track lengths adjust correctly
 		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t1));

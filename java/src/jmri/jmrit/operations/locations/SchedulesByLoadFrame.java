@@ -144,15 +144,15 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 						// determine if schedule is requesting car type and load
 						for (int k = 0; k < items.size(); k++) {
 							ScheduleItem item = sch.getItemById(items.get(k));
-							if (item.getType().equals(type) && item.getLoad().equals(load)
-									|| item.getType().equals(type) && item.getLoad().equals("")
-									|| item.getType().equals(type) && item.getShip().equals(load)
-									|| item.getType().equals(type) && item.getShip().equals("")) {
+							if (item.getTypeName().equals(type) && item.getReceiveLoadName().equals(load)
+									|| item.getTypeName().equals(type) && item.getReceiveLoadName().equals("")
+									|| item.getTypeName().equals(type) && item.getShipLoadName().equals(load)
+									|| item.getTypeName().equals(type) && item.getShipLoadName().equals("")) {
 								addItemLeft(locationsPanel,
 										new JLabel(spur.getName() + " (" + spur.getScheduleName()
 												+ ")"), 1, x);
 								// create string (type, timetable, road, load)
-								String s = item.getType();
+								String s = item.getTypeName();
 								if (!item.getTrainScheduleId().equals("")
 										&& TrainScheduleManager.instance().getScheduleById(
 												item.getTrainScheduleId()) != null)
@@ -163,15 +163,15 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 													.getName();
 								else
 									s = s + ",";
-								if (!item.getRoad().equals(""))
-									s = s + ", " + item.getRoad();
+								if (!item.getRoadName().equals(""))
+									s = s + ", " + item.getRoadName();
 								else
 									s = s + ",";
-								s = s + ", " + item.getLoad();
+								s = s + ", " + item.getReceiveLoadName();
 								addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive")
 										+ " (" + s + ")"), 2, x);
 								addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship")
-										+ " (" + item.getShip() + ")"), 3, x++);
+										+ " (" + item.getShipLoadName() + ")"), 3, x++);
 								if (item.getDestination() != null)
 									addItemLeft(
 											locationsPanel,

@@ -212,8 +212,8 @@ public class EngineManager extends RollingStockManager{
     	while (en.hasMoreElements()) { 
     		Engine engine = getById(en.nextElement());
     		if ((engine.getModel().equals(model) || model.equals(""))
-    				&& !names.contains(engine.getRoad())){
-    			names.add(engine.getRoad());
+    				&& !names.contains(engine.getRoadName())){
+    			names.add(engine.getRoadName());
     		}
     	}
     	return sortList(names);

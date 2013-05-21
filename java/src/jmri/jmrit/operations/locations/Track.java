@@ -587,7 +587,7 @@ public class Track {
 
 	public void addTypeName(String type) {
 		// insert at start of list, sort later
-		if (_typeList.contains(type))
+		if (type == null || _typeList.contains(type))
 			return;
 		_typeList.add(0, type);
 		log.debug("track (" + getName() + ") add rolling stock type " + type);
@@ -1117,17 +1117,17 @@ public class Track {
 	 */
 	public String accepts(RollingStock rs) {
 		// first determine if rolling stock can be move to the new location
-		if (!acceptsTypeName(rs.getType())) {
-			log.debug("Rolling stock (" + rs.toString() + ") type (" + rs.getType()
+		if (!acceptsTypeName(rs.getTypeName())) {
+			log.debug("Rolling stock (" + rs.toString() + ") type (" + rs.getTypeName()
 					+ ") not accepted at location (" + getLocation().getName() + ", " + getName() // NOI18N
 					+ ") wrong type"); // NOI18N
-			return TYPE + " (" + rs.getType() + ")";
+			return TYPE + " (" + rs.getTypeName() + ")";
 		}
-		if (!acceptsRoadName(rs.getRoad())) {
-			log.debug("Rolling stock (" + rs.toString() + ") road (" + rs.getRoad()
+		if (!acceptsRoadName(rs.getRoadName())) {
+			log.debug("Rolling stock (" + rs.toString() + ") road (" + rs.getRoadName()
 					+ ") not accepted at location (" + getLocation().getName() + ", " + getName() // NOI18N
 					+ ") wrong road"); // NOI18N
-			return ROAD + " (" + rs.getRoad() + ")";
+			return ROAD + " (" + rs.getRoadName() + ")";
 		}
 		// now determine if there's enough space for the rolling stock
 		int length = 0;
@@ -1157,11 +1157,11 @@ public class Track {
 					length = length + Integer.parseInt(c.getLength()) + RollingStock.COUPLER;
 				}
 			}
-			if (!acceptsLoad(car.getLoad(), car.getType())) {
-				log.debug("Car  (" + rs.toString() + ") load (" + car.getLoad()
+			if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
+				log.debug("Car  (" + rs.toString() + ") load (" + car.getLoadName()
 						+ ") not accepted at location (" + getLocation().getName() + ", " // NOI18N
 						+ getName() + ") wrong load"); // NOI18N
-				return LOAD + " (" + car.getLoad() + ")";
+				return LOAD + " (" + car.getLoadName() + ")";
 			}
 		}
 		// check for loco in consist
@@ -1416,68 +1416,68 @@ public class Track {
 						new Object[] { si.getTrainScheduleId() });
 				break;
 			}
-			if (!_location.acceptsTypeName(si.getType())) {
+			if (!_location.acceptsTypeName(si.getTypeName())) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getType() });
+						new Object[] { si.getTypeName() });
 				break;
 			}
-			if (!acceptsTypeName(si.getType())) {
+			if (!acceptsTypeName(si.getTypeName())) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getType() });
+						new Object[] { si.getTypeName() });
 				break;
 			}
-			if (!si.getRoad().equals("") && !acceptsRoadName(si.getRoad())) {
+			if (!si.getRoadName().equals("") && !acceptsRoadName(si.getRoadName())) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getRoad() });
+						new Object[] { si.getRoadName() });
 				break;
 			}
-			if (!si.getRoad().equals("") && !CarRoads.instance().containsName(si.getRoad())) {
+			if (!si.getRoadName().equals("") && !CarRoads.instance().containsName(si.getRoadName())) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getRoad() });
+						new Object[] { si.getRoadName() });
 				break;
 			}
 			// check loads
-			if (!si.getLoad().equals("") && !acceptsLoad(si.getLoad(), si.getType())) {
+			if (!si.getReceiveLoadName().equals("") && !acceptsLoad(si.getReceiveLoadName(), si.getTypeName())) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getLoad() });
+						new Object[] { si.getReceiveLoadName() });
 				break;
 			}
-			List<String> loads = CarLoads.instance().getNames(si.getType());
-			if (!si.getLoad().equals("") && !loads.contains(si.getLoad())) {
+			List<String> loads = CarLoads.instance().getNames(si.getTypeName());
+			if (!si.getReceiveLoadName().equals("") && !loads.contains(si.getReceiveLoadName())) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getLoad() });
+						new Object[] { si.getReceiveLoadName() });
 				break;
 			}
-			if (!si.getShip().equals("") && !loads.contains(si.getShip())) {
+			if (!si.getShipLoadName().equals("") && !loads.contains(si.getShipLoadName())) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
-						new Object[] { si.getShip() });
+						new Object[] { si.getShipLoadName() });
 				break;
 			}
 			// check destination
-			if (si.getDestination() != null && !si.getDestination().acceptsTypeName(si.getType())) {
+			if (si.getDestination() != null && !si.getDestination().acceptsTypeName(si.getTypeName())) {
 				status = MessageFormat.format(Bundle.getMessage("NotValid"),
 						new Object[] { si.getDestination() });
 				break;
 			}
 			// check destination track
 			if (si.getDestination() != null && si.getDestinationTrack() != null) {
-				if (!si.getDestinationTrack().acceptsTypeName(si.getType())) {
+				if (!si.getDestinationTrack().acceptsTypeName(si.getTypeName())) {
 					status = MessageFormat.format(
 							Bundle.getMessage("NotValid"),
 							new Object[] { si.getDestinationTrack() + " ("
 									+ Bundle.getMessage("Type") + ")" });
 					break;
 				}
-				if (!si.getRoad().equals("")
-						&& !si.getDestinationTrack().acceptsRoadName(si.getRoad())) {
+				if (!si.getRoadName().equals("")
+						&& !si.getDestinationTrack().acceptsRoadName(si.getRoadName())) {
 					status = MessageFormat.format(
 							Bundle.getMessage("NotValid"),
 							new Object[] { si.getDestinationTrack() + " ("
 									+ Bundle.getMessage("Road") + ")" });
 					break;
 				}
-				if (!si.getShip().equals("")
-						&& !si.getDestinationTrack().acceptsLoad(si.getShip(), si.getType())) {
+				if (!si.getShipLoadName().equals("")
+						&& !si.getDestinationTrack().acceptsLoad(si.getShipLoadName(), si.getTypeName())) {
 					status = MessageFormat.format(
 							Bundle.getMessage("NotValid"),
 							new Object[] { si.getDestinationTrack() + " ("
@@ -1500,15 +1500,15 @@ public class Track {
 			return OKAY;
 		if (getScheduleId().equals("")) {
 			// does car have a scheduled load?
-			if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-					|| car.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
+			if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
+					|| car.getLoadName().equals(CarLoads.instance().getDefaultLoadName()))
 				return OKAY; // no
 			// can't place a car with a scheduled load at a spur
 			else if (!getLocType().equals(SPUR))
 				return OKAY;
 			else
 				return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD,
-						car.getLoad() });
+						car.getLoadName() });
 		}
 		// only spurs can have a schedule
 		if (!getLocType().equals(SPUR))
@@ -1532,18 +1532,18 @@ public class Track {
 
 	private String searchSchedule(Car car) {
 		if (debugFlag)
-			log.debug("Search match for car " + toString() + " type (" + car.getType() + ") load (" + car.getLoad()
+			log.debug("Search match for car " + toString() + " type (" + car.getTypeName() + ") load (" + car.getLoadName()
 					+ ")");
 		for (int i = 0; i < getSchedule().getSize(); i++) {
 			ScheduleItem si = getNextScheduleItem();
 			if (debugFlag)
-				log.debug("Item id (" + si.getId() + ") requesting type (" + si.getType() + ") " + "load ("
-						+ si.getLoad() + ") final dest (" + si.getDestinationName() + ") track (" // NOI18N
+				log.debug("Item id (" + si.getId() + ") requesting type (" + si.getTypeName() + ") " + "load ("
+						+ si.getReceiveLoadName() + ") final dest (" + si.getDestinationName() + ") track (" // NOI18N
 						+ si.getDestinationTrackName() + ")"); // NOI18N
 			String status = checkScheduleItem(si, car);
 			if (status.equals(OKAY)) {
 				log.debug("Found item match (" + si.getId() + ") car (" + car.toString() + ") load ("
-						+ si.getLoad() + ") ship (" + si.getShip() + ") " + "destination (" // NOI18N
+						+ si.getReceiveLoadName() + ") ship (" + si.getShipLoadName() + ") " + "destination (" // NOI18N
 						+ si.getDestinationName() + ", " + si.getDestinationTrackName() + ")"); // NOI18N
 				car.setScheduleId(si.getId());	// remember which item was a match
 				return OKAY;
@@ -1567,17 +1567,17 @@ public class Track {
 						+ " (" + sch.getName() + ")";
 		}
 		// Check for correct car type, road, load
-		if (!car.getType().equals(si.getType())) {
+		if (!car.getTypeName().equals(si.getTypeName())) {
 			return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCar") + " "
-					+ TYPE + " (" + si.getType() + ")";
+					+ TYPE + " (" + si.getTypeName() + ")";
 		}
-		if (!si.getRoad().equals("") && !car.getRoad().equals(si.getRoad())) {
+		if (!si.getRoadName().equals("") && !car.getRoadName().equals(si.getRoadName())) {
 			return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCar") + " "
-					+ TYPE + " (" + si.getType() + ") " + ROAD + " (" + si.getRoad() + ")";
+					+ TYPE + " (" + si.getTypeName() + ") " + ROAD + " (" + si.getRoadName() + ")";
 		}
-		if (!si.getLoad().equals("") && !car.getLoad().equals(si.getLoad())) {
+		if (!si.getReceiveLoadName().equals("") && !car.getLoadName().equals(si.getReceiveLoadName())) {
 			return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCar") + " "
-					+ TYPE + " (" + si.getType() + ") " + LOAD + " (" + si.getLoad() + ")";
+					+ TYPE + " (" + si.getTypeName() + ") " + LOAD + " (" + si.getReceiveLoadName() + ")";
 		}
 		return OKAY;
 	}
@@ -1631,9 +1631,9 @@ public class Track {
 		if (currentSi != null
 				&& (currentSi.getTrainScheduleId().equals("") || TrainManager.instance()
 						.getTrainScheduleActiveId().equals(currentSi.getTrainScheduleId()))
-				&& car.getType().equals(currentSi.getType())
-				&& (currentSi.getRoad().equals("") || car.getRoad().equals(currentSi.getRoad()))
-				&& (currentSi.getLoad().equals("") || car.getLoad().equals(currentSi.getLoad()))) {
+				&& car.getTypeName().equals(currentSi.getTypeName())
+				&& (currentSi.getRoadName().equals("") || car.getRoadName().equals(currentSi.getRoadName()))
+				&& (currentSi.getReceiveLoadName().equals("") || car.getLoadName().equals(currentSi.getReceiveLoadName()))) {
 			loadNext(currentSi, car);
 			car.setScheduleId("");
 			// bump schedule
@@ -1657,9 +1657,9 @@ public class Track {
 				mode = Bundle.getMessage("match");
 			return SCHEDULE
 					+ MessageFormat.format(Bundle.getMessage("sequentialMessage"), new Object[] {
-							getScheduleName(), mode,  car.toString(), car.getType(), timetableName,
-							car.getRoad(), car.getLoad(), currentSi.getType(), currentTimetableName,  currentSi.getRoad(),
-							currentSi.getLoad() });
+							getScheduleName(), mode,  car.toString(), car.getTypeName(), timetableName,
+							car.getRoadName(), car.getLoadName(), currentSi.getTypeName(), currentTimetableName,  currentSi.getRoadName(),
+							currentSi.getReceiveLoadName() });
 		} else {
 			log.error("ERROR Track " + getName() + " current schedule item is null!");
 			return SCHEDULE + " ERROR Track " + getName() + " current schedule item is null!"; // NOI18N
@@ -1673,7 +1673,7 @@ public class Track {
 			return;
 		}
 		// set the car's next load
-		car.setNextLoad(scheduleItem.getShip());
+		car.setNextLoadName(scheduleItem.getShipLoadName());
 		// set the car's final destination and track
 		car.setFinalDestination(scheduleItem.getDestination());
 		car.setFinalDestinationTrack(scheduleItem.getDestinationTrack());
@@ -1682,7 +1682,7 @@ public class Track {
 		// bump hit count for this schedule item
 		scheduleItem.setHits(scheduleItem.getHits() + 1);
 
-		log.debug("Car (" + car.toString() + ") type (" + car.getType() + ") next load (" + car.getNextLoad()
+		log.debug("Car (" + car.toString() + ") type (" + car.getTypeName() + ") next load (" + car.getNextLoadName()
 				+ ") final destination (" + car.getFinalDestinationName() + ", " + car.getFinalDestinationTrackName() // NOI18N
 				+ ") next wait: " + car.getWait()); // NOI18N
 		// set all cars in kernel to the next load

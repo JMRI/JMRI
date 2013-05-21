@@ -267,8 +267,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
 	public void load(RollingStock rs) {
 		_rs = rs;
-		textRoad.setText(_rs.getRoad() + " " + _rs.getNumber());
-		textType.setText(_rs.getType());
+		textRoad.setText(_rs.getRoadName() + " " + _rs.getNumber());
+		textType.setText(_rs.getTypeName());
 		locationUnknownCheckBox.setSelected(_rs.isLocationUnknown());
 		outOfServiceCheckBox.setSelected(_rs.isOutOfService());
 		updateComboBoxes();
@@ -343,16 +343,16 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			Train train = rs.getTrain();
 			if (train != null) {
 				// determine if train services this rs's type
-				if (!train.acceptsTypeName(rs.getType())) {
+				if (!train.acceptsTypeName(rs.getTypeName())) {
 					JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
-							"rsTrainNotServType"), new Object[] { rs.getType(), train.getName() }), getRb()
+							"rsTrainNotServType"), new Object[] { rs.getTypeName(), train.getName() }), getRb()
 							.getString("rsNotMove"), JOptionPane.ERROR_MESSAGE);
 					return false;
 				}
 				// determine if train services this rs's road
-				if (!train.acceptsRoadName(rs.getRoad())) {
+				if (!train.acceptsRoadName(rs.getRoadName())) {
 					JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
-							"rsTrainNotServRoad"), new Object[] { rs.getRoad(), train.getName() }), getRb()
+							"rsTrainNotServRoad"), new Object[] { rs.getRoadName(), train.getName() }), getRb()
 							.getString("rsNotMove"), JOptionPane.ERROR_MESSAGE);
 					return false;
 				}

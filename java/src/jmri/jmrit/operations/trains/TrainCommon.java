@@ -419,7 +419,7 @@ public class TrainCommon {
 		boolean showLength = showUtilityCarLength(messageFormat);
 		// figure out if the user want to show the car's loads
 		boolean showLoad = showUtilityCarLoad(messageFormat);
-		String[] carType = car.getType().split("-");
+		String[] carType = car.getTypeName().split("-");
 		String carAttributes = carType[0] + splitString(car.getTrackName());
 		if (!isPickup)
 			carAttributes = carType[0] + splitString(car.getDestinationTrackName())
@@ -427,7 +427,7 @@ public class TrainCommon {
 		if (showLength)
 			carAttributes = carAttributes + car.getLength();
 		if (showLoad)
-			carAttributes = carAttributes + car.getLoad();
+			carAttributes = carAttributes + car.getLoadName();
 		// have we already done this car type?
 		if (!utilityCarTypes.contains(carAttributes)) {
 			utilityCarTypes.add(carAttributes); // don't do this type again
@@ -436,12 +436,12 @@ public class TrainCommon {
 				Car c = carManager.getById(carList.get(i));
 				if (!c.isUtility())
 					continue;
-				String[] cType = c.getType().split("-");
+				String[] cType = c.getTypeName().split("-");
 				if (!cType[0].equals(carType[0]))
 					continue;
 				if (showLength && !c.getLength().equals(car.getLength()))
 					continue;
-				if (showLoad && !c.getLoad().equals(car.getLoad()))
+				if (showLoad && !c.getLoadName().equals(car.getLoadName()))
 					continue;	
 				if (isPickup && c.getRouteLocation() == rl && c.getRouteDestination() == rld
 						&& splitString(c.getTrackName()).equals(splitString(car.getTrackName()))) {
@@ -697,7 +697,7 @@ public class TrainCommon {
 		if (attribute.equals(Setup.LOAD))
 			return (car.isCaboose() || car.isPassenger()) ? tabString("", CarLoads.instance()
 					.getCurMaxNameLength() + 1) : " "
-					+ tabString(car.getLoad(), CarLoads.instance().getCurMaxNameLength());
+					+ tabString(car.getLoadName(), CarLoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.HAZARDOUS))
 			return (car.isHazardous() ? " " + Setup.getHazardousMsg() : "");
 		else if (attribute.equals(Setup.DROP_COMMENT))
@@ -726,9 +726,9 @@ public class TrainCommon {
 			return " "
 					+ tabString(splitString(rs.getNumber()), Control.max_len_string_road_number - 4);
 		else if (attribute.equals(Setup.ROAD))
-			return " " + tabString(rs.getRoad(), CarRoads.instance().getCurMaxNameLength());
+			return " " + tabString(rs.getRoadName(), CarRoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.TYPE)) {
-			String[] type = rs.getType().split("-"); // second half of string
+			String[] type = rs.getTypeName().split("-"); // second half of string
 														// can be anything
 			return " " + tabString(type[0], CarTypes.instance().getCurMaxNameLength());
 		} else if (attribute.equals(Setup.LENGTH))

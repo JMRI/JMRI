@@ -462,7 +462,7 @@ public class ImportCars extends Thread {
 							+ ") built (" + carBuilt + ") location (" + carLocation + ", " // NOI18N
 							+ carTrack + ")");
 					Car car = manager.newCar(carRoad, carNumber);
-					car.setType(carType);
+					car.setTypeName(carType);
 					car.setLength(carLength);
 					car.setWeight(carWeight);
 					car.setColor(carColor);

@@ -52,7 +52,7 @@ public class OperationsEnginesTest extends TestCase {
 		e1.setModel("TESTMODEL");
 		e1.setLength("TESTLENGTH");
 
-		Assert.assertEquals("Engine Road", "TESTROAD", e1.getRoad());
+		Assert.assertEquals("Engine Road", "TESTROAD", e1.getRoadName());
 		Assert.assertEquals("Engine Number", "TESTNUMBER1", e1.getNumber());
 		Assert.assertEquals("Engine Model", "TESTMODEL", e1.getModel());
 		Assert.assertEquals("Engine Length", "TESTLENGTH", e1.getLength());
@@ -509,12 +509,12 @@ public class OperationsEnginesTest extends TestCase {
         e5.setModel("GP353");
         e6.setModel("GP355");
         
-        e1.setType("Diesel");
-        e2.setType("Diesel");
-        e3.setType("Diesel");
-        e4.setType("Diesel");
-        e5.setType("Diesel");
-        e6.setType("Diesel");
+        e1.setTypeName("Diesel");
+        e2.setTypeName("Diesel");
+        e3.setTypeName("Diesel");
+        e4.setTypeName("Diesel");
+        e5.setTypeName("Diesel");
+        e6.setTypeName("Diesel");
         
         e1.setLength("13");
         e2.setLength("9");
@@ -819,8 +819,8 @@ public class OperationsEnginesTest extends TestCase {
 		e1.setNumber("X Test Number e1");  
 		e1.setOutOfService(false);
 		e1.setRfid("norfide1");
-		e1.setRoad("OLDRoad");
-		e1.setType("e1 X type");
+		e1.setRoadName("OLDRoad");
+		e1.setTypeName("e1 X type");
 		e1.setWeight("54");
 		e1.setWeightTons("001");
 
@@ -834,8 +834,8 @@ public class OperationsEnginesTest extends TestCase {
 		e2.setNumber("X Test Number e2");  
 		e2.setOutOfService(true);
 		e2.setRfid("rfide2");
-		e2.setRoad("e2 Road");
-		e2.setType("e2 type");
+		e2.setRoadName("e2 Road");
+		e2.setTypeName("e2 type");
 		e2.setWeight("33");
 		e2.setWeightTons("798");
 
@@ -849,8 +849,8 @@ public class OperationsEnginesTest extends TestCase {
 		e3.setNumber("X Test Number e3");  
 		e3.setOutOfService(false);
 		e3.setRfid("rfide3");
-		e3.setRoad("e3 Road");
-		e3.setType("e3 type");
+		e3.setRoadName("e3 Road");
+		e3.setTypeName("e3 type");
 		e3.setWeight("345");
 		e3.setWeightTons("1798");
 
@@ -880,8 +880,8 @@ public class OperationsEnginesTest extends TestCase {
 		e1.setNumber("New Test Number e1");  
 		e1.setOutOfService(true);
 		e1.setRfid("rfide1");
-		e1.setRoad("newRoad");
-		e1.setType("e1 type");
+		e1.setRoadName("newRoad");
+		e1.setTypeName("e1 type");
 		e1.setWeight("45");
 		e1.setWeightTons("100");
 
@@ -895,8 +895,8 @@ public class OperationsEnginesTest extends TestCase {
 		e5.setNumber("New Test Number e5");  
 		e5.setOutOfService(true);
 		e5.setRfid("rfide5");
-		e5.setRoad("e5Road");
-		e5.setType("e5 type");
+		e5.setRoadName("e5Road");
+		e5.setTypeName("e5 type");
 		e5.setWeight("66");
 		e5.setWeightTons("77");      
 		
@@ -955,8 +955,8 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e1 number", "New Test Number e1", e1.getNumber());
 		Assert.assertEquals("engine e1 out of service", true, e1.isOutOfService());
 		Assert.assertEquals("engine e1 rfid", "rfide1", e1.getRfid());
-		Assert.assertEquals("engine e1 road", "newRoad", e1.getRoad());
-		Assert.assertEquals("engine e1 type", "e1 type", e1.getType());
+		Assert.assertEquals("engine e1 road", "newRoad", e1.getRoadName());
+		Assert.assertEquals("engine e1 type", "e1 type", e1.getTypeName());
 		Assert.assertEquals("engine e1 weight", "45", e1.getWeight());
 		Assert.assertEquals("engine e1 weight tons", "100", e1.getWeightTons());
 		Assert.assertEquals("engine e1 hp", "e1 hp", e1.getHp());
@@ -970,8 +970,8 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e2 number", "X Test Number e2", e2.getNumber());
 		Assert.assertEquals("engine e2 out of service", true, e2.isOutOfService());
 		Assert.assertEquals("engine e2 rfid", "rfide2", e2.getRfid());
-		Assert.assertEquals("engine e2 road", "e2 Road", e2.getRoad());
-		Assert.assertEquals("engine e2 type", "e2 type", e2.getType());
+		Assert.assertEquals("engine e2 road", "e2 Road", e2.getRoadName());
+		Assert.assertEquals("engine e2 type", "e2 type", e2.getTypeName());
 		Assert.assertEquals("engine e2 weight", "33", e2.getWeight());
 		Assert.assertEquals("engine e2 weight tons", "798", e2.getWeightTons());
 		Assert.assertEquals("engine e2 hp", "e2 hp", e2.getHp());
@@ -985,8 +985,8 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e3 number", "X Test Number e3", e3.getNumber());
 		Assert.assertEquals("engine e3 out of service", false, e3.isOutOfService());
 		Assert.assertEquals("engine e3 rfid", "rfide3", e3.getRfid());
-		Assert.assertEquals("engine e3 road", "e3 Road", e3.getRoad());
-		Assert.assertEquals("engine e3 type", "e3 type", e3.getType());
+		Assert.assertEquals("engine e3 road", "e3 Road", e3.getRoadName());
+		Assert.assertEquals("engine e3 type", "e3 type", e3.getTypeName());
 		Assert.assertEquals("engine e3 weight", "345", e3.getWeight());
 		Assert.assertEquals("engine e3 weight tons", "1798", e3.getWeightTons());
 		Assert.assertEquals("engine e3 hp", "e3 hp", e3.getHp());
@@ -1001,8 +1001,8 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e4 number", "Test Number 4", e4.getNumber());
 		Assert.assertEquals("engine e4 out of service", false, e4.isOutOfService());
 		Assert.assertEquals("engine e4 rfid", "", e4.getRfid());
-		Assert.assertEquals("engine e4 road", "PC", e4.getRoad());
-		Assert.assertEquals("engine e4 type", "", e4.getType());
+		Assert.assertEquals("engine e4 road", "PC", e4.getRoadName());
+		Assert.assertEquals("engine e4 type", "", e4.getTypeName());
 		Assert.assertEquals("engine e4 weight", "0", e4.getWeight());
 		Assert.assertEquals("engine e4 weight tons", "", e4.getWeightTons());
 		Assert.assertEquals("engine e4 hp", "", e4.getHp());
@@ -1016,8 +1016,8 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e5 number", "New Test Number e5", e5.getNumber());
 		Assert.assertEquals("engine e5 out of service", true, e5.isOutOfService());
 		Assert.assertEquals("engine e5 rfid", "rfide5", e5.getRfid());
-		Assert.assertEquals("engine e5 road", "e5Road", e5.getRoad());
-		Assert.assertEquals("engine e5 type", "e5 type", e5.getType());
+		Assert.assertEquals("engine e5 road", "e5Road", e5.getRoadName());
+		Assert.assertEquals("engine e5 type", "e5 type", e5.getTypeName());
 		Assert.assertEquals("engine e5 weight", "66", e5.getWeight());
 		Assert.assertEquals("engine e5 weight tons", "77", e5.getWeightTons());
 		Assert.assertEquals("engine e5 hp", "e5 hp", e5.getHp());
@@ -1031,8 +1031,8 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e6 number", "Test Number 6", e6.getNumber());
 		Assert.assertEquals("engine e6 out of service", false, e6.isOutOfService());
 		Assert.assertEquals("engine e6 rfid", "", e6.getRfid());
-		Assert.assertEquals("engine e6 road", "SP", e6.getRoad());
-		Assert.assertEquals("engine e6 type", "", e6.getType());
+		Assert.assertEquals("engine e6 road", "SP", e6.getRoadName());
+		Assert.assertEquals("engine e6 type", "", e6.getTypeName());
 		Assert.assertEquals("engine e6 weight", "0", e6.getWeight());
 		Assert.assertEquals("engine e6 weight tons", "", e6.getWeightTons());
 		Assert.assertEquals("engine e6 hp", "", e6.getHp());
@@ -1092,8 +1092,8 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e1 number", "X Test Number e1", e1.getNumber());
 		Assert.assertEquals("engine e1 out of service", false, e1.isOutOfService());
 		Assert.assertEquals("engine e1 rfid", "norfide1", e1.getRfid());
-		Assert.assertEquals("engine e1 road", "OLDRoad", e1.getRoad());
-		Assert.assertEquals("engine e1 type", "e1 X type", e1.getType());
+		Assert.assertEquals("engine e1 road", "OLDRoad", e1.getRoadName());
+		Assert.assertEquals("engine e1 type", "e1 X type", e1.getTypeName());
 		Assert.assertEquals("engine e1 weight", "54", e1.getWeight());
 		Assert.assertEquals("engine e1 weight tons", "001", e1.getWeightTons());
 		Assert.assertEquals("engine e1 hp", "e1 hp", e1.getHp());
@@ -1107,8 +1107,8 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e2 number", "X Test Number e2", e2.getNumber());
 		Assert.assertEquals("engine e2 out of service", true, e2.isOutOfService());
 		Assert.assertEquals("engine e2 rfid", "rfide2", e2.getRfid());
-		Assert.assertEquals("engine e2 road", "e2 Road", e2.getRoad());
-		Assert.assertEquals("engine e2 type", "e2 type", e2.getType());
+		Assert.assertEquals("engine e2 road", "e2 Road", e2.getRoadName());
+		Assert.assertEquals("engine e2 type", "e2 type", e2.getTypeName());
 		Assert.assertEquals("engine e2 weight", "33", e2.getWeight());
 		Assert.assertEquals("engine e2 weight tons", "798", e2.getWeightTons());
 		Assert.assertEquals("engine e2 hp", "e2 hp", e2.getHp());
@@ -1122,8 +1122,8 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e3 number", "X Test Number e3", e3.getNumber());
 		Assert.assertEquals("engine e3 out of service", false, e3.isOutOfService());
 		Assert.assertEquals("engine e3 rfid", "rfide3", e3.getRfid());
-		Assert.assertEquals("engine e3 road", "e3 Road", e3.getRoad());
-		Assert.assertEquals("engine e3 type", "e3 type", e3.getType());
+		Assert.assertEquals("engine e3 road", "e3 Road", e3.getRoadName());
+		Assert.assertEquals("engine e3 type", "e3 type", e3.getTypeName());
 		Assert.assertEquals("engine e3 weight", "345", e3.getWeight());
 		Assert.assertEquals("engine e3 weight tons", "1798", e3.getWeightTons());
 		Assert.assertEquals("engine e3 hp", "e3 hp", e3.getHp());

@@ -50,19 +50,19 @@ public class Engine extends RollingStock {
 	 * @param type
 	 *            Engine type: Steam, Diesel, Gas Turbine, etc.
 	 */
-	public void setType(String type) {
+	public void setTypeName(String type) {
 		if (getModel().equals(""))
 			return;
-		String old = getType();
+		String old = getTypeName();
 		engineModels.setModelType(getModel(), type);
 		if (!old.equals(type))
 			firePropertyChange(TYPE_CHANGED_PROPERTY, old, type);
 	}
 
-	public String getType() {
+	public String getTypeName() {
 		String type = engineModels.getModelType(getModel());
 		if (type == null)
-			type = super.getType();
+			type = super.getTypeName();
 		return type;
 	}
 
@@ -223,7 +223,7 @@ public class Engine extends RollingStock {
 		if ((a = e.getAttribute(Xml.LENGTH)) != null)
 			setLength(a.getValue());
 		if ((a = e.getAttribute(Xml.TYPE)) != null)
-			setType(a.getValue());
+			setTypeName(a.getValue());
 		if ((a = e.getAttribute(Xml.WEIGHT_TONS)) != null)
 			setWeightTons(a.getValue());
 		if ((a = e.getAttribute(Xml.CONSIST)) != null) {
@@ -283,11 +283,11 @@ public class Engine extends RollingStock {
 	public void propertyChange(PropertyChangeEvent e) {
 		super.propertyChange(e);
 		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
-			if (e.getOldValue().equals(getType())) {
+			if (e.getOldValue().equals(getTypeName())) {
 				if (log.isDebugEnabled())
 					log.debug("Engine (" + toString() + ") sees type name change old: "
 							+ e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
-				setType((String) e.getNewValue());
+				setTypeName((String) e.getNewValue());
 			}
 		}
 		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_NAME_CHANGED_PROPERTY)) {

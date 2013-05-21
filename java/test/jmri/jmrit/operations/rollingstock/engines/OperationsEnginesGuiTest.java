@@ -248,7 +248,7 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		
 		Assert.assertNotNull("Engine did not create", c6);
 		Assert.assertEquals("Engine type", "SW8", c6.getModel());
-		Assert.assertEquals("Engine type", "Diesel", c6.getType());
+		Assert.assertEquals("Engine type", "Diesel", c6.getTypeName());
 		Assert.assertEquals("Engine length", "44", c6.getLength()); //default for SW8 is 44
 		Assert.assertEquals("Engine built", "1999", c6.getBuilt());
 		Assert.assertEquals("Engine owner", "Owner1", c6.getOwner());

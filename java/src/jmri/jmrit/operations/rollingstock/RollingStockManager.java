@@ -74,7 +74,7 @@ public class RollingStockManager {
     	Enumeration<String> en = _hashTable.keys();
     	while (en.hasMoreElements()) { 
     		RollingStock rs = getById(en.nextElement());
-    		if(rs.getType().equals(type) && rs.getRoad().equals(road))
+    		if(rs.getTypeName().equals(type) && rs.getRoadName().equals(road))
     			return rs;
     	}
     	return null;
@@ -298,7 +298,7 @@ public class RollingStockManager {
     	List<String> out = new ArrayList<String>();
     	for (int i=0; i<l.size(); i++){
     		RollingStock rs = getById(l.get(i));
-    		if (rs.getType().equals(type))
+    		if (rs.getTypeName().equals(type))
     			out.add(l.get(i));
     	}
     	return out;
@@ -474,8 +474,8 @@ public class RollingStockManager {
     protected Object getRsAttribute(RollingStock rs, int attribute){
     	switch (attribute){
     	case BY_NUMBER: return rs.getNumber();
-    	case BY_ROAD: return rs.getRoad();
-    	case BY_TYPE: return rs.getType();
+    	case BY_ROAD: return rs.getRoadName();
+    	case BY_TYPE: return rs.getTypeName();
     	case BY_COLOR: return rs.getColor();
     	case BY_LOCATION: return rs.getStatus() + rs.getLocationName() + rs.getTrackName();
     	case BY_DESTINATION: return rs.getDestinationName() + rs.getDestinationTrackName();

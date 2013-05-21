@@ -108,9 +108,9 @@ public class PrintEngineRosterAction extends AbstractAction {
 
 				// loco number
 				number = padAttribute(engine.getNumber().trim(), 7);
-				road = padAttribute(engine.getRoad().trim(), 7);
+				road = padAttribute(engine.getRoadName().trim(), 7);
 				model = padAttribute(engine.getModel().trim(), Control.max_len_string_attibute);
-				type = padAttribute(engine.getType().trim(), Control.max_len_string_attibute);
+				type = padAttribute(engine.getTypeName().trim(), Control.max_len_string_attibute);
 				length = padAttribute(engine.getLength().trim(), Control.max_len_string_length_name);
 
 				if (panel.sortByConsist.isSelected())

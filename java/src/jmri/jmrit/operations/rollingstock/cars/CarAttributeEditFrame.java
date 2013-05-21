@@ -391,11 +391,11 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 			Car car = manager.getById(cars.get(i));
 
 			if (_comboboxName == CarEditFrame.ROAD) {
-				if (car.getRoad().equals(item))
+				if (car.getRoadName().equals(item))
 					number++;
 			}
 			if (_comboboxName == CarEditFrame.TYPE) {
-				if (car.getType().equals(item))
+				if (car.getTypeName().equals(item))
 					number++;
 			}
 			if (_comboboxName == CarEditFrame.COLOR) {
@@ -423,8 +423,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 				List<String> engines = EngineManager.instance().getList();
 				for (int i = 0; i < engines.size(); i++) {
 					Engine engine = EngineManager.instance().getById(engines.get(i));
-					if (engine.getRoad().equals(item)) {
-						log.info("Engine (" + engine.getRoad() + " " + engine.getNumber()
+					if (engine.getRoadName().equals(item)) {
+						log.info("Engine (" + engine.getRoadName() + " " + engine.getNumber()
 								+ ") has assigned road name (" + item + ")");	// NOI18N
 						return;
 					}

@@ -161,10 +161,10 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 				addItemLeft(pLocations, op, 2, x++);
 				if (!train.acceptsTypeName(carType))
 					op.setText(Bundle.getMessage("X(TrainType)"));
-				else if (car != null && !train.acceptsRoadName(car.getRoad()))
+				else if (car != null && !train.acceptsRoadName(car.getRoadName()))
 					op.setText(Bundle.getMessage("X(TrainRoad)"));
 				else if (car != null && !car.isCaboose()
-						&& !train.acceptsLoad(car.getLoad(), car.getType()))
+						&& !train.acceptsLoad(car.getLoadName(), car.getTypeName()))
 					op.setText(Bundle.getMessage("X(TrainLoad)"));
 				else if (car != null && !train.acceptsBuiltDate(car.getBuilt()))
 					op.setText(Bundle.getMessage("X(TrainBuilt)"));
@@ -185,9 +185,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 					op.setText(Bundle.getMessage("X(TrackTrain)"));
 				else if (!track.acceptsTypeName(carType))
 					op.setText(Bundle.getMessage("X(TrackType)"));
-				else if (car != null && !track.acceptsRoadName(car.getRoad()))
+				else if (car != null && !track.acceptsRoadName(car.getRoadName()))
 					op.setText(Bundle.getMessage("X(TrackRoad)"));
-				else if (car != null && !track.acceptsLoad(car.getLoad(), car.getType()))
+				else if (car != null && !track.acceptsLoad(car.getLoadName(), car.getTypeName()))
 					op.setText(Bundle.getMessage("X(TrackLoad)"));
 				else if ((rl.getTrainDirection() & location.getTrainDirections()) == 0)
 					op.setText(Bundle.getMessage("X(DirLoc)"));
@@ -246,33 +246,33 @@ public class TrainByCarTypeFrame extends OperationsFrame implements
 		for (int i = 0; i < scheduleItems.size(); i++) {
 			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
 			// check to see if schedule services car type
-			if (attribute.equals(TYPE) && si.getType().equals(carType))
+			if (attribute.equals(TYPE) && si.getTypeName().equals(carType))
 				return true;
 			// check to see if schedule services car type and load
 			if (attribute.equals(LOAD)
-					&& si.getType().equals(carType)
-					&& (si.getLoad().equals("") || car == null || si.getLoad()
-							.equals(car.getLoad())))
+					&& si.getTypeName().equals(carType)
+					&& (si.getReceiveLoadName().equals("") || car == null || si.getReceiveLoadName()
+							.equals(car.getLoadName())))
 				return true;
 			// check to see if schedule services car type and road
 			if (attribute.equals(ROAD)
-					&& si.getType().equals(carType)
-					&& (si.getRoad().equals("") || car == null || si.getRoad()
-							.equals(car.getRoad())))
+					&& si.getTypeName().equals(carType)
+					&& (si.getRoadName().equals("") || car == null || si.getRoadName()
+							.equals(car.getRoadName())))
 				return true;
 			// check to see if schedule timetable allows delivery
 			if (attribute.equals(TIMETABLE)
-					&& si.getType().equals(carType)
+					&& si.getTypeName().equals(carType)
 					&& (si.getTrainScheduleId().equals("") || TrainManager.instance()
 							.getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
 				return true;
 			// check to see if at least one schedule item can service car
 			if (attribute.equals(ALL)
-					&& si.getType().equals(carType)
-					&& (si.getLoad().equals("") || car == null || si.getLoad()
-							.equals(car.getLoad()))
-					&& (si.getRoad().equals("") || car == null || si.getRoad()
-							.equals(car.getRoad()))
+					&& si.getTypeName().equals(carType)
+					&& (si.getReceiveLoadName().equals("") || car == null || si.getReceiveLoadName()
+							.equals(car.getLoadName()))
+					&& (si.getRoadName().equals("") || car == null || si.getRoadName()
+							.equals(car.getRoadName()))
 					&& (si.getTrainScheduleId().equals("") || TrainManager.instance()
 							.getTrainScheduleActiveId().equals(si.getTrainScheduleId())))
 				return true;

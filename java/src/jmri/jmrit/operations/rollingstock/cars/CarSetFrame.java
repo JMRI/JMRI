@@ -204,7 +204,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				lef.dispose();
 			lef = new CarLoadEditFrame();
 			lef.setLocationRelativeTo(this);
-			lef.initComponents(_car.getType(), (String) loadComboBox.getSelectedItem());
+			lef.initComponents(_car.getTypeName(), (String) loadComboBox.getSelectedItem());
 		}
 	}
 
@@ -252,8 +252,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		// car load
 		if (!ignoreLoadCheckBox.isSelected() && loadComboBox.getSelectedItem() != null) {
 			String load = (String) loadComboBox.getSelectedItem();
-			if (CarLoads.instance().containsName(car.getType(), load))
-				car.setLoad(load);
+			if (CarLoads.instance().containsName(car.getTypeName(), load))
+				car.setLoadName(load);
 		}
 		// save car's track
 		Track saveTrack = car.getTrack();
@@ -314,9 +314,9 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 					// now apply schedule to car
 					track.scheduleNext(car);
 					// change load to ship load
-					if (!car.getNextLoad().equals("")) {
-						car.setLoad(car.getNextLoad());
-						car.setNextLoad("");
+					if (!car.getNextLoadName().equals("")) {
+						car.setLoadName(car.getNextLoadName());
+						car.setNextLoadName("");
 					}
 					// change next wait to wait now!
 					if (car.getNextWait() > 0) {
@@ -329,9 +329,9 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		// determine if train services this car's load
 		if (car.getTrain() != null) {
 			Train train = car.getTrain();
-			if (!train.acceptsLoad(car.getLoad(), car.getType())) {
+			if (!train.acceptsLoad(car.getLoadName(), car.getTypeName())) {
 				JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-						.getMessage("carTrainNotServLoad"), new Object[] { car.getLoad(), train.getName() }),
+						.getMessage("carTrainNotServLoad"), new Object[] { car.getLoadName(), train.getName() }),
 						Bundle.getMessage("rsNotMove"), JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
@@ -372,8 +372,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			}
 			// update car load
 			if (!ignoreLoadCheckBox.isSelected()
-					&& CarLoads.instance().containsName(car.getType(), _car.getLoad()))
-				car.setLoad(_car.getLoad());
+					&& CarLoads.instance().containsName(car.getTypeName(), _car.getLoadName()))
+				car.setLoadName(_car.getLoadName());
 		}
 		return super.updateGroup(list);
 	}
@@ -444,8 +444,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	protected void updateLoadComboBox() {
 		if (_car != null) {
 			log.debug("Updating load box for car (" + _car.toString() + ")");
-			CarLoads.instance().updateComboBox(_car.getType(), loadComboBox);
-			loadComboBox.setSelectedItem(_car.getLoad());
+			CarLoads.instance().updateComboBox(_car.getTypeName(), loadComboBox);
+			loadComboBox.setSelectedItem(_car.getLoadName());
 		}
 	}
 

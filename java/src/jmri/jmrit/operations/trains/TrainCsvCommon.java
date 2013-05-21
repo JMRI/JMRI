@@ -66,7 +66,7 @@ public class TrainCsvCommon extends TrainCommon {
 	
 	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation){
 		// check for delimiter in names
-      	String carType = car.getType();
+      	String carType = car.getTypeName();
     	if (carType.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in type field: "+carType);
     		carType = ESC+carType+ESC;
@@ -103,11 +103,11 @@ public class TrainCsvCommon extends TrainCommon {
     	}
 
 		addLine(fileOut, operation 
-				+DEL+car.getRoad()
+				+DEL+car.getRoadName()
 				+DEL+car.getNumber()
 				+DEL+carType
 				+DEL+car.getLength()
-				+DEL+car.getLoad()
+				+DEL+car.getLoadName()
 				+DEL+car.getColor()								
 				+DEL+carLocationName
 				+DEL+carTrackName
@@ -149,11 +149,11 @@ public class TrainCsvCommon extends TrainCommon {
 			engineDestTrackName = ESC+engine.getDestinationTrackName()+ESC;
 		}
 		addLine(fileOut, operation
-				+DEL+engine.getRoad()
+				+DEL+engine.getRoadName()
 				+DEL+engine.getNumber()
 				+DEL+engine.getModel()						
 				+DEL+engine.getLength()
-				+DEL+engine.getType()
+				+DEL+engine.getTypeName()
 				+DEL+engine.getHp()								
 				+DEL+engineLocationName
 				+DEL+engineTrackName

@@ -485,19 +485,19 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		case NUMCOLUMN:
 			return car.getNumber();
 		case ROADCOLUMN:
-			return car.getRoad();
+			return car.getRoadName();
 		case COLORCOLUMN: {
 			if (showColor)
 				return car.getColor();
 			else if (car.getLoadPriority().equals(CarLoad.PRIORITY_HIGH))
-				return car.getLoad() + " " + Bundle.getMessage("(P)");
+				return car.getLoadName() + " " + Bundle.getMessage("(P)");
 			else
-				return car.getLoad();
+				return car.getLoadName();
 		}
 		case LENGTHCOLUMN:
 			return car.getLength();
 		case TYPECOLUMN: {
-			StringBuffer buf = new StringBuffer(car.getType());
+			StringBuffer buf = new StringBuffer(car.getTypeName());
 			if (car.isCaboose())
 				buf.append(" " + Bundle.getMessage("(C)"));
 			if (car.hasFred())

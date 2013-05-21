@@ -257,12 +257,12 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 						// get the old configuration for this model
 						String length = engine.getLength();
 						String hp = engine.getHp();
-						String type = engine.getType();
+						String type = engine.getTypeName();
 						// now update the new model
 						engine.setModel(newItem);
 						engine.setLength(length);
 						engine.setHp(hp);
-						engine.setType(type);
+						engine.setTypeName(type);
 					}
 				}
 			}

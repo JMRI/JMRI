@@ -30,7 +30,7 @@ public class OperationsLoggerTest extends TestCase {
 		// load a car
 		CarManager manager = CarManager.instance();
 		Car c1 = manager.newCar("CP", "1");
-		c1.setType("Boxcar");
+		c1.setTypeName("Boxcar");
 		c1.setLength("40");
 		// turn on logging
 		Setup.setCarLoggerEnabled(true);

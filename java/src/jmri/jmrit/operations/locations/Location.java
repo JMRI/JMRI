@@ -511,7 +511,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 */
 	public void addTypeName(String type) {
 		// insert at start of list, sort later
-		if (_listTypes.contains(type))
+		if (type == null || _listTypes.contains(type))
 			return;
 		_listTypes.add(0, type);
 		log.debug("location (" + getName() + ") add rolling stock type " + type);

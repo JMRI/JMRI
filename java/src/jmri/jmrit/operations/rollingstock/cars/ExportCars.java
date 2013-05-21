@@ -94,21 +94,21 @@ public class ExportCars extends XmlFile {
 		for (int i = 0; i < carList.size(); i++) {
 			// store car number, road, type, length, weight, color, owner, built date, location and track
 			Car car = manager.getById(carList.get(i));
-			carType = car.getType();
+			carType = car.getTypeName();
 			if (carType.contains(del)) {
-				log.debug("Car (" + car.getRoad() + " " + car.getNumber()
+				log.debug("Car (" + car.getRoadName() + " " + car.getNumber()
 						+ ") has delimiter in type field: " + carType); // NOI18N
-				carType = ESC + car.getType() + ESC;
+				carType = ESC + car.getTypeName() + ESC;
 			}
 			carLocationName = car.getLocationName();
 			if (carLocationName.contains(del)) {
-				log.debug("Car (" + car.getRoad() + " " + car.getNumber()
+				log.debug("Car (" + car.getRoadName() + " " + car.getNumber()
 						+ ") has delimiter in location field: " + carLocationName); // NOI18N
 				carLocationName = ESC + car.getLocationName() + ESC;
 			}
 			carTrackName = car.getTrackName();
 			if (carTrackName.contains(del)) {
-				log.debug("Car (" + car.getRoad() + " " + car.getNumber()
+				log.debug("Car (" + car.getRoadName() + " " + car.getNumber()
 						+ ") has delimiter in track field: " + carTrackName); // NOI18N
 				carTrackName = ESC + car.getTrackName() + ESC;
 			}
@@ -117,7 +117,7 @@ public class ExportCars extends XmlFile {
 			if (!car.getValue().equals("")) {
 				value = del + ESC + car.getValue() + ESC;
 			}
-			line = car.getNumber() + del + car.getRoad() + del + carType + del + car.getLength()
+			line = car.getNumber() + del + car.getRoadName() + del + carType + del + car.getLength()
 					+ del + car.getWeight() + del + car.getColor() + del + car.getOwner() + del
 					+ car.getBuilt() + del + carLocationName + ",-," + carTrackName + value; // NOI18N
 			fileOut.println(line);

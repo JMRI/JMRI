@@ -250,7 +250,7 @@ public class TrainManifest extends TrainCommon {
 						pickUpCar(fileOut, car);
 					cars++;
 					newWork = true;
-					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(
+					if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 							CarLoad.LOAD_TYPE_EMPTY))
 						emptyCars++;
 				}
@@ -271,7 +271,7 @@ public class TrainManifest extends TrainCommon {
 					dropCar(fileOut, car);
 				cars--;
 				newWork = true;
-				if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(
+				if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 						CarLoad.LOAD_TYPE_EMPTY))
 					emptyCars--;
 			}
@@ -308,7 +308,7 @@ public class TrainManifest extends TrainCommon {
 							pickUpCar(fileOut, car);
 						cars++;
 						newWork = true;
-						if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(
+						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 								CarLoad.LOAD_TYPE_EMPTY))
 							emptyCars++;
 					}
@@ -331,7 +331,7 @@ public class TrainManifest extends TrainCommon {
 						dropCar(fileOut, car);
 					cars--;
 					newWork = true;
-					if (CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(
+					if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 							CarLoad.LOAD_TYPE_EMPTY))
 						emptyCars--;
 				}

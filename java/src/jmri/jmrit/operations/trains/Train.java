@@ -844,7 +844,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public void addTypeName(String type) {
 		// insert at start of list, sort later
-		if (_typeList.contains(type))
+		if (type == null || _typeList.contains(type))
 			return;
 		_typeList.add(0, type);
 		log.debug("train " + getName() + " add car type " + type);
@@ -1312,22 +1312,22 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean services(Car car, PrintWriter buildReport) {
 		boolean addToReport = Setup.getRouterBuildReportLevel().equals(SEVEN);
 		// check to see if train can carry car
-		if (!acceptsTypeName(car.getType())) {
+		if (!acceptsTypeName(car.getTypeName())) {
 			if (addToReport)
 				TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("trainCanNotServiceCarType"), new Object[] { getName(), car.toString(),
-						car.getType() }));
+						car.getTypeName() }));
 			return false;
 		}
-		if (!acceptsLoad(car.getLoad(), car.getType())) {
+		if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
 			if (addToReport)
 				TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("trainCanNotServiceCarLoad"), new Object[] { getName(), car.toString(),
-						car.getType(), car.getLoad() }));
+						car.getTypeName(), car.getLoadName() }));
 			return false;
 		}
 		if (!acceptsBuiltDate(car.getBuilt()) || !acceptsOwnerName(car.getOwner())
-				|| !acceptsRoadName(car.getRoad())) {
+				|| !acceptsRoadName(car.getRoadName())) {
 			if (addToReport)
 				TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("trainCanNotServiceCar"), new Object[] { getName(), car.toString() }));
@@ -1599,7 +1599,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				RouteLocation rl = route.getLocationById(ids.get(i));
 				for (int j = 0; j < cars.size(); j++) {
 					Car car = CarManager.instance().getById(cars.get(j));
-					if (!CarLoads.instance().getLoadType(car.getType(), car.getLoad()).equals(
+					if (!CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
 							CarLoad.LOAD_TYPE_EMPTY))
 						continue;
 					if (car.getRouteLocation() == rl) {
