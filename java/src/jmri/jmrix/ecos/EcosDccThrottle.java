@@ -429,7 +429,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 for (String line: msgDetails) {
                     if(speedMessageSent>0 && m.isUnsolicited() && line.contains("speed")){
                         //We want to ignore these messages.
-                    } else if (speedMessageSent0 && line.contains("speed") && !line.contains("speedstep")){
+                    } else if (speedMessageSent<=0 && line.contains("speed") && !line.contains("speedstep")){
                         Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))) ) ;
                         super.setSpeedSetting(newSpeed);
                     } else if (line.contains("dir")){
