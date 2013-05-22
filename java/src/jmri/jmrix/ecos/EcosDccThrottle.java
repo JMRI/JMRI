@@ -390,12 +390,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 return;
             }
             if(replyType.equals("set")){
-                //log.debug("The last command was accepted by the ecos");
                 //This might need to use speedstep, rather than speed
                 //This is for standard response to set and request.
                 String[] msgDetails = m.getContents();
                 for (String line: msgDetails) {
-                    if (line.contains("speed")){
+                    if (line.contains("speed")&& !line.contains("speedstep")){
                         if(speedMessageSent==1){
                             Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))) ) ;
                             super.setSpeedSetting(newSpeed);
@@ -407,23 +406,33 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                         if (EcosReply.getContentDetails(line, "dir").equals("0")) newDirection=true;
                         super.setIsForward(newDirection);
                     }
-                
+                }
+                if(msgDetails.length==0){
+                    //For some reason in recent ECOS software releases we do not get the contents, only a header and End State
+                    if(m.toString().contains("speed")&& !m.toString().contains("speedstep")){
+                        if(speedMessageSent==1){
+                            Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed"))) ) ;
+                            super.setSpeedSetting(newSpeed);
+                        }
+                        speedMessageSent--;
+                    } else if (m.toString().contains("dir")){
+                        boolean newDirection = false;
+                        if (EcosReply.getContentDetails(m.toString(), "dir").equals("0")) newDirection=true;
+                        super.setIsForward(newDirection);
+                    }
                 }
             }
             //Treat gets and events as the same.
             else if((replyType.equals("get")) || (m.isUnsolicited())){
-                if(speedMessageSent>0 && m.isUnsolicited()){
-                    //We ignore events for the throttle change if the GUI throttle is sending mutliple changings in speed.
-                    return;
-                }
                 //log.debug("The last command was accepted by the ecos");
                 String[] msgDetails = m.getContents();
                 for (String line: msgDetails) {
-                    if (line.contains("speed") && !line.contains("speedstep")){
+                    if(speedMessageSent>0 && m.isUnsolicited() && line.contains("speed")){
+                        //We want to ignore these messages.
+                    } else if (speedMessageSent>0 && line.contains("speed") && !line.contains("speedstep")){
                         Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))) ) ;
                         super.setSpeedSetting(newSpeed);
-                    }
-                    else if (line.contains("dir")){
+                    } else if (line.contains("dir")){
                         boolean newDirection = false;
                         if (EcosReply.getContentDetails(line, "dir").equals("0")) newDirection=true;
                         super.setIsForward(newDirection);
