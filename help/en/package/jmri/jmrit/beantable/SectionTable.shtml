@@ -55,13 +55,19 @@ the <b>forward</b> direction (from first block to last block) or <b>reverse</b>
 direction (from last block to first block). If a Section has only one Block, the 
 <b>direction</b> of that Section is chosen when setting up its <b>Entry Points</b> 
 (see below).</p>
+
+<p>Therefore, when setting up multi-block sections, you should choose blocks in the same 
+order across the layout for sequentially connected sections.  That way, the forward and 
+reverse directions will have consistent meaning for sections on a relative basis</p>
+
 <p>A Section has one or more <b>Entry Points</b>. An Entry Point defines a 
 connection from a Block inside the Section to a Block outside of the Section. Entry 
 Points are set up using Paths of Blocks in the Section--Paths that represent connections 
-to Blocks not contained in the Section. Entry Points are grouped according to whether 
-entering the Section at that Entry Point will result in a train traveling in the "forward" 
-direction, or whether entering at that Entry Point will result in a train 
-traveling in the "reverse" direction.</P>
+to Blocks not contained in the Section. Entry Points are classified in one of two ways:
+<ol><li>Whether entering the Section at that Entry Point will result in a train traveling in the "forward" 
+direction<li>
+<li>whether entering at that Entry Point will result in a train 
+traveling in the "reverse" direction.</li></ol></P>
 <p> Sections are designed to be allocated to one train at a time. If a portion of 
 connected track is long enough to support multiple trains simultaneously traveling in 
 the same direction, one following the other, that connected track should be divided into 
@@ -73,7 +79,8 @@ a CTC machine, or directly without any panel provided. Sections build on JMRI's
 Blocks and Paths structure. So before attempting to create any Sections, you should 
 have Blocks and Paths fully initialized for your layout. (An easy way to 
 automatically initialize your Blocks and Paths is to sketch out a Layout Editor panel 
-of your layout, with blocks assigned.)</p>
+of your layout, with blocks assigned. By assigning blocks to all track segments, turnouts, etc., 
+the paths will be created automatically for you by the software.)</p>
 <p>Layout blocking should be carefully planned, to provide "<i>reasonable</i>" 
 Sections--Sections that make sense for a dispatcher to allocate to a train. For 
 right-handed or left-handed turnouts switching mainline track, for 
@@ -116,7 +123,9 @@ before it overruns a red signal, if signals are present.</>
 <H2> Using the Section Table to Display and Create Sections
 </H2>
 <P>All the Sections that JMRI knows about can be viewed using the <b>Section 
-Table</b>.  Select <b>Sections</b> in the <b>Tables</b> submenu of the <b>Tools</b> menu 
+Table</b>.   Sections can either be created manually within the Section Table window, 
+or they can be created automatically if you also plan to use SignalMast Logic  <A HREF="#SignalMast">(see below).</a>
+Select <b>Sections</b> in the <b>Tables</b> submenu of the <b>Tools</b> menu 
 of the main JMRI program window. There are eight columns in the Section Table:</P>
 <UL>
 <LI><b>System Name</b> - The system name is assigned to the Section when it's created, 
@@ -174,21 +183,25 @@ in the same direction as entering at all other REVERSE Entry Points.</li>
 </UL>
 <p><b>WARNING: If Entry Points are not consistent strange behavior may result 
 when using the Section.</b></p>
-<H2>Using SignalMast Logic With Sections</H2>
+<H2><a name='SignalMast'>Using SignalMast Logic With Sections</a></H2>
 <p>If the signalling is based using Signal Masts, with the associated logic that has been generated 
 using the layout editor, then it is possible to also have sections automatically generated based 
 upon the logic.
 <p>The tool can be found in the <b>SignalMast Logic Table</b>|<b>Tools</b> | <b>Generate Sections</b>
-  Running this will create a Section for each Signal Mast Pair, it will place all the 
-"Automatically Generated" blocks in to the section in the 
-correct order, with the direction being set as FORWARD travel, going from the source to destination Mast.
-The block details are not saved when the panel is stored, but are re-created when the file is loaded.
-<p>The tool will also create forward and reverse direction sensors and places them in the section, however currently 
-the Signal Mast Logic does not use these and their creation is only there to allow validation of the section.
-<p>Sections generated with the tool will only have a pair of Entry Points and simply follows the path between the two signals
+ Running this will immediately create Sections that each contain all of the Blocks between any already-defined Signal Mast Pairs.
+ It will also setup each "Automatically Generated" Section so that they  include those Blocks in  the correct order, 
+ with the direction being set as FORWARD travel, going from the source to destination SignalMast. 
+ Please note that the block details are not saved when the panel is stored, but are re-created when the file is loaded. 
+<p>The tool will also automatically create forward and reverse direction sensors and places them in the sectionSection, however 
+currently the Signal Mast Logic does not use these and their creation is only there to allow validation of the section 
+(or use by the user in unrelated Logix if desired).
+<p>Sections generated with the tool will only have a pair of Entry Points and simply follows the path between the two signals.
+<p>Direction Sensors (Forward and Reverse) are created by the Generate Sections tool, but Stopping Sensors (Forward and Reverse) 
+need to be added manually by the user via the Edit Sections window for each section if desired.
 <p>The details of the Optional Direction and Stopping Sensors are saved when the panel file is stored.
-<p>To use the Sections that have built this way you will need to set the <A HREF="../dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a> 
-to use SignalMast Logic via the <A HREF="../dispatcher/Options.shtml"><b>Options</b></a> menu.
+<p>To use the Sections that have been built this way you will next need to setup <a href="TransitTable.shtml">Transits</a>, Following that, 
+you will also need to set the <A HREF="../dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a> 
+to use SignalMast Logic via the Dispatcher's <A HREF="../dispatcher/Options.shtml"><b>Options</b></a> menu.
 <a name="tools"><H2> Section Table Tools
 </H2>
 <P> The Section Table has a <b>Tools</b> menu to facilitate use of Sections. 
@@ -205,7 +218,7 @@ Entry Point</b>, but that feature is a planned future addition.  After testing i
 complete, a message is displayed giving the results of the testing. Detailed error 
 messages, if any, are placed in the JMRI error log.</p>
 </li>
-<li><p><b>Set Direction Sensors in Logic...</b> (Not required when using SignalMast Logic)
+<li><b>Set Direction Sensors in Logic...</b> (Not required when using SignalMast Logic)
  - When this item is selected, 
 direction sensors defined for each Section are placed in the signal logic 
 of appropriate signal heads--those signal heads internal to the Section or 

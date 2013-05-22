@@ -84,6 +84,7 @@ public class SignalMastLogicTableAction extends AbstractTableAction{
         item.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
                ((jmri.managers.DefaultSignalMastLogicManager) InstanceManager.signalMastLogicManagerInstance()).generateSection();
+               JOptionPane.showMessageDialog(null, Bundle.getMessage("SectionGenerationComplete"));
         	}
             });
     
