@@ -410,7 +410,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 if(msgDetails.length==0){
                     //For some reason in recent ECOS software releases we do not get the contents, only a header and End State
                     if(m.toString().contains("speed")&& !m.toString().contains("speedstep")){
-                        if(speedMessageSent==1){
+                        if(speedMessageSent<=1){
                             Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed"))) ) ;
                             super.setSpeedSetting(newSpeed);
                         }
@@ -429,7 +429,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 for (String line: msgDetails) {
                     if(speedMessageSent>0 && m.isUnsolicited() && line.contains("speed")){
                         //We want to ignore these messages.
-                    } else if (speedMessageSent>0 && line.contains("speed") && !line.contains("speedstep")){
+                    } else if (speedMessageSent0 && line.contains("speed") && !line.contains("speedstep")){
                         Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))) ) ;
                         super.setSpeedSetting(newSpeed);
                     } else if (line.contains("dir")){
