@@ -9,10 +9,9 @@ import java.awt.Component;
 import java.awt.event.*;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
+import java.util.ArrayList;
+import javax.swing.*;
 import javax.swing.text.Document;
-
 
 /**
  * Extends VariableValue to represent a indexed variable
@@ -26,6 +25,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
+ * @author   Bob Jacobsen  Copyright (C) 2013
  * @version  $Revision$
  *
  */
@@ -42,7 +42,7 @@ public class IndexedPairVariableValue extends VariableValue
         _secondCVrow = secondCVrow;
         _maxVal = maxVal;
         _minVal = minVal;
-        _value = new JTextField("0",3);
+        _value = new JTextField("0",4);
         _defaultColor = _value.getBackground();
         _value.setBackground(COLOR_UNKNOWN);
         mFactor = pFactor;
@@ -214,6 +214,8 @@ public class IndexedPairVariableValue extends VariableValue
             return _value;
     }
 
+    ArrayList<IndexedPairVarSlider> sliders = new ArrayList<IndexedPairVarSlider>();
+
     public void setValue(int value) {
         if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" enter setValue "+value);
         int oldVal;
@@ -231,28 +233,48 @@ public class IndexedPairVariableValue extends VariableValue
     Color _defaultColor;
 
     // implement an abstract member to set colors
+    Color getColor() { return _value.getBackground(); }
     void setColor(Color c) {
         if (c != null) _value.setBackground(c);
         else _value.setBackground(_defaultColor);
     }
 
     public Component getNewRep(String format)  {
-        JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
-        if (getReadOnly() || getInfoOnly()) {
-            value.setEditable(false);
+        if (format.equals("vslider")) {
+            IndexedPairVarSlider b = new IndexedPairVarSlider(this, _minVal, _maxVal);
+            b.setOrientation(JSlider.VERTICAL);
+            sliders.add(b);
+            reps.add(b);
+            updateRepresentation(b);
+            return b;
         }
-        reps.add(value);
-        updateRepresentation(value);
-        return value;
+        else if (format.equals("hslider")) {
+            IndexedPairVarSlider b = new IndexedPairVarSlider(this, _minVal, _maxVal);
+            b.setOrientation(JSlider.HORIZONTAL);
+            sliders.add(b);
+            reps.add(b);
+            updateRepresentation(b);
+            return b;
+        }
+        else {
+            JTextField value = new VarTextField(_value.getDocument(),_value.getText(), 3, this);
+            if (getReadOnly() || getInfoOnly()) {
+                value.setEditable(false);
+            }
+            reps.add(value);
+            updateRepresentation(value);
+            return value;
+        }
     }
 
     public void setAvailable(boolean a) {
         _value.setVisible(a);
+        for (Component c : sliders) c.setVisible(a);
         for (Component c : reps) c.setVisible(a);
         super.setAvailable(a);
     }
 
-    java.util.List<Component> reps = new java.util.ArrayList<Component>();
+    ArrayList<Component> reps = new ArrayList<Component>();
 
     private int _progState = 0;
     private boolean programmingLow = true;
