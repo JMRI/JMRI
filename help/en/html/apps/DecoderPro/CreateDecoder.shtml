@@ -23,14 +23,15 @@
 
 <H2>DecoderPro User Guide - Creating A Custom Decoder File</h2>
 
-<p>This page provides a little information on how the configuration
-files for the DecoderPro Symbolic Programmer work.</p>
+<p>This page provides information on how the decoder definition
+files for the DecoderPro Symbolic Programmer work and how to create a new one.</p>
 
 <p>In this user guide, we walk you through the process of creating a
 file to describe a new decoder.  You might benefit from reading the
 other sections of the DecoderPro user guide to get background
-information, especially the XML introduction and the section on what
-the configuration files contain.</p>
+information, especially the 
+<a href="IntroXML.shtml">XML introduction</a> and the section on 
+<a href="Files.shtml">what the configuration files contain</a>.</p>
 
 <p>The easiest way to create a configuration file is to modify an
 existing one.  In this section, we walk you through doing this.</p>
@@ -341,7 +342,11 @@ menu.</p>
 </dl>
 <p>Congratulations!  You're done.  Next, open the programmer
 application and try it.</p>
-    
+
+<p>For more advanced information on the content of the files, 
+please see the 
+<a href="CreateDecoderAdvanced.shtml">Advanced Decoder Definitions</a>
+page.
 <!--#include virtual="/Footer" -->
 </div>
 </body>
