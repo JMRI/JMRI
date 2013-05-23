@@ -10,7 +10,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 
 /**
  * Contains the csv operators for manifests and switch lists
- * @author Daniel Boudreau Copyright (C) 2011
+ * @author Daniel Boudreau Copyright (C) 2011, 2013
  * @version             $Revision: 1 $
  *
  */
@@ -66,10 +66,25 @@ public class TrainCsvCommon extends TrainCommon {
 	
 	protected void fileOutCsvCar(PrintWriter fileOut, Car car, String operation){
 		// check for delimiter in names
+      	String carRoad = car.getRoadName();
+    	if (carRoad.contains(DEL)){
+    		log.debug("Car ("+car.toString()+") has delimiter in road field: "+carRoad);
+    		carRoad = ESC+carRoad+ESC;
+    	}
       	String carType = car.getTypeName();
     	if (carType.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in type field: "+carType);
     		carType = ESC+carType+ESC;
+    	}
+      	String carLoad = car.getLoadName();
+    	if (carLoad.contains(DEL)){
+    		log.debug("Car ("+car.toString()+") has delimiter in load field: "+carLoad);
+    		carLoad = ESC+carLoad+ESC;
+    	}
+      	String carColor = car.getColor();
+    	if (carColor.contains(DEL)){
+    		log.debug("Car ("+car.toString()+") has delimiter in color field: "+carColor);
+    		carColor = ESC+carColor+ESC;
     	}
        	String carLocationName = car.getLocationName();
     	if (carLocationName.contains(DEL)){
@@ -91,6 +106,16 @@ public class TrainCsvCommon extends TrainCommon {
     		log.debug("Car ("+car.toString()+") has delimiter in destination track field: "+carDestTrackName);
     		carDestTrackName = ESC+carDestTrackName+ESC;
     	}
+      	String carOwner = car.getOwner();
+    	if (carOwner.contains(DEL)){
+    		log.debug("Car ("+car.toString()+") has delimiter in owner field: "+carOwner);
+    		carOwner = ESC+carOwner+ESC;
+    	}
+      	String carKernelName = car.getKernelName();
+    	if (carKernelName.contains(DEL)){
+    		log.debug("Car ("+car.toString()+") has delimiter in kernel name field: "+carKernelName);
+    		carKernelName = ESC+carKernelName+ESC;
+    	}
     	String carRWEDestName = car.getReturnWhenEmptyDestinationName();
       	if (carRWEDestName.contains(DEL)){
     		log.debug("Car ("+car.toString()+") has delimiter in RWE destination field: "+carRWEDestName);
@@ -103,31 +128,46 @@ public class TrainCsvCommon extends TrainCommon {
     	}
 
 		addLine(fileOut, operation 
-				+DEL+car.getRoadName()
+				+DEL+carRoad
 				+DEL+car.getNumber()
 				+DEL+carType
 				+DEL+car.getLength()
-				+DEL+car.getLoadName()
-				+DEL+car.getColor()								
+				+DEL+carLoad
+				+DEL+carColor							
 				+DEL+carLocationName
 				+DEL+carTrackName
 				+DEL+carDestName
 				+DEL+carDestTrackName
-				+DEL+car.getOwner()
-				+DEL+car.getKernelName()
-				+DEL+car.getComment()
-				+DEL+car.getPickupComment()
-				+DEL+car.getDropComment()
+				+DEL+carOwner
+				+DEL+carKernelName
+				+DEL+ESC+car.getComment()+ESC
+				+DEL+ESC+car.getPickupComment()+ESC
+				+DEL+ESC+car.getDropComment()+ESC
 				+DEL+(car.isCaboose()?"C":"")
 				+DEL+(car.hasFred()?"F":"")
 				+DEL+(car.isHazardous()?"H":"")
-				+DEL+car.getRfid()
+				+DEL+ESC+car.getRfid()+ESC
 				+DEL+carRWEDestName
 				+DEL+carRWETrackName);
 	}
 	
 	protected void fileOutCsvEngine(PrintWriter fileOut, Engine engine, String operation){	
 		// check for delimiter in names
+      	String engineRoad = engine.getRoadName();
+    	if (engineRoad.contains(DEL)){
+    		log.debug("Engine ("+engine.toString()+") has delimiter in road field: "+engineRoad);
+    		engineRoad = ESC+engineRoad+ESC;
+    	}
+     	String engineModel = engine.getModel();
+    	if (engineModel.contains(DEL)){
+    		log.debug("Engine ("+engine.toString()+") has delimiter in model field: "+engineModel);
+    		engineModel = ESC+engineModel+ESC;
+    	}
+      	String engineType = engine.getTypeName();
+    	if (engineType.contains(DEL)){
+    		log.debug("Engine ("+engine.toString()+") has delimiter in type field: "+engineType);
+    		engineType = ESC+engineType+ESC;
+    	}
 		String engineLocationName = engine.getLocationName();
 		if (engineLocationName.contains(DEL)){
 			log.debug("Engine ("+engine.toString()+") has delimiter in location field: "+engineLocationName);
@@ -148,21 +188,32 @@ public class TrainCsvCommon extends TrainCommon {
 			log.debug("Engine ("+engine.toString()+") has delimiter in destination track field: "+engineDestTrackName);
 			engineDestTrackName = ESC+engine.getDestinationTrackName()+ESC;
 		}
+      	String engineOwner = engine.getOwner();
+    	if (engineOwner.contains(DEL)){
+    		log.debug("Engine ("+engine.toString()+") has delimiter in owner field: "+engineOwner);
+    		engineOwner = ESC+engineOwner+ESC;
+    	}
+      	String engineConsistName = engine.getConsistName();
+    	if (engineConsistName.contains(DEL)){
+    		log.debug("Engine ("+engine.toString()+") has delimiter in consist name field: "+engineConsistName);
+    		engineConsistName = ESC+engineConsistName+ESC;
+    	}
+
 		addLine(fileOut, operation
-				+DEL+engine.getRoadName()
+				+DEL+engineRoad
 				+DEL+engine.getNumber()
-				+DEL+engine.getModel()						
+				+DEL+engineModel						
 				+DEL+engine.getLength()
-				+DEL+engine.getTypeName()
+				+DEL+engineType
 				+DEL+engine.getHp()								
 				+DEL+engineLocationName
 				+DEL+engineTrackName
 				+DEL+engineDestName
 				+DEL+engineDestTrackName
-				+DEL+engine.getOwner()
-				+DEL+engine.getConsistName()
-				+DEL+engine.getComment()
-				+DEL+engine.getRfid());
+				+DEL+engineOwner
+				+DEL+engineConsistName
+				+DEL+ESC+engine.getComment()+ESC
+				+DEL+ESC+engine.getRfid()+ESC);
 	}
 	
 	protected void engineCsvChange(PrintWriter fileOut, RouteLocation rl, int legOptions){
