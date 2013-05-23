@@ -119,6 +119,11 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (rs.getTrack() == null && mustHaveTrack)
 			return;
 
+		String rsRoad = rs.getRoadName();
+		if (rsRoad.contains(DEL)) {
+			log.debug("RS (" + rs.toString() + ") has delimiter in road field: " + rsRoad);
+			rsRoad = ESC + rs.getRoadName() + ESC;
+		}
 		String rsType = rs.getTypeName();
 		if (rsType.contains(DEL)) {
 			log.debug("RS (" + rs.toString() + ") has delimiter in type field: " + rsType);
@@ -134,6 +139,11 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		if (rsTrackName.contains(DEL)) {
 			log.debug("RS (" + rs.toString() + ") has delimiter in track field: " + rsTrackName);
 			rsTrackName = ESC + rs.getTrackName() + ESC;
+		}
+		String rsTrainName = rs.getTrainName();
+		if (rsTrainName.contains(DEL)) {
+			log.debug("RS (" + rs.toString() + ") has delimiter in train field: " + rsTrainName);
+			rsTrainName = ESC + rs.getTrainName() + ESC;
 		}
 		String carLoad = " ";
 		String carFinalDest = " ";
@@ -160,9 +170,9 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 			}
 		}
 
-		String line = rs.getNumber() + DEL + rs.getRoadName() + DEL + rsType + DEL + carLoad + DEL
+		String line = rs.getNumber() + DEL + rsRoad + DEL + rsType + DEL + carLoad + DEL
 				+ rsLocationName + DEL + rsTrackName + DEL + carFinalDest + DEL + carFinalDestTrack
-				+ DEL + rs.getTrainName() + DEL + rs.getMoves() + DEL + getTime();
+				+ DEL + rsTrainName + DEL + rs.getMoves() + DEL + getTime();
 
 		// append line to file
 		fileOut(line);
