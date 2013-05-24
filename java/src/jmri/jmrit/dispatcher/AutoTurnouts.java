@@ -60,8 +60,8 @@ public class AutoTurnouts {
 	 * NOTE: This method requires use of the connectivity stored in a Layout Editor panel.
 	 */
 	protected boolean checkTurnoutsInSection(Section s, int seqNum, Section nextSection,
-				ActiveTrain at, LayoutEditor le) {
-		return turnoutUtil(s, seqNum, nextSection, at, le, false, false);
+				ActiveTrain at, LayoutEditor le, Section prevSection) {
+		return turnoutUtil(s, seqNum, nextSection, at, le, false, false, prevSection);
 	}
 	/** 
 	 * Set all turnouts for travel in the designated Section to the next Section.
@@ -82,8 +82,8 @@ public class AutoTurnouts {
 	 * NOTE: This method requires use of the connectivity stored in a Layout Editor panel.
 	 */
 	protected boolean setTurnoutsInSection(Section s, int seqNum, Section nextSection,
-				ActiveTrain at, LayoutEditor le, boolean alwaysSet) {
-		return turnoutUtil(s, seqNum, nextSection, at, le, alwaysSet, true);
+				ActiveTrain at, LayoutEditor le, boolean alwaysSet, Section prevSection) {
+		return turnoutUtil(s, seqNum, nextSection, at, le, alwaysSet, true, prevSection);
 	}
 	/**
 	 * Internal method implementing the above two methods
@@ -92,7 +92,7 @@ public class AutoTurnouts {
 	 *	 what it finds. 
 	 */
 	private boolean turnoutUtil(Section s, int seqNum, Section nextSection,
-				ActiveTrain at, LayoutEditor le, boolean alwaysSet, boolean set) {
+				ActiveTrain at, LayoutEditor le, boolean alwaysSet, boolean set, Section prevSection) {
 		// validate input and initialize
 		Transit tran = at.getTransit();
 		if ( (s==null) || (seqNum>tran.getMaxSequence()) || (!tran.containsSection(s)) || (le==null) ) {
@@ -114,7 +114,6 @@ public class AutoTurnouts {
 		}
 		// initialize connectivity utilities and beginning block pointers
 		ConnectivityUtil ct = le.getConnectivityUtil();
-		Section prevSection = at.getLastAllocatedSection();
 		EntryPoint entryPt = null;
 		if (prevSection!=null) {
 			entryPt = s.getEntryPointFromSection(prevSection, direction);

@@ -417,17 +417,17 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     public void generateSection(){
         SectionManager sm = InstanceManager.sectionManagerInstance();
         for(NamedBean nb:sm.getNamedBeanList()){
-            /*if(((Section) nb).getSectionType()==Section.SIGNALMASTLOGIC)
-                nb.removeProperty("intermediateSection");*/
+            if(((Section) nb).getSectionType()==Section.SIGNALMASTLOGIC)
+                nb.removeProperty("intermediateSection");
             nb.removeProperty("forwardMast");
         }
         for(SignalMastLogic sml : getSignalMastLogicList()){
             jmri.jmrit.display.layoutEditor.LayoutBlock faceLBlock=sml.getFacingBlock();
             if(faceLBlock!=null){
-                /*boolean sourceIntermediate = false;
+                boolean sourceIntermediate = false;
                 if(sml.getSourceMast().getProperty("intermediateSignal")!=null){
                     sourceIntermediate = ((Boolean)sml.getSourceMast().getProperty("intermediateSignal")).booleanValue();
-                }*/
+                }
                 for(SignalMast destMast: sml.getDestinationList()){
                     if(sml.getAutoBlocksBetweenMasts(destMast).size()!=0){
                         Section sec = sm.createNewSection(sml.getSourceMast().getDisplayName()+":"+destMast.getDisplayName());
@@ -450,7 +450,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                         }
                         sml.setAssociatedSection(sec, destMast);
                         sec.setProperty("forwardMast", destMast.getDisplayName());
-                        /*boolean destIntermediate = false;
+                        boolean destIntermediate = false;
                         if(destMast.getProperty("intermediateSignal")!=null){
                             destIntermediate = ((Boolean)destMast.getProperty("intermediateSignal")).booleanValue();
                         }
@@ -458,7 +458,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
                             sec.setProperty("intermediateSection", true);
                         } else {
                             sec.setProperty("intermediateSection", false);
-                        }*/
+                        }
                         //Not 100% sure about this for now so will comment out
                         //sml.addSensor(sec.getSystemName()+":forward", Sensor.INACTIVE, destMast);
                     }
