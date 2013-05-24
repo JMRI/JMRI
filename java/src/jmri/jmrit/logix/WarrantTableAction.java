@@ -913,16 +913,16 @@ public class WarrantTableAction extends AbstractAction {
         	String blockName = orders.get(0).getBlock().getDisplayName();
         	w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
         	w.addThrottleCommand(new ThrottleSetting(0, "F2", "true", blockName));
-        	w.addThrottleCommand(new ThrottleSetting(1750, "F2", "false", blockName));
-        	w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
-        	w.addThrottleCommand(new ThrottleSetting(1750, "F2", "false", blockName));
-        	w.addThrottleCommand(new ThrottleSetting(0, "Forward", 
+        	w.addThrottleCommand(new ThrottleSetting(2000, "F2", "false", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(1500, "F2", "true", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(2000, "F2", "false", blockName));
+        	w.addThrottleCommand(new ThrottleSetting(500, "Forward", 
         										(_forward.isSelected()?"true":"false"), blockName));
         	w.addThrottleCommand(new ThrottleSetting(0, "Speed", Float.toString(f/4), blockName));        		
-        	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(3*f/8), blockName));        		
-        	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(f/2), blockName));        		
-        	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(3*f/4), blockName));        		
-        	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(7*f/8), blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(2000, "Speed", Float.toString(3*f/8), blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(2000, "Speed", Float.toString(f/2), blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(2000, "Speed", Float.toString(3*f/4), blockName));        		
+        	w.addThrottleCommand(new ThrottleSetting(2000, "Speed", Float.toString(7*f/8), blockName));        		
         	if (orders.size() > 2) {
             	blockName = orders.get(1).getBlock().getDisplayName();
         		w.addThrottleCommand(new ThrottleSetting(1000, "NoOp", "Enter Block", blockName));
@@ -938,11 +938,11 @@ public class WarrantTableAction extends AbstractAction {
                 	blockName = orders.get(orders.size()-2).getBlock().getDisplayName();
             	}
             	w.addThrottleCommand(new ThrottleSetting(0, "Speed", Float.toString(7*f/8), blockName));        		
-            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(3*f/4), blockName));        		
-            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(5*f/8), blockName));        		
-            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(f/2), blockName));        		
-            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(3*f/8), blockName));        		
-            	w.addThrottleCommand(new ThrottleSetting(1000, "Speed", Float.toString(f/3), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(2000, "Speed", Float.toString(3*f/4), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(2000, "Speed", Float.toString(5*f/8), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(2000, "Speed", Float.toString(f/2), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(2000, "Speed", Float.toString(3*f/8), blockName));        		
+            	w.addThrottleCommand(new ThrottleSetting(2000, "Speed", Float.toString(f/3), blockName));        		
          	}
         	OBlock block = orders.get(orders.size()-1).getBlock();
         	blockName = block.getDisplayName();

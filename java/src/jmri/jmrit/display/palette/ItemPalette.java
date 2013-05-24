@@ -33,9 +33,11 @@ import jmri.InstanceManager;
 
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
+import jmri.jmrit.catalog.DirectorySearcher;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.IconAdder;
 import jmri.jmrit.picker.PickListModel;
 
 
@@ -426,9 +428,31 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
             }.init(editor));
         findIcon.add(editItem);
         findIcon.addSeparator();
-
+        
+        JMenuItem openItem = new JMenuItem(Bundle.getMessage("openDirMenu"));
+        openItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    DirectorySearcher.instance().openDirectory(false);
+                }
+            });
+        findIcon.add(openItem);
+/*
         JMenuItem searchItem = new JMenuItem(Bundle.getMessage("searchFSMenu"));
+        searchItem.addActionListener(new ActionListener() {
+            IconAdder ea;
+            public void actionPerformed(ActionEvent e) {
+                File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+                if (dir != null) {
+                    ea.addDirectoryToCatalog(dir);
+                }
+            }
+            ActionListener init() {
+//                ea = ed;
+                return this;
+            }
+    	}.init());
         findIcon.add(searchItem);
+*/        
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.display.ItemPalette", true);
     }
