@@ -974,7 +974,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         if(at.getDelayedStart()==ActiveTrain.SENSORDELAY && at.getDelaySensor()!=null){
             if(at.getDelaySensor().getState()!=jmri.Sensor.ACTIVE){
                 at.initializeDelaySensor();
-                return;
             }
         }
 		AllocationRequest ar = at.initializeFirstAllocation();
@@ -1189,6 +1188,10 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 					}
 				}
 			}
+            //check here to see if block is already assigned to an allocated section;
+            if(getSignalType()==SIGNALMAST && !checkBlocksNotInAllocatedSection(s, ar)){
+                return null;
+            }
 			// Programming Note: if ns is not null, the program will not check for end Block, but will use ns. Calling
 			//		code must do all validity checks on a non-null ns.
 			if (ns!=null) {
@@ -1208,10 +1211,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				ArrayList<Section> secList = at.getTransit().getSectionListBySeq(seqNum);
 				if (secList.size()==1) {
 					nextSection = secList.get(0);
-                    //check here to see if block is already assigned to an allocated section;
-                    if(getSignalType()==SIGNALMAST && !checkBlocksNotInAllocatedSection(nextSection, ar)){
-                        return null;
-                    }
+
 				}
 				else if (secList.size()>1) {
 					if (_AutoAllocate) {
@@ -1231,10 +1231,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 				ArrayList<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
 				if (secList.size()==1) {
 					nextSection = secList.get(0);
-                    //check here to see if block is already assigned to an allocated section;
-                    if(getSignalType()==SIGNALMAST && !checkBlocksNotInAllocatedSection(secList.get(0), ar)){
-                        return null;
-                    }
 				}
 				else if (secList.size()>1) {
 					if (_AutoAllocate) {
@@ -1296,7 +1292,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 
 			s.setState(ar.getSectionDirection());
             boolean signalHeldByDispatcher = false;
-            if(getSignalType()==SIGNALMAST && at.getLastAllocatedSection()!=null){  //We only start holding signals once the first one 
+            if(getSignalType()==SIGNALMAST){
                 String property = "forwardMast";
                 if(s.getState()==Section.REVERSE){
                     property = "reverseMast";
@@ -1677,13 +1673,18 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	protected void newTrainDone(ActiveTrain at) {
 		if (at!=null) {
 			// a new active train was created, check for delayed start
-			if (at.getDelayedStart()!=ActiveTrain.NODELAY && (!at.getStarted()) ) {		
+			if (at.getDelayedStart()!=ActiveTrain.NODELAY && (!at.getStarted()) ) {
 				delayedTrains.add(at);
 				fastClockWarn();
 			}
 		}
 		newTrainActive = false;
 	}
+    
+    protected void removeDelayedTrain(ActiveTrain at){
+        delayedTrains.remove(at);
+    }
+    
 	private void fastClockWarn() {
 		if (fastClockSensor.getState()==Sensor.ACTIVE) return;
 		// warn that the fast clock is not running

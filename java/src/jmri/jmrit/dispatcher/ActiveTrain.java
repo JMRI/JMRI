@@ -242,9 +242,13 @@ public class ActiveTrain {
 		else if (mStatus==PAUSED) 
 			return rb.getString("PAUSED");
 		else if (mStatus==WAITING) {
-			if (!mStarted && mDelayedStart!=NODELAY) {
-				return jmri.jmrit.beantable.LogixTableAction.formatTime(mDepartureTimeHr,
-						mDepartureTimeMin)+" "+rb.getString("START");
+			if (!mStarted) { 
+                if(mDelayedStart==TIMEDDELAY) {
+                    return jmri.jmrit.beantable.LogixTableAction.formatTime(mDepartureTimeHr,
+                            mDepartureTimeMin)+" "+rb.getString("START");
+                } else if (mDelayedStart==SENSORDELAY){
+                    return (Bundle.getMessage("BeanNameSensor") + " " + getDelaySensorName());
+                }
 			}
 			return rb.getString("WAITING");
 		}
@@ -312,8 +316,9 @@ public class ActiveTrain {
                     if (e.getPropertyName().equals("KnownState")) {
                         if(((Integer) e.getNewValue()).intValue()==jmri.Sensor.ACTIVE){
                             getDelaySensor().removePropertyChangeListener(delaySensorListener);
-                            DispatcherFrame.instance().allocateNewActiveTrain(at);
-                            
+                            DispatcherFrame.instance().removeDelayedTrain(at);
+                            setStarted();
+                            DispatcherFrame.instance().forceScanOfAllocation();
                             try{
                                 getDelaySensor().setKnownState(jmri.Sensor.INACTIVE);
                             } catch (jmri.JmriException ex){

@@ -546,7 +546,7 @@ public class ActivateTrainFrame {
 		at.setDepartureTimeHr(departureTimeHours);
 		at.setDepartureTimeMin(departureTimeMinutes);
         at.setDelaySensor((jmri.Sensor)delaySensor.getSelectedBean());
-		if (_dispatcher.isFastClockTimeGE(departureTimeHours,departureTimeMinutes)) {
+		if (_dispatcher.isFastClockTimeGE(departureTimeHours,departureTimeMinutes) && delayedStart!=ActiveTrain.SENSORDELAY) {
 			at.setStarted();
 		}
 		at.setTrainType(trainType);
