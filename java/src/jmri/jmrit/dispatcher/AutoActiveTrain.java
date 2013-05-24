@@ -1010,7 +1010,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
                 // ignore this exception
-            }            
+            }
+            waitUntilStopped();
 			_autoEngineer.abort();
             InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, this);
 		}
@@ -1251,7 +1252,7 @@ public class AutoActiveTrain implements ThrottleListener {
 						log.error("InterruptedException in AutoEngineer"+ie);
 					}
 				}
-             }
+            }
             // shut down
         }
 
