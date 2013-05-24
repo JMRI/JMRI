@@ -135,8 +135,6 @@ public class AllocationRequest {
     private java.beans.PropertyChangeListener mSignalMastListener = null;
     
     private jmri.SignalMast mWaitingForSignalMast = null;
-    
-    private boolean autoDispatcherHeldMast = false;
        
     public void setWaitingForSignalMast(jmri.SignalMast sm){
         if(mSignalMastListener == null){
