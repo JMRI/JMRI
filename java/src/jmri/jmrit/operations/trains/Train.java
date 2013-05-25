@@ -2413,7 +2413,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return True only if train is successfully built.
 	 */
 	public boolean buildIfSelected() {
-		if (_build && !_built) {
+		if (isBuildEnabled() && !isBuilt()) {
 			build();
 			return true;
 		}
@@ -2519,7 +2519,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if print successful.
 	 */
 	public boolean printManifestIfBuilt() {
-		if (_built) {
+		if (isBuilt()) {
 			boolean isPreview = TrainManager.instance().isPrintPreviewEnabled();
 			printManifest(isPreview);
 		} else {
@@ -2670,7 +2670,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * Terminate train.
 	 */
 	public void terminate() {
-		while (_built)
+		while (isBuilt())
 			move();
 	}
 
@@ -2680,8 +2680,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public void move() {
 		log.debug("Move train (" + getName() + ")");
-		if (getRoute() == null || getCurrentLocation() == null)
+		if (getRoute() == null || getCurrentLocation() == null) {
+			setBuilt(false);	// break terminate loop
 			return;
+		}
 		List<String> routeList = getRoute().getLocationsBySequenceList();
 		for (int i = 0; i < routeList.size(); i++) {
 			RouteLocation rl = getRoute().getLocationById(routeList.get(i));
