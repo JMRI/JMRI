@@ -582,7 +582,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void enableButtons(boolean enabled) {
 		editButton.setEnabled(enabled);
-		routeBox.setEnabled(enabled);
+		routeBox.setEnabled(enabled && _train != null && !_train.isBuilt());
 		clearButton.setEnabled(enabled);
 		resetButton.setEnabled(enabled);
 		setButton.setEnabled(enabled);
@@ -970,6 +970,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		if (e.getPropertyName().equals(Train.TRAIN_ROUTE_CHANGED_PROPERTY) && _train != null) {
 			routeBox.setSelectedItem(_train.getRoute());
+		}
+		if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+			enableButtons(_train != null);
 		}
 	}
 
