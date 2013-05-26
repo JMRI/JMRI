@@ -382,7 +382,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		packFrame();
 	}
 
-	// Save, Delete, Add
+	// Save, Delete, Add, Edit, Reset, Set, Clear
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveTrainButton) {
 			log.debug("train save button activated");
@@ -861,6 +861,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	private void editAddRoute() {
 		log.debug("Edit/add route");
+		// warn user if train is built that they shouldn't edit the train's route
+		if (_train != null && _train.isBuilt()) {
+			JOptionPane.showMessageDialog(this, Bundle.getMessage("DoNotModifyRoute"), Bundle
+					.getMessage("BuiltTrain"), JOptionPane.WARNING_MESSAGE);
+		}
 		if (ref != null)
 			ref.dispose();
 		ref = new RouteEditFrame();

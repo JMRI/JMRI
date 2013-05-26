@@ -199,7 +199,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
       	
       	builtPane = new JScrollPane(panelBuilt);
       	builtPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-      	builtPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BuiltTrain")));
+      	builtPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BuiltDatesTrain")));
       	
       	trainReq1Pane = new JScrollPane(panelTrainReq1);
       	trainReq1Pane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
