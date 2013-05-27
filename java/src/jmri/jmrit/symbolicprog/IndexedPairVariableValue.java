@@ -279,7 +279,7 @@ public class IndexedPairVariableValue extends VariableValue
     private int _progState = 0;
     private boolean programmingLow = true;
     private static final int IDLE = 0;
-    private static final int WRITING_PI4R = 1;
+    private static final int WRITING_PI4R = 1;  // R, W, C suffix is Read, Write, Confirm
     private static final int WRITING_PI4W = 2;
     private static final int WRITING_SI4R = 3;
     private static final int WRITING_SI4W = 4;
