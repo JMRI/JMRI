@@ -187,9 +187,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     * @param  block train has just entered.
     */
     protected void synchNotify(OBlock block) {
-    	if (_ramp!=null) {
-    		_ramp.stop();
-    		_ramp = null;
+    	synchronized(this) {
+        	if (_ramp!=null) {
+        		_ramp.stop();
+        		_ramp = null;
+        	}    		
     	}
     	checkHalt();
         if (log.isDebugEnabled()) log.debug("synchNotify from block "+block.getDisplayName()+
@@ -454,18 +456,19 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param sensorName
      * @param action
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UW_UNCOND_WAIT", justification="Test for wait condition already done in line 470") 
     private void getSensor(String sensorName, String action) {
         action = action.toUpperCase();    
         _waitSensor = InstanceManager.sensorManagerInstance().getSensor(sensorName);
         if (_waitSensor != null) {
-            int state = _waitSensor.getKnownState();
             if ("ACTIVE".equals(action)) {
                 _sensorWaitState = Sensor.ACTIVE;        	
             } else if ("INACTIVE".equals(action)) {
                 _sensorWaitState = Sensor.INACTIVE;        	        	
             }
+            int state = _waitSensor.getKnownState();
             if (state==_sensorWaitState) {
-            	log.warn("Engineer: state of event sensor "+sensorName+" already at state "+action);
+            	log.info("Engineer: state of event sensor "+sensorName+" already at state "+action);
             	return;
             }
         	_waitSensor.addPropertyChangeListener(this);
@@ -473,12 +476,14 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             		_waitSensor.getDisplayName()+", wait for State= "+_sensorWaitState);
             // suspend commands until sensor changes state
             synchronized(this) {
-                try {
-                    _waitForSensor = true;            	
-                    _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
-                    wait();                    	
-                } catch (InterruptedException ie) {
-                    log.error("InterruptedException "+ie);
+                _waitForSensor = true;            	
+                while (!_waitForSensor) {
+                    try {
+                        _warrant.fireRunStatus("Command", Integer.valueOf(_idxCurrentCommand), Integer.valueOf(_idxCurrentCommand+1));
+                        wait();                    	
+                    } catch (InterruptedException ie) {
+                        log.error("InterruptedException "+ie);
+                    }                	
                 }
             }
        } else {
@@ -497,9 +502,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 ((Number)evt.getNewValue()).intValue()== _sensorWaitState) ) {
             synchronized(this) {
     	        if (!_halt) {
-    	            this.notify();
     	            _waitSensor.removePropertyChangeListener(this);
+    	            this.notify();
     	            _sensorWaitState = 0;
+    	            _waitForSensor = false;
     	            _waitSensor = null;
     	        }
             }

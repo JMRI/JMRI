@@ -148,7 +148,7 @@ final public class Tracker {
     	Iterator<OBlock> iter = _range.iterator();
     	while (iter.hasNext()) {
     		OBlock b = iter.next();
-    		if ((b.getState() & OBlock.OCCUPIED) != 0 & _trainName.equals(b.getValue())) {
+    		if ((b.getState() & OBlock.OCCUPIED) != 0 && _trainName.equals(b.getValue())) {
     	        _prevBlock = _currentBlock;
         		_currentBlock = b;    			
 				makeRange();           			

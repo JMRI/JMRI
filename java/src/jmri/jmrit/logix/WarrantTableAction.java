@@ -648,7 +648,6 @@ public class WarrantTableAction extends AbstractAction {
             tablePanel.add(title, BorderLayout.NORTH);
             tablePanel.add(tablePane, BorderLayout.CENTER);
             
-            JPanel panel = new JPanel();
             JPanel p = new JPanel();
             p.add(new JLabel("status"));
         	_background = _status.getBackground();
@@ -657,7 +656,7 @@ public class WarrantTableAction extends AbstractAction {
             _status.setEditable(false);
             tablePanel.add(p, BorderLayout.CENTER);
             
-            panel = new JPanel();
+            JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
             //JPanel p = new JPanel();
