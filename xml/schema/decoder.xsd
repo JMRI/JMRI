@@ -218,7 +218,9 @@
             </xs:element>
           </xs:sequence>
           <xs:attribute name="model" type="xs:string" use="required"/>
-          <xs:attribute name="show" type="yesNoType" default="yes" />
+          <xs:attribute name="show" type="yesNoMaybeType" default="yes" >
+            <xs:annotation><xs:documentation>&quot;yes&quot; always shows in the full decoder model list; &quot;no&quot; never shows in the full decoder model list; &quot;maybe&quot; shows when this model has been detected</xs:documentation></xs:annotation>
+          </xs:attribute>
           <xs:attribute name="options" type="xs:string" />
           <xs:attribute name="comment" type="xs:string" />
           <xs:attribute name="numFns" type="xs:int" />
@@ -287,7 +289,6 @@
     <xs:attribute name="highVersionID" type="xs:int" />
     <xs:attribute name="type" type="xs:string" />
     <xs:attribute name="comment" type="xs:string" />
-    <xs:attribute name="show" type="yesNoMaybeType" default="yes" />
   </xs:complexType>
 
   <xs:complexType name="VariablesType">
@@ -576,6 +577,15 @@
                     <xs:attribute name="offset" type="xs:string"/>
                     <xs:attribute name="comment" type="xs:string"/>
                     <xs:attribute name="upperMask" type="xs:string"/>
+                    <xs:attribute name="order" default="lowFirst">
+                        <xs:annotation><xs:documentation>Controls whether high CV or low CV written first</xs:documentation></xs:annotation>
+                        <xs:simpleType>
+                          <xs:restriction base="xs:string">
+                            <xs:enumeration value="lowFirst"/>
+                            <xs:enumeration value="highFirst"/>
+                          </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>    
                   </xs:complexType>
                 </xs:element>
               </xs:choice>

@@ -627,7 +627,14 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         }
         // ensure highCVnumber exists
         int highCVrow = _indxCvModel.addIndxCV(row, highCVname, _piCv, highCVpiVal, _siCv, highCVsiVal, highCVnumber, readOnly, infoOnly, writeOnly);
-        iv = new IndexedPairVariableValue(row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(), _status, item, highCVrow, highCVname, factor, offset, uppermask);
+        
+        // order
+        boolean upperFirst = false;
+        if ((a = child.getAttribute("order")) != null) {
+            if (a.getValue().equals("highFirst")) upperFirst = true;
+        }
+        
+        iv = new IndexedPairVariableValue(row, name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cv, mask, minVal, maxVal, _indxCvModel.allIndxCvVector(), _status, item, highCVrow, highCVname, factor, offset, uppermask, upperFirst);
         return iv;
     }
 

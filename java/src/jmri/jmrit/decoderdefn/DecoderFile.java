@@ -168,10 +168,17 @@ public class DecoderFile extends XmlFile {
     public String getFilename()  { return _filename; }
     public int getNumFunctions() { return _numFns; }
     public int getNumOutputs()   { return _numOuts; }
-    public boolean getShowable() { 
-        if (_element.getAttribute("show") == null) return true; // default
-        return ! (_element.getAttributeValue("show").equals("no"));
+    public Showable getShowable() { 
+        if (_element.getAttribute("show") == null) return Showable.YES; // default
+        else if (_element.getAttributeValue("show").equals("no")) return Showable.NO;
+        else if (_element.getAttributeValue("show").equals("maybe")) return Showable.MAYBE;
+        else {
+            log.error("unexpected value for show attribute: "+_element.getAttributeValue("show"));
+            return Showable.YES; // default again
+        }
     }
+
+    public enum Showable { YES, NO, MAYBE }
 
     public String getModelComment() { return _element.getAttributeValue("comment"); }
     public String getFamilyComment() { return ((Element)_element.getParent()).getAttributeValue("comment"); }
