@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130412-1344-jake on Fri Apr 12 06:45:17 PDT 2013 $Id$-->
-  <decoderIndex version="270">
+  <!--Written by JMRI version 20130527-2109-jake on Mon May 27 14:09:24 PDT 2013 $Id$-->
+  <decoderIndex version="272">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="104">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1337,7 +1337,7 @@
         </model>
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" file="ESU_LokPilotV4.0.xml">
-        <model model="LokPilot V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
+        <model model="LokPilot V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LPV4">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -1361,7 +1361,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
+        <model model="LokPilot DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LPV4DCC">
           <output name="1" label="Headlight" maxcurrent="250mA" />
           <output name="2" label="Rear light" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -1380,7 +1380,7 @@
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC" -->
         </model>
-        <model model="LokPilot Micro V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes">
+        <model model="LokPilot Micro V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="LPmV4">
           <output name="1" label="Headlight" maxcurrent="150mA" />
           <output name="2" label="Rear light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="150mA" />
@@ -1404,7 +1404,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes">
+        <model model="LokPilot Micro DCC V4.0" numOuts="15" numFns="28" maxMotorCurrent="0.75A" extFnsNmraF13="yes" productID="LPmV4DCC">
           <output name="1" label="Headlight" maxcurrent="150mA" />
           <output name="2" label="Rear light" maxcurrent="150mA" />
           <output name="3" label="AUX 1" maxcurrent="150mA" />
@@ -3002,6 +3002,45 @@
           <output name="4" label="Output D" />
         </model>
       </family>
+      <family name="Harman Signalist Accessory Decoders" mfg="Harman DCC" file="Harman_Sig_decoders.xml">
+        <!--  <model model="SC1 version 0.18" numOuts="8" numFns="16" formFactor="HO" productID="V018">
+        <versionCV lowVersionID="224" highVersionID="255"/>
+        <output name="1" label="Output A"/>
+        <output name="2" label="Output B"/>
+        <output name="3" label="Output C"/>
+        <output name="4" label="Output D"/>
+        <output name="5" label="Output E"/>
+        <output name="6" label="Output F"/>
+        <output name="7" label="Output G"/>
+        <output name="8" label="Output H"/>
+      </model>
+	  -->
+        <model model="SC1 version 0.21" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57377">
+          <!-- possibly product ID will need to be both Hex numbers, ie. E021, which is decimal 57377  -->
+          <!-- productID=33 should match Version=021Hex  <versionCV lowVersionID="21" highVersionID="22"/> -->
+          <output name="1" label="Output A" />
+          <output name="2" label="Output B" />
+          <output name="3" label="Output C" />
+          <output name="4" label="Output D" />
+          <output name="5" label="Output E" />
+          <output name="6" label="Output F" />
+          <output name="7" label="Output G" />
+          <output name="8" label="Output H" />
+        </model>
+        <model model="SC1 version 0.23" lowVersionID="9" highVersionID="10" numOuts="8" numFns="16" formFactor="HO" productID="57379">
+          <!--productID=57379 should match Version=E023Hex    
+			Version numbers are in CV112/113 and take values 224 and 035 (ie. the version is in hex, so Hex23 = 35) 
+			-->
+          <output name="1" label="Output A" />
+          <output name="2" label="Output B" />
+          <output name="3" label="Output C" />
+          <output name="4" label="Output D" />
+          <output name="5" label="Output E" />
+          <output name="6" label="Output F" />
+          <output name="7" label="Output G" />
+          <output name="8" label="Output H" />
+        </model>
+      </family>
       <family name="Sapphire-R8245" mfg="Hornby" highVersionID="10" lowVersionID="10" comment="Decoder with auntomous loco control and fuel/water simulation" file="Hornby8245_v2.xml">
         <model model="Sapphire-R8245" numOuts="4" numFns="4" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="0O">
           <output name="1" label="1 - White" />
@@ -3846,51 +3885,6 @@
           <size length="83" width="16" height="7.5" units="mm" />
         </model>
         <model model="Synch Diesel Sound 1804 - HO Scale Athearn MP15" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
-          <size length="83" width="16" height="7.5" units="mm" />
-        </model>
-        <model model="Synch Diesel Sound 1805 - G.E. U23B Prime Mover" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
-          <size length="48" width="17" height="7.5" units="mm" />
-        </model>
-        <model model="Synch Diesel Sound 1806 - N Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
-          <size length="72" width="9.7" height="3.0" units="mm" />
-        </model>
-        <model model="Synch Diesel Sound 1811 - G.E. U23B Prime Mover" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
-          <size length="" width="" height="" units="mm" />
-        </model>
-        <functionlabels>
-          <functionlabel num="0" lockable="true">Light</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="false">Horn</functionlabel>
-          <functionlabel num="3" lockable="true">Air Release/Acc1 on or off</functionlabel>
-          <functionlabel num="4" lockable="true">Coupling</functionlabel>
-          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
-          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
-          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
-          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
-          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
-          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
-          <functionlabel num="11" lockable="true">loco Sound</functionlabel>
-          <functionlabel num="12" lockable="true">Prime MoverType</functionlabel>
-          <functionlabel num="13" lockable="true">Air release/ Acc2 on or off</functionlabel>
-          <functionlabel num="14" lockable="true">Coupling 2</functionlabel>
-          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
-          <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
-          <functionlabel num="17" lockable="true">Flange Noise 1</functionlabel>
-          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
-          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
-          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
-          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
-          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
-          <functionlabel num="23" lockable="true">Prime Mover Volume</functionlabel>
-          <functionlabel num="24" lockable="true">Air Release</functionlabel>
-          <functionlabel num="25" lockable="true">Flange Noise 2</functionlabel>
-          <functionlabel num="26" lockable="true">Safety Valve Pop</functionlabel>
-          <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
-          <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
-        </functionlabels>
-      </family>
-      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" file="MRC_soundbrilliance1806.xml">
-        <model model="Synch Diesel Sound 1802 - HO Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
           <size length="83" width="16" height="7.5" units="mm" />
         </model>
         <model model="Synch Diesel Sound 1805 - G.E. U23B Prime Mover" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
@@ -5854,6 +5848,9 @@
       </family>
       <family name="Control Point" mfg="RR-CirKits" type="stationary" comment="The Control Point is normally programmed in OPs mode" file="RR-CirKits-LNCP-basic.xml">
         <model model="LNCP" comment="LocoNet Control Point" lowVersionID="01" />
+      </family>
+      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode" file="RR-CirKits-SignalMan-basic.xml">
+        <model model="SignalMan" comment="Signal Mast Driver" lowVersionID="10" />
       </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
         <model model="TC-64" comment="64 line I/O" lowVersionID="06" />
@@ -8003,6 +8000,16 @@
           <output name="Number" label="Boards" />
           <output name="Mute" />
           <output name="Class" label="Light" />
+          <output name="Brakes" />
+          <output name="Grade" label="Xing" />
+        </model>
+        <model model="F9B" numOuts="4" numFns="14" connector="9pin" productID="103" comment="CP_CN">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="STR8-2-8" />
+          <output name="Dynamics" />
+          <output name="Mute" />
           <output name="Brakes" />
           <output name="Grade" label="Xing" />
         </model>
@@ -10334,6 +10341,19 @@
           <output name="3" maxcurrent="100 mA" />
           <output name="4" maxcurrent="100 mA" />
         </model>
+      </family>
+      <family name="Wekomm for LSM" mfg="Wekomm" type="locomotive" file="Wekomm_RRR.xml">
+        <model model="Wekomm_RRR" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Cab Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Trailing Lights</functionlabel>
+          <functionlabel num="2" lockable="true">Safelights</functionlabel>
+          <functionlabel num="3" lockable="true">Interior lights</functionlabel>
+          <functionlabel num="4" lockable="true">Warning lights</functionlabel>
+          <functionlabel num="5" lockable="true">3rd Front light</functionlabel>
+          <functionlabel num="9" lockable="true">Reverse lights</functionlabel>
+          <functionlabel num="10" lockable="true">Failed lights</functionlabel>
+        </functionlabels>
       </family>
       <family name="ZTC213/213A" mfg="ZTC" lowVersionID="0" highVersionID="255" file="ZTC_213.xml">
         <model model="ZTC213" numOuts="2">
