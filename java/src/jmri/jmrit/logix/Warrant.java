@@ -408,8 +408,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         key = "Halted";
                         break;
                     case Warrant.ABORT:
-                    	if (_commands!=null && 
-                    			_engineer.getCurrentCommandIndex()>=_commands.size()-1) {
+                    	if (_engineer.getCurrentCommandIndex()>=_commands.size()-1) {
                     		_engineer = null;
                     		return Bundle.getMessage("endOfScript");
                     	}
@@ -586,12 +585,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
         }
         _delayStart = false;	// script should start - no more delay
-        log.debug("Throttle at "+address.toString()+" Aquired for warrant "+getDisplayName());
         if (msg!=null) {
          	log.error("Abort warrant \""+ getDisplayName()+"\" "+msg);
          	if (_engineer!=null) {
             	_engineer.abort();
          	}
+        } else {
+            log.debug("Throttle at "+address.toString()+" Aquired for warrant "+getDisplayName());        	
         }
     	return msg;
     }
