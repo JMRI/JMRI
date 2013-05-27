@@ -37,18 +37,23 @@ public class LnTrafficControllerTest extends TestCase {
     	public boolean listenResultRcv = false;
     	// set to true if the LocoNetListener receives the echo of a sent message
         public boolean listenResultXmit = false;
-        public Date listenTimestamp = new Date(0);
+        
+        //public Date listenTimestamp = new Date(0);
+        
         // reset values
         public void reset() {
         	listenResultRcv = false;
             listenResultXmit = false;
-            listenTimestamp = new Date(0); }
+            //listenTimestamp = new Date(0);
+        }
 		public void notifyXmit(Date timestamp, LocoNetMessage m) {
 			listenResultXmit = true;
-			listenTimestamp = timestamp; }
+			//listenTimestamp = timestamp;
+		}
 		public void notifyRcv(Date timestamp, LocoNetMessage m) {
 			listenResultRcv = true;
-			listenTimestamp = timestamp; }
+			//listenTimestamp = timestamp;
+		}
     }
 
     /** This class implements a simple test stub for LocoNetListener to test 
