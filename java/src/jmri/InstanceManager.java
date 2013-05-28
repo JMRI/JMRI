@@ -2,6 +2,8 @@
 
 package jmri;
 
+import jmri.implementation.NmraConsistManager;
+import jmri.implementation.DccConsistManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;

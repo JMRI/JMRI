@@ -16,7 +16,7 @@ import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 
-public class XNetConsist extends jmri.DccConsist implements XNetListener {
+public class XNetConsist extends jmri.implementation.DccConsist implements XNetListener {
 
 	// We need to wait for replies before completing consist 
 	// operations

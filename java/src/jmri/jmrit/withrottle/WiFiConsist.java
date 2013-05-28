@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.DccConsist;
+import jmri.implementation.DccConsist;
 import jmri.DccLocoAddress;
 
 /**

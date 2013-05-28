@@ -2,6 +2,7 @@
 
 package jmri;
 
+import jmri.implementation.DccConsist;
 import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;

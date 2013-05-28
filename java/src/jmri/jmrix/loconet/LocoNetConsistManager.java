@@ -1,57 +1,66 @@
 /**
  * LocoNetConsistManager.java
  *
- * Description:           Consist Manager for use with the
- *                        LocoNetConsist class for the consists it builds
+ * Description: Consist Manager for use with the LocoNetConsist class for the
+ * consists it builds
  *
- * @author                Paul Bender Copyright (C) 2011
- * @version               $Revision$
+ * @author Paul Bender Copyright (C) 2011
+ * @version $Revision$
  */
-
-
 package jmri.jmrix.loconet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.Consist;
 import jmri.DccLocoAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public class LocoNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
-    
-    private LocoNetSystemConnectionMemo memo=null;
+public class LocoNetConsistManager extends jmri.implementation.AbstractConsistManager implements jmri.ConsistManager {
+
+    private LocoNetSystemConnectionMemo memo = null;
 
     /**
-     *  Constructor - call the constructor for the superclass, and 
-     *  initilize the consist reader thread, which retrieves consist 
-     *  information from the command station
-     **/
-    public LocoNetConsistManager(LocoNetSystemConnectionMemo lm){
-        super();
-	this.memo=lm;
-    }
-    
-    /**
-     *    This implementation does support command station assisted
-     *     consists, so return true.
-     **/
-    public boolean isCommandStationConsistPossible() { return true; }
-    
-    /**
-     *    Does a CS consist require a seperate consist address?
-     **/
-    public boolean csConsistNeedsSeperateAddress() { return false; }
-    
-    /**
-     *    Add a new LocoNetConsist with the given address to 
-     *    consistTable/consistList
+     * Constructor - call the constructor for the superclass, and initilize the
+     * consist reader thread, which retrieves consist information from the
+     * command station
+     *
      */
-    public Consist addConsist(DccLocoAddress address){ 
-        if(consistList.contains(address)) // no duplicates allowed.
-           return consistTable.get(address);
+    public LocoNetConsistManager(LocoNetSystemConnectionMemo lm) {
+        super();
+        this.memo = lm;
+    }
+
+    /**
+     * This implementation does support command station assisted consists, so
+     * return true.
+     *
+     */
+    @Override
+    public boolean isCommandStationConsistPossible() {
+        return true;
+    }
+
+    /**
+     * Does a CS consist require a separate consist address?
+     *
+     */
+    @Override
+    public boolean csConsistNeedsSeperateAddress() {
+        return false;
+    }
+
+    /**
+     * Add a new LocoNetConsist with the given address to
+     * consistTable/consistList
+     */
+    @Override
+    public Consist addConsist(DccLocoAddress address) {
+        if (consistTable.containsKey(address)) // no duplicates allowed.
+        {
+            return consistTable.get(address);
+        }
         LocoNetConsist consist;
-        consist = new LocoNetConsist(address,memo);
-        consistTable.put(address,consist);
-        consistList.add(address);
+        consist = new LocoNetConsist(address, memo);
+        consistTable.put(address, consist);
         return consist;
     }
 
@@ -69,49 +78,47 @@ public class LocoNetConsistManager extends jmri.jmrix.AbstractConsistManager imp
      * slots and adding new "top" slot addresses and removing address
      * that are no longer "top" locomotives.
      */
-    public void requestUpdateFromLayout(){
-       SlotManager sm=memo.getSlotManager();
+    @Override
+    public void requestUpdateFromLayout() {
+        SlotManager sm = memo.getSlotManager();
 
-       // in the first pass, check for consists top addresses in the 
-       // command station slots.
+        // in the first pass, check for consists top addresses in the
+        // command station slots.
 
-       for(int i=0;i<128;i++){
-          LocoNetSlot s=sm.slot(i);
-          DccLocoAddress address=new DccLocoAddress(s.locoAddr(),LnThrottleManager.isLongAddress(s.locoAddr()));
-          if(log.isDebugEnabled()) log.debug(" Slot " + i + " Address " +address + " consist status " + LnConstants.CONSIST_STAT(s.consistStatus()));
-          if(s.consistStatus()==LnConstants.CONSIST_TOP || s.consistStatus()==LnConstants.CONSIST_MID)
-{
-             // this is a consist top, add it to the list, if it is not there
-             // already.
-             if(!consistList.contains(address)){
-                if(log.isDebugEnabled()) log.debug("Adding Consist with Address " + address + " due to command station read");
-                addConsist(address);
-                getConsist(address).add(address,true); // add the address to the consist.
-             }
-          } else {
-             // this is not a consist top, so remove it from the list, if it
-             // is currently there.
-                if(log.isDebugEnabled()) log.debug("Removing Consist with Address " + address + " due to command station read");
-                consistList.remove(address); 
-          } 
-       }
+        for (int i = 0; i < 128; i++) {
+            LocoNetSlot s = sm.slot(i);
+            DccLocoAddress address = new DccLocoAddress(s.locoAddr(), LnThrottleManager.isLongAddress(s.locoAddr()));
+            if (log.isDebugEnabled()) {
+                log.debug(" Slot " + i + " Address " + address + " consist status " + LnConstants.CONSIST_STAT(s.consistStatus()));
+            }
+            if (s.consistStatus() == LnConstants.CONSIST_TOP || s.consistStatus() == LnConstants.CONSIST_MID) {
+                // this is a consist top, add it to the list, if it is not there
+                // already.
+                if (!consistTable.containsKey(address)) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("Adding Consist with Address " + address + " due to command station read");
+                    }
+                    addConsist(address);
+                    getConsist(address).add(address, true); // add the address to the consist.
+                }
+            }
+        }
 
-       // make a second pass, this time looking for locomotives in a consist.
-       for(int i=0;i<128;i++){
-          LocoNetSlot s=sm.slot(i);
-          DccLocoAddress address=new DccLocoAddress(s.locoAddr(),LnThrottleManager.isLongAddress(s.locoAddr()));
-          if(log.isDebugEnabled()) log.debug(" Slot " + i + " Address " +address + " consist status " + LnConstants.CONSIST_STAT(s.consistStatus()));
-          if(s.consistStatus()==LnConstants.CONSIST_SUB || s.consistStatus()==LnConstants.CONSIST_MID)
-{
-             // this is a consist member, add it to the consist in the
-             // slot which it has a pointer to (the slot pointer is stored in
-             // the slot's speed).
-             DccLocoAddress lead= new DccLocoAddress(sm.slot(s.speed()).locoAddr(),LnThrottleManager.isLongAddress(sm.slot(s.speed()).locoAddr()));
-             getConsist(lead).add(address,s.isForward()==sm.slot(s.speed()).isForward());
-          }
-       }
+        // make a second pass, this time looking for locomotives in a consist.
+        for (int i = 0; i < 128; i++) {
+            LocoNetSlot s = sm.slot(i);
+            DccLocoAddress address = new DccLocoAddress(s.locoAddr(), LnThrottleManager.isLongAddress(s.locoAddr()));
+            if (log.isDebugEnabled()) {
+                log.debug(" Slot " + i + " Address " + address + " consist status " + LnConstants.CONSIST_STAT(s.consistStatus()));
+            }
+            if (s.consistStatus() == LnConstants.CONSIST_SUB || s.consistStatus() == LnConstants.CONSIST_MID) {
+                // this is a consist member, add it to the consist in the
+                // slot which it has a pointer to (the slot pointer is stored in
+                // the slot's speed).
+                DccLocoAddress lead = new DccLocoAddress(sm.slot(s.speed()).locoAddr(), LnThrottleManager.isLongAddress(sm.slot(s.speed()).locoAddr()));
+                getConsist(lead).add(address, s.isForward() == sm.slot(s.speed()).isForward());
+            }
+        }
     }
-
     static Logger log = LoggerFactory.getLogger(LocoNetConsistManager.class.getName());
-    
 }

@@ -16,7 +16,7 @@ import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 
-public class EasyDccConsist extends jmri.DccConsist implements EasyDccListener {
+public class EasyDccConsist extends jmri.implementation.DccConsist implements EasyDccListener {
 
 	// Initialize a consist for the specific address
         // the Default consist type is an advanced consist 

@@ -19,7 +19,7 @@ import jmri.ThrottleListener;
 
 import java.util.ArrayList;
 
-public class LocoNetConsist extends jmri.DccConsist implements SlotListener,ThrottleListener {
+public class LocoNetConsist extends jmri.implementation.DccConsist implements SlotListener,ThrottleListener {
 
 	private SlotManager slotManager=null;
 	private LnTrafficController trafficController=null;
