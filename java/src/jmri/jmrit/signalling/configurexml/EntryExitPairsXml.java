@@ -14,6 +14,7 @@ import jmri.SignalMast;
 import jmri.SignalHead;
 import jmri.Sensor;
 import jmri.NamedBean;
+import java.awt.Color;
 
 /**
  * This module handles configuration for the Entry Exit pairs unsed in interlocking on a layouteditor
@@ -40,6 +41,12 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         ArrayList<LayoutEditor> editors = p.getSourcePanelList();
         if (editors.size()==0) return element;
         element.addContent(new Element("cleardown").addContent(""+p.getClearDownOption()));
+        if(p.getDispatcherIntegration())
+            element.addContent(new Element("dispatcherintegration").addContent("yes"));
+        if(p.useDifferentColorWhenSetting()){
+            element.addContent(new Element("colourwhilesetting").addContent(colorToString(p.getSettingRouteColor())));
+            element.addContent(new Element("settingTimer").addContent(""+p.getSettingTimer()));
+        }
         for (int k = 0; k<editors.size(); k++){
             LayoutEditor panel = editors.get(k);
             List<Object> nxpair = p.getSourceList(panel);
@@ -137,6 +144,19 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         }
 		// get attributes
         ArrayList<Object> loadedPanel = jmri.InstanceManager.configureManagerInstance().getInstanceList(LayoutEditor.class);
+        if(element.getChild("dispatcherintegration")!=null && element.getChild("dispatcherintegration").getText().equals("yes")){
+            eep.setDispatcherIntegration(true);
+        }
+        if(element.getChild("colourwhilesetting")!=null) {
+            eep.setSettingRouteColor(stringToColor(element.getChild("colourwhilesetting").getText()));
+            int settingTimer = 2000;
+            try {
+                settingTimer = Integer.parseInt(element.getChild("settingTimer").getText());
+            } catch (Exception e){
+                log.error("Error in converting timer to int " + element.getChild("settingTimer"));
+            }
+            eep.setSettingTimer(settingTimer);
+        }
         List<Element> panelList = element.getChildren("layoutPanel");
         for(int k = 0; k<panelList.size(); k++){
             String panelName = panelList.get(k).getAttribute("name").getValue();
@@ -211,6 +231,45 @@ public class EntryExitPairsXml extends AbstractXmlAdapter {
         }
         return true;
     }
+    
+    public static String colorToString(Color color) {
+		if(color == Color.black) return "black";
+		else if (color == Color.darkGray) return "darkGray";
+		else if (color == Color.gray) return "gray";
+		else if (color == Color.lightGray) return "lightGray";
+		else if (color == Color.white) return "white";
+		else if (color == Color.red) return "red";
+		else if (color == Color.pink) return "pink";
+		else if (color == Color.orange) return "orange";
+		else if (color == Color.yellow) return "yellow";
+		else if (color == Color.green) return "green";
+		else if (color == Color.blue) return "blue";
+		else if (color == Color.magenta) return "magenta";
+		else if (color == Color.cyan) return "cyan";
+        else if (color == null) return "None";
+		log.error ("unknown color sent to colorToString");
+		return "black";
+	}
+    
+    
+	public static Color stringToColor(String string) {
+		if(string.equals("black")) return Color.black;
+		else if (string.equals("darkGray")) return Color.darkGray;	
+		else if (string.equals("gray")) return Color.gray;	
+		else if (string.equals("lightGray")) return Color.lightGray;	
+		else if (string.equals("white")) return Color.white;	
+		else if (string.equals("red")) return Color.red;	
+		else if (string.equals("pink")) return Color.pink;	
+		else if (string.equals("orange")) return Color.orange;	
+		else if (string.equals("yellow")) return Color.yellow;	
+		else if (string.equals("green")) return Color.green;
+		else if (string.equals("blue")) return Color.blue;	
+		else if (string.equals("magenta")) return Color.magenta;	
+		else if (string.equals("cyan")) return Color.cyan;
+        else if (string.equals("None")) return null;
+		log.error("unknown color text '"+string+"' sent to stringToColor");
+		return Color.black;
+	}
     
     public int loadOrder(){
         if(jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class)==null){

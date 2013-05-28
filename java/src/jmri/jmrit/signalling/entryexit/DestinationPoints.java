@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Container;
 import java.awt.BorderLayout;
+import java.awt.Color;
 
 import jmri.Sensor;
 import jmri.Block;
@@ -295,13 +296,33 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 manager.cancelStackedRoute(this, false);
             /*We put the setting of the route into a seperate thread and put a glass pane infront of the layout editor,
             the swing thread for flash the icons to carry on as without interuption */
+            final ArrayList<Color> realColorStd = new ArrayList<Color>();
+            final ArrayList<Color> realColorXtra = new ArrayList<Color>();
+            final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>(routeDetails);
+            if(manager.useDifferentColorWhenSetting()){
+                for(int i = 0; i<routeDetails.size(); i++){
+                    LayoutBlock lbk = routeDetails.get(i);
+                    realColorXtra.add(lbk.getBlockExtraColor());
+                    realColorStd.add(lbk.getBlockTrackColor());
+                    if(i>0){
+                        lbk.setBlockExtraColor(manager.getSettingRouteColor());
+                        lbk.setBlockTrackColor(manager.getSettingRouteColor());
+                    }
+                }
+                //Force a redraw, to reflect color change
+                src.getPoint().getPanel().redrawPanel();
+            }
             Runnable setRouteRun = new Runnable() {
                 public void run() {
                     src.getPoint().getPanel().getGlassPane().setVisible(true);
+                    
                     try {
+                    
                         Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
                         
                         ConnectivityUtil connection = new ConnectivityUtil(point.getPanel());
+                        
+
                         
                         //This for loop was after the if statement
                         //Last block in the route is the one that we are protecting at the last sensor/signalmast
@@ -380,8 +401,27 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                 routeDetails.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
                             }
                         }
-                        //Force a redraw
-                        src.getPoint().getPanel().redrawPanel();
+                        /*if(manager.useDifferentColorWhenSetting()){
+                            final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>(routeDetails);
+                            //final ArrayList<Color> realColorXtra = realColorXtra;
+                            javax.swing.Timer resetColorBack = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
+                                public void actionPerformed(java.awt.event.ActionEvent e) {
+                                    log.info("Use different color reset back");
+                                    for(int i = 0; i<routeBlocks.size(); i++){
+                                        LayoutBlock lbk = routeBlocks.get(i);
+                                        log.info(lbk.getDisplayName());
+                                        lbk.setBlockExtraColor(realColorXtra.get(i));
+                                        lbk.setBlockTrackColor(realColorStd.get(i));
+                                    }
+                                    src.getPoint().getPanel().redrawPanel();
+                                }
+                            });
+                            resetColorBack.setRepeats(false);
+                            resetColorBack.start();
+                        } else {*/
+                            //Force a redraw
+                            src.getPoint().getPanel().redrawPanel();
+                        //}
                         if (getEntryExitType()!=EntryExitPairs.SETUPTURNOUTSONLY){
                             if(getEntryExitType()==EntryExitPairs.FULLINTERLOCK){
                                 //If our start block is already active we will set it as our lastSeenActiveBlock.
@@ -437,15 +477,35 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                 setRouteFrom(true);
                                 setRouteTo(true);
                             }
-                        } //else {
-                            src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                            point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                        //}
+                        }
+                        if(manager.useDifferentColorWhenSetting()){
+                            //final ArrayList<Color> realColorXtra = realColorXtra;
+                            javax.swing.Timer resetColorBack = new javax.swing.Timer(manager.getSettingTimer(), new java.awt.event.ActionListener() {
+                                public void actionPerformed(java.awt.event.ActionEvent e) {
+                                    for(int i = 0; i<routeBlocks.size(); i++){
+                                        LayoutBlock lbk = routeBlocks.get(i);
+                                        lbk.setBlockExtraColor(realColorXtra.get(i));
+                                        lbk.setBlockTrackColor(realColorStd.get(i));
+                                    }
+                                    src.getPoint().getPanel().redrawPanel();
+                                }
+                            });
+                            resetColorBack.setRepeats(false);
+                            resetColorBack.start();
+                        }
+                        src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                        point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                     } catch (RuntimeException ex) {
                         log.error("An error occured while setting the route");
                         ex.printStackTrace();
                         src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                         point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+                        for(int i = 0; i<routeDetails.size(); i++){
+                            LayoutBlock lbk = routeDetails.get(i);
+                            lbk.setBlockExtraColor(realColorXtra.get(i));
+                            lbk.setBlockTrackColor(realColorStd.get(i));
+                        }
+                        src.getPoint().getPanel().redrawPanel();
                     }
                     src.getPoint().getPanel().getGlassPane().setVisible(false);
                     src.setMenuEnabled(true);

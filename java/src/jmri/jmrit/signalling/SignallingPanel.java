@@ -82,13 +82,14 @@ public class SignallingPanel extends jmri.util.swing.JmriPanel {
             this.sourceMast = source;
             this.sml = InstanceManager.signalMastLogicManagerInstance().getSignalMastLogic(source);
             fixedSourceMastLabel = new JLabel(sourceMast.getDisplayName());
+            if(dest!=null)
+                frame.setTitle(source.getDisplayName() + " to " + dest.getDisplayName());
         }
         if ((dest!=null) && (sml!=null)){
             this.destMast=dest;
             if (!sml.isDestinationValid(dest)){
                 sml.setDestinationMast(dest);
             }
-
             fixedDestMastLabel = new JLabel(destMast.getDisplayName());
             useLayoutEditor.setSelected(sml.useLayoutEditor(destMast));
             useLayoutEditorTurnout.setSelected(sml.useLayoutEditorTurnouts(destMast));

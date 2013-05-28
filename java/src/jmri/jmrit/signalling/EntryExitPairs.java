@@ -18,6 +18,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Color;
 import javax.swing.JPanel;
 import jmri.jmrit.signalling.entryexit.*;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
@@ -52,6 +53,30 @@ public class EntryExitPairs implements jmri.Manager{
     public final static int NXBUTTONACTIVE = Sensor.ACTIVE;
     public final static int NXBUTTONINACTIVE = Sensor.INACTIVE;
     
+    private int settingTimer = 2000;
+    
+    public int getSettingTimer(){
+        return settingTimer;
+    }
+    
+    public void setSettingTimer(int i){
+        settingTimer = i;
+    }
+    
+    private Color settingRouteColor = null;
+    
+    public boolean useDifferentColorWhenSetting(){
+        return(settingRouteColor==null? false:true);
+    }
+    
+    public Color getSettingRouteColor(){
+        return settingRouteColor;
+    }
+    
+    public void setSettingRouteColor(Color col){
+        settingRouteColor = col;
+    }
+    
     /**
     * Constant value to represent that the entryExit will only set up the
     * turnouts between two different points
@@ -70,6 +95,8 @@ public class EntryExitPairs implements jmri.Manager{
     * it will set the turnouts and "reserve" the blocks.
     */
     public final static int FULLINTERLOCK = 0x02;
+    
+    boolean allocateToDispatcher = false;
     
     public final static int PROMPTUSER = 0x00;
     public final static int AUTOCLEAR = 0x01;
@@ -94,6 +121,14 @@ public class EntryExitPairs implements jmri.Manager{
             e.consume();
           } 
         }); 
+    }
+    
+    public void setDispatcherIntegration(boolean boo){
+        allocateToDispatcher = boo;
+    }
+    
+    public boolean getDispatcherIntegration(){
+        return allocateToDispatcher;
     }
     
     public JPanel getGlassPane(){
@@ -505,61 +540,6 @@ public class EntryExitPairs implements jmri.Manager{
     public final static int EXITROUTE = 2;
     public final static int STACKROUTE = 4;
     
-    
-
-    
-    /*public static void flashSensor(PointDetails pd){
-        for(SensorIcon si : pd.getPanel().sensorList){
-            if(si.getSensor()==pd.getSensor()){
-                si.flashSensor(2, Sensor.ACTIVE, Sensor.INACTIVE);
-            }
-        }
-    }
-    
-    public static void stopFlashSensor(PointDetails pd){
-        for(SensorIcon si : pd.getPanel().sensorList){
-            if(si.getSensor()==pd.getSensor()){
-                si.stopFlash();
-            }
-        }
-    }
-    
-    synchronized public void setNXButtonState(PointDetails nxPoint, int state){
-        if(nxPoint.getSensor()==null)
-            return;
-        if(state==NXBUTTONINACTIVE){
-            //If a route is set to or from out point then we need to leave/set the sensor to ACTIVE
-            if(nxPoint.isRouteToPointSet()){
-                state=NXBUTTONACTIVE;
-            } else if(nxPoint.isRouteFromPointSet()){
-                state=NXBUTTONACTIVE;
-            }
-        }
-        nxPoint.setNXState(state);
-        int sensorState = Sensor.UNKNOWN;
-        switch(state){
-            case NXBUTTONINACTIVE : sensorState = Sensor.INACTIVE;
-                                    break;
-            case NXBUTTONACTIVE   : sensorState = Sensor.ACTIVE;
-                                    break;
-            case NXBUTTONSELECTED : sensorState = Sensor.ACTIVE;
-                                    break;
-            default               : sensorState = Sensor.UNKNOWN;
-                                    break;
-        }
-        
-        //Might need to clear listeners at the stage and then reapply them after.
-        if(nxPoint.getSensor().getKnownState()!=sensorState){
-            nxPoint.removeSensorList();
-            try {
-                nxPoint.getSensor().setKnownState(sensorState);
-            } catch (jmri.JmriException ex){
-                log.error(ex.getLocalizedMessage(), ex);
-            }
-            nxPoint.addSensorList();
-        }
-    }*/
-    
     public PointDetails getPointDetails(Object obj, LayoutEditor panel){
         for (int i = 0; i<pointDetails.size(); i++){
             if ((pointDetails.get(i).getRefObject()==obj) && (pointDetails.get(i).getPanel()==panel)) {
@@ -671,14 +651,9 @@ public class EntryExitPairs implements jmri.Manager{
 
     synchronized void checkRoute(){
         checkTimer.stop();
-        //Iterator<StackDetails> iter = stackList.iterator();
         StackDetails[] tmp = new StackDetails[stackList.size()];
-        //ArrayList<StackDetails> tmp = new ArrayList<StackDetails>(stackList.size());
-        //System.arraycopy(stackList,0, tmp,0, stackList.size());
         stackList.toArray(tmp);
-        /*while(iter.hasNext()){
-            StackDetails st = iter.next();
-            */
+
         for(StackDetails st:tmp){
             if(!st.getDestinationPoint().isActive()){
                 //If the route is not alredy active then check
