@@ -401,27 +401,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                 routeDetails.get(i).getBlock().removePropertyChangeListener(propertyBlockListener); // was set against occupancy sensor
                             }
                         }
-                        /*if(manager.useDifferentColorWhenSetting()){
-                            final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>(routeDetails);
-                            //final ArrayList<Color> realColorXtra = realColorXtra;
-                            javax.swing.Timer resetColorBack = new javax.swing.Timer(2000, new java.awt.event.ActionListener() {
-                                public void actionPerformed(java.awt.event.ActionEvent e) {
-                                    log.info("Use different color reset back");
-                                    for(int i = 0; i<routeBlocks.size(); i++){
-                                        LayoutBlock lbk = routeBlocks.get(i);
-                                        log.info(lbk.getDisplayName());
-                                        lbk.setBlockExtraColor(realColorXtra.get(i));
-                                        lbk.setBlockTrackColor(realColorStd.get(i));
-                                    }
-                                    src.getPoint().getPanel().redrawPanel();
-                                }
-                            });
-                            resetColorBack.setRepeats(false);
-                            resetColorBack.start();
-                        } else {*/
-                            //Force a redraw
-                            src.getPoint().getPanel().redrawPanel();
-                        //}
+                        src.getPoint().getPanel().redrawPanel();
                         if (getEntryExitType()!=EntryExitPairs.SETUPTURNOUTSONLY){
                             if(getEntryExitType()==EntryExitPairs.FULLINTERLOCK){
                                 //If our start block is already active we will set it as our lastSeenActiveBlock.
@@ -500,10 +480,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                         ex.printStackTrace();
                         src.pd.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
                         point.setNXButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                        for(int i = 0; i<routeDetails.size(); i++){
-                            LayoutBlock lbk = routeDetails.get(i);
-                            lbk.setBlockExtraColor(realColorXtra.get(i));
-                            lbk.setBlockTrackColor(realColorStd.get(i));
+                        if(manager.useDifferentColorWhenSetting()){
+                            for(int i = 0; i<routeDetails.size(); i++){
+                                LayoutBlock lbk = routeDetails.get(i);
+                                lbk.setBlockExtraColor(realColorXtra.get(i));
+                                lbk.setBlockTrackColor(realColorStd.get(i));
+                            }
                         }
                         src.getPoint().getPanel().redrawPanel();
                     }
