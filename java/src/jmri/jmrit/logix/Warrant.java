@@ -568,7 +568,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return msg;
     }
     
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NP_NULL_PARAM_DEREF",justification="address is tested and error msg is not null")
+	@SuppressWarnings("null")
     private String acquireThrottle(DccLocoAddress address) {
     	String msg = null;
         if (address == null)  {
