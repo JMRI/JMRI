@@ -632,6 +632,15 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         destList.get(destination).initialise();
     }
     
+    public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination){
+        if (disposing) return new LinkedHashMap<Block, Integer>();
+        
+        if(!destList.containsKey(destination)){
+            return new LinkedHashMap<Block, Integer>();
+        }
+        return destList.get(destination).setupLayoutEditorTurnoutDetails(blks);
+    }
+    
     public void setupLayoutEditorDetails(){
         if(disposing) return;
         
@@ -2144,88 +2153,14 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     log.debug(destination.getDisplayName() + " dest " + destinationBlock.getDisplayName());
                 }
                 LinkedHashMap<Block, Integer> block = new LinkedHashMap<Block, Integer>();
-                Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
+                
                  //= new ArrayList<LayoutBlock>();
                 try {
                     lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);                    
                 } catch (jmri.JmriException ee){
                     log.error("No blocks found by the layout editor for pair " + source.getDisplayName() + " " + destination.getDisplayName());
                 }
-                    ConnectivityUtil connection;
-                    ArrayList<LayoutTurnout> turnoutlist;
-                    ArrayList<Integer> throwlist;
-
-                    for (int i = 0; i<lblks.size(); i++){
-                        if(log.isDebugEnabled())
-                            log.debug(lblks.get(i).getDisplayName());
-                        block.put(lblks.get(i).getBlock(), Block.UNOCCUPIED);
-                        if ((i>0)) {
-                            int nxtBlk = i+1;
-                            int preBlk = i-1;
-                            if (i==lblks.size()-1){
-                                nxtBlk = i;
-                            } else if (i==0){
-                                preBlk=i;
-                            }
-                            //We use the best connectivity for the current block;
-                            connection = new ConnectivityUtil(lblks.get(i).getMaxConnectedPanel());
-                            turnoutlist=connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
-                            throwlist=connection.getTurnoutSettingList();
-                            for (int x=0; x<turnoutlist.size(); x++){
-                                if(turnoutlist.get(x) instanceof LayoutSlip){
-                                    int slipState = throwlist.get(x);
-                                    LayoutSlip ls = (LayoutSlip)turnoutlist.get(x);
-                                    int taState = ls.getTurnoutState(slipState);
-                                    turnoutSettings.put(ls.getTurnout(), taState);
-
-                                    int tbState = ls.getTurnoutBState(slipState);
-                                    turnoutSettings.put(ls.getTurnoutB(), tbState);
-                                } else {
-                                    String t = turnoutlist.get(x).getTurnoutName();
-                                    Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
-                                    if(log.isDebugEnabled()){
-                                        if ((turnoutlist.get(x).getTurnoutType()<=3) && (!turnoutlist.get(x).getBlockName().equals(""))){
-                                            log.debug("turnout in list is straight left/right wye");
-                                            log.debug("turnout block Name " + turnoutlist.get(x).getBlockName());
-                                            log.debug("current " + lblks.get(i).getBlock().getDisplayName() + " - pre " + lblks.get(preBlk).getBlock().getDisplayName());
-                                            log.debug("A " + turnoutlist.get(x).getConnectA());
-                                            log.debug("B " + turnoutlist.get(x).getConnectB());
-                                            log.debug("C " + turnoutlist.get(x).getConnectC());
-                                            log.debug("D " + turnoutlist.get(x).getConnectD());
-                                        }
-                                    }
-                                    turnoutSettings.put(turnout, throwlist.get(x));
-                                    LayoutTurnout lt = turnoutlist.get(x);
-                                    /* TODO: We could do with a more inteligent way to deal with double crossovers, other than just looking at the state of the other conflicting blocks
-                                       such as looking at Signalmasts that protect the other blocks and the settings of any other turnouts along the way.
-                                    */
-                                    if(lt.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER){
-                                        if(throwlist.get(x)==jmri.Turnout.THROWN){
-                                            if(lt.getLayoutBlock()==lblks.get(i) || lt.getLayoutBlockC()==lblks.get(i)){
-                                                if(lt.getLayoutBlockB()!=null){
-                                                    dblCrossOverAutoBlocks.add(lt.getLayoutBlockB().getBlock());
-                                                    block.put(lt.getLayoutBlockB().getBlock(), Block.UNOCCUPIED);
-                                                }
-                                                if(lt.getLayoutBlockD()!=null){
-                                                    dblCrossOverAutoBlocks.add(lt.getLayoutBlockD().getBlock());
-                                                    block.put(lt.getLayoutBlockD().getBlock(), Block.UNOCCUPIED);
-                                                }                                                
-                                            } else if(lt.getLayoutBlockB()==lblks.get(i) || lt.getLayoutBlockD()==lblks.get(i)){
-                                                if(lt.getLayoutBlock()!=null){
-                                                    dblCrossOverAutoBlocks.add(lt.getLayoutBlock().getBlock());
-                                                    block.put(lt.getLayoutBlock().getBlock(), Block.UNOCCUPIED);
-                                                }
-                                                if(lt.getLayoutBlockC()!=null){
-                                                    dblCrossOverAutoBlocks.add(lt.getLayoutBlockC().getBlock());
-                                                    block.put(lt.getLayoutBlockC().getBlock(), Block.UNOCCUPIED);
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    block = setupLayoutEditorTurnoutDetails(lblks);
                     
                     for(int i = 0; i<blockInXings.size(); i++){
                         blockInXings.get(i).removeSignalMastLogic(source);
@@ -2253,10 +2188,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         setAutoBlocks(block);
                     else
                         setAutoBlocks(null);
-                    if(useLayoutEditorTurnouts)
-                        setAutoTurnouts(turnoutSettings);
-                    else
+                    if(!useLayoutEditorTurnouts)
                         setAutoTurnouts(null);
+                    /*else
+                        setAutoTurnouts(null);*/
                 /*} catch (jmri.JmriException e){
                     log.debug(destination.getDisplayName() + " Valid route not found from " + facingBlock.getDisplayName() + " to " + destinationBlock.getDisplayName());
                     log.debug(e.toString());
@@ -2265,6 +2200,88 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                 setupAutoSignalMast(null, false);
             }
             initialise();
+        }
+        
+        LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> lblks){
+            ConnectivityUtil connection;
+            ArrayList<LayoutTurnout> turnoutlist;
+            ArrayList<Integer> throwlist;
+            Hashtable<Turnout, Integer> turnoutSettings = new Hashtable<Turnout, Integer>();
+            LinkedHashMap<Block, Integer> block = new LinkedHashMap<Block, Integer>();
+            for (int i = 0; i<lblks.size(); i++){
+                if(log.isDebugEnabled())
+                    log.debug(lblks.get(i).getDisplayName());
+                block.put(lblks.get(i).getBlock(), Block.UNOCCUPIED);
+                if ((i>0)) {
+                    int nxtBlk = i+1;
+                    int preBlk = i-1;
+                    if (i==lblks.size()-1){
+                        nxtBlk = i;
+                    } else if (i==0){
+                        preBlk=i;
+                    }
+                    //We use the best connectivity for the current block;
+                    connection = new ConnectivityUtil(lblks.get(i).getMaxConnectedPanel());
+                    turnoutlist=connection.getTurnoutList(lblks.get(i).getBlock(), lblks.get(preBlk).getBlock(), lblks.get(nxtBlk).getBlock());
+                    throwlist=connection.getTurnoutSettingList();
+                    for (int x=0; x<turnoutlist.size(); x++){
+                        if(turnoutlist.get(x) instanceof LayoutSlip){
+                            int slipState = throwlist.get(x);
+                            LayoutSlip ls = (LayoutSlip)turnoutlist.get(x);
+                            int taState = ls.getTurnoutState(slipState);
+                            turnoutSettings.put(ls.getTurnout(), taState);
+
+                            int tbState = ls.getTurnoutBState(slipState);
+                            turnoutSettings.put(ls.getTurnoutB(), tbState);
+                        } else {
+                            String t = turnoutlist.get(x).getTurnoutName();
+                            Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
+                            if(log.isDebugEnabled()){
+                                if ((turnoutlist.get(x).getTurnoutType()<=3) && (!turnoutlist.get(x).getBlockName().equals(""))){
+                                    log.debug("turnout in list is straight left/right wye");
+                                    log.debug("turnout block Name " + turnoutlist.get(x).getBlockName());
+                                    log.debug("current " + lblks.get(i).getBlock().getDisplayName() + " - pre " + lblks.get(preBlk).getBlock().getDisplayName());
+                                    log.debug("A " + turnoutlist.get(x).getConnectA());
+                                    log.debug("B " + turnoutlist.get(x).getConnectB());
+                                    log.debug("C " + turnoutlist.get(x).getConnectC());
+                                    log.debug("D " + turnoutlist.get(x).getConnectD());
+                                }
+                            }
+                            turnoutSettings.put(turnout, throwlist.get(x));
+                            LayoutTurnout lt = turnoutlist.get(x);
+                            /* TODO: We could do with a more inteligent way to deal with double crossovers, other than just looking at the state of the other conflicting blocks
+                               such as looking at Signalmasts that protect the other blocks and the settings of any other turnouts along the way.
+                            */
+                            if(lt.getTurnoutType()==LayoutTurnout.DOUBLE_XOVER){
+                                if(throwlist.get(x)==jmri.Turnout.THROWN){
+                                    if(lt.getLayoutBlock()==lblks.get(i) || lt.getLayoutBlockC()==lblks.get(i)){
+                                        if(lt.getLayoutBlockB()!=null){
+                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlockB().getBlock());
+                                            block.put(lt.getLayoutBlockB().getBlock(), Block.UNOCCUPIED);
+                                        }
+                                        if(lt.getLayoutBlockD()!=null){
+                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlockD().getBlock());
+                                            block.put(lt.getLayoutBlockD().getBlock(), Block.UNOCCUPIED);
+                                        }                                                
+                                    } else if(lt.getLayoutBlockB()==lblks.get(i) || lt.getLayoutBlockD()==lblks.get(i)){
+                                        if(lt.getLayoutBlock()!=null){
+                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlock().getBlock());
+                                            block.put(lt.getLayoutBlock().getBlock(), Block.UNOCCUPIED);
+                                        }
+                                        if(lt.getLayoutBlockC()!=null){
+                                            dblCrossOverAutoBlocks.add(lt.getLayoutBlockC().getBlock());
+                                            block.put(lt.getLayoutBlockC().getBlock(), Block.UNOCCUPIED);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if(useLayoutEditorTurnouts)
+                setAutoTurnouts(turnoutSettings);
+            return block;
         }
         
         /*

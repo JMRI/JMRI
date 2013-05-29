@@ -1,5 +1,6 @@
 package jmri;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.LinkedHashMap;
@@ -357,5 +358,13 @@ public interface SignalMastLogic {
     * destination signal mast
     */
     public LayoutBlock getProtectingBlock(SignalMast destination);
+    
+    /**
+     * Set the auto turnouts based upon a given list of layout blocks for a specific destination mast
+     * @param blks List of Layout Blockt.
+     * @param destination Destination SignalMast.
+     * @return A LinkedHashMap of the original blocks and the required state, plus any blocks found on double-overs that also need to be un-occupied
+    */
+    public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination);
     
 }
