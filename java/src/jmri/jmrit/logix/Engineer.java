@@ -518,7 +518,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param action
      */
     private void runWarrant(ThrottleSetting ts) {
-    	Warrant w = InstanceManager.warrantManagerInstance().getWarrant(ts.getBlockName());
+    	Warrant w = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class).getWarrant(ts.getBlockName());
     	if (w==null) {
             log.warn("Warrant \""+ts.getBlockName()+"\" not found.");
             return;
@@ -568,11 +568,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
             
         @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY", justification="Shared variable 'stop' not being seen by FindBugs for some reason") 
-        void stop() {
+        synchronized void stop() {
         	stop = true;
-        	synchronized(this) {
-        		notify();
-        	}
+    		notify();
         }
 
         public void run() {
