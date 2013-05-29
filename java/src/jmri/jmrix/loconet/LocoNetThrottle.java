@@ -136,6 +136,9 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         return 0;
       else if (fSpeed < 0.f)
         return 1;   // estop
+      if(getSpeedStepMode()==DccThrottle.SpeedStepMode28){
+        return (int)((fSpeed*28)*4)+12;
+      }
         // add the 0.5 to handle float to int round for positive numbers
       return (int)(fSpeed * 126.f + 0.5) + 1 ;
     }
