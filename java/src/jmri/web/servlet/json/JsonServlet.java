@@ -196,7 +196,7 @@ public class JsonServlet extends WebSocketServlet {
             if (code == 200) {
                 response.getWriter().write(this.mapper.writeValueAsString(reply));
             } else {
-                response.sendError(code, this.mapper.writeValueAsString(reply));
+                this.sendError(response, code, this.mapper.writeValueAsString(reply));
             }
         } else {
             response.setContentType("text/html"); // NOI18N
@@ -298,7 +298,7 @@ public class JsonServlet extends WebSocketServlet {
         if (code == 200) {
             response.getWriter().write(this.mapper.writeValueAsString(reply));
         } else {
-            response.sendError(code, this.mapper.writeValueAsString(reply));
+            this.sendError(response, code, this.mapper.writeValueAsString(reply));
         }
     }
 
@@ -370,8 +370,13 @@ public class JsonServlet extends WebSocketServlet {
         if (code == 200) {
             response.getWriter().write(this.mapper.writeValueAsString(reply));
         } else {
-            response.sendError(code, this.mapper.writeValueAsString(reply));
+            this.sendError(response, code, this.mapper.writeValueAsString(reply));
         }
+    }
+
+    public void sendError(HttpServletResponse response, int code, String message) throws IOException {
+        response.setStatus(code);
+        response.getWriter().write(message);
     }
 
     public class JsonWebSocket implements WebSocket.OnTextMessage {
