@@ -109,6 +109,12 @@ public class AllocationRequest {
 	 */
 	private void handleSectionChange(java.beans.PropertyChangeEvent e) {
 		DispatcherFrame.instance().sectionOccupancyChanged();
+        //This forces us to rescan the allocation list if the section has gone unoccupied, thus this might get re-allocated
+        if (e.getPropertyName().equals("occupancy")) {
+            if(((Integer) e.getNewValue()).intValue()==jmri.Section.UNOCCUPIED){
+                DispatcherFrame.instance().forceScanOfAllocation();
+            }
+        }
 	}
 		
 	public void dispose() {
@@ -135,7 +141,7 @@ public class AllocationRequest {
     private java.beans.PropertyChangeListener mSignalMastListener = null;
     
     private jmri.SignalMast mWaitingForSignalMast = null;
-       
+    
     public void setWaitingForSignalMast(jmri.SignalMast sm){
         if(mSignalMastListener == null){
             mSignalMastListener = new java.beans.PropertyChangeListener() {
