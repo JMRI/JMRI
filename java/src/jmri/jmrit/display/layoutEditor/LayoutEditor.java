@@ -381,6 +381,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		setupZoomMenu(menuBar);
 		// setup Zoom menu
 		setupMarkerMenu(menuBar);
+        //Setup Dispatcher window
+        setupDispatcherMenu(menuBar);
+
 		// setup Help menu
         addHelpMenu("package.jmri.jmrit.display.LayoutEditor", true);
 		
@@ -1373,7 +1376,34 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         		removeMarkers();
             }
         });
-	}
+    }
+
+    private void setupDispatcherMenu(JMenuBar menuBar){
+        JMenu dispMenu = new JMenu(Bundle.getMessage("MenuDispatcher"));
+        dispMenu.add(new JMenuItem(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemOpen"))));
+        menuBar.add(dispMenu);
+        JMenuItem newTrainItem = new JMenuItem(Bundle.getMessage("MenuItemNewTrain"));
+        dispMenu.add(newTrainItem);
+        newTrainItem.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                if (jmri.InstanceManager.transitManagerInstance().getSystemNameList().size()<=0) {
+                    // Inform the user that there are no Transits available, and don't open the window
+                    javax.swing.JOptionPane.showMessageDialog(null,ResourceBundle.getBundle("jmri.jmrit.dispatcher.DispatcherBundle").getString("NoTransitsMessage"));
+                    return;
+                }
+                jmri.jmrit.dispatcher.DispatcherFrame df = jmri.jmrit.dispatcher.DispatcherFrame.instance();
+                if (!df.getNewTrainActive()) {
+                    df.getActiveTrainFrame().initiateTrain(event, null, null);
+                    df.setNewTrainActive(true);
+                } else {
+                    df.getActiveTrainFrame().showActivateFrame(null);
+                }
+                
+            }
+        });
+        menuBar.add(dispMenu);
+    
+    }
     /**
      * Remove marker icons from panel
      */

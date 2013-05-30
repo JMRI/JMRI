@@ -111,7 +111,7 @@ public class ActivateTrainFrame {
     */
     public void initiateTrain(ActionEvent e, RosterEntry re, Block b){
         initiateTrain(e);
-        if(_TrainsFromRoster){
+        if(_TrainsFromRoster && re!=null){
             setComboBox(trainSelectBox, re.getId());
             //Add in some bits of code as some point to filter down the transits that can be used.
         }
