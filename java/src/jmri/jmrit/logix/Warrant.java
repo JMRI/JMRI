@@ -568,7 +568,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return msg;
     }
     
-	@SuppressWarnings("null")
+	//@SuppressWarnings("null")
     private String acquireThrottle(DccLocoAddress address) {
     	String msg = null;
         if (address == null)  {
