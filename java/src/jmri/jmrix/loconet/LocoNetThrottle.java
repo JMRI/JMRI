@@ -125,6 +125,11 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) return 0.f;
         else if (lSpeed == 1) return -1.f;   // estop
+        if(getSpeedStepMode()==DccThrottle.SpeedStepMode28){
+            if(lSpeed<=15) //Value less than 15 is in the stop/estop range bracket
+                return 0.f;
+            return (((lSpeed-12)/4)/28.f);
+        }
         else return ( (lSpeed-1)/126.f);
     }
 
