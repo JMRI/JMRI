@@ -177,10 +177,14 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		ignoreLoadCheckBox.setEnabled(enabled);
 		loadComboBox.setEnabled(!ignoreLoadCheckBox.isSelected() & enabled);
 		editLoadButton.setEnabled(!ignoreLoadCheckBox.isSelected() & enabled & _car != null);
+		
+		// if car in a built train, enable destination fields
+		boolean enableDest = enableDestination
+				|| (_car != null && _car.getTrain() != null && _car.getTrain().isBuilt());
 
-		destinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enableDestination & enabled);
-		trackDestinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enableDestination & enabled);
-		autoDestinationTrackCheckBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enableDestination
+		destinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enableDest & enabled);
+		trackDestinationBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enableDest & enabled);
+		autoDestinationTrackCheckBox.setEnabled(!ignoreDestinationCheckBox.isSelected() & enableDest
 				& enabled);
 	}
 
