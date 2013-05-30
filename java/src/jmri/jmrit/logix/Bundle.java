@@ -42,7 +42,7 @@ public class Bundle extends jmri.jmrit.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    static String getMessage(String key) {
+    @NonNull static String getMessage(String key) {
         return b.handleGetMessage(key);
     }
     /**
@@ -61,7 +61,7 @@ public class Bundle extends jmri.jmrit.Bundle {
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */
-    static String getMessage(String key, Object ... subs) {
+    @NonNull static String getMessage(String key, Object ... subs) {
         return b.handleGetMessage(key, subs);
     }
    
