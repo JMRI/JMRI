@@ -12,6 +12,9 @@ import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
+import edu.umd.cs.findbugs.annotations.Nullable;
+
 /**
  * An Warrant contains the operating permissions and directives needed for
  * a train to proceed from an Origin to a Destination
@@ -569,34 +572,37 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
     
 	//@SuppressWarnings("null")
-    private String acquireThrottle(DccLocoAddress address) {
+    @Nullable private String acquireThrottle(@Nullable DccLocoAddress address) {
     	String msg = null;
         if (address == null)  {
             msg = Bundle.getMessage("NoAddress", getDisplayName());
+            abortWarrant(msg);
+            return msg;
         }
-        if (msg==null) {
-            if (InstanceManager.throttleManagerInstance()==null) {
-                msg = Bundle.getMessage("noThrottle");
-            }
+        if (InstanceManager.throttleManagerInstance()==null) {
+            msg = Bundle.getMessage("noThrottle");
+            abortWarrant(msg);
+            return msg;
         }
-        if (msg==null) {
-            if (!InstanceManager.throttleManagerInstance().
-                    requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
-                    msg = Bundle.getMessage("trainInUse", address.getNumber());
-            }
+        if (!InstanceManager.throttleManagerInstance().
+                requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
+                msg = Bundle.getMessage("trainInUse", address.getNumber());
+                abortWarrant(msg);
+                return msg;
         }
         _delayStart = false;	// script should start - no more delay
-        if (msg!=null) {
-         	log.error("Abort warrant \""+ getDisplayName()+"\" "+msg);
-         	if (_engineer!=null) {
-            	_engineer.abort();
-         	}
-        } else {
-            log.debug("Throttle at "+address.toString()+" Aquired for warrant "+getDisplayName());        	
-        }
-    	return msg;
+        log.debug("Throttle at "+address.toString()+" acquired for warrant "+getDisplayName());        	
+    	return null;
     }
 
+    void abortWarrant(@NonNull String msg) {
+        _delayStart = false;	// script should start - no more delay
+        log.error("Abort warrant \""+ getDisplayName()+"\" "+msg);
+        if (_engineer!=null) {
+            _engineer.abort();
+        }
+    }
+    
     /**
     * Pause and resume auto-running train or abort any allocation state
     * _engineer.abort() calls setRunMode(MODE_NONE,...) which calls deallocate all.
