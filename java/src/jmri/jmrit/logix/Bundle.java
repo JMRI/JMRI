@@ -42,7 +42,7 @@ public class Bundle extends jmri.jmrit.Bundle {
      * @param key Bundle key to be translated
      * @return Internationalized text
      */
-    @NonNull static String getMessage(String key) {
+    @NonNull static String getMessage(@NonNull String key) {
         return b.handleGetMessage(key);
     }
     /**
@@ -61,14 +61,14 @@ public class Bundle extends jmri.jmrit.Bundle {
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */
-    @NonNull static String getMessage(String key, Object ... subs) {
+    @NonNull static String getMessage(@NonNull String key, @NonNull Object ... subs) {
         return b.handleGetMessage(key, subs);
     }
    
     private final static Bundle b = new Bundle();
     @Override @Nullable protected String bundleName() {return name; }
-    @Override protected jmri.Bundle getBundle() { return b; }
-    @Override protected String retry(String key) { return super.getBundle().handleGetMessage(key); }
+    @Override @NonNull protected jmri.Bundle getBundle() { return b; }
+    @Override @NonNull protected String retry(@NonNull String key) { return super.getBundle().handleGetMessage(key); }
 
 }
 
