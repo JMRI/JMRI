@@ -18,6 +18,13 @@ $(document).ready(function() {
                 var console = $('#console');
                 console.append(data + '<br/>');
                 console.scrollTop(console[0].scrollHeight - console.height());
+            } else {
+                $('#powerImg').addClass('animated pulse');
+                var wait = window.setTimeout(function() {
+                    $('#powerImg').removeClass('animated pulse');
+                },
+                        1300
+                        );
             }
         },
         power: function(state) {
