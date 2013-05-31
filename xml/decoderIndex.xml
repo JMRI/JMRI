@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130527-2109-jake on Mon May 27 14:09:24 PDT 2013 $Id$-->
-  <decoderIndex version="272">
+  <!--Written by JMRI version 20130531-1341-jake on Fri May 31 07:41:28 MDT 2013 $Id$-->
+  <decoderIndex version="279">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="104">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -11120,6 +11120,15 @@
           <output name="Motor" />
           <output name="BEMF" />
           <output name="Brake" />
+        </model>
+      </family>
+      <family name="WOW Sound" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012" file="TCS_WOW_FW01.xml">
+        <model model="WOWSound Steam" numOuts="4" numFns="22" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD" lowVersionID="1" highVersionID="1" productID="61">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
         </model>
       </family>
       <family name="TCS X Series Decoders" mfg="Train Control Systems" file="TCS_X.xml">
