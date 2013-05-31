@@ -12,12 +12,13 @@ package jmri.jmrix.nce;
 
 import jmri.Consist;
 import jmri.DccLocoAddress;
+import jmri.implementation.AbstractConsistManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class NceConsistManager extends jmri.implementation.AbstractConsistManager implements jmri.ConsistManager {
+public class NceConsistManager extends AbstractConsistManager {
 
     private NceSystemConnectionMemo memo = null;
 
@@ -31,7 +32,9 @@ public class NceConsistManager extends jmri.implementation.AbstractConsistManage
      */
     @Override
     public void requestUpdateFromLayout() {
-        startConsistReader();
+        if (shouldRequestUpdateFromLayout()) {
+            startConsistReader();
+        }
     }
 
     /**

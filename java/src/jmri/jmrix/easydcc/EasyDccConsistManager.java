@@ -11,24 +11,27 @@ package jmri.jmrix.easydcc;
 
 import jmri.Consist;
 import jmri.DccLocoAddress;
+import jmri.implementation.AbstractConsistManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EasyDccConsistManager extends jmri.implementation.AbstractConsistManager implements jmri.ConsistManager {
+public class EasyDccConsistManager extends AbstractConsistManager {
 
-    //private Thread initThread = null;
+    private EasyDccConsistReader reader;
+
     /**
-     * Constructor - call the constructor for the superclass, and initilize the
+     * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
      * command station
      *
      */
     public EasyDccConsistManager() {
         super();
+        reader = new EasyDccConsistReader();
     }
 
     /**
-     * This implementation does support andvanced consists, so return true.
+     * This implementation does support advanced consists, so return true.
      *
      */
     @Override
@@ -37,7 +40,7 @@ public class EasyDccConsistManager extends jmri.implementation.AbstractConsistMa
     }
 
     /**
-     * Does a CS consist require a seperate consist address? CS consist
+     * Does a CS consist require a separate consist address? CS consist
      * addresses are assigned by the user, so return true.
      *
      */
@@ -66,8 +69,14 @@ public class EasyDccConsistManager extends jmri.implementation.AbstractConsistMa
      */
     @Override
     public void requestUpdateFromLayout() {
-        // Initilize the consist reader thread.
-        new EasyDccConsistReader();
+        if (this.shouldRequestUpdateFromLayout()) {
+            reader.searchNext();
+        }
+    }
+
+    @Override
+    protected boolean shouldRequestUpdateFromLayout() {
+        return (reader.CurrentState == EasyDccConsistReader.IDLE);
     }
 
     // Internal class to read consists from the command station
@@ -82,7 +91,6 @@ public class EasyDccConsistManager extends jmri.implementation.AbstractConsistMa
         int CurrentState = IDLE;
 
         EasyDccConsistReader() {
-            searchNext();
         }
 
         @Override
@@ -116,7 +124,7 @@ public class EasyDccConsistManager extends jmri.implementation.AbstractConsistMa
                     // This is the response we're looking for
                     // The bytes 2 and 3 are the
 
-                    int consistAddr = -1;
+                    int consistAddr;
                     Boolean newConsist = true;
                     EasyDccConsist currentConsist = null;
                     String sa = "" + (char) r.getElement(1)
@@ -128,7 +136,7 @@ public class EasyDccConsistManager extends jmri.implementation.AbstractConsistMa
                     for (int i = 3; i < r.getNumDataElements(); i += 4) {
                         DccLocoAddress locoAddress;
                         int tempAddr;
-                        boolean directionNormal = true;
+                        boolean directionNormal;
                         if ((char) r.getElement(i) == ' ') {
                             i++; // skip a space
                         } else if (java.lang.Character.digit((char) r.getElement(i), 16) == -1) {

@@ -11,15 +11,17 @@ package jmri.jmrix.loconet;
 
 import jmri.Consist;
 import jmri.DccLocoAddress;
+import jmri.implementation.AbstractConsistManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class LocoNetConsistManager extends jmri.implementation.AbstractConsistManager implements jmri.ConsistManager {
+public class LocoNetConsistManager extends AbstractConsistManager {
 
     private LocoNetSystemConnectionMemo memo = null;
+    private boolean requestingUpdate = false;
 
     /**
-     * Constructor - call the constructor for the superclass, and initilize the
+     * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
      * command station
      *
@@ -64,7 +66,6 @@ public class LocoNetConsistManager extends jmri.implementation.AbstractConsistMa
         return consist;
     }
 
-
     /* request an update from the layout, loading
      * Consists from the command station.
      *
@@ -80,6 +81,10 @@ public class LocoNetConsistManager extends jmri.implementation.AbstractConsistMa
      */
     @Override
     public void requestUpdateFromLayout() {
+        if (!shouldRequestUpdateFromLayout()) {
+            return;
+        }
+        requestingUpdate = true;
         SlotManager sm = memo.getSlotManager();
 
         // in the first pass, check for consists top addresses in the
@@ -119,6 +124,12 @@ public class LocoNetConsistManager extends jmri.implementation.AbstractConsistMa
                 getConsist(lead).add(address, s.isForward() == sm.slot(s.speed()).isForward());
             }
         }
+        requestingUpdate = false;
+    }
+
+    @Override
+    protected boolean shouldRequestUpdateFromLayout() {
+        return !requestingUpdate;
     }
     static Logger log = LoggerFactory.getLogger(LocoNetConsistManager.class.getName());
 }

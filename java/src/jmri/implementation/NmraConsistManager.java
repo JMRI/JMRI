@@ -13,7 +13,6 @@ package jmri.implementation;
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
-import jmri.implementation.DccConsistManager;
 
 public class NmraConsistManager extends DccConsistManager implements ConsistManager {
 

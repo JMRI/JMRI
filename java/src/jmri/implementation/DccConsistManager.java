@@ -13,7 +13,6 @@ package jmri.implementation;
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
-import jmri.implementation.AbstractConsistManager;
 
 public class DccConsistManager extends AbstractConsistManager implements ConsistManager {
 
@@ -48,12 +47,5 @@ public class DccConsistManager extends AbstractConsistManager implements Consist
     @Override
     public boolean csConsistNeedsSeperateAddress() {
         return false;
-    }
-
-    /* request an update from the layout, loading
-     * Consists from the command station.
-     */
-    @Override
-    public void requestUpdateFromLayout() {
     }
 }

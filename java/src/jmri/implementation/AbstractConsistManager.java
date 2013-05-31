@@ -114,11 +114,20 @@ abstract public class AbstractConsistManager implements ConsistManager {
         }
     }
 
-    /* request an update from the layout, loading
-     * Consists from the command station.
-     */
     @Override
     public void requestUpdateFromLayout() {
+    }
+
+    /**
+     * Allow a request for consist updates from the layout.
+     *
+     * If not overridden, by a concrete subclass, this method always returns
+     * true.
+     *
+     * @return true if the request can be made, false if not
+     */
+    protected boolean shouldRequestUpdateFromLayout() {
+        return true;
     }
 
     /*

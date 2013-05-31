@@ -3,6 +3,7 @@ package jmri.jmrix.lenz;
 
 import jmri.Consist;
 import jmri.DccLocoAddress;
+import jmri.implementation.AbstractConsistManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,13 +13,14 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2004-2010
  * @version $Revision$
  */
-public final class XNetConsistManager extends jmri.implementation.AbstractConsistManager implements jmri.ConsistManager {
+public final class XNetConsistManager extends AbstractConsistManager {
 
     private Thread initThread = null;
     protected XNetTrafficController tc = null;
+    private boolean requestingUpdate = false;
 
     /**
-     * Constructor - call the constructor for the superclass, and initilize the
+     * Constructor - call the constructor for the superclass, and initialize the
      * consist reader thread, which retrieves consist information from the
      * command station
      *
@@ -70,12 +72,19 @@ public final class XNetConsistManager extends jmri.implementation.AbstractConsis
      */
     @Override
     public void requestUpdateFromLayout() {
-        // Initilize the consist reader thread.
-        initThread = new Thread(new XNetConsistReader());
-        int it = initThread.getPriority();
-        it--;
-        initThread.setPriority(it);
-        initThread.start();
+        if (shouldRequestUpdateFromLayout()) {
+            // Initilize the consist reader thread.
+            initThread = new Thread(new XNetConsistReader());
+            int it = initThread.getPriority();
+            it--;
+            initThread.setPriority(it);
+            initThread.start();
+        }
+    }
+
+    @Override
+    protected boolean shouldRequestUpdateFromLayout() {
+        return !requestingUpdate;
     }
 
     // Internal class to read consists from the command station
@@ -110,6 +119,7 @@ public final class XNetConsistManager extends jmri.implementation.AbstractConsis
         }
 
         private void searchNext() {
+            requestingUpdate = true;
             if (log.isDebugEnabled()) {
                 log.debug("Sending search for next DB Entry, _lastAddress is: " + _lastAddress);
             }
@@ -182,6 +192,7 @@ public final class XNetConsistManager extends jmri.implementation.AbstractConsis
                             case XNetConstants.LOCO_SEARCH_NO_RESULT:
                                 CurrentState = IDLE;
                                 notifyConsistListChanged();
+                                requestingUpdate = false;
                                 break;
                             case XNetConstants.LOCO_NOT_AVAILABLE:
                             case XNetConstants.LOCO_FUNCTION_STATUS:
