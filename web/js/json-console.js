@@ -14,9 +14,11 @@ $(document).ready(function() {
             jmri.getPower();
         },
         console: function(data) {
-            var console = $('#console');
-            console.append(data + '<br/>');
-            console.scrollTop(console[0].scrollHeight - console.height());
+            if (data !== '{"type":"pong"}') {
+                var console = $('#console');
+                console.append(data + '<br/>');
+                console.scrollTop(console[0].scrollHeight - console.height());
+            }
         },
         power: function(state) {
             power = state;
