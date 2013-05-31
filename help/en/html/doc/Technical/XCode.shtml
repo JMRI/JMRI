@@ -42,7 +42,23 @@ Xcode can be used to work with JMRI.
 <p>The instructions below assume a fresh checkout of JMRI, along with a recent 
 version of Xcode.
 
-<H2>Procedure to setup JMRI on Xcode</H2>
+<H2>Procedure to setup JMRI on Xcode 4</H2>
+<ol>
+<li><p>Start <b>Xcode</b> and dismiss any previous project window that appears.</p></li>
+<li>File -> New -> New Project.  
+<li>In the new window, on the left, select OS X Other.  On the right, select External Build System.
+Click Next.
+<li>Project name: JMRI.  Build tool: /usr/bin/ant  Click Next.
+<li>Navigate to your JMRI checkout & select the main checked-out directory.  "java" should show in the window as the next level down.
+Click "Create".
+<li>You should get an XCode project window. In the center, it should say
+"External Build Tool Configuration".  (You might have to click around to get there).
+Change Arguments from $(ACTION) to decoderpro (or panelpro if you'd like; case matters)
+<li>Just below that is a Directory field.  CLick the icon at the right end to get a 
+file chooser, and again select your checked-out directory.
+<li>Click the run button, upper left. DecoderPro should start after a compilation cycle.
+</ol>
+<H2>Procedure to setup JMRI on Xcode 3</H2>
 <ol>
 <li><p>Start <b>Xcode,</b> dismiss any window that appears, and uncheck return to 
 this window, etc.</p></li>
