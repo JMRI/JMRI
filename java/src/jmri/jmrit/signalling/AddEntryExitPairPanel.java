@@ -144,10 +144,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
     JLabel sourceLabel = new JLabel();
     
     private void autoDiscovery(){
-        if (!InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+        if (!InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()){
             int response = JOptionPane.showConfirmDialog(null, rb.getString("EnableLayoutBlockRouting"));
             if (response == 0){
-                InstanceManager.layoutBlockManagerInstance().enableAdvancedRouting(true);
+                InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).enableAdvancedRouting(true);
                 JOptionPane.showMessageDialog(null, rb.getString("LayoutBlockRoutingEnabled"));
             }
         }
@@ -185,7 +185,6 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
                 nxPairs.addPropertyChangeListener(propertyNXListener);
                 nxPairs.automaticallyDiscoverEntryExitPairs(panels.get(selectPanel.getSelectedIndex()), typeBox.getSelectedIndex());
             } catch (jmri.JmriException e){
-                log.info("Exception here");
                 nxPairs.removePropertyChangeListener(propertyNXListener);
                 JOptionPane.showMessageDialog(null, e.toString());
                 entryExitFrame.setVisible(false);
@@ -549,7 +548,10 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
 			Color.lightGray,Color.white,Color.red,Color.pink,Color.orange,
 			Color.yellow,Color.green,Color.blue,Color.magenta,Color.cyan};
 	int numColors = 14;  // number of entries in the above arrays
+    JCheckBox dispatcherUse = new JCheckBox(Bundle.getMessage("DispatcherInt"));
+    
     JComboBox settingTrackColorBox = new JComboBox();
+    
     private void initializeColorCombo(JComboBox colorCombo) {
 		colorCombo.removeAllItems();
 		for (int i = 0;i<numColors;i++) {
@@ -614,6 +616,12 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
             p3.add(new JLabel(Bundle.getMessage("SettingDuration")));
             p3.add(durationSetting);
             optionsPane.add(p3);
+
+            JPanel p4 = new JPanel();
+            p4.add(dispatcherUse);
+            dispatcherUse.setSelected(nxPairs.getDispatcherIntegration());
+            optionsPane.add(p4);
+            
             JButton ok = new JButton(Bundle.getMessage("ButtonOkay"));
             optionsPane.add(ok);
             ok.addActionListener(
@@ -638,6 +646,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         nxPairs.setSettingTimer(settingTimer);
         nxPairs.setSettingRouteColor(getSelectedColor(settingTrackColorBox));
         nxPairs.setClearDownOption(clearEntry.getSelectedIndex());
+        nxPairs.setDispatcherIntegration(dispatcherUse.isSelected());
         optionsFrame.setVisible(false);
     
     }

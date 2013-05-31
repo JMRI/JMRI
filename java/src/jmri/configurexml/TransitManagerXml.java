@@ -63,7 +63,7 @@ public class TransitManagerXml extends jmri.managers.configurexml.AbstractNamedB
                     Element tsElem = null;
                     for (int k = 0; k<tsList.size(); k++) {
                         TransitSection ts = tsList.get(k);
-                        if (ts!=null) {						
+                        if (ts!=null && !ts.isTemporary()) {
                             tsElem = new Element ("transitsection");
                             Section tSection = ts.getSection();
                             if (tSection!=null) tsElem.setAttribute("sectionname",tSection.getSystemName());

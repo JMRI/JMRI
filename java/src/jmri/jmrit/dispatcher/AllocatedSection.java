@@ -114,7 +114,25 @@ public class AllocatedSection {
 	}
 	public int getSequence() {return mSequence;}
 	public jmri.Section getNextSection() {return mNextSection;}
-	public int getNextSectionSequence() {return mNextSectionSequence;}	
+	public int getNextSectionSequence() {return mNextSectionSequence;}
+    
+    protected boolean setNextSection(jmri.Section sec, int i){
+        if(sec==null){
+            mNextSection=null;
+            mNextSectionSequence = i;
+            return true;
+        }
+        if(mNextSection!=null){
+            log.error("Next section is already set");
+            return false;
+        }
+        mNextSection=sec;
+        return true;
+    }
+    
+    public void setNextSectionSequence(int i){
+        mNextSectionSequence = i;
+    }
 	public boolean getEntered() {return mEntered;}
 	public boolean getExited() {return mExited;}
 	public int getAllocationNumber() {return mAllocationNumber;}

@@ -596,6 +596,34 @@ public class ActiveTrain {
 				mNextSectionSeqNumber, mNextSectionDirection, this);
 		return ar;
 	}
+    
+    protected boolean addEndSection(jmri.Section s, int seq){
+        AllocatedSection as = mAllocatedSections.get(mAllocatedSections.size()-1);
+        if(!as.setNextSection(s, seq)) return false;
+        setEndBlockSection(s);
+        setEndBlockSectionSequenceNumber(seq);
+        //At this stage the section direction hasn't been set, by default the exit block returned is the reverse if the section is free
+        setEndBlock(s.getExitBlock());
+        mNextSectionSeqNumber = seq;
+        mNextSectionToAllocate = s;
+        return true;
+    }
+    
+    /*This is for use where the transit has been extended, then the last section has been cancelled no 
+    checks are performed, these should be done by a higher level code*/
+    protected void removeLastAllocatedSection(){
+        AllocatedSection as = mAllocatedSections.get(mAllocatedSections.size()-1);
+        //Set the end block using the AllocatedSections exit block before clearing the next section in the allocatedsection
+        setEndBlock(as.getExitBlock());
+
+        as.setNextSection(null, 0);
+        setEndBlockSection(as.getSection());
+
+        setEndBlockSectionSequenceNumber(getEndBlockSectionSequenceNumber()-1);
+        // In theory the following values should have already been set if there are no more sections to allocate.
+        mNextSectionSeqNumber = 0;
+        mNextSectionToAllocate = null;
+    }
 	
 	protected void reverseAllAllocatedSections() {
 		for (int i = 0; i<mAllocatedSections.size(); i++) {
@@ -628,7 +656,7 @@ public class ActiveTrain {
 	}
     
 	public void dispose() {
-	
+        getTransit().removeTemporarySections();
 	}
 
 	// Property Change Support

@@ -79,7 +79,10 @@ public class TransitSection {
         }
 		needsInitialization = false;
 	}
-	
+    
+    boolean temporary = false;
+    public void setTemporary(boolean boo){ temporary = boo; }
+    public boolean isTemporary() { return temporary; }
 	/**
      * Access methods
      */

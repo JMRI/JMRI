@@ -2371,6 +2371,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
         }
         
         void dispose(){
+            if(thr!=null)
+                thr.interrupt();
             disposed = true;
             clearTurnoutLock();
             destination.removePropertyChangeListener(propertyDestinationMastListener);
@@ -2730,6 +2732,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
     protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
     public void dispose(){
+        if(thr!=null)
+            thr.interrupt();
         disposing=true;
         getSourceMast().removePropertyChangeListener(propertySourceMastListener);
         Enumeration<SignalMast> en = destList.keys();

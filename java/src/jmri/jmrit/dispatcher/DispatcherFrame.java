@@ -626,6 +626,57 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 			extraFrame = null;
 		}
 	}
+    
+    /**
+    * This method is for use to extend the allocation of a section to a active train
+    * Its use is to allow a dispatcher to manually route a train to its final destination
+    */
+    
+    public boolean extendActiveTrainsPath(Section s, ActiveTrain at, JmriJFrame jFrame){
+        AllocatedSection lastAllocationSection = null;
+        if(s.getEntryPointFromSection(at.getEndBlockSection(), Section.FORWARD)!=null &&
+            at.getNextSectionToAllocate()==null){
+            
+            int seq = at.getEndBlockSectionSequenceNumber()+1;
+            if(!at.addEndSection(s, seq)) return false;
+            jmri.TransitSection ts = new jmri.TransitSection(s, seq, Section.FORWARD);
+            ts.setTemporary(true);
+            at.getTransit().addTransitSection(ts);
+            
+            // requesting allocation of a section outside of the Transit, direction set arbitrary
+            boolean requested = requestAllocation(at, s, Section.FORWARD, seq, true, jFrame);
+
+            AllocationRequest ar = findAllocationRequestInQueue(s, seq, Section.FORWARD, at);
+            // if allocation request is OK, force an allocation the Section so that the dispatcher can then allocate futher paths through
+            if (requested &&(ar!=null)) {
+                allocateSection(ar, null);
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean removeFromActiveTrainPath(Section s, ActiveTrain at, JmriJFrame jFrame){
+        if(s==null || at==null){
+            return false;
+        }
+        if(at.getEndBlockSection()!=s){
+            log.error("Active trains end section " + at.getEndBlockSection().getDisplayName() + " is not the same as the requested section to remove " + s.getDisplayName());
+            return false;
+        }
+        if(!at.getTransit().removeLastTemporarySection(s))
+            return false;
+        
+        //Need to find allocation and remove from list.
+		for (int k = allocatedSections.size(); k>0;  k--) {
+			if (at == allocatedSections.get(k-1).getActiveTrain()
+                && allocatedSections.get(k-1).getSection() == s) {
+				releaseAllocatedSection (allocatedSections.get(k-1), true);
+			}
+		}
+        at.removeLastAllocatedSection();
+        return true;
+    }
 	
 	// cancel the automatic restart request of an Active Train from the button in the Dispatcher window
 	void cancelRestart(ActionEvent e) {
@@ -1832,7 +1883,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	protected void setNameInAllocatedBlock(boolean set) {_NameInAllocatedBlock = set;}
 	protected int getScale() {return _LayoutScale;}
 	protected void setScale(int sc) {_LayoutScale = sc;}
-	protected ArrayList<ActiveTrain> getActiveTrainsList() {return activeTrainsList;}
+	public ArrayList<ActiveTrain> getActiveTrainsList() {return activeTrainsList;}
 	protected ArrayList<AllocatedSection> getAllocatedSectionsList() {return allocatedSections;}
     
     public ActiveTrain getActiveTrainForRoster(RosterEntry re){
