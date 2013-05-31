@@ -665,7 +665,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             
             if (cancelClear == EntryExitPairs.CANCELROUTE){
                 if(manager.getDispatcherIntegration() && jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class)!=null){
-                    jmri.jmrit.roster.RosterEntry re = null;
                     jmri.jmrit.dispatcher.DispatcherFrame df = jmri.InstanceManager.getDefault(jmri.jmrit.dispatcher.DispatcherFrame.class);
                     ActiveTrain at = null;
                     for(ActiveTrain atl:df.getActiveTrainsList()){

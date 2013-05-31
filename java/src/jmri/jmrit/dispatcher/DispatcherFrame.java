@@ -633,7 +633,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
     */
     
     public boolean extendActiveTrainsPath(Section s, ActiveTrain at, JmriJFrame jFrame){
-        AllocatedSection lastAllocationSection = null;
         if(s.getEntryPointFromSection(at.getEndBlockSection(), Section.FORWARD)!=null &&
             at.getNextSectionToAllocate()==null){
             
