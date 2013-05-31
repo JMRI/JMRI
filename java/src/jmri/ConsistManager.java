@@ -25,9 +25,8 @@ import java.util.ArrayList;
 public interface ConsistManager {
 
     /**
-     * Find a Consist with this consist address, and return it. if the Consist
+     * Find a Consist with this consist address, and return it. If the Consist
      * doesn't exit, create it.
-	 *
      */
     public Consist getConsist(DccLocoAddress address);
 
@@ -42,43 +41,44 @@ public interface ConsistManager {
     public boolean isCommandStationConsistPossible();
 
     /**
-     * Does a CS consist require a seperate consist address?
+     * Does a CS consist require a separate consist address?
      */
     public boolean csConsistNeedsSeperateAddress();
 
     /**
-     * Get an ArrayList object containning the string representation of the
+     * Get an ArrayList object containing the string representation of the
      * consist addresses we know about.
      */
     public ArrayList<DccLocoAddress> getConsistList();
 
     /**
-     * Translate Error Codes recieved by a consistListener into Strings
+     * Translate Error Codes relieved by a consistListener into Strings
      */
     public String decodeErrorCode(int ErrorCode);
 
-    /* request an update from the layout, loading
-     * Consists from the command station.
+    /**
+     * Request an update from the layout, loading Consists from the command
+     * station.
      */
     public void requestUpdateFromLayout();
 
-    /*
-     * register a ConsistListListener object with this Consist
-     * Manager
+    /**
+     * Register a ConsistListListener object with this ConsistManager
+     *
      * @param listener a Consist List Listener object.
      */
     public void addConsistListListener(ConsistListListener l);
 
-    /*
-     * remove a ConsistListListener object with this Consist
-     * Manager
+    /**
+     * Remove a ConsistListListener object with this ConsistManager
+     *
      * @param listener a Consist List Listener object.
      */
     public void removeConsistListListener(ConsistListListener l);
 
-    /*
-     * Notify the registered Consist List Listener objects that the
-     * Consist List has changed.
+    /**
+     * Notify the registered ConsistListListener objects that the ConsistList
+     * has changed.
      */
     public void notifyConsistListChanged();
 }
