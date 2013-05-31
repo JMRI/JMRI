@@ -37,6 +37,7 @@ public final class JSON {
     public static final String STATE = "state"; // NOI18N
     public static final String VALUE = "value"; // NOI18N
     public static final String ID = "id"; // NOI18N
+    public static final String STATUS = "status"; // NOI18N
     /* JSON error */
     public static final String ERROR = "error"; // NOI18N
     public static final String CODE = "code"; // NOI18N
@@ -48,6 +49,7 @@ public final class JSON {
     public static final String RAILROAD = "railroad"; // NOI18N
    /* JSON list types */
     public static final String CARS = "cars"; // NOI18N
+    public static final String CONSISTS = "consists"; // NOI18N
     public static final String ENGINES = "engines"; // NOI18N
     public static final String LIGHTS = "lights"; // NOI18N
     public static final String LOCATIONS = "locations"; // NOI18N
@@ -65,6 +67,7 @@ public final class JSON {
     public static final String NETWORK_SERVICES = "networkServices"; // NOI18N
     /* JSON data types */
     public static final String CAR = "car"; // NOI18N
+    public static final String CONSIST = "consist"; // NOI18N
     public static final String ENGINE = "engine"; // NOI18N
     public static final String LIGHT = "light"; // NOI18N
     public static final String LOCATION = "location"; // NOI18N
@@ -84,7 +87,6 @@ public final class JSON {
     public static final String TURNOUT = "turnout"; // NOI18N
     /* JSON operations tokens */
     public static final String LENGTH = "length"; // NOI18N
-    public static final String STATUS = "status"; // NOI18N
     public static final String WEIGHT = "weight"; // NOI18N
     public static final String LEAD_ENGINE = "leadEngine"; // NOI18N
     public static final String CABOOSE = "caboose"; // NOI18N
@@ -158,6 +160,9 @@ public final class JSON {
     public static final String INTEGER = "int"; // NOI18N
     /* JSON network services tokens */
     public static final String PORT = "port"; // NOI18N
+    /* JSON consist tokens */
+    public static final String POSITION = "position"; // NOI18N
+    public static final String SIZE_LIMIT = "sizeLimit"; // NOI18N
     /*
      * JSON State (an unsigned integer)
      */

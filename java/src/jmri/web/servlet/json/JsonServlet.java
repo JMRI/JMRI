@@ -55,6 +55,7 @@ public class JsonServlet extends WebSocketServlet {
 
     public JsonServlet() {
         super();
+        InstanceManager.consistManagerInstance().requestUpdateFromLayout();
     }
 
     @Override
@@ -92,7 +93,7 @@ public class JsonServlet extends WebSocketServlet {
      * sample responses:
      * <ul>
      * <li>{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}</li>
-     * <li>{"type":"list","list":[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]}</li>
+     * <li>[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]</li>
      * </ul>
      * note that data will vary for each type
      */
@@ -115,6 +116,8 @@ public class JsonServlet extends WebSocketServlet {
                 if (name == null) {
                     if (type.equals(CARS)) {
                         reply = JsonUtil.getCars();
+                    } else if (type.equals(CONSISTS)) {
+                        reply = JsonUtil.getConsists();
                     } else if (type.equals(ENGINES)) {
                         reply = JsonUtil.getEngines();
                     } else if (type.equals(LIGHTS)) {
@@ -158,6 +161,8 @@ public class JsonServlet extends WebSocketServlet {
                 } else {
                     if (type.equals(CAR)) {
                         reply = JsonUtil.getCar(name);
+                    } else if (type.equals(CONSIST)) {
+                        reply = JsonUtil.getConsist(name);
                     } else if (type.equals(ENGINE)) {
                         reply = JsonUtil.getEngine(name);
                     } else if (type.equals(LIGHT)) {
@@ -400,8 +405,8 @@ public class JsonServlet extends WebSocketServlet {
             sockets.add(this);
             try {
                 this.handler.sendHello(this.wsConnection.getMaxIdleTime());
-            } catch (IOException e) {
-                log.warn(e.getMessage(), e);
+            } catch (Exception e) {
+                log.warn("Error openning WebSocket:\n{}", e.getMessage(), e);
                 this.wsConnection.close();
                 sockets.remove(this);
             }
@@ -417,8 +422,8 @@ public class JsonServlet extends WebSocketServlet {
         public void onMessage(String string) {
             try {
                 this.handler.onMessage(string);
-            } catch (IOException e) {
-                log.warn(e.getMessage(), e);
+            } catch (Exception e) {
+                log.error("Error on WebSocket message:\n{}", e.getMessage(), e);
                 this.wsConnection.close();
                 sockets.remove(this);
             }

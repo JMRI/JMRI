@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 public class JsonClientHandler {
 
+    private JsonConsistServer consistServer;
     private JsonLightServer lightServer;
     private JsonMemoryServer memoryServer;
     private JsonOperationsServer operationsServer;
@@ -31,6 +32,7 @@ public class JsonClientHandler {
     public JsonClientHandler(JmriConnection connection, ObjectMapper mapper) {
         this.connection = connection;
         this.mapper = mapper;
+        this.consistServer = new JsonConsistServer(this.connection);
         this.lightServer = new JsonLightServer(this.connection);
         this.memoryServer = new JsonMemoryServer(this.connection);
         this.operationsServer = new JsonOperationsServer(this.connection);
@@ -117,6 +119,8 @@ public class JsonClientHandler {
                 String list = root.path(LIST).asText();
                 if (list.equals(CARS)) {
                     reply = JsonUtil.getCars();
+                } else if (list.equals(CONSISTS)) {
+                    reply = JsonUtil.getConsists();
                 } else if (list.equals(ENGINES)) {
                     reply = JsonUtil.getEngines();
                 } else if (list.equals(LIGHTS)) {
@@ -154,7 +158,9 @@ public class JsonClientHandler {
                 //if (log.isDebugEnabled()) log.debug("Sending to client: " + this.mapper.writeValueAsString(reply));
                 this.connection.sendMessage(this.mapper.writeValueAsString(reply));
             } else if (!data.isMissingNode()) {
-                if (type.equals(LIGHT)) {
+                if (type.equals(CONSIST)) {
+                    this.consistServer.parseRequest(data);
+                } else if (type.equals(LIGHT)) {
                     this.lightServer.parseRequest(data);
                 } else if (type.equals(MEMORY)) {
                     this.memoryServer.parseRequest(data);

@@ -8,6 +8,8 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
 import java.util.Enumeration;
 import java.util.List;
+import jmri.Consist;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
@@ -78,6 +80,49 @@ public class JsonUtil {
         ArrayNode root = mapper.createArrayNode();
         for (String id : CarManager.instance().getByIdList()) {
             root.add(getCar(id));
+        }
+        return root;
+    }
+
+    static public JsonNode getConsist(DccLocoAddress address) throws JsonException {
+        try {
+            if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+                ObjectNode root = mapper.createObjectNode();
+                root.put(TYPE, CONSIST);
+                ObjectNode data = root.putObject(DATA);
+                Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
+                data.put(ADDRESS, consist.getConsistAddress().getNumber());
+                data.put(IS_LONG_ADDRESS, consist.getConsistAddress().isLongAddress());
+                data.put(TYPE, consist.getConsistType());
+                ArrayNode engines = data.putArray(ENGINES);
+                for (DccLocoAddress l : consist.getConsistList()) {
+                    ObjectNode engine = mapper.createObjectNode();
+                    engine.put(ADDRESS, l.getNumber());
+                    engine.put(IS_LONG_ADDRESS, l.isLongAddress());
+                    engine.put(FORWARD, consist.getLocoDirection(l));
+                    engine.put(POSITION, consist.getPosition(l));
+                    engines.add(engine);
+                }
+                data.put(ID, consist.getConsistID());
+                data.put(SIZE_LIMIT, consist.sizeLimit());
+                return root;
+            } else {
+                throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
+            }
+        } catch (Exception ex) {
+            log.error("Exception getting consist [{}].", address.toString(), ex);
+            throw new JsonException(500, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
+        }
+    }
+
+    static public JsonNode getConsist(String address) throws JsonException {
+        return getConsist(addressForString(address));
+    }
+
+    static public JsonNode getConsists() throws JsonException {
+        ArrayNode root = mapper.createArrayNode();
+        for (DccLocoAddress address : InstanceManager.consistManagerInstance().getConsistList()) {
+            root.add(getConsist(address));
         }
         return root;
     }
@@ -973,5 +1018,26 @@ public class JsonUtil {
         data.put(CODE, code);
         data.put(MESSAGE, message);
         return root;
+    }
+
+    /**
+     * Gets the {@link jmri.DccLocoAddress} for a String in the form
+     * <code>number(type)</code>.
+     *
+     * Type may be
+     * <code>L</code> or
+     * <code>S</code>.
+     *
+     * @param address
+     * @return The DccLocoAddress for address.
+     */
+    static public DccLocoAddress addressForString(String address) {
+        String[] components = address.split("[()]");
+        int number = Integer.parseInt(components[0]);
+        boolean isLong = false;
+        if (components.length > 1 && "L".equals(components[1].toUpperCase())) {
+            isLong = true;
+        }
+        return new DccLocoAddress(number, isLong);
     }
 }
