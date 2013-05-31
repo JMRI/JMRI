@@ -638,6 +638,13 @@ public class Section extends AbstractNamedBean
 		if ( (blockIndex>mBlockEntries.size()) || (blockIndex<=0) ) return null;
 		return mBlockEntries.get(blockIndex-1);
 	}
+    public Block getExitBlock() {
+		if (initializationNeeded) initializeBlocks();
+		if (mBlockEntries.size() <=0) return null;
+		if (mState==REVERSE) blockIndex = 1;
+        else blockIndex=mBlockEntries.size();
+		return mBlockEntries.get(blockIndex-1);
+	}
 	public boolean containsBlock(Block b) {
 		for (int i = 0; i<mBlockEntries.size(); i++) {
 			if (b == mBlockEntries.get(i)) return true;
