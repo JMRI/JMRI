@@ -25,7 +25,8 @@
   <!-- Version 1.3- Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Z2 decoder" mfg="Train Control Systems">
-      <model model="Z2" numOuts="2" numFns="2" lowVersionID="49">
+        <model show="no" model="Z2" numOuts="2" numFns="2" lowVersionID="41" highVersionID="50"
+             replacementModel="Z2" replacementFamily="June 2007">
         <output name="4" label="Purple"/>
       </model>
     </family>

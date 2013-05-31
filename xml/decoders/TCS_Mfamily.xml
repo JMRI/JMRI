@@ -23,13 +23,16 @@
   <!-- Version 4.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Mx series decoders" mfg="Train Control Systems">
-      <model model="M1" numOuts="2" numFns="6" lowVersionID="24" highVersionID="24">
+      <model show="no" model="M1" numOuts="2" numFns="6" lowVersionID="24" highVersionID="24"
+          replacementModel="M1" replacementFamily="Jan 2000">
         <size length="0.500" width="0.375" height="0.125" units="inches"/>
       </model>
-      <model model="M2" numOuts="3" numFns="6" lowVersionID="29" highVersionID="29">
+      <model show="no" model="M2" numOuts="3" numFns="6" lowVersionID="29" highVersionID="29"
+          replacementModel="M2" replacementFamily="Jan 2000">
         <size length="0.500" width="0.375" height="0.125" units="inches"/>
       </model>
-      <model model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37">
+      <model show="no" model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37"
+          replacementModel="M1P-UK" replacementFamily="Jan 2000">
     		</model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

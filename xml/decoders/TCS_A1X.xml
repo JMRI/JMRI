@@ -20,7 +20,8 @@
   <!-- Version 1.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS A1X decoder" mfg="Train Control Systems">
-      <model model="A1X" numOuts="4" numFns="2" lowVersionID="32"/>
+      <model show="no" model="A1X" numOuts="4" numFns="2" lowVersionID="32"
+          replacementModel="A1X" replacementFamily="Jan 2000" />
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

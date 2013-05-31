@@ -20,8 +20,9 @@
   <!-- Version 2.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <!-- Version 2.2- 20130212 Added Forward and reverse Trim. Updated version option -->
   <decoder>
-    <family name="TCS V51+" mfg="Train Control Systems" comment="TCS Ver 51 on" lowVersionID="51" highVersionID="99">
-      <model model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+    <family name="TCS V51+" mfg="Train Control Systems" comment="TCS Ver 51 on" lowVersionID="51" highVersionID="52">
+      <model show="no" model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
+          replacementModel="A4X" replacementFamily="June 2007">
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -33,7 +34,8 @@
         <output name="Brake"/>
         <size length="2.860" width="0.680" height="0.145" units="inches"/>
       </model>
-      <model model="A6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+      <model show="no" model="A6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
+          replacementModel="A6X" replacementFamily="June 2007">
         <output name="1" label="White" connection="solder" maxcurrent="200 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="200 mA"/>
@@ -47,7 +49,7 @@
         <output name="Brake"/>
         <size length="2.860" width="0.680" height="0.145" units="inches"/>
       </model>
-      <model model="ALD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: SD50 SD60">
+      <model show="no" model="ALD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: SD50 SD60" replacementModel="ALD4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -58,7 +60,8 @@
         <output name="Brake"/>
         <size length="2.83" width="0.351" height="0.13" units="inches"/>
       </model>
-      <model model="AMD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B">
+      <model show="no" model="AMD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B"
+          replacementModel="AMD4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -69,7 +72,8 @@
         <output name="Brake"/>
         <size length="2.83" width="0.351" height="0.13" units="inches"/>
       </model>
-      <model model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B">
+      <model show="no" model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B"
+          replacementModel="ASD4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -80,7 +84,8 @@
         <output name="Brake"/>
         <size length="2.73" width="0.349" height="0.13" units="inches"/>
       </model>
-      <model model="CN" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions">
+      <model show="no" model="CN" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions"
+          replacementModel="CN" replacementFamily="June 2007">
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -90,7 +95,8 @@
         <output name="Brake"/>
         <size length="0.834" width="0.361" height="0.101" units="inches"/>
       </model>
-      <model model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions">
+      <model show="no" model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions"
+          replacementModel="CN-GP" replacementFamily="June 2007">
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -102,7 +108,8 @@
         <output name="Brake"/>
         <size length="0.73" width="0.36" height="0.15" units="inches"/>
       </model>
-      <model model="DP2X" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+      <model show="no" model="DP2X" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
+          replacementModel="DP2X" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -112,7 +119,8 @@
         <output name="Brake"/>
         <size length="0845" width="0.680" height="0.165" units="inches"/>
       </model>
-      <model model="DP2X-UK" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="UK  version of DP2X different pin orientation - fits Atlas vacuumcar">
+      <model show="no" model="DP2X-UK" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="UK  version of DP2X different pin orientation - fits Atlas vacuumcar"
+          replacementModel="DP2X-UK" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -122,7 +130,8 @@
         <output name="Brake"/>
         <size length="0845" width="0.680" height="0.165" units="inches"/>
       </model>
-      <model model="DP5" numOuts="5" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+      <model show="no" model="DP5" numOuts="5" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP"
+          replacementModel="DP5" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -134,7 +143,8 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP">
+      <model show="no" model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP"
+          replacementModel="EU621" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -148,7 +158,7 @@
         <output name="Brake"/>
         <size length="0.78" width="0.59" height="0.13" units="inches"/>
       </model>
-      <model model="EUN651" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="European 6 pin connector">
+      <model show="no" model="EUN651" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="European 6 pin connector" replacementModel="EUN651" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -158,7 +168,8 @@
         <output name="Brake"/>
         <size length="0845" width="0.680" height="0.165" units="inches"/>
       </model>
-      <model model="G8" numOuts="8" numFns="14" maxMotorCurrent="?" formFactor="O">
+      <model show="no" model="G8" numOuts="8" numFns="14" maxMotorCurrent="?" formFactor="O"
+          replacementModel="G8" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -174,7 +185,8 @@
         <output name="Brake"/>
         <size length="3.0" width="1.45" height="0.0" units="inches"/>
       </model>
-      <model model="IMD4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="IMD4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="IMD4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -186,7 +198,8 @@
         <output name="Brake"/>
         <size length="2.83" width="0.351" height="0.13" units="inches"/>
       </model>
-      <model model="IMF4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="IMF4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="IMF4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -197,7 +210,8 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="IMFP4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="IMFP4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="IMFP4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -208,7 +222,8 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="IMFTA4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="IMFTA4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="IMFTA4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -219,7 +234,8 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="IMFTB4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="IMFTB4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="IMFTB4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -230,23 +246,8 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
-        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
-        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
-        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
-        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
-        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
-        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <output name="BEMF"/>
-        <output name="Brake"/>
-        <size length="2.53" width="0.542" height="0.155" units="inches"/>
-      </model>
-      <model model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="K0D8-A" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -262,7 +263,8 @@
         <output name="Brake"/>
         <size length="2.53" width="0.542" height="0.155" units="inches"/>
       </model>
-      <model model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="K0D8-B" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -278,7 +280,8 @@
         <output name="Brake"/>
         <size length="2.53" width="0.542" height="0.155" units="inches"/>
       </model>
-      <model model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="K0D8-C" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
@@ -294,7 +297,25 @@
         <output name="Brake"/>
         <size length="2.53" width="0.542" height="0.155" units="inches"/>
       </model>
-      <model model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="K0D8-D" replacementFamily="June 2007">
+        <output name="1" label="White" connection="other" maxcurrent="60 mA"/>
+        <output name="2" label="Yellow" connection="other" maxcurrent="60 mA"/>
+        <output name="3" label="Green" connection="solder" maxcurrent="60 mA"/>
+        <output name="4" label="Purple" connection="solder" maxcurrent="60 mA"/>
+        <output name="5" label="Brown" connection="solder" maxcurrent="60 mA"/>
+        <output name="6" label="Pink" connection="solder" maxcurrent="60 mA"/>
+        <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA"/>
+        <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA"/>
+        <output name="Dim"/>
+        <output name="Ditch"/>
+        <output name="Motor"/>
+        <output name="BEMF"/>
+        <output name="Brake"/>
+        <size length="2.53" width="0.542" height="0.155" units="inches"/>
+      </model>
+      <model show="no" model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="K1D4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -306,7 +327,7 @@
         <output name="Brake"/>
         <size length="2.7" width="0.4" height="0.0" units="inches"/>
       </model>
-      <model model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="No Clips version of K1D4">
+      <model show="no" model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="No Clips version of K1D4" replacementModel="K1D4-NC" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -318,7 +339,8 @@
         <output name="Brake"/>
         <size length="2.7" width="0.4" height="0.0" units="inches"/>
       </model>
-      <model model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="K2D4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -330,7 +352,8 @@
         <output name="Brake"/>
         <size length="2.7" width="0.4" height="0.0" units="inches"/>
       </model>
-      <model model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="K3D3" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="50 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
@@ -341,7 +364,8 @@
         <output name="Brake"/>
         <size length="2.860" width="0.680" height="0.145" units="inches"/>
       </model>
-      <model model="LL8" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP">
+      <model show="no" model="LL8" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP"
+          replacementModel="LL8" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -357,7 +381,8 @@
         <output name="Brake"/>
         <size length="1.96" width="0.70" height="0.04" units="inches"/>
       </model>
-      <model model="M1" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="M1" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
+          replacementModel="M1" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -367,7 +392,8 @@
         <output name="Brake"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M1P-15" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO">
+      <model show="no" model="M1P-15" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO"
+          replacementModel="M1P-15" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -377,7 +403,8 @@
         <output name="Brake"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M1P-MH" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO">
+      <model show="no" model="M1P-MH" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO"
+          replacementModel="M1P-MH" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -387,7 +414,8 @@
         <output name="Brake"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M1P-UK" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO">
+      <model show="no" model="M1P-UK" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO"
+          replacementModel="M1P-UK" replacementFamily="June 2007">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -397,7 +425,8 @@
         <output name="Brake"/>
         <size length="0.57" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M3" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="M3" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
+          replacementModel="M3" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -408,7 +437,8 @@
         <output name="Brake"/>
         <size length="0.570" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="M4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
+          replacementModel="M4" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -420,7 +450,8 @@
         <output name="Brake"/>
         <size length="0.570" width="0.355" height="0.132" units="inches"/>
       </model>
-      <model model="M4T" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="M4T" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
+          replacementModel="M4T" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="80 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="80 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="80 mA"/>
@@ -431,7 +462,8 @@
         <output name="BEMF"/>
         <size length="0.567" width="0.359" height="0.135" units="inches"/>
       </model>
-      <model model="MC2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="MC2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
+          replacementModel="MC2" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -441,7 +473,8 @@
         <output name="Brake"/>
         <size length="0.71" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model model="MC4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="MC4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
+          replacementModel="MC4" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -453,7 +486,8 @@
         <output name="Brake"/>
         <size length="0.71" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model model="MC6" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+      <model show="no" model="MC6" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N"
+          replacementModel="MC6" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -467,7 +501,7 @@
         <output name="Brake"/>
         <size length="0.71" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model model="MP-15N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15">
+      <model show="no" model="MP-15N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15" replacementModel="MP-15N" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -478,7 +512,7 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="MZA4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Z-scale 4 function A format drop in with two LEDs">
+      <model show="no" model="MZA4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Z-scale 4 function A format drop in with two LEDs" replacementModel="MZA4" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -489,7 +523,7 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="T1" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous" formFactor="HO">
+      <model show="no" model="T1" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous" formFactor="HO" replacementModel="T1" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="Dim"/>
@@ -499,7 +533,8 @@
         <output name="Brake"/>
         <size length="0.956" width="0.665" height="0.207" units="inches"/>
       </model>
-      <model model="T4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+      <model show="no" model="T4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO"
+          replacementModel="T4X" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -511,7 +546,8 @@
         <output name="Brake"/>
         <size length="1.010" width="0.665" height="0.250" units="inches"/>
       </model>
-      <model model="T6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+      <model show="no" model="T6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO"
+          replacementModel="T6X" replacementFamily="June 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -525,7 +561,7 @@
         <output name="Brake"/>
         <size length="1.00" width="0.680" height="0.250" units="inches"/>
       </model>
-      <model model="VO-1000N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000">
+      <model show="no" model="VO-1000N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000" replacementModel="VO-1000N" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -536,7 +572,7 @@
         <output name="BEMF"/>
         <output name="Brake"/>
       </model>
-      <model model="Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Fits Z thru light duty HO">
+      <model show="no" model="Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Fits Z thru light duty HO" replacementModel="Z2" replacementFamily="June 2007">
         <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
         <output name="Dim"/>

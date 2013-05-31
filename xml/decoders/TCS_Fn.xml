@@ -18,12 +18,13 @@
   <!-- Version 1.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Function Decoders" mfg="Train Control Systems">
-      <model model="FL2" numOuts="2" numFns="14" lowVersionID="30" highVersionID="37" formFactor="HO">
+      <model show="no" model="FL2" numOuts="2" numFns="14" lowVersionID="30" highVersionID="37" formFactor="HO"
+          replacementModel="FL2" replacementFamily="June 2007">
         <output name="1" label="Green" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Purple" connection="solder" maxcurrent="100 mA"/>
         <size length="1.000" width="0.650" height="0.160" units="inches"/>
       </model>
-      <model model="FL4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+      <model show="no" model="FL4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="37" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="FL4" replacementFamily="June 2007">
         <output name="1" label="Green" connection="solder" maxcurrent="200 mA"/>
         <output name="2" label="Purple" connection="solder" maxcurrent="200 mA"/>
         <output name="3" label="Brown" connection="solder" maxcurrent="200 mA"/>

@@ -23,11 +23,12 @@
   <!-- Version 5.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Tx series decoders" mfg="Train Control Systems">
-      <model model="T1" numOuts="2" numFns="2" lowVersionID="16" highVersionID="22"/>
-      <model model="T2" numOuts="5" numFns="5">
+      <model show="no" model="T1" numOuts="2" numFns="2" lowVersionID="16" highVersionID="22"
+          replacementModel="T1" replacementFamily="Jan 2000">
         <output name="4" label="Violet"/>
       </model>
-      <model model="TH141" numOuts="4" numFns="2" lowVersionID="8" highVersionID="9">
+      <model show="no" model="TH141" numOuts="4" numFns="2" lowVersionID="8" highVersionID="9"
+          replacementModel="TH141" replacementFamily="Jan 2000">
         <output name="4" label="Violet"/>
       </model>
     </family>

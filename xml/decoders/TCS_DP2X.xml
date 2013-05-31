@@ -25,9 +25,30 @@
   <!-- Version 1.3 - 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS DP2X decoder" mfg="Train Control Systems">
-      <model model="Z2" numOuts="2" numFns="2" lowVersionID="50">
-        <output name="4" label="Purple"/>
-      </model>
+        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="1" highVersionID="40"
+            replacementModel="DP2X" replacementFamily="Jan 2000">
+            <output name="4" label="Purple"/>
+        </model>
+        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="41" highVersionID="50"
+            replacementModel="DP2X" replacementFamily="June 2007">
+            <output name="4" label="Purple"/>
+        </model>
+        <model show="no" model="DP2X" numOuts="2" numFns="2" lowVersionID="86" highVersionID="88"
+            replacementModel="DP2X" replacementFamily="Jan 2012">
+            <output name="4" label="Purple"/>
+        </model>
+        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="1" highVersionID="40"
+            replacementModel="DP2X-UK" replacementFamily="Jan 2000">
+            <output name="4" label="Purple"/>
+        </model>
+        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="41" highVersionID="50"
+            replacementModel="DP2X-UK" replacementFamily="June 2007">
+            <output name="4" label="Purple"/>
+        </model>
+        <model show="no" model="DP2X-UK" numOuts="2" numFns="2" lowVersionID="86" highVersionID="88"
+            replacementModel="DP2X-UK" replacementFamily="Jan 2012">
+            <output name="4" label="Purple"/>
+        </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

@@ -23,7 +23,8 @@
 			 way TCS does it. - joe -->
   <decoder>
     <family name="TCS Tx series decoders" mfg="Train Control Systems">
-      <model model="T1x" numOuts="2" numFns="2" lowVersionID="27">
+      <model show="no" model="T1x" numOuts="2" numFns="2" lowVersionID="27"
+          replacementModel="T1" replacementFamily="Jan 2000">
         <output name="4" label="Purple"/>
       </model>
     </family>

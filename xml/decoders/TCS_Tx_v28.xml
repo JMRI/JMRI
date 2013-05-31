@@ -20,7 +20,8 @@
   <!-- Version 3.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <decoder>
     <family name="TCS Tx series decoders" mfg="Train Control Systems">
-      <model model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35">
+      <model show="no" model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35"
+          replacementModel="T1" replacementFamily="Jan 2000">
 			</model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>

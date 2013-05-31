@@ -19,7 +19,8 @@
   <!-- Version 2.1 - changed spelling of "behavior" (Jack Shall) -->
   <decoder>
     <family name="TCS Mx series decoders" mfg="Train Control Systems">
-      <model model="M1" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24">
+      <model show="no" model="M1" numOuts="2" numFns="2" lowVersionID="24" highVersionID="24"
+          replacementModel="M1" replacementFamily="Jan 2000">
         <size length="0.500" width="0.375" height="0.125" units="inches"/>
       </model>
     </family>
