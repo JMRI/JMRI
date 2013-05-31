@@ -3678,8 +3678,6 @@
 
 <mapID target="html.doc.Technical.FindBugs" url="html/doc/Technical/FindBugs.shtml"/>
 
-<mapID target="package.jmri.jmrit.operations.Operations_ResetDatabases" url="package/jmri/jmrit/operations/Operations.shtml#ResetDatabases"/>
-
 <mapID target="package.jmri.jmrix.ecos.swing.statusframe.StatusFrame" url="package/jmri/jmrix/ecos/swing/statusframe/StatusFrame.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_GroupIdField" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#GroupIdField"/>
@@ -3721,6 +3719,8 @@
 <mapID target="manual.JMRI_2-12_Manual.Start_Preferences" url="manual/JMRI_2-12_Manual/Start_Preferences.shtml"/>
 
 <mapID target="manual.3-0_DecoderPro3.Main_LocoNet_FirmwareDownloader" url="manual/3-0_DecoderPro3/Main_LocoNet.shtml#FirmwareDownloader"/>
+
+<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml"/>
 
 <mapID target="manual.3-2_JMRI_OPS_UsersGuide.Ops_Routes" url="manual/3-2_JMRI_OPS_UsersGuide/Ops_Routes.shtml"/>
 
@@ -4458,6 +4458,8 @@
 
 <mapID target="manual.3-2_DecoderPro.Basic_Programming_OpsMode" url="manual/3-2_DecoderPro/Basic_Programming.shtml#OpsMode"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ResetDatabase" url="package/jmri/jmrit/operations/Operations.shtml#ResetDatabase"/>
+
 <mapID target="manual.3-0_DecoderPro3.Start_Preferences_Top" url="manual/3-0_DecoderPro3/Start_Preferences.shtml#Top"/>
 
 <mapID target="manual.3-0_JMRI_OPS_UsersGuide.Ops_AddTrain" url="manual/3-0_JMRI_OPS_UsersGuide/Ops_AddTrain.shtml"/>
@@ -5044,6 +5046,8 @@
 
 <mapID target="manual.3-0_DecoderPro3.Programmer_Multi_Decoder" url="manual/3-0_DecoderPro3/Programmer_Multi_Decoder.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_newUserAdvice" url="package/jmri/jmrit/operations/Operations.shtml#newUserAdvice"/>
+
 <mapID target="manual.3-2_JMRI_OPS_UsersGuide.index_Main" url="manual/3-2_JMRI_OPS_UsersGuide/index.shtml#Main"/>
 
 <mapID target="manual.DP3_2-14_manual.Main_LocoNet_Sounds" url="manual/DP3_2-14_manual/Main_LocoNet.shtml#Sounds"/>
@@ -5247,6 +5251,8 @@
 <mapID target="manual.JMRI_2-14_manual.Ops_Trains_buildbtn" url="manual/JMRI_2-14_manual/Ops_Trains.shtml#buildbtn"/>
 
 <mapID target="html.doc.Technical.I8N" url="html/doc/Technical/I8N.shtml"/>
+
+<mapID target="package.jmri.jmrix.nce.cab.NceShowCabFrame" url="package/jmri/jmrix/nce/cab/NceShowCabFrame.shtml"/>
 
 <mapID target="manual.3-0_DecoderPro3.Main_wangrow" url="manual/3-0_DecoderPro3/Main_wangrow.shtml"/>
 
