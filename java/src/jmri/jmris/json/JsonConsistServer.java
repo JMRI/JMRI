@@ -30,7 +30,7 @@ public class JsonConsistServer {
         this.mapper = new ObjectMapper();
         InstanceManager.consistManagerInstance().requestUpdateFromLayout();
         try {
-            (new ConsistFile()).ReadFile();
+            (new ConsistFile()).readFile();
         } catch (Exception e) {
             log.warn("error reading consist file: " + e);
         }

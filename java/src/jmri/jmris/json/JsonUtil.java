@@ -238,7 +238,7 @@ public class JsonUtil {
                 }
             }
             try {
-                (new ConsistFile()).WriteFile(InstanceManager.consistManagerInstance().getConsistList());
+                (new ConsistFile()).writeFile(InstanceManager.consistManagerInstance().getConsistList());
             } catch (IOException ex) {
                 throw new JsonException(500, ex.getLocalizedMessage());
             }
