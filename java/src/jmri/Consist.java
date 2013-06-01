@@ -92,29 +92,29 @@ public interface Consist {
     /**
      * Add a Locomotive to a Consist
      *
-     * @param LocoAddress is the Locomotive address to add to the locomotive
+     * @param address is the Locomotive address to add to the locomotive
      * @param directionNormal is True if the locomotive is traveling the same
      * direction as the consist, or false otherwise.
      */
-    public void add(DccLocoAddress LocoAddress, boolean directionNormal);
+    public void add(DccLocoAddress address, boolean directionNormal);
 
     /**
      * Restore a Locomotive to a Consist, but don't write to the command
      * station. This is used for restoring the consist from a file or adding a
      * consist read from the command station.
      *
-     * @param LocoAddress is the Locomotive address to add to the consist
+     * @param address is the Locomotive address to add to the consist
      * @param directionNormal is True if the locomotive is traveling the same
      * direction as the consist, or false otherwise.
      */
-    public void restore(DccLocoAddress LocoAddress, boolean directionNormal);
+    public void restore(DccLocoAddress address, boolean directionNormal);
 
     /**
      * Remove a Locomotive from this Consist
      *
      * @param address is the Locomotive address to add to the locomotive
      */
-    public void remove(DccLocoAddress LocoAddress);
+    public void remove(DccLocoAddress address);
 
     /**
      * Set the position of a locomotive within the consist
@@ -137,23 +137,23 @@ public interface Consist {
     public int getPosition(DccLocoAddress address);
 
     /**
-     * Add a Listener for consist events
+     * Add a listener for consist events
      *
-     * @param Listener is a consistListener object
+     * @param listener is a consistListener object
      */
-    public void addConsistListener(jmri.ConsistListener Listener);
+    public void addConsistListener(jmri.ConsistListener listener);
 
     /**
-     * Remove a Listener for consist events
+     * Remove a listener for consist events
      *
-     * @param Listener is a consistListener object
+     * @param listener is a consistListener object
      */
-    public void removeConsistListener(jmri.ConsistListener Listener);
+    public void removeConsistListener(jmri.ConsistListener listener);
 
     /**
      * Set the text ID associated with the consist
      *
-     * @param String is a string identifier for the consist
+     * @param ID is a string identifier for the consist
      */
     public void setConsistID(String ID);
 
