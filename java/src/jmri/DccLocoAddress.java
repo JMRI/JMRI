@@ -36,21 +36,21 @@ public class DccLocoAddress implements LocoAddress {
 
     @Override
     public boolean equals(Object a) {
-        if (a == null || !a.getClass().isInstance(this.getClass())) {
-            return false;
-        }
-        try {
-            DccLocoAddress other = (DccLocoAddress) a;
-            if (this.number != other.number) {
+        if (a != null && a.getClass().equals(this.getClass())) {
+            try {
+                DccLocoAddress other = (DccLocoAddress) a;
+                if (this.number != other.number) {
+                    return false;
+                }
+                if (this.protocol != other.protocol) {
+                    return false;
+                }
+                return true;
+            } catch (Exception e) {
                 return false;
             }
-            if (this.protocol != other.protocol) {
-                return false;
-            }
-            return true;
-        } catch (Exception e) {
-            return false;
         }
+        return false;
     }
 
     @Override
