@@ -380,6 +380,8 @@ public class DccConsist implements Consist, ProgListener {
                 }
             }
         }
+        // notify any listeners that the consist changed
+        this.notifyConsistListeners(ConsistAddress, ConsistListener.OK);
     }
 
 
