@@ -6,6 +6,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import jmri.Consist;
@@ -24,6 +26,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
 import static jmri.jmris.json.JSON.*;
+import jmri.jmrit.consisttool.ConsistFile;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -84,39 +87,44 @@ public class JsonUtil {
         return root;
     }
 
-    static public JsonNode getConsist(DccLocoAddress address) throws JsonException {
-        try {
-            if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
-                ObjectNode root = mapper.createObjectNode();
-                root.put(TYPE, CONSIST);
-                ObjectNode data = root.putObject(DATA);
-                Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
-                data.put(ADDRESS, consist.getConsistAddress().getNumber());
-                data.put(IS_LONG_ADDRESS, consist.getConsistAddress().isLongAddress());
-                data.put(TYPE, consist.getConsistType());
-                ArrayNode engines = data.putArray(ENGINES);
-                for (DccLocoAddress l : consist.getConsistList()) {
-                    ObjectNode engine = mapper.createObjectNode();
-                    engine.put(ADDRESS, l.getNumber());
-                    engine.put(IS_LONG_ADDRESS, l.isLongAddress());
-                    engine.put(FORWARD, consist.getLocoDirection(l));
-                    engine.put(POSITION, consist.getPosition(l));
-                    engines.add(engine);
-                }
-                data.put(ID, consist.getConsistID());
-                data.put(SIZE_LIMIT, consist.sizeLimit());
-                return root;
-            } else {
-                throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
-            }
-        } catch (Exception ex) {
-            log.error("Exception getting consist [{}].", address.toString(), ex);
-            throw new JsonException(500, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
+    static public void delConsist(DccLocoAddress address) throws JsonException {
+        if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+            InstanceManager.consistManagerInstance().delConsist(address);
+        } else {
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
         }
     }
 
-    static public JsonNode getConsist(String address) throws JsonException {
-        return getConsist(addressForString(address));
+    static public JsonNode getConsist(DccLocoAddress address) throws JsonException {
+        if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+            ObjectNode root = mapper.createObjectNode();
+            root.put(TYPE, CONSIST);
+            ObjectNode data = root.putObject(DATA);
+            Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
+            data.put(ADDRESS, consist.getConsistAddress().getNumber());
+            data.put(IS_LONG_ADDRESS, consist.getConsistAddress().isLongAddress());
+            data.put(TYPE, consist.getConsistType());
+            ArrayNode engines = data.putArray(ENGINES);
+            for (DccLocoAddress l : consist.getConsistList()) {
+                ObjectNode engine = mapper.createObjectNode();
+                engine.put(ADDRESS, l.getNumber());
+                engine.put(IS_LONG_ADDRESS, l.isLongAddress());
+                engine.put(FORWARD, consist.getLocoDirection(l));
+                engine.put(POSITION, consist.getPosition(l));
+                engines.add(engine);
+            }
+            data.put(ID, consist.getConsistID());
+            data.put(SIZE_LIMIT, consist.sizeLimit());
+            return root;
+        } else {
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", CONSIST, address.toString()));
+        }
+    }
+
+    static public void putConsist(DccLocoAddress address, JsonNode data) throws JsonException {
+        if (!InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+            InstanceManager.consistManagerInstance().getConsist(address);
+        }
     }
 
     static public JsonNode getConsists() throws JsonException {
@@ -125,6 +133,62 @@ public class JsonUtil {
             root.add(getConsist(address));
         }
         return root;
+    }
+
+    /**
+     * Change the properties and locomotives of a consist.
+     *
+     * This method takes as input the JSON representation of a consist as
+     * provided by {@link #getConsist(jmri.DccLocoAddress) }.
+     *
+     * If present in the JSON, this method sets the following consist
+     * properties:
+     * <ul>
+     * <li>consistID</li>
+     * <li>consistType</li>
+     * <li>locomotives (<em>engines</em> in the JSON representation)<br>
+     * <strong>NOTE</strong> Since this method adds, repositions, and deletes
+     * locomotives, the JSON representation must contain <em>every</em>
+     * locomotive that should not be deleted, if it contains the engines
+     * node.</li>
+     * </ul>
+     *
+     * @param address - the consist address
+     * @param data - the consist as a JsonObject
+     * @throws JsonException
+     */
+    static public void setConsist(DccLocoAddress address, JsonNode data) throws JsonException {
+        if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
+            Consist consist = InstanceManager.consistManagerInstance().getConsist(address);
+            if (data.path(ID).isTextual()) {
+                consist.setConsistID(data.path(ID).asText());
+            }
+            if (data.path(TYPE).isInt()) {
+                consist.setConsistType(data.path(TYPE).asInt());
+            }
+            if (data.path(ENGINES).isArray()) {
+                ArrayList<DccLocoAddress> engines = new ArrayList<DccLocoAddress>();
+                // add every engine in
+                for (JsonNode engine : data.path(ENGINES)) {
+                    DccLocoAddress engineAddress = new DccLocoAddress(engine.path(ADDRESS).asInt(), engine.path(IS_LONG_ADDRESS).asBoolean());
+                    if (!consist.contains(engineAddress)) {
+                        consist.add(engineAddress, engine.path(FORWARD).asBoolean());
+                    }
+                    consist.setPosition(engineAddress, engine.path(POSITION).asInt());
+                    engines.add(engineAddress);
+                }
+                for (DccLocoAddress engineAddress : (ArrayList<DccLocoAddress>) consist.getConsistList().clone()) {
+                    if (!engines.contains(engineAddress)) {
+                        consist.remove(engineAddress);
+                    }
+                }
+            }
+            try {
+                (new ConsistFile()).WriteFile(InstanceManager.consistManagerInstance().getConsistList());
+            } catch (IOException ex) {
+                throw new JsonException(500, ex.getLocalizedMessage());
+            }
+        }
     }
 
     static public JsonNode getEngine(String id) {
