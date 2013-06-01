@@ -87,6 +87,13 @@ public class JsonUtil {
         return root;
     }
 
+    /**
+     * Delete the consist at the given address.
+     *
+     * @param address The address of the consist to delete.
+     * @throws JsonException This exception has code 404 if the consist does not
+     * exist.
+     */
     static public void delConsist(DccLocoAddress address) throws JsonException {
         if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
             InstanceManager.consistManagerInstance().delConsist(address);
@@ -95,6 +102,33 @@ public class JsonUtil {
         }
     }
 
+    /**
+     * Get the JSON representation of a consist.
+     *
+     * The JSON representation is an object with the following data attributes:
+     * <ul>
+     * <li>address - integer address</li>
+     * <li>isLongAddress - boolean true if address is long, false if short</li>
+     * <li>type - integer, see {@link jmri.Consist#getConsistType() }</li>
+     * <li>id - string with consist Id</li>
+     * <li>sizeLimit - the maximum number of locomotives the consist can
+     * contain</li>
+     * <li>engines - array listing every locomotive in the consist. Each entry
+     * in the array contains the following attributes:
+     * <ul>
+     * <li>address - integer address</li>
+     * <li>isLongAddress - boolean true if address is long, false if short</li>
+     * <li>forward - boolean true if the locomotive running is forward in the
+     * consists</li>
+     * <li>position - integer locomotive's position in the consist</li>
+     * </ul>
+     * </ul>
+     *
+     * @param address The address of the consist to get.
+     * @return The JSON representation of the consist.
+     * @throws JsonException This exception has code 404 if the consist does not
+     * exist.
+     */
     static public JsonNode getConsist(DccLocoAddress address) throws JsonException {
         if (InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
             ObjectNode root = mapper.createObjectNode();
@@ -121,12 +155,30 @@ public class JsonUtil {
         }
     }
 
+    /**
+     * Add a consist.
+     *
+     * Adds a consist, populating it with information from data.
+     *
+     * @param address The address of the new consist.
+     * @param data The JSON representation of the consist. See
+     * {@link #getConsist(jmri.DccLocoAddress)} for the JSON structure.
+     * @throws JsonException
+     */
     static public void putConsist(DccLocoAddress address, JsonNode data) throws JsonException {
         if (!InstanceManager.consistManagerInstance().getConsistList().contains(address)) {
             InstanceManager.consistManagerInstance().getConsist(address);
+            setConsist(address, data);
         }
     }
 
+    /**
+     * Get a list of consists.
+     *
+     * @return JSON array of consists as in the structure returned by
+     * {@link #getConsist(jmri.DccLocoAddress)}
+     * @throws JsonException
+     */
     static public JsonNode getConsists() throws JsonException {
         ArrayNode root = mapper.createArrayNode();
         for (DccLocoAddress address : InstanceManager.consistManagerInstance().getConsistList()) {
@@ -149,7 +201,7 @@ public class JsonUtil {
      * <li>locomotives (<em>engines</em> in the JSON representation)<br>
      * <strong>NOTE</strong> Since this method adds, repositions, and deletes
      * locomotives, the JSON representation must contain <em>every</em>
-     * locomotive that should not be deleted, if it contains the engines
+     * locomotive that should be in the consist, if it contains the engines
      * node.</li>
      * </ul>
      *
@@ -177,7 +229,9 @@ public class JsonUtil {
                     consist.setPosition(engineAddress, engine.path(POSITION).asInt());
                     engines.add(engineAddress);
                 }
-                for (DccLocoAddress engineAddress : (ArrayList<DccLocoAddress>) consist.getConsistList().clone()) {
+                @SuppressWarnings("unchecked")
+                ArrayList<DccLocoAddress> consistEngines = (ArrayList<DccLocoAddress>) consist.getConsistList().clone();
+                for (DccLocoAddress engineAddress : consistEngines) {
                     if (!engines.contains(engineAddress)) {
                         consist.remove(engineAddress);
                     }
@@ -1086,11 +1140,13 @@ public class JsonUtil {
 
     /**
      * Gets the {@link jmri.DccLocoAddress} for a String in the form
-     * <code>number(type)</code>.
+     * <code>number(type)</code> or
+     * <code>number</code>.
      *
      * Type may be
-     * <code>L</code> or
-     * <code>S</code>.
+     * <code>L</code> for long or
+     * <code>S</code> for short. If the type is not specified, type is assumed
+     * to be short.
      *
      * @param address
      * @return The DccLocoAddress for address.
