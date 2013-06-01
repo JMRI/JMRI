@@ -1,94 +1,119 @@
 // DccLocoAddress.java
-
 package jmri;
 
-
-/** 
+/**
  * Encapsulate information for a DCC Locomotive Decoder Address.
  *
- * In particular, this handles the "short" (standard) vs
- * "extended" (long) address selection.
+ * In particular, this handles the "short" (standard) vs "extended" (long)
+ * address selection.
  *
- * An address must be one of these, hence short vs long is encoded
- * as a boolean.
+ * An address must be one of these, hence short vs long is encoded as a boolean.
  *
  * Once created, the number and long/short status cannot be changed.
  *
- * @author			Bob Jacobsen Copyright (C) 2005
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2005
+ * @version	$Revision$
  */
-
 public class DccLocoAddress implements LocoAddress {
 
-	public DccLocoAddress(int number, boolean isLong) {
-		this.number = number;
+    public DccLocoAddress(int number, boolean isLong) {
+        this.number = number;
         protocol = LocoAddress.Protocol.DCC_SHORT;
-        if(isLong)
+        if (isLong) {
             protocol = LocoAddress.Protocol.DCC_LONG;
-	}
-    
-    public DccLocoAddress(int number, LocoAddress.Protocol protocol){
+        }
+    }
+
+    public DccLocoAddress(int number, LocoAddress.Protocol protocol) {
         this.number = number;
         this.protocol = protocol;
     }
-	
-	public DccLocoAddress(DccLocoAddress l) {
-		this.number = l.number;
-        this.protocol = l.protocol;
-	}
 
+    public DccLocoAddress(DccLocoAddress l) {
+        this.number = l.number;
+        this.protocol = l.protocol;
+    }
+
+    @Override
     public boolean equals(Object a) {
-        if (a==null) return false;
+        if (a == null || !a.getClass().isInstance(this.getClass())) {
+            return false;
+        }
         try {
             DccLocoAddress other = (DccLocoAddress) a;
-            if (this.number != other.number) return false;
-            if (this.protocol != other.protocol) return false;
+            if (this.number != other.number) {
+                return false;
+            }
+            if (this.protocol != other.protocol) {
+                return false;
+            }
             return true;
-        } catch (Exception e) { return false; }
-    }
-    
-    public int hashCode() {
-        switch(protocol){
-            case DCC_SHORT :    return (int)(number&0xFFFFFFFF);
-            case DCC_LONG :     return (int)(20000+number&0xFFFFFFFF);
-            case SELECTRIX:     return (int)(30000+number&0xFFFFFFFF);
-            case MOTOROLA:      return (int)(40000+number&0xFFFFFFFF);
-            case MFX:           return (int)(50000+number&0xFFFFFFFF);
-            case M4:            return (int)(60000+number&0xFFFFFFFF);
-            case OPENLCB:       return (int)(70000+number&0xFFFFFFFF);
-            default:            return (int)(number&0xFFFFFFFF);
-        }
-    }
-    
-    public String toString() {
-        switch(protocol){
-            case DCC_SHORT : return ""+number+"(S)";
-            case DCC_LONG : return ""+number+"(L)";
-            case SELECTRIX: return ""+number+"(SX)";
-            case MOTOROLA: return ""+number+"(MM)";
-            case M4: return ""+number+"(M4)";
-            case MFX: return ""+number+"(MFX)";
-            case OPENLCB: return ""+number+"(OpenLCB)";
-            default: return ""+number+"(D)";
-        }
-    }
-    
-	public boolean isLongAddress() { 
-        if(protocol==LocoAddress.Protocol.DCC_SHORT)
+        } catch (Exception e) {
             return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        switch (protocol) {
+            case DCC_SHORT:
+                return (int) (number & 0xFFFFFFFF);
+            case DCC_LONG:
+                return (int) (20000 + number & 0xFFFFFFFF);
+            case SELECTRIX:
+                return (int) (30000 + number & 0xFFFFFFFF);
+            case MOTOROLA:
+                return (int) (40000 + number & 0xFFFFFFFF);
+            case MFX:
+                return (int) (50000 + number & 0xFFFFFFFF);
+            case M4:
+                return (int) (60000 + number & 0xFFFFFFFF);
+            case OPENLCB:
+                return (int) (70000 + number & 0xFFFFFFFF);
+            default:
+                return (int) (number & 0xFFFFFFFF);
+        }
+    }
+
+    @Override
+    public String toString() {
+        switch (protocol) {
+            case DCC_SHORT:
+                return "" + number + "(S)";
+            case DCC_LONG:
+                return "" + number + "(L)";
+            case SELECTRIX:
+                return "" + number + "(SX)";
+            case MOTOROLA:
+                return "" + number + "(MM)";
+            case M4:
+                return "" + number + "(M4)";
+            case MFX:
+                return "" + number + "(MFX)";
+            case OPENLCB:
+                return "" + number + "(OpenLCB)";
+            default:
+                return "" + number + "(D)";
+        }
+    }
+
+    public boolean isLongAddress() {
+        if (protocol == LocoAddress.Protocol.DCC_SHORT) {
+            return false;
+        }
         return true;
     }
-    
+
+    @Override
     public LocoAddress.Protocol getProtocol() {
         return protocol;
     }
-    
-    public int getNumber() { return (int)number; }
-	
+
+    @Override
+    public int getNumber() {
+        return (int) number;
+    }
     protected long number;
     protected LocoAddress.Protocol protocol = LocoAddress.Protocol.DCC;
-
 }
-
-
 /* @(#)DccLocoAddress.java */
