@@ -175,8 +175,8 @@ public final class ImageIndexEditor extends JmriJFrame {
                             return true;
                         }
             		};
+                    jmri.InstanceManager.shutDownManagerInstance().register(_shutDownTask);
                 }
-                jmri.InstanceManager.shutDownManagerInstance().register(_shutDownTask);
         	}        	
         }
     }

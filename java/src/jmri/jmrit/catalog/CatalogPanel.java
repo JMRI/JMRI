@@ -431,6 +431,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         backgroundPanel.setMaximumSize(backgroundPanel.getPreferredSize());
         previewPanel.add(backgroundPanel);
         add(previewPanel);
+        updatePanel();
     }
 
     public void setBackground(Container container) {
@@ -585,7 +586,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _preview.add(bottom);
 
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
-        packParentFrame(this);
         return java.text.MessageFormat.format(rb.getString("numImagesInNode"),
                               new Object[] {node.getUserObject(),Integer.valueOf(leaves.size())});
     }
@@ -629,7 +629,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         if (frame!=null) {
             frame.pack();
         }
-
     }
 
     /**

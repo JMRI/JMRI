@@ -46,7 +46,7 @@ public class IconDialog extends ItemDialog {
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public IconDialog(String type, String family, ItemPanel parent, HashMap <String, NamedIcon> iconMap ) {
-        super(type, family, Bundle.getMessage("ShowIconsTitle", type), parent, false);
+        super(type, family, Bundle.getMessage("ShowIconsTitle", type), parent);
         
         _iconMap = clone(iconMap);
         JPanel panel = new JPanel();
@@ -78,12 +78,16 @@ public class IconDialog extends ItemDialog {
         _iconPanel = makeIconPanel(_iconMap);
         panel.add(_iconPanel);	// put icons above buttons
         panel.add(buttonPanel);
-        
+        panel.setMaximumSize(panel.getPreferredSize());
+
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.add(panel);
         _catalog = CatalogPanel.makeDefaultCatalog();
         _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-        panel.add(new JScrollPane(_catalog));
+        p.add(new JScrollPane(_catalog));
 
-        setContentPane(panel);
+        setContentPane(p);
     }
 
     /**
