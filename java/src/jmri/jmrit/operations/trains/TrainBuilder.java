@@ -570,10 +570,11 @@ public class TrainBuilder extends TrainCommon {
 		for (int i = 0; i < validTrackIds.size(); i++)
 			tracks[i] = departLocation.getTrackById(validTrackIds.get(i));
 		if (validTrackIds.size() > 1) {
-			Track selected = (Track) JOptionPane.showInputDialog(null, Bundle
-					.getMessage("SelectDepartureTrack"), Bundle.getMessage("TrainDepartingStaging"),
+			Track selected = (Track) JOptionPane.showInputDialog(null, MessageFormat.format(Bundle
+					.getMessage("TrainDepartingStaging"), new Object[] { train.getName(),
+					departLocation.getName() }), Bundle.getMessage("SelectDepartureTrack"),
 					JOptionPane.QUESTION_MESSAGE, null, tracks, null);
-			if (selected != null)
+		if (selected != null)
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle
 						.getMessage("buildUserSelectedDeparture"), new Object[] { selected.getName(),
 						selected.getLocation().getName() }));
@@ -601,10 +602,10 @@ public class TrainBuilder extends TrainCommon {
 		for (int i = 0; i < validTrackIds.size(); i++)
 			tracks[i] = terminateLocation.getTrackById(validTrackIds.get(i));
 		if (validTrackIds.size() > 1) {
-			Track selected = (Track) JOptionPane.showInputDialog(null, Bundle
-					.getMessage("SelectArrivalTrack"), MessageFormat.format(Bundle
+			Track selected = (Track) JOptionPane.showInputDialog(null, MessageFormat.format(Bundle
 					.getMessage("TrainTerminatingStaging"), new Object[] { train.getName(),
-					terminateLocation.getName() }), JOptionPane.QUESTION_MESSAGE, null, tracks, null);
+					terminateLocation.getName() }), Bundle.getMessage("SelectArrivalTrack"),
+					JOptionPane.QUESTION_MESSAGE, null, tracks, null);
 			if (selected != null)
 				addLine(buildReport, FIVE, MessageFormat.format(
 						Bundle.getMessage("buildUserSelectedArrival"), new Object[] { selected.getName(),
