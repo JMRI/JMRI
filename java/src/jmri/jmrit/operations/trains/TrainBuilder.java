@@ -602,8 +602,9 @@ public class TrainBuilder extends TrainCommon {
 			tracks[i] = terminateLocation.getTrackById(validTrackIds.get(i));
 		if (validTrackIds.size() > 1) {
 			Track selected = (Track) JOptionPane.showInputDialog(null, Bundle
-					.getMessage("SelectArrivalTrack"), Bundle.getMessage("TrainTerminatingStaging"),
-					JOptionPane.QUESTION_MESSAGE, null, tracks, null);
+					.getMessage("SelectArrivalTrack"), MessageFormat.format(Bundle
+					.getMessage("TrainTerminatingStaging"), new Object[] { train.getName(),
+					terminateLocation.getName() }), JOptionPane.QUESTION_MESSAGE, null, tracks, null);
 			if (selected != null)
 				addLine(buildReport, FIVE, MessageFormat.format(
 						Bundle.getMessage("buildUserSelectedArrival"), new Object[] { selected.getName(),
