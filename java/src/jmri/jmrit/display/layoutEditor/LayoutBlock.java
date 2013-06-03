@@ -250,7 +250,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	 */
 	public Sensor validateSensor(String sensorName, Component openFrame) {
 		// check if anything entered	
-		if (sensorName.length()<1) {
+		if (sensorName==null || sensorName.length()<1) {
 			// no sensor entered
 			return null;
 		}
