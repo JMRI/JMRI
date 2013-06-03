@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import java.util.Hashtable;
+import java.util.Map;
 import java.util.UUID;
 
 import java.beans.PropertyChangeListener;
@@ -381,8 +382,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                     turnoutSettings.put(t, tmSml.getAutoTurnoutState(t, (SignalMast) getSignal()));
                                 }
                             }
-                            for(Turnout key:turnoutSettings.keySet()) {
-                                key.setCommandedState(turnoutSettings.get(key));
+                            for(Map.Entry< Turnout, Integer > entry : turnoutSettings.entrySet()){
+                                entry.getKey().setCommandedState(entry.getValue());
                                 Runnable r = new Runnable() {
                                   public void run() {
                                     try {
@@ -677,10 +678,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                     }
                     if(at!=null){
                         jmri.Section sec = null;
-                        if(sml!=null && sml.getAssociatedSection((SignalMast)getSignal())!=null){
-                            sec = sml.getAssociatedSection((SignalMast)getSignal());
-                        } else {
-                            sec = InstanceManager.sectionManagerInstance().getSection(src.getPoint().getDisplayName()+ ":" + point.getDisplayName());
+                        synchronized(this){
+                            if(sml!=null && sml.getAssociatedSection((SignalMast)getSignal())!=null){
+                                sec = sml.getAssociatedSection((SignalMast)getSignal());
+                            } else {
+                                sec = InstanceManager.sectionManagerInstance().getSection(src.getPoint().getDisplayName()+ ":" + point.getDisplayName());
+                            }
                         }
                         if(sec!=null){
                             if(!df.removeFromActiveTrainPath(sec, at, src.getPoint().getPanel())){
