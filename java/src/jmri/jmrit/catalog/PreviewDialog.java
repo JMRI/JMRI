@@ -79,10 +79,8 @@ public class PreviewDialog extends JDialog {
     JButton _moreButton;
     boolean _mode;
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.catalog.CatalogBundle");
-
     public PreviewDialog(Frame frame, String title, File dir, String[] filter, boolean modality ) {
-        super(frame, rb.getString(title), modality);
+        super(frame, Bundle.getMessage(title), modality);
         _currentDir = dir;
         _filter = new String[filter.length];
         for (int i=0; i<filter.length; i++) {
@@ -120,7 +118,7 @@ public class PreviewDialog extends JDialog {
 
         if (moreAction != null) {
             p.add(Box.createHorizontalStrut(5));
-            _moreButton = new JButton(rb.getString("ButtonDisplayMore"));
+            _moreButton = new JButton(Bundle.getMessage("ButtonDisplayMore"));
             _moreButton.addActionListener(moreAction);
             p.add(_moreButton);
         }
@@ -137,34 +135,34 @@ public class PreviewDialog extends JDialog {
         if (addAction != null) {
             if (_moreButton.isVisible()) {
                 JOptionPane.showMessageDialog(this, 
-                                      java.text.MessageFormat.format(rb.getString("tooManyIcons"), 
+                                      java.text.MessageFormat.format(Bundle.getMessage("tooManyIcons"), 
                                       new Object[] {_currentDir.getName()}),
-                                      rb.getString("warn"), JOptionPane.INFORMATION_MESSAGE);
-                msg.setText(rb.getString("moreMsg"));
+                                      Bundle.getMessage("warn"), JOptionPane.INFORMATION_MESSAGE);
+                msg.setText(Bundle.getMessage("moreMsg"));
             } else {
                 p.add(Box.createHorizontalStrut(5));
-                _addButton = new JButton(rb.getString("ButtonAddToCatalog"));
+                _addButton = new JButton(Bundle.getMessage("ButtonAddToCatalog"));
                 _addButton.addActionListener(addAction);
                 p.add(_addButton);
-                msg.setText(rb.getString("addDirMsg"));
+                msg.setText(Bundle.getMessage("addDirMsg"));
             }
         } else if (lookAction != null) {
             if (_moreButton.isVisible()) {
-                msg.setText(rb.getString("moreMsg"));
+                msg.setText(Bundle.getMessage("moreMsg"));
             }
         }
         else {
-            msg.setText(rb.getString("dragMsg"));
+            msg.setText(Bundle.getMessage("dragMsg"));
         }
 
         if (lookAction != null) {
             p.add(Box.createHorizontalStrut(5));
-            JButton lookButton = new JButton(rb.getString("ButtonKeepLooking"));
+            JButton lookButton = new JButton(Bundle.getMessage("ButtonKeepLooking"));
             lookButton.addActionListener(lookAction);
             p.add(lookButton);
         }
         p.add(Box.createHorizontalStrut(5));
-        JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
+        JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(cancelAction);
         p.add(cancelButton);
         p.add(Box.createHorizontalStrut(5));
@@ -200,9 +198,9 @@ public class PreviewDialog extends JDialog {
         JScrollPane js = new JScrollPane(_preview);                       
         previewPanel.add(js);
         _preview.setMinimumSize(new Dimension(200, 150));
-        JRadioButton whiteButton = new JRadioButton(rb.getString("white"),false);
-        JRadioButton grayButton = new JRadioButton(rb.getString("lightGray"),true);
-        JRadioButton darkButton = new JRadioButton(rb.getString("darkGray"),false);
+        JRadioButton whiteButton = new JRadioButton(Bundle.getMessage("white"),false);
+        JRadioButton grayButton = new JRadioButton(Bundle.getMessage("lightGray"),true);
+        JRadioButton darkButton = new JRadioButton(Bundle.getMessage("darkGray"),false);
         whiteButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     setBackGround(Color.white);
@@ -219,7 +217,7 @@ public class PreviewDialog extends JDialog {
                 }
             });
         JPanel pp = new JPanel();
-        pp.add(new JLabel(rb.getString("setBackground")));
+        pp.add(new JLabel(Bundle.getMessage("setBackground")));
         previewPanel.add(pp);
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -384,7 +382,7 @@ public class PreviewDialog extends JDialog {
                             name = name.substring(0, 18);
                         }
                         JLabel nameLabel = new JLabel(name);
-                        JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
+                        JLabel label = new JLabel(java.text.MessageFormat.format(Bundle.getMessage("scale"),
                                             new Object[] {CatalogPanel.printDbl(scale,2)}));
                         p.add(label);
                         p.add(nameLabel);
@@ -401,9 +399,9 @@ public class PreviewDialog extends JDialog {
                         }
                     } catch (OutOfMemoryError oome) {
                         JOptionPane.showMessageDialog(this, 
-                                java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
+                                java.text.MessageFormat.format(Bundle.getMessage("OutOfMemory"), 
                                 new Object[] {Integer.valueOf(_cnt)}),
-                                rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
+                                Bundle.getMessage("error"), JOptionPane.INFORMATION_MESSAGE);
                         _noMemory = true;
                     }
                 }
@@ -414,10 +412,10 @@ public class PreviewDialog extends JDialog {
         JLabel bottom = new JLabel();
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
-        String msg = java.text.MessageFormat.format(rb.getString("numImagesInDir"),
+        String msg = java.text.MessageFormat.format(Bundle.getMessage("numImagesInDir"),
                               new Object[] {_currentDir.getName(), Integer.valueOf(cnt)});
         if (startNum>0) {
-            msg = msg +" "+ java.text.MessageFormat.format(rb.getString("numImagesShown"), 
+            msg = msg +" "+ java.text.MessageFormat.format(Bundle.getMessage("numImagesShown"), 
                               new Object[] {Integer.valueOf(startNum)});
         }
         _previewLabel.setText(msg);
@@ -426,9 +424,9 @@ public class PreviewDialog extends JDialog {
 
         if (_noMemory) {
             JOptionPane.showMessageDialog(this, 
-                    java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
+                    java.text.MessageFormat.format(Bundle.getMessage("OutOfMemory"), 
                     new Object[] {Integer.valueOf(_cnt)}),
-                    rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
+                    Bundle.getMessage("error"), JOptionPane.INFORMATION_MESSAGE);
         }
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
         return _noMemory;
