@@ -10,12 +10,14 @@ import jmri.jmrit.display.*;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.Rectangle;
 //import java.awt.RenderingHints;
 import java.awt.Shape;
@@ -41,9 +43,22 @@ public class PositionableShape extends PositionableJComponent
     protected Color	_fillColor;
     protected int	_alpha = 255;
     protected int	_lineWidth = 1;
-    protected int	_degrees;
+    private int	_degrees;
     protected AffineTransform _transform;
     private NamedBeanHandle<Sensor> _controlSensor = null;
+    // GUI resizing params
+    private Rectangle[] _handles;
+    protected int _hitIndex = -1;
+    protected int _lastX;
+    protected int _lastY;
+    // params for shape's bounding box
+    protected int _width;
+    protected int _height;
+	static final int TOP	=0;
+	static final int RIGHT	=1;
+	static final int BOTTOM	=2;
+	static final int LEFT	=3;    
+    static final int SIZE = 10;
     
     public PositionableShape(Editor editor) {
     	super(editor);
@@ -61,7 +76,27 @@ public class PositionableShape extends PositionableJComponent
     
     protected void setShape(Shape s) {
     	_shape = s;
- 		getShapeSize();
+    }
+    protected Shape getShape() {
+    	return _shape;
+    }
+    public AffineTransform getTransform() {
+    	return _transform;
+    }
+    public void setWidth(int w) {
+    	_width = w;
+    }
+    public void setHeight(int h) {
+    	_height = h;
+    }
+    @Override
+    public int getHeight() {
+      return _height;
+    }
+
+    @Override
+    public int getWidth() {
+      return _width;
     }
 
     /**
@@ -106,30 +141,7 @@ public class PositionableShape extends PositionableJComponent
     	return _lineWidth;
     }
 
-    float _sW;
-    float _sH;
-    void getShapeSize() {
-    	float[] coord = new float[6];
-    	float wMin = Float.MAX_VALUE;
-    	float wMax = Float.MIN_VALUE;
-    	float hMin = Float.MAX_VALUE;
-    	float hMax = Float.MIN_VALUE;
-    	PathIterator iter = _shape.getPathIterator(null, 5.0);	// flat
-    	while (!iter.isDone()) {
-    		int type = iter.currentSegment(coord);
-    		if (type!=PathIterator.SEG_CLOSE) {
-    	    	wMin = Math.min(wMin, coord[0]);
-    	    	wMax = Math.max(wMax, coord[0]);
-    	    	hMin = Math.min(hMin, coord[1]);
-    	    	hMax = Math.max(hMax, coord[1]);
-    		}
-    		iter.next();    		    		
-    	}
-    	_sW = wMax-wMin;
-    	_sH = hMax-hMin;
-    }
     /**
-     * !!! TODO fix so rotation image matches bound rectangle
      * Rotate shape 
      */
     public void rotate(int deg) {
@@ -137,20 +149,9 @@ public class PositionableShape extends PositionableJComponent
     	if (_degrees==0) {
     		_transform = null;
      	} else {
-     		float w = _sW;
-     		float h = _sH;
             double rad = _degrees*Math.PI/180.0;
-            if (0<=_degrees && _degrees<90 || -360<_degrees && _degrees<=-270){
-            	_transform = AffineTransform.getTranslateInstance(h*Math.sin(rad), 0.0);
-            } else if (90<=_degrees && _degrees<180 || -270<_degrees && _degrees<=-180) {
-            	_transform = AffineTransform.getTranslateInstance(h*Math.sin(rad)-w*Math.cos(rad), -h*Math.cos(rad));
-            } else if (180<=_degrees && _degrees<270 || -180<_degrees && _degrees<=-90) {
-            	_transform = AffineTransform.getTranslateInstance(-w*Math.cos(rad), -w*Math.sin(rad)-h*Math.cos(rad));
-            } else {
-            	_transform = AffineTransform.getTranslateInstance(0.0, -w*Math.sin(rad));
-            }
-            AffineTransform r = AffineTransform.getRotateInstance(rad);
-            _transform.concatenate(r);          
+            _transform = new AffineTransform();
+            _transform.setToRotation(rad, _width/2, _height/2);
     	}
     	updateSize();
     }
@@ -184,6 +185,24 @@ public class PositionableShape extends PositionableJComponent
         g2d.setColor(_lineColor);
         g2d.setStroke(stroke);
         g2d.draw(_shape);
+        paintHandles(g2d);
+    }
+    
+    protected void paintHandles(Graphics2D g2d) {
+        if (_handles!=null) {
+            g2d.setColor(Editor.HIGHLIGHT_COLOR);
+            g2d.setStroke(new java.awt.BasicStroke(2.0f));
+            Rectangle r = getBounds();
+            r.x=0;
+            r.y=0;
+       		g2d.draw(r);
+        	for (int i=0; i<_handles.length; i++) {
+        		g2d.setColor(Color.RED);
+        		g2d.fill(_handles[i]);
+                g2d.setColor(Editor.HIGHLIGHT_COLOR);
+           		g2d.draw(_handles[i]);
+        	}
+        }
     }
 
     public Positionable deepClone() {
@@ -197,7 +216,7 @@ public class PositionableShape extends PositionableJComponent
         pos._lineWidth = _lineWidth; 
         pos.setFillColor(_fillColor); 
         pos._lineColor = new Color(_lineColor.getRed(), _lineColor.getGreen(), _lineColor.getBlue());
-        pos.makeShape();
+//        pos.makeShape();
         pos.updateSize();
         return super.finishClone(pos);
     }
@@ -213,30 +232,8 @@ public class PositionableShape extends PositionableJComponent
     	} else {
         	r = super.getBounds();    		
     	}
-    	r = new Rectangle(r.x-_lineWidth/2, r.y-_lineWidth/2, r.width+_lineWidth, r.height+_lineWidth);
-    	if (_transform!=null) {
-    		float[] pts = new float[8];
-    		pts[0] = r.x; 
-    		pts[1] = r.y; 
-    		pts[2] = r.x+r.width; 
-    		pts[3] = r.y; 
-    		pts[4] = r.x+r.width; 
-    		pts[5] = r.y+r.height; 
-    		pts[6] = r.x; 
-    		pts[7] = r.y+r.height;
-    		_transform.transform(pts, 0, pts, 0, 4);
-    		float minX = pts[0];
-    		float maxX = pts[0];
-    		float minY = pts[1];
-    		float maxY = pts[1];
-    		for (int i=2; i<pts.length; i+=2) {
-    			minX = Math.min(minX, pts[i]);
-    			maxX = Math.max(maxX, pts[i]);
-    			minY = Math.min(minY, pts[i+1]);
-    			maxY = Math.max(maxY, pts[i+1]);
-    		}
-        	r = new Rectangle(Math.round(minX), Math.round(minY), Math.round(maxX-minX), Math.round(maxY-minY));
-    	}
+    	_width = r.width;
+    	_height = r.height;
         setSize(r.width, r.height);
     }
     
@@ -306,7 +303,8 @@ public class PositionableShape extends PositionableJComponent
     }
     protected void editItem() {
         _editFrame.updateFigure(this);
-        makeShape();
+//        makeShape();
+        removeHandles();
         updateSize();
         _editFrame.closingEvent();    	
         repaint();
@@ -330,47 +328,136 @@ public class PositionableShape extends PositionableJComponent
      * Attach a named sensor to shape
      * @param pName Used as a system/user name to lookup the sensor object
      */
-     public void setControlSensor(String pName) {
-         if (pName==null || pName.trim().length()==0) {
-             setControlSensorHandle(null);
-             return;
-         }
-         if (InstanceManager.sensorManagerInstance()!=null) {
-             Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
-             if (sensor != null) {
-            	 setControlSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));                
-             } else {
-                 log.error("PositionalShape Control Sensor '"+pName+"' not available, shape won't see changes");
-             }
-         } else {
-             log.error("No SensorManager for this protocol, block icons won't see changes");
-         }
-     }
-     public void setControlSensorHandle(NamedBeanHandle<Sensor> senHandle) {
-         if (_controlSensor != null) {
-        	 getControlSensor().removePropertyChangeListener(this);
-         }
-         _controlSensor = senHandle;
-         if (_controlSensor != null) {
-             Sensor sensor = getControlSensor();
-             sensor.addPropertyChangeListener(this, _controlSensor.getName(), "PositionalShape");
-             setHidden(sensor.getKnownState()==Sensor.INACTIVE);
-         } 
-     }
-     public Sensor getControlSensor() {
-         if (_controlSensor==null) {
-             return null;
-         }
-         return _controlSensor.getBean(); 
-     }    
-     public NamedBeanHandle <Sensor> getControlSensorHandle() { return _controlSensor; }
+	public void setControlSensor(String pName) {
+        if (pName==null || pName.trim().length()==0) {
+            setControlSensorHandle(null);
+            return;
+        }
+        if (InstanceManager.sensorManagerInstance()!=null) {
+            Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
+            if (sensor != null) {
+           	 setControlSensorHandle(jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(pName, sensor));                
+            } else {
+                log.error("PositionalShape Control Sensor '"+pName+"' not available, shape won't see changes");
+            }
+        } else {
+            log.error("No SensorManager for this protocol, block icons won't see changes");
+        }
+    }
+    public void setControlSensorHandle(NamedBeanHandle<Sensor> senHandle) {
+        if (_controlSensor != null) {
+       	 getControlSensor().removePropertyChangeListener(this);
+        }
+        _controlSensor = senHandle;
+        if (_controlSensor != null) {
+            Sensor sensor = getControlSensor();
+            sensor.addPropertyChangeListener(this, _controlSensor.getName(), "PositionalShape");
+            setHidden(sensor.getKnownState()==Sensor.INACTIVE);
+        } 
+    }
+    public Sensor getControlSensor() {
+        if (_controlSensor==null) {
+            return null;
+        }
+        return _controlSensor.getBean(); 
+    }    
+    public NamedBeanHandle <Sensor> getControlSensorHandle() { return _controlSensor; }
 
-     public void dispose() {
-         if (_controlSensor != null) {
-        	 getControlSensor().removePropertyChangeListener(this);
-         }
-         _controlSensor = null;
-     }
-     
+    public void dispose() {
+        if (_controlSensor != null) {
+       	 getControlSensor().removePropertyChangeListener(this);
+        }
+        _controlSensor = null;
+    }
+    
+    protected void removeHandles() {
+      	 _handles = null;
+       	 invalidate();
+    }
+    
+    protected void drawHandles() {
+    	_handles = new Rectangle[4];
+    	_handles[TOP] = new Rectangle(_width/2-SIZE/2, 0, SIZE, SIZE);
+    	_handles[RIGHT] = new Rectangle(_width-SIZE,_height/2-SIZE/2, SIZE, SIZE);
+    	_handles[BOTTOM] = new Rectangle(_width/2-SIZE/2, _height-SIZE, SIZE, SIZE);
+    	_handles[LEFT] = new Rectangle(0, _height/2-SIZE/2, SIZE, SIZE);
+    }
+    
+    protected Point getInversePoint(int x, int y) throws java.awt.geom.NoninvertibleTransformException  {
+ 	   	 if (_transform!=null) {
+ 	   		 java.awt.geom.AffineTransform t = _transform.createInverse();
+ 	   		 float[] pt = new float[2];
+ 	   		 pt[0]=x;
+ 	   		 pt[1]=y;
+ 	   		 t.transform(pt, 0, pt, 0, 1);
+ 	   		 return new Point(Math.round(pt[0]), Math.round(pt[1]));
+ 	   	 }
+ 	   	 return new Point(x, y);
+   }
+   
+    
+    public void doMousePressed(MouseEvent event) {
+    	_hitIndex=-1;
+    	if (_handles!=null) {   		
+      	   	 _lastX = event.getX();
+       	   	 _lastY = event.getY();
+       	   	 int x = _lastX-getX();
+       	   	 int y = _lastY- getY();
+       	   	 Point pt;
+       	   	 try {
+           	   	 pt = getInversePoint(x, y);       	   		 
+       	   	 } catch (java.awt.geom.NoninvertibleTransformException nte) {
+   	   			 log.error("Can't locate Hit Rectangles "+nte.getMessage());
+   	   			 return;
+       	   	 }
+       	   	 for (int i=0; i<_handles.length; i++) {
+       	   		 if (_handles[i].contains(pt.x, pt.y)) {
+       	   			 _hitIndex=i;
+       	   		 }       	   		 
+       	   	 }
+    	}
+    }
+   
+    protected boolean doHandleMove(MouseEvent event) {
+    	if (_hitIndex>=0) {
+            int deltaX = event.getX() - _lastX;
+            int deltaY = event.getY() - _lastY;
+        	switch (_hitIndex) {
+    			case TOP:
+    				if (_height-deltaY > SIZE) {
+    					setHeight(_height-deltaY);
+        				_editor.moveItem(this, 0, deltaY);    					
+    				} else {
+    					setHeight(SIZE);
+        				_editor.moveItem(this, 0, _height-SIZE);    					
+    				}
+    				break;
+        		case RIGHT:
+        			setWidth(Math.max(SIZE, _width+deltaX));
+        			break;
+        		case BOTTOM:
+        			setHeight(Math.max(SIZE, _height+deltaY));
+        			break;
+        		case LEFT:
+        			if (_width-deltaX > SIZE) {
+        				setWidth(Math.max(SIZE, _width-deltaX));
+        				_editor.moveItem(this, deltaX, 0);        				
+        			} else {
+        				setWidth(SIZE);
+        				_editor.moveItem(this, _width-SIZE, 0);        				
+        			}
+        			break;
+        	}
+            makeShape();
+            updateSize();
+            drawHandles();
+            repaint();
+            _lastX = event.getX();
+            _lastY = event.getY();   	 
+            return true;
+    	}
+    	return false;
+    }
+    
     static Logger log = LoggerFactory.getLogger(PositionableShape.class.getName());
 }

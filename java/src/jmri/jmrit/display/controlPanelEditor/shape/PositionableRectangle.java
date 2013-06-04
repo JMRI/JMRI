@@ -5,7 +5,9 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import javax.swing.JPopupMenu;
 import org.slf4j.LoggerFactory;
@@ -19,8 +21,6 @@ import org.slf4j.LoggerFactory;
 
 public class PositionableRectangle extends PositionableShape {
 
-	int _width;
-	int _height;
     
     public PositionableRectangle(Editor editor) {
     	super(editor);
@@ -30,21 +30,6 @@ public class PositionableRectangle extends PositionableShape {
        	super(editor, shape);
     }
 
-    public void setWidth(int w) {
-    	_width = w;
-    }
-    public void setHeight(int h) {
-    	_height = h;
-    }
-    @Override
-    public int getHeight() {
-      return _height;
-    }
-
-    @Override
-    public int getWidth() {
-      return _width;
-    }
     /**
      * Make shape with new parameters
      */

@@ -178,9 +178,6 @@ import jmri.jmrit.logix.OBlock;
         public void paint(Graphics g) {
         	super.paint(g);
             Graphics2D g2d = (Graphics2D)g;
-            if (_transform!=null ) {
-            	g2d.transform(_transform);
-            }        
             g2d.setFont(getFont().deriveFont(Font.BOLD));
         	int textWidth = getFontMetrics(getFont()).stringWidth(_text);
         	int textHeight = getFontMetrics(getFont()).getHeight();

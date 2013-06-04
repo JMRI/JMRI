@@ -3,6 +3,7 @@ package jmri.jmrit.display.controlPanelEditor.shape;
 import java.awt.Rectangle;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -83,7 +84,7 @@ public class DrawRectangle extends DrawFrame{
     /**
      * Create a new PositionableShape 
      */
-    protected boolean makeFigure() {
+    protected boolean makeFigure(MouseEvent event) {
     	ControlPanelEditor ed = _parent.getEditor();
     	Rectangle r = ed.getSelectRect();
     	if (r!=null) {
