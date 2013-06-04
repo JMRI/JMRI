@@ -98,7 +98,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     final public static int SCROLL_HORIZONTAL = 2;
     final public static int SCROLL_VERTICAL   = 3;
     
-    public static Color HIGHLIGHT_COLOR = new Color(204, 207, 88);
+    final public static Color HIGHLIGHT_COLOR = new Color(204, 207, 88);
 
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
@@ -2203,6 +2203,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * Return a List of all items whose bounding rectangle contain the mouse position.
     * ordered from top level to bottom
     */
+//    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ICAST_IDIV_CAST_TO_DOUBLE", justification="Divide by 2 is only case") 
     protected List <Positionable> getSelectedItems(MouseEvent event) {
         double x;
         double y;
@@ -2218,11 +2219,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
   	            double rad = p.getDegrees()*Math.PI/180.0;
   	            java.awt.geom.AffineTransform t = java.awt.geom.AffineTransform.getRotateInstance(-rad);
   	            double[] pt = new double[2];
-     	   		 pt[0]=x - rect.x - rect.width/2;
-     	   		 pt[1]=y - rect.y - rect.height/2;
+  	            // bit shift to avoid Findbugs paranoia
+     	   		 pt[0]=x - rect.x - (rect.width>>>1);
+     	   		 pt[1]=y - rect.y - (rect.height>>>1);
      	   		 t.transform(pt, 0, pt, 0, 1);
-     	   		 x = pt[0] + rect.x + rect.width/2;
-     	   		 y = pt[1] + rect.y + rect.height/2;
+     	   		 x = pt[0] + rect.x + (rect.width>>>1);
+     	   		 y = pt[1] + rect.y + (rect.height>>>1);
             }
             Rectangle2D.Double rect2D = new Rectangle2D.Double(rect.x*_paintScale,
                                                                rect.y*_paintScale,

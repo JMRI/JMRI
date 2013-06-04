@@ -256,12 +256,9 @@ public class DrawPolygon extends DrawFrame{
      * Editing is done.  Update the existing PositionableShape
      */
     protected void updateFigure(PositionableShape p) {
-    	PositionablePolygon pos = (PositionablePolygon)p;
+//    	PositionablePolygon pos = (PositionablePolygon)p;
     	_editing = false;
     	_pShape.editing(false);
-//		Point spt = getStartPoint();
-//		pos.setShape(makePath(spt));
-//		setPositionableParams(pos);
     }
    
     static Logger log = LoggerFactory.getLogger(DrawPolygon.class.getName());

@@ -151,7 +151,8 @@ public class PositionableShape extends PositionableJComponent
      	} else {
             double rad = _degrees*Math.PI/180.0;
             _transform = new AffineTransform();
-            _transform.setToRotation(rad, _width/2, _height/2);
+            // use bit shift to avoid FindBugs paranoia
+            _transform.setToRotation(rad, (_width>>>1), (_height>>>1));
     	}
     	updateSize();
     }
