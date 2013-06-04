@@ -80,13 +80,11 @@ public class JsonClientHandler {
      * @throws IOException
      */
     public void onMessage(String string) throws IOException {
-        if (log.isDebugEnabled()) {
-            log.debug("Received from client: " + string);
-        }
+        log.debug("Received from client: {}", string);
         try {
             this.onMessage(this.mapper.readTree(string));
         } catch (JsonProcessingException pe) {
-            log.warn("Exception processing \"" + string + "\"\n" + pe.getMessage());
+            log.warn("Exception processing \"{}\"\n{}", string, pe.getMessage());
             this.sendErrorMessage(500, Bundle.getMessage("ErrorProcessingJSON", pe.getLocalizedMessage()));
         }
     }
