@@ -100,7 +100,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             return uniqueId;
         }
         
-        PointDetails getDestPoint(){
+        public PointDetails getDestPoint(){
             return point;
         }
         
@@ -261,6 +261,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
         
         //For a clear down we need to add a message, if it is a cancel, manual clear down or I didn't mean it.
         void setRoute(boolean state){
+            if(log.isDebugEnabled()) log.debug("Set route " + src.getPoint().getDisplayName());
             if(disposed){
                 log.error("Set route called even though interlock has been disposed of");
                 return;
@@ -287,6 +288,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                     case EntryExitPairs.AUTOCLEAR  : cancelClearInterlock(EntryExitPairs.CLEARROUTE); break;
                     default         : cancelClearOptionBox(); break;
                 }
+                if(log.isDebugEnabled()) log.debug("Exit " + src.getPoint().getDisplayName());
                 return;
             }
             if(manager.isRouteStacked(this, false))
@@ -295,16 +297,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             the swing thread for flash the icons to carry on as without interuption */
             final ArrayList<Color> realColorStd = new ArrayList<Color>();
             final ArrayList<Color> realColorXtra = new ArrayList<Color>();
-            final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>(routeDetails);
+            final ArrayList<LayoutBlock> routeBlocks = new ArrayList<LayoutBlock>();
             if(manager.useDifferentColorWhenSetting()){
-                for(int i = 0; i<routeDetails.size(); i++){
+                for(int i = 1; i<routeDetails.size(); i++){
                     LayoutBlock lbk = routeDetails.get(i);
+                    routeBlocks.add(lbk);
                     realColorXtra.add(lbk.getBlockExtraColor());
                     realColorStd.add(lbk.getBlockTrackColor());
-                    if(i>0){
-                        lbk.setBlockExtraColor(manager.getSettingRouteColor());
-                        lbk.setBlockTrackColor(manager.getSettingRouteColor());
-                    }
+                    lbk.setBlockExtraColor(manager.getSettingRouteColor());
+                    lbk.setBlockTrackColor(manager.getSettingRouteColor());
                 }
                 //Force a redraw, to reflect color change
                 src.getPoint().getPanel().redrawPanel();
@@ -542,7 +543,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
             } catch (InterruptedException e){
                 log.error("Interuption exception " + e.toString());
             }
-            
+            if(log.isDebugEnabled()) log.debug("finish route " + src.getPoint().getDisplayName());
         }
         
         private boolean isSignalLogicDynamic(){
@@ -610,11 +611,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                 cancelClearFrame.setVisible(false);
                                 threadAutoClearFrame.interrupt();
                                 cancelClearInterlock(EntryExitPairs.EXITROUTE);
+                                firePropertyChange("noChange", null, null);
                             }
                         });
                 src.getPoint().getPanel().setGlassPane(manager.getGlassPane());
 
             }
+            cancelClearFrame.setTitle(getUserName());
             if(manager.isRouteStacked(this, false))
                 jButton_Stack.setEnabled(false);
             else
@@ -1041,8 +1044,12 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 null,
                 options,
                 options[1]);
-            if(n ==0)
+            if(n ==0){
                 manager.stackNXRoute(this, reverse);
+                firePropertyChange("stacked", null, null);
+            } else {
+                firePropertyChange("failed", null, null);
+            }
         }
         
         public void dispose(){

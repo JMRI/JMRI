@@ -46,9 +46,9 @@ public class PointDetails {
         this.protectingBlocks = protecting;
     }
     
-    LayoutBlock getFacing(){ return facing; }
-    List<LayoutBlock> getProtecting(){ return protectingBlocks; }
-    
+    public LayoutBlock getFacing(){ return facing; }
+    public List<LayoutBlock> getProtecting(){ return protectingBlocks; }
+
     //This might be better off a ref to the source pointdetail.
     boolean routeToSet = false;
     void setRouteTo(boolean boo){
@@ -88,70 +88,75 @@ public class PointDetails {
     protected PropertyChangeListener nxButtonListener = new PropertyChangeListener() {
     //First off if we were inactive, and now active
         public void propertyChange(PropertyChangeEvent e) {
-            if(!e.getPropertyName().equals("KnownState"))
-                return;
-            int now = ((Integer) e.getNewValue()).intValue();
-            int old = ((Integer) e.getOldValue()).intValue();
-            
-            if((old==Sensor.UNKNOWN) || (old==Sensor.INCONSISTENT)){
-                setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                return;
-            }
-            
-            DestinationPoints destPoint = null;
-            
-            for(Entry<DestinationPoints, Source> dp: destinations.entrySet()){
-                destPoint = dp.getKey();
-                if(destPoint.isEnabled() && dp.getValue().getPoint().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                    destPoint.activeBean(false);
-                    return;
-                }
-            }
-            
-            if(sourceRoute!=null){
-                if(now==Sensor.ACTIVE && getNXState()==EntryExitPairs.NXBUTTONINACTIVE){
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                    for(Entry<PointDetails, DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
-                        //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
-                        //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
-                        if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
-                            if(en.getKey().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                                sourceRoute.activeBean(en.getValue(), true);
-                            }
-                        }
-                    }
-                } else if (now==Sensor.INACTIVE && getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                    //sensor inactive, nxbutton state was selected, going to set back to inactive - ie user cancelled button
-                    setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                } else if (now==Sensor.INACTIVE && getNXState()==EntryExitPairs.NXBUTTONACTIVE){
-                    //Sensor gone inactive, while nxbutton was selected - potential start of user either clear route or setting another
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                    for(Entry<PointDetails, DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
-                        //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
-                        //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
-                        if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
-                            if(en.getKey().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                                sourceRoute.activeBean(en.getValue(), false);
-                            }
-                        }
-                    }
-                }
-            } else if (destPoint!=null){
-                //Button set as a destination but has no source, it has had a change in state
-                if(now==Sensor.ACTIVE){
-                    //State now is Active will set flashing
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                } else if(getNXState()==EntryExitPairs.NXBUTTONACTIVE){
-                    //Sensor gone inactive while it was previosly active
-                    setButtonState(EntryExitPairs.NXBUTTONSELECTED);
-                } else if(getNXState()==EntryExitPairs.NXBUTTONSELECTED){
-                    //Sensor gone inactive while it was previously selected therefore will cancel
-                    setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
-                }
-            }
+            nxButtonStateChange(e);
         }
     };
+    
+    private void nxButtonStateChange(PropertyChangeEvent e){
+        if(!e.getPropertyName().equals("KnownState"))
+            return;
+        int now = ((Integer) e.getNewValue()).intValue();
+        int old = ((Integer) e.getOldValue()).intValue();
+        
+        if((old==Sensor.UNKNOWN) || (old==Sensor.INCONSISTENT)){
+            setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+            return;
+        }
+        
+        DestinationPoints destPoint = null;
+        
+        for(Entry<DestinationPoints, Source> dp: destinations.entrySet()){
+            destPoint = dp.getKey();
+            if(destPoint.isEnabled() && dp.getValue().getPoint().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+                destPoint.activeBean(false);
+                return;
+            }
+        }
+        
+        if(sourceRoute!=null){
+            if(now==Sensor.ACTIVE && getNXState()==EntryExitPairs.NXBUTTONINACTIVE){
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+                for(Entry<PointDetails, DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
+                    //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
+                    //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
+                    if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
+                        if(en.getKey().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                            sourceRoute.activeBean(en.getValue(), true);
+                        }
+                    }
+                }
+            } else if (now==Sensor.INACTIVE && getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                //sensor inactive, nxbutton state was selected, going to set back to inactive - ie user cancelled button
+                setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+            } else if (now==Sensor.INACTIVE && getNXState()==EntryExitPairs.NXBUTTONACTIVE){
+                //Sensor gone inactive, while nxbutton was selected - potential start of user either clear route or setting another
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+                for(Entry<PointDetails, DestinationPoints> en : sourceRoute.pointToDest.entrySet()){
+                    //Sensor sen = getSensorFromPoint(en.getKey().getPoint());
+                    //Set a time out on the source sensor, so that if its state hasn't been changed, then we will clear it out.
+                    if(en.getValue().isEnabled() && !en.getValue().getUniDirection()){
+                        if(en.getKey().getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                            sourceRoute.activeBean(en.getValue(), false);
+                        }
+                    }
+                }
+            }
+        } else if (destPoint!=null){
+            //Button set as a destination but has no source, it has had a change in state
+            if(now==Sensor.ACTIVE){
+                //State now is Active will set flashing
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+            } else if(getNXState()==EntryExitPairs.NXBUTTONACTIVE){
+                //Sensor gone inactive while it was previosly active
+                setButtonState(EntryExitPairs.NXBUTTONSELECTED);
+            } else if(getNXState()==EntryExitPairs.NXBUTTONSELECTED){
+                //Sensor gone inactive while it was previously selected therefore will cancel
+                setButtonState(EntryExitPairs.NXBUTTONINACTIVE);
+            }
+        }
+        jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).setMultiPointRoute(this, panel);
+    }
     
     void setSignalMast(SignalMast mast) {
         signalmast = mast;
@@ -205,7 +210,7 @@ public class PointDetails {
         nxButtonState=state;
     }
     
-    int getNXState(){
+    public int getNXState(){
         return nxButtonState;
     }
     

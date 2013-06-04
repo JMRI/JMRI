@@ -211,8 +211,13 @@ public class Source {
         return false;
     }
     
-    void activeBean(DestinationPoints dest, boolean reverseDirection){
-        dest.activeBean(reverseDirection);
+    public void activeBean(DestinationPoints dest, boolean reverseDirection){
+        if(dest!=null)
+            dest.activeBean(reverseDirection);
+    }
+    
+    public DestinationPoints getDestForPoint(PointDetails dp){
+        return pointToDest.get(dp);
     }
 
     public int getNumberOfDestinations() { return pointToDest.size(); }
