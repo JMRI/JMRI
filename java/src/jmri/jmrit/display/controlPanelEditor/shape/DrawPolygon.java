@@ -34,8 +34,6 @@ public class DrawPolygon extends DrawFrame{
 	boolean _editing;
     private static final int NEAR = PositionableShape.SIZE;
 	PositionablePolygon _pShape;
-    private int _lastX;
-    private int _lastY;
 	
 	public DrawPolygon(String which, String title, ShapeDrawer parent) {
 		super(which, title, parent);
@@ -102,6 +100,7 @@ public class DrawPolygon extends DrawFrame{
 	}
 /*	
     public void paint(Graphics g) {
+    	supper.paint(g);
     	if (_editing) {
     		int hitIndex = _pShape.getHitIndex();
     		if (hitIndex>=0) {
@@ -182,16 +181,6 @@ public class DrawPolygon extends DrawFrame{
     	return false;
     }
     
-    
-    private boolean editFigure() {
-    	Editor ed = _parent.getEditor();
-    	Point p = new Point(ed.getLastX(), ed.getLastY());
-    	if (hitPolygonVertex(p)) {
-    		
-    	}
-    	return false;
-    }
-
     /**
      * @param pt is "startPoint" the upper left corner of the figure 
      * @return
@@ -237,28 +226,13 @@ public class DrawPolygon extends DrawFrame{
     }
 
     /**
-     * Set parameters on a new or updated PositionableShape
-     *
-    protected void setPositionableParams(PositionableShape p) {
-    	super.setPositionableParams(p);
-    	PositionablePolygon pos = (PositionablePolygon)p;
-	}
-
-    /**
-     * Done editing. Set parameters on the popup that will edit the PositionableShape
-     *
-    protected void setDisplayParams(PositionableShape p) {
-    	super.setDisplayParams(p);
-    	_editing = false;
-    }
-
-    /**
      * Editing is done.  Update the existing PositionableShape
      */
     protected void updateFigure(PositionableShape p) {
-//    	PositionablePolygon pos = (PositionablePolygon)p;
+    	PositionablePolygon pos = (PositionablePolygon)p;
     	_editing = false;
     	_pShape.editing(false);
+		setPositionableParams(pos);
     }
    
     static Logger log = LoggerFactory.getLogger(DrawPolygon.class.getName());

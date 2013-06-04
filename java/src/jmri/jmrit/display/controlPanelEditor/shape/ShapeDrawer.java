@@ -153,12 +153,8 @@ public class ShapeDrawer  {
     				if (_currentSelection!= null) {
     					_currentSelection.removeHandles();
     				}
-    				_currentSelection = null;    			
-    	    		if (p != null) {
-    	    			_currentSelection = (PositionableShape)p;
-    	    			_currentSelection.drawHandles();
-    	        		
-    	    		}
+	    			_currentSelection = (PositionableShape)p;
+	    			_currentSelection.drawHandles();
     			}    			
     		} else {
 				if (_currentSelection!= null) {
