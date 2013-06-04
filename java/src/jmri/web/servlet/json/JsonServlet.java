@@ -80,6 +80,7 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     public WebSocket doWebSocketConnect(HttpServletRequest hsr, String string) {
+        log.debug("Creating WebSocket for {} at {}", hsr.getRemoteHost(), hsr.getRequestURL());
         return new JsonWebSocket();
     }
 
@@ -442,6 +443,7 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void onOpen(Connection cnctn) {
+            log.debug("Opening connnection");
             this.wsConnection = cnctn;
             this.jmriConnection = new JmriConnection(this.wsConnection);
             this.wsConnection.setMaxIdleTime(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
@@ -449,6 +451,7 @@ public class JsonServlet extends WebSocketServlet {
             this.handler = new JsonClientHandler(this.jmriConnection, this.mapper);
             sockets.add(this);
             try {
+                log.debug("Sending hello");
                 this.handler.sendHello(this.wsConnection.getMaxIdleTime());
             } catch (Exception e) {
                 log.warn("Error openning WebSocket:\n{}", e.getMessage(), e);
