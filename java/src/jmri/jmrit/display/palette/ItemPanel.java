@@ -91,9 +91,10 @@ public abstract class ItemPanel extends JPanel {
     }
     protected void updateFamiliesPanel() {
     }
-    public void dispose() {
+    protected void closeDialogs() {
     } 
-    
+    public void dispose() {
+    }    
     public String getFamilyName() {
         return _family;
     }

@@ -155,13 +155,13 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     protected void openEditDialog() {
-        IconDialog dialog = new MultiSensorIconDialog(_itemType, _family, this, _currentIconMap);
-        dialog.sizeLocate();
+    	_dialog = new MultiSensorIconDialog(_itemType, _family, this, _currentIconMap);
+    	_dialog.sizeLocate();
     }
 
     protected void createNewFamily(String type) {
-        IconDialog dialog = new MultiSensorIconDialog(_itemType, null, this, null);
-        dialog.sizeLocate();
+    	_newFamilyDialog = new MultiSensorIconDialog(_itemType, null, this, null);
+    	_newFamilyDialog.sizeLocate();
     }
     
     /**

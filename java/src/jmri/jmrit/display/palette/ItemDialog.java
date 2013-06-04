@@ -7,6 +7,12 @@ import org.slf4j.LoggerFactory;
 import jmri.util.JmriJFrame;
 
 /**
+ * Container for dialogs that modify the user's changes to his/her icon catalog. 
+ * e.g additions, deletions or modifications of icon families. 
+ * (User's customizations are saved in CatalogTree.xml)
+ * 
+ * While not exactly a singleton class, only one version of the dialog should be
+ * viable at a time - i.e. the version for a particular device type.
  * @author Pete Cressman  Copyright (c) 2010
  */
 
@@ -23,6 +29,7 @@ public class ItemDialog extends JmriJFrame {
     public ItemDialog(String type, String family, String title, ItemPanel parent) {
         super(title, true, true);
         if (_instance!=null) {
+        	_instance.closeDialogs();
         	_instance.dispose();
         }
         _instance = this;
@@ -42,10 +49,14 @@ public class ItemDialog extends JmriJFrame {
     protected String getDialogType() {
         return _type;
     }
-    
+    protected void closeDialogs() {
+    }
+       
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification="Null reference to singular version to allow gc earlier") 
     public void dispose() {
     	super.dispose();
-    	_instance = null;
+    	_instance = null;	// remove reference to allow gc
+    	
     }
     
     // initialize logging

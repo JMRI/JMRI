@@ -41,6 +41,7 @@ public class IconDialog extends ItemDialog {
     protected JButton       _addFamilyButton;
     protected JButton       _deleteButton;
     private boolean 		_newIconSet = false;
+    private IconDialog 		_newFamlyDialog;
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
@@ -88,6 +89,7 @@ public class IconDialog extends ItemDialog {
         p.add(new JScrollPane(_catalog));
 
         setContentPane(p);
+        pack();
     }
 
     /**
@@ -162,8 +164,8 @@ public class IconDialog extends ItemDialog {
     protected void addFamilySet() {
         setVisible(false);
 //        _parent.createNewFamilySet(_type);
-        IconDialog dialog = new IconDialog(_type, null, _parent, null);
-        dialog.sizeLocate();
+        _newFamlyDialog = new IconDialog(_type, null, _parent, null);
+        _newFamlyDialog.sizeLocate();
     }
 
     /**
@@ -223,6 +225,11 @@ public class IconDialog extends ItemDialog {
         });
         buttonPanel.add(panel);
         panel.add(cancelButton);
+    }
+    protected void closeDialogs() {
+    	if (_newFamlyDialog!=null) {
+    		_newFamlyDialog.dispose();
+    	}
     }
 
     protected JPanel makeIconPanel(HashMap<String, NamedIcon> iconMap) {
