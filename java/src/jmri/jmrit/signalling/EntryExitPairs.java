@@ -325,36 +325,42 @@ public class EntryExitPairs implements jmri.Manager{
     }
     
     private void setMultiPointRoute(PointDetails fromPd, PointDetails toPd){
-        boolean result = false;
+        boolean cleardown = false;
+        if(fromPd.isRouteFromPointSet() && toPd.isRouteToPointSet())
+            cleardown = true;
         for(LayoutBlock pro:fromPd.getProtecting()){
             try{
                 jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-                result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(),pro, toPd.getFacing(), toPd.getProtecting().get(0), LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(),pro, toPd.getFacing(), toPd.getProtecting().get(0), LayoutBlockConnectivityTools.SENSORTOSENSOR);
                 if(result){
-                    ArrayList<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, true, LayoutBlockConnectivityTools.NONE);
-                    List<jmri.NamedBean> beanList = lbm.getLayoutBlockConnectivityTools().getBeansInPath(blkList, fromPd.getPanel(), jmri.Sensor.class);
-                    PointDetails fromPoint = fromPd;
-                    refCounter++;
-                    if(!beanList.isEmpty()){
-                        for(int i = 1; i<beanList.size(); i++){
-                            NamedBean nb = beanList.get(i);
-                            PointDetails cur = getPointDetails(nb, fromPd.getPanel());
-                            Source s = nxpair.get(fromPoint);
-                            if(s!=null)
-                                routesToSet.add(new SourceToDest(s, s.getDestForPoint(cur), false, refCounter));
-                            fromPoint = cur;
+                    ArrayList<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
+                    if(!blkList.isEmpty()){
+                        List<jmri.NamedBean> beanList = lbm.getLayoutBlockConnectivityTools().getBeansInPath(blkList, fromPd.getPanel(), jmri.Sensor.class);
+                        PointDetails fromPoint = fromPd;
+                        refCounter++;
+                        if(!beanList.isEmpty()){
+                            for(int i = 1; i<beanList.size(); i++){
+                                NamedBean nb = beanList.get(i);
+                                PointDetails cur = getPointDetails(nb, fromPd.getPanel());
+                                Source s = nxpair.get(fromPoint);
+                                if(s!=null)
+                                    routesToSet.add(new SourceToDest(s, s.getDestForPoint(cur), false, refCounter));
+                                fromPoint = cur;
+                            }
                         }
+                        Source s = nxpair.get(fromPoint);
+                        if(s!=null)
+                            routesToSet.add(new SourceToDest(s, s.getDestForPoint(toPd), false, refCounter));
+                        processRoutesToSet();
+                        return;
                     }
-                    Source s = nxpair.get(fromPoint);
-                    if(s!=null)
-                        routesToSet.add(new SourceToDest(s, s.getDestForPoint(toPd), false, refCounter));
-                    processRoutesToSet();
-                    return;
                 }
             } catch (jmri.JmriException e){
-                log.error("Exception " + e.toString());
+                //Can be considered normal if route is blocked
             }
         }
+        fromPd.setNXButtonState(NXBUTTONINACTIVE);
+        toPd.setNXButtonState(NXBUTTONINACTIVE);
     }
     
     int refCounter = 0;

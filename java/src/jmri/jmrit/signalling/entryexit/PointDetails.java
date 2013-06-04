@@ -267,8 +267,8 @@ public class PointDetails {
     
     //LayoutEditor getLayoutEditor() { return panel; }
     
-    boolean isRouteToPointSet() { return routeToSet; }
-    boolean isRouteFromPointSet() { return routeFromSet; }
+    public boolean isRouteToPointSet() { return routeToSet; }
+    public boolean isRouteFromPointSet() { return routeFromSet; }
     
     public String getDisplayName(){
         if(sensor!=null){
