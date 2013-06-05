@@ -1211,6 +1211,8 @@ public class AutoActiveTrain implements ThrottleListener {
                             if (_rampCount>_rampTargetCount) {
                                 // step the speed
                                 if (_currentSpeed<_targetSpeed) {
+                                    if(useSpeedProfile)
+                                        re.getSpeedProfile().cancelSpeedChange();
                                     // ramp up
                                     _currentSpeed += _minSpeedStep;
                                     if (_currentSpeed>=_targetSpeed) {
@@ -1220,10 +1222,12 @@ public class AutoActiveTrain implements ThrottleListener {
                                     else {
                                         _rampCount = 0;
                                     }
+                                    _throttle.setSpeedSetting(_currentSpeed);
                                 }
                                 else {
                                     if(useSpeedProfile){
                                         re.getSpeedProfile().changeLocoSpeed(_throttle, _currentAllocatedSection.getSection(), _targetSpeed);
+                                        _currentSpeed = _targetSpeed;
                                     } else {
                                         // ramp down
                                         _currentSpeed -= _minSpeedStep;
@@ -1234,9 +1238,9 @@ public class AutoActiveTrain implements ThrottleListener {
                                         else {
                                             _rampCount = 0;
                                         }
+                                        _throttle.setSpeedSetting(_currentSpeed);
                                     }
                                 }
-                                _throttle.setSpeedSetting(_currentSpeed);
                             }
 						}
 					}
