@@ -667,7 +667,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         // read the consist file after the consist manager has
         // finished loading consists on startup.
         try {
-            consistFile.ReadFile();
+            consistFile.readFile();
         } catch (Exception e) {
             log.warn("error reading consist file: " + e);
         }
