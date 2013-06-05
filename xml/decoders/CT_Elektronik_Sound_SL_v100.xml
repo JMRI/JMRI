@@ -38,10 +38,15 @@
   <!--	version 1 - recreated from CT_Elektronik_Sound_SL_51.xml by "mark.kasprowicz@traindecoder.com"
 			version="1.0 beta" lastUpdated="20040818" - Peter 06/10/28 -->
   <!--	version 2 - added new CVs: Auto Uncoupling and Light Effects - Peter -->
+  <!--  Version 2.1  added SL76 decoders - Nigel Cliffe, ncliffe@btinternet.com, 2013/05/14 -->
+  <!--  Added decoder version numbers, SL51/SL75 have up to version 125, SL76 is version 127+ -->
+  <!--  Added CV49=10 for diesel electrics, this is undocumented, info from John Gymer at YouChoos.co.uk -->
+  <!--  Added GE75 and GE76 sound only (no motor) decoders. Motor panes required to synch sound behaviour -->
+  <!--  Added SL82 Large decoder (LGB), cannot find CV's which control output F7 (ninth output on decoder) -->
   <decoder>
     <family name="Sound Decoder SL (v100 up)" mfg="CT Elektronik">
       <model model="SL 51" numOuts="8" numFns="15" productID="SL51">
-        <versionCV lowVersionID="100"/>
+        <versionCV lowVersionID="100" highVersionID="125"/>
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>
         <output name="3" label="Green"/>
@@ -53,17 +58,17 @@
         <output name="Ra" label="Yard Mode"/>
         <output name="Se" label="Sound"/>
         <output name="Alt" label="Alt Snds"/>
-        <output name="G1" label="Snd Slot 1/9"/>
-        <output name="G2" label="Snd Slot 2/10"/>
-        <output name="G3" label="Snd Slot 3/11"/>
-        <output name="G4" label="Snd Slot 4/12"/>
-        <output name="G5" label="Snd Slot 5/13"/>
-        <output name="G6" label="Snd Slot 6/14"/>
-        <output name="G7" label="Snd Slot 7/15"/>
-        <output name="G8" label="Snd Slot 8/16"/>
+        <output name="G1" label="Slot 1/9"/>
+        <output name="G2" label="Slot 2/10"/>
+        <output name="G3" label="Slot 3/11"/>
+        <output name="G4" label="Slot 4/12"/>
+        <output name="G5" label="Slot 5/13"/>
+        <output name="G6" label="Slot 6/14"/>
+        <output name="G7" label="Slot 7/15"/>
+        <output name="G8" label="Slot 8/16"/>
       </model>
-      <model model="SL 75" numOuts="4" numFns="15" productID="SL75">
-        <versionCV lowVersionID="100"/>
+      <model model="SL 75" numOuts="4" numFns="14" productID="SL75">
+        <versionCV lowVersionID="100" highVersionID="125"/>
         <output name="1" label="White"/>
         <output name="2" label="Yellow"/>
         <output name="3" label="Green"/>
@@ -71,14 +76,90 @@
         <output name="Ra" label="Yard Mode"/>
         <output name="Se" label="Sound"/>
         <output name="Alt" label="Alt Snds"/>
-        <output name="G1" label="Snd Slot 1/9"/>
-        <output name="G2" label="Snd Slot 2/10"/>
-        <output name="G3" label="Snd Slot 3/11"/>
-        <output name="G4" label="Snd Slot 4/12"/>
-        <output name="G5" label="Snd Slot 5/13"/>
-        <output name="G6" label="Snd Slot 6/14"/>
-        <output name="G7" label="Snd Slot 7/15"/>
-        <output name="G8" label="Snd Slot 8/16"/>
+        <output name="G1" label="Slot 1/9"/>
+        <output name="G2" label="Slot 2/10"/>
+        <output name="G3" label="Slot 3/11"/>
+        <output name="G4" label="Slot 4/12"/>
+        <output name="G5" label="Slot 5/13"/>
+        <output name="G6" label="Slot 6/14"/>
+        <output name="G7" label="Slot 7/15"/>
+        <output name="G8" label="Slot 8/16"/>
+      </model>
+	  <model model="GE 75" numOuts="2" numFns="14" productID="GE75">
+        <versionCV lowVersionID="100" highVersionID="125"/>
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="Ra" label="Yard Mode"/>
+        <output name="Se" label="Sound"/>
+        <output name="Alt" label="Alt Snds"/>
+        <output name="G1" label="Slot 1/9"/>
+        <output name="G2" label="Slot 2/10"/>
+        <output name="G3" label="Slot 3/11"/>
+        <output name="G4" label="Slot 4/12"/>
+        <output name="G5" label="Slot 5/13"/>
+        <output name="G6" label="Slot 6/14"/>
+        <output name="G7" label="Slot 7/15"/>
+        <output name="G8" label="Slot 8/16"/>
+      </model>
+
+	  <model model="SL 76" numOuts="4" numFns="14" productID="SL76">
+        <versionCV lowVersionID="127"/>
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="3" label="Green"/>
+        <output name="4" label="Purple"/>
+        <output name="Ra" label="Yard Mode"/>
+        <output name="Se" label="Sound"/>
+        <output name="Alt" label="Alt Snds"/>
+        <output name="G1" label="Slot 1/9"/>
+        <output name="G2" label="Slot 2/10"/>
+        <output name="G3" label="Slot 3/11"/>
+        <output name="G4" label="Slot 4/12"/>
+        <output name="G5" label="Slot 5/13"/>
+        <output name="G6" label="Slot 6/14"/>
+        <output name="G7" label="Slot 7/15"/>
+        <output name="G8" label="Slot 8/16"/>
+      </model>
+	  <model model="GE 76" numOuts="4" numFns="14" productID="GE76">
+        <versionCV lowVersionID="127"/>
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="3" label="Green"/>
+        <output name="4" label="Purple"/>
+        <output name="Ra" label="Yard Mode"/>
+        <output name="Se" label="Sound"/>
+        <output name="Alt" label="Alt Snds"/>
+        <output name="G1" label="Slot 1/9"/>
+        <output name="G2" label="Slot 2/10"/>
+        <output name="G3" label="Slot 3/11"/>
+        <output name="G4" label="Slot 4/12"/>
+        <output name="G5" label="Slot 5/13"/>
+        <output name="G6" label="Slot 6/14"/>
+        <output name="G7" label="Slot 7/15"/>
+        <output name="G8" label="Slot 8/16"/>
+      </model>
+	  <model model="SL82" numOuts="9" numFns="14" productID="SL82" maxMotorCurrent="4A / 2.5A" maxTotalCurrent="4A">
+        <versionCV lowVersionID="100"/>
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="3" label="F1"/>
+        <output name="4" label="F2"/>
+        <output name="5" label="F3"/>
+        <output name="6" label="F4"/>
+        <output name="7" label="F5"/>
+        <output name="8" label="F6"/>
+        <output name="9" label="F7"/>
+        <output name="Ra" label="Yard Mode"/>
+        <output name="Se" label="Sound"/>
+        <output name="Alt" label="Alt Snds"/>
+        <output name="G1" label="Slot 1/9"/>
+        <output name="G2" label="Slot 2/10"/>
+        <output name="G3" label="Slot 3/11"/>
+        <output name="G4" label="Slot 4/12"/>
+        <output name="G5" label="Slot 5/13"/>
+        <output name="G6" label="Slot 6/14"/>
+        <output name="G7" label="Slot 7/15"/>
+        <output name="G8" label="Slot 8/16"/>
       </model>
     </family>
     <programming direct="yes" paged="no" register="no" ops="yes"/>
@@ -1564,7 +1645,7 @@
         </enumVal>
         <label>Steam/Diesel sound types</label>
       </variable>
-      <variable label="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL75" default="0" tooltip="CV49, bits 0-3">
+      <variable label="Steam/Diesel sound types" CV="49" mask="XXXXVVVV" include="SL75,SL76,GE75,GE76,SL82" default="0" tooltip="CV49, bits 0-3">
         <enumVal>
           <enumChoice choice="4 Cylinder steam, auto pulse">
             <choice>4 Cylinder steam, auto pulse</choice>
@@ -1572,7 +1653,7 @@
           <enumChoice choice="Synchro pulse inputs">
             <choice>Synchro pulse inputs</choice>
           </enumChoice>
-          <enumChoice choice="Diesel Electric (variable speed)">
+          <enumChoice choice="Electric (variable speed)">
             <choice>Diesel Electric (variable speed)</choice>
           </enumChoice>
           <enumChoice choice="Diesel Electric (constant speed)">
@@ -1582,6 +1663,10 @@
             <choice>2 Cylinder Steam, auto pulse</choice>
           </enumChoice>
           <enumChoice choice="3 Cylinder Steam, auto pulse" value="8">
+            <choice>3 Cylinder Steam, auto pulse</choice>
+          </enumChoice>
+		  <!-- value CV49=10 information from John Gymer at YouChoos.co.uk, it gives better behaviour than CV49=2 -->
+		  <enumChoice choice="Diesel Electric (variable speed)" value="10">
             <choice>3 Cylinder Steam, auto pulse</choice>
           </enumChoice>
         </enumVal>
@@ -2000,7 +2085,7 @@
         </enumVal>
         <label>Random Idling Slot 7</label>
       </variable>
-      <variable label="Random Idling Slot 8" CV="112" mask="VXXXXXXX" default="0" include="SL75">
+      <variable label="Random Idling Slot 8" CV="112" mask="VXXXXXXX" default="0" include="SL75,SL76,GE75,GE76,SL82">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2092,7 +2177,7 @@
         </enumVal>
         <label>Random Running Slot 7</label>
       </variable>
-      <variable label="Random Running Slot 8" CV="113" mask="VXXXXXXX" default="0" include="SL75">
+      <variable label="Random Running Slot 8" CV="113" mask="VXXXXXXX" default="0" include="SL75,SL76,GE75,GE76,SL82">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -2853,7 +2938,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         <label>Sound slot 7 function repetition</label>
       </variable>
       <!-- CV129 changed in V40, see also CV146 -->
-      <variable label="Sound slot 8 volume" CV="129" mask="XXXXXXVV" include="SL75" default="0">
+      <variable label="Sound slot 8 volume" CV="129" mask="XXXXXXVV" include="SL75,SL76,GE75,GE76,SL82" default="0">
         <enumVal>
           <enumChoice choice="0 (max)">
             <choice>0 (max)</choice>
@@ -2870,7 +2955,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 8 volume</label>
       </variable>
-      <variable label="Sound slot 8 auto repetition" CV="129" mask="XXXVVVXX" include="SL75" default="0">
+      <variable label="Sound slot 8 auto repetition" CV="129" mask="XXXVVVXX" include="SL75,SL76,GE75,GE76,SL82" default="0">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -2899,7 +2984,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Sound slot 8 auto repetition</label>
       </variable>
-      <variable label="Sound slot 8 function repetition" CV="129" mask="VVVXXXXX" include="SL75" default="3">
+      <variable label="Sound slot 8 function repetition" CV="129" mask="VVVXXXXX" include="SL75,SL76,GE75,GE76,SL82" default="3">
         <enumVal>
           <enumChoice choice="0">
             <choice>0</choice>
@@ -3181,7 +3266,7 @@ CV116 = 128 knobs back quickly. Sound falls to idle knob position alters itself.
         </enumVal>
         <label>Loop Sound Slot 7</label>
       </variable>
-      <variable label="Loop Sound Slot 8" CV="145" mask="VXXXXXXX" default="0" include="SL75">
+      <variable label="Loop Sound Slot 8" CV="145" mask="VXXXXXXX" default="0" include="SL75,SL76,GE75,GE76,SL82">
         <enumVal>
           <enumChoice choice="Off">
             <choice>Off</choice>
@@ -3226,7 +3311,7 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
 		   <enumVal><enumChoice choice="Off"/><enumChoice choice="Yes"/></enumVal></variable>
 -->
       <!-- SL75 manual implies CV146 is replacement for CV129 from V40 onwards -->
-      <variable label="Strong Time" CV="146" default="4" include="SL75" comment="Position 00-03 in Filelist" tooltip="CV146 Strong reduction of sound after acceleration, Position 00-03 in Filelist">
+      <variable label="Strong Time" CV="146" default="4" include="SL75,SL76,GE75,GE76,SL82" comment="Position 00-03 in Filelist" tooltip="CV146 Strong reduction of sound after acceleration, Position 00-03 in Filelist">
         <decVal/>
         <label>Strong Time</label>
         <comment>Position 00-03 in Filelist</comment>
@@ -4784,8 +4869,8 @@ Sept 2009 - believe this is obselete from V39 upwards, replaced by Function Mapp
           <label label=" Note, this pane is still work in progress.  ">
             <label> Note, this pane is still work in progress.  </label>
           </label>
-          <label label=" Particularly note that strong time for SL75 is CV146, previous decoders were CV129. ">
-            <label> Particularly note that strong time for SL75 is CV146, previous decoders were CV129. </label>
+          <label label=" Particularly note that strong time for SL75,SL76,GE75,GE76 is CV146, previous decoders were CV129. ">
+            <label> Particularly note that strong time for SL75,SL76,GE75,GE76 is CV146, previous decoders were CV129. </label>
           </label>
           <label label=" Recommend care when changing settings, and take notes.  Information on how this pane with">
             <label> Recommend care when changing settings, and take notes.  Information on how this pane with</label>

@@ -30,6 +30,8 @@
   <!-- Version 1.8, Nigel Cliffe, 2011/11/30  -->
   <!--    removed decoder "highVersion" as those on sale appear to have many version numbers -->
   <!--    and upper limit used by CT is not known  -->
+  <!-- Version 1.9, Nigel Cliffe, 2013/05/14 -->
+  <!--    added DCX76 series decoders -->
   <decoder>
     <family name="DCX Series (v.66 and higher)" mfg="CT Elektronik" lowVersionID="66" comment="DCX74, DCX75, with variants">
       <model model="DCX74D" numOuts="2" numFns="10" maxMotorCurrent="1.6 A" maxTotalCurrent="0.8 A">
@@ -50,6 +52,20 @@
         <output name="Ra" label="Yard Mode"/>
       </model>
       <model model="DCX75" numOuts="2" numFns="10" maxMotorCurrent="1.0A, peak=2A for 3 sec." maxTotalCurrent="1.0A">
+        <output name="Ra" label="Yard Mode"/>
+      </model>
+	  <model model="DCX76" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="3" label="Pad F1"/>
+        <output name="4" label="Pad F2"/>
+        <output name="Ra" label="Yard Mode"/>
+	  </model>
+	  <model model="DCX76Z" numOuts="4" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="0.8 A">
+        <output name="1" label="White"/>
+        <output name="2" label="Yellow"/>
+        <output name="3" label="Pad F1"/>
+        <output name="4" label="Pad F2"/>
         <output name="Ra" label="Yard Mode"/>
       </model>
     </family>
