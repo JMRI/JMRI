@@ -724,12 +724,14 @@ public class ActivateTrainFrame {
 			startingBlockBoxList = selectedTransit.getEntryBlocksList();
 		}
 		startingBlockSeqList = selectedTransit.getBlockSeqList();
+        boolean found = false;
 		for (int i = 0; i<startingBlockBoxList.size(); i++) {
 			Block b = startingBlockBoxList.get(i);
 			int seq = startingBlockSeqList.get(i).intValue();
 			startingBlockBox.addItem(getBlockName(b)+"-"+seq);
-            if(b.getState()==Block.OCCUPIED){
+            if(!found && b.getState()==Block.OCCUPIED){
                 startingBlockBox.setSelectedItem(getBlockName(b)+"-"+seq);
+                found = true;
             }
 		}
 	}
