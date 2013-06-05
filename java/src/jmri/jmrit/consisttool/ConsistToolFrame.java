@@ -655,8 +655,24 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         ConsistMan.removeConsistListListener(this);
     }
 
+    // want to read the consist file after the consists have been loaded
+    // from the command station.  The _readConsistFile flag tells the 
+    // notifyConsistListChanged routine to do this.  notifyConsistListChanged
+    // sets the value to false after the file is read.
+    private boolean _readConsistFile = true;
+
     // ConsistListListener interface
     public void notifyConsistListChanged(){
+        if(_readConsistFile) {
+        // read the consist file after the consist manager has
+        // finished loading consists on startup.
+        try {
+            consistFile.ReadFile();
+        } catch (Exception e) {
+            log.warn("error reading consist file: " + e);
+        }
+        _readConsistFile=false;
+       }
        // update the consist list.
        initializeConsistBox();
     }
