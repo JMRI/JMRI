@@ -41,12 +41,13 @@ public class IconDialog extends ItemDialog {
     protected JButton       _addFamilyButton;
     protected JButton       _deleteButton;
     private boolean 		_newIconSet = false;
+    private IconDialog 		_newFamlyDialog;
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
     public IconDialog(String type, String family, ItemPanel parent, HashMap <String, NamedIcon> iconMap ) {
-        super(type, family, Bundle.getMessage("ShowIconsTitle", type), parent, false);
+        super(type, family, Bundle.getMessage("ShowIconsTitle", type), parent);
         
         _iconMap = clone(iconMap);
         JPanel panel = new JPanel();
@@ -78,12 +79,17 @@ public class IconDialog extends ItemDialog {
         _iconPanel = makeIconPanel(_iconMap);
         panel.add(_iconPanel);	// put icons above buttons
         panel.add(buttonPanel);
-        
+        panel.setMaximumSize(panel.getPreferredSize());
+
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.add(panel);
         _catalog = CatalogPanel.makeDefaultCatalog();
         _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
-        panel.add(new JScrollPane(_catalog));
+        p.add(new JScrollPane(_catalog));
 
-        setContentPane(panel);
+        setContentPane(p);
+        pack();
     }
 
     /**
@@ -158,8 +164,8 @@ public class IconDialog extends ItemDialog {
     protected void addFamilySet() {
         setVisible(false);
 //        _parent.createNewFamilySet(_type);
-        IconDialog dialog = new IconDialog(_type, null, _parent, null);
-        dialog.sizeLocate();
+        _newFamlyDialog = new IconDialog(_type, null, _parent, null);
+        _newFamlyDialog.sizeLocate();
     }
 
     /**
@@ -219,6 +225,11 @@ public class IconDialog extends ItemDialog {
         });
         buttonPanel.add(panel);
         panel.add(cancelButton);
+    }
+    protected void closeDialogs() {
+    	if (_newFamlyDialog!=null) {
+    		_newFamlyDialog.dispose();
+    	}
     }
 
     protected JPanel makeIconPanel(HashMap<String, NamedIcon> iconMap) {

@@ -2152,51 +2152,43 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                     log.debug(destination.getDisplayName() + " prot " + protectingBlock.getDisplayName());
                     log.debug(destination.getDisplayName() + " dest " + destinationBlock.getDisplayName());
                 }
-                LinkedHashMap<Block, Integer> block = new LinkedHashMap<Block, Integer>();
                 
-                 //= new ArrayList<LayoutBlock>();
                 try {
                     lblks = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(facingBlock, destinationBlock, protectingBlock, true, jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools.MASTTOMAST);                    
                 } catch (jmri.JmriException ee){
                     log.error("No blocks found by the layout editor for pair " + source.getDisplayName() + " " + destination.getDisplayName());
                 }
-                    block = setupLayoutEditorTurnoutDetails(lblks);
-                    
-                    for(int i = 0; i<blockInXings.size(); i++){
-                        blockInXings.get(i).removeSignalMastLogic(source);
-                    }
-                    blockInXings = new ArrayList<LevelXing>(0);
-                    xingAutoBlocks = new ArrayList<Block>(0);
-                    for(int i = 0; i<layout.size(); i++){
-                        LayoutEditor lay = layout.get(i);
-                        for(int j = 0; j<lay.xingList.size(); j++){
-                            //Looking for a crossing that both layout blocks defined and they are individual.
-                            if((lay.xingList.get(j).getLayoutBlockAC()!=null) && (lay.xingList.get(j).getLayoutBlockBD()!=null) && (lay.xingList.get(j).getLayoutBlockAC()!=lay.xingList.get(j).getLayoutBlockBD())){
-                                if(lblks.contains(lay.xingList.get(j).getLayoutBlockAC())){
-                                    block.put(lay.xingList.get(j).getLayoutBlockBD().getBlock(), Block.UNOCCUPIED);
-                                    xingAutoBlocks.add(lay.xingList.get(j).getLayoutBlockBD().getBlock());
-                                    blockInXings.add(lay.xingList.get(j));
-                                } else if (lblks.contains(lay.xingList.get(j).getLayoutBlockBD())){
-                                    block.put(lay.xingList.get(j).getLayoutBlockAC().getBlock(), Block.UNOCCUPIED);
-                                    xingAutoBlocks.add(lay.xingList.get(j).getLayoutBlockAC().getBlock());
-                                    blockInXings.add(lay.xingList.get(j));
-                                }
+                LinkedHashMap<Block, Integer> block = setupLayoutEditorTurnoutDetails(lblks);
+                
+                for(int i = 0; i<blockInXings.size(); i++){
+                    blockInXings.get(i).removeSignalMastLogic(source);
+                }
+                blockInXings = new ArrayList<LevelXing>(0);
+                xingAutoBlocks = new ArrayList<Block>(0);
+                for(int i = 0; i<layout.size(); i++){
+                    LayoutEditor lay = layout.get(i);
+                    for(int j = 0; j<lay.xingList.size(); j++){
+                        //Looking for a crossing that both layout blocks defined and they are individual.
+                        if((lay.xingList.get(j).getLayoutBlockAC()!=null) && (lay.xingList.get(j).getLayoutBlockBD()!=null) && (lay.xingList.get(j).getLayoutBlockAC()!=lay.xingList.get(j).getLayoutBlockBD())){
+                            if(lblks.contains(lay.xingList.get(j).getLayoutBlockAC())){
+                                block.put(lay.xingList.get(j).getLayoutBlockBD().getBlock(), Block.UNOCCUPIED);
+                                xingAutoBlocks.add(lay.xingList.get(j).getLayoutBlockBD().getBlock());
+                                blockInXings.add(lay.xingList.get(j));
+                            } else if (lblks.contains(lay.xingList.get(j).getLayoutBlockBD())){
+                                block.put(lay.xingList.get(j).getLayoutBlockAC().getBlock(), Block.UNOCCUPIED);
+                                xingAutoBlocks.add(lay.xingList.get(j).getLayoutBlockAC().getBlock());
+                                blockInXings.add(lay.xingList.get(j));
                             }
                         }
                     }
-                    if(useLayoutEditorBlocks)
-                        setAutoBlocks(block);
-                    else
-                        setAutoBlocks(null);
-                    if(!useLayoutEditorTurnouts)
-                        setAutoTurnouts(null);
-                    /*else
-                        setAutoTurnouts(null);*/
-                /*} catch (jmri.JmriException e){
-                    log.debug(destination.getDisplayName() + " Valid route not found from " + facingBlock.getDisplayName() + " to " + destinationBlock.getDisplayName());
-                    log.debug(e.toString());
-                    throw e;
-                }*/
+                }
+                if(useLayoutEditorBlocks)
+                    setAutoBlocks(block);
+                else
+                    setAutoBlocks(null);
+                if(!useLayoutEditorTurnouts)
+                    setAutoTurnouts(null);
+
                 setupAutoSignalMast(null, false);
             }
             initialise();

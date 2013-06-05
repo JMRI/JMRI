@@ -58,7 +58,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
         consistFile = new ConsistFile();
         try {
-            consistFile.ReadFile();
+            consistFile.readFile();
         } catch (Exception e) {
             log.warn("error reading consist file: " + e);
         }
@@ -351,7 +351,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         adrSelector.setEnabled(true);
         initializeConsistBox();
         try {
-            consistFile.WriteFile(ConsistMan.getConsistList());
+            consistFile.writeFile(ConsistMan.getConsistList());
         } catch (Exception ex) {
             log.warn("error writing consist file: " + ex);
         }
@@ -643,7 +643,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         //}
         consistModel.fireTableDataChanged();
         try {
-            consistFile.WriteFile(ConsistMan.getConsistList());
+            consistFile.writeFile(ConsistMan.getConsistList());
         } catch (Exception e) {
             log.warn("error writing consist file: " + e);
         }

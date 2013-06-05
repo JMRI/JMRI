@@ -275,16 +275,6 @@ public class EntryExitPairs implements jmri.Manager{
         if(sourcePoint==null){
             LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, panel);
             List<LayoutBlock> protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectingBlocksByNamedBean(source, panel);
-            /*if(source instanceof SignalMast){
-                facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByMast((SignalMast)source, panel);
-                protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlockByMast((SignalMast)source, panel);
-            } else if (source instanceof Sensor) {
-                facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockBySensor((Sensor)source, panel);
-                protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlockBySensor((Sensor)source, panel);
-            } else if (source instanceof SignalHead){
-                facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlock((SignalHead)source, panel);
-                protecting = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlock((SignalHead)source, panel);
-            }*/
             if((facing==null) && (protecting==null)){
                 log.error("Unable to find facing and protecting block");
                 return null;
@@ -322,6 +312,115 @@ public class EntryExitPairs implements jmri.Manager{
 
         return total;
     }
+    
+    public void setMultiPointRoute(PointDetails requestpd, LayoutEditor panel){
+        for (PointDetails pd : pointDetails){
+            if(pd!=requestpd && pd.getPanel()==panel){
+                if(pd.getNXState()==NXBUTTONSELECTED){
+                    setMultiPointRoute(pd, requestpd);
+                    return;
+                }
+            }
+        }
+    }
+    
+    private void setMultiPointRoute(PointDetails fromPd, PointDetails toPd){
+        boolean cleardown = false;
+        if(fromPd.isRouteFromPointSet() && toPd.isRouteToPointSet())
+            cleardown = true;
+        for(LayoutBlock pro:fromPd.getProtecting()){
+            try{
+                jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
+                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(),pro, toPd.getFacing(), toPd.getProtecting().get(0), LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                if(result){
+                    ArrayList<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
+                    if(!blkList.isEmpty()){
+                        List<jmri.NamedBean> beanList = lbm.getLayoutBlockConnectivityTools().getBeansInPath(blkList, fromPd.getPanel(), jmri.Sensor.class);
+                        PointDetails fromPoint = fromPd;
+                        refCounter++;
+                        if(!beanList.isEmpty()){
+                            for(int i = 1; i<beanList.size(); i++){
+                                NamedBean nb = beanList.get(i);
+                                PointDetails cur = getPointDetails(nb, fromPd.getPanel());
+                                Source s = nxpair.get(fromPoint);
+                                if(s!=null)
+                                    routesToSet.add(new SourceToDest(s, s.getDestForPoint(cur), false, refCounter));
+                                fromPoint = cur;
+                            }
+                        }
+                        Source s = nxpair.get(fromPoint);
+                        if(s!=null)
+                            routesToSet.add(new SourceToDest(s, s.getDestForPoint(toPd), false, refCounter));
+                        processRoutesToSet();
+                        return;
+                    }
+                }
+            } catch (jmri.JmriException e){
+                //Can be considered normal if route is blocked
+            }
+        }
+        fromPd.setNXButtonState(NXBUTTONINACTIVE);
+        toPd.setNXButtonState(NXBUTTONINACTIVE);
+    }
+    
+    int refCounter = 0;
+    
+    ArrayList<SourceToDest> routesToSet = new ArrayList<SourceToDest>();
+    
+    static class SourceToDest {
+    
+        Source s = null;
+        DestinationPoints dp = null;
+        boolean direction = false;
+        int ref = -1;
+        
+        SourceToDest(Source s, DestinationPoints dp, boolean dir, int ref){
+            this.s = s;
+            this.dp = dp;
+            this.direction = dir;
+            this.ref = ref;
+        }
+    }
+    
+    int currentDealing = 0;
+    
+    synchronized void processRoutesToSet(){
+        if(routesToSet.isEmpty())
+            return;
+        Source s = routesToSet.get(0).s;
+        DestinationPoints dp = routesToSet.get(0).dp;
+        boolean dir = routesToSet.get(0).direction;
+        currentDealing = routesToSet.get(0).ref;
+        routesToSet.remove(0);
+        
+        dp.addPropertyChangeListener(propertyDestinationListener);
+        s.activeBean(dp, dir);
+    }
+    
+    //Removes the remaining routes for a given reference
+    synchronized void removeRemainingRoute(){
+        ArrayList<SourceToDest> toRemove = new ArrayList<SourceToDest>();
+        for(SourceToDest rts:routesToSet){
+            if(rts.ref==currentDealing){
+                toRemove.add(rts);
+                rts.dp.getDestPoint().setNXButtonState(NXBUTTONINACTIVE);
+            }
+        }
+        for(SourceToDest rts:toRemove){
+            routesToSet.remove(rts);
+        }
+    }
+    
+    protected PropertyChangeListener propertyDestinationListener = new PropertyChangeListener(){
+        public void propertyChange(PropertyChangeEvent e) {
+            ((DestinationPoints)e.getSource()).removePropertyChangeListener(this);
+            if(e.getPropertyName().equals("active")){
+                processRoutesToSet();
+            } else if (e.getPropertyName().equals("stacked") || e.getPropertyName().equals("failed") || e.getPropertyName().equals("noChange") ){
+                removeRemainingRoute();
+            }
+        }
+    };
 
     ArrayList<Object> destinationList = new ArrayList<Object>();
     
@@ -630,6 +729,7 @@ public class EntryExitPairs implements jmri.Manager{
     static class StackDetails{
         DestinationPoints dp;
         boolean reverse;
+
         StackDetails(DestinationPoints dp, boolean reverse){
             this.dp = dp;
             this.reverse = reverse;
@@ -640,7 +740,6 @@ public class EntryExitPairs implements jmri.Manager{
         DestinationPoints getDestinationPoint(){
             return dp;
         }
-    
     }
     
     javax.swing.Timer checkTimer  = new javax.swing.Timer(10000, new java.awt.event.ActionListener() {

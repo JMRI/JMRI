@@ -15,6 +15,7 @@
 
 
 <!-- version 1 - new file includes for Signalman files -->
+<!-- version 1.1 - Add Strobe length -->
 
 <!-- Panes to show Lamp Brightness -->
 
@@ -191,13 +192,18 @@
       </column>
       </row> 
       <row>
-          <label label="Brightness Values range from 1-48"/>
+      <column>
+        <display item="Strobe Length" layout="left" label="Strobe Length x 10ms"/>
+      </column>
+      <column>
+        <display item="Strobe Length" layout="left" format="hslider" label=""/>
+      </column>
       </row>
       <row>
           <label label=" "/>
       </row>
       <row>
-          <label label="Lamps are shown above in the order that they appear on the SignalMan connectors."/>
+          <label label="Lamps are shown above in the order that they appear on the SignalMan connectors. Brightness Values range from 1-48"/>
       </row>
       <row>
           <label label="Lamp colors are for label reference only. Actual lamps may be any color that you have connected."/>

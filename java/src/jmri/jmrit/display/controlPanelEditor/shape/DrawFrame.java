@@ -7,6 +7,8 @@ import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Stroke;
+import java.awt.event.MouseEvent;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -54,7 +56,6 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
     JSlider 	_lineSlider;
     JSlider		_fillSlider;
 	JTextField	_sensorName = new JTextField(30);
-	PositionableShape _pShape;
     
 	public DrawFrame(String which, String title, ShapeDrawer parent) {
 		super(title, false, false);
@@ -100,6 +101,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         panel.add(pp);
         
         panel.add(makePanel());
+        // PositionableShape adds buttons at the bottom
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
         panel.add(makeSensorPanel());
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -114,6 +116,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
         pack();
         setLocation(_loc);
         setVisible(true);
+        setAlwaysOnTop(true);
 	}
 
 	protected JPanel makePanel() {
@@ -216,9 +219,9 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
     		_parent.closeDrawFrame(this);
     		_parent.getEditor().resetEditor();
     	}
-    	if (_pShape!=null) {
-    		_pShape.setVisible(true);
-    	}
+//    	if (_pShape!=null) {
+//    		_pShape.setVisible(true);
+//    	}
     	_loc = getLocation(_loc);
     	_dim = getSize(_dim);
     	dispose();
@@ -238,11 +241,11 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
 	}
 	protected void drawShape(Graphics g) {		
 	}
-	protected boolean dragTo(int x, int y) {
-		return false;
-	}
+    protected boolean doHandleMove(MouseEvent event) {
+    	return false;
+    }
 	
-	abstract protected boolean makeFigure();
+	abstract protected boolean makeFigure(MouseEvent event);
 	abstract protected void updateFigure(PositionableShape pos);
  
     static Logger log = LoggerFactory.getLogger(DrawFrame.class.getName());

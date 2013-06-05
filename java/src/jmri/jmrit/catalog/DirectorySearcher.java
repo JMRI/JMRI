@@ -44,8 +44,6 @@ import jmri.CatalogTreeManager;
  */
 public class DirectorySearcher {
 
-    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.catalog.CatalogBundle");
-    
     // For choosing image directories
     static JFileChooser _directoryChooser = null;
     static DirectorySearcher _instance;
@@ -73,19 +71,19 @@ public class DirectorySearcher {
             }
             _directoryChooser.setFileFilter(filt);
         }
-        _directoryChooser.setDialogTitle(rb.getString(msg));
+        _directoryChooser.setDialogTitle(Bundle.getMessage(msg));
         _directoryChooser.rescanCurrentDirectory();
         
         _directoryChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        JLabel label = new JLabel(rb.getString("loadDir1"));
+        JLabel label = new JLabel(Bundle.getMessage("loadDir1"));
         panel.add(label);
-        label = new JLabel(rb.getString("loadDir2"));
+        label = new JLabel(Bundle.getMessage("loadDir2"));
         panel.add(label);
-        label = new JLabel(rb.getString("loadDir3"));
+        label = new JLabel(Bundle.getMessage("loadDir3"));
         panel.add(label);
-        label = new JLabel(rb.getString("loadDir4"));
+        label = new JLabel(Bundle.getMessage("loadDir4"));
         panel.add(label);
         _directoryChooser.setAccessory(panel);
         int retVal = _directoryChooser.showOpenDialog(null);
@@ -120,12 +118,12 @@ public class DirectorySearcher {
     }
 
     private void showWaitFrame() {
-        _waitDialog = new JFrame(rb.getString("waitTitle"));
+        _waitDialog = new JFrame(Bundle.getMessage("waitTitle"));
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel(rb.getString("waitWarning")));
+        panel.add(new JLabel(Bundle.getMessage("waitWarning")));
 
-        _waitText.setText(rb.getString("prevMsg"));
+        _waitText.setText(Bundle.getMessage("prevMsg"));
         _waitText.setEditable(false);
         _waitText.setFont(new Font("Dialog", Font.BOLD, 12));
         _waitText.setBackground(panel.getBackground());
@@ -162,7 +160,7 @@ public class DirectorySearcher {
                                 null, new CActionListener(), 0);
             }
         } else {
-            JOptionPane.showMessageDialog(null, rb.getString("NoImagesInDir"), rb.getString("searchFSMenu"),
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("NoImagesInDir"), Bundle.getMessage("searchFSMenu"),
                                                      JOptionPane.INFORMATION_MESSAGE);
         }
         closeWaitFrame();
@@ -175,7 +173,7 @@ public class DirectorySearcher {
         if (dir != null) {
             getImageDirectory(dir, CatalogTreeManager.IMAGE_FILTER);
             if (!_quitLooking) {
-                JOptionPane.showMessageDialog(null, rb.getString("DirNotFound"), rb.getString("searchFSMenu"),
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("DirNotFound"), Bundle.getMessage("searchFSMenu"),
                                                      JOptionPane.INFORMATION_MESSAGE);
             }
         }

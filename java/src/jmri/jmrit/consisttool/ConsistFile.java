@@ -49,7 +49,7 @@ public class ConsistFile extends XmlFile {
      * @param consist a JDOM element containing a consist
      */
     @SuppressWarnings("unchecked")
-    private void ConsistFromXML(Element consist) {
+    private void consistFromXml(Element consist) {
         Attribute type, cnumber, isCLong, cID;
         Consist newConsist;
 
@@ -170,7 +170,7 @@ public class ConsistFile extends XmlFile {
      * @param consist a Consist object to write to the file
      * @return an Element representing the consist.
      */
-    private Element ConsistToXML(Consist consist) {
+    private Element consistToXml(Consist consist) {
         Element e = new Element("consist");
         e.setAttribute("id", consist.getConsistID());
         e.setAttribute("consistNumber", "" + consist.getConsistAddress()
@@ -206,8 +206,8 @@ public class ConsistFile extends XmlFile {
      * @throws JDOMException
      * @throws IOException
      */
-    public void ReadFile() throws JDOMException, IOException {
-        ReadFile(defaultConsistFilename());
+    public void readFile() throws JDOMException, IOException {
+        readFile(defaultConsistFilename());
     }
 
     /**
@@ -218,7 +218,7 @@ public class ConsistFile extends XmlFile {
      * @throws IOException
      */
     @SuppressWarnings("unchecked")
-    public void ReadFile(String fileName) throws JDOMException, IOException {
+    public void readFile(String fileName) throws JDOMException, IOException {
         if (checkFile(fileName)) {
             Element root = rootFromName(fileName);
             Element roster;
@@ -236,7 +236,7 @@ public class ConsistFile extends XmlFile {
                 Element consist;
                 do {
                     consist = consistIterator.next();
-                    ConsistFromXML(consist);
+                    consistFromXml(consist);
                 } while (consist != null);
             } catch (NoSuchElementException nde) {
                 log.debug("end of consist list");
@@ -253,8 +253,8 @@ public class ConsistFile extends XmlFile {
      * @param consistList
      * @throws IOException
      */
-    public void WriteFile(ArrayList<DccLocoAddress> consistList) throws IOException {
-        WriteFile(consistList, defaultConsistFilename());
+    public void writeFile(ArrayList<DccLocoAddress> consistList) throws IOException {
+        writeFile(consistList, defaultConsistFilename());
     }
 
     /**
@@ -264,7 +264,7 @@ public class ConsistFile extends XmlFile {
      * @param fileName - with location and file type
      * @throws IOException
      */
-    public void WriteFile(ArrayList<DccLocoAddress> consistList, String fileName) throws IOException {
+    public void writeFile(ArrayList<DccLocoAddress> consistList, String fileName) throws IOException {
         // create root element
         Element root = new Element("consist-roster-config");
         Document doc = newDocument(root, dtdLocation + "consist-roster-config.dtd");
@@ -280,7 +280,7 @@ public class ConsistFile extends XmlFile {
 
         for (int i = 0; i < consistList.size(); i++) {
             Consist newConsist = consistMan.getConsist(consistList.get(i));
-            roster.addContent(ConsistToXML(newConsist));
+            roster.addContent(consistToXml(newConsist));
         }
         root.addContent(roster);
         try {

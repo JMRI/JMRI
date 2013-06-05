@@ -16,7 +16,7 @@ public final class JSON {
      * while changes to the minor number represent an
      * addition to the protocol.
      */
-    public static final String JSON_PROTOCOL_VERSION = "0.1"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "0.2"; // NOI18N
     /* JSON structure */
     public static final String TYPE = "type"; // NOI18N
     public static final String LIST = "list"; // NOI18N

@@ -22,6 +22,7 @@ public class ShapeDrawer  {
 	
 	protected ControlPanelEditor _editor;
 	private DrawFrame 	_drawFrame;
+	private PositionableShape _currentSelection;
 
 	public ShapeDrawer(ControlPanelEditor ed) {
         _editor = ed;
@@ -144,16 +145,30 @@ public class ShapeDrawer  {
     public boolean doMousePressed(MouseEvent event) {
     	if (_drawFrame!=null) {
     		_drawFrame.anchorPoint(event.getX(), event.getY());
-//            _editor.setSelectionGroup(null);
-//            _drawFrame.setDrawParams();
             return true;
+    	} else {
+    		Positionable p = _editor.getCurrentSelection();
+    		if (p instanceof PositionableShape) {
+    			if (!p.equals(_currentSelection)) {
+    				if (_currentSelection!= null) {
+    					_currentSelection.removeHandles();
+    				}
+	    			_currentSelection = (PositionableShape)p;
+	    			_currentSelection.drawHandles();
+    			}    			
+    		} else {
+				if (_currentSelection!= null) {
+					_currentSelection.removeHandles();
+				}
+				_currentSelection = null;    			
+    		}
     	}
     	return false;
     }
    
     public boolean doMouseReleased(Positionable selection, MouseEvent event) {
         if (_drawFrame!=null) {
-        	if (_drawFrame.makeFigure()) {
+        	if (_drawFrame.makeFigure(event)) {
             	_drawFrame.closingEvent();
                 _editor.resetEditor();        		
         	}
@@ -170,8 +185,8 @@ public class ShapeDrawer  {
     }
 
     public boolean doMouseDragged(MouseEvent event) {
-        if (_drawFrame!=null) {
-            return _drawFrame.dragTo(event.getX(), event.getY());
+        if (_currentSelection!=null) {
+        	return _currentSelection.doHandleMove(event);
         }
         return false;
     }

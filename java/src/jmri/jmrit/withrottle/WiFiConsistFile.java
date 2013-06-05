@@ -27,7 +27,7 @@ public class WiFiConsistFile extends ConsistFile{
         if (checkFile(getFileLocation() + fileName)) {
             log.debug("Has "+fileName+" file.");
             try {
-                ReadFile(getFileLocation()+fileName);
+                readFile(getFileLocation()+fileName);
             } catch (Exception e) {
                 log.warn("error reading consist file: " + e);
             }
@@ -36,7 +36,7 @@ public class WiFiConsistFile extends ConsistFile{
             if (checkFile(defaultConsistFilename())) {
                 log.debug("Has default consist.xml file, will read it.");
                 try {
-                    ReadFile();
+                    readFile();
                 } catch (Exception e) {
                     log.warn("error reading consist file: " + e);
                 }

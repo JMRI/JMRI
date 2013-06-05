@@ -119,6 +119,7 @@ public class OptionsMenu extends JMenu {
 	JComboBox layoutScaleBox = new JComboBox();
 	JRadioButton scaleFeet = new JRadioButton(rb.getString("ScaleFeet"));
 	JRadioButton scaleMeters = new JRadioButton(rb.getString("ScaleMeters"));
+    JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
     
     String[] signalTypes = {"SignalHeads/SSL", "SignalMasts"};
 	
@@ -236,6 +237,14 @@ public class OptionsMenu extends JMenu {
 			scaleMeters.setToolTipText(rb.getString("ScaleMetersHint"));
 			scaleGroup.add(scaleMeters);
 			optionsPane.add(p12);
+            
+            JPanel p14 = new JPanel();
+			p14.setLayout(new FlowLayout());
+			p14.add(openDispatcherWithPanel);
+			openDispatcherWithPanel.setToolTipText(Bundle.getMessage("OpenDispatcherWithPanelBoxHint"));
+			optionsPane.add(p14);
+            
+            
 			optionsPane.add(new JSeparator());
 			JPanel p9 = new JPanel();
 			p9.setLayout(new FlowLayout());
@@ -282,6 +291,7 @@ public class OptionsMenu extends JMenu {
 		supportVSDecoderCheckBox.setSelected(dispatcher.getSupportVSDecoder());
 		scaleMeters.setSelected(dispatcher.getUseScaleMeters());
 		scaleFeet.setSelected(!dispatcher.getUseScaleMeters());
+        openDispatcherWithPanel.setSelected(jmri.jmrit.display.layoutEditor.LayoutEditor.getOpenDispatcherOnLoad());
 		optionsFrame.pack();
 		optionsFrame.setVisible(true);
 	}
@@ -313,6 +323,7 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
 		dispatcher.setScale(layoutScaleBox.getSelectedIndex()+1);
 		dispatcher.setUseScaleMeters(scaleMeters.isSelected());
+        jmri.jmrit.display.layoutEditor.LayoutEditor.setOpenDispatcherOnLoad(openDispatcherWithPanel.isSelected());
 		optionsFrame.setVisible(false);	
 		optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
 		optionsFrame = null;

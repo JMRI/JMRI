@@ -38,13 +38,14 @@ public class XmlFileLocationAction extends AbstractAction {
         final String user = FileUtil.getUserFilesPath();
         final String roster = Roster.getFileLocation();
         final String config = FileUtil.getPreferencesPath();
-        // final String configName = System.getProperty("org.jmri.Apps.configFilename");
         final String scripts = FileUtil.getScriptsPath();
         final String prog = System.getProperty("user.dir");
-
-
-
-
+        String configName = System.getProperty("org.jmri.Apps.configFilename");
+        if (!new File(configName).isAbsolute()) {
+            // must be relative, but we want it to 
+            // be relative to the preferences directory
+            configName = config+configName;
+        }
 
 
         JFrame frame = new jmri.util.JmriJFrame();  // to ensure fits
@@ -128,6 +129,8 @@ public class XmlFileLocationAction extends AbstractAction {
         textPane.append("Scripts Location: " + scripts + "\n");
 
         textPane.append("Program Location: " + prog + "\n");
+
+        textPane.append("Config file: " + configName + "\n");
 
         addLogFiles(textPane);
 

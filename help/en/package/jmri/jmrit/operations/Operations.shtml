@@ -1228,6 +1228,15 @@
     location. If there's an alternate track specified, the program will only move the car when one
     of the spurs can accept a new car, i.e. the track is no longer full.</P>
 
+   <P>Another feature of using an alternate track for cars with custom loads but without a final
+    destination, is that the program will try and forward some number of cars to the spur demanding
+    that car type and load. The program refers to these cars as "inbound" to the spur/industry. For
+    a car to be "inbound" is has to be transported by trains that don't directly service the
+    spur/industry. The maximum number of inbound cars to a spur with an alternate track is
+    determined by the length of the spur and the alternate track. So if the spur could hold 6 cars,
+    and the alternate track 5, then the program would allow a maximum of 11 cars to be in route to
+    the spur.</P>
+
    <P>Schedules can operate in one of two modes, sequential as described above, or in match
     mode. Match mode eliminates the sequential aspects of a schedule. In match mode, the program
     will search the entire schedule to find a car type and load that matches the car that the

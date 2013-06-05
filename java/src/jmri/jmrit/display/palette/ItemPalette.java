@@ -58,6 +58,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
     static HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>> _indicatorTOMaps;
+    ItemPanel _currentItemPanel;
     
     /**
     * Store palette icons in preferences file catalogTrees.xml 
@@ -310,7 +311,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
 
         setLayout(new BorderLayout(5,5));
         add(_tabPane, BorderLayout.CENTER);
-        setLocation(10,10);               
+        setLocation(10,10);
+        JScrollPane sp = (JScrollPane)_tabPane.getSelectedComponent();
+        _currentItemPanel = (ItemPanel)sp.getViewport().getView();
         pack();
 //        System.out.println("Palette built in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
     }
@@ -321,98 +324,88 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         
         ItemPanel itemPanel = new TableItemPanel(palette, "Turnout", null,
                                        PickListModel.turnoutPickModelInstance(), editor);
-        itemPanel.init();
+        itemPanel.init();		// show panel on start
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Turnout"));
         _tabIndex.put("Turnout", itemPanel);
         
         itemPanel = new TableItemPanel(palette, "Sensor", null,
                                        PickListModel.sensorPickModelInstance(), editor);
-//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Sensor"));
         _tabIndex.put("Sensor", itemPanel);
 
         itemPanel = new SignalHeadItemPanel(palette, "SignalHead", null,
                                        PickListModel.signalHeadPickModelInstance(), editor);
- //       itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("SignalHead"));
         _tabIndex.put("SignalHead", itemPanel);
 
         itemPanel = new SignalMastItemPanel(palette, "SignalMast", null,
                                             PickListModel.signalMastPickModelInstance(), editor);
-//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("SignalMast"));
         _tabIndex.put("SignalMast", itemPanel);
 
         itemPanel = new MemoryItemPanel(palette, "Memory", null,
                                         PickListModel.memoryPickModelInstance(), editor);
- //       itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Memory"));
+         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Memory"));
         _tabIndex.put("Memory", itemPanel);
 
         itemPanel = new ReporterItemPanel(palette, "Reporter", null,
                                           PickListModel.reporterPickModelInstance(), editor);
-//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Reporter"));
         _tabIndex.put("Reporter", itemPanel);
 
        itemPanel = new TableItemPanel(palette, "Light", null,
                                        PickListModel.lightPickModelInstance(), editor);
-//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Light"));
         _tabIndex.put("Light", itemPanel);
 
         itemPanel = new MultiSensorItemPanel(palette, "MultiSensor", null,
                                              PickListModel.multiSensorPickModelInstance(), editor);
- //       itemPanel.init();
-        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("MultiSensor"));
+         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("MultiSensor"));
         _tabIndex.put("MultiSensor", itemPanel);
  
         ItemPanel iconPanel = new IconItemPanel(palette, "Icon", null, editor);
-//        iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Icon"));
         _tabIndex.put("Icon", itemPanel);
  
         iconPanel = new BackgroundItemPanel(palette, "Background", null, editor);
-//        iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Background")); 
         _tabIndex.put("Background", itemPanel);
 
         iconPanel = new TextItemPanel(palette, "Text", null, editor);
- //       iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Text"));     
         _tabIndex.put("Text", itemPanel);
 
         iconPanel = new RPSItemPanel(palette, "RPSReporter", null, editor);
-//        iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("RPSReporter")); 
         _tabIndex.put("RPSReporter", itemPanel);
 
         iconPanel = new ClockItemPanel(palette, "FastClock", null, editor);
-//        iconPanel.init();
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("FastClock")); 
         _tabIndex.put("FastClock", itemPanel);
 
         itemPanel = new IndicatorItemPanel(palette, "IndicatorTrack", null, editor);
-//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("IndicatorTrack"));
         _tabIndex.put("IndicatorTrack", itemPanel);
 
         itemPanel = new IndicatorTOItemPanel(palette, "IndicatorTO", null,
                                        PickListModel.turnoutPickModelInstance(), editor);
-//        itemPanel.init();
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("IndicatorTO"));
         _tabIndex.put("IndicatorTO", itemPanel);
         
         _tabPane.addChangeListener(palette);
     	
     }
-    
+
     public void stateChanged(ChangeEvent e) {
 //        long t = System.currentTimeMillis();
         JTabbedPane tp = (JTabbedPane)e.getSource();
         JScrollPane sp = (JScrollPane)tp.getSelectedComponent();
         ItemPanel p = (ItemPanel)sp.getViewport().getView();
     	p.init();
+    	if (_currentItemPanel!=null) {
+        	_currentItemPanel.closeDialogs();    		
+    	}
+    	_currentItemPanel = p;
 //        System.out.println("Panel "+p._itemType+" built in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
     }
 
@@ -469,10 +462,11 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         java.awt.Component[] comps = _tabPane.getComponents();
         if (log.isDebugEnabled()) log.debug("closePanels: tab count= "+_tabPane.getTabCount());
         for (int i=0; i<comps.length; i++) {
-            if (comps[i] instanceof ItemPanel) {
-                //log.debug("windowClosing "+i+"th panel= "+comps[i].getClass().getName());
-                ((ItemPanel)comps[i]).dispose();
-            }
+        	javax.swing.JViewport vp = (javax.swing.JViewport)((JScrollPane)comps[i]).getComponent(0);
+            java.awt.Component ip = vp.getView();
+        	if (ip instanceof ItemPanel) {
+                ((ItemPanel)ip).dispose();                		
+        	}
         }
         super.windowClosing(e);
     }

@@ -1404,6 +1404,16 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         menuBar.add(dispMenu);
     
     }
+    
+    static boolean openDispatcherOnLoad = false;
+    
+    static public boolean getOpenDispatcherOnLoad(){
+        return openDispatcherOnLoad;
+    }
+    
+    static public void setOpenDispatcherOnLoad(Boolean boo){
+        openDispatcherOnLoad = boo;
+    }
     /**
      * Remove marker icons from panel
      */

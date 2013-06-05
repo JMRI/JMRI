@@ -34,6 +34,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     JButton   _showIconsButton;
     JButton   _updateButton;
     protected HashMap<String, NamedIcon> _currentIconMap;
+    IconDialog _dialog;
+    IconDialog _newFamilyDialog;
 
     /**
     * Constructor types with multiple families and multiple icon families
@@ -431,8 +433,24 @@ public abstract class FamilyItemPanel extends ItemPanel {
         return panel;
     }
     private void createNewFamilySet(String type) {
-        IconDialog dialog = new IconDialog(type, null, this, null);
-        dialog.sizeLocate();
+    	_newFamilyDialog = new IconDialog(type, null, this, null);
+    	_newFamilyDialog.sizeLocate();
+    }
+    protected void closeDialogs() {
+    	if (_dialog!=null) {
+    		_dialog.closeDialogs();
+    		_dialog.dispose();
+    	}    	
+    }
+    public void dispose() {
+    	if (_dialog!=null) {
+    		_dialog.closeDialogs();
+    		_dialog.dispose();
+    	}
+    	if (_newFamilyDialog != null) {
+    		_newFamilyDialog.dispose();
+    	}
+    	super.dispose();
     }
 
     // add update buttons to  bottom1Panel
@@ -455,9 +473,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
  
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        IconDialog dialog = new IconDialog(_itemType, _family, this, _currentIconMap);
+        _dialog = new IconDialog(_itemType, _family, this, _currentIconMap);
         // call super ItemDialog to size and locate dialog
-        dialog.sizeLocate();
+        _dialog.sizeLocate();
     }
 
     /**

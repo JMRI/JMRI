@@ -80,6 +80,7 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     public WebSocket doWebSocketConnect(HttpServletRequest hsr, String string) {
+        log.debug("Creating WebSocket for {} at {}", hsr.getRemoteHost(), hsr.getRequestURL());
         return new JsonWebSocket();
     }
 
@@ -162,7 +163,7 @@ public class JsonServlet extends WebSocketServlet {
                     if (type.equals(CAR)) {
                         reply = JsonUtil.getCar(name);
                     } else if (type.equals(CONSIST)) {
-                        reply = JsonUtil.getConsist(name);
+                        reply = JsonUtil.getConsist(JsonUtil.addressForString(name));
                     } else if (type.equals(ENGINE)) {
                         reply = JsonUtil.getEngine(name);
                     } else if (type.equals(LIGHT)) {
@@ -254,7 +255,10 @@ public class JsonServlet extends WebSocketServlet {
                     name = data.path(NAME).asText();
                 }
                 if (name != null) {
-                    if (type.equals(LIGHT)) {
+                    if (type.equals(CONSIST)) {
+                        JsonUtil.setConsist(JsonUtil.addressForString(name), data);
+                        reply = JsonUtil.getConsist(JsonUtil.addressForString(name));
+                    } else if (type.equals(LIGHT)) {
                         JsonUtil.setLight(name, data);
                         reply = JsonUtil.getLight(name);
                     } else if (type.equals(MEMORY)) {
@@ -338,7 +342,10 @@ public class JsonServlet extends WebSocketServlet {
                     name = data.path(NAME).asText();
                 }
                 if (name != null) {
-                    if (type.equals(LIGHT)) {
+                    if (type.equals(CONSIST)) {
+                        JsonUtil.putConsist(JsonUtil.addressForString(name), data);
+                        reply = JsonUtil.getConsist(JsonUtil.addressForString(name));
+                    } else if (type.equals(LIGHT)) {
                         JsonUtil.putLight(name, data);
                         reply = JsonUtil.getLight(name);
                     } else if (type.equals(MEMORY)) {
@@ -379,6 +386,45 @@ public class JsonServlet extends WebSocketServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Date now = new Date();
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json"); // NOI18N
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        response.setDateHeader("Date", now.getTime()); // NOI18N
+        response.setDateHeader("Last-Modified", now.getTime()); // NOI18N
+        response.setDateHeader("Expires", now.getTime()); // NOI18N
+
+        String[] rest = request.getPathInfo().split("/"); // NOI18N
+        String type = (rest.length > 1) ? rest[1] : null;
+        String name = (rest.length > 2) ? rest[2] : null;
+        JsonNode reply = mapper.createObjectNode();
+        try {
+            if (type != null) {
+                if (name == null) {
+                    throw new JsonException(400, "name must be specified"); // need to I18N
+                }
+                if (type.equals(CONSIST)) {
+                    JsonUtil.delConsist(JsonUtil.addressForString(name));
+                } else {
+                    // not a deletable item
+                    throw new JsonException(400, type + " is not a deletable type"); // need to I18N
+                }
+            } else {
+                log.warn("Type not specified.");
+                reply = JsonUtil.getUnknown(type);
+            }
+        } catch (JsonException ex) {
+            reply = ex.getJsonMessage();
+        }
+        int code = reply.path(DATA).path(CODE).asInt(200); // use HTTP error codes when possible
+        // only include a response body if something went wrong
+        if (code != 200) {
+            this.sendError(response, code, this.mapper.writeValueAsString(reply));
+        }
+    }
+
     public void sendError(HttpServletResponse response, int code, String message) throws IOException {
         response.setStatus(code);
         response.getWriter().write(message);
@@ -397,6 +443,7 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void onOpen(Connection cnctn) {
+            log.debug("Opening connnection");
             this.wsConnection = cnctn;
             this.jmriConnection = new JmriConnection(this.wsConnection);
             this.wsConnection.setMaxIdleTime(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
@@ -404,6 +451,7 @@ public class JsonServlet extends WebSocketServlet {
             this.handler = new JsonClientHandler(this.jmriConnection, this.mapper);
             sockets.add(this);
             try {
+                log.debug("Sending hello");
                 this.handler.sendHello(this.wsConnection.getMaxIdleTime());
             } catch (Exception e) {
                 log.warn("Error openning WebSocket:\n{}", e.getMessage(), e);

@@ -24,6 +24,7 @@ import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
+import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
@@ -904,6 +905,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         repaint();
     }
 //    public void keyReleased(KeyEvent e) {}
+    public Positionable getCurrentSelection() {
+    	return _currentSelection;
+    }
     
     /*********** Mouse ***************/
 
@@ -917,12 +921,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _lastX = _anchorX;
         _lastY = _anchorY;
 
+        _currentSelection = getCurrentSelection(event);
         if (_shapeDrawer.doMousePressed(event)) {
         	_selectionGroup = null;
         	_currentSelection = null;
         	return;
         }
-        _currentSelection = getCurrentSelection(event);
 
         if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown()) {
           /*  if (!event.isControlDown()) */{
@@ -1068,6 +1072,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (_circuitBuilder.doMouseDragged(_currentSelection, event) ) {
         	return;
         }
+        if (_shapeDrawer.doMouseDragged(event) ) {
+        	return;
+        }
         if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && (isEditable() || _currentSelection instanceof LocoIcon)) {
             moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
@@ -1154,9 +1161,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     protected void paintTargetPanel(Graphics g) {
-    	if (_shapeDrawer != null) {
-    		_shapeDrawer.paint(g);
-    	}
+    	// needed to create PositionablePolygon
+    	_shapeDrawer.paint(g);
     }
 
     /**
@@ -1360,6 +1366,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setSelectionGroup(null);
     }
 
+    /* Called by CircuitBuilder
+     * */
     protected void highlight(Positionable pos) {
     	if (pos==null) {
     		_highlightcomponent = null;

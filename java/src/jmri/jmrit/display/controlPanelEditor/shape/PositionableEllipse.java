@@ -18,11 +18,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: 1 $
  */
 
-public class PositionableEllipse extends PositionableShape {
-
-	int _width;
-	int _height;
-    
+public class PositionableEllipse extends PositionableRectangle {
     public PositionableEllipse(Editor editor) {
     	super(editor);
     }
@@ -30,38 +26,6 @@ public class PositionableEllipse extends PositionableShape {
     public PositionableEllipse(Editor editor, Shape shape) {
        	super(editor, shape);
     }
-
-    public void setWidth(int w) {
-    	_width = w;
-    }
-    public void setHeight(int h) {
-    	_height = h;
-    }
-    @Override
-    public int getHeight() {
-      return _height;
-    }
-
-    @Override
-    public int getWidth() {
-      return _width;
-    }
-    /**
-     * Rotate shape 
-     */
-    public void rotate(int deg) {
-    	_degrees = deg;
-    	if (_degrees==0) {
-    		_transform = null;
-    		makeShape();
-     	} else {
-        	_transform = AffineTransform.getTranslateInstance(_width/2., _height/2.);
-        	_transform.rotate(deg*Math.PI/180);
-        	_transform.translate(-_width/2., -_height/2.);
-    	}
-    	updateSize();
-    }
- 
     /**
      * this class must be overridden by its subclasses and executed
      *  only after its parameters have been set

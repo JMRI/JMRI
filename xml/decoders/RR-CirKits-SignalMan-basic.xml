@@ -13,9 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.09" lastUpdated="20130328"/>
+  <version author="dick@rr-cirkits.com" version="0.11" lastUpdated="20130603"/>
   <!-- Version 0.01  Working version modified from LNCP -->
   <!-- Version 0.10  SignalMan version -->
+  <!-- Version 0.11  Add Strobe effect -->
 
   <decoder>
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode">
@@ -79,13 +80,13 @@
       <variable label="Flash Write MSB" CV="114" readOnly="yes" mask="VVXXXXXX" item="Flash Write MSB">
         <splitVal highCV="115" upperMask="VVVVVVVV"/>
       </variable>
+      <variable label="Strobe Length" CV="116" comment="Strobe Length x 10ms" default="10">
+        <decVal min="1" max="200"/>
+      </variable>
       <variable label="Reserved" CV="20" readOnly="yes">
         <decVal/>
       </variable>
       <variable label="Firmware Version" CV="7" readOnly="yes" item="Firmware Version" default="1">
-        <decVal/>
-      </variable>
-      <variable label="Manufacturer ID - Reset" CV="7" item="Reset" comment="Writing a value of 170 will reset decoder to factory defaults">
         <decVal/>
       </variable>
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer ID" default="87">
@@ -105,7 +106,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA1 Effect" CV="33" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA2 Address Mode" CV="34" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -114,7 +115,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA2 Effect" CV="34" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA3 Address Mode" CV="35" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -123,7 +124,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA3 Effect" CV="35" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA4 Address Mode" CV="36" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -132,7 +133,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA4 Effect" CV="36" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA5 Address Mode" CV="37" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -141,7 +142,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA5 Effect" CV="37" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA6 Address Mode" CV="38" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -150,7 +151,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA6 Effect" CV="38" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA7 Address Mode" CV="39" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -159,7 +160,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA7 Effect" CV="39" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA8 Address Mode" CV="40" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -168,7 +169,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA8 Effect" CV="40" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA9 Address Mode" CV="41" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -177,7 +178,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA9 Effect" CV="41" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA10 Address Mode" CV="42" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -186,7 +187,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA10 Effect" CV="42" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA11 Address Mode" CV="43" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -195,7 +196,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA11 Effect" CV="43" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA12 Address Mode" CV="44" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -204,7 +205,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA12 Effect" CV="44" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA13 Address Mode" CV="45" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -213,7 +214,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA13 Effect" CV="45" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA14 Address Mode" CV="46" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -222,7 +223,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA14 Effect" CV="46" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA15 Address Mode" CV="47" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -231,7 +232,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA15 Effect" CV="47" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA16 Address Mode" CV="48" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -240,7 +241,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA16 Effect" CV="48" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA17 Address Mode" CV="49" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -249,7 +250,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA17 Effect" CV="49" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA18 Address Mode" CV="50" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -258,7 +259,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA18 Effect" CV="50" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA19 Address Mode" CV="51" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -267,7 +268,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA19 Effect" CV="51" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA20 Address Mode" CV="52" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -276,7 +277,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA20 Effect" CV="52" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA21 Address Mode" CV="53" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -285,7 +286,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA21 Effect" CV="53" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA22 Address Mode" CV="54" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -294,7 +295,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA22 Effect" CV="54" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA23 Address Mode" CV="55" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -303,7 +304,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA23 Effect" CV="55" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA24 Address Mode" CV="56" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -312,7 +313,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA24 Effect" CV="56" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA25 Address Mode" CV="57" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -321,7 +322,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA25 Effect" CV="57" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA26 Address Mode" CV="58" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -330,7 +331,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA26 Effect" CV="58" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA27 Address Mode" CV="59" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -339,7 +340,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA27 Effect" CV="59" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA28 Address Mode" CV="60" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -348,7 +349,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA28 Effect" CV="60" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA29 Address Mode" CV="61" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -357,7 +358,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA29 Effect" CV="61" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA30 Address Mode" CV="62" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -366,7 +367,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA30 Effect" CV="62" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA31 Address Mode" CV="63" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -375,7 +376,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA31 Effect" CV="63" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <variable label="MA32 Address Mode" CV="64" mask="VXXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLD.xml"/>
@@ -384,7 +385,7 @@
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/Choice2Transition.xml"/>
       </variable>
       <variable label="MA32 Effect" CV="64" mask="XXXXXVVV" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLampEffect.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSignalManLampEffect.xml"/>
       </variable>
       <!-- Lamp Brightness values -->
       <variable label="LB1" CV="129" mask="VVVVVVVV" default="25" item="Lamp G-H1 Brightness" comment="Brightness (Range 1-48)">
@@ -8927,9 +8928,6 @@
       </variable>
       <!-- End of Composite Variables -->
     </variables>
-    <resets>
-      <factReset label="Restore to Factory Defaults. Address = 11000" CV="7" default="170"/>
-    </resets>
   </decoder>
   <pane name="SignalMan">
     <column>
@@ -8982,8 +8980,8 @@
       <row>
         <column>
           <label label=" "/>
-          <label label="Use DecoderPro Version 3.2 or later."/>
-          <label label="Decoder File Version: 0.09."/>
+          <label label="Use DecoderPro Version 3.4 or later."/>
+          <label label="Decoder File Version: 1.1"/>
         </column>
       </row>
     </column>

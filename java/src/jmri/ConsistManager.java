@@ -54,7 +54,7 @@ public interface ConsistManager {
     /**
      * Translate Error Codes relieved by a consistListener into Strings
      */
-    public String decodeErrorCode(int ErrorCode);
+    public String decodeErrorCode(int errorCode);
 
     /**
      * Request an update from the layout, loading Consists from the command
@@ -67,14 +67,14 @@ public interface ConsistManager {
      *
      * @param listener a Consist List Listener object.
      */
-    public void addConsistListListener(ConsistListListener l);
+    public void addConsistListListener(ConsistListListener listener);
 
     /**
      * Remove a ConsistListListener object with this ConsistManager
      *
      * @param listener a Consist List Listener object.
      */
-    public void removeConsistListListener(ConsistListListener l);
+    public void removeConsistListListener(ConsistListListener listener);
 
     /**
      * Notify the registered ConsistListListener objects that the ConsistList
