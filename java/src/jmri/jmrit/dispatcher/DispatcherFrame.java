@@ -1324,7 +1324,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                 ArrayList<TransitSection> tsList = ar.getActiveTrain().getTransit().getTransitSectionList();
                 boolean found = false;
                 if(at.isAllocationReversed()){
-                    for(int i = tsList.size(); i>0; i--){
+                    for(int i = tsList.size()-1; i>0; i--){
                         TransitSection ts = tsList.get(i);
                         if(ts.getSection()==ar.getSection() && ts.getSequenceNumber() == ar.getSectionSeqNumber()){
                             found = true;

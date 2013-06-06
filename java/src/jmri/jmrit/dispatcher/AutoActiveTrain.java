@@ -821,7 +821,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		}
 		if (task>NO_TASK) {
 			Runnable waitForStop = new WaitForTrainToStop(task);
-			Thread tWait = new Thread(waitForStop, "Wait for stop " + _controllingSignalMast.getDisplayName());
+			Thread tWait = new Thread(waitForStop, "Wait for stop " + getActiveTrain().getActiveTrainName());
 			tWait.start();
 		}
 	}
