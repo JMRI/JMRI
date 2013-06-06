@@ -156,8 +156,18 @@ public class TransitTableAction extends AbstractTableAction {
 				} 
  				else if (col == DUPLICATECOL) {
 					// set up to duplicate
-					String sName = (String) getValueAt(row, SYSNAMECOL);
-					duplicatePressed(sName);
+                    class WindowMaker implements Runnable {
+                        int row;
+                        WindowMaker(int r){
+                            row = r;
+                        }
+                        public void run() {
+                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            duplicatePressed(sName);
+                        }
+                    }
+                    WindowMaker t = new WindowMaker(row);
+					javax.swing.SwingUtilities.invokeLater(t);
 				} 
 				else super.setValueAt(value, row, col);
     		}
@@ -322,6 +332,14 @@ public class TransitTableAction extends AbstractTableAction {
             p.add(sysNameLabel);
 			p.add(sysNameFixed);
             p.add(sysName);
+			sysName.setToolTipText(rbx.getString("TransitSystemNameHint"));
+			p.add (new JLabel("     "));
+            p.add(userNameLabel);
+            p.add(userName);
+			userName.setToolTipText(rbx.getString("TransitUserNameHint"));
+            addFrame.getContentPane().add(p);
+            p = new JPanel();
+            ((FlowLayout)p.getLayout()).setVgap(0);
             p.add(_autoSystemName);
             _autoSystemName.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
@@ -330,13 +348,8 @@ public class TransitTableAction extends AbstractTableAction {
             });
             if(pref.getSimplePreferenceState(systemNameAuto))
                 _autoSystemName.setSelected(true);
-			sysName.setToolTipText(rbx.getString("TransitSystemNameHint"));
-			p.add (new JLabel("     "));
-            p.add(userNameLabel);
-            p.add(userName);
-			userName.setToolTipText(rbx.getString("TransitUserNameHint"));
             addFrame.getContentPane().add(p);
-			addFrame.getContentPane().add(new JSeparator());
+            addFrame.getContentPane().add(new JSeparator());
 			JPanel p1 = new JPanel();
 			p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 			JPanel p11 = new JPanel();
