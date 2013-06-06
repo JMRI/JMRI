@@ -157,26 +157,26 @@ public class Router extends TrainCommon {
 			// check to see if an alternative track was specified
 			if ((_status.startsWith(Track.LENGTH) || _status.startsWith(Track.SCHEDULE)) && car.getLocation() != clone.getDestination()
 					&& clone.getDestinationTrack() != null
-					&& clone.getDestinationTrack().getAlternativeTrack() != null) {
+					&& clone.getDestinationTrack().getAlternateTrack() != null) {
 				String status = car.setDestination(clone.getDestination(), clone.getDestinationTrack()
-						.getAlternativeTrack());
+						.getAlternateTrack());
 				if (status.equals(Track.OKAY)) {
 					if (_train == null || _train.services(car)) {
 						addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("RouterSendCarToAlternative"), new Object[] { car.toString(),
-							clone.getDestinationTrack().getAlternativeTrack().getName(),
+							clone.getDestinationTrack().getAlternateTrack().getName(),
 							clone.getDestination().getName() }));
 						return true;
 					}
 					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 							.getMessage("RouterNotSendCarToAlternative"), new Object[] {
 						_train.getName(), car.toString(),
-						clone.getDestinationTrack().getAlternativeTrack().getName(),
+						clone.getDestinationTrack().getAlternateTrack().getName(),
 						clone.getDestination().getName() }));
 				} else {
 					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 							.getMessage("RouterAlternateFailed"), new Object[] {
-						clone.getDestinationTrack().getAlternativeTrack().getName(), status }));
+						clone.getDestinationTrack().getAlternateTrack().getName(), status }));
 				}
 			}
 			// check to see if spur was full, if so, forward to yard if possible

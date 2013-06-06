@@ -5733,7 +5733,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk3.setLength(100); // only enough room for two cars
 
 		// set the alternate for Arlington siding
-		loc2trk1.setAlternativeTrack(loc2trk3);
+		loc2trk1.setAlternateTrack(loc2trk3);
 
 		// send cars to Arlington siding
 		c3.setFinalDestination(loc2);

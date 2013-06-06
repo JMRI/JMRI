@@ -1225,7 +1225,7 @@ public class OperationsLocationsTest extends TestCase {
 		
 		// test schedule and alternate track features
 		t2.setScheduleId(s1.getId());
-		t2.setAlternativeTrack(t1);
+		t2.setAlternateTrack(t1);
 		t2.setReservationFactor(33);
 		t2.setScheduleMode(Track.MATCH);
 		t2.setScheduleCount(2);
@@ -1414,8 +1414,8 @@ public class OperationsLocationsTest extends TestCase {
 				Assert.assertNotNull("Location 2 track 1 schedule", t.getSchedule());
 				Assert.assertEquals("Location 2 track 1 schedule name", "Schedule 1 Name", t.getSchedule().getName());
 				Assert.assertEquals("Location 2 track 1 schedule name", "Schedule 1 Name", t.getScheduleName());
-				Assert.assertNotNull("Location 2 track 1 alternate track", t.getAlternativeTrack());
-				Assert.assertEquals("Location 2 track 1 alternate track name", "A Yard", t.getAlternativeTrack().getName());
+				Assert.assertNotNull("Location 2 track 1 alternate track", t.getAlternateTrack());
+				Assert.assertEquals("Location 2 track 1 alternate track name", "A Yard", t.getAlternateTrack().getName());
 				Assert.assertEquals("Location 2 track 1 schedule mode", Track.MATCH, t.getScheduleMode());
 				Assert.assertEquals("Location 2 track 1 reservation factor", 33, t.getReservationFactor());
 				Assert.assertEquals("Location 2 track 1 schedule count", 2, t.getScheduleCount());

@@ -2504,7 +2504,7 @@ public class TrainBuilder extends TrainCommon {
 	 * 
 	 * @param car
 	 *            the car with the load
-	 * @return true if there's a schedule that can be route to for this car and load
+	 * @return true if there's a schedule that can be routed to for this car and load
 	 * @throws BuildFailedException
 	 */
 	private boolean findFinalDestinationForCarLoad(Car car) throws BuildFailedException {
@@ -2542,9 +2542,15 @@ public class TrainBuilder extends TrainCommon {
 			String status = car.testDestination(track.getLocation(), track);
 			if (!status.equals(Track.OKAY)) {
 				// if the track has an alternate track don't abort if the issue was space
-				if (!status.startsWith(Track.LENGTH) || track.getAlternativeTrack() == null
-						|| !track.checkSchedule(car).equals(Track.OKAY))
+				if (!status.startsWith(Track.LENGTH) || !track.checkSchedule(car).equals(Track.OKAY))
 					continue;
+				if (track.getAlternateTrack() == null) {
+					// report that the spur is full and no alternate
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("buildSpurFullNoAlternate"), new Object[] {
+							track.getLocation().getName(), track.getName() }));
+					continue;
+				}
 			}
 			
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSetFinalDestination"),
@@ -2997,20 +3003,20 @@ public class TrainBuilder extends TrainCommon {
 						if (!status.equals(Track.OKAY) && status.startsWith(Track.LENGTH)
 								&& testTrack.checkSchedule(car).equals(Track.OKAY)
 								&& testTrack.getLocType().equals(Track.SPUR)
-								&& testTrack.getAlternativeTrack() != null) {
+								&& testTrack.getAlternateTrack() != null) {
 							addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 									.getMessage("buildTrackHasAlternate"), new Object[] {
-									testTrack.getName(), testTrack.getAlternativeTrack().getName() }));
+									testTrack.getName(), testTrack.getAlternateTrack().getName() }));
 							String altStatus = car.testDestination(car.getDestination(), testTrack
-									.getAlternativeTrack());
+									.getAlternateTrack());
 							if (altStatus.equals(Track.OKAY)
 							// "CUSTOM" and "LOAD" are in the status message if spur, must use contains
 							// the following code allows the alternate track to be a spur TODO other code only yard or interchange is correct
 									|| (altStatus.contains(Track.CUSTOM) && altStatus.contains(Track.LOAD))) {
 								addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("buildUseAlternateTrack"), new Object[] { car.toString(),
-										testTrack.getAlternativeTrack().getName() }));
-								addCarToTrain(car, rl, rld, testTrack.getAlternativeTrack());
+										testTrack.getAlternateTrack().getName() }));
+								addCarToTrain(car, rl, rld, testTrack.getAlternateTrack());
 								// and forward the car to the original destination
 								car.setFinalDestination(car.getDestination());
 								car.setFinalDestinationTrack(testTrack);
@@ -3021,7 +3027,7 @@ public class TrainBuilder extends TrainCommon {
 								addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("buildCanNotDropCarBecause"),
 										new Object[] { car.toString(),
-												testTrack.getAlternativeTrack().getName(), altStatus }));
+												testTrack.getAlternateTrack().getName(), altStatus }));
 							}
 						}
 						if (!status.equals(Track.OKAY)) {
@@ -3606,7 +3612,7 @@ public class TrainBuilder extends TrainCommon {
 					+ ") has final destination track (" // NOI18N
 					+ car.getFinalDestinationTrackName() + ") location (" + car.getDestinationName() + ")"); // NOI18N
 			if (car.testDestination(car.getFinalDestination(), car.getFinalDestinationTrack()).equals(Track.OKAY)) {
-				Track alternate = car.getFinalDestinationTrack().getAlternativeTrack();
+				Track alternate = car.getFinalDestinationTrack().getAlternateTrack();
 				if (alternate != null && alternate.getLocType().equals(Track.YARD)
 						&& car.getDestinationTrack() == alternate) {
 					log.debug("Car (" + car.toString() + ") alternate track ("

@@ -75,7 +75,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
 
 		_track.getLocation().updateComboBox(trackBox);
 		trackBox.removeItem(_track); // remove this track from consideration
-		trackBox.setSelectedItem(_track.getAlternativeTrack());
+		trackBox.setSelectedItem(_track.getAlternateTrack());
 
 		JPanel pControls = new JPanel();
 		pControls.add(saveButton);
@@ -111,9 +111,9 @@ class ScheduleOptionsFrame extends OperationsFrame {
 			}
 			_track.setReservationFactor(Integer.parseInt(factorTextField.getText()));
 			if (trackBox.getSelectedItem() != null && !trackBox.getSelectedItem().equals(""))
-				_track.setAlternativeTrack((Track) trackBox.getSelectedItem());
+				_track.setAlternateTrack((Track) trackBox.getSelectedItem());
 			else
-				_track.setAlternativeTrack(null);
+				_track.setAlternateTrack(null);
 			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();

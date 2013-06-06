@@ -39,7 +39,7 @@ public class Track {
 	protected String _name = "";
 	protected String _locType = ""; // yard, spur, interchange or staging
 	protected Location _location; // the location for this track
-	protected String _alternativeTrackId = ""; // the alternative track id
+	protected String _alternateTrackId = ""; // the alternate track id
 	protected String _roadOption = ALLROADS; // controls which car roads are accepted
 	protected int _trainDir = EAST + WEST + NORTH + SOUTH; // train direction served by this track
 	protected int _numberRS = 0; // number of cars and engines
@@ -320,19 +320,19 @@ public class Track {
 		return _mode;
 	}
 
-	public void setAlternativeTrack(Track track) {
-		Track oldTrack = _location.getTrackById(_alternativeTrackId);
-		String old = _alternativeTrackId;
+	public void setAlternateTrack(Track track) {
+		Track oldTrack = _location.getTrackById(_alternateTrackId);
+		String old = _alternateTrackId;
 		if (track != null)
-			_alternativeTrackId = track.getId();
+			_alternateTrackId = track.getId();
 		else
-			_alternativeTrackId = "";
-		if (!old.equals(_alternativeTrackId))
-			setDirtyAndFirePropertyChange("alternativeTrack", oldTrack, track); // NOI18N
+			_alternateTrackId = "";
+		if (!old.equals(_alternateTrackId))
+			setDirtyAndFirePropertyChange("alternateTrack", oldTrack, track); // NOI18N
 	}
 
-	public Track getAlternativeTrack() {
-		return _location.getTrackById(_alternativeTrackId);
+	public Track getAlternateTrack() {
+		return _location.getTrackById(_alternateTrackId);
 	}
 
 	/**
@@ -352,8 +352,8 @@ public class Track {
 			return (getLength() * getReservationFactor() / 100 - (getReservedInRoute() + carLength) >= 0);
 		// if there's alternate, include that length in the calculation
 		int trackLength = getLength();
-		if (getAlternativeTrack() != null)
-			trackLength = trackLength + getAlternativeTrack().getLength();
+		if (getAlternateTrack() != null)
+			trackLength = trackLength + getAlternateTrack().getLength();
 		return (trackLength - (getReservedInRoute() + carLength) >= 0);
 	}
 
@@ -2063,7 +2063,7 @@ public class Track {
 		if ((a = e.getAttribute(Xml.SCHEDULE_MODE)) != null)
 			_mode = Integer.parseInt(a.getValue());
 		if ((a = e.getAttribute(Xml.ALTERNATIVE)) != null)
-			_alternativeTrackId = a.getValue();
+			_alternateTrackId = a.getValue();
 
 		if ((a = e.getAttribute(Xml.LOAD_OPTIONS)) != null)
 			_loadOptions = Integer.parseInt(a.getValue());
@@ -2260,8 +2260,8 @@ public class Track {
 			e.setAttribute(Xml.FACTOR, Integer.toString(getReservationFactor()));
 			e.setAttribute(Xml.SCHEDULE_MODE, Integer.toString(getScheduleMode()));
 		}
-		if (getAlternativeTrack() != null)
-			e.setAttribute(Xml.ALTERNATIVE, getAlternativeTrack().getId());
+		if (getAlternateTrack() != null)
+			e.setAttribute(Xml.ALTERNATIVE, getAlternateTrack().getId());
 		if (_loadOptions != 0)
 			e.setAttribute(Xml.LOAD_OPTIONS, Integer.toString(_loadOptions));
 		if (_blockOptions != 0)

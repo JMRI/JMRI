@@ -233,10 +233,10 @@ public class PrintLocationsAction extends AbstractAction {
 								+ Bundle.getMessage("ScheduleMode") + ": " + mode  + NEW_LINE;
 						writer.write(s);
 						// show alternate track if there's one
-						if (spur.getAlternativeTrack() != null) {
+						if (spur.getAlternateTrack() != null) {
 							s = padOutString("", MAX_NAME_LENGTH)+ SPACE
 									+ MessageFormat.format(Bundle.getMessage("AlternateTrackName"), new Object[] { spur
-											.getAlternativeTrack().getName() }) + NEW_LINE;
+											.getAlternateTrack().getName() }) + NEW_LINE;
 							writer.write(s);
 						}
 						// show custom loads from staging if not 100%
@@ -725,11 +725,11 @@ public class PrintLocationsAction extends AbstractAction {
 				+ TAB
 				+ MessageFormat.format(Bundle.getMessage("TrackScheduleName"), new Object[] { track
 						.getScheduleName() }) + NEW_LINE);
-		if (track.getAlternativeTrack() != null)
+		if (track.getAlternateTrack() != null)
 			buf.append(TAB
 					+ TAB
 					+ MessageFormat.format(Bundle.getMessage("AlternateTrackName"), new Object[] { track
-							.getAlternativeTrack().getName() }) + NEW_LINE);
+							.getAlternateTrack().getName() }) + NEW_LINE);
 		if (track.getReservationFactor() != 100)
 			buf.append(TAB
 					+ TAB
