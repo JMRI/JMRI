@@ -165,12 +165,12 @@ public class AutoActiveTrain implements ThrottleListener {
 		// request a throttle for automatic operation, throttle returned via callback below
 		boolean ok = true;
         if(_activeTrain.getTrainSource()==ActiveTrain.ROSTER){
-            if (_activeTrain.getRosterEntry()!=null)
+            if (_activeTrain.getRosterEntry()!=null){
                 re = _activeTrain.getRosterEntry();
                 ok = InstanceManager.throttleManagerInstance().requestThrottle(_activeTrain.getRosterEntry(),this);
                 if(re.getSpeedProfile()!=null)
                     useSpeedProfile=true;
-            else {
+            } else {
                 ok = InstanceManager.throttleManagerInstance().requestThrottle(_address,this);
             }
         }

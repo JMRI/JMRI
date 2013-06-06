@@ -2572,7 +2572,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             return;
         }
         int ave = getAverage(alignX, alignToFirstSelected);
-        ave += getMax(alignX, alignToFirstSelected);;
+        ave += getMax(alignX, alignToFirstSelected);
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable comp = _selectionGroup.get(i);
             if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
@@ -2588,7 +2588,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             return;
         }
         int ave = getAverage(alignX, alignToFirstSelected);
-        int max = getMax(alignX, alignToFirstSelected);;
+        int max = getMax(alignX, alignToFirstSelected);
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable comp = _selectionGroup.get(i);
             if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
