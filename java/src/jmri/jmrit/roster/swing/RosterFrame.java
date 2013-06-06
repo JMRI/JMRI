@@ -308,6 +308,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 if (log.isDebugEnabled()) {
                     log.debug("Launch Throttle pressed");
                 }
+                if (!checkIfEntrySelected()) return;
                 ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
                 tf.toFront();
                 tf.getAddressPanel().setRosterEntry(re);
@@ -1235,6 +1236,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 startProgrammer(null, re, programmer1);
             }
         });
+        if(re==null){
+            menuItem.setEnabled(false);
+        }
         popupMenu.add(menuItem);
         ButtonGroup group = new ButtonGroup();
         group.add(contextService);
@@ -1281,6 +1285,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 editMediaButton();
             }
         });
+        if(re==null){
+            menuItem.setEnabled(false);
+        }
         popupMenu.add(menuItem);
         menuItem = new JMenuItem("Throttle");
         menuItem.addActionListener(new ActionListener() {
@@ -1292,6 +1299,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 tf.getAddressPanel().setRosterEntry(re);
             }
         });
+        if(re==null){
+            menuItem.setEnabled(false);
+        }
         popupMenu.add(menuItem);
         popupMenu.addSeparator();
         menuItem = new JMenuItem("Duplicate");
@@ -1301,6 +1311,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 copyLoco();
             }
         });
+        if(re==null){
+            menuItem.setEnabled(false);
+        }
         popupMenu.add(menuItem);
         menuItem = new JMenuItem("Delete");
         menuItem.addActionListener(new ActionListener() {
@@ -1310,6 +1323,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         popupMenu.add(menuItem);
+        if(re==null){
+            menuItem.setEnabled(false);
+        }
+
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
@@ -1354,6 +1371,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             log.debug("Call to start programmer has been called twice when the first call hasn't opened");
             return;
         }
+        if (!checkIfEntrySelected()) return;
         try {
             setCursor(new Cursor(Cursor.WAIT_CURSOR));
             inStartProgrammer = true;
