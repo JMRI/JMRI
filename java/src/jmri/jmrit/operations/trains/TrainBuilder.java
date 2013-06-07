@@ -2071,6 +2071,24 @@ public class TrainBuilder extends TrainCommon {
 		int serviceTrainDir = rld.getLocation().getTrainDirections();
 		if (track != null)
 			serviceTrainDir = serviceTrainDir & track.getTrainDirections();
+		
+		// is this a car going to alternate track?
+		if ((rld.getTrainDirection() & serviceTrainDir) > 0 && rs != null && Car.class.isInstance(rs)) {
+			Car car = (Car) rs;
+			if (car.getFinalDestinationTrack() != null
+					&& track == car.getFinalDestinationTrack().getAlternateTrack()
+					&& (rld.getTrainDirection() & serviceTrainDir & car.getFinalDestinationTrack()
+							.getTrainDirections()) == 0) {
+				addLine(buildReport, FIVE, MessageFormat.format(Bundle
+						.getMessage("buildCanNotDropRsUsingTrain"), new Object[] { rs.toString(),
+						rld.getTrainDirectionString() }));
+				addLine(buildReport, FIVE, MessageFormat.format(Bundle
+						.getMessage("buildCanNotDropRsUsingTrain2"), new Object[] { car
+						.getFinalDestinationTrack().getName() }));
+				return false;
+			}
+		}
+		
 		if ((rld.getTrainDirection() & serviceTrainDir) > 0) {
 			return true;
 		}
@@ -2599,6 +2617,45 @@ public class TrainBuilder extends TrainCommon {
 		}
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCouldNotFindSpur"),
 				new Object[] { car.toString(), car.getLoadName() }));
+		if (!routeToSpurFound) {
+			// try and send car to staging
+			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrySendCarToStaging"),
+					new Object[] { car.toString(), car.getLoadName() }));
+			tracks = locationManager.getTracks(Track.STAGING);
+			log.debug("Found " + tracks.size() + " staging tracks");
+			// Only try routing to a staging location once
+			List<Location> locations = new ArrayList<Location>();
+			for (int i = 0; i < tracks.size(); i++) {
+				Track track = tracks.get(i);
+				log.debug("Staging track (" + track.getLocation().getName() + ", " + track.getName() + ")");
+				if (track.getLocation() == car.getLocation())
+					continue;
+				if (locations.contains(track.getLocation()))
+					continue;
+				String status = track.accepts(car);
+				if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH))
+					continue;
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("buildStagingCanAcceptLoad"), new Object[] { track.getLocation(),
+						track.getName(), car.getLoadName() }));
+				// try to send car to staging
+				car.setFinalDestination(track.getLocation());
+				// test to see if destination is reachable by this train
+				if (Router.instance().setDestination(car, train, buildReport))
+					routeToSpurFound = true; // found a route to staging
+				if (car.getDestination() != null) {
+					// is car part of kernel?
+					car.updateKernel();
+					return true;
+				}
+				locations.add(track.getLocation()); // couldn't route to this staging location
+				car.setFinalDestination(null);
+			}
+			if (locations.isEmpty())
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+						.getMessage("buildNoStagingForCarLoad"), new Object[] { car.toString(),
+						car.getLoadName() }));
+		}
 		return routeToSpurFound; // done
 	}
 
