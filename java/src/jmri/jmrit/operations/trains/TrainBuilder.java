@@ -1719,8 +1719,10 @@ public class TrainBuilder extends TrainCommon {
 			if (!car.getLocationName().equals(rl.getName()))
 				continue;
 			// can this car be picked up?
-			if (!checkPickUpTrainDirection(car, rl))
+			if (!checkPickUpTrainDirection(car, rl)) {
+				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 				continue; // no
+			}
 			// add message that we're on the second pass for this location
 			if (secondPass && messageFlag) {
 				messageFlag = false;
@@ -1909,7 +1911,7 @@ public class TrainBuilder extends TrainCommon {
 	 */
 	private void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
 		addLine(buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAssignedDest"),
-				new Object[] { car.toString(), (rld.getName() + ", " + track.getName()) }));
+				new Object[] { car.toString(), rld.getName(), track.getName() }));
 		car.setDestination(track.getLocation(), track);
 		// don't update car's previous location if just re-staging car
 		if (routeList.size() > 2)
@@ -1929,7 +1931,7 @@ public class TrainBuilder extends TrainCommon {
 					continue;
 				addLine(buildReport, THREE, MessageFormat.format(Bundle
 						.getMessage("buildCarKernelAssignedDest"), new Object[] { kCar.toString(),
-						kCar.getKernelName(), (rld.getName() + ", " + track.getName()) }));
+						kCar.getKernelName(), rld.getName(), track.getName() }));
 				kCar.setTrain(train);
 				kCar.setRouteLocation(rl);
 				kCar.setRouteDestination(rld);
