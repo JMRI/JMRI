@@ -1001,7 +1001,21 @@ public class JsonUtil {
             data.put(USERNAME, turnout.getUserName());
             data.put(COMMENT, turnout.getComment());
             data.put(INVERTED, turnout.getInverted());
-            data.put(STATE, turnout.getKnownState());
+            switch (turnout.getKnownState()) {
+                case Turnout.THROWN:
+                    data.put(STATE, THROWN);
+                    break;
+                case Turnout.CLOSED:
+                    data.put(STATE, CLOSED);
+                    break;
+                case Turnout.INCONSISTENT:
+                    data.put(STATE, INCONSISTENT);
+                    break;
+                case Turnout.UNKNOWN:
+                default:
+                    data.put(STATE, UNKNOWN);
+                    break;
+            }
         } catch (NullPointerException e) {
             log.error("Unable to get turnout [{}].", name);
             throw new JsonException(404, Bundle.getMessage("ErrorObject", TURNOUT, name));
