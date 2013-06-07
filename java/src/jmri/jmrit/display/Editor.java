@@ -2659,7 +2659,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             aY = y;
             h = -h;
         }
-        _selectRect = new Rectangle(aX, aY, w, h);
+        _selectRect = new Rectangle((int)Math.round(aX/_paintScale), (int)Math.round(aY/_paintScale),
+        		(int)Math.round(w/_paintScale), (int)Math.round(h/_paintScale));
     }
 
     public final int getAnchorX() {

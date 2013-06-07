@@ -196,6 +196,11 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 String iconName = list.get(i).getName();
                 CatalogTreeLeaf leaf = list.get(i);
                 String path = leaf.getPath();
+                try {
+                    NamedIcon icon = new NamedIcon(path, path);                	
+                } catch (Exception e) {
+                	throw new NullPointerException("Can't find icon file: "+path);
+                }
                 NamedIcon icon = new NamedIcon(path, path);
                 w = Math.max(w, icon.getIconWidth());
                 h = Math.max(h, icon.getIconHeight());
