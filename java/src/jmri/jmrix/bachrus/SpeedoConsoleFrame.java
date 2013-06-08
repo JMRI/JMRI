@@ -499,8 +499,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // pane to hold the title
         JPanel profileTitlePane = new JPanel();
         profileTitlePane.setLayout(new BoxLayout(profileTitlePane, BoxLayout.X_AXIS));
-        JTextArea profileTitle = new JTextArea("Title: ");
-//        profileTitlePane.add(profileTitle);
+ //       JTextArea profileTitle = new JTextArea("Title: ");
+ //       profileTitlePane.add(profileTitle);
         printTitleText.setToolTipText(rb.getString("TTPrintTitle"));
         printTitleText.setText("Bachrus MTS-DCC profile for loco <unknown>");
         profileTitlePane.add(printTitleText);
