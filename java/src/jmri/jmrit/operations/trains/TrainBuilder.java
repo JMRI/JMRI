@@ -1675,6 +1675,7 @@ public class TrainBuilder extends TrainCommon {
 			// perform a another pass if aggressive and there are requested moves
 			// this will perform local moves at this location, services off spot tracks
 			if (Setup.isBuildAggressive() && saveReqMoves != reqNumOfMoves) {
+				log.debug("Perform extra pass at location "+rl.getName());
 				findDestinationsForCarsFromLocation(rl, routeIndex, true);
 			}
 
@@ -1718,17 +1719,18 @@ public class TrainBuilder extends TrainCommon {
 			// find a car at this location
 			if (!car.getLocationName().equals(rl.getName()))
 				continue;
-			// can this car be picked up?
-			if (!checkPickUpTrainDirection(car, rl)) {
-				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
-				continue; // no
-			}
 			// add message that we're on the second pass for this location
 			if (secondPass && messageFlag) {
 				messageFlag = false;
 				noMoreMoves = false; // we're on a second pass, there might be moves now
 				addLine(buildReport, THREE, MessageFormat.format(Bundle
-						.getMessage("buildSecondPassForLocation"), new Object[] { rl.getName() }));
+						.getMessage("buildExtraPassForLocation"), new Object[] { rl.getName() }));
+				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+			}
+			// can this car be picked up?
+			if (!checkPickUpTrainDirection(car, rl)) {
+				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+				continue; // no
 			}
 			// check for car order?
 			car = getCarOrder(car);
@@ -2081,10 +2083,10 @@ public class TrainBuilder extends TrainCommon {
 					&& track == car.getFinalDestinationTrack().getAlternateTrack()
 					&& (rld.getTrainDirection() & serviceTrainDir & car.getFinalDestinationTrack()
 							.getTrainDirections()) == 0) {
-				addLine(buildReport, FIVE, MessageFormat.format(Bundle
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("buildCanNotDropRsUsingTrain"), new Object[] { rs.toString(),
 						rld.getTrainDirectionString() }));
-				addLine(buildReport, FIVE, MessageFormat.format(Bundle
+				addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 						.getMessage("buildCanNotDropRsUsingTrain2"), new Object[] { car
 						.getFinalDestinationTrack().getName() }));
 				return false;
@@ -2095,18 +2097,18 @@ public class TrainBuilder extends TrainCommon {
 			return true;
 		}
 		if (rs == null) {
-			addLine(buildReport, FIVE, MessageFormat.format(Bundle
+			addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 					.getMessage("buildDestinationDoesNotService"), new Object[] {
 					rld.getLocation().getName(), rld.getTrainDirectionString() }));
 			return false;
 		}
-		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain"),
+		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCanNotDropRsUsingTrain"),
 				new Object[] { rs.toString(), rld.getTrainDirectionString() }));
 		if (track != null)
-			addLine(buildReport, FIVE, MessageFormat.format(
+			addLine(buildReport, SEVEN, MessageFormat.format(
 					Bundle.getMessage("buildCanNotDropRsUsingTrain2"), new Object[] { track.getName() }));
 		else
-			addLine(buildReport, FIVE, MessageFormat.format(
+			addLine(buildReport, SEVEN, MessageFormat.format(
 					Bundle.getMessage("buildCanNotDropRsUsingTrain3"), new Object[] { rld.getLocation()
 							.getName() }));
 		return false;
