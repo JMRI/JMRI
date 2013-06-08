@@ -1723,7 +1723,7 @@ public class TrainBuilder extends TrainCommon {
 			if (secondPass && messageFlag) {
 				messageFlag = false;
 				noMoreMoves = false; // we're on a second pass, there might be moves now
-				addLine(buildReport, THREE, MessageFormat.format(Bundle
+				addLine(buildReport, FIVE, MessageFormat.format(Bundle
 						.getMessage("buildExtraPassForLocation"), new Object[] { rl.getName() }));
 				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 			}
