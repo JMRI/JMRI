@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
+import jmri.InstanceManager;
 
 import jmri.jmrix.AbstractThrottle;
 
@@ -111,6 +112,49 @@ public class SprogThrottle extends AbstractThrottle
                                         getF25(), getF26(), getF27(), getF28());
 
         station.sendPacket(result, 1);
+    }
+
+    /**
+     * setSpeedStepMode - set the speed step value and the related
+     *                    speedIncrement value.
+     * 
+     * @param Mode - the current speed step mode - default should be 128
+     *              speed step mode in most cases
+     */
+    public void setSpeedStepMode(int Mode) {
+        SprogMessage m;
+        int mode = SprogThrottleManager.isLongAddress(address)
+                ? SprogConstants.LONG_ADD : 0;
+        try {
+            mode |= (InstanceManager.powerManagerInstance().getPower() == SprogPowerManager.ON)
+                    ? SprogConstants.POWER_BIT : 0;
+        } catch (Exception e) {
+            log.error("Exception from InstanceManager.powerManagerInstance(): " + e);
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("Speed Step Mode Change to Mode: " + Mode
+                    + " Current mode is: " + this.speedStepMode);
+        }
+        if (Mode == DccThrottle.SpeedStepMode14) {
+            mode += 0x200;
+            speedIncrement = SPEED_STEP_14_INCREMENT;
+        } else if (Mode == DccThrottle.SpeedStepMode27) {
+            log.error("Requested Speed Step Mode 27 not supported Current mode is: "
+                    + this.speedStepMode);
+            return;
+        } else if (Mode == DccThrottle.SpeedStepMode28) {
+            mode += 0x400;
+            speedIncrement = SPEED_STEP_28_INCREMENT;
+        } else { // default to 128 speed step mode
+            mode += 0x800;
+            speedIncrement = SPEED_STEP_128_INCREMENT;
+        }
+        m = new SprogMessage("M h" + Integer.toHexString(mode));
+        SprogTrafficController.instance().sendSprogMessage(m, null);
+        if ((speedStepMode != Mode) && (Mode != DccThrottle.SpeedStepMode27)) {
+            notifyPropertyChangeListener("SpeedSteps", this.speedStepMode,
+                    this.speedStepMode = Mode);
+        }
     }
 
     /**
