@@ -60,6 +60,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JLabel scaleLabel = new JLabel();
     protected JTextField speedTextField = new JTextField(12);
 
+    protected ButtonGroup modeGroup = new ButtonGroup();
+    protected JRadioButton progButton = new JRadioButton(rb.getString("ProgTrack"));
+    protected JRadioButton mainButton = new JRadioButton(rb.getString("OnMain"));
+    
     protected ButtonGroup speedGroup = new ButtonGroup();
     protected JRadioButton mphButton = new JRadioButton(rb.getString("MPH"));
     protected JRadioButton kphButton = new JRadioButton(rb.getString("KPH"));
@@ -69,26 +73,28 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected SpeedoDial speedoDialDisplay = new SpeedoDial();
     protected JRadioButton dirFwdButton = new JRadioButton(rb.getString("Fwd"));
     protected JRadioButton dirRevButton = new JRadioButton(rb.getString("Rev"));
+    protected JRadioButton toggleGridButton = new JRadioButton(rb.getString("ToggleGrid"));
 
     GraphPane profileGraphPane;
     //protected JLabel profileAddressLabel = new JLabel(rb.getString("LocoAddress"));
     //protected JTextField profileAddressField = new JTextField(6);
     protected JButton readAddressButton = new JButton(rb.getString("Read"));
 
-	private DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
-	private JButton setButton;
-	private RosterEntryComboBox rosterBox;
-	protected RosterEntry rosterEntry;
-	private boolean disableRosterBoxActions = false;
-	
-	private int profileAddress = 0;
-	private boolean profileIsLong = false;
+    private DccLocoAddressSelector addrSelector = new DccLocoAddressSelector();
+    private JButton setButton;
+    private RosterEntryComboBox rosterBox;
+    protected RosterEntry rosterEntry;
+    private boolean disableRosterBoxActions = false;
+    
+    private int profileAddress = 0;
+    private boolean profileIsLong = false;
 	
     protected JButton trackPowerButton = new JButton(rb.getString("PowerUp"));
     protected JButton startProfileButton = new JButton(rb.getString("Start"));
     protected JButton stopProfileButton = new JButton(rb.getString("Stop"));
     protected JButton exportProfileButton = new JButton(rb.getString("Export"));
     protected JButton printProfileButton = new JButton(rb.getString("Print"));
+    protected JTextField printTitleText = new JTextField();
     protected JLabel statusLabel = new JLabel(" ");
 
     protected javax.swing.JLabel readerLabel = new javax.swing.JLabel();
@@ -217,10 +223,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         // What services do we have?
         dccServices = BASIC;
-        if (InstanceManager.programmerManagerInstance()!=null &&
-            InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (InstanceManager.programmerManagerInstance() != null
+                && InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             prog = InstanceManager.programmerManagerInstance().getGlobalProgrammer();
-        	dccServices |= PROG;
+            dccServices |= PROG;
         }
         if (false /*jmri.InstanceManager.commandStationInstance() != null*/) {
             // We'll use the command station to send explicit speed steps
@@ -230,7 +236,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         } else if (InstanceManager.throttleManagerInstance()!=null) {
             // otherwise we'll send speed commands
             log.info("Using Throttle interface for profiling");
-        	dccServices |= THROTTLE;
+            dccServices |= THROTTLE;
         }
         
         if (InstanceManager.powerManagerInstance() != null) {
@@ -244,7 +250,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         JPanel basicPane = new JPanel(); 
         basicPane.setLayout(new BoxLayout(basicPane, BoxLayout.Y_AXIS));
 
-        // Scale panel
+        // Scale panel to hold the scale selector
         JPanel scalePanel = new JPanel();
         scalePanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), rb.getString("SelectScale")));
@@ -274,7 +280,43 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         scalePanel.add(readerLabel);
         
         basicPane.add(scalePanel);
- 
+
+        // Mode panel for selection of profile mode
+        JPanel modePanel = new JPanel();
+        modePanel.setBorder(BorderFactory.createTitledBorder(
+                BorderFactory.createEtchedBorder(), rb.getString("SelectMode")));
+        modePanel.setLayout(new FlowLayout());
+        
+        // Buttons to select the mode
+        modeGroup.add(progButton);
+        modeGroup.add(mainButton);
+        progButton.setSelected(true);
+        progButton.setToolTipText(rb.getString("TTProg"));
+        mainButton.setToolTipText(rb.getString("TTMain"));
+        modePanel.add(progButton);
+        modePanel.add(mainButton);
+        
+        // Listen to change of profile mode
+        progButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                if (((dccServices & PROG) == PROG)) {
+                    // Programmer is available to read back CVs
+                    readAddressButton.setEnabled(true);
+                    statusLabel.setText(rb.getString("StatProg"));
+                }
+            }
+        });
+        mainButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                // no programmer available to read back CVs
+                readAddressButton.setEnabled(false);
+                statusLabel.setText(rb.getString("StatMain"));
+            }
+        });
+        
+        basicPane.add(modePanel);
+
+        // Speed panel for the dial or digital speed display
         JPanel speedPanel = new JPanel();
         speedPanel.setBorder(BorderFactory.createTitledBorder(
                 BorderFactory.createEtchedBorder(), rb.getString("MeasuredSpeed")));
@@ -383,41 +425,41 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         addrPane.setLayout(gLayout);
         addrPane.setBorder(addrPaneTitle);
 
-		setButton = new JButton(rb.getString("ButtonSet"));
-		setButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				changeOfAddress();
-			}
-		});
-    	addrSelector.setAddress(null);
+        setButton = new JButton(rb.getString("ButtonSet"));
+        setButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                changeOfAddress();
+            }
+        });
+        addrSelector.setAddress(null);
 
-		rosterBox = new GlobalRosterEntryComboBox();
-		rosterBox.setNonSelectedItem(rb.getString("NoLocoSelected"));
-		rosterBox.setToolTipText(rb.getString("TTSelectLocoFromRoster"));
-		rosterBox.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				if (!disableRosterBoxActions) { //Have roster box actions been disabled?
-					rosterItemSelected();
-				}
-			}
-		});
-        
+        rosterBox = new GlobalRosterEntryComboBox();
+        rosterBox.setNonSelectedItem(rb.getString("NoLocoSelected"));
+        rosterBox.setToolTipText(rb.getString("TTSelectLocoFromRoster"));
+        rosterBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (!disableRosterBoxActions) { //Have roster box actions been disabled?
+                    rosterItemSelected();
+                }
+            }
+        });
+
         readAddressButton.setToolTipText(rb.getString("ReadLoco"));
 
     	addrPane.add(addrSelector.getCombinedJPanel(), gConstraints);
         addrPane.add(new JLabel(" "), gConstraints);
-		addrPane.add(setButton, gConstraints);
+        addrPane.add(setButton, gConstraints);
         addrPane.add(new JLabel(" "), gConstraints);
-		addrPane.add(rosterBox, gConstraints);
+        addrPane.add(rosterBox, gConstraints);
         addrPane.add(new JLabel(" "), gConstraints);
         addrPane.add(readAddressButton, gConstraints);
         
-        if ((dccServices & PROG) != PROG) {
-            // User must enter address
-        	addrSelector.setEnabled(false);
+        if (((dccServices & PROG) != PROG) || (mainButton.isSelected())) {
+            // No programming facility so user must enter address
+            addrSelector.setEnabled(false);
             readAddressButton.setEnabled(false);
         } else {
-        	addrSelector.setEnabled(true);
+            addrSelector.setEnabled(true);
             readAddressButton.setEnabled(true);
         }
 
@@ -454,6 +496,21 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         profileButtonPane.add(printProfileButton);
         printProfileButton.setToolTipText(rb.getString("TTPrintProfile"));
         
+        // pane to hold the title
+        JPanel profileTitlePane = new JPanel();
+        profileTitlePane.setLayout(new BoxLayout(profileTitlePane, BoxLayout.X_AXIS));
+        JTextArea profileTitle = new JTextArea("Title: ");
+//        profileTitlePane.add(profileTitle);
+        printTitleText.setToolTipText(rb.getString("TTPrintTitle"));
+        printTitleText.setText("Bachrus MTS-DCC profile for loco <unknown>");
+        profileTitlePane.add(printTitleText);
+        
+        // pane to wrap buttons and title
+        JPanel profileSouthPane = new JPanel();
+        profileSouthPane.setLayout(new BoxLayout(profileSouthPane, BoxLayout.Y_AXIS));
+        profileSouthPane.add(profileButtonPane);
+        profileSouthPane.add(profileTitlePane);
+        
         // Listen to track Power button
         trackPowerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -475,6 +532,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             }
         });
 
+        // Listen to grid button
+        toggleGridButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                profileGraphPane.showGrid(toggleGridButton.isSelected());
+                profileGraphPane.repaint();
+            }
+        });
+
         // Listen to export button
         exportProfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -492,20 +557,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // Listen to print button
         printProfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                Date today;
-                String result;
-                SimpleDateFormat formatter;
-                formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
-                today = new Date();
-                result = formatter.format(today);
-                String annotate = "Bachrus MTS-DCC "+rb.getString("ProfileFor")+" "
-                                    +profileAddress+" "+rb.getString("CreatedOn")
-                                    +" " + result;
-                profileGraphPane.printProfile(annotate);
+                profileGraphPane.printProfile(printTitleText.getText());
             }
         });
 
-        profilePane.add(profileButtonPane, BorderLayout.SOUTH);
+        profilePane.add(profileSouthPane, BorderLayout.SOUTH);
 
         // Pane to hold controls
         JPanel profileControlPane = new JPanel();
@@ -517,19 +573,26 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         dirRevButton.setForeground(Color.BLUE);
         profileControlPane.add(dirFwdButton);
         profileControlPane.add(dirRevButton);
+        toggleGridButton.setSelected(true);
+        profileControlPane.add(toggleGridButton);
+        profileGraphPane.showGrid(toggleGridButton.isSelected());
         
         profilePane.add(profileControlPane, BorderLayout.EAST);
         
         /*
          * Create the tabbed pane and add the panes
          */
-        JTabbedPane tabbedPane = new JTabbedPane();
+//        JTabbedPane tabbedPane = new JTabbedPane();
+        JPanel tabbedPane = new JPanel();
+        tabbedPane.setLayout(new BoxLayout(tabbedPane, BoxLayout.X_AXIS));
         // make basic panel
-        tabbedPane.addTab(rb.getString("Setup"), null, basicPane, "Basic Speedo Operation");
+//        tabbedPane.addTab(rb.getString("Setup"), null, basicPane, "Basic Speedo Operation");
+        tabbedPane.add(basicPane);
 
         if (((dccServices & THROTTLE) == THROTTLE)
             || ((dccServices & COMMAND) == COMMAND)) {
-            tabbedPane.addTab(rb.getString("Profile"), null, profilePane, "Profile Loco");
+//            tabbedPane.addTab(rb.getString("Profile"), null, profilePane, "Profile Loco");
+            tabbedPane.add(profilePane);
         }
 
         // connect to TrafficController
@@ -565,6 +628,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     	if (addrSelector.getAddress() != null) {
 	    	profileAddress = addrSelector.getAddress().getNumber();
 	    	profileIsLong = addrSelector.getAddress().isLongAddress();
+                setTitle();
     	} else {
     		profileAddress = 0;
     		profileIsLong = true;
@@ -591,6 +655,19 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 		setPowerStatus();
 	}
 
+    private void setTitle() {    
+        Date today;
+        String result;
+        SimpleDateFormat formatter;
+        formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
+        today = new Date();
+        result = formatter.format(today);
+        String annotate = "Bachrus MTS-DCC "+rb.getString("ProfileFor")+" "
+                            +profileAddress+" "+rb.getString("CreatedOn")
+                            +" " + result;
+        printTitleText.setText(annotate);
+    }
+    
     private void setPowerStatus() {
     	if (pm==null) return;
         try {
@@ -822,6 +899,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
         if (throttle.getSpeedStepMode() != DccThrottle.SpeedStepMode28) {
             log.error("Failed to set 28 step mode");
+            statusLabel.setText("Failed to set 28 step mode");
             InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
             //throttle.release();
             return;
@@ -947,6 +1025,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if (state == ProfileState.WAIT_FOR_THROTTLE) {
             tidyUp();
             log.error("Timeout waiting for throttle");
+            statusLabel.setText("Timeout waiting for throttle");
         } else if (state == ProfileState.RUNNING) {
             if (profileDir == ProfileDirection.FORWARD) {
                 spFwd.setPoint(profileStep, avSpeed);
@@ -991,11 +1070,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected void tidyUp() {
         profileTimer.stop();
         // turn off power
-        try {
-            pm.setPower(PowerManager.OFF);
-        } catch (JmriException e) {
-            log.error("Exception during power off: "+e.toString());
-        }
+        // Turning power off is bad for some systems, e.g. Digitrax
+//        try {
+//            pm.setPower(PowerManager.OFF);
+//        } catch (JmriException e) {
+//            log.error("Exception during power off: "+e.toString());
+//        }
         if (throttle != null) {
             throttle.setSpeedSetting(0.0F);
             //jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, this);
