@@ -137,13 +137,13 @@ public class Router extends TrainCommon {
 		}
 		if (testTrain != null) {
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCarSingleTrain"),
-					new Object[] { car.toString(), clone.getDestinationName(),
-							clone.getDestinationTrackName(), testTrain.getName() }));
+					new Object[] { testTrain.getName(), car.toString(), clone.getDestinationName(),
+							clone.getDestinationTrackName() }));
 			// now check to see if specific train can service car directly
 			if (_train != null && !trainServicesCar) {
 				addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"),
-						new Object[] { _train.getName(), car.toString(),
-								(clone.getDestinationName() + ", " + clone.getDestinationTrackName()) }));
+						new Object[] { _train.getName(), car.toString(), clone.getDestinationName(),
+								clone.getDestinationTrackName() }));
 				_status = STATUS_NOT_THIS_TRAIN;
 				return true; // car can be routed, but not by this train!
 			}
@@ -422,11 +422,9 @@ public class Router extends TrainCommon {
 					// only set car's destination if specific train can service car
 					if (_train != null && _train != firstTrain) {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-								.getMessage("TrainDoesNotServiceCar"), new Object[] {
-							_train.getName(),
-							car.toString(),
-							(testCar.getDestinationName() + ", " + testCar
-									.getDestinationTrackName()) }));
+								.getMessage("TrainDoesNotServiceCar"), new Object[] { _train.getName(),
+								car.toString(), testCar.getDestinationName(),
+								testCar.getDestinationTrackName() }));
 						_status = STATUS_NOT_THIS_TRAIN;
 						continue;// found a route but it doesn't start with the specific train
 					}
@@ -538,7 +536,7 @@ public class Router extends TrainCommon {
 					if (_train != null && !_train.services(ts2)) {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("TrainDoesNotServiceCar"), new Object[] { _train.getName(),
-							car.toString(), (fltp.getLocation().getName() + ", " + fltp.getName()) }));
+							car.toString(), fltp.getLocation().getName(), fltp.getName() }));
 						_status = STATUS_NOT_THIS_TRAIN;
 						return true;
 					}
@@ -597,7 +595,7 @@ public class Router extends TrainCommon {
 								addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("TrainDoesNotServiceCar"), new Object[] {
 									_train.getName(), car.toString(),
-									(fltp.getLocation().getName() + ", " + fltp.getName()) }));
+									fltp.getLocation().getName(), fltp.getName() }));
 								_status = STATUS_NOT_THIS_TRAIN;
 								return true;
 							}
@@ -684,7 +682,7 @@ public class Router extends TrainCommon {
 										addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 												.getMessage("TrainDoesNotServiceCar"), new Object[] {
 											_train.getName(), car.toString(),
-											(fltp.getLocation().getName() + ", " + fltp.getName()) }));
+											fltp.getLocation().getName(), fltp.getName() }));
 										_status = STATUS_NOT_THIS_TRAIN;
 										return true;
 									}
