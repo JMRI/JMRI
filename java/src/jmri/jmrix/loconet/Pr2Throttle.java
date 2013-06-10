@@ -42,11 +42,11 @@ public class Pr2Throttle extends AbstractThrottle {
         if(getSpeedStepMode()==DccThrottle.SpeedStepMode28){
             if(lSpeed<=15) //Value less than 15 is in the stop/estop range bracket
                 return 0.f;
-            return (((lSpeed-12)/4)/28.f);
+            return (((lSpeed-12)/4f)/28.f);
         }  else if (getSpeedStepMode()==DccThrottle.SpeedStepMode14){
             if(lSpeed<=15) //Value less than 15 is in the stop/estop range bracket
                 return 0.f;
-            return ((lSpeed-8)/8)/14.f;
+            return ((lSpeed-8)/8f)/14.f;
         }
         else return ( (lSpeed-1)/126.f);
     }
