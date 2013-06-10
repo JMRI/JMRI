@@ -1680,8 +1680,8 @@ public class TrainBuilder extends TrainCommon {
 			}
 
 			// we might have freed up space at a spur that has an alternate track
-			redirectCarsFromAlternateTrack();
-
+			if (redirectCarsFromAlternateTrack())
+				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 			if (routeIndex == 0)
 				checkDepartureForStaging(percent); // report ASAP that the build has failed
 			
@@ -3663,10 +3663,12 @@ public class TrainBuilder extends TrainCommon {
 	 * this train, but cars were sent to the alternate because the spur was full at the time it was tested.
 	 * 
 	 * @param rl
+	 * @return true if one or more cars were redirected
 	 */
-	private void redirectCarsFromAlternateTrack() {
+	private boolean redirectCarsFromAlternateTrack() {
 		if (!Setup.isBuildAggressive())
-			return;
+			return false;
+		boolean redirected = false;
 		List<String> cars = carManager.getByTrainDestinationList(train);
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = carManager.getById(cars.get(i));
@@ -3689,9 +3691,11 @@ public class TrainBuilder extends TrainCommon {
 							.getMessage("buildRedirectFromAlternate"), new Object[] {
 							car.getFinalDestinationTrackName(), car.toString(), car.getDestinationTrackName() }));
 					car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+					redirected = true;
 				}
 			}
 		}
+		return redirected;
 	}
 	
 	// report any cars left at location
