@@ -352,6 +352,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     
     void stopCurrentSpeedStep(){
         finishTime = System.nanoTime();
+        finishSensor.removePropertyChangeListener(finishListener);
         sourceLabel.setText(Bundle.getMessage("StatusLabelCalculating"));
         if(profileStep>=4)
             t.setSpeedSetting(profileSpeed/2);
@@ -392,12 +393,11 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
     
     void calculateSpeed(){
-
         float duration = (((float)(finishTime-startTime))/1000000000); //Now in seconds
         duration = duration - 2f;  // Abratory time to add in feedback delay
         float length = (Integer.parseInt(lengthField.getText())); //left as mm
-        if (log.isDebugEnabled()) log.debug(profileStep + " " + duration + " " + length);
         float speed = length/duration;
+        if (log.isDebugEnabled()) log.debug("Step:" + profileStep + " duration:" + duration + " length:" + length + " speed:" + speed);
         if(isForward){
             rosterSpeedProfile.setForwardSpeed(profileSpeed, speed);
         } else {

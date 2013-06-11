@@ -146,8 +146,10 @@ public class RosterSpeedProfile {
     * return the approximate duration in seconds that a loco may travel for a given speed step
     */
     public float getDurationOfTravelInSeconds(boolean isForward, float speedStep, int distance){
-        float spd = getForwardSpeed(speedStep);
-        if(!isForward){
+        float spd = 0f;
+        if(isForward){
+            spd = getForwardSpeed(speedStep);
+        } else {
             spd = getReverseSpeed(speedStep);
         }
         return (distance/spd);
@@ -157,9 +159,10 @@ public class RosterSpeedProfile {
     * return the approximate distance travelled in millimeters for a give duration in seconds and speed step.
     */
     public float getDistanceTravelled(boolean isForward, float speedStep, float duration){
-        float spd = getForwardSpeed(speedStep);
-        
-        if(!isForward){
+        float spd = 0f;
+        if(isForward){
+            spd = getForwardSpeed(speedStep);
+        } else {
             spd = getReverseSpeed(speedStep);
         }
         return Math.abs(spd*duration);
@@ -180,7 +183,6 @@ public class RosterSpeedProfile {
     
     javax.swing.Timer stopTimer = null;
     
-    long lastTimeSpeedFinished = 0l;
     long lastTimeTimerStarted = 0l;
     
     boolean increaseSpeed = false;
@@ -395,7 +397,7 @@ public class RosterSpeedProfile {
                 }
             } else {
                 calculatingStep = calculatingStep - calculatedStepInc;
-                if(calculatingStep<stepIncrement){
+                if(calculatingStep<0.001){
                     calculatingStep = 0.0f;
                     calculated = true;
                     timePerStep = 0;
