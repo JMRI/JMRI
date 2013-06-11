@@ -21,7 +21,6 @@
  *  TODO: handle drawn ellipse (see LMRC APB)
  *  TODO: research movement of locoicons (will require "promoting" locoicon to system entity)
  *  TODO: finish layoutturntable (draw rays) (see Mtn RR and CnyMod27)
- *  TODO: fix issue with FireFox using size of alt text for rotation of unloaded images
  *  TODO: address color differences between java panel and javascript panel (e.g. lightGray)
  *  TODO: determine proper level (z-index) for canvas layer
  *  TODO: diagnose and correct the small position issues visible with footscray
@@ -1053,8 +1052,7 @@ var $setWidgetPosition = function(e) {
 		var $width =  e.width()  * $widget.scale;
 
 		//if image needs rotating or scaling, but is not loaded yet, set callback to do this again when it is loaded
-		//TODO: firefox returns a height for the alt text, so this doesn't work right
-		if (e.is("img") && $height == 0 && ($widget.degrees != 0 || $widget.scale != 1.0)) {
+		if (e.is("img") && ($widget.degrees != 0 || $widget.scale != 1.0) && $(e).get(0).complete == false ) {
 			e.load(function(){
 				$setWidgetPosition($(this));
 				e.unbind('load');  //only do this once
