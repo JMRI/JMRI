@@ -394,7 +394,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			if (Setup.isOnlyActiveTrainsEnabled() && !train.isBuildEnabled())
 				continue;
 			// does this train service this car?
-			if (train.services(car, buildReport))
+			if (train.services(buildReport, car))
 				return train;
 		}
 		return null;

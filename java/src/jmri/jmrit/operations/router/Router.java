@@ -124,7 +124,7 @@ public class Router extends TrainCommon {
 		boolean trainServicesCar = false;	// specific train
 		Train testTrain = null;				// any train
 		if (_train != null)
-			trainServicesCar = _train.services(clone);
+			trainServicesCar = _train.services(buildReport, clone);
 		if (trainServicesCar)
 			testTrain = _train;	// use the specific train
 		// can specific train can service car out of staging

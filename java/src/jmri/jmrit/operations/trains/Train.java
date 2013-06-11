@@ -1304,12 +1304,12 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return true if this train can service the car.
 	 */
 	public boolean services(Car car) {
-		return services(car, null);
+		return services(null, car);
 	}
 	
 	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 	
-	protected boolean services(Car car, PrintWriter buildReport) {
+	public boolean services(PrintWriter buildReport, Car car) {
 		boolean addToReport = Setup.getRouterBuildReportLevel().equals(SEVEN);
 		// check to see if train can carry car
 		if (!acceptsTypeName(car.getTypeName())) {
@@ -1399,7 +1399,8 @@ public class Train implements java.beans.PropertyChangeListener {
 									if (addToReport)
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 												.getMessage("trainCanNotDeliverToTrack"), new Object[] {
-												getName(), car.toString(), car.getDestinationName(), car.getDestinationTrackName() }));
+												getName(), car.toString(), car.getDestinationTrackName(),
+												car.getDestinationName(), rLocations.get(k) }));
 									continue;
 								}
 							} else if (rLoc.getLocation().getLocationOps() == Location.STAGING
@@ -1417,8 +1418,9 @@ public class Train implements java.beans.PropertyChangeListener {
 										TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 												.getMessage("trainCanNotDeliverToTrack"), new Object[] {
 												getName(), car.toString(),
+												getTerminationTrack().getName(), 
 												getTerminationTrack().getLocation().getName(),
-												getTerminationTrack().getName() }));
+												rLocations.get(k) }));
 									continue;
 								}
 							} else {
