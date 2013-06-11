@@ -13,6 +13,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JPanel;
 import jmri.jmrit.operations.OperationsFrame;
@@ -146,6 +147,7 @@ public class BuildReportOptionFrame extends OperationsFrame {
 	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton) {
+			
 			// font size
 			Setup.setBuildReportFontSize((Integer) fontSizeComboBox.getSelectedItem());
 
@@ -160,12 +162,18 @@ public class BuildReportOptionFrame extends OperationsFrame {
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 
 			// router build report level
+			String oldReportLevel = Setup.getRouterBuildReportLevel();			
 			if (buildReportRouterNor.isSelected())
 				Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_NORMAL);
 			else if (buildReportRouterMax.isSelected())
 				Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
 			else if (buildReportRouterVD.isSelected())
 				Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+			
+			if (!oldReportLevel.equals(Setup.getRouterBuildReportLevel())) {
+				JOptionPane.showMessageDialog(this, Bundle.getMessage("buildReportRouter"), Bundle
+						.getMessage("buildReportRouterTitle"), JOptionPane.INFORMATION_MESSAGE);
+			}
 
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			Setup.setBuildReportIndentEnabled(buildReportIndentCheckBox.isSelected());
