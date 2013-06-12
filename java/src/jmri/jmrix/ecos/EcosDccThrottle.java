@@ -128,8 +128,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) return 0.0f;
+        if(getSpeedStepMode()==jmri.DccThrottle.SpeedStepMode28){
+            int step = (int)Math.ceil(lSpeed/4.65);
+            return step*SPEED_STEP_28_INCREMENT;
+        }
         return ( (lSpeed)/126.f);
-
     }
     
     /**
@@ -303,7 +306,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
         if (value>128) value = 126;    // max possible speed
         if ((value >0) || (value ==0.0)) {
-            this.speedSetting = speed;
             String message = "set("+this.objectNumber+", speed["+value+"])";
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
