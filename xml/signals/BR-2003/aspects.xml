@@ -125,6 +125,7 @@
     <appearancefile href="appearance-4-i.xml"/>
     <appearancefile href="appearance-4-i-c.xml"/>
     <appearancefile href="appearance-buffer-stop.xml"/>
+    <appearancefile href="appearance-feather.xml"/>
   </appearancefiles>
 </aspecttable>
   
