@@ -864,7 +864,7 @@ public class RosterEntry implements jmri.BasicRosterEntry {
             return;
         }
         try{
-            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel);
+            LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel, getDecoderFamily());
         } catch (Exception ex){
             log.error("Error reading roster entry", ex);
             try {
