@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <pane name="Basic" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/programmer.xsd">
-    <name xml:lang="fr">Basic(fr)</name>
     <name xml:lang="ca">Bàsic</name>
     <name xml:lang="it">Semplificato</name>
     <column>
@@ -8,22 +7,28 @@
         <label label=" "/>
         <display item="Short Address" tooltip="Sets the Primary (2 digit) address">
             <tooltip xml:lang="it">Indirizzo Corto"</tooltip>
+            <tooltip xml:lang="ca">Establir adreÁa prim‡ria (2 dÌgits)</tooltip>
         </display>
         <display item="Long Address" tooltip="Sets the extended (4 digit) address">
             <tooltip xml:lang="it">Imposta l'indirizzo esteso (4 cifre)</tooltip>
+            <tooltip xml:lang="ca">Establir adreÁa llarga (4 dÌgits)</tooltip>
         </display>
         <display item="Address Format" tooltip="Determines whether loco will use short or long address">
             <tooltip xml:lang="it">Determina se la Loco usa l'indirizzo corto o quello esteso</tooltip>
+            <tooltip xml:lang="ca">Determina si es fa servir adreÁa curta o llargaî</tooltip>
         </display>
         <label label=" "/>
         <display item="Locomotive Direction" tooltip="Sets the relative direction of the loco when told to move forward">
             <tooltip xml:lang="it">Imposta la Direzione di movimento della Loco per Comando Avanti</tooltip>
+            <tooltip xml:lang="ca">Estableix el sentit de circulaciÛ de la locomotora</tooltip>
         </display>
         <display item="Speed Step Mode" tooltip="Sets the speed step mode for headlight control">
             <tooltip xml:lang="it">Imposta la Modalit di Step Velocit per Comando Luci</tooltip>
+            <tooltip xml:lang="ca">Estableix els passos de velocitat per al control de llums</tooltip>
         </display>
         <display item="Analog (DC) Operation" tooltip="Determines whether loco can operate on conventional DC current (enables Power Source Conversion)">
             <tooltip xml:lang="it">Determina se la Loco può operare in CC (analogica)</tooltip>
+            <tooltip xml:lang="ca">Estableix que la locomotora pot circular en analÚgic [CC] (ConversiÛ de Font de potËncia)</tooltip>
         </display>
     </column>
     <column>
@@ -31,21 +36,26 @@
         <label label=" "/>
         <display item="User Id #1" tooltip="Sets a custom user ID or number">
             <tooltip xml:lang="it">Imposta un ID Utente o Numero Personalizzato</tooltip>
+            <tooltip xml:lang="ca">1r n˙mero usuari</tooltip>
         </display>
         <display item="User Id #2" tooltip="Sets a custom user ID or number">
             <tooltip xml:lang="it">Imposta un ID Utente o Numero Personalizzato</tooltip>
+            <tooltip xml:lang="ca">2n n˙mero usuari</tooltip>
         </display>
         <label label=" "/>
         <separator/>
         <label label=" "/>
         <display item="Manufacturer" tooltip="The manufacturer's ID number (read only)">
             <tooltip xml:lang="it">ID Costruttore (sola lettura)</tooltip>
+            <tooltip xml:lang="ca">N˙mero de fabricant (nomÈs lectura)</tooltip>
         </display>
         <display item="Decoder Version" tooltip="The decoder version number (read only)">
             <tooltip xml:lang="it">Numero versione del Decoder (sola lettura)</tooltip>
+            <tooltip xml:lang="ca">N˙mero de versiÛ del descodificador (nomÈs lectura)</tooltip>
         </display>
         <display item="Product Number" tooltip="The decoder product number (if used) (read only)">
             <tooltip xml:lang="it">Codice di prodotto del Decoder (se usato) (sola lettura)</tooltip>
+            <tooltip xml:lang="ca">La referËncia del descodificador (nomÈs si es fa servir) (nomÈs lectura)</tooltip>
         </display>
     </column>
 </pane>
