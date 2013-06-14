@@ -39,7 +39,7 @@
 
     <appearance>
       <aspectname>Zero</aspectname>
-      <show>Dark</show>
+      <show>dark</show>
       <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/JunctionIndicators/blank.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/JunctionIndicators/blank.gif</imagelink>
     </appearance>
