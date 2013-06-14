@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
+import java.util.TreeMap;
 
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -261,17 +262,11 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
                 }
             };
             
-            rosterSpeedProfile = re.getSpeedProfile();
-            if(rosterSpeedProfile==null){
-                rosterSpeedProfile = new RosterSpeedProfile(re);
-                re.setSpeedProfile(rosterSpeedProfile);
-            }
             
             isForward = true;
             startProfile();
         } else {
-            rosterSpeedProfile = re.getSpeedProfile();
-            if(rosterSpeedProfile==null){
+            if(re.getSpeedProfile()==null){
                 log.error("Loco has no speed profile");
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNoSpeedProfile"));
                 setButtonStates(true);
@@ -328,6 +323,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     SensorDetails middleBlockSensor;
     
     void startProfile(){
+        stepCalculated = false;
         sourceLabel.setText(Bundle.getMessage("StatusLabelNextRun"));
         if(isForward){
             finishSensor = sensorB.getSensor();
@@ -349,9 +345,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         startTime = System.nanoTime();
         sourceLabel.setText(Bundle.getMessage("StatusLabelCurrentRun", (isForward?"(forward) ":"(reverse) "), profileStep, finishSpeedStep));
     }
-    
+    boolean stepCalculated = false;
     void stopCurrentSpeedStep(){
         finishTime = System.nanoTime();
+        stepCalculated = true;
         finishSensor.removePropertyChangeListener(finishListener);
         sourceLabel.setText(Bundle.getMessage("StatusLabelCalculating"));
         if(profileStep>=4)
@@ -363,6 +360,10 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
 
     void stopLoco() {
         
+        if(!stepCalculated){
+            return;
+        }
+        
         startSensor.removePropertyChangeListener(startListener);
         finishSensor.removePropertyChangeListener(finishListener);
         
@@ -373,6 +374,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
         
         if(profileStep>finishSpeedStep){
+            updateSpeedProfileWithResults();
             setButtonStates(true);
             re.updateFile();
             Roster.writeRosterFile();
@@ -398,10 +400,30 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         float length = (Integer.parseInt(lengthField.getText())); //left as mm
         float speed = length/duration;
         if (log.isDebugEnabled()) log.debug("Step:" + profileStep + " duration:" + duration + " length:" + length + " speed:" + speed);
+
+        int iSpeedStep = Math.round(profileSpeed*1000);
+        if(!speeds.containsKey(iSpeedStep)){
+            speeds.put(iSpeedStep, new SpeedStep());
+        }
+        SpeedStep ss = speeds.get(iSpeedStep);
+        
         if(isForward){
-            rosterSpeedProfile.setForwardSpeed(profileSpeed, speed);
+            ss.setForwardSpeed(speed);
         } else {
-            rosterSpeedProfile.setReverseSpeed(profileSpeed, speed);
+            ss.setReverseSpeed(speed);
+        }
+    }
+    
+    void updateSpeedProfileWithResults(){
+        RosterSpeedProfile rosterSpeedProfile = re.getSpeedProfile();
+        if(rosterSpeedProfile==null){
+            rosterSpeedProfile = new RosterSpeedProfile(re);
+            re.setSpeedProfile(rosterSpeedProfile);
+        } else {
+            rosterSpeedProfile.clearCurrentProfile();
+        }
+        for(Integer i : speeds.keySet()){
+            rosterSpeedProfile.setSpeed(i, speeds.get(i).getForwardSpeed(), speeds.get(i).getReverseSpeed());
         }
     }
     
@@ -433,7 +455,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     void stopTrainTest(){
         //int locolength = Integer.parseInt(locoLengthField.getText());
         int sectionlength = Integer.parseInt(lengthField.getText());
-        rosterSpeedProfile.changeLocoSpeed(t, sectionlength, 0.0f);
+        re.getSpeedProfile().changeLocoSpeed(t, sectionlength, 0.0f);
         //rosterSpeedProfile.stopLoco(t, Integer.parseInt(lengthField.getText())/1000);
         setButtonStates(true);
         startSensor.removePropertyChangeListener(startListener);
@@ -459,7 +481,6 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             usingGlobal = sen.useDefaultTimerSettings();
             activeDelay = sen.getSensorDebounceGoingActiveTimer();
             inactiveDelay = sen.getSensorDebounceGoingInActiveTimer();
-
         }
         
         void setupSensor(){
@@ -478,6 +499,33 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             return sensor;
         }
         
+    }
+    
+    TreeMap<Integer, SpeedStep>  speeds= new TreeMap<Integer, SpeedStep>();
+    
+    static class SpeedStep {
+        
+        float forward = 0.0f;
+        float reverse = 0.0f;
+        
+        SpeedStep(){
+        }
+        
+        void setForwardSpeed(float speed){
+            forward = speed;
+        }
+        
+        void setReverseSpeed(float speed){
+            reverse = speed;
+        }
+        
+        float getForwardSpeed(){
+            return forward;
+        }
+        
+        float getReverseSpeed(){
+            return reverse;
+        }
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedProfilePanel.class.getName());

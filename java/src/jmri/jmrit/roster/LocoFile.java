@@ -48,7 +48,7 @@ class LocoFile extends XmlFile {
      *                 intended, but not required, that this be empty.
      */
     @SuppressWarnings("unchecked")
-	public static void loadCvModel(Element loco, CvTableModel cvModel, IndexedCvTableModel iCvModel){
+	public static void loadCvModel(Element loco, CvTableModel cvModel, IndexedCvTableModel iCvModel, String family){
         CvValue cvObject;
         // get the CVs and load
         Element values = loco.getChild("values");
@@ -111,6 +111,17 @@ class LocoFile extends XmlFile {
                 int iCv   = Integer.valueOf(((elementList.get(i))).getAttribute("iCv").getValue()).intValue();
                 String value = ((elementList.get(i))).getAttribute("value").getValue();
                 if (log.isDebugEnabled()) log.debug("CV: "+i+"th entry, CV number "+name+" has value: "+value);
+
+                // Hack to fix ESU LokSound V4.0 existing decoder file Indexed CV names
+                if (family.equals("ESU LokPilot V4.0")||family.equals("ESU LokSound Select")||family.equals("ESU LokSound V4.0")) {
+                    if (piCv  == 32) {
+						piCv  = 31;
+						siCv  = 32;
+						siVal = piVal;
+						piVal = 16;
+                    }
+                    name = iCv+"."+piVal+"."+siVal;
+                }
 
                 // cvObject = (iCvModel.allIndxCvVector().elementAt(i));
                 cvObject = iCvModel.getMatchingIndexedCV(name);

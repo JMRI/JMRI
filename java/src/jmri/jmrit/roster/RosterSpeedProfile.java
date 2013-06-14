@@ -55,6 +55,10 @@ public class RosterSpeedProfile {
         overRunTimeReverse=dt;
     }
     
+    public void clearCurrentProfile(){
+        speeds= new TreeMap<Integer, SpeedStep>();
+    }
+    
     /**
     * forward and reverse values are in meters per second
     */

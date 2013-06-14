@@ -128,8 +128,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
      */
     protected float floatSpeed(int lSpeed) {
         if (lSpeed == 0) return 0.0f;
+        if(getSpeedStepMode()==jmri.DccThrottle.SpeedStepMode28){
+            int step = (int)Math.ceil(lSpeed/4.65);
+            return step*SPEED_STEP_28_INCREMENT;
+        }
         return ( (lSpeed)/126.f);
-
     }
     
     /**
@@ -296,14 +299,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setSpeedSetting(float speed) {
         if(!_haveControl) return;
-        int value;
-        if (speed == this.speedSetting){
+        if (speed == this.speedSetting && speedMessageSent<=0){
             return;
         }
-        value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
+        int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
         if (value>128) value = 126;    // max possible speed
         if ((value >0) || (value ==0.0)) {
-            this.speedSetting = speed;
             String message = "set("+this.objectNumber+", speed["+value+"])";
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
@@ -317,8 +318,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             tc.sendEcosMessage(m, this);
             
         }
-        record(speed);
+        //record(speed);
     }
+    
+    //float lastRequestedSpeed = 0f;
 
     EcosTrafficController tc;
     
@@ -327,10 +330,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     public void setIsForward(boolean forward) {
         if(!_haveControl) return;
         
-        EcosMessage m;
-        
         String message = "set("+this.objectNumber+", dir["+(forward?0:1)+"])";
-        m = new EcosMessage(message);
+        EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
     }
 
@@ -341,9 +342,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
     
     protected void throttleDispose(){
-        EcosMessage m;
+
         String message = "release("+this.objectNumber+", control)";
-        m = new EcosMessage(message);
+        EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
         _haveControl = false;
         _hadControl = false;
@@ -395,11 +396,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 String[] msgDetails = m.getContents();
                 for (String line: msgDetails) {
                     if (line.contains("speed")&& !line.contains("speedstep")){
-                        if(speedMessageSent==1){
+                        speedMessageSent--;
+                        if(speedMessageSent<=1){
                             Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(line, "speed"))) ) ;
                             super.setSpeedSetting(newSpeed);
                         }
-                        speedMessageSent--;
                     }
                     else if (line.contains("dir")){
                         boolean newDirection = false;
@@ -410,11 +411,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 if(msgDetails.length==0){
                     //For some reason in recent ECOS software releases we do not get the contents, only a header and End State
                     if(m.toString().contains("speed")&& !m.toString().contains("speedstep")){
+                        speedMessageSent--;
                         if(speedMessageSent<=1){
                             Float newSpeed = new Float (floatSpeed(Integer.parseInt(EcosReply.getContentDetails(m.toString(), "speed"))) ) ;
                             super.setSpeedSetting(newSpeed);
                         }
-                        speedMessageSent--;
                     } else if (m.toString().contains("dir")){
                         boolean newDirection = false;
                         if (EcosReply.getContentDetails(m.toString(), "dir").equals("0")) newDirection=true;
