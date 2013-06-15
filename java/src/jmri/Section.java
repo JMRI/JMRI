@@ -279,7 +279,7 @@ public class Section extends AbstractNamedBean
 			log.error("Sensor name - "+forwardSensor+" invalid when setting forward sensor in Section "+getSystemName());
 			return null;
 		}
-        nbhm.getNamedBeanHandle(tempSensorName, s);
+        mForwardBlockingNamedSensor = nbhm.getNamedBeanHandle(tempSensorName, s);
 		mForwardBlockingSensorName = tempSensorName;
 		return s;
 	}
