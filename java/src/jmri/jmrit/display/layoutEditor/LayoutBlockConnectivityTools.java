@@ -257,6 +257,10 @@ public class LayoutBlockConnectivityTools{
                 /*if(destBlockn1!=null)
                     log.debug("remote prot " + destBlockn1.getDisplayName());*/
             }
+            if(currentBlock==destBlockn1.get(0) && nextBlock==destBlock){
+                log.debug("Our dest protecting block is our current block and our protecting block is the same as our destination block");
+                return false;
+            }
             //Do a simple test to see if one is reachable from the other.
             int proCount = 0;
             int desCount = 0;
@@ -283,7 +287,7 @@ public class LayoutBlockConnectivityTools{
                 log.debug("proCount is less than destination");
                 ArrayList<LayoutBlock> blockList = getLayoutBlocks(currentBlock, destBlock, nextBlock, true, pathMethod); //Was MASTTOMAST
                 for(LayoutBlock dp: destBlockn1){
-                    if(blockList.contains(dp)){
+                    if(blockList.contains(dp) && currentBlock!=dp){
                         log.debug("Signal mast in the wrong direction");
                         return false;
                     }
