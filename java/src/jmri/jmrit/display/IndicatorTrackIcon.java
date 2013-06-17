@@ -334,14 +334,21 @@ public class IndicatorTrackIcon extends PositionableIcon
             getOccSensor().removePropertyChangeListener(this);
         }
         namedOccSensor = null;
-
         if (namedOccBlock != null) {
             getOccBlock().removePropertyChangeListener(this);
         }
         namedOccBlock = null;
-
         _iconMap = null;
         super.dispose();
+    }
+    
+    public jmri.NamedBean getNamedBean() {
+    	if (namedOccBlock!=null) {
+            return namedOccBlock.getBean();     		
+    	} else if (namedOccSensor!=null) {
+            return namedOccSensor.getBean();    		
+    	}
+    	return null;
     }
     
     static Logger log = LoggerFactory.getLogger(IndicatorTrackIcon.class.getName());

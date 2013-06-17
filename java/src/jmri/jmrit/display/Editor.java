@@ -1058,6 +1058,29 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }.init(p, showTooltipItem));
         edit.add(showTooltipItem);
         edit.add(CoordinateEdit.getTooltipEditAction(p));
+        jmri.NamedBean bean = p.getNamedBean();
+        if (bean!=null) {
+            edit.add(new AbstractAction(Bundle.getMessage("SetSysNameTooltip")) {
+                Positionable comp;
+                jmri.NamedBean bean;
+                public void actionPerformed(ActionEvent e) { 
+                    ToolTip tip = comp.getTooltip();
+                    if (tip!=null) {
+                    	String uName = bean.getUserName();
+                    	String sName = bean.getSystemName();
+                    	if (uName!=null && uName.length()>0) {
+                    		sName = uName+"("+sName+")";
+                    	}
+                        tip.setText(sName);
+                    }
+                 }
+                AbstractAction init(Positionable pos, jmri.NamedBean b) {
+                    comp = pos;
+                    bean = b;
+                    return this;
+                }
+            }.init(p, bean));
+        }
         popup.add(edit);
     }
 

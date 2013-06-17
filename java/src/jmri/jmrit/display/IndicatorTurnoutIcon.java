@@ -473,6 +473,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
         if (namedOccSensor != null) {
             getOccSensor().removePropertyChangeListener(this);
         }
+        if (namedOccBlock != null) {
+            getOccBlock().removePropertyChangeListener(this);
+        }
         namedOccSensor = null;
         namedOccSensor = null;
         super.dispose();
