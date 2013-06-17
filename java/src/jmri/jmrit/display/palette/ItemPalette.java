@@ -120,21 +120,21 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         return typeNode;
     }
 
-    static public void loadIcons() {
+    static public void loadIcons(Editor ed) {
         if (_iconMaps==null) {
 //        	long t = System.currentTimeMillis();
             _iconMaps = new HashMap <String, HashMap<String, HashMap<String, NamedIcon>>>();
             _indicatorTOMaps = 
                 new HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>>();
 
-            if (!loadSavedIcons()) {
-                loadDefaultIcons();
+            if (!loadSavedIcons(ed)) {
+                loadDefaultIcons(ed);
             }
 //            System.out.println("Palette icons loaded in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
         }
     }
 
-    static boolean loadSavedIcons() {
+    static boolean loadSavedIcons(Editor ed) {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         CatalogTree tree = manager.getBySystemName("NXPI");
         if (tree != null) {
@@ -148,13 +148,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 // not very elegant (i.e. extensible), but maybe all that's needed.
                 if (typeName.equals("IndicatorTO")) {
                     HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap =
-                                                loadIndicatorFamilyMap(node);
+                                                loadIndicatorFamilyMap(node, ed);
                     if (log.isDebugEnabled()) log.debug("Add "+familyTOMap.size()+
                                     " indicatorTO families to item type "+typeName+" to _indicatorTOMaps.");
                     _indicatorTOMaps.put(typeName, familyTOMap); 
                 } else {
                     HashMap<String, HashMap<String, NamedIcon>> familyMap = 
-                                                loadFamilyMap(node);
+                                                loadFamilyMap(node, ed);
                     _iconMaps.put(typeName, familyMap); 
                     if (log.isDebugEnabled()) log.debug("Add item type "+typeName+" to _iconMaps.");
                 }
@@ -166,7 +166,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     }
 
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> 
-                                        loadIndicatorFamilyMap(CatalogTreeNode node) {
+                                        loadIndicatorFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyMap =
                                 new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>();
         @SuppressWarnings("unchecked")
@@ -174,13 +174,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         while (ee.hasMoreElements()) {
             CatalogTreeNode famNode = ee.nextElement();
             String name = (String)famNode.getUserObject();
-            familyMap.put(name, loadFamilyMap(famNode));
+            familyMap.put(name, loadFamilyMap(famNode, ed));
             Thread.yield();
         }
         return familyMap;
     }
 
-    static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node) {
+    static HashMap<String, HashMap<String, NamedIcon>> loadFamilyMap(CatalogTreeNode node, Editor ed) {
         HashMap <String, HashMap<String, NamedIcon>> familyMap =
                  new HashMap <String, HashMap<String, NamedIcon>> ();
         @SuppressWarnings("unchecked")
@@ -196,12 +196,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 String iconName = list.get(i).getName();
                 CatalogTreeLeaf leaf = list.get(i);
                 String path = leaf.getPath();
-                try {
-                    NamedIcon icon = new NamedIcon(path, path);                	
-                } catch (Exception e) {
-                	throw new NullPointerException("Can't find icon file: "+path);
+                NamedIcon icon = NamedIcon.getIconByName(path);                	
+                if (icon==null) {
+                    icon = ed.loadFailed(iconName, path);
+                    if (icon==null) {
+                        log.info(iconName+" removed for url= "+path);
+                    }
                 }
-                NamedIcon icon = new NamedIcon(path, path);
                 w = Math.max(w, icon.getIconWidth());
                 h = Math.max(h, icon.getIconHeight());
                 iconMap.put(iconName, icon);
@@ -213,7 +214,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         return familyMap;
     }
 
-    static void loadDefaultIcons() {
+    static void loadDefaultIcons(Editor ed) {
         File file = new File("xml"+File.separator+"defaultPanelIcons.xml");
         if (!file.exists()) {
             log.error("defaultPanelIcons file doesn't exist: "+file.getPath());
@@ -232,12 +233,12 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 // not very elegant (i.e. extensible), but maybe all that's needed.
                 if (typeName.equals("IndicatorTO")) {
                     HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap =
-                                                loadDefaultIndicatorTOMap(families);
+                                                loadDefaultIndicatorTOMap(families, ed);
                     _indicatorTOMaps.put(typeName, familyTOMap); 
                     if (log.isDebugEnabled()) log.debug("Add "+familyTOMap.size()+
                                     " indicatorTO families to item type "+typeName+" to _indicatorTOMaps.");
                 } else {
-                    HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families);
+                    HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families, ed);
                     _iconMaps.put(typeName, familyMap); 
                     if (log.isDebugEnabled()) log.debug("Add "+familyMap.size()+
                                                         " families to item type "+typeName+" to _iconMaps.");
@@ -251,7 +252,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         }
     }
 
-    static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families)
+    static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families, Editor ed)
     {
         HashMap<String, HashMap<String, NamedIcon>> familyMap =
                 new HashMap<String, HashMap<String, NamedIcon>> ();
@@ -268,7 +269,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                     fileName = "resources/icons/misc/X-red.gif";
                     log.warn("loadDefaultIcons: iconName= "+iconName+" in family "+familyName+" has no image file.");
                 }
-                NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(fileName, fileName);
+                NamedIcon icon = NamedIcon.getIconByName(fileName);                	
+                if (icon==null) {
+                    icon = ed.loadFailed(iconName, fileName);
+                    if (icon==null) {
+                        log.info(iconName+" removed for url= "+fileName);
+                    }
+                }
                 iconMap.put(iconName, icon);
             }
             familyMap.put(familyName, iconMap); 
@@ -277,7 +284,8 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         return familyMap;
     }
 
-    static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> loadDefaultIndicatorTOMap(List<Element> typeList)
+    static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> 
+    			loadDefaultIndicatorTOMap(List<Element> typeList, Editor ed)
     {
         HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap =
                 new HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> ();     // Map of all families of type, typeName
@@ -285,7 +293,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
             String familyName = typeList.get(k).getName();
             @SuppressWarnings("unchecked")
             List<Element> types = typeList.get(k).getChildren();
-            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types);
+            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(types, ed);
             familyTOMap.put(familyName, familyMap);
             if (log.isDebugEnabled()) log.debug("Add "+familyMap.size()+
                                 " IndicatorTO sub-families to item type "+familyName+" to IndicatorTO families.");
@@ -303,7 +311,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     private ItemPalette(String title, Editor editor) {
         super(title, true, true);
 //        long t = System.currentTimeMillis();
-        loadIcons();
+        loadIcons(editor);
         addWindowListener(new java.awt.event.WindowAdapter() {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     closePanels(e);

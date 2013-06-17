@@ -483,7 +483,7 @@ public class PositionableLabel extends JLabel implements Positionable {
      * For item popups in Control Panel Editor
      */
     protected void makePalettteFrame(String title) {
-    	jmri.jmrit.display.palette.ItemPalette.loadIcons();
+    	jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
 
         _paletteFrame = new jmri.util.JmriJFrame(title, false, false);
         _paletteFrame.setLocationRelativeTo(this);

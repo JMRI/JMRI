@@ -1018,7 +1018,7 @@ public class CircuitBuilder  {
     }
 
     private void makePalettteFrame(String title) {
-    	jmri.jmrit.display.palette.ItemPalette.loadIcons();
+    	jmri.jmrit.display.palette.ItemPalette.loadIcons(_editor);
     	_convertDialog = new JDialog(_editor, java.text.MessageFormat.format(
         		Bundle.getMessage("EditItem"), Bundle.getMessage(title)), true);
     	_convertFrame = new convertFrame(_convertDialog);
