@@ -606,7 +606,7 @@ public class JsonUtil {
                 InstanceManager.reporterManagerInstance().getReporter(name).setReport(data.path(REPORT).asText());
             }
         } catch (NullPointerException ex) {
-            throw new JsonException(404, Bundle.getMessage("ErrorObject", ROUTE, name));
+            throw new JsonException(404, Bundle.getMessage("ErrorObject", REPORTER, name));
         }
     }
 
