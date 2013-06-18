@@ -15,6 +15,8 @@ import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.AbstractNamedBean;
 import jmri.util.JmriJFrame;
+import jmri.jmrit.beantable.beanedit.BeanItemPanel;
+import jmri.jmrit.beantable.beanedit.BeanEditItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
@@ -155,7 +157,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	}
     
     protected void initializeLayoutBlockRouting(){
-        if(!InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+        if(!InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled())
             return;
         setBlockMetric();
         for (int i = 0; i<block.getPaths().size(); i++){
@@ -176,7 +178,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	public boolean getUseExtraColor() {return useExtraColor;}
 	public void setUseExtraColor(boolean b) {
         useExtraColor = b;
-        if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+        if(InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()){
             stateUpdate();
         }
         if(getBlock()!=null)
@@ -270,7 +272,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		// ensure that this sensor is unique among defined Layout Blocks
 		NamedBeanHandle<Sensor> savedNamedSensor = occupancyNamedSensor;
 		occupancyNamedSensor = null;
-		LayoutBlock b = InstanceManager.layoutBlockManagerInstance().
+		LayoutBlock b = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
 											getBlockWithSensorAssigned(s);
 		if (b!=null) {
 			// new sensor is not unique, return to the old one
@@ -430,7 +432,10 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 			Sensor s = jmri.InstanceManager.sensorManagerInstance().
                             getSensor(occupancySensorName);
 			if (s == null) {			
-				// no occupancy sensor
+				// no occupancy sensor, so base upon block occupancy state
+                if(block!=null)
+                    return block.getState();
+                //if no block or sensor return unknown
 				return (UNKNOWN);
 			}
             occupancyNamedSensor = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(occupancySensorName, s);
@@ -499,7 +504,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				// check that this connectivity is compatible with that of other panels.
 				for (int j = 0;j < panels.size();j++) {
 					LayoutEditor tPanel = panels.get(j);
-					if ( (tPanel!=panel) && InstanceManager.layoutBlockManagerInstance().
+					if ( (tPanel!=panel) && InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
 								warn() && ( !compareConnectivity(c,
 										tPanel.auxTools.getConnectivityList(_instance)) )  ) {
 						// send user an error message
@@ -512,7 +517,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 								rb.getString("ButtonOKPlus")},rb.getString("ButtonOK"));
 						if (response!=0)
 							// user elected to disable messages
-							InstanceManager.layoutBlockManagerInstance().turnOffWarning();						
+							InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).turnOffWarning();						
 					}
 				}
 			}
@@ -585,7 +590,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		for (int i = 0;i<paths.size();i++) {
 			if (need[i]<0) {
                 block.removePath(paths.get(i));
-                if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+                if(InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled())
                     removeAdjacency(paths.get(i));
 			}
 		}	
@@ -610,7 +615,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				block.addPath(newp);
                 if(enableAddRouteLogging)
                     log.info("From " + this.getDisplayName() + " updateBlock Paths");
-                if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled())
+                if(InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled())
                     addAdjacency(newp);
 				//else log.error("Trouble adding Path to block '"+blockName+"'.");
 				auxTools.addBeanSettings(newp,lc,_instance);
@@ -673,7 +678,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		// Redraw all Layout Editor panels using this Layout Block
 		redrawLayoutBlockPanels();
         
-        if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+        if(InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()){
             stateUpdate();
         }
 
@@ -719,10 +724,17 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 	JButton blockEditCancel;
 	boolean editOpen = false;
     JComboBox attachedBlocks = new JComboBox();
+    
+    protected void editLayoutBlock(Component callingPane){
+        LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
+        beanEdit.setBean(block);
+        beanEdit.actionPerformed(null);
+    
+    }
     /**
      * Edit a Layout Block 
      */
-	protected void editLayoutBlock(Component callingPane) {
+	protected void editLayoutBlockOld(Component callingPane) {
 		if (editOpen) {
 			editLayoutBlockFrame.setVisible(true);
 			return;
@@ -820,7 +832,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             memoryNameField.setToolTipText( rb.getString("MemoryVariableTip") );
             contentPane.add(panel8);
             
-            if(InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled()){
+            if(InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()){
                 contentPane.add(new JSeparator(JSeparator.HORIZONTAL));
                 JPanel panel19 = new JPanel();
                 panel19.setLayout(new FlowLayout());
@@ -1037,6 +1049,167 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 		editLayoutBlockFrame.dispose();
 		editLayoutBlockFrame = null;
 	}
+    
+    
+    class LayoutBlockEditAction extends jmri.jmrit.beantable.beanedit.BlockEditAction{
+        @Override
+        public String helpTarget() { return "package.jmri.jmrit.display.EditLayoutBlock"; }  //IN18N
+        
+        @Override
+        protected void initPanels(){
+            super.initPanels();
+            BeanItemPanel ld = layoutDetails();
+            if(InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled()){
+                blockRoutingDetails();
+            }
+            setSelectedComponent(ld);
+        }
+        
+        BeanItemPanel layoutDetails(){
+            BeanItemPanel layout = new BeanItemPanel();
+            layout.setName("Layout Editor");
+            
+            layout.addItem(new BeanEditItem(new JLabel(""+useCount), rb.getString("UseCount"), null));
+            layout.addItem(new BeanEditItem(memoryNameField, rb.getString("MemoryVariable"), rb.getString("MemoryVariableTip")));
+            
+            senseBox.removeAllItems();
+            senseBox.addItem( rb.getString("SensorActive") );
+            senseActiveIndex = 0;
+            senseBox.addItem( rb.getString("SensorInactive") );
+            senseInactiveIndex = 1;
+            
+            layout.addItem(new BeanEditItem(senseBox, rb.getString("OccupiedSense"), rb.getString("OccupiedSenseHint")));
+            
+            initializeColorCombo(trackColorBox);
+            layout.addItem(new BeanEditItem(trackColorBox, rb.getString("TrackColor"), rb.getString("TrackColorHint")));
+            
+            initializeColorCombo(occupiedColorBox);
+            layout.addItem(new BeanEditItem(occupiedColorBox, rb.getString("OccupiedColor"), rb.getString("OccupiedColorHint")));
+            
+            initializeColorCombo(extraColorBox);
+            layout.addItem(new BeanEditItem(extraColorBox, rb.getString("ExtraColor"), rb.getString("ExtraColorHint")));
+            
+            layout.setSaveItem(new AbstractAction(){
+                public void actionPerformed(ActionEvent e) {
+                    boolean needsRedraw = false;
+                    int k = senseBox.getSelectedIndex();
+                    int oldSense = occupiedSense;
+                    if (k==senseActiveIndex) occupiedSense = Sensor.ACTIVE;
+                    else occupiedSense = Sensor.INACTIVE;
+                    if (oldSense!=occupiedSense) needsRedraw = true;
+                    // check if track color changed
+                    Color oldColor = blockTrackColor;
+                    blockTrackColor = getSelectedColor(trackColorBox);
+                    if (oldColor!=blockTrackColor) needsRedraw = true;
+                    // check if occupied color changed
+                    oldColor = blockOccupiedColor;
+                    blockOccupiedColor = getSelectedColor(occupiedColorBox);
+                    if (oldColor!=blockOccupiedColor) needsRedraw = true;
+                    // check if extra color changed
+                    oldColor = blockExtraColor;
+                    blockExtraColor = getSelectedColor(extraColorBox);
+                    if (oldColor!=blockExtraColor) needsRedraw = true;
+                    // check if Memory changed
+                    if ( !memoryName.equals(memoryNameField.getText().trim()) ) {
+                        // memory has changed
+                        String newName = memoryNameField.getText().trim();
+                        if ((memory = validateMemory(newName,editLayoutBlockFrame))==null) {
+                            // invalid memory entered
+                            memoryName = "";
+                            memoryNameField.setText("");
+                            return;
+                        }
+                        else {
+                            memoryNameField.setText(memoryName);
+                            needsRedraw = true;
+                        }
+                    }
+                    if (needsRedraw) redrawLayoutBlockPanels();
+                }
+            });
+            
+            layout.setResetItem(new AbstractAction(){
+                public void actionPerformed(ActionEvent e) {
+                    memoryNameField.setText(memoryName);
+                    setColorCombo(trackColorBox,blockTrackColor);
+                    setColorCombo(occupiedColorBox,blockOccupiedColor);
+                    setColorCombo(extraColorBox,blockExtraColor);
+                    if (occupiedSense==Sensor.ACTIVE) {
+                        senseBox.setSelectedIndex(senseActiveIndex);
+                    }
+                    else {
+                        senseBox.setSelectedIndex(senseInactiveIndex);
+                    }
+                }
+            });
+            bei.add(layout);
+            return layout;
+        }
+        
+        BeanItemPanel blockRoutingDetails(){
+            BeanItemPanel routing = new BeanItemPanel();
+            routing.setName("Routing");
+            
+            routing.addItem(new BeanEditItem(metricField, "Block Metric", "set the cost for going over this block"));
+            
+            routing.addItem(new BeanEditItem(null, null, "Set the direction of the connection to the neighbouring block"));
+            neighbourDir = new ArrayList<JComboBox>(getNumberOfNeighbours());
+            for(int i = 0; i<getNumberOfNeighbours(); i++){
+                JComboBox dir = new JComboBox(working);
+                routing.addItem(new BeanEditItem(dir, getNeighbourAtIndex(i).getDisplayName(), null));
+                neighbourDir.add(dir);
+            }
+            
+            routing.setResetItem(new AbstractAction(){
+                public void actionPerformed(ActionEvent e) {
+                    metricField.setText(Integer.toString(metric));
+                    for(int i = 0; i<getNumberOfNeighbours(); i++){
+                        JComboBox dir = neighbourDir.get(i);
+                        Block blk = neighbours.get(i).getBlock();
+                        if(block.isBlockDenied(blk))
+                            dir.setSelectedIndex(2);
+                        else if (blk.isBlockDenied(block))
+                            dir.setSelectedIndex(1);
+                        else
+                            dir.setSelectedIndex(0);
+                    }
+                }
+            });
+            
+            routing.setSaveItem(new AbstractAction(){
+                public void actionPerformed(ActionEvent e) {
+                    int m = Integer.parseInt(metricField.getText().trim());
+                    if (m!=metric)
+                        setBlockMetric(m);
+                    block.setPermissiveWorking(permissiveCheck.isSelected());
+                    if(neighbourDir!=null){
+                        for(int i = 0; i<neighbourDir.size(); i++){
+                            int neigh = neighbourDir.get(i).getSelectedIndex();
+                            neighbours.get(i).getBlock().removeBlockDenyList(block);
+                            block.removeBlockDenyList(neighbours.get(i).getBlock());
+                            switch(neigh){
+                                case 0 : updateNeighbourPacketFlow(neighbours.get(i), RXTX);
+                                         break;
+                                case 1 :
+                                        neighbours.get(i).getBlock().addBlockDenyList(block.getDisplayName());
+                                        updateNeighbourPacketFlow(neighbours.get(i), TXONLY);
+                                        break;
+                                case 2 :
+                                        block.addBlockDenyList(neighbours.get(i).getBlock().getDisplayName());
+                                        updateNeighbourPacketFlow(neighbours.get(i), RXONLY);
+                                        break;
+                                 default: break;
+
+                            }
+                        }
+                    }
+                
+                }
+            });
+            bei.add(routing);
+            return routing;
+        }
+    }
 	
 	/** 
 	 * Methods and data to support initialization of color Combo box
@@ -1226,7 +1399,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				// check that this connectivity is compatible with that of other panels.
 				for (int j = 0;j < panels.size();j++) {
 					LayoutEditor tPanel = panels.get(j);
-					if ( (tPanel!=panel) && InstanceManager.layoutBlockManagerInstance().
+					if ( (tPanel!=panel) && InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
 								warn() && ( !compareConnectivity(c,
 										tPanel.auxTools.getConnectivityList(_instance)) )  ) {
 						// send user an error message
@@ -1239,7 +1412,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 								rb.getString("ButtonOKPlus")},rb.getString("ButtonOK"));
 						if (response!=0)
 							// user elected to disable messages
-							InstanceManager.layoutBlockManagerInstance().turnOffWarning();
+							InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).turnOffWarning();
 					}
 				}
 			}
@@ -1281,7 +1454,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             Adjacencies adj = new Adjacencies(addBlock, direction, workingDirection);
             neighbours.add(adj);
             //Add the neighbor to our routing table.
-            LayoutBlock blk = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(addBlock);
+            LayoutBlock blk = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(addBlock);
             LayoutEditor editor = getMaxConnectedPanel();
             if((editor!=null) && (connection==null)){
                 //We should be able to determine block metric now as the tracksegment should be valid
@@ -1503,7 +1676,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         if(adj.isMutual()){
             if(enableAddRouteLogging)
                 log.info("From " + this.getDisplayName() + " adj with " + newblock.getDisplayName() + " is mutual");
-            lBnewblock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(newblock);
+            lBnewblock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(newblock);
         }
         else if(enableAddRouteLogging) {
             log.info("From " + this.getDisplayName() + " adj with " + newblock.getDisplayName() + " is NOT mutual");
@@ -1579,7 +1752,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     void removeAdjacency(jmri.Path removedPath){
         if(enableDeleteRouteLogging)
             log.info("From " + this.getDisplayName() + " Adjacency to be removed " + removedPath.getBlock().getDisplayName() + " " + Path.decodeDirection(removedPath.getToBlockDirection()));
-        LayoutBlock layoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(removedPath.getBlock());
+        LayoutBlock layoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(removedPath.getBlock());
         if(layoutBlock!=null)
             removeAdjacency(layoutBlock);
     }
@@ -1602,7 +1775,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 layoutBlock.removePropertyChangeListener(this);
                 if(enableDeleteRouteLogging)
                     log.info("From " + this.getDisplayName() + " block " + removedBlock.getDisplayName() + " found and removed");
-                LayoutBlock layoutBlockToNotify = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(neighbours.get(i).getBlock());
+                LayoutBlock layoutBlockToNotify = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(neighbours.get(i).getBlock());
                 getAdjacency(neighbours.get(i).getBlock()).dispose();
                 neighbours.remove(i);
                 layoutBlockToNotify.notifiedNeighbourNoLongerMutual(this);
@@ -1635,14 +1808,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     
     //This is used when a property event change is triggered for a removed route.  Not sure that bulk removals will be necessary
     void removeRouteFromNeighbour(LayoutBlock src, RoutingPacket update){
-        InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setLastRoutingChange();
         Block srcblk = src.getBlock();
         Block destblk = update.getBlock();
         String msgPrefix = "From " + this.getDisplayName() + " notify block " + srcblk.getDisplayName() + " ";
         if(enableDeleteRouteLogging)
             log.info(msgPrefix + " remove route from neighbour called");
         
-        if (InstanceManager.layoutBlockManagerInstance().getLayoutBlock(srcblk)==this){
+        if (InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(srcblk)==this){
             if(enableDeleteRouteLogging)
                 log.info("From " + this.getDisplayName() + " source block is the same as our block! " + destblk.getDisplayName());
             return;
@@ -1826,7 +1999,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     Block nextHop = validroute.get(0).getNextBlock();
                     LayoutBlock layoutBlock;
                     if(validroute.get(0).getNextBlock()!=this.getBlock()){
-                        layoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextHop);
+                        layoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(nextHop);
                         if(enableDeleteRouteLogging)
                             log.info(msgPrefix + " We only have a single valid route left to " + destBlock.getDisplayName() + " So will tell " + layoutBlock.getDisplayName() + " we no longer have it");
                         layoutBlock.removeRouteFromNeighbour(this, newUpdate);
@@ -1864,7 +2037,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     for(int i = 0; i<validNeighboursToNotify.size(); i++){
                         //If the neighbour has a valid through path to the dest we will not notify the neighbour of our loss of route
                         if(!validThroughPath(validNeighboursToNotify.get(i), destBlock)){
-                            layoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(validNeighboursToNotify.get(i));
+                            layoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(validNeighboursToNotify.get(i));
                             if (layoutBlock!=null)
                                 layoutBlock.removeRouteFromNeighbour(this, newUpdate);
                             getAdjacency(validNeighboursToNotify.get(i)).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
@@ -1913,7 +2086,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                 }
                             }
                             if (!leaveroute){
-                            LayoutBlock layoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nextblk);
+                            LayoutBlock layoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(nextblk);
                             if(enableDeleteRouteLogging)
                                 log.info(msgPrefix + "############ We need to send notification to " + nextblk.getDisplayName() + " to remove route ########### haven't found an example of this yet!");
                             layoutBlock.removeRouteFromNeighbour(this, newUpdate);
@@ -1998,7 +2171,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 				// check that this connectivity is compatible with that of other panels.
 				for (int j = 0;j < panels.size();j++) {
 					LayoutEditor tPanel = panels.get(j);
-					if ( (tPanel!=panel) && InstanceManager.layoutBlockManagerInstance().
+					if ( (tPanel!=panel) && InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
 								warn() && ( !compareConnectivity(c,
 										tPanel.auxTools.getConnectivityList(_instance)) )  ) {
 						// send user an error message
@@ -2011,7 +2184,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 								rb.getString("ButtonOKPlus")},rb.getString("ButtonOK"));
 						if (response!=0)
 							// user elected to disable messages
-							InstanceManager.layoutBlockManagerInstance().turnOffWarning();
+							InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).turnOffWarning();
 					}
 				}
 			}
@@ -2536,7 +2709,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                     if (routingMethod==LayoutBlockConnectivityTools.METRIC){
                         currentValue = routes.get(i).getMetric();
                     
-                    } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
+                    } else /*if (routingMethod==InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).HOPCOUNT)*/{
                         currentValue = routes.get(i).getHopCount();  //was lastindex changed to i
                     }
                     if(currentValue>=lastValue){
@@ -2555,7 +2728,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                                         bestCount = r.getMetric();
                                     }
                                 
-                                } else /*if (routingMethod==InstanceManager.layoutBlockManagerInstance().HOPCOUNT)*/{
+                                } else /*if (routingMethod==InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).HOPCOUNT)*/{
                                     if (r.getHopCount()<bestCount){
                                         bestIndex = i;
                                         bestCount = r.getHopCount();
@@ -2657,14 +2830,14 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 int updateType = update.getPacketType();
                 switch (updateType) {
                     case ADDITION : if(enableUpdateRouteLogging) log.info("Addition");
-                                    //InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+                                    //InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setLastRoutingChange();
                                     addRouteFromNeighbour(srcEvent, update);
                                     break;
                     case UPDATE :  if(enableUpdateRouteLogging) log.info("Update");
                                     updateRoutingInfo(srcEvent, update);
                                     break;
                     case REMOVAL : if(enableUpdateRouteLogging) log.info("Removal");
-                                    InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+                                    InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setLastRoutingChange();
                                     removeRouteFromNeighbour(srcEvent, update);
                                     break;
                     default :       break;
@@ -2947,7 +3120,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             Adjacencies adj = getAdjacency(messageRecipients.get(i));
             if(adj.advertiseRouteToNeighbour(ro)){
                 adj.addRouteAdvertisedToNeighbour(ro);
-                LayoutBlock recipient = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(messageRecipients.get(i));
+                LayoutBlock recipient = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(messageRecipients.get(i));
                 if (recipient!=null)
                     recipient.updateRoutingInfo(this, update);
             }
@@ -3023,7 +3196,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             source blocks that have a desination of the next hop*/
             if (throughPaths.get(i).getDestinationBlock()==nextHop){
                 if (getAdjacency(throughPaths.get(i).getSourceBlock()).isMutual()){
-                    validBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(throughPaths.get(i).getSourceBlock());
+                    validBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(throughPaths.get(i).getSourceBlock());
                 }
             }
             //only need to add it the once.  Not sure if the contains is required.
@@ -3055,7 +3228,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
             log.info("From " + this.getDisplayName() + " packet to be added from neighbour " + src.getDisplayName());
             log.info("From " + this.getDisplayName() + " src: " + src.getDisplayName() + " block: " + update.getBlock().getDisplayName() + " hopCount " + update.getHopCount() + " metric: " + update.getMetric() + " status: " + update.getBlockState() + " packetID: " + update.getPacketId());
         }
-        InstanceManager.layoutBlockManagerInstance().setLastRoutingChange();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setLastRoutingChange();
         Block destBlock = update.getBlock();
         Block srcblk = src.getBlock();
         if(destBlock==this.getBlock()){
@@ -3265,7 +3438,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 return;
             mutualAdjacency=mut;
             if (mutualAdjacency){
-                adjLayoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(adjBlock);
+                adjLayoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(adjBlock);
             }
         }
         
@@ -3296,7 +3469,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         int getMetric() { 
             if(adjLayoutBlock!=null)
                 return adjLayoutBlock.getBlockMetric();
-            adjLayoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(adjBlock);
+            adjLayoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(adjBlock);
             if (adjLayoutBlock!=null)
                 return adjLayoutBlock.getBlockMetric();
             if(log.isDebugEnabled())
@@ -3311,7 +3484,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         float getLength() { 
             if(adjLayoutBlock!=null)
                 return adjLayoutBlock.getBlock().getLengthMm();
-            adjLayoutBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(adjBlock);
+            adjLayoutBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(adjBlock);
             if (adjLayoutBlock!=null)
                 return adjLayoutBlock.getBlock().getLengthMm();
             if(log.isDebugEnabled())
@@ -3593,7 +3766,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
         }
         
         int getState() {
-            LayoutBlock destLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(destBlock);
+            LayoutBlock destLBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(destBlock);
             if (destLBlock!=null)
                 return destLBlock.getBlockStatus();
             if(log.isDebugEnabled())
