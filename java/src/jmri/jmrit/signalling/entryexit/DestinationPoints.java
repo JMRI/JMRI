@@ -742,11 +742,16 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                 } else {
                     if (log.isDebugEnabled()) log.debug(mUserName + "  No blocks were cleared down " + routeDetails.size());
                     try{
-                        if (log.isDebugEnabled()) log.debug(mUserName + "  set first block as active so that we can manually clear this down " + routeDetails.get(0).getBlock().getSensor().getDisplayName());
-                        if(routeDetails.get(0).getBlock().getSensor()!=null)
-                            routeDetails.get(0).getBlock().getSensor().setState(Sensor.ACTIVE);
-                        if(src.getStart().getBlock().getSensor()!=null)
-                            src.getStart().getBlock().getSensor().setState(Sensor.INACTIVE);
+                        if (log.isDebugEnabled()) log.debug(mUserName + "  set first block as active so that we can manually clear this down " + routeDetails.get(0).getBlock().getUserName());
+                        if(routeDetails.get(0).getOccupancySensor()!=null)
+                            routeDetails.get(0).getOccupancySensor().setState(Sensor.ACTIVE);
+                        else
+                            routeDetails.get(0).getBlock().goingActive();
+                        
+                        if(src.getStart().getOccupancySensor()!=null)
+                            src.getStart().getOccupancySensor().setState(Sensor.INACTIVE);
+                        else
+                            src.getStart().getBlock().goingInactive();
                     } catch (java.lang.NullPointerException e){
                         log.error("error in clear route A " + e);
                     } catch (JmriException e){
@@ -765,13 +770,15 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                             if (log.isDebugEnabled()) log.debug(mUserName + " in loop Set active " + routeDetails.get(i).getDisplayName() + " " + routeDetails.get(i).getBlock().getSystemName());
                             try{
                                 if(routeDetails.get(i).getOccupancySensor()!=null)
-                                    routeDetails.get(i).getOccupancySensor().setState(Sensor.ACTIVE); //was getBlock().getSensor()
-                                routeDetails.get(i).getBlock().goingActive();
+                                    routeDetails.get(i).getOccupancySensor().setState(Sensor.ACTIVE);
+                                else
+                                    routeDetails.get(i).getBlock().goingActive();
                                 
                                 if (log.isDebugEnabled()) log.debug(mUserName + " in loop Set inactive " + routeDetails.get(i-1).getDisplayName() + " " + routeDetails.get(i-1).getBlock().getSystemName());
                                 if(routeDetails.get(i-1).getOccupancySensor()!=null)
-                                    routeDetails.get(i-1).getOccupancySensor().setState(Sensor.INACTIVE); //was getBlock().getSensor()
-                                routeDetails.get(i-1).getBlock().goingInactive();
+                                    routeDetails.get(i-1).getOccupancySensor().setState(Sensor.INACTIVE);
+                                else
+                                    routeDetails.get(i-1).getBlock().goingInactive();
                             } catch (java.lang.NullPointerException e){
                                 log.error("error in clear route b " + e);
                                 e.printStackTrace();
@@ -784,9 +791,13 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                             //Get the last block an set it active.
                             if(routeDetails.get(routeDetails.size()-1).getOccupancySensor()!=null)
                                 routeDetails.get(routeDetails.size()-1).getOccupancySensor().setState(Sensor.ACTIVE);
+                            else
+                                routeDetails.get(routeDetails.size()-1).getBlock().goingActive();
                             if (log.isDebugEnabled()) log.debug(mUserName + " out of loop Set inactive " + routeDetails.get(routeDetails.size()-2).getUserName() + " " + routeDetails.get(routeDetails.size()-2).getBlock().getSystemName());
                             if(routeDetails.get(routeDetails.size()-2).getOccupancySensor()!=null)
                                 routeDetails.get(routeDetails.size()-2).getOccupancySensor().setState(Sensor.INACTIVE);
+                            else
+                                routeDetails.get(routeDetails.size()-2).getBlock().goingInactive();
                         } catch (java.lang.NullPointerException e){
                             log.error("error in clear route c " +e);
                         } catch (java.lang.ArrayIndexOutOfBoundsException e){
