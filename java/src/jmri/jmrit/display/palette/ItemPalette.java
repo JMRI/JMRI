@@ -190,8 +190,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
             String familyName = (String)famNode.getUserObject();
             HashMap <String, NamedIcon> iconMap = new HashMap <String, NamedIcon> ();
             List <CatalogTreeLeaf> list = famNode.getLeaves();
-            int w = 0;
-            int h = 0;
             for (int i=0; i<list.size(); i++) {
                 String iconName = list.get(i).getName();
                 CatalogTreeLeaf leaf = list.get(i);
@@ -203,10 +201,10 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                         log.info(iconName+" removed for url= "+path);
                     }
                 }
-                w = Math.max(w, icon.getIconWidth());
-                h = Math.max(h, icon.getIconHeight());
-                iconMap.put(iconName, icon);
-                if (log.isDebugEnabled()) log.debug("Add "+iconName+" icon to family "+familyName);
+                if (icon!=null) {
+                    iconMap.put(iconName, icon);
+                    if (log.isDebugEnabled()) log.debug("Add "+iconName+" icon to family "+familyName);                	
+                }
                 Thread.yield();
            }
             familyMap.put(familyName, iconMap); 
@@ -276,7 +274,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                         log.info(iconName+" removed for url= "+fileName);
                     }
                 }
-                iconMap.put(iconName, icon);
+                if (icon!=null) {
+                	iconMap.put(iconName, icon);
+                }
             }
             familyMap.put(familyName, iconMap); 
             if (log.isDebugEnabled()) log.debug("Add "+iconMap.size()+" icons to family "+familyName);
