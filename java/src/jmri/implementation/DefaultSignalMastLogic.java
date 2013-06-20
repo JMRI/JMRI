@@ -1335,27 +1335,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                         autoBlocks.remove(facingBlock.getBlock());
                     }
                 }
-            }
-            if(getAssociatedSection()!=null){
-                createSectionDetails();
-                /*getAssociatedSection().removeAllBlocksFromSection();
-                for(Block key:autoBlocks.keySet()){
-                    getAssociatedSection().addBlock(key);
-                }
-                String dir = jmri.Path.decodeDirection(getFacingBlock().getNeighbourDirection(getProtectingBlock()));
-                jmri.EntryPoint ep = new jmri.EntryPoint(getProtectingBlock().getBlock(), getFacingBlock().getBlock(), dir);
-                ep.setTypeForward();
-                getAssociatedSection().addToForwardList(ep);
-                
-                //LayoutBlock destLBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blks.get(blks.size()-1));
-                LayoutBlock proDestLBlock = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getProtectedBlockByNamedBean(destination, destinationBlock.getMaxConnectedPanel());
-                if(proDestLBlock!=null){
-                    dir = jmri.Path.decodeDirection(proDestLBlock.getNeighbourDirection(destinationBlock));
-                    ep = new jmri.EntryPoint(destinationBlock.getBlock(), proDestLBlock.getBlock(), dir);
-                    ep.setTypeReverse();
-                    getAssociatedSection().addToReverseList(ep);
-                }*/
-                
+                if(getAssociatedSection()!=null){
+                    createSectionDetails();
+                }                    
             }
             firePropertyChange("autoblocks", null, this.destination);
         }
