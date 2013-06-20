@@ -198,7 +198,7 @@ public class ZeroConfService {
      * Start advertising the service.
      */
     public void publish() {
-        if (!isPublished()) {
+    	if (!isPublished() && _jmdns != null) {
             try {
                 ZeroConfService.jmdns().registerService(_serviceInfo);
                 ZeroConfService.services().put(key(), this);
