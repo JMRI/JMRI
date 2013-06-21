@@ -38,8 +38,8 @@ import org.slf4j.LoggerFactory;
  * JMRI version numbers in a string "major.minor.test" with the key "jmri"
  * <P>
  * All ZeroConfServices are automatically stopped when the JMRI application
- * shuts down. A collection of all ZeroConfService objects is available with:
- * <pre>ZeroConfService.allServices()</pre>.
+ * shuts down. Use {@link #allServices() } to get a collection of all
+ * ZeroConfService objects.
  * <hr>
  * This file is part of JMRI.
  * <P>
@@ -68,11 +68,12 @@ public class ZeroConfService {
 
     /**
      * Create a ZeroConfService with the minimal required settings. This method
-     * calls
-     * <pre>create(type, port, props)</pre> with an empty props HashMap.
+     * calls {@link #create(type, port, props)} with an empty props HashMap.
      *
      * @param type The service protocol
      * @param port The port the service runs over
+     * @see #create(java.lang.String, java.lang.String, int, int, int,
+     * java.util.HashMap)
      */
     public static ZeroConfService create(String type, int port) {
         return create(type, port, new HashMap<String, String>());
@@ -81,8 +82,10 @@ public class ZeroConfService {
     /**
      * Create a ZeroConfService with an automatically detected server name. This
      * method calls
-     * <pre>create</pre> with the default weight and priority, and with the name
-     * "<em>hostName</em>" with dots and dashes replaced with spaces.
+     * {@link #create(java.lang.String, java.lang.String, int, int, int, java.util.HashMap)}
+     * with the default weight and priority, and with the result of
+     * {@link jmri.web.server.WebServerPreferences#getRailRoadName()}
+     * reformatted to replace dots and dashes with spaces.
      *
      * @param type The service protocol
      * @param port The port the service runs over
@@ -100,12 +103,10 @@ public class ZeroConfService {
      * string as its value.
      * <p>
      * If a service with the same key as the new service is already published,
-     * that service is returned unmodified instead of a new object.
-     * <!-- after upgrading to JmDNS 3.4 this should change, since 3.4
-     * advertises changes to text properties on a service -->
+     * the original service is returned unmodified.
      *
-     * @param name The name of service listed on client devices
      * @param type The service protocol
+     * @param name The name of the JMRI server listed on client devices
      * @param port The port the service runs over
      * @param weight Default value is 0
      * @param priority Default value is 0
@@ -198,7 +199,7 @@ public class ZeroConfService {
      * Start advertising the service.
      */
     public void publish() {
-    	if (!isPublished()) {
+        if (!isPublished()) {
             try {
                 ZeroConfService.jmdns().registerService(_serviceInfo);
                 ZeroConfService.services().put(key(), this);
@@ -259,7 +260,7 @@ public class ZeroConfService {
     }
 
     /* return the JmDNS handler */
-    static JmDNS jmdns() {  // package protected, so we only have one.
+    protected static JmDNS jmdns() {  // package protected, so we only have one.
         if (_jmdns == null) {
             log.debug("JmDNS version: {}", JmDNS.VERSION);
             try {
@@ -295,12 +296,11 @@ public class ZeroConfService {
 
     /**
      * Return the system name or "computer" if the system name cannot be
-     * determined. This method uses the JmDNS.getHostName() method.
-     *
+     * determined. This method returns the first part of the fully qualified
+     * domain name from {@link #FQDN()}.
      */
     public static String hostName() {
-        // getHostName returns the FQDN or "computer" for the host
-        String hostName = ZeroConfService.jmdns().getHostName() + ".";
+        String hostName = ZeroConfService.FQDN() + ".";
         // we would have to check for the existance of . if we did not add .
         // to the string above.
         return hostName.substring(0, hostName.indexOf('.'));
@@ -308,7 +308,8 @@ public class ZeroConfService {
 
     /**
      * Return the fully qualified domain name or "computer" if the system name
-     * cannot be determined. This method uses the JmDNS.getHostName() method.
+     * cannot be determined. This method uses the
+     * {@link javax.jmdns.JmDNS#getHostName()} method to get the name.
      */
     public static String FQDN() {
         return ZeroConfService.jmdns().getHostName();
