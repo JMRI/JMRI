@@ -218,7 +218,7 @@ public class RosterSpeedProfile {
      */
     public void changeLocoSpeed(DccThrottle t, Block blk, float speed){
         if(blk==referenced && speed == desiredSpeedStep){
-            if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this block");
+            //if(log.isDebugEnabled()) log.debug("Already setting to desired speed step for this block");
             return;
         }
         float blockLength = blk.getLengthMm();
@@ -401,10 +401,14 @@ public class RosterSpeedProfile {
                 }
             } else {
                 calculatingStep = calculatingStep - calculatedStepInc;
-                if(calculatingStep<0.001){
+                if(calculatingStep<_throttle.getSpeedIncrement()){
                     calculatingStep = 0.0f;
                     calculated = true;
                     timePerStep = 0;
+                }
+                if (calculatingStep<desiredSpeedStep){
+                    calculatingStep=desiredSpeedStep;
+                    calculated=true;
                 }
             }
             if(log.isDebugEnabled()) log.debug("Speed Step current " + _throttle.getSpeedSetting() + " speed to set " + calculatingStep);
@@ -420,7 +424,7 @@ public class RosterSpeedProfile {
             calculatedDistance = calculatedDistance - getDistanceTravelled(_throttle.getIsForward(), calculatingStep, ((float)(timePerStep/1000.0)));
             
             if(calculatedDistance<0 && !calculated){
-                log.error("distance remaining is now 0, but we have not reached desired speed setting");
+                log.error("distance remaining is now 0, but we have not reached desired speed setting " + desiredSpeedStep + " v " + calculatingStep);
                 ss = new SpeedSetting(desiredSpeedStep, 10);
                 synchronized(this){
                     stepQueue.addLast(ss);
