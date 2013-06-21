@@ -198,7 +198,7 @@ public class ZeroConfService {
      * Start advertising the service.
      */
     public void publish() {
-    	if (!isPublished() && _jmdns != null) {
+    	if (!isPublished()) {
             try {
                 ZeroConfService.jmdns().registerService(_serviceInfo);
                 ZeroConfService.services().put(key(), this);
@@ -209,6 +209,12 @@ public class ZeroConfService {
                             log.debug("\t{}", _serviceInfo.getInetAddresses()[i]);
                         }
                     }
+                }
+            } catch (NullPointerException ex) {
+                if (_jmdns == null) {
+                    log.error("Unable to publish service for {}; no JmDNS service provider.", key());
+                } else {
+                    log.error("Unable to publish service for {}: {}", key(), ex.getMessage());
                 }
             } catch (IOException ex) {
                 log.error("Unable to publish service for {}: {}", key(), ex.getMessage());
