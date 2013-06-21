@@ -1339,7 +1339,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
                         }
                     }
                 } else {
-                    for(int i = 0; i<=tsList.size(); i++){
+                    for(int i = 0; i<=tsList.size()-1; i++){
                         TransitSection ts = tsList.get(i);
                         if(ts.getSection()==ar.getSection() && ts.getSequenceNumber() == ar.getSectionSeqNumber()){
                             found = true;
