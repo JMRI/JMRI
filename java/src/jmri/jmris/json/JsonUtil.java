@@ -569,8 +569,8 @@ public class JsonUtil {
         data.put(USERNAME, reporter.getUserName());
         data.put(STATE, reporter.getState());
         data.put(COMMENT, reporter.getComment());
-        data.put(REPORT, reporter.getCurrentReport().toString());
-        data.put(LAST_REPORT, reporter.getLastReport().toString());
+        data.put(REPORT, (reporter.getCurrentReport() != null) ? reporter.getCurrentReport().toString() : null);
+        data.put(LAST_REPORT, (reporter.getLastReport() != null) ? reporter.getLastReport().toString() : null);
         return root;
     }
 
