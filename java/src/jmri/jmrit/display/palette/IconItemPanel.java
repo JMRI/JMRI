@@ -238,7 +238,12 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     */
     protected void addNewIcon() {
         if (log.isDebugEnabled()) log.debug("addNewIcon Action: iconMap.size()= "+_iconMap.size());
-        String name = Bundle.getMessage("RedX");
+//        String name = Bundle.getMessage("RedX");
+        String name = JOptionPane.showInputDialog(this,
+    			Bundle.getMessage("NoIconName"), null);
+        if ( name==null || name.trim().length()==0) {
+        	return;
+        }
         if (_iconMap.get(name)!=null) {
             JOptionPane.showMessageDialog(this,
                     Bundle.getMessage("DuplicateIconName", name),
