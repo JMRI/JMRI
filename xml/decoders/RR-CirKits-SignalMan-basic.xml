@@ -8824,7 +8824,7 @@
            
       <variable label="MAA Type">
         <compositeVal>
-          <compositeChoice choice="Serial">
+          <compositeChoice choice="Turnout">
             <compositeSetting label="MA1 Address Mode" value="0"/>
             <compositeSetting label="MA2 Address Mode" value="0"/>
             <compositeSetting label="MA3 Address Mode" value="0"/>
@@ -8850,7 +8850,7 @@
       </variable>
       <variable label="MAB Type">
         <compositeVal>
-          <compositeChoice choice="Serial">
+          <compositeChoice choice="Turnout">
             <compositeSetting label="MA9 Address Mode" value="0"/>
             <compositeSetting label="MA10 Address Mode" value="0"/>
             <compositeSetting label="MA11 Address Mode" value="0"/>
@@ -8876,7 +8876,7 @@
       </variable>
       <variable label="MAC Type">
         <compositeVal>
-          <compositeChoice choice="Serial">
+          <compositeChoice choice="Turnout">
             <compositeSetting label="MA17 Address Mode" value="0"/>
             <compositeSetting label="MA18 Address Mode" value="0"/>
             <compositeSetting label="MA19 Address Mode" value="0"/>
@@ -8902,7 +8902,7 @@
       </variable>
       <variable label="MAD Type">
         <compositeVal>
-          <compositeChoice choice="Serial">
+          <compositeChoice choice="Turnout">
             <compositeSetting label="MA25 Address Mode" value="0"/>
             <compositeSetting label="MA26 Address Mode" value="0"/>
             <compositeSetting label="MA27 Address Mode" value="0"/>

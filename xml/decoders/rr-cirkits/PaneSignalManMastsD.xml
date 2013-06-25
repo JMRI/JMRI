@@ -39,21 +39,21 @@
       <separator/>
       <separator/>
       <row>       
-        <label label="Aspect#    Mode   ">
+        <label label="Aspect#    Mode ">
            </label>
         <label label="  Command     ">
            </label>
         <separator/>
-        <label label="  Lamp A  Phase/Flash    ">
+        <label label="  Lamp A  Phase/Flash  ">
            </label>
         <separator/>
         <label label=" Bi-Polar ">
            </label>
         <separator/>
-        <label label="  Lamp B  Phase/Flash       ">
+        <label label="  Lamp B  Phase/Flash      ">
            </label>
         <separator/>
-        <label label="     Lamp C  Phase/Flash    ">
+        <label label="  Lamp C  Phase/Flash  ">
            </label>
         <separator/>
         <label label=" Bi-Polar ">
@@ -75,7 +75,7 @@
         <column>
           <display item="MA25 Address Mode" format="onradiobutton" label="    "/>
         </column>
-        <label label="         ">
+        <label label="  ">
            </label>
          
         <column>
@@ -186,7 +186,7 @@
         <column>
           <display item="MA26 Address Mode" format="onradiobutton" label="    "/>
         </column>
-        <label label="         ">
+        <label label="  ">
            </label>
          
         <column>
@@ -297,7 +297,7 @@
         <column>
           <display item="MA27 Address Mode" format="onradiobutton" label="    "/>
         </column>
-        <label label="         ">
+        <label label="  ">
            </label>
          
         <column>
@@ -408,7 +408,7 @@
         <column>
           <display item="MA28 Address Mode" format="onradiobutton" label="    "/>
         </column>
-        <label label="         ">
+        <label label="  ">
            </label>
          
         <column>
@@ -519,7 +519,7 @@
         <column>
           <display item="MA29 Address Mode" format="onradiobutton" label="    "/>
         </column>
-        <label label="         ">
+        <label label="  ">
            </label>
          
         <column>
@@ -630,7 +630,7 @@
         <column>
           <display item="MA30 Address Mode" format="onradiobutton" label="    "/>
         </column>
-        <label label="         ">
+        <label label="  ">
            </label>
          
         <column>
@@ -741,7 +741,7 @@
         <column>
           <display item="MA31 Address Mode" format="onradiobutton" label="    "/>
         </column>
-        <label label="         ">
+        <label label="  ">
            </label>
          
         <column>
@@ -852,7 +852,7 @@
         <column>
           <display item="MA32 Address Mode" format="onradiobutton" label="    "/>
         </column>
-        <label label="         ">
+        <label label="  ">
            </label>
          
         <column>
