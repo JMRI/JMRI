@@ -19,7 +19,7 @@
 <!-- LocoNet/DCC choice for Masts -->
 
 <enumVal>
-  <enumChoice choice="Serial"/>
+  <enumChoice choice="Turnout"/>
   <enumChoice choice="DCC"/>
 </enumVal>
 
