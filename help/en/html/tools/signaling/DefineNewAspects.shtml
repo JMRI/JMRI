@@ -97,6 +97,7 @@ Most of the file is blocks that look like this:
       &lt;speed&gt;&lt;/speed&gt;
       &lt;speed2&gt;&lt;/speed2&gt;
       &lt;route&gt;&lt;/route&gt;
+      &lt;dccAspect&gt;&lt;/dccAspect&gt;
     &lt;/aspect&gt;
 </PRE>
 
@@ -124,6 +125,10 @@ The route element indicates that this specific aspect is used when a
 turnout has been thrown in the path ahead.  The signalmast logic uses this element
 to help determine which aspect should be displayed where there are multiple 
 possible aspects.
+<p>
+The dccAspect element, if present, is the default DCC signal accessory decoder id for that aspect, 
+these values are then used to populate the aspect ids when a DCC or LNCP signal driver are used. 
+The values can be over-written by the user when creating or editing the signalmast.
 <p>
 The delay element, if present, allows a delay to be configured between changing the 
 aspects on each signal head where multiple heads are configured on a mast.<br>

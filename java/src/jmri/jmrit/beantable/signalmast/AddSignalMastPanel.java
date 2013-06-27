@@ -265,8 +265,9 @@ public class AddSignalMastPanel extends JPanel {
                     String key = aspects.nextElement();
                     DCCAspectPanel dccPanel = dccAspect.get(key);
                     dccPanel.setAspectDisabled(dmast.isAspectDisabled(key));
-                    if(!dmast.isAspectDisabled(key))
+                    if(!dmast.isAspectDisabled(key)){
                         dccPanel.setAspectId(dmast.getOutputForAppearance(key));
+                    }
                     
                 }
             }
@@ -920,10 +921,12 @@ public class AddSignalMastPanel extends JPanel {
         mastType =  mastType.substring(11, mastType.indexOf(".xml"));
         jmri.implementation.DefaultSignalAppearanceMap sigMap = jmri.implementation.DefaultSignalAppearanceMap.getMap(sigsysname, mastType);
         java.util.Enumeration<String> aspects = sigMap.getAspects();
+        SignalSystem sigsys = InstanceManager.signalSystemManagerInstance().getSystem(sigsysname);
         while(aspects.hasMoreElements()){
             String aspect = aspects.nextElement();
             DCCAspectPanel aPanel = new DCCAspectPanel(aspect);
             dccAspect.put(aspect, aPanel);
+            aPanel.setAspectId((String) sigsys.getProperty(aspect, "dccAspect"));
         }
         dccMastPanel.removeAll();
         dccMastPanel.setLayout(new jmri.util.javaworld.GridLayout2(dccAspect.size()+3,2));
@@ -1085,6 +1088,10 @@ public class AddSignalMastPanel extends JPanel {
         
         void setAspectId(int i){
             aspectId.setText(""+i);
+        }
+        
+        void setAspectId(String s){
+            aspectId.setText(s);
         }
         
         JPanel panel;
