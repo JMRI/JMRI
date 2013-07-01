@@ -142,14 +142,14 @@
         <pathelement location="${libdir}/jackson-core-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-annotations-2.0.6.jar"/>
         <pathelement location="${libdir}/jackson-databind-2.0.6.jar"/>
-        <pathelement location="${libdir}/jetty-continuation-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-http-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-security-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-server-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-servlet-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-util-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-io-8.1.0.v20120127.jar"/>
-        <pathelement location="${libdir}/jetty-websocket-8.1.0.v20120127.jar"/>
+        <pathelement location="${libdir}/jetty-continuation-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-http-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-security-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-server-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-servlet-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-util-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-io-8.1.11.v20130520.jar"/>
+        <pathelement location="${libdir}/jetty-websocket-8.1.11.v20130520.jar"/>
         <pathelement location="${libdir}/slf4j-api-1.7.2.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.2.jar"/>
     </path>
