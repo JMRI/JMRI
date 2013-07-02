@@ -142,9 +142,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             String value = img.get(j).getText();
             images.put(key, value);
         }
-        
         map.aspectImageMap.put(name, images);
-    
     }
 
     public final static int NUMSPECIFIC = 4;
@@ -171,13 +169,16 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             default: child = "danger";
         }
         
-        String appearance;
+        String appearance = null;
+        if(root.getChild("specificappearances").getChild(child)==null){
+            log.debug("appearance not configured " + child);
+            return;
+        }
         try {
             appearance = root.getChild("specificappearances").getChild(child).getChild("aspect").getText();
             SMmap.specificMaps.put(aspectType, appearance);
         } catch (java.lang.NullPointerException e){
-            log.debug("appearance not configured");
-            return;
+            log.debug("aspect for specific appearance not configured " + child);
         }
         
         try {
@@ -185,20 +186,30 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             List<Element> img = root.getChild("specificappearances").getChild(child).getChildren("imagelink");
             String name = "$"+child;
             if (img.size()==0){
-               //We do not have any specific images created, therefore we use the
-               //those associated with the aspect.
-               List<String> app = SMmap.getImageTypes(appearance);
-               java.util.Hashtable<String, String> images = new java.util.Hashtable<String, String>();
-               String type = "";
-               for (int i = 0; i<app.size(); i++){
-                    type = SMmap.getImageLink(appearance, app.get(i));
-                    images.put(app.get(i), type);
+                if(appearance!=null){
+                   //We do not have any specific images created, therefore we use the
+                   //those associated with the aspect.
+                   List<String> app = SMmap.getImageTypes(appearance);
+                   java.util.Hashtable<String, String> images = new java.util.Hashtable<String, String>();
+                   String type = "";
+                   for (int i = 0; i<app.size(); i++){
+                        type = SMmap.getImageLink(appearance, app.get(i));
+                        images.put(app.get(i), type);
+                   }
+                   //We will register the last aspect as a default.
+                   images.put("default", type);
+                   SMmap.aspectImageMap.put(name, images);
                }
-               //We will register the last aspect as a default.
-               images.put("default", type);
-               SMmap.aspectImageMap.put(name, images);
             } else {
                 loadImageMaps(img, name, SMmap);
+                java.util.Hashtable<String, String> hm = new java.util.Hashtable<String, String>();
+                
+                //Register the last aspect as the default
+                String key = img.get(img.size()-1).getName();
+                String value = img.get(img.size()-1).getText();
+                hm.put(key, value);
+                
+                SMmap.aspectAttributeMap.put(name, hm);
             }
         } catch (java.lang.NullPointerException e){
             //Considered Normal if held aspect uses default signal appearance
