@@ -170,7 +170,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         }
         
         String appearance = null;
-        if(root.getChild("specificappearances").getChild(child)==null){
+        if(root.getChild("specificappearances")==null || root.getChild("specificappearances").getChild(child)==null){
             log.debug("appearance not configured " + child);
             return;
         }
