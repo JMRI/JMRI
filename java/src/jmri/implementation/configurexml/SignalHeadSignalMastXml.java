@@ -31,7 +31,13 @@ public class SignalHeadSignalMastXml
         e.setAttribute("class", this.getClass().getName());
         e.addContent(new Element("systemName").addContent(p.getSystemName()));
         storeCommon(p, e);
-        
+        Element unlit = new Element("unlit");
+        if(p.allowUnLit()){
+            unlit.setAttribute("allowed", "yes");
+        } else {
+            unlit.setAttribute("allowed", "no");
+        }
+        e.addContent(unlit);
         List<String> disabledAspects = p.getDisabledAspects();
         if(disabledAspects!=null){
             Element el = new Element("disabledAspects");
@@ -65,7 +71,16 @@ public class SignalHeadSignalMastXml
             m.setUserName(getUserName(element));
         
         loadCommon(m, element);
-        
+        if(element.getChild("unlit")!=null){
+            Element unlit = element.getChild("unlit");
+            if(unlit.getAttribute("allowed")!=null){
+                if(unlit.getAttribute("allowed").getValue().equals("no")){
+                    m.setAllowUnLit(false);
+                } else {
+                    m.setAllowUnLit(true);
+                }
+            }
+        }
         Element e = element.getChild("disabledAspects");
         if(e!=null){
             @SuppressWarnings("unchecked")

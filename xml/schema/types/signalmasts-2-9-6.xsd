@@ -58,6 +58,13 @@
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="unlit" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:attribute name="allowed"  use="required">
+                <xs:annotation><xs:documentation>Specifies if the signal can go unlit</xs:documentation></xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="disabledAspects" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType>
             <xs:sequence>
@@ -89,6 +96,17 @@
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="unlit" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="turnout" type="xs:string" minOccurs="0" maxOccurs="1"/>
+              <xs:element name="turnoutstate" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="allowed"  use="required">
+                <xs:annotation><xs:documentation>Specifies if the signal can go unlit</xs:documentation></xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType>
             <xs:sequence>
@@ -127,6 +145,16 @@
         <xs:element name="systemName" type="systemNameType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="userName" type="userNameType" minOccurs="0" maxOccurs="1"/>
         <xs:element name="comment" type="commentType" minOccurs="0" maxOccurs="1" />
+        <xs:element name="unlit" minOccurs="0" maxOccurs="1" >
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="aspect" type="xs:string" minOccurs="0" maxOccurs="1"/>
+            </xs:sequence>
+            <xs:attribute name="allowed"  use="required">
+                <xs:annotation><xs:documentation>Specifies if the signal can go unlit</xs:documentation></xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="aspect" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType>
             <xs:sequence>

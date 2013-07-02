@@ -157,7 +157,28 @@ public class DccSignalMast extends AbstractSignalMast {
             log.warn("Trying to set aspect that has not been configured");
         }
         super.setAspect(aspect);
+    }
     
+    public void setLit(boolean newLit) {
+        if(!allowUnLit() || newLit == getLit()){
+            return;
+        }
+        if(newLit){
+            setAspect(getAspect());
+        } else {
+            c.sendPacket( NmraPacket.altAccSignalDecoderPkt( dccSignalDecoderAddress, unLitId ), packetRepeatCount);
+        }
+        super.setLit(newLit);
+    }
+    
+    int unLitId = 31;
+    
+    public void setUnlitId(int i){
+        unLitId = i;
+    }
+    
+    public int getUnlitId(){
+        return unLitId;
     }
     
     public int getDccSignalMastAddress(){
@@ -168,9 +189,9 @@ public class DccSignalMast extends AbstractSignalMast {
         return c;
     }
   
-  protected CommandStation c;
+    protected CommandStation c;
 
-  protected int dccSignalDecoderAddress;
+    protected int dccSignalDecoderAddress;
   
     public static String isDCCAddressUsed(int addr){
         for(String val : InstanceManager.signalMastManagerInstance().getSystemNameList()){
