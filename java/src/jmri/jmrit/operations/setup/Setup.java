@@ -204,8 +204,9 @@ public class Setup {
 	private static String iconLocalColor ="";
 	private static String iconTerminateColor ="";
 	
-	private static boolean tab = false;						// when true, tab out manifest and switch lists
+	private static boolean tab = false;						// when true, tab out manifest and switch lists	
 	private static int tabCharLength = Control.max_len_string_attibute;
+	private static boolean twoColumnFormat = false;			// when true, use two columns for work at a location
 	private static boolean manifestEditorEnabled = false;	// when true use text editor to view build report
 	private static boolean switchListSameManifest = true;	// when true switch list format is the same as the manifest
 	private static boolean manifestTruncated = false;		// when true, manifest is truncated if switch list is available
@@ -845,6 +846,14 @@ public class Setup {
 	
 	public static void setTablength(int length){
 		tabCharLength = length;
+	}
+	
+	public static boolean isTwoColumnFormatEnabled(){
+		return twoColumnFormat;
+	}
+	
+	public static void setTwoColumnFormatEnabled(boolean enable){
+		twoColumnFormat = enable;
 	}
 	
 	public static boolean isCarLoggerEnabled(){
@@ -1569,6 +1578,9 @@ public class Setup {
     	values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled()?Xml.TRUE:Xml.FALSE);
     	values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
     	
+    	e.addContent(values = new Element(Xml.COLUMN_FORMAT));
+    	values.setAttribute(Xml.TWO_COLUMNS, isTwoColumnFormatEnabled()?Xml.TRUE:Xml.FALSE);
+    	
         if (!getManifestLogoURL().equals("")){
         	values = new Element(Xml.MANIFEST_LOGO);
         	values.setAttribute(Xml.NAME, getManifestLogoURL());
@@ -2014,7 +2026,14 @@ public class Setup {
         		if (log.isDebugEnabled()) log.debug("manifest hazardousMsg: "+message);
         		setHazardousMsg(message);
         	}
-        }     
+        } 
+        if ((operations.getChild(Xml.COLUMN_FORMAT) != null)){ 
+        	if((a = operations.getChild(Xml.COLUMN_FORMAT).getAttribute(Xml.TWO_COLUMNS))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("two columns: "+enable);
+        		setTwoColumnFormatEnabled(enable.equals(Xml.TRUE));
+        	}
+        }
        	// get manifest logo
         if ((operations.getChild(Xml.MANIFEST_LOGO) != null)){ 
         	if((a = operations.getChild(Xml.MANIFEST_LOGO).getAttribute(Xml.NAME))!= null){

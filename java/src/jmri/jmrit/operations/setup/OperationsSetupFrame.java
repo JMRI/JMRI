@@ -144,6 +144,8 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
 		panelTextField.setToolTipText(Bundle.getMessage("EnterPanelName"));
 		yearTextField.setToolTipText(Bundle.getMessage("EnterYearModeled"));
+		autoSaveCheckBox.setToolTipText(Bundle.getMessage("AutoSaveTip"));
+		autoBackupCheckBox.setToolTipText(Bundle.getMessage("AutoBackUpTip"));
 
 		// Layout the panel by rows
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

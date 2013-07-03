@@ -25,7 +25,7 @@ import java.io.File;
 /**
  * Frame for user edit of the train manifest options
  * 
- * @author Dan Boudreau Copyright (C) 2010
+ * @author Dan Boudreau Copyright (C) 2010, 2013
  * @version $Revision$
  */
 
@@ -178,6 +178,7 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 			if (_train != null){
 				_train.setRailroadName(railroadNameTextField.getText());
 				_train.setShowArrivalAndDepartureTimes(ShowTimesCheckBox.isSelected());
+				_train.setModified(true);
 			}
 			OperationsXml.save();
 			if (Setup.isCloseWindowOnSaveEnabled())

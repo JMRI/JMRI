@@ -815,6 +815,10 @@ public class TrainBuilder extends TrainCommon {
 			} else {
 				Location destination = rld.getLocation();
 				List<String> destTracks = destination.getTrackIdsByMovesList(null);
+				if (destTracks.size() == 0) {
+					addLine(buildReport, THREE, MessageFormat.format(
+							Bundle.getMessage("buildNoTracksAtDestination"), new Object[] { rld.getName() }));
+				}
 				for (int s = 0; s < destTracks.size(); s++) {
 					Track track = destination.getTrackById(destTracks.get(s));
 					if (!checkDropTrainDirection(engine, rld, track))

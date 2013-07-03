@@ -129,4 +129,47 @@ public class Xml {
 	static final String DIRECTORY = "directory"; // NOI18N
 	static final String COMMON_FILE = "commonFile"; // NOI18N
 	
+	// TrainManifestText.java
+	static final String MANIFEST_TEXT_STRINGS = "manifestTextStrings";
+	static final String MANIFEST_FOR_TRAIN = "manifestForTrain";
+	static final String VALID = "valid";
+	static final String SCHEDULED_WORK = "scheduledWork";
+	static final String WORK_DEPARTURE_TIME = "workDepartureTime";
+	static final String WORK_ARRIVAL_TIME = "workArrivalTime";
+	static final String NO_SCHEDULED_WORK = "noScheduledWork";
+	static final String DEPART_TIME = "departTime";
+	static final String TRAIN_DEPARTS_CARS = "trainDepartsCars";
+	static final String TRAIN_DEPARTS_LOADS = "trainDepartsLoads";
+	static final String TRAIN_TERMINATES = "trainTerminates";
+	static final String DESTINATION = "destination";
+	static final String FROM = "from";
+	static final String TO = "to";
+	static final String ADD_HELPERS = "addHelpers";
+	static final String REMOVE_HELPERS = "removeHelpers";
+	static final String LOCO_CHANGE = "locoChange";
+	static final String CABOOSE_CHANGE = "cabooseChange";
+	static final String LOCO_CABOOSE_CHANGE = "locoCabooseChange";
+	
+	static final String TEXT = "text";
+	
+	// TrainSwitchListText.java
+	static final String SWITCH_LIST_TEXT_STRINGS = "switchListTextStrings";
+	static final String SWICH_LIST_FOR = "switchListFor";
+	static final String SCHEDULED_WORK_TRAIN= "scheduledWorkTrain";
+	
+	static final String DEPARTS_AT = "departsAt";
+	static final String DEPARTS_EXPECTED_ARRIVAL = "departsExpectedArrival";
+	static final String DEPARTED_EXPECTED = "departedExpected";
+	
+	static final String VISIT_NUMBER = "visitNumber";
+	static final String VISIT_NUMBER_DEPARTED = "visitNumberDeparted";
+	static final String VISIT_NUMBER_TERMINATES = "visitNumberTerminates";
+	static final String VISIT_NUMBER_TERMINATES_DEPARTED = "visitNumberTerminatesDeparted";
+	static final String VISIT_NUMBER_DONE = "visitNumberDone";
+	
+	static final String TRAIN_DIRECTION_CHANGE = "trainDirectionChange";
+	static final String NO_CAR_PICK_UPS = "noCarPickUps";
+	static final String NO_CAR_SET_OUTS = "noCarSetOuts";
+	static final String TRAIN_DONE = "trainDone";
+	
 }

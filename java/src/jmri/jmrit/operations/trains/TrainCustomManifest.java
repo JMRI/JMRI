@@ -10,7 +10,7 @@ import org.jdom.Element;
 import jmri.jmrit.operations.FileHelper;
 import jmri.util.SystemType;
 
-public class CustomManifest {
+public class TrainCustomManifest {
 
 	// To start, all files will be created inside of
 	// ../JMRI/operations/csvManifests
@@ -174,6 +174,6 @@ public class CustomManifest {
 		options.addContent(mc);
 	}
 	
-	static Logger log = LoggerFactory.getLogger(CustomManifest.class
+	static Logger log = LoggerFactory.getLogger(TrainCustomManifest.class
 			.getName());
 }

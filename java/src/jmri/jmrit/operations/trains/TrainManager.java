@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Manages trains.
  * 
  * @author Bob Jacobsen Copyright (C) 2003
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013
  * @version $Revision$
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
@@ -766,10 +766,23 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	/**
+	 * Sets all built trains manifests to modified
+	 */
+	public void setTrainsModified() {
+		List<String> trains = getTrainsByTimeList();
+		for (int i = 0; i < trains.size(); i++) {
+			Train train = getTrainById(trains.get(i));
+			if (!train.isBuilt() || train.isTrainInRoute())
+				continue; // train wasn't built or in route, so skip
+			train.setModified(true);
+		}
+	}
+	
 	public void load(Element root) {
 		if (root.getChild(Xml.OPTIONS) != null) {
 			Element options = root.getChild(Xml.OPTIONS);
-			CustomManifest.load(options);
+			TrainCustomManifest.load(options);
 			Element e = options.getChild(Xml.TRAIN_OPTIONS);
 			Attribute a;
 			if (e != null) {
@@ -885,7 +898,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			options.addContent(es);
 		}
 		
-		CustomManifest.store(options);	// save custom manifest elements
+		TrainCustomManifest.store(options);	// save custom manifest elements
 		
 		root.addContent(options);
 

@@ -117,6 +117,9 @@ public class Xml {
 	static final String TAB = "tab"; // NOI18N
 	static final String ENABLED = "enabled"; // NOI18N
 	
+	static final String COLUMN_FORMAT = "columnFormat";
+	static final String TWO_COLUMNS = "twoColumns";
+	
 	static final String TRUNCATE = "truncate"; // NOI18N
 	static final String USE_DEPARTURE_TIME = "useDepartureTime"; // NOI18N
 	static final String USE_EDITOR = "useEditor"; // NOI18N

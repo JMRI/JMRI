@@ -705,7 +705,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * Used to determine if train has departed its
+	 * Used to determine if train has departed the first location in the train's route
 	 * 
 	 * @return true if train is in route
 	 */
@@ -2595,11 +2595,11 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	
 		// Set up to process the CSV file by the external Manifest program
-		CustomManifest.addCVSFile(file);
-		if (!CustomManifest.process()) {
-			if (!CustomManifest.manifestCreatorFileExists()) {
+		TrainCustomManifest.addCVSFile(file);
+		if (!TrainCustomManifest.process()) {
+			if (!TrainCustomManifest.manifestCreatorFileExists()) {
 				log.warn("Manifest creator file not found!, directory name: "
-						+ CustomManifest.getDirectoryName() + ", file name: " + CustomManifest.getFileName()); // NOI18N
+						+ TrainCustomManifest.getDirectoryName() + ", file name: " + TrainCustomManifest.getFileName()); // NOI18N
 			}
 			TrainUtilities.openDesktop(file);
 			return false;

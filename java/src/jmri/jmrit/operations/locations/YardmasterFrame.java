@@ -26,6 +26,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.TrainManifestText;
 
 /**
  * Yardmaster Frame. Shows work at one location.
@@ -104,10 +105,10 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 		if (_location != null) {
 			textLocationName.setText(_location.getName());
-			textLocationComment.setText(_location.getComment());
+			textLocationComment.setText(lineWrap(_location.getComment()));
 			pLocationComment.setVisible(!_location.getComment().equals("")
 					&& Setup.isPrintLocationCommentsEnabled());
-			textSwitchListComment.setText(_location.getSwitchListComment());
+			textSwitchListComment.setText(lineWrap(_location.getSwitchListComment()));
 			pSwitchListComment.setVisible(!_location.getSwitchListComment().equals(""));
 			updateTrainsComboBox();
 			
@@ -198,12 +199,12 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 			// show train comment box only if there's a comment
 			if (!_train.getComment().equals("")) {
 				pTrainComment.setVisible(true);
-				textTrainComment.setText(_train.getComment());
+				textTrainComment.setText(lineWrap(_train.getComment()));
 			}
 			// show route comment box only if there's a route comment
 			if (!route.getComment().equals("") && Setup.isPrintRouteCommentsEnabled()) {
 				pTrainRouteComment.setVisible(true);
-				textTrainRouteComment.setText(route.getComment());
+				textTrainRouteComment.setText(lineWrap(route.getComment()));
 			}
 			// Does this train have a unique railroad name?
 			if (!_train.getRailroadName().equals(""))
@@ -242,7 +243,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 				// update comment and location name
 				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
-				textTrainRouteLocationComment.setText(rl.getComment());
+				textTrainRouteLocationComment.setText(lineWrap(rl.getComment()));
 				textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
 
 				// check for locos
@@ -252,7 +253,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				blockCars(rl, false);
 
 				if (lastLocation) {
-					textStatus.setText(MessageFormat.format(Bundle.getMessage("TrainTerminatesIn"),
+					textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
 							new Object[] { TrainCommon.splitString(_train.getTrainTerminatesName()) }));
 				} else {
 					textStatus.setText(getStatus(rl));

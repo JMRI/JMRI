@@ -23,12 +23,13 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.swing.FontComboUtil;
 
 /**
  * Frame for user edit of manifest and switch list print options
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2012, 2013
  * @version $Revision$
  */
 
@@ -61,6 +62,7 @@ public class PrintOptionFrame extends OperationsFrame {
 
 	// check boxes
 	JCheckBox tabFormatCheckBox = new JCheckBox(Bundle.getMessage("TabFormat"));
+	JCheckBox twoColumnFormatCheckBox = new JCheckBox(Bundle.getMessage("TwoColumn"));
 	JCheckBox formatSwitchListCheckBox = new JCheckBox(Bundle.getMessage("SameAsManifest"));
 	JCheckBox editManifestCheckBox = new JCheckBox(Bundle.getMessage("UseTextEditor"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(Bundle.getMessage("PrintLocationComments"));
@@ -136,6 +138,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		addLogoButton.setToolTipText(Bundle.getMessage("AddLogoToolTip"));
 		removeLogoButton.setToolTipText(Bundle.getMessage("RemoveLogoToolTip"));
 		tabFormatCheckBox.setToolTipText(Bundle.getMessage("TabComment"));
+		twoColumnFormatCheckBox.setToolTipText(Bundle.getMessage("TwoColumnTip"));
 		printLocCommentsCheckBox.setToolTipText(Bundle.getMessage("AddLocationComments"));
 		printRouteCommentsCheckBox.setToolTipText(Bundle.getMessage("AddRouteComments"));
 		printLoadsEmptiesCheckBox.setToolTipText(Bundle.getMessage("LoadsEmptiesComment"));
@@ -189,6 +192,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		JPanel pFormat = new JPanel();
 		pFormat.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutFormat")));
 		pFormat.add(tabFormatCheckBox);
+		pFormat.add(twoColumnFormatCheckBox);
 
 		JPanel pOrientation = new JPanel();
 		pOrientation.setBorder(BorderFactory.createTitledBorder(Bundle
@@ -321,6 +325,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		switchListOrientationComboBox.setSelectedItem(Setup.getSwitchListOrientation());
 
 		tabFormatCheckBox.setSelected(Setup.isTabEnabled());
+		twoColumnFormatCheckBox.setSelected(Setup.isTwoColumnFormatEnabled());
 		formatSwitchListCheckBox.setSelected(Setup.isSwitchListFormatSameAsManifest());
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
 		printRouteCommentsCheckBox.setSelected(Setup.isPrintRouteCommentsEnabled());
@@ -375,12 +380,15 @@ public class PrintOptionFrame extends OperationsFrame {
 		addButtonAction(deleteSwitchListLocalComboboxButton);
 
 		addCheckBoxAction(tabFormatCheckBox);
+		addCheckBoxAction(twoColumnFormatCheckBox);
 		addCheckBoxAction(formatSwitchListCheckBox);
 
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
 		toolMenu.add(new PrintMoreOptionAction());
+		toolMenu.add(new EditManifestTextAction());
+		toolMenu.add(new EditSwitchListTextAction());
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true); // NOI18N
@@ -532,12 +540,16 @@ public class PrintOptionFrame extends OperationsFrame {
 			Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
 			Setup.setUseDepartureTimeEnabled(departureTimeCheckBox.isSelected());
 			Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
+			Setup.setTwoColumnFormatEnabled(twoColumnFormatCheckBox.isSelected());
 			
 			// reload combo boxes if tab changed
 			boolean oldTabEnabled = Setup.isTabEnabled();
 			Setup.setTabEnabled(tabFormatCheckBox.isSelected());	
 			if (oldTabEnabled ^ Setup.isTabEnabled())
 				loadFormatComboBox();
+			
+			// recreate all train manifests
+			TrainManager.instance().setTrainsModified();
 			
 			OperationsSetupXml.instance().writeOperationsFile();
 			if (Setup.isCloseWindowOnSaveEnabled())
@@ -546,7 +558,7 @@ public class PrintOptionFrame extends OperationsFrame {
 	}
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		if (ae.getSource() == tabFormatCheckBox) {
+		if (ae.getSource() == tabFormatCheckBox || ae.getSource() == twoColumnFormatCheckBox) {
 			loadFontComboBox();
 		}
 		if (ae.getSource() == formatSwitchListCheckBox) {
@@ -754,7 +766,7 @@ public class PrintOptionFrame extends OperationsFrame {
 	private void loadFontComboBox() {
 		fontComboBox.removeAllItems();
 		List<String> fonts = FontComboUtil.getFonts(FontComboUtil.ALL);
-		if (tabFormatCheckBox.isSelected())
+		if (tabFormatCheckBox.isSelected() || twoColumnFormatCheckBox.isSelected())
 			fonts = FontComboUtil.getFonts(FontComboUtil.MONOSPACED);
 		for (int i = 0; i < fonts.size(); i++) {
 			fontComboBox.addItem(fonts.get(i));

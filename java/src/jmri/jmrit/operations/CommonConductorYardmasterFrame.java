@@ -38,6 +38,8 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.trains.TrainManifestText;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,8 +68,6 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	// labels
 	protected JLabel textRailRoadName = new JLabel();
 	protected JLabel textTrainDescription = new JLabel();
-	protected JLabel textTrainRouteComment = new JLabel();
-	protected JLabel textTrainRouteLocationComment = new JLabel();
 	protected JLabel textLocationName = new JLabel();
 	protected JLabel textStatus = new JLabel();
 
@@ -80,6 +80,8 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	// text panes
 	protected JTextPane textLocationComment = new JTextPane();
 	protected JTextPane textTrainComment = new JTextPane();
+	protected JTextPane textTrainRouteComment = new JTextPane();
+	protected JTextPane textTrainRouteLocationComment = new JTextPane();
 
 	// panels
 	protected JPanel pRailRoadName = new JPanel();
@@ -175,11 +177,13 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		// train route comment
 		pTrainRouteComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteComment")));
 		pTrainRouteComment.add(textTrainRouteComment);
+		textTrainRouteComment.setBackground(null);
 
 		// train route location comment
 		pTrainRouteLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getMessage("RouteLocationComment")));
 		pTrainRouteLocationComment.add(textTrainRouteLocationComment);
+		textTrainRouteLocationComment.setBackground(null);
 
 		// row 12
 		pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.X_AXIS));
@@ -492,12 +496,12 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	protected String getStatus(RouteLocation rl) {
 		if (Setup.isPrintLoadsAndEmptiesEnabled()) {
 			int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
-			return MessageFormat.format(Bundle.getMessage("TrainDepartsLoads"), new Object[] {
+			return MessageFormat.format(TrainManifestText.getStringTrainDepartsLoads(), new Object[] {
 					TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
 					_train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
 					Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
 		} else {
-			return MessageFormat.format(Bundle.getMessage("TrainDepartsCars"), new Object[] {
+			return MessageFormat.format(TrainManifestText.getStringTrainDepartsCars(), new Object[] {
 					TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
 					_train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
 					Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });

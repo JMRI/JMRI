@@ -15,10 +15,12 @@ import java.util.List;
 import javax.swing.JLabel;
 
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
@@ -49,6 +51,36 @@ public class TrainCommon {
 
 	CarManager carManager = CarManager.instance();
 	EngineManager engineManager = EngineManager.instance();
+	
+	// for manifests
+	int cars = 0;
+	int emptyCars = 0;
+	boolean newWork = false;
+	
+	// for switch lists
+	boolean pickupCars;	
+	boolean dropCars;
+	
+	protected void blockLocosTwoColumn(PrintWriter fileOut, List<String> engineList, RouteLocation rl, boolean isManifest) {
+		for (int k = 0; k < engineList.size(); k++) {
+			Engine engine = engineManager.getById(engineList.get(k));
+			if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) { 
+				newLine(fileOut, pickupEngine(engine).trim(), isManifest);
+			}
+			if (engine.getRouteDestination() == rl) {
+				int lineLength;
+				if (isManifest)
+					lineLength = getLineLength(Setup.getManifestOrientation());
+				else
+					lineLength = getLineLength(Setup.getSwitchListOrientation());
+				String s = padString("", lineLength / 2);
+				s = s + " |" + dropEngine(engine);
+				if (s.length() > lineLength)
+					s = s.substring(0, lineLength);
+				newLine(fileOut, s, isManifest);
+			}
+		}
+	}
 
 	/**
 	 * Adds a list of locomotive pick ups for the route location to the output file
@@ -139,6 +171,190 @@ public class TrainCommon {
 		}
 		return buf.toString();
 	}
+	
+	/**
+	 * Block cars by track, then pick up and set out for each location in a train's route.
+	 */
+	protected void blockCarsByTrack(PrintWriter fileOut, Train train, List<String> carList,
+			List<String> routeList, RouteLocation rl, int r, boolean isManifest) {
+		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
+		List<String> trackNames = new ArrayList<String>();
+		for (int i = 0; i < trackIds.size(); i++) {
+			Track track = rl.getLocation().getTrackById(trackIds.get(i));
+			if (trackNames.contains(splitString(track.getName())))
+				continue;
+			trackNames.add(splitString(track.getName())); // use a track name once
+			// block cars by destination
+			for (int j = r; j < routeList.size(); j++) {
+				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+				clearUtilityCarTypes(); // list utility cars by quantity
+				for (int k = 0; k < carList.size(); k++) {
+					Car car = carManager.getById(carList.get(k));
+					if (Setup.isSortByTrackEnabled()
+							&& !splitString(track.getName()).equals(splitString(car.getTrack().getName())))
+						continue;
+					// note that a car in train doesn't have a track assignment
+					if (car.getRouteLocation() == rl && car.getTrack() != null
+							&& car.getRouteDestination() == rld) {
+						if (car.isUtility())
+							pickupUtilityCars(fileOut, carList, car, rl, rld, isManifest);
+						// use truncated format if there's a switch list
+						else if (isManifest && Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+							pickUpCarTruncated(fileOut, car);
+						else
+							pickUpCar(fileOut, car, isManifest);
+						pickupCars = true;
+						cars++;
+						newWork = true;
+						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
+								CarLoad.LOAD_TYPE_EMPTY))
+							emptyCars++;
+					}
+				}
+			}
+			for (int j = 0; j < carList.size(); j++) {
+				Car car = carManager.getById(carList.get(j));
+				if (Setup.isSortByTrackEnabled()
+						&& !splitString(track.getName()).equals(
+								splitString(car.getDestinationTrackName())))
+					continue;
+				if (car.getRouteDestination() == rl
+						&& car.getDestinationTrack() != null) {
+					if (car.isUtility())
+						setoutUtilityCars(fileOut, carList, car, rl, isManifest);
+					// use truncated format if there's a switch list
+					else if (isManifest && Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+						truncatedDropCar(fileOut, car);
+					else
+						dropCar(fileOut, car, isManifest);
+					dropCars = true;
+					cars--;
+					newWork = true;
+					if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
+							CarLoad.LOAD_TYPE_EMPTY))
+						emptyCars--;
+				}
+			}
+			if (!Setup.isSortByTrackEnabled())
+				break; // done
+		}
+	}
+	
+	/**
+	 * Produces a two column format for car pick ups and set outs. Sorted by track and then by destination.
+	 */
+	protected void blockCarsByTrackTwoColumn(PrintWriter fileOut, Train train, List<String> carList,
+			List<String> routeList, RouteLocation rl, int r, boolean isManifest) {
+		index = 0;
+		int lineLength;
+		if (isManifest)
+			lineLength = getLineLength(Setup.getManifestOrientation());
+		else
+			lineLength = getLineLength(Setup.getSwitchListOrientation());
+		List<String> trackIds = rl.getLocation().getTrackIdsByNameList(null);
+		List<String> trackNames = new ArrayList<String>();
+		clearUtilityCarTypes(); // list utility cars by quantity
+		for (int i = 0; i < trackIds.size(); i++) {
+			Track track = rl.getLocation().getTrackById(trackIds.get(i));
+			if (trackNames.contains(splitString(track.getName())))
+				continue;
+			trackNames.add(splitString(track.getName())); // use a track name once
+			// block car pick ups by destination
+			for (int j = r; j < routeList.size(); j++) {
+				RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
+				for (int k = 0; k < carList.size(); k++) {
+					Car car = carManager.getById(carList.get(k));
+					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
+							&& car.getRouteDestination() == rld) {
+						if (Setup.isSortByTrackEnabled()
+								&& !splitString(track.getName()).equals(splitString(car.getTrack().getName())))
+							continue;
+						pickupCars = true;
+						String s;
+						if (car.isUtility()) {
+							s = pickupUtilityCars(carList, car, rl, rld, isManifest);
+							if (s == null)
+								continue;
+							s = s.trim();
+						} else {
+							s = pickupCar(car, isManifest).trim();
+						}
+						s = padString(s, lineLength / 2);
+						if (s.length() > lineLength / 2)
+							s = s.substring(0, lineLength / 2);
+						if (isLocalMove(car)) {
+							String sl = appendSetoutString(s, carList, car.getRouteDestination(), car,
+									isManifest);
+							// check for utility car, and local route with two or more locations
+							if (!sl.equals(s)) {
+								s = sl;
+								carList.remove(car.getId()); // done with this car, remove from list
+								k--;
+							}
+						} else {
+							s = appendSetoutString(s, carList, rl, true, isManifest);
+						}
+						newLine(fileOut, s, isManifest);
+					}
+				}
+			}
+			if (!Setup.isSortByTrackEnabled())
+					break;	//done
+		}
+		while (index < carList.size()) {
+			String s = padString("", lineLength / 2);
+			s = appendSetoutString(s, carList, rl, false, isManifest);
+			String test = s.trim();
+			if (test.length() > 0)
+				newLine(fileOut, s, isManifest);
+		}
+	}
+	
+	int index = 0;
+
+	private String appendSetoutString(String s, List<String> carList, RouteLocation rl, boolean local, boolean isManfest) {
+		while (index < carList.size()) {
+			Car car = carManager.getById(carList.get(index++));
+			if (local && isLocalMove(car))
+				continue;	// skip local moves
+			// car list is already sorted by destination track
+			if (car.getRouteDestination() == rl) {
+				String so = appendSetoutString(s, carList, rl, car, isManfest);
+				// check for utility car
+				if (!so.equals(s))
+					return so;
+			}
+		}
+		return s;
+	}
+
+	private String appendSetoutString(String s, List<String> carList, RouteLocation rl, Car car, boolean isManifest) {
+		dropCars = true;
+		String newS;
+		// use truncated format if there's a switch list
+		// else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
+		// truncatedDropCar(fileOut, car);
+		if (isLocalMove(car))
+			newS = s + "->";
+		else
+			newS = s + " |";
+		if (car.isUtility()) {
+			String so = setoutUtilityCars(carList, car, rl, false, isManifest);
+			if (so == null)
+				return s;	// no changes to the input string
+			newS = newS + so;
+		} else {
+			newS = newS + dropCar(car, isManifest);
+		}
+		int lineLength;
+		if (isManifest)
+			lineLength = getLineLength(Setup.getManifestOrientation());
+		else
+			lineLength = getLineLength(Setup.getSwitchListOrientation());
+		if (newS.length() > lineLength)
+			newS = newS.substring(0, lineLength);
+		return newS;
+	}
 
 	/**
 	 * Adds the car's pick up string to the output file using the manifest format
@@ -165,9 +381,13 @@ public class TrainCommon {
 	 * @param file
 	 * @param car
 	 */
-	protected void switchListPickUpCar(PrintWriter file, Car car) {
-		pickUpCar(file, car, new StringBuffer(Setup.getSwitchListPickupCarPrefix()),
-				Setup.getSwitchListPickupCarMessageFormat(), Setup.getSwitchListOrientation());
+	protected void pickUpCar(PrintWriter file, Car car, boolean isManifest) {
+		if (isManifest)
+			pickUpCar(file, car, new StringBuffer(Setup.getPickupCarPrefix()), Setup
+					.getPickupCarMessageFormat(), Setup.getManifestOrientation());
+		else
+			pickUpCar(file, car, new StringBuffer(Setup.getSwitchListPickupCarPrefix()), Setup
+					.getSwitchListPickupCarMessageFormat(), Setup.getSwitchListOrientation());
 	}
 
 	private void pickUpCar(PrintWriter file, Car car, StringBuffer buf, String[] format,
@@ -241,15 +461,19 @@ public class TrainCommon {
 	 * @param file
 	 * @param car
 	 */
-	protected void switchListDropCar(PrintWriter file, Car car) {
-		StringBuffer buf = new StringBuffer(Setup.getSwitchListDropCarPrefix());
-		String[] format = Setup.getSwitchListDropCarMessageFormat();
-		boolean isLocal = isLocalMove(car);
-		if (isLocal) {
-			buf = new StringBuffer(Setup.getSwitchListLocalPrefix());
-			format = Setup.getSwitchListLocalMessageFormat();
+	protected void dropCar(PrintWriter file, Car car, boolean isManifest) {
+		if (isManifest)
+			dropCar(file, car);
+		else {
+			StringBuffer buf = new StringBuffer(Setup.getSwitchListDropCarPrefix());
+			String[] format = Setup.getSwitchListDropCarMessageFormat();
+			boolean isLocal = isLocalMove(car);
+			if (isLocal) {
+				buf = new StringBuffer(Setup.getSwitchListLocalPrefix());
+				format = Setup.getSwitchListLocalMessageFormat();
+			}
+			dropCar(file, car, buf, format, isLocal, Setup.getSwitchListOrientation());
 		}
-		dropCar(file, car, buf, format, isLocal, Setup.getSwitchListOrientation());
 	}
 
 	private void dropCar(PrintWriter file, Car car, StringBuffer buf, String[] format,
@@ -337,11 +561,11 @@ public class TrainCommon {
 	 * @param carList
 	 * @param car
 	 * @param rl
-	 * @param isLocal
 	 * @param isManifest
 	 */
 	protected void setoutUtilityCars(PrintWriter fileOut, List<String> carList, Car car, RouteLocation rl,
-			boolean isLocal, boolean isManifest) {
+			boolean isManifest) {
+		boolean isLocal = car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack() != null;
 		StringBuffer buf = new StringBuffer(Setup.getDropCarPrefix());
 		String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
 		if (isLocal && isManifest) {
@@ -371,7 +595,7 @@ public class TrainCommon {
 		int count = countUtiltiyCars(messageFormat, carList, car, rl, rld, PICKUP);
 		if (count == 0)
 			return null;
-		StringBuffer buf = new StringBuffer(" " + tabString(Integer.toString(count), 3));
+		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), 3));
 		for (int i = 0; i < messageFormat.length; i++) {
 			String s = getCarAttribute(car, messageFormat[i], PICKUP, !LOCAL);
 			buf.append(s);
@@ -393,7 +617,7 @@ public class TrainCommon {
 		int count = countUtiltiyCars(messageFormat, carList, car, rl, null, !PICKUP);
 		if (count == 0)
 			return null;
-		StringBuffer buf = new StringBuffer(" " + tabString(Integer.toString(count), 3));
+		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), 3));
 		for (int i = 0; i < messageFormat.length; i++) {
 			String s = getCarAttribute(car, messageFormat[i], !PICKUP, isLocal);
 			buf.append(s);
@@ -419,11 +643,19 @@ public class TrainCommon {
 		boolean showLength = showUtilityCarLength(messageFormat);
 		// figure out if the user want to show the car's loads
 		boolean showLoad = showUtilityCarLoad(messageFormat);
+		boolean showLocation = false;
 		String[] carType = car.getTypeName().split("-");
-		String carAttributes = carType[0] + splitString(car.getTrackName());
-		if (!isPickup)
+		String carAttributes;
+		// Note for car pick up: type, id, track name. For set out type, track name, id.
+		if (isPickup) {
+			carAttributes = carType[0] + car.getRouteLocationId() + splitString(car.getTrackName());
+		} else {
 			carAttributes = carType[0] + splitString(car.getDestinationTrackName())
-			+ car.getRouteDestinationId();
+					+ car.getRouteDestinationId();
+			showLocation = showUtilityCarLocation(messageFormat);
+			if (showLocation)
+				carAttributes = carAttributes + car.getRouteLocationId();
+		}
 		if (showLength)
 			carAttributes = carAttributes + car.getLength();
 		if (showLoad)
@@ -442,12 +674,15 @@ public class TrainCommon {
 				if (showLength && !c.getLength().equals(car.getLength()))
 					continue;
 				if (showLoad && !c.getLoadName().equals(car.getLoadName()))
-					continue;	
-				if (isPickup && c.getRouteLocation() == rl && c.getRouteDestination() == rld
+					continue;
+				if (showLocation && !c.getRouteLocationId().equals(car.getRouteLocationId()))
+					continue;
+				if (isPickup && c.getRouteLocation() == rl
 						&& splitString(c.getTrackName()).equals(splitString(car.getTrackName()))) {
 					count++;
 				}
-				if (!isPickup && c.getRouteDestination() == rl
+				if (!isPickup
+						&& c.getRouteDestination() == rl
 						&& splitString(c.getDestinationTrackName()).equals(
 								splitString(car.getDestinationTrackName()))
 						&& c.getRouteDestination().equals(car.getRouteDestination())) {
@@ -457,7 +692,6 @@ public class TrainCommon {
 		}
 		return count;
 	}
-
 
 	public void clearUtilityCarTypes() {
 		utilityCarTypes.clear();
@@ -474,6 +708,14 @@ public class TrainCommon {
 	private boolean showUtilityCarLoad(String[] mFormat) {
 		for (int i = 0; i < mFormat.length; i++) {
 			if (mFormat[i].equals(Setup.LOAD))
+				return true;
+		}
+		return false;
+	}
+	
+	private boolean showUtilityCarLocation(String[] mFormat) {
+		for (int i = 0; i < mFormat.length; i++) {
+			if (mFormat[i].equals(Setup.LOCATION))
 				return true;
 		}
 		return false;
@@ -568,6 +810,13 @@ public class TrainCommon {
 		if (file != null)
 			file.println(string);
 	}
+	
+	protected void newLine(PrintWriter file, String string, boolean isManifest) {
+		if (isManifest)
+			newLine(file, string, Setup.getManifestOrientation());
+		else
+			newLine(file, string, Setup.getSwitchListOrientation());
+	}
 
 	/**
 	 * Writes a string to file.  Checks for string length, and will automatically wrap lines.
@@ -628,6 +877,21 @@ public class TrainCommon {
 			}
 		}
 		return parsedName;
+	}
+	
+	// returns true if there's work at location
+	protected boolean isThereWorkAtLocation(List<String> carList, List<String> engList, RouteLocation rl) {
+		for (int i = 0; i < carList.size(); i++) {
+			Car car = carManager.getById(carList.get(i));
+			if (car.getRouteLocation() == rl || car.getRouteDestination() == rl)
+				return true;
+		}
+		for (int i = 0; i < engList.size(); i++) {
+			Engine eng = engineManager.getById(engList.get(i));
+			if (eng.getRouteLocation() == rl || eng.getRouteDestination() == rl)
+				return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -739,17 +1003,17 @@ public class TrainCommon {
 			return " " + tabString(rs.getColor(), CarColors.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)) {
 			if (rs.getTrack() != null)
-				return " " + Bundle.getMessage("from") + " " + splitString(rs.getTrackName());
+				return " " + TrainManifestText.getStringFrom() + " " + splitString(rs.getTrackName());
 			return "";
 		} else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal)
-			return " " + Bundle.getMessage("from") + " " + splitString(rs.getLocationName());
+			return " " + TrainManifestText.getStringFrom() + " " + splitString(rs.getLocationName());
 		else if (attribute.equals(Setup.DESTINATION) && isPickup) {
 			if (Setup.isTabEnabled())
 				return " " + Bundle.getMessage("dest") + " " + splitString(rs.getDestinationName());
 			else
-				return " " + Bundle.getMessage("destination") + " " + splitString(rs.getDestinationName());
+				return " " + TrainManifestText.getStringDestination() + " " + splitString(rs.getDestinationName());
 		} else if (attribute.equals(Setup.DESTINATION) && !isPickup)
-			return " " + Bundle.getMessage("to") + " " + splitString(rs.getDestinationTrackName());
+			return " " + TrainManifestText.getStringTo() + " " + splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.DEST_TRACK))
 			return " " + Bundle.getMessage("dest") + " " + splitString(rs.getDestinationName()) + ", "
 					+ splitString(rs.getDestinationTrackName());
@@ -817,9 +1081,16 @@ public class TrainCommon {
 		return date;
 	}
 
-	private static String tabString(String s, int fieldSize) {
+	protected static String tabString(String s, int fieldSize) {
 		if (!Setup.isTabEnabled())
 			return s;
+		s = padString(s, fieldSize);
+		if (s.length() > fieldSize)
+			s = s.substring(0, fieldSize);
+		return s;
+	}
+	
+	protected static String padString(String s, int fieldSize) {
 		StringBuffer buf = new StringBuffer(s);
 		while (buf.length() < fieldSize) {
 			buf.append(" ");
@@ -828,7 +1099,7 @@ public class TrainCommon {
 	}
 	
 	// used by manifests
-	private int getLineLength(String orientation) {
+	protected int getLineLength(String orientation) {
 		return getLineLength(orientation, Setup.getManifestFontSize());
 	}
 	

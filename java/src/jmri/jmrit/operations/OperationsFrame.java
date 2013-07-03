@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -349,6 +350,32 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	protected void storeValues(){
 		OperationsXml.save();
+	}
+		
+	protected static final String NEW_LINE = "\n"; // NOI18N
+	
+	protected String lineWrap(String s) {
+		int numberChar = 80;
+		Dimension size = getPreferredSize();
+		if (size != null) {
+			JLabel X = new JLabel("X");
+			numberChar = size.width / X.getPreferredSize().width;
+		}
+		
+		String[] sa = s.split(NEW_LINE);
+		String so = "";
+		
+		for (int i = 0; i<sa.length; i++) {
+			if (i > 0)
+				so = so + NEW_LINE;
+			StringBuilder sb = new StringBuilder(sa[i]);
+			int j = 0;
+			while (j + numberChar < sb.length() && (j = sb.lastIndexOf(" ", j + numberChar)) != -1) {
+				sb.replace(j, j + 1, NEW_LINE);
+			}
+			so = so + sb.toString();
+		}
+		return so;
 	}
 	
 	static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());
