@@ -1816,12 +1816,14 @@
    <H3>Car Loads</H3>
 
    You can optionally set the load state of the car. Select E for empty or L for loaded. You can
-   also create your own custom <A HREF="#EditCarLoads">car loads</A>, but there are restrictions.
-   Normally spurs with <A HREF="#Schedules">Schedules</A> are used to load or unload cars with
-   custom loads that you've created. You can also use <A HREF="#StagingAndCarLoads">staging
-    tracks</A> to load or unload your car with custom loads. It is also suggested that you use a format
-   similar to L(commodity) to describe your loads. For example a load of tools could be entered as
-   "L(Tools)" or just "Tools" if desired. 
+   also create your own custom
+   <A HREF="#EditCarLoads">car loads</A>, but there are restrictions. Normally spurs with
+   <A HREF="#Schedules">Schedules</A> are used to load or unload cars with custom loads that you've
+   created. You can also use
+   <A HREF="#StagingAndCarLoads">staging tracks</A> to load or unload your car with custom loads. It
+   is also suggested that you use a format similar to L(commodity) to describe your loads so it
+   looks good on your manifests and switch lists. For example a load of tools could be entered as
+   "L(Tools)" or just "Tools" if desired.
    
    <A NAME="Kernel"></A>
    <H3>Kernel, or Group of Cars</H3>
@@ -1837,12 +1839,20 @@
 
    Finally you can optionally enter the color, build date, owner and comment for this car. The build
    date can be entered as a four digit year, or in the format of month-year.
+   
+   <H3>Add</H3>
+
+   Press the "Add" button to enter a new car into your roster. If you have similar cars, you can
+   select an existing car using the "Edit" button in the "Cars" window, and then modify the car's
+   road number, and any other car attributes, followed by pressing the "Add" button to create another
+   car for your roster. Pressing the "Add" button also causes the new car to be saved. See the
+   "Save" button below.
 
    <H3>Save</H3>
 
-   Press "Save" to store the car's settings. The program will create a file
-   (OperationsCarRoster.xml) in your JMRI directory in a folder called "operations". A backup file
-   with the last settings for all of your cars is also created each time the "Save" button is
+   Press "Save" to store the car's attributes after you've made changes. The program will create a
+   file (OperationsCarRoster.xml) in your JMRI directory in a folder called "operations". A backup
+   file with the last settings for all of your cars is also created each time the "Save" button is
    pressed. 
    
    <A NAME="EditCarAttributes"></A>
