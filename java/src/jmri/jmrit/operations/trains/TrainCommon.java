@@ -270,6 +270,11 @@ public class TrainCommon {
 								&& !splitString(track.getName()).equals(splitString(car.getTrack().getName())))
 							continue;
 						pickupCars = true;
+						cars++;
+						newWork = true;
+						if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
+								CarLoad.LOAD_TYPE_EMPTY))
+							emptyCars++;
 						String s;
 						if (car.isUtility()) {
 							s = pickupUtilityCars(carList, car, rl, rld, isManifest);
@@ -328,8 +333,14 @@ public class TrainCommon {
 		return s;
 	}
 
-	private String appendSetoutString(String s, List<String> carList, RouteLocation rl, Car car, boolean isManifest) {
+	private String appendSetoutString(String s, List<String> carList, RouteLocation rl, Car car,
+			boolean isManifest) {
 		dropCars = true;
+		cars--;
+		newWork = true;
+		if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
+				CarLoad.LOAD_TYPE_EMPTY))
+			emptyCars--;
 		String newS;
 		// use truncated format if there's a switch list
 		// else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
@@ -341,7 +352,7 @@ public class TrainCommon {
 		if (car.isUtility()) {
 			String so = setoutUtilityCars(carList, car, rl, false, isManifest);
 			if (so == null)
-				return s;	// no changes to the input string
+				return s; // no changes to the input string
 			newS = newS + so;
 		} else {
 			newS = newS + dropCar(car, isManifest);

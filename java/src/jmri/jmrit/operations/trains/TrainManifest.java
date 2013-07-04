@@ -80,14 +80,13 @@ public class TrainManifest extends TrainCommon {
 			// print info only if new location
 			String routeLocationName = splitString(rl.getName());
 			if (!routeLocationName.equals(previousRouteLocationName)
-					|| (routeLocationName.equals(previousRouteLocationName) && oldWork == false
-							&& work == true && newWork == false)) {
+					|| (work && !oldWork && !newWork)) {
 				if (work) {
 					// add line break between locations without work and ones with work
 					// TODO sometimes an extra line break appears when the user has two or more locations with the
 					// "same" name
 					// and the second location doesn't have work
-					if (oldWork == false)
+					if (!oldWork)
 						newLine(fileOut);
 					newWork = true;
 					String expectedArrivalTime = train.getExpectedArrivalTime(rl);
