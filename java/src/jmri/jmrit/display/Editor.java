@@ -952,43 +952,115 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (showAlignPopup(p)) {
             JMenu edit = new JMenu(Bundle.getMessage("EditAlignment"));
             edit.add(new AbstractAction(Bundle.getMessage("AlignX")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroup(true,false);
+                int _x;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(_x, comp.getY());
+                    }
                 }
-            });
+                AbstractAction init(int x) {
+                    _x = x;
+                    return this;
+                }
+            }.init(p.getX()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignMiddleX")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroupMiddle(true,false);
+                int _x;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(_x-comp.getWidth()/2, comp.getY());
+                    }
                 }
-            });
+                AbstractAction init(int x) {
+                    _x = x;
+                    return this;
+                }
+            }.init(p.getX()+p.getWidth()/2));
             edit.add(new AbstractAction(Bundle.getMessage("AlignOtherX")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroupOtherSide(true,false);
+                int _x;
+                 public void actionPerformed(ActionEvent e) { 
+                     if (_selectionGroup==null) { return;}
+                     for (int i=0; i<_selectionGroup.size(); i++) {
+                         Positionable comp = _selectionGroup.get(i);
+                         if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                         comp.setLocation(_x-comp.getWidth(), comp.getY());
+                     }
+                 }
+                AbstractAction init(int x) {
+                    _x = x;
+                    return this;
                 }
-            });
+            }.init(p.getX()+p.getWidth()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignY")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroup(false,false);
+                int _y;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(comp.getX(), _y);
+                    }
                 }
-            });
+                AbstractAction init(int y) {
+                    _y = y;
+                    return this;
+                }
+            }.init(p.getY()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignMiddleY")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroupMiddle(false,false);
+                int _y;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(comp.getX(), _y-comp.getHeight()/2);
+                    }
                 }
-            });
+                AbstractAction init(int y) {
+                    _y = y;
+                    return this;
+                }
+            }.init(p.getY()+p.getHeight()/2));
             edit.add(new AbstractAction(Bundle.getMessage("AlignOtherY")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroupOtherSide(false,false);
+                int _y;
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(comp.getX(), _y-comp.getHeight());
+                    }
                 }
-            });
+                AbstractAction init(int y) {
+                    _y = y;
+                    return this;
+                }
+            }.init(p.getY()+p.getHeight()));
             edit.add(new AbstractAction(Bundle.getMessage("AlignXFirst")) {
-                public void actionPerformed(ActionEvent e) {
-                    alignGroup(true,true);
+                public void actionPerformed(ActionEvent e) { 
+                    if (_selectionGroup==null) { return; }
+                    int x = _selectionGroup.get(0).getX();
+                    for (int i=1; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(x, comp.getY());
+                    }
                 }
             });
             edit.add(new AbstractAction(Bundle.getMessage("AlignYFirst")) {
                 public void actionPerformed(ActionEvent e) {
-                    alignGroup(false,true);
+                    if (_selectionGroup==null) { return; }
+                    int y = _selectionGroup.get(0).getX();
+                    for (int i=1; i<_selectionGroup.size(); i++) {
+                        Positionable comp = _selectionGroup.get(i);
+                        if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                        comp.setLocation(comp.getX(), y);
+                    }
                 }
             });
             popup.add(edit);
@@ -2573,98 +2645,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    protected void alignGroup(boolean alignX, boolean alignToFirstSelected) {
-        if (_selectionGroup==null) {
-            return;
-        }
-        int ave = getAverage(alignX, alignToFirstSelected);
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignX) {
-                comp.setLocation(ave, comp.getY());
-            } else {
-                comp.setLocation(comp.getX(), ave);
-            }
-        }
-    }
-    
-
-    protected void alignGroupOtherSide(boolean alignX, boolean alignToFirstSelected) {
-        if (_selectionGroup==null) {
-            return;
-        }
-        int ave = getAverage(alignX, alignToFirstSelected);
-        ave += getMax(alignX, alignToFirstSelected);
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignX) {
-                comp.setLocation(ave-comp.getWidth(), comp.getY());
-            } else {
-                comp.setLocation(comp.getX(), ave-comp.getHeight());
-            }
-        }
-    }
-    protected void alignGroupMiddle(boolean alignX, boolean alignToFirstSelected) {
-        if (_selectionGroup==null) {
-            return;
-        }
-        int ave = getAverage(alignX, alignToFirstSelected);
-        int max = getMax(alignX, alignToFirstSelected);
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignX) {
-                comp.setLocation(ave+(max-comp.getWidth()>>>1), comp.getY());
-            } else {
-                comp.setLocation(comp.getX(), ave+(max-comp.getHeight()>>>1));
-            }
-        }
-    }
-    private int getMax(boolean alignX, boolean alignToFirstSelected) {
-        int max = 0;
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignX) {
-                max = Math.max(max, comp.getWidth());
-            } else {
-                max = Math.max(max, comp.getHeight());
-            }
-        }
-        return max;
-    }    
-    private int getAverage(boolean alignX, boolean alignToFirstSelected) {
-    	int sum =0;
-        int cnt = 0;
-        int ave = 0;       
-        for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable comp = _selectionGroup.get(i);
-            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
-            if (alignToFirstSelected) {
-                if (alignX) {
-                        ave = comp.getX();
-                    } else {
-                        ave = comp.getY();
-                    }
-                    break;
-                } else {
-                    if (alignX) {
-                    sum += comp.getX();
-                } else {
-                    sum += comp.getY();
-                }
-            cnt++;
-            }
-        }
-
-        if (!alignToFirstSelected) {
-            ave = Math.round((float) sum / cnt);
-        }
-    	return ave;
-    }
-    
     public Rectangle getSelectRect() {
     	return _selectRect;
     }

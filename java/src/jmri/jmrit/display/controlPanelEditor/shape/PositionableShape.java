@@ -63,11 +63,13 @@ public class PositionableShape extends PositionableJComponent
     public PositionableShape(Editor editor) {
     	super(editor);
     	setName("Graphic");
+    	setShowTooltip(false);
     }
 
     public PositionableShape(Editor editor, Shape shape) {
        	this(editor);
         _shape = shape;
+    	setShowTooltip(false);
     }
     
     public PathIterator getPathIterator(AffineTransform at) {
@@ -190,7 +192,7 @@ public class PositionableShape extends PositionableJComponent
     }
     
     protected void paintHandles(Graphics2D g2d) {
-        if (_handles!=null) {
+        if (_editor.isEditable() && _handles!=null) {
             g2d.setColor(Editor.HIGHLIGHT_COLOR);
             g2d.setStroke(new java.awt.BasicStroke(2.0f));
             Rectangle r = getBounds();
