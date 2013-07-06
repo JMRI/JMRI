@@ -31,7 +31,11 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 
 	// labels
 	JLabel textTrainName = new JLabel();
+	JLabel textTrainDepartureTime = new JLabel();
 	JLabel textNextLocationName = new JLabel();
+	
+	// panels
+	JPanel pTrainDepartureTime = new JPanel();
 
 	// major buttons
 
@@ -66,6 +70,10 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 		// row 10
 		JPanel pRow10 = new JPanel();
 		pRow10.setLayout(new BoxLayout(pRow10, BoxLayout.X_AXIS));
+		
+		// row 10b (train departure time)
+		pTrainDepartureTime.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DepartTime")));
+		pTrainDepartureTime.add(textTrainDepartureTime);
 
 		// row 10c (next location name)
 		JPanel pNextLocationName = new JPanel();
@@ -73,6 +81,7 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 		pNextLocationName.add(textNextLocationName);
 
 		pRow10.add(pLocationName); // location name
+		pRow10.add(pTrainDepartureTime);
 		pRow10.add(pNextLocationName);
 
 		// row 14
@@ -174,6 +183,8 @@ public class TrainConductorFrame extends CommonConductorYardmasterFrame {
 				pTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
 				textTrainRouteLocationComment.setText(lineWrap(rl.getComment()));
 				textLocationName.setText(rl.getLocation().getName());
+				pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled() && !rl.getDepartureTime().equals(""));					
+				textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
 				pLocationComment.setVisible(!rl.getLocation().getComment().equals("")
 						&& Setup.isPrintLocationCommentsEnabled());
 				textLocationComment.setText(lineWrap(rl.getLocation().getComment()));
