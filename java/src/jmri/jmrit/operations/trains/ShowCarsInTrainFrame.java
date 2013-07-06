@@ -14,6 +14,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
@@ -42,7 +43,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 	JLabel textTrainName = new JLabel();
 	JLabel textLocationName = new JLabel();
 	JLabel textNextLocationName = new JLabel();
-	JLabel textStatus = new JLabel();
+	JTextPane textStatus = new JTextPane();
 	JLabel textPickUp = new JLabel(Bundle.getMessage("Pickup"));
 	JLabel textInTrain = new JLabel(Bundle.getMessage("InTrain"));
 	JLabel textSetOut = new JLabel(Bundle.getMessage("SetOut"));
@@ -122,6 +123,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 		pStatus.setLayout(new GridBagLayout());
 		pStatus.setBorder(BorderFactory.createTitledBorder(""));
 		addItem(pStatus, textStatus, 0, 0);
+		textStatus.setBackground(null);
 
 		getContentPane().add(pRow2);
 		getContentPane().add(pRow6);
@@ -188,7 +190,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 					}
 				}
 
-				textStatus.setText(getStatus(rl));
+				textStatus.setText(lineWrap(getStatus(rl)));
 			} else {
 				textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
 						new Object[] { _train.getTrainTerminatesName() }));
