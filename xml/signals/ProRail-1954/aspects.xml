@@ -91,3 +91,96 @@
     <appearancefile href="appearance-Dwarf.xml" />
   </appearancefiles>
 </aspecttable>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>ProRail-1954</name>
+  <date>2013</date>
+  <reference>Signaling definitions corresponding to the Wikipedia Dutch signals page</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2010</year>
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-07-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Stop</name>
+      <indication>Stop</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop for Engineering</name>
+      <indication>Stop</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>4</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear</name>
+      <indication>Proceed</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach</name>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited</name>
+      <indication>Proceed at Limited speed</indication>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricting</name>
+      <indication>Proceed at restricted speed because line may be blocked</indication>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>5</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Not Lit</name>
+      <rule>Dark</rule>
+      <indication>(used to indicate dark for e.g. approach lighting)</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Normal</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+  </aspects>
+  <appearancefiles>
+    <appearancefile href="appearance-High.xml" />
+    <appearancefile href="appearance-Dwarf.xml" />
+  </appearancefiles>
+</aspecttable>

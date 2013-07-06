@@ -136,3 +136,141 @@
     </aspectMapping>
   </aspectMappings>
 </appearancetable>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-07-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>InfraBel-2013</aspecttable>
+  <name>Main block signal</name>
+  <reference>http://en.wikipedia.org/wiki/Belgian_railway_signalling</reference>
+  <description>Appearances for main block signal with five lamps</description>
+  <appearances>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-R.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-G.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>dark</show>
+      <show>red</show>
+      <show>lunar</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-RW.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>yellow</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-YY.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advance Approach</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>yellow</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-GY.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Slow Approach</aspectname>
+      <show>green</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>yellow</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-YG.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Block-D.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+      <ourAspect>Slow Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Advance Approach</ourAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

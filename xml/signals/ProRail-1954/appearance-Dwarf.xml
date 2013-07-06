@@ -99,3 +99,104 @@
     </aspectMapping>
   </aspectMappings>
 </appearancetable>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-07-02</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>Prorail-1954</aspecttable>
+  <name>Dwarf signal</name>
+  <reference>http://en.wikipedia.org/wiki/Dutch_railway_signalling</reference>
+  <description>Three lamp dwarf signal</description>
+  <appearances>
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-RD.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Stop for Engineering</aspectname>
+      <show>flashred</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FRD.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Limited</aspectname>
+      <show>green</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-GD.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Approach</aspectname>
+      <show>yellow</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-YD.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Restricting</aspectname>
+      <show>flashyellow</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FYD.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-DD.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop for Engineering</aspect>
+    </danger>
+    <permissive>
+      <aspect>Restricting</aspect>
+    </permissive>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited</advancedAspect>
+      <ourAspect>Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting</advancedAspect>
+      <ourAspect>Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop for Engineering</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>
