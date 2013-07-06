@@ -76,9 +76,14 @@ Signal Mast definitions:
 <li><a href="appearance-CROR-1D-lo.xml">Single head searchlight dwarf signal with a rectangular 'DV' plate</a>
 </ul>
 <p>
-<ul>
+</ul>
+
 With the exception of single head masts plates are only shown on the masts where they modify the meaning of the aspect. If you are using a plated mast be sure to disable any aspects which should not be shown, I have left some in on the 'L' and 'DV' plated masts which I suspect should not be there. The 'L' plate elevates medium speed to limited speed for a given aspect, and 'DV' similarly elevates slow speed to diverging speed.
-    
+
+<p>
+There is only one issue to be aware off in that the CROR-2008 refers to a speed named DIVERGING and there doesn't seem to be a way to configure it as an additional speed. It is between SLOW and MEDIUM so users will probably be able to use one or the other as a workaround. 
+It only affects 'DV' plated signal masts which are not key to the system functioning otherwise since they are optional.    
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>
