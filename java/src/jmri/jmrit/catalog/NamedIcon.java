@@ -14,6 +14,8 @@ import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
 import java.net.URL;
 import javax.swing.ImageIcon;
+
+import jmri.jmrit.display.PositionableLabel;
 import jmri.util.FileUtil;
 
 /**
@@ -354,6 +356,9 @@ public class NamedIcon extends ImageIcon {
         t.concatenate(r);
         transformImage(width, heigth, t, comp);
         _deg = degree;
+        if (comp instanceof PositionableLabel) {
+            ((PositionableLabel)comp).setDegrees(degree);
+        }
     }
 
     /**
