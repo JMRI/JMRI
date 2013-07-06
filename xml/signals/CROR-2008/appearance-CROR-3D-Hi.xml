@@ -1106,3 +1106,557 @@
     </aspectMapping>
   </aspectMappings>
 </appearancetable>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2012</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1.0</revnumber>
+      <date>2013-06-27</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial Version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.02</revnumber>
+      <date>2013-06-30</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Changed Danger specific appearance to Restricting Signal</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.03</revnumber>
+      <date>2013-07-01</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Changed Danger specific appearance back to Stop Signal because the mast cannot show Restricting Signal</revremark>
+    </revision>
+  </revhistory>
+  <aspecttable>CROR-2008</aspecttable>
+  <name>Triple head searchlight high signal with 'DV' plate</name>
+  <reference>As described in the CROR Rule Book TC O-0-93.</reference>
+  <description>Appearances for a triple head searchlight mast with diverging speed aspects when a 'DV' plate is fitted to the mast. </description>
+  <appearances>
+    <appearance>
+      <aspectname>Clear Signal</aspectname>
+      <show>green</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 405</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-405.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear to Limited</aspectname>
+      <show>yellow</show>
+      <show>flashgreen</show>
+      <show>red</show>
+      <reference>Rule 406</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-406.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear to Medium</aspectname>
+      <show>yellow</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>Rule 407</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-407.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear to Diverging</aspectname>
+      <show>yellow</show>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Rule 408</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-408.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear to Restricting</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <show>flashred</show>
+      <reference>Rule 410</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-410.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Clear to Stop</aspectname>
+      <show>yellow</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 411</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-411.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advance Clear to Limited</aspectname>
+      <show>flashyellow</show>
+      <show>flashgreen</show>
+      <show>red</show>
+      <reference>Rule 412</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-412.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advance Clear to Medium</aspectname>
+      <show>flashyellow</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>Rule 413</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-413.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advance Clear to Slow</aspectname>
+      <show>flashyellow</show>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Rule 414</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-414.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Advance Clear to Stop</aspectname>
+      <show>flashyellow</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 415</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-415.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Limited to Clear</aspectname>
+      <show>red</show>
+      <show>flashgreen</show>
+      <show>red</show>
+      <reference>Rule 416</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-416.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Limited to Limited</aspectname>
+      <show>red</show>
+      <show>flashgreen</show>
+      <show>flashgreen</show>
+      <reference>Rule 417</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-417.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Limited to Medium</aspectname>
+      <show>red</show>
+      <show>flashgreen</show>
+      <show>green</show>
+      <reference>Rule 418</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-418.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Limited to Slow</aspectname>
+      <show>red</show>
+      <show>flashgreen</show>
+      <show>flashyellow</show>
+      <reference>Rule 419</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-419.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Limited to Restricting</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <show>flashred</show>
+      <reference>Rule 420</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-420.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Limited to Stop</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <show>red</show>
+      <reference>Rule 421</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-421.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium to Clear</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>red</show>
+      <reference>Rule 422</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-422.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium to Limited</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>flashgreen</show>
+      <reference>Rule 423</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-423.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium to Medium</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>green</show>
+      <reference>Rule 424</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-424.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium to Slow</aspectname>
+      <show>red</show>
+      <show>green</show>
+      <show>flashyellow</show>
+      <reference>Rule 425</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-425.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium to Restricting</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <show>flashred</show>
+      <reference>Rule 426</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-426.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Medium to Stop</aspectname>
+      <show>red</show>
+      <show>yellow</show>
+      <show>red</show>
+      <reference>Rule 427</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-427.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging to Clear</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>green</show>
+      <reference>Rule 428</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-428.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging to Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>flashyellow</show>
+      <reference>Rule 429</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-429.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Diverging</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>yellow</show>
+      <reference>Rule 430</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-430.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Slow to Limited</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <show>flashgreen</show>
+      <reference>Rule 432</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-432.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Slow to Medium</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <show>green</show>
+      <reference>Rule 433</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-433.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Slow to Slow</aspectname>
+      <show>red</show>
+      <show>flashyellow</show>
+      <show>flashyellow</show>
+      <reference>Rule 434</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-434.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Take Siding</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>flashred</show>
+      <reference>Rule 438</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-438.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Stop Signal</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 439</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-439.gif</imagelink>
+    </appearance>
+    <appearance>
+      <aspectname>Not Lit</aspectname>
+      <show>dark</show>
+      <show>dark</show>
+      <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/CROR-2008/3-hi/CROR-3-DarkD.gif</imagelink>
+    </appearance>
+  </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop Signal</aspect>
+    </danger>
+    <held>
+      <aspect>Stop Signal</aspect>
+    </held>
+    <dark>
+      <aspect>Not Lit</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear Signal</advancedAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear to Limited</advancedAspect>
+      <ourAspect>Advance Clear to Limited</ourAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear to Medium</advancedAspect>
+      <ourAspect>Advance Clear to Medium</ourAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear to Diverging</advancedAspect>
+      <ourAspect>Advance Clear to Slow</ourAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear to Slow</advancedAspect>
+      <ourAspect>Advance Clear to Slow</ourAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear to Restricting</advancedAspect>
+      <ourAspect>Advance Clear to Slow</ourAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Clear to Stop</advancedAspect>
+      <ourAspect>Advance Clear to Stop</ourAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Clear to Limited</advancedAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Clear to Medium</advancedAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Clear to Slow</advancedAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Advance Clear to Stop</advancedAspect>
+      <ourAspect>Clear Signal</ourAspect>
+      <ourAspect>Limited to Clear</ourAspect>
+      <ourAspect>Medium to Clear</ourAspect>
+      <ourAspect>Diverging to Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited to Clear</advancedAspect>
+      <ourAspect>Clear to Limited</ourAspect>
+      <ourAspect>Limited to Limited</ourAspect>
+      <ourAspect>Medium to Limited</ourAspect>
+      <ourAspect>Slow to Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited to Limited</advancedAspect>
+      <ourAspect>Clear to Limited</ourAspect>
+      <ourAspect>Limited to Limited</ourAspect>
+      <ourAspect>Medium to Limited</ourAspect>
+      <ourAspect>Slow to Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited to Medium</advancedAspect>
+      <ourAspect>Clear to Limited</ourAspect>
+      <ourAspect>Limited to Limited</ourAspect>
+      <ourAspect>Medium to Limited</ourAspect>
+      <ourAspect>Slow to Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited to Slow</advancedAspect>
+      <ourAspect>Clear to Limited</ourAspect>
+      <ourAspect>Limited to Limited</ourAspect>
+      <ourAspect>Medium to Limited</ourAspect>
+      <ourAspect>Slow to Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited to Restricting</advancedAspect>
+      <ourAspect>Clear to Limited</ourAspect>
+      <ourAspect>Limited to Limited</ourAspect>
+      <ourAspect>Medium to Limited</ourAspect>
+      <ourAspect>Slow to Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Limited to Stop</advancedAspect>
+      <ourAspect>Clear to Limited</ourAspect>
+      <ourAspect>Limited to Limited</ourAspect>
+      <ourAspect>Medium to Limited</ourAspect>
+      <ourAspect>Slow to Limited</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium to Clear</advancedAspect>
+      <ourAspect>Clear to Medium</ourAspect>
+      <ourAspect>Limited to Medium</ourAspect>
+      <ourAspect>Medium to Medium</ourAspect>
+      <ourAspect>Slow to Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium to Limited</advancedAspect>
+      <ourAspect>Clear to Medium</ourAspect>
+      <ourAspect>Limited to Medium</ourAspect>
+      <ourAspect>Medium to Medium</ourAspect>
+      <ourAspect>Slow to Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium to Medium</advancedAspect>
+      <ourAspect>Clear to Medium</ourAspect>
+      <ourAspect>Limited to Medium</ourAspect>
+      <ourAspect>Medium to Medium</ourAspect>
+      <ourAspect>Slow to Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium to Slow</advancedAspect>
+      <ourAspect>Clear to Medium</ourAspect>
+      <ourAspect>Limited to Medium</ourAspect>
+      <ourAspect>Medium to Medium</ourAspect>
+      <ourAspect>Slow to Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium to Restricting</advancedAspect>
+      <ourAspect>Clear to Medium</ourAspect>
+      <ourAspect>Limited to Medium</ourAspect>
+      <ourAspect>Medium to Medium</ourAspect>
+      <ourAspect>Slow to Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Medium to Stop</advancedAspect>
+      <ourAspect>Clear to Medium</ourAspect>
+      <ourAspect>Limited to Medium</ourAspect>
+      <ourAspect>Medium to Medium</ourAspect>
+      <ourAspect>Slow to Medium</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging to Clear</advancedAspect>
+      <ourAspect>Clear to Diverging</ourAspect>
+      <ourAspect>Limited to Slow</ourAspect>
+      <ourAspect>Medium to Slow</ourAspect>
+      <ourAspect>Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging to Stop</advancedAspect>
+      <ourAspect>Clear to Diverging</ourAspect>
+      <ourAspect>Limited to Slow</ourAspect>
+      <ourAspect>Medium to Slow</ourAspect>
+      <ourAspect>Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging</advancedAspect>
+      <ourAspect>Clear to Diverging</ourAspect>
+      <ourAspect>Limited to Slow</ourAspect>
+      <ourAspect>Medium to Slow</ourAspect>
+      <ourAspect>Diverging</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow to Clear</advancedAspect>
+      <ourAspect>Clear to Restricting</ourAspect>
+      <ourAspect>Limited to Slow</ourAspect>
+      <ourAspect>Medium to Slow</ourAspect>
+      <ourAspect>Slow to Slow</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow to Limited</advancedAspect>
+      <ourAspect>Clear to Restricting</ourAspect>
+      <ourAspect>Limited to Slow</ourAspect>
+      <ourAspect>Medium to Slow</ourAspect>
+      <ourAspect>Slow to Slow</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow to Medium</advancedAspect>
+      <ourAspect>Clear to Restricting</ourAspect>
+      <ourAspect>Limited to Slow</ourAspect>
+      <ourAspect>Medium to Slow</ourAspect>
+      <ourAspect>Slow to Slow</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow to Slow</advancedAspect>
+      <ourAspect>Clear to Restricting</ourAspect>
+      <ourAspect>Limited to Slow</ourAspect>
+      <ourAspect>Medium to Slow</ourAspect>
+      <ourAspect>Slow to Slow</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Slow to Stop</advancedAspect>
+      <ourAspect>Clear to Restricting</ourAspect>
+      <ourAspect>Limited to Slow</ourAspect>
+      <ourAspect>Medium to Slow</ourAspect>
+      <ourAspect>Slow to Slow</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Restricting Signal</advancedAspect>
+      <ourAspect>Clear to Restricting</ourAspect>
+      <ourAspect>Limited to Restricting</ourAspect>
+      <ourAspect>Medium to Restricting</ourAspect>
+      <ourAspect>Slow to Slow</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop and Proceed</advancedAspect>
+      <ourAspect>Clear to Stop</ourAspect>
+      <ourAspect>Limited to Stop</ourAspect>
+      <ourAspect>Medium to Stop</ourAspect>
+      <ourAspect>Diverging to Stop</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Take Siding</advancedAspect>
+      <ourAspect>Clear to Restricting</ourAspect>
+      <ourAspect>Limited to Restricting</ourAspect>
+      <ourAspect>Medium to Restricting</ourAspect>
+      <ourAspect>Slow to Slow</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop Signal</advancedAspect>
+      <ourAspect>Clear to Stop</ourAspect>
+      <ourAspect>Limited to Stop</ourAspect>
+      <ourAspect>Medium to Stop</ourAspect>
+      <ourAspect>Diverging to Stop</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
+</appearancetable>

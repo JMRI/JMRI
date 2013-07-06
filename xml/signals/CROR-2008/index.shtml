@@ -160,6 +160,90 @@ Signal Mast definitions:
 <li><a href="appearance-CROR-1D-lo.xml">Single head searchlight dwarf signal with a rectangular 'DV' plate</a>
 </ul>
 <p>
+<ul>
+With the exception of single head masts plates are only shown on the masts where they modify the meaning of the aspect. If you are using a plated mast be sure to disable any aspects which should not be shown, I have left some in on the 'L' and 'DV' plated masts which I suspect should not be there. The 'L' plate elevates medium speed to limited speed for a given aspect, and 'DV' similarly elevates slow speed to diverging speed.
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: Tall $) 2013 -->
+<!-- $Id: index.shtml,v 1.0 2013/06/21 12:00 Tall Exp $ -->
+<title>JMRI: CROR 2008 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: CROR 2008 Signaling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to 
+the CROR Signal Rules from the current 2008 rulebook TC O-0-93
+
+This rulebook is with a few minor exceptions a superset of all the other CROR rulebooks I have seen so should make a good basis for a CROR signal system with universal appeal. Unwanted aspects can be disabled in the mast properties to create signals for the older rulebooks.
+
+<p>
+
+<a href="http://www.tc.gc.ca/eng/railsafety/rules-tco93-175.htm">CROR 2008 rule book</a>
+
+<p>
+See the <a href="aspects.xml">aspect page</a> to see how the aspects look.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-CROR-3-Hi.xml">Triple head searchlight high signal</a>
+<li><a href="appearance-CROR-3A-Hi.xml">Triple head searchlight high signal with alternative Green over Red based aspects</a>
+<li><a href="appearance-CROR-3L-Hi.xml">Triple head searchlight high signal with a yellow triangular 'L' plate</a>
+<li><a href="appearance-CROR-3D-Hi.xml">Triple head searchlight high signal with a yellow rectangular 'DV' plate</a>
+</ul>
+<p>
+<ul>
+<li><a href="appearance-CROR-2S-Hi.xml">Double head inline searchlight high signal</a>
+<li><a href="appearance-CROR-2SL-Hi.xml">Double head inline searchlight high signal with a yellow triangular 'L' plate</a>
+<li><a href="appearance-CROR-2SD-Hi.xml">Double head inline searchlight high signal with a yellow rectangular 'DV' plate</a>
+</ul>
+<p>
+<ul>
+<li><a href="appearance-CROR-2O-Hi.xml">Double head staggered searchlight high signal</a>
+<li><a href="appearance-CROR-2OL-Hi.xml">Double head staggered searchlight high signal with a yellow triangular 'L' plate</a>
+<li><a href="appearance-CROR-2OD-Hi.xml">Double head staggered searchlight high signal with a yellow rectangular 'DV' plate</a>
+</ul>
+<p>
+<ul>
+<li><a href="appearance-CROR-1-Hi.xml">Single head searchlight high signal</a>
+<li><a href="appearance-CROR-1A-Hi.xml">Single head searchlight high signal with white circular 'A' plate</a>
+<li><a href="appearance-CROR-1R-Hi.xml">Single head searchlight high signal with a yellow rectangular 'R' plate</a>
+</ul>
+<p>
+<ul>
+<li><a href="appearance-CROR-2-lo.xml">Double head searchlight dwarf signal</a>
+<li><a href="appearance-CROR-2L-lo.xml">Double head searchlight dwarf signal with a yellow triangular 'L' plate</a>
+<li><a href="appearance-CROR-2D-lo.xml">Double head searchlight dwarf signal with a yellow rectangular 'DV' plate</a>
+</ul>
+<p>
+<ul>
+<li><a href="appearance-CROR-1-lo.xml">Single head searchlight dwarf signal</a>
+<li><a href="appearance-CROR-1A-lo.xml">Single head searchlight dwarf signal with a circular 'A' plate</a>
+<li><a href="appearance-CROR-1D-lo.xml">Single head searchlight dwarf signal with a rectangular 'DV' plate</a>
+</ul>
+<p>
 </ul>
 
 With the exception of single head masts plates are only shown on the masts where they modify the meaning of the aspect. If you are using a plated mast be sure to disable any aspects which should not be shown, I have left some in on the 'L' and 'DV' plated masts which I suspect should not be there. The 'L' plate elevates medium speed to limited speed for a given aspect, and 'DV' similarly elevates slow speed to diverging speed.

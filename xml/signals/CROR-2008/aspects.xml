@@ -748,3 +748,378 @@
     <appearancefile href="appearance-CROR-1D-Lo.xml" />
   </appearancefiles>
 </aspecttable>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>CROR-2008</name>
+  <date>2008</date>
+  <reference>From CROR rulebook TC O-0-93</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2013</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2013-06-27</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Clear Signal</name>
+      <rule>Rule 405</rule>
+      <indication>Proceed.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>29</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear to Limited</name>
+      <rule>Rule 406</rule>
+      <indication>Proceed, approaching the next signal at LIMITED speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
+      <dccAspect>28</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear to Medium</name>
+      <rule>Rule 407</rule>
+      <indication>Proceed, approaching the next signal at MEDIUM speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>27</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear to Diverging</name>
+      <rule>Rule 408</rule>
+      <indication>Proceed, approaching the next signal at DIVERGING speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Diverging</speed2>
+      <route>Normal</route>
+      <dccAspect>26</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear to Slow</name>
+      <rule>Rule 409</rule>
+      <indication>Proceed, approaching the next signal at SLOW speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>26</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear to Restricting</name>
+      <rule>Rule 410</rule>
+      <indication>Proceed, next signal is displaying restricting signal.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>25</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Clear to Stop</name>
+      <rule>Rule 411</rule>
+      <indication>Proceed, preparing to stop at next signal.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>24</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Advance Clear to Limited</name>
+      <rule>Rule 412</rule>
+      <indication>Proceed, approaching second signal at LIMITED speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>23</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Advance Clear to Medium</name>
+      <rule>Rule 413</rule>
+      <indication>Proceed, approaching second signal at MEDIUM speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>22</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Advance Clear to Slow</name>
+      <rule>Rule 414</rule>
+      <indication>Proceed, approaching second signal at SLOW speed.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>21</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Advance Clear to Stop</name>
+      <rule>Rule 415</rule>
+      <indication>Proceed, next signal is displaying Clear to Stop, be prepared to stop at second signal.</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>20</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited to Clear</name>
+      <rule>Rule 416</rule>
+      <indication>Proceed, LIMITED Speed passing signal and through turnouts.</indication>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>19</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited to Limited</name>
+      <rule>Rule 417</rule>
+      <indication>Proceed, LIMITED speed passing signal and through turnouts.</indication>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
+      <dccAspect>18</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited to Medium</name>
+      <rule>Rule 418</rule>
+      <indication>Proceed, LIMITED speed passing signal and through turnouts, approaching next signal at MEDIUM speed.</indication>
+      <speed>Limited</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+      <dccAspect>17</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited to Slow</name>
+      <rule>Rule 419</rule>
+      <indication>Proceed, LIMITED speed passing signal and through turnouts, approaching next signal at SLOW speed.</indication>
+      <speed>Limited</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+      <dccAspect>16</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited to Restricting</name>
+      <rule>Rule 420</rule>
+      <indication>Proceed, LIMITED speed passing signal and through turnouts, next signal is displaying restricted signal.</indication>
+      <speed>Limited</speed>
+      <speed2>Restricting</speed2>
+      <route>Diverging</route>
+      <dccAspect>15</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Limited to Stop</name>
+      <rule>Rule 421</rule>
+      <indication>Proceed, LIMITED speed passing signal and through turnouts, preparing to stop at next signal.</indication>
+      <speed>Limited</speed>
+      <speed2>Limited</speed2>
+      <route>Normal</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium to Clear</name>
+      <rule>Rule 422</rule>
+      <indication>Proceed, MEDIUM speed passing signal and through turnouts.</indication>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>13</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium to Limited</name>
+      <rule>Rule 423</rule>
+      <indication>Proceed, MEDIUM speed passing signal and through turnouts, approaching next signal at LIMITED speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
+      <dccAspect>12</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium to Medium</name>
+      <rule>Rule 424</rule>
+      <indication>Proceed, MEDIUM speed passing signal and through turnouts, approaching next signal at MEDIUM speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+      <dccAspect>11</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium to Slow</name>
+      <rule>Rule 425</rule>
+      <indication>Proceed, MEDIUM speed passing signal and through turnouts, approaching next signal at SLOW speed.</indication>
+      <speed>Medium</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+      <dccAspect>10</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium to Restricting</name>
+      <rule>Rule 426</rule>
+      <indication>Proceed, MEDIUM speed passing signal and through turnouts, next signal is displaying restricted signal.</indication>
+      <speed>Medium</speed>
+      <speed2>Restricting</speed2>
+      <route>Diverging</route>
+      <dccAspect>9</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Medium to Stop</name>
+      <rule>Rule 427</rule>
+      <indication>Proceed, MEDIUM speed passing signal and through turnouts, preparing to stop at the next signal.</indication>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging to Clear</name>
+      <rule>Rule 428</rule>
+      <indication>Proceed, DIVERGING speed passing signal and through turnouts.</indication>
+      <speed>Diverging</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging to Stop</name>
+      <rule>Rule 429</rule>
+      <indication>Proceed, DIVERGING speed passing signal and through turnouts, preparing to stop at the next signal.</indication>
+      <speed>Diverging</speed>
+      <speed2>Diverging</speed2>
+      <route>Normal</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Diverging</name>
+      <rule>Rule 430</rule>
+      <indication>Proceed, REDUCED speed  not exceeding DIVERGING speedpassing signal and through turnouts.</indication>
+      <speed>Diverging</speed>
+      <speed2>Diverging</speed2>
+      <route>Normal</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow to Clear</name>
+      <rule>Rule 431</rule>
+      <indication>Proceed, SLOW speed passing signal and through turnouts.</indication>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow to Limited</name>
+      <rule>Rule 432</rule>
+      <indication>Proceed, SLOW speed passing signal and through turnouts, approaching next signal at Limited speed.</indication>
+      <speed>Slow</speed>
+      <speed2>Limited</speed2>
+      <route>Diverging</route>
+      <dccAspect>6</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow to Medium</name>
+      <rule>Rule 433</rule>
+      <indication>Proceed, SLOW speed passing signal and through turnouts, approaching next signal at MEDIUM speed.</indication>
+      <speed>Slow</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+      <dccAspect>5</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow to Slow</name>
+      <rule>Rule 434</rule>
+      <indication>Proceed, SLOW speed passing signal and through turnouts, approaching next signal at SLOW speed.</indication>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Diverging</route>
+      <dccAspect>4</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Slow to Stop</name>
+      <rule>Rule 435</rule>
+      <indication>Proceed, SLOW speed passing signal and through turnouts preparing to stop at next signal.</indication>
+      <speed>Slow</speed>
+      <speed2>Slow</speed2>
+      <route>Normal</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricting Signal</name>
+      <rule>Rule 436</rule>
+      <indication>Proceed at RESTRICTED speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop and Proceed Signal</name>
+      <rule>Rule 437</rule>
+      <indication>Stop, then proceed at RESTRICTED speed.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Take Siding</name>
+      <rule>Rule 438</rule>
+      <indication>Indications will be specified in special instructions for each specific application of this signal.</indication>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop Signal</name>
+      <rule>Rule 439</rule>
+      <indication>Stop.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Not Lit</name>
+      <rule>Dark</rule>
+      <indication>Signal is extinguished because no train is present.</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
+  </aspects>
+  <appearancefiles>
+    <appearancefile href="appearance-CROR-3-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-3A-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-3L-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-3D-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2S-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2SL-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2SD-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2O-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2OL-Hi.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2OD-Hi.xml" />
+    <appearancefile href="appearance-CROR-1-Hi.xml" />
+    <appearancefile href="appearance-CROR-1A-Hi.xml" />
+    <appearancefile href="appearance-CROR-1R-Hi.xml" />
+    <appearancefile href="appearance-CROR-2-Lo.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2L-Lo.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-2D-Lo.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-1-Lo.xml" />
+    <appearancefile href="appearance-CROR-1A-Lo.xml"></appearancefile>
+    <appearancefile href="appearance-CROR-1D-Lo.xml" />
+  </appearancefiles>
+</aspecttable>
