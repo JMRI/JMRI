@@ -5,47 +5,55 @@
 <!-- $Id: Kato_FL12.xml 22091 2012-12-29 02:38:59Z jacobsen $ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="dat7719@daletripp.com" version="1" lastUpdated="20080321"/>
+  <version author="Martin Jahner jmri@jahner.org" version="2" lastUpdated="201300706"/>
   <decoder>
     <family name="Function Only, with transponding" mfg="Kato">
-      <model model="FL12" lowVersionID="0"/>
+      <model model="FL12" numOuts="2" lowVersionID="254"/>
     </family>
     <programming direct="byteOnly" paged="yes" register="yes" ops="no"/>
     <variables>
-      <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-        <shortAddressVal/>
-      </variable>
-      <variable label="Version ID" CV="7" readOnly="yes" item="Decoder Version" default="0">
-        <decVal/>
-      </variable>
-      <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer" default="129">
-        <decVal/>
-      </variable>
-      <variable label="Use F0 for function control" CV="61" mask="XXXXXXXV" item="F0 use">
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/digitrax/mfgVersionId.xml"/>
+
+      <variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction">
         <enumVal>
-          <enumChoice choice="Off"/>
-          <enumChoice choice="On"/>
+          <enumChoice choice="forward">
+            <choice>forward</choice>
+            <choice xml:lang="it">avanti</choice>
+          </enumChoice>
+          <enumChoice choice="reverse">
+            <choice>reverse</choice>
+            <choice xml:lang="it">indietro</choice>
+          </enumChoice>
         </enumVal>
+        <label>Normal direction of motion</label>
+        <label xml:lang="it">Normale direzione di marcia</label>
       </variable>
-      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Transpond" default="1">
-        <enumVal>
-          <enumChoice choice="Off"/>
-          <enumChoice choice="On"/>
-        </enumVal>
+
+      <variable label="Digitrax Transponding" CV="61" mask="XXXXXXVX" item="Transponding" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Digitrax Transponding</label>
+       <label xml:lang="it">Tranponding Digitrax</label>
       </variable>
-      <variable label="Function controlling output" CV="64" mask="XXXXXXXV" item="ControlFn">
+      <variable label="Function controlling output" CV="64" mask="XXXXXXVV" item="ControlFn">
         <enumVal>
           <enumChoice choice="F0"/>
           <enumChoice choice="F3"/>
           <enumChoice choice="F5"/>
+          <enumChoice choice="F9"/>
         </enumVal>
       </variable>
     </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+                 <label>Reset All CVs</label>
+                 <label xml:lang="it">Ripristino di tutte le CV</label>
+      </factReset>
+    </resets>
   </decoder>
   <pane name="Function Output">
     <column>
-      <display item="Transpond"/>
       <display item="ControlFn"/>
-      <display item="F0 use" format="checkbox" tooltip="Do not check this box if 'F0' is not selected above"/>
     </column>
   </pane>
 </decoder-config>
