@@ -99,6 +99,11 @@ public class ManageLocationsFrame extends JmriJFrame {
 
     private List<JMenu> menuList;
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2",
+                    justification="2D array of different types passed as complex parameter. "+
+                                   "Better to switch to passing use-specific objects rather than "+
+                                   "papering this over with a deep copy of the arguments. "+
+                                   "In any case, there's no risk of exposure here.")
     public ManageLocationsFrame(ListeningSpot listener, 
 				Object[][] reporters,
 				Object[][] ops,
