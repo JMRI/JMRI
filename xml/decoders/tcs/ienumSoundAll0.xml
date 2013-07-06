@@ -1,0 +1,207 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file panes for QSI V7 files -->
+<!-- version 2 - reorganize for translations -->
+<!-- version 3 - add models 187,1031,1040,1041,1042,336,337,338,411 -->
+<!-- version 4 - add models 175,186,202,1048,1049,2048,2049,3048,3049,4048,4049,5048,5049-->
+<!-- function output choices for output 15 thru 30 when moving and in neutral -->
+<ienumVal>
+	<ienumChoice choice="Westinghouse 2 Stage" value="121" />
+	<ienumChoice choice="Westinghouse Cross Compound" value="122" />
+	<ienumChoice choice="Westinghouse Single Stage" value="123" />
+	<ienumChoice choice="Westinghouse Single Stage" value="125" />
+	<ienumChoice choice="Westinghouse Single Stage" value="124" />
+	<ienumChoice choice="Conrail Num 2233 GP30 air powered bell" value="7" />
+	<ienumChoice choice="Heisler Class 53833 Num 4 Hand powered bell" value="12" />
+	<ienumChoice choice="John Bull Replica hand powered bell" value="9" />
+	<ienumChoice choice="Leetonia RR Shay Num 1 bell" value="13" />
+	<ienumChoice choice="Num 89 Air Power Bell" value="2" />
+	<ienumChoice choice="PRR 280 H3 1187 Hand powered Bell" value="10" />
+	<ienumChoice choice="PRR 280 H3 2846 air Powered Bell" value="11" />
+	<ienumChoice choice="PRR 442 Num 7002 hand powered bell" value="5" />
+	<ienumChoice choice="PRR GG1 bell" value="8" />
+	<ienumChoice choice="PRR Num 1223 American 440 D16SB hand powered bell" value="6" />
+	<ienumChoice choice="Reading 060 Num 1251 Tank engine air powered bell" value="3" />
+	<ienumChoice choice="Strasburg 475 Air Powered bell" value="1" />
+	<ienumChoice choice="Strasburg 475 Hand Powered bell" value="0" />
+	<ienumChoice choice="Strasburg num 90 hand powered bell" value="16" />
+	<ienumChoice choice="Strasburg num 90 hand powered bell variation" value="17" />
+	<ienumChoice choice="Unknown bell from Strasburg museum floor" value="14" />
+	<ienumChoice choice="Virginia Truckee RR 260 hand powered bell" value="4" />
+	<ienumChoice choice="Williams Grove PRR #643 060 bell" value="15" />
+	<ienumChoice choice="Blow Down 1" value="96" />
+	<ienumChoice choice="Blow Down 2" value="95" />
+	<ienumChoice choice="Blow Down 3" value="97" />
+	<ienumChoice choice="Blower 1" value="98" />
+	<ienumChoice choice="Blower 2" value="99" />
+	<ienumChoice choice="Brake Release 1 Independent" value="206" />
+	<ienumChoice choice="Brake Release 2 Independent" value="207" />
+	<ienumChoice choice="Brake Squeal 1" value="205" />
+	<ienumChoice choice="Brake Squeal 2" value="199" />
+	<ienumChoice choice="Brake Squeal 3" value="200" />
+	<ienumChoice choice="Brake Squeal 4" value="201" />
+	<ienumChoice choice="Brake Squeal 5" value="202" />
+	<ienumChoice choice="Brake Squeal 6" value="203" />
+	<ienumChoice choice="Brake Squeal 7" value="204" />
+	<ienumChoice choice="Coupler Clank 1" value="100" />
+	<ienumChoice choice="Coupler Clank 2" value="101" />
+	<ienumChoice choice="Direction Change 1 Power Reverser" value="94" />
+	<ienumChoice choice="Generator 1" value="117" />
+	<ienumChoice choice="Generator 2" value="116" />
+	<ienumChoice choice="Nathan K5LA horn long" value="88" />
+	<ienumChoice choice="Nathan K5LA horn quill" value="89" />
+	<ienumChoice choice="Nathan K5LA horn short" value="87" />
+	<ienumChoice choice="Injector 1" value="118" />
+	<ienumChoice choice="Injector 2" value="119" />
+	<ienumChoice choice="Injector 3" value="120" />
+	<ienumChoice choice="Rod Clank 1" value="90" />
+	<ienumChoice choice="Rod Clank 2" value="91" />
+	<ienumChoice choice="Rod Clank 3" value="92" />
+	<ienumChoice choice="Rod Clank 4" value="93" />
+	<ienumChoice choice="Safety 1" value="126" />
+	<ienumChoice choice="Safety 2" value="127" />
+	<ienumChoice choice="Shovelling 1 Butterfly - Air Powered" value="128" />
+	<ienumChoice choice="Shovelling 2 Butterfly - Air Powered" value="129" />
+	<ienumChoice choice="Alamo Michigan Plant Whistle Long" value="19" />
+	<ienumChoice choice="B &amp; O Long Toot" value="46" />
+	<ienumChoice choice="Whistle - Long 3" value="67" />
+	<ienumChoice choice="Whistle - Long 4" value="76" />
+	<ienumChoice choice="Whistle - Long 5" value="79" />
+	<ienumChoice choice="Whistle - Long 6" value="70" />
+	<ienumChoice choice="Whistle - Long 7" value="73" />
+	<ienumChoice choice="Kingsly 4 Chime Whistle Long" value="25" />
+	<ienumChoice choice="Lunkenhimer 3 Chime Whistle Long" value="28" />
+	<ienumChoice choice="Whistle - Long 10" value="31" />
+	<ienumChoice choice="NW Deep Single Chime long" value="52" />
+	<ienumChoice choice="NW single chime short bell long toot" value="82" />
+	<ienumChoice choice="PA 3 Chime Whistle Long" value="22" />
+	<ienumChoice choice="Pennsy K4 Long Toot" value="49" />
+	<ienumChoice choice="Reading 6 Chime Whistle Long" value="34" />
+	<ienumChoice choice="Reading Pacific G2 Whistle Long" value="37" />
+	<ienumChoice choice="Reading Single Chime Whistle Long" value="40" />
+	<ienumChoice choice="Unknown Whistle 1 long toot" value="58" />
+	<ienumChoice choice="Unknown Whistle 2 long toot" value="61" />
+	<ienumChoice choice="Unknown Whistle 3 long toot" value="64" />
+	<ienumChoice choice="Wabash Whistle Long" value="43" />
+	<ienumChoice choice="WG Lunkenheimer 3 chime long" value="55" />
+	<ienumChoice choice="Alamo Michigan Plant Whistle ProceedSignal" value="130" />
+	<ienumChoice choice="B &amp; O Forward Whistle" value="139" />
+	<ienumChoice choice="Whistle - Proceed Forward 3" value="146" />
+	<ienumChoice choice="Whistle - Proceed Forward 4" value="149" />
+	<ienumChoice choice="Whistle - Proceed Forward 5" value="150" />
+	<ienumChoice choice="Whistle - Proceed Forward 6" value="147" />
+	<ienumChoice choice="Whistle - Proceed Forward 7" value="148" />
+	<ienumChoice choice="Kingsly 4 Chime Whistle Forward" value="132" />
+	<ienumChoice choice="Whistle - Proceed Forward 9" value="134" />
+	<ienumChoice choice="NW Deep Single Chime forward toot" value="141" />
+	<ienumChoice choice="NW single chime short bell forward whistle" value="151" />
+	<ienumChoice choice="PA 3 Chime Whistle Forward" value="131" />
+	<ienumChoice choice="Pennsy K4 Forward Whistle" value="140" />
+	<ienumChoice choice="Reading 6 Chime Whistle Forward" value="135" />
+	<ienumChoice choice="Reading Pacific G2 Whistle Forward" value="136" />
+	<ienumChoice choice="Reading Single Chime Whistle Forward" value="137" />
+	<ienumChoice choice="Unknown Whistle 1 forward toot" value="143" />
+	<ienumChoice choice="Unknown Whistle 2 forward toot" value="144" />
+	<ienumChoice choice="Unknown Whistle 3 forward toot" value="145" />
+	<ienumChoice choice="Wabash Whistle Forward" value="138" />
+	<ienumChoice choice="WG Lunkenheimer 3 chime forward" value="142" />
+	<ienumChoice choice="Alamo Michigian Plant Whistle Quill" value="20" />
+	<ienumChoice choice="B &amp; O quill" value="47" />
+	<ienumChoice choice="Whistle - Quill 3" value="68" />
+	<ienumChoice choice="Whistle - Quill 4" value="77" />
+	<ienumChoice choice="Whistle - Quill 5" value="80" />
+	<ienumChoice choice="Whistle - Quill 6" value="71" />
+	<ienumChoice choice="Whistle - Quill 7" value="74" />
+	<ienumChoice choice="Kingsly 4 Chime Whistle Quill" value="26" />
+	<ienumChoice choice="Lunkenhimer factory 3 Chime Whistle Quill" value="29" />
+	<ienumChoice choice="Whistle - Quill 10" value="32" />
+	<ienumChoice choice="NW Deep Single Chime quill" value="53" />
+	<ienumChoice choice="NW single chime short bell Quill" value="83" />
+	<ienumChoice choice="PA 3 Chime Whistle Quill" value="23" />
+	<ienumChoice choice="Pennsy K4 quill" value="50" />
+	<ienumChoice choice="Reading 6 Chime Whistle Quill" value="35" />
+	<ienumChoice choice="Reading Pacific G2 Whistle Quill" value="38" />
+	<ienumChoice choice="Reading Single Chime Whistle Quill" value="41" />
+	<ienumChoice choice="Unknown Whistle 1 quill" value="59" />
+	<ienumChoice choice="Unknown Whistle 2 quill" value="62" />
+	<ienumChoice choice="Unknown Whistle 3 quill" value="65" />
+	<ienumChoice choice="Wabash Whistle Quill" value="44" />
+	<ienumChoice choice="WG Lunkenheimer 3 chime quill" value="56" />
+	<ienumChoice choice="Alamo Michigan Plant Whistle ReverseOrStop" value="153" />
+	<ienumChoice choice="B &amp; O Reverse Whistle" value="162" />
+	<ienumChoice choice="Whistle - Reverse 3" value="169" />
+	<ienumChoice choice="Whistle - Reverse 4" value="172" />
+	<ienumChoice choice="Whistle - Reverse 5" value="173" />
+	<ienumChoice choice="Whistle - Reverse 6" value="170" />
+	<ienumChoice choice="Whistle - Reverse 7" value="171" />
+	<ienumChoice choice="Kingsly 4 Chime Whistle Reverse whistle" value="155" />
+	<ienumChoice choice="Lunkenhimer 3 Chime Whistle Reverse" value="156" />
+	<ienumChoice choice="Whistle - Reverse 10" value="157" />
+	<ienumChoice choice="NW Deep Single Chime reverse toot" value="164" />
+	<ienumChoice choice="NW single chime short bell reverse whistle" value="174" />
+	<ienumChoice choice="PA 3 Chime Whistle Reverse" value="154" />
+	<ienumChoice choice="Pennsy K4 Reverse Whistle" value="163" />
+	<ienumChoice choice="Reading 6 Chime Whistle Reverse" value="158" />
+	<ienumChoice choice="Reading Pacific G2 Whistle Reverse" value="159" />
+	<ienumChoice choice="Reading Single Chime Whistle Reverse" value="160" />
+	<ienumChoice choice="Unknown Whistle 1 reverse toot" value="166" />
+	<ienumChoice choice="Unknown Whistle 2 reverse toot" value="167" />
+	<ienumChoice choice="Unknown Whistle 3 reverse toot" value="168" />
+	<ienumChoice choice="Wabash Whistle Reverse" value="161" />
+	<ienumChoice choice="WG Lunkenheimer 3 chime reverse" value="165" />
+	<ienumChoice choice="Alamo Michigan Plant Whistle Short" value="18" />
+	<ienumChoice choice="B &amp; O Short Toot" value="45" />
+	<ienumChoice choice="Whistle - Short 3" value="66" />
+	<ienumChoice choice="Whistle - Short 4" value="75" />
+	<ienumChoice choice="Whistle - Short 5" value="78" />
+	<ienumChoice choice="Whistle - Short 6" value="69" />
+	<ienumChoice choice="Whistle - Short 7" value="72" />
+	<ienumChoice choice="Kingsly 4 Chime Whistle Short" value="24" />
+	<ienumChoice choice="Lunkenhimer 3 Chime Whistle Short" value="27" />
+	<ienumChoice choice="Whistle - Short 10" value="30" />
+	<ienumChoice choice="NW Deep Single Chime short" value="51" />
+	<ienumChoice choice="NW single chime short bell short toot" value="81" />
+	<ienumChoice choice="PA 3 Chime Whistle Short" value="21" />
+	<ienumChoice choice="Pennsy K4 Short Toot" value="48" />
+	<ienumChoice choice="Reading 6 Chime Whistle Short" value="33" />
+	<ienumChoice choice="Reading Pacific G2 Whistle Short" value="36" />
+	<ienumChoice choice="Reading Single Chime Whistle Short" value="39" />
+	<ienumChoice choice="Unknown Whistle 1 short toot" value="57" />
+	<ienumChoice choice="Unknown Whistle 2 short toot" value="60" />
+	<ienumChoice choice="Unknown Whistle 3 short toot" value="63" />
+	<ienumChoice choice="Wabash Whistle Short" value="42" />
+	<ienumChoice choice="WG Lunkenheimer 3 chime short" value="54" />
+	<ienumChoice choice="Alamo Michigan Plant Whistle Long 1" value="176" />
+	<ienumChoice choice="B &amp; O Stopped Whistle" value="185" />
+	<ienumChoice choice="Whistle - Stop 3" value="192" />
+	<ienumChoice choice="Whistle - Stop 4" value="195" />
+	<ienumChoice choice="Whistle - Stop 5" value="196" />
+	<ienumChoice choice="Whistle - Stop 6" value="193" />
+	<ienumChoice choice="Whistle - Stop 7" value="194" />
+	<ienumChoice choice="Kingsly 4 Chime Whistle Long 1" value="178" />
+	<ienumChoice choice="Lunkenhimer 3 Chime Whistle Long 1" value="179" />
+	<ienumChoice choice="Whistle - Stop 10" value="180" />
+	<ienumChoice choice="NW Deep Single Chime stop toot" value="187" />
+	<ienumChoice choice="NW single chime short bell stop whistle" value="197" />
+	<ienumChoice choice="PA 3 Chime Whistle Stop" value="177" />
+	<ienumChoice choice="Pennsy K4 Stop Whistle" value="186" />
+	<ienumChoice choice="Reading 6 Chime Stop Whistle" value="181" />
+	<ienumChoice choice="Reading Pacific G2 Whistle Stop" value="182" />
+	<ienumChoice choice="Reading Single Chime Whistle Stop" value="183" />
+	<ienumChoice choice="Unknown Whistle 1 stop toot" value="189" />
+	<ienumChoice choice="Unknown Whistle 2 stop toot" value="190" />
+	<ienumChoice choice="Unknown Whistle 3 stop toot" value="191" />
+	<ienumChoice choice="Wabash Whistle Stop" value="184" />
+	<ienumChoice choice="WG Lunkenheimer 3 chime stop" value="188" />
+</ienumVal>

@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id:  $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - for Unified Software -->
+
+
+<pane name="Chuff Rate">
+    <column>
+		<label label="Must have JMRi 3.3.6 or later."/>
+		<label label="   "/>
+		<label label="Chuff Rate"/>
+		<label label="   "/>
+        <row>
+			<column>
+				<display item="Step 1 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 1 Chuff Rate" layout="above" label="1" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 2 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 2 Chuff Rate" layout="above" label="2" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 3 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 3 Chuff Rate" layout="above" label="3" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 4 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 4 Chuff Rate" layout="above" label="4" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 5 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 5 Chuff Rate" layout="above" label="5" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 6 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 6 Chuff Rate" layout="above" label="6" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 7 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 7 Chuff Rate" layout="above" label="7" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 8 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 8 Chuff Rate" layout="above" label="8" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 9 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 9 Chuff Rate" layout="above" label="9" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 10 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 10 Chuff Rate" layout="above" label="10" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 11 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 11 Chuff Rate" layout="above" label="11" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 12 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 12 Chuff Rate" layout="above" label="12" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 13 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 13 Chuff Rate" layout="above" label="13" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 14 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 14 Chuff Rate" layout="above" label="14" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 15 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 15 Chuff Rate" layout="above" label="15" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 16 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 16 Chuff Rate" layout="above" label="16" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 17 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 17 Chuff Rate" layout="above" label="17" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 18 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 18 Chuff Rate" layout="above" label="18" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 19 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 19 Chuff Rate" layout="above" label="19" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 20 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 20 Chuff Rate" layout="above" label="20" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 21 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 21 Chuff Rate" layout="above" label="21" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 22 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 22 Chuff Rate" layout="above" label="22" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 23 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 23 Chuff Rate" layout="above" label="23" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 24 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 24 Chuff Rate" layout="above" label="24" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 25 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 25 Chuff Rate" layout="above" label="25" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 26 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 26 Chuff Rate" layout="above" label="26" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 27 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 27 Chuff Rate" layout="above" label="27" format="vslider"/>
+			</column>
+			<column>
+				<display item="Step 28 Chuff Rate" layout="above" label=""/> 
+				<display item="Step 28 Chuff Rate" layout="above" label="28" format="vslider"/>
+			</column>
+        </row>
+    </column>
+</pane>
+
