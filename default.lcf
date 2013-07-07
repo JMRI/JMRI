@@ -52,7 +52,7 @@ log4j.appender.A1.layout=org.apache.log4j.PatternLayout
 # Justification, padding and truncation can be controlled e.g. %-5.10p 
 # is left justified, at least 5 and no more than 10 characters wide
 
-log4j.appender.A1.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
+log4j.appender.A1.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
 
 # R is set to output to a single log file. This is defined
 # for systems that can't (or don't want to) have rolling files,
@@ -61,7 +61,7 @@ log4j.appender.R=org.apache.log4j.FileAppender
 log4j.appender.R.File=${jmri.log.path}example.log
 log4j.appender.R.Append=false
 log4j.appender.R.layout=org.apache.log4j.PatternLayout
-log4j.appender.R.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
+log4j.appender.R.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
 
 # T is set to output to a rolling file.  This only works for certain systems,
 # but manages files in a convenient way.
@@ -69,7 +69,7 @@ log4j.appender.T=org.apache.log4j.RollingFileAppender
 log4j.appender.T.File=${jmri.log.path}messages.log
 log4j.appender.T.Append=false
 log4j.appender.T.layout=org.apache.log4j.PatternLayout
-log4j.appender.T.layout.ConversionPattern=%6r %-37.37c{2} %-5p - %m [%t]%n
+log4j.appender.T.layout.ConversionPattern=%d{ISO8601} %-37.37c{2} %-5p - %m [%t]%n
 log4j.appender.T.MaxFileSize=1000KB
 log4j.appender.T.MaxBackupIndex=2
 
