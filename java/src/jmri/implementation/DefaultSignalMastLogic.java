@@ -2223,6 +2223,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic {
                             }
                             turnoutSettings.put(turnout, throwlist.get(x));
                             LayoutTurnout lt = turnoutlist.get(x);
+                            if(lt.getSecondTurnout()!=null)
+                                turnoutSettings.put(lt.getSecondTurnout(),throwlist.get(x));
                             /* TODO: We could do with a more inteligent way to deal with double crossovers, other than just looking at the state of the other conflicting blocks
                                such as looking at Signalmasts that protect the other blocks and the settings of any other turnouts along the way.
                             */

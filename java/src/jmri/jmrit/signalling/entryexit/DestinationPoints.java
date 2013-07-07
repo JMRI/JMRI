@@ -364,6 +364,8 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                                 String t = turnoutlist.get(x).getTurnoutName();
                                                 Turnout turnout = InstanceManager.turnoutManagerInstance().getTurnout(t);
                                                 turnoutSettings.put(turnout, throwlist.get(x));
+                                                if(turnoutlist.get(x).getSecondTurnout()!=null)
+                                                    turnoutSettings.put(turnoutlist.get(x).getSecondTurnout(),throwlist.get(x));
                                             }
                                         }
                                     }
