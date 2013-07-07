@@ -792,8 +792,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             setOpaque(false);        	
         }
         _namedIcon = null;
-        displayState(sensorState());
         setAttributes();
+        displayState(sensorState());
 //        setSensor(handle);
         int deg = getDegrees();
         rotate(deg);
