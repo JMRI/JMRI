@@ -257,7 +257,7 @@ public class LayoutBlockConnectivityTools{
                 /*if(destBlockn1!=null)
                     log.debug("remote prot " + destBlockn1.getDisplayName());*/
             }
-            if(currentBlock==destBlockn1.get(0) && nextBlock==destBlock){
+            if(!destBlockn1.isEmpty() && currentBlock==destBlockn1.get(0) && nextBlock==destBlock){
                 log.debug("Our dest protecting block is our current block and our protecting block is the same as our destination block");
                 return false;
             }
