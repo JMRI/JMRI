@@ -223,7 +223,6 @@ public class PositionablePropertiesUtil {
         //fontSizeChoice.addActionListener(PreviewActionListener);
         fontSizeChoice.getSelectionModel().addListSelectionListener(new javax.swing.event.ListSelectionListener() {
             public void valueChanged(javax.swing.event.ListSelectionEvent e) {
-                log.info("Action called");
                 fontSizeField.setText((String)fontSizeChoice.getSelectedValue());
                 preview();
             }
