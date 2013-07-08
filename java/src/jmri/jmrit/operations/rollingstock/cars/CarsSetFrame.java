@@ -33,6 +33,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 	private static boolean ignoreLocationCheckBoxSelected = false;
 	private static boolean ignoreRWECheckBoxSelected = false;
 	private static boolean ignoreLoadCheckBoxSelected = false;
+	private static boolean ignoreKernelCheckBoxSelected = false;
 	private static boolean ignoreDestinationCheckBoxSelected = false;
 	private static boolean ignoreFinalDestinationCheckBoxSelected = false;
 	private static boolean ignoreTrainCheckBoxSelected = false;
@@ -54,6 +55,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreLocationCheckBox.setVisible(true);
 		ignoreRWECheckBox.setVisible(true);
 		ignoreLoadCheckBox.setVisible(true);
+		ignoreKernelCheckBox.setVisible(true);
 		ignoreDestinationCheckBox.setVisible(true);
 		ignoreFinalDestinationCheckBox.setVisible(true);
 		ignoreTrainCheckBox.setVisible(true);
@@ -63,6 +65,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreLocationCheckBox.setSelected(ignoreLocationCheckBoxSelected);
 		ignoreRWECheckBox.setSelected(ignoreRWECheckBoxSelected);
 		ignoreLoadCheckBox.setSelected(ignoreLoadCheckBoxSelected);
+		ignoreKernelCheckBox.setSelected(ignoreKernelCheckBoxSelected);
 		ignoreDestinationCheckBox.setSelected(ignoreDestinationCheckBoxSelected);
 		ignoreFinalDestinationCheckBox.setSelected(ignoreFinalDestinationCheckBoxSelected);
 		ignoreTrainCheckBox.setSelected(ignoreTrainCheckBoxSelected);
@@ -81,6 +84,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreLocationCheckBoxSelected = ignoreLocationCheckBox.isSelected();
 		ignoreRWECheckBoxSelected = ignoreRWECheckBox.isSelected();
 		ignoreLoadCheckBoxSelected = ignoreLoadCheckBox.isSelected();
+		ignoreKernelCheckBoxSelected = ignoreKernelCheckBox.isSelected();
 		ignoreDestinationCheckBoxSelected = ignoreDestinationCheckBox.isSelected();
 		ignoreFinalDestinationCheckBoxSelected = ignoreFinalDestinationCheckBox.isSelected();
 		ignoreTrainCheckBoxSelected = ignoreTrainCheckBox.isSelected();

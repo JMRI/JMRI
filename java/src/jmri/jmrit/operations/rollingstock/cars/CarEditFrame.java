@@ -725,15 +725,18 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			_car.setLoadName(loadComboBox.getSelectedItem().toString());
 			// check to see if car is part of kernel, and ask if all the other cars in the kernel should be changed
 			if (_car.getKernel() != null) {
-				if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-						Bundle.getMessage("carInKernel"), new Object[] { _car.toString() }), Bundle
-						.getMessage("carPartKernel"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-					// go through the entire list and change the loads for all cars
-					List<Car> cars = _car.getKernel().getCars();
-					for (int i = 0; i < cars.size(); i++) {
-						Car car = cars.get(i);
-						if (CarLoads.instance().containsName(car.getTypeName(), _car.getLoadName()))
-							car.setLoadName(_car.getLoadName());
+				List<Car> cars = _car.getKernel().getCars();
+				if (cars.size() > 1) {
+					if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
+							Bundle.getMessage("carInKernel"), new Object[] { _car.toString() }), MessageFormat
+							.format(Bundle.getMessage("carPartKernel"), new Object[] { _car.getKernelName() }),
+							JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+						// go through the entire list and change the loads for all cars					
+						for (int i = 0; i < cars.size(); i++) {
+							Car car = cars.get(i);
+							if (CarLoads.instance().containsName(car.getTypeName(), _car.getLoadName()))
+								car.setLoadName(_car.getLoadName());
+						}
 					}
 				}
 			}
@@ -756,15 +759,18 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					setLocation(_car);
 					// is this car part of a kernel?
 					if (_car.getKernel() != null) {
-						if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
-								Bundle.getMessage("carInKernel"), new Object[] { _car.toString() }), Bundle
-								.getMessage("carPartKernel"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-							// go through the entire list and change the location for all cars
-							List<Car> cars = _car.getKernel().getCars();
-							for (int i = 0; i < cars.size(); i++) {
-								Car car = cars.get(i);
-								if (car != _car)
-									setLocation(car);
+						List<Car> cars = _car.getKernel().getCars();
+						if (cars.size() > 1) {
+							if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+									.getMessage("carInKernel"), new Object[] { _car.toString() }), MessageFormat
+									.format(Bundle.getMessage("carPartKernel"), new Object[] { _car
+										.getKernelName() }), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+								// go through the entire list and change the location for all cars
+								for (int i = 0; i < cars.size(); i++) {
+									Car car = cars.get(i);
+									if (car != _car)
+										setLocation(car);
+								}
 							}
 						}
 					}
