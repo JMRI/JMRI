@@ -68,7 +68,8 @@ public class ZeroConfService {
 
     /**
      * Create a ZeroConfService with the minimal required settings. This method
-     * calls {@link #create(type, port, props)} with an empty props HashMap.
+     * calls {@link #create(java.lang.String, int, java.util.HashMap)} with an
+     * empty props HashMap.
      *
      * @param type The service protocol
      * @param port The port the service runs over
