@@ -59,6 +59,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreDestinationCheckBox.setVisible(true);
 		ignoreFinalDestinationCheckBox.setVisible(true);
 		ignoreTrainCheckBox.setVisible(true);
+		ignoreAllButton.setVisible(true);
 
 		// set the last state
 		ignoreStatusCheckBox.setSelected(ignoreStatusCheckBoxSelected);
@@ -76,6 +77,18 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			super.loadCar(car);
 		}
 	}
+	
+	protected void ignoreAll(boolean b) {
+		ignoreStatusCheckBox.setSelected(!locationUnknownCheckBox.isSelected() & b);
+		ignoreLocationCheckBox.setSelected(b);
+		ignoreRWECheckBox.setSelected(b);
+		ignoreLoadCheckBox.setSelected(b);
+		ignoreKernelCheckBox.setSelected(b);
+		ignoreDestinationCheckBox.setSelected(b);
+		ignoreFinalDestinationCheckBox.setSelected(b);
+		ignoreTrainCheckBox.setSelected(b);
+		enableComponents(!locationUnknownCheckBox.isSelected());
+	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	protected boolean save() {
@@ -85,7 +98,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreRWECheckBoxSelected = ignoreRWECheckBox.isSelected();
 		ignoreLoadCheckBoxSelected = ignoreLoadCheckBox.isSelected();
 		ignoreKernelCheckBoxSelected = ignoreKernelCheckBox.isSelected();
-		ignoreDestinationCheckBoxSelected = ignoreDestinationCheckBox.isSelected();
+		ignoreDestinationCheckBoxSelected = ignoreKernelCheckBox.isSelected();
 		ignoreFinalDestinationCheckBoxSelected = ignoreFinalDestinationCheckBox.isSelected();
 		ignoreTrainCheckBoxSelected = ignoreTrainCheckBox.isSelected();
 
