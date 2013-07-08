@@ -93,7 +93,7 @@ public class TurnoutSignalMast extends AbstractSignalMast {
         super.setAspect(aspect);
     }
     
-    TurnoutAspect unLit = null;;
+    TurnoutAspect unLit = null;
     
     public void setUnLitTurnout(String turnoutName, int turnoutState){
         unLit = new TurnoutAspect(turnoutName, turnoutState);
