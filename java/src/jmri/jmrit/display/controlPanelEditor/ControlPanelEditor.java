@@ -24,7 +24,6 @@ import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
-import jmri.jmrit.display.controlPanelEditor.shape.PositionableShape;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
@@ -820,7 +819,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     /***************** Overriden methods of Editor *******************/
     
     protected Positionable getCurrentSelection(MouseEvent event) {
-        if (_pastePending) {
+        if (_pastePending && !event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown()) {
             return getCopySelection(event);
         }
         List <Positionable> selections = getSelectedItems(event);
@@ -981,6 +980,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             }
             boolean circuitBuilder =_circuitBuilder.doMouseReleased(selection, event);
             // when dragging, don't change selection group
+            if (_pastePending && _dragging) {
+                pasteItems();
+            }
             if (isEditable()) {
                 if (_shapeDrawer.doMouseReleased(selection, event)) {
                 	_selectRect = null;
@@ -992,9 +994,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 }
                 if (_selectRect!=null && !circuitBuilder) {
                     makeSelectionGroup(event);
-                }
-                if (_pastePending && _dragging) {
-                    pasteItems();
                 }
                 _currentSelection = selection;            	
                 if (!circuitBuilder) {
@@ -1216,6 +1215,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 if (_debug) log.debug("Add "+_selectionGroup.get(i).getNameString());
             }
         }
+        if (_selectionGroup.get(0) instanceof LocoIcon) {
+        	LocoIcon p =(LocoIcon)_selectionGroup.get(0);
+            CoordinateEdit f = new CoordinateEdit();
+            f.init("Train Name", p, false);
+            f.initText();
+            f.setVisible(true);	
+            f.setLocationRelativeTo((Component)p);
+        }
         _pastePending = false;
     }
         
@@ -1292,12 +1299,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 popup.addSeparator();
                 popupSet = false;
             }
-            popupSet = p.setEditItemMenu(popup);    // ItemPalette Editor        
-/*            if (event.isControlDown()) {
-                popupSet = p.setEditIconMenu(popup);    // old IconEditor        
-            } else {
-                popupSet = p.setEditItemMenu(popup);    // ItemPalette Editor        
-            }*/
+            popupSet = p.setEditItemMenu(popup);        
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
@@ -1308,12 +1310,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             	if (!pl.isIcon()) {
                     popupSet |= setTextAttributes(pl, popup);            	            		
             	}
-            	if (p instanceof LinkingLabel) {
-            		LinkingLabel pll = (LinkingLabel)p;
-                    popupSet |= pll.setLinkMenu(popup);            	            		            		
-            	}
             } else if (p instanceof PositionableJPanel) {
                 popupSet |= setTextAttributes(p, popup);            	            		            	
+            }
+            if (p instanceof LinkingObject) {
+            	((LinkingObject)p).setLinkMenu(popup);
             }
             if (popupSet) { 
                 popup.addSeparator();
@@ -1330,6 +1331,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
             setRemoveMenu(p, popup);
         } else {
+        	if (p instanceof LocoIcon) {
+                setCopyMenu(p, popup);
+        	}
             p.showPopUp(popup);
             if (util!=null) {
                 util.setAdditionalViewPopUpMenu(popup);
