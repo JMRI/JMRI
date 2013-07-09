@@ -402,7 +402,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			if (list.size() > 1) {
 				if (JOptionPane.showConfirmDialog(this, MessageFormat.format(
 						Bundle.getMessage("carInKernel"), new Object[] { car.toString() }), MessageFormat
-						.format(Bundle.getMessage("carPartKernel"), new Object[] { _car.getKernelName() }),
+						.format(Bundle.getMessage("carPartKernel"), new Object[] { car.getKernelName() }),
 						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 					if (!updateGroup(list))
 						return false;
