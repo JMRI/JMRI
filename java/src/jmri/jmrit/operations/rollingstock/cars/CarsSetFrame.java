@@ -78,6 +78,14 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		}
 	}
 	
+	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+		super.buttonActionPerformed(ae);
+		if (ae.getSource() == ignoreAllButton) {
+			ignoreAll(toggle);
+		}
+	}
+	
+	boolean toggle = true;
 	protected void ignoreAll(boolean b) {
 		ignoreStatusCheckBox.setSelected(!locationUnknownCheckBox.isSelected() & b);
 		ignoreLocationCheckBox.setSelected(b);
@@ -88,6 +96,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreFinalDestinationCheckBox.setSelected(b);
 		ignoreTrainCheckBox.setSelected(b);
 		enableComponents(!locationUnknownCheckBox.isSelected());
+		toggle = !b;
 	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")

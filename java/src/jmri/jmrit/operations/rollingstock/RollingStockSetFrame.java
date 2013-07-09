@@ -56,12 +56,6 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	// labels
 	JLabel textRoad = new JLabel();
 	JLabel textType = new JLabel();
-	JLabel textName = new JLabel(Bundle.getMessage("Name"));
-	JLabel textTrack = new JLabel(Bundle.getMessage("Track"));
-	JLabel textName2 = new JLabel(Bundle.getMessage("Name"));
-	JLabel textTrack2 = new JLabel(Bundle.getMessage("Track"));
-	JLabel textName3 = new JLabel(Bundle.getMessage("Name"));
-	JLabel textTrack3 = new JLabel(Bundle.getMessage("Track"));
 
 	// major buttons
 	protected JButton saveButton = new JButton(Bundle.getMessage("Save"));
@@ -137,9 +131,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		JPanel pStatus = new JPanel();
 		pStatus.setLayout(new GridBagLayout());
 		pStatus.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Status")));
-		addItem(pStatus, ignoreStatusCheckBox, 1, 0);
-		addItem(pStatus, locationUnknownCheckBox, 1, 1);
-		addItem(pStatus, outOfServiceCheckBox, 1, 2);
+		addItemLeft(pStatus, ignoreStatusCheckBox, 0, 0);
+		addItemLeft(pStatus, locationUnknownCheckBox, 1, 1);
+		addItemLeft(pStatus, outOfServiceCheckBox, 1, 0);
 		pRow1.add(pStatus);
 
 		pPanel.add(pRow1);
@@ -147,10 +141,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// row 2
 		JPanel pLocation = new JPanel();
 		pLocation.setLayout(new GridBagLayout());
-		pLocation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Location")));
-		addItem(pLocation, textName, 1, 0);
-		addItem(pLocation, textTrack, 2, 0);
-		addItem(pLocation, ignoreLocationCheckBox, 0, 1);
+		pLocation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationAndTrack")));
+		addItemLeft(pLocation, ignoreLocationCheckBox, 0, 1);
 		addItem(pLocation, locationBox, 1, 1);
 		addItem(pLocation, trackLocationBox, 2, 1);
 		addItem(pLocation, autoTrackCheckBox, 3, 1);
@@ -166,11 +158,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// row 6
 		JPanel pDestination = new JPanel();
 		pDestination.setLayout(new GridBagLayout());
-		pDestination
-				.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutDestination")));
-		addItem(pDestination, textName2, 1, 0);
-		addItem(pDestination, textTrack2, 2, 0);
-		addItem(pDestination, ignoreDestinationCheckBox, 0, 1);
+		pDestination.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("DestinationAndTrack")));
+		addItemLeft(pDestination, ignoreDestinationCheckBox, 0, 1);
 		addItem(pDestination, destinationBox, 1, 1);
 		addItem(pDestination, trackDestinationBox, 2, 1);
 		addItem(pDestination, autoDestinationTrackCheckBox, 3, 1);
@@ -179,10 +168,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// row 7
 		pFinalDestination.setLayout(new GridBagLayout());
 		pFinalDestination.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("BorderLayoutFinalDestination")));
-		addItem(pFinalDestination, textName3, 1, 0);
-		addItem(pFinalDestination, textTrack3, 2, 0);
-		addItem(pFinalDestination, ignoreFinalDestinationCheckBox, 0, 1);
+				.getMessage("FinalDestinationAndTrack")));
+		addItemLeft(pFinalDestination, ignoreFinalDestinationCheckBox, 0, 1);
 		addItem(pFinalDestination, finalDestinationBox, 1, 1);
 		addItem(pFinalDestination, finalDestTrackBox, 2, 1);
 		addItem(pFinalDestination, autoFinalDestTrackCheckBox, 3, 1);
@@ -192,7 +179,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		JPanel pTrain = new JPanel();
 		pTrain.setLayout(new GridBagLayout());
 		pTrain.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Train")));
-		addItem(pTrain, ignoreTrainCheckBox, 0, 0);
+		addItemLeft(pTrain, ignoreTrainCheckBox, 0, 0);
 		addItem(pTrain, trainBox, 1, 0);
 		addItem(pTrain, autoTrainCheckBox, 2, 0);
 		pOptional2.add(pTrain);
@@ -298,17 +285,10 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
-		if (ae.getSource() == ignoreAllButton) {
-			ignoreAll(true);
-		}
 	}
 
 	protected ResourceBundle getRb() {
 		return rb;
-	}
-	
-	protected void ignoreAll(boolean b) {
-		
 	}
 
 	protected boolean save() {

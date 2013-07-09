@@ -176,7 +176,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 					for (int k = 0; k < carList.size(); k++) {
 						Car car = carManager.getById(carList.get(k));
 						log.debug("car " + car.toString() + " track " + car.getTrackName()
-								+ " routelocation " + car.getRouteLocation().getName());
+								+ " routelocation " + car.getRouteLocation().getName()); // NOI18N
 						if ((car.getTrack() == null || car.getRouteLocation() == rl)
 								&& car.getRouteDestination() == rld) {
 							JCheckBox checkBox = new JCheckBox(car.toString());
