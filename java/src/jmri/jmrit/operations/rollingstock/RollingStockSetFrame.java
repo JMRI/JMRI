@@ -65,6 +65,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
 	// major buttons
 	protected JButton saveButton = new JButton(Bundle.getMessage("Save"));
+	protected JButton ignoreAllButton = new JButton(Bundle.getMessage("IgnoreAll"));
 
 	// combo boxes
 	protected JComboBox locationBox = LocationManager.instance().getComboBox();
@@ -199,7 +200,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// button panel
 		JPanel pButtons = new JPanel();
 		pButtons.setLayout(new GridBagLayout());
-		addItem(pButtons, saveButton, 2, 10);
+		addItem(pButtons, ignoreAllButton, 1, 0);
+		addItem(pButtons, saveButton, 2, 0);
 
 		// add panels
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -214,8 +216,10 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		ignoreDestinationCheckBox.setVisible(false);
 		ignoreFinalDestinationCheckBox.setVisible(false);
 		ignoreTrainCheckBox.setVisible(false);
+		ignoreAllButton.setVisible(false);
 
 		// setup buttons
+		addButtonAction(ignoreAllButton);
 		addButtonAction(saveButton);
 
 		// setup combobox
@@ -294,10 +298,17 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			if (Setup.isCloseWindowOnSaveEnabled())
 				dispose();
 		}
+		if (ae.getSource() == ignoreAllButton) {
+			ignoreAll(true);
+		}
 	}
 
 	protected ResourceBundle getRb() {
 		return rb;
+	}
+	
+	protected void ignoreAll(boolean b) {
+		
 	}
 
 	protected boolean save() {

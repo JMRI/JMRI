@@ -93,12 +93,15 @@ public class ThrottleFrameManager
 		if (frame != null)
 		{
 			destroyThrottleWindow(frame);
-            throttleWindows.remove(throttleWindows.indexOf(frame));
+            try {
+                throttleWindows.remove(throttleWindows.indexOf(frame));
+            } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+                log.debug(ex.toString());
+            }
 			if (throttleWindows.size() > 0)
 			{
 				requestFocusForNextFrame();
 			}
-            
 		}
 	}
 

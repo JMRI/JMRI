@@ -38,6 +38,8 @@
   <version author="Dave Heap" version="8" lastUpdated="20130429"/>
   <!-- ver9 indexed CV fixes -->
   <version author="Dave Heap" version="9" lastUpdated="20130606"/>
+  <!-- ver10 Add warning to CV reset -->
+  <version author="Dave Heap" version="10" lastUpdated="20130626"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound V4.0 NEM652" numOuts="40" numFns="28" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="54400">
@@ -4424,7 +4426,7 @@
       </ivariable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
     </resets>
   </decoder>
   <pane name="Indexed CVs">

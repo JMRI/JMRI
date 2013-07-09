@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import javax.swing.JButton;
@@ -15,13 +13,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
-
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -129,7 +128,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	private int getNumberOfCheckboxes(Dimension size){
 		if (size== null)
 			return minCheckboxes;	// default is 6 checkboxes per row
-		StringBuffer pad = new StringBuffer("X");
+		StringBuilder pad = new StringBuilder("X");
 		for (int i=0; i<CarTypes.instance().getMaxNameSubTypeLength(); i++)
 			pad.append("X");
 		
@@ -144,6 +143,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 
 	protected void addButtonAction(JButton b) {
 		b.addActionListener(new java.awt.event.ActionListener() {
+                        @Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				buttonActionPerformed(e);
 			}
@@ -156,6 +156,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	protected void addRadioButtonAction(JRadioButton b) {
 		b.addActionListener(new java.awt.event.ActionListener() {
+                        @Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				radioButtonActionPerformed(e);
 			}
@@ -168,6 +169,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	protected void addCheckBoxAction(JCheckBox b) {
 		b.addActionListener(new java.awt.event.ActionListener() {
+                        @Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				checkBoxActionPerformed(e);
 			}
@@ -180,6 +182,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	protected void addSpinnerChangeListerner(JSpinner s) {
 		s.addChangeListener(new javax.swing.event.ChangeListener() {
+                        @Override
 			public void stateChanged(javax.swing.event.ChangeEvent e) {
 				spinnerChangeEvent(e);
 			}
@@ -192,6 +195,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	protected void addComboBoxAction(JComboBox b) {
 		b.addActionListener(new java.awt.event.ActionListener() {
+                        @Override
 			public void actionPerformed(java.awt.event.ActionEvent e) {
 				comboBoxActionPerformed(e);
 			}
@@ -259,7 +263,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		UserPreferencesManager p = InstanceManager.getDefault(UserPreferencesManager.class);
 		TableSorter sorter = null;
 		String tableref = getWindowFrameRef() + ":table";	// NOI18N
-		if (p == null || p.getTablesColumnList(tableref).size() == 0)
+		if (p == null || p.getTablesColumnList(tableref).isEmpty())
 			return false;
 		try {
 			sorter = (TableSorter) table.getModel();
@@ -330,15 +334,18 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			trainDirtyTask = new SwingShutDownTask(
 					"Operations Train Window Check", Bundle.getMessage("PromptQuitWindowNotWritten"),	// NOI18N
 					Bundle.getMessage("PromptSaveQuit"), this) {
+                                @Override
 				public boolean checkPromptNeeded() {
 					return !OperationsXml.areFilesDirty();
 				}
 
+                                @Override
 				public boolean doPrompt() {
 					storeValues();
 					return true;
 				}
 				
+                                @Override
 				public boolean doClose() {
 					storeValues();
 					return true;
@@ -348,6 +355,7 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		}
 	}
 	
+        @Override
 	protected void storeValues(){
 		OperationsXml.save();
 	}
@@ -363,19 +371,19 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		}
 		
 		String[] sa = s.split(NEW_LINE);
-		String so = "";
+		StringBuilder so = new StringBuilder();
 		
 		for (int i = 0; i<sa.length; i++) {
 			if (i > 0)
-				so = so + NEW_LINE;
+                            so.append(NEW_LINE);
 			StringBuilder sb = new StringBuilder(sa[i]);
 			int j = 0;
 			while (j + numberChar < sb.length() && (j = sb.lastIndexOf(" ", j + numberChar)) != -1) {
 				sb.replace(j, j + 1, NEW_LINE);
 			}
-			so = so + sb.toString();
+                        so.append(sb);
 		}
-		return so;
+		return so.toString();
 	}
 	
 	static Logger log = LoggerFactory.getLogger(OperationsFrame.class.getName());

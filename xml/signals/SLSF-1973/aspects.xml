@@ -35,6 +35,12 @@
         <authorinitials>PAB</authorinitials>
         <revremark>Adapted from 1937 NYCS</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2013-07-09</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Add speed information</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -44,6 +50,9 @@
       <rule>Rule 281</rule>
       <indication>Proceed</indication>
       <reference>Page 16</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -51,6 +60,9 @@
       <rule>Rule 282</rule>
       <indication>Proceed preparing to stop at second signal</indication>
       <reference>Page 16</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
   
     <aspect>
@@ -58,6 +70,9 @@
       <rule>Rule 283</rule>
       <indication>Proceed approaching next signal at limited speed.</indication>
       <reference>Page 16</reference>
+      <speed>Limited</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
     </aspect>
  
     <aspect>
@@ -65,6 +80,9 @@
       <rule>Rule 284</rule>
       <indication>Proceed approaching next signal at medium speed</indication>
       <reference>Page 16</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -72,6 +90,9 @@
       <rule>Rule 285</rule>
       <indication>Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed.</indication>
       <reference>Page 18</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
     </aspect>
 
     <aspect>
@@ -79,6 +100,9 @@
       <rule>Rule 286</rule>
       <indication>Proceed through turnout at prescribed speed</indication>
       <reference>Page 18</reference>
+      <speed>Medium</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -86,6 +110,9 @@
       <rule>Rule 287</rule>
       <indication>Proceed through turnout at prescribed speed, prepared to stop at next signal except when entering a siding, then be goverened by rule 105 of the transportation department.</indication>
       <reference>Page 18</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
     </aspect>
 
     <aspect>
@@ -93,6 +120,9 @@
       <rule>Rule 288</rule>
       <indication>Proceed at restricted speed.</indication>
       <reference>Page 18</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
     </aspect>
 
     <aspect>
@@ -100,6 +130,9 @@
       <rule>Rule 289</rule>
       <indication>Proceed at restricted speed.</indication>
       <reference>Page 18</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
     </aspect>
 
     <aspect>
@@ -107,6 +140,9 @@
       <rule>Rule 290</rule>
       <indication>Stop. then proceed in accordance with rule 510 R 510 (a) of the transportation department.</indication>
       <reference>Page 18</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
     </aspect>
 
     <aspect>
@@ -114,6 +150,9 @@
       <rule>Rule 291</rule>
       <indication>Stop.</indication>
       <reference>Page 20</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
     </aspect>
 
   </aspects>

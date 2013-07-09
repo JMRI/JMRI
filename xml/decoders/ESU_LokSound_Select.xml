@@ -38,6 +38,8 @@
   <version author="Dave Heap" version="8" lastUpdated="20130429"/>
   <!-- ver9 indexed CV fixes -->
   <version author="Dave Heap" version="9" lastUpdated="20130606"/>
+  <!-- ver10 Add warning to CV reset -->
+  <version author="Dave Heap" version="10" lastUpdated="20130626"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
       <model model="LokSound Select Alco 244" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73401">
@@ -3463,7 +3465,7 @@
       </ivariable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
     </resets>
   </decoder>
   <pane name="Indexed CVs">

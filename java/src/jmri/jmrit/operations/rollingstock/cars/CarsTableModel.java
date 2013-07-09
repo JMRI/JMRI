@@ -661,8 +661,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		if (Control.showProperty && log.isDebugEnabled())
 			log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue()
 					+ " new: " + e.getNewValue());	// NOI18N
-		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY)) {
 			updateList();
 			fireTableDataChanged();
 		}

@@ -1,22 +1,28 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
-
-<appearancetable
-    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
->
-
+<appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
-    <year>2009</year><year>2010</year><holder>JMRI</holder>
+    <year>2009</year>
+    <year>2010</year>
+    <year>2013</year>
+    <holder>JMRI</holder>
   </copyright>
-  
   <authorgroup xmlns="http://docbook.org/ns/docbook">
      <author>
-        <personname><firstname>Chuck</firstname><surname>Catania</surname></personname>
+      <personname>
+        <firstname>Chuck</firstname>
+        <surname>Catania</surname>
+      </personname>
         <email>cpcrr@charter.net</email>
     </author>    
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
   </authorgroup>
-
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
         <revnumber>1</revnumber>
@@ -24,41 +30,85 @@
         <authorinitials>CFC</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+      <revnumber>1.1</revnumber>
+      <date>2013-07-01</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added aspect mapping and specific appearances.</revremark>
+    </revision>
   </revhistory>
-
-  <aspecttable>USS-H2</aspecttable>
+  <aspecttable>SPTCO-1930</aspecttable>
   <name>Single searchlight absolute signal</name>
   <reference>As described in the 1930 version of the "Rules and Regulations of the Transportation Department".</reference>
   <description>Appearances for one-searchlight signal head without other badging</description>
-  
   <appearances>
-
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
       <reference>Rule 504</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPCO-1930/SL-1/Grn.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1930/SL-1/Grn.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <reference>Rule 503</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPCO-1930/SL-1/Yel.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1930/SL-1/Yel.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
       <reference>Rule 501</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPCO-1930/SL-1/Red.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1930/SL-1/Red.gif</imagelink>
     </appearance>
-
     <appearance>
       <aspectname>Dark</aspectname>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SPCO-1930/SL-1/Drk.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SPTCO-1930/SL-1/Drk.gif</imagelink>
     </appearance>
-
   </appearances>
+  <specificappearances>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
+    <dark>
+      <aspect>Dark</aspect>
+    </dark>
+  </specificappearances>
+  <aspectMappings>
+    <aspectMapping>
+      <advancedAspect>Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Stop</advancedAspect>
+      <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Diverging Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Branch Clear</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Branch Approach</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+    <aspectMapping>
+      <advancedAspect>Branch Diverging</advancedAspect>
+      <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+  </aspectMappings>
 </appearancetable>  

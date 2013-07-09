@@ -33,6 +33,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 	private static boolean ignoreLocationCheckBoxSelected = false;
 	private static boolean ignoreRWECheckBoxSelected = false;
 	private static boolean ignoreLoadCheckBoxSelected = false;
+	private static boolean ignoreKernelCheckBoxSelected = false;
 	private static boolean ignoreDestinationCheckBoxSelected = false;
 	private static boolean ignoreFinalDestinationCheckBoxSelected = false;
 	private static boolean ignoreTrainCheckBoxSelected = false;
@@ -54,15 +55,18 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreLocationCheckBox.setVisible(true);
 		ignoreRWECheckBox.setVisible(true);
 		ignoreLoadCheckBox.setVisible(true);
+		ignoreKernelCheckBox.setVisible(true);
 		ignoreDestinationCheckBox.setVisible(true);
 		ignoreFinalDestinationCheckBox.setVisible(true);
 		ignoreTrainCheckBox.setVisible(true);
+		ignoreAllButton.setVisible(true);
 
 		// set the last state
 		ignoreStatusCheckBox.setSelected(ignoreStatusCheckBoxSelected);
 		ignoreLocationCheckBox.setSelected(ignoreLocationCheckBoxSelected);
 		ignoreRWECheckBox.setSelected(ignoreRWECheckBoxSelected);
 		ignoreLoadCheckBox.setSelected(ignoreLoadCheckBoxSelected);
+		ignoreKernelCheckBox.setSelected(ignoreKernelCheckBoxSelected);
 		ignoreDestinationCheckBox.setSelected(ignoreDestinationCheckBoxSelected);
 		ignoreFinalDestinationCheckBox.setSelected(ignoreFinalDestinationCheckBoxSelected);
 		ignoreTrainCheckBox.setSelected(ignoreTrainCheckBoxSelected);
@@ -73,6 +77,18 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			super.loadCar(car);
 		}
 	}
+	
+	protected void ignoreAll(boolean b) {
+		ignoreStatusCheckBox.setSelected(!locationUnknownCheckBox.isSelected() & b);
+		ignoreLocationCheckBox.setSelected(b);
+		ignoreRWECheckBox.setSelected(b);
+		ignoreLoadCheckBox.setSelected(b);
+		ignoreKernelCheckBox.setSelected(b);
+		ignoreDestinationCheckBox.setSelected(b);
+		ignoreFinalDestinationCheckBox.setSelected(b);
+		ignoreTrainCheckBox.setSelected(b);
+		enableComponents(!locationUnknownCheckBox.isSelected());
+	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	protected boolean save() {
@@ -81,7 +97,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		ignoreLocationCheckBoxSelected = ignoreLocationCheckBox.isSelected();
 		ignoreRWECheckBoxSelected = ignoreRWECheckBox.isSelected();
 		ignoreLoadCheckBoxSelected = ignoreLoadCheckBox.isSelected();
-		ignoreDestinationCheckBoxSelected = ignoreDestinationCheckBox.isSelected();
+		ignoreKernelCheckBoxSelected = ignoreKernelCheckBox.isSelected();
+		ignoreDestinationCheckBoxSelected = ignoreKernelCheckBox.isSelected();
 		ignoreFinalDestinationCheckBoxSelected = ignoreFinalDestinationCheckBox.isSelected();
 		ignoreTrainCheckBoxSelected = ignoreTrainCheckBox.isSelected();
 
@@ -89,6 +106,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		if (rows.length == 0)
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
 					.getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
+		
+		askKernelChange = true;
 
 		for (int i = 0; i < rows.length; i++) {
 			Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[i]));
@@ -107,6 +126,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			}
 			if (!super.change(car))
 				return false;
+			else if (car.getKernel() != null && !ignoreKernelCheckBox.isSelected())
+				askKernelChange = false;
 		}
 		return true;
 	}

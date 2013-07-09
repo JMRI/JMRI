@@ -20,6 +20,8 @@
   <!-- ver2 correct CV2,3,4,5,6 max values plus add function lables -->
   <version author="Michael Mosher mjmx@comcast.net" version="3" lastUpdated="20090717"/>
   <!-- ver3 fix acc/dec on motor tab bug & incorporate latest changes from LS V3.5 file -->
+  <!-- ver4 Add warning to CV reset -->
+  <version author="Dave Heap" version="4" lastUpdated="20130626"/>
   <decoder>
     <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59">
       <model model="LokSoundXL Version 3.5" numOuts="8" numFns="12" maxMotorCurrent="3.0A" extFnsNmraF13="yes">
@@ -6115,7 +6117,7 @@
       </variable>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8"/>
+      <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
     </resets>
   </decoder>
   <xi:include href="http://jmri.org/xml/decoders/esu/v3buttonPane.xml"/>
