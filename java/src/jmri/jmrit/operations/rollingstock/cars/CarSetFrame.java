@@ -254,6 +254,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		}
 		return false;
 	}
+	
+	protected boolean askKernelChange = true;
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	protected boolean change(Car car) {
@@ -395,7 +397,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		}
 		checkTrain(car);
 		// is this car part of a kernel?
-		if (car.getKernel() != null) {
+		if (askKernelChange && car.getKernel() != null) {
 			List<RollingStock> list = car.getKernel().getGroup();
 			if (list.size() > 1) {
 				if (JOptionPane.showConfirmDialog(this, MessageFormat.format(

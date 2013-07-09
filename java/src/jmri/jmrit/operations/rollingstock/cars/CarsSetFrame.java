@@ -106,6 +106,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		if (rows.length == 0)
 			JOptionPane.showMessageDialog(this, Bundle.getMessage("selectCars"), Bundle
 					.getMessage("carNoneSelected"), JOptionPane.WARNING_MESSAGE);
+		
+		askKernelChange = true;
 
 		for (int i = 0; i < rows.length; i++) {
 			Car car = _carsTableModel.getCarAtIndex(_sorter.modelIndex(rows[i]));
@@ -124,6 +126,8 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			}
 			if (!super.change(car))
 				return false;
+			else if (car.getKernel() != null && !ignoreKernelCheckBox.isSelected())
+				askKernelChange = false;
 		}
 		return true;
 	}
