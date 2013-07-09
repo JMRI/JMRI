@@ -296,6 +296,10 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			String load = (String) loadComboBox.getSelectedItem();
 			if (CarLoads.instance().containsName(car.getTypeName(), load))
 				car.setLoadName(load);
+			else
+				JOptionPane.showMessageDialog(this, MessageFormat.format(
+						Bundle.getMessage("carLoadNotValid"), new Object[] { load, car.getTypeName() }),
+						Bundle.getMessage("carCanNotChangeLoad"), JOptionPane.WARNING_MESSAGE);
 		}
 		// kernel
 		if (!ignoreKernelCheckBox.isSelected() && kernelComboBox.getSelectedItem() != null) {
