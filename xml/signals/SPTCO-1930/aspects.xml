@@ -12,13 +12,13 @@
     <holder>JMRI</holder>
   </copyright>
   <authorgroup xmlns="http://docbook.org/ns/docbook">
-     <author>
+    <author>
       <personname>
         <firstname>Chuck</firstname>
         <surname>Catania</surname>
       </personname>
-        <email>cpcrr@charter.net</email>
-    </author>    
+      <email>cpcrr@charter.net</email>
+    </author>
     <author>
       <personname>
         <firstname>Suzie</firstname>
@@ -29,68 +29,106 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-        <revnumber>1</revnumber>
-        <date>2010-06-01</date>
-        <authorinitials>CFC</authorinitials>
-        <revremark>Initial version</revremark>
-    </revision>    
+      <revnumber>1</revnumber>
+      <date>2010-06-01</date>
+      <authorinitials>CFC</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+      <revnumber>1.1</revnumber>
+      <date>2013-07-01</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added routing and aspect numbers.</revremark>
+    </revision>
   </revhistory>
-
   <aspects>
     <aspect>
-      <name>Clear</name>
-      <indication>Proceed</indication>
-    </aspect>
-
-    <aspect>
-      <name>Approach</name>
-      <indication>Proceed preparing to stop at next signal</indication>
-    </aspect>
-
-    <aspect>
       <name>Stop</name>
+      <rule>Rule 501</rule>
       <indication>Stop</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>0</dccAspect>
     </aspect>
-
     <aspect>
       <name>Diverging Clear</name>
+      <rule>Rule 502</rule>
       <indication>Proceed through diverging route</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>4</dccAspect>
     </aspect>
-
     <aspect>
       <name>Diverging Approach</name>
+      <rule>Rule 502A</rule>
       <indication>Proceed through diverging route preparing to stop at next signal</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>3</dccAspect>
     </aspect>
-
     <aspect>
       <name>Branch Clear</name>
+      <rule>Rule 502C</rule>
       <indication>Proceed through branch route</indication>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>6</dccAspect>
     </aspect>
-
-   <aspect>
+    <aspect>
+      <name>Approach</name>
+      <rule>Rule 503</rule>
+      <indication>Proceed preparing to stop at next signal</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
       <name>Branch Approach</name>
+      <rule>Rule 503A</rule>
       <indication>Proceed through branch route preparing to stop at next signal</indication>
+      <speed>Slow</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>5</dccAspect>
     </aspect>
-
-   <aspect>
+    <aspect>
       <name>Branch Diverging</name>
+      <rule>Rule 503B</rule>
       <indication>Proceed through branch route at restricted speed</indication>
+      <speed>Restricted</speed>
+      <speed2>Normal</speed2>
+      <route>Diverging</route>
+      <dccAspect>7</dccAspect>
     </aspect>
-
-   <aspect>
+    <aspect>
+      <name>Clear</name>
+      <rule>Rule 504</rule>
+      <indication>Proceed</indication>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>2</dccAspect>
+    </aspect>
+    <aspect>
       <name>Dark</name>
+      <rule>Dark</rule>
       <indication>(used to indicate dark for e.g. approach lighting)</indication>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>8</dccAspect>
     </aspect>
-
- </aspects>
-  
+  </aspects>
   <appearancefiles>
-    <appearancefile href="appearance-SL-1-head.xml"/>
-    <appearancefile href="appearance-SL-2-head.xml"/>
-    <appearancefile href="appearance-SL-3-head.xml"/>
-    <appearancefile href="appearance-DW-1-head.xml"/>
-    <appearancefile href="appearance-DW-2-head.xml"/>
- </appearancefiles>
-
+    <appearancefile href="appearance-SL-1-head.xml" />
+    <appearancefile href="appearance-SL-2-head.xml" />
+    <appearancefile href="appearance-SL-3-head.xml" />
+    <appearancefile href="appearance-DW-1-head.xml" />
+    <appearancefile href="appearance-DW-2-head.xml" />
+  </appearancefiles>
 </aspecttable>
-  
