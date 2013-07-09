@@ -145,8 +145,13 @@ Third, we do any necessary release-specific updates.
 ====================================================================================
 For local builds, these are the build instructions; CI builds will already be running)
 
-( ) ant -Dnsis.home="" packages
+( ) edit  release.properties to say release.official=true (last line)
 
+( ) setenv SVN_REVISION 23699
+    ant -Dnsis.home="" clean packages
+
+    (You can get the SVN_REVISION from http://sourceforge.net/p/jmri/code/HEAD/tree/branches/jmri/releases ; don't prefix an 'r')
+    
     Ant will do the various builds, construct the distribution
     directories, and finally construct the Linux, Mac OS X and Windows
     distribution files in dist/releases/
@@ -170,7 +175,8 @@ Final release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.3.4/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.4/ws/jmri/dist/release/*zip*/release.zip"
+    rm release/JMRI*
     unzip release.zip
     cd release
     scp JMRI.* user,jmri@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"    
@@ -189,12 +195,13 @@ Final release steps:
 ( ) Wait until the downloads have propagated to the mirrors; check
     by trying to download each file
 
+
 ( ) Commit release note files to the web site SVN directory
 
 ( ) Complete all the above before continuing
 
 ( ) Update the web site front page and downloads page:
-     index.html download/Sidebar download/index.shtml
+     index.html download/Sidebar download/index.shtml releaselist
 
 ( ) Update the "releaselist" file at the top of the web directory
 
