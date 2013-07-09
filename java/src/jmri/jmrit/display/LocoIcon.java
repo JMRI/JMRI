@@ -3,11 +3,14 @@ package jmri.jmrit.display;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.util.List;
 //import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
@@ -37,11 +40,13 @@ public class LocoIcon extends PositionableLabel {
     
     private int _dockX = 0;
     private int _dockY = 0;
+    private Color _locoColor;
 	
 	public LocoIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
     	super(new NamedIcon("resources/icons/markers/loco-white.gif",
                             "resources/icons/markers/loco-white.gif"), editor);
+    	_locoColor = Color.WHITE;
         setDisplayLevel(Editor.MARKERS);
         setShowTooltip(false);
         //setEditable(false);
@@ -63,9 +68,8 @@ public class LocoIcon extends PositionableLabel {
         LocoIcon pos = (LocoIcon)p;
         if (entry!=null) {
             pos.setRosterEntry(getRosterEntry());       	
-        } else {
-        	pos.setText(getText());
         }
+    	pos.setText(getText());
         return super.finishClone(pos);
     }
 
@@ -155,26 +159,32 @@ public class LocoIcon extends PositionableLabel {
     	log.debug("Set loco color to " + color);
     	if(color.equals(WHITE)){
     		super.updateIcon (white);
+        	_locoColor = Color.WHITE;   	
     		setForeground (Color.black);
     	}
     	if(color.equals(GREEN)){
     		super.updateIcon (green);
+        	_locoColor = Color.GREEN;   	
     		setForeground (Color.black);
     	}
     	if(color.equals(GRAY)){
     		super.updateIcon (gray);
+        	_locoColor = Color.GRAY;   	
     		setForeground (Color.white);
     	}
     	if(color.equals(RED)){
     		super.updateIcon (red);
+        	_locoColor = Color.RED;   	
     		setForeground (Color.white);
     	}
     	if(color.equals(BLUE)){
     		super.updateIcon (blue);
+        	_locoColor = Color.BLUE;   	
     		setForeground (Color.white);
     	}
     	if(color.equals(YELLOW)){
     		super.updateIcon (yellow);
+        	_locoColor = Color.YELLOW;   	
     		setForeground (Color.black);
     	}
     }
@@ -241,6 +251,28 @@ public class LocoIcon extends PositionableLabel {
         }.init(getEditor(), this));
     	return dockMenu;
     }
-    
+
+    public void doMouseReleased(MouseEvent event) {
+    	List <Positionable> selections = _editor.getSelectedItems(event);
+    	if (selections==null) {
+    		return;
+    	}
+    	for (int i=0; i<selections.size(); i++) {
+    		if (selections.get(i) instanceof IndicatorTrack) {
+    			IndicatorTrack t = (IndicatorTrack)selections.get(i);
+    			jmri.jmrit.logix.OBlock block = t.getOccBlock();
+    			if (block!=null) {
+    				block.setMarkerForeground(getForeground());
+    				block.setMarkerBackground(_locoColor);
+        			if (TrackerTableAction.markNewTracker(block, getText())) {
+        				dock();
+//        				remove();    				
+        			}
+        		}
+    			break;
+    		}
+    	}
+    }
+
     static Logger log = LoggerFactory.getLogger(LocoIcon.class.getName());
 }

@@ -62,6 +62,12 @@ public class TrackerTableAction extends AbstractAction {
     		_frame.mouseClickedOnBlock(block);
     	}
     }
+    static public boolean markNewTracker(OBlock block, String name) {
+    	if (_frame==null) {
+        	_frame = new TableFrame();    		
+    	}
+		return _frame.addTracker(block, name);
+    }
     
     /**
      * Holds a table of Trackers that follow adjacent occupancy.  Needs to be 
@@ -106,7 +112,7 @@ public class TrackerTableAction extends AbstractAction {
             JScrollPane tablePane = new JScrollPane(table);
             Dimension dim = table.getPreferredSize();
             table.getRowHeight(new JButton("STOPIT").getPreferredSize().height);
-            dim.height = table.getRowHeight()*12;
+            dim.height = table.getRowHeight()*2;
             tablePane.getViewport().setPreferredSize(dim);
 
             JPanel tablePanel = new JPanel();
@@ -259,29 +265,38 @@ public class TrackerTableAction extends AbstractAction {
 	            if (block==null) {
     	            JOptionPane.showMessageDialog(this, Bundle.getMessage("BlockNotFound", blockName), 
     	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-	            } else if ((block.getState() & OBlock.UNOCCUPIED) > 0) {
-    	            JOptionPane.showMessageDialog(this, Bundle.getMessage("blockUnoccupied", block.getDisplayName()), 
-    	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-	            } else if (nameInuse(_trainNameBox.getText())) {
-    	            JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateName", _trainNameBox.getText()), 
-    	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);	            	
 	            } else {
-	            	String name = blockInUse(block);
-	            	if (name!=null) {
-	     	            JOptionPane.showMessageDialog(this, Bundle.getMessage("blockInUse", name, block.getDisplayName()),
-	     	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-	 	            } else {
-		            	Tracker newTracker = new Tracker(block, _trainNameBox.getText());
-		            	_trackerList.add(newTracker);
-		            	addBlockListeners(newTracker);
-//		            	newTracker.addPropertyChangeListener(this);
-		                _model.fireTableDataChanged();
-		    	    	_status.setText(Bundle.getMessage("blockInUse", _trainNameBox.getText(), block.getDisplayName()));
-		            	retOK = true;   	            		 	            	
-	 	            }
+ 	            	addTracker(block, _trainNameBox.getText());
+	            	retOK = true;   	            		 	            	
 	            }
 	        }
 	        return retOK;
+	    }
+	    
+	    public boolean addTracker(OBlock block, String name){
+            if ((block.getState() & OBlock.OCCUPIED) == 0) {
+	            JOptionPane.showMessageDialog(this, Bundle.getMessage("blockUnoccupied", block.getDisplayName()), 
+	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+	            return false;
+            } else if (nameInuse(_trainNameBox.getText())) {
+	            JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateName", _trainNameBox.getText()), 
+	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);	            	
+	            return false;
+            } else {
+            	String oldName = blockInUse(block);
+            	if (oldName!=null) {
+     	            JOptionPane.showMessageDialog(this, Bundle.getMessage("blockInUse", oldName, block.getDisplayName()),
+     	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+    	            return false;
+ 	            } else {
+ 	              	Tracker newTracker = new Tracker(block, name);
+ 	 	           	_trackerList.add(newTracker);
+ 	 	        	addBlockListeners(newTracker);
+ 	 	            _model.fireTableDataChanged();
+ 	 		    	_status.setText(Bundle.getMessage("blockInUse", _trainNameBox.getText(), block.getDisplayName()));
+ 		            return true;   	            		 	            	
+ 	            }
+            }
 	    }
 	    
 	    String blockInUse(OBlock b) {
@@ -542,8 +557,8 @@ public class TrackerTableAction extends AbstractAction {
 
         public int getPreferredWidth(int col) {
             switch (col) {
-                case NAME_COL: return new JTextField(25).getPreferredSize().width;
-                case STATUS_COL: return new JTextField(80).getPreferredSize().width;
+                case NAME_COL: return new JTextField(20).getPreferredSize().width;
+                case STATUS_COL: return new JTextField(60).getPreferredSize().width;
                 case STOP_COL: return new JButton("STOPIT").getPreferredSize().width;
             }
             return 5;

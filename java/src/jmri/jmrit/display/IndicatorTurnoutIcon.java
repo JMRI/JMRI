@@ -13,6 +13,10 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 import jmri.NamedBeanHandle;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -378,7 +382,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.setStatus(block, state);
         if ((state & OBlock.OCCUPIED)!=0) {
-            _pathUtil.setLocoIcon((String)block.getValue(), getLocation(), getSize(), _editor);        	
+            _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);        	
             repaint();
         }
         if (_status.equals("DontUseTrack")) {

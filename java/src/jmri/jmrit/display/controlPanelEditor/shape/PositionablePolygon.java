@@ -135,6 +135,9 @@ public class PositionablePolygon extends PositionableShape {
     @Override
     public void doMousePressed(MouseEvent event) {
     	_hitIndex=-1;
+    	if (!_editor.isEditable()) {
+    		return;
+    	}
     	if (_editing) {
         	if (_vertexHandles!=null) {   		
          	   	 _lastX = event.getX();
@@ -161,7 +164,7 @@ public class PositionablePolygon extends PositionableShape {
     
     @Override
     protected boolean doHandleMove(MouseEvent event) {
-    	if (_hitIndex>=0) {
+    	if (_hitIndex>=0 && _editor.isEditable()) {
         	if (_editing) {
         		Point pt = new Point(event.getX()-_lastX, event.getY()-_lastY);
 /*        		try {

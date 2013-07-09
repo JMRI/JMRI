@@ -129,6 +129,8 @@ final public class Tracker {
     	if ((state & OBlock.OCCUPIED) != 0) {
 	        _prevBlock = _currentBlock;
             _currentBlock = block;
+            _currentBlock.setMarkerBackground(_prevBlock.getMarkerBackground());
+            _currentBlock.setMarkerForeground(_prevBlock.getMarkerForeground());
          	makeRange();
          	return ENTER_BLOCK;
     	} else if ((state & OBlock.UNOCCUPIED) != 0) {

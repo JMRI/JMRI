@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.awt.Color;
 
 import jmri.Path;
 import jmri.Sensor;
@@ -79,6 +80,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     static final HashMap<String, Integer> _oldstatusMap = new HashMap<String, Integer>();
     static final HashMap<String, Integer> _statusMap = new HashMap<String, Integer>();
     static final HashMap<String, String> _statusNameMap = new HashMap<String, String>();
+    
+    static final Color DEFAULT_FILL_COLOR = new Color(200, 0, 200);
 
     static void loadStatusMap() {
     	_statusMap.put("unoccupied", Integer.valueOf(UNOCCUPIED));
@@ -141,6 +144,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO = 
     		new HashMap<String, List<HashMap<OBlock, List<OPath>>>>();
     private boolean _occupationPending;	// autoTrain is about to enter this block
+    private Color _markerForeground = Color.WHITE;
+    private Color _markerBackground = DEFAULT_FILL_COLOR;
     
     public OBlock(String systemName) {
         super(systemName);
@@ -371,8 +376,31 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public float getScaleRatio() {
         return _scaleRatio;
     }
+    public void setMarkerForeground(Color c) { 
+    	_markerForeground =c;
+    }
+    public Color getMarkerForeground() { 
+    	return _markerForeground;
+    }
+    public void setMarkerBackground(Color c) { 
+    	_markerBackground =c;
+    }
+    public Color getMarkerBackground() { 
+    	return _markerBackground;
+    }
+    
+    /** override
+     * 
+     */
+    public void setValue(Object o) {
+    	super.setValue(o);
+    	if (o==null) {
+        	_markerForeground = Color.WHITE;
+        	_markerBackground = DEFAULT_FILL_COLOR;   		
+    	}
+    }
 
-    /*
+    /*_
     *  From the universal name for block status, check if it is the current status
     */
     public boolean statusIs(String statusName) {
