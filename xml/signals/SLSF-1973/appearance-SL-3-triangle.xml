@@ -32,6 +32,12 @@
         <authorinitials>PAB</authorinitials>
         <revremark>Adapted from NYCS-1937</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2013-07-09</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Add aspect mappings</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SLSF</aspecttable>
@@ -48,7 +54,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>green</show>
       <show>red</show>
       <show>red</show>
-      <reference>Page 16</reference>
+      <reference>Rule 281</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -57,7 +63,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>yellow</show>
       <show>yellow</show>
       <show>red</show>
-      <reference>Page 16</reference>
+      <reference>Rule 282</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -66,7 +72,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>yellow</show>
       <show>green</show>
       <show>red</show>
-      <reference>Page 16</reference>
+      <reference>Rule 283</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -75,7 +81,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>yellow</show>
       <show>red</show>
       <show>red</show>
-      <reference>Page 16</reference>
+      <reference>Rule 285</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -84,7 +90,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>green</show>
       <show>red</show>
-      <reference>Page 18</reference>
+      <reference>Rule 286</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -94,7 +100,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>yellow</show>
       <show>red</show>
-      <reference>Page 18</reference>
+      <reference>Rule 287</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -103,7 +109,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>red</show>
       <show>yellow</show>
-      <reference>Page 18</reference>
+      <reference>Rule 288</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -112,7 +118,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>lunar</show>
       <show>red</show>
       <show>red</show>
-      <reference>Page 18</reference>
+      <reference>Rule 288</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -121,7 +127,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>lunar</show>
       <show>red</show>
-      <reference>Page 18</reference>
+      <reference>Rule 288</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -130,7 +136,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>red</show>
       <show>lunar</show>
-      <reference>Page 18</reference>
+      <reference>Rule 288</reference>
       <imagelink></imagelink>
     </appearance>
 
@@ -139,9 +145,77 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <show>red</show>
       <show>red</show>
-      <reference>Page 18</reference>
+      <reference>Rule 291</reference>
       <imagelink></imagelink>
     </appearance>
 
   </appearances>
+
+        <specificappearances><!-- Start of Specific Appearances list -->
+           <danger>
+              <aspect>Stop</aspect>
+           </danger>
+           <held>
+              <aspect>Stop</aspect>
+           </held>
+    </specificappearances><!-- End of Specific Appearances list -->
+ 
+    <aspectMappings><!-- Start of Aspect Mapping -->
+
+    <aspectMapping>
+     <advancedAspect>Stop</advancedAspect>
+     <ourAspect>Stop</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Restricted Proceed</advancedAspect>
+     <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Approach</advancedAspect>
+     <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Approach Medium</advancedAspect>
+     <ourAspect>Diverging Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Clear</advancedAspect>
+     <ourAspect>Diverging Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Restricting</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Medium</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Diverging</advancedAspect>
+     <ourAspect>Approach Limited</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Advance Approach</advancedAspect>
+     <ourAspect>Advance Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Clear</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+  </aspectMappings><!-- End of Aspect Mapping -->
+
 </appearancetable>  
