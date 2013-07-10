@@ -32,6 +32,12 @@
         <authorinitials>PAB</authorinitials>
         <revremark>Adapted from NYCS-1937</revremark>
     </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2013-07-09</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Add aspect mappings and signal icon references</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>SLSF</aspecttable>
@@ -46,42 +52,105 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <reference>Page 16</reference>
-      <imagelink>
-      </imagelink>
+      <reference>Rule 281</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-1-high/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <reference>Page 16</reference>
-      <imagelink>
-      </imagelink>
+      <reference>Rule 285</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-1-high/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach Medium</aspectname>
       <show>flashyellow</show>
-      <reference>Page 16</reference>
-      <imagelink>
-      </imagelink>
+      <reference>Rule 284</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-1-high/rule-284.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
-      <reference>Page 18</reference>
-      <imagelink>
-      </imagelink>
+      <reference>Rule 288</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-1-high/rule-288.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Grade</aspectname>
       <show>red</show>
-      <reference>Page 18</reference>
-      <imagelink>
-      </imagelink>
+      <reference>Rule 289</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-1-high/rule-289.gif</imagelink>
     </appearance>
 
   </appearances>
+
+        <specificappearances><!-- Start of Specific Appearances list -->
+           <danger>
+              <aspect>Grade</aspect>
+           </danger>
+           <held>
+              <aspect>Grade</aspect>
+           </held>
+    </specificappearances><!-- End of Specific Appearances list -->
+ 
+    <aspectMappings><!-- Start of Aspect Mapping -->
+
+    <aspectMapping>
+     <advancedAspect>Stop</advancedAspect>
+     <ourAspect>Grade</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Restricted Proceed</advancedAspect>
+     <ourAspect>Restricting</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Approach</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Approach Medium</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Diverging Clear</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Restricting</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Medium</advancedAspect>
+     <ourAspect>Approach Medium</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Approach Diverging</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Advance Approach</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Clear</advancedAspect>
+     <ourAspect>Clear</ourAspect>
+    </aspectMapping>
+  </aspectMappings><!-- End of Aspect Mapping -->
+
 </appearancetable>  
