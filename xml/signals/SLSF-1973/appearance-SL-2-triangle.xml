@@ -157,56 +157,57 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
            </held>
     </specificappearances><!-- End of Specific Appearances list -->
  
+ 
     <aspectMappings><!-- Start of Aspect Mapping -->
 
     <aspectMapping>
      <advancedAspect>Stop</advancedAspect>
-     <ourAspect>Stop and Proceed</ourAspect>
+     <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
-     <advancedAspect>Restricted Proceed</advancedAspect>
-     <ourAspect>Restricting</ourAspect>
+     <advancedAspect>Stop and Proceed</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Grade</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Restricting</advancedAspect>
+     <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Diverging Approach</advancedAspect>
-     <ourAspect>Diverging Approach</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
-     <advancedAspect>Diverging Approach Medium</advancedAspect>
-     <ourAspect>Diverging Approach</ourAspect>
+     <ourAspect>Advanced Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Diverging Clear</advancedAspect>
-     <ourAspect>Diverging Clear</ourAspect>
+     <ourAspect>Advanced Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Approach</advancedAspect>
-     <ourAspect>Approach</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
-     <advancedAspect>Approach Restricting</advancedAspect>
-     <ourAspect>Approach</ourAspect>
+     <ourAspect>Advanced Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Approach Medium</advancedAspect>
-     <ourAspect>Approach Limited</ourAspect>
+     <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
-     <advancedAspect>Approach Diverging</advancedAspect>
-     <ourAspect>Approach Limited</ourAspect>
+     <advancedAspect>Approach Limited</advancedAspect>
+     <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Advance Approach</advancedAspect>
-     <ourAspect>Approach Limited</ourAspect>
+     <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
