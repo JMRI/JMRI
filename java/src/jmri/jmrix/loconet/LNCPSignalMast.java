@@ -103,10 +103,10 @@ public class LNCPSignalMast extends DccSignalMast implements LocoNetListener {
     }
     
     public void setAspect(String aspect){
-        if(appearanceToOutput.containsKey(aspect)){
+        if(appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect)!=-1){
             c.sendPacket( NmraPacket.altAccSignalDecoderPkt( dccSignalDecoderAddress, appearanceToOutput.get(aspect) ), packetRepeatCount);
         } else {
-            log.warn("Trying to set aspect that has not been configured");
+            log.warn("Trying to set aspect (" + aspect + ") that has not been configured on mast " + getDisplayName());
         }
     }
     
