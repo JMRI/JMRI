@@ -228,7 +228,7 @@
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
-
+      <xs:attribute name="degrees" type="xs:int"/>
       <xs:attribute name="class" type="classType" use="required" />
       <xs:attribute name="sensor" type="beanNameType" />
       <xs:attribute name="momentary" type="trueFalseType" />
@@ -921,6 +921,7 @@
       <xs:attribute name="signald1name" type="beanNameType" />
       <xs:attribute name="signald2name" type="beanNameType" />
       <xs:attribute name="linkedturnoutname" type="beanNameType" />
+      <xs:attribute name="secondturnoutname" type="beanNameType" />
       <xs:attribute name="linktype" type="xs:string" />
 
     </xs:complexType>

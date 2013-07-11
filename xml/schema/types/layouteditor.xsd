@@ -96,7 +96,7 @@
       <xs:attribute name="defaultalternativetrackcolor" type="screenColorType"/>
       <xs:attribute name="defaultoccupiedtrackcolor" type="screenColorType"/>
       <xs:attribute name="defaulttextcolor" type="screenColorType"/>
-      <xs:attribute name="turnoutcirclecolor" type="screenColorType"/>
+      <xs:attribute name="turnoutcirclecolor" type="turnoutCircleColourType"/>
       <xs:attribute name="turnoutcirclesize" type="xs:integer"/>
       <xs:attribute name="turnoutdrawunselectedleg" type="yesNoType" default="yes"/>
       <xs:attribute name="turnoutbx" type="xs:float"/>
@@ -109,7 +109,17 @@
       <xs:attribute name="greenBackground" type="xs:integer"/>
       <xs:attribute name="blueBackground" type="xs:integer"/>
       <xs:attribute name="autoblkgenerate" type="yesNoType" default="yes"/>
+      <xs:attribute name="openDispatcher" type="yesNoType" default="no"/>
     </xs:complexType>
 
+    <xs:simpleType name="trackAsColourType">
+      <xs:restriction base="xs:token">
+        <xs:enumeration value="track"/>
+      </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="turnoutCircleColourType">
+       <xs:union memberTypes="screenColorType trackAsColourType"/>
+    </xs:simpleType>
 
 </xs:schema>
