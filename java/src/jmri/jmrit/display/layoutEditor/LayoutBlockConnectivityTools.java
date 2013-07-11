@@ -446,6 +446,8 @@ public class LayoutBlockConnectivityTools{
                     blocksInRoute.add(bt);
                 }
                 if (nextBlock==destBlock){
+                    if(!validateOnly && !checkForLevelCrossing(destinationLayoutBlock))
+                        throw new jmri.JmriException("Destination block is in conflict on a crossover");
                     ArrayList<LayoutBlock> returnBlocks = new ArrayList<LayoutBlock>();
                     for (int i =0; i<blocksInRoute.size(); i++){
                         returnBlocks.add(blocksInRoute.get(i).getBlock());
@@ -569,7 +571,7 @@ public class LayoutBlockConnectivityTools{
                     lastErrorMessage="block " + block.getDisplayName() + " is directly attached, however the route to the destination block " + destBlock.getDisplayName() + " can not be directly used";
                     log.debug(lastErrorMessage);
                 }
-                else if ((validateOnly) || (checkForDoubleCrossOver(preBlock, currentLBlock, blocktoCheck) && canLBlockBeUsed(lBlock))){
+                else if ((validateOnly) || ((checkForDoubleCrossOver(preBlock, currentLBlock, blocktoCheck) && checkForLevelCrossing(currentLBlock)) && canLBlockBeUsed(lBlock))){
                     if(log.isDebugEnabled()){
                         log.debug(block.getDisplayName() + " not occupied & not reserved but we need to check if the anchor point between the two contains a signal or not");
                         log.debug(currentBlock.getDisplayName() + " " + block.getDisplayName());
@@ -631,6 +633,25 @@ public class LayoutBlockConnectivityTools{
                                 return false;
                             }
                         }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
+    private boolean checkForLevelCrossing(LayoutBlock curBlock){
+        LayoutEditor lay = curBlock.getMaxConnectedPanel();
+        for(int j = 0; j<lay.xingList.size(); j++){
+            //Looking for a crossing that both layout blocks defined and they are individual.
+            LevelXing lx = lay.xingList.get(j);
+            if(lx.getLayoutBlockAC()==curBlock || lx.getLayoutBlockBD()==curBlock){
+                if((lx.getLayoutBlockAC()!=null) && (lx.getLayoutBlockBD()!=null) && (lx.getLayoutBlockAC()!=lx.getLayoutBlockBD())){
+                    if(lx.getLayoutBlockAC()==curBlock){
+                        return canLBlockBeUsed(lx.getLayoutBlockBD());
+                    }
+                    else if(lx.getLayoutBlockBD()==curBlock) {
+                        return canLBlockBeUsed(lx.getLayoutBlockAC());
                     }
                 }
             }
