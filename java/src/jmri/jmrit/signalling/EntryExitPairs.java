@@ -20,6 +20,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Color;
 import javax.swing.JPanel;
+import javax.swing.JDialog;
 import jmri.jmrit.signalling.entryexit.*;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -686,11 +687,22 @@ public class EntryExitPairs implements jmri.Manager{
             return;
         stackList.add(new StackDetails(dp, reverse));
         checkTimer.start();
-        if(stackWindow==null)
-            stackWindow = new StackNXWindow();
-        stackWindow.updateGUI();
-        stackWindow.setVisible(true);
+        if(stackPanel==null)
+            stackPanel = new StackNXPanel();
+        if(stackDialog==null){
+            stackDialog = new JDialog();
+            stackDialog.setTitle(Bundle.getMessage("WindowTitleStackRoutes"));
+            stackDialog.add(stackPanel);
+        }
+        stackPanel.updateGUI();
+        
+        stackDialog.pack();
+        stackDialog.setModal(false);
+        stackDialog.setVisible(true);
     }
+    
+    StackNXPanel stackPanel=null;
+    JDialog stackDialog = null;
     
     public List<DestinationPoints> getStackedInterlocks(){
         List<DestinationPoints> dpList = new ArrayList<DestinationPoints>();
@@ -717,14 +729,12 @@ public class EntryExitPairs implements jmri.Manager{
             if(st.getDestinationPoint()==dp && st.getReverse()==reverse)
                 iter.remove();
         }
-        stackWindow.updateGUI();
+        stackPanel.updateGUI();
         if(stackList.isEmpty()){
-            stackWindow.setVisible(false);
+            stackDialog.setVisible(false);
             checkTimer.stop();
         }
     }
-    
-    StackNXWindow stackWindow;
     
     static class StackDetails{
         DestinationPoints dp;
@@ -764,7 +774,7 @@ public class EntryExitPairs implements jmri.Manager{
         if(!stackList.isEmpty()){
             checkTimer.start();
         } else {
-            stackWindow.setVisible(false);
+            stackDialog.setVisible(false);
         }
     }
     

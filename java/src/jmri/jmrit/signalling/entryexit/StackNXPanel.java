@@ -9,11 +9,10 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.util.Hashtable;
 
-import jmri.util.JmriJFrame;
 import jmri.jmrit.signalling.EntryExitPairs;
 
 
-public class StackNXWindow extends JmriJFrame{
+public class StackNXPanel extends JPanel{
 
     transient EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
     
@@ -23,7 +22,7 @@ public class StackNXWindow extends JmriJFrame{
     private JList list = new JList();
     JScrollPane listScrollPane = new JScrollPane(list);
     
-    public StackNXWindow(){
+    public StackNXPanel(){
         super();
         initGUI();
     }
@@ -31,7 +30,6 @@ public class StackNXWindow extends JmriJFrame{
     private void initGUI()
     {
         listModel = new DefaultListModel();
-        setTitle(Bundle.getMessage("WindowTitleStackRoutes"));
         setLayout(new BorderLayout());
         entryExitPanel = new JPanel();
         entryExitPanel.setDoubleBuffered(true);
@@ -56,7 +54,6 @@ public class StackNXWindow extends JmriJFrame{
     Hashtable<String, DestinationPoints> listToDest = new Hashtable<String, DestinationPoints>();
     
     public void updateGUI() {
-    
         listModel.clear();
         listToDest = new Hashtable<String, DestinationPoints>();
         for(DestinationPoints dp:manager.getStackedInterlocks()){
@@ -65,6 +62,5 @@ public class StackNXWindow extends JmriJFrame{
         }
         list.setModel(listModel);
         list.setVisibleRowCount(10);
-        pack();
     }
 }
