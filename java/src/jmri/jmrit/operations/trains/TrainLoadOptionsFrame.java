@@ -37,9 +37,6 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 		
 	private static boolean loadAndType = false;
-	
-	TrainManager manager;
-	TrainManagerXml managerXml;
 
 	Train _train = null;
 
@@ -83,10 +80,6 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
     	      	
 		parent.setChildFrame(this);
 		_train = parent._train;
-
-		// load managers
-		manager = TrainManager.instance();
-		managerXml = TrainManagerXml.instance();
 	
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 				

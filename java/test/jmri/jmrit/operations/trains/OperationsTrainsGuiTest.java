@@ -338,17 +338,6 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("allow local moves", false, t.isAllowLocalMovesEnabled());
 		Assert.assertEquals("allow through cars", false, t.isAllowThroughCarsEnabled());
 
-		// test car road options
-		getHelper().enterClickAndLeave(new MouseEventData(this, f.roadNameExclude));
-		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-		Assert.assertEquals("train car road exclude", Train.EXCLUDEROADS, t.getRoadOption());
-		getHelper().enterClickAndLeave(new MouseEventData(this, f.roadNameInclude));
-		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-		Assert.assertEquals("train car road include", Train.INCLUDEROADS, t.getRoadOption());
-		getHelper().enterClickAndLeave(new MouseEventData(this, f.roadNameAll));
-		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-		Assert.assertEquals("train car road all", Train.ALLROADS, t.getRoadOption());
-
 		// test car owner options
 		getHelper().enterClickAndLeave(new MouseEventData(this, f.ownerNameExclude));
 		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
