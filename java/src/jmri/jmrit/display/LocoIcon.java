@@ -11,7 +11,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.List;
-//import java.awt.event.MouseEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
@@ -37,6 +36,8 @@ public class LocoIcon extends PositionableLabel {
     public static final String RED = "Red";
     public static final String BLUE = "Blue";
     public static final String YELLOW = "Yellow";
+    
+    public static final Color COLOR_BLUE = new Color(40, 140, 255);
     
     private int _dockX = 0;
     private int _dockY = 0;
@@ -179,7 +180,7 @@ public class LocoIcon extends PositionableLabel {
     	}
     	if(color.equals(BLUE)){
     		super.updateIcon (blue);
-        	_locoColor = Color.BLUE;   	
+        	_locoColor = COLOR_BLUE;   	
     		setForeground (Color.white);
     	}
     	if(color.equals(YELLOW)){
@@ -252,6 +253,30 @@ public class LocoIcon extends PositionableLabel {
     	return dockMenu;
     }
 
+    /**
+     * Called at load time to get "background" color
+     */
+    public void init() {
+    	NamedIcon icon = (NamedIcon)getIcon();
+    	String name = icon.getURL();
+    	if (name.endsWith("loco-white.gif")) {
+        	_locoColor = Color.WHITE;    		
+    	} else if (name.endsWith("loco-green.gif")) {
+        	_locoColor = Color.GREEN;    		
+    	} else if (name.endsWith("loco-gray.gif")) {
+        	_locoColor = Color.GRAY;    		
+    	}else if (name.endsWith("loco-red.gif")) {
+        	_locoColor = Color.RED;    		
+    	}else if (name.endsWith("loco-blue.gif")) {
+        	_locoColor = COLOR_BLUE;    		
+    	}else if (name.endsWith("loco-yellow.gif")) {
+        	_locoColor = Color.YELLOW;    		
+    	}
+    }
+
+    /**
+     * Set display attributes for Tracker
+     */
     public void doMouseReleased(MouseEvent event) {
     	List <Positionable> selections = _editor.getSelectedItems(event);
     	if (selections==null) {
@@ -264,9 +289,14 @@ public class LocoIcon extends PositionableLabel {
     			if (block!=null) {
     				block.setMarkerForeground(getForeground());
     				block.setMarkerBackground(_locoColor);
-        			if (TrackerTableAction.markNewTracker(block, getText())) {
+    				PositionablePopupUtil util = getPopupUtility();
+    				block.setMarkerFont(util.getFont());
+    				String name = getText();	// rotated icons have null text
+    				if (name==null || name.length()==0) {
+    					name = getUnRotatedText();
+    				}
+        			if (TrackerTableAction.markNewTracker(block, name)) {
         				dock();
-//        				remove();    				
         			}
         		}
     			break;

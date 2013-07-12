@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.awt.Color;
+import java.awt.Font;
 
 import jmri.Path;
 import jmri.Sensor;
@@ -146,6 +147,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private boolean _occupationPending;	// autoTrain is about to enter this block
     private Color _markerForeground = Color.WHITE;
     private Color _markerBackground = DEFAULT_FILL_COLOR;
+    private Font _markerFont;
     
     public OBlock(String systemName) {
         super(systemName);
@@ -388,6 +390,13 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     public Color getMarkerBackground() { 
     	return _markerBackground;
     }
+    public void setMarkerFont(Font f) {
+    	_markerFont = f;
+    }
+    public Font getMarkerFont() {
+    	return _markerFont;
+    }
+    
     
     /** override
      * 
@@ -396,7 +405,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     	super.setValue(o);
     	if (o==null) {
         	_markerForeground = Color.WHITE;
-        	_markerBackground = DEFAULT_FILL_COLOR;   		
+        	_markerBackground = DEFAULT_FILL_COLOR;
+        	_markerFont = null;
     	}
     }
 

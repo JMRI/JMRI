@@ -128,9 +128,12 @@ import jmri.jmrit.logix.OBlock;
         }
         trainName = trainName.trim();
     	_loco = new LocoLable(ed);
-        FontMetrics metrics = ed.getFontMetrics(ed.getFont());
-    	int width = metrics.stringWidth(trainName);
-    	int height = metrics.getHeight();
+        Font font = block.getMarkerFont();
+        if (font==null) {
+            font = ed.getFont();
+        }
+    	int width = ed.getFontMetrics(font).stringWidth(trainName);
+    	int height = ed.getFontMetrics(ed.getFont()).getHeight();	// limit height to locoIcon height
     	_loco.setLineWidth(1);
     	_loco.setLineColor(Color.BLACK);
     	_loco.setAlpha(255);
@@ -185,11 +188,15 @@ import jmri.jmrit.logix.OBlock;
         		return;
         	}
             Graphics2D g2d = (Graphics2D)g;
-            g2d.setFont(getFont().deriveFont(Font.BOLD));
-        	int textWidth = getFontMetrics(getFont()).stringWidth(trainName);
-        	int textHeight = getFontMetrics(getFont()).getHeight();
+            Font font = _block.getMarkerFont();
+            if (font==null) {
+            	font = getFont();
+            }
+        	g2d.setFont(font);
+        	int textWidth = getFontMetrics(font).stringWidth(trainName);
+        	int textHeight = getFontMetrics(font).getHeight();
     		int hOffset = Math.max((maxWidth()-textWidth)/2, 0);
-    		int vOffset = Math.max((maxHeight()-textHeight)/2, 0) + getFontMetrics(getFont()).getAscent();
+    		int vOffset = Math.max((maxHeight()-textHeight)/2, 0) + getFontMetrics(font).getAscent();
             g2d.setColor(_block.getMarkerForeground());
             g2d.drawString(trainName, hOffset, vOffset);
         }
