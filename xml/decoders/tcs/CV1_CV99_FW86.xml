@@ -789,7 +789,7 @@
                     <enumChoice choice="Yes"/>
                 </enumVal>
             </variable>
-            <variable label="White Wire Effect Group" CV="49" mask="XVXXXXXX" item="Output 1 options" defualt="0">
+            <variable label="White Wire Effect Group" CV="49" mask="XVXXXXXX" item="Output 1 options" default="0">
                 <enumVal>
                     <enumChoice choice="Group 0"/>
                     <enumChoice choice="Group 1"/>
@@ -841,7 +841,7 @@
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Yellow Wire Effect Group" CV="50" mask="XVXXXXXX" item="Output 2 options" defualt="0">
+            <variable label="Yellow Wire Effect Group" CV="50" mask="XVXXXXXX" item="Output 2 options" default="0">
                 <enumVal>
                     <enumChoice choice="Group 0"/>
                     <enumChoice choice="Group 1"/>
@@ -893,7 +893,7 @@
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Green Wire Effect Group" CV="51" mask="XVXXXXXX" minOut="3" item="Output 3 options" defualt="0">
+            <variable label="Green Wire Effect Group" CV="51" mask="XVXXXXXX" minOut="3" item="Output 3 options" default="0">
                 <enumVal>
                     <enumChoice choice="Group 0"/>
                     <enumChoice choice="Group 1"/>
@@ -945,7 +945,7 @@
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Purple Wire Effect Group" CV="52" mask="XVXXXXXX" minOut="4" item="Output 4 options" defualt="0">
+            <variable label="Purple Wire Effect Group" CV="52" mask="XVXXXXXX" minOut="4" item="Output 4 options" default="0">
                 <enumVal>
                     <enumChoice choice="Group 0"/>
                     <enumChoice choice="Group 1"/>
@@ -997,7 +997,7 @@
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Brown Wire Effect Group" CV="53" mask="XVXXXXXX" minOut="5" item="Output 5 options" defualt="0">
+            <variable label="Brown Wire Effect Group" CV="53" mask="XVXXXXXX" minOut="5" item="Output 5 options" default="0">
                 <enumVal>
                     <enumChoice choice="Group 0"/>
                     <enumChoice choice="Group 1"/>
@@ -1049,7 +1049,7 @@
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Pink Wire Effect Group" CV="54" mask="XVXXXXXX" minOut="6" item="Output 6 options" defualt="0">
+            <variable label="Pink Wire Effect Group" CV="54" mask="XVXXXXXX" minOut="6" item="Output 6 options" default="0">
                 <enumVal>
                     <enumChoice choice="Group 0"/>
                     <enumChoice choice="Group 1"/>
@@ -1101,7 +1101,7 @@
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Pink/Purple Wire Effect Group" CV="55" mask="XVXXXXXX" minOut="7" item="Output 7 options" defualt="0">
+            <variable label="Pink/Purple Wire Effect Group" CV="55" mask="XVXXXXXX" minOut="7" item="Output 7 options" default="0">
                 <enumVal>
                     <enumChoice choice="Group 0"/>
                     <enumChoice choice="Group 1"/>
@@ -1159,7 +1159,7 @@
             <variable label="Dither Amplitude" CV="57" default="10" item="Dither option" tooltip="Practical range is 5 (low) to 50 (high)">
                 <decVal/>
             </variable>
-           <variable label="Green/Brown Wire Effect Group" CV="58" mask="XVXXXXXX" minOut="8" item="Output 8 options" defualt="0">
+           <variable label="Green/Brown Wire Effect Group" CV="58" mask="XVXXXXXX" minOut="8" item="Output 8 options" default="0">
                 <enumVal>
                     <enumChoice choice="Group 0"/>
                     <enumChoice choice="Group 1"/>
