@@ -346,7 +346,7 @@ public class TrainCommon {
 		// else if (Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled())
 		// truncatedDropCar(fileOut, car);
 		if (isLocalMove(car))
-			newS = s + "->";
+			newS = s + "->"; // NOI18N
 		else
 			newS = s + " |";
 		if (car.isUtility()) {

@@ -104,17 +104,9 @@ public class DccSignalMast extends AbstractSignalMast {
         }
         return appearanceToOutput.get(appearance);
     }
-    
-        /*switch( mAppearance ){
-          case SignalHead.DARK:        aspect = 0 ; break;
-          case SignalHead.RED:         aspect = 1 ; break;
-          case SignalHead.YELLOW:      aspect = 2 ; break;
-          case SignalHead.GREEN:       aspect = 3 ; break;
-          case SignalHead.FLASHRED:    aspect = 4 ; break;
-          case SignalHead.FLASHYELLOW: aspect = 5 ; break;
-          case SignalHead.FLASHGREEN:  aspect = 6 ; break;
-          }
-/*          0.  "Stop"
+
+/*
+0.  "Stop"
 1.  "Take Siding"
 2.  "Stop-Orders"
 3.  "Stop-Proceed"
@@ -145,16 +137,16 @@ public class DccSignalMast extends AbstractSignalMast {
 28. "Adv-Appr-Ltd"
 29. "Clear"
 30. "Cab-Speed"
-31. "Dark"
-        */
+31. "Dark" */
+
     protected int packetRepeatCount = 3;
     
     public void setAspect(String aspect){
         
-        if(appearanceToOutput.containsKey(aspect)){
+        if(appearanceToOutput.containsKey(aspect) && appearanceToOutput.get(aspect)!=-1){
             c.sendPacket( NmraPacket.altAccSignalDecoderPkt( dccSignalDecoderAddress, appearanceToOutput.get(aspect) ), packetRepeatCount);
         } else {
-            log.warn("Trying to set aspect that has not been configured");
+            log.warn("Trying to set aspect (" + aspect + ") that has not been configured on mast " + getDisplayName());
         }
         super.setAspect(aspect);
     }

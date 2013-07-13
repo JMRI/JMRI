@@ -45,7 +45,7 @@
   <reference> As described in the
 July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
   </reference>
-  <description>Appearances for a single-searchlight signal head with number plate</description>
+  <description>Appearances for a single-searchlight signal head with an "A" (Absolute) marker.</description>
   
   <appearances>
 
@@ -78,20 +78,20 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
     </appearance>
 
     <appearance>
-      <aspectname>Stop and Proceed</aspectname>
+      <aspectname>Stop</aspectname>
       <show>red</show>
-      <reference>Rule 290</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-1-high/rule-290.gif</imagelink>
+      <reference>Rule 291</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-1-high/rule-291.gif</imagelink>
     </appearance>
 
   </appearances>
 
         <specificappearances><!-- Start of Specific Appearances list -->
            <danger>
-              <aspect>Stop and Proceed</aspect>
+              <aspect>Stop</aspect>
            </danger>
            <held>
-              <aspect>Stop and Proceed</aspect>
+              <aspect>Stop</aspect>
            </held>
     </specificappearances><!-- End of Specific Appearances list -->
  
@@ -99,46 +99,46 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
 
     <aspectMapping>
      <advancedAspect>Stop</advancedAspect>
-     <ourAspect>Stop and Proceed</ourAspect>
+     <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
-     <advancedAspect>Restricted Proceed</advancedAspect>
-     <ourAspect>Restricting</ourAspect>
+     <advancedAspect>Stop and Proceed</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Grade</advancedAspect>
+     <ourAspect>Approach</ourAspect>
+    </aspectMapping>
+
+    <aspectMapping>
+     <advancedAspect>Restricting</advancedAspect>
+     <ourAspect>Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Diverging Approach</advancedAspect>
-     <ourAspect>Approach Medium</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
-     <advancedAspect>Diverging Approach Medium</advancedAspect>
-     <ourAspect>Approach Medium</ourAspect>
+     <ourAspect>Advanced Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Diverging Clear</advancedAspect>
-     <ourAspect>Approach Medium</ourAspect>
+     <ourAspect>Advanced Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Approach</advancedAspect>
-     <ourAspect>Approach</ourAspect>
-    </aspectMapping>
-
-    <aspectMapping>
-     <advancedAspect>Approach Restricting</advancedAspect>
-     <ourAspect>Approach</ourAspect>
+     <ourAspect>Advanced Approach</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Approach Medium</advancedAspect>
-     <ourAspect>Approach Medium</ourAspect>
+     <ourAspect>Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
-     <advancedAspect>Approach Diverging</advancedAspect>
+     <advancedAspect>Approach Limited</advancedAspect>
      <ourAspect>Clear</ourAspect>
     </aspectMapping>
 

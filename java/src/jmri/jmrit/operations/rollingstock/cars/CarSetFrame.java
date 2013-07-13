@@ -46,9 +46,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
 	Car _car;
 
-	JLabel textName4 = new JLabel(Bundle.getMessage("Name"));
-	JLabel textTrack4 = new JLabel(Bundle.getMessage("Track"));
-
 	// combo boxes
 	protected JComboBox destReturnWhenEmptyBox = LocationManager.instance().getComboBox();
 	protected JComboBox trackReturnWhenEmptyBox = new JComboBox();
@@ -97,9 +94,9 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		pReturnWhenEmpty.setLayout(new GridBagLayout());
 		pReturnWhenEmpty.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getMessage("BorderLayoutReturnWhenEmpty")));
-		addItem(pReturnWhenEmpty, textName4, 1, 0);
-		addItem(pReturnWhenEmpty, textTrack4, 2, 0);
-		addItem(pReturnWhenEmpty, ignoreRWECheckBox, 0, 1);
+		addItem(pReturnWhenEmpty, new JLabel(Bundle.getMessage("Location")), 1, 0);
+		addItem(pReturnWhenEmpty, new JLabel(Bundle.getMessage("Track")), 2, 0);
+		addItemLeft(pReturnWhenEmpty, ignoreRWECheckBox, 0, 1);
 		addItem(pReturnWhenEmpty, destReturnWhenEmptyBox, 1, 1);
 		addItem(pReturnWhenEmpty, trackReturnWhenEmptyBox, 2, 1);
 		addItem(pReturnWhenEmpty, autoReturnWhenEmptyTrackCheckBox, 3, 1);
@@ -109,7 +106,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		JPanel pLoad = new JPanel();
 		pLoad.setLayout(new GridBagLayout());
 		pLoad.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
-		addItem(pLoad, ignoreLoadCheckBox, 1, 0);
+		addItemLeft(pLoad, ignoreLoadCheckBox, 1, 0);
 		addItem(pLoad, loadComboBox, 2, 0);
 		addItem(pLoad, editLoadButton, 3, 0);
 		pOptional.add(pLoad);
@@ -118,7 +115,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		JPanel pKernel = new JPanel();
 		pKernel.setLayout(new GridBagLayout());
 		pKernel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Kernel")));
-		addItem(pKernel, ignoreKernelCheckBox, 1, 0);
+		addItemLeft(pKernel, ignoreKernelCheckBox, 1, 0);
 		addItem(pKernel, kernelComboBox, 2, 0);
 		addItem(pKernel, editKernelButton, 3, 0);
 		pOptional.add(pKernel);
@@ -178,7 +175,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 
 	protected void enableComponents(boolean enabled) {
-
 		// If routing is disable, the RWE and Final Destination fields do not work
 		if (!Setup.isCarRoutingEnabled()) {
 			ignoreRWECheckBox.setSelected(true);

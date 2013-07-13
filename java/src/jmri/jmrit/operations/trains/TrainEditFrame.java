@@ -338,6 +338,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
 		toolMenu.add(new TrainEditBuildOptionsAction(Bundle.getMessage("MenuItemBuildOptions"), this));
+		toolMenu.add(new TrainLoadOptionsAction(Bundle.getMessage("MenuItemLoadOptions"), this));
+		toolMenu.add(new TrainRoadOptionsAction(Bundle.getMessage("MenuItemRoadOptions"), this));
 		toolMenu.add(new TrainManifestOptionAction(Bundle.getMessage("MenuItemOptions"), this));
 		if (_train != null)
 			toolMenu.add(new TrainCopyAction(Bundle.getMessage("TitleTrainCopy"), _train.getName()));

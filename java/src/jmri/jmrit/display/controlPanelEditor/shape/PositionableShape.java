@@ -298,6 +298,7 @@ public class PositionableShape extends PositionableJComponent
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
+                    removeHandles();
                     _editFrame.closingEvent();
                 }
         });
@@ -374,9 +375,10 @@ public class PositionableShape extends PositionableJComponent
     }
     
     protected void removeHandles() {
-      	 _handles = null;
-       	 invalidate();
-    }
+    	_handles = null;
+//    	invalidate();
+ 		repaint();
+   }
     
     protected void drawHandles() {
     	_handles = new Rectangle[4];
@@ -401,6 +403,9 @@ public class PositionableShape extends PositionableJComponent
     
     public void doMousePressed(MouseEvent event) {
     	_hitIndex=-1;
+    	if (!_editor.isEditable()) {
+    		return;
+    	}
     	if (_handles!=null) {   		
       	   	 _lastX = event.getX();
        	   	 _lastY = event.getY();
@@ -422,7 +427,7 @@ public class PositionableShape extends PositionableJComponent
     }
    
     protected boolean doHandleMove(MouseEvent event) {
-    	if (_hitIndex>=0) {
+    	if (_hitIndex>=0 && _editor.isEditable()) {
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;
         	switch (_hitIndex) {

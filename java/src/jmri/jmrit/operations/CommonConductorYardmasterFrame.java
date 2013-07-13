@@ -100,7 +100,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 	
 	protected JPanel pPickups = new JPanel();
 	protected JPanel pSetouts = new JPanel();
-	protected JPanel pWorkPanes = new JPanel();	// place car pick ups and set outs side by side
+	protected JPanel pWorkPanes = new JPanel();	// place car pick ups and set outs side by side using two columns
 	protected JPanel pMoves = new JPanel();
 	
 	protected JPanel pStatus = new JPanel();

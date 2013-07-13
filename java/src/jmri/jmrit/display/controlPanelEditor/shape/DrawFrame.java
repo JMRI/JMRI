@@ -219,9 +219,6 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame implements ChangeL
     		_parent.closeDrawFrame(this);
     		_parent.getEditor().resetEditor();
     	}
-//    	if (_pShape!=null) {
-//    		_pShape.setVisible(true);
-//    	}
     	_loc = getLocation(_loc);
     	_dim = getSize(_dim);
     	dispose();

@@ -18,7 +18,7 @@
 <!ELEMENT operations (railRoad | settings | panel | fontName | fontSize | manifestColors
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
- | missingCarFormat | tab | manifest | vsd | reporters | switchList
+ | missingCarFormat | tab | manifest | columnFormat | vsd | reporters | switchList
  | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat 
  | pageOrientation | CATS | router | logger | comments)*>
  
@@ -43,6 +43,7 @@
 <!ELEMENT setupFrameOptions EMPTY>
 <!ELEMENT tab EMPTY>
 <!ELEMENT manifest EMPTY>
+<!ELEMENT columnFormat EMPTY>
 <!ELEMENT vsd EMPTY>
 <!ELEMENT switchList EMPTY>
 <!ELEMENT switchListPickupCarFormat EMPTY>
@@ -171,7 +172,10 @@
 <!ATTLIST manifest useEditor			(true | false ) "false"> 
 <!ATTLIST manifest hazardousMsg			CDATA #IMPLIED> 
 
+<!ATTLIST columnFormat twoColumns		(true | false ) "false">
+
 <!ATTLIST vsd enablePhysicalLocations	(true | false ) "false">
+
 <!ATTLIST switchList sameAsManifest		(true | false ) "true">
 <!ATTLIST switchList realTime			(true | false ) "true">
 <!ATTLIST switchList allTrains			(true | false ) "true">

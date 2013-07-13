@@ -58,6 +58,12 @@ public class DrawPolygon extends DrawFrame{
     	}
     	_pShape.drawHandles();
 	}
+	
+	protected void closingEvent() {
+		_pShape.editing(false);
+		super.closingEvent();
+		repaint();
+	}
 
 	/*
 	 * Rubber Band line

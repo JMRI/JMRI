@@ -625,7 +625,7 @@ public class CoordinateEdit extends JmriJFrame {
 	}
 
     public void initLink() {
-        LinkingLabel pLabel = (LinkingLabel)pl;
+    	LinkingObject pLabel = (LinkingObject)pl;
         oldStr = pLabel.getUrl();
         textX = new javax.swing.JLabel();
 		textX.setText(Bundle.getMessage("LinkEqual"));
@@ -637,25 +637,26 @@ public class CoordinateEdit extends JmriJFrame {
 
 		getContentPane().setLayout(new GridBagLayout());		
 		addTextItems();
+		oldX = 0;		// counter for warning
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				LinkingLabel pp = (LinkingLabel)pl;
+				LinkingObject pp = (LinkingObject)pl;
                 String t = xTextField.getText();
                 boolean hasText = (t!=null && t.length()>0);
-                if (pp.isIcon() || hasText) {
-                    pp._text = hasText; 
+                if (hasText || oldX>0) {
                     pp.setUrl(t);
                     pp.updateSize();
                     dispose();
                 } else {
-                    xTextField.setText("Item disappears with null text!");
+                    xTextField.setText("Link disappears with null text!");
+                    oldX++;
                 }
 			}
 		});
 		cancelButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-				LinkingLabel pp = (LinkingLabel)pl;
+				LinkingObject pp = (LinkingObject)pl;
                 pp.setUrl(oldStr);
                 pp.updateSize();
                 dispose();

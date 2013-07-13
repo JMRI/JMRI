@@ -314,8 +314,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		_toolMenu = new JMenu(Bundle.getMessage("Tools"));
-		_toolMenu.add(new TrackRoadEditAction(this));
 		_toolMenu.add(new TrackLoadEditAction(this));
+		_toolMenu.add(new TrackRoadEditAction(this));	
 		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		_toolMenu.add(new TrackEditCommentsAction(this));
 		_toolMenu.add(new PoolTrackAction(this));

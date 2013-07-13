@@ -242,12 +242,6 @@ public class TrainBuilder extends TrainCommon {
 					new Object[] { train.getName(), train.getRoadOption(),
 							formatStringToCommaSeparated(train.getRoadNames()) }));
 		}
-		// show load names that this train will service
-		if (!train.getLoadOption().equals(Train.ALLLOADS)) {
-			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainLoads"),
-					new Object[] { train.getName(), train.getLoadOption(),
-							formatStringToCommaSeparated(train.getLoadNames()) }));
-		}
 		// show owner names that this train will service
 		if (!train.getOwnerOption().equals(Train.ALLOWNERS)) {
 			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainOwners"),
@@ -470,10 +464,16 @@ public class TrainBuilder extends TrainCommon {
 		addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildDoneAssingEnginesTrain"),
 				new Object[] { train.getName() }));
 
-		// show car types that this train will service
+		// show car types and loads that this train will service
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainServicesCarTypes"),
 				new Object[] { train.getName() }));
 		addLine(buildReport, FIVE, formatStringToCommaSeparated(train.getCarTypeNames()));
+		// show load names that this train will service
+		if (!train.getLoadOption().equals(Train.ALLLOADS)) {
+			addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainLoads"),
+					new Object[] { train.getName(), train.getLoadOption(),
+							formatStringToCommaSeparated(train.getLoadNames()) }));
+		}
 
 		// get list of cars for this route
 		carList = carManager.getAvailableTrainList(train);
@@ -1263,8 +1263,8 @@ public class TrainBuilder extends TrainCommon {
 				}
 				if (!car.isCaboose() && !car.isPassenger() && !train.acceptsLoad(car.getLoadName(), car.getTypeName())) {
 					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-							.getMessage("buildExcludeCarLoadAtLoc"), new Object[] { car.toString(),
-							car.getLoadName(), (car.getLocationName() + ", " + car.getTrackName()) }));
+							.getMessage("buildExcludeCarLoadAtLoc"), new Object[] { car.toString(), car.getTypeName(),
+							car.getLoadName() }));
 					carList.remove(car.getId());
 					carIndex--;
 					continue;

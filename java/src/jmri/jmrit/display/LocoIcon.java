@@ -3,12 +3,14 @@ package jmri.jmrit.display;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.logix.TrackerTableAction;
 import jmri.jmrit.roster.RosterEntry;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-//import java.awt.event.MouseEvent;
+import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
@@ -35,13 +37,17 @@ public class LocoIcon extends PositionableLabel {
     public static final String BLUE = "Blue";
     public static final String YELLOW = "Yellow";
     
+    public static final Color COLOR_BLUE = new Color(40, 140, 255);
+    
     private int _dockX = 0;
     private int _dockY = 0;
+    private Color _locoColor;
 	
 	public LocoIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
     	super(new NamedIcon("resources/icons/markers/loco-white.gif",
                             "resources/icons/markers/loco-white.gif"), editor);
+    	_locoColor = Color.WHITE;
         setDisplayLevel(Editor.MARKERS);
         setShowTooltip(false);
         //setEditable(false);
@@ -63,9 +69,8 @@ public class LocoIcon extends PositionableLabel {
         LocoIcon pos = (LocoIcon)p;
         if (entry!=null) {
             pos.setRosterEntry(getRosterEntry());       	
-        } else {
-        	pos.setText(getText());
         }
+    	pos.setText(getText());
         return super.finishClone(pos);
     }
 
@@ -155,26 +160,32 @@ public class LocoIcon extends PositionableLabel {
     	log.debug("Set loco color to " + color);
     	if(color.equals(WHITE)){
     		super.updateIcon (white);
+        	_locoColor = Color.WHITE;   	
     		setForeground (Color.black);
     	}
     	if(color.equals(GREEN)){
     		super.updateIcon (green);
+        	_locoColor = Color.GREEN;   	
     		setForeground (Color.black);
     	}
     	if(color.equals(GRAY)){
     		super.updateIcon (gray);
+        	_locoColor = Color.GRAY;   	
     		setForeground (Color.white);
     	}
     	if(color.equals(RED)){
     		super.updateIcon (red);
+        	_locoColor = Color.RED;   	
     		setForeground (Color.white);
     	}
     	if(color.equals(BLUE)){
     		super.updateIcon (blue);
+        	_locoColor = COLOR_BLUE;   	
     		setForeground (Color.white);
     	}
     	if(color.equals(YELLOW)){
     		super.updateIcon (yellow);
+        	_locoColor = Color.YELLOW;   	
     		setForeground (Color.black);
     	}
     }
@@ -241,6 +252,57 @@ public class LocoIcon extends PositionableLabel {
         }.init(getEditor(), this));
     	return dockMenu;
     }
-    
+
+    /**
+     * Called at load time to get "background" color
+     */
+    public void init() {
+    	NamedIcon icon = (NamedIcon)getIcon();
+    	String name = icon.getURL();
+    	if (name.endsWith("loco-white.gif")) {
+        	_locoColor = Color.WHITE;    		
+    	} else if (name.endsWith("loco-green.gif")) {
+        	_locoColor = Color.GREEN;    		
+    	} else if (name.endsWith("loco-gray.gif")) {
+        	_locoColor = Color.GRAY;    		
+    	}else if (name.endsWith("loco-red.gif")) {
+        	_locoColor = Color.RED;    		
+    	}else if (name.endsWith("loco-blue.gif")) {
+        	_locoColor = COLOR_BLUE;    		
+    	}else if (name.endsWith("loco-yellow.gif")) {
+        	_locoColor = Color.YELLOW;    		
+    	}
+    }
+
+    /**
+     * Set display attributes for Tracker
+     */
+    public void doMouseReleased(MouseEvent event) {
+    	List <Positionable> selections = _editor.getSelectedItems(event);
+    	if (selections==null) {
+    		return;
+    	}
+    	for (int i=0; i<selections.size(); i++) {
+    		if (selections.get(i) instanceof IndicatorTrack) {
+    			IndicatorTrack t = (IndicatorTrack)selections.get(i);
+    			jmri.jmrit.logix.OBlock block = t.getOccBlock();
+    			if (block!=null) {
+    				block.setMarkerForeground(getForeground());
+    				block.setMarkerBackground(_locoColor);
+    				PositionablePopupUtil util = getPopupUtility();
+    				block.setMarkerFont(util.getFont());
+    				String name = getText();	// rotated icons have null text
+    				if (name==null || name.length()==0) {
+    					name = getUnRotatedText();
+    				}
+        			if (TrackerTableAction.markNewTracker(block, name)) {
+        				dock();
+        			}
+        		}
+    			break;
+    		}
+    	}
+    }
+
     static Logger log = LoggerFactory.getLogger(LocoIcon.class.getName());
 }
