@@ -50,7 +50,7 @@ public class TrainSwitchLists extends TrainCommon {
 			location.setStatus(Location.UPDATED);
 		}
 
-		// create manifest file
+		// create switch list file
 		File file = TrainManagerXml.instance().createSwitchListFile(location.getName());
 
 		PrintWriter fileOut;

@@ -349,6 +349,10 @@ public class Location implements java.beans.PropertyChangeListener {
 			setDirtyAndFirePropertyChange("SwitchListState", old, state); // NOI18N
 	}
 
+	/**
+	 * Returns the state of the switch list for this location.
+	 * @return Location.SW_CREATE, Location.SW_PRINTED or Location.SW_APPEND
+	 */
 	public int getSwitchListState() {
 		return _switchListState;
 	}
