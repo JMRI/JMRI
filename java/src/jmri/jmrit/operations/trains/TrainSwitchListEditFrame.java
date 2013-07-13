@@ -143,6 +143,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		switchListPageCheckBox.setSelected(Setup.isSwitchListPagePerTrainEnabled());
 
 		updateButton.setVisible(!switchListRealTimeCheckBox.isSelected());
+		resetButton.setVisible(!switchListRealTimeCheckBox.isSelected());
 		saveButton.setEnabled(false);
 
 		// setup buttons
@@ -209,6 +210,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == switchListRealTimeCheckBox) {
 			updateButton.setVisible(!switchListRealTimeCheckBox.isSelected());
+			resetButton.setVisible(!switchListRealTimeCheckBox.isSelected());
 		}
 		// enable the save button whenever a checkbox is changed
 		enableSaveButton(true);
@@ -386,6 +388,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 		previewButton.setEnabled(!enable);
 		printButton.setEnabled(!enable);
 		updateButton.setEnabled(!enable);
+		resetButton.setEnabled(!enable);
 	}
 
 	private void enableChangeButtons() {
