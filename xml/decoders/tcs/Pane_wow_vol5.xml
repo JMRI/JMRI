@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id:  $ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - for Unified Software -->
+
+
+<pane name="Volume Level 5">
+	<column>
+		<row>
+			<column>
+				<label label="   "/>
+				<label label="Must have JMRI 3.3.6 or later."/>
+				<label label="   "/>
+				<label label="To set individual sound volume to level 5"/>
+				<label label="Pick sound high byte first then from list of sounds of for that high byte"/>
+				<label label="Then press Write full sheet"/>
+				<label label="Repeat for other sounds"/>
+				<label label="To change to different volume level, choose different Volume Level tab"/>
+				<label label="   "/>
+				<display item="Volume Level 5" />
+				<display item="Volume Level 5 0" label=""/>
+				<display item="Volume Level 5 1" label="" />
+				<display item="Volume Level 5 255" label="" />
+			</column>
+		</row>
+	</column>
+</pane>
+

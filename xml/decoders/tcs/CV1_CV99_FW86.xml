@@ -789,182 +789,364 @@
                     <enumChoice choice="Yes"/>
                 </enumVal>
             </variable>
-            <variable label="White Wire Effect" CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
+            <variable label="White Wire Effect Group" CV="49" mask="XVXXXXXX" item="Output 1 options" default="0">
+                <enumVal>
+                    <enumChoice choice="Group 0"/>
+                    <enumChoice choice="Group 1"/>
+                </enumVal>
+            </variable>
+            <variable label="White Wire Effect 1" CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
+                <enumVal>
+                    <enumChoice choice="Double pulse strobe 2"/>
+                    <enumChoice choice="Random flicker 2 (fire box)"/>
+                    <enumChoice choice="Constant dim 2"/>
+                    <enumChoice choice="Constant dim 3"/>
+                    <enumChoice choice="Constant dim 4"/>
+                </enumVal>
+				<qualifier>
+					<variableref>White Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </variable>
+            <variable label="White Wire Effect 0" CV="49" mask="XXXXVVVV" item="Output 1 behavior">
                 <enumVal>
                     <enumChoice choice="Constant bright light"/>
-                    <enumChoice choice="Random flicker (fire box)"/>
+                    <enumChoice choice="Random flicker 1 (fire box)"/>
                     <enumChoice choice="Mars light"/>
                     <enumChoice choice="Flashing light"/>
-                    <enumChoice choice="Single pulse strobe"/>
-                    <enumChoice choice="Double pulse strobe"/>
+                    <enumChoice choice="Single pulse strobe 1"/>
+                    <enumChoice choice="Double pulse strobe 1"/>
                     <enumChoice choice="Rotary beacon"/>
                     <enumChoice choice="Gyra light"/>
                     <enumChoice choice="Rule 17 (dimmable)"/>
                     <enumChoice choice="Momentary pulse"/>
                     <enumChoice choice="Ditch light A"/>
                     <enumChoice choice="Ditch light B"/>
-                    <enumChoice choice="Constant dim"/>
+                    <enumChoice choice="Constant dim 1"/>
                     <enumChoice choice="Auto Mars"/>
                     <enumChoice choice="Brake lights"/>
+					<enumChoice choice="Single pulse strobe 2"/>
                 </enumVal>
+				<qualifier>
+					<variableref>White Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
             </variable>
-            <variable label="White Wire Timing" CV="49" mask="XXVVXXXX" item="Output 1 behavior">
+            <variable label="White Wire Timing" CV="49" mask="XXVVXXXX" item="Output 1 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Yellow Wire Effect" CV="50" mask="XXXXVVVV" item="Output 2 effect generated">
+            <variable label="Yellow Wire Effect Group" CV="50" mask="XVXXXXXX" item="Output 2 options" default="0">
+                <enumVal>
+                    <enumChoice choice="Group 0"/>
+                    <enumChoice choice="Group 1"/>
+                </enumVal>
+            </variable>
+            <variable label="Yellow Wire Effect 1" CV="50" mask="XXXXVVVV" item="Output 2 effect generated">
+                <enumVal>
+                    <enumChoice choice="Double pulse strobe 2"/>
+                    <enumChoice choice="Random flicker 2 (fire box)"/>
+                    <enumChoice choice="Constant dim 2"/>
+                    <enumChoice choice="Constant dim 3"/>
+                    <enumChoice choice="Constant dim 4"/>
+                </enumVal>
+				<qualifier>
+					<variableref>Yellow Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </variable>
+            <variable label="Yellow Wire Effect 0" CV="50" mask="XXXXVVVV" item="Output 2 behavior">
                 <enumVal>
                     <enumChoice choice="Constant bright light"/>
-                    <enumChoice choice="Random flicker (fire box)"/>
+                    <enumChoice choice="Random flicker 1 (fire box)"/>
                     <enumChoice choice="Mars light"/>
                     <enumChoice choice="Flashing light"/>
-                    <enumChoice choice="Single pulse strobe"/>
-                    <enumChoice choice="Double pulse strobe"/>
+                    <enumChoice choice="Single pulse strobe 1"/>
+                    <enumChoice choice="Double pulse strobe 1"/>
                     <enumChoice choice="Rotary beacon"/>
                     <enumChoice choice="Gyra light"/>
                     <enumChoice choice="Rule 17 (dimmable)"/>
                     <enumChoice choice="Momentary pulse"/>
                     <enumChoice choice="Ditch light A"/>
                     <enumChoice choice="Ditch light B"/>
-                    <enumChoice choice="Constant dim"/>
+                    <enumChoice choice="Constant dim 1"/>
                     <enumChoice choice="Auto Mars"/>
                     <enumChoice choice="Brake lights"/>
+					<enumChoice choice="Single pulse strobe 2"/>
                 </enumVal>
+				<qualifier>
+					<variableref>Yellow Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
             </variable>
-            <variable label="Yellow Wire Timing" CV="50" mask="XXVVXXXX" item="Output 2 behavior" default="1">
+            <variable label="Yellow Wire Timing" CV="50" mask="XXVVXXXX" item="Output 2 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Green Wire Effect" CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 effect generated">
+            <variable label="Green Wire Effect Group" CV="51" mask="XVXXXXXX" minOut="3" item="Output 3 options" default="0">
+                <enumVal>
+                    <enumChoice choice="Group 0"/>
+                    <enumChoice choice="Group 1"/>
+                </enumVal>
+            </variable>
+            <variable label="Green Wire Effect 1" CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 effect generated">
+                <enumVal>
+                    <enumChoice choice="Double pulse strobe 2"/>
+                    <enumChoice choice="Random flicker 2 (fire box)"/>
+                    <enumChoice choice="Constant dim 2"/>
+                    <enumChoice choice="Constant dim 3"/>
+                    <enumChoice choice="Constant dim 4"/>
+                </enumVal>
+				<qualifier>
+					<variableref>Green Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </variable>
+            <variable label="Green Wire Effect 0" CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 behavior">
                 <enumVal>
                     <enumChoice choice="Constant bright light"/>
-                    <enumChoice choice="Random flicker (fire box)"/>
+                    <enumChoice choice="Random flicker 1 (fire box)"/>
                     <enumChoice choice="Mars light"/>
                     <enumChoice choice="Flashing light"/>
-                    <enumChoice choice="Single pulse strobe"/>
-                    <enumChoice choice="Double pulse strobe"/>
+                    <enumChoice choice="Single pulse strobe 1"/>
+                    <enumChoice choice="Double pulse strobe 1"/>
                     <enumChoice choice="Rotary beacon"/>
                     <enumChoice choice="Gyra light"/>
                     <enumChoice choice="Rule 17 (dimmable)"/>
                     <enumChoice choice="Momentary pulse"/>
                     <enumChoice choice="Ditch light A"/>
                     <enumChoice choice="Ditch light B"/>
-                    <enumChoice choice="Constant dim"/>
+                    <enumChoice choice="Constant dim 1"/>
                     <enumChoice choice="Auto Mars"/>
                     <enumChoice choice="Brake lights"/>
+					<enumChoice choice="Single pulse strobe 2"/>
                 </enumVal>
+				<qualifier>
+					<variableref>Green Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
             </variable>
-            <variable label="Green Wire Timing" CV="51" mask="XXVVXXXX" minOut="3" item="Output 3 behavior" default="2">
+            <variable label="Green Wire Timing" CV="51" mask="XXVVXXXX" minOut="3" item="Output 3 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Purple Wire Effect" CV="52" mask="XXXXVVVV" minOut="4" item="Output 4 effect generated">
+            <variable label="Purple Wire Effect Group" CV="52" mask="XVXXXXXX" minOut="4" item="Output 4 options" default="0">
+                <enumVal>
+                    <enumChoice choice="Group 0"/>
+                    <enumChoice choice="Group 1"/>
+                </enumVal>
+            </variable>
+            <variable label="Purple Wire Effect 1" CV="52" mask="XXXXVVVV" minOut="4" item="Output 4 effect generated">
+                <enumVal>
+                    <enumChoice choice="Double pulse strobe 2"/>
+                    <enumChoice choice="Random flicker 2 (fire box)"/>
+                    <enumChoice choice="Constant dim 2"/>
+                    <enumChoice choice="Constant dim 3"/>
+                    <enumChoice choice="Constant dim 4"/>
+                </enumVal>
+				<qualifier>
+					<variableref>Purple Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </variable>
+            <variable label="Purple Wire Effect 0" CV="52" mask="XXXXVVVV" minOut="4" item="Output 4 behavior">
                 <enumVal>
                     <enumChoice choice="Constant bright light"/>
-                    <enumChoice choice="Random flicker (fire box)"/>
+                    <enumChoice choice="Random flicker 1 (fire box)"/>
                     <enumChoice choice="Mars light"/>
                     <enumChoice choice="Flashing light"/>
-                    <enumChoice choice="Single pulse strobe"/>
-                    <enumChoice choice="Double pulse strobe"/>
+                    <enumChoice choice="Single pulse strobe 1"/>
+                    <enumChoice choice="Double pulse strobe 1"/>
                     <enumChoice choice="Rotary beacon"/>
                     <enumChoice choice="Gyra light"/>
                     <enumChoice choice="Rule 17 (dimmable)"/>
                     <enumChoice choice="Momentary pulse"/>
                     <enumChoice choice="Ditch light A"/>
                     <enumChoice choice="Ditch light B"/>
-                    <enumChoice choice="Constant dim"/>
+                    <enumChoice choice="Constant dim 1"/>
                     <enumChoice choice="Auto Mars"/>
                     <enumChoice choice="Brake lights"/>
+					<enumChoice choice="Single pulse strobe 2"/>
                 </enumVal>
+				<qualifier>
+					<variableref>Purple Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
             </variable>
-            <variable label="Purple Wire Timing" CV="52" mask="XXVVXXXX" minOut="4" item="Output 4 behavior" default="2">
+            <variable label="Purple Wire Timing" CV="52" mask="XXVVXXXX" minOut="4" item="Output 4 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Brown Wire Effect" CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 effect generated">
+            <variable label="Brown Wire Effect Group" CV="53" mask="XVXXXXXX" minOut="5" item="Output 5 options" default="0">
+                <enumVal>
+                    <enumChoice choice="Group 0"/>
+                    <enumChoice choice="Group 1"/>
+                </enumVal>
+            </variable>
+            <variable label="Brown Wire Effect 1" CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 effect generated">
+                <enumVal>
+                    <enumChoice choice="Double pulse strobe 2"/>
+                    <enumChoice choice="Random flicker 2 (fire box)"/>
+                    <enumChoice choice="Constant dim 2"/>
+                    <enumChoice choice="Constant dim 3"/>
+                    <enumChoice choice="Constant dim 4"/>
+                </enumVal>
+				<qualifier>
+					<variableref>Brown Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </variable>
+            <variable label="Brown Wire Effect 0" CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 behavior">
                 <enumVal>
                     <enumChoice choice="Constant bright light"/>
-                    <enumChoice choice="Random flicker (fire box)"/>
+                    <enumChoice choice="Random flicker 1 (fire box)"/>
                     <enumChoice choice="Mars light"/>
                     <enumChoice choice="Flashing light"/>
-                    <enumChoice choice="Single pulse strobe"/>
-                    <enumChoice choice="Double pulse strobe"/>
+                    <enumChoice choice="Single pulse strobe 1"/>
+                    <enumChoice choice="Double pulse strobe 1"/>
                     <enumChoice choice="Rotary beacon"/>
                     <enumChoice choice="Gyra light"/>
                     <enumChoice choice="Rule 17 (dimmable)"/>
                     <enumChoice choice="Momentary pulse"/>
                     <enumChoice choice="Ditch light A"/>
                     <enumChoice choice="Ditch light B"/>
-                    <enumChoice choice="Constant dim"/>
+                    <enumChoice choice="Constant dim 1"/>
                     <enumChoice choice="Auto Mars"/>
                     <enumChoice choice="Brake lights"/>
+					<enumChoice choice="Single pulse strobe 2"/>
                 </enumVal>
+				<qualifier>
+					<variableref>Brown Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
             </variable>
-            <variable label="Brown Wire Timing" CV="53" mask="XXVVXXXX" minOut="5" item="Output 5 behavior" default="2">
+            <variable label="Brown Wire Timing" CV="53" mask="XXVVXXXX" minOut="5" item="Output 5 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Pink Wire Effect" CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 effect generated">
+            <variable label="Pink Wire Effect Group" CV="54" mask="XVXXXXXX" minOut="6" item="Output 6 options" default="0">
+                <enumVal>
+                    <enumChoice choice="Group 0"/>
+                    <enumChoice choice="Group 1"/>
+                </enumVal>
+            </variable>
+            <variable label="Pink Wire Effect 1" CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 effect generated">
+                <enumVal>
+                    <enumChoice choice="Double pulse strobe 2"/>
+                    <enumChoice choice="Random flicker 2 (fire box)"/>
+                    <enumChoice choice="Constant dim 2"/>
+                    <enumChoice choice="Constant dim 3"/>
+                    <enumChoice choice="Constant dim 4"/>
+                </enumVal>
+				<qualifier>
+					<variableref>Pink Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </variable>
+            <variable label="Pink Wire Effect 0" CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 behavior">
                 <enumVal>
                     <enumChoice choice="Constant bright light"/>
-                    <enumChoice choice="Random flicker (fire box)"/>
+                    <enumChoice choice="Random flicker 1 (fire box)"/>
                     <enumChoice choice="Mars light"/>
                     <enumChoice choice="Flashing light"/>
-                    <enumChoice choice="Single pulse strobe"/>
-                    <enumChoice choice="Double pulse strobe"/>
+                    <enumChoice choice="Single pulse strobe 1"/>
+                    <enumChoice choice="Double pulse strobe 1"/>
                     <enumChoice choice="Rotary beacon"/>
                     <enumChoice choice="Gyra light"/>
                     <enumChoice choice="Rule 17 (dimmable)"/>
                     <enumChoice choice="Momentary pulse"/>
                     <enumChoice choice="Ditch light A"/>
                     <enumChoice choice="Ditch light B"/>
-                    <enumChoice choice="Constant dim"/>
+                    <enumChoice choice="Constant dim 1"/>
                     <enumChoice choice="Auto Mars"/>
                     <enumChoice choice="Brake lights"/>
+					<enumChoice choice="Single pulse strobe 2"/>
                 </enumVal>
+				<qualifier>
+					<variableref>Pink Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
             </variable>
-            <variable label="Pink Wire Timing" CV="54" mask="XXVVXXXX" minOut="6" item="Output 6 behavior" default="2">
+            <variable label="Pink Wire Timing" CV="54" mask="XXVVXXXX" minOut="6" item="Output 6 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
                     <enumChoice choice="Function on both directions"/>
                 </enumVal>
             </variable>
-            <variable label="Pink/Purple Wire Effect" CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
+            <variable label="Pink/Purple Wire Effect Group" CV="55" mask="XVXXXXXX" minOut="7" item="Output 7 options" default="0">
+                <enumVal>
+                    <enumChoice choice="Group 0"/>
+                    <enumChoice choice="Group 1"/>
+                </enumVal>
+            </variable>
+            <variable label="Pink/Purple Wire Effect 1" CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
+                <enumVal>
+                    <enumChoice choice="Double pulse strobe 2"/>
+                    <enumChoice choice="Random flicker 2 (fire box)"/>
+                    <enumChoice choice="Constant dim 2"/>
+                    <enumChoice choice="Constant dim 3"/>
+                    <enumChoice choice="Constant dim 4"/>
+                </enumVal>
+				<qualifier>
+					<variableref>Pink/Purple Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </variable>
+            <variable label="Pink/Purple Wire Effect 0" CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 behavior">
                 <enumVal>
                     <enumChoice choice="Constant bright light"/>
-                    <enumChoice choice="Random flicker (fire box)"/>
+                    <enumChoice choice="Random flicker 1 (fire box)"/>
                     <enumChoice choice="Mars light"/>
                     <enumChoice choice="Flashing light"/>
-                    <enumChoice choice="Single pulse strobe"/>
-                    <enumChoice choice="Double pulse strobe"/>
+                    <enumChoice choice="Single pulse strobe 1"/>
+                    <enumChoice choice="Double pulse strobe 1"/>
                     <enumChoice choice="Rotary beacon"/>
                     <enumChoice choice="Gyra light"/>
                     <enumChoice choice="Rule 17 (dimmable)"/>
                     <enumChoice choice="Momentary pulse"/>
                     <enumChoice choice="Ditch light A"/>
                     <enumChoice choice="Ditch light B"/>
-                    <enumChoice choice="Constant dim"/>
+                    <enumChoice choice="Constant dim 1"/>
                     <enumChoice choice="Auto Mars"/>
                     <enumChoice choice="Brake lights"/>
+					<enumChoice choice="Single pulse strobe 2"/>
                 </enumVal>
+				<qualifier>
+					<variableref>Pink/Purple Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
             </variable>
-            <variable label="Pink/Purple Wire Timing" CV="55" mask="XXVVXXXX" minOut="7" item="Output 7 behavior" default="2">
+            <variable label="Pink/Purple Wire Timing" CV="55" mask="XXVVXXXX" minOut="7" item="Output 7 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
@@ -977,26 +1159,52 @@
             <variable label="Dither Amplitude" CV="57" default="10" item="Dither option" tooltip="Practical range is 5 (low) to 50 (high)">
                 <decVal/>
             </variable>
-            <variable label="Green/Brown Wire Effect" CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated">
+           <variable label="Green/Brown Wire Effect Group" CV="58" mask="XVXXXXXX" minOut="8" item="Output 8 options" default="0">
+                <enumVal>
+                    <enumChoice choice="Group 0"/>
+                    <enumChoice choice="Group 1"/>
+                </enumVal>
+            </variable>
+            <variable label="Green/Brown Wire Effect 1" CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated">
+                <enumVal>
+                    <enumChoice choice="Double pulse strobe 2"/>
+                    <enumChoice choice="Random flicker 2 (fire box)"/>
+                    <enumChoice choice="Constant dim 2"/>
+                    <enumChoice choice="Constant dim 3"/>
+                    <enumChoice choice="Constant dim 4"/>
+                </enumVal>
+				<qualifier>
+					<variableref>Green/Brown Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </variable>
+            <variable label="Green/Brown Wire Effect 0" CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 behavior">
                 <enumVal>
                     <enumChoice choice="Constant bright light"/>
-                    <enumChoice choice="Random flicker (fire box)"/>
+                    <enumChoice choice="Random flicker 1 (fire box)"/>
                     <enumChoice choice="Mars light"/>
                     <enumChoice choice="Flashing light"/>
-                    <enumChoice choice="Single pulse strobe"/>
-                    <enumChoice choice="Double pulse strobe"/>
+                    <enumChoice choice="Single pulse strobe 1"/>
+                    <enumChoice choice="Double pulse strobe 1"/>
                     <enumChoice choice="Rotary beacon"/>
                     <enumChoice choice="Gyra light"/>
                     <enumChoice choice="Rule 17 (dimmable)"/>
                     <enumChoice choice="Momentary pulse"/>
                     <enumChoice choice="Ditch light A"/>
                     <enumChoice choice="Ditch light B"/>
-                    <enumChoice choice="Constant dim"/>
+                    <enumChoice choice="Constant dim 1"/>
                     <enumChoice choice="Auto Mars"/>
                     <enumChoice choice="Brake lights"/>
+					<enumChoice choice="Single pulse strobe 2"/>
                 </enumVal>
+				<qualifier>
+					<variableref>Green/Brown Wire Effect Group</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
             </variable>
-            <variable label="Green/Brown Wire Timing" CV="58" mask="XXVVXXXX" minOut="8" item="Output 8 behavior" default="2">
+            <variable label="Green/Brown Wire Timing" CV="58" mask="XXVVXXXX" minOut="8" item="Output 8 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
@@ -1045,14 +1253,14 @@
                     <enumChoice choice="Auto F2 for/rev"/>
                 </enumVal>
             </variable>
-            <variable label="Momentary Pulse" CV="62" default="60" item="Function 3 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
+            <variable label="Momentary Pulse" CV="62" default="60" item="Function 6 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
                 <decVal/>
             </variable>
             <variable label="Ditch Light Blink Holdover Time" CV="63" default="10" item="Function 2 effect generated" tooltip="1 second = about 12">
                 <decVal/>
             </variable>
-            <variable label="Dimming Brightness" CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
-                <decVal/>
+            <variable label="Constant Dim 1 Brightness" CV="64" default="16" item="Global lighting option 2" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+                <decVal max="32" />
             </variable>
             <variable label="Forward Trim" CV="66" item="Forward Motor Trim" default="128" comment="Range 0-256">
                 <decVal max="256"/>

@@ -903,7 +903,6 @@
       <xs:attribute name="disableWhenOccupied" type="yesNoType" />
 
       <xs:attribute name="turnoutname" type="beanNameType" />
-      <xs:attribute name="secondturnoutname" type="beanNameType" />
       <xs:attribute name="blockname" type="beanNameType" />
       <xs:attribute name="blockbname" type="beanNameType" />
       <xs:attribute name="blockcname" type="beanNameType" />

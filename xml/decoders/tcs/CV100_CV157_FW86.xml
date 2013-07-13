@@ -245,7 +245,7 @@
             <enumChoice choice="Yes"/>
         </enumVal>
     </variable>
-    <variable label="Random Flicker Control" CV="135" default="16" item="Function 4 effect generated" tooltip="Random Flicker for fireboxes">
+    <variable label="Random Flicker 1 Speed" CV="135" default="16" item="Function 7 effect generated" tooltip="Random Flicker for fireboxes">
         <decVal/>
     </variable>
     <variable label="F5 controls output BEMF" CV="136" mask="XXXXXXXV" minOut="1">
@@ -346,5 +346,59 @@
             <enumChoice choice="No"/>
             <enumChoice choice="Yes"/>
         </enumVal>
+    </variable>
+    <variable label="Single Strobe 1 Off Duration" CV="140" default="140" item="Function 3 effect generated" >
+        <decVal/>
+    </variable>
+    <variable label="Single Strobe 1 On Duration" CV="141" default="5" item="Function 3 behavior" >
+        <decVal/>
+    </variable>
+    <variable label="Single Strobe 2 Off Duration" CV="142" default="124" item="Function 3 options" >
+        <decVal/>
+    </variable>
+    <variable label="Single Strobe 2 On Duration" CV="143" default="5" item="Function 3 option 1" >
+        <decVal/>
+    </variable>
+    <variable label="Flashing Light On Duration" CV="144" default="144" item="Function 8 effect generated" >
+        <decVal/>
+    </variable>
+    <variable label="Flashing Light Off Duration" CV="145" default="48" item="Function 8 behavior" >
+        <decVal/>
+    </variable>
+    <variable label="Double Strobe 1 Long Off Duration" CV="146" default="112" item="Function 4 effect generated" >
+        <decVal/>
+    </variable>
+    <variable label="Double Strobe 1 On Duration" CV="147" default="5" item="Function 4 behavior" >
+        <decVal/>
+    </variable>
+    <variable label="Double Strobe 1 Short Off Duration" CV="148" default="16" item="Function 4 options" >
+        <decVal/>
+    </variable>
+    <variable label="Double Strobe 2 Long Off Duration" CV="149" default="117" item="Function 4 option 1" >
+        <decVal/>
+    </variable>
+    <variable label="Double Strobe 2 On Duration" CV="150" default="16" item="Function 4 option 2" >
+        <decVal/>
+    </variable>
+    <variable label="Double Strobe 2 Short Off Duration" CV="151" default="5" item="Function 4 option 3" >
+        <decVal/>
+    </variable>
+    <variable label="Random Flicker 2 Speed" CV="152" default="16" item="Function 7 behavior" tooltip="Random Flicker 2 for fireboxes">
+        <decVal/>
+    </variable>
+    <variable label="Constant Dim 2 Brightness" CV="153" default="5" item="Global lighting option 3" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+        <decVal max="32" />
+    </variable>
+    <variable label="Constant Dim 3 Brightness" CV="154" default="5" item="Global lighting option 4" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+        <decVal max="32" />
+    </variable>
+    <variable label="Constant Dim 4 Brightness" CV="155" default="5" item="Global lighting option 5" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+        <decVal max="32"/>
+    </variable>
+    <variable label="Headlight Dim Brightness" CV="156" default="0" item="Global lighting option 6" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+        <decVal max="32"/>
+    </variable>
+    <variable label="Reverse Light Dim Brightness" CV="157" default="0" item="Global lighting option 7" tooltip="16 = 50% for incandescent bulbs, 2-6 for LEDs">
+        <decVal max="32"/>
     </variable>
 </variables>
