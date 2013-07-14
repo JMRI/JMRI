@@ -331,7 +331,7 @@
    <H3>Maximum Train Length</H3>
 
    Now enter the default "Maximum Train Length" you desire for your trains. This field provides the
-   maximum default train length between stations. Later you can override this length if you wish a
+   maximum scale train length between stations. Later you can override this length if you wish a
    shorter train between any two locations. A 1000 foot train can carry approximately 20 cars, and
    is of course dependent on the car lengths assigned to the train.
 
