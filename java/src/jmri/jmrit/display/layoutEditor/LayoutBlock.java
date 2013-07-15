@@ -727,7 +727,12 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
     
     protected void editLayoutBlock(Component callingPane){
         LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
-        beanEdit.setBean(block);
+        if(block==null){
+            //Block may not have been initialised due to an error so manually set it in the edit window
+            beanEdit.setBean(InstanceManager.blockManagerInstance().getBlock(blockName));
+        } else {
+            beanEdit.setBean(block);
+        }
         beanEdit.actionPerformed(null);
     
     }
