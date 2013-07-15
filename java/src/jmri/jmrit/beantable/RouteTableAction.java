@@ -795,21 +795,14 @@ public class RouteTableAction extends AbstractTableAction {
         // display the window
         addFrame.setVisible(true);
         autoSystemName();
-        //_routeTurnoutModel.fireTableDataChanged();
-        //_routeSensorModel.fireTableDataChanged();
-    }   // addPressed
+    }
     
     void autoSystemName(){
         if (_autoSystemName.isSelected()){
-            createButton.setEnabled(true);
             _systemName.setEnabled(false);
             nameLabel.setEnabled(false);
         }
         else {
-            if (_systemName.getText().length() > 0)
-                createButton.setEnabled(true);
-            else
-                createButton.setEnabled(false);
             _systemName.setEnabled(true);  
             nameLabel.setEnabled(true);            
         }
