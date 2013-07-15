@@ -271,7 +271,7 @@ public class EntryExitPairs implements jmri.Manager{
     * This method will generate the point details, given a known source and layout panel.
     * 
     */
-    private PointDetails providePoint(NamedBean source, LayoutEditor panel){
+    public PointDetails providePoint(NamedBean source, LayoutEditor panel){
         PointDetails sourcePoint = getPointDetails(source, panel);
         if(sourcePoint==null){
             LayoutBlock facing = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getFacingBlockByNamedBean(source, panel);
@@ -301,6 +301,9 @@ public class EntryExitPairs implements jmri.Manager{
         return list;
     }
 
+    public Source getSourceForPoint(PointDetails pd){
+        return nxpair.get(pd);
+    }
     public int getNxPairNumbers(LayoutEditor panel){
         int total=0;
         for(Entry<PointDetails, Source> e : nxpair.entrySet()){

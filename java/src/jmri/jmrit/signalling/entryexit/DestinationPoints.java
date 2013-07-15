@@ -155,27 +155,6 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                                                             justification="No auto serialization")
         transient protected PropertyChangeListener propertyBlockListener;
         
-        /* = new PropertyChangeListener() {
-            public void propertyChange(PropertyChangeEvent e) {
-                Block blk = (Block) e.getSource();
-                if (e.getPropertyName().equals("state")) {
-                    if (log.isDebugEnabled()) log.debug(mUserName + "  We have a change of state on the block " + blk.getDisplayName());
-                    int now = ((Integer) e.getNewValue()).intValue();
-                    
-                    if (now==Block.OCCUPIED){
-                        LayoutBlock lBlock = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).getLayoutBlock(blk);
-                        //If the block was previously active or inactive then we will 
-                        //reset the useExtraColor, but not if it was previously unknown or inconsistent.
-                        lBlock.setUseExtraColor(false);
-                        blk.removePropertyChangeListener(propertyBlockListener); //was this
-                        removeBlockFromRoute(lBlock);
-                    } else {
-                        if (log.isDebugEnabled()) log.debug("state was " + now + " and did not go through reset");
-                    }
-                }
-            }
-        };*/
-        
         protected void blockStateUpdated(PropertyChangeEvent e){
             Block blk = (Block) e.getSource();
             if (e.getPropertyName().equals("state")) {
@@ -535,7 +514,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
                         src.getPoint().getPanel().redrawPanel();
                     }
                     src.getPoint().getPanel().getGlassPane().setVisible(false);
-                    src.setMenuEnabled(true);
+                    //src.setMenuEnabled(true);
                 }
             };
             Thread thrMain = new Thread(setRouteRun, "Entry Exit Set Route");
@@ -1091,6 +1070,7 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean{
         void setActiveEntryExit(boolean boo){
             int oldvalue = getState();
             activeEntryExit = boo;
+            src.setMenuEnabled(boo);
             firePropertyChange("active", oldvalue, getState());
             
         }
