@@ -145,7 +145,8 @@ public class WarrantFrame extends WarrantRoute {
             _throttleCommands.add(ts);
         }
         getRoster();
-        if (!setTrainInfo(_warrant.getTrainId(), false)) {
+        String id = _warrant.getTrainId();
+        if (id==null || id.length()==0 || !setTrainInfo(id, false)) {
             jmri.DccLocoAddress address = _warrant.getDccAddress();
             if (address!=null) {
                 _dccNumBox.setText(address.toString());
@@ -958,7 +959,7 @@ public class WarrantFrame extends WarrantRoute {
             }
             _startTime = System.currentTimeMillis();
             _warrant.addPropertyChangeListener(this);
-           msg = _warrant.setRunMode(Warrant.MODE_LEARN, _locoAddress, _learnThrottle, 
+            msg = _warrant.setRunMode(Warrant.MODE_LEARN, _locoAddress, _learnThrottle, 
                                           _throttleCommands, _runBlind.isSelected());
         }
         if (msg!=null) {

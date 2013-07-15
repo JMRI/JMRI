@@ -304,6 +304,7 @@ public class Portal  {
     */
     public String getPermissibleEntranceSpeed(OBlock block) {
         String speed = null;
+    	String blockName = block.getDisplayName();
         if (block.equals(_toBlock)) {
             if (_fromSignal!=null) {
                 if (_fromSignal instanceof SignalHead) {
@@ -321,8 +322,10 @@ public class Portal  {
                 }
             }
         } else {
-            log.error("Block \""+block.getDisplayName()+"\" is not in Portal \""+_portalName+"\".");
+            	log.error("Block \""+blockName+"\" is not in Portal \""+_portalName+"\".");
         }
+        if (log.isDebugEnabled() && speed!=null) log.debug("Portal \""+_portalName+"\"," +
+        		" has ENTRANCE speed= "+speed+" into \""+blockName+"\" from signal."); 
         // no signals, proceed at recorded speed
         return speed;
     }
@@ -348,6 +351,7 @@ public class Portal  {
     */
     public String getPermissibleExitSpeed(OBlock block) {
         String speed = null;
+    	String blockName = block.getDisplayName();
         if (block.equals(_toBlock)) {
             if (_fromSignal!=null) {
                 if (_fromSignal instanceof SignalHead) {
@@ -365,12 +369,13 @@ public class Portal  {
                 }
             }
         } else {
-            log.error("Block \""+block.getDisplayName()+"\" is not in Portal \""+_portalName+"\".");
+            log.error("Block \""+blockName+"\" is not in Portal \""+_portalName+"\".");
         }
+        if (log.isDebugEnabled() && speed!=null) log.debug("Portal \""+_portalName+"\"," +
+        		" has EXIT speed= "+speed+" into \""+blockName+"\" from signal."); 
         // no signals, proceed at recorded speed
         return speed;
     }
-
 
     private String getPermissibleSignalEntranceSpeed(SignalHead signal) {
         int appearance = signal.getAppearance();
