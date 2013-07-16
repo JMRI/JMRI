@@ -335,7 +335,10 @@ public class EntryExitPairs implements jmri.Manager{
         for(LayoutBlock pro:fromPd.getProtecting()){
             try{
                 jmri.jmrit.display.layoutEditor.LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(),pro, toPd.getFacing(), toPd.getProtecting().get(0), LayoutBlockConnectivityTools.SENSORTOSENSOR);
+                LayoutBlock toProt = null;
+                if(!toPd.getProtecting().isEmpty())
+                    toProt = toPd.getProtecting().get(0);
+                boolean result = lbm.getLayoutBlockConnectivityTools().checkValidDest(fromPd.getFacing(),pro, toPd.getFacing(), toProt, LayoutBlockConnectivityTools.SENSORTOSENSOR);
                 if(result){
                     ArrayList<LayoutBlock> blkList = lbm.getLayoutBlockConnectivityTools().getLayoutBlocks(fromPd.getFacing(), toPd.getFacing(), pro, cleardown, LayoutBlockConnectivityTools.NONE);
                     if(!blkList.isEmpty()){
