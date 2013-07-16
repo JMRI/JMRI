@@ -158,6 +158,13 @@ For local builds, these are the build instructions; CI builds will already be ru
 
 ( ) Put the Linux, Mac OS X and Windows files where developers can
     take a quick look, send an email, and WAIT FOR SOME REPLIES
+    
+    The main JMRI web site gets completely overwritten by Jenkins, so another approach:
+        ssh user,jmri@shell.sf.net create
+        scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
+    puts them at
+        http://user.users.sf.net/release
+    (The user has to have put the htdocs link in their SF.net account)
 
 ====================================================================================
 Final release steps:
