@@ -2766,7 +2766,8 @@ public class TrainBuilder extends TrainCommon {
 					+ ", car load: (" + car.getLoadName() + ")"); // NOI18N
 			return false;
 		}
-		// first try this train's termination track if one exists
+		// TODO, not sure if we really need to try the terminate track, attempt to generate car load to staging was done earlier
+		//first try this train's termination track if one exists
 		if (train.isAllowThroughCarsEnabled()
 				&& generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack))
 			return true;
@@ -3317,18 +3318,18 @@ public class TrainBuilder extends TrainCommon {
 			// is there a track assigned for staging cars?
 			if (rld == train.getTrainTerminatesRouteLocation() && terminateStageTrack != null) {
 				// no need to check train and track direction into staging, already done
-				String status = car.testDestination(testDestination, terminateStageTrack); // will staging accept this
-																							// car?
+				String status = car.testDestination(testDestination, terminateStageTrack); // will staging accept this																						// car?
 				if (status.equals(Track.OKAY)) {
 					trackTemp = terminateStageTrack;
 					destinationTemp = testDestination;
 					// only generate a new load if there aren't any other tracks available for this car
 				} else if (status.startsWith(Track.LOAD)
 						&& car.getTrack() == departStageTrack
+						&& car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
 						&& rldSave == null
-						&& !departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled()
-						&& (departStageTrack.isAddLoadsEnabled() || departStageTrack
-								.isAddLoadsAnySpurEnabled())) {
+						&& (departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled()
+								|| departStageTrack.isAddLoadsEnabled() || departStageTrack
+									.isAddLoadsAnySpurEnabled())) {
 					// try and generate a load for this car into staging
 					if (generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack)) {
 						trackTemp = terminateStageTrack;
