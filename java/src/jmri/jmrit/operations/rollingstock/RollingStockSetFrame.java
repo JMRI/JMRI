@@ -674,7 +674,6 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				if (_rs != null && _rs.getLocation() != null && _rs.getLocation().equals(l)
 						&& _rs.getTrack() != null)
 					trackLocationBox.setSelectedItem(_rs.getTrack());
-				packFrame();
 			}
 		}
 	}
@@ -699,15 +698,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(loc)
 						&& _rs.getDestinationTrack() != null)
 					trackDestinationBox.setSelectedItem(_rs.getDestinationTrack());
-				packFrame();
 			}
 		}
 	}
 
 	protected void packFrame() {
 		pack();
-		if (getHeight() < 400)
-			setSize(getWidth(), 400);
 		setVisible(true);
 	}
 

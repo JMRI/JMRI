@@ -4,6 +4,8 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.*;
 
@@ -88,8 +90,7 @@ class ChangeTracksFrame extends OperationsFrame{
     	getContentPane().add(p1);
     	setTitle(Bundle.getMessage("MenuItemChangeTrackType"));
     	pack();
-    	if (getWidth() < 250)
-    		setSize(getWidth()+100, getHeight());
+    	setMinimumSize(new Dimension(400, 100));
     	setVisible(true); 	
 	}
 	

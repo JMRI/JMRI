@@ -30,7 +30,6 @@ public class OptionAction extends AbstractAction {
     		f.initComponents();
     	}
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	
     }
     
 	static Logger log = LoggerFactory

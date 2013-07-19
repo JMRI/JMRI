@@ -245,6 +245,11 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 
 	protected boolean save() {
 		if (change(_car)) {
+			// if car's load changes, we need to update track combo boxes if auto was selected
+			updateLocation();
+			updateReturnWhenEmpty();
+			updateDestination();
+			updateFinalDestination();
 			OperationsXml.save();
 			return true;
 		}
@@ -258,6 +263,16 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		// save the auto button
 		autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
 
+		// car load
+		if (!ignoreLoadCheckBox.isSelected() && loadComboBox.getSelectedItem() != null) {
+			String load = (String) loadComboBox.getSelectedItem();
+			if (CarLoads.instance().containsName(car.getTypeName(), load))
+				car.setLoadName(load);
+			else
+				JOptionPane.showMessageDialog(this, MessageFormat.format(
+						Bundle.getMessage("carLoadNotValid"), new Object[] { load, car.getTypeName() }),
+						Bundle.getMessage("carCanNotChangeLoad"), JOptionPane.WARNING_MESSAGE);
+		}
 		// set final destination fields before destination in case there's a schedule at destination
 		if (!ignoreFinalDestinationCheckBox.isSelected()) {
 			if (finalDestinationBox.getSelectedItem() == null
@@ -287,16 +302,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				car.setFinalDestinationTrack(finalDestTrack);
 			}
 		}
-		// car load
-		if (!ignoreLoadCheckBox.isSelected() && loadComboBox.getSelectedItem() != null) {
-			String load = (String) loadComboBox.getSelectedItem();
-			if (CarLoads.instance().containsName(car.getTypeName(), load))
-				car.setLoadName(load);
-			else
-				JOptionPane.showMessageDialog(this, MessageFormat.format(
-						Bundle.getMessage("carLoadNotValid"), new Object[] { load, car.getTypeName() }),
-						Bundle.getMessage("carCanNotChangeLoad"), JOptionPane.WARNING_MESSAGE);
-		}
 		// kernel
 		if (!ignoreKernelCheckBox.isSelected() && kernelComboBox.getSelectedItem() != null) {
 			if (kernelComboBox.getSelectedItem().equals("")) {
@@ -319,27 +324,29 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				car.setReturnWhenEmptyDestination(null);
 				car.setReturnWhenEmptyDestTrack(null);
 			} else {
+				Location locationRWE = (Location) destReturnWhenEmptyBox.getSelectedItem();
 				if (trackReturnWhenEmptyBox.getSelectedItem() != null
 						&& !trackReturnWhenEmptyBox.getSelectedItem().equals("")) {
-					Track rwe = (Track) trackReturnWhenEmptyBox.getSelectedItem();
-					if (rwe != null && rwe.getLocType().equals(Track.STAGING)) {
-						log.debug("Return when empty track (" + rwe.getName() + ") is staging");
+					Track trackRWE = (Track) trackReturnWhenEmptyBox.getSelectedItem();
+					// warn user if they selected a staging track
+					if (trackRWE != null && trackRWE.getLocType().equals(Track.STAGING)) {
+						log.debug("Return when empty track (" + trackRWE.getName() + ") is staging");
 						JOptionPane.showMessageDialog(this, Bundle.getMessage("rsDoNotSelectStaging"), Bundle
 								.getMessage("rsCanNotRWE"), JOptionPane.ERROR_MESSAGE);
 						return false;
 					}
-					String status = car.testDestination((Location) destReturnWhenEmptyBox.getSelectedItem(),
-							(Track) trackReturnWhenEmptyBox.getSelectedItem());
+					// use a test car with a load of "E" and no length
+					String status = getTestCar(car).testDestination(locationRWE, trackRWE);
 					if (!status.equals(Track.OKAY)) {
 						JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
 								.getMessage("rsCanNotRWEMsg"), new Object[] { car.toString(), status }),
 								Bundle.getMessage("rsCanNotRWE"), JOptionPane.WARNING_MESSAGE);
 					}
-					car.setReturnWhenEmptyDestTrack((Track) trackReturnWhenEmptyBox.getSelectedItem());
+					car.setReturnWhenEmptyDestTrack(trackRWE);
 				} else {
 					car.setReturnWhenEmptyDestTrack(null);
 				}
-				car.setReturnWhenEmptyDestination((Location) destReturnWhenEmptyBox.getSelectedItem());
+				car.setReturnWhenEmptyDestination(locationRWE);
 			}
 		}
 		// check to see if there's a schedule when placing the car at a spur
@@ -469,16 +476,16 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			} else {
 				log.debug("CarSetFrame sees return when empty: " + destReturnWhenEmptyBox.getSelectedItem());
 				Location l = (Location) destReturnWhenEmptyBox.getSelectedItem();
-				l.updateComboBox(trackReturnWhenEmptyBox, _car,
+				l.updateComboBox(trackReturnWhenEmptyBox, getTestCar(_car),
 						autoReturnWhenEmptyTrackCheckBox.isSelected(), true);
 				if (_car != null && _car.getReturnWhenEmptyDestination() != null
 						&& _car.getReturnWhenEmptyDestination().equals(l)
 						&& _car.getReturnWhenEmptyDestTrack() != null)
 					trackReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyDestTrack());
-				packFrame();
 			}
 		}
 	}
+	
 
 	protected void updateFinalDestination() {
 		if (finalDestinationBox.getSelectedItem() != null) {
@@ -491,7 +498,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				if (_car != null && _car.getFinalDestination() != null
 						&& _car.getFinalDestination().equals(l) && _car.getFinalDestinationTrack() != null)
 					finalDestTrackBox.setSelectedItem(_car.getFinalDestinationTrack());
-				packFrame();
 			}
 		}
 	}
@@ -529,17 +535,22 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		if (_car != null)
 			trainBox.setSelectedItem(_car.getTrain());
 	}
+	
+	private Car getTestCar(Car car) {
+		Car c = car;
+		// clone car and set the load to default empty and a length of zero
+		if (car != null) {
+			c = car.clone();
+			c.setLoadName(CarLoads.instance().getDefaultEmptyName());
+			c.setLength("0");	// ignore car length
+		}
+		return c;
+	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	public void setDestinationEnabled(boolean enable) {
 		enableDestination = !enableDestination;
 		enableComponents(!locationUnknownCheckBox.isSelected());
-	}
-
-	protected void packFrame() {
-		super.packFrame();
-		if (getHeight() < 650)
-			setSize(getWidth(), 650);
 	}
 
 	public void dispose() {

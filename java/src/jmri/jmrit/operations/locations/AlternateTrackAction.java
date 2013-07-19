@@ -4,6 +4,8 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.*;
 
@@ -77,8 +79,7 @@ class AlternateTrackFrame extends OperationsFrame{
     	
     	setTitle(Bundle.getMessage("AlternateTrack"));
     	pack();
-    	if (getWidth() < 300 || getHeight() < 100)
-    		setSize(300, 100);
+    	setMinimumSize(new Dimension(300, 100));
     	setVisible(true); 	
 	}
 	

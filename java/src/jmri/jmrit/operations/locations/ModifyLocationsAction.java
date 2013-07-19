@@ -38,7 +38,6 @@ public class ModifyLocationsAction extends AbstractAction {
 			f.initComponents(l);
 		}
 		f.setExtendedState(Frame.NORMAL);
-		f.setVisible(true);
 	}
 }
 

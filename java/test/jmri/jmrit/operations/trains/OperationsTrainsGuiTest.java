@@ -72,7 +72,6 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 			LocationManager.instance().newLocation("Test_Location " + i);
 
 		TrainsTableFrame f = new TrainsTableFrame();
-		f.setVisible(true);
 		f.setLocation(10, 20);
 		getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
 

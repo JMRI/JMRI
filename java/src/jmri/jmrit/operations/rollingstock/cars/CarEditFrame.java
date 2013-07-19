@@ -322,10 +322,6 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		carManager.addPropertyChangeListener(this);
 
 		pack();
-		if (getWidth() < 450)
-			setSize(450, getHeight());
-		if (getHeight() < 500)
-			setSize(getWidth(), 500);
 		setMinimumSize(new Dimension(450, Control.panelHeight));
 		setVisible(true);
 	}

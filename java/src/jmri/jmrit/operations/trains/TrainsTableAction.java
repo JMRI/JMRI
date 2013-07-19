@@ -32,7 +32,6 @@ public class TrainsTableAction extends AbstractAction {
 			f = new TrainsTableFrame();
 		}
 		f.setExtendedState(Frame.NORMAL);
-		f.setVisible(true);
 	}
 }
 

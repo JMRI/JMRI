@@ -32,7 +32,6 @@ public class RoutesTableAction extends AbstractAction {
     		f = new RoutesTableFrame();
      	}
     	f.setExtendedState(Frame.NORMAL);
-    	f.setVisible(true);
     }
 }
 

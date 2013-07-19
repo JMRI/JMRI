@@ -50,7 +50,6 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Location l5 = lManager.newLocation("Test Loc A");
 		l5.setLength(1005);
 		LocationsTableFrame f = new LocationsTableFrame();
-		f.setVisible(true);
 		
 		// should be 5 rows
 		Assert.assertEquals("number of rows", 5, f.locationsModel.getRowCount());
@@ -594,7 +593,6 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testScheduleTableFrame(){
 		SchedulesTableFrame f = new SchedulesTableFrame();
-		f.setVisible(true);
 		f.dispose();
 	}
 	

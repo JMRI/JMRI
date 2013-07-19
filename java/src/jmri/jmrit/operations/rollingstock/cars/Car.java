@@ -60,6 +60,17 @@ public class Car extends RollingStock {
 		log.debug("New car " + road + " " + number);
 		addPropertyChangeListeners();
 	}
+	
+	public Car clone() {
+		Car car = new Car();
+		car.setBuilt(_built);
+		car.setColor(_color);
+		car.setLength(_length);
+		car.setRoadName(_road);
+		car.setTypeName(_type);
+		car.setLoadName(_load);
+		return car;
+	}
 
 	public void setHazardous(boolean hazardous) {
 		boolean old = _hazardous;
