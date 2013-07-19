@@ -248,8 +248,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);	// NOI18N
 
-		pack();
-		setVisible(true);
+		initComponents();
 
 		// create ShutDownTasks
 		createShutDownTask();

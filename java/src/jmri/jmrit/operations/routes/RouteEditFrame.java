@@ -194,10 +194,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		LocationManager.instance().addPropertyChangeListener(this);
 
 		// set frame size and route for display
-		pack();
+		initComponents();
 		if (getWidth() < Control.panelWidth)
 			setSize(Control.panelWidth, Control.panelHeight);
-		setVisible(true);
 
 		// create ShutDownTasks
 		createShutDownTask();
