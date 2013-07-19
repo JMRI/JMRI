@@ -66,9 +66,11 @@ public class Car extends RollingStock {
 		car.setBuilt(_built);
 		car.setColor(_color);
 		car.setLength(_length);
-		car.setRoadName(_road);
-		car.setTypeName(_type);
 		car.setLoadName(_load);
+		car.setNumber(_number);
+		car.setOwner(_owner);
+		car.setRoadName(_road);
+		car.setTypeName(_type);	
 		return car;
 	}
 

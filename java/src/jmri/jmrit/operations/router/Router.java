@@ -713,18 +713,10 @@ public class Router extends TrainCommon {
 
 	// sets clone car destination to final destination and track
 	private Car clone(Car car) {
-		Car clone = new Car();
-		clone.setBuilt(car.getBuilt());
+		Car clone = car.clone();
 		// modify clone car length if car is part of kernel
 		if (car.getKernel() != null)
 			clone.setLength(Integer.toString(car.getKernel().getTotalLength()));
-		else
-			clone.setLength(car.getLength());
-		clone.setLoadName(car.getLoadName());
-		clone.setNumber(car.getNumber());
-		clone.setOwner(car.getOwner());
-		clone.setRoadName(car.getRoadName());
-		clone.setTypeName(car.getTypeName());
 		clone.setLocation(car.getLocation());
 		clone.setTrack(car.getTrack());
 		clone.setFinalDestination(car.getFinalDestination());
