@@ -17,6 +17,7 @@ import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
@@ -43,6 +44,12 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	public OperationsFrame() {
 		super();
 		setEscapeKeyClosesWindow(true);
+	}
+	
+	public void initComponents() {
+		setMinimumSize(new Dimension(500, Control.panelHeight));
+		pack();
+		setVisible(true);
 	}
 
 	protected void addItem(JComponent c, int x, int y) {

@@ -161,13 +161,11 @@ class PoolTrackFrame extends OperationsFrame implements
 	}
 
 	@Override
-	public void initComponents() throws Exception {
+	public void initComponents() {
 		// This is an alternate constructor that only takes a Track instance.
 		// the following code sets the frame's initial state
 		getContentPane().setLayout(
 				new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
-		// _tefx = tef;
 
 		if (_track == null) {
 			log.debug("track is null, pools can not be created");

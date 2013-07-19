@@ -532,7 +532,7 @@
    <A NAME="MakeDepartureTrackAvailable"></A>
    <H4>Make departure track available after train is built</H4>
 
-   When selected the departure track in staging becomes available for other trains immediately after
+   When selected, the departure track in staging becomes available for other trains immediately after
    the departure train is built. For trains that return to same staging location, this option allows
    the train to return to the same track it departed on. This option is only available when using
    the <A HREF="#BuildOptions">aggressive</A> mode for building trains. 
@@ -2279,14 +2279,15 @@
    <P>
     <img src="images/Trains.png">
    </P>
-   <P>The "Trains" window shows all of your trains. For each train, the there's a checkbox to
-    select which trains to build, print, and terminate using the buttons on the bottom of the page.
-    You can also modify an existing train using the "Edit" button. For each train there's also an
-    action button. You can select one of four actions for your train. The 'Move" action causes a
-    built train to depart its current location and move to the next location in the train's route.
-    The "Conductor" action opens a window that provides the train's manifest for each location in
-    the train's route. The last two actions are "Terminate" and "Reset", pressing "Terminate" moves
-    a built train to the last location in the train's route, and completes the work assigned to the
+   <P>The "Trains" window shows all of your trains. For each train, the there's a checkbox in
+    the "Build" column used to select which trains to build, print, and terminate. The buttons on
+    the bottom of the page will build, print or terminate the trains selected. You can also modify
+    an existing train using the "Edit" button for that train. For each train there's also an action
+    button. You can select one of four actions for your train. The 'Move" action causes a built
+    train to depart its current location and move to the next location in the train's route. The
+    "Conductor" action opens a window that provides the train's manifest for each location in the
+    train's route. The last two actions are "Terminate" and "Reset", pressing "Terminate" moves a
+    built train to the last location in the train's route, and completes the work assigned to the
     train. "Reset" is used to release all cars assigned to a built train. You can only reset a train
     that hasn't been moved.</P>
 
@@ -2327,7 +2328,7 @@
 
    <H3>Train Rolling Stock</H3>
 
-   You can determine what type of cars and locomotives the train will service. Select the rolling
+   You can decide what type of cars and locomotives the train will service. Select the rolling
    stock the train will carry by clicking on the appropriate checkboxes. A checked box means the
    train will service this type of rolling stock. 
    

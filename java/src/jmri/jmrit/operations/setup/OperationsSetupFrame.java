@@ -384,12 +384,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
-		/*
-		 * all JMRI window position and size are now saved // set frame size and location for display if
-		 * (Setup.getOperationsSetupFramePosition()!= null){ setLocation(Setup.getOperationsSetupFramePosition()); }
-		 */
-		packFrame();
-		setVisible(true);
+		super.initComponents();
 	}
 
 	// Save, Delete, Add buttons

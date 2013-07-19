@@ -205,12 +205,7 @@ public class OptionFrame extends OperationsFrame {
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true); // NOI18N
 
-		pack();
-		if (getWidth() < 450)
-			setSize(450, getHeight());
-		if (getHeight() < Control.panelHeight)
-			setSize(getWidth(), Control.panelHeight);
-		setVisible(true);
+		super.initComponents();
 	}
 
 	private void setBuildOption() {

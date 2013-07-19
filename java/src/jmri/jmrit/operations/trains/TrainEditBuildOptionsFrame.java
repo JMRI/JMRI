@@ -418,7 +418,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		// get notified if car owners or engine models gets modified
 		CarOwners.instance().addPropertyChangeListener(this);
 		EngineModels.instance().addPropertyChangeListener(this);
-		packFrame();
+		
+		super.initComponents();
 	}
 
 	// Save
@@ -913,15 +914,6 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	 * MessageFormat.format(Bundle.getMessage("CanNot"), new Object[] {Bundle.getMessage("save")}),
 	 * JOptionPane.ERROR_MESSAGE); return false; }
 	 */
-
-	private void packFrame() {
-		pack();
-		if (getWidth() < 550)
-			setSize(550, getHeight());
-		if (getHeight() < 600)
-			setSize(getWidth(), 600);
-		setVisible(true);
-	}
 
 	public void dispose() {
 		CarOwners.instance().removePropertyChangeListener(this);

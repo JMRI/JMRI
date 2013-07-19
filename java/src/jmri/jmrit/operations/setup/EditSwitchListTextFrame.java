@@ -177,8 +177,7 @@ public class EditSwitchListTextFrame extends OperationsFrame {
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true); // NOI18N
 
-		pack();
-		setVisible(true);
+		super.initComponents();
 	}
 
 	// Save buttons

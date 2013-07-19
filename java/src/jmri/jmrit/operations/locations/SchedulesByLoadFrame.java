@@ -43,7 +43,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 	LocationManager locationManager = LocationManager.instance();
 
 	public SchedulesByLoadFrame() {
-		super();
+		super(Bundle.getMessage("MenuItemShowSchedulesByLoad"));
 
 		// the following code sets the frame's initial state
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -93,11 +93,9 @@ public class SchedulesByLoadFrame extends OperationsFrame implements
 		// select first item to load contents
 		typesComboBox.setSelectedIndex(0);
 
-		setTitle(Bundle.getMessage("MenuItemShowSchedulesByLoad"));
-		pack();
+		super.initComponents();
 		if (getWidth() < 750)
 			setSize(750, getHeight());
-		setVisible(true);
 	}
 
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {

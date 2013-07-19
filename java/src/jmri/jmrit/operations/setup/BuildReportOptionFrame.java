@@ -5,7 +5,6 @@ package jmri.jmrit.operations.setup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -139,9 +138,7 @@ public class BuildReportOptionFrame extends OperationsFrame {
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_BuildReportDetails", true); // NOI18N
 
-		pack();
-		setMinimumSize(new Dimension(400, 400));
-		setVisible(true);
+		super.initComponents();
 	}
 
 	// Save button
