@@ -1477,9 +1477,9 @@ public class WarrantTableAction extends AbstractAction {
                 // a NamedBean added or deleted
                 init();
                 fireTableDataChanged();
-            } else if (e.getSource() instanceof NamedBean){
+            } else if (e.getSource() instanceof Warrant){
                 // a value changed.  Find it, to avoid complete redraw
-                NamedBean bean = (NamedBean)e.getSource();
+            	Warrant bean = (Warrant)e.getSource();
                 for (int i=0; i<_warList.size(); i++) {
                     if (bean.equals(_warList.get(i)))  {
                     	
@@ -1501,7 +1501,13 @@ public class WarrantTableAction extends AbstractAction {
                     }
                 }
                 if (e.getPropertyName().equals("blockChange")) {
-                    setStatusText("", Color.red);               	
+                	OBlock oldBlock = (OBlock)e.getOldValue();
+                	OBlock newBlock = (OBlock)e.getNewValue();
+                	if (newBlock==null) {
+                        setStatusText(Bundle.getMessage("ChangedRoute", bean.getDisplayName(), oldBlock.getDisplayName()), Color.red);               	                		
+                	} else {
+                        setStatusText(Bundle.getMessage("TrackerBlockEnter", bean.getTrainName(), newBlock.getDisplayName()), Color.green);               	                		                		
+                	}
                 }
             }
             if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+

@@ -62,11 +62,17 @@ public class TrackerTableAction extends AbstractAction {
     		_frame.mouseClickedOnBlock(block);
     	}
     }
-    static public boolean markNewTracker(OBlock block, String name) {
+    static public Tracker markNewTracker(OBlock block, String name) {
     	if (_frame==null) {
         	_frame = new TableFrame();    		
     	}
 		return _frame.addTracker(block, name);
+    }
+    static public void stopTracker(Tracker t) {
+    	if (_frame==null) {
+        	_frame = new TableFrame();    		
+    	}
+    	_frame.stopTrain(t);
     }
     
     /**
@@ -266,28 +272,31 @@ public class TrackerTableAction extends AbstractAction {
     	            JOptionPane.showMessageDialog(this, Bundle.getMessage("BlockNotFound", blockName), 
     	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
 	            } else {
- 	            	addTracker(block, _trainNameBox.getText());
-	            	retOK = true;   	            		 	            	
+	            	retOK = (addTracker(block, _trainNameBox.getText())!=null);   	            		 	            	
 	            }
 	        }
 	        return retOK;
 	    }
 	    
-	    public boolean addTracker(OBlock block, String name){
+	    public Tracker addTracker(OBlock block, String name){
             if ((block.getState() & OBlock.OCCUPIED) == 0) {
 	            JOptionPane.showMessageDialog(this, Bundle.getMessage("blockUnoccupied", block.getDisplayName()), 
 	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-	            return false;
-            } else if (nameInuse(_trainNameBox.getText())) {
-	            JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateName", _trainNameBox.getText()), 
+	            return null;
+            } else if (name==null ||name.length()==0) {
+	            JOptionPane.showMessageDialog(this, Bundle.getMessage("noName"), 
 	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);	            	
-	            return false;
+	            return null;
+            } else if (nameInuse(name)) {
+	            JOptionPane.showMessageDialog(this, Bundle.getMessage("duplicateName", name), 
+	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);	            	
+	            return null;
             } else {
             	String oldName = blockInUse(block);
             	if (oldName!=null) {
      	            JOptionPane.showMessageDialog(this, Bundle.getMessage("blockInUse", oldName, block.getDisplayName()),
      	                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-    	            return false;
+    	            return null;
  	            } else {
  	              	Tracker newTracker = new Tracker(block, name);
  	              	newTracker.setupCheck();
@@ -295,7 +304,7 @@ public class TrackerTableAction extends AbstractAction {
  	 	        	addBlockListeners(newTracker);
  	 	            _model.fireTableDataChanged();
  	 		    	_status.setText(Bundle.getMessage("blockInUse", _trainNameBox.getText(), block.getDisplayName()));
- 		            return true;   	            		 	            	
+ 		            return newTracker;   	            		 	            	
  	            }
             }
 	    }
@@ -462,47 +471,61 @@ public class TrackerTableAction extends AbstractAction {
 	    			log.error("No Trackers found for block "+b.getDisplayName()+" going to state= "+state);
 	    			b.removePropertyChangeListener(this);
 	    		} else {
-	    			if (trackers.size()==1) {
-	    				processTrackerStateChange(trackers.get(0), b, state);
-	    			} else {
-    			    	boolean found = false;
-	    				if ((state & OBlock.OCCUPIED) != 0 && b.getValue()==null) {
+    				// perhaps several trackers listen for this block
+    				if ((state & OBlock.OCCUPIED) != 0) {
+    					// going occupied
+    					if (b.getValue()==null) {
 		    				String[] trains = new String[trackers.size()];
-		    		    	Iterator<Tracker> iter = trackers.iterator();
 		    		    	int i=0;
+	    		    		Warrant w = b.getWarrant();
+	    		    		if (w!=null) {
+    		    				int idx = w.getCurrentOrderIndex();
+    		    				// Assume it is a warranted train that entered the block
+    		    				// is distance of 1 block OK? maybe 2?
+    		    				if (Math.abs(w.getIndexOfBlock(b, idx)-idx)<2) {
+    		    					return;
+    		    				}
+	    		    		}
+		    		    	Iterator<Tracker> iter = trackers.iterator();
 		    		    	while (iter.hasNext()) {
-		    		    		trains[i++] = iter.next().getTrainName();
-		    		    	}	    				
-		    				Object selection = JOptionPane.showInputDialog(this, Bundle.getMessage("MultipleTrackers",
+		    		    		Tracker t = iter.next();
+		    		    		trains[i++] = t.getTrainName();
+		    		    	}
+		    		    	Tracker t = trackers.get(0);
+		    		    	if (i>1) {
+			    				Object selection = JOptionPane.showInputDialog(this, Bundle.getMessage("MultipleTrackers",
 		    							b.getDisplayName()),Bundle.getMessage("WarningTitle"),
 		    								JOptionPane.INFORMATION_MESSAGE, null, trains, null);
-		    				if (selection!=null) {
-		    			    	iter = _trackerList.iterator();
-		    			    	while (iter.hasNext()) {
-		    			    		Tracker t = iter.next();
-		    			    		if (((String)selection).equals(t.getTrainName())) {
-		    		    				processTrackerStateChange(t, b, state);
-		    		    				found = true;
-		    		    				break;
-		    			    		}
-		    			    	}
-		    				}
-	    				} else {
-	    			    	Iterator<Tracker> iter = _trackerList.iterator();
-	    			    	while (iter.hasNext()) {
-	    			    		Tracker t = iter.next();
-	    			    		if (t.getTrainName().equals(b.getValue())) {
-	    		    				processTrackerStateChange(t, b, state);
-	    		    				found = true;
-	    		    				break;
-	    			    		}
-	    			    	}
-	    				}
-	    				if (!found) {
-	    					_status.setText(Bundle.getMessage("UnknownOccupier", 
-	    							b.getValue(), b.getDisplayName()));
-	    				}	    					
-	    			}
+			    				if (selection!=null) {
+			    			    	iter = _trackerList.iterator();
+			    			    	while (iter.hasNext()) {
+			    			    		t = iter.next();
+			    			    		if (((String)selection).equals(t.getTrainName())) {
+			    		    				break;
+			    			    		}
+			    			    	}
+			    				} else {
+			    					return;
+			    				}
+		    		    	}
+		    				processTrackerStateChange(t, b, state);
+    					} else {
+    						log.warn("Block "+b.getDisplayName()+" going active with value= "+
+    										b.getValue()+" Wasup wi dat?");
+    					}
+    				} else {
+    					// b going unoccupied.
+    					// to avoid ConcurrentModificationException if a tracker is deleted, use a copy
+    					Tracker[] copy = new Tracker[trackers.size()];
+	    		    	Iterator<Tracker> iter = trackers.iterator();
+	    		    	int i = 0;
+	    		    	while (iter.hasNext()) {
+	    		    		copy[i++]=iter.next();
+	    		    	}
+	    		    	for(int k=0; k<i; k++) {
+		    				processTrackerStateChange(copy[k], b, state);	    		    			    		    		
+	    		    	}
+    				}
 	    		}
 	            if ((state & OBlock.UNOCCUPIED) != 0) {
 	            	b.setValue(null);
@@ -525,7 +548,7 @@ public class TrackerTableAction extends AbstractAction {
 				case Tracker.NO_BLOCK:
 					adjustBlockListeners(oldRange, tracker.getRange(), tracker);
 					String msg = Bundle.getMessage("TrackerNoCurrentBlock", tracker.getTrainName(), 
-							block.getDisplayName());
+							block.getDisplayName())+"\n"+Bundle.getMessage("TrackingStopped");
 		            JOptionPane.showMessageDialog(this, msg, 
 		                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
 		            stopTrain(tracker);

@@ -295,7 +295,7 @@ public class LocoIcon extends PositionableLabel {
     				if (name==null || name.length()==0) {
     					name = getUnRotatedText();
     				}
-        			if (TrackerTableAction.markNewTracker(block, name)) {
+        			if (TrackerTableAction.markNewTracker(block, name)!=null) {
         				dock();
         			}
         		}

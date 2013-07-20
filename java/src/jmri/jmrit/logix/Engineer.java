@@ -62,8 +62,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             _runOnET = _setRunOnET;		// OK to set here
             long time = ts.getTime();
             if (log.isDebugEnabled()) log.debug("Start of Command "+(_idxCurrentCommand+1)+" Block \""+ts.getBlockName()+
-                    "\" in order #"+cmdBlockIdx+" Warrant order#"+_warrant._idxCurrentOrder);
-            if (cmdBlockIdx < _warrant._idxCurrentOrder) {
+                    "\" in order #"+cmdBlockIdx+" Warrant order#"+_warrant.getCurrentOrderIndex());
+            if (cmdBlockIdx < _warrant.getCurrentOrderIndex()) {
             	// Train advancing too fast, need to process commands more quickly,
             	// allowing half second for whistle toots etc.
             	time = Math.min(time, 500);
@@ -84,7 +84,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         // Having waited, time=ts.getTime(), so blocks should agree.  if not,
                         // wait for train to arrive at block and send sync notification.
                         // note, blind runs cannot detect entrance.
-                        if (!_runOnET && _syncIdx > _warrant._idxCurrentOrder) {
+                        if (!_runOnET && _syncIdx > _warrant.getCurrentOrderIndex()) {
                             // commands are ahead of current train position 
                             if (log.isDebugEnabled()) log.debug("Command Block \""+ts.getBlockName()+
                                                       "\" wait for train to enter. "+_warrant.getDisplayName());
@@ -184,8 +184,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param set
      */
     protected void setRunOnET(Boolean set) {
-        if (log.isDebugEnabled()) log.debug("setRunOnET "+set+" command #"+(_idxCurrentCommand+1)+
-        		
+        if (log.isDebugEnabled()) log.debug("setRunOnET "+set+" command #"+(_idxCurrentCommand+1)+        		
         		" warrant "+_warrant.getDisplayName());
     	_setRunOnET = set;        	
         if (!set) {
@@ -221,7 +220,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 
     synchronized private void checkHalt() {
         if (!_halt && !_waitForSensor) {
-            if (_syncIdx <= _warrant._idxCurrentOrder) { 
+            if (_syncIdx <= _warrant.getCurrentOrderIndex()) { 
                 this.notify();
             }
         }    	
@@ -306,14 +305,14 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     synchronized public int getRunState() {
         if (_abort) {
             return Warrant.ABORT;
+        } else  if (_halt) {
+            return Warrant.HALT;
         } else if (_waitForClear) {
             return Warrant.WAIT_FOR_CLEAR;
         } else if (_waitForSync) {
             return Warrant.WAIT_FOR_TRAIN;
         } else if (_waitForSensor) {
             return Warrant.WAIT_FOR_SENSOR;
-        } else  if (_halt) {
-            return Warrant.HALT;
         } else if (!_speedType.equals("Normal")) {
             return Warrant.SPEED_RESTRICTED;
         }

@@ -964,9 +964,9 @@ public class WarrantFrame extends WarrantRoute {
         }
         if (msg!=null) {
             stopRunTrain();
-            _statusBox.setText(msg);
            JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"), 
                                           JOptionPane.WARNING_MESSAGE);
+           _statusBox.setText(msg);
         }
     }
 
@@ -982,7 +982,6 @@ public class WarrantFrame extends WarrantRoute {
             JOptionPane.showMessageDialog(this, msg, 
                           Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             _warrant.deAllocate();
-//            _statusBox.setText(msg);
            return;
         }
     	msg = setupRun();
@@ -1003,10 +1002,10 @@ public class WarrantFrame extends WarrantRoute {
         msg = _warrant.setRunMode(Warrant.MODE_RUN, _locoAddress, null, 
                                       _throttleCommands, _runBlind.isSelected());
         if (msg!=null) {
-            _statusBox.setText(msg);
             stopRunTrain();
             JOptionPane.showMessageDialog(this, msg,
                                 Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            _statusBox.setText(msg);
             return;
         }
     }
@@ -1065,7 +1064,7 @@ public class WarrantFrame extends WarrantRoute {
                                 _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
                     break;
                 case Warrant.MODE_RUN:
-                case Warrant.MODE_MANUAL: 
+                case Warrant.MODE_MANUAL:
                     item = _warrant.getRunningMessage();
                     scrollCommandTable(_warrant.getCurrentCommandIndex());
                     break;
@@ -1134,7 +1133,11 @@ public class WarrantFrame extends WarrantRoute {
         for (int i=0; i<_throttleCommands.size(); i++) {
             _warrant.addThrottleCommand(new ThrottleSetting(_throttleCommands.get(i)));
         }
-        _warrant.setTrainName(_trainNameBox.getText());
+        String name = _trainNameBox.getText();
+        if (name==null ||name.length()==0) {
+        	name = _dccNumBox.getText();
+        }
+        _warrant.setTrainName(name);
         if (_train != null){
             _warrant.setTrainId(_train.getId());
             _warrant.setDccAddress(_train.getDccLocoAddress());

@@ -20,13 +20,14 @@ import javax.swing.JOptionPane;
  * @author	Pete Cressman  Copyright (C) 2013
  */
 
-final public class Tracker {
+public class Tracker {
 
 //	OBlock _currentBlock;
 //	OBlock _prevBlock;
 	String _trainName;
 	ArrayList<OBlock> _headRange;	// blocks reachable from head block
 	ArrayList<OBlock> _tailRange;	// blocks reachable from tail block
+	ArrayList<OBlock> _lostRange;	// reachable block occupied by someone else
 	LinkedList<OBlock> _occupies;	// blocks occupied by train
 	Portal _headPortal;
 	Portal _tailPortal;
@@ -95,7 +96,7 @@ final public class Tracker {
 			makeRange();
     	}    	
     }
- 
+    
     /*
      * Jiggle state so Indicator icons show block value
      */
@@ -159,6 +160,7 @@ final public class Tracker {
     private List<OBlock> makeRange() {
     	_headRange = new ArrayList<OBlock>();
     	_tailRange = new ArrayList<OBlock>();
+    	_lostRange = new ArrayList<OBlock>();
     	OBlock headBlock = getHeadBlock();
     	OBlock tailBlock = getTailBlock();
     	if (_headPortal==null) {
@@ -210,9 +212,11 @@ final public class Tracker {
     
     private void addtoHeadRange(OBlock b) {
 		if (b!=null && !_headRange.contains(b) && !_occupies.contains(b)) {
-			_headRange.add(b);
-    		if ((b.getState() & OBlock.OCCUPIED) != 0) {
-    			log.info("Adjacent block \""+b.getDisplayName()+"\" is already occupied.  Tracking of \""+
+    		if ((b.getState() & OBlock.OCCUPIED) == 0) {
+    			_headRange.add(b);
+    		} else {
+    			_lostRange.add(b);
+    			if (log.isDebugEnabled()) log.debug("Adjacent block \""+b.getDisplayName()+"\" is already occupied.  Tracking of \""+
     					_trainName+"\" from headBlock= \""+getHeadBlock().getDisplayName()+"\" may fail to be accurate.");
     		}
 		}    	
@@ -220,9 +224,11 @@ final public class Tracker {
 
     private void addtoTailRange(OBlock b) {
 		if (b!=null && !_tailRange.contains(b) && !_occupies.contains(b)) {
-			_tailRange.add(b);
-    		if ((b.getState() & OBlock.OCCUPIED) != 0) {
-    			log.info("Adjacent block \""+b.getDisplayName()+"\" is already occupied.  Tracking of \""+
+    		if ((b.getState() & OBlock.OCCUPIED) == 0) {
+    			_tailRange.add(b);
+    		} else {
+    			_lostRange.add(b);
+    			if (log.isDebugEnabled()) log.debug("Adjacent block \""+b.getDisplayName()+"\" is already occupied.  Tracking of \""+
     					_trainName+"\" from tailBlock= \""+getTailBlock().getDisplayName()+"\" may fail to be accurate.");
     		}
 		}    	
@@ -258,6 +264,12 @@ final public class Tracker {
     		range.add(b);
     		if (log.isDebugEnabled()) log.debug("   "+b.getDisplayName()+" value= "+b.getValue());    			
     	}
+    	it = _lostRange.iterator();
+    	while (it.hasNext()) {
+    		OBlock b = it.next();
+    		range.add(b);
+    		if (log.isDebugEnabled()) log.debug("   "+b.getDisplayName()+" value= "+b.getValue());    			
+    	}
     	return range;
     }
     
@@ -286,8 +298,10 @@ final public class Tracker {
         }
     	if ((state & OBlock.OCCUPIED) != 0) {
     		if (_occupies.contains(block)) {
-    			log.error("Block \""+block.getDisplayName()+"\" is occupied by \""+_trainName+"\"!");
- //   			return ERROR_BLOCK;  maybe can recover
+    			if (log.isDebugEnabled()) log.debug("Block \""+block.getDisplayName()+"\" already occupied by \""+_trainName+"\"!");
+     		}
+    		if (_lostRange.contains(block)) {
+    			if (log.isDebugEnabled()) log.debug("\""+_trainName+"\" should not be listening to block \""+block.getDisplayName()+"\"");    			
     		}
     		if (_headRange.contains(block)) {
     			showBlockValue(block);
@@ -309,19 +323,24 @@ final public class Tracker {
          	makeRange();
          	return ENTER_BLOCK;
     	} else if ((state & OBlock.UNOCCUPIED) != 0) {
-    		if (!_occupies.contains(block)) {
-    			log.error("Block \""+block.getDisplayName()+"\" is NOT occupied by \""+_trainName+"\"!");
-    			return ERROR_BLOCK;
-    		}
-    		if (block.equals(getHeadBlock()) && _occupies.size()==1) {
-    			setupCheck();
+    		if (_lostRange.contains(block)) {
+    			//OK, just do makeRange
+    		} else {
+        		if (!_occupies.contains(block)) {
+        			log.error("Block \""+block.getDisplayName()+"\" is NOT occupied by \""+_trainName+"\"!");
+        			return ERROR_BLOCK;
+        		}
     		}
         	_occupies.remove(block);
     		removeBlock(block);
         	int size = _occupies.size();
         	if (size==0) {
     			log.error("\""+block.getDisplayName()+"\", going inactive, is last block occupied by \""+_trainName+"\"!");
-				return NO_BLOCK;    		        		
+    			if (recovery(block)) {
+    				return ENTER_BLOCK;
+    			} else {
+    				return NO_BLOCK;    		        		    				
+    			}
         	} else if (size==1) {
         		_headPortal =null;
         		_tailPortal =null;
@@ -333,6 +352,34 @@ final public class Tracker {
          	return LEAVE_BLOCK;
     	}  	
   		return NO_BLOCK;
+    }
+
+    /**
+     * Called when _occupies is empty
+     * @param block
+     * @return
+     */
+    private boolean recovery(OBlock block) {
+    	if (_lostRange==null || _lostRange.size()==0) {
+    		return false;
+    	} else {
+ 			block = (OBlock)JOptionPane.showInputDialog(null, Bundle.getMessage("TrackerNoCurrentBlock",
+ 					_trainName, block.getDisplayName())+"\n"+Bundle.getMessage("PossibleLocation"),
+ 					Bundle.getMessage("WarningTitle"), JOptionPane.INFORMATION_MESSAGE, null, 
+ 					_lostRange.toArray(), null);
+    		if (block!=null) {
+        		_occupies.addFirst(block);
+                showBlockValue(block);    			
+    		} else {
+    			return false;
+    		}
+    		setupCheck();
+    		return true;
+    	}
+    }
+    
+    public String toString() {
+    	return _trainName;
     }
 
     static Logger log = LoggerFactory.getLogger(Tracker.class.getName());

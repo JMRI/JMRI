@@ -783,6 +783,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return java.text.MessageFormat.format(
             Bundle.getMessage("BlockDescription"), getDisplayName());
     }
+    public String toString() {
+    	return getDisplayName();
+    }
     
     static Logger log = LoggerFactory.getLogger(OBlock.class.getName());
 }
