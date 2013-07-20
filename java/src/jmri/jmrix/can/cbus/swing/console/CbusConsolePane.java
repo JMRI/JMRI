@@ -136,7 +136,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     
     @Override
     public void dispose() {
-        if (tc!=null) tc.removeCanListener(this);
+        if (tc!=null) { tc.removeCanListener(this); }
         super.dispose();
     }
     
@@ -710,14 +710,12 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             String logLine = sbCbus.toString();
             if (!newline.equals("\n")) {
                 // have to massage the line-ends
-                int j = 0;
+                int j;
                 int lim = sbCbus.length();
                 StringBuffer out = new StringBuffer(sbCbus.length()+10);  // arbitrary guess at space
                 for ( j = 0; j<lim; j++) {
-                    if (sbCbus.charAt(j) == '\n')
-                        out.append(newline);
-                    else
-                        out.append(sbCbus.charAt(j));
+                    if (sbCbus.charAt(j) == '\n') { out.append(newline); }
+                    else { out.append(sbCbus.charAt(j)); }
                 }
                 logLine = new String(out);
             }
@@ -768,7 +766,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             stopLogButtonActionPerformed(e);  // stop before changing file
             //File file = logFileChooser.getSelectedFile();
             // if we were currently logging, start the new file
-            if (loggingNow) startLogButtonActionPerformed(e);
+            if (loggingNow) { startLogButtonActionPerformed(e); }
         }
     }
     
@@ -828,17 +826,17 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         int data, data2;
         CanMessage m = new CanMessage(tc.getCanid());
         data = parseBinDecHexByte(dynPriField.getText(), 2, _decimal, "CBUS Console", "Invalid Dynamic Priority Value");
-        if (data == -1) return;
+        if (data == -1) { return; }
         data2 = parseBinDecHexByte(minPriField.getText(), 3, _decimal, "CBUS Console", "Invalid Minor Priority Value");
-        if (data2 == -1) return;
+        if (data2 == -1) { return; }
         m.setHeader(data*4 + data2);
         for (j=0; j<8; j++) {
             if (!dataFields[j].getText().equals("")) {
                 data = parseBinDecHexByte(dataFields[j].getText(), 255, _decimal, "CBUS Console",
                         "Invalid Data Value in d"+j);
-                if (data == -1) return;
+                if (data == -1) { return; }
                 m.setElement(j, data);
-                if (j==0) data2 = data;     // save OPC(d0) for later
+                if (j==0) { data2 = data; }  // save OPC(d0) for later
             } else {
                 break;
             }
@@ -898,10 +896,10 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     public void sendEvButtonActionPerformed(java.awt.event.ActionEvent e) {
         int nn, ev;
         CanMessage m = new CanMessage(tc.getCanid());
-        nn = parseBinDecHexByte(nnField.getText(), 65536, _decimal, "CBUS Console", "Invalid Node Number");
-        if (nn == -1) return;
-        ev = parseBinDecHexByte(evField.getText(), 65536, _decimal, "CBUS Console", "Invalid Event");
-        if (ev == -1) return;
+        nn = parseBinDecHexByte(nnField.getText(), 65535, _decimal, "CBUS Console", "Invalid Node Number");
+        if (nn == -1) { return; }
+        ev = parseBinDecHexByte(evField.getText(), 65535, _decimal, "CBUS Console", "Invalid Event");
+        if (ev == -1) { return; }
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY*4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         if (onButton.isSelected()) {
             if (nn > 0) {
@@ -940,7 +938,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     // to get a time string
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
     
-    StringBuffer[] linesBuffer = new StringBuffer[2];
+    final StringBuffer[] linesBuffer = new StringBuffer[2];
     static private int CAN = 0;
     static private int CBUS = 1;
     static private int MAX_LINES = 500 ;
@@ -995,16 +993,12 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      * Parse a string for binary, decimal or hex byte value
      * <P>
      * 0b, 0d or 0x prefix will force parsing of binary, decimal or hex,
-     * respectively. Otherwies, if decimal is true:
-     *      Up to three digits will be parsed as decimal, e.g. 10 or 127
-     *      more than three digits will be parsed as binary, e.g. 0010 or 1011
-     * if decimal is clear:
-     *      up to two digits will be treated as hex, e.g. F or B1
-     *      more than two digits will be treated as binary, e.g. 001 or 110
+     * respectively. Entries with no prefix are parsed as decimal if decimal flag
+     *      is true, otherwise hex.
      *
      * @param s string to be parsed
      * @param limit upper bound of value to be parsed
-     * @param decimal flag for decimnal or hex default
+     * @param decimal flag for decimal or hex default
      * @param errTitle Title of error dialogue box if Number FormatException encountered
      * @param errMsg Message to be displayed if Number FormatException encountered
      * @return the byte value, -1 indicates failure
@@ -1027,19 +1021,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             s = s.substring(2);
             radix = 2;
         } else if (decimal) {
-            if (s.length() > 3) {
-                // Assumed to be binary
-                radix = 2;
-            } else {
-                radix = 10;
-            }
-        } else {
-            if (s.length() > 2) {
-                // Assumed to be binary
-                radix = 2;
-            } else {
-                radix = 16;
-            }
+            radix = 10;
         }
         
         try {
@@ -1047,12 +1029,12 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         } catch (NumberFormatException ex) {
             error = true;
         }
-        if ((data < 0) || (data > limit))
+        if ((data < 0) || (data > limit)) {
             error = true;
-        
+        }
         if (error) {
             JOptionPane.showMessageDialog(null, errMsg,
-                    errTitle, JOptionPane.ERROR_MESSAGE);
+                errTitle, JOptionPane.ERROR_MESSAGE);
             data = -1;
         }
         return data;
