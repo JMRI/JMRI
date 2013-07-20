@@ -246,14 +246,17 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	protected boolean save() {
 		if (change(_car)) {
 			// if car's load changes, we need to update track combo boxes if auto was selected
-			updateLocation();
-			updateReturnWhenEmpty();
-			updateDestination();
-			updateFinalDestination();
+			updateComboBoxesLoadChange();
 			OperationsXml.save();
 			return true;
 		}
 		return false;
+	}
+	
+	protected void updateComboBoxesLoadChange() {
+		updateLocation();
+		updateDestination();
+		updateFinalDestination();
 	}
 	
 	protected boolean askKernelChange = true;
@@ -560,7 +563,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("PropertyChange " + e.getPropertyName() + " " + e.getNewValue());
+		log.debug("PropertyChange (" + e.getPropertyName() + ") new (" + e.getNewValue()+")");
 		if (_disableComboBoxUpdate) {
 			log.debug("Combobox update is disabled");
 			return;

@@ -50,6 +50,7 @@ public class Car extends RollingStock {
 	public static final String FINAL_DESTINATION_CHANGED_PROPERTY = "Car final destination changed"; // NOI18N
 	public static final String FINAL_DESTINATION_TRACK_CHANGED_PROPERTY = "Car final destination track changed"; // NOI18N
 	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Car return when empty changed"; // NOI18N
+	public static final String SCHEDULE_ID_CHANGED_PROPERTY = "car schedule id changed"; // NOI18N
 
 	public Car() {
 
@@ -146,7 +147,7 @@ public class Car extends RollingStock {
 		String old = _scheduleId;
 		_scheduleId = id;
 		if (!old.equals(id))
-			firePropertyChange("car schedule id changed", old, id); // NOI18N
+			firePropertyChange(SCHEDULE_ID_CHANGED_PROPERTY, old, id);
 	}
 
 	public String getScheduleId() {

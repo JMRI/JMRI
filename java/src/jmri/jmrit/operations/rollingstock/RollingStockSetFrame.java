@@ -595,11 +595,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
 	// location combo box
 	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("Combobox action");
 		if (ae.getSource() == locationBox) {
+			log.debug("Combobox action location");
 			updateLocation();
 		}
 		if (ae.getSource() == destinationBox || ae.getSource() == trainBox) {
+			log.debug("Combobox action destination or train");
 			updateDestination();
 		}
 	}
@@ -716,12 +717,13 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		log.debug("PropertyChange " + e.getPropertyName() + " " + e.getNewValue());
+		log.debug("PropertyChange (" + e.getPropertyName() + ") new (" + e.getNewValue() +")");
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
 				|| e.getSource().getClass().equals(Car.class)
 				|| e.getSource().getClass().equals(Engine.class)) {
-			updateComboBoxes();
+			if (!e.getPropertyName().equals(Car.SCHEDULE_ID_CHANGED_PROPERTY))
+				updateComboBoxes();
 		}
 	}
 
