@@ -194,6 +194,8 @@
       <xs:attribute name="y" type="xs:float" use="required" />
       <xs:attribute name="connect1name" type="xs:string" />
       <xs:attribute name="connect2name" type="xs:string" />
+      <xs:attribute name="linkedpanel" type="xs:string" />
+      <xs:attribute name="linkpointid" type="xs:string" />
       <xs:attribute name="eastboundsignal" type="xs:string" />
       <xs:attribute name="westboundsignal" type="xs:string" />
       <xs:attribute name="eastboundsignalmast" type="xs:string" />
