@@ -66,9 +66,30 @@ public class LayoutEditorAuxTools
 			if ( (lc.getBlock1() == blk) || (lc.getBlock2() == blk) ) {
 				retList.add(lc);
 			}
+            /*if(lc.getAnchor()!=null && lc.getAnchor().getType()==PositionablePoint.EDGE_CONNECTOR){
+                if(lc.getAnchor().getLinkedEditor()!=null){
+                    retList.addAll(new LayoutEditorAuxTools(lc.getAnchor().getLinkedEditor()).getConnectivityListSole(blk));
+                }
+            }*/
 		}
 		return (retList);
 	}
+    
+    /*protected ArrayList<LayoutConnectivity> getConnectivityListSole(LayoutBlock blk){
+        if (!initialized) initializeBlockConnectivity();
+		if (blockConnectivityChanged) {
+			updateBlockConnectivity();
+		}
+		ArrayList<LayoutConnectivity> retList = new ArrayList<LayoutConnectivity>();
+		for (int i = 0;i<cList.size();i++) {
+			LayoutConnectivity lc = cList.get(i);
+			if ( (lc.getBlock1() == blk) || (lc.getBlock2() == blk) ) {
+				retList.add(lc);
+			}
+		}
+		return (retList);
+    
+    }*/
 	
 	/**
 	 * Initializes the block connectivity (block boundaries) for a Layout Editor panel.
@@ -108,7 +129,7 @@ public class LayoutEditorAuxTools
 			TrackSegment ts2 = null;
 			for (int i = 0; i<layoutEditor.pointList.size(); i++) {
 				p = layoutEditor.pointList.get(i);
-				if (p.getType() == PositionablePoint.ANCHOR) {
+				if (p.getType() == PositionablePoint.ANCHOR){
 					// within PositionablePoints, only ANCHOR points can be block boundaries
 					ts1 = p.getConnect1();
 					ts2 = p.getConnect2();
@@ -126,6 +147,32 @@ public class LayoutEditorAuxTools
 																ts2.getConnect2(),ts2.getType2());
 							else p2 = layoutEditor.getCoords(ts2.getConnect1(),ts2.getType1());
 							c.setDirection(computeDirection(p1,p2));
+							// save Connections
+							c.setConnections(ts1,ts2,LayoutEditor.TRACK,p);
+							// add to list
+							cList.add(c);
+						}
+					}
+				}
+                if (p.getType() == PositionablePoint.EDGE_CONNECTOR){
+
+                    //Need to find a way to compute the direction for this for a split over the panel
+					ts1 = p.getConnect1();
+					ts2 = p.getConnect2();
+					if ( (ts1!=null) && (ts2!=null) ) {
+						blk1 = ts1.getLayoutBlock();
+						blk2 = ts2.getLayoutBlock();
+						if ( (blk1!=null) && (blk2!=null) && (blk1!=blk2) ) {
+							// this is a block boundary, create a LayoutConnectivity
+							c = new LayoutConnectivity(blk1,blk2);
+                            
+							// determine direction from block 1 to block 2
+							if (ts1.getConnect1()==p) p1 = layoutEditor.getCoords(
+																ts1.getConnect2(),ts1.getType2());
+							else p1 = layoutEditor.getCoords(ts1.getConnect1(),ts1.getType1());
+                            //In this instance work out the direction of the first track relative to the positionable poin.
+
+							c.setDirection(computeDirection(p1,p.getCoords()));
 							// save Connections
 							c.setConnections(ts1,ts2,LayoutEditor.TRACK,p);
 							// add to list
@@ -367,6 +414,32 @@ public class LayoutEditorAuxTools
 																ts2.getConnect2(),ts2.getType2());
 							else p2 = layoutEditor.getCoords(ts2.getConnect1(),ts2.getType1());
 							c.setDirection(computeDirection(p1,p2));
+							// save Connections
+							c.setConnections(ts1,ts2,LayoutEditor.TRACK,p);
+							// add to list, if not already present
+							checkConnectivity(c,found);
+						}
+					}
+				}
+                else if (p.getType() == PositionablePoint.EDGE_CONNECTOR){
+
+                    //Need to find a way to compute the direction for this for a split over the panel
+					ts1 = p.getConnect1();
+					ts2 = p.getConnect2();
+					if ( (ts1!=null) && (ts2!=null) ) {
+						blk1 = ts1.getLayoutBlock();
+						blk2 = ts2.getLayoutBlock();
+						if ( (blk1!=null) && (blk2!=null) && (blk1!=blk2) ) {
+							// this is a block boundary, create a LayoutConnectivity
+							c = new LayoutConnectivity(blk1,blk2);
+                            
+							// determine direction from block 1 to block 2
+							if (ts1.getConnect1()==p) p1 = layoutEditor.getCoords(
+																ts1.getConnect2(),ts1.getType2());
+							else p1 = layoutEditor.getCoords(ts1.getConnect1(),ts1.getType1());
+                            //In this instance work out the direction of the first track relative to the positionable poin.
+
+							c.setDirection(computeDirection(p1,p.getCoords()));
 							// save Connections
 							c.setConnections(ts1,ts2,LayoutEditor.TRACK,p);
 							// add to list, if not already present
@@ -650,6 +723,7 @@ public class LayoutEditorAuxTools
 		}
 		return dir;
 	}
+    
 	
 	/** 
 	 * Searches for and adds BeanSetting's to a Path as needed.

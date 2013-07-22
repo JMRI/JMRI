@@ -501,25 +501,32 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
 						c = panel.auxTools.getConnectivityList(_instance);
 					}
 				}
-				// check that this connectivity is compatible with that of other panels.
-				for (int j = 0;j < panels.size();j++) {
-					LayoutEditor tPanel = panels.get(j);
-					if ( (tPanel!=panel) && InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
-								warn() && ( !compareConnectivity(c,
-										tPanel.auxTools.getConnectivityList(_instance)) )  ) {
-						// send user an error message
-						int response = JOptionPane.showOptionDialog(null,
-								java.text.MessageFormat.format(rb.getString("Warn1"),
-								new Object[]{blockName,tPanel.getLayoutName(),
-								panel.getLayoutName()}),rb.getString("WarningTitle"),
-								JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,
-								null,new Object[] {rb.getString("ButtonOK"),
-								rb.getString("ButtonOKPlus")},rb.getString("ButtonOK"));
-						if (response!=0)
-							// user elected to disable messages
-							InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).turnOffWarning();						
-					}
-				}
+                //Now try to determine if this block is across two panels due to a linked point
+                PositionablePoint point = panel.findPositionableLinkPoint(this);
+                if(point!=null && point.getLinkedEditor()!=null && panels.contains(point.getLinkedEditor())){
+                    c = panel.auxTools.getConnectivityList(_instance);
+                    c.addAll( point.getLinkedEditor().auxTools.getConnectivityList(_instance));
+                } else {
+                    // check that this connectivity is compatible with that of other panels.
+                    for (int j = 0;j < panels.size();j++) {
+                        LayoutEditor tPanel = panels.get(j);
+                        if ( (tPanel!=panel) && InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).
+                                    warn() && ( !compareConnectivity(c,
+                                            tPanel.auxTools.getConnectivityList(_instance)) )  ) {
+                            // send user an error message
+                            int response = JOptionPane.showOptionDialog(null,
+                                    java.text.MessageFormat.format(rb.getString("Warn1"),
+                                    new Object[]{blockName,tPanel.getLayoutName(),
+                                    panel.getLayoutName()}),rb.getString("WarningTitle"),
+                                    JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,
+                                    null,new Object[] {rb.getString("ButtonOK"),
+                                    rb.getString("ButtonOKPlus")},rb.getString("ButtonOK"));
+                            if (response!=0)
+                                // user elected to disable messages
+                                InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).turnOffWarning();						
+                        }
+                    }
+                }
 			}
 			// update block Paths to reflect connectivity as needed
 			updateBlockPaths(c,panel);
@@ -593,7 +600,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                 if(InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).isAdvancedRoutingEnabled())
                     removeAdjacency(paths.get(i));
 			}
-		}	
+		}
 		// add Paths as required
 		for (int j = 0;j<c.size();j++) {
 			if (!used[j]) {

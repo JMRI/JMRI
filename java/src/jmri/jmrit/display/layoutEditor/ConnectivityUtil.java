@@ -463,7 +463,7 @@ public class ConnectivityUtil
 					// end of line
 					tr = null;
 				}
-				else if (((PositionablePoint)cObject).getType() == PositionablePoint.ANCHOR) {
+				else if (((PositionablePoint)cObject).getType() == PositionablePoint.ANCHOR || (((PositionablePoint)cObject).getType() == PositionablePoint.EDGE_CONNECTOR)) {
 					// proceed to next track segment if within the same Block
 					if (((PositionablePoint)cObject).getConnect1() == tr) {
 						tr = ((PositionablePoint)cObject).getConnect2();
@@ -2354,7 +2354,7 @@ public class ConnectivityUtil
 						// end of line without reaching 'nlb'
 						curTS = null;					
 					}
-					else if (((PositionablePoint)conObj).getType() == PositionablePoint.ANCHOR) {
+					else if (((PositionablePoint)conObj).getType() == PositionablePoint.ANCHOR || ((PositionablePoint)conObj).getType() == PositionablePoint.EDGE_CONNECTOR ) {
 						// proceed to next track segment if within the same Block
 						if (((PositionablePoint)conObj).getConnect1() == curTS) {
 							curTS = (((PositionablePoint)conObj).getConnect2());

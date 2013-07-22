@@ -300,7 +300,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			i ++;
 		}
 		if (lc==null) {
-			log.error("Block "+facingBlock.getSystemName()+" is not connected to Block "+protectedBlock.getSystemName());
+			log.error("Block "+facingBlock.getDisplayName()+" is not connected to Block "+protectedBlock.getDisplayName());
 			return null;
 		}
 		// blocks are connected, get connection item types
@@ -1335,7 +1335,13 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
 			i ++;
 		}
         if (lc==null) {
-			log.error("Block "+facingBlock.getSystemName()+" is not connected to Block "+protectedBlock.getSystemName());
+            PositionablePoint p = panel.findPositionableLinkPoint(fLayoutBlock);
+            if(p==null)
+                p = panel.findPositionableLinkPoint(pLayoutBlock);
+            if(p!=null && p.getLinkedEditor()!=null){
+                return getFacingBean(facingBlock, protectedBlock, p.getLinkedEditor(), T);
+            }
+			log.error("Block "+facingBlock.getDisplayName()+" is not connected to Block "+protectedBlock.getDisplayName() + " on panel " + panel.getLayoutName());
 			return null;
 		}
 		LayoutTurnout lt = null;
