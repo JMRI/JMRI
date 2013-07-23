@@ -66,30 +66,9 @@ public class LayoutEditorAuxTools
 			if ( (lc.getBlock1() == blk) || (lc.getBlock2() == blk) ) {
 				retList.add(lc);
 			}
-            /*if(lc.getAnchor()!=null && lc.getAnchor().getType()==PositionablePoint.EDGE_CONNECTOR){
-                if(lc.getAnchor().getLinkedEditor()!=null){
-                    retList.addAll(new LayoutEditorAuxTools(lc.getAnchor().getLinkedEditor()).getConnectivityListSole(blk));
-                }
-            }*/
 		}
 		return (retList);
 	}
-    
-    /*protected ArrayList<LayoutConnectivity> getConnectivityListSole(LayoutBlock blk){
-        if (!initialized) initializeBlockConnectivity();
-		if (blockConnectivityChanged) {
-			updateBlockConnectivity();
-		}
-		ArrayList<LayoutConnectivity> retList = new ArrayList<LayoutConnectivity>();
-		for (int i = 0;i<cList.size();i++) {
-			LayoutConnectivity lc = cList.get(i);
-			if ( (lc.getBlock1() == blk) || (lc.getBlock2() == blk) ) {
-				retList.add(lc);
-			}
-		}
-		return (retList);
-    
-    }*/
 	
 	/**
 	 * Initializes the block connectivity (block boundaries) for a Layout Editor panel.

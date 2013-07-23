@@ -5867,12 +5867,41 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         l.updateSize();
         l.setDisplayLevel(SIGNALS);
     }
-
+    
     SignalHead getSignalHead(String name) {
         SignalHead sh = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
         if (sh == null) sh = InstanceManager.signalHeadManagerInstance().getByUserName(name);
         if (sh == null) log.warn("did not find a SignalHead named "+name);
         return sh;
+    }
+    
+    public boolean containsSignalHead(SignalHead head){
+        for(SignalHeadIcon h:signalList){
+            if(h.getSignalHead()==head)
+                return true;
+        }
+        return false;
+    }
+    
+    public void removeSignalHead(SignalHead head){
+		SignalHeadIcon h = null;
+		int index = -1;
+		for (int i=0;(i<signalList.size())&&(index==-1);i++) {
+			h = signalList.get(i);
+			if (h.getSignalHead() == head) {
+				index = i;
+                break;
+			}
+		}
+		if (index!=(-1)) {
+			signalList.remove(index);
+            if(h!=null){
+                h.remove();
+                h.dispose();
+            }
+            setDirty(true);
+            repaint();
+		}
     }
     
     void addSignalMast() {

@@ -128,7 +128,6 @@ public class PositionablePoint
     public void setLinkedPoint(PositionablePoint p){
         if(p==linkedPoint) return;
         if(linkedPoint!=null && linkedPoint!=p){
-            log.info("in here");
             PositionablePoint oldLinkedPoint = linkedPoint;
             linkedPoint=null;
             if(oldLinkedPoint.getLinkedPoint()!=null){
@@ -147,6 +146,14 @@ public class PositionablePoint
             }
         }
         linkedPoint = p;
+        if(p!=null){
+            p.setLinkedPoint(this);
+            if(getConnect1()!=null){
+                layoutEditor.auxTools.setBlockConnectivityChanged();
+                getConnect1().updateBlockInfo();
+                layoutEditor.repaint();
+            }
+        }
     }
     
     public LayoutEditor getLinkedEditor(){
@@ -159,10 +166,55 @@ public class PositionablePoint
         return layoutEditor;
     }
     
-	public String getEastBoundSignal() {return eastBoundSignalName;}
-	public void setEastBoundSignal(String signalName) {eastBoundSignalName = signalName;}
-	public String getWestBoundSignal() {return westBoundSignalName;}
-	public void setWestBoundSignal(String signalName) {westBoundSignalName = signalName;}
+	public String getEastBoundSignal() {
+        if(getType()==EDGE_CONNECTOR){
+            if(getConnect1Dir()==Path.EAST || getConnect1Dir()==Path.SOUTH)
+                return eastBoundSignalName;
+            else if(getLinkedPoint()!=null){
+                return getLinkedPoint().getEastBoundSignal();
+            }
+            return "";
+        }
+        return eastBoundSignalName;
+    }
+	public void setEastBoundSignal(String signalName) {
+        if(getType()==EDGE_CONNECTOR){
+            if(getConnect1Dir()==Path.EAST || getConnect1Dir()==Path.SOUTH)
+                eastBoundSignalName = signalName;
+            else if(getLinkedPoint()!=null){
+                getLinkedPoint().setEastBoundSignal(signalName);
+            } else {
+                eastBoundSignalName = signalName;
+            }
+        } else {
+            eastBoundSignalName = signalName;
+        }
+    }
+	public String getWestBoundSignal() {
+        if(getType()==EDGE_CONNECTOR){
+            if(getConnect1Dir()==Path.WEST || getConnect1Dir()==Path.NORTH)
+                return westBoundSignalName;
+            else if(getLinkedPoint()!=null){
+                return getLinkedPoint().getWestBoundSignal();
+            }
+            return "";
+        }
+        return westBoundSignalName;
+    }
+    
+	public void setWestBoundSignal(String signalName) {
+        if(getType()==EDGE_CONNECTOR){
+            if(getConnect1Dir()==Path.WEST || getConnect1Dir()==Path.NORTH)
+                westBoundSignalName = signalName;
+            else if(getLinkedPoint()!=null){
+                getLinkedPoint().setWestBoundSignal(signalName);
+            } else {
+                westBoundSignalName = signalName;
+            }
+        } else {
+            westBoundSignalName = signalName;
+        }
+    }
     
     public String getEastBoundSensorName() {
         if(eastBoundSensorNamed!=null)
@@ -482,6 +534,14 @@ public class PositionablePoint
                         setLink();
                     }
                 });
+                popup.add(new AbstractAction(rb.getString("SetSignals")) {
+                    public void actionPerformed(ActionEvent e) {
+                        tools = new LayoutEditorTools(layoutEditor);
+                        // bring up signals at level crossing tool dialog
+                        tools.setSignalAtEdgeConnector(instance,
+                            layoutEditor.signalIconEditor,layoutEditor.signalFrame);
+                    }
+                });
             } else {
                 popup.add(new AbstractAction(rb.getString("SetSignals")) {
                         public void actionPerformed(ActionEvent e) {
@@ -555,10 +615,11 @@ public class PositionablePoint
     
     void removeLinkedPoint(){
         if(type==EDGE_CONNECTOR && getLinkedPoint()!=null){
-            getLinkedPoint().setLinkedPoint(null);
-            getLinkedEditor().repaint();
+
             if(getConnect2()!=null && getLinkedEditor()!=null){
                 //as we have removed the point, need to force the update on the remote end.
+                getLinkedPoint().setLinkedPoint(null);
+                getLinkedEditor().repaint();
                 TrackSegment ts = getConnect2();
                 getLinkedEditor().auxTools.setBlockConnectivityChanged();
                 ts.updateBlockInfo();
@@ -586,6 +647,9 @@ public class PositionablePoint
     
     protected int getConnect1Dir(){
         Point2D p1;
+        if(getConnect1()==null){
+            return Path.NONE;
+        }
         if (getConnect1().getConnect1()==this) p1 = layoutEditor.getCoords(getConnect1().getConnect2(),getConnect1().getType2());
         else p1 = layoutEditor.getCoords(getConnect1().getConnect1(),getConnect1().getType1());
         
@@ -613,7 +677,6 @@ public class PositionablePoint
 			else dir = Path.NORTH + Path.EAST;
 		}
 		return dir;
-    
     }
     
     JComboBox linkPointsBox;
@@ -711,6 +774,29 @@ public class PositionablePoint
     
     public void updateLink(){
         if(editorCombo.getSelectedIndex()==0 || linkPointsBox.getSelectedIndex()==-1){
+            if(getLinkedPoint()!=null && getConnect2()!=null){
+                String removeremote = null;
+                String removelocal = null;
+                if(getConnect1Dir()==Path.EAST || getConnect1Dir()==Path.SOUTH){
+                    removeremote = getLinkedPoint().getEastBoundSignal();
+                    removelocal = getWestBoundSignal();
+                    getLinkedPoint().setEastBoundSignal("");
+                } else {
+                    removeremote = getLinkedPoint().getWestBoundSignal();
+                    removelocal = getEastBoundSignal();
+                    getLinkedPoint().setWestBoundSignal("");
+                }
+                if(removeremote!=null && !removeremote.equals("")){
+                    jmri.SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(removeremote);
+                    getLinkedEditor().removeSignalHead(sh);
+                    jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removeremote);
+                }
+                if(removelocal!=null && !removelocal.equals("")){
+                    jmri.SignalHead sh = InstanceManager.signalHeadManagerInstance().getSignalHead(removelocal);
+                    layoutEditor.removeSignalHead(sh);
+                    jmri.jmrit.blockboss.BlockBossLogic.getStoppedObject(removelocal);
+                }
+            }
             setLinkedPoint(null);
         } else {
             setLinkedPoint(pointList.get(linkPointsBox.getSelectedIndex()));
