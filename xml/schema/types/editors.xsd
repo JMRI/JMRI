@@ -118,7 +118,10 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence>
-        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
       </xs:sequence>
 
@@ -215,7 +218,10 @@
         </xs:appinfo>
       </xs:annotation>
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
         <xs:element name="icon" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="active" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="inactive" type="EditorIconType" minOccurs="0" maxOccurs="unbounded" />
@@ -463,7 +469,10 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
         <xs:element name="memorystate" minOccurs="0" maxOccurs="unbounded">
           <xs:complexType>
             <xs:attribute name="value" type="xs:string" use="required" />
@@ -593,6 +602,9 @@
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
         <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
         <xs:element name="multisensoriconentry" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType>
             <xs:attribute name="sensor" type="beanNameType" use="required" />
@@ -646,7 +658,10 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
         <xs:element name="icons" minOccurs="0" maxOccurs="1" >
           <xs:complexType>
             <xs:all>
@@ -758,7 +773,10 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
       </xs:sequence>
 
       <xs:attributeGroup ref="EditorCommonAttributesGroup" />
@@ -786,7 +804,10 @@
       </xs:annotation>
 
       <xs:sequence minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="tooltip" type="xs:string" minOccurs="0" maxOccurs="1" />
+        <xs:element name="toolTip" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:annotation><xs:documentation>Deprecated since JMRI 3.5.2</xs:documentation></xs:annotation>
+        </xs:element>
         <xs:element name="icons" minOccurs="0" maxOccurs="unbounded" >
           <xs:complexType>
             <xs:sequence>
