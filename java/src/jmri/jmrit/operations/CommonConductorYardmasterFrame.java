@@ -232,6 +232,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		pMoves.removeAll();
 
 		// turn everything off and re-enable if needed
+		pWorkPanes.setVisible(false);
 		pickupPane.setVisible(false);
 		setoutPane.setVisible(false);
 		locoPane.setVisible(false);
@@ -357,6 +358,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 							&& car.getRouteLocation() == rl && car.getRouteDestination() == rld
 							&& car.getRouteDestination() != rl) {
 						// yes we have a pick up
+						pWorkPanes.setVisible(true);
 						pickupPane.setVisible(true);
 						if (!rollingStock.contains(car)) {
 							rollingStock.add(car);
@@ -398,6 +400,8 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 								&& car.getDestinationTrack() != null
 								&& (!Setup.isSortByTrackEnabled() || car.getDestinationTrack().getName().equals(track.getName())) 
 								&& car.getRouteDestination() == rl)) {
+					// we have set outs
+					pWorkPanes.setVisible(true);
 					setoutPane.setVisible(true);
 					if (!rollingStock.contains(car)) {
 						rollingStock.add(car);
