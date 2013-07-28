@@ -61,7 +61,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 	public static final String LOCATION_CHANGED_PROPERTY = "rolling stock location";  // NOI18N property change descriptions
 	public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location"; // NOI18N
 	public static final String DESTINATION_CHANGED_PROPERTY = "rolling stock destination"; // NOI18N
-	public static final String DESTINATIONTRACK_CHANGED_PROPERTY = "rolling stock track destination"; // NOI18N
+	public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "rolling stock track destination"; // NOI18N
 	public static final String TRAIN_CHANGED_PROPERTY = "rolling stock train"; // NOI18N
 	public static final String LENGTH_CHANGED_PROPERTY = "rolling stock length"; // NOI18N
 	public static final String TYPE_CHANGED_PROPERTY = "rolling stock type"; // NOI18N
@@ -524,7 +524,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 			}
 
 			firePropertyChange(DESTINATION_CHANGED_PROPERTY, oldDestination, destination);
-			firePropertyChange(DESTINATIONTRACK_CHANGED_PROPERTY, oldTrack, track);
+			firePropertyChange(DESTINATION_TRACK_CHANGED_PROPERTY, oldTrack, track);
 		}
 		return status;
 	}

@@ -2011,7 +2011,7 @@ public class TrainBuilder extends TrainCommon {
 
 		// Only track direction can cause the following message. Location direction has already been checked
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildRsCanNotPickupUsingTrain"),
-				new Object[] { rs.toString(), rl.getTrainDirectionString(), rs.getTrack().getName() }));
+				new Object[] { rs.toString(), rl.getTrainDirectionString(), rs.getTrackName() }));
 		addLine(buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildRsCanNotPickupUsingTrain2"),
 				new Object[] { rs.getLocation().getName() }));
 		return false;
@@ -2930,7 +2930,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 		if (car != bestCar)
 			addLine(buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackModeCarPriority"),
-					new Object[] { car.getTrack().getLocType(), car.getTrack().getName(),
+					new Object[] { car.getTrack().getLocType(), car.getTrackName(),
 							car.getTrack().getServiceOrder(), bestCar.toString(), car.toString() }));
 		return bestCar;
 	}
@@ -3160,7 +3160,7 @@ public class TrainBuilder extends TrainCommon {
 		if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
 			addLine(buildReport, SEVEN, MessageFormat
 					.format(Bundle.getMessage("buildBypassCarServiceOrder"), new Object[] { car.toString(),
-							car.getTrack().getName(), car.getTrack().getServiceOrder() }));
+							car.getTrackName(), car.getTrack().getServiceOrder() }));
 			// move car id in front of current pointer so car is no longer used on this pass
 			carList.remove(car.getId());
 			carList.add(carIndex, car.getId());
@@ -3544,7 +3544,7 @@ public class TrainBuilder extends TrainCommon {
 		if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
 			addLine(buildReport, SEVEN, MessageFormat
 					.format(Bundle.getMessage("buildBypassCarServiceOrder"), new Object[] { car.toString(),
-							car.getTrack().getName(), car.getTrack().getServiceOrder() }));
+							car.getTrackName(), car.getTrack().getServiceOrder() }));
 			// move car id in front of current pointer so car is no longer used on this pass
 			carList.remove(car.getId());
 			carList.add(carIndex, car.getId());

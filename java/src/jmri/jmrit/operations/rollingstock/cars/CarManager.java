@@ -36,7 +36,7 @@ public class CarManager extends RollingStockManager{
 	
 	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>(); // stores Kernels by number
 
-	public static final String KERNELLISTLENGTH_CHANGED_PROPERTY = "KernelListLength"; // NOI18N
+	public static final String KERNEL_LISTLENGTH_CHANGED_PROPERTY = "KernelListLength"; // NOI18N
 
     public CarManager() {
     }
@@ -112,7 +112,7 @@ public class CarManager extends RollingStockManager{
     		kernel = new Kernel(name);
     		Integer oldSize = Integer.valueOf(_kernelHashTable.size());
     		_kernelHashTable.put(name, kernel);
-    		firePropertyChange(KERNELLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
+    		firePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
     	}
     	return kernel;
     }
@@ -127,7 +127,7 @@ public class CarManager extends RollingStockManager{
     		kernel.dispose();
     		Integer oldSize = Integer.valueOf(_kernelHashTable.size());
     		_kernelHashTable.remove(name);
-    		firePropertyChange(KERNELLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
+    		firePropertyChange(KERNEL_LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
     	}
     }
     

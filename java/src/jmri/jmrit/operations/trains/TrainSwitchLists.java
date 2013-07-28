@@ -272,7 +272,7 @@ public class TrainSwitchLists extends TrainCommon {
 //				for (int k = 0; k < carList.size(); k++) {
 //					Car car = carManager.getById(carList.get(k));
 //					if (Setup.isSortByTrackEnabled()
-//							&& !splitString(track.getName()).equals(splitString(car.getTrack().getName())))
+//							&& !splitString(track.getName()).equals(splitString(car.getTrackName())))
 //						continue;
 //					// note that a car in train doesn't have a track assignment
 //					if (car.getRouteLocation() == rl && car.getTrack() != null
@@ -345,7 +345,7 @@ public class TrainSwitchLists extends TrainCommon {
 //					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 //							&& car.getRouteDestination() == rld) {
 //						if (Setup.isSortByTrackEnabled()
-//								&& !splitString(track.getName()).equals(splitString(car.getTrack().getName())))
+//								&& !splitString(track.getName()).equals(splitString(car.getTrackName())))
 //							continue;
 //						pickupCars = true;
 //						String s;

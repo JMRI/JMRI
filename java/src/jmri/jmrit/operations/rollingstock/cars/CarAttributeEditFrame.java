@@ -484,7 +484,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements
 			CarLengths.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY))
 			CarOwners.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY))
 			manager.updateKernelComboBox(comboBox);
 		if (e.getPropertyName().equals(CarManager.LISTLENGTH_CHANGED_PROPERTY))
 			updateCarQuanity();

@@ -51,6 +51,7 @@ public class Car extends RollingStock {
 	public static final String FINAL_DESTINATION_TRACK_CHANGED_PROPERTY = "Car final destination track changed"; // NOI18N
 	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Car return when empty changed"; // NOI18N
 	public static final String SCHEDULE_ID_CHANGED_PROPERTY = "car schedule id changed"; // NOI18N
+	public static final String KERNEL_NAME_CHANGED_PROPERTY = "kernel name changed"; // NOI18N
 
 	public Car() {
 
@@ -406,7 +407,7 @@ public class Car extends RollingStock {
 			newName = _kernel.getName();
 		}
 		if (!old.equals(newName))
-			firePropertyChange("kernel name changed", old, newName); // NOI18N
+			firePropertyChange(KERNEL_NAME_CHANGED_PROPERTY, old, newName); // NOI18N
 	}
 
 	public Kernel getKernel() {

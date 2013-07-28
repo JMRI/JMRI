@@ -532,9 +532,9 @@
    <A NAME="MakeDepartureTrackAvailable"></A>
    <H4>Make departure track available after train is built</H4>
 
-   When selected, the departure track in staging becomes available for other trains immediately after
-   the departure train is built. For trains that return to same staging location, this option allows
-   the train to return to the same track it departed on. This option is only available when using
+   This option when selected makes the departure track in staging available for other trains immediately after
+   the departing train is built. For trains that return to the same staging location, this option allows
+   the train to use the same track it departed on. This option is only available when using
    the <A HREF="#BuildOptions">aggressive</A> mode for building trains. 
    
    <A NAME="AllowCarsToReturnToStaging"></A>

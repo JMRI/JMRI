@@ -285,7 +285,7 @@ public class TrainManifest extends TrainCommon {
 //				for (int k = 0; k < carList.size(); k++) {
 //					Car car = carManager.getById(carList.get(k));
 //					if (Setup.isSortByTrackEnabled()
-//							&& !splitString(track.getName()).equals(splitString(car.getTrack().getName())))
+//							&& !splitString(track.getName()).equals(splitString(car.getTrackName())))
 //						continue;
 //					if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
 //						if (car.isUtility())
@@ -367,7 +367,7 @@ public class TrainManifest extends TrainCommon {
 //				for (int k = 0; k < carList.size(); k++) {
 //					Car car = carManager.getById(carList.get(k));
 //					if (Setup.isSortByTrackEnabled()
-//							&& !splitString(track.getName()).equals(splitString(car.getTrack().getName())))
+//							&& !splitString(track.getName()).equals(splitString(car.getTrackName())))
 //						continue;
 //					if (car.getRouteLocation() == rl && car.getRouteDestination() == rld) {
 //						cars++; // car added to train

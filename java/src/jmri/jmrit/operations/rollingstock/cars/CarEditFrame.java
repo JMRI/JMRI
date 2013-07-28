@@ -25,6 +25,7 @@ import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -878,7 +879,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			if (_car != null)
 				lengthComboBox.setSelectedItem(_car.getLength());
 		}
-		if (e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(CarManager.KERNEL_LISTLENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Car.KERNEL_NAME_CHANGED_PROPERTY)) {
 			carManager.updateKernelComboBox(kernelComboBox);
 			if (_car != null)
 				kernelComboBox.setSelectedItem(_car.getKernelName());
@@ -888,7 +890,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			if (_car != null)
 				ownerComboBox.setSelectedItem(_car.getOwner());
 		}
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(RollingStock.TRACK_CHANGED_PROPERTY)) {
 			LocationManager.instance().updateComboBox(locationBox);
 			updateTrackLocationBox();
 			if (_car != null)

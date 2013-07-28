@@ -138,8 +138,6 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 			else if (car.getKernel() != null && !ignoreKernelCheckBox.isSelected())
 				askKernelChange = false;
 		}
-		// if car's load changes, we need to update track combo boxes if auto was selected
-		updateComboBoxesLoadChange();
 		return true;
 	}
 

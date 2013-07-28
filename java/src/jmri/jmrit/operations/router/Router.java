@@ -544,7 +544,7 @@ public class Router extends TrainCommon {
 					if (!_status.equals(Track.OKAY)) {
 						addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
 								.getMessage("RouterCanNotDeliverCar"), new Object[] { car.toString(),
-							testCar.getLocation().getName(), testCar.getTrack().getName(), _status }));
+							testCar.getLocation().getName(), testCar.getTrackName(), _status }));
 					}
 					return true; // done 3 train routing
 				}

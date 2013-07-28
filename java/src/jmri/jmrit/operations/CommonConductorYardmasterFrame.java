@@ -354,7 +354,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 					Car car = carManager.getById(carList.get(k));
 					// determine if car is a pick up from the right track
 					if (car.getTrack() != null
-							&& (!Setup.isSortByTrackEnabled() || car.getTrack().getName().equals(track.getName()))
+							&& (!Setup.isSortByTrackEnabled() || car.getTrackName().equals(track.getName()))
 							&& car.getRouteLocation() == rl && car.getRouteDestination() == rld
 							&& car.getRouteDestination() != rl) {
 						// yes we have a pick up

@@ -24,8 +24,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -262,7 +260,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		textType.setText(_rs.getTypeName());
 		locationUnknownCheckBox.setSelected(_rs.isLocationUnknown());
 		outOfServiceCheckBox.setSelected(_rs.isOutOfService());
-		updateComboBoxes();
+		updateComboBoxes();		// load the location, destination, and final destination combo boxes
+		updateTrainComboBox();	// load the train combo box
 		enableComponents(!locationUnknownCheckBox.isSelected());
 		// has the program generated a pick up and set out for this rolling stock?
 		if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null) {
@@ -551,18 +550,11 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		locationManager.updateComboBox(locationBox);
 		locationManager.updateComboBox(destinationBox);
 		locationManager.updateComboBox(finalDestinationBox);
-		trainManager.updateComboBox(trainBox);
-		if (_rs != null) {
-			locationBox.setSelectedItem(_rs.getLocation());
-			destinationBox.setSelectedItem(_rs.getDestination());
-			trainBox.setSelectedItem(_rs.getTrain());
-		}
 
-		// update track combo boxes
-		updateLocation();
-		updateDestination();
+		updateLocationComboBoxes();
+		updateDestinationComboBoxes();
 	}
-
+	
 	protected boolean updateGroup(List<RollingStock> list) {
 		for (int i = 0; i < list.size(); i++) {
 			RollingStock rs = list.get(i);
@@ -593,18 +585,6 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		return true;
 	}
 
-	// location combo box
-	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		if (ae.getSource() == locationBox) {
-			log.debug("Combobox action location");
-			updateLocation();
-		}
-		if (ae.getSource() == destinationBox || ae.getSource() == trainBox) {
-			log.debug("Combobox action destination or train");
-			updateDestination();
-		}
-	}
-
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("checkbox action ");
 		if (ae.getSource() == locationUnknownCheckBox) {
@@ -612,9 +592,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			enableComponents(!locationUnknownCheckBox.isSelected());
 		}
 		if (ae.getSource() == autoTrackCheckBox)
-			updateLocation();
+			updateLocationTrackComboBox();
 		if (ae.getSource() == autoDestinationTrackCheckBox)
-			updateDestination();
+			updateDestinationTrackComboBox();
 		if (ae.getSource() == ignoreStatusCheckBox) {
 			locationUnknownCheckBox.setEnabled(!ignoreStatusCheckBox.isSelected());
 			outOfServiceCheckBox.setEnabled(!ignoreStatusCheckBox.isSelected());
@@ -663,44 +643,76 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		ignoreFinalDestinationCheckBox.setEnabled(Setup.isCarRoutingEnabled() & enabled);
 		ignoreTrainCheckBox.setEnabled(enabled);
 	}
-
-	protected void updateLocation() {
-		if (locationBox.getSelectedItem() != null) {
-			if (locationBox.getSelectedItem().equals("")) {
-				trackLocationBox.removeAllItems();
-			} else {
-				log.debug("RollingStockFrame sees location: " + locationBox.getSelectedItem());
-				Location l = (Location) locationBox.getSelectedItem();
-				l.updateComboBox(trackLocationBox, _rs, autoTrackCheckBox.isSelected(), false);
-				if (_rs != null && _rs.getLocation() != null && _rs.getLocation().equals(l)
-						&& _rs.getTrack() != null)
-					trackLocationBox.setSelectedItem(_rs.getTrack());
-			}
+	
+	// location combo box
+	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		if (ae.getSource() == locationBox) {
+			updateLocationTrackComboBox();
+		}
+		if (ae.getSource() == destinationBox || ae.getSource() == trainBox) {
+			updateDestinationTrackComboBox();
 		}
 	}
 
-	protected void updateDestination() {
-		if (destinationBox.getSelectedItem() != null) {
-			if (destinationBox.getSelectedItem().equals("")) {
-				trackDestinationBox.removeAllItems();
-			} else {
-				log.debug("RollingStockFrame sees destination: " + destinationBox.getSelectedItem());
-				Location loc = (Location) destinationBox.getSelectedItem();
-				loc.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
-				// check for staging, add track if train is built and terminates into staging
-				if (autoDestinationTrackCheckBox.isSelected() && trainBox.getSelectedItem() != null
-						&& !trainBox.getSelectedItem().equals("")) {
-					Train train = (Train) trainBox.getSelectedItem();
-					if (train.isBuilt() && train.getTerminationTrack() != null
-							&& train.getTerminationTrack().getLocation() == loc) {
-						trackDestinationBox.addItem(train.getTerminationTrack());
-					}
-				}
-				if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(loc)
-						&& _rs.getDestinationTrack() != null)
-					trackDestinationBox.setSelectedItem(_rs.getDestinationTrack());
-			}
+	
+	protected void updateLocationComboBoxes() {
+		log.debug("update location combo boxes");
+		if (_rs != null)
+			locationBox.setSelectedItem(_rs.getLocation());
+		// now update track combo boxes
+		updateLocationTrackComboBox();
+	}
+
+	protected void updateLocationTrackComboBox() {
+		log.debug("update location track combobox");
+		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+			trackLocationBox.removeAllItems();
+		} else {
+			log.debug("RollingStockFrame sees location: " + locationBox.getSelectedItem());
+			Location l = (Location) locationBox.getSelectedItem();
+			l.updateComboBox(trackLocationBox, _rs, autoTrackCheckBox.isSelected(), false);
+			if (_rs != null && _rs.getLocation() != null && _rs.getLocation().equals(l)
+					&& _rs.getTrack() != null)
+				trackLocationBox.setSelectedItem(_rs.getTrack());
 		}
+	}
+	
+	protected void updateDestinationComboBoxes() {
+		log.debug("update destination combo boxes");
+		if (_rs != null)
+			destinationBox.setSelectedItem(_rs.getDestination());
+		// now update track combo boxes
+		updateDestinationTrackComboBox();
+	}
+
+	protected void updateDestinationTrackComboBox() {
+		log.debug("update destination track combobox");
+		if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
+			trackDestinationBox.removeAllItems();
+		} else {
+			log.debug("RollingStockFrame sees destination: " + destinationBox.getSelectedItem());
+			Location loc = (Location) destinationBox.getSelectedItem();
+			loc.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
+			// check for staging, add track if train is built and terminates into staging
+			if (autoDestinationTrackCheckBox.isSelected() && trainBox.getSelectedItem() != null
+					&& !trainBox.getSelectedItem().equals("")) {
+				Train train = (Train) trainBox.getSelectedItem();
+				if (train.isBuilt() && train.getTerminationTrack() != null
+						&& train.getTerminationTrack().getLocation() == loc) {
+					trackDestinationBox.addItem(train.getTerminationTrack());
+				}
+			}
+			if (_rs != null && _rs.getDestination() != null && _rs.getDestination().equals(loc)
+					&& _rs.getDestinationTrack() != null)
+				trackDestinationBox.setSelectedItem(_rs.getDestinationTrack());
+		}
+	}
+	
+	protected void updateTrainComboBox() {
+		log.debug("update train combo box");
+		trainManager.updateComboBox(trainBox);
+		if (_rs != null)
+			trainBox.setSelectedItem(_rs.getTrain());
 	}
 
 	protected void packFrame() {
@@ -718,12 +730,17 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug("PropertyChange (" + e.getPropertyName() + ") new (" + e.getNewValue() +")");
-		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
-				|| e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)
-				|| e.getSource().getClass().equals(Car.class)
-				|| e.getSource().getClass().equals(Engine.class)) {
-			if (!e.getPropertyName().equals(Car.SCHEDULE_ID_CHANGED_PROPERTY))
-				updateComboBoxes();
+		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY))
+			updateComboBoxes();
+		if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY))
+			updateTrainComboBox();
+		if (e.getPropertyName().equals(RollingStock.TRACK_CHANGED_PROPERTY))
+			updateLocationComboBoxes();
+		if (e.getPropertyName().equals(RollingStock.DESTINATION_TRACK_CHANGED_PROPERTY))
+			updateDestinationComboBoxes();
+		if (e.getPropertyName().equals(RollingStock.TRAIN_CHANGED_PROPERTY)){
+			if (_rs != null)
+				trainBox.setSelectedItem(_rs.getTrain());
 		}
 	}
 
