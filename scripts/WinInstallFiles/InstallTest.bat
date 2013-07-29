@@ -40,6 +40,7 @@ if errorlevel 1 (
 		echo Now trying to re-run as a 32-bit process....
 		echo.
 		%windir%\SysWoW64\cmd.exe /c %THISFILE% %1 %2 %3 %4 %5 %6 %7 %8 %9
+                pause
 		exit
 	) else (
 		echo You must install JAVA first or fix your JAVA install.
