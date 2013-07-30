@@ -4,6 +4,8 @@ package jmri.jmrit.operations.trains;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -17,6 +19,7 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 import java.io.File;
@@ -120,10 +123,7 @@ public class TrainManifestOptionFrame extends OperationsFrame{
 		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainManifestOptions", true);// NOI18N
 
 		pack();
-		if (getWidth()<400 )
-			setSize(400, getHeight());
-		if (getHeight()<300 )
-			setSize(getWidth(), 300);
+		setMinimumSize(new Dimension(Control.mediumPanelWidth, Control.minPanelHeight));
 		setVisible(true);
 	}
 	

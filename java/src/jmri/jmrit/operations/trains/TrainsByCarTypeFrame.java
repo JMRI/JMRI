@@ -5,6 +5,7 @@ package jmri.jmrit.operations.trains;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -121,8 +122,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 
 		setPreferredSize(null);
 		pack();
-		if (getWidth()<300)
-			setSize(300, getHeight());
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.panelHeight));
 		setTitle(Bundle.getMessage("TitleModifyTrains"));
 		setVisible(true);
 	}

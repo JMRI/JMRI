@@ -13,6 +13,7 @@ import javax.swing.*;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -91,7 +92,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
 
 		setTitle(Bundle.getMessage("MenuItemScheduleOptions"));
 		pack();
-		setMinimumSize(new Dimension(300, 200));
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
 		setVisible(true);
 	}
 

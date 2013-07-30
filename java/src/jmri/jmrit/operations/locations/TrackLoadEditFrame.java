@@ -261,9 +261,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		loadAndTypeCheckBox.setSelected(loadAndType);
 		shipLoadAndTypeCheckBox.setSelected(shipLoadAndType);
 		
-		setMinimumSize(new Dimension(500, Control.panelHeight));
-		pack();
-		setVisible(true);
+		super.initComponents();
 	}
 
 	// Save, Delete, Add

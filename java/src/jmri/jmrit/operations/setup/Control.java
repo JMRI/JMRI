@@ -18,10 +18,16 @@ public class Control {
 	public static final boolean showInstance = false;
 	
 	// Default panel width
-	public static final int panelWidth = 1025;
+	public static final int widePanelWidth = 1025;
+	public static final int minPanelWidth = 500;
+	public static final int mediumPanelWidth = 400;
+	public static final int smallPanelWidth = 300;
 	
 	// Default panel height
 	public static final int panelHeight = 500;
+	public static final int minPanelHeight = 300;
+	public static final int smallPanelHeight = 200;
+	public static final int tinyPanelHeight = 100;
 	
 	/*
 	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();	

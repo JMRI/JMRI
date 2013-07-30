@@ -276,7 +276,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);	// NOI18N
 
 		pack();
-		setMinimumSize(new Dimension(750, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.minPanelWidth, Control.panelHeight));
 		setVisible(true);
 		
         // create ShutDownTasks

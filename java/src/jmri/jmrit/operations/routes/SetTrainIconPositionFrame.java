@@ -10,10 +10,12 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainIcon;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ComponentListener;
@@ -171,6 +173,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 		addSpinnerChangeListerner(spinTrainIconSouthY);
 		
     	pack();
+    	setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
      	if (getWidth()<350) 
     		setSize(350, getHeight());
      	// height has to be tall enough for four train directions

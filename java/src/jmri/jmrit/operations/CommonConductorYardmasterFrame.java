@@ -208,7 +208,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		addButtonAction(clearButton);
 		addButtonAction(setButton);
 
-		setMinimumSize(new Dimension(600, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.minPanelWidth, Control.panelHeight));
 	}
 
 	// Select, Clear, and Set Buttons

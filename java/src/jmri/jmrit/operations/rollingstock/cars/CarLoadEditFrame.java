@@ -163,7 +163,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarLoads", true);	// NOI18N
 
 		pack();
-		setMinimumSize(new Dimension(300, 375));
+		setMinimumSize(new Dimension(Control.smallPanelWidth, 375));
 		setVisible(true);
 	}
 

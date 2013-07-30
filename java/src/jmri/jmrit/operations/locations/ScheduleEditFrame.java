@@ -193,8 +193,8 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
 		// set frame size and schedule for display
 		super.initComponents();
-		if (getWidth() < Control.panelWidth)
-			setSize(Control.panelWidth, getHeight());
+		if (getWidth() < Control.widePanelWidth)
+			setSize(Control.widePanelWidth, getHeight());
 	}
 
 	// Save, Delete, Add

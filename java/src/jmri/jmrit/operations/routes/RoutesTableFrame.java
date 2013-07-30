@@ -69,7 +69,7 @@ public class RoutesTableFrame extends OperationsFrame {
 		controlPanel.add(sortById);
 		controlPanel.add(textSep);
 		controlPanel.add(addButton);
-		controlPanel.setMaximumSize(new Dimension(Control.panelWidth, 50));
+		controlPanel.setMaximumSize(new Dimension(Control.widePanelWidth, 50));
 
 		getContentPane().add(controlPanel);
 

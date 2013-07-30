@@ -333,7 +333,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateRoadOption();
 		updateLoadOption();
 		
-		setMinimumSize(new Dimension(750, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.minPanelWidth, Control.panelHeight));
 	}
 
 	// Save, Delete, Add

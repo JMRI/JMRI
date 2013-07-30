@@ -15,6 +15,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Control;
 
 
 /**
@@ -90,7 +91,7 @@ class ChangeTracksFrame extends OperationsFrame{
     	getContentPane().add(p1);
     	setTitle(Bundle.getMessage("MenuItemChangeTrackType"));
     	pack();
-    	setMinimumSize(new Dimension(400, 100));
+    	setMinimumSize(new Dimension(Control.smallPanelWidth, Control.tinyPanelHeight));
     	setVisible(true); 	
 	}
 	

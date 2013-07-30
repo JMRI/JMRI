@@ -13,6 +13,7 @@ import javax.swing.*;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 
@@ -79,7 +80,7 @@ class AlternateTrackFrame extends OperationsFrame{
     	
     	setTitle(Bundle.getMessage("AlternateTrack"));
     	pack();
-    	setMinimumSize(new Dimension(300, 100));
+    	setMinimumSize(new Dimension(Control.smallPanelWidth, Control.tinyPanelHeight));
     	setVisible(true); 	
 	}
 	

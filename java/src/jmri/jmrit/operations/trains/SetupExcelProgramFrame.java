@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -74,7 +75,7 @@ public class SetupExcelProgramFrame extends OperationsFrame {
 		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true); // NOI18N
 		setTitle(Bundle.getMessage("MenuItemSetupExcelProgram"));
 		
-		setMinimumSize(new Dimension(300, 200));
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
 		pack();
 		setVisible(true);
 	}

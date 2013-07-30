@@ -7,10 +7,12 @@ import org.slf4j.LoggerFactory;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainIcon;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ComponentListener;
 import java.beans.PropertyChangeEvent;
@@ -134,8 +136,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 		addSpinnerChangeListerner(spinTrainIconY);
 		
     	pack();
-     	if (getWidth()<300) 
-    		setSize(300, getHeight());
+    	setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
     	if (getHeight()<250)
     		setSize(getWidth(), 250);
        	setVisible(true);

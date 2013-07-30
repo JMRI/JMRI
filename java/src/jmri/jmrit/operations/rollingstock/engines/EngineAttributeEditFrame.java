@@ -102,7 +102,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true); // NOI18N
 
 		pack();
-		setMinimumSize(new Dimension(300, 180));
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.smallPanelHeight));
 		setVisible(true);
 	}
 
