@@ -237,6 +237,9 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		setoutPane.setVisible(false);
 		locoPane.setVisible(false);
 		movePane.setVisible(false);
+		
+		pTrainRouteLocationComment.setVisible(false);
+		pLocationComment.setVisible(false);
 
 		setButtonText();
 	}

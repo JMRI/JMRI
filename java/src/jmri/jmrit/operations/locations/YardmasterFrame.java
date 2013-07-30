@@ -125,6 +125,7 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 				print.setToolTipText(Bundle.getMessage("TipDisabled"));
 				preview.setToolTipText(Bundle.getMessage("TipDisabled"));
 			}
+			setTitle(Bundle.getMessage("Yardmaster") + " (" + _location.getName() + ")");
 		}
 
 		update();
