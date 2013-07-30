@@ -1206,32 +1206,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridwidth = 1;
             }
             else if (name.equals("cvtable")) {
-                log.debug("starting to build CvTable pane");
-                                // this is copied from SymbolicProgFrame
-                JTable cvTable = new JTable(_cvModel);
-                JScrollPane cvScroll = new JScrollPane(cvTable);
-                cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
-                cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
-                cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
-                cvTable.setDefaultEditor(JButton.class, new ValueEditor());
-                cvTable.setRowHeight(new JButton("X").getPreferredSize().height);
-                cvScroll.setColumnHeaderView(cvTable.getTableHeader());
-                // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-                // instead of forcing the columns to fill the frame (and only fill)
-                cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-                cs.gridwidth = GridBagConstraints.REMAINDER;
-                g.setConstraints(cvScroll, cs);
-                c.add(cvScroll);
-                cs.gridwidth = 1;
-
-                // remember which CVs to read/write
-                for (int j=0; j<_cvModel.getRowCount(); j++) {
-                    cvList.add(Integer.valueOf(j));
-                }
-
-                _cvTable = true;
-                log.debug("end of building CvTable pane");
-
+                makeCvTable(cs, g, c);
             }
             else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
@@ -1346,32 +1321,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridheight = 1;
             }
             else if (name.equals("cvtable")) {
-                log.debug("starting to build CvTable pane");
-                // this is copied from SymbolicProgFrame
-                JTable			cvTable		= new JTable(_cvModel);
-                JScrollPane 	cvScroll	= new JScrollPane(cvTable);
-                cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
-                cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
-                cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
-                cvTable.setDefaultEditor(JButton.class, new ValueEditor());
-                cvTable.setRowHeight(new JButton("X").getPreferredSize().height);
-                cvScroll.setColumnHeaderView(cvTable.getTableHeader());
-                // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-                // instead of forcing the columns to fill the frame (and only fill)
-                cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-                cs.gridheight = GridBagConstraints.REMAINDER;
-                g.setConstraints(cvScroll, cs);
-                c.add(cvScroll);
-                cs.gridheight = 1;
-
-                // remember which CVs to read/write
-                for (int j=0; j<_cvModel.getRowCount(); j++) {
-                    cvList.add(Integer.valueOf(j));
-                }
-                _cvTable = true;
-                log.debug("end of building CvTable pane");
-
+                makeCvTable(cs, g, c);
             }
             else if (name.equals("indxcvtable")) {
                 log.debug("starting to build IndexedCvTable pane");
@@ -1436,6 +1386,38 @@ public class PaneProgPane extends javax.swing.JPanel
         return c;
     }
 
+    void makeCvTable(GridBagConstraints cs, GridBagLayout g, JPanel c) {
+        log.debug("starting to build CvTable pane");
+
+        JTable			cvTable		= new JTable(_cvModel);
+        cvTable.setAutoCreateRowSorter(true);
+        cvTable.getRowSorter().toggleSortOrder(0);  // sort on left most
+        
+        cvTable.setDefaultRenderer(JTextField.class, new ValueRenderer());
+        cvTable.setDefaultRenderer(JButton.class, new ValueRenderer());
+        cvTable.setDefaultEditor(JTextField.class, new ValueEditor());
+        cvTable.setDefaultEditor(JButton.class, new ValueEditor());
+        cvTable.setRowHeight(new JButton("X").getPreferredSize().height);
+        // have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
+        // instead of forcing the columns to fill the frame (and only fill)
+        cvTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+
+        JScrollPane 	cvScroll	= new JScrollPane(cvTable);
+        cvScroll.setColumnHeaderView(cvTable.getTableHeader());
+
+        cs.gridheight = GridBagConstraints.REMAINDER;
+        g.setConstraints(cvScroll, cs);
+        c.add(cvScroll);
+        cs.gridheight = 1;
+
+        // remember which CVs to read/write
+        for (int j=0; j<_cvModel.getRowCount(); j++) {
+            cvList.add(Integer.valueOf(j));
+        }
+        _cvTable = true;
+        log.debug("end of building CvTable pane");
+    }
+    
     /**
      * Add the representation of a single variable.  The
      * variable is defined by a JDOM variable Element from the XML file.
