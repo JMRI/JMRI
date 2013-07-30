@@ -44,6 +44,9 @@ public class TrainInfo {
 	String departureTimeHr = "08";
 	String departureTimeMin = "00";
     String delaySensor = null;
+    int delayedRestart = ActiveTrain.NODELAY;
+    String restartDelaySensor = null;
+    String delayedRestartTime = "0";
 	String trainType = "";
 	
 	// instance variables for automatic operation
@@ -96,7 +99,14 @@ public class TrainInfo {
     protected String getDelaySensor() {return delaySensor; }
 	protected void setTrainType(String s) {trainType = s;}
 	protected String getTrainType() {return trainType;}
-	
+    
+    protected void setDelayedRestart(int ds) {delayedRestart = ds;}
+	protected int getDelayedRestart() {return delayedRestart;}
+    protected void setRestartDelaySensor(String sen) { restartDelaySensor = sen; }
+    protected String getRestartDelaySensor() {return restartDelaySensor; }
+    protected void setRestartDelayTime(String s) {delayedRestartTime = s;}
+	protected String getRestartDelayTime() {return delayedRestartTime;}
+    
 	/**
      * Access methods for automatic operation instance variables
      */

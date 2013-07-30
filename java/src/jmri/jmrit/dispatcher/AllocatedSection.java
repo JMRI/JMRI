@@ -202,7 +202,15 @@ public class AllocatedSection {
 				mActiveTrain.getAutoActiveTrain().handleSectionOccupancyChange(this);
 			}
 		}
-		DispatcherFrame.instance().sectionOccupancyChanged();
+		
+        
+        if(mEntered && !mExited && mActiveTrain.getResetWhenDone() && mActiveTrain.getDelayedRestart()!=ActiveTrain.NODELAY){
+            if(getSequence()==mActiveTrain.getEndBlockSectionSequenceNumber()){
+                mActiveTrain.setRestart();
+            }
+        }
+        
+        DispatcherFrame.instance().sectionOccupancyChanged();
 	}
 	public synchronized void initializeMonitorBlockOccupancy() {
 		if (mBlockList != null) return;
