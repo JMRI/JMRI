@@ -1135,13 +1135,14 @@ public class Track {
 			return LENGTH + " (" + rs.getLength() + ")";
 		}
 		// @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="BC_UNCONFIRMED_CAST")
-		if (Car.class.isInstance(rs)) {			
+		if (Car.class.isInstance(rs)) {
 			Car car = (Car) rs;
 			// does this track service the car's final destination?
 			if (!acceptsDestination(car.getFinalDestination())) {
-				return DESTINATION + " (" + car.getFinalDestinationName()+ ")"; // no
+				return DESTINATION + " (" + car.getFinalDestinationName() + ") "
+						+ Bundle.getMessage("carIsNotAllowed"); // no
 			}
-			// check for car in kernel
+		// check for car in kernel
 			if (car.getKernel() != null && car.getKernel().isLead(car)) {
 				length = 0;
 				List<Car> cars = car.getKernel().getCars();

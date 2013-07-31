@@ -34,7 +34,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements
 		// panelTrainDir.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainInterchange")));
 		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getMessage("TypesInterchange")));
-		// deleteTrackButton.setText(Bundle.getMessage("DeleteInterchange"));
+		deleteTrackButton.setText(Bundle.getMessage("DeleteInterchange"));
 		addTrackButton.setText(Bundle.getMessage("AddInterchange"));
 		saveTrackButton.setText(Bundle.getMessage("SaveInterchange"));
 
