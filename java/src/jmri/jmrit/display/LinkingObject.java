@@ -17,7 +17,7 @@ import javax.swing.JPopupMenu;
                 String frame = url.substring(6);
                 final jmri.util.JmriJFrame jframe = jmri.util.JmriJFrame.getFrame(frame);
                 java.awt.EventQueue.invokeLater(new Runnable() {
-                    @Override
+                    &#64;Override
                     public void run() {
                         jframe.toFront();
                         jframe.repaint();
