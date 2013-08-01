@@ -189,7 +189,7 @@ public class CommonConductorYardmasterFrame extends OperationsFrame implements j
 		pWorkPanes.setLayout(new BoxLayout(pWorkPanes, BoxLayout.X_AXIS));
 		pWorkPanes.add(pickupPane);
 		pWorkPanes.add(setoutPane);
-		pWorkPanes.setPreferredSize(new Dimension(600, 400));
+//		pWorkPanes.setPreferredSize(new Dimension(600, 400));
 
 		// row 13
 		pStatus.setLayout(new GridBagLayout());

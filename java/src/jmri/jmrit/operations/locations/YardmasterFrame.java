@@ -10,6 +10,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -45,6 +46,9 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 	// combo boxes
 	JComboBox trainComboBox = new JComboBox();
 	JComboBox trainVisitComboBox = new JComboBox();
+	
+	// buttons
+	JButton nextButton = new JButton(Bundle.getMessage("Next"));
 
 	// panels
 	JPanel pTrainVisit = new JPanel();
@@ -79,6 +83,8 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 		JPanel pTrainName = new JPanel();
 		pTrainName.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Train")));
 		pTrainName.add(trainComboBox);
+		// add next button for web server
+		pTrainName.add(nextButton);
 
 		// row 6b (train visit)
 		pTrainVisit.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Visit")));
@@ -132,6 +138,8 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 		addComboBoxAction(trainComboBox);
 		addComboBoxAction(trainVisitComboBox);
+		
+		addButtonAction(nextButton);
 
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
 		
@@ -145,10 +153,28 @@ public class YardmasterFrame extends CommonConductorYardmasterFrame {
 
 	// Select, Clear, and Set Buttons
 	public void buttonActionPerformed(ActionEvent ae) {
+		if (ae.getSource() == nextButton)
+			nextButtonAction();
 		super.buttonActionPerformed(ae);
 		update();
 	}
 
+	private void nextButtonAction() {
+		log.debug("next button activated");
+		if (trainComboBox.getItemCount() > 1) {
+			if (pTrainVisit.isVisible()) {
+				int index = trainVisitComboBox.getSelectedIndex()+1;
+				if (index < trainVisitComboBox.getItemCount()) {
+					trainVisitComboBox.setSelectedIndex(index);
+					return;	// done
+				}
+			}
+			int index = trainComboBox.getSelectedIndex()+1;
+			if (index >= trainComboBox.getItemCount())
+				index = 0;
+			trainComboBox.setSelectedIndex(index);
+		}
+	}
 
 	// Select Train and Visit
 	protected void comboBoxActionPerformed(ActionEvent ae) {

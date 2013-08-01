@@ -389,9 +389,16 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	}
 
 	private synchronized void buildTrain(int row) {
-		Train train = manager.getTrainById(sysList.get(row));
+		final Train train = manager.getTrainById(sysList.get(row));
 		if (!train.isBuilt()) {
-			train.build();
+			// use a thread to allow table updates during build
+			Thread build = new Thread(new Runnable() {
+				public void run() {
+					train.build();
+				}
+			});
+			build.setName("Build Train"); // NOI18N
+			build.start();
 			// print build report, print manifest, run or open file
 		} else {
 			if (manager.isBuildReportEnabled())
