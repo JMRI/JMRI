@@ -70,6 +70,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		super.initComponents(location, track);
 		_type = Track.STAGING;
 
+		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Staging", true); // NOI18N
 
 		// override text strings for tracks

@@ -44,6 +44,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
 	Location _location = null;
 	Track _track = null;
+	String trackName = null;	// track name for tools menu
 	String _type = "";
 	JMenu _toolMenu = null;
 
@@ -296,9 +297,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addCheckBoxAction(autoDropCheckBox);
 		addCheckBoxAction(autoPickupCheckBox);
 
-		// track name for tools menu
-		String trackName = null;
-
 		// load fields and enable buttons
 		if (_track != null) {
 			_track.addPropertyChangeListener(this);
@@ -316,7 +314,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		_toolMenu = new JMenu(Bundle.getMessage("Tools"));
 		_toolMenu.add(new TrackLoadEditAction(this));
 		_toolMenu.add(new TrackRoadEditAction(this));	
-		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		_toolMenu.add(new TrackEditCommentsAction(this));
 		_toolMenu.add(new PoolTrackAction(this));
 		

@@ -122,7 +122,7 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 
 		setPreferredSize(null);
 		pack();
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
 		setTitle(Bundle.getMessage("TitleModifyTrains"));
 		setVisible(true);
 	}

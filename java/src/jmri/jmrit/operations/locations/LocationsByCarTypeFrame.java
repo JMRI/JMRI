@@ -140,7 +140,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 
 		setPreferredSize(null);	// we need to resize this frame
 		pack();
-		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
 		if (location != null)
 			setTitle(Bundle.getMessage("TitleModifyLocation"));
 		else
