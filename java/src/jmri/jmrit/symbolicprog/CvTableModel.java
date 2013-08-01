@@ -139,7 +139,7 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
     public Object getValueAt(int row, int col) {
         switch (col) {
         case NUMCOLUMN:
-            return (Integer)_cvDisplayVector.elementAt(row).number();
+            return _cvDisplayVector.elementAt(row).number();
         case VALCOLUMN:
             return _cvDisplayVector.elementAt(row).getTableEntry();
         case STATECOLUMN:
