@@ -336,7 +336,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements
 				l.setSwitchListEnabled(previousLocation.isSwitchListEnabled());
 				if (previousLocation.isSwitchListEnabled()
 						&& l.getStatus().equals(Location.MODIFIED)) {
-					previousLocation.setStatus(); // we need to update the primary location
+					previousLocation.setStatusModified(); // we need to update the primary location
 					l.setStatus(Location.UPDATED); // and clear the secondaries
 				}
 				continue;

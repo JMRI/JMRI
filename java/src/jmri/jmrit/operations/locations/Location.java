@@ -316,7 +316,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * was printed or CSV generated.
 	 * 
 	 */
-	public void setStatus() {
+	public void setStatusModified() {
 		if (getStatus().equals(PRINTED) || getStatus().equals(CSV_GENERATED) || !Setup.isSwitchListRealTime())
 			setStatus(MODIFIED);
 	}

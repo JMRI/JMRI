@@ -1971,8 +1971,8 @@ public class TrainBuilder extends TrainCommon {
 
 	private void addRsToTrain(RollingStock rs, RouteLocation rl, RouteLocation rld, Track track, int length,
 			int weightTons) {
-		rl.getLocation().setStatus();
-		rld.getLocation().setStatus();
+		rl.getLocation().setStatusModified();
+		rld.getLocation().setStatusModified();
 		rs.setTrain(train);
 		rs.setRouteLocation(rl);
 		rs.setRouteDestination(rld);

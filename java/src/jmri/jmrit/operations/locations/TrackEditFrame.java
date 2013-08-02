@@ -112,7 +112,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JTextArea commentTextArea = new JTextArea(2, 60);
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,
 			JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	Dimension minScrollerDim = new Dimension(500, 42);
+	Dimension minScrollerDim = new Dimension(800,42);
 
 	// combo box
 	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();

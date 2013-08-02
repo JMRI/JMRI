@@ -4,6 +4,8 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import javax.swing.*;
 
@@ -63,90 +65,91 @@ class PoolTrackFrame extends OperationsFrame implements
 	public PoolTrackFrame(TrackEditFrame tef) {
 		super();
 
-		// the following code sets the frame's initial state
-		getContentPane().setLayout(
-				new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+//		// the following code sets the frame's initial state
+//		getContentPane().setLayout(
+//				new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
 		_tefx = tef;
 		_track = _tefx._track;
 
-		if (_track == null) {
-			log.debug("track is null, pools can not be created");
-			return;
-		}
-
-		_track.addPropertyChangeListener(this);
-		_track.getLocation().addPropertyChangeListener(this);
-
-		_pool = _track.getPool();
-
-		if (_pool != null)
-			_pool.addPropertyChangeListener(this);
-
-		// load the panel
-		JPanel p1 = new JPanel();
-		p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-		JScrollPane p1Pane = new JScrollPane(p1);
-		p1Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		p1Pane.setBorder(BorderFactory.createTitledBorder(""));
-
-		JPanel poolName = new JPanel();
-		poolName.setLayout(new GridBagLayout());
-		poolName.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("PoolName")));
-		addItem(poolName, trackPoolNameTextField, 0, 0);
-		addItem(poolName, addButton, 1, 0);
-
-		JPanel selectPool = new JPanel();
-		selectPool.setLayout(new GridBagLayout());
-		selectPool.setBorder(BorderFactory.createTitledBorder(Bundle
-				.getMessage("PoolSelect")));
-		addItem(selectPool, comboBoxPools, 0, 0);
-
-		JPanel minLengthTrack = new JPanel();
-		minLengthTrack.setLayout(new GridBagLayout());
-		minLengthTrack.setBorder(BorderFactory.createTitledBorder(MessageFormat
-				.format(Bundle.getMessage("PoolTrackMinimum"),
-						new Object[] { _track.getName() })));
-		addItem(minLengthTrack, trackMinLengthTextField, 0, 0);
-
-		trackMinLengthTextField.setText(Integer.toString(_track
-				.getMinimumLength()));
-
-		JPanel savePool = new JPanel();
-		savePool.setLayout(new GridBagLayout());
-		savePool.setBorder(BorderFactory.createTitledBorder(""));
-		addItem(savePool, saveButton, 0, 0);
-
-		p1.add(poolName);
-		p1.add(selectPool);
-		p1.add(minLengthTrack);
-		p1.add(savePool);
-
-		JPanel p2 = new JPanel();
-		p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
-		JScrollPane p2Pane = new JScrollPane(p2);
-		p2Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		p2Pane.setBorder(BorderFactory.createTitledBorder(""));
-
-		// pool status panel
-		poolStatus.setLayout(new GridBagLayout());
-
-		p2.add(poolStatus);
-
-		getContentPane().add(p1Pane);
-		getContentPane().add(p2Pane);
-		setTitle(Bundle.getMessage("MenuItemPoolTrack"));
-
-		// load comboBox
-		updatePoolsComboBox();
-		updatePoolStatus();
-
-		// button action
-		addButtonAction(addButton);
-		addButtonAction(saveButton);
-
-		setVisible(true);
+//		if (_track == null) {
+//			log.debug("track is null, pools can not be created");
+//			return;
+//		}
+//
+//		_track.addPropertyChangeListener(this);
+//		_track.getLocation().addPropertyChangeListener(this);
+//
+//		_pool = _track.getPool();
+//
+//		if (_pool != null)
+//			_pool.addPropertyChangeListener(this);
+//
+//		// load the panel
+//		JPanel p1 = new JPanel();
+//		p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+//		JScrollPane p1Pane = new JScrollPane(p1);
+//		p1Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//		p1Pane.setBorder(BorderFactory.createTitledBorder(""));
+//
+//		JPanel poolName = new JPanel();
+//		poolName.setLayout(new GridBagLayout());
+//		poolName.setBorder(BorderFactory.createTitledBorder(Bundle
+//				.getMessage("PoolName")));
+//		addItem(poolName, trackPoolNameTextField, 0, 0);
+//		addItem(poolName, addButton, 1, 0);
+//
+//		JPanel selectPool = new JPanel();
+//		selectPool.setLayout(new GridBagLayout());
+//		selectPool.setBorder(BorderFactory.createTitledBorder(Bundle
+//				.getMessage("PoolSelect")));
+//		addItem(selectPool, comboBoxPools, 0, 0);
+//
+//		JPanel minLengthTrack = new JPanel();
+//		minLengthTrack.setLayout(new GridBagLayout());
+//		minLengthTrack.setBorder(BorderFactory.createTitledBorder(MessageFormat
+//				.format(Bundle.getMessage("PoolTrackMinimum"),
+//						new Object[] { _track.getName() })));
+//		addItem(minLengthTrack, trackMinLengthTextField, 0, 0);
+//
+//		trackMinLengthTextField.setText(Integer.toString(_track
+//				.getMinimumLength()));
+//
+//		JPanel savePool = new JPanel();
+//		savePool.setLayout(new GridBagLayout());
+//		savePool.setBorder(BorderFactory.createTitledBorder(""));
+//		addItem(savePool, saveButton, 0, 0);
+//
+//		p1.add(poolName);
+//		p1.add(selectPool);
+//		p1.add(minLengthTrack);
+//		p1.add(savePool);
+//
+//		JPanel p2 = new JPanel();
+//		p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
+//		JScrollPane p2Pane = new JScrollPane(p2);
+//		p2Pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+//		p2Pane.setBorder(BorderFactory.createTitledBorder(""));
+//
+//		// pool status panel
+//		poolStatus.setLayout(new GridBagLayout());
+//
+//		p2.add(poolStatus);
+//
+//		getContentPane().add(p1Pane);
+//		getContentPane().add(p2Pane);
+//		setTitle(Bundle.getMessage("MenuItemPoolTrack"));
+//
+//		// load comboBox
+//		updatePoolsComboBox();
+//		updatePoolStatus();
+//
+//		// button action
+//		addButtonAction(addButton);
+//		addButtonAction(saveButton);
+//
+//		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
+//		setVisible(true);
 	}
 
 	public PoolTrackFrame(Track t) {
@@ -245,6 +248,7 @@ class PoolTrackFrame extends OperationsFrame implements
 		addButtonAction(addButton);
 		addButtonAction(saveButton);
 
+		setMinimumSize(new Dimension(Control.smallPanelWidth, Control.minPanelHeight));
 		setVisible(true);
 
 	}
