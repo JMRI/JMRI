@@ -42,7 +42,7 @@ public class TrainSwitchLists extends TrainCommon {
 		boolean append = false;
 		boolean nextTrain = false;
 		if (newTrainsOnly) {
-			if (!location.getStatus().equals(Location.MODIFIED))
+			if (!location.getStatus().equals(Location.MODIFIED) && !Setup.isSwitchListAllTrainsEnabled())
 				return; // nothing to add
 			append = location.getSwitchListState() == Location.SW_APPEND;
 			if (location.getSwitchListState() != Location.SW_APPEND)
@@ -67,8 +67,8 @@ public class TrainSwitchLists extends TrainCommon {
 			newLine(fileOut);
 			newLine(fileOut, MessageFormat.format(TrainSwitchListText.getStringSwitchListFor(),
 					new Object[] { splitString(location.getName()) }));
-		} else if (Setup.isSwitchListPagePerTrainEnabled()) {
-			fileOut.write(formFeed);
+			if (!location.getSwitchListComment().equals(""))
+				newLine(fileOut, location.getSwitchListComment());
 		}
 
 		String valid = MessageFormat.format(TrainManifestText.getStringValid(), new Object[] { getDate(true) });
@@ -78,16 +78,9 @@ public class TrainSwitchLists extends TrainCommon {
 			if (sch != null)
 				valid = valid + " (" + sch.getName() + ")";
 		}
-		if (Setup.isPrintValidEnabled())
-			newLine(fileOut, valid);
-
-		if (!location.getSwitchListComment().equals(""))
-			newLine(fileOut, location.getSwitchListComment());
 
 		// get a list of trains sorted by arrival time
 		List<Train> trains = trainManager.getTrainsArrivingThisLocationList(location);
-//		CarManager carManager = CarManager.instance();
-//		EngineManager engineManager = EngineManager.instance();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = trains.get(i);
 			if (!train.isBuilt())
@@ -104,8 +97,16 @@ public class TrainSwitchLists extends TrainCommon {
 						+ ")");
 				continue;
 			}
-			if (nextTrain && Setup.isSwitchListPagePerTrainEnabled())
+			// we're now going to add to the switch list
+			if (!nextTrain) {
+				if (append && Setup.isSwitchListPagePerTrainEnabled()) {
 				fileOut.write(formFeed);
+			}
+				if (Setup.isPrintValidEnabled())
+					newLine(fileOut, valid);
+			} else if (Setup.isSwitchListPagePerTrainEnabled()) {
+				fileOut.write(formFeed);
+			}
 			nextTrain = true;
 			// some cars booleans and the number of times this location get's serviced
 			pickupCars = false;
