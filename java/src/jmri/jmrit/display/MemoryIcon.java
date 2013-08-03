@@ -335,7 +335,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                             _saveColor = null;
                         }
                     }
-                    setIcon(null);
+                    _editor.setAttributes(getPopupUtility(), this, false);
                     _icon = false;
                     _text = true;
                 } else if (val instanceof javax.swing.ImageIcon) {
