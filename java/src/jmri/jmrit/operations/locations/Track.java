@@ -164,6 +164,8 @@ public class Track {
 	public static final String POOL_CHANGED_PROPERTY = "trackPool"; // NOI18N
 	public static final String PLANNEDPICKUPS_CHANGED_PROPERTY = "plannedPickUps"; // NOI18N
 	public static final String LOAD_OPTIONS_CHANGED_PROPERTY = "trackLoadOptions"; // NOI18N
+	public static final String DESTINATIONS_CHANGED_PROPERTY = "trackDestinations"; // NOI18N
+	public static final String DESTINATION_OPTIONS_CHANGED_PROPERTY = "trackDestinationOptions"; // NOI18N
 
 	public Track(String id, String name, String type, Location location) {
 		log.debug("New track " + name + " " + id);
@@ -1836,13 +1838,16 @@ public class Track {
 		return "";
 	}
 	
-	
 	List<String> _destinationIdList = new ArrayList<String>();
+	public int getDestinationListSize() {
+		return _destinationIdList.size();
+	}
+	
 	public boolean addDestination(Location destination) {
 		if (_destinationIdList.contains(destination.getId()))
 			return false;		
 		_destinationIdList.add(destination.getId());
-		setDirtyAndFirePropertyChange("add_track_destination", null, destination.getName()); // NOI18N
+		setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, null, destination.getName()); // NOI18N
 		return true;
 	}
 	
@@ -1850,7 +1855,7 @@ public class Track {
 		if (!_destinationIdList.contains(destination.getId()))
 			return;
 		_destinationIdList.remove(destination.getId());
-		setDirtyAndFirePropertyChange("delete_track_destination", destination.getName(), null); // NOI18N
+		setDirtyAndFirePropertyChange(DESTINATIONS_CHANGED_PROPERTY, destination.getName(), null); // NOI18N
 		return;
 	}
 	
@@ -1867,7 +1872,7 @@ public class Track {
 		String old = _destinationOption;
 		_destinationOption = option;
 		if (!option.equals(old))
-			setDirtyAndFirePropertyChange("track_destination_option", old, option); // NOI18N
+			setDirtyAndFirePropertyChange(DESTINATION_OPTIONS_CHANGED_PROPERTY, old, option); // NOI18N
 	}
 	
 	public String getDestinationOption() {

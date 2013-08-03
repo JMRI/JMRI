@@ -63,7 +63,7 @@ public class Car extends RollingStock {
 		addPropertyChangeListeners();
 	}
 	
-	public Car clone() {
+	public Car copy() {
 		Car car = new Car();
 		car.setBuilt(_built);
 		car.setColor(_color);

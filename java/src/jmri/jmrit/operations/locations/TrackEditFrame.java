@@ -38,7 +38,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 //	private static boolean loadAndType = false;
 
 	// Managers
-	LocationManagerXml managerXml = LocationManagerXml.instance();
+//	LocationManagerXml managerXml = LocationManagerXml.instance();
 	TrainManager trainManager = TrainManager.instance();
 	RouteManager routeManager = RouteManager.instance();
 
@@ -55,12 +55,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
 	JPanel panelTrainDir = new JPanel();
 	JPanel pShipLoadOption = new JPanel();
+	JPanel pDestinationOption = new JPanel();
 	JPanel panelOrder = new JPanel();
 	
 	// labels
 	JLabel loadOption = new JLabel();
 	JLabel shipLoadOption = new JLabel();
 	JLabel roadOption = new JLabel(Bundle.getMessage("AcceptsAllRoads"));
+	JLabel destinationOption = new JLabel();
 
 	// major buttons
 	JButton clearButton = new JButton(Bundle.getMessage("Clear"));
@@ -200,13 +202,18 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		pLoadOption.add(loadOption);
 		pShipLoadOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("ShipLoadOption")));
 		pShipLoadOption.add(shipLoadOption);
+		pDestinationOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Destinations")));
+		pDestinationOption.add(destinationOption);
 		
 		panelRoadAndLoadStatus.add(pRoadOption);
 		panelRoadAndLoadStatus.add(pLoadOption);
 		panelRoadAndLoadStatus.add(pShipLoadOption);
+		panelRoadAndLoadStatus.add(pDestinationOption);
 		
 		// only staging uses the ship load option
 		pShipLoadOption.setVisible(false);
+		// only classification/interchange tracks use the destination option
+		pDestinationOption.setVisible(false);
 
 		// row 10
 		// order panel

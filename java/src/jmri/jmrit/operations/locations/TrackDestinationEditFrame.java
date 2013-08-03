@@ -211,7 +211,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
 			return;
 		Location loc = locationManager.getLocationByName(b.getText());
 		if (loc != null) {
-			if (b.isSelected())
+			if (b.isSelected() ^ _track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS))
 				_track.addDestination(loc);
 			else
 				_track.deleteDestination(loc);
