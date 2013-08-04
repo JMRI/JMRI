@@ -45,6 +45,7 @@ public class PositionableIcon extends PositionableLabel {
         pos._iconFamily = _iconFamily;
         pos._scale = _scale;
         pos._rotate = _rotate;
+        pos._iconMap = cloneMap(_iconMap, pos);
         return super.finishClone(pos);
     }
 

@@ -264,6 +264,7 @@ public class DetectionPanel extends JPanel {
         _checkBoxPanel.setLayout(new BoxLayout(_checkBoxPanel, BoxLayout.Y_AXIS));
         _checkBoxPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.black), 
                                                          Bundle.getMessage("circuitPaths")));
+        _checkBoxPanel.add(Box.createHorizontalStrut(100));
         _block = block;
         _pathBoxes = new ArrayList<JCheckBox>();
         List<Path> paths = _block.getPaths();

@@ -326,7 +326,8 @@ public class Tracker {
     			//OK, just do makeRange
     		} else {
         		if (!_occupies.contains(block)) {
-        			log.error("Block \""+block.getDisplayName()+"\" is NOT occupied by \""+_trainName+"\"!");
+        			// a different train can leave an adjacent block held in _lostRange.
+        			if (log.isDebugEnabled()) log.debug("Block \""+block.getDisplayName()+"\" is not occupied by \""+_trainName+"\"!");
         			return ERROR_BLOCK;
         		}
     		}

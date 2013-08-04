@@ -42,7 +42,9 @@ import jmri.jmrit.picker.PickListModel;
 
 /**
  * Container for adding items to control panels.
- * Singleton class loads and stores icons used in panels.
+ * Loads and stores icons used in control editor panels.
+ * For background colors to work there needs to be an ItemPalette
+ * instance for each editor instance
  *
  * @author Pete Cressman  Copyright (c) 2010
  */
@@ -53,7 +55,6 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     
     static JTabbedPane _tabPane;
     static HashMap<String, ItemPanel> _tabIndex;
-    static ItemPalette _instance;
 
     static HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
@@ -211,43 +212,72 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         }
         return familyMap;
     }
-
-    static void loadDefaultIcons(Editor ed) {
+    
+    static List<Element> getDefaultIconItemTypes() throws org.jdom.JDOMException, java.io.IOException{
         File file = new File("xml"+File.separator+"defaultPanelIcons.xml");
         if (!file.exists()) {
             log.error("defaultPanelIcons file doesn't exist: "+file.getPath());
             throw new IllegalArgumentException("defaultPanelIcons file doesn't exist: "+file.getPath());
         }
+        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
+        Element root = xf.rootFromFile(file);
+        @SuppressWarnings("unchecked")
+        List<Element> typeList = root.getChild("ItemTypes").getChildren();
+        return typeList;
+    }
+
+    static void loadDefaultIcons(Editor ed) {
         try {
-            jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
-            Element root = xf.rootFromFile(file);
-            @SuppressWarnings("unchecked")
-            List<Element> typeList = root.getChild("ItemTypes").getChildren();
+        	List<Element> typeList = getDefaultIconItemTypes();
             for (int i = 0; i < typeList.size(); i++) {
                 String typeName = typeList.get(i).getName();
                 @SuppressWarnings("unchecked")
                 List<Element>families = typeList.get(i).getChildren();
-                // detect this is a 4 level map collection. 
-                // not very elegant (i.e. extensible), but maybe all that's needed.
-                if (typeName.equals("IndicatorTO")) {
-                    HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap =
-                                                loadDefaultIndicatorTOMap(families, ed);
-                    _indicatorTOMaps.put(typeName, familyTOMap); 
-                    if (log.isDebugEnabled()) log.debug("Add "+familyTOMap.size()+
-                                    " indicatorTO families to item type "+typeName+" to _indicatorTOMaps.");
-                } else {
-                    HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families, ed);
-                    _iconMaps.put(typeName, familyMap); 
-                    if (log.isDebugEnabled()) log.debug("Add "+familyMap.size()+
-                                                        " families to item type "+typeName+" to _iconMaps.");
-                }
+                loadFamilies(typeName, families, ed);
                 Thread.yield();
             }
         } catch (org.jdom.JDOMException e) {
-            log.error("error reading file \""+file.getName()+"\" due to: "+e);
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: "+e);
         } catch (java.io.IOException ioe) {
-            log.error("error reading file \""+file.getName()+"\" due to: "+ioe);
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: "+ioe);
         }
+    }
+    
+    static void loadFamilies(String typeName, List<Element>families, Editor ed) {
+        // detect this is a 4 level map collection. 
+        // not very elegant (i.e. extensible), but maybe all that's needed.
+        if (typeName.equals("IndicatorTO")) {
+            HashMap<String, HashMap<String, HashMap<String, NamedIcon>>> familyTOMap =
+                                        loadDefaultIndicatorTOMap(families, ed);
+            _indicatorTOMaps.put(typeName, familyTOMap); 
+            if (log.isDebugEnabled()) log.debug("Add "+familyTOMap.size()+
+                            " indicatorTO families to item type "+typeName+" to _indicatorTOMaps.");
+        } else {
+            HashMap<String, HashMap<String, NamedIcon>> familyMap = loadDefaultFamilyMap(families, ed);
+            _iconMaps.put(typeName, familyMap); 
+            if (log.isDebugEnabled()) log.debug("Add "+familyMap.size()+
+                                                " families to item type "+typeName+" to _iconMaps.");
+        }    	
+    }
+    
+    static void loadMissingItemType(String itemType, Editor ed) {
+        try {
+        	List<Element> typeList = getDefaultIconItemTypes();
+            for (int i = 0; i < typeList.size(); i++) {
+                String typeName = typeList.get(i).getName();
+                if (!typeName.equals(itemType)) {
+                	continue;
+                }
+                @SuppressWarnings("unchecked")
+                List<Element>families = typeList.get(i).getChildren();
+                loadFamilies(itemType, families, ed);
+                ImageIndexEditor.indexChanged(true);
+            }
+        } catch (org.jdom.JDOMException e) {
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: "+e);
+        } catch (java.io.IOException ioe) {
+            log.error("error reading file \"defaultPanelIcons.xml\" due to: "+ioe);
+        }   	
     }
 
     static HashMap<String, HashMap<String, NamedIcon>> loadDefaultFamilyMap(List<Element> families, Editor ed)
@@ -301,14 +331,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         return familyTOMap;
     }
 
-    static public ItemPalette getInstance(String title, Editor editor) {
-    	if (_instance==null) {
-    		_instance= new ItemPalette(title, editor);
-    	}
-    	return _instance;    	
-    }
-
-    private ItemPalette(String title, Editor editor) {
+    public ItemPalette(String title, Editor editor) {
         super(title, true, true);
 //        long t = System.currentTimeMillis();
         loadIcons(editor);
@@ -405,8 +428,12 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("IndicatorTO"));
         _tabIndex.put("IndicatorTO", itemPanel);
         
+        itemPanel = new PortalItemPanel(palette, "Portal", null, editor);
+        _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("Portal"));
+        _tabIndex.put("Portal", itemPanel);
+
         _tabPane.addChangeListener(palette);
-    	
+//        _tabPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);    	
     }
 
     public void stateChanged(ChangeEvent e) {
@@ -419,6 +446,9 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         	_currentItemPanel.closeDialogs();    		
     	}
     	_currentItemPanel = p;
+//    	java.awt.Dimension dim = p.getPreferredSize();
+//    	setSize(dim.width+30, dim.height+50);
+//    	repaint();
 //        System.out.println("Panel "+p._itemType+" built in "+ (System.currentTimeMillis()-t)+ " milliseconds.");
     }
 
@@ -510,6 +540,11 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     * Adding a new Family of icons to the device type
     */
     static protected boolean addFamily(java.awt.Frame frame, String type, String family, HashMap<String, NamedIcon> iconMap) {
+    	if (ItemPalette.getFamilyMaps(type)==null) {
+    		HashMap<String, HashMap<String, NamedIcon>> typeMap = new HashMap<String, HashMap<String, NamedIcon>>();
+    		_iconMaps.put(type, typeMap);
+//    		typeMap.put(family, iconMap);
+    	}
         Iterator <String> iter = ItemPalette.getFamilyMaps(type).keySet().iterator();
         if (familyNameOK(frame, type, family, iter)) {
             getFamilyMaps(type).put(family, iconMap);

@@ -166,23 +166,15 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 makeDndIconPanel(_iconGroupsMap.get("ClearTrack"), "TurnoutStateClosed");
             }
         } else {
-            addCreatePanels();
-            createNewFamily();
+        	familiesMissing();
+            //createNewFamily();
         }
         if (log.isDebugEnabled()) log.debug("initIconFamiliesPanel done");
-    }
-
-    protected void updateFamiliesPanel() {
-        _iconFamilyPanel.remove(_iconPanel);
-        _iconPanel = new JPanel();
-        addIcons2Panel(_iconGroupsMap);
-        _iconFamilyPanel.add(_iconPanel, 0);
-        _iconPanel.setVisible(true);
-        reset();
     }
     
     protected void resetFamiliesPanel() {
         remove(_iconFamilyPanel);
+        _tablePanel.setVisible(true);
         initIconFamiliesPanel();
         int n = _iconFamilyPanel.getComponentCount();
         if (n>2) {
@@ -266,6 +258,33 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
     }
 
+    /** Override
+     * 
+     */
+    protected void makeBottomPanel(ActionListener doneAction) {
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new FlowLayout());
+        _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
+        _showIconsButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    if (_iconPanel.isVisible()) {
+                        hideIcons();
+                    } else {
+                        showIcons();
+                    }
+                }
+        });
+        _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
+        bottomPanel.add(_showIconsButton);
+        _bottom1Panel = makeBottom3Panel(doneAction, bottomPanel);
+        initIconFamiliesPanel();
+        add(_iconFamilyPanel);
+        add(_bottom1Panel);
+    }
+    
+    /** override
+     * 
+     */
     protected JPanel makeBottom2Panel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
@@ -477,7 +496,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             }
             NamedBean bean = getNamedBean();
             if (bean==null) {
-                log.error("IconDragJLabel.getTransferData: NamedBean is null!");
+            	JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"), 
+                  		Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 

@@ -28,7 +28,11 @@ import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
- *
+ * This class is used when FamilyItemPanel classes add, modify or delete icon families.
+ * 
+ * Note this class cannot be used with superclasses of FamilyItemPanel (ItemPanel etc) 
+ * since there are several casts to FamilyItemPanel.
+ * 
  * @author Pete Cressman  Copyright (c) 2010, 2011
  */
 
@@ -58,9 +62,8 @@ public class IconDialog extends ItemDialog {
         _familyName = new JTextField(family);
         if (_family==null) {
         	_newIconSet = true;
-//        	_familyName.setText(Bundle.getMessage("Unnamed"));
         }
-        _familyName.setEditable(!isUpdate);
+        _familyName.setEditable(!isUpdate && _newIconSet);
         panel.add(ItemPalette.makeBannerPanel("IconSetName", _familyName));
         
         JPanel buttonPanel = new JPanel();
@@ -134,14 +137,22 @@ public class IconDialog extends ItemDialog {
        //check text
         String family = _familyName.getText();
         _parent.reset();
-        checkIconSizes();
+//        checkIconSizes();
     	((FamilyItemPanel)_parent)._currentIconMap = _iconMap;
         if (_parent.isUpdate()) {  // don't touch palette's maps.  just modify individual device icons
         	return true;
         }
     	if (!_newIconSet && family.equals(_family)) {
             ItemPalette.removeIconMap(_type, _family);
-    	}        
+    	}
+        if (family==null || family.trim().length()==0) {
+            family = JOptionPane.showInputDialog(_parent._paletteFrame, Bundle.getMessage("EnterFamilyName"), 
+                    Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE);
+            if (family==null || family.trim().length()==0) {
+                // bail out
+                return false;
+            }
+        }
     	while (!ItemPalette.addFamily(_parent._paletteFrame, _type, family, _iconMap)) {
     		/*
             family = JOptionPane.showInputDialog(_parent._paletteFrame, Bundle.getMessage("EnterFamilyName"), 
@@ -341,7 +352,7 @@ public class IconDialog extends ItemDialog {
         	}
            int nextWidth = icon.getIconWidth();
            int nextHeight = icon.getIconHeight();
-           if ((Math.abs(lastWidth - nextWidth) > 3 || Math.abs(lastHeight - nextHeight) > 3)) {
+           if ((Math.abs(lastWidth - nextWidth) > 5 || Math.abs(lastHeight - nextHeight) > 5)) {
                JOptionPane.showMessageDialog(_parent._paletteFrame, 
                                              Bundle.getMessage("IconSizeDiff"), Bundle.getMessage("warnTitle"),
                                              JOptionPane.WARNING_MESSAGE);

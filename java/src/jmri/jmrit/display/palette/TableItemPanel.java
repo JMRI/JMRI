@@ -28,7 +28,9 @@ import jmri.jmrit.picker.PickListModel;
 import jmri.util.JmriJFrame;
 
 /**
-*  JPanels for the various item types that come from tool Tables - e.g. Sensors, Turnouts, etc.
+*  ItemPanel for the various item types that come from tool Tables - e.g. Sensors, Turnouts, etc.
+*  
+* @author Pete Cressman  Copyright (c) 2010, 2011
 */
 public class TableItemPanel extends FamilyItemPanel implements ListSelectionListener {
 
@@ -241,7 +243,8 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             }
             NamedBean bean = getNamedBean();
             if (bean==null) {
-                log.error("IconDragJLabel.getTransferData: NamedBean is null!");
+            	JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"), 
+              		Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 

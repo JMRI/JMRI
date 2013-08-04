@@ -77,21 +77,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                 }
             }
         }
-        // include CircuitBuilder portal icons
-        java.util.List<PortalIcon> list = p.getPortalIcons();
-        for (int i=0; i<list.size(); i++) {
-            Positionable sub = list.get(i);
-            if (sub!=null && sub.storeItem()) {
-                try {
-                    Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
-                    if (e!=null) panel.addContent(e);
-                } catch (Exception e) {
-                    log.error("Error storing panel element: "+e);
-                    e.printStackTrace();
-                }
-            }
-        }       	
-
         return panel;
     }
 

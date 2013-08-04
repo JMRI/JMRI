@@ -727,7 +727,7 @@ public class WarrantTableAction extends AbstractAction {
             addHelpMenu("package.jmri.jmrit.logix.Warrant", true);
 
             setContentPane(tablePanel);
-            setLocation(0,100);
+            setLocation(50,0);
             setVisible(true);
             pack();
         }

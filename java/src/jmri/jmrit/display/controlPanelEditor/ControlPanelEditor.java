@@ -18,12 +18,16 @@ import java.awt.dnd.*;
 import java.io.IOException;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
+import jmri.jmrit.display.palette.BackgroundItemPanel;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
@@ -122,11 +126,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.ControlPanelEditor", true);
-        _itemPalette = ItemPalette.getInstance(Bundle.getMessage("MenuItemItemPallette"), this);        		
+        _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPallette"), this);        		
 
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
-        makeDataFlavors();
+        makeDataFlavors(); 
 
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
@@ -526,6 +530,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                                 	((PositionableIcon)pos).displayState(bean.getState());                            		
                             	}
                             }
+                            else if (pos instanceof MemoryIcon) {
+                            	((MemoryIcon)pos).displayState();
+                            }
+                            else if (pos instanceof PositionableJComponent) {
+                            	((PositionableJComponent)pos).displayState();
+                            }
                             if (_debug) log.debug("Paste Added at ("+pos.getLocation().x+", "+pos.getLocation().y+")");
                         }
                     }
@@ -546,6 +556,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private void copyToClipboard() {
         if (_selectionGroup!=null) {
             ArrayList <Positionable> dragGroup = new ArrayList <Positionable>();
+            HashMap <MemoryComboIcon, javax.swing.plaf.ComboBoxUI> combosUI = new HashMap <MemoryComboIcon, javax.swing.plaf.ComboBoxUI>();
 
             for (int i=0; i<_selectionGroup.size(); i++) {
                 Positionable pos = _selectionGroup.get(i).deepClone();
@@ -553,7 +564,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 removeFromTarget(pos);   // cloned item gets added to _targetPane during cloning
             }
             if (_debug) log.debug("copyToClipboard: cloned _selectionGroup, size= "+_selectionGroup.size());
-//            abortPasteItems(dragGroup);
             _clipGroup = dragGroup;
 
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -562,7 +572,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             getPanelScrollPane().getUI().installUI(getPanelScrollPane());
 //            clipboard.setContents(new PositionableListDnD(dragGroup), null);
             if (_debug) log.debug("copyToClipboard: setContents _selectionGroup, size= "+_selectionGroup.size());
-
         } else {
             _clipGroup = null;
         }
@@ -903,11 +912,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         repaint();
     }
-//    public void keyReleased(KeyEvent e) {}
-    public Positionable getCurrentSelection() {
-    	return _currentSelection;
-    }
-    
+
     /*********** Mouse ***************/
 
     public void mousePressed(MouseEvent event) {
@@ -924,7 +929,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         if (!event.isPopupTrigger()&& !event.isMetaDown() && !event.isAltDown()) {
         {
-              if (_shapeDrawer.doMousePressed(event)) {
+              if (_shapeDrawer.doMousePressed(event, _currentSelection)) {
               	_selectionGroup = null;
               	_currentSelection = null;
               	return;
@@ -1104,7 +1109,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     }
                     */
                 }
-                if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)) {
+                if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)
+                		&& !_circuitBuilder.dragPortal()) {
                     for (int i=0; i<_selectionGroup.size(); i++){
                         moveItem(_selectionGroup.get(i), deltaX, deltaY);
                     }
@@ -1113,7 +1119,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                     moveItem(_currentSelection, deltaX, deltaY);
                 }
             } else {
-                if ((isEditable() && _selectionGroup==null && !_shapeDrawer.doMouseDragged(event))) {
+                if ((isEditable() && _selectionGroup==null /*&& !_shapeDrawer.doMouseDragged(event)*/)) {
                     drawSelectRect(event.getX(), event.getY());
                 }
             }
@@ -1346,6 +1352,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     /********************* Circuitbuilder ************************************/
 
     protected void disableMenus() {
+    	_drawMenu.setEnabled(false);
     	_warrantMenu.setEnabled(false);
         _iconMenu.setEnabled(false);
         _zoomMenu.setEnabled(false);
@@ -1356,6 +1363,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     
     public void resetEditor() {
     	// enable menus
+    	_drawMenu.setEnabled(true);
     	_warrantMenu.setEnabled(true);
         _iconMenu.setEnabled(true);
         _zoomMenu.setEnabled(true);
@@ -1370,8 +1378,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         setSelectionGroup(null);
     }
 
-    /* Called by CircuitBuilder
-     * */
+    /************************ Called by CircuitBuilder **********************/
+    
     protected void highlight(Positionable pos) {
     	if (pos==null) {
     		_highlightcomponent = null;
@@ -1382,7 +1390,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     	repaint();
     }
    
-    public void setSelectionGroup(ArrayList<Positionable> group) {
+    protected void setSelectionGroup(ArrayList<Positionable> group) {
     	_highlightcomponent = null;
 //        _currentSelection = null;		need non-null for Portal dragging in CircuitBuilder
     	_selectionGroup = group;
@@ -1393,13 +1401,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         return _selectionGroup;
     }
 
-    public java.util.List<PortalIcon> getPortalIcons() {
-    	return _circuitBuilder.getPortalIcons();
-    }
-    
-    public void putPortalIcon(PortalIcon pos) {
-    	_circuitBuilder.addPortalIcon(pos);
-    }
     /**************************** DnD **************************************/
 
     protected void makeDataFlavors() {
@@ -1440,14 +1441,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 for (int i=0; i<flavors.length; i++) {
                     flavor += flavors[i].getRepresentationClass().getName()+", ";
                 }
-                log.debug("Editor Drop: flavor classes= "+flavor);
+                if (_debug) log.debug("Editor Drop: flavor classes= "+flavor);
             }
             if (tr.isDataFlavorSupported(_positionableDataFlavor)) {
                 Positionable item = (Positionable)tr.getTransferData(_positionableDataFlavor);
                 if (item==null) {
-//                    if (_debug) log.debug("Drop of null POSITIONABLE_FLAVOR");
-                    JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"), 
-                    		Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                     return;
                 }
                 item.setLocation(pt.x, pt.y);

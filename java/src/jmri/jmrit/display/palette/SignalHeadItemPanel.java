@@ -181,7 +181,8 @@ public class SignalHeadItemPanel extends TableItemPanel {//implements ListSelect
             }
             NamedBean bean = getNamedBean();
             if (bean==null) {
-                log.error("IconDragJLabel.getTransferData: NamedBean is null!");
+            	JOptionPane.showMessageDialog(null, Bundle.getMessage("noRowSelected"), 
+                  		Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
 

@@ -389,7 +389,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 if (pos instanceof IndicatorTrack) {
                     ((IndicatorTrack)pos).removePath(name);
                 } else {
-                    ((PortalIcon)pos).setStatus(PortalIcon.BLOCK);
+                    ((PortalIcon)pos).setStatus(PortalIcon.VISIBLE);
                 }        		        		
         	}
         }     
@@ -528,7 +528,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         for (int i=0; i<_pathGroup.size(); i++) {
             Positionable pos = _pathGroup.get(i);
             if (pos instanceof PortalIcon) {
-                ((PortalIcon)pos).setStatus(PortalIcon.BLOCK);
+                ((PortalIcon)pos).setStatus(PortalIcon.VISIBLE);
             } else {
                 ((IndicatorTrack)pos).removePath(TEST_PATH);
             }

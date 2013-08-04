@@ -44,7 +44,8 @@ import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.LinkingLabel;
 
 /**
-*  ItemPanel for for plain icons and backgrounds 
+*  ItemPanel for for plain icons and backgrounds
+*  Does NOT use IconDialog class to add, replace or delete icons. 
 */
 public class IconItemPanel extends ItemPanel implements MouseListener {
 

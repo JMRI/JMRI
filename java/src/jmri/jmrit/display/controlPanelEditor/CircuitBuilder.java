@@ -44,10 +44,10 @@ public class CircuitBuilder  {
     private JMenu _todoMenu;
     
     // map track icon to OBlock to which it belongs
-    private Hashtable<Positionable, OBlock> _iconMap = new Hashtable<Positionable, OBlock>();
+    private HashMap<Positionable, OBlock> _iconMap = new HashMap<Positionable, OBlock>();
 
     // map OBlock to List of icons that represent it
-    private Hashtable<OBlock, ArrayList<Positionable>> _circuitMap;
+    private HashMap<OBlock, ArrayList<Positionable>> _circuitMap;
     
     // list of track icons not belonging to an OBlock
     private ArrayList<Positionable> _darkTrack;
@@ -64,13 +64,11 @@ public class CircuitBuilder  {
     // list of OBlocks whose portal icons are misplaced
     private ArrayList<OBlock> _portalMisplacedBlock;
     
-    protected ArrayList <PortalIcon> _portalIcons = new ArrayList<PortalIcon>();
-    
     // map of PortalIcons by portal name
-    private Hashtable<String, PortalIcon> _portalIconMap;
+    private HashMap<String, PortalIcon> _portalIconMap;
     
     // map of Portals by portal name
-    private Hashtable<String, Portal> _portalMap;
+    private HashMap<String, Portal> _portalMap;
     
     // OBlock list to open edit frames 
     private PickListModel _oblockModel;
@@ -80,6 +78,7 @@ public class CircuitBuilder  {
     private EditCircuitFrame _editCircuitFrame;
     private EditPortalFrame  _editPortalFrame; 
     private EditCircuitPaths _editPathsFrame;
+    private EditPortalDirection _editDirectionFrame; 
 
     // list of icons making a circuit - used by editing frames to indicate block(s) being worked on
     private ArrayList<Positionable> _circuitIcons;      // Dark Blue
@@ -94,7 +93,7 @@ public class CircuitBuilder  {
     public final static Color _editGroupColor = new Color(150, 150, 255);
     public final static Color _pathColor = Color.green;
     public final static Color _highlightColor = new Color(255, 100, 200);
-
+    
     /******************************************************************/
 
     public CircuitBuilder() {
@@ -107,7 +106,7 @@ public class CircuitBuilder  {
     }
 
     protected JMenu makeMenu() {
-        _circuitMap = new Hashtable<OBlock, ArrayList<Positionable>>();
+        _circuitMap = new HashMap<OBlock, ArrayList<Positionable>>();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         for (int i = 0; i < sysNames.length; i++) {
@@ -292,6 +291,8 @@ public class CircuitBuilder  {
         _circuitMenu.add(editCircuitItem);
         JMenuItem editPortalsItem = new JMenuItem(Bundle.getMessage("editPortalsItem"));
         _circuitMenu.add(editPortalsItem);
+        JMenuItem editDirectionItem = new JMenuItem(Bundle.getMessage("editDirectionItem"));
+        _circuitMenu.add(editDirectionItem);
         JMenuItem editCircuitPathsItem = new JMenuItem(Bundle.getMessage("editCircuitPathsItem"));
         _circuitMenu.add(editCircuitPathsItem);
 
@@ -306,6 +307,11 @@ public class CircuitBuilder  {
                         editPortals("editPortalsItem");
                     }
                 });
+            editDirectionItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                	EditPortalDirection("editDirectionItem");
+                }
+            });
             editCircuitPathsItem.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         editCircuitPaths("editCircuitPathsItem");
@@ -314,6 +320,7 @@ public class CircuitBuilder  {
         } else {
             editCircuitItem.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
             editPortalsItem.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
+            editDirectionItem.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
             editCircuitPathsItem.add(new JMenuItem(Bundle.getMessage("noCircuitsItem")));
         }
         
@@ -344,7 +351,7 @@ public class CircuitBuilder  {
             editCircuitDialog(title);
             if (_currentBlock!=null) {
                  checkCircuits();
-                 makeSelectionGroup(_currentBlock, null);
+                 makeSelectionGroup(_currentBlock, false);
                 _editor.disableMenus();
                 TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
                 targetPane.setSelectGroupColor(_editGroupColor);
@@ -359,7 +366,7 @@ public class CircuitBuilder  {
             _currentBlock = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getBySystemName(sysName);
             if (_currentBlock!=null) {
                 checkCircuits();
-                makeSelectionGroup(_currentBlock, null);
+                makeSelectionGroup(_currentBlock, false);
                 _editor.disableMenus();
                 _editCircuitFrame = new EditCircuitFrame(Bundle.getMessage("OpenCircuitItem"), this, _currentBlock);
             }
@@ -373,7 +380,7 @@ public class CircuitBuilder  {
                 checkCircuits();
                 // check icons to be indicator type
                 if (iconsConverted(_circuitMap.get(_currentBlock))) {
-                    makeSelectionGroup(_currentBlock, PortalIcon.BLOCK);
+                    makeSelectionGroup(_currentBlock, true);
                 	_editor.disableMenus();
                     TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
                     targetPane.setSelectGroupColor(_editGroupColor);
@@ -393,7 +400,7 @@ public class CircuitBuilder  {
                 // check icons to be indicator type
                 _circuitIcons = _circuitMap.get(_currentBlock);
                 if (iconsConverted(_circuitMap.get(_currentBlock))) {
-                    makeSelectionGroup(_currentBlock, PortalIcon.BLOCK);
+                    makeSelectionGroup(_currentBlock, true);
                 	_editor.disableMenus();
                     TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
                     targetPane.setSelectGroupColor(_editGroupColor);
@@ -401,6 +408,25 @@ public class CircuitBuilder  {
                    _editPortalFrame = new EditPortalFrame(Bundle.getMessage("OpenPortalTitle"), this, _currentBlock);
                 }
             }
+        }
+    }
+    
+    protected void EditPortalDirection(String title) {
+        if (editingOK()) {
+            editCircuitDialog(title);
+            if (_currentBlock!=null) {
+                checkCircuits();
+                // check icons to be indicator type
+                if (iconsConverted(_circuitMap.get(_currentBlock))) {
+                    makeSelectionGroup(_currentBlock, true);
+                	_editor.disableMenus();
+                    TargetPane targetPane = (TargetPane)_editor.getTargetPanel();
+                    targetPane.setSelectGroupColor(_editGroupColor);
+                    targetPane.setHighlightColor(_highlightColor);
+                   _editDirectionFrame = new EditPortalDirection(Bundle.getMessage("OpenDirectionTitle"), this, _currentBlock);
+                }
+            }
+
         }
     }
 
@@ -412,7 +438,7 @@ public class CircuitBuilder  {
                 // check icons to be indicator type
                 _circuitIcons = _circuitMap.get(_currentBlock);
                 if (iconsConverted(_circuitMap.get(_currentBlock))) {
-                    makeSelectionGroup(_currentBlock, PortalIcon.BLOCK);
+                    makeSelectionGroup(_currentBlock, true);
                     _currentBlock.setState(OBlock.UNOCCUPIED);
                     // A temporary path "TEST_PATH" is used to display the icons representing a path
                     _currentBlock.allocate(EditCircuitPaths.TEST_PATH);
@@ -426,26 +452,15 @@ public class CircuitBuilder  {
         }
     }
 
-    /*
-    private void addPortalIcons() {
-        Iterator<PortalIcon> it = _portalIcons.iterator();
+    private void hidePortalIcons() {
+        Iterator<PortalIcon> it = _portalIconMap.values().iterator();
         while (it.hasNext()) {
-         	PortalIcon pi = it.next();
-         	pi.setStatus(PortalIcon.HIDDEN);
-           	_editor.putItem(pi);
-        }    	
-    }
-    */
-
-    private void removePortalIcons() {
-        Iterator<PortalIcon> it = _portalIcons.iterator();
-        while (it.hasNext()) {
-           	_editor.removeFromContents(it.next());
-        }
+        	it.next().setStatus(PortalIcon.HIDDEN);
+        }        	
     }
 
     private boolean editingOK() {
-        if (_editCircuitFrame!=null || _editPathsFrame!=null || _editPortalFrame!=null) {
+        if (_editCircuitFrame!=null || _editPathsFrame!=null || _editPortalFrame!=null || _editDirectionFrame!=null) {
 			// Already editing a circuit, ask for completion of that edit
 	        JOptionPane.showMessageDialog(_editCircuitFrame,
                     Bundle.getMessage("AlreadyEditing"), Bundle.getMessage("errorTitle"),
@@ -459,6 +474,9 @@ public class CircuitBuilder  {
             } else if (_editPortalFrame!=null) {
                 _editPortalFrame.toFront();
                 _editPortalFrame.setVisible(true);
+            } else if (_editDirectionFrame!=null) {
+            	_editDirectionFrame.toFront();
+            	_editDirectionFrame.setVisible(true);
             }
             return false;
         }
@@ -709,14 +727,18 @@ public class CircuitBuilder  {
         _editPortalFrame = null;
         closeCircuitBuilder();
     }
-
+    protected void closePortalDirection(OBlock block) {
+    	_editDirectionFrame = null;
+        closeCircuitBuilder();
+    }
+    
     private void closeCircuitBuilder() {
         _circuitIcons = null;
         _currentBlock = null;
         checkCircuits();
         makeToDoMenu();
         makeCircuitMenu();
-        removePortalIcons();
+        hidePortalIcons();
         _editor.resetEditor();
     }
     /**************** end closing frames ********************/
@@ -727,15 +749,10 @@ public class CircuitBuilder  {
     */
     private void checkCircuits() {
 
-        _portalIconMap = new Hashtable<String, PortalIcon>();
+        _portalIconMap = new HashMap<String, PortalIcon>();
         _darkTrack = new ArrayList<Positionable>();
         _unconvertedTrack = new ArrayList<Positionable>();
         _portalMisplacedBlock = new ArrayList<OBlock>();
-        Iterator<PortalIcon> pit = _portalIcons.iterator();
-        while (pit.hasNext()) {
-        	PortalIcon pi = pit.next();
-            _portalIconMap.put(pi.getName(), pi);
-        }
         Iterator<Positionable> it = _editor.getContents().iterator();
         while (it.hasNext()) {
             Positionable pos = it.next();
@@ -750,11 +767,8 @@ public class CircuitBuilder  {
                 }
             } else if (pos instanceof PortalIcon) {
                 PortalIcon pIcon = (PortalIcon)pos;
-                pIcon.setStatus(PortalIcon.BLOCK);
-                // Eliminate possible duplicate icons for this portal
                 if(!_portalIconMap.containsKey(pIcon.getName())) {
                     _portalIconMap.put(pIcon.getName(), pIcon);
-                    _portalIcons.add(pIcon);                	
                 }
             } else if (isUnconvertedTrack(pos)) {
                 if (!_unconvertedTrack.contains(pos)) {
@@ -765,7 +779,7 @@ public class CircuitBuilder  {
 
         _bareBlock = new ArrayList<OBlock>();
         _convertBlock = new ArrayList<OBlock>();
-        _portalMap = new Hashtable<String, Portal>();
+        _portalMap = new HashMap<String, Portal>();
         OBlockManager manager = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
         String[] sysNames = manager.getSystemNameArray();
         hasOBlocks = (sysNames.length>0);
@@ -838,7 +852,7 @@ public class CircuitBuilder  {
     /**
     * Used by Portal Frame
     */    
-    protected Hashtable<String, PortalIcon> getPortalIconMap() {
+    protected HashMap<String, PortalIcon> getPortalIconMap() {
         return _portalIconMap;
     }
     
@@ -867,7 +881,6 @@ public class CircuitBuilder  {
         if(!_portalIconMap.containsKey(name)) {
         	_portalMap.put(name, icon.getPortal());
         	_portalIconMap.put(name, icon);
-            _portalIcons.add(icon);                	
         }
         // 
     	if (_circuitIcons!=null) {
@@ -875,10 +888,6 @@ public class CircuitBuilder  {
     	}
     }
     
-    public java.util.List<PortalIcon> getPortalIcons() {
-        return _portalIcons;
-    }
-
     /**
     * Remove block, but keep the track icons. Set block reference in icon null
     */
@@ -916,14 +925,6 @@ public class CircuitBuilder  {
             g2d.setColor(color);
             g2d.setStroke(stroke);
         }
-    }
-/*
-    public void setAllEditable(boolean state) {
-		_editable = state;
-        for (int i = 0; i<_contents.size(); i++) {
-            _contents.get(i).setEditable(state);
-        }
-        _editor.setSelectionGroup(null);
     }
 
 /********************* convert plain track to indicator track **************/
@@ -1104,26 +1105,23 @@ public class CircuitBuilder  {
 /**************** select - deselect track icons ************************/
 
     /**
-    * select block's track icons for editing
+    * select block's track icons for editing -***could be _circuitMap.get(block) is sufficient
     */
-    private ArrayList<Positionable> makeSelectionGroup(OBlock block, String status) {
+    private ArrayList<Positionable> makeSelectionGroup(OBlock block, boolean showPortal) {
     	ArrayList<Positionable> group = new ArrayList<Positionable>();
-    	Iterator<Positionable> iter = _circuitMap.get(block).iterator();
-        while(iter.hasNext()) {
-        	group.add(iter.next());
-        }
-        for (int i=0; i<_portalIcons.size(); i++) {
-        	PortalIcon icon = _portalIcons.get(i);
-        	Portal port = icon.getPortal();
-            group.remove(icon);
-        	if (status!=null) {
-                if (block.equals(port.getFromBlock()) || block.equals(port.getToBlock()) ) {
-                    icon.setStatus(status);
-                   	_editor.putItem(icon);
-                }         		
-         	}
-        }
     	_circuitIcons = _circuitMap.get(block);
+    	Iterator<Positionable> iter = _circuitIcons.iterator();
+        while(iter.hasNext()) {
+        	Positionable p = iter.next();
+        	if (p instanceof PortalIcon) {
+        		if (showPortal) {
+                	((PortalIcon)p).setStatus(PortalIcon.VISIBLE);
+                	group.add(p);        		        			
+            	}
+    		} else {
+            	group.add(p);        		    			
+    		}
+        }
         _editor.setSelectionGroup(group);
         return group;
     }
@@ -1254,11 +1252,14 @@ public class CircuitBuilder  {
     	} else if (_editPortalFrame!=null) {
     		_editPortalFrame.toFront();
             _editor.setSelectionGroup(_saveSelectionGroup);
+    	} else if (_editDirectionFrame!=null) {
+    		_editDirectionFrame.toFront();
+            _editor.setSelectionGroup(_saveSelectionGroup);
     	}
     }
    
     public boolean doMouseReleased(Positionable selection, MouseEvent event) {
-        if (_editCircuitFrame!=null || _editPathsFrame!=null) {
+        if (_editCircuitFrame!=null || _editPathsFrame!=null || _editDirectionFrame!=null) {
         	return true;
         } else if (_editPortalFrame!=null) {
         	if (selection instanceof PortalIcon) {
@@ -1270,7 +1271,7 @@ public class CircuitBuilder  {
     }
 
     protected boolean doMouseClicked(Positionable selection, MouseEvent event) {
-        if (_editCircuitFrame!=null || _editPathsFrame!=null || (_editPortalFrame!=null)) {
+        if (_editCircuitFrame!=null || _editPathsFrame!=null || (_editPortalFrame!=null) || _editDirectionFrame!=null) {
             if (_editPathsFrame!=null && event.isShiftDown()) {
             	selection.doMouseClicked(event);
             }
@@ -1286,17 +1287,24 @@ public class CircuitBuilder  {
     * No dragging when editing
     */
     public boolean doMouseDragged(Positionable selection, MouseEvent event) {
-        if (_editCircuitFrame!=null || _editPathsFrame!=null) {
+        if (_editCircuitFrame!=null || _editPathsFrame!=null || _editDirectionFrame!=null) {
             return true;     // no dragging when editing
         }
         if (_editPortalFrame!=null) {
-            if ((selection instanceof PortalIcon) /*&&_circuitIcons.contains(selection)*/) {
+            if (selection instanceof PortalIcon) {
                 return false;		// OK to drag portal icon
             } else {
             	return true;
             }
         }
         return false;
+    }
+    /**
+     * Second call needed to only drag the portal icon and not entire selection
+     * @return
+     */
+    public boolean dragPortal() {
+    	return (_editPortalFrame!=null);
     }
 
     /*
@@ -1332,7 +1340,7 @@ public class CircuitBuilder  {
                     if (pathGroup.contains(selection)) {
                         pathGroup.remove(selection);
                         if (selection instanceof PortalIcon) {
-                            ((PortalIcon)selection).setStatus(PortalIcon.BLOCK);
+                            ((PortalIcon)selection).setStatus(PortalIcon.VISIBLE);
                         } else {
                         	((IndicatorTrack)selection).setStatus(Sensor.INACTIVE);
                             ((IndicatorTrack)selection).removePath(EditCircuitPaths.TEST_PATH);
@@ -1349,7 +1357,7 @@ public class CircuitBuilder  {
                     }
                 } else {
                     if (selection instanceof PortalIcon) {
-                        ((PortalIcon)selection).setStatus(PortalIcon.BLOCK);
+                        ((PortalIcon)selection).setStatus(PortalIcon.VISIBLE);
                     }
                 }
                 int state = block.getState() | OBlock.ALLOCATED;
@@ -1366,6 +1374,11 @@ public class CircuitBuilder  {
                 _editor.highlight(getPortalIconMap().get(((PortalIcon)selection).getName()));
             }
             _editPortalFrame.toFront();
+        } else if (_editDirectionFrame!=null) {
+            if (selection instanceof PortalIcon && _circuitIcons.contains(selection)) {
+            	_editDirectionFrame.setPortalIcon((PortalIcon)selection);
+            }
+        	_editDirectionFrame.toFront();
         }
     }
 

@@ -1124,8 +1124,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 _idxCurrentOrder = activeIdx;
                 getBlockOrderAt(activeIdx).setPath(this);// safety for late TO throws -especially when coming from a dark block
                 // set block state to show our train occupies the block
-                block.setValue(_trainName);
-                block.setState(block.getState() | OBlock.RUNNING);
+//                block.setValue(_trainName);
+//                block.setState(block.getState() | OBlock.RUNNING);
             }
         } else if (activeIdx > _idxCurrentOrder+1) {
             log.warn("Rouge train ahead at block \""+block.getDisplayName()+"\"!");
@@ -1137,10 +1137,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         	return;
         } else if (_idxCurrentOrder > 0) {
         	log.error("activeIdx ("+activeIdx+") < _idxCurrentOrder ("+_idxCurrentOrder+")!"); 
-        } else {
-            block.setValue(_trainName);
-            block.setState(block.getState() | OBlock.RUNNING);        	
         }
+        block.setValue(_trainName);
+        block.setState(block.getState() | OBlock.RUNNING);        	
         // _idxCurrentOrder has been incremented. Warranted train has entered this block. 
         // Do signals, speed etc.
         String currentSpeed = "Stop";

@@ -192,28 +192,26 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     boolean _delete;
     HashMap<String, String> _urlMap = new HashMap<String, String>(); 
     public NamedIcon loadFailed(String msg, String url) {
-        if (_debug) log.debug("loadFailed _ignore= "+_ignore);
+        if (_debug) log.debug("loadFailed _ignore= "+_ignore+" "+msg);
         String goodUrl = _urlMap.get(url);
         if (goodUrl!=null) {
             return NamedIcon.getIconByName(goodUrl);
         }
         if (_ignore) {
             _loadFailed = true;
-            return new NamedIcon(url, url);
+            return NamedIcon.getIconByName(url);
         }
         _newIcon = null;
         _delete = false;
         new UrlErrorDialog(msg, url);
 
         if (_delete) {
-            if (_debug) log.debug("loadFailed _delete= "+_delete);
             return null;
         }
         if (_newIcon==null) {
             _loadFailed = true;
-            _newIcon =new NamedIcon(url, url);
+            _newIcon = NamedIcon.getIconByName(url);
         }
-        if (_debug) log.debug("loadFailed icon null= "+(_newIcon==null));
         return _newIcon;
     }
     class UrlErrorDialog extends JDialog {
@@ -223,14 +221,21 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         UrlErrorDialog(String msg, String url) {
             super(_targetFrame, Bundle.getMessage("BadIcon"), true);
             _badUrl = url;
+            JPanel content = new JPanel();
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            panel.add(javax.swing.Box.createVerticalStrut(10));
             panel.add(new JLabel(java.text.MessageFormat.format(Bundle.getMessage("IconUrlError"), msg)));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt1")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt1A")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt1B")));
             panel.add(javax.swing.Box.createVerticalStrut(10));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt2")));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt3")));
+            panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt3A")));
+            panel.add(javax.swing.Box.createVerticalStrut(10));
             panel.add(new JLabel(Bundle.getMessage("UrlErrorPrompt4")));
+            panel.add(javax.swing.Box.createVerticalStrut(10));
             _urlField = new JTextField(url);
             _urlField.setDragEnabled(true);
             _urlField.setTransferHandler(new jmri.util.DnDStringImportHandler());
@@ -241,7 +246,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _catalog = CatalogPanel.makeDefaultCatalog();
             _catalog.setToolTipText(Bundle.getMessage("ToolTipDragIconToText"));
             panel.add(_catalog);
-            setContentPane(panel);
+            content.add(panel);
+            setContentPane(content);
             setLocation(200, 100);
             pack();
             setVisible(true);
@@ -504,9 +510,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
 
         public void paint(Graphics g) {
-            Graphics2D g2d = (Graphics2D)g;
+        	Graphics2D g2d = (Graphics2D)g;
             g2d.scale(_paintScale, _paintScale);
-            super.paint(g);
+            super.paint(g);           	        	
             paintTargetPanel(g);
             java.awt.Stroke stroke = g2d.getStroke();
             Color color = g2d.getColor();
@@ -2555,7 +2561,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             for (int i=0; i<_selectionGroup.size(); i++) {
             	Positionable p = _selectionGroup.get(i);
             	if ( p instanceof PositionableLabel ) {
-                    setAttributes(util, p, isOpaque);           		
+                    setAttributes(util, p, false);           		
             	}
              }
         }

@@ -36,7 +36,7 @@ public class ItemDialog extends JmriJFrame {
         _type = type;
         _family = family;
         _parent = parent;
-        setAlwaysOnTop(true);
+//        setAlwaysOnTop(true);
     }
 
     protected void sizeLocate() {

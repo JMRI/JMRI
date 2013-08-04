@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import jmri.util.JmriJFrame;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 
 /**
 *  JPanels for the various item types that come from tool Tables - e.g. Sensors, Turnouts, etc.
@@ -73,8 +74,6 @@ public abstract class ItemPanel extends JPanel {
     /* Methods used upon return from Icon dialogs
     * to update the panel for TableItemPanel item types.
     */    
-    protected void initIconFamiliesPanel(){
-    }
     protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap){
     }
     protected void setFamily(String family) {
@@ -84,9 +83,6 @@ public abstract class ItemPanel extends JPanel {
     protected void removeIconMap(String family) {
     }
     protected void reset() {
-      _paletteFrame.pack();
-      _paletteFrame.invalidate();
-      invalidate();
       _paletteFrame.repaint();
     }
     protected void updateFamiliesPanel() {
@@ -123,6 +119,8 @@ public abstract class ItemPanel extends JPanel {
     static final String[] BACKGROUND = {"Background"};
     static final String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "AllocatedTrack",
                                                 "PositionTrack", "DontUseTrack", "ErrorTrack"};
+    static final String[] PORTAL = {PortalIcon.HIDDEN, PortalIcon.VISIBLE, PortalIcon.PATH, 
+    								PortalIcon.TO_ARROW, PortalIcon.FROM_ARROW};
 
     static protected HashMap<String, NamedIcon> makeNewIconMap(String type) {
         HashMap <String, NamedIcon> newMap = new HashMap <String, NamedIcon>();
@@ -147,6 +145,8 @@ public abstract class ItemPanel extends JPanel {
             names = INDICATOR_TRACK;
         } else if (type.equals("IndicatorTO")) {
             names = INDICATOR_TRACK;
+        } else if (type.equals("Portal")) {
+            names = PORTAL;
         } else {
             log.error("Item type \""+type+"\" cannot create icon sets!");
             return null;
