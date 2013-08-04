@@ -66,7 +66,6 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
         border.setLayout(new java.awt.BorderLayout(10,10));
         border.add(contentPane);
         setContentPane(border);
-        setSize(500, 500);
         pack();
         if (_firstInstance) {
             setLocationRelativeTo(_parent._editor);
@@ -368,7 +367,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
 
 /*    private void checkPortalIcons() {
         java.util.List<Portal> portals = _homeBlock.getPortals();
-        Hashtable<String, PortalIcon> iconMap = _parent.getPortalIconMap();
+        HashMap<String, PortalIcon> iconMap = _parent.getPortalIconMap();
         if (log.isDebugEnabled()) log.debug("checkPortalIcons: "+_homeBlock.getDisplayName()+
                                             " has "+portals.size()+" portals, iconMap has "+
                                             iconMap.size()+" icons");
@@ -523,7 +522,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
                     }
                 	pi = new PortalIcon(_parent._editor, portal);
                 	pi.setLevel(Editor.MARKERS);
-                	pi.setStatus(PortalIcon.BLOCK);
+                	pi.setStatus(PortalIcon.VISIBLE);
                     _parent.addPortalIcon(pi);
                 }
                 _currentPortalName = name;

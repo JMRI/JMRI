@@ -6,9 +6,13 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.jmrit.display.configurexml.PositionableLabelXml;
+import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
 
+import java.util.Iterator;
 import java.util.List;
+
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
@@ -45,17 +49,14 @@ public class PortalIconXml extends PositionableLabelXml {
         element.setAttribute("fromBlockName", portal.getFromBlockName());
 
         Element elem = new Element("icons");
-        NamedIcon icon = p.getIcon(PortalIcon.HIDDEN);
-        if (icon!=null) {
-            elem.addContent(storeIcon("hidden", icon));
-        }
-        icon = p.getIcon(PortalIcon.BLOCK);
-        if (icon!=null) {
-            elem.addContent(storeIcon("block", icon));
-        }
-        icon = p.getIcon(PortalIcon.PATH);
-        if (icon!=null) {
-            elem.addContent(storeIcon("path", icon));
+        String family = p.getFamily();
+        if (family!=null) {
+            elem.setAttribute("family", family);
+        }        
+        Iterator<String> iter = p.getIconStateNames();
+        while (iter.hasNext()) {
+        	String key = iter.next();
+            elem.addContent(storeIcon(key, p.getIcon(key)));        	
         }
         element.addContent(elem);
 
@@ -97,10 +98,17 @@ public class PortalIconXml extends PositionableLabelXml {
             ed.loadFailed();
             return;
         }
-        PortalIcon l= new PortalIcon(fromBlk, portalName, ed);
+        OBlock block = jmri.InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(fromBlk);
+        Portal portal = block.getPortalByName(portalName);
+        
+        PortalIcon l= new PortalIcon(ed, portal);
 
         try {
             Element icons = element.getChild("icons");
+            Attribute attr = icons.getAttribute("family");
+            if (attr!=null) {
+                l.setFamily(attr.getValue());
+            }
             @SuppressWarnings("unchecked")
             List<Element> iconList = icons.getChildren();
             for (int i=0; i<iconList.size(); i++) {
@@ -119,7 +127,8 @@ public class PortalIconXml extends PositionableLabelXml {
             return;
         }
     	
-        ed.putPortalIcon(l);
+//        ed.putPortalIcon(l);
+        ed.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, ControlPanelEditor.MARKERS, element);        
      }
