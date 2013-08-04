@@ -346,7 +346,7 @@ public class Tracker {
         		_tailPortal =null;
         	} else {
         		_headPortal = getPortalBetween(_occupies.get(1), _occupies.getFirst());
-        		_tailPortal = getPortalBetween(_occupies.get(size-2), _occupies.getLast());;        		
+        		_tailPortal = getPortalBetween(_occupies.get(size-2), _occupies.getLast());        		
         	}
          	makeRange();
          	return LEAVE_BLOCK;

@@ -51,7 +51,7 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
             bottomPanel.add(_bottom1Panel);
             bottomPanel.add(_bottom2Panel);
             add(bottomPanel);
-            _initialized = true;;
+            _initialized = true;
        	}
     }
 

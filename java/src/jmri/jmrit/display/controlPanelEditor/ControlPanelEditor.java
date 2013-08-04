@@ -556,7 +556,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private void copyToClipboard() {
         if (_selectionGroup!=null) {
             ArrayList <Positionable> dragGroup = new ArrayList <Positionable>();
-            HashMap <MemoryComboIcon, javax.swing.plaf.ComboBoxUI> combosUI = new HashMap <MemoryComboIcon, javax.swing.plaf.ComboBoxUI>();
 
             for (int i=0; i<_selectionGroup.size(); i++) {
                 Positionable pos = _selectionGroup.get(i).deepClone();
@@ -1227,7 +1226,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             f.init("Train Name", p, false);
             f.initText();
             f.setVisible(true);	
-            f.setLocationRelativeTo((Component)p);
+            f.setLocationRelativeTo(p);
         }
         _pastePending = false;
     }

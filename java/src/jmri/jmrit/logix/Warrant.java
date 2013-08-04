@@ -207,7 +207,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     */
     protected int getIndexOfBlock(String name, int startIdx) {
         for (int i=startIdx; i<_orders.size(); i++){
-        	String n = _orders.get(i).getBlock().getDisplayName();
             if (_orders.get(i).getBlock().getDisplayName().equals(name)) {
                 return i;
             }

@@ -1301,7 +1301,7 @@ public class CircuitBuilder  {
     }
     /**
      * Second call needed to only drag the portal icon and not entire selection
-     * @return
+     * @return true if portal frame is open
      */
     public boolean dragPortal() {
     	return (_editPortalFrame!=null);

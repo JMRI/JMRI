@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
 *  
 * @author Pete Cressman  Copyright (c) 2010, 2011
 */
-public /*abstract*/ class FamilyItemPanel extends ItemPanel {
+public abstract class FamilyItemPanel extends ItemPanel {
 
     protected JPanel    _iconFamilyPanel;
     protected JPanel    _iconPanel;     // panel contained in _iconFamilyPanel - all icons in family
@@ -183,9 +183,6 @@ public /*abstract*/ class FamilyItemPanel extends ItemPanel {
         }
     }
 
-    /**
-     * @param idx component index of _iconFamilyPanel
-     */
     protected void updateFamiliesPanel() {
         if (log.isDebugEnabled()) log.debug("updateFamiliesPanel for "+_itemType);
         removeIconFamiliesPanel();
@@ -334,7 +331,7 @@ public /*abstract*/ class FamilyItemPanel extends ItemPanel {
         }
     }
 
-    /*abstract*/ protected JLabel getDragger(DataFlavor flavor, HashMap <String, NamedIcon> map) {return null; };
+    protected JLabel getDragger(DataFlavor flavor, HashMap <String, NamedIcon> map) {return null; }
 
     protected void makeDndIconPanel(HashMap<String, NamedIcon> iconMap, String displayKey) {
         if (_supressDragging) {

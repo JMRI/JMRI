@@ -1487,7 +1487,7 @@ public class WarrantTableAction extends AbstractAction {
                         	(property.equals("runMode") && e.getNewValue()==Integer.valueOf(Warrant.MODE_NONE))
                         	|| (property.equals("controlChange") &&e.getNewValue()==Integer.valueOf(Warrant.ABORT))
                         	)) {
-                        	removeNXWarrant((Warrant)bean);                       	
+                        	removeNXWarrant(bean);                       	
                             try {
                                 Thread.sleep(50);
                                 fireTableRowsDeleted(i, i);
