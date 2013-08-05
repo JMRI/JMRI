@@ -564,7 +564,7 @@ public class Car extends RollingStock {
 		}
 	}
 
-	protected void reset() {
+	public void reset() {
 		setScheduleId(getPreviousScheduleId());	// revert to previous
 		setNextLoadName("");
 		setNextWait(0);

@@ -933,9 +933,10 @@ public class TrainBuilder extends TrainCommon {
 					} else if (findDestinationAndTrack(car, rl, rld)) {
 						foundCar = true;
 					}
-					if (!foundCar)
+					if (!foundCar) {
 						throw new BuildFailedException(MessageFormat.format(Bundle
 								.getMessage("buildErrorCarStageDest"), new Object[] { car.toString() }));
+					}
 				}
 				// is there a specific road requirement for the car with FRED?
 				else if (!road.equals("") && !road.equals(car.getRoadName())) {
@@ -1035,9 +1036,10 @@ public class TrainBuilder extends TrainCommon {
 					} else if (findDestinationAndTrack(car, rl, rld)) {
 						foundCaboose = true;
 					}
-					if (!foundCaboose)
+					if (!foundCaboose) {
 						throw new BuildFailedException(MessageFormat.format(Bundle
 								.getMessage("buildErrorCarStageDest"), new Object[] { car.toString() }));
+					}
 				}
 				// is there a specific road requirement for the caboose?
 				else if (!roadCaboose.equals("") && !roadCaboose.equals(car.getRoadName())) {
@@ -1825,13 +1827,20 @@ public class TrainBuilder extends TrainCommon {
 			// we'll just put out a warning message here so we can find out how many cars have issues
 			if (car.getLocationName().equals(departLocation.getName())
 					&& departStageTrack != null
-					&& (car.getDestination() == null || car.getDestinationTrack() == null || car
-					.getTrain() == null)) {
-				addLine(buildReport, ONE, MessageFormat.format(Bundle
-						.getMessage("buildErrorCarStageDest"), new Object[] { car.toString() }));
+					&& (car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)) {
+				addLine(buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageDest"),
+						new Object[] { car.toString() }));
+				// does the car has a final destination track going into staging? If so we need to reset this car
+				if (car.getFinalDestinationTrack() != null
+						&& car.getFinalDestinationTrack() == terminateStageTrack) {
+					addLine(buildReport, THREE, MessageFormat.format(Bundle
+							.getMessage("buildStatingCarHasFinal"), new Object[] { car.toString(),
+							car.getFinalDestinationName(), car.getFinalDestinationTrackName() }));
+					car.reset();
+				}
 				addLine(buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
 			}
-			// are there still moves available?
+		// are there still moves available?
 			if (noMoreMoves) {
 				addLine(buildReport, FIVE, Bundle.getMessage("buildNoAvailableDestinations"));
 				break;
@@ -3111,6 +3120,14 @@ public class TrainBuilder extends TrainCommon {
 				log.debug("Car (" + car.toString() + ") has a destination track ("
 						+ car.getDestinationTrack().getName() + ")");
 				// going into the correct staging track?
+				if (rld.equals(train.getTrainTerminatesRouteLocation()) && terminateStageTrack != null
+						&& terminateStageTrack != car.getDestinationTrack()) {
+					// car going to wrong track in staging, change track
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("buildCarDestinationStaging"), new Object[] { car.toString(),
+							car.getDestinationName(), car.getDestinationTrackName() }));
+					car.setDestination(terminateStageTrack.getLocation(), terminateStageTrack);
+				}
 				if (!rld.equals(train.getTrainTerminatesRouteLocation()) || terminateStageTrack == null
 						|| terminateStageTrack == car.getDestinationTrack()) {
 					// is train direction correct?
@@ -3194,7 +3211,7 @@ public class TrainBuilder extends TrainCommon {
 	}
 
 	/**
-	 * Find a destination and track for a car.
+	 * Find a destination and track for a car, and add the car to the train.
 	 * 
 	 * @param car
 	 *            The car that is looking for a destination and destination track.
@@ -3204,7 +3221,7 @@ public class TrainBuilder extends TrainCommon {
 	 *            Where in the train's route to begin a search for a destination for this car.
 	 * @param routeEnd
 	 *            Where to stop looking for a destination.
-	 * @return true if successful.
+	 * @return true if successful, car has destination, track and a train.
 	 * @throws BuildFailedException
 	 */
 	private boolean findDestinationAndTrack(Car car, RouteLocation rl, int routeIndex, int routeEnd)
@@ -3249,16 +3266,13 @@ public class TrainBuilder extends TrainCommon {
 				// The following should never throw, all locations in the route have been already checked
 				throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRouteLoc"),
 						new Object[] { train.getRoute().getName(), rld.getName() }));
-			}
-			
-
+			}			
 			// any moves left at this location?
 			if (rld.getCarMoves() >= rld.getMaxCarMoves()) {
 				addLine(buildReport, FIVE, MessageFormat.format(Bundle
 						.getMessage("buildNoAvailableMovesDest"), new Object[] { rld.getName() }));
 				continue;
 			}
-
 			noMoreMoves = false;
 			Location destinationTemp = null;
 			Track trackTemp = null;
@@ -3644,7 +3658,7 @@ public class TrainBuilder extends TrainCommon {
 			if (status.equals(Track.OKAY)) {
 				car.setLoadGeneratedFromStaging(true);
 				car.setFinalDestination(stageTrack.getLocation());
-				car.setFinalDestinationTrack(stageTrack);
+				car.setFinalDestinationTrack(stageTrack);	// TODO should we be setting the track in staging?
 				// is car part of kernel?
 				car.updateKernel();
 				addLine(buildReport, SEVEN, MessageFormat.format(

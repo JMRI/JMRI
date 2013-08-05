@@ -873,7 +873,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 		}
 	}
 
-	protected void reset() {
+	public void reset() {
 		// the order of the next two instructions is important, otherwise rs will have train's route id
 		setTrain(null);
 		setDestination(null, null);

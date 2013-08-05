@@ -2267,8 +2267,8 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("set destination", Track.OKAY, c3.setDestination(l3, l3s2));
 		train2.build();
 		// Should build
-		Assert.assertFalse("Train 2 built", train2.isBuilt());
-		Assert.assertEquals("Car X10001 not assigned to train 2", null, c3.getTrain());
+		Assert.assertTrue("Train 2 built", train2.isBuilt());
+		Assert.assertEquals("Car X10001 not assigned to train 2", train2, c3.getTrain());
 
 		// Send car X10001 to staging and the only track available
 		train2.reset();
