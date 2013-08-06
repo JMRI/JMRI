@@ -418,6 +418,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
 	// one of four buttons: Report, Move, Conductor or Terminate
 	private synchronized void actionTrain(int row) {
+		// no actions while a train is being built
+		if (build != null && build.isAlive())
+			return;
 		Train train = manager.getTrainById(sysList.get(row));
 		// move button becomes report if failure
 		if (train.getBuildFailed()) {
