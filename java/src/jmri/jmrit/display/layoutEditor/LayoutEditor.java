@@ -1411,13 +1411,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     
     }
     
-    static boolean openDispatcherOnLoad = false;
+    boolean openDispatcherOnLoad = false;
     
-    static public boolean getOpenDispatcherOnLoad(){
+    public boolean getOpenDispatcherOnLoad(){
         return openDispatcherOnLoad;
     }
     
-    static public void setOpenDispatcherOnLoad(Boolean boo){
+    public void setOpenDispatcherOnLoad(Boolean boo){
         openDispatcherOnLoad = boo;
     }
     /**
