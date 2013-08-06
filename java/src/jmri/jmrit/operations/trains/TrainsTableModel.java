@@ -388,11 +388,15 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		focusRef = true;
 	}
 
+	Thread build;
 	private synchronized void buildTrain(int row) {
 		final Train train = manager.getTrainById(sysList.get(row));
 		if (!train.isBuilt()) {
+			// only one train build at a time
+			if (build != null && build.isAlive())
+				return;
 			// use a thread to allow table updates during build
-			Thread build = new Thread(new Runnable() {
+			build = new Thread(new Runnable() {
 				public void run() {
 					train.build();
 				}
