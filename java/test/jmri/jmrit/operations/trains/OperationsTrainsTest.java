@@ -3442,7 +3442,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.STAGING);
 		loc3trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc3trk1.setLength(900);
-		loc3trk1.setRemoveLoadsEnabled(true);
+		loc3trk1.setRemoveCustomLoadsEnabled(true);
 
 		// Create route with 2 location
 		Route rte1;
@@ -3698,8 +3698,8 @@ public class OperationsTrainsTest extends TestCase {
 		r3rl3.setTrainIconX(75); // set the train icon coordinates
 		r3rl3.setTrainIconY(100);
 
-		loc3trk1.setRemoveLoadsEnabled(false);
-		loc3trk1.setAddLoadsEnabled(true); // generate schedule loads
+		loc3trk1.setRemoveCustomLoadsEnabled(false);
+		loc3trk1.setAddCustomLoadsEnabled(true); // generate schedule loads
 
 		sch1Item1.setReceiveLoadName("Metal 1"); // request these loads from staging
 		sch1Item2.setReceiveLoadName("Metal 2");

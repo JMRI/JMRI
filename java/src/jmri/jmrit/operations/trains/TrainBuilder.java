@@ -1537,8 +1537,8 @@ public class TrainBuilder extends TrainCommon {
 								continue;
 							}
 							if (car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
-									&& (departStageTrack.isAddLoadsEnabled()
-											|| departStageTrack.isAddLoadsAnySpurEnabled() || departStageTrack
+									&& (departStageTrack.isAddCustomLoadsEnabled()
+											|| departStageTrack.isAddCustomLoadsAnySpurEnabled() || departStageTrack
 												.isAddCustomLoadsAnyStagingTrackEnabled())) {
 								addLine(buildReport, SEVEN, MessageFormat.format(Bundle
 										.getMessage("blockNotAbleCarTypeGenerate"), new Object[] {
@@ -2299,8 +2299,8 @@ public class TrainBuilder extends TrainCommon {
 					if (!car.isCaboose()
 							&& !car.isPassenger()
 							&& (!car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName()) || !departStageTrack
-									.isAddLoadsEnabled()
-									&& !departStageTrack.isAddLoadsAnySpurEnabled()
+									.isAddCustomLoadsEnabled()
+									&& !departStageTrack.isAddCustomLoadsAnySpurEnabled()
 									&& !departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled())
 							&& !train.acceptsLoad(car.getLoadName(), car.getTypeName())) {
 						addLine(buildReport, THREE, MessageFormat.format(Bundle
@@ -2685,11 +2685,11 @@ public class TrainBuilder extends TrainCommon {
 	 */
 	private boolean generateCarLoadFromStaging(Car car) throws BuildFailedException {
 		if (car.getTrack() == null || !car.getTrack().getLocType().equals(Track.STAGING)
-				|| !car.getTrack().isAddLoadsAnySpurEnabled()
+				|| !car.getTrack().isAddCustomLoadsAnySpurEnabled()
 				|| !car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
 				|| car.getDestination() != null || car.getFinalDestination() != null) {
 			log.debug("No load search for car (" + car.toString() + ") isAddLoadsAnySpurEnabled: " // NOI18N
-					+ (car.getTrack().isAddLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
+					+ (car.getTrack().isAddCustomLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
 					+ ", car load: (" + car.getLoadName() + ")"); // NOI18N
 			return false; // no load generated for this car
 		}
@@ -2771,7 +2771,7 @@ public class TrainBuilder extends TrainCommon {
 				|| car.getDestination() != null || car.getFinalDestination() != null) {
 			log.debug("No load search for car (" + car.toString()
 					+ ") isAddCustomLoadsAnyStagingTrackEnabled: " // NOI18N
-					+ (car.getTrack().isAddLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
+					+ (car.getTrack().isAddCustomLoadsAnySpurEnabled() ? "true" : "false") // NOI18N
 					+ ", car load: (" + car.getLoadName() + ")"); // NOI18N
 			return false;
 		}
@@ -3342,8 +3342,8 @@ public class TrainBuilder extends TrainCommon {
 						&& car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())
 						&& rldSave == null
 						&& (departStageTrack.isAddCustomLoadsAnyStagingTrackEnabled()
-								|| departStageTrack.isAddLoadsEnabled() || departStageTrack
-									.isAddLoadsAnySpurEnabled())) {
+								|| departStageTrack.isAddCustomLoadsEnabled() || departStageTrack
+									.isAddCustomLoadsAnySpurEnabled())) {
 					// try and generate a load for this car into staging
 					if (generateLoadCarDepartingAndTerminatingIntoStaging(car, terminateStageTrack)) {
 						trackTemp = terminateStageTrack;
@@ -3401,8 +3401,8 @@ public class TrainBuilder extends TrainCommon {
 							&& (!status.startsWith(Track.LENGTH)) // can't generate load for spur that is full
 							&& testTrack.getLocType().equals(Track.SPUR)
 							&& !testTrack.getScheduleId().equals("")
-							&& (car.getTrack().isAddLoadsEnabled() || car.getTrack()
-									.isAddLoadsAnySpurEnabled())
+							&& (car.getTrack().isAddCustomLoadsEnabled() || car.getTrack()
+									.isAddCustomLoadsAnySpurEnabled())
 							&& car.getLoadName().equals(CarLoads.instance().getDefaultEmptyName())) {
 						// can we use this track?
 						if (!testTrack.isSpaceAvailable(car)) {

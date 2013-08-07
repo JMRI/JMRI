@@ -541,13 +541,14 @@ public class Car extends RollingStock {
 			if (destTrack.isSetLoadEmptyEnabled() && getLoadName().equals(carLoads.getDefaultLoadName())) {
 				setLoadEmpty();
 			}
-			// empty car if it has a schedule load
-			if (destTrack.isRemoveLoadsEnabled() && !getLoadName().equals(carLoads.getDefaultEmptyName())
+			// empty car if it has a custom load
+			if (destTrack.isRemoveCustomLoadsEnabled() && !getLoadName().equals(carLoads.getDefaultEmptyName())
 					&& !getLoadName().equals(carLoads.getDefaultLoadName())) {
-				setLoadEmpty();
 				// remove this car's final destination if it has one
 				setFinalDestination(null);
 				setFinalDestinationTrack(null);
+				// note that RWE sets the car's final destination
+				setLoadEmpty();
 			}
 		}
 	}

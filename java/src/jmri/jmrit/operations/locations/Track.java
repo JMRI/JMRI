@@ -86,9 +86,9 @@ public class Track {
 	// load options
 	protected int _loadOptions = 0;
 	private static final int SWAP_GENERIC_LOADS = 1;
-	private static final int EMPTY_SCHEDULE_LOADS = 2;
-	private static final int GENERATE_SCHEDULE_LOADS = 4;
-	private static final int GENERATE_SCHEDULE_LOADS_ANY_SPUR = 8;
+	private static final int EMPTY_CUSTOM_LOADS = 2;
+	private static final int GENERATE_CUSTOM_LOADS = 4;
+	private static final int GENERATE_CUSTOM_LOADS_ANY_SPUR = 8;
 	private static final int EMPTY_GENERIC_LOADS = 16;
 	private static final int GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK = 32;
 
@@ -1731,53 +1731,53 @@ public class Track {
 	 * @param enable
 	 *            when true, remove Scheduled loads from cars
 	 */
-	public void setRemoveLoadsEnabled(boolean enable) {
+	public void setRemoveCustomLoadsEnabled(boolean enable) {
 		if (enable)
-			_loadOptions = _loadOptions | EMPTY_SCHEDULE_LOADS;
+			_loadOptions = _loadOptions | EMPTY_CUSTOM_LOADS;
 		else
-			_loadOptions = _loadOptions & 0xFFFF - EMPTY_SCHEDULE_LOADS;
+			_loadOptions = _loadOptions & 0xFFFF - EMPTY_CUSTOM_LOADS;
 	}
 
-	public boolean isRemoveLoadsEnabled() {
-		return (0 < (_loadOptions & EMPTY_SCHEDULE_LOADS));
+	public boolean isRemoveCustomLoadsEnabled() {
+		return (0 < (_loadOptions & EMPTY_CUSTOM_LOADS));
 	}
 
 	/**
-	 * When enabled, add Scheduled car loads if there's a demand.
+	 * When enabled, add custom car loads if there's a demand.
 	 * 
 	 * @param enable
-	 *            when true, add Scheduled loads from cars
+	 *            when true, add custom loads to cars
 	 */
-	public void setAddLoadsEnabled(boolean enable) {
-		boolean old = isAddLoadsEnabled();
+	public void setAddCustomLoadsEnabled(boolean enable) {
+		boolean old = isAddCustomLoadsEnabled();
 		if (enable)
-			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS;
+			_loadOptions = _loadOptions | GENERATE_CUSTOM_LOADS;
 		else
-			_loadOptions = _loadOptions & 0xFFFF - GENERATE_SCHEDULE_LOADS;
+			_loadOptions = _loadOptions & 0xFFFF - GENERATE_CUSTOM_LOADS;
 		setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
 	}
 
-	public boolean isAddLoadsEnabled() {
-		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS));
+	public boolean isAddCustomLoadsEnabled() {
+		return (0 < (_loadOptions & GENERATE_CUSTOM_LOADS));
 	}
 
 	/**
-	 * When enabled, add Scheduled car loads if there's a demand.
+	 * When enabled, add custom car loads if there's a demand by any spur/industry.
 	 * 
 	 * @param enable
-	 *            when true, add Scheduled loads from cars
+	 *            when true, add custom loads to cars
 	 */
-	public void setAddLoadsAnySpurEnabled(boolean enable) {
-		boolean old = isAddLoadsAnySpurEnabled();
+	public void setAddCustomLoadsAnySpurEnabled(boolean enable) {
+		boolean old = isAddCustomLoadsAnySpurEnabled();
 		if (enable)
-			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS_ANY_SPUR;
+			_loadOptions = _loadOptions | GENERATE_CUSTOM_LOADS_ANY_SPUR;
 		else
-			_loadOptions = _loadOptions & 0xFFFF - GENERATE_SCHEDULE_LOADS_ANY_SPUR;
+			_loadOptions = _loadOptions & 0xFFFF - GENERATE_CUSTOM_LOADS_ANY_SPUR;
 		setDirtyAndFirePropertyChange(LOAD_OPTIONS_CHANGED_PROPERTY, old, enable);
 	}
 
-	public boolean isAddLoadsAnySpurEnabled() {
-		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS_ANY_SPUR));
+	public boolean isAddCustomLoadsAnySpurEnabled() {
+		return (0 < (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_SPUR));
 	}
 
 	/**
