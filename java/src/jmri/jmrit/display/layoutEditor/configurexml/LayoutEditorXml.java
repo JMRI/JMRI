@@ -90,7 +90,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
             panel.setAttribute("blueBackground", ""+p.getBackgroundColor().getBlue());
         }
 		p.resetDirty();
-        panel.setAttribute("openDispatcher",jmri.jmrit.display.layoutEditor.LayoutEditor.getOpenDispatcherOnLoad()?"yes":"no");
+        panel.setAttribute("openDispatcher",p.getOpenDispatcherOnLoad()?"yes":"no");
 
         // include contents (Icons and Labels)
         List <Positionable> contents = p.getContents();
@@ -530,11 +530,11 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         if(jmri.InstanceManager.transitManagerInstance().getSystemNameList().size()>0){
             if(element.getAttribute("openDispatcher")!=null){
                 if (element.getAttribute("openDispatcher").getValue().equals("yes")){
-                    LayoutEditor.setOpenDispatcherOnLoad(true);
+                    panel.setOpenDispatcherOnLoad(true);
                     jmri.jmrit.dispatcher.DispatcherFrame.instance();
                 }
                 else
-                    LayoutEditor.setOpenDispatcherOnLoad(false);
+                    panel.setOpenDispatcherOnLoad(false);
             }
         }
         return result;
