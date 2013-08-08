@@ -2576,6 +2576,10 @@ public class TrainBuilder extends TrainCommon {
 			}
 			String status = car.testDestination(track.getLocation(), track);
 			if (!status.equals(Track.OKAY)) {
+				if (track.getScheduleMode() == Track.SEQUENTIAL && status.startsWith(Track.SCHEDULE))
+					addLine(buildReport, SEVEN, MessageFormat.format(Bundle
+							.getMessage("buildTrackSequentialMode"), new Object[] { track.getName(),
+							track.getLocation().getName(), status }));
 				// if the track has an alternate track don't abort if the issue was space
 				if (!status.startsWith(Track.LENGTH) || !track.checkSchedule(car).equals(Track.OKAY))
 					continue;

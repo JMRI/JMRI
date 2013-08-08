@@ -72,7 +72,7 @@ public class Track {
 	protected int _scheduleCount = 0; // the number of times the item has been delivered
 	protected int _reservedInRoute = 0; // length of cars in route to this track
 	protected int _reservationFactor = 100; // percentage of track space for cars in route
-	protected int _mode = SEQUENTIAL;
+	protected int _mode = MATCH;
 
 	// drop options
 	protected String _dropOption = ANY; // controls which route or train can set out cars

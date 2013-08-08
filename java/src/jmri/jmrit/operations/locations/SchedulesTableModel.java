@@ -29,15 +29,16 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     ScheduleManager manager;						// There is only one manager
  
     // Defines the columns
-    private static final int IDCOLUMN = 0;
-    private static final int NAMECOLUMN = IDCOLUMN+1;
-    private static final int SCH_STATUSCOLUMN = NAMECOLUMN+1;
-    private static final int SPURCOLUMN = SCH_STATUSCOLUMN+1;
-    private static final int STATUSCOLUMN = SPURCOLUMN+1;
-    private static final int EDITCOLUMN = STATUSCOLUMN+1;
-    private static final int DELETECOLUMN = EDITCOLUMN+1;
+    private static final int ID_COLUMN = 0;
+    private static final int NAME_COLUMN = ID_COLUMN+1;
+    private static final int SCHEDULE_STATUS_COLUMN = NAME_COLUMN+1;
+    private static final int SPUR_NUMBER_COLUMN = SCHEDULE_STATUS_COLUMN+1;
+    private static final int SPUR_COLUMN = SPUR_NUMBER_COLUMN+1;
+    private static final int STATUS_COLUMN = SPUR_COLUMN+1;
+    private static final int EDIT_COLUMN = STATUS_COLUMN+1;
+    private static final int DELETE_COLUMN = EDIT_COLUMN+1;
     
-    private static final int HIGHESTCOLUMN = DELETECOLUMN+1;
+    private static final int HIGHEST_COLUMN = DELETE_COLUMN+1;
 
     public SchedulesTableModel() {
         super();
@@ -82,10 +83,10 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
-		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
-		tcm.getColumn(DELETECOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(DELETECOLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(EDIT_COLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(DELETE_COLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(DELETE_COLUMN).setCellEditor(buttonEditor);
         table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
@@ -102,50 +103,53 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			return;	// done
         log.debug("Setting preferred widths");
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
-		table.getColumnModel().getColumn(SCH_STATUSCOLUMN).setPreferredWidth(80);
-		table.getColumnModel().getColumn(SPURCOLUMN).setPreferredWidth(350);
-		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(150);
-		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(40);
+		table.getColumnModel().getColumn(NAME_COLUMN).setPreferredWidth(200);
+		table.getColumnModel().getColumn(SCHEDULE_STATUS_COLUMN).setPreferredWidth(80);
+		table.getColumnModel().getColumn(SPUR_NUMBER_COLUMN).setPreferredWidth(40);
+		table.getColumnModel().getColumn(SPUR_COLUMN).setPreferredWidth(350);
+		table.getColumnModel().getColumn(STATUS_COLUMN).setPreferredWidth(150);
+		table.getColumnModel().getColumn(EDIT_COLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(90);
 	}
     
     public int getRowCount() { return sysList.size(); }
 
-    public int getColumnCount( ){ return HIGHESTCOLUMN;}
+    public int getColumnCount( ){ return HIGHEST_COLUMN;}
 
     public String getColumnName(int col) {
         switch (col) {
-        case IDCOLUMN: return Bundle.getMessage("Id");
-        case NAMECOLUMN: return Bundle.getMessage("Name");
-        case SCH_STATUSCOLUMN: return Bundle.getMessage("Status");
-        case SPURCOLUMN: return Bundle.getMessage("Spurs");
-        case STATUSCOLUMN: return Bundle.getMessage("StatusSpur");
-        case EDITCOLUMN: return Bundle.getMessage("Edit");
-        case DELETECOLUMN: return Bundle.getMessage("Delete");
+        case ID_COLUMN: return Bundle.getMessage("Id");
+        case NAME_COLUMN: return Bundle.getMessage("Name");
+        case SCHEDULE_STATUS_COLUMN: return Bundle.getMessage("Status");
+        case SPUR_NUMBER_COLUMN: return Bundle.getMessage("Number");
+        case SPUR_COLUMN: return Bundle.getMessage("Spurs");
+        case STATUS_COLUMN: return Bundle.getMessage("StatusSpur");
+        case EDIT_COLUMN: return Bundle.getMessage("Edit");
+        case DELETE_COLUMN: return Bundle.getMessage("Delete");
         default: return "unknown"; // NOI18N
         }
     }
 
     public Class<?> getColumnClass(int col) {
         switch (col) {
-        case IDCOLUMN: return String.class;
-        case NAMECOLUMN: return String.class;
-        case SCH_STATUSCOLUMN: return String.class;
-        case SPURCOLUMN: return JComboBox.class;
-        case STATUSCOLUMN: return String.class;
-        case EDITCOLUMN: return JButton.class;
-        case DELETECOLUMN: return JButton.class;
+        case ID_COLUMN: return String.class;
+        case NAME_COLUMN: return String.class;
+        case SCHEDULE_STATUS_COLUMN: return String.class;
+        case SPUR_NUMBER_COLUMN: return String.class;
+        case SPUR_COLUMN: return JComboBox.class;
+        case STATUS_COLUMN: return String.class;
+        case EDIT_COLUMN: return JButton.class;
+        case DELETE_COLUMN: return JButton.class;
         default: return null;
         }
     }
 
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-        case EDITCOLUMN: 
-        case DELETECOLUMN:
-        case SPURCOLUMN:
+        case EDIT_COLUMN: 
+        case DELETE_COLUMN:
+        case SPUR_COLUMN:
         	return true;
         default: 
         	return false;
@@ -168,10 +172,11 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
        	if (s == null)
     		return "ERROR schedule unknown "+row; // NOI18N
         switch (col) {
-        case IDCOLUMN: return s.getId();
-        case NAMECOLUMN: return s.getName();
-        case SCH_STATUSCOLUMN: return getScheduleStatus(row);
-        case SPURCOLUMN: {
+        case ID_COLUMN: return s.getId();
+        case NAME_COLUMN: return s.getName();
+        case SCHEDULE_STATUS_COLUMN: return getScheduleStatus(row);
+        case SPUR_NUMBER_COLUMN: return manager.getSpursByScheduleComboBox(s).getItemCount();
+        case SPUR_COLUMN: {
         	JComboBox box = manager.getSpursByScheduleComboBox(s);
         	String index = comboSelect.get(sysList.get(row));
         	if (index != null){
@@ -179,20 +184,20 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         	}
         	return box;
         }
-        case STATUSCOLUMN: return getSpurStatus(row);
-        case EDITCOLUMN: return Bundle.getMessage("Edit");
-        case DELETECOLUMN: return Bundle.getMessage("Delete");
+        case STATUS_COLUMN: return getSpurStatus(row);
+        case EDIT_COLUMN: return Bundle.getMessage("Edit");
+        case DELETE_COLUMN: return Bundle.getMessage("Delete");
         default: return "unknown "+col; // NOI18N
         }
     }
 
     public void setValueAt(Object value, int row, int col) {
         switch (col) {
-        case EDITCOLUMN: editSchedule(row);
+        case EDIT_COLUMN: editSchedule(row);
         	break;
-        case DELETECOLUMN: deleteSchedule(row);
+        case DELETE_COLUMN: deleteSchedule(row);
     		break;
-        case SPURCOLUMN: selectJComboBox(value, row);
+        case SPUR_COLUMN: selectJComboBox(value, row);
         	break;
         default:
             break;
