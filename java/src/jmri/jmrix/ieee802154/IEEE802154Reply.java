@@ -2,6 +2,9 @@
 
 package jmri.jmrix.ieee802154;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Contains the data payload of a serial reply
@@ -51,7 +54,7 @@ public class IEEE802154Reply extends jmri.jmrix.AbstractMRReply {
 
     public String toMonitorString() { return toString(); }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IEEE802154Reply.class.getName());
+    static Logger log = LoggerFactory.getLogger(IEEE802154Reply.class);
 
 }
 

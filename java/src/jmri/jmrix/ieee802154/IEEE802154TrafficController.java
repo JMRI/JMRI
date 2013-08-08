@@ -6,6 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts Stream-based I/O to/from messages.  The "IEEE802154Interface"
@@ -177,7 +179,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRTrafficContr
      */
     //protected AbstractMRReply newReply() {return new IEEE802154Reply(this);}
       
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IEEE802154TrafficController.class.getName());
+    static Logger log = LoggerFactory.getLogger(IEEE802154TrafficController.class);
 
 }
 

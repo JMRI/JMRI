@@ -1,11 +1,13 @@
 package jmri.jmrix.ieee802154.serialdriver.configurexml;
 
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.ieee802154.serialdriver.ConnectionConfig;
 import jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter;
-import java.util.List;
 import org.jdom.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persisting
@@ -105,6 +107,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
      
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
 
 }

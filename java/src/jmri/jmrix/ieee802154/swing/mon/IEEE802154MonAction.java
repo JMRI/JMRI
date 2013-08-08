@@ -11,8 +11,10 @@
 
 package jmri.jmrix.ieee802154.swing.mon;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class IEEE802154MonAction extends AbstractAction {
@@ -55,7 +57,7 @@ public class IEEE802154MonAction extends AbstractAction {
 
 	}
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IEEE802154MonAction.class.getName());
+	static Logger log = LoggerFactory.getLogger(IEEE802154MonAction.class);
 
 }
 
