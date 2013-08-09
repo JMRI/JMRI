@@ -90,8 +90,8 @@ public class SchedulesTableFrame extends OperationsFrame {
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 
 		initComponents();
-		if (getWidth() < Control.widePanelWidth)
-			setSize(Control.widePanelWidth, getHeight());
+//		if (getWidth() < Control.widePanelWidth)
+//			setSize(Control.widePanelWidth, getHeight());
 
 	}
 
