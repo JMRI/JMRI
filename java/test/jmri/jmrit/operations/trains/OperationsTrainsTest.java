@@ -3413,6 +3413,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk1.setLength(900);
 		loc2trk1.deleteTypeName("Coil Car");
 		loc2trk1.setScheduleId(sch1.getId());
+		loc2trk1.setScheduleMode(Track.SEQUENTIAL);
 		// start the schedule with 2nd item Flat Car
 		loc2trk1.setScheduleItemId(sch1.getItemsBySequenceList().get(1));
 
@@ -3422,6 +3423,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk2.setLength(900);
 		loc2trk2.deleteTypeName("Coil Car");
 		loc2trk2.setScheduleId(sch1.getId());
+		loc2trk2.setScheduleMode(Track.SEQUENTIAL);
 		// start the schedule with 3rd item Gon
 		loc2trk2.setScheduleItemId(sch1.getItemsBySequenceList().get(2));
 
@@ -3437,6 +3439,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk4.setLength(900);
 		loc2trk4.setScheduleId(sch2.getId());
+		loc2trk4.setScheduleMode(Track.SEQUENTIAL);
 
 		Track loc3trk1;
 		loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.STAGING);

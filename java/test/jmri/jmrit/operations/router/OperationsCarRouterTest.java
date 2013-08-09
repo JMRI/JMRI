@@ -1447,6 +1447,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// Add schedule to tracks
 		CS1.setScheduleId(schA.getId());
+		CS1.setScheduleMode(Track.SEQUENTIAL);
 		DS1.setScheduleId("");
 		DS2.setScheduleId("");
 		ES1.setScheduleId("");
@@ -2294,9 +2295,10 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// add schedules to tracks
 		AS1.setScheduleId(schA.getId());
+		AS1.setScheduleMode(Track.SEQUENTIAL);
 		AS2.setScheduleId(schA.getId());
+		AS2.setScheduleMode(Track.SEQUENTIAL);
 		AS3.setScheduleId(schA.getId());
-		
 		// put Action Siding 3 into match mode
 		AS3.setScheduleMode(Track.MATCH);
 			
