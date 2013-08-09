@@ -31,8 +31,8 @@ public class TrainsTableAction extends AbstractAction {
 		if (f == null || !f.isVisible()) {
 			f = new TrainsTableFrame();
 		}
-	   	f.setVisible(true);	// this also brings the frame into focus
 		f.setExtendedState(Frame.NORMAL);
+	   	f.setVisible(true);	// this also brings the frame into focus
 	}
 }
 

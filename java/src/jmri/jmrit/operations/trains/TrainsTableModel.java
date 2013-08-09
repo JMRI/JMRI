@@ -497,6 +497,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			_trainConductorHashTable.put(train.getId(), f);
 		} else {
 			f.setExtendedState(Frame.NORMAL);
+		   	f.setVisible(true);	// this also brings the frame into focus
 		}
 		tcf = f;
 	}

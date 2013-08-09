@@ -34,7 +34,7 @@ public class PrintOptionAction extends AbstractAction {
 			f.initComponents();
 		}
 		f.setExtendedState(Frame.NORMAL);
-		f.setVisible(true);
+	   	f.setVisible(true);	// this also brings the frame into focus
 	}
 
 	static Logger log = LoggerFactory.getLogger(PrintOptionAction.class

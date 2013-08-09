@@ -47,6 +47,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 			f = new SetPhysicalLocationFrame(_location);
 		}
 		f.setExtendedState(Frame.NORMAL);
+	   	f.setVisible(true);	// this also brings the frame into focus
 	}
 
 	public class SetPhysicalLocationFrame extends OperationsFrame {

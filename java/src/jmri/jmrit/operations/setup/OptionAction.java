@@ -30,6 +30,7 @@ public class OptionAction extends AbstractAction {
     		f.initComponents();
     	}
         f.setExtendedState(Frame.NORMAL);
+	   	f.setVisible(true);	// this also brings the frame into focus
     }
     
 	static Logger log = LoggerFactory
