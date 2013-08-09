@@ -31,6 +31,7 @@ public class RoutesTableAction extends AbstractAction {
     	if (f == null || !f.isVisible()){
     		f = new RoutesTableFrame();
      	}
+       	f.setVisible(true);	// this also brings the frame into focus
     	f.setExtendedState(Frame.NORMAL);
     }
 }
