@@ -96,7 +96,7 @@ public class RoutesTableFrame extends OperationsFrame {
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true); // NOI18N
 
-		initComponents();
+		initMinimumSize();
 		setSize(730, getHeight());
 
 		// now load the cars and engines

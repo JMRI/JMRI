@@ -167,7 +167,7 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 		updateRoadComboBox();
 		updateRoadNames();
 		
-		super.initComponents();
+		initMinimumSize();
 	}
 
 	// Save, Delete, Add

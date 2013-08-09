@@ -384,7 +384,7 @@ public class OperationsSetupFrame extends OperationsFrame implements
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
-		super.initComponents();
+		initMinimumSize();
 	}
 
 	// Save, Delete, Add buttons

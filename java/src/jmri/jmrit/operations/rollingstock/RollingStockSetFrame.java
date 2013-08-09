@@ -251,7 +251,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		// get notified if train combo box gets modified
 		trainManager.addPropertyChangeListener(this);
 
-		setMinimumSize(new Dimension(Control.minPanelWidth, Control.panelHeight));
+		setMinimumSize(new Dimension(Control.panelWidth, Control.panelHeight));
 	}
 
 	public void load(RollingStock rs) {

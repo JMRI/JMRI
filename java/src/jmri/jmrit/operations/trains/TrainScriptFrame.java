@@ -163,7 +163,7 @@ public class TrainScriptFrame extends OperationsFrame {
 			enableButtons(false);
 		}
 		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true); // NOI18N
-		super.initComponents();
+		initMinimumSize();
 	}
 
 	private void updateBuildScriptPanel() {

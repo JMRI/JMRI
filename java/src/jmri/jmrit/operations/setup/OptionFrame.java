@@ -205,7 +205,7 @@ public class OptionFrame extends OperationsFrame {
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true); // NOI18N
 
-		super.initComponents();
+		initMinimumSize();
 	}
 
 	private void setBuildOption() {

@@ -419,7 +419,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		CarOwners.instance().addPropertyChangeListener(this);
 		EngineModels.instance().addPropertyChangeListener(this);
 		
-		super.initComponents();
+		initMinimumSize();
 	}
 
 	// Save

@@ -96,7 +96,7 @@ public class TrainsScriptFrame extends OperationsFrame {
 
 		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainScripts", true); // NOI18N
 		packFrame();
-		super.initComponents();
+		initMinimumSize();
 	}
 
 	private void updateStartUpScriptPanel() {

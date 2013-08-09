@@ -89,7 +89,7 @@ public class SchedulesTableFrame extends OperationsFrame {
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true); // NOI18N
 
-		initComponents();
+		initMinimumSize();
 //		if (getWidth() < Control.widePanelWidth)
 //			setSize(Control.widePanelWidth, getHeight());
 

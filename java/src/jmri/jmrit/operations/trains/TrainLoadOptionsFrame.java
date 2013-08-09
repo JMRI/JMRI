@@ -187,7 +187,7 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 		CarLoads.instance().addPropertyChangeListener(this);
 		loadAndTypeCheckBox.setSelected(loadAndType);
 		
-		super.initComponents();
+		initMinimumSize();
 	}
 	
 	// Save

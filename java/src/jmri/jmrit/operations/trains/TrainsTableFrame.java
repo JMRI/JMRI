@@ -262,7 +262,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
 		// add help menu to window
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true); // NOI18N
 
-		initComponents();
+		initMinimumSize();
 
 		// listen for timetable changes
 		trainManager.addPropertyChangeListener(this);

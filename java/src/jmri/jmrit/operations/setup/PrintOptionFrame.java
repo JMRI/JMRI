@@ -393,7 +393,7 @@ public class PrintOptionFrame extends OperationsFrame {
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true); // NOI18N
 
-		super.initComponents();
+		initMinimumSize();
 	}
 
 	// Add Remove Logo and Save buttons

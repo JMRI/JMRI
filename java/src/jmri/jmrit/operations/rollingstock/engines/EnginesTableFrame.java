@@ -196,7 +196,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Locomotives", true); // NOI18N
 
-		initComponents();
+		initMinimumSize();
 
 		// create ShutDownTasks
 		createShutDownTask();

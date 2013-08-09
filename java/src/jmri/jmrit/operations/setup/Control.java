@@ -19,7 +19,8 @@ public class Control {
 	
 	// Default panel width
 	public static final int widePanelWidth = 1025;
-	public static final int minPanelWidth = 500;
+	public static final int tablePanelWidth = 700;
+	public static final int panelWidth = 500;
 	public static final int mediumPanelWidth = 400;
 	public static final int smallPanelWidth = 300;
 	

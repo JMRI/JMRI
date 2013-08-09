@@ -95,8 +95,9 @@ public class LocationsTableFrame extends OperationsFrame {
 		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true);	// NOI18N
     	
-    	initComponents();
-    	if ((getWidth()<670)) setSize(670, getHeight());
+    	initMinimumSize();
+//		if ((getWidth() < Control.tablePanelWidth))
+//			setSize(Control.tablePanelWidth, getHeight());
     	
      	// now load the cars and engines
     	CarManagerXml.instance();

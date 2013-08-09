@@ -46,8 +46,12 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		setEscapeKeyClosesWindow(true);
 	}
 	
-	public void initComponents() {
-		setMinimumSize(new Dimension(Control.minPanelWidth, Control.minPanelHeight));
+	public void initMinimumSize() {
+		initMinimumSize(new Dimension(Control.panelWidth, Control.minPanelHeight));
+	}
+	
+	public void initMinimumSize(Dimension dimension) {
+		setMinimumSize(dimension);
 		pack();
 		setVisible(true);
 	}
