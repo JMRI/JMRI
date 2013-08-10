@@ -166,6 +166,7 @@ public class Track {
 	public static final String LOAD_OPTIONS_CHANGED_PROPERTY = "trackLoadOptions"; // NOI18N
 	public static final String DESTINATIONS_CHANGED_PROPERTY = "trackDestinations"; // NOI18N
 	public static final String DESTINATION_OPTIONS_CHANGED_PROPERTY = "trackDestinationOptions"; // NOI18N
+	public static final String TRACK_SCHEDULE_MODE_CHANGED_PROPERTY = "trackScheduleMode"; // NOI18N
 
 	public Track(String id, String name, String type, Location location) {
 		log.debug("New track " + name + " " + id);
@@ -310,7 +311,7 @@ public class Track {
 		int old = _mode;
 		_mode = mode;
 		if (old != mode)
-			setDirtyAndFirePropertyChange("scheduleMode", old, mode); // NOI18N
+			setDirtyAndFirePropertyChange(TRACK_SCHEDULE_MODE_CHANGED_PROPERTY, old, mode); // NOI18N
 	}
 
 	/**

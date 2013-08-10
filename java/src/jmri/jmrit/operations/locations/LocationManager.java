@@ -221,7 +221,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	 * Returns all tracks of type
 	 * 
 	 * @param type
-	 *            Spur, Yard, Interchange, Staging, or null (returns all track types)
+	 *            Spur (Track.SPUR), Yard (Track.YARD), Interchange (Track.INTERCHANGE), Staging (Track.STAGING), or
+	 *            null (returns all track types)
 	 * @return List of tracks ordered by use
 	 */
 	public List<Track> getTracks(String type) {

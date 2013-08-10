@@ -65,6 +65,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 	synchronized void updateList() {
 		// first, remove listeners from the individual objects
 		removePropertyChangeSchedules();
+		removePropertyChangeTracks();
 
 		if (_sort == SORTBYID)
 			sysList = scheduleManager.getSchedulesByIdList();
@@ -75,6 +76,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			// log.debug("schedule ids: " + (String) sysList.get(i));
 			scheduleManager.getScheduleById(sysList.get(i)).addPropertyChangeListener(this);
 		}
+		addPropertyChangeTracks();
 	}
 
 	List<String> sysList = null;
@@ -337,10 +339,27 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Schedule l = scheduleManager.getScheduleById(sysList.get(i));
-				if (l != null)
-					l.removePropertyChangeListener(this);
+				Schedule sch = scheduleManager.getScheduleById(sysList.get(i));
+				if (sch != null)
+					sch.removePropertyChangeListener(this);
 			}
+		}
+	}
+	
+	private void addPropertyChangeTracks() {
+		// only spurs have schedules
+		List<Track> tracks = LocationManager.instance().getTracks(Track.SPUR);
+		for (int i=0; i<tracks.size(); i++) {
+			Track track = tracks.get(i);
+			track.addPropertyChangeListener(this);
+		}
+	}
+	
+	private void removePropertyChangeTracks() {
+		List<Track> tracks = LocationManager.instance().getTracks(Track.SPUR);
+		for (int i=0; i<tracks.size(); i++) {
+			Track track = tracks.get(i);
+			track.removePropertyChangeListener(this);
 		}
 	}
 
@@ -351,6 +370,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			sef.dispose();
 		scheduleManager.removePropertyChangeListener(this);
 		removePropertyChangeSchedules();
+		removePropertyChangeTracks();
 	}
 
 	// check for change in number of schedules, or a change in a schedule
@@ -368,6 +388,9 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 				log.debug("Update schedule table row: " + row + " id: " + id);
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
+		}
+		if (e.getPropertyName().equals(Track.TRACK_SCHEDULE_MODE_CHANGED_PROPERTY)) {
+			fireTableDataChanged();
 		}
 	}
 
