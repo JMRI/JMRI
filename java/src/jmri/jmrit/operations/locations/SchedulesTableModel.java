@@ -389,12 +389,15 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
 		}
-		if (e.getPropertyName().equals(Track.TRACK_SCHEDULE_MODE_CHANGED_PROPERTY)) {
+		if (e.getPropertyName().equals(Track.SCHEDULE_MODE_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY)) {
 			Track track = (Track) e.getSource();
 			String id = track.getScheduleId();
 			int row = sysList.indexOf(id);
 			if (row >= 0)
 				fireTableRowsUpdated(row, row);
+			else
+				fireTableDataChanged();
 		}
 	}
 
