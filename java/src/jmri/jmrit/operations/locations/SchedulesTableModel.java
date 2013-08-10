@@ -213,7 +213,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		case SPUR_COLUMN: {
 			JComboBox box = scheduleManager.getSpursByScheduleComboBox(s);
 			String index = comboSelect.get(sysList.get(row));
-			if (index != null) {
+			if (index != null && box.getItemCount() > Integer.parseInt(index)) {
 				box.setSelectedIndex(Integer.parseInt(index));
 			}
 			return box;
