@@ -97,26 +97,20 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 return;     // Must assume no family names were changed
             }
         }
-        int result = JOptionPane.showConfirmDialog(_paletteFrame,Bundle.getMessage("NoFamilyName"),
-                Bundle.getMessage("questionTitle"), JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE);
-        if (result==JOptionPane.NO_OPTION) {
-            return;
-        }
-        if (_family!=null && _family.trim().length()>0) {
-            if (ItemPalette.addLevel4Family(_paletteFrame, _itemType, _family, iconMaps)) {
-                return;
-            }
-        }
-        do {
-            _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"),
+        if (_family==null || _family.trim().length()==0) {
+            _family = JOptionPane.showInputDialog(_paletteFrame, Bundle.getMessage("EnterFamilyName"), 
                     Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (_family==null || _family.trim().length()==0) {
                 // bail out
                 return;
             }
-        } while (!ItemPalette.addLevel4Family(_paletteFrame, _itemType, _family, iconMaps));
-        
+        }
+        int result = JOptionPane.showConfirmDialog(_paletteFrame,
+                Bundle.getMessage("UnkownFamilyName", _family), Bundle.getMessage("questionTitle"),
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if (result==JOptionPane.YES_OPTION) {
+        	ItemPalette.addLevel4Family(_paletteFrame, _itemType, _family, iconMaps);
+        }        
     }
 
     /*
@@ -258,10 +252,10 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
     }
 
-    /** Override
+    /** 
      * 
-     */
-    protected void makeBottomPanel(ActionListener doneAction) {
+     *
+    private void makeBottomPanel(ActionListener doneAction) {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new FlowLayout());
         _showIconsButton = new JButton(Bundle.getMessage("ShowIcons"));
@@ -276,11 +270,11 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         });
         _showIconsButton.setToolTipText(Bundle.getMessage("ToolTipShowIcons"));
         bottomPanel.add(_showIconsButton);
-        _bottom1Panel = makeBottom3Panel(doneAction, bottomPanel);
+        _bottom1Panel = makeUpdatePanel(doneAction, bottomPanel);
         initIconFamiliesPanel();
         add(_iconFamilyPanel);
         add(_bottom1Panel);
-    }
+    }*/
     
     /** override
      * 

@@ -90,10 +90,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(Bundle.getMessage("ScrollHorizontal"));
     private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(Bundle.getMessage("ScrollVertical"));
 
-    // DnD
-    public static final String POSITIONABLE_LIST_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
-               ";class=jmri.jmrit.display.controlPanelEditor.ControlPanelEditor";
-
     public ControlPanelEditor() {
     }
 
@@ -494,10 +490,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             if (_positionableListDataFlavor.equals(flavors[k])) {
                 Point pt = _targetPanel.getMousePosition(true);
                 try{
-//                    ArrayList clipGroup = (ArrayList)clipboard.getData(_positionableListDataFlavor);
-                    ControlPanelEditor ed = 
-                        (ControlPanelEditor)clipboard.getData(_positionableListDataFlavor);
-                    ArrayList<Positionable> clipGroup = ed.getClipGroup();
+                    List<Positionable> clipGroup = (List<Positionable>)clipboard.getData(_positionableListDataFlavor);
                     if (clipGroup!=null && clipGroup.size()>0) {
                         Positionable pos = clipGroup.get(0);
                         int minX = pos.getLocation().x;
@@ -513,7 +506,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                         }
                         _selectionGroup = new ArrayList<Positionable>();
                         for (int i=0; i<clipGroup.size(); i++) {
-                            //pos = clipGroup.get(i).deepClone();
                             pos = clipGroup.get(i);
                             // make positionable belong to this editor
                             pos.setEditor(this);
@@ -559,17 +551,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
             for (int i=0; i<_selectionGroup.size(); i++) {
                 Positionable pos = _selectionGroup.get(i).deepClone();
-                dragGroup.add(pos);
+                dragGroup.add(pos);                	
                 removeFromTarget(pos);   // cloned item gets added to _targetPane during cloning
             }
             if (_debug) log.debug("copyToClipboard: cloned _selectionGroup, size= "+_selectionGroup.size());
             _clipGroup = dragGroup;
 
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-            clipboard.setContents(new PositionableListDnD(this), this);
-            // workaround to recognize CCP
-            getPanelScrollPane().getUI().installUI(getPanelScrollPane());
-//            clipboard.setContents(new PositionableListDnD(dragGroup), null);
+            clipboard.setContents(new PositionableListDnD(_clipGroup), this);
             if (_debug) log.debug("copyToClipboard: setContents _selectionGroup, size= "+_selectionGroup.size());
         } else {
             _clipGroup = null;
@@ -854,7 +843,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         return selection;
     }
 
-    protected Positionable getCopySelection(MouseEvent event) {
+    private Positionable getCopySelection(MouseEvent event) {
         if (_selectionGroup==null) {
             return null;
         }
@@ -971,7 +960,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         Positionable selection = getCurrentSelection(event);
 
-        if ((event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) && !_dragging) {
+        if ((event.isPopupTrigger() || event.isMetaDown() || event.isAltDown()) /*&& !_dragging*/) {
             if (selection!=null) {
                 _highlightcomponent = null;
                 showPopUp(selection, event);
@@ -1021,6 +1010,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _lastX = event.getX();
         _lastY = event.getY();
         _dragging = false;
+        _currentSelection = null;
         _targetPanel.repaint(); // needed for ToolTip
 //        if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+
 //        " _selectionGroup= "+(_selectionGroup==null?"null":_selectionGroup.size()));
@@ -1079,6 +1069,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         	return;
         }
         if (!event.isPopupTrigger() && !event.isMetaDown() && !event.isAltDown() && (isEditable() || _currentSelection instanceof LocoIcon)) {
+//        if (!event.isPopupTrigger() && (isEditable() || _currentSelection instanceof LocoIcon)) {
             moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
                 int deltaX = event.getX() - _lastX;
@@ -1347,6 +1338,34 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         popup.show((Component)p, p.getWidth()/2+(int)((getPaintScale()-1.0)*p.getX()),
                     p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));
     }
+ 
+    private HashMap <String, NamedIcon> _portalIconMap;
+    private String _portalIconFamily = "Standard";
+
+    protected NamedIcon getPortalIcon (String name) {
+    	if (_portalIconMap==null) {		// set defaults
+    		_portalIconMap = new HashMap <String, NamedIcon>();
+    		_portalIconMap.put(PortalIcon.VISIBLE, 
+    				new NamedIcon("resources/icons/throttles/RoundRedCircle20.png","resources/icons/throttles/RoundRedCircle20.png"));
+    		_portalIconMap.put(PortalIcon.PATH, 
+    				new NamedIcon("resources/icons/greenSquare.gif","resources/icons/greenSquare.gif"));
+    		_portalIconMap.put(PortalIcon.HIDDEN, 
+    				new NamedIcon("resources/icons/Invisible.gif","resources/icons/Invisible.gif"));
+    		_portalIconMap.put(PortalIcon.TO_ARROW, 
+    				new NamedIcon("resources/icons/track/toArrow.gif","resources/icons/track/toArrow.gif"));
+    		_portalIconMap.put(PortalIcon.FROM_ARROW, 
+    				new NamedIcon("resources/icons/track/fromArrow.gif","resources/icons/track/fromArrow.gif"));
+    	}
+        return _portalIconMap.get(name);    	
+    }
+    
+    protected String getPortalIconFamily() {
+    	return _portalIconFamily;
+    }
+    
+    public void setDefaultPortalIcons(HashMap <String, NamedIcon> map) {
+    	_portalIconMap = map;
+    }
     
     /********************* Circuitbuilder ************************************/
 
@@ -1407,7 +1426,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         try {
             _positionableDataFlavor = new DataFlavor(POSITIONABLE_FLAVOR);
             _namedIconDataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
-            _positionableListDataFlavor = new DataFlavor(POSITIONABLE_LIST_FLAVOR);
+            _positionableListDataFlavor = new DataFlavor(List.class, "JComponentList");
         } catch (ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
@@ -1486,8 +1505,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 putItem(l);
                 evt.dropComplete(true);
             } else if (tr.isDataFlavorSupported(_positionableListDataFlavor)) {
-                ArrayList<Positionable> dragGroup = 
-                        (ArrayList<Positionable>)tr.getTransferData(_positionableListDataFlavor);
+                List<Positionable> dragGroup = 
+                        (List<Positionable>)tr.getTransferData(_positionableListDataFlavor);
                 for (int i=0; i<dragGroup.size(); i++) {
                     Positionable pos = dragGroup.get(i);
                     pos.setEditor(this);
@@ -1509,16 +1528,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     static protected class PositionableListDnD implements Transferable {
-        ControlPanelEditor _sourceEditor;
+//        ControlPanelEditor _sourceEditor;
+        List _sourceEditor;
         DataFlavor _dataFlavor;
 
-        PositionableListDnD(ControlPanelEditor source) {
+        PositionableListDnD(List source) {
             _sourceEditor = source;
-            try {
-                _dataFlavor = new DataFlavor(POSITIONABLE_LIST_FLAVOR);
-            } catch (ClassNotFoundException cnfe) {
-                cnfe.printStackTrace();
-            }
+            _dataFlavor = new DataFlavor(List.class, "JComponentList");
         }
 
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {

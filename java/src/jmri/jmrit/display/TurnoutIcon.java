@@ -136,13 +136,6 @@ public class TurnoutIcon extends PositionableIcon implements java.beans.Property
         return _iconStateMap.get(Integer.valueOf(state));
     }
 
-    public String getFamily() {
-        return _iconFamily;
-    }
-    public void setFamily(String family) {
-        _iconFamily = family;
-    }
-
     public int maxHeight() {
         int max = 0;
         Iterator<NamedIcon> iter = _iconStateMap.values().iterator();

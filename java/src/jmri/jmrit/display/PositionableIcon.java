@@ -147,7 +147,7 @@ public class PositionableIcon extends PositionableLabel {
         updateSize();
     }
 
-    protected HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map,
+    public static HashMap<String, NamedIcon> cloneMap(HashMap<String, NamedIcon> map,
                                                              PositionableLabel pos) {
     	HashMap<String, NamedIcon> clone = new HashMap<String, NamedIcon>();
         if (map!=null) {

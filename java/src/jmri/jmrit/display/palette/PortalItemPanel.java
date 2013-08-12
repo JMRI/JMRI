@@ -3,14 +3,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.jmrit.display.controlPanelEditor.PortalIcon;
 import jmri.util.JmriJFrame;
 
@@ -42,17 +46,28 @@ public /*abstract*/ class PortalItemPanel extends FamilyItemPanel {
        		Thread.yield();
        		_update = false;
        		_supressDragging = true;
-            _bottom1Panel = makeBottom1Panel();
-            _bottom2Panel = makeBottom2Panel();
-            initIconFamiliesPanel();
-            add(new JPanel());		// space holder to make _iconFamilyPanel 2nd component
-            add(_iconFamilyPanel);
-            JPanel bottomPanel = new JPanel(new FlowLayout());
-            bottomPanel.add(_bottom1Panel);
-            bottomPanel.add(_bottom2Panel);
-            add(bottomPanel);
-            _initialized = true;
+       		makeBottomPanel();
+       		add(makeChangeDefaultIconsPanel());
        	}
+    }
+    
+    private JPanel makeChangeDefaultIconsPanel() {
+    	JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        JButton setDefaultsButton = new JButton(Bundle.getMessage("setDefaultIcons"));
+        setDefaultsButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                	setDefaults();
+                }
+        });
+        setDefaultsButton.setToolTipText(Bundle.getMessage("ToolTipSetDefaultIcons"));
+        panel.add(setDefaultsButton);
+    	return panel;
+    }
+    
+    private void setDefaults() {
+    	HashMap <String, NamedIcon> map = getIconMap();
+    	((ControlPanelEditor)_editor).setDefaultPortalIcons(jmri.jmrit.display.PositionableIcon.cloneMap(map, null));
     }
 
     static Logger log = LoggerFactory.getLogger(PortalItemPanel.class.getName());

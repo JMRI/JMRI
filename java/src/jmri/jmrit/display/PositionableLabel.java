@@ -208,11 +208,12 @@ public class PositionableLabel extends JLabel implements Positionable {
         pos.updateSize();
         return pos;
     }
+    
     public JComponent getTextComponent() {
     	return this;
     }
 
-    protected NamedIcon cloneIcon(NamedIcon icon, PositionableLabel pos) {
+    public static NamedIcon cloneIcon(NamedIcon icon, PositionableLabel pos) {
     	if (icon.getURL()!=null) {
              return new NamedIcon(icon, pos);   		
     	} else {
@@ -477,7 +478,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         invalidate();
     }
 
-    jmri.util.JmriJFrame _paletteFrame;
+    public jmri.util.JmriJFrame _paletteFrame;
 
     /************ Methods for Item Popups in Control Panel editor ********************/
     /**

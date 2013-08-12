@@ -33,7 +33,8 @@ public class ReporterItemPanel extends TableItemPanel {
             add(initTablePanel(_model, _editor));        // NORTH Panel
             initIconFamiliesPanel();
             add(_iconFamilyPanel);
-         	}
+            super.init();
+    	}
    }
 
     protected JPanel instructions() {

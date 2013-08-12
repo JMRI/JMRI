@@ -3,13 +3,21 @@
 
 package jmri.jmrit.display.controlPanelEditor;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
+
+import javax.swing.JPopupMenu;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.ToolTip;
-import jmri.jmrit.display.TurnoutIcon;
+import jmri.jmrit.display.palette.PortalItemPanel;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.Portal;
 
@@ -26,16 +34,20 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
     public static final String TO_ARROW = "toArrow";
     public static final String FROM_ARROW = "fromArrow";
 
-    protected static NamedIcon _toArrowIcon = NamedIcon.getIconByName("resources/icons/track/toArrow.gif");
+/*    protected static NamedIcon _toArrowIcon = NamedIcon.getIconByName("resources/icons/track/toArrow.gif");
     protected static NamedIcon _fromArrowIcon = NamedIcon.getIconByName("resources/icons/track/fromArrow.gif");
     protected static NamedIcon _hiddenIcon = NamedIcon.getIconByName("resources/icons/Invisible.gif");
-
+*/
     private Portal _portal;
+    private PortalItemPanel _portalPanel;
+    private String _status;
+    //jmri.util.JmriJFrame _paletteFrame;
 
     public PortalIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(editor);
         initMap();
+        setPopupUtility(null);        // no text 
     }
 
     public PortalIcon(Editor editor, Portal portal) {
@@ -45,15 +57,13 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
 
     private void initMap() {
         _iconMap = new java.util.HashMap<String, NamedIcon>();
-
-        setIcon("resources/icons/throttles/RoundRedCircle20.png",VISIBLE);
-        setIcon("resources/icons/greenSquare.gif",PATH);
-        setIcon("resources/icons/Invisible.gif",HIDDEN);
-        setIcon("resources/icons/track/toArrow.gif",TO_ARROW);
-        setIcon("resources/icons/track/fromArrow.gif",FROM_ARROW);
-        setFamily("Standard");
-
-        setPopupUtility(null);        // no text 
+        ControlPanelEditor ed = (ControlPanelEditor)_editor;
+        ed.getPortalIcon(VISIBLE);
+        ed.getPortalIcon(PATH);
+        ed.getPortalIcon(HIDDEN);
+        ed.getPortalIcon(TO_ARROW);
+        ed.getPortalIcon(FROM_ARROW);
+        setFamily((ed.getPortalIconFamily()));
     }
     
     public Positionable deepClone() {
@@ -65,19 +75,6 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
     	PortalIcon pos = (PortalIcon)p;
         pos._iconMap = cloneMap(_iconMap, pos);
         return super.finishClone(p);
-    }
-    
-    private void setIcon(String fileName, String key) {
-        NamedIcon icon = NamedIcon.getIconByName(fileName);
-        if (icon==null) {
-            icon = _editor.loadFailed("Portal icon for status \""+key+"\" ", fileName);
-            if (icon==null) {
-                log.info("Portal icon for status \""+key+"\" removed for url= "+fileName);
-                return;
-            }        	
-        }
-        _iconMap.put(key, icon);
-        if (log.isDebugEnabled()) log.debug("\""+getName()+"\" put icon key= \""+key+"\" icon= "+fileName);
     }
     
     /**
@@ -110,11 +107,12 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
     public void setStatus(String status) {
         if (log.isDebugEnabled()) log.debug("\""+getName()+"\" setStatus("+status+") icon= "+_iconMap.get(status));
         setIcon(_iconMap.get(status));
+        _status = status;
         updateSize();
         repaint();
     }
     
-    /* currently Portals do not have an instance manager - !!!todo */
+    /* currently Portals do not have an instance manager - !!!todo? */
     public jmri.NamedBean getNamedBean(){
         return _portal;
     }
@@ -161,5 +159,66 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
         return _portal.getDescription();
     }
 
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("portal"));
+        popup.add(new javax.swing.AbstractAction(txt) {
+                public void actionPerformed(ActionEvent e) {
+                    editItem();
+                }
+            });
+        return true;
+    }
+
+    protected void editItem() {
+        makePalettteFrame(java.text.MessageFormat.format(Bundle.getMessage("EditItem"), Bundle.getMessage("portal")));
+        _portalPanel = new PortalItemPanel(_paletteFrame, "Portal", _iconFamily, _editor);
+
+        ActionListener updateAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateItem();
+            }
+        };
+        // duplicate _iconMap map with unscaled and unrotated icons
+        HashMap<String, NamedIcon> map = new HashMap<String, NamedIcon>();
+        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            NamedIcon oldIcon = entry.getValue();
+            NamedIcon newIcon = cloneIcon(oldIcon, this);
+            newIcon.rotate(0, this);
+            newIcon.scale(1.0, this);
+            newIcon.setRotation(4, this);
+            map.put(entry.getKey(), newIcon);
+        }
+        _portalPanel.init(updateAction, map);
+        _paletteFrame.add(_portalPanel);
+        _paletteFrame.setLocationRelativeTo(this);
+        _paletteFrame.toFront();
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
+    }
+
+    void updateItem() {
+        HashMap<String, NamedIcon> iconMap = _portalPanel.getIconMap();
+        if (iconMap!=null) {
+        	HashMap<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
+            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
+                NamedIcon newIcon = entry.getValue();
+                NamedIcon oldIcon = oldMap.get(entry.getKey());
+                newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                newIcon.setRotation(oldIcon.getRotation(), this);
+                setIcon(entry.getKey(), newIcon);
+            }
+        }   // otherwise retain current map
+//        jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex();
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _portalPanel.dispose();
+        _portalPanel = null;
+        setStatus(_status);
+    }
     static Logger log = LoggerFactory.getLogger(PortalIcon.class.getName());
 }

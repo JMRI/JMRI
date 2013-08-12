@@ -73,10 +73,10 @@ public class IconDialog extends ItemDialog {
             if (!isUpdate) {
             	makeAddSetButtonPanel(buttonPanel);
             }
-            makeDoneButtonPanel(buttonPanel);
+            makeDoneButtonPanel(buttonPanel, "doneButton");
         } else {
         	_iconMap = ItemPanel.makeNewIconMap(type);
-            makeCreateButtonPanel(buttonPanel);
+        	makeDoneButtonPanel(buttonPanel, "createNewFamily");
         }
 
         _iconPanel = makeIconPanel(_iconMap);
@@ -139,6 +139,7 @@ public class IconDialog extends ItemDialog {
         _parent.reset();
 //        checkIconSizes();
     	((FamilyItemPanel)_parent)._currentIconMap = _iconMap;
+        _parent.updateFamiliesPanel();
         if (_parent.isUpdate()) {  // don't touch palette's maps.  just modify individual device icons
         	return true;
         }
@@ -149,9 +150,11 @@ public class IconDialog extends ItemDialog {
             family = JOptionPane.showInputDialog(_parent._paletteFrame, Bundle.getMessage("EnterFamilyName"), 
                     Bundle.getMessage("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (family==null || family.trim().length()==0) {
-                // bail out
-                return false;
+                // bail out - dispose dialog
+                return true;
             }
+            _familyName.setText(family);
+            return false;
         }
     	while (!ItemPalette.addFamily(_parent._paletteFrame, _type, family, _iconMap)) {
     		/*
@@ -163,8 +166,7 @@ public class IconDialog extends ItemDialog {
             }*/
             return false;
         }
-        _parent._family = family;
-        _parent.updateFamiliesPanel();
+//        _parent._family = family;
         _parent.setFamily(family);
         return true;
     }
@@ -189,10 +191,10 @@ public class IconDialog extends ItemDialog {
         _parent.updateFamiliesPanel();
     }
 
-    protected void makeDoneButtonPanel(JPanel buttonPanel) {
-        JPanel panel0 = new JPanel();
-        panel0.setLayout(new FlowLayout());
-        JButton doneButton = new JButton(Bundle.getMessage("doneButton"));
+    protected void makeDoneButtonPanel(JPanel buttonPanel, String text) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        JButton doneButton = new JButton(Bundle.getMessage(text));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (doDoneAction()) {
@@ -200,43 +202,19 @@ public class IconDialog extends ItemDialog {
                     }
                 }
         });
-        panel0.add(doneButton);
+        panel.add(doneButton);
 
         JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
         cancelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    _parent.updateFamiliesPanel();
+//                    _parent.updateFamiliesPanel();
                     dispose();
                 }
         });
-        panel0.add(cancelButton);
-        buttonPanel.add(panel0);
-    }
-
-    protected void makeCreateButtonPanel(JPanel buttonPanel) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        JButton newFamilyButton = new JButton(Bundle.getMessage("createNewFamily"));
-        newFamilyButton.addActionListener(new ActionListener() {
-                //IconDialog dialog; never used?
-                public void actionPerformed(ActionEvent a) {
-                    if (doDoneAction()) {
-                        dispose();
-                    }
-                }
-        });
-        newFamilyButton.setToolTipText(Bundle.getMessage("ToolTipAddFamily"));
-        panel.add(newFamilyButton);
-
-        JButton cancelButton = new JButton(Bundle.getMessage("cancelButton"));
-        cancelButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    dispose();
-                }
-        });
-        buttonPanel.add(panel);
         panel.add(cancelButton);
+        buttonPanel.add(panel);
     }
+
     protected void closeDialogs() {
     	if (_newFamlyDialog!=null) {
     		_newFamlyDialog.dispose();
