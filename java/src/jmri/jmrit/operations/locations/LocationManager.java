@@ -318,6 +318,25 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     					}
     				}
 				}
+				// now adjust ship load names
+				loadNames = track.getShipLoadNames();
+				for (int k = 0; k < loadNames.length; k++) {
+					if (loadNames[k].equals(oldLoadName)) {
+						track.deleteShipLoadName(oldLoadName);
+						if (newLoadName != null)
+							track.addShipLoadName(newLoadName);
+					}
+					// adjust combination car type and load name
+	   				String[] splitLoad = loadNames[k].split(CarLoad.SPLIT_CHAR);
+    				if (splitLoad.length > 1) {
+    					if (splitLoad[0].equals(type) && splitLoad[1].equals(oldLoadName)) {
+    						track.deleteShipLoadName(loadNames[k]);
+    						if (newLoadName != null) {
+    							track.addShipLoadName(type + CarLoad.SPLIT_CHAR + newLoadName);
+    						}
+    					}
+    				}
+				}
 			}
 		}
 	}
