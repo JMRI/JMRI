@@ -8,7 +8,7 @@ h1 {
 	padding-top: 2px;
 	padding-bottom: 2px;
 }
-ul.manifest>li.location {
+ul.manifest>li.location, ul.manifest>li.aboard {
 	font-size: 150%;
 }
 ul.manifest>li.location:hover {
@@ -30,7 +30,7 @@ ul.manifest>li.location:hover {
 ul.manifest>li.location>ul:hover {
 	font-style: normal;
 }
-ul.manifest>li.location>ul {
+ul.manifest>li.location>ul, ul.manifest>li.aboard>ul {
 	font-size: 75%;
 }
 ul.manifest {
@@ -64,6 +64,11 @@ ul.manifest li.car.actionCompleted img.actionComplete {
 }
 ul.manifest>li>ul>li {
 	list-style: none;
+}
+ul.manifest li.location.complete {
+	font-size: 130%;
+    line-height: 100%;
+    opacity: 0.5;
 }
 
 #operationsFooter {
