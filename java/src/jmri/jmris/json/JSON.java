@@ -70,6 +70,7 @@ public final class JSON {
     public static final String ENGINE = "engine"; // NOI18N
     public static final String LIGHT = "light"; // NOI18N
     public static final String LOCATION = "location"; // NOI18N
+    public static final String LOCATION_ID = "locationId"; // NOI18N
     public static final String MEMORY = "memory"; // NOI18N
     public static final String OPERATIONS = "operations"; // NOI18N
     public static final String PANEL = "panel"; // NOI18N
