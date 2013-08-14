@@ -36,8 +36,22 @@ ul.manifest>li.location>ul, ul.manifest>li.aboard>ul {
 ul.manifest {
 	white-space: nowrap;
 }
-ul.manifest>span.comment {
+ul.manifest>span.comment, ul.manifest>li.aboard {
 	font-style: italic;
+}
+ul.manifest>li.aboard>ul {
+	font-style: normal;
+}
+ul.manifest>li.aboard {
+	-moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #EEECF6;
+    border-color: #BEBFD7 -moz-use-text-color;
+    border-image: none;
+    border-style: dotted none;
+    border-width: 1px 0;
 }
 ul.manifest>li.location>ul.cars>li.car>span.roadNumber {
 	font-size: 125%;

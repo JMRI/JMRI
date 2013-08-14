@@ -82,11 +82,11 @@ var $buildManifest = function($r, $s, $x){
 			}
 		});
 		$msg = "";
-		if ($rl.expectedArrivalTime == -1 && $train.location !== $rl.name) { //location has been passed
+		if ($rl.expectedArrivalTime == -1 && $train.locationId !== $rl.id) { //location has been passed
 			$msg += " - complete ";
 			$locationClass = "complete";
 		} else  { 
-			if ($train.location == $rl.name) {
+			if ($train.locationId == $rl.id) {
 				$msg += " (current) "; //show that train is at this location
 				$locationClass = "current";
 			} 
@@ -109,10 +109,11 @@ var $buildManifest = function($r, $s, $x){
 		$h += "  </li>";
 	});
 
-	if ($ht !== "") {
-		$h += "<li class='aboard'> Train contents<ul>" + $ht + "</ul></li>";
+	$h += "<li class='aboard'>Train Status: " + $train.status;
+	if ($ht !== "") { //add in list of cars if set
+		$h += "<ul>" + $ht + "</ul>";
 	}
-	$h += "</ul>";
+	$h += "</li></ul>";
 	$('div#displayArea').html($h); //put output on page
 
 	//insert checkbox image in all actionable li's, hidden until row is clicked
