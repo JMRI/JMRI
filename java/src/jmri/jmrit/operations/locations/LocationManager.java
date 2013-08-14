@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages locations.
  * 
  * @author Bob Jacobsen Copyright (C) 2003
- * @author Daniel Boudreau Copyright (C) 2008, 2009
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2013
  * @version $Revision$
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
