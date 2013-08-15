@@ -31,7 +31,7 @@
 
 <hr>
 <p align="left">Add<a href="Ops_Locations.shtml"> Location as Staging Only</a> and the <strong>Add Location </strong>window will be displayed with Staging only selected.</p>
-<p><img src="images/Ops_Staging01.png" width="773" height="574" alt="staging"></p>
+<p><img src="images/Ops_Staging01.png" width="772" height="640" alt="staging"></p>
 <p><br>
   To add a location as a Staging Only: in the <strong>Add Location</strong> window, type the<strong> Name</strong>
   <input name="textfield" type="text" id="textfield" value="Staging Area">
@@ -43,7 +43,7 @@ of the Staging Only location, note most of the window is greyed out until the lo
   at the bottom of the window.</p>
 <p>A Staging Only area may contain several tracks that must be defined. </p>
 <p>This opens the <strong>Add Location</strong> window with all the options enabled.</p>
-<p><img src="images/Ops_Staging02.png" width="775" height="631" alt="staging"></p>
+<p><img src="images/Ops_Staging02.png" width="772" height="640"></p>
 <p>You may select <strong>This location is serviced by trains traveling</strong>, select at least one or any number of the directions depending on access to your staging. We have selected
   
   All directions, for this staging.</p>
@@ -70,7 +70,7 @@ then the <strong>Add Staging Track</strong> window is displayed, so that you can
 <p>&nbsp;</p>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="48%" align="left" valign="top"><img src="images/Ops_Staging03.png" width="750" height="772" alt="staging"></td>
+    <td width="48%" align="left" valign="top"><img src="images/Ops_Staging03.png" width="771" height="719"></td>
     <td width="52%" align="left" valign="top"><p>In <strong>Name</strong>
       <input type="text" name="textfield2" id="textfield2">
       type the specific  track to be serviced at this location.</p>
@@ -86,7 +86,7 @@ then the <strong>Add Staging Track</strong> window is displayed, so that you can
 </table>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="48%" align="left" valign="top"><p><img src="images/Ops_Staging04.png" width="750" height="772" alt="staging"></p></td>
+    <td width="48%" align="left" valign="top"><p><img src="images/Ops_Staging04.png" width="771" height="705"></p></td>
     <td width="52%" align="left" valign="top"><p>You may <strong>Select the roads serviced by this track</strong></p>
       <p>
         <input name="radio3" type="radio" id="radio3" value="radio3" checked>
@@ -128,13 +128,23 @@ then the <strong>Add Staging Track</strong> window is displayed, so that you can
         <strong>
       <input type="radio" name="radio10" id="radio10" value="radio10">
       Trains</strong><br>
-      <br>
-      <img src="images/Ops_AddInterchangeTrack04-05.png" width="255" height="87" alt="staginh">      </p>
+      <img src="images/Ops_AddInterchangeTrack04-05.png" width="440" height="89"><br>
+      </p>
       <p>
         <strong>
       <input type="radio" name="radio11" id="radio11" value="radio11">
-      Routes</strong><br>
-      <img src="images/Ops_AddInterchangeTrack04-06.png" width="344" height="85" alt="staging">      </p>
+      Routes</strong></p>
+      <p><img src="images/Ops_AddInterchangeTrack04-06.png" width="434" height="127"><br>
+      </p>
+      <p>
+        <input type="radio" name="radio12" id="radio12" value="radio12">
+      <strong>      Exclude Trains</strong></p>
+      <p><img src="images/Ops_AddInterchangeTrack04-07.png" width="435" height="108"></p>
+      <p>
+        <strong>
+      <input type="radio" name="radio13" id="radio13" value="radio13">
+      Exclude Routes</strong></p>
+      <p><img src="images/Ops_AddInterchangeTrack04-08.png" width="442" height="123"></p>
       <p><strong>Optional car load controls</strong></p>
       <p>
         <input name="checkbox" type="checkbox" id="checkbox" checked>
@@ -156,15 +166,19 @@ then the <strong>Add Staging Track</strong> window is displayed, so that you can
         <strong>
       <input type="checkbox" name="checkbox5" id="checkbox5">
       Generate custom loads for any spur (muliple trains)</strong><strong></strong></p>
+      <p><strong>Optional Car Blocking</strong></p>
+      <p>
+        <input type="checkbox" name="checkbox6" id="checkbox6">
+      <strong>Block cars by pickup location</strong></p>
       <p>You may enter a <strong>Comment</strong>
         <input type="text" name="textfield5" id="textfield5">
         for the track.</p>
       <p>You may now press
-        <input type="submit" name="button11" id="button11" value="Save Staging Track">
+        <input type="submit" name="button11" id="button11" value="Add Staging Track">
         to add to the location or press
         <input type="submit" name="button12" id="button12" value="Delete Staging Track">
       if you do not want to store the track.</p>
-      <p>If you want to add another track to this interchange location, then enter new data and Press
+      <p>If you want to add another track to this staging location, then enter new data and Press
         <input type="submit" name="button13" id="button13" value="Save Staging Track">
         to add the track.</p>
       <p>Note if you are running a train to and from the same staging location, you must define two staging tracks for the program, one to depart and one to return on. Physically, the tracks can be the same track.</p>
@@ -182,7 +196,7 @@ and the <strong>Edit Staging Track</strong> window will open.</p>
 <p>&nbsp;</p>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="48%" align="left" valign="top"><input type="image" name="staging2" id="staging2" src="images/Ops_Staging06.png"></td>
+    <td width="48%" align="left" valign="top"><img src="images/Ops_Staging06.png" width="750" height="844"></td>
     <td width="52%" align="left" valign="top"><p>Note that it is identical to the Add Interchange and Yard Track except for the title.</p>
       <p>Change any of the entries that you want to edit and then press the
         <input type="submit" name="button15" id="button15" value="Save Staging Track">

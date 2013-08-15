@@ -127,7 +127,7 @@ Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</str
   <input type="submit" name="button" id="button" value="Add"> 
 Press to add a location</p>
 <p>The <strong>Add Location</strong> window is opened. At this point only the  Location Name and the type operation at this location entries are active.</p>
-<p><img src="images/Ops_AddLocation.png" width="760" height="650" alt="location"></p>
+<p><img src="images/Ops_AddLocation.png" width="772" height="589" alt="add location"></p>
 <p><strong>Name</strong>
   <input type="text" name="textfield" id="textfield">
 The location name must be unique; the program  will not allow two locations with identical names. However, if you want  more than one location to have the same name for your manifests and  switch lists, add a hyphen and a number to the locations name. For  example, <strong>Boston-1</strong> and <strong>Boston-2</strong> will print as <strong>Boston</strong>. The program  will remove the hyphen and number when printing manifests and switch  lists.</p>
@@ -144,7 +144,7 @@ The location name must be unique; the program  will not allow two locations with
     <input type="submit" name="button2" id="button2" value="Add Location">
     at  the bottom of the panel. The various fields that were disabled should  be enabled.</p>
 </blockquote>
-<p><img src="images/Ops_AddLocation01.png" width="760" height="650" alt="location"></p>
+<p><img src="images/Ops_AddLocation01.png" width="772" height="585" alt="Add Location"></p>
 <p>Each location can have several yard, spurs, interchange or  staging tracks. Yards are where cars and engines are placed for  temporary storage. A spur can be an industry or any place where a car  is loaded or unloaded. For a train to service a location, there must be  at least one track for that location. See below how to add tracks to  your location.</p>
 <p><strong>Select the rolling stock serviced by this location</strong></p>
 <p>The tables show the length of the tracks, the amount of track  that is occupied (Used) by cars and engines, the total number of cars  and engines (Rolling Stock) at each location, the number of cars and  engines that will be picked up (Pickups) by trains, and the number of  cars and engines that will be delivered (Drops) by trains.</p>
@@ -167,7 +167,7 @@ Spurs
 <input type="radio" name="radio4" id="radio4" value="radio4">
 Yards 
 <input type="radio" name="radio5" id="radio5" value="radio5">
-Interchange 
+Classification/Interchange 
 <input type="radio" name="radio6" id="radio6" value="radio6">
 Staging only</strong><br>
 To add a location, press the "Add ... Track" button. Now enter the name of  the location along with the length of the track in scale feet or in actual  inches. Append a double quote (") to the length when entering actual  inches and the program will convert the length into scale feet. Append  cm if you want to convert from centimeters to meters. Press the "Add  ... Track" button at the bottom of the panel and the disabled fields  should now appear. </p>
@@ -177,7 +177,7 @@ To add a location, press the "Add ... Track" button. Now enter the name of  the 
  
   
 </p>
-<h3>Add Spurs, Yards, Interchange, or Staging Only(corresponding to the present task)</h3>
+<h3>Add Spurs, Yards, Classification/Interchange, or Staging Only(corresponding to the present task)</h3>
 <p>To add a location , press the "Add ...(location)" button. </p>
 <p><a href="Ops_AddSiding.shtml"><input type="button" name="button4" id="button4" value="Add Spur Track">
 </a>  <a href="Ops_AddSiding.shtml">Add Spur Track</a></p>
@@ -185,8 +185,8 @@ To add a location, press the "Add ... Track" button. Now enter the name of  the 
   
   <input type="button" name="button5" id="button5" value="Add Yard Track">
 </a><a href="Ops_AddYard.shtml">Add Yard Track</a></p>
-<p><a href="Ops_AddInterchange.shtml"><input type="button" name="button6" id="button6" value="Add Interchange Track">
-</a><a href="Ops_AddInterchange.shtml">Add Classification Interchange Track</a></p>
+<p><a href="Ops_AddInterchange.shtml"><input type="button" name="button6" id="button6" value="Add Classification/Interchange Track">
+</a><a href="Ops_AddInterchange.shtml">Add Classification/Interchange Track</a></p>
 <p><a href="Ops_AddStaging.shtml"><input type="button" name="button7" id="button7" value="Add Staging Only Track">
 </a><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></p>
 <h3>Each of these buttons opens a corresponding dialog to describe its function.</h3>
