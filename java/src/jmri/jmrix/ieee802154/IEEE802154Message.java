@@ -4,19 +4,7 @@ package jmri.jmrix.ieee802154;
 
 
 /**
- * Contains the data payload of a serial
- * packet.
- * <P>
- * The transmission protocol can come in one of several forms:
- * <ul>
- * <li>If the interlocked parameter is false (default),
- * the packet is just sent.  If the response length is not zero,
- * a reply of that length is expected.
- * <li>If the interlocked parameter is true, the transmission
- * will require a CRC interlock, which will be automatically added.
- * (Design note: this is done to make sure that the messages
- * remain atomic)
- * </ul>
+ * Contains the data payload of an IEEE 802.15.4 packet.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
  * Converted to multiple connection
@@ -78,16 +66,18 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
 
         /**
          * check whether the message has a valid parity
+         * IEEE 802.15.4 messages have a two byte parity.
          */
         public boolean checkParity() {
                 int len = getNumDataElements();
-                int chksum = 0x00;  /* the seed */
+                int chksum = 0x0000;  /* the seed */
                 int loop;
 
-        for(loop = 0; loop < len-1; loop++) {  // calculate contents for data part
-                chksum ^= getElement(loop);
+        for(loop = 0; loop < len-1; loop=loop+2) {  // calculate contents for data part
+                chksum ^= (getElement(loop)<<8);
+                chksum ^= getElement(loop+1);
         }
-                return ((chksum&0xFF) == getElement(len-1));
+                return ((chksum&0xFFFF) == ((getElement(len-2)<<8 ) + getElement(len-1)));
         }
 
     public void setParity() {
@@ -96,12 +86,12 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
                 int loop;
 
         for(loop = 0; loop < len-1; loop++) {  // calculate contents for data part
-                chksum ^= getElement(loop);
+                chksum ^= (getElement(loop)<<8);
+                chksum ^= getElement(loop+1);
         }
                 setElement(len-1, chksum&0xFF);
+                setElement(len-2, ((chksum&0xFF00)>>8));
     }
-
-
 
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set
     public void setResponseLength(int l) { responseLength = l; }
@@ -109,16 +99,5 @@ public class IEEE802154Message extends jmri.jmrix.AbstractMRMessage {
         
     public String toMonitorString() { return toString(); }
     
-    // static methods to recognize a message
-    public boolean isPoll() { return getElement(1)==48;}
-    public boolean isXmt()  { return getElement(1)==17;}
-    public int getAddr() { return getElement(0); }
-
-    // static methods to return a formatted message
-    static public IEEE802154Message getPoll(int addr) {
-        // IEEE802154 implementation does not currently poll
-        return null;
-    }
 }
-
 /* @(#)IEEE802154Message.java */

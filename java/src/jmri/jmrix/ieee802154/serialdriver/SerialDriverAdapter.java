@@ -31,7 +31,7 @@ import gnu.io.SerialPortEventListener;
  */
 
 public class SerialDriverAdapter extends IEEE802154PortController implements jmri.jmrix.SerialPortAdapter {
-    SerialPort activeSerialPort = null;
+    protected SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
         super();
@@ -295,8 +295,8 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     public String option2Name() { return ""; }
 
     // private control members
-    private boolean opened = false;
-    InputStream serialStream = null;
+    protected boolean opened = false;
+    protected InputStream serialStream = null;
 
 //    static public SerialDriverAdapter instance() {
 //        if (mInstance == null) mInstance = new SerialDriverAdapter();

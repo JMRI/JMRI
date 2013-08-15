@@ -1,22 +1,20 @@
-package jmri.jmrix.ieee802154.serialdriver.configurexml;
+package jmri.jmrix.ieee802154.xbee.configurexml;
 
-import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
-import jmri.jmrix.ieee802154.serialdriver.ConnectionConfig;
-import jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter;
-import jmri.jmrix.ieee802154.serialdriver.SerialTrafficController;
-import jmri.jmrix.ieee802154.serialdriver.SerialSystemConnectionMemo;
-import jmri.jmrix.ieee802154.serialdriver.SerialNode;
+import jmri.jmrix.ieee802154.xbee.ConnectionConfig;
+import jmri.jmrix.ieee802154.xbee.XBeeAdapter;
+import jmri.jmrix.ieee802154.xbee.XBeeNode;
+import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
+import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
+import java.util.List;
 import org.jdom.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persisting
- * the SerialDriverAdapter (and connections). Note this is
+ * the XBeeAdapter (and connections). Note this is
  * named as the XML version of a ConnectionConfig object,
- * but it's actually persisting the SerialDriverAdapter.
+ * but it's actually persisting the XBeeAdapter.
  * <P>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write,
  * as that class is the one actually registered. Reads are brought
@@ -36,9 +34,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @param e Element being extended
      */
     protected void extendElement(Element e) {
-        SerialSystemConnectionMemo scm = (SerialSystemConnectionMemo)adapter.getSystemConnectionMemo();
-        SerialTrafficController stc=(SerialTrafficController)scm.getTrafficController();
-        SerialNode node = (SerialNode) stc.getNode(0);
+        XBeeConnectionMemo xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();
+        XBeeTrafficController xtc=(XBeeTrafficController)xcm.getTrafficController();
+        XBeeNode node = (XBeeNode) xtc.getNode(0);
         int index = 1;
         while (node != null) {
             // add node as an element
@@ -46,15 +44,16 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             n.setAttribute("name",""+node.getNodeAddress());
             e.addContent(n);
             // add parameters to the node as needed
-            n.addContent(makeParameter("PAN", ""+ 
-                      jmri.util.StringUtil.hexStringFromBytes(node.getPANAddress())));
-            n.addContent(makeParameter("address", ""+ 
+            n.addContent(makeParameter("address", ""+
                       jmri.util.StringUtil.hexStringFromBytes(node.getUserAddress())));
-            n.addContent(makeParameter("GUID", ""+ 
+            n.addContent(makeParameter("PAN", ""+
+                      jmri.util.StringUtil.hexStringFromBytes(node.getPANAddress())));
+            n.addContent(makeParameter("GUID", ""+
                       jmri.util.StringUtil.hexStringFromBytes(node.getGlobalAddress())));
+            n.addContent(makeParameter("name", node.getIdentifier()));
 
             // look for the next node
-            node = (SerialNode) stc.getNode(index);
+            node = (XBeeNode) xtc.getNode(index);
             index ++;
         }
     }
@@ -67,7 +66,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 	}
 
     protected void getInstance() {
-        adapter = new SerialDriverAdapter();
+        adapter = new XBeeAdapter();
     }
 
     protected void getInstance(Object object) {
@@ -79,24 +78,27 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @param e Element containing the connection info
      */
     @SuppressWarnings("unchecked")
-	protected void unpackElement(Element e) {
+    protected void unpackElement(Element e) {
         List<Element> l = e.getChildren("node");
         for (int i = 0; i<l.size(); i++) {
             Element n = l.get(i);
             int addr = Integer.parseInt(n.getAttributeValue("name"));
-            byte PAN[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"PAN"));            
-            byte address[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"address")); 
-            byte GUID[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"GUID"));            
-
+            byte PAN[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"PAN"));
+            byte address[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"address"));
+            byte GUID[] = jmri.util.StringUtil.bytesFromHexString(findParmValue(n,"GUID"));
+            String Identifier = findParmValue(n,"name");
             // create node (they register themselves)
-            SerialNode node = new SerialNode(PAN,address,GUID);
-            
+            XBeeNode node = new XBeeNode(PAN,address,GUID);
+            node.setIdentifier(Identifier);
+
             // Trigger initialization of this Node to reflect these parameters
-            SerialSystemConnectionMemo scm = (SerialSystemConnectionMemo)adapter.getSystemConnectionMemo();
-            SerialTrafficController stc=(SerialTrafficController)scm.getTrafficController();
-            stc.registerNode(node);
+            XBeeConnectionMemo xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();
+            XBeeTrafficController xtc=(XBeeTrafficController)xcm.getTrafficController();
+            xtc.registerNode(node);
         }
     }
+
+
 
     /**
      * Service routine to look through "parameter" child elements
@@ -121,6 +123,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
      
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
 
 }

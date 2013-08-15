@@ -15,7 +15,8 @@ public class SerialConnectionTypeList  implements jmri.jmrix.ConnectionTypeList 
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {
-              "jmri.jmrix.ieee802154.serialdriver.ConnectionConfig"
+              "jmri.jmrix.ieee802154.serialdriver.ConnectionConfig",
+              "jmri.jmrix.ieee802154.xbee.ConnectionConfig"
         };
     }
 

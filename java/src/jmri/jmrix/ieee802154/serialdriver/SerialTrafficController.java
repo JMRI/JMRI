@@ -21,7 +21,7 @@ public class SerialTrafficController extends IEEE802154TrafficController{
      * This is a default, null implementation, which must be overridden
      * in an adapter-specific subclass.
      */
-    public IEEE802154Message getSerialMessage(int length) {return null;}
+    public IEEE802154Message getIEEE802154Message(int length) {return new IEEE802154Message(length);}
 
     /**
      * <p>
@@ -29,5 +29,11 @@ public class SerialTrafficController extends IEEE802154TrafficController{
      * in an adapter-specific subclass.
      */
     protected AbstractMRReply newReply() {return new IEEE802154Reply(this);}
+
+    /*
+     * Build a new IEEE802154 Node.
+     * @return new IEEE802154Node.
+     */
+    public jmri.jmrix.ieee802154.IEEE802154Node newNode() { return new SerialNode(); }
 
 }

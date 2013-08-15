@@ -5,7 +5,7 @@ package jmri.jmrix.ieee802154;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.AbstractMRNodeTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,12 +32,14 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2013
  * @version			$Revision$
  */
-abstract public class IEEE802154TrafficController extends AbstractMRTrafficController implements IEEE802154Interface {
+abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficController implements IEEE802154Interface {
 
 	public IEEE802154TrafficController() {
         super();
         logDebug = log.isDebugEnabled();
         
+        init(1,100);
+
         // not polled at all, so allow unexpected messages, and
         // use poll delay just to spread out startup
         setAllowUnexpectedReply(true);
@@ -57,7 +59,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRTrafficContr
      * This is a default, null implementation, which must be overridden
      * in an adapter-specific subclass.
      */
-    public IEEE802154Message getSerialMessage(int length) {return null;}
+    public IEEE802154Message getIEEE802154Message(int length) {return null;}
     
     // have several debug statements in tight loops, e.g. every character;
     // only want to check once
@@ -81,6 +83,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRTrafficContr
     /**
      * Forward a IEEE802154Message to all registered IEEE802154Interface listeners.
      */
+    @Override
     protected void forwardMessage(AbstractMRListener client, AbstractMRMessage m) {
         ((IEEE802154Listener)client).message((IEEE802154Message)m);
     }
@@ -142,17 +145,20 @@ abstract public class IEEE802154TrafficController extends AbstractMRTrafficContr
  
     /**
      * <p>
-     * The length is the first two bytes of the message payload, 
-     * with the MSB first.  The end of the message occurs when
-     * the length of the message is equal to the payload length. 
+     * The length is the first byte of the message payload, The end of the 
+     * message occurs when the length of the message is equal to the payload 
+     * length.
+     * <p>
+     * NOTE: This function does not work with XBee nodes, which provide a 
+     * modified version of the packets sent via the radio.  
      */
     @Override
     protected boolean endOfMessage(AbstractMRReply msg) {
-         return ( ((msg.getElement(0)<<8)+msg.getElement(1)+2)== msg.getNumDataElements()); }
+         return ( (msg.getElement(0)+2)== msg.getNumDataElements()); }
 
     /**
      * Add trailer to the outgoing byte stream.
-     * This version adds the checksum to the last byte.
+     * This version adds the checksum to the end of the message.
      * @param msg  The output byte stream
      * @param offset the first byte not yet used
      */
@@ -178,7 +184,15 @@ abstract public class IEEE802154TrafficController extends AbstractMRTrafficContr
      * in an adapter-specific subclass.
      */
     //protected AbstractMRReply newReply() {return new IEEE802154Reply(this);}
-      
+     
+    /*
+     * Build a new IEEE802154 Node.
+     * Must be implemented by derived classes
+     * @return new IEEE802154Node.
+     */
+    abstract public IEEE802154Node newNode();
+
+ 
     static Logger log = LoggerFactory.getLogger(IEEE802154TrafficController.class);
 
 }

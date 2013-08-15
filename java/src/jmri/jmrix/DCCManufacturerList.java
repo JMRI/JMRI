@@ -30,6 +30,7 @@ public class DCCManufacturerList {
     public static final String DCCSPEC = "DCC Specialties";
     public static final String FLEISHMANN = "Fleishmann";
     public static final String IEEE802154 = "IEEE 802.15.4";
+    public static final String XBee = "XBee (API Mode)";
     public static final String JMRI = "JMRI (Network)";
     public static final String LIONEL = "Lionel TMCC";
     public static final String MAPLE = "Maple Systems";
