@@ -49,7 +49,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
-                closingEvent();
+                closingEvent(true);
             }
         });
         addHelpMenu("package.jmri.jmrit.display.CircuitBuilder", true);
@@ -86,7 +86,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         JButton doneButton = new JButton(Bundle.getMessage("ButtonDone"));
         doneButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
-                    closingEvent();
+                    closingEvent(false);
                 }
         });
         panel.add(doneButton);
@@ -319,16 +319,16 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _pathChange = pathChanged;
     }
 
-    private void checkForSavePath() {
+    private boolean checkForSavePath() {
         if (_pathChange && _pathName.getText().length()>0) {
             int result = JOptionPane.showConfirmDialog(this, Bundle.getMessage("savePath", 
             			_pathName.getText()), Bundle.getMessage("makePath"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.QUESTION_MESSAGE);
             if (result==JOptionPane.YES_OPTION) {
- //           	deletePath();
-            	addPath();
+             	addPath();
             }
         }
+        return true;
     }
 
     /************************* end setup **************************/
@@ -515,13 +515,14 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         clearPath();
     }
 
-    protected void closingEvent() {
-        checkForSavePath();
-        clearPath();
-        _parent.closePathFrame(_block);
-        _loc = getLocation(_loc);
-        _dim = getSize(_dim);
-        dispose();
+    protected void closingEvent(boolean close) {
+    	if (checkForSavePath() || close) {
+            clearPath();
+            _parent.closePathFrame(_block);
+            _loc = getLocation(_loc);
+            _dim = getSize(_dim);
+            dispose();    		
+    	}
     }
 
     private void clearPath() {

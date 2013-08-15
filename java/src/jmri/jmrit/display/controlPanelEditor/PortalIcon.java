@@ -58,11 +58,11 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
     private void initMap() {
         _iconMap = new java.util.HashMap<String, NamedIcon>();
         ControlPanelEditor ed = (ControlPanelEditor)_editor;
-        ed.getPortalIcon(VISIBLE);
-        ed.getPortalIcon(PATH);
-        ed.getPortalIcon(HIDDEN);
-        ed.getPortalIcon(TO_ARROW);
-        ed.getPortalIcon(FROM_ARROW);
+        _iconMap.put(VISIBLE, ed.getPortalIcon(VISIBLE));
+        _iconMap.put(PATH, ed.getPortalIcon(PATH));
+        _iconMap.put(HIDDEN,ed.getPortalIcon(HIDDEN));
+        _iconMap.put(TO_ARROW, ed.getPortalIcon(TO_ARROW));
+        _iconMap.put(FROM_ARROW, ed.getPortalIcon(FROM_ARROW));
         setFamily((ed.getPortalIconFamily()));
     }
     
@@ -94,12 +94,14 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
     			return;
     		} else {
     			_portal.removePropertyChangeListener(this);
+    	        _portal = portal;
+    	        _portal.addPropertyChangeListener(this); 		
     		}   			
     	} else if (portal==null) {
     		return;
+    	} else {
+    		_portal = portal;
     	}
-        _portal = portal;
-        _portal.addPropertyChangeListener(this); 		
         setName(_portal.getName());
         setTooltip(new ToolTip(_portal.getDescription(), 0, 0));
    }
@@ -110,6 +112,10 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
         _status = status;
         updateSize();
         repaint();
+    }
+    
+    public String getStatus() {
+    	return _status;
     }
     
     /* currently Portals do not have an instance manager - !!!todo? */

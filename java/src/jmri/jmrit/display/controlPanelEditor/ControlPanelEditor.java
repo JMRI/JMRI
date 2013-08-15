@@ -76,6 +76,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     private JMenu _circuitMenu;
     private JMenu _drawMenu;
     private CircuitBuilder _circuitBuilder;
+    private ArrayList <Positionable>_secondSelectionGroup;
     private ShapeDrawer _shapeDrawer;
     private ItemPalette _itemPalette;
 
@@ -946,7 +947,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             	_selectionGroup = null;
             }
         }
-        _circuitBuilder.doMousePressed(event);
+        _circuitBuilder.doMousePressed(event, _currentSelection);
         _targetPanel.repaint(); // needed for ToolTip
     }
 
@@ -1155,9 +1156,25 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         targetWindowClosing(true);
     }
 
+    protected void setSecondSelectionGroup(ArrayList <Positionable> list) {
+    	_secondSelectionGroup = list;
+    }
     protected void paintTargetPanel(Graphics g) {
     	// needed to create PositionablePolygon
     	_shapeDrawer.paint(g);
+        if (_secondSelectionGroup!=null){
+        	Graphics2D g2d = (Graphics2D)g;
+            g2d.setColor(new Color(100, 200, 255));
+            g2d.setStroke(new java.awt.BasicStroke(2.0f));
+            if (_secondSelectionGroup!=null){
+                for(int i=0; i<_secondSelectionGroup.size();i++){
+                	Positionable p = _secondSelectionGroup.get(i);
+                    if (!(p instanceof jmri.jmrit.display.controlPanelEditor.shape.PositionableShape)) {
+                        g.drawRect(p.getX(), p.getY(), p.maxWidth(), p.maxHeight());                        	
+                    }
+                }
+            }
+        }
     }
 
     /**

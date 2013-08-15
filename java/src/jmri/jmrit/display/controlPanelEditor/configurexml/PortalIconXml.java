@@ -42,6 +42,10 @@ public class PortalIconXml extends PositionableLabelXml {
 
         // include contents
         Portal portal = p.getPortal();
+        if (p==null) {
+            log.info("PortalIcon has no associated Portal.");
+            return null;
+        }
         element.setAttribute("portalName", portal.getName());
         if (portal.getToBlock()!=null) { 
             element.setAttribute("toBlockName", portal.getToBlockName());
