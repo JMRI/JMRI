@@ -673,7 +673,7 @@ public class TrainCommon {
 			carAttributes = carType[0] + splitString(car.getDestinationTrackName())
 					+ car.getRouteDestinationId();
 			showLocation = showUtilityCarLocation(messageFormat);
-			if (showLocation)
+			if (showLocation && car.getTrack() != null)
 				carAttributes = carAttributes + car.getRouteLocationId();
 		}
 		if (showLength)
