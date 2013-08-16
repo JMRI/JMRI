@@ -576,6 +576,7 @@ public class TrainCommon {
 	 */
 	protected void setoutUtilityCars(PrintWriter fileOut, List<String> carList, Car car, RouteLocation rl,
 			boolean isManifest) {
+		// TODO should we be using isLocal(car)?
 		boolean isLocal = car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack() != null;
 		StringBuffer buf = new StringBuffer(Setup.getDropCarPrefix());
 		String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
@@ -630,7 +631,10 @@ public class TrainCommon {
 			return null;
 		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), 3));
 		for (int i = 0; i < messageFormat.length; i++) {
-			String s = getCarAttribute(car, messageFormat[i], !PICKUP, isLocal);
+			// TODO the Setup.Location doesn't work correctly for the conductor
+			// window
+			// therefore we use the local true to disable it.
+			String s = getCarAttribute(car, messageFormat[i], !PICKUP, LOCAL);
 			buf.append(s);
 		}
 		return buf.toString();
@@ -665,6 +669,7 @@ public class TrainCommon {
 			if (showDestination)
 				carAttributes = carAttributes + car.getRouteDestinationId();
 		} else {
+			// set outs and local moves
 			carAttributes = carType[0] + splitString(car.getDestinationTrackName())
 					+ car.getRouteDestinationId();
 			showLocation = showUtilityCarLocation(messageFormat);
@@ -693,6 +698,8 @@ public class TrainCommon {
 				if (showLocation && !c.getRouteLocationId().equals(car.getRouteLocationId()))
 					continue;
 				if (showDestination && !c.getRouteDestinationId().equals(car.getRouteDestinationId()))
+					continue;
+				if (isLocalMove(car) ^ isLocalMove(c))
 					continue;
 				if (isPickup && c.getRouteLocation() == rl
 						&& splitString(c.getTrackName()).equals(splitString(car.getTrackName()))) {
