@@ -34,14 +34,9 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
     public static final String TO_ARROW = "toArrow";
     public static final String FROM_ARROW = "fromArrow";
 
-/*    protected static NamedIcon _toArrowIcon = NamedIcon.getIconByName("resources/icons/track/toArrow.gif");
-    protected static NamedIcon _fromArrowIcon = NamedIcon.getIconByName("resources/icons/track/fromArrow.gif");
-    protected static NamedIcon _hiddenIcon = NamedIcon.getIconByName("resources/icons/Invisible.gif");
-*/
     private Portal _portal;
     private PortalItemPanel _portalPanel;
     private String _status;
-    //jmri.util.JmriJFrame _paletteFrame;
 
     public PortalIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -101,6 +96,7 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
     		return;
     	} else {
     		_portal = portal;
+	        _portal.addPropertyChangeListener(this); 		
     	}
         setName(_portal.getName());
         setTooltip(new ToolTip(_portal.getDescription(), 0, 0));

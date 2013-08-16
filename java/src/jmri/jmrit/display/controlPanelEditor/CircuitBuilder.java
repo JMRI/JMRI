@@ -387,6 +387,7 @@ public class CircuitBuilder  {
             editCircuitDialog(title);
             if (_currentBlock!=null) {
                 checkCircuits();
+                _circuitIcons = _circuitMap.get(_currentBlock);
                 // check icons to be indicator type
                 if (iconsConverted(_currentBlock)) {
                 	_editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true));
@@ -439,6 +440,7 @@ public class CircuitBuilder  {
             editCircuitDialog(title);
             if (_currentBlock!=null) {
                 checkCircuits();
+                _circuitIcons = _circuitMap.get(_currentBlock);
                 // check icons to be indicator type
                 if (iconsConverted(_currentBlock)) {
                 	_editor.setSelectionGroup(makeSelectionGroup(_currentBlock, true));
