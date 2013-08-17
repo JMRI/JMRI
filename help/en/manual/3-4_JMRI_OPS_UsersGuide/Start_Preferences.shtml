@@ -1,0 +1,284 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Start_Preferences.shtml 18193 2011-08-16 23:19:17Z dat7719 $ -->
+<title>Decoder Pro Manual: Getting Started</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+<script type="text/javascript">
+<!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+//-->
+</script>
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+<h1>Getting Started with DecoderPro&reg;</h1>
+<h1>How do I set up my preferences?</h1>
+
+<div align=right>
+<p><a href="Start_DecoderPro.shtml">Previous</a>
+<p><a href="index.shtml#startOps">Back to Index</a> </div>
+
+<hr>
+<h3>&nbsp;</h3>
+<p>
+ Click on the Edit menu and then Preferences... option
+in the screen below, which opens the Preferences window. (This window may open automatically the first time you
+run the program.) 
+<p>As a first time user the most  important information is the <strong>Connections</strong> screen where you describe how the  computer will talk to the command station.&nbsp;  Most of rest you can leave at the initial or &ldquo;default&rdquo; settings until  you find a need to change things to suit your fancy.
+<p><strong>Most importantly, you must click  
+  <input type="button" name="button9" id="button9" value="Save">
+   to finalize your settings and then re-start the program to have them  take effect.</strong>
+<p>The Preferences window provides  access to the basic  configuration information to connect your computer to your DCC system.&nbsp; You will be using that system to  actually&nbsp; program and operate  trains equipped with DCC decoders. 
+<p>The window is split into two panes, on the left side is a list of   preference groups that may be set. Clicking on one of the items opens   the options that may be set in the right side pane. No selection have been made
+<h1><img src="images/Preferences.png" width="755" height="432" alt="preferences"></h1>
+
+<p><a name="Top"></a>
+
+<table align="center" border="1" cellpadding="1" cellspacing="1" width="80%">
+  <tbody>
+    <tr>
+      <td align="left" valign="top" width="22%"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Connections">Connections</a></strong></td>
+      <td align="left" valign="top" width="78%">Allows you to select the system connection that you are using for controlling DCC and the connection to your computer.</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Defaults">Defaults</a></strong></td>
+      <td align="left" valign="top">Shows system default settings</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#FileLocations">File Locations</a></strong></td>
+      <td align="left" valign="top">Set default location for saving User files and Script Files</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#StartUp">Start Up</a></strong></td>
+      <td align="left" valign="top">Allows you to set Actions, Buttons, Files and Scripts that run at Start Up</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Display">Display</a></strong></td>
+      <td align="left" valign="top">Allows you to select your computer display mode</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Messages">Messages</a></strong></td>
+      <td align="left" valign="top">Set default actions for system message when displayed</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Roster">Roster</a></strong></td>
+      <td align="left" valign="top">Allows you to set your default Programmer and roster location</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#Throttle">Throttle</a></strong></td>
+      <td align="left" valign="top">Allows you to set up you Throttle preferences</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#WiThrottle">Wi Throttle</a></strong></td>
+      <td align="left" valign="top">Allows you to set up a Wi Throttle settings</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#JOSN"><strong>JSON Server</strong></a></td>
+      <td align="left" valign="top">Opens JSON Server Prefence settings pane</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong><a href="file:///G:/JMRI%20SVN%2020130109/3-2_DecoderPro/Start_Preferences.shtml#MiniServer">WebServer</a></strong></td>
+      <td align="left" valign="top">Sets up the Decoder Pro&reg; WebServer</td>
+    </tr>
+  </tbody>
+</table>
+<p>Now we will set up preferences for the JMRI environment with your command station.</p>
+<table width="80%" border="1" align="center" cellpadding="2" cellspacing="1">
+  <tr>
+    <td>I am using a Digitrax Super Chief Command Station (radio) interfaced to the computer via loconet, PR3 (MS100 mode) and USB port. I keep master roster on the System Drive.;</td>
+  </tr>
+</table>
+<h3><a name="Connections"></a>Connections Pane (TABS are configured to the system your selected)</h3>
+<p>Now select Connections and connection options display in right pane</p>
+<p><img src="images/Preferences2.png" width="755" height="432"></p>
+<table width="80%" border="1" align="center" cellpadding="2" cellspacing="1">
+  <tr>
+    <td width="21%">System manufacturer:</td>
+    <td colspan="2">Drop-down list with all the supported DCC manufacturers, select the manufacturer of your system.</td>
+  </tr>
+  <tr>
+    <td>System connection:</td>
+    <td colspan="2">Drop-down list with all of the supported DCC system interfaces   supportted by the manufacturer that you selected, select the interface   that you are using.</td>
+  </tr>
+  <tr>
+    <td rowspan="4">Settings:</td>
+    <td width="22%">Serial Port:</td>
+    <td width="57%">Drop-down list to select the serial port to which your DCC interface is   connected. If you do not know, check your system hardware configuration   manual.    A second drop-down list may include a selection if there are   more than one possibility. possibilityDrop-down list to select the serial port to which your DCC  interface is connected. If you do not know, check your system hardware  configuration manual. A second drop-down list may include a selection if there  are more than one possibility</td>
+  </tr>
+  <tr>
+    <td>Command station type:</td>
+    <td>Drop-down list to select the command station type that JMRI will be using to send your DCC commands.</td>
+  </tr>
+  <tr>
+    <td>Connection prefix</td>
+    <td>Include the prefix for your connection, in the case shown the "L" is default</td>
+  </tr>
+  <tr>
+    <td>Connection name</td>
+    <td>	Should default to the connection used</td>
+  </tr>
+</table>
+<p><img src="images/Preferences3.png" width="755" height="463"></p>
+<p>
+  <input type="checkbox" name="checkbox" id="checkbox"> 
+Additional Connection Settings, if checked:  </p>
+<p>
+  <input type="submit" name="button2" id="button2" value="Disable  Connection">
+will disable all the connection settings.</p>
+<p> 
+  <input type="submit" name="button" id="button" value="Delete Connection">
+will delete all the connection settings. </p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h3><a name="Defaults"></a>Defaults Pane</h3>
+<p><img src="images/Preferences4.png" width="755" height="302"></p>
+<p>Shows the default settings which will depend upon the system used.</p>
+<p><a href="#Top">Top</a></p>
+<h3><a name="FileLocations"></a>File locations Pane</h3>
+<p><img src="images/Preferences5.png" width="755" height="302"></p>
+<table align="center" border="1" cellpadding="2" cellspacing="1" width="50%">
+  <tbody>
+    <tr>
+      <td align="left" valign="top" width="26%"><strong>User File Locations</strong></td>
+      <td align="left" width="74%">Select the location for your user files on your system</td>
+    </tr>
+    <tr>
+      <td align="left" valign="top"><strong>Jython Script Location</strong></td>
+      <td align="left">Set the location of Jython Script files</td>
+    </tr>
+  </tbody>
+</table>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h3><a name="StartUp"></a>Start Up Pane</h3>
+<p><img src="images/Preferences6.png" width="755" height="302"></p>
+<table width="80%" border="1" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="17%"><strong>Actions TAB</strong></td>
+    <td width="41%"><input type="submit" name="button3" id="button3" value="Add Action">
+    to set up a Startup action</td>
+    <td width="42%"><img src="images/Preferences11.png" width="328" height="182" alt="actions"></td>
+  </tr>
+  <tr>
+    <td width="17%"><strong>Buttons TAB</strong></td>
+    <td><input type="submit" name="button4" id="button4" value="Add Button ">
+    to the Splash Screen</td>
+    <td><img src="images/Preferences8.png" width="333" height="188" alt="buttons"></td>
+  </tr>
+  <tr>
+    <td width="17%"><strong>Files TAB</strong></td>
+    <td><input type="submit" name="button5" id="button5" value="Add Files">
+    that you want to load at startup</td>
+    <td><img src="images/Preferences9.png" width="264" height="186" alt="files"></td>
+  </tr>
+  <tr>
+    <td width="17%"><strong>Scripts TAB</strong></td>
+    <td><input type="submit" name="button6" id="button6" value="Add Scripts">
+    to load at startup</td>
+    <td><img src="images/Preferences10.png" width="265" height="190" alt="scripts"></td>
+  </tr>
+</table>
+<p>You may add as many items as you want to open on start up.  Example of <strong>Actions</strong></p>
+<p><img src="images/Preferences7.png" width="672" height="501" alt="preferences"></p>
+<p>
+  <input type="submit" name="button7" id="button7" value="Remove"> 
+removes the item from the Start Up sequence. All of the panes are of the same format.</p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h3><a name="Display"></a>Display Panes</h3>
+<h4>GUI Pane</h4>
+<p><img src="images/Preferences_GUI.png" width="667" height="467" alt="GUI"></p>
+<table width="80%" border="1" align="center" cellpadding="2" cellspacing="1">
+  <tr>
+    <td width="51%" rowspan="5"><strong>Select your preferred appearane for buttons, menus, etc.</strong></td>
+    <td width="49%"><input name="radio" type="radio" id="radio" value="radio" checked>
+      Metal</td>
+  </tr>
+  <tr>
+    <td><input type="radio" name="radio2" id="radio2" value="radio2"> 
+      Windows Classic</td>
+  </tr>
+  <tr>
+    <td><input type="radio" name="radio3" id="radio3" value="radio3"> 
+      CDEMotif</td>
+  </tr>
+  <tr>
+    <td><input type="radio" name="radio4" id="radio4" value="radio4">
+      Windows</td>
+  </tr>
+  <tr>
+    <td><input type="radio" name="radio5" id="radio5" value="radio5">
+      Nimbus</td>
+  </tr>
+  <tr>
+    <td><strong>Select font size in points</strong></td>
+    <td><form name="form" id="form">
+      <select name="jumpMenu" id="jumpMenu" onChange="MM_jumpMenu('parent',this,0)">
+        <option>12</option>
+      </select> 
+      select font size
+    </form></td>
+  </tr>
+  <tr>
+    <td colspan="2"><input type="checkbox" name="checkbox2" id="checkbox2">
+      Use non-standard release event for mouse click?</td>
+  </tr>
+</table>
+<h4>Locale Pane</h4>
+<p><img src="images/Preferences_local.png" width="657" height="300" alt="locale"></p>
+<p>Drop-down list to select your location and language</p>
+<h4>Console Pane</h4>
+<p><img src="images/Preferences_Console.png" width="755" height="296"></p>
+<p>Display settings for the JMRI system console.</p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h3><a name="Messages"></a>Messages Panes</h3>
+<p>TABS and selections can be used to set how and when messages are displayed.</p>
+<p><img src="images/Preferences_Messages.png" width="726" height="296"></p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h3><a name="Roster"></a>Roster Panes</h3>
+<h4>Programmer pane</h4>
+<p>Used to set the preferred decoder programmer.</p>
+<p><img src="images/Preferences_Roster_Programmer.png" width="728" height="308"></p>
+<h4>Roster Pane</h4>
+<p>You may set the default location of the locomotive roster and the default owners name.</p>
+<p><img src="images/Preferences_roster.png" width="726" height="296"></p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h3><a name="Throttle"></a>Throttle Pane</h3>
+<p>Select throttle startup conditions, shown are defaults, but you may change the settings.</p>
+<p><img src="images/Preferences_throttle.png" width="726" height="423"></p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h3><a name="WiThrottle"></a>WiThrottle Pane</h3>
+<p>This pane allows WiThottle users to customize the setup.</p>
+<p><img src="images/Preferences_Wi.png" width="726" height="396"></p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h2><a name="JSON"></a>JSON Server Pane</h2>
+<p><img src="images/Preference_JSON_Server.png" width="755" height="432"></p>
+<h2><a name="MiniServer"></a>MinServer Pane</h2>
+<p>Use this pane to setup MinServer if you are using it.</p>
+<p><img src="images/Preferences_miniServer.png" width="726" height="396"></p>
+<p><strong><a href="#Top">Top</a></strong></p>
+<h2 align="center">Before you exit the preferences, Click on          
+  <input type="submit" name="button8" id="button8" value="Save">
+button to save all your selections.</h2>
+<h2 align="center">You must restart DecoderPro for preferences to take effect</h2>
+<hr>
+<div align=right>
+<p><a href="Start_DecoderPro.shtml">Previous</a>
+<p><a href="index.shtml#startOps">Back to Index</a> </div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Ops_Locations.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
+<title>Operations-Locations</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+
+<h1>Using JMRI&reg; to Operate Trains</h1>
+<h1>Operations Locations Window</h1>
+
+<div align=right>
+<p><a href="Ops_Settings.shtml">Previous </a> | <a href="Ops_Cars.shtml">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr>
+<p>The Operations Tool, Locations opens the Locations window as shown. Locations are places on your railroad that trains visit to pickup or  drop off cars and engines. Locations can be cities, towns, or just  places where trains need to work cars. To enter a new location press 
+  <input type="submit" name="button9" id="button9" value="Add">
+, which will open the<strong><a href="#addLoc">Add  Location</a></strong>window which we will discuss in a moment.&nbsp; But first let&rsquo;s discuss the &ldquo;Locations&rdquo;  window itself. </p>
+<p><img src="images/Ops_locations01.png" width="670" height="245" alt="ops locations"></p>
+<p><strong>menu bar</strong>
+</p>
+<ul>
+  <li><strong>  Tools</strong></li>
+  <ul>
+    <li><a href="Ops_schedule.shtml"><strong>Schedules</strong></a><br>
+      Opens the <strong>Schedules</strong> panel. &nbsp;If you would like to see  cars delivered in a particular sequence, or with a specific load for delivery  or shipping, the program allows you to apply a schedule to a siding. This is an  optional feature and shouldn't be used until you become very familiar with how  the program generates manifests and switch lists. <br>
+      <br>
+    </li>
+    <li><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a><br>
+      Opens the <strong>Modify Locations by Car Type </strong>window.<br>
+      <br>
+    </li>
+  </ul>
+  <ul>
+    <li><strong><a href="Ops_Cars.shtml">Show Cars</a></strong><br>
+      Opens Cars window which lists cars for this location    <br>
+      <br>
+    </li>
+    <li><strong>Print
+      </strong><br>
+      <img src="images/Ops_locations_print.png" width="195" height="179" alt="print"><br>
+      Click on 
+      <input type="button" name="button10" id="button10" value="Okay">
+    opens system printer dialog.</li>
+  </ul>
+  <blockquote>
+    <p><img src="images/Ops_print_loc.png" width="718" height="608" alt="print location"><br>
+      <br>
+    </p>
+  </blockquote>
+  <ul>
+    
+    <li>    <strong>Preview</strong><br>
+      <img src="images/Ops_locations_print.png" width="195" height="158" alt="print"><br>
+      Click 
+      <input type="button" name="button11" id="button11" value="Okay"> 
+    opens the print previw window showing Location information.</li>
+  </ul>
+  <blockquote>
+    <p><img src="images/ops_PrintPreview_loc.png" width="675" height="537" alt="Location preview"><br>
+      <br>
+    </p>
+  </blockquote>
+  <li><strong>Operations</strong>
+  </li>
+</ul>
+<ul>
+  <ul>
+    <li><strong>Settings</strong>
+      <blockquote>
+        <p>Opens <strong><a href="Ops_Settings.shtml"> Setting</a></strong> window.</p>
+      </blockquote>
+    </li>
+    <li><strong>Locations</strong></li>
+    <blockquote>
+      <p>Opens <strong><a href="Ops_Locations.shtml">Locations</a></strong> window.</p>
+    </blockquote>
+    <li><strong>Cars</strong></li>
+    <blockquote>
+      <p>Opens <strong><a href="Ops_Cars.shtml">Cars</a></strong> window.</p>
+    </blockquote>
+    <li><strong>:Locomotives</strong>
+      <blockquote>
+        <p>Opens <strong><a href="Ops_Engines.shtml">Locomotives</a></strong> window.</p>
+      </blockquote>
+    </li>
+    <li><strong>Routes</strong>
+      <blockquote>
+        <p>Opens <strong><a href="Ops_Routes.shtml">Routes</a></strong> window.</p>
+      </blockquote>
+    </li>
+    <li><strong>Trains</strong>
+      <blockquote>
+        <p>Opens <a href="Ops_Trains.shtml">Trains</a> window.</p>
+      </blockquote>
+    </li>
+  </ul>
+  <li><strong>Window</strong></li>
+  <li><strong>Help</strong></li>
+</ul>
+<p>At the bottom of the window you may select Sort order of the locations</p>
+<p><strong>Sort by 
+  <input name="radio" type="radio" id="radio" value="radio" checked> 
+  Name  
+  <input type="radio" name="radio2" id="radio2" value="radio2"> 
+Id &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>Sets the sort order for the locations</p>
+<p>
+  <a name="addLoc"></a>
+  <input type="submit" name="button" id="button" value="Add"> 
+Press to add a location</p>
+<p>The <strong>Add Location</strong> window is opened. At this point only the  Location Name and the type operation at this location entries are active.</p>
+<p><img src="images/Ops_AddLocation.png" width="772" height="589" alt="add location"></p>
+<p><strong>Name</strong>
+  <input type="text" name="textfield" id="textfield">
+The location name must be unique; the program  will not allow two locations with identical names. However, if you want  more than one location to have the same name for your manifests and  switch lists, add a hyphen and a number to the locations name. For  example, <strong>Boston-1</strong> and <strong>Boston-2</strong> will print as <strong>Boston</strong>. The program  will remove the hyphen and number when printing manifests and switch  lists.</p>
+<p>Add Location Menu</p>
+<p><img src="images/Ops_AddLocation_menu.png" width="776" height="168" alt="menu"></p>
+<p><strong>Tools</strong></p>
+<blockquote>
+  <p><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a></p>
+  <p><strong><a href="Ops_Cars.shtml">Show Cars</a></strong></p>
+  <p><strong>Change Track Type</strong></p>
+  <p><img src="images/Ops_location_ChangeTrackType.png" width="388" height="107" alt="track type"><br>
+    <br>
+    Press the 
+    <input type="submit" name="button2" id="button2" value="Add Location">
+    at  the bottom of the panel. The various fields that were disabled should  be enabled.</p>
+</blockquote>
+<p><img src="images/Ops_AddLocation01.png" width="772" height="585" alt="Add Location"></p>
+<p>Each location can have several yard, spurs, interchange or  staging tracks. Yards are where cars and engines are placed for  temporary storage. A spur can be an industry or any place where a car  is loaded or unloaded. For a train to service a location, there must be  at least one track for that location. See below how to add tracks to  your location.</p>
+<p><strong>Select the rolling stock serviced by this location</strong></p>
+<p>The tables show the length of the tracks, the amount of track  that is occupied (Used) by cars and engines, the total number of cars  and engines (Rolling Stock) at each location, the number of cars and  engines that will be picked up (Pickups) by trains, and the number of  cars and engines that will be delivered (Drops) by trains.</p>
+<p><strong>This Location is Serviced by Trains Traveling</strong> 
+  <strong>
+<input type="checkbox" name="checkbox" id="checkbox">
+North
+<input name="checkbox2" type="checkbox" id="checkbox2" checked>
+South 
+<input type="checkbox" name="checkbox3" id="checkbox3">
+East 
+<input type="checkbox" name="checkbox4" id="checkbox4">
+West<br>
+  </strong>You can decide which train direction the location can service. For  example, if only south bound trains can access the location select South and deselect the other directions. This can be useful if you  want to only support trailing point switching for a given location. If a  location can support multiple directions then select the ones that are  appropriate.
+<br>
+<br>
+<strong>Operations at this location
+<input name="radio3" type="radio" id="radio3" value="radio3" checked>
+Spurs 
+<input type="radio" name="radio4" id="radio4" value="radio4">
+Yards 
+<input type="radio" name="radio5" id="radio5" value="radio5">
+Classification/Interchange 
+<input type="radio" name="radio6" id="radio6" value="radio6">
+Staging only</strong><br>
+To add a location, press the "Add ... Track" button. Now enter the name of  the location along with the length of the track in scale feet or in actual  inches. Append a double quote (") to the length when entering actual  inches and the program will convert the length into scale feet. Append  cm if you want to convert from centimeters to meters. Press the "Add  ... Track" button at the bottom of the panel and the disabled fields  should now appear. </p>
+<p>The
+  <input type="submit" name="button3" id="button3" value="Add...">
+  at the bottom of the window will change corresponding to the location you want to add.<br>
+ 
+  
+</p>
+<h3>Add Spurs, Yards, Classification/Interchange, or Staging Only(corresponding to the present task)</h3>
+<p>To add a location , press the "Add ...(location)" button. </p>
+<p><a href="Ops_AddSiding.shtml"><input type="button" name="button4" id="button4" value="Add Spur Track">
+</a>  <a href="Ops_AddSiding.shtml">Add Spur Track</a></p>
+<p><a href="Ops_AddYard.shtml">
+  
+  <input type="button" name="button5" id="button5" value="Add Yard Track">
+</a><a href="Ops_AddYard.shtml">Add Yard Track</a></p>
+<p><a href="Ops_AddInterchange.shtml"><input type="button" name="button6" id="button6" value="Add Classification/Interchange Track">
+</a><a href="Ops_AddInterchange.shtml">Add Classification/Interchange Track</a></p>
+<p><a href="Ops_AddStaging.shtml"><input type="button" name="button7" id="button7" value="Add Staging Only Track">
+</a><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></p>
+<h3>Each of these buttons opens a corresponding dialog to describe its function.</h3>
+<h3>Save --- Track</h3>
+Press the 
+<input type="submit" name="button8" id="button8" value="Save Location">
+to save your work. The program will create a  file (OperationsLocationRoster.xml) in your JMRI directory in a folder  called "operations". The program will also create a backup file  containing the last settings for all of your locations. <a name="Sidings"></a>
+<h3>&nbsp;</h3>
+<p>Spurs are very similar  to <a href="Ops_AddYard.shtml">Yards</a>, so see above for more information.  You can if  you wish schedule the order that cars will be delivered to a spur.  See <a href="Ops_schedule.shtml">Schedules</a> below for more information.
+</p>
+<hr>
+
+<div align=right>
+<p><a href="Ops_Settings.shtml">Previous </a> | <a href="Ops_Cars.shtml">Next</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
