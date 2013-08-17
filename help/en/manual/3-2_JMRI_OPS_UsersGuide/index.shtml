@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/"><!-- /Style --></head>
-
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
@@ -81,7 +80,7 @@ browser. </p>
           <li><a href="Ops_Settings.shtml">Settings</a> </li>
           <li><a href="Ops_Locations.shtml">Locations</a> </li>
           <li><a href="Ops_Cars.shtml">Cars</a></li>
-          <li><a href="Ops_Engines.shtml">locomotives</a></li>
+          <li><a target="_blank" href="Ops_Engines.shtml">locomotives</a></li>
           <li><a href="Ops_Routes.shtml">Routes</a></li>
           <li><a href="Ops_Trains.shtml">Trains</a></li>
         </ul>
@@ -232,7 +231,7 @@ browser. </p>
   </tr>
   <tr>
     <td align="left" valign="top">3.2</td>
-    <td align="left" valign="top">7/31/2013</td>
+    <td align="left" valign="top">8/17/2013</td>
     <td align="left" valign="top">Dale A. Tripp</td>
     <td align="left" valign="top">Updated from Version 3.0</td>
   </tr>
