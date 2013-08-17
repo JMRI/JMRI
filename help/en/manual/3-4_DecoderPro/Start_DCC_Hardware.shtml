@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Start_DCC_Hardware.shtml 18193 2011-08-16 23:19:17Z dat7719 $ -->
+<title>Decoder Pro Manual: Getting Started</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1><img src="images/Logo.gif" alt="JMRI DecoderPro Logo" width=163 height=117 vspace="15" border=10 class="BOXIT"></h1>
+
+<h1>Getting Started with DecoderPro&reg;</h1>
+<h1>What hardware do I need?</h1>
+
+<div align=right>
+<p><a href="Start_DCC_Systems.shtml">Previous</a> <a href="Start_DecoderPro.shtml">| Next</a>
+<p><a href="index.shtml#GettingStarted">Back to Index</a> </div>
+
+<hr>
+
+<p>You will need, a means to connect between your computer and the track on which the  locomotive rests, that will take serial instructions and generate DCC packets  on the rails. At a minimum, a command station/booster( your DCC system will probably suffice),
+an additional hardware interface to send commands from your computer to the command station (this could be as simple as a serial cable), and a programming track set up according to the manufacturer's instructions.</p>
+<p> For some systems, you will also need an additional hardware interface to
+  send the commands from your computer to the command station, and from there
+  on to the decoder in the locomotive. For a Digitrax system, for example,
+  you will need either the <b>MS100 interface</b>, <strong>PR3 programmer</strong> or a <b>LocoBuffer</b>. The <b>PR1</b> device
+  from Digitrax is a stand-alone programmer and is <span class="ACCENT">not</span> usable with this software.
+</p>
+<p>For those who do not have any DCC hardware yet and are  considering purchasing a DCC locomotive and want to use Decoder Pro to program  it consider the SPROG II USB.&nbsp; It has all  the electronics in one package with enough output to run a locomotive.&nbsp; It comes complete with the USB cable, power  supply, instructions and JMRI on disk.&nbsp;  All you need in addition, is the test track.</p>
+<p>You will also need, of course, some locomotives with the decoders  installed  which you can
+  program.
+<hr>
+<div align=right>
+<p><a href="Start_DCC_Systems.shtml">Previous</a> <a href="Start_DecoderPro.shtml">| Next</a>
+<p><a href="index.shtml#GettingStarted">Back to Index</a> </div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
