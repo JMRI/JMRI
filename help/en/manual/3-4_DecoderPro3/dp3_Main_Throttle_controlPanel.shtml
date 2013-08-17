@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: dat7719 $) 2009 -->
+<!-- $Id: Main_Throttle.shtml 18167 2011-08-13 11:22:06Z dat7719 $ -->
+<title>DecoderPro Throttle</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a NAME="Top"></a>
+<h1>DecoderPro3&reg; Main Window</h1>
+<h1>JMRI&reg; Throttle Window - Control Panel</h1>
+
+<div align=right>
+<p><a href="dp3_Main_Throttle.shtml">Back </a></p>
+</div>
+
+<hr>
+<h4>Throttle Control Panel</h4>
+<table width="90%" border="0" align="center" cellpadding="1" cellspacing="1">
+  <tr>
+    <td width="13%" valign="top"><p><img src="images/Main_Throttle_Control.png" width="96" height="391" alt="speed control"></p>
+      <h4>Slider from 0% to 100%</h4></td>
+    <td width="14%" valign="top"><p><img src="images/Main_Throttle_Control01.png" width="103" height="384" alt="digital control"></p>
+      <h4>Speed steps</h4></td>
+    <td width="26%"  align="left" valign="top"><p><img src="images/Main_Throttle_Control02.png" width="104" height="387" alt="control 2"></p>
+      <h4>Slider 100% to 100%<br>
+        through 0%</h4></td>
+    <td align="left" valign="top"><p>After you have established an address for the throttle, you should be able to run the train on your layout. The Control panel is used to control the speed and direction on your locomotive when the throttle is used to operate on a layout.</p>
+      <p>Right click on the panel and &quot;Properties&quot; is displayed. You can now select the type of slider you want to control your train.</p>
+      <p>The throttle slider controls the speed and indicates the percentage of power from <strong>Stop</strong> to <strong>100%</strong>. Use mouse to drag the slider to the desired speed</p>
+      <p>Alternately, the slider may be set to STOP in the middle and move to + 100% or to -100% to control locomotive speed.</p>
+      <p>In the Step mode the up and down arrows control the speed one step at a time, or you may enter a number into the text box area between 0 and the max step indicated.</p>
+      <p><strong>
+        <input name="radio" type="radio" id="radio" value="radio" checked>
+        Forward</strong> and
+        <input type="radio" name="radio2" id="radio2" value="radio2">
+        <strong>Reverse </strong> set the locomotives direction.</p>
+      <p><strong>
+        <input type="submit" name="button9" id="button9" value="Stop!">
+      </strong> executes an emergency stop, locomotive stops immediately overriding any BEMF or momentum programmed into the decoder.</p>
+      <p><strong>
+        <input type="submit" name="button10" id="button10" value="Idle">
+      </strong> stops the locomotive smoothly using any momentum setting programmed into the decoder..</p></td>
+  </tr>
+  <tr>
+    <td colspan="3"><p><img src="images/Main_Throttle_Control_edit.png" width="383" height="196" alt="control edit"></p>
+    <p>Properties window.</p></td>
+    <td width="47%" align="left" valign="top">Control Panel Properties may be set by right clicking on the Throttle Control Panel(Speed),  the <strong>Edit Speed Control Panel </strong>dialog is displayed. This allows you to select either of the two slider or step speed control
+      <p>
+        <input name="radio3" type="radio" id="radio3" value="radio3" checked>
+        <strong>Display Speed Slider(from 0 to 100)</strong>-- displays the Throttle Control shown at the left</p>
+      <p>
+        <input type="radio" name="radio4" id="radio4" value="radio4">
+        <strong>Display Speed Steps </strong>-- displays the Throttle Control shown in the middle</p>
+      <p>
+        <input type="radio" name="radio5" id="radio5" value="radio5">
+        <strong>Display shunting speed slider(from 100 to 0 to 100)  -- </strong>displays the Throttle control shown on the right</p>
+      <p>
+        <input type="checkbox" name="checkbox7" id="checkbox7">
+        <strong>Track sider in real time</strong></p>
+      <p><strong>Switch to contiuous speed slider on function:</strong>
+        <input name="textfield" type="text" id="textfield" value="F5" size="5">
+        Enter the function from the <strong>Function Panel</strong> that you want to use.</p>
+      <p>
+        <input type="button" name="button3" id="button3" value="OK">
+        Sets the selections</p>
+      <p>
+        <input type="button" name="button4" id="button4" value="Cancel">
+        Cancels any settings </p></td>
+  </tr>
+</table>
+<div>
+  <div align="right"><a href="#Top"></a></div>
+</div>
+
+<div> </div>
+<div> </div>
+<hr>
+
+<div align=right>
+<p><a href="dp3_Main_Throttle.shtml">Back </a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
