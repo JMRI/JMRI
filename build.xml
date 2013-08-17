@@ -150,8 +150,8 @@
         <pathelement location="${libdir}/jetty-util-8.1.11.v20130520.jar"/>
         <pathelement location="${libdir}/jetty-io-8.1.11.v20130520.jar"/>
         <pathelement location="${libdir}/jetty-websocket-8.1.11.v20130520.jar"/>
-        <pathelement location="${libdir}/slf4j-api-1.7.2.jar"/>
-        <pathelement location="${libdir}/slf4j-log4j12-1.7.2.jar"/>
+        <pathelement location="${libdir}/slf4j-api-1.7.5.jar"/>
+        <pathelement location="${libdir}/slf4j-log4j12-1.7.5.jar"/>
         <pathelement location="${libdir}/xbee-api-0.9.jar"/>
     </path>
 
