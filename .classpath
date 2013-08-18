@@ -53,5 +53,6 @@
 	<classpathentry kind="lib" path="lib/jackson-databind-2.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-annotations-2.0.6.jar"/>
 	<classpathentry kind="lib" path="lib/i18nchecker.jar"/>
+	<classpathentry kind="lib" path="lib/xbee-api-0.9.jar"/>
 	<classpathentry kind="output" path="java/classes"/>
 </classpath>
