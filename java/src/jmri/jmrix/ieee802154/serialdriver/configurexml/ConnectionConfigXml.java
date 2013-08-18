@@ -36,8 +36,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @param e Element being extended
      */
     protected void extendElement(Element e) {
-        SerialSystemConnectionMemo scm = (SerialSystemConnectionMemo)adapter.getSystemConnectionMemo();
-        SerialTrafficController stc=(SerialTrafficController)scm.getTrafficController();
+        SerialSystemConnectionMemo scm;
+        try {
+         scm = (SerialSystemConnectionMemo)adapter.getSystemConnectionMemo();
+       } catch (NullPointerException npe) {
+         // The adapter doesn't have a memo, so no nodes can be defined.
+         return;
+       }
+       SerialTrafficController stc=(SerialTrafficController)scm.getTrafficController();
         SerialNode node = (SerialNode) stc.getNode(0);
         int index = 1;
         while (node != null) {

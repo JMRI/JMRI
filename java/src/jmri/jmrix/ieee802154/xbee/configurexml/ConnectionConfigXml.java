@@ -33,8 +33,14 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * Write out the SerialNode objects too
      * @param e Element being extended
      */
-    protected void extendElement(Element e) {
-        XBeeConnectionMemo xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();
+    protected void extendElenent(Element e) {
+        XBeeConnectionMemo xcm; 
+        try {
+        xcm = (XBeeConnectionMemo)adapter.getSystemConnectionMemo();
+        } catch(NullPointerException npe) {
+          // The adapter doesn't have a memo, so no nodes can be defined.
+          return;
+        }
         XBeeTrafficController xtc=(XBeeTrafficController)xcm.getTrafficController();
         XBeeNode node = (XBeeNode) xtc.getNode(0);
         int index = 1;
