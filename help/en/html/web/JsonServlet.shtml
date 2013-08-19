@@ -43,9 +43,9 @@
             The <b>HTTP GET</b> feature of the servlet responds to the following URL patterns:
             <ul>
                 <li>/json/cars</li>
-                <li>/json/cars/&lt;ID&gt;</li>
+                <li>/json/car/&lt;ID&gt;</li>
                 <li>/json/sensors</li>
-                <li>/json/sensors/&lt;name&gt;</li>
+                <li>/json/sensor/&lt;name&gt;</li>
             </ul>Currently, the servlet supports cars, engines, lights, locations, memories, metadata, panels, power, railroad, reporters, roster, routes, sensors, signalHeads, signalMasts, trains, and turnouts.
 
             The WebSocket feature of this servlet
