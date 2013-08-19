@@ -1,9 +1,15 @@
 //request data for specified trainId and display it as a manifest
+//expects url of form operationsManifest.html?trainid=3
+//if no trainid passed in, redirects to operationsTrains.html page to list available trains 
 var $getTrainData = function($trainId){
 	$.ajax({
 		url:  '/json/train/' + $trainId, //request proper url for train data
 		success: function($r, $s, $x) {
 			$buildManifest($r, $s, $x);  //handle returned data
+		},
+		error: function($r, $s, $x){
+		    $err = JSON && JSON.parse($r.responseText) || $.parseJSON($r.responseText);  //extract JMRI error message from responseText
+			$('div#displayArea').html("ERROR retrieving train data: " + $err.data.message).hide().show(); //put output on page (hide+show needed on Android to force redraw)
 		},
 		dataType: 'json' //<--dataType
 	});
