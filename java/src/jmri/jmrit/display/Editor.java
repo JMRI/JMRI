@@ -1382,7 +1382,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     static final public String[] ICON_EDITORS = {"Sensor", "RightTurnout", "LeftTurnout",
                         "SlipTOEditor", "SignalHead", "SignalMast", "Memory", "Light", 
-                        "Reporter", "Background", "MultiSensor", "Icon", "Text"};
+                        "Reporter", "Background", "MultiSensor", "Icon", "Text", "Block Contents"};
     /**
     * @param name Icon editor's name
     */
@@ -1415,6 +1415,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 addIconEditor();
             } else if ("Text".equals(name)) {
                 addTextEditor();
+            } else if("BlockLabel".equals(name)){
+                addBlockContentsEditor();
             } else {
 //                log.error("No such Icon Editor \""+name+"\"");
                 return null;
@@ -1662,6 +1664,21 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JFrameItem frame = makeAddIconFrame("Memory", true, true, editor);
         _iconEditorFrame.put("Memory", frame);
         editor.setPickList(PickListModel.memoryPickModelInstance());
+        editor.makeIconPanel(true);
+        editor.complete(addIconAction, false, true, false);
+        frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
+    }
+    
+    protected void addBlockContentsEditor(){
+        IconAdder editor = new IconAdder("Block Contents");
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                putBlockContents();
+            }
+        };
+        JFrameItem frame = makeAddIconFrame("BlockLabel", true, true, editor);
+        _iconEditorFrame.put("BlockLabel", frame);
+        editor.setPickList(PickListModel.blockPickModelInstance());
         editor.makeIconPanel(true);
         editor.complete(addIconAction, false, true, false);
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
@@ -1916,6 +1933,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return l;
     }
     
+
+    
     protected MemorySpinnerIcon addMemorySpinner() {
         MemorySpinnerIcon l = new MemorySpinnerIcon(this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
@@ -1931,6 +1950,18 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         MemoryInputIcon l = new MemoryInputIcon(_spinCols.getNumber().intValue(), this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
         l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
+        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setDisplayLevel(MEMORIES);
+        setNextLocation(l);
+        putItem(l);
+        return l;
+    }
+    
+    protected BlockContentsIcon putBlockContents() {
+        BlockContentsIcon l = new BlockContentsIcon(new NamedIcon("resources/icons/misc/X-red.gif",
+                            "resources/icons/misc/X-red.gif"), this);
+        IconAdder blockIconEditor = getIconEditor("BlockLabel");
+        l.setBlock(blockIconEditor.getTableSelection().getDisplayName());
         l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         l.setDisplayLevel(MEMORIES);
         setNextLocation(l);
