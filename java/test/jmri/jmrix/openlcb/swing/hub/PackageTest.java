@@ -1,14 +1,14 @@
 // PackageTest.java
 
-package jmri.jmrix.openlcb.swing;
+package jmri.jmrix.openlcb.swing.hub;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.openlcb package.
- * @author      Bob Jacobsen  Copyright 2009, 2012
+ * Tests for the jmri.jmrix.openlcb.swing.hub package.
+ * @author      Bob Jacobsen  Copyright 2009, 2012, 2013
  * @version   $Revision$
  */
 public class PackageTest extends TestCase {
@@ -33,9 +33,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.openlcb.swing.PackageTest");
 
-        suite.addTest(jmri.jmrix.openlcb.swing.hub.PackageTest.suite());
-        suite.addTest(jmri.jmrix.openlcb.swing.tie.PackageTest.suite());
-        suite.addTest(jmri.jmrix.openlcb.swing.monitor.PackageTest.suite());
+        suite.addTest(HubPaneTest.suite());
         
         return suite;
     }

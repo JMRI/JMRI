@@ -1,0 +1,427 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for Decoder files -->
+<!-- Panes to show I/O lines -->
+<pane name="I/O-2 A">
+  <column>
+    <row>
+      <column>
+        <label label="TowerMan Input/Output Port Configuration settings. All numbers are entered as their actual">
+          </label>
+        <label label="event numbers. For example LS9 is entered as event number 9. Paired inputs or outputs respond">
+          </label>
+        <label label="only to the first line's event numbers. The second line's event numbers are ignored.">
+          </label>
+      </column>
+    </row>
+    <separator/>
+
+
+    <separator/>
+    <row>
+      <column>
+        <display item="PB1 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Paired" label=" #1 (Pin 10)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Paired-I" label=" #1 (Pin 10)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP9 Type" label="Type" tooltip="Line #1 is paired with Line #2">
+          <label>IP9 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB1 Base Address" label="Primary event #" tooltip="CV129-30">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB1 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB1 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB1 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+
+    <separator/>
+    <row>
+      <column>
+        <display item="PB2 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Paired" label=" #2  (Pin  9)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Paired-I" label=" #2  (Pin  9)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP10 Type" label="Type" tooltip="Line #2 is paired with Line #1">
+          <label>IP10 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB2 Base Address" label="Primary event #" tooltip="CV129-30">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB2 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB2 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB2 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+
+    <separator/>
+    <row>
+      <column>
+        <display item="PB3 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Paired" label=" #3  (Pin  8)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Paired-I" label=" #3  (Pin  8)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP11 Type" label="Type" tooltip="Line #3 is paired with Line #4">
+          <label>IP11 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB3 Base Address" label="Primary event #" tooltip="CV129-30">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB3 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB3 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB3 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+
+    <separator/>
+    <row>
+      <column>
+        <display item="PB4 Output-Input" label=" " tooltip="Line direction">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Paired" label=" #4  (Pin  7)  Paired" tooltip="Paired Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Paired-I" label=" #4  (Pin  7)   Action" tooltip="Alt Action when selected">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Type" label="    Type">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Timing" label="                                       Debounce">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 TimingA" label="   Timing">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 TimingB" label="      Timing">
+          </display>
+      </column>
+      <column>
+        <display item="IP12 Type" label="Type" tooltip="Line #4 is paired with Line #3">
+          <label>IP12 Type</label>
+        </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB4 Base Address" label="Primary event #" tooltip="CV129-30">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Input Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Output Direction" label="Polarity" tooltip="Direction for active message">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Mode" label="">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Transition" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB4 Secondary 1 Address" label="Second Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 1 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 1 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 1" label="message">
+          </display>
+      </column>
+    </row>
+    <row>
+      <column>
+        <display item="PB4 Secondary 2 Address" label="   Third Event #">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 2 Polarity" label="Polarity">
+          </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 2 Type" label="">
+          <label/>
+        </display>
+      </column>
+      <column>
+        <display item="PB4 Secondary 2" label="message">
+          </display>
+      </column>
+    </row>
+    <separator/>
+    <separator/>
+    <row>
+      <column>
+        <display item="IOP2 Port Type" label="Set Port 2 Type" tooltip="Complete Port type setting">
+        </display>
+      </column>
+    </row>
+  </column>
+</pane>

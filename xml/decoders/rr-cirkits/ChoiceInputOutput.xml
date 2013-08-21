@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!-- Copyright (C) JMRI 2005, 2011, 2013 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -11,11 +11,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- version 1 - new file includes for LNCP files -->
-<!-- mode choices for Output pairing -->
+<!-- version 1 - new file includes for Decoder files -->
+<!-- Port choices for LocoNet Input - Output -->
 <enumVal>
-  <enumChoice choice="Normal"/>
-  <enumChoice choice="N/A . . . "/>
-  <enumChoice choice="N/A . . . "/>
-  <enumChoice choice="Signal"/>
+  <enumChoice choice="input"/>
+  <enumChoice choice="output"/>
 </enumVal>
