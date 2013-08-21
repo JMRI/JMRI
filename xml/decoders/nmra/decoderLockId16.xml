@@ -27,7 +27,13 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>6</revnumber>
+      <revision>
+      <revnumber>7</revnumber>
+      <date>2013-07-31</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added French</revremark>
+    </revision>
+	  <revnumber>6</revnumber>
       <date>2012-12-26</date>
       <authorinitials>BJ</authorinitials>
       <revremark>Initial release as separate file</revremark>
@@ -42,6 +48,6 @@
   <variable label="Decoder Lock ID number" item="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
     <decVal/>
     <label xml:lang="it">ID Codice Blocco Decoder</label>
-    <label xml:lang="fr">Decoder Lock ID number(fr)</label>
+    <label xml:lang="fr">No de verrouillage décodeur (Lock ID)</label>
   </variable>
 </variables>

@@ -27,7 +27,13 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>6</revnumber>
+      <revision>
+      <revnumber>7</revnumber>
+      <date>2013-07-29</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added German</revremark>
+    </revision>
+	  <revnumber>6</revnumber>
       <date>2012-12-26</date>
       <authorinitials>BJ</authorinitials>
       <revremark>Initial release as separate file</revremark>
@@ -43,5 +49,6 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
     <label xml:lang="it">Direzione di Marcia Normale</label>
     <label xml:lang="fr">Sens normal de marche</label>
+	<label xml:lang="de">Fahrtrichtung Standard</label>
   </variable>
 </variables>
