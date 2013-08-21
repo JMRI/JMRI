@@ -26,6 +26,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2013-07-17</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added large icons</revremark>
+    </revision>
   </revhistory>
   <aspects>
     <aspect>
@@ -86,6 +92,10 @@
       <dccAspect>8</dccAspect>
     </aspect>
   </aspects>
+  <imagetypes>
+    <imagetype type="large" />
+    <imagetype type="aspects" />
+  </imagetypes>
   <appearancefiles>
     <appearancefile href="appearance-High.xml" />
     <appearancefile href="appearance-Dwarf.xml" />
