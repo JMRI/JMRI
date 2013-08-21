@@ -170,6 +170,10 @@
           <display item="CV52.46" layout="above" label=""/>
           <display item="CV52.46" layout="above" format="hslider"/>
         </row>
+        <row>
+          <display item="CV52.47" layout="above" label=""/>
+          <display item="CV52.47" layout="above" format="hslider"/>
+        </row>
         <label label=" "/>
         <row>
           <display item="CV52.50" layout="above" label=""/>

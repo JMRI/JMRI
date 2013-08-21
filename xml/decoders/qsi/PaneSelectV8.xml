@@ -68,6 +68,19 @@
       <column>
         <row>
           <column>
+            <display item="CV118.8 Sign 16" format="offradiobutton" label="" layout="left"/>
+            <display item="CV118.8 Sign 16" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV118.8 Value 16" layout="above" label=""/>
+              <display item="CV118.8 Value 16" layout="above" format="hslider"/>
+            </row>
+          </column>
+        </row>
+        <label label=" "/>
+        <row>
+          <column>
             <display item="CV118.10 Sign" format="offradiobutton" label="" layout="left"/>
             <display item="CV118.10 Sign" format="onradiobutton" label="" layout="left"/>
           </column>
@@ -75,6 +88,18 @@
             <row>
               <display item="CV118.10 Value" layout="above" label=""/>
               <display item="CV118.10 Value" layout="above" format="hslider"/>
+            </row>
+          </column>
+        </row>
+        <row>
+          <column>
+            <display item="CV118.10 Sign 16" format="offradiobutton" label="" layout="left"/>
+            <display item="CV118.10 Sign 16" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV118.10 Value 16" layout="above" label=""/>
+              <display item="CV118.10 Value 16" layout="above" format="hslider"/>
             </row>
           </column>
         </row>
@@ -88,6 +113,18 @@
             <row>
               <display item="CV118.11 Value" layout="above" label=""/>
               <display item="CV118.11 Value" layout="above" format="hslider"/>
+            </row>
+          </column>
+        </row>
+        <row>
+          <column>
+            <display item="CV118.11 Sign 16" format="offradiobutton" label="" layout="left"/>
+            <display item="CV118.11 Sign 16" format="onradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV118.11 Value 16" layout="above" label=""/>
+              <display item="CV118.11 Value 16" layout="above" format="hslider"/>
             </row>
           </column>
         </row>

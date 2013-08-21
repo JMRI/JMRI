@@ -33,58 +33,83 @@
           <display item="CV51.5" layout="above" label=""/>
           <display item="CV51.5" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
         <row>
           <display item="CV51.10" layout="above" label=""/>
           <display item="CV51.10" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
         <row>
           <display item="CV51.12" layout="above" label=""/>
           <display item="CV51.12" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
         <row>
           <display item="CV51.13" layout="above" label=""/>
           <display item="CV51.13" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
         <row>
           <display item="CV55.3.5 Hold" layout="above" label=""/>
           <display item="CV55.3.5 Hold" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
+        <row>
+          <display item="CV55.3.6" layout="above" label=""/>
+          <display item="CV55.3.6" layout="above" format="hslider"/>
+        </row>
         <row>
           <display item="CV55.12.1" layout="above" label=""/>
           <display item="CV55.12.1" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
         <row>
           <display item="CV55.12.2" layout="above" label=""/>
           <display item="CV55.12.2" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
+        <row>
+          <display item="CV55.13.1" layout="above" label=""/>
+          <display item="CV55.13.1" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="CV55.13.2" layout="above" label=""/>
+          <display item="CV55.13.2" layout="above" format="hslider"/>
+        </row>
         <row>
           <display item="CV55.21.0" layout="above" label=""/>
           <display item="CV55.21.0" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
+        <row>
+          <display item="CV129.1.0" layout="above" label=""/>
+          <display item="CV129.1.0" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="CV55.21.1" layout="above" label=""/>
+          <display item="CV55.21.1" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="CV129.2.0" layout="above" label=""/>
+          <display item="CV129.2.0" layout="above" format="hslider"/>
+        </row>
         <row>
           <display item="CV56.12" layout="above" label=""/>
           <display item="CV56.12" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
         <row>
           <display item="CV56.13" layout="above" label=""/>
           <display item="CV56.13" layout="above" format="hslider"/>
         </row>
-        <label label=" "/>
         <row>
           <display item="CV56.14" layout="above" label=""/>
           <display item="CV56.14" layout="above" format="hslider"/>
         </row>
+        <row>
+          <display item="CV129.50.0" layout="above" label=""/>
+          <display item="CV129.50.0" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="CV129.51.0" layout="above" label=""/>
+          <display item="CV129.51.0" layout="above" format="hslider"/>
+        </row>
+        <row>
+          <display item="CV129.55.0" layout="above" label=""/>
+          <display item="CV129.55.0" layout="above" format="hslider"/>
+        </row>
       </column>
-      <label label="      "/>
       <column>
         <display item="CV51.2 Doppler" format="checkbox"/>
         <display item="CV51.2 Turbine" format="checkbox"/>
@@ -112,10 +137,15 @@
         <display item="CV56.0 Units"/>
         <display item="CV56.0 Cal"/>
         <display item="CV56.0 Sync"/>
+        <display item="CV56.1 Sync"/>
         <display item="CV56.0 Odo"/>
         <display item="CV56.0 Cap"/>
         <display item="CV56.0 Reed"/>
+        <display item="CV56.1 AirWire"/>
+        <display item="CV56.1 Polarity"/>
         <display item="CV56.32.0"/>
+        <display item="CV51.16"/>
+        <display item="CV129.10.0 Transition"/>
         <label label=" "/>
       </column>
     </row>

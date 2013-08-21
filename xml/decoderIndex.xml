@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "../xml/decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 20130821-1713-jake on Wed Aug 21 20:14:04 EEST 2013 $Id$-->
+  <!--Written by JMRI version 20130821-1735-jake on Wed Aug 21 20:35:45 EEST 2013 $Id$-->
   <decoderIndex version="287">
     <mfgList nmraListDate="2012-12-05" updated="2013-04-11" lastadd="104">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -5196,6 +5196,12 @@
           <output name="3" label="" connection="other" />
           <output name="4" label="" connection="other" />
         </model>
+        <model model="BLI RSD-15 (Beacon)" numFns="14" numOuts="14" productID="12520">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
         <model model="BLI SD40-2" numFns="14" numOuts="14" productID="102">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
@@ -5359,6 +5365,12 @@
           <output name="4" label="" connection="other" />
         </model>
         <model model="P2k F7B" numFns="14" numOuts="14" productID="160">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F7B (other)" numFns="14" numOuts="14" productID="160">
           <output name="1" label="" connection="other" />
           <output name="2" label="" connection="other" />
           <output name="3" label="" connection="other" />
@@ -5910,12 +5922,53 @@
         <model model="Titan Steam" numFns="14" numOuts="0" productID="3100" />
         <model model="Titan Articulated Steam" numFns="14" numOuts="0" productID="4100" />
         <model model="Titan Gas Turbine" numFns="14" numOuts="0" productID="5100" />
-        <model model="FX-JTT KiHa52 (Tenshodo)" numFns="14" numOuts="0" productID="1102" />
+        <model model="Titan G Diesel" numFns="14" numOuts="0" productID="1101" />
+        <model model="Titan G RDC" numFns="14" numOuts="0" productID="1121" />
+        <model model="Titan G Electrtic" numFns="14" numOuts="0" productID="2101" />
+        <model model="Titan G Steam" numFns="14" numOuts="0" productID="3101" />
+        <model model="Titan G Articulated Steam" numFns="14" numOuts="0" productID="4101" />
+        <model model="Titan G Gas Turbine" numFns="14" numOuts="0" productID="5101" />
         <model model="FX-SD GE Dash-8 40B (Atlas)" numFns="14" numOuts="0" productID="1106" />
+        <model model="FX-DO GE Dash-8 40B (Atlas)" numFns="14" numOuts="0" productID="1118" />
+        <model model="FX-DO F3A EMD567 (Atlas)" numFns="14" numOuts="0" productID="1116" />
+        <model model="FX-DO F3B EMD567 (Atlas)" numFns="14" numOuts="0" productID="1119" />
         <model model="FX-SD GP40-2 (Atlas)" numFns="14" numOuts="0" productID="1107" />
-        <model model="FX-SD SD35 (Atlas)" numFns="14" numOuts="0" productID="1108" />
         <model model="FX-MT MP-15 (Atlas)" numFns="14" numOuts="0" productID="1110" />
+        <model model="FX-SD SD35 (Atlas)" numFns="14" numOuts="0" productID="1108" />
+        <model model="Titan-G Steam (Bachmann)" numFns="14" numOuts="0" productID="3107" />
         <model model="FX-DO E7 (Sunset Models)" numFns="14" numOuts="0" productID="1111" />
+        <model model="FX-DO FL9 (Sunset Models)" numFns="14" numOuts="0" productID="1126" />
+        <model model="FX-U NP Z6 Challenger (Sunset Models)" numFns="14" numOuts="0" productID="4102" />
+        <model model="FX-JTT KiHa52 (Tenshodo)" numFns="14" numOuts="0" productID="1102" />
+        <model model="FX-JTT EF66 (Tenshodo)" numFns="14" numOuts="0" productID="2102" />
+        <model model="FX-JTT EF58 (Tenshodo)" numFns="14" numOuts="0" productID="2105" />
+        <model model="FX-JTT C62 (Tenshodo)" numFns="14" numOuts="0" productID="3106" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+          <functionlabel num="26" lockable="true">Fuel Loading</functionlabel>
+          <functionlabel num="27" lockable="true">Maintenance</functionlabel>
+          <functionlabel num="28" lockable="true">Water Loading</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="QSI Ver. 9 Emulator" mfg="QSIndustries" lowVersionID="9" file="QSI_ver9.xml">
+        <model model="FX-U ALCo 244" numFns="14" numOuts="0" productID="1123" />
+        <model model="FX-U F3 EMD567" numFns="14" numOuts="0" productID="1115" />
+        <model model="Titan-G ALCo 244" numFns="14" numOuts="0" productID="1127" />
+        <model model="Titan-G F3 EMD567" numFns="14" numOuts="0" productID="1132" />
+        <model model="FX-SD U30B (Atlas)" numFns="14" numOuts="0" productID="1130" />
+        <model model="FX-SD R Class (Eureka)" numFns="14" numOuts="0" productID="3104" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>

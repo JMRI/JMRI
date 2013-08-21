@@ -23,6 +23,10 @@
         <label label=" "/>
         <display item="CV56.254.6"/>
         <label label=" "/>
+        <display item="Wheel Diameter"/>
+        <display item="Locomotive Scale"/>
+        <display item="Scale Wheel Diameter"/>
+        <display item="Power Conversion Stopping Distance"/>
       </column>
       <label label="        "/>
       <column>
@@ -58,9 +62,7 @@
         </row>
         <label label=" "/>
         <display item="SMPH-BEMF Ratio"/>
-        <display item="Wheel Diameter"/>
-        <display item="Locomotive Scale"/>
-        <display item="Scale Wheel Diameter"/>
+        <display item="BEMF-SMPH Calibration Distance"/>
       </column>
     </row>
     <label label=" "/>
