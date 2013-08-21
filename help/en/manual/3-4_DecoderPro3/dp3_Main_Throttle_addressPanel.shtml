@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009 -->
-<!-- $Id: Main_Throttle.shtml 18167 2011-08-13 11:22:06Z dat7719 $ -->
-<title>DecoderPro Throttle</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Throttle.shtml 18167 2011-08-13 11:22:06Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>DecoderPro Throttle</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -20,36 +17,44 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>DecoderPro3&reg; Main Window</h1>
-<h1>JMRI&reg; Throttle Window - Address Panel</h1>
+<a name="Top"></a>
+<h1>DecoderPro3® Main Window</h1>
+<h1>JMRI® Throttle Window - Address Panel</h1>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_Main_Throttle.shtml">Back </a></p>
 </div>
 
 <hr>
-<h3>Throttle Address Panel</h3>
+<h3>Address Panel</h3>
 <div align="right"></div>
-<table width="90%" border="0" cellspacing="1" cellpadding="1">
-  <tr>
-    <td width="46%" align="left" valign="top"><img src="images/Main_Throttle_Address.png" width="277" height="134" alt="Throttle address frame"></td>
-    <td width="54%" align="left" valign="top"><p>Primary use is to identify the decoders address, and to dispatch or release the identified address. Locomotive address may be entered by one of two methods: typed into text box or use drop-down list to select locomotive from your roster. .&nbsp; If you&nbsp;  have added<strong> <a href="Adv_FunctionLabel.shtml">Function labels</a></strong><a href="Adv_FunctionLabel.shtml">,</a> to your Roster, the label text from the Roster will be displayed  on the throttle function buttons.</p>
+<table border="0" cellpadding="1" cellspacing="1" width="90%">
+  <tbody><tr>
+    <td align="left" valign="top" width="46%"><img src="images/Main_Throttle_Address.png" alt="Throttle address frame" height="134" width="277"></td>
+    <td align="left" valign="top" width="54%"><p>Primary
+use is to identify the decoders address, and to Set, Dispatch or
+Release the identified address in your DCC Controller. Locomotive
+addresses may be entered by one of two methods: typed into text box or
+use drop-down list to select locomotive from your roster. .&nbsp; If
+you&nbsp; have added<strong> <a href="Adv_FunctionLabel.shtml">Function labels</a></strong><a href="Adv_FunctionLabel.shtml">,</a> to your Roster, the label text from the Roster will be displayed  on the throttle function buttons.</p>
       <p>Click on the
-        <input type="submit" name="button" id="button" value="Set">
-        to  send the address to your system to  make this throttle active.</p>
+        <input name="button" id="button" value="Set" type="submit">
+        to  send the address to your system to  make this throttle active for the selected locomotive..</p>
       <p>
-        <input type="submit" name="button" id="button2" value="Dispatch">
-        is used to dispatch the locomotive which releases the throttle for that address so that it can be aquired by another throttle</p>
+        <input name="button" id="button2" value="Dispatch" type="submit">
+is used to dispatch the locomotive which releases the throttle for that
+address so that it can be aquired by another throttle</p>
       <p><strong>
-        <input type="submit" name="button" id="button3" value="Release">
+        <input name="button" id="button3" value="Release" type="submit">
       </strong> is used to release the address from your system. </p>
       <p><strong>
-        <input type="submit" name="button" id="button4" value="Program">
-      </strong>opens the <a href="Comp_Setup_Roster.shtml"> <strong>Programmer</strong></a>for the locomotive selected in ops-mode (Programming on the Main) Only active when roster entry is used to select the address for the throttle.</p>
+        <input name="button" id="button4" value="Program" type="submit">
+      </strong>opens the <a href="Comp_Setup_Roster.shtml"> <strong>Programmer</strong></a>
+for the locomotive selected in ops-mode (Programming on the Main) Only
+active when roster entry is used to select the address for the throttle.</p>
       <p>Any of the buttons may be grayed out depending on the status of your system.</p></td>
   </tr>
-</table>
+</tbody></table>
 <div>
   <div align="right"><a href="#Top"></a></div>
 </div>
@@ -58,10 +63,9 @@
 <div> </div>
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_Main_Throttle.shtml">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div></body></html>

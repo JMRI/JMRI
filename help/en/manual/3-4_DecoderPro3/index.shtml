@@ -13,7 +13,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
 <h1>DecoderPro3® Version 3.4</h1>
-<h3>Revised in work 8/18/2013</h3>
+<h3>Revised in work 8/21/2013</h3>
 <p>&nbsp;
 </p>
 <p><strong>DecoderPro3® is a Java-based cross-platform
@@ -153,7 +153,7 @@ Bar</a></strong></li>
 </ul>
 </li>
 <li><strong>System dependent menu </strong>
-<ul>
+<br><ul>
 <li><a href="Main_acela.shtml"><strong>Acela</strong></a></li>
 <li><strong><a href="Main_CMRI.shtml">CMRI</a></strong></li>
 <li><strong><a href="Main_EasyDCC.shtml">EasyDCC</a></strong></li>
@@ -237,7 +237,7 @@ version 3.2</td>
 </tr>
 <tr>
 <td align="left" valign="top">3.4</td>
-<td align="left" valign="top">8/?/2013</td>
+<td align="left" valign="top">8/21/2013</td>
 <td align="left" valign="top">Dale A.Tripp</td>
 <td align="left" valign="top">Update to
 version 3.4</td>

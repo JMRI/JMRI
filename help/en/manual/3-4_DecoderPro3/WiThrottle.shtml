@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009, 2010 -->
-<!-- $Id: Adv_RosterMedia.shtml 18142 2011-08-08 11:30:48Z dat7719 $ -->
-<title>Comprehensive Programmer - Advanced Features Pane</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009, 2010 --><!-- $Id: Adv_RosterMedia.shtml 18142 2011-08-08 11:30:48Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>Comprehensive Programmer - Advanced Features Pane</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -20,11 +17,11 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>DecoderPro3&reg;</h1>
+<a name="Top"></a>
+<h1>DecoderPro3®</h1>
 <h1>Wi Throttle</h1>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_Main_Throttle_menubar.shtml#Wi">Back</a></p>
 <p><a href="index.shtml">Back to Index</a></p>
 </div>
@@ -33,12 +30,12 @@
   <blockquote>
     <blockquote>
       <blockquote>
-        <p><img src="images/ThrottleWi.png" width="331" height="271" alt="WiThrottle">
+        <p><img src="images/ThrottleWi.png" alt="WiThrottle" height="271" width="331">
         </p>
       </blockquote>
     </blockquote>
     <p>Menu Bar</p>
-    <p><img src="images/ThrottleWi_menu.png" width="217" height="167" alt="menu"></p>
+    <p><img src="images/ThrottleWi_menu.png" alt="menu" height="167" width="217"></p>
     <ul>
       <li>WiThrottle
         <ul>
@@ -51,26 +48,25 @@
           <li>Filter Controls</li>
         </ul>
         <blockquote>
-          <p><img src="images/ThrottleWi_ControlsFilter.png" width="669" height="209" alt="filter"></p>
-          <p>Set up Turnouts and Routes that can be controlled by DecoderPro3&reg; for control by WiThrottle.</p>
+          <p><img src="images/ThrottleWi_ControlsFilter.png" alt="filter" height="209" width="669"></p>
+          <p>Set up Turnouts and Routes that can be controlled by DecoderPro3® for control by WiThrottle.</p>
         </blockquote>
         <ul>
           <li>Preferences...</li>
         </ul>
       </li>
       <blockquote>
-        <p>Opens the WiThrottle Preferences Pane in preferences.</p>
+        <p>Opens the WiThrottle Preferences Pane in<a style="font-weight: bold;" href="Start_Preferences.shtml"> preferences.</a></p>
       </blockquote>
       <li>Window</li>
       <li>Help</li>
     </ul>
   </blockquote>
 </blockquote>
-<div align=right>
+<div align="right">
   <p><a href="Comp_LightFX.shtml"></a><a href="dp3_Main_Throttle_menubar.shtml#Wi">Back</a></p>
 <p><a href="index.shtml">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div></body></html>
