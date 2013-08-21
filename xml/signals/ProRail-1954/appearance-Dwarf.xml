@@ -21,6 +21,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2013-07-17</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added large icons</revremark>
+    </revision>
   </revhistory>
   <aspecttable>Prorail-1954</aspecttable>
   <name>Dwarf signal</name>
@@ -30,32 +36,38 @@
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-RD.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-RD.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-RD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Stop for Engineering</aspectname>
       <show>flashred</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FRD.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FRD.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FRD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Limited</aspectname>
       <show>green</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-GD.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-GD.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-GD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-YD.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-YD.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-YD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>flashyellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FYD.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-FYD.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-FYD.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-DD.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/ProRail-1954/ProRail-DD.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/ProRail-1954/ProRail-DD.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>

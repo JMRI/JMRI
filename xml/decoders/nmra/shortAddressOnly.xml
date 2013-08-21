@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>7</revnumber>
+      <date>2013-07-31</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added German</revremark>
+    </revision>
+	<revision>
       <revnumber>6</revnumber>
       <date>2010-03-12</date>
       <authorinitials>BJ</authorinitials>
@@ -41,9 +47,11 @@
   </revhistory>
   <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
     <shortAddressVal/>
-    <comment xml:lang="it">Indirizzo Primario(</comment>
-    <label xml:lang="fr">Adresse d&#xE9;codeur</label>
-    <comment xml:lang="it">Indirizzo Corto</comment>
-    <comment xml:lang="fr">Adresse courte</comment>
+    <label xml:lang="it">Indirizzo Primario</label>
+	<comment xml:lang="it">Indirizzo Primario</comment>
+    <label xml:lang="fr">Adresse courte</label>
+	<comment xml:lang="fr">Adresse de base</comment>
+    <label xml:lang="de">Basisadresse</label>
+	<comment xml:lang="de">Kurze Adresse</comment>
   </variable>
 </variables>

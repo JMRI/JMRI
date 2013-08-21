@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009, 2010 -->
-<!-- $Id: Comp_Setup_Roster.shtml 18120 2011-08-07 11:49:22Z dat7719 $ -->
-<title>Comprehensive Programmer - Setup and Roster Panes</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009, 2010 --><!-- $Id: Comp_Setup_Roster.shtml 18120 2011-08-07 11:49:22Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>Comprehensive Programmer - Setup and Roster Panes</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -20,24 +17,36 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top">
-<h1>DecoderPro3&reg; Comprehensive Programmer</h1>
-<h1>Roster Entry Pane</h1>
+<a name="Top">
+</a><h1><a name="Top">DecoderPro3® Comprehensive Programmer</a></h1>
+<h1><a name="Top">Roster Entry Pane</a></h1>
 
-<div align=right>
+<div align="right">
 <p><a href="Comp_Basic.shtml">Next </a>
-<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
-</div>
+</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+</p></div>
 
 <hr>
 <p>The <strong>Comprehensive Programmer </strong>begins the same way as the <strong>Basic Programmer</strong>, with  a <strong>Programmer Setup Pane</strong> and a <strong>Roster </strong>Pane.  The content  are identical, so they will not be repeated here.
-<p> Just be sure that you select the <strong>Comprehensive Programmer</strong> in the DecoderPro3 <strong>Preferences</strong>, <strong>Roster</strong> pane, Program TAB, then selelct locomotive you wish to program from the DecoderPro3 main screen from the roster list, now press the <strong>Progam </strong>button .
-<h1><img src="images/dp3_roster_list.png" width="999" height="388" alt="Roster List"></h1>
-  <p>We have programmed the Athearn FP-45 in the Basic Programmer, it is on the roster list and has been addressed. If we want to add the extra features of the decoder, we will select the locomotive from the roster list then, set prefernces for Comprehensive Program then click  the <strong>Program</strong> button.</p>
+</p><p> Just be sure that you select the <strong>Comprehensive Programmer</strong> in the DecoderPro3 <strong>Preferences</strong>, <strong>Roster</strong>
+pane, Program TAB, then selelct locomotive you wish to program from the
+DecoderPro3 main screen from the roster list, now press the <strong>Progam </strong>button .
+</p><h1><img style="width: 900px; height: 425px;" alt="roster list" src="images/dp3_roster_list.png"><br></h1>
+  <p>We
+have programmed the Athearn FP-45 in the Basic Programmer, it is on the
+roster list and has been addressed. If we want to add the extra
+features of the decoder, we will select the locomotive from the roster
+list then, set prefernces for Comprehensive Program then click the <strong>Program</strong> button.</p>
 <p>The Programmer window will open as shown below. All programmers, Basic and Comprehensive, open
     to the Roster Entry pane, which will be similar to that shown below for the FP-45.</p>
-  <p>The programmer opens with  the roster entry page filled in because we selected the loco from the roster panel in the previous  screen..  Note that there are now a whole lot more TABs at the top of the page, allowing us to open many panes to program more features. The number of TABS will depend upon the decoder being programmed. This Tsunami Sound Programming has several TABS that are unique to sound decoders.</p>
-<p align="center"><img src="images/Comp_Roste_02.png" width="895" height="585" alt="comp roster"></p>
+  <p>The
+programmer opens with the roster entry page filled in because we
+selected the loco from the roster panel in the previous screen.. Note
+that there are now a whole lot more TABs at the top of the page,
+allowing us to open many panes to program more features. The number of
+TABS will depend upon the decoder being programmed. This Tsunami Sound
+Programming has several TABS that are unique to sound decoders.</p>
+<p align="center"><img style="width: 903px; height: 582px;" alt="comprehensive rostre" src="images/Comp_Roste_02.png"><br></p>
   <p align="left">
 Note that the <b>Roster</b> pane is essentially unchanged from the <b>Basic</b>
 programmer, but the window has a LOT more options in the <b>Tabs</b>
@@ -46,11 +55,10 @@ go back to that section in the <a href="Basic_Start.shtml"><strong>Basic
 Programmer</strong></a>. If you're ready to move on to bigger and better things,
 let's go to the next tab.</p>
 <hr align="left">
-<div align=right>
+<div align="right">
 <p><a href="Comp_Basic.shtml"> Next </a>
-<p><a href="index.shtml#Advanced Programmer">Back to Index</a>
-</div>
+</p><p><a href="index.shtml#Advanced%20Programmer">Back to Index</a>
+</p></div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div></body></html>

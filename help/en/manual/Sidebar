@@ -1,20 +1,20 @@
-<!-- Sidebar -->
-<!-- This is the common sidebar definition for Manual pages -->
-<hr class="hide">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head><!-- Sidebar --><!-- This is the common sidebar definition for Manual pages --></head>
+<body><hr class="hide">
 
 <div id="mBody">
 
 <div id="side"> <!-- Block of text at top -->
-    <div style="text-align: center"><strong>The JMRI Manual</strong></div>
+    <div style="text-align: center;"><strong>The JMRI Manual</strong></div>
 
-  <div style="text-align: right">
+  <div style="text-align: right;">
       <dd>
       <ul>
       <li> <a href="pdf/jmri_Man_2_12.pdf">Download JMRI Guide 2.12</a></li>
       <li><a href="pdf/DP3_Man_2_14.pdf">Download DP3 2.14</a></li>
       <li><a href="pdf/DP_man_3-0.pdf">Download  DP Guide 3.0</a></li>
       <li><a href="pdf/DP3_Man_3-0.pdf">Download DP3 Guide</a></li>
-      <li><a href="pdf/JMRI_3-0 Operations_Users Guide.pdf">Download JMRI Ops Guide 3.0</a></li>
+      <li><a href="pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Download JMRI Ops Guide 3.0</a></li>
       <li><a href="pdf/DP3_Man_3-2.pdf">Download DP3 Guide 3.2</a></li>
       <li><a href="pdf/DP_man_3-2.pdf">Download DP Guide 3.2</a></li>
       </ul>
@@ -23,10 +23,10 @@
 
 <dl><!-- main table of contents -->
 
- <div style="text-align: center"><strong>JMRI® User's Guides</strong></div>
+ <div style="text-align: center;"><strong>JMRI® User's Guides</strong></div>
 
 <dt>JMRI® Version 2.12</dt>
-    <dd>
+    <dd style="font-weight: bold;">
     <ul>
     <li><a href="JMRI_2-12_Manual/index.shtml">JMRI® Guide 2.12</a></li>
 
@@ -34,7 +34,7 @@
     </dd>
     
 <dt>JMRI® Version 2.14</dt>
-    <dd>
+    <dd style="font-weight: bold;">
     <ul>
     <li><a href="JMRI_2-14_manual/index.shtml">JMRI® Guide 2.14.1</a></li>
     <li><a href="DP3_2-14_manual/index.shtml">DecoderPro3® 2.14</a></li>
@@ -42,7 +42,7 @@
     </dd>
     
 <dt>JMRI® Version 3.0</dt>
-    <dd>
+    <dd style="font-weight: bold;">
       <ul>
         <li><a href="3-0_DecoderPro/index.shtml">DecoderPro® 3.0</a></li>
         <li><a href="3-0_DecoderPro3/index.shtml">DecoderPro3® 3.0</a></li>
@@ -51,11 +51,13 @@
     </dd>
 
 <dt>JMRI® Version 3.2 </dt>
-	<dd>
+	<dd style="font-weight: bold;">
     <ul>
     	<li><a href="3-2_DecoderPro3/index.shtml">DecoderPro3®  3.2</a></li>
-        <li><a href="3-2_DecoderPro/index.shtml">DecoderPro®  3.2</a></li>
-     </ul>
+        <li><a href="3-2_DecoderPro/index.shtml">DecoderPro®  3.2</a></li><li><a href="3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI Operations Users Guide 3.2</a></li>
+     </ul></dd><dt>JMRI® Version 3.4 </dt><dd>
+    <ul><li><a href="3-4_DecoderPro3/index.shtml">DecoderPro3®  3.4</a></li><li style="font-weight: bold;"><a href="3-4_DecoderPro/index.shtml">DecoderPro®  3.4</a></li><li>JMRI Operations Users Guide 3.4</li></ul>
+     </dd><dd>
      </dd>
     
   </dl>
@@ -63,3 +65,4 @@
 </dl>
 </div>
 <!-- /Sidebar -->
+</div></body></html>

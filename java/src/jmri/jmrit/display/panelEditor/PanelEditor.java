@@ -245,6 +245,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox.addItem(new ComboBoxItem("SignalHead"));
         _addIconBox.addItem(new ComboBoxItem("SignalMast"));
         _addIconBox.addItem(new ComboBoxItem("Memory"));
+        _addIconBox.addItem(new ComboBoxItem("BlockLabel"));
         _addIconBox.addItem(new ComboBoxItem("Reporter"));
         _addIconBox.addItem(new ComboBoxItem("Light"));
         _addIconBox.addItem(new ComboBoxItem("Background"));
@@ -950,6 +951,7 @@ public class PanelEditor extends Editor implements ItemListener {
         addItemPopUp(new ComboBoxItem("SignalHead"),_add);
         addItemPopUp(new ComboBoxItem("SignalMast"),_add);
         addItemPopUp(new ComboBoxItem("Memory"),_add);
+        addItemPopUp(new ComboBoxItem("BlockLabel"),_add);
         addItemPopUp(new ComboBoxItem("Reporter"),_add);
         addItemPopUp(new ComboBoxItem("Light"),_add);
         addItemPopUp(new ComboBoxItem("Background"),_add);

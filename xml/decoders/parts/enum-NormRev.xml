@@ -5,8 +5,12 @@
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="normal">
     <choice>normal</choice>
+	<choice xml:lang="fr">normal</choice>
+	<choice xml:lang="de">Normal</choice>
   </enumChoice>
   <enumChoice choice="reversed">
     <choice>reversed</choice>
+	<choice xml:lang="fr">inversé</choice>
+	<choice xml:lang="de">Invertiert</choice>
   </enumChoice>
 </enumVal>

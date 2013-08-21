@@ -1,52 +1,64 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009 -->
-<!-- $Id: Main_Throttle.shtml 18167 2011-08-13 11:22:06Z dat7719 $ -->
-<title>DecoderPro Throttle</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Throttle.shtml 18167 2011-08-13 11:22:06Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>DecoderPro Throttle</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
-
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 <body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>DecoderPro3&reg; Main Menu Bar</h1>
-<h1>JMRI&reg; Throttle Window</h1>
+<a name="Top"></a>
+<h1>DecoderPro3® Main Menu Bar</h1>
+<h1>JMRI® Throttle Window</h1>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_Main_Main.shtml">Back</a></p>
 </div>
 
 <hr>
-<p>The JMRI&reg; Throttle may be used on your computer screen to replace the vendor throttle that is furnished with your DCC system. One or several throttles may be in use at one time. The Throttle opens as a floating window that may be positioned anywhere on  your desktop. Note the Title Bar contains the locomotive address information.</p>
-<p><img src="images/Main_Throttle01.png" width="506" height="495" alt="throttle"></p>
-<p>(color shading added to show functional areas throttle panels)</p>
-<p>The Throttle Window contains <a href="dp3_Main_Throttle_menubar.shtml"><strong>Menu Bar</strong></a>, <a href="dp3_Main_Throttle_toolbar.shtml"><strong>Toolbar</strong></a> and three panels which may be enabled or disabled via check box in the View menu. Each panel has a title bar with windows controls to minimize, maximize and exit: :&nbsp;&nbsp; </p>
-<p><strong>Warning!!! </strong>Be careful with the left  hand (minimize) buttons.&nbsp;In Windows, if the little guy is clicked it  will minimize the panel, which means it is no longer visible but the restore  button is lost behind the rest of the panels.&nbsp;  The  way to easily get it back, is to go into the view menu, uncheck  it there,  then go back again and re-check it.&nbsp; You may also drag the panels out of the way to uncover the Maximize icon for a minimized panel.</p>
+<p>The JMRI® Throttle may be used on your computer screen to replace
+the vendor throttle that is furnished with your DCC system. One or
+several throttles may be in use at one time. The Throttle opens as a
+floating window that may be positioned anywhere on your desktop. Note
+the Title Bar contains the locomotive Roster ID&nbsp; information or
+the Locomotive address.</p>
+<p style="text-align: center;"><img style="width: 512px; height: 538px;" alt="Throttle" src="images/Main_Throttle01.png"><br></p>
+<p>(color shading added to show functional areas of&nbsp; throttle panels)</p>
+<p>The Throttle Window contains <a href="dp3_Main_Throttle_menubar.shtml"><strong>Menu Bar</strong></a>, <a href="dp3_Main_Throttle_toolbar.shtml"><strong>Toolbar</strong></a>
+and three panels which may be enabled or disabled via check box in the
+View menu. Each panel has a title bar with windows controls to
+minimize, maximize and exit: :&nbsp;&nbsp; </p>
+<p style="color: rgb(255, 102, 102); font-weight: bold;"><strong>Warning!!! </strong>Be careful with the left hand (minimize)
+buttons.&nbsp;In Windows, if the little guy is clicked it will minimize
+the panel, which means it is no longer visible but the restore button
+is lost behind the rest of the panels.&nbsp; The way to easily get it
+back, is to go into the view menu, uncheck it there, then go back again
+and re-check it.&nbsp; You may also drag the panels out of the way to
+uncover the Maximize icon for a minimized panel.</p>
 <p><a href="dp3_Main_Throttle_addressPanel.shtml"><strong>Address Panel </strong></a>(green shading) facilitates setting the address of the locomotive you wish to control with the throttle.</p>
-<p><a href="dp3_Main_Throttle_controlPanel.shtml"><strong>Control Panel</strong></a> (blue shading) contains the controls for applying power to the locomotive that is addressed and controlling speed</p>
+<p><a href="dp3_Main_Throttle_controlPanel.shtml"><strong>Speed Control Panel</strong></a> (blue shading) contains the controls for applying power to the locomotive that is addressed and controlling speed</p>
 <p><a href="dp3_Main_Throttle_functionPanel.shtml"><strong>Function Panel</strong></a>(yellow shading) contains all the function buttons used to control the addressed locomotives functions.</p>
-<h4>The descriptions shown  above are only a small part of what the <strong>Throttle</strong> Window can do. The author(s)  of the <strong>Throttle</strong> Window have created an extensive set of Help files to help you  customize Throttle Windows to your way of operating.&nbsp; To access Help, just open a New <strong>Throttle</strong>. Then,  click on <strong>Help</strong> and select <strong>Window Help</strong> from the dropdown box.&nbsp; There&rsquo;s lots of good stuff in there.</h4>
+<h4>The descriptions shown  above are only a small part of what the <strong>Throttle</strong> Window can do. The author(s)  of the <strong>Throttle</strong>
+Window have created an extensive set of Help files to help you
+customize Throttle Windows to your way of operating.&nbsp; To access
+Help, just open a New <strong>Throttle</strong>. Then,  click on <strong>Help</strong> and select <strong>Window Help</strong> from the dropdown box.&nbsp; There&#8217;s lots of good stuff in there.</h4>
 <div>
   <div align="right"></div>
 </div>
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_Main_Main.shtml">Back</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div></body></html>

@@ -28,278 +28,178 @@
     </row>
     <row>
       <column>
-        <display item="CV55.70.0"/>
-        <display item="CV55.70.0 Turbine" format="checkbox"/>
-        <display item="CV55.70.1 FWD"/>
-        <display item="CV55.70.1 NFF"/>
-        <display item="CV55.70.1 REV"/>
-        <display item="CV55.70.1 NFR"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.70.10"/>
+			<display item="CV55.70.0"/>
+			<display item="CV55.70.0 Turbine" format="checkbox"/>
+			<display item="CV55.70.1 FWD"/>
+			<display item="CV55.70.1 NFF"/>
+			<display item="CV55.70.1 REV"/>
+			<display item="CV55.70.1 NFR"/>
           </column>
-          <column>
-            <display item="CV55.70.10" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.70.12"/>
-          </column>
-          <column>
-            <display item="CV55.70.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.70.15"/>
-          </column>
-          <column>
-            <display item="CV55.70.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.70.16"/>
-          </column>
-          <column>
-            <display item="CV55.70.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.70.17"/>
-          </column>
-          <column>
-            <display item="CV55.70.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.70.18"/>
-          </column>
-          <column>
-            <display item="CV55.70.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.70.10" layout="above" label=""/>
+			<display item="CV55.70.10" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.70.12" layout="above" label=""/>
+			<display item="CV55.70.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.70.15" layout="above" label=""/>
+			<display item="CV55.70.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.70.16" layout="above" label=""/>
+			<display item="CV55.70.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.70.17" layout="above" label=""/>
+			<display item="CV55.70.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.70.18" layout="above" label=""/>
+			<display item="CV55.70.18" layout="above" format="hslider"/>
+		</row>
       </column>
+      <label label="   "/>
       <column>
-        <display item="CV55.73.0"/>
-        <display item="CV55.73.1 FWD"/>
-        <display item="CV55.73.1 NFF"/>
-        <display item="CV55.73.1 REV"/>
-        <display item="CV55.73.1 NFR"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.73.10"/>
+			<display item="CV55.73.0"/>
+			<display item="CV55.73.1 FWD"/>
+			<display item="CV55.73.1 NFF"/>
+			<display item="CV55.73.1 REV"/>
+			<display item="CV55.73.1 NFR"/>
           </column>
-          <column>
-            <display item="CV55.73.10" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.73.12"/>
-          </column>
-          <column>
-            <display item="CV55.73.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.73.15"/>
-          </column>
-          <column>
-            <display item="CV55.73.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.73.16"/>
-          </column>
-          <column>
-            <display item="CV55.73.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.73.17"/>
-          </column>
-          <column>
-            <display item="CV55.73.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.73.18"/>
-          </column>
-          <column>
-            <display item="CV55.73.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.73.10" layout="above"  label=""/>
+			<display item="CV55.73.10" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.73.12" layout="above"  label=""/>
+			<display item="CV55.73.12" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.73.15" layout="above"  label=""/>
+			<display item="CV55.73.15" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.73.16" layout="above"  label=""/>
+			<display item="CV55.73.16" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.73.17" layout="above"  label=""/>
+			<display item="CV55.73.17" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.73.18" layout="above"  label=""/>
+			<display item="CV55.73.18" layout="above"  format="hslider"/>
+		</row>
       </column>
     </row>
+    <separator/>
     <label label="Mars "/>
     <row>
       <column>
-        <display item="CV55.76.0"/>
-        <display item="CV55.76.1"/>
-        <display item="CV55.76.2"/>
-        <display item="CV55.76.3"/>
-        <display item="CV55.76.4"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.76.6"/>
+			<display item="CV55.76.0"/>
+			<display item="CV55.76.1"/>
+			<display item="CV55.76.2"/>
+			<display item="CV55.76.3"/>
+			<display item="CV55.76.4"/>
           </column>
-          <column>
-            <display item="CV55.76.6" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.76.10"/>
-          </column>
-          <column>
-            <display item="CV55.76.10" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.76.11"/>
-          </column>
-          <column>
-            <display item="CV55.76.11" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.76.12"/>
-          </column>
-          <column>
-            <display item="CV55.76.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.76.13"/>
-          </column>
-          <column>
-            <display item="CV55.76.13" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.76.15"/>
-          </column>
-          <column>
-            <display item="CV55.76.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.76.16"/>
-          </column>
-          <column>
-            <display item="CV55.76.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.76.17"/>
-          </column>
-          <column>
-            <display item="CV55.76.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.76.18"/>
-          </column>
-          <column>
-            <display item="CV55.76.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.76.6" layout="above"  label=""/>
+			<display item="CV55.76.6" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.76.10" layout="above"  label=""/>
+			<display item="CV55.76.10" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.76.11" layout="above"  label=""/>
+			<display item="CV55.76.11" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.76.12" layout="above"  label=""/>
+			<display item="CV55.76.12" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.76.13" layout="above"  label=""/>
+			<display item="CV55.76.13" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.76.15" layout="above"  label=""/>
+			<display item="CV55.76.15" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.76.16" layout="above"  label=""/>
+			<display item="CV55.76.16" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.76.17" layout="above"  label=""/>
+			<display item="CV55.76.17" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.76.18" layout="above"  label=""/>
+			<display item="CV55.76.18" layout="above"  format="hslider"/>
+		</row>
       </column>
+      <label label="   "/>
       <column>
-        <display item="CV55.80.0"/>
-        <display item="CV55.80.1"/>
-        <display item="CV55.80.2"/>
-        <display item="CV55.80.3"/>
-        <display item="CV55.80.4"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.80.6"/>
+			<display item="CV55.80.0"/>
+			<display item="CV55.80.1"/>
+			<display item="CV55.80.2"/>
+			<display item="CV55.80.3"/>
+			<display item="CV55.80.4"/>
           </column>
-          <column>
-            <display item="CV55.80.6" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.80.10"/>
-          </column>
-          <column>
-            <display item="CV55.80.10" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.80.11"/>
-          </column>
-          <column>
-            <display item="CV55.80.11" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.80.12"/>
-          </column>
-          <column>
-            <display item="CV55.80.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.80.13"/>
-          </column>
-          <column>
-            <display item="CV55.80.13" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.80.15"/>
-          </column>
-          <column>
-            <display item="CV55.80.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.80.16"/>
-          </column>
-          <column>
-            <display item="CV55.80.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.80.17"/>
-          </column>
-          <column>
-            <display item="CV55.80.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.80.18"/>
-          </column>
-          <column>
-            <display item="CV55.80.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.80.6" layout="above"  label=""/>
+			<display item="CV55.80.6" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.80.10" layout="above"  label=""/>
+			<display item="CV55.80.10" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.80.11" layout="above"  label=""/>
+			<display item="CV55.80.11" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.80.12" layout="above"  label=""/>
+			<display item="CV55.80.12" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.80.13" layout="above"  label=""/>
+			<display item="CV55.80.13" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.80.15" layout="above"  label=""/>
+			<display item="CV55.80.15" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.80.16" layout="above"  label=""/>
+			<display item="CV55.80.16" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.80.17" layout="above"  label=""/>
+			<display item="CV55.80.17" layout="above"  format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.80.18" layout="above"  label=""/>
+			<display item="CV55.80.18" layout="above"  format="hslider"/>
+		</row>
       </column>
     </row>
+    <separator/>
     <label label="Ditch "/>
     <row>
       <column>
@@ -329,79 +229,44 @@
             <display item="CV55.84.4 Bell" format="checkbox" label=""/>
           </column>
         </row>
-        <row>
-          <column>
-            <display item="CV55.84.5"/>
-          </column>
-          <column>
-            <display item="CV55.84.5" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.84.6"/>
-          </column>
-          <column>
-            <display item="CV55.84.6" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.84.10"/>
-          </column>
-          <column>
-            <display item="CV55.84.10" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.84.11"/>
-          </column>
-          <column>
-            <display item="CV55.84.11" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.84.12"/>
-          </column>
-          <column>
-            <display item="CV55.84.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.84.15"/>
-          </column>
-          <column>
-            <display item="CV55.84.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.84.16"/>
-          </column>
-          <column>
-            <display item="CV55.84.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.84.17"/>
-          </column>
-          <column>
-            <display item="CV55.84.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.84.18"/>
-          </column>
-          <column>
-            <display item="CV55.84.18" format="hslider" label=""/>
-          </column>
-        </row>
+		<row>
+			<display item="CV55.84.5" layout="above" label=""/>
+			<display item="CV55.84.5" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.84.6" layout="above" label=""/>
+			<display item="CV55.84.6" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.84.10" layout="above" label=""/>
+			<display item="CV55.84.10" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.84.11" layout="above" label=""/>
+			<display item="CV55.84.11" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.84.12" layout="above" label=""/>
+			<display item="CV55.84.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.84.15" layout="above" label=""/>
+			<display item="CV55.84.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.84.16" layout="above" label=""/>
+			<display item="CV55.84.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.84.17" layout="above" label=""/>
+			<display item="CV55.84.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.84.18" layout="above" label=""/>
+			<display item="CV55.84.18" layout="above" format="hslider"/>
+		</row>
       </column>
+      <label label="   "/>
       <column>
         <row>
           <column>
@@ -429,416 +294,297 @@
             <display item="CV55.88.4 Bell" format="checkbox" label=""/>
           </column>
         </row>
-        <row>
-          <column>
-            <display item="CV55.88.5"/>
-          </column>
-          <column>
-            <display item="CV55.88.5" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.88.6"/>
-          </column>
-          <column>
-            <display item="CV55.88.6" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.88.10"/>
-          </column>
-          <column>
-            <display item="CV55.88.10" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.88.11"/>
-          </column>
-          <column>
-            <display item="CV55.88.11" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.88.12"/>
-          </column>
-          <column>
-            <display item="CV55.88.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.88.15"/>
-          </column>
-          <column>
-            <display item="CV55.88.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.88.16"/>
-          </column>
-          <column>
-            <display item="CV55.88.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.88.17"/>
-          </column>
-          <column>
-            <display item="CV55.88.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.88.18"/>
-          </column>
-          <column>
-            <display item="CV55.88.18" format="hslider" label=""/>
-          </column>
-        </row>
+		<row>
+			<display item="CV55.88.5" layout="above" label=""/>
+			<display item="CV55.88.5" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.88.6" layout="above" label=""/>
+			<display item="CV55.88.6" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.88.10" layout="above" label=""/>
+			<display item="CV55.88.10" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.88.11" layout="above" label=""/>
+			<display item="CV55.88.11" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.88.12" layout="above" label=""/>
+			<display item="CV55.88.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.88.15" layout="above" label=""/>
+			<display item="CV55.88.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.88.16" layout="above" label=""/>
+			<display item="CV55.88.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.88.17" layout="above" label=""/>
+			<display item="CV55.88.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.88.18" layout="above" label=""/>
+			<display item="CV55.88.18" layout="above" format="hslider"/>
+		</row>
       </column>
     </row>
+    <separator/>
     <label label="Beacon "/>
     <row>
       <column>
-        <display item="CV55.92.0 Auto"/>
-        <display item="CV55.92.0 Bell" format="checkbox"/>
-        <display item="CV55.92.0 Effect"/>
-        <display item="CV55.92.1 FWD"/>
-        <display item="CV55.92.1 NFF"/>
-        <display item="CV55.92.1 REV"/>
-        <display item="CV55.92.1 NFR"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.92.6"/>
+			<display item="CV55.92.0 Auto"/>
+			<display item="CV55.92.0 Bell" format="checkbox"/>
+			<display item="CV55.92.0 Effect"/>
+			<display item="CV55.92.1 FWD"/>
+			<display item="CV55.92.1 NFF"/>
+			<display item="CV55.92.1 REV"/>
+			<display item="CV55.92.1 NFR"/>
           </column>
-          <column>
-            <display item="CV55.92.6" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.92.11"/>
-          </column>
-          <column>
-            <display item="CV55.92.11" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.92.12"/>
-          </column>
-          <column>
-            <display item="CV55.92.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.92.15"/>
-          </column>
-          <column>
-            <display item="CV55.92.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.92.16"/>
-          </column>
-          <column>
-            <display item="CV55.92.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.92.17"/>
-          </column>
-          <column>
-            <display item="CV55.92.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.92.18"/>
-          </column>
-          <column>
-            <display item="CV55.92.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.92.6" layout="above" label=""/>
+			<display item="CV55.92.6" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.92.11" layout="above" label=""/>
+			<display item="CV55.92.11" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.92.12" layout="above" label=""/>
+			<display item="CV55.92.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.92.15" layout="above" label=""/>
+			<display item="CV55.92.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.92.16" layout="above" label=""/>
+			<display item="CV55.92.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.92.17" layout="above" label=""/>
+			<display item="CV55.92.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.92.18" layout="above" label=""/>
+			<display item="CV55.92.18" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.92.19" layout="above" label=""/>
+			<display item="CV55.92.19" layout="above" format="hslider"/>
+		</row>
       </column>
+      <label label="   "/>
       <column>
-        <display item="CV55.96.0 Auto"/>
-        <display item="CV55.96.0 Bell" format="checkbox"/>
-        <display item="CV55.96.0 Effect"/>
-        <display item="CV55.96.1 FWD"/>
-        <display item="CV55.96.1 NFF"/>
-        <display item="CV55.96.1 REV"/>
-        <display item="CV55.96.1 NFR"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.96.6"/>
+			<display item="CV55.96.0 Auto"/>
+			<display item="CV55.96.0 Bell" format="checkbox"/>
+			<display item="CV55.96.0 Effect"/>
+			<display item="CV55.96.1 FWD"/>
+			<display item="CV55.96.1 NFF"/>
+			<display item="CV55.96.1 REV"/>
+			<display item="CV55.96.1 NFR"/>
           </column>
-          <column>
-            <display item="CV55.96.6" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.96.11"/>
-          </column>
-          <column>
-            <display item="CV55.96.11" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.96.12"/>
-          </column>
-          <column>
-            <display item="CV55.96.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.96.15"/>
-          </column>
-          <column>
-            <display item="CV55.96.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.96.16"/>
-          </column>
-          <column>
-            <display item="CV55.96.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.96.17"/>
-          </column>
-          <column>
-            <display item="CV55.96.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.96.18"/>
-          </column>
-          <column>
-            <display item="CV55.96.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.96.6"  layout="above" label=""/>
+			<display item="CV55.96.6"  layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.96.11" layout="above" label=""/>
+			<display item="CV55.96.11" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.96.12" layout="above" label=""/>
+			<display item="CV55.96.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.96.15" layout="above" label=""/>
+			<display item="CV55.96.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.96.16" layout="above" label=""/>
+			<display item="CV55.96.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.96.17" layout="above" label=""/>
+			<display item="CV55.96.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.96.18" layout="above" label=""/>
+			<display item="CV55.96.18" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.96.19" layout="above" label=""/>
+			<display item="CV55.96.19" layout="above" format="hslider"/>
+		</row>
       </column>
     </row>
+    <separator/>
     <label label="Number Board "/>
     <row>
       <column>
-        <display item="CV55.100.0"/>
-        <display item="CV55.100.1 FWD" format="checkbox"/>
-        <display item="CV55.100.1 NFF" format="checkbox"/>
-        <display item="CV55.100.1 REV" format="checkbox"/>
-        <display item="CV55.100.1 NFR" format="checkbox"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.100.12"/>
+			<display item="CV55.100.0"/>
+			<display item="CV55.100.1 FWD" format="checkbox"/>
+			<display item="CV55.100.1 NFF" format="checkbox"/>
+			<display item="CV55.100.1 REV" format="checkbox"/>
+			<display item="CV55.100.1 NFR" format="checkbox"/>
           </column>
-          <column>
-            <display item="CV55.100.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.100.15"/>
-          </column>
-          <column>
-            <display item="CV55.100.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.100.16"/>
-          </column>
-          <column>
-            <display item="CV55.100.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.100.17"/>
-          </column>
-          <column>
-            <display item="CV55.100.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.100.18"/>
-          </column>
-          <column>
-            <display item="CV55.100.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.100.12" layout="above" label=""/>
+			<display item="CV55.100.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.100.15" layout="above" label=""/>
+			<display item="CV55.100.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.100.16" layout="above" label=""/>
+			<display item="CV55.100.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.100.17" layout="above" label=""/>
+			<display item="CV55.100.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.100.18" layout="above" label=""/>
+			<display item="CV55.100.18" layout="above" format="hslider"/>
+		</row>
       </column>
+      <label label="   "/>
       <column>
-        <display item="CV55.102.0"/>
-        <display item="CV55.102.1 FWD" format="checkbox"/>
-        <display item="CV55.102.1 NFF" format="checkbox"/>
-        <display item="CV55.102.1 REV" format="checkbox"/>
-        <display item="CV55.102.1 NFR" format="checkbox"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.102.12"/>
+			<display item="CV55.102.0"/>
+			<display item="CV55.102.1 FWD" format="checkbox"/>
+			<display item="CV55.102.1 NFF" format="checkbox"/>
+			<display item="CV55.102.1 REV" format="checkbox"/>
+			<display item="CV55.102.1 NFR" format="checkbox"/>
           </column>
-          <column>
-            <display item="CV55.102.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.102.15"/>
-          </column>
-          <column>
-            <display item="CV55.102.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.102.16"/>
-          </column>
-          <column>
-            <display item="CV55.102.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.102.17"/>
-          </column>
-          <column>
-            <display item="CV55.102.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.102.18"/>
-          </column>
-          <column>
-            <display item="CV55.102.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.102.12" layout="above" label=""/>
+			<display item="CV55.102.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.102.15" layout="above" label=""/>
+			<display item="CV55.102.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.102.16" layout="above" label=""/>
+			<display item="CV55.102.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.102.17" layout="above" label=""/>
+			<display item="CV55.102.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.102.18" layout="above" label=""/>
+			<display item="CV55.102.18" layout="above" format="hslider"/>
+		</row>
       </column>
     </row>
-    <label label="Marker "/>
+    <separator/>
+	<label label="Marker "/>
     <row>
       <column>
-        <display item="CV55.104.0"/>
-        <display item="CV55.104.1 FWD" format="checkbox"/>
-        <display item="CV55.104.1 NFF" format="checkbox"/>
-        <display item="CV55.104.1 REV" format="checkbox"/>
-        <display item="CV55.104.1 NFR" format="checkbox"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.104.12"/>
+			<display item="CV55.104.0"/>
+			<display item="CV55.104.1 FWD" format="checkbox"/>
+			<display item="CV55.104.1 NFF" format="checkbox"/>
+			<display item="CV55.104.1 REV" format="checkbox"/>
+			<display item="CV55.104.1 NFR" format="checkbox"/>
           </column>
-          <column>
-            <display item="CV55.104.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.104.15"/>
-          </column>
-          <column>
-            <display item="CV55.104.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.104.16"/>
-          </column>
-          <column>
-            <display item="CV55.104.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.104.17"/>
-          </column>
-          <column>
-            <display item="CV55.104.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.104.18"/>
-          </column>
-          <column>
-            <display item="CV55.104.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.104.12" layout="above" label=""/>
+			<display item="CV55.104.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.104.15" layout="above" label=""/>
+			<display item="CV55.104.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.104.16" layout="above" label=""/>
+			<display item="CV55.104.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.104.17" layout="above" label=""/>
+			<display item="CV55.104.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.104.18" layout="above" label=""/>
+			<display item="CV55.104.18" layout="above" format="hslider"/>
+		</row>
       </column>
+      <label label="   "/>
       <column>
-        <display item="CV55.106.0"/>
-        <display item="CV55.106.1 FWD" format="checkbox"/>
-        <display item="CV55.106.1 NFF" format="checkbox"/>
-        <display item="CV55.106.1 REV" format="checkbox"/>
-        <display item="CV55.106.1 NFR" format="checkbox"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.106.12"/>
+			<display item="CV55.106.0"/>
+			<display item="CV55.106.1 FWD" format="checkbox"/>
+			<display item="CV55.106.1 NFF" format="checkbox"/>
+			<display item="CV55.106.1 REV" format="checkbox"/>
+			<display item="CV55.106.1 NFR" format="checkbox"/>
           </column>
-          <column>
-            <display item="CV55.106.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.106.15"/>
-          </column>
-          <column>
-            <display item="CV55.106.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.106.16"/>
-          </column>
-          <column>
-            <display item="CV55.106.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.106.17"/>
-          </column>
-          <column>
-            <display item="CV55.106.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.106.18"/>
-          </column>
-          <column>
-            <display item="CV55.106.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.106.12" layout="above" label=""/>
+			<display item="CV55.106.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.106.15" layout="above" label=""/>
+			<display item="CV55.106.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.106.16" layout="above" label=""/>
+			<display item="CV55.106.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.106.17" layout="above" label=""/>
+			<display item="CV55.106.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.106.18" layout="above" label=""/>
+			<display item="CV55.106.18" layout="above" format="hslider"/>
+		</row>
       </column>
     </row>
+    <separator/>
     <label label="Step "/>
     <row>
       <column>
-        <display item="CV55.112.0"/>
-        <display item="CV55.112.1 FWD" format="checkbox"/>
-        <display item="CV55.112.1 NFF" format="checkbox"/>
-        <display item="CV55.112.1 REV" format="checkbox"/>
-        <display item="CV55.112.1 NFR" format="checkbox"/>
+		<row>
+          <column>
+			<display item="CV55.112.0"/>
+			<display item="CV55.112.1 FWD" format="checkbox"/>
+			<display item="CV55.112.1 NFF" format="checkbox"/>
+			<display item="CV55.112.1 REV" format="checkbox"/>
+			<display item="CV55.112.1 NFR" format="checkbox"/>
+			<display item="CV55.134.0 Step" />
+          </column>
+		</row>
+		<row>
+			<display item="CV55.113.12" layout="above" label=""/>
+			<display item="CV55.113.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.113.17" layout="above" label=""/>
+			<display item="CV55.113.17" layout="above" format="hslider"/>
+		</row>
       </column>
+      <label label="   "/>
       <column>
         <display item="CV55.114.0"/>
         <display item="CV55.114.1 FWD" format="checkbox"/>
@@ -846,181 +592,145 @@
         <display item="CV55.114.1 REV" format="checkbox"/>
         <display item="CV55.114.1 NFR" format="checkbox"/>
       </column>
+
     </row>
-    <label label="Cab "/>
+    <separator/>
+    <label label="Cab"/>
     <row>
       <column>
-        <display item="CV55.116.0"/>
-        <display item="CV55.116.1 FWD" format="checkbox"/>
-        <display item="CV55.116.1 NFF" format="checkbox"/>
-        <display item="CV55.116.1 REV" format="checkbox"/>
-        <display item="CV55.116.1 NFR" format="checkbox"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.116.12"/>
+			<display item="CV55.116.0"/>
+			<display item="CV55.116.1 FWD" format="checkbox"/>
+			<display item="CV55.116.1 NFF" format="checkbox"/>
+			<display item="CV55.116.1 REV" format="checkbox"/>
+			<display item="CV55.116.1 NFR" format="checkbox"/>
           </column>
-          <column>
-            <display item="CV55.116.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.116.15"/>
-          </column>
-          <column>
-            <display item="CV55.116.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.116.16"/>
-          </column>
-          <column>
-            <display item="CV55.116.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.116.17"/>
-          </column>
-          <column>
-            <display item="CV55.116.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.116.18"/>
-          </column>
-          <column>
-            <display item="CV55.116.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.116.12" layout="above" label=""/>
+			<display item="CV55.116.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.116.15" layout="above" label=""/>
+			<display item="CV55.116.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.116.16" layout="above" label=""/>
+			<display item="CV55.116.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.116.17" layout="above" label=""/>
+			<display item="CV55.116.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.116.18" layout="above" label=""/>
+			<display item="CV55.116.18" layout="above" format="hslider"/>
+		</row>
       </column>
+      <label label="   "/>
       <column>
-        <display item="CV55.118.0"/>
-        <display item="CV55.118.1 FWD" format="checkbox"/>
-        <display item="CV55.118.1 NFF" format="checkbox"/>
-        <display item="CV55.118.1 REV" format="checkbox"/>
-        <display item="CV55.118.1 NFR" format="checkbox"/>
-        <row>
+		<row>
           <column>
-            <display item="CV55.118.12"/>
+			<display item="CV55.118.0"/>
+			<display item="CV55.118.1 FWD" format="checkbox"/>
+			<display item="CV55.118.1 NFF" format="checkbox"/>
+			<display item="CV55.118.1 REV" format="checkbox"/>
+			<display item="CV55.118.1 NFR" format="checkbox"/>
           </column>
-          <column>
-            <display item="CV55.118.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.118.15"/>
-          </column>
-          <column>
-            <display item="CV55.118.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.118.16"/>
-          </column>
-          <column>
-            <display item="CV55.118.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.118.17"/>
-          </column>
-          <column>
-            <display item="CV55.118.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.118.18"/>
-          </column>
-          <column>
-            <display item="CV55.118.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.118.12" layout="above" label=""/>
+			<display item="CV55.118.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.118.15" layout="above" label=""/>
+			<display item="CV55.118.15" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.118.16" layout="above" label=""/>
+			<display item="CV55.118.16" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.118.17" layout="above" label=""/>
+			<display item="CV55.118.17" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.118.18" layout="above" label=""/>
+			<display item="CV55.118.18" layout="above" format="hslider"/>
+		</row>
       </column>
     </row>
+    <separator/>
     <label label="Firebox "/>
     <row>
       <column>
-        <row>
+		<row>
           <column>
-            <display item="CV55.122.11"/>
+			<display item="CV55.135.0 Firebox" />
           </column>
-          <column>
-            <display item="CV55.122.11" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.122.12"/>
-          </column>
-          <column>
-            <display item="CV55.122.12" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.122.13"/>
-          </column>
-          <column>
-            <display item="CV55.122.13" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.122.15"/>
-          </column>
-          <column>
-            <display item="CV55.122.15" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.122.16"/>
-          </column>
-          <column>
-            <display item="CV55.122.16" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.122.17"/>
-          </column>
-          <column>
-            <display item="CV55.122.17" format="hslider" label=""/>
-          </column>
-        </row>
-        <row>
-          <column>
-            <display item="CV55.122.18"/>
-          </column>
-          <column>
-            <display item="CV55.122.18" format="hslider" label=""/>
-          </column>
-        </row>
+		</row>
+		<row>
+			<display item="CV55.122.11" layout="above" label=""/>
+			<display item="CV55.122.11" layout="above" format="hslider" />
+		</row>
+		<row>
+			<display item="CV55.122.12" layout="above" label=""/>
+			<display item="CV55.122.12" layout="above" format="hslider" />
+		</row>
+		<row>
+			<display item="CV55.122.13" layout="above" label=""/>
+			<display item="CV55.122.13" layout="above" format="hslider" />
+		</row>
+		<row>
+			<display item="CV55.122.15" layout="above" label=""/>
+			<display item="CV55.122.15" layout="above" format="hslider" />
+		</row>
+		<row>
+			<display item="CV55.122.16" layout="above" label=""/>
+			<display item="CV55.122.16" layout="above" format="hslider" />
+		</row>
+		<row>
+			<display item="CV55.122.17" layout="above" label=""/>
+			<display item="CV55.122.17" layout="above" format="hslider" />
+		</row>
+		<row>
+			<display item="CV55.122.18" layout="above" label=""/>
+			<display item="CV55.122.18" layout="above" format="hslider" />
+		</row>
       </column>
     </row>
-    <label label=" "/>
+    <separator/>
+    <label label="Exterior Lights"/>
     <row>
       <column>
-        <label label="Exterior Lights"/>
-        <display item="CV55.134.0 Truck" format="checkbox"/>
-        <display item="CV55.134.0 Step" format="checkbox"/>
+		<row>
+          <column>
+			<display item="CV55.134.0 Truck" />
+          </column>
+		</row>
+		<row>
+			<display item="CV55.109.12" layout="above" label=""/>
+			<display item="CV55.109.12" layout="above" format="hslider"/>
+		</row>
       </column>
-      <label label="   "/>
-      <separator/>
-      <label label="   "/>
+    </row>
+    <separator/>
+    <label label="Interior Lights"/>
+    <row>
       <column>
-        <label label="Interior Lights"/>
-        <display item="CV55.135.0 Engine" format="checkbox"/>
-        <display item="CV55.135.0 Front Panel" format="checkbox"/>
-        <display item="CV55.135.0 Rear Panel" format="checkbox"/>
-        <display item="CV55.135.0 Firebox" format="checkbox"/>
+        <display item="CV55.135.0 Engine" />
+        <display item="CV55.135.0 Engine2" />
+        <display item="CV55.135.0 Front Panel" />
+        <display item="CV55.135.0 Rear Panel" />
+		<row>
+			<display item="CV55.120.12" layout="above" label=""/>
+			<display item="CV55.120.12" layout="above" format="hslider"/>
+		</row>
+		<row>
+			<display item="CV55.120.17" layout="above" label=""/>
+			<display item="CV55.120.17" layout="above" format="hslider"/>
+		</row>
       </column>
     </row>
   </column>

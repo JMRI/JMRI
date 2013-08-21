@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="13" lastUpdated="20130815"/>
   <version author="Michael Mosher" version="12" lastUpdated="2011003"/>
   <version author="Michael Mosher" version="11" lastUpdated="20110922"/>
   <version author="Michael Mosher" version="10" lastUpdated="20101228"/>
@@ -38,7 +39,8 @@
   <!-- version 10 - Add hoot/fancy ending bit to CV55.154.x & add model 411 -->
   <!-- version 11 - add models 4048,4049 -->
   <!-- version 12 - removed factor="256" from paired vars -->
-  <decoder>
+  <!-- version 13 - update from latest QSI info & more use of x:includes -->
+<decoder>
     <family name="QSI Articulated Steam Ver. 7" mfg="QSIndustries" lowVersionID="7">
       <model model="QSI Revolution Articulated Steam" numFns="14" numOuts="0" productID="4050">
       </model>
@@ -177,168 +179,63 @@
         <label>Consist Address</label>
       </variable>
       <variable label="Consist Direction" CV="19" mask="VXXXXXXX">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Consist Direction</label>
       </variable>
       <variable label="Consist Address Active For F1" CV="21" mask="XXXXXXXV" tooltip="F1 = Bell; Recommendation: Lead = ON, Mid = OFF, End = OFF">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
       </variable>
       <variable label="Consist Address Active For F2" CV="21" mask="XXXXXXVX" tooltip="F2 = Horn / Whistle; Recommendation: Lead = ON, Mid = OFF, End = OFF">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F2</label>
       </variable>
       <variable label="Consist Address Active For F3" CV="21" mask="XXXXXVXX" tooltip="F3 = Coupler Clash (default); Recommendation: Lead = OFF, Mid = OFF, End = ON">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F3</label>
       </variable>
       <variable label="Consist Address Active For F4" CV="21" mask="XXXXVXXX" tooltip="F4 = Blower Hiss / Fan (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F4</label>
       </variable>
       <variable label="Consist Address Active For F5" CV="21" mask="XXXVXXXX" tooltip="F5 = Dynamic Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F5</label>
       </variable>
       <variable label="Consist Address Active For F6" CV="21" mask="XXVXXXXX" tooltip="F6 = Doppler (Startup) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F6</label>
       </variable>
       <variable label="Consist Address Active For F7" CV="21" mask="XVXXXXXX" tooltip="F7 = Brake Squeal and Air Brakes (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F7</label>
       </variable>
       <variable label="Consist Address Active For F8" CV="21" mask="VXXXXXXX" tooltip="F8 = Audio Mute (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F8</label>
       </variable>
       <variable label="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" tooltip="FL(f) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL in Forward</label>
       </variable>
       <variable label="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" tooltip="FL(r) = Directional Lighting; Recommendation: Lead = ON, Mid = OFF, End = OFF">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For FL in Reverse</label>
       </variable>
       <variable label="Consist Address Active For F9" CV="22" mask="XXXXXVXX" tooltip="F9 = Cruise Ctrl (Shut Down) (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F9</label>
       </variable>
       <variable label="Consist Address Active For F10" CV="22" mask="XXXXVXXX" tooltip="F10 = SMPH Report (Status Report) (default); Recommendation: Lead = ON, Mid = OFF, End = OFF">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F10</label>
       </variable>
       <variable label="Consist Address Active For F11" CV="22" mask="XXXVXXXX" tooltip="F11 = Number Board Lights (default); Recommendation: Lead = ON, Mid = ON, End = ON">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F11</label>
       </variable>
       <variable label="Consist Address Active For F12" CV="22" mask="XXVXXXXX" tooltip="F12 = Cab Lights (default); Recommendation: Lead = OFF, Mid = OFF, End = OFF">
-        <enumVal>
-          <enumChoice choice="Locomotive Address Only">
-            <choice>Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Respond to Consist Address">
-            <choice>Respond to Consist Address</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
       </variable>
       <variable label="Acceleration Adjustment" CV="23" mask="XVVVVVVV" tooltip="This is used whenever acceleration is non zero" item="Consist Acceleration Adjustment">
@@ -346,14 +243,7 @@
         <label>Acceleration Adjustment</label>
       </variable>
       <variable label="Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign">
-        <enumVal>
-          <enumChoice choice="Adjustment Added">
-            <choice>Adjustment Added</choice>
-          </enumChoice>
-          <enumChoice choice="Adjustment Subtracted">
-            <choice>Adjustment Subtracted</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract.xml"/>
         <label>Acceleration Adjustment Sign</label>
       </variable>
       <variable label="Deceleration Adjustment" CV="24" mask="XVVVVVVV" tooltip="This is used whenever deceleration is non zero" item="Consist Deceleration Adjustment">
@@ -361,14 +251,7 @@
         <label>Deceleration Adjustment</label>
       </variable>
       <variable label="Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign">
-        <enumVal>
-          <enumChoice choice="Adjustment Added">
-            <choice>Adjustment Added</choice>
-          </enumChoice>
-          <enumChoice choice="Adjustment Subtracted">
-            <choice>Adjustment Subtracted</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-AddSubtract2.xml"/>
         <label>Deceleration Adjustment Sign</label>
       </variable>
       <variable label="Quantum Speed Table" CV="25" item="Speed Table Selection" default="2" comment="value is applied">
@@ -414,14 +297,7 @@
         <comment>value is applied</comment>
       </variable>
       <variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
-        <enumVal>
-          <enumChoice choice="normal">
-            <choice>normal</choice>
-          </enumChoice>
-          <enumChoice choice="reversed">
-            <choice>reversed</choice>
-          </enumChoice>
-        </enumVal>
+         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NormRev.xml"/>
         <label>Locomotive Direction</label>
       </variable>
       <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
@@ -924,15 +800,16 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>F12 controls output 14</label>
       </variable>
+      <variable label="Primary Index" CV="49" opsOnly="yes" writeOnly="yes" item="Primary Index for Verbal CV Inquiry">
+        <decVal/>
+        <label>Primary Index</label>
+      </variable>
+      <variable label="Secondary Index" CV="50" opsOnly="yes" writeOnly="yes" item="Secondary Index for Verbal CV Inquiry">
+        <decVal/>
+        <label>Secondary Index</label>
+      </variable>
       <variable label="Programming Verbal Acknowledgement" CV="62" mask="XXXXXXXV" comment="CV62" item="CV62 Verbal Ack" default="1">
-        <enumVal>
-          <enumChoice choice="Disable">
-            <choice>Disable</choice>
-          </enumChoice>
-          <enumChoice choice="Enable">
-            <choice>Enable</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Programming Verbal Acknowledgement</label>
         <comment>CV62</comment>
       </variable>
@@ -948,7 +825,6 @@
         <label>CV Numeric Readout</label>
         <comment>CV62</comment>
       </variable>
-      <!-- need to make this work for indexed CVs as well - TBD -->
       <variable label="Verbal CV Inquiry" CV="64" opsOnly="yes" writeOnly="yes" comment="CV64" item="Verbal CV Inquiry">
         <decVal/>
         <label>Verbal CV Inquiry</label>
@@ -1058,6 +934,9 @@
         <indexedVal max="15"/>
       </ivariable>
       <ivariable label="Injector" CVname="52.31" CV="52" PI="31" default="11" comment="QSI" item="CV52.31">
+        <indexedVal max="15"/>
+      </ivariable>
+      <ivariable label="Fuel" CVname="52.32" CV="52" PI="32" default="11" item="CV52.32" >
         <indexedVal max="15"/>
       </ivariable>
       <ivariable label="Coupler Sounds" CVname="52.34" CV="52" PI="34" default="11" comment="QSI" item="CV52.34">
@@ -1178,7 +1057,7 @@
       <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0" default="10" item="CV53.16.0" include="4000,4004,4048,4049,4050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
-      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" default="10" item="CV53.17.0" include="400,401,402,403,404,406,407,408,410,411">
+      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" default="153" item="CV53.17.0" include="400,401,402,403,404,406,407,408,410,411">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
@@ -1186,7 +1065,7 @@
           <value>40</value>
         </qualifier>
       </ivariable>
-      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" default="10" item="CV53.17.0" include="4000,4004,4048,4049,4050">
+      <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0" default="153" item="CV53.17.0" include="4000,4004,4048,4049,4050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </ivariable>
       <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0" default="10" item="CV53.18.0" include="400,401,402,403,404,406,407,408,410,411">
@@ -1339,72 +1218,19 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="Headlight Initial State" CVname="55.70.0" CV="55" PI="70" SI="0" default="1" item="CV55.70.0">
-        <ienumVal>
-          <ienumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Automatic" value="1">
-            <choice>Automatic</choice>
-          </ienumChoice>
-          <ienumChoice choice="On" value="2">
-            <choice>On</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim" value="4">
-            <choice>Dim</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffAutoOnDim.xml"/>
       </ivariable>
       <ivariable label="Auto Headlight FWD" CVname="55.70.1" CV="55" PI="70" SI="1" default="2" item="CV55.70.1 FWD" mask="XXXXXXVV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
       </ivariable>
       <ivariable label="Auto Headlight NFF" CVname="55.70.1" CV="55" PI="70" SI="1" default="1" item="CV55.70.1 NFF" mask="XXXXVVXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
       </ivariable>
       <ivariable label="Auto Headlight REV" CVname="55.70.1" CV="55" PI="70" SI="1" default="1" item="CV55.70.1 REV" mask="XXVVXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
       </ivariable>
       <ivariable label="Auto Headlight NFR" CVname="55.70.1" CV="55" PI="70" SI="1" default="1" item="CV55.70.1 NFR" mask="VVXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
       </ivariable>
       <ivariable label="Headlight Dim Intensity" CVname="55.70.10" CV="55" PI="70" SI="10" default="48" item="CV55.70.10" include="400,401,402,403,404,406,407,408,410,411">
         <indexedVal/>
@@ -1435,72 +1261,19 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="Reverse Light Initial State" CVname="55.73.0" CV="55" PI="73" SI="0" default="1" item="CV55.73.0">
-        <ienumVal>
-          <ienumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Automatic" value="1">
-            <choice>Automatic</choice>
-          </ienumChoice>
-          <ienumChoice choice="On" value="2">
-            <choice>On</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim" value="4">
-            <choice>Dim</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffAutoOnDim.xml"/>
       </ivariable>
       <ivariable label="Auto Reverse Light FWD" CVname="55.73.1" CV="55" PI="73" SI="1" default="1" item="CV55.73.1 FWD" mask="XXXXXXVV">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
       </ivariable>
       <ivariable label="Auto Reverse Light NFF" CVname="55.73.1" CV="55" PI="73" SI="1" default="1" item="CV55.73.1 NFF" mask="XXXXVVXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
       </ivariable>
       <ivariable label="Auto Reverse Light REV" CVname="55.73.1" CV="55" PI="73" SI="1" default="2" item="CV55.73.1 REV" mask="XXVVXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
       </ivariable>
       <ivariable label="Auto Reverse Light NFR" CVname="55.73.1" CV="55" PI="73" SI="1" default="1" item="CV55.73.1 NFR" mask="VVXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBright.xml"/>
       </ivariable>
       <ivariable label="Reverse Light Dim Intensity" CVname="55.73.10" CV="55" PI="73" SI="10" default="32" item="CV55.73.10" include="4000,4004,4050">
         <indexedVal/>
@@ -1515,87 +1288,19 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="Mars Light Initial State" CVname="55.76.0" CV="55" PI="76" SI="0" default="1" item="CV55.76.0" include="4000,4004,4048,4049,4050">
-        <ienumVal>
-          <ienumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Automatic" value="1">
-            <choice>Automatic</choice>
-          </ienumChoice>
-          <ienumChoice choice="On" value="2">
-            <choice>On</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim" value="4">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strobe" value="8">
-            <choice>Strobe</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffAutoOnDimStrobe.xml"/>
       </ivariable>
       <ivariable label="Auto Mars Light FWD" CVname="55.76.1" CV="55" PI="76" SI="1" default="3" item="CV55.76.1" include="4000,4004,4048,4049,4050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strobe">
-            <choice>Strobe</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
       </ivariable>
       <ivariable label="Auto Mars Light NFF" CVname="55.76.2" CV="55" PI="76" SI="2" default="1" item="CV55.76.2" include="4000,4004,4048,4049,4050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strobe">
-            <choice>Strobe</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
       </ivariable>
       <ivariable label="Auto Mars Light REV" CVname="55.76.3" CV="55" PI="76" SI="3" default="1" item="CV55.76.3" include="4000,4004,4048,4049,4050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strobe">
-            <choice>Strobe</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
       </ivariable>
       <ivariable label="Auto Mars Light NFR" CVname="55.76.4" CV="55" PI="76" SI="4" default="1" item="CV55.76.4" include="4000,4004,4048,4049,4050">
-        <ienumVal>
-          <ienumChoice choice="Off">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Dim">
-            <choice>Dim</choice>
-          </ienumChoice>
-          <ienumChoice choice="Bright">
-            <choice>Bright</choice>
-          </ienumChoice>
-          <ienumChoice choice="Strobe">
-            <choice>Strobe</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
       </ivariable>
       <ivariable label="Mars Light Period" CVname="55.76.6" CV="55" PI="76" SI="6" default="100" item="CV55.76.6" include="4048,4049,4050">
         <indexedVal/>
@@ -1619,17 +1324,7 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="Front Number Board Lights Initial State" CVname="55.100.0" CV="55" PI="100" SI="0" default="1" item="CV55.100.0" mask="XXXXXXVV" include="408,4000,4004,4050">
-        <ienumVal>
-          <ienumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Automatic" value="1">
-            <choice>Automatic</choice>
-          </ienumChoice>
-          <ienumChoice choice="On" value="2">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
       </ivariable>
       <ivariable label="Auto Front Number Board Lights FWD" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 FWD" mask="XXXXXXXV" include="408,4000,4004,4048,4049,4050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
@@ -1653,17 +1348,7 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="Front Marker Lights Initial State" CVname="55.104.0" CV="55" PI="104" SI="0" default="1" item="CV55.104.0" mask="XXXXXXVV" include="4000,4004,4048,4049,4050">
-        <ienumVal>
-          <ienumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Automatic" value="1">
-            <choice>Automatic</choice>
-          </ienumChoice>
-          <ienumChoice choice="On" value="2">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
       </ivariable>
       <ivariable label="Auto Front Marker Lights FWD" CVname="55.104.1" CV="55" PI="104" SI="1" default="1" item="CV55.104.1 FWD" mask="XXXXXXXV" include="4000,4004,4048,4049,4050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
@@ -1687,17 +1372,7 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="Rear Marker Lights Initial State" CVname="55.106.0" CV="55" PI="106" SI="0" default="1" item="CV55.106.0" mask="XXXXXXVV" include="4000,4004,4048,4049,4050">
-        <ienumVal>
-          <ienumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Automatic" value="1">
-            <choice>Automatic</choice>
-          </ienumChoice>
-          <ienumChoice choice="On" value="2">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
       </ivariable>
       <ivariable label="Auto Rear Marker Lights FWD" CVname="55.106.1" CV="55" PI="106" SI="1" default="1" item="CV55.106.1 FWD" mask="XXXXXXXV" include="4000,4004,4048,4049,4050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
@@ -1721,17 +1396,7 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="Front Cab Lights Initial State" CVname="55.116.0" CV="55" PI="116" SI="0" default="1" item="CV55.116.0" mask="XXXXXXVV" include="4050">
-        <ienumVal>
-          <ienumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Automatic" value="1">
-            <choice>Automatic</choice>
-          </ienumChoice>
-          <ienumChoice choice="On" value="2">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
       </ivariable>
       <ivariable label="Auto Front Cab Lights FWD" CVname="55.116.1" CV="55" PI="116" SI="1" default="0" item="CV55.116.1 FWD" mask="XXXXXXXV" include="4050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
@@ -1755,17 +1420,7 @@
         <indexedVal/>
       </ivariable>
       <ivariable label="Rear Cab Lights Initial State" CVname="55.118.0" CV="55" PI="118" SI="0" default="1" item="CV55.118.0" mask="XXXXXXVV" include="4000,4004,4048,4049,4050">
-        <ienumVal>
-          <ienumChoice choice="Off" value="0">
-            <choice>Off</choice>
-          </ienumChoice>
-          <ienumChoice choice="Automatic" value="1">
-            <choice>Automatic</choice>
-          </ienumChoice>
-          <ienumChoice choice="On" value="2">
-            <choice>On</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
       </ivariable>
       <ivariable label="Auto Rear Cab Lights FWD" CVname="55.118.1" CV="55" PI="118" SI="1" default="0" item="CV55.118.1 FWD" mask="XXXXXXXV" include="4000,4004,4048,4049,4050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
@@ -1842,7 +1497,7 @@
       <ivariable label="Rear Marker Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 106" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Front Step Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 112" mask="XVXXXXXXX">
+      <ivariable label="Front Step Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 112" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Rear Step Lights" CVname="55.136.1" CV="55" PI="136" SI="1" default="0" item="CV55.136.1 114" mask="VXXXXXXX">
@@ -1890,7 +1545,7 @@
       <ivariable label="Multi Auto Lights 2, Rear Marker Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 106" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Multi Auto Lights 2, Front Step Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 112" mask="XVXXXXXXX">
+      <ivariable label="Multi Auto Lights 2, Front Step Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 112" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 2, Rear Step Lights" CVname="55.137.1" CV="55" PI="137" SI="1" default="1" item="CV55.137.1 114" mask="VXXXXXXX">
@@ -1938,7 +1593,7 @@
       <ivariable label="Multi Auto Lights 3, Rear Marker Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 106" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Multi Auto Lights 3, Front Step Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 112" mask="XVXXXXXXX">
+      <ivariable label="Multi Auto Lights 3, Front Step Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 112" mask="XVXXXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Multi Auto Lights 3, Rear Step Lights" CVname="55.138.1" CV="55" PI="138" SI="1" default="0" item="CV55.138.1 114" mask="VXXXXXXX">
@@ -2133,14 +1788,7 @@
         </ienumVal>
       </ivariable>
       <ivariable label="Reed Switch" CVname="56.0" CV="56" PI="0" default="0" item="CV56.0 Reed" mask="VXXXXXXX">
-        <ienumVal>
-          <ienumChoice choice="Enable">
-            <choice>Enable</choice>
-          </ienumChoice>
-          <ienumChoice choice="Disabled">
-            <choice>Disabled</choice>
-          </ienumChoice>
-        </ienumVal>
+        <xi:include href="http://jmri.org/xml/decoders/parts/ienum-EnabledDisabled.xml"/>
       </ivariable>
       <ivariable label="Throttle Mode" CVname="56.4" CV="56" PI="4" default="1" item="CV56.4" mask="XXXXXXVV">
         <ienumVal>
@@ -2222,23 +1870,26 @@
       <ivariable label="High Speed Differential Gain" CVname="56.21.2" CV="56" PI="21" SI="2" default="1" item="CV56.21.2">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Wheel Diameter Low Byte" CVname="56.24.0" CV="56" PI="24" SI="0" default="0" item="CV56.24.0" include="4000,4004,4050">
+      <ivariable label="Wheel Diameter Low Byte" CVname="56.24.0" CV="56" PI="24" SI="0" default="0" item="CV56.24.0" include="4000,4002,4004,4048,4049,4050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Wheel Diameter High Byte" CVname="56.24.1" CV="56" PI="24" SI="1" default="0" item="CV56.24.1" include="4000,4004,4050">
+      <ivariable label="Wheel Diameter High Byte" CVname="56.24.1" CV="56" PI="24" SI="1" default="0" item="CV56.24.1" include="4000,4002,4004,4048,4049,4050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Wheel Diameter" CVname="56.24.0" CV="56" PI="24" SI="0" include="4000,4004,4050">
+      <ivariable label="Wheel Diameter" CVname="56.24.0" CV="56" PI="24" SI="0" include="4000,4002,4004,4048,4049,4050">
         <indexedPairVal highCVname="56.24.1"/>
       </ivariable>
-      <ivariable label="Locomotive Scale Low Byte" CVname="56.25.0" CV="56" PI="25" SI="0" default="0" item="CV56.25.0" include="4000,4004,4050">
+      <ivariable label="Locomotive Scale Low Byte" CVname="56.25.0" CV="56" PI="25" SI="0" default="0" item="CV56.25.0" include="4000,4002,4004,4048,4049,4050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Locomotive Scale High Byte" CVname="56.25.1" CV="56" PI="25" SI="1" default="0" item="CV56.25.1" include="4000,4004,4050">
+      <ivariable label="Locomotive Scale High Byte" CVname="56.25.1" CV="56" PI="25" SI="1" default="0" item="CV56.25.1" include="4000,4002,4004,4048,4049,4050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Locomotive Scale" CVname="56.25.0" CV="56" PI="25" SI="0" include="4000,4004,4050">
+      <ivariable label="Locomotive Scale" CVname="56.25.0" CV="56" PI="25" SI="0" include="4000,4002,4004,4048,4049,4050">
         <indexedPairVal highCVname="56.25.1"/>
+      </ivariable>
+      <ivariable label="Room Temperature" CVname="56.32.0" CV="56" PI="32" SI="0" default="25" item="CV56.32.0" include="4000,4004,4050">
+        <indexedVal/>
       </ivariable>
       <!-- CV 56.129 Engine ID Access (for ops mode) - TBD -->
       <!-- CV 56.254 About Quantum Decoder -->

@@ -364,6 +364,19 @@
         <label label=" "/>
         <row>
           <column>
+            <display item="CV116.47 Sign" format="onradiobutton" label="" layout="left"/>
+            <display item="CV116.47 Sign" format="offradiobutton" label="" layout="left"/>
+          </column>
+          <column>
+            <row>
+              <display item="CV116.47 Value" layout="above" label=""/>
+              <display item="CV116.47 Value" layout="above" format="hslider"/>
+            </row>
+          </column>
+        </row>
+        <label label=" "/>
+        <row>
+          <column>
             <display item="CV116.53 Sign" format="onradiobutton" label="" layout="left"/>
             <display item="CV116.53 Sign" format="offradiobutton" label="" layout="left"/>
           </column>

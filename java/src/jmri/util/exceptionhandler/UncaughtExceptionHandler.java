@@ -21,6 +21,10 @@ import org.slf4j.LoggerFactory;
 public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
 
     public void uncaughtException(Thread t, Throwable e) {
+    
+        // see http://docs.oracle.com/javase/7/docs/api/java/lang/ThreadDeath.html
+        if (e instanceof java.lang.ThreadDeath) return;
+        
         log.error("Unhandled Exception: "+e, e);
     }
     

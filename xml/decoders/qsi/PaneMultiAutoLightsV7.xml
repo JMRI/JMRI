@@ -43,10 +43,12 @@
         <display item="CV55.136.1 104" format="checkbox"/>
         <display item="CV55.136.1 106" format="checkbox"/>
         <display item="CV55.136.1 109" format="checkbox"/>
-        <display item="CV55.136.1 113" format="checkbox"/>
+        <display item="CV55.136.1 112" format="checkbox"/>
         <display item="CV55.136.2 116" format="checkbox"/>
         <display item="CV55.136.2 118" format="checkbox"/>
         <display item="CV55.136.2 122" format="checkbox"/>
+        <display item="CV55.136.2 120" format="checkbox"/>
+        <display item="CV55.136.2 121" format="checkbox"/>
       </column>
       <column>
         <label label="  #2"/>
@@ -63,10 +65,12 @@
         <display item="CV55.137.1 104" format="checkbox" label=""/>
         <display item="CV55.137.1 106" format="checkbox" label=""/>
         <display item="CV55.137.1 109" format="checkbox" label=""/>
-        <display item="CV55.137.1 113" format="checkbox" label=""/>
+        <display item="CV55.137.1 112" format="checkbox" label=""/>
         <display item="CV55.137.2 116" format="checkbox" label=""/>
         <display item="CV55.137.2 118" format="checkbox" label=""/>
         <display item="CV55.137.2 122" format="checkbox" label=""/>
+        <display item="CV55.137.2 120" format="checkbox" label=""/>
+        <display item="CV55.137.2 121" format="checkbox" label=""/>
       </column>
       <column>
         <label label="  #3"/>
@@ -83,10 +87,12 @@
         <display item="CV55.138.1 104" format="checkbox" label=""/>
         <display item="CV55.138.1 106" format="checkbox" label=""/>
         <display item="CV55.138.1 109" format="checkbox" label=""/>
-        <display item="CV55.138.1 113" format="checkbox" label=""/>
+        <display item="CV55.138.1 112" format="checkbox" label=""/>
         <display item="CV55.138.2 116" format="checkbox" label=""/>
         <display item="CV55.138.2 118" format="checkbox" label=""/>
         <display item="CV55.138.2 122" format="checkbox" label=""/>
+        <display item="CV55.138.2 120" format="checkbox" label=""/>
+        <display item="CV55.138.2 121" format="checkbox" label=""/>
       </column>
     </row>
   </column>

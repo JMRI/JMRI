@@ -85,7 +85,7 @@ to e.g. the CV programmer you want to use.
 <h2>File Locations</h2></a>
 These allow you to set the default location for where scripts and user files are loaded and saved to.
 <p>
-Note that when changing the "User File Locations" this will also change the default location for where the following are stored.
+Note that when changing the "User Files Location" this will also change the default location for where the following are stored.
 <dl><dd>Panels<br>
 Rosters<br>
 Operations<br>

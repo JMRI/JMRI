@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009 -->
-<!-- $Id: Main_Menu.shtml 18146 2011-08-09 11:51:16Z dat7719 $ -->
-<title>DecoderPro Menus</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Menu.shtml 18146 2011-08-09 11:51:16Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>DecoderPro Menus</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -20,17 +17,17 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>DecoderPro3&reg; Main Window</h1>
+<a name="Top"></a>
+<h1>DecoderPro3® Main Window</h1>
 <h1>Menu bar</h1>
 
-<div align=right>
+<div align="right">
 <p><a href="dp3_Main_Main.shtml">Main Window</a></p>
 </div>
 
 <hr>
-<p wrap="">Most of the DecoderPro3&reg; functions can be accessed via the menu bar.</p>
-<p><img src="images/Main_05_MenuBar.png" width="425" height="87" alt="menu bar"></p>
+<p wrap="">Most of the DecoderPro3® functions can be accessed via the menu bar.</p>
+<p><img src="images/Main_05_MenuBar.png" alt="menu bar" height="87" width="425"></p>
 <ul>
   <li>
     <h3>File</h3>
@@ -39,67 +36,66 @@
     <li><strong>New Roster Window    </strong><br>
     Opens another instance of Main DecoderPro3 <strong>Roster</strong> window. </li>
     <li><strong>Import Roster</strong><br>
-    Imports Roster into DecoderPro3&reg;</li>
+    Imports Roster into DecoderPro3®</li>
     <li><strong>Import Roster Entry</strong><br>
       Open the <strong>Open</strong> dialog to allow you to select a Roster Entry to import. <br>
       <br>
-    <img src="images/dp3_file_import_roster.png" width="508" height="360" alt="import roster"><br>
+    <img src="images/dp3_file_import_roster.png" alt="import roster" height="360" width="508"><br>
     <br>
     </li>
     <li><strong>Import Decoder File</strong><br>
       <br>
-      Opens the Open dialog to allow you to select a Decoder File to import.
+      Opens the Open dialog to allow you to select a Decoder File to import from &nbsp;drive:/Program Files/JMRI/xml/decoders/<br>
       <br>
-      <br>
-    <img src="images/dp3_file_import_decoderfile.png" width="508" height="360" alt="import decoder file">    </li>
+    <img style="width: 508px; height: 360px;" alt="import decoder file" src="images/dp3_file_import_decoderfile.png"><br>    </li>
     <li><strong>Import Decoder URL</strong><br>
       <br>
-      <img src="images/dp3_file_URLimport.png" width="297" height="128" alt="URL">      <br>
-    <img src="images/separator.png" width="340" height="4" alt="s"> </li>
+      <img src="images/dp3_file_URLimport.png" alt="URL" height="128" width="297">      <br>
+    <img src="images/separator.png" alt="s" height="4" width="340"> </li>
   </ul>
   <ul>
     <li><strong>Export Roster Entry</strong><br>
-      <img src="images/dp3_file_export_rosterEntry01.png" width="387" height="86" alt="roster entry"><br>
+      <img src="images/dp3_file_export_rosterEntry01.png" alt="roster entry" height="86" width="387"><br>
       Exports .xml file for the selected locomotive on your roster.
       <br>
       <br>
-    <img src="images/dp3_file_export_rosterEntry.png" width="508" height="360" alt="export roster entry">    </li>
+    <img src="images/dp3_file_export_rosterEntry.png" alt="export roster entry" height="360" width="508">    </li>
     <li><strong>Export Complete Roster<br>
       <br>
-      <img src="images/dp3_file_export_roster.png" width="508" height="360" alt="roster">      <br>
-      <img src="images/separator.png" width="340" height="4" alt="s"></strong></li>
+      <img src="images/dp3_file_export_roster.png" alt="roster" height="360" width="508">      <br>
+      <img src="images/separator.png" alt="s" height="4" width="340"></strong></li>
     <li><strong>Close Window</strong></li>
   </ul>
   <blockquote>
     <p>Greyed out if only one Roster Window has been opened.  Allows you to close an extra Roster Window that is no longer needed.</p>
   </blockquote>
   <ul>
-    <li><strong>Print Roster <img src="images/arrow.gif" width="20" height="9"></strong></li>
+    <li><strong>Print Roster <img src="images/arrow.gif" height="9" width="20"></strong></li>
     <ul>
       <li>Entry<br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Opens the <strong>Select Items to Print</strong> dialog<br>
-      <img src="images/dp3_print_dialog_selected.png" width="251" height="174">      <br>
+      <img style="width: 251px; height: 174px;" alt="print dialog box selected" src="images/dp3_print_dialog_selected.png">&nbsp;<br>
       <br>
       Printed page for selected Roster Entry.
       </li>
     </ul>
     <blockquote>
-      <p><img src="images/dp3_print_selected_Item.png" width="800" height="579" alt="printed page"></p>
+      <p><img style="width: 714px; height: 779px;" alt="print seledted item" src="images/dp3_print_selected_Item.png"><br></p>
     </blockquote>
     <ul>
       <li>Summary<br>
       This printout may be many pages.  You can print to pdf file using printer dialog.<br>
       </li>
-      <li><strong><img src="images/dp3_file_printSummary.png" width="723" height="468" alt="print"></strong><br>
-        <br>
-        <img src="images/separator.png" width="340" height="4" alt="s">    </li>
+      <li><strong></strong><br>
+        <img style="width: 721px; height: 640px;" alt="summary" src="images/dp3_file_printSummary.png"><br>
+        <img src="images/separator.png" alt="s" height="4" width="340">    </li>
     </ul>
-    <li><strong>Print P</strong><strong>review Roster <img src="images/arrow.gif" alt="" width="20" height="9"></strong>
+    <li><strong>Print P</strong><strong>review Roster <img src="images/arrow.gif" alt="" height="9" width="20"></strong>
       <ul>
         <li>Entry<br>
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Same as print except it uses the system printers Preview window.</li>
         <li> Summary<br>
-          <img src="images/dp3_file_printPreview.png" width="671" height="394" alt="preview"></li>
+          <img src="images/dp3_file_printPreview.png" alt="preview" height="394" width="671"></li>
       </ul>
     </li>
     <li><strong>Quit</strong><br>
@@ -118,18 +114,18 @@
     <li><strong>Duplicate Loco</strong><br>
       Select the roster entry that you would like to duplicate.  Enter a new name for the duplicate entry.
       <br>
-    <img src="images/dp3_edit_duplicate01.png" width="297" height="128" alt="duplicate">    <br>
+    <img src="images/dp3_edit_duplicate01.png" alt="duplicate" height="128" width="297">    <br>
     press OK and the duplicate is now added to the roster list.  You may now edit or reprogram as required.
     <br>
     <br>
-    <img src="images/dp3_edit_duplicate02.png" width="773" height="86" alt="dupliate">.<br>
+    <img src="images/dp3_edit_duplicate02.png" alt="dupliate" height="86" width="773">.<br>
     </li>
     <li><strong>Delete Loco</strong><br>
       Select the loco that you wish to delete in the roster list, select menu item.<br>
-      <img src="images/dp3_edit_delete_entry.png" width="405" height="122" alt="delete">      <br>
-      <img src="images/separator.png" width="340" height="4" alt="s"></li>
+      <img src="images/dp3_edit_delete_entry.png" alt="delete" height="122" width="405">      <br>
+      <img src="images/separator.png" alt="s" height="4" width="340"></li>
     <li><strong>Preferences </strong></li>
-    </li>
+    
   Opens the<strong> <a href="Start_Preferences.shtml">Preferences</a> </strong>window.
   </ul>
 </ul>
@@ -139,30 +135,29 @@
   </li>
   <ul>
     <li><strong>Hide/Show Summary Pane</strong><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Toggles the decoder information on/off, Part 4 of the main window 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Toggles the decoder information on/off, <span style="font-weight: bold;">Part 4 </span>of the<span style="font-weight: bold;"> main window</span> 
     <blockquote>
-      <p>Show decoder summary pane<br>
-      </p>
-      <p>Hide decoder summary pane<br>
-        <img src="images/dp3_info_show.png" width="837" height="294" alt="info show">Note the up and down arrows in the area above the summary pane. The down arrow will hide the summary pane and the up arrow will show the summary pane when clicked on.<br>
-      </p>
-    </blockquote>
-    </li>
+      <p>Show decoder summary pane</p></blockquote></li><ul><li><img style="width: 596px; height: 271px;" alt="info show" src="images/dp3_info_show.png"></li></ul><li>
+      
+      <blockquote><p>Hide decoder summary pane The above information is not available.</p></blockquote></li><li><dl><dd><img style="width: 859px; height: 89px;" alt="info hide" src="images/dp3_info_hide.png"></dd></dl><blockquote><p>
+        Note
+the up and down arrows in the area above the summary pane. The down
+arrow will hide the summary pane and the up arrow will show the summary
+pane when clicked on.</p></blockquote></li>
   
-    <li><strong>Reset Window Sizes</strong><br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not available yet</li>
-    <li><strong>Reset Column <u>W</u>idths</strong><br>
+    <li><p><strong>Reset Window Sizes</strong></p></li></ul></ul><p style="margin-left: 120px;">not available yet</p><ul><ul>
+    <ul><li><strong>Reset Column <u>W</u>idths</strong><br>
       Resets all of the columns to default settings if you have resized any of them.<br>
-    </li>
-    <li><strong>Hide/Show Roster Images</strong><br>
+    </li></ul>
+    <ul><li><strong>Hide/Show Roster Images</strong><br>
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Toggles the roster image in Part 4 of the main window to show or hide
     <blockquote>
       <p>Show Roster image.<br>
-        <img src="images/dp3_Icon_show.png" width="660" height="292" alt="icon show"></p>
+        <img style="width: 570px; height: 252px;" alt="icon show" src="images/dp3_Icon_show.png"><br></p>
       <p>Hide Roster image.<br>
-        <img src="images/dp3_Icon_hide.png" width="654" height="320" alt="icon hide"></p>
+        <img style="width: 393px; height: 232px;" alt="icon hide" src="images/dp3_Icon_hide.png"><br></p>
     </blockquote>
-    </li>
+    </li></ul>
   
     <li><strong>Hide/Show Roster Groups</strong><br>
       Show Roster Groups Pane<br>
@@ -170,24 +165,24 @@
        Select All Entries to show complete Roster.<br>
        Note the arrows on the border of the Roster Table.
        Right arrow shows Roster Groups pane and Left arrow hides the Roster Groups pane.<br>
-      <img src="images/dp3_GroupShow.png" width="875" height="523" alt="Group Show">Hide Roster Groups Pane.<br>
-      <img src="images/dp3_GroupHide.png" width="546" height="486" alt="Group Hide"><br>
-      <img src="images/separator.png" width="340" height="4" alt="s"></li>
-    <li><strong>Programming <img src="images/arrow.gif" width="20" height="9"></strong><br>
-      <img src="images/separator.png" width="340" height="4" alt="s">
+      <img src="images/dp3_GroupShow.png" alt="Group Show" height="523" width="875">Hide Roster Groups Pane.<br>
+      <img src="images/dp3_GroupHide.png" alt="Group Hide" height="486" width="546"><br>
+      <img src="images/separator.png" alt="s" height="4" width="340"></li>
+    <li><strong>Programming <img src="images/arrow.gif" height="9" width="20"></strong><br>
+      <img src="images/separator.png" alt="s" height="4" width="340">
       <ul>
         <li><strong>Programming Track</strong><br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selects the <strong><a href="Programmer_ServiceMode.shtml">Service Mode </a></strong>(Programming Track )</li>
       </ul>
       <blockquote>
-        <p><img src="images/Program_Select01.png" width="243" height="224" alt="program track"></p>
+        <p><img src="images/Program_Select01.png" alt="program track" height="224" width="243"></p>
       </blockquote>
       <ul>
         <li><strong>Programming on Main</strong><br>
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Selects the <a href="Programmer_OpsMode.shtml"><strong>Operations Mode</strong></a> (Program on Main) </li>
       </ul>
       <blockquote>
-        <p><img src="images/Program_Select02.png" width="238" height="243" alt="main"></p>
+        <p><img src="images/Program_Select02.png" alt="main" height="243" width="238"></p>
       </blockquote>
       <ul>
         <li><strong>Edit Only</strong><br>
@@ -195,7 +190,7 @@
       </ul>
     </li>
     <blockquote>
-      <p><img src="images/Program_Select03.png" width="244" height="231" alt="edit"></p>
+      <p><img src="images/Program_Select03.png" alt="edit" height="231" width="244"></p>
     </blockquote>
     <li><a href="dp3_settings_rosterGroups.shtml#create"><strong>Create Roster Group</strong></a></li>
     <li><a href="dp3_settings_rosterGroups.shtml#Rename"><strong>Rename Roster Group</strong></a></li>
@@ -203,7 +198,7 @@
     <li><strong><a href="dp3_settings_rosterGroups.shtml#delete">Delete Roster Group</a></strong></li>
   </ul>
   <blockquote>
-    <p><img src="images/separator.png" width="340" height="4" alt="s"> </p>
+    <p><img src="images/separator.png" alt="s" height="4" width="340"> </p>
   </blockquote>
   <ul>
     <li><strong><a href="dp3_settings_rosterGroups.shtml#table">Roster Group Table Association</a><a href="dp3_settings_rosterGroups.html#table"></a></strong></li>
@@ -221,15 +216,17 @@
   </ul>
   <ul>
     <li><strong>Labels and Media</strong>
-      <blockquote>Opens the Labels and Media window with two tabs to set these parameters for the selected roster entry in your roster. Select the <strong><a href="Adv_FunctionLabel.shtml">Function Labels </a></strong>TAB to edit your throttle function labels. Select the <strong><a href="RosterMedia.shtml">Roster Media</a></strong> TAB to edit the icon for your roster selection.<br>
+      <blockquote>Opens
+the Labels and Media window with two tabs to set these parameters for
+the selected roster entry in your roster. Select the <strong><a href="Adv_FunctionLabel.shtml">Function Labels </a></strong>TAB to edit your throttle function labels. Select the <strong><a href="RosterMedia.shtml">Roster Media</a></strong> TAB to edit the icon for your roster selection.<br>
         <br> 
-        <img src="images/dp3_LabelMedia.png" width="497" height="286" alt="Label Media window"><br>
+        <img src="images/dp3_LabelMedia.png" alt="Label Media window" height="286" width="497"><br>
 </blockquote>
 </li>
     <li><strong><a href="dp3_Main_Throttle.shtml">New Throttle</a></strong><br>
       <br>
     </li>
-    <li>Load Default Throttle Layout
+    <li>Loads Default Throttle Layout
       <blockquote>
         <p>Opens the 
         default throttle that is set in preferences</p>
@@ -238,30 +235,30 @@
   </ul>
   <blockquote>
     <p><br>
-      <img src="images/separator.png" width="340" height="4" alt="s">        </p>
+      <img src="images/separator.png" alt="s" height="4" width="340">        </p>
   </blockquote>
   <ul>
     <li><a href="dp3_Main_ConsistControl.shtml"><strong>Consisting Tool</strong></a></li>
     <li><a href="dp3_Main_TurnoutControl.shtml"><strong>Turnout Control</strong></a></li>
     <li>Power Control
       <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="images/Main_04_PwrCntr.png" width="207" height="114" alt="power"></li>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="images/Main_04_PwrCntr.png" alt="power" height="114" width="207"></li>
     <li><strong><a href="dp3_Main_Speedometer.shtml">Speedometer</a></strong></li>
     <li><a name="Single"></a><a href="Programmer_SingleCV.shtml"><strong>Single CV Programmer</strong></a><br>
       <br>
-      <img src="images/separator.png" width="340" height="4" alt="s"></li>
+      <img src="images/separator.png" alt="s" height="4" width="340"></li>
     <li>Start WiThrottle Server<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <img src="images/dp3_WiThrottle.png" width="321" height="267" alt="wi Throttle"></li>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img style="width: 331px; height: 271px;" alt="Wi Throttle" src="images/dp3_WiThrottle.png"><br></li>
     <li>Start  Web Server<br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <img src="images/dp3_mimiServer.png" width="414" height="70" alt="mini server"><br>
-      <img src="images/separator.png" width="340" height="4" alt="s"></li>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;      <img src="images/dp3_mimiServer.png" alt="mini server" height="70" width="414"><br>
+      <img src="images/separator.png" alt="s" height="4" width="340"></li>
     <li><strong>Recreate Roster Index</strong><br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Recreates the Roster Index when adding new XML roster files.</li>
     <li><strong>Recreate Decoder Index</strong><br>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Used to update Decoder Index when new decoder files are added.<br>
-      <img src="images/separator.png" width="340" height="4" alt="s"></li>
+      <img src="images/separator.png" alt="s" height="4" width="340"></li>
     <li><strong>Run Script</strong><br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Opens a dialog to allow you to select a script that will run within DecoderPro3&reg;. </li>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Opens a dialog to allow you to select a script that will run within DecoderPro3®. </li>
   </ul>
 </ul>
 <ul>
@@ -300,7 +297,7 @@
     <li>Minimize</li>
   </ul>
   <blockquote>
-    <p><img src="images/separator.png" width="340" height="4" alt="s"></p>
+    <p><img src="images/separator.png" alt="s" height="4" width="340"></p>
   </blockquote>
   <ul>
     <li>open windows listed</li>
@@ -320,16 +317,15 @@
     <li>Upload Debugging Info...</li>
   </ul>
   <blockquote>
-    <p><img src="images/separator.png" width="340" height="4" alt="s"></p>
+    <p><img src="images/separator.png" alt="s" height="4" width="340"></p>
   </blockquote>
   <ul>
     <li>About DecoderPro3<br>
       <br>
-    <img src="images/dp3_About.png" width="255" height="333" alt="about"></li>
+    <img style="width: 255px; height: 333px;" alt="about screen" src="images/dp3_About.png"><br></li>
   </ul>
 </ul>
-<div align=right><a href="dp3_Main_Main.shtml">Main Window</a> </div>
+<div align="right"><a href="dp3_Main_Main.shtml">Main Window</a> </div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div></body></html>

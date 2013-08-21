@@ -334,6 +334,15 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
         return new MemoryPickModel();
     }
+    public static PickListModel blockPickModelInstance() {
+        Integer num = _listMap.get("block");
+        if (num!=null) {
+            _listMap.put("block", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("block", Integer.valueOf(1));
+        }
+        return new BlockPickModel();
+    }
     public static PickListModel reporterPickModelInstance() {
         Integer num = _listMap.get("reporter");
         if (num!=null) {
@@ -528,6 +537,29 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
         public NamedBean addBean(String sysName, String userName) {
             return manager.newMemory(sysName, userName);
+        }
+        public boolean canAddBean() {
+            return true;
+        }
+    }
+    
+    class BlockPickModel extends PickListModel {
+        BlockManager manager;
+        BlockPickModel () {
+            manager = InstanceManager.blockManagerInstance();
+            _name = rb.getString("TitleBlockTable");
+        }
+        public Manager getManager() {
+            return manager;
+        }
+        public NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        public NamedBean addBean(String name) {
+            return manager.provideBlock(name);
+        }
+        public NamedBean addBean(String sysName, String userName) {
+            return manager.createNewBlock(sysName, userName);
         }
         public boolean canAddBean() {
             return true;

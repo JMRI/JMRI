@@ -1,17 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: zoo $) 2009 -->
-<!-- $Id: Main_Monitor_Window.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
-<TITLE>
-DecoderPro&reg; Main Window
-</TITLE>
+<html lang="en"><head>
+<!-- Copyright ($Author: zoo $) 2009 --><!-- $Id: Main_Monitor_Window.shtml 17977 2011-07-18 17:23:46Z zoo $ --><title>DecoderPro® Main Window</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
@@ -20,45 +15,100 @@ DecoderPro&reg; Main Window
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-
-<h1>DecoderPro&reg; Main Window</h1>
+<h1>DecoderPro® Main Window</h1>
 <h1>Communications Monitor Window</h1>
-
-<div align=right>
-<p><a href="dp3_menubar.shtml">Back to Index</a><a href="index.shtml#Main"></a></p>
+<div align="right">
+<p><a href="dp3_menubar.shtml">Back to Index</a></p>
 </div>
-
 <hr>
-<p>DecoderPro provides a communications monitor window so that you can see what is happening on the communications link between the program and the layout hardware.</p>
-<p>When the monitor window opens, it will automatically display all traffic on the communications link.</p>
-<p>The Title bar will display the<em> name</em> of your DCC systems communications link.</p>
-<p align="center"><img src="images/Main_MonitorWindow.png" alt="Communication Monitor Window" width="538" height="228" border="4"></p>
+<p>DecoderPro provides a communications monitor window so that
+you can see what is happening on the communications link between the
+program and the layout hardware.</p>
+<p>When the monitor window opens, it will automatically display
+all traffic on the communications link.</p>
+<p>The Title bar will display the<em> name</em> of
+your DCC systems communications link.</p>
+<p align="center"><img style="width: 739px; height: 215px;" alt="monitor" src="images/Main_MonitorWindow.png"><br>
+</p>
 <p align="left">&nbsp;</p>
-<p align="left">The messages that are sent and received over the communictions link are displayed in the main pane of the window.</p>
-<h4 align="left">Controls  at the bottom of the window.</h4>
-<p align="left"><strong>Clear screen </strong>button&#8212; Erases the log area of the screen where the messages are displayed.</p>
-<p align="left"><strong>Freeze screen</strong> button&#8212;Stops acquiring new information, so that the captured information stops scrolling.</p>
-<p align="left">
-  <input type="checkbox" name="checkbox" id="checkbox"> 
-  <strong>Show raw data</strong>&#8212;Normally, the monitor displays the program's interpretation of what it's seeing. If you want to see the raw bytes, check this box.</p>
-<p align="left">
-  <input type="checkbox" name="checkbox2" id="checkbox2">
-  <strong>Show timestamps</strong>&#8212;Normally, the program just displays the data from the communication link.. If you would like each message to be preceded by the time it was sent or recieved, check this box.</p>
-<h4 align="left">Logging to a File</h4>
-<p align="left">Sometimes, it is useful to capture the events that are happening. If a problem occurs, then the information capture in the log file can be sent to the group for analysis of the problem. Small amounts of information can be copied from the display pane of the monitor window. If more information is needed than is provided by the window, you need to write the information to a log file on your computer's disk.</p>
+<p align="left">The messages that are sent and received
+over the communictions link are displayed in the main pane of the
+window.</p>
+<h4 align="left">Controls at the bottom of the window.</h4>
+<p align="left"><strong>Clear screen </strong>button&#8212;
+Erases the log area of the screen where the messages are displayed.</p>
+<p align="left"><strong>Freeze screen</strong>
+button&#8212;Stops acquiring new information, so that the captured
+information stops scrolling.</p>
+<p align="left"> <input name="checkbox" id="checkbox" type="checkbox"> <strong>Show
+raw data</strong>&#8212;Normally, the monitor displays the program's
+interpretation of what it's seeing. If you want to see the raw bytes,
+check this box.</p>
+<p align="left"> <input name="checkbox2" id="checkbox2" type="checkbox"> <strong>Show
+timestamps</strong>&#8212;Normally, the program just displays the data
+from the communication link.. If you would like each message to be
+preceded by the time it was sent or recieved, check this box.</p>
+<p align="left"><input name="a" type="checkbox">
+<span style="font-weight: bold;">Window always on Top </span>--
+Always displays the Monitor window.</p>
+<p align="left"><input checked="checked" name="b" type="checkbox"> <span style="font-weight: bold;">Auto
+scroll </span>-- Scrolls the data in the window continuously.</p>
+<p align="left"><span style="font-weight: bold;">Filter
+Bytes: <input size="40" name="c"></span>
+&nbsp; </p>
+<div class="nomenu" id="mBody">
+<div id="mainContent">
+<dl>
+<dd> You can filter unwanted messages from the window by
+entering each message's first hex value into the "Filter Bytes" field.
+This can be especially helpful when there is a lot of routine comm
+traffic. Separate multiple values by spaces. e.g. "B0 D0 CC". This
+example will suppress any messages whose raw data starts with "B0",
+"D0" or "CC" You can determine the available hex values by turning on
+"Show raw data." </dd>
+</dl>
+</div>
+</div>
+<p align="left"><span style="font-weight: bold;">Choose
+log file </span>button -- Log monitor data to a file for
+recovery for diagnostics, and sharing data with others.</p>
+<p align="left"><span style="font-weight: bold;">Start
+logging </span>button -- Starts sending data in <span style="font-weight: bold;">Monitor Window</span> to
+selected file.</p>
+<h4 align="left"><span style="font-weight: normal;"><span style="font-weight: bold;">Stop logging</span> button
+-- &nbsp;Stops sending data &nbsp;in <span style="font-weight: bold;">Monitor Window</span> to
+selected file.</span><br>
+</h4>
+<h4 style="font-weight: normal;" align="left">Logging
+to a File</h4>
+<p align="left">Sometimes, it is useful to capture the
+events that are happening. If a problem occurs, then the information
+capture in the log file can be sent to the group for analysis of the
+problem. Small amounts of information can be copied from the display
+pane of the monitor window. If more information is needed than is
+provided by the window, you need to write the information to a log file
+on your computer's disk.</p>
 <p align="left">To do this:</p>
 <ol>
-  <li>Click the <strong>Choose log file</strong> button. This opens a <strong>Save</strong> dialog on your computer, locate the folder where you would like to save the log file, give the log file a name ( if you use the name of an existing file, it will be overwritten). Click on Save button.</li>
-  <li>When you are ready to capture the data that you want to save, click on the <strong>Start logging </strong>button on the monitor window.</li>
-  <li>When done, clidk the <strong>Stop logging</strong> button to store the data and close the file.</li>
+<li>Click the <strong>Choose log file</strong>
+button. This opens a <strong>Save</strong> dialog on your
+computer, locate the folder where you would like to save the log file,
+give the log file a name ( if you use the name of an existing file, it
+will be overwritten). Click on Save button.</li>
+<li>When you are ready to capture the data that you want to
+save, click on the <strong>Start logging </strong>button
+on the monitor window.</li>
+<li>When done, clidk the <strong>Stop logging</strong>
+button to store the data and close the file.</li>
 </ol>
-<h4>Adding Messages to Log File</h4>
-<p>Type your message in the Add Messge text box, then clidk on the <strong>Add Message</strong> button to add your message to the log file.</p>
+<h4>Adding Message&nbsp;</h4> button&nbsp;<input size="50" name="v">
+<p>Type your message in the Add Messge text box, then clidk on
+the <strong>Add Message</strong> button to add your
+message to the log file.</p>
 <p align="left">&nbsp;</p>
 <hr>
 <a href="dp3_menubar.shtml">Back to Index</a>
-<div align=right> </div>
-
+<div align="right"> </div>
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div>
+</body></html>

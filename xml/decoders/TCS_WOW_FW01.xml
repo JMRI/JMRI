@@ -15,6 +15,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="Simon Ginsburg" version="1" lastUpdated="20130522"/>
     <version author="Michael Mosher" version="2" lastUpdated="20130711"/>
+    <version author="Michael Mosher" version="3" lastUpdated="20130722"/>
         
     <decoder>
         <family name="WOW Sound" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
@@ -127,12 +128,12 @@
 			<ivariable label="Button 0 Sound" CVname="203.1.0" CV="203" PI="1" SI="0" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
-            <ivariable label="Button 0 0" CVname="204.1.0" CV="204" PI="1" SI="0" writeOnly="yes" default="116" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            <ivariable label="Button 0 255" CVname="204.1.0" CV="204" PI="1" SI="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
 				<qualifier>
 					<variableref>Button 0 Sound</variableref>
 					<relation>eq</relation>
-					<value>0</value>
+					<value>255</value>
 				</qualifier>
             </ivariable>
             <ivariable label="Button 0 1" CVname="204.1.0" CV="204" PI="1" SI="0" writeOnly="yes" >
@@ -143,23 +144,23 @@
 					<value>1</value>
 				</qualifier>
             </ivariable>
-            <ivariable label="Button 0 255" CVname="204.1.0" CV="204" PI="1" SI="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
+            <ivariable label="Button 0 0" CVname="204.1.0" CV="204" PI="1" SI="0" writeOnly="yes" default="116" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
 					<variableref>Button 0 Sound</variableref>
 					<relation>eq</relation>
-					<value>255</value>
+					<value>0</value>
 				</qualifier>
             </ivariable>
 			<ivariable label="Button 1 Sound" CVname="203.1.1" CV="203" PI="1" SI="1" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
-            <ivariable label="Button 1 0" CVname="204.1.1" CV="204" PI="1" SI="1" writeOnly="yes" default="19" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+            <ivariable label="Button 1 255" CVname="204.1.1" CV="204" PI="1" SI="1" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
 				<qualifier>
 					<variableref>Button 1 Sound</variableref>
 					<relation>eq</relation>
-					<value>0</value>
+					<value>255</value>
 				</qualifier>
             </ivariable>
             <ivariable label="Button 1 1" CVname="204.1.1" CV="204" PI="1" SI="1" writeOnly="yes" >
@@ -170,25 +171,17 @@
 					<value>1</value>
 				</qualifier>
             </ivariable>
-            <ivariable label="Button 1 255" CVname="204.1.1" CV="204" PI="1" SI="1" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
+            <ivariable label="Button 1 0" CVname="204.1.1" CV="204" PI="1" SI="1" writeOnly="yes" default="0" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
 					<variableref>Button 1 Sound</variableref>
 					<relation>eq</relation>
-					<value>255</value>
+					<value>0</value>
 				</qualifier>
             </ivariable>
 			<ivariable label="Button 2 Sound" CVname="203.1.2" CV="203" PI="1" SI="2" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
-            <ivariable label="Button 2 0" CVname="204.1.2" CV="204" PI="1" SI="2" writeOnly="yes" default="18" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
-				<qualifier>
-					<variableref>Button 2 Sound</variableref>
-					<relation>eq</relation>
-					<value>0</value>
-				</qualifier>
-            </ivariable>
             <ivariable label="Button 2 1" CVname="204.1.2" CV="204" PI="1" SI="2" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -205,17 +198,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 3 Sound" CVname="203.1.3" CV="203" PI="1" SI="3" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 3 0" CVname="204.1.3" CV="204" PI="1" SI="3" writeOnly="yes" default="20" >
+            <ivariable label="Button 2 0" CVname="204.1.2" CV="204" PI="1" SI="2" writeOnly="yes" default="19" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 3 Sound</variableref>
+					<variableref>Button 2 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 3 Sound" CVname="203.1.3" CV="203" PI="1" SI="3" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 3 1" CVname="204.1.3" CV="204" PI="1" SI="3" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -232,17 +225,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 4 Sound" CVname="203.1.4" CV="203" PI="1" SI="4" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 4 0" CVname="204.1.4" CV="204" PI="1" SI="4" writeOnly="yes" default="107" >
+            <ivariable label="Button 3 0" CVname="204.1.3" CV="204" PI="1" SI="3" writeOnly="yes" default="18" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 4 Sound</variableref>
+					<variableref>Button 3 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 4 Sound" CVname="203.1.4" CV="203" PI="1" SI="4" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 4 1" CVname="204.1.4" CV="204" PI="1" SI="4" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -259,17 +252,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 5 Sound" CVname="203.1.5" CV="203" PI="1" SI="5" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 5 0" CVname="204.1.5" CV="204" PI="1" SI="5" writeOnly="yes" default="206" >
+            <ivariable label="Button 4 0" CVname="204.1.4" CV="204" PI="1" SI="4" writeOnly="yes" default="20" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 5 Sound</variableref>
+					<variableref>Button 4 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 5 Sound" CVname="203.1.5" CV="203" PI="1" SI="5" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 5 1" CVname="204.1.5" CV="204" PI="1" SI="5" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -286,17 +279,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 6 Sound" CVname="203.1.6" CV="203" PI="1" SI="6" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 6 0" CVname="204.1.6" CV="204" PI="1" SI="6" writeOnly="yes" default="199" >
+            <ivariable label="Button 5 0" CVname="204.1.5" CV="204" PI="1" SI="5" writeOnly="yes" default="107" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 6 Sound</variableref>
+					<variableref>Button 5 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 6 Sound" CVname="203.1.6" CV="203" PI="1" SI="6" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 6 1" CVname="204.1.6" CV="204" PI="1" SI="6" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -313,17 +306,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 7 Sound" CVname="203.1.7" CV="203" PI="1" SI="7" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 7 0" CVname="204.1.7" CV="204" PI="1" SI="7" writeOnly="yes" default="16" >
+            <ivariable label="Button 6 0" CVname="204.1.6" CV="204" PI="1" SI="6" writeOnly="yes" default="206" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 7 Sound</variableref>
+					<variableref>Button 6 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 7 Sound" CVname="203.1.7" CV="203" PI="1" SI="7" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 7 1" CVname="204.1.7" CV="204" PI="1" SI="7" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -340,6 +333,14 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
+            <ivariable label="Button 7 0" CVname="204.1.7" CV="204" PI="1" SI="7" writeOnly="yes" default="199" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+				<qualifier>
+					<variableref>Button 7 Sound</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
+            </ivariable>
 			<ivariable label="Button 8 Sound" CVname="203.1.8" CV="203" PI="1" SI="8" default="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
@@ -351,14 +352,6 @@
 					<value>0</value>
 				</qualifier>
             </ivariable>
-            <ivariable label="Button 8 1" CVname="204.1.8" CV="204" PI="1" SI="8" writeOnly="yes" default="6" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
-				<qualifier>
-					<variableref>Button 8 Sound</variableref>
-					<relation>eq</relation>
-					<value>1</value>
-				</qualifier>
-            </ivariable>
             <ivariable label="Button 8 255" CVname="204.1.8" CV="204" PI="1" SI="8" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
 				<qualifier>
@@ -367,23 +360,23 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 9 Sound" CVname="203.1.9" CV="203" PI="1" SI="9" default="0" writeOnly="yes" >
+            <ivariable label="Button 8 1" CVname="204.1.8" CV="204" PI="1" SI="8" writeOnly="yes" default="4" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+				<qualifier>
+					<variableref>Button 8 Sound</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </ivariable>
+			<ivariable label="Button 9 Sound" CVname="203.1.9" CV="203" PI="1" SI="9" default="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
-            <ivariable label="Button 9 0" CVname="204.1.9" CV="204" PI="1" SI="9" writeOnly="yes" default="100" >
+            <ivariable label="Button 9 0" CVname="204.1.9" CV="204" PI="1" SI="9" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
 					<variableref>Button 9 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
-				</qualifier>
-            </ivariable>
-            <ivariable label="Button 9 1" CVname="204.1.9" CV="204" PI="1" SI="9" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
-				<qualifier>
-					<variableref>Button 9 Sound</variableref>
-					<relation>eq</relation>
-					<value>1</value>
 				</qualifier>
             </ivariable>
             <ivariable label="Button 9 255" CVname="204.1.9" CV="204" PI="1" SI="9" writeOnly="yes" >
@@ -394,17 +387,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
+            <ivariable label="Button 9 1" CVname="204.1.9" CV="204" PI="1" SI="9" writeOnly="yes" default="6" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
+				<qualifier>
+					<variableref>Button 9 Sound</variableref>
+					<relation>eq</relation>
+					<value>1</value>
+				</qualifier>
+            </ivariable>
 			<ivariable label="Button 10 Sound" CVname="203.1.10" CV="203" PI="1" SI="10" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
-            <ivariable label="Button 10 0" CVname="204.1.10" CV="204" PI="1" SI="10" writeOnly="yes" default="101" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
-				<qualifier>
-					<variableref>Button 10 Sound</variableref>
-					<relation>eq</relation>
-					<value>0</value>
-				</qualifier>
-            </ivariable>
             <ivariable label="Button 10 1" CVname="204.1.10" CV="204" PI="1" SI="10" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -421,17 +414,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 11 Sound" CVname="203.1.11" CV="203" PI="1" SI="11" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 11 0" CVname="204.1.11" CV="204" PI="1" SI="11" writeOnly="yes" default="119" >
+            <ivariable label="Button 10 0" CVname="204.1.10" CV="204" PI="1" SI="10" writeOnly="yes" default="100" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 11 Sound</variableref>
+					<variableref>Button 10 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 11 Sound" CVname="203.1.11" CV="203" PI="1" SI="11" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 11 1" CVname="204.1.11" CV="204" PI="1" SI="11" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -448,17 +441,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 12 Sound" CVname="203.1.12" CV="203" PI="1" SI="12" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 12 0" CVname="204.1.12" CV="204" PI="1" SI="12" writeOnly="yes" default="121" >
+            <ivariable label="Button 11 0" CVname="204.1.11" CV="204" PI="1" SI="11" writeOnly="yes" default="101" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 12 Sound</variableref>
+					<variableref>Button 11 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 12 Sound" CVname="203.1.12" CV="203" PI="1" SI="12" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 12 1" CVname="204.1.12" CV="204" PI="1" SI="12" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -475,17 +468,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 13 Sound" CVname="203.1.13" CV="203" PI="1" SI="13" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 13 0" CVname="204.1.13" CV="204" PI="1" SI="13" writeOnly="yes" default="98" >
+            <ivariable label="Button 12 0" CVname="204.1.12" CV="204" PI="1" SI="12" writeOnly="yes" default="119" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 13 Sound</variableref>
+					<variableref>Button 12 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 13 Sound" CVname="203.1.13" CV="203" PI="1" SI="13" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 13 1" CVname="204.1.13" CV="204" PI="1" SI="13" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -502,18 +495,18 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 14 Sound" CVname="203.1.14" CV="203" PI="1" SI="14" default="1" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 14 0" CVname="204.1.14" CV="204" PI="1" SI="14" writeOnly="yes" >
+            <ivariable label="Button 13 0" CVname="204.1.13" CV="204" PI="1" SI="13" writeOnly="yes" default="121" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 14 Sound</variableref>
+					<variableref>Button 13 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
-            <ivariable label="Button 14 1" CVname="204.1.14" CV="204" PI="1" SI="14" writeOnly="yes" default="8" >
+			<ivariable label="Button 14 Sound" CVname="203.1.14" CV="203" PI="1" SI="14" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
+            <ivariable label="Button 14 1" CVname="204.1.14" CV="204" PI="1" SI="14" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
 					<variableref>Button 14 Sound</variableref>
@@ -529,17 +522,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 15 Sound" CVname="203.1.15" CV="203" PI="1" SI="15" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 15 0" CVname="204.1.15" CV="204" PI="1" SI="15" writeOnly="yes" default="88" >
+            <ivariable label="Button 14 0" CVname="204.1.14" CV="204" PI="1" SI="14" writeOnly="yes" default="98" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 15 Sound</variableref>
+					<variableref>Button 14 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 15 Sound" CVname="203.1.15" CV="203" PI="1" SI="15" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 15 1" CVname="204.1.15" CV="204" PI="1" SI="15" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -556,17 +549,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 16 Sound" CVname="203.1.16" CV="203" PI="1" SI="16" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 16 0" CVname="204.1.16" CV="204" PI="1" SI="16" writeOnly="yes" default="129" >
+            <ivariable label="Button 15 0" CVname="204.1.15" CV="204" PI="1" SI="15" writeOnly="yes" default="8" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 16 Sound</variableref>
+					<variableref>Button 15 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 16 Sound" CVname="203.1.16" CV="203" PI="1" SI="16" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 16 1" CVname="204.1.16" CV="204" PI="1" SI="16" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -583,17 +576,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 17 Sound" CVname="203.1.17" CV="203" PI="1" SI="17" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 17 0" CVname="204.1.17" CV="204" PI="1" SI="17" writeOnly="yes" default="95" >
+            <ivariable label="Button 16 0" CVname="204.1.16" CV="204" PI="1" SI="16" writeOnly="yes" default="88" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 17 Sound</variableref>
+					<variableref>Button 16 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 17 Sound" CVname="203.1.17" CV="203" PI="1" SI="17" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 17 1" CVname="204.1.17" CV="204" PI="1" SI="17" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -610,17 +603,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Button 18 Sound" CVname="203.1.18" CV="203" PI="1" SI="18" default="255" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Button 18 0" CVname="204.1.18" CV="204" PI="1" SI="18" writeOnly="yes" >
+            <ivariable label="Button 17 0" CVname="204.1.17" CV="204" PI="1" SI="17" writeOnly="yes" default="129" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Button 18 Sound</variableref>
+					<variableref>Button 17 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Button 18 Sound" CVname="203.1.18" CV="203" PI="1" SI="18" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Button 18 1" CVname="204.1.18" CV="204" PI="1" SI="18" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -629,12 +622,20 @@
 					<value>1</value>
 				</qualifier>
             </ivariable>
-            <ivariable label="Button 18 255" CVname="204.1.18" CV="204" PI="1" SI="18" writeOnly="yes" default="255" >
+            <ivariable label="Button 18 255" CVname="204.1.18" CV="204" PI="1" SI="18" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
 				<qualifier>
 					<variableref>Button 18 Sound</variableref>
 					<relation>eq</relation>
 					<value>255</value>
+				</qualifier>
+            </ivariable>
+            <ivariable label="Button 18 0" CVname="204.1.18" CV="204" PI="1" SI="18" default="95" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+				<qualifier>
+					<variableref>Button 18 Sound</variableref>
+					<relation>eq</relation>
+					<value>0</value>
 				</qualifier>
             </ivariable>
 			<ivariable label="Button 19 Sound" CVname="203.1.19" CV="203" PI="1" SI="19" default="255" writeOnly="yes" >
@@ -910,14 +911,6 @@
 			<ivariable label="Random 1 Sound" CVname="203.1.29" CV="203" PI="1" SI="29" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
-            <ivariable label="Random 1 0" CVname="204.1.29" CV="204" PI="1" SI="29" writeOnly="yes" default="122" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
-				<qualifier>
-					<variableref>Random 1 Sound</variableref>
-					<relation>eq</relation>
-					<value>0</value>
-				</qualifier>
-            </ivariable>
             <ivariable label="Random 1 1" CVname="204.1.29" CV="204" PI="1" SI="29" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -934,17 +927,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Random 2 Sound" CVname="203.1.30" CV="203" PI="1" SI="30" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Random 2 0" CVname="204.1.30" CV="204" PI="1" SI="30" writeOnly="yes" default="128" >
+            <ivariable label="Random 1 0" CVname="204.1.29" CV="204" PI="1" SI="29" writeOnly="yes" default="122" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Random 2 Sound</variableref>
+					<variableref>Random 1 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Random 2 Sound" CVname="203.1.30" CV="203" PI="1" SI="30" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Random 2 1" CVname="204.1.30" CV="204" PI="1" SI="30" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -961,17 +954,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Random 3 Sound" CVname="203.1.31" CV="203" PI="1" SI="31" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Random 3 0" CVname="204.1.31" CV="204" PI="1" SI="31" writeOnly="yes" default="118" >
+            <ivariable label="Random 2 0" CVname="204.1.30" CV="204" PI="1" SI="30" writeOnly="yes" default="128" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Random 3 Sound</variableref>
+					<variableref>Random 2 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Random 3 Sound" CVname="203.1.31" CV="203" PI="1" SI="31" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Random 3 1" CVname="204.1.31" CV="204" PI="1" SI="31" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -988,17 +981,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Random 4 Sound" CVname="203.1.32" CV="203" PI="1" SI="32" default="0" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Random 4 0" CVname="204.1.32" CV="204" PI="1" SI="32" writeOnly="yes" default="126" >
+            <ivariable label="Random 3 0" CVname="204.1.31" CV="204" PI="1" SI="31" writeOnly="yes" default="118" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Random 4 Sound</variableref>
+					<variableref>Random 3 Sound</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Random 4 Sound" CVname="203.1.32" CV="203" PI="1" SI="32" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Random 4 1" CVname="204.1.32" CV="204" PI="1" SI="32" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1015,8 +1008,16 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
+            <ivariable label="Random 4 0" CVname="204.1.32" CV="204" PI="1" SI="32" writeOnly="yes" default="126" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+				<qualifier>
+					<variableref>Random 4 Sound</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
+            </ivariable>
 
-			<ivariable label="Volume Level 0" CVname="203.2.0" CV="203" PI="2" SI="0" writeOnly="yes" >
+			<ivariable label="Volume Level 0" CVname="203.2.0" CV="203" PI="2" SI="0" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
             <ivariable label="Volume Level 0 0" CVname="204.2.0" CV="204" PI="2" SI="0" writeOnly="yes" >
@@ -1035,7 +1036,7 @@
 					<value>1</value>
 				</qualifier>
             </ivariable>
-            <ivariable label="Volume Level 0 255" CVname="204.2.0" CV="204" PI="2" SI="0" writeOnly="yes" >
+            <ivariable label="Volume Level 0 255" CVname="204.2.0" CV="204" PI="2" SI="0" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll255.xml"/>
 				<qualifier>
 					<variableref>Volume Level 0</variableref>
@@ -1043,17 +1044,9 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Volume Level 1" CVname="203.2.1" CV="203" PI="2" SI="1" writeOnly="yes" >
+			<ivariable label="Volume Level 1" CVname="203.2.1" CV="203" PI="2" SI="1" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
 			</ivariable>
-            <ivariable label="Volume Level 1 0" CVname="204.2.1" CV="204" PI="2" SI="1" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
-				<qualifier>
-					<variableref>Volume Level 1</variableref>
-					<relation>eq</relation>
-					<value>0</value>
-				</qualifier>
-            </ivariable>
             <ivariable label="Volume Level 1 1" CVname="204.2.1" CV="204" PI="2" SI="1" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1070,17 +1063,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Volume Level 2" CVname="203.2.2" CV="203" PI="2" SI="2" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Volume Level 2 0" CVname="204.2.2" CV="204" PI="2" SI="2" writeOnly="yes" >
+            <ivariable label="Volume Level 1 0" CVname="204.2.1" CV="204" PI="2" SI="1" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Volume Level 2</variableref>
+					<variableref>Volume Level 1</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Volume Level 2" CVname="203.2.2" CV="203" PI="2" SI="2" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Volume Level 2 1" CVname="204.2.2" CV="204" PI="2" SI="2" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1097,17 +1090,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Volume Level 3" CVname="203.2.3" CV="203" PI="2" SI="3" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Volume Level 3 0" CVname="204.2.3" CV="204" PI="2" SI="3" writeOnly="yes" >
+            <ivariable label="Volume Level 2 0" CVname="204.2.2" CV="204" PI="2" SI="2" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Volume Level 3</variableref>
+					<variableref>Volume Level 2</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Volume Level 3" CVname="203.2.3" CV="203" PI="2" SI="3" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Volume Level 3 1" CVname="204.2.3" CV="204" PI="2" SI="3" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1124,17 +1117,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Volume Level 4" CVname="203.2.4" CV="203" PI="2" SI="4" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Volume Level 4 0" CVname="204.2.4" CV="204" PI="2" SI="4" writeOnly="yes" >
+            <ivariable label="Volume Level 3 0" CVname="204.2.3" CV="204" PI="2" SI="3" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Volume Level 4</variableref>
+					<variableref>Volume Level 3</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Volume Level 4" CVname="203.2.4" CV="203" PI="2" SI="4" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Volume Level 4 1" CVname="204.2.4" CV="204" PI="2" SI="4" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1151,17 +1144,17 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
-			<ivariable label="Volume Level 5" CVname="203.2.5" CV="203" PI="2" SI="5" writeOnly="yes" >
-				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
-			</ivariable>
-            <ivariable label="Volume Level 5 0" CVname="204.2.5" CV="204" PI="2" SI="5" writeOnly="yes" >
+            <ivariable label="Volume Level 4 0" CVname="204.2.4" CV="204" PI="2" SI="4" default="0" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
 				<qualifier>
-					<variableref>Volume Level 5</variableref>
+					<variableref>Volume Level 4</variableref>
 					<relation>eq</relation>
 					<value>0</value>
 				</qualifier>
             </ivariable>
+			<ivariable label="Volume Level 5" CVname="203.2.5" CV="203" PI="2" SI="5" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundType.xml"/>
+			</ivariable>
             <ivariable label="Volume Level 5 1" CVname="204.2.5" CV="204" PI="2" SI="5" writeOnly="yes" >
 				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll1.xml"/>
 				<qualifier>
@@ -1178,8 +1171,15 @@
 					<value>255</value>
 				</qualifier>
             </ivariable>
+            <ivariable label="Volume Level 5 0" CVname="204.2.5" CV="204" PI="2" SI="5" default="0" writeOnly="yes" >
+				<xi:include href="http://jmri.org/xml/decoders/tcs/ienumSoundAll0.xml"/>
+				<qualifier>
+					<variableref>Volume Level 5</variableref>
+					<relation>eq</relation>
+					<value>0</value>
+				</qualifier>
+            </ivariable>
 			
-			<ivariable label="Step 0 Chuff Rate" CVname="204.3.0" CV="204" PI="3" SI="0" default="32" writeOnly="yes" >					<indexedPairVal highCVname="203.3.0" order="highFirst" min="0" max="65536"/>			</ivariable>
 			<ivariable label="Step 1 Chuff Rate" CVname="204.3.1" CV="204" PI="3" SI="1" default="46592" writeOnly="yes" >				<indexedPairVal highCVname="203.3.1" order="highFirst" min="0" max="65536"/>			</ivariable>
 			<ivariable label="Step 2 Chuff Rate" CVname="204.3.2" CV="204" PI="3" SI="2" default="18176" writeOnly="yes" >				<indexedPairVal highCVname="203.3.2" order="highFirst" min="0" max="65536"/>			</ivariable>
 			<ivariable label="Step 3 Chuff Rate" CVname="204.3.3" CV="204" PI="3" SI="3" default="11360" writeOnly="yes" >				<indexedPairVal highCVname="203.3.3" order="highFirst" min="0" max="65536"/>			</ivariable>
@@ -1331,8 +1331,35 @@
 			<ivariable label="Random Sound Cutout Speed Step" CVname="204.4.7" CV="204" PI="4" SI="7" default="126" writeOnly="yes" item="Sound Setting 26" tooltip="The speed at which Random sounds will stop playing (speed of zero stops random sounds from playing)">
 				<indexedPairVal highCVname="203.4.7" order="highFirst" min="0" max="126"/>
 			</ivariable>
-			<ivariable label="Default Whistle Set" CVname="204.4.8" CV="204" PI="4" SI="8" default="0" writeOnly="yes" item="Sound Option 1" tooltip="The speed at which Random sounds will stop playing (speed of zero stops random sounds from playing)">
-				<indexedPairVal highCVname="203.4.8" order="highFirst" min="0" max="22"/>
+			<ivariable label="Default Whistle Set Upper" CVname="203.4.8" CV="203" PI="4" SI="8" default="0" writeOnly="yes" >
+				<ienumVal>
+					<ienumChoice choice="0" />
+				</ienumVal>
+			</ivariable>
+			<ivariable label="Default Whistle Set" CVname="204.4.8" CV="204" PI="4" SI="8" default="0" writeOnly="yes" >
+				<ienumVal>
+					<ienumChoice choice="Whistle Alamo Michigan Plant" />
+					<ienumChoice choice="Whistle PA 3 Chime" />
+					<ienumChoice choice="Whistle Kingsly 4 Chime" />
+					<ienumChoice choice="Whistle 05" />
+					<ienumChoice choice="Whistle Reading 6 Chime" />
+					<ienumChoice choice="Whistle Reading Pacific G2" />
+					<ienumChoice choice="Whistle Reading Single Chime" />
+					<ienumChoice choice="Whistle Wabash" />
+					<ienumChoice choice="Whistle B &amp; O" />
+					<ienumChoice choice="Whistle Pennsy K4" />
+					<ienumChoice choice="Whistle NW Deep Single Chime" />
+					<ienumChoice choice="Whistle WG Lunkenheimer 3 chime" />
+					<ienumChoice choice="Whistle Unknown 1" />
+					<ienumChoice choice="Whistle Unknown 2" />
+					<ienumChoice choice="Whistle Unknown 3" />
+					<ienumChoice choice="Whistle 17" />
+					<ienumChoice choice="Whistle 18" />
+					<ienumChoice choice="Whistle 19" />
+					<ienumChoice choice="Whistle 20" />
+					<ienumChoice choice="Whistle 21" />
+					<ienumChoice choice="Whistle NW single chime short bell" />
+				</ienumVal>
 			</ivariable>
 			<ivariable label="Proto chuff start speed step" CVname="204.4.9" CV="204" PI="4" SI="9" default="10" writeOnly="yes" item="Sound Setting 33" >
 				<indexedPairVal highCVname="203.4.9" order="highFirst" min="0" max="126"/>
@@ -1353,44 +1380,44 @@
 					<ienumChoice choice="Geared" />
 				</ienumVal>
             </ivariable>
--->			<ivariable label="Random Sound 1 enable" CVname="203.4.12" CV="203" PI="4" SI="14" default="1" mask="XXXXXXXV" writeOnly="yes">
+-->			<ivariable label="Random Sound 1 enable" CVname="203.4.12" CV="203" PI="4" SI="12" default="1" mask="XXXXXXXV" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Random Sound 2 enable" CVname="203.4.12" CV="203" PI="4" SI="14" default="1" mask="XXXXXXVX" writeOnly="yes">
+			<ivariable label="Random Sound 2 enable" CVname="203.4.12" CV="203" PI="4" SI="12" default="1" mask="XXXXXXVX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Random Sound 3 enable" CVname="203.4.12" CV="203" PI="4" SI="14" default="1" mask="XXXXXVXX" writeOnly="yes">
+			<ivariable label="Random Sound 3 enable" CVname="203.4.12" CV="203" PI="4" SI="12" default="1" mask="XXXXXVXX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Random Sound 4 enable" CVname="203.4.12" CV="203" PI="4" SI="14" default="1" mask="XXXXVXXX" writeOnly="yes">
+			<ivariable label="Random Sound 4 enable" CVname="203.4.12" CV="203" PI="4" SI="12" default="1" mask="XXXXVXXX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Cam enable" CVname="204.4.12" CV="204" PI="4" SI="14" default="0" mask="XXXXXXXV" writeOnly="yes">
+			<ivariable label="Cam enable" CVname="204.4.12" CV="204" PI="4" SI="12" default="0" mask="XXXXXXXV" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Rod clank enable" CVname="204.4.12" CV="204" PI="4" SI="14" default="1" mask="XXXXXXVX" writeOnly="yes">
+			<ivariable label="Rod clank enable" CVname="204.4.12" CV="204" PI="4" SI="12" default="1" mask="XXXXXXVX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Idling sound enable" CVname="204.4.12" CV="204" PI="4" SI="14" default="1" mask="XXXXXVXX" writeOnly="yes">
+			<ivariable label="Idling sound enable" CVname="204.4.12" CV="204" PI="4" SI="12" default="1" mask="XXXXXVXX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
 <!--		not in first version	
-			<ivariable label="Layout sound enable" CVname="204.4.12" CV="204" PI="4" SI="14" default="0" mask="XXXXVXXX" writeOnly="yes">
+			<ivariable label="Layout sound enable" CVname="204.4.12" CV="204" PI="4" SI="12" default="0" mask="XXXXVXXX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
--->			<ivariable label="Forward whistles enable" CVname="204.4.12" CV="204" PI="4" SI="14" default="1" mask="XXXVXXXX" writeOnly="yes">
+-->			<ivariable label="Forward whistles enable" CVname="204.4.12" CV="204" PI="4" SI="12" default="1" mask="XXXVXXXX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Reverse whistles enable" CVname="204.4.12" CV="204" PI="4" SI="14" default="1" mask="XXVXXXXX" writeOnly="yes">
+			<ivariable label="Reverse whistles enable" CVname="204.4.12" CV="204" PI="4" SI="12" default="1" mask="XXVXXXXX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Stop whistles enable" CVname="204.4.12" CV="204" PI="4" SI="14" default="1" mask="XVXXXXXX" writeOnly="yes">
+			<ivariable label="Stop whistles enable" CVname="204.4.12" CV="204" PI="4" SI="12" default="1" mask="XVXXXXXX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Direction change enable" CVname="204.4.12" CV="204" PI="4" SI="14" default="1" mask="VXXXXXXX" writeOnly="yes">
+			<ivariable label="Direction change enable" CVname="204.4.12" CV="204" PI="4" SI="12" default="1" mask="VXXXXXXX" writeOnly="yes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="Brake grinding noise start speed" CVname="204.4.13" CV="204" PI="13" SI="9" default="15" writeOnly="yes" item="Sound Setting 34" >
+			<ivariable label="Brake grinding noise start speed" CVname="204.4.13" CV="204" PI="4" SI="13" default="15" writeOnly="yes" item="Sound Setting 34" >
 				<indexedPairVal highCVname="203.4.13" order="highFirst" min="0" max="127"/>
 			</ivariable>
 			<ivariable label="Dual function F7" CVname="203.4.14" CV="203" PI="4" SI="14" default="0" mask="XXXXXXXV" writeOnly="yes" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
@@ -1441,7 +1468,7 @@
 			<ivariable label="Dual function F6" CVname="204.4.14" CV="204" PI="4" SI="14" default="0" mask="VXXXXXXX" writeOnly="yes" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
 				<xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
 			</ivariable>
-			<ivariable label="BEMF sensitivity" CVname="204.4.15" CV="204" PI="15" SI="9" default="1" writeOnly="yes" item="Sound Setting 35" tooltip=" divides the BEMF value by n^2, higher the number the lower the chuff volume/change from loads">
+			<ivariable label="BEMF sensitivity" CVname="204.4.15" CV="204" PI="4" SI="15" default="1" writeOnly="yes" item="Sound Setting 35" tooltip=" divides the BEMF value by n^2, higher the number the lower the chuff volume/change from loads">
 				<indexedPairVal highCVname="203.4.15" order="highFirst" min="0" max="8"/>
 			</ivariable>
 			

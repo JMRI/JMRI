@@ -31,7 +31,7 @@ public class ConstantValue extends VariableValue {
         _minVal = minVal;
         _value = new JComboBox();
         for (int i=0; i<=maxVal; i++) {
-            _value.addItem(""+0);
+            _value.addItem(i);
         }
     }
 
@@ -94,7 +94,7 @@ public class ConstantValue extends VariableValue {
             // this only makes sense if there are exactly two options
             JCheckBox b = new JCheckBox();
             b.setEnabled(false);
-            b.setSelected(true);
+            b.setSelected((getIntValue() == 1));
             comboCBs.add(b);
             updateRepresentation(b);
             return b;

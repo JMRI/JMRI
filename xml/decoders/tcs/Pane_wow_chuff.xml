@@ -25,10 +25,6 @@
 		<label label="   "/>
         <row>
 			<column>
-				<display item="Step 0 Chuff Rate" layout="above" label=""/> 
-				<display item="Step 0 Chuff Rate" layout="above" label="0" format="vslider"/>
-			</column>
-			<column>
 				<display item="Step 1 Chuff Rate" layout="above" label=""/> 
 				<display item="Step 1 Chuff Rate" layout="above" label="1" format="vslider"/>
 			</column>

@@ -1,0 +1,198 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file panes for QSi V7 files -->
+<!-- version 2 - Add minor version to top of pane -->
+<!-- version 3 - Add support for V8 -->
+<pane name="Component Volume">
+  <column>
+    <row>
+      <column>
+        <label label="JMRI 2.13.2 or later is required for QSI V9"/>
+        <label label="When programming in Ops-mode, see note on QSI Misc. tab"/>
+        <label label=" "/>
+        <display item="CV56.254.6"/>
+        <label label=" "/>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <row>
+          <display item="CV127.10.0" layout="above" label=""/>
+          <display item="CV127.10.0" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.1" layout="above" label=""/>
+          <display item="CV127.10.1" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.2" layout="above" label=""/>
+          <display item="CV127.10.2" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.10" layout="above" label=""/>
+          <display item="CV127.10.10" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.11" layout="above" label=""/>
+          <display item="CV127.10.11" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.12" layout="above" label=""/>
+          <display item="CV127.10.12" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.20" layout="above" label=""/>
+          <display item="CV127.10.20" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.21" layout="above" label=""/>
+          <display item="CV127.10.21" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.22" layout="above" label=""/>
+          <display item="CV127.10.22" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.30" layout="above" label=""/>
+          <display item="CV127.10.30" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.31" layout="above" label=""/>
+          <display item="CV127.10.31" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.32" layout="above" label=""/>
+          <display item="CV127.10.32" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.60" layout="above" label=""/>
+          <display item="CV127.10.60" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.61" layout="above" label=""/>
+          <display item="CV127.10.61" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.70" layout="above" label=""/>
+          <display item="CV127.10.70" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.10.71" layout="above" label=""/>
+          <display item="CV127.10.71" layout="above" format="hslider"/>
+        </row>
+      </column>
+      <column>
+        <label label="        "/>
+      </column>
+      <column>
+        <row>
+          <display item="CV127.11.0" layout="above" label=""/>
+          <display item="CV127.11.0" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.1" layout="above" label=""/>
+          <display item="CV127.11.1" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.2" layout="above" label=""/>
+          <display item="CV127.11.2" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.10" layout="above" label=""/>
+          <display item="CV127.11.10" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.11" layout="above" label=""/>
+          <display item="CV127.11.11" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.12" layout="above" label=""/>
+          <display item="CV127.11.12" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.20" layout="above" label=""/>
+          <display item="CV127.11.20" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.21" layout="above" label=""/>
+          <display item="CV127.11.21" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.22" layout="above" label=""/>
+          <display item="CV127.11.22" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.30" layout="above" label=""/>
+          <display item="CV127.11.30" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.31" layout="above" label=""/>
+          <display item="CV127.11.31" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.32" layout="above" label=""/>
+          <display item="CV127.11.32" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.60" layout="above" label=""/>
+          <display item="CV127.11.60" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.61" layout="above" label=""/>
+          <display item="CV127.11.61" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.70" layout="above" label=""/>
+          <display item="CV127.11.70" layout="above" format="hslider"/>
+        </row>
+        <label label=" "/>
+        <row>
+          <display item="CV127.11.71" layout="above" label=""/>
+          <display item="CV127.11.71" layout="above" format="hslider"/>
+        </row>
+      </column>
+    </row>
+    <label label=" "/>
+  </column>
+</pane>

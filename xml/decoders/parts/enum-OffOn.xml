@@ -6,13 +6,15 @@
   <enumChoice choice="Off">
     <choice>Off</choice>
     <choice xml:lang="it">Off</choice>
-    <choice xml:lang="fr">De</choice>
+    <choice xml:lang="fr">Eteint</choice>
+	<choice xml:lang="de">Aus</choice>
     <choice xml:lang="es">De</choice>
   </enumChoice>
   <enumChoice choice="On">
     <choice>On</choice>
     <choice xml:lang="it">On</choice>
-    <choice xml:lang="fr">Sur</choice>
+    <choice xml:lang="fr">Allumé</choice>
+	<choice xml:lang="de">An</choice>
     <choice xml:lang="es">En</choice>
   </enumChoice>
 </enumVal>

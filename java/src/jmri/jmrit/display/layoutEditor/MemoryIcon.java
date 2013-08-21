@@ -63,7 +63,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
                 Object val = key;
                 if (val instanceof jmri.jmrit.roster.RosterEntry){
                     jmri.jmrit.roster.RosterEntry roster = (jmri.jmrit.roster.RosterEntry) val;
-                    val = updateMemoryFromRosterVal(roster);
+                    val = updateIconFromRosterVal(roster);
                     flipRosterIcon = false;
                     if(val == null)
                         return;
@@ -155,9 +155,9 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
     }
     
-    protected void addRosterToMemory(RosterEntry roster){
+    protected void addRosterToIcon(RosterEntry roster){
         if(!jmri.InstanceManager.layoutBlockManagerInstance().isAdvancedRoutingEnabled() || lBlock==null){
-            super.addRosterToMemory(roster);
+            super.addRosterToIcon(roster);
             return;
         }
         
@@ -207,10 +207,20 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
         }
         if(getMemory().getValue()==roster){
             //No change in the loco but a change in direction facing might have occured
-             updateMemoryFromRosterVal(roster);
+             updateIconFromRosterVal(roster);
         } else {
             setValue(roster);
         }
+    }
+    
+    protected boolean updateBlockValue = false;
+    
+    public void updateBlockValueOnChange(boolean boo){
+        updateBlockValue = boo;
+    }
+    
+    public boolean updateBlockValueOnChange(){
+        return updateBlockValue;
     }
 
     static Logger log = LoggerFactory.getLogger(MemoryIcon.class.getName());

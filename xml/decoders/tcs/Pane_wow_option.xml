@@ -46,5 +46,12 @@
 				<display item="Direction change enable" format="checkbox" />
 			</column>
 		</row>
+		<row>
+			<column>
+				<label label="   "/>
+				<display item="Default Whistle Set Upper" label=""/>
+				<display item="Default Whistle Set" />
+			</column>
+		</row>
 	</column>
 </pane>
