@@ -886,7 +886,7 @@
 					<value>0</value>
 				</qualifier>
             </variable>
-            <variable label="Yellow Wire Timing" CV="50" mask="XXVVXXXX" item="Output 2 option 1">
+            <variable label="Yellow Wire Timing" CV="50" mask="XXVVXXXX" default="1" item="Output 2 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
@@ -938,7 +938,7 @@
 					<value>0</value>
 				</qualifier>
             </variable>
-            <variable label="Green Wire Timing" CV="51" mask="XXVVXXXX" minOut="3" item="Output 3 option 1">
+            <variable label="Green Wire Timing" CV="51" mask="XXVVXXXX" minOut="3" default="2" item="Output 3 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
@@ -990,7 +990,7 @@
 					<value>0</value>
 				</qualifier>
             </variable>
-            <variable label="Purple Wire Timing" CV="52" mask="XXVVXXXX" minOut="4" item="Output 4 option 1">
+            <variable label="Purple Wire Timing" CV="52" mask="XXVVXXXX" minOut="4" default="2" item="Output 4 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
@@ -1042,7 +1042,7 @@
 					<value>0</value>
 				</qualifier>
             </variable>
-            <variable label="Brown Wire Timing" CV="53" mask="XXVVXXXX" minOut="5" item="Output 5 option 1">
+            <variable label="Brown Wire Timing" CV="53" mask="XXVVXXXX" minOut="5" default="2" item="Output 5 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
@@ -1094,7 +1094,7 @@
 					<value>0</value>
 				</qualifier>
             </variable>
-            <variable label="Pink Wire Timing" CV="54" mask="XXVVXXXX" minOut="6" item="Output 6 option 1">
+            <variable label="Pink Wire Timing" CV="54" mask="XXVVXXXX" minOut="6" default="2" item="Output 6 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
@@ -1146,7 +1146,7 @@
 					<value>0</value>
 				</qualifier>
             </variable>
-            <variable label="Pink/Purple Wire Timing" CV="55" mask="XXVVXXXX" minOut="7" item="Output 7 option 1">
+            <variable label="Pink/Purple Wire Timing" CV="55" mask="XXVVXXXX" minOut="7" default="2" item="Output 7 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
@@ -1204,7 +1204,7 @@
 					<value>0</value>
 				</qualifier>
             </variable>
-            <variable label="Green/Brown Wire Timing" CV="58" mask="XXVVXXXX" minOut="8" item="Output 8 option 1">
+            <variable label="Green/Brown Wire Timing" CV="58" mask="XXVVXXXX" minOut="8" default="2" item="Output 8 option 1">
                 <enumVal>
                     <enumChoice choice="Function on running forward"/>
                     <enumChoice choice="Function on running reverse"/>
