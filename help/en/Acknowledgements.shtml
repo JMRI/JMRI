@@ -260,6 +260,7 @@
 <a name="J"></A>
 	<LI>John Jabour, who created the excellent LocoBuffer and thereby made 
 	reliable LocoNet communications routine
+	<li>Martin Jahner, who fixed the constant checkboxen
 	<LI>Bob Jacobsen, who wrote some of the early code and does packaging and user support
 	<li>Martin Jahner, who built a replacement library for Mac OS X
 	<li>Jay Janzen, who debugged a RobotThrottle problem
@@ -429,6 +430,7 @@
 	<li>John Stewart, who provided a decoder definition for the Lenz Plus 2010 decoder.
 <a name="T"></A>
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
+	<li>Suzie Tall, who provided several international signal definitions
     <li>Clint Taylor added code to allow function buttons to work within the loconet slot manager.
 	<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
         for JMRI to connect to his <a href="http://www.terdina.net/rails/">XnTcp adapter</a>,
