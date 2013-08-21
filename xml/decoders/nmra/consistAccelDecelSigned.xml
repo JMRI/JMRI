@@ -54,11 +54,11 @@
     <enumVal>
       <enumChoice choice="Adjustment Added">
         <choice xml:lang="it">Fattore Aggiunto</choice>
-		<label xml:lang="fr">Ajustement positif</label>
+		<choice xml:lang="fr">Ajustement positif</choice>
       </enumChoice>
       <enumChoice choice="Adjustment Subtracted">
         <choice xml:lang="it">Fattore Sottratto</choice>
-		<label xml:lang="fr">Ajustement négatif</label>
+		<choice xml:lang="fr">Ajustement négatif</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="it">Segno Aggiustamento Accellerazione Consist</label>
@@ -73,11 +73,11 @@
     <enumVal>
       <enumChoice choice="Adjustment Added">
         <choice xml:lang="it">Fattore Aggiunto</choice>
-		<label xml:lang="fr">Ajustement positif</label>
+		<choice xml:lang="fr">Ajustement positif</choice>
       </enumChoice>
       <enumChoice choice="Adjustment Subtracted">
         <choice xml:lang="it">Fattore Aggiunto</choice>
-		<label xml:lang="fr">Ajustement négatif</label>
+		<choice xml:lang="fr">Ajustement négatif</choice>
       </enumChoice>
     </enumVal>
     <label xml:lang="fr">Signe de l'ajustement de décélération</label>
