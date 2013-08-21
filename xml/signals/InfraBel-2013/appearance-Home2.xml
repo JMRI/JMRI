@@ -21,6 +21,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2013-07-14</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added large icons</revremark>
+    </revision>
   </revhistory>
   <aspecttable>InfraBel-2013</aspecttable>
   <name>2-lamp Home signal</name>
@@ -30,17 +36,20 @@
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home2-R.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Home2-R.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home2-R.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Clear</aspectname>
       <show>green</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home2-G.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Home2-G.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home2-G.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home2-D.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Home2-D.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Home2-D.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>

@@ -21,6 +21,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2013-07-14</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added large icons</revremark>
+    </revision>
   </revhistory>
   <aspecttable>InfraBel-2013</aspecttable>
   <name>Distant signal for reverse running</name>
@@ -32,35 +38,40 @@
       <show>green</show>
       <show>dark</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-FG.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/BlockR-FG.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-FG.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Approach</aspectname>
       <show>dark</show>
       <show>flashyellow</show>
       <show>flashyellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-FYY.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/BlockR-FYY.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-FYY.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>flashgreen</show>
       <show>flashyellow</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-FGY.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/BlockR-FGY.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-FGY.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Slow Approach</aspectname>
       <show>flashgreen</show>
       <show>dark</show>
       <show>flashyellow</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-FYG.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/BlockR-FYG.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-FYG.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
       <show>dark</show>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-D.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/BlockR-D.gif</imagelink>
+      <imagelink type="aspects">../../../resources/icons/smallschematics/aspects/InfraBel-2013/BlockR-D.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>

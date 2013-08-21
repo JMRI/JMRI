@@ -21,6 +21,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+      <revnumber>1.01</revnumber>
+      <date>2013-07-14</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Added large icons</revremark>
+    </revision>
   </revhistory>
   <aspecttable>InfraBel-2013</aspecttable>
   <name>Dwarf signal</name>
@@ -30,17 +36,20 @@
     <appearance>
       <aspectname>Stop</aspectname>
       <show>red</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-H.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Dwarf-H.gif</imagelink>
+      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-H.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>lunar</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-I.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Dwarf-I.gif</imagelink>
+      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-I.gif</imagelink>
     </appearance>
     <appearance>
       <aspectname>Not Lit</aspectname>
       <show>dark</show>
-      <imagelink>../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-D.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/largeschematics/aspects/InfraBel-2013/Dwarf-D.gif</imagelink>
+      <imagelink type="aspect">../../../resources/icons/smallschematics/aspects/InfraBel-2013/Dwarf-D.gif</imagelink>
     </appearance>
   </appearances>
   <specificappearances>

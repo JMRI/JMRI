@@ -86,6 +86,10 @@
       <dccAspect>8</dccAspect>
     </aspect>
   </aspects>
+  <imagetypes>
+    <imagetype type="large" />
+    <imagetype type="aspects" />
+  </imagetypes>
   <appearancefiles>
     <appearancefile href="appearance-Block.xml" />
     <appearancefile href="appearance-Distant.xml" />
