@@ -4,11 +4,13 @@
 <!-- $Id: enum-enabledDisabled.xml 22113 2012-12-30 02:14:11Z jacobsen $ -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="Enabled">
-    <choice xml:lang="fr">Enabled(fr)</choice>
+    <choice xml:lang="fr">Activé</choice>
     <choice xml:lang="it">Abilitato</choice>
+	<choice xml:lang="de">Aktiviert</choice>
   </enumChoice>
   <enumChoice choice="Disabled">
-    <choice xml:lang="fr">Disabled(fr)</choice>
+    <choice xml:lang="fr">Désactivé</choice>
     <choice xml:lang="it">Disabilitato</choice>
+	<choice xml:lang="de">Deaktiviert</choice>
   </enumChoice>
 </enumVal>

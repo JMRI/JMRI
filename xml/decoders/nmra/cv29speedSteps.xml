@@ -27,6 +27,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>2</revnumber>
+      <date>2013-07-25</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Added French and German translations</revremark>
+    </revision>
+	<revision>
       <revnumber>1</revnumber>
       <date>2013-01-22</date>
       <authorinitials>MM</authorinitials>
@@ -43,5 +49,7 @@
       </enumChoice>
     </enumVal>
     <label>Speed Steps</label>
+	<label xml:lang="fr">Pas de vitesse</label>
+	<label xml:lang="de">Fahrstufen</label>
   </variable>
 </variables>
