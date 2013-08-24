@@ -18,7 +18,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro® v3.4 User's Guide</h1>
-<h1>&nbsp;(revision in work 8/22/2013)</h1>
+<h1>&nbsp;(revision in work 8/24/2013)</h1>
 
 <p>&nbsp;</p>
 <p><strong>JMRI® is a Java-based cross-platform application for model railroaders. JMRI® contains applications for:</strong></p>
@@ -395,7 +395,7 @@ The Basic Programmer</h4>
 <hr>
 <p>The <a target="_blank" href="http://jmri.org/download/index.shtml">JMRI download page</a>
 is hosted by <a href="http://sourceforge.net">
-<img src="images/sflogo.png" alt="SourceForge Logo" align="middle" border="0" height="31" hspace="10" width="88"><a href="http://sourceforge.net/" target="_blank">sourceforge.net</a></a><a href="http://sourceforge.net/" target="_blank">.</a></p>
+<img src="images/sflogo.png" alt="SourceForge Logo" align="middle" border="0" height="31" hspace="10" width="88"></a><a href="http://sourceforge.net/" target="_blank">sourceforge.net</a><a href="http://sourceforge.net/" target="_blank">.</a></p>
 <p>
 To give feedback on this HTML manual, ask questions about things not
 covered, or make suggestions for improvements to the manual or the software,

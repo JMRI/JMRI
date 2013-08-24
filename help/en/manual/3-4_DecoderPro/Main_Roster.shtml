@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009 -->
-<!-- $Id: Main_Roster.shtml 18150 2011-08-10 13:07:19Z dat7719 $ -->
-<title>Roster Menu</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_Roster.shtml 18150 2011-08-10 13:07:19Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>Roster Menu</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -20,128 +17,157 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>DecoderPro&reg; Main Window</h1>
+<a name="Top"></a>
+<h1>DecoderPro® Main Window</h1>
 <h1>Roster Menu </h1>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Tool.shtml"> Previous | </a><a href="Main_Panels.shtml">Next </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
-<p><strong><a name="roster"></a><a href="dp3Roster.shtml">Roster</a></strong></p>
+<p><big><big><big><strong>Roster</strong></big></big></big></p>
 <blockquote>
-  <p>Opens <strong>DecoderPro3</strong> Roster Window. </p>
-</blockquote>
-<hr>
-<p><strong><a name="Create"></a><a href="#CreateRoster">Create Entry...</a></strong></p>
+  <p>Opens in DecoderPro3® Window. (See <a style="font-weight: bold;" href="../index.shtml" target="_blank">DecoderPro3® Manual.</a>)</p>
+<p><img src="images/Main_DP3Roster.png" alt="DP3 Roster" height="527" width="899"></p><p></p><p><img src="images/separator.png" alt="sep" height="4" width="340"></p></blockquote><p><span style="font-weight: bold;">Create Entry...</span></p><strong></strong>
 <blockquote>
-  <p>Opens <strong>New Roster Entry Setup</strong> Pane.</p>
+  <h4>New Roster Setup Pane</h4>
+<p align="center"><img src="images/Main_RosterMenu01.png" alt="Create Roster" border="4" height="483" width="391"></p>
+<p>Select a decoder that matches the one installed in your locomotive.
+The Open Programmer button will now become activated and you&#8217;ll be able
+to move on with the Programmer selected from the drop-down list, then
+&nbsp;click on the <strong>Open Programmer</strong> button, the selected Programmer window will open. All programmers,  Basic and Comprehensive, open to the <a href="Comp_Setup_Roster.shtml">Roster Entry pane</a>.</p>
+
 </blockquote>
-<p><strong><a name="Edit"></a><a href="#EditRoster">Edit Entry...</a></strong></p>
+<p><strong>Edit Entry...</strong></p>
 <blockquote>
-  <p>Opens <strong>Edit Roster Entry Setup</strong> Pane.</p>
+  <h4>Edit Roster Entry Setup Pane</h4>
+<p align="center"><img src="images/Main_RosterMenu02.png" alt="Edit Roster setup" border="4" height="162" width="275"></p>
+<p align="left">Select the roster entry from the drop-down list that
+you wish to edit. Select the Programmer format that you wish to use
+from the drop-down list. Click on the Open Programmer button and <a href="Comp_Setup_Roster.shtml">Roster Entry Pane</a> of selected programmer will open.</p>
+
 </blockquote>
-<p><strong><a name="copy"></a>Copy Entry...</strong></p>
+<p><strong>Copy Entry...</strong></p>
 <blockquote>
-  <p>Opens the <a href="#SelectDialog">Select	roster entry</a> dialog box. After you select the roster,the <a href="#InputDialog">Input prompt</a> will be displayed. Useful when you have two locomotives with the same decoder program but different addresses.</p>
+  <h4 align="left">Select	roster entry dialog box.</h4>
+<p align="center"><img src="images/Main_RosterMenu05.png" alt="Deleter Roster" border="4" height="119" width="305"><img src="images/Main_RosterMenu03.png" alt="select roster entry" border="4" height="123" width="309"></p>
+<p align="left">From the drop-down list select the roster that you wish to process, then click on the <strong>OK</strong> button. Click <strong>Cancel</strong> button if you wish to abort this function.</p>
+
 </blockquote>
-<p><strong><a name="Import"></a>Import Entry...</strong></p>
+<p><strong>Import Entry...</strong></p>
 <blockquote>
-  <p>The <strong>Open</strong> dialog is displayed, select the roster file (roster.xml) that you wish to import. The<a href="#InputDialog"> Input prompt </a>will be displayed. The roster file will be imported, update your roster index in the <strong>Debug </strong>menu.</p>
-</blockquote>
-<p><strong><a name="Export"></a>Export Entry...</strong></p>
+  <h4 align="left">Input prompt</h4>
+<p align="center"><img src="images/Main_RosterMenu04.png" alt="input dialog" border="4" height="127" width="299"></p>
+<p align="left">Type the name of the new roster you wish to process then click on the <strong>OK</strong> button. Click <strong>Cancel</strong> button if you wish to abort this function.</p></blockquote>
+<p><strong>Export Entry...</strong></p>
 <blockquote>
   <p>Opens the <a href="#SelectDialog">Select roster entry</a> dialog box. Next the <strong>Save</strong> dialog will be displayed, select the location where you would like to save the roster file.</p>
 </blockquote>
-<p><strong><a name="Delete"></a>Delete Entry...</strong></p>
+<p><strong>Delete Entry...</strong></p>
 <blockquote>
-  <p>Opens <a href="#DeleteRoster">Delete roster entry</a> prompt box. Used to remove an entry from the DecoderPro roster.</p>
-</blockquote>
-<p><strong><a name="Print"></a><a href="#PrintOutput">Print Summary...</a></strong></p>
+  <p align="left">Select the roster from the drop-down list that you wish to delete from DecoderPro. Click <strong>OK</strong> and the Confirmation box <strong>Delete entry <em>file Name</em>? </strong>is displayed.. Click <strong>Cancel</strong> button if you wish to abort this function.</p>
+<p align="center"><img src="images/Main_RosterMenu06.png" alt="confirm delete" border="4" height="122" width="432"></p>
+<p align="left"><strong>Yes </strong>button deletes file, <strong>No</strong> button aborts the operation.</p></blockquote>
+<p><strong>Print Summary...</strong></p>
 <blockquote>
-  <p>Opens your operating systems printer dialog and when print is selected, prints a complete summary of your roster entries. (typically 5 entries per page, so be prepared to print several pages).</p>
-</blockquote>
-<p><a href="#PrintOutput"><strong>Print Preview Summary...</strong></a></p>
-<blockquote>
-  <p>Open print preview window and displays your roster but nothing will be sent to the printer. </p>
-</blockquote>
-<hr>
-<p><strong><a href="Main_RosterGroup.shtml">Roster Groups</a></strong><img src="images/arrow.gif" width="20" height="9" alt="arrow"></p>
-<p>Roster Grouping allows you to allocate Roster Entries into different groups.  
+  <p>Opens your operating systems printer dialog and when
+print is selected, prints a complete summary of your roster entries.
+(typically 5 entries per page, so be prepared to print several pages).
+&nbsp;Printing to pdf file can save a lot of paper.</p><p style="text-align: center;"><img style="width: 722px; height: 649px;" alt="summary" src="images/Main_RosterMenu07.png"><br></p></blockquote><p><strong>Print Preview Summary...</strong></p>
+
+<blockquote><div style="text-align: center;">
+  </div><p style="text-align: center;">Preview Roster Summary<img style="width: 669px; height: 605px;" alt="Summary Preview" src="images/Main_RosterMenu07a.png"> </p>
+</blockquote><br><p style="margin-left: 40px;"><img src="images/separator.png" alt="sep" height="4" width="340"></p><strong><a href="Main_RosterGroup.shtml">Roster Groups</a></strong><img src="images/arrow.gif" alt="arrow" height="9" width="20">
+<p style="margin-left: 40px;">Roster Grouping allows you to allocate Roster Entries into different groups.  
   If for example you run multiple layouts with different locomotives, 
   you can allocate those locomotives to the relative group, 
   thus when you select a roster group to work with, 
   the drop down lists in the throttle or edit roster entries 
 will only contain locomotives that are in that specific list.</p>
-  <p>When working with a Roster Group, some of the functions above change slightly.
+  <p style="margin-left: 40px;">When working with a Roster Group, some of the functions above change slightly.
 
-<ul>
+</p><ul>
   <ul>
     <li><strong>Create Roster Group</strong></li>
-    <li><strong>Set Active Roster Group</strong></li>
+    
     <li><strong>Delete Roster Group</strong></li>
     <li><strong>Table Association</strong></li>
     <li><strong>Add Roster Entry to Group</strong></li>
     <li><strong>Remove Roster Entry from Group</strong></li>
   </ul>
-</ul>
+</ul><div style="margin-left: 40px;"><img src="images/separator.png" alt="sep" height="4" width="340"></div>
 <p><strong>Export Complete Roster...</strong></p>
-<p>Opens the Save dialog box to allow you to select directory and name the file.</p>
-<p><a name="OpenDP3Roster"></a><strong>DecoderPro3&reg; Roster Window</strong></p>
-<p>Opens in DecoderPro3&reg; Window. (See DecoderPro3&reg; Manual.)</p>
-<p><img src="images/Main_DP3Roster.png" width="899" height="527" alt="DP3 Roster"></p>
-<blockquote>
-  <div>
-    <div align="right"><a href="#Top">Top</a></div>
-  </div>
-  <p>&nbsp;</p>
-</blockquote>
-<h4><a name="CreateRoster"></a>New Roster Setup Pane</h4>
-<p align="center"><img src="images/Main_RosterMenu01.png" alt="Create Roster" width="391" height="483" border="4"></p>
-<p>Select a decoder that matches the one installed in your locomotive. The Open Programmer button will now become activated and you&rsquo;ll be  able to move on with the Programmer selected from the drop-down list, then &nbsp;click on the <strong>Open Programmer</strong> button, the selected Programmer window will open. All programmers,  Basic and Comprehensive, open to the <a href="Comp_Setup_Roster.shtml">Roster Entry pane</a>.</p>
-<div>
-  <div align="right"><a href="#Create">Back</a></div>
-</div>
-<h4><a name="EditRoster"></a> Edit Roster Entry Setup Pane</h4>
-<p align="center"><img src="images/Main_RosterMenu02.png" alt="Edit Roster setup" width="275" height="162" border="4"></p>
-<p align="left">Select the roster entry from the drop-down list that you wish to edit. Select the Programmer format that you wish to use from the drop-down list. Click on the Open Programmer button and <a href="Comp_Setup_Roster.shtml">Roster Entry Pane</a> of selected programmer will open.</p>
-<div>
-  <div align="right"><a href="#Edit">Back</a></div>
-</div>
-<h4 align="left"><a name="SelectDialog" id="SelectDialog"></a>Select	roster entry dialog box.</h4>
-<p align="center"><img src="images/Main_RosterMenu05.png" alt="Deleter Roster" width="305" height="119" border="4"><img src="images/Main_RosterMenu03.png" alt="select roster entry" width="309" height="123" border="4"></p>
-<p align="left">From the drop-down list select the roster that you wish to process, then click on the <strong>OK</strong> button. Click <strong>Cancel</strong> button if you wish to abort this function.</p>
-<div>
-  <div align="right"><a href="#copy">Back</a></div>
-</div>
-<p align="left">&nbsp;</p>
-<h4 align="left"><a name="InputDialog"></a>Input prompt</h4>
-<p align="center"><img src="images/Main_RosterMenu04.png" alt="input dialog" width="299" height="127" border="4"></p>
-<p align="left">Type the name of the new roster you wish to process then click on the <strong>OK</strong> button. Click <strong>Cancel</strong> button if you wish to abort this function.</p>
-<div>
-  <div align="right"><a href="#copy">Back</a></div>
-</div>
-<h4 align="left"><a name="DeleteRoster"></a>Delete roster entry prompt</h4>
-<p align="center">&nbsp;</p>
-<p align="left">Select the roster from the drop-down list that you wish to delete from DecoderPro. Click <strong>OK</strong> and the Confirmation box <strong>Delete entry <em>fileName</em>? </strong>is displayed.. Click <strong>Cancel</strong> button if you wish to abort this function.</p>
-<p align="center"><img src="images/Main_RosterMenu06.png" alt="confirm delete" width="432" height="122" border="4"></p>
-<p align="left"><strong>Yes </strong>button deletes file, <strong>No</strong> button aborts the operation.</p>
-<div>
-  <div align="right"><a href="#Delete">Back</a></div>
-</div>
-<h4 align="left"><a name="PrintOutput"></a>Print and Print Preview</h4>
-<p align="left">Both generate a printout that looks like this.&nbsp; The difference is that preview is only on  your screen, whereas print summary prints it onto paper. (HINT: Print to pdf file and review. Then you can print anytime or print selected pages.)</p>
-<p align="center"><img src="images/Main_RosterMenu07.png" alt="pritned page" width="610" height="674" border="4"></p>
-<div>
-  <div align="right"><a href="#Print">Back</a></div>
-</div>
-<hr>
+<p>Opens the Save dialog box to allow you to select directory and name the file.</p><p><span style="font-weight: bold;">Speed Profiling</span></p><p>
+          The tool is designed to create a profile of a loco at various speed 
+          steps to help with the automatic running of a loco within JMRI. 
+          Primarily to help with the principle of getting a loco to stop 
+          within a specific distance from a known throttle setting.
+        </p>
+        <p>
+          The tool works on the principle of timing a loco over a known 
+          distance at a given speed step, in both the forward and reverse 
+          direction. Currently it requires three sensors which monitor the 
+          occupancy of a section of track. Ideally the section of track that 
+          the timed runs are performed over should be straight, and a minimum 
+          of 1 m&nbsp; long, the longer the length the better the result. For this 
+          profiling to work correctly acceleration / deacceleration should be 
+          disabled on the loco decoder.
+        </p><table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2"><tbody><tr><td><img style="width: 408px; height: 465px;" alt="speed profile" src="images/Main_Roster_SpeedProfile.png"></td><td style="vertical-align: top;"><ul><li>
+            <b>Block Length</b> - This is the length &nbsp;Millimeters of the 
+            middle section which the timed run will be measured.
+          </li><li>
+            <b>Start Sensor</b> - This is the initial section of track that 
+            the loco will start its initial run from.
+          </li><li>
+            <b>Block Sensor</b> - This is the sensor related to the section of 
+            track that the timed run will be taken over
+          </li><li>
+            <b>Finish Sensor</b> - This sensor related to the section track 
+            immediately after the timed section.
+          </li><li>
+            <b>Roster Entry</b> - Select the loco that the profiling is to be 
+            performed on.
+          </li><li>
+            <b>Cancel</b> - Cancels the profiling or test run
+          </li><li>
+            <b>Profile</b> - Starts the profiling</li></ul></td></tr></tbody></table><blockquote><div class="nomenu" id="mBody"><div id="mainContent"><p>
+          To profile the loco, fill the above details into the window, place 
+          the loco in the starting section facing forwards towards (but not 
+          on) the section of track that the timed run will be taken over, then 
+          press profile.
+        </p>
+        <p>
+          What happens is that the tool will set the loco off running in the 
+          forward direction at speed step 1, when it activates the timed 
+          section sensor it starts a timer. Once the finish section sensor is 
+          activated the timer is stopped, and the speed is calculated in 
+          Millimeters per Second, this is then recorded against the roster. 
+          The tool will then ensure that the loco is clear of the timed 
+          section sensor, then repeat the procedure again but in the reverse 
+          direction. Once the loco is back at the initial start section, the 
+          whole procedure is repeated again for the next speed step, this 
+          occurs until a profile of all speed steps has been completed.
+        </p>
+        <h3>
+          Testing
+        </h3>
+        <p>
+          Having completed the profiling, it is possible to test the profile 
+          out. Place the loco in the starting section again facing forward 
+          toward the timed section, ideally some distance away from it. Enter 
+          in a starting speed step number in the box next to the Test Button, 
+          then press test. What will occur is that the tool will set the loco 
+          off running at the given speed step, then it will attempt to 
+          gradually stop the loco before it reaches the far end. Results will 
+          vary especially at the higher speed steps, where you will more 
+          likely experience an over run.&nbsp;</p>
+      </div>
+    </div></blockquote><hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Panels.shtml"></a><a href="Main_Tool.shtml">Previous | </a><a href="Main_Panels.shtml">Next </a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div></body></html>
