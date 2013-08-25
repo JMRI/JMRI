@@ -154,7 +154,7 @@ will delete all the connection settings. </p>
 <table align="center" border="1" cellpadding="2" cellspacing="1" width="50%">
   <tbody>
     <tr>
-      <td align="left" valign="top" width="26%"><strong>User File Locations</strong></td>
+      <td align="left" valign="top" width="26%"><strong>User Files Location</strong></td>
       <td align="left" width="74%">Select the location for your user files on your system</td>
     </tr>
     <tr>
