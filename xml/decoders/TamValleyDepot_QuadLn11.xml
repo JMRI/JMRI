@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" >
 	<!-- showEmptyPanes="no" -->
-	<version author="robin@n3ix.com" version="1.10" lastUpdated="20130807"/>
+	<version author="robin@n3ix.com" version="1.10.1" lastUpdated="20130820"/>
 	<decoder>
 		<family name="Quad-LN gen2" mfg="Tam Valley Depot" type="stationary" comment="The Quad-LN is programmed in OPs mode except for the address.">
 			<model model="Quad-LNv1" comment="4 Servo Driver" lowVersionID="5"/>
@@ -225,6 +225,17 @@
 					</enumChoice>
 				</enumVal>
 				<label>Send Output Off</label>
+			</variable>
+			<variable label="No CS" CV="22" mask="XXXXXVXX" default="0">
+				<enumVal>
+					<enumChoice choice="Disable">
+						<choice>Disable</choice>
+					</enumChoice>
+					<enumChoice choice="Enable">
+						<choice>Enable</choice>
+					</enumChoice>
+				</enumVal>
+				<label>No CS</label>
 			</variable>
 
 			<variable label="Servo1 Closed" CV="33" item="Servo1 Closed" default="1260">
@@ -3976,6 +3987,9 @@
 					</display>
 					<display item="Servo Drive" label="Servo Drive" tooltip="Disable servo drive when stopped">
 						<label>Servo Drive</label>
+					</display>
+					<display item="No CS" label="No Command Station" tooltip="Enable when no command station is present">
+						<label>No Command Station</label>
 					</display>
 					<label label=" "/>	
 					<label label=" "/>	
