@@ -64,7 +64,7 @@ file, only need to be set up once, and can be reused. Active Trains, on the othe
 hand are dynamic and transient.  Active Trains are not saved to disk, and must be 
 set up each time they are used.</p>
 <p>Transits are <i>activated</i> in the 
-<a href="../dispatcher/DispatcherFrame.shtml">Dispatcher</a> window, where a Transit is 
+<a href="../dispatcher/Dispatcher.shtml">Dispatcher</a> window, where a Transit is 
 linked to a train to create an Active Train. When an Active Train is created, a 
 Transit is selected, a Train is selected, and a starting Block (train location 
 at start) and ending Block (train location when travel is complete) are specified, along 
