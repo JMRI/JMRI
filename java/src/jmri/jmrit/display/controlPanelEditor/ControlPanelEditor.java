@@ -489,7 +489,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         DataFlavor[] flavors = clipboard.getAvailableDataFlavors();
         for (int k=0; k<flavors.length; k++) {
             if (_positionableListDataFlavor.equals(flavors[k])) {
-                Point pt = _targetPanel.getMousePosition(true);
                 try{
                     List<Positionable> clipGroup = (List<Positionable>)clipboard.getData(_positionableListDataFlavor);
                     if (clipGroup!=null && clipGroup.size()>0) {
@@ -510,7 +509,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                             pos = clipGroup.get(i);
                             // make positionable belong to this editor
                             pos.setEditor(this);
-                            pos.setLocation(pos.getLocation().x+pt.x-minX, pos.getLocation().y+pt.y-minY);
+                            pos.setLocation(pos.getLocation().x+_anchorX-minX, pos.getLocation().y+_anchorY-minY);
                             // now set display level in the pane.
                             pos.setDisplayLevel(pos.getDisplayLevel());
                             putItem(pos);
@@ -1164,7 +1163,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     	_shapeDrawer.paint(g);
         if (_secondSelectionGroup!=null){
         	Graphics2D g2d = (Graphics2D)g;
-            g2d.setColor(new Color(100, 200, 255));
+            g2d.setColor(new Color(150, 150, 255));
             g2d.setStroke(new java.awt.BasicStroke(2.0f));
             if (_secondSelectionGroup!=null){
                 for(int i=0; i<_secondSelectionGroup.size();i++){

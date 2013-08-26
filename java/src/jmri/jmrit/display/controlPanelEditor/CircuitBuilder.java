@@ -92,7 +92,7 @@ public class CircuitBuilder  {
     protected ControlPanelEditor _editor;
 
 //    public final static ResourceBundle rbcp = ControlPanelEditor.rbcp;
-    public final static Color _editGroupColor = new Color(100, 100, 255);
+    public final static Color _editGroupColor = new Color(100, 200, 255);
     public final static Color _pathColor = Color.green;
     public final static Color _highlightColor = new Color(255, 100, 200);
     
@@ -416,7 +416,6 @@ public class CircuitBuilder  {
                 // checkCircuits();
                 // check icons to be indicator type
                 _circuitIcons = _circuitMap.get(_currentBlock);
-                List<Positionable> adjacentIcons = _circuitMap.get(adjacentBlock);
                 if (iconsConverted(_currentBlock)&& iconsConverted(adjacentBlock)) {
                 	_editor.setSelectionGroup(makeSelectionGroup(_currentBlock, false));
                 	_editor.setSecondSelectionGroup(makeSelectionGroup(adjacentBlock, false));

@@ -604,7 +604,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 abortWarrant(msg);
                 return msg;
         }
-        _delayStart = false;	// script should start - no more delay
         log.debug("Throttle at "+address.toString()+" acquired for warrant "+getDisplayName());        	
     	return null;
     }
@@ -690,6 +689,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             startupWarrant();
             new Thread(_engineer).start();
+            if (_delayStart) {
+            	controlRunTrain(HALT);
+            }
+            _delayStart = false;	// script should start when user resumes - no more delay
         }
     }
     

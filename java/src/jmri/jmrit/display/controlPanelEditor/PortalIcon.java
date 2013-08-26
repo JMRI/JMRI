@@ -77,7 +77,7 @@ public class PortalIcon extends jmri.jmrit.display.PositionableIcon implements j
     */
     public void setIcon(String name, NamedIcon icon) {
         if (log.isDebugEnabled()) log.debug("\""+getName()+"\" put icon key= \""+name+"\" icon= "+icon);
-        _iconMap.put(name, icon);
+        _iconMap.put(name, cloneIcon(icon, this));
     }    
 
     public Portal getPortal() {

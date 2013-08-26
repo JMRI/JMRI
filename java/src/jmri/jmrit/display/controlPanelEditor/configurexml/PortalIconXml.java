@@ -42,7 +42,7 @@ public class PortalIconXml extends PositionableLabelXml {
 
         // include contents
         Portal portal = p.getPortal();
-        if (p==null) {
+        if (portal==null) {
             log.info("PortalIcon has no associated Portal.");
             return null;
         }
