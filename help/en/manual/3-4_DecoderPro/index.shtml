@@ -18,7 +18,7 @@
 
 <a name="Top"></a>
 <h1>DecoderPro® v3.4 User's Guide</h1>
-<h1>&nbsp;(revision in work 8/24/2013)</h1>
+<h1>&nbsp;(revision in work 8/26/2013)</h1>
 
 <p>&nbsp;</p>
 <p><strong>JMRI® is a Java-based cross-platform application for model railroaders. JMRI® contains applications for:</strong></p>
@@ -313,11 +313,11 @@ The Basic Programmer</h4>
   </li>
   <li><a href="Main_Debug.shtml">Debug Menu</a>
     <ul>
-      <li><a href="Main_Debug.shtml#memoryMonitor">Memory Usage Monitor</a></li>
+      <li>Memory Usage Monitor</li>
       <li>Import Decoder File</li>
       <li>Import Decoder URL</li>
       <li>Recreate Decoder Index</li>
-      <li>Recreate Roster Index</li>
+      <li>Recreate Roster Index</li><li>Update Decoder Definitions</li>
       <li>Check XML File</li>
       <li>Validate XML File</li>
       <li>Check Decoder Names</li>
@@ -329,11 +329,8 @@ The Basic Programmer</h4>
       <li><a href="Main_VSD.shtml">Virtual Sound Decoder</a><img src="images/arrow.gif" alt="arrow" height="9" width="20">
       <ul>
 	<li><a href="VSD_Manager.shtml">VSDecoder Manager</a></li>
-	<li><a href="VSD_LocationsMgr.shtml">Manage VSD Locations</a></li>
-      </ul></li>
-      <li>Listed Table Access</li>
-      <li>Listed Table Access-Direct to Routes</li>
-      <li>PRICOM <img src="images/arrow.gif" alt="arrow" height="9" width="20">
+	<li><a href="VSD_LocationsMgr.shtml">Manage VSD Locations</a></li><li>VSDecoder Preferences</li>
+      </ul></li><li>PRICOM <img src="images/arrow.gif" alt="arrow" height="9" width="20">
             <ul>
               <li><a href="Main_PRICOM.shtml">PRICOM Pocket Tester</a><img src="images/arrow.gif" alt="arrow" height="9" width="20">
                 <ul>
