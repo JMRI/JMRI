@@ -139,7 +139,11 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		cr.addName("UP");
 		
 		LocationManager lManager = LocationManager.instance();
+		Location l3 = lManager.newLocation("Test Loc C");
+		l3.setLength(1003);
+
 		Location l = lManager.getLocationByName("Test Loc C");
+		Assert.assertNotNull("Test Loc C", l);
 		InterchangeEditFrame f = new InterchangeEditFrame();
 		f.setTitle("Test Interchange Add Frame");
 		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -288,7 +292,10 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	 */
 	public void testStagingEditFrame(){		
 		LocationManager lManager = LocationManager.instance();
+		Location l5 = lManager.newLocation("Test Loc A");
+		l5.setLength(1005);
 		Location l = lManager.getLocationByName("Test Loc A");
+		Assert.assertNotNull("Test Loc A", l);
 		StagingEditFrame f = new StagingEditFrame();
 		f.setTitle("Test Staging Add Frame");
 		f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -354,6 +361,26 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("only east", Track.EAST, t.getTrainDirections());	
 		
 		f.dispose();
+		
+		Location l2 = lManager.getLocationByName("Test Loc A");
+		Assert.assertNotNull("Test Loc A",l2);
+		
+		LocationEditFrame fl = new LocationEditFrame();
+		fl.setTitle("Test Edit Location Frame Staging");
+		fl.initComponents(l2);
+		
+		// check location name
+		Assert.assertEquals("name", "Test Loc A", fl.locationNameTextField.getText());
+		
+		Assert.assertEquals("number of sidings", 0, fl.spurModel.getRowCount());
+		Assert.assertEquals("number of interchanges", 0, fl.interchangeModel.getRowCount());
+		Assert.assertEquals("number of yards", 0, fl.yardModel.getRowCount());
+		Assert.assertEquals("number of staging tracks", 4, fl.stagingModel.getRowCount());
+		
+		// is the staging only button selected?
+		Assert.assertTrue("staging selected", fl.stageRadioButton.isSelected());
+		
+		fl.dispose();
 	}
 	
 	public void testYardEditFrame(){
@@ -430,7 +457,10 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	 */
 	public void testLocationEditFrameRead(){
 		LocationManager lManager = LocationManager.instance();
-		Location l2 = lManager.getLocationByName("Test Loc C");
+		Location l = lManager.newLocation("Test Loc C");
+		l.setLength(1003);
+		Location l2 = lManager.getLocationByName("Test Loc C");		
+		Assert.assertNotNull("Location Test Loc C", l2);
 		
 		LocationEditFrame f = new LocationEditFrame();
 		f.setTitle("Test Edit Location Frame");
@@ -449,7 +479,10 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testLocationEditFrameReadStaging(){
 		LocationManager lManager = LocationManager.instance();
+		Location l = lManager.newLocation("Test Loc A");
+		l.setLength(1003);
 		Location l2 = lManager.getLocationByName("Test Loc A");
+		Assert.assertNotNull("Test Loc A",l2);
 		
 		LocationEditFrame f = new LocationEditFrame();
 		f.setTitle("Test Edit Location Frame Staging");
@@ -472,6 +505,9 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 
 	public void testScheduleEditFrame(){
 		LocationManager lManager = LocationManager.instance();
+		Location l2 = lManager.newLocation("Test Loc C");
+		l2.setLength(1003);
+
 		Location l = lManager.getLocationByName("Test Loc C");
 		Assert.assertNotNull("Location exists", l);
 		Track t = l.getTrackByName("3rd siding track", null);

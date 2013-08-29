@@ -480,6 +480,13 @@ public class OperationsTrainsTest extends TestCase {
 		RouteManager rmanager = RouteManager.instance();
 		LocationManager lmanager = LocationManager.instance();
 		EngineManager emanager = EngineManager.instance();
+		
+		// disable build messages
+		tmanager.setBuildMessagesEnabled(false);
+		// disable build reports
+		tmanager.setBuildReportEnabled(false);
+		// This test uses the maximum length of a train in route
+		Setup.setTrainLength(1000);
 
 		Train train = tmanager.newTrain("AutoEngineTest");
 		train.setNumberEngines(Train.AUTO);

@@ -868,6 +868,7 @@ public class TrainBuilder extends TrainCommon {
 				double grade = rl.getGrade();
 				carDivisor = carDivisor / grade;
 			}
+			log.debug("Maximum train length "+rl.getMaxTrainLength()+" for location "+rl.getName());
 			if (rl.getMaxTrainLength() / (carDivisor * 40) > numberEngines) {
 				numberEngines = rl.getMaxTrainLength() / (carDivisor * (40 + Car.COUPLER));
 				// round up to next whole integer
