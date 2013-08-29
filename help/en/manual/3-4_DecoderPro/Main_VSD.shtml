@@ -1,20 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009 -->
-<!-- $Id: Main_VSD.shtml 18193 2011-08-16 23:19:17Z dat7719 $ -->
-<TITLE>
-DecoderPro&reg; Main Window
-</TITLE>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Main_VSD.shtml 18193 2011-08-16 23:19:17Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>DecoderPro® Main Window</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -22,10 +17,10 @@ DecoderPro&reg; Main Window
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>DecoderPro&reg; Debug Menu</h1>
+<h1>DecoderPro® Debug Menu</h1>
 <h1>Virtual Sound Decoder</h1>
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Debug.shtml#pricom">Back </a></p>
 </div>
 
@@ -50,7 +45,7 @@ speakers.</span></p>
 audio lbirary installed.  OpenAL is included by default on the Mac, but
 must be installed on Windows.</p>
 <p>OpenAL is available free from Creative Labs.
-You can <a href="http://connect.creativelabs.com/openal/Downloads/Forms/AllItems.aspx">download the installer for your operating system</a> from the
+You can <a target="_blank" href="http://jmri.org/help/en/package/jmri/jmrit/vsdecoder/VSDecoderFrame.shtml">download the installer for your operating system</a> from the
 OpenAL site.</p>
 <p>If you do not have OpenAL installed, Virtual Sound Decoder will
 <i>seem</i> to work, except you will get no sound output.</p>
@@ -62,7 +57,7 @@ maintained nor controlled by the JMRI team.</p>
 <ol>
   <li>Make sure your sound system is working, and (if needed) you have
   installed OpenAL</li>
-  <li>Select Debug->Virtual Sound Decoder->VSDecoder Manager</li>
+  <li>Select Debug-&gt;Virtual Sound Decoder-&gt;VSDecoder Manager</li>
   <li>With the VSDecoder Manager window selected, click the <em>Add
   Decoder</em> button.</li>
   <li>Configure the new VSDecoder
@@ -92,7 +87,7 @@ choose a Profile, and click "Save".</p>
 
 Virtual Sound Decoder requires a throttle that will report speed
 changes and function button presses to JMRI. Currently compatible
-throttles include:</p>
+throttles include:
 <ul>
   <li>JMRI software and web throttles</li>
   <li>Digitrax</li>
@@ -107,9 +102,9 @@ throttles include:</p>
 have one of these systems and can confirm that VSD responds to
 throttle changes, please mention this on the <a href="http://groups.yahoo.com/group/jmriusers/">JMRIUsers
 Yahoo! Group</a>
-<p>Notably missing from this list is the popular NCE PowerCab
-system.</li>
-<p>VSD is <strong>not</strong> compatible with the following systems
+</p><p>Notably missing from this list is the popular NCE PowerCab
+system.
+</p><p>VSD is <strong>not</strong> compatible with the following systems
 because they do not send throttle information to JMRI.</p>
 <ul>
   <li>EasyDCC</li>
@@ -125,7 +120,7 @@ are using an incompatible throttle system.</p>
 <p>With input from locomotive tracking hardware, Virtual Sound Decoder is
 able to move the apparent source of the locomotive sound to follow the
 locomotive's position on the layout.
-<h5>Location Following Setup</h5>
+</p><h5>Location Following Setup</h5>
 To enable location following you will need a hardware method of
 tracking the locomotive's position on the layout.  VSD currently
 supports the following tracking systems:
@@ -141,8 +136,7 @@ supports the following tracking systems:
 to help with testing and debug of this feature, please contact me on
 the <a href="http://groups.yahoo.com/group/jmriusers/">JMRIUsers
 Yahoo! Group</a>.  More systems will be added in the future.</p>
-<p>For details on setting up Location Following, see the <a
-href="VSD_LocationsMgr.shtml">Manage VSD Locations</a> instructions.</p>
+<p>For details on setting up Location Following, see the <a href="VSD_LocationsMgr.shtml">Manage VSD Locations</a> instructions.</p>
 
 <p>When you have followed the above setup steps, launch a VSDecoder
 window, assign a locomotive and run it.  As your locomotive moves
@@ -152,14 +146,14 @@ position.</p>
 location as the locomotive's reported location changes.  This effect
 will be smaller with additional and more closely spaced reporters.
 
-<h5>Location Following using JMRI Operations</h5>
+</p><h5>Location Following using JMRI Operations</h5>
 <p>If you do not have a hardware tracking system, you can use the
 JMRI Operations feature to enable a rudimentary form of location
 following.</p>
 <p>To set the Operations locations:</p>
 <ol>
-  <li>Select Operations->Settings</li>
-  <li>Select Tools->Options</li>
+  <li>Select Operations-&gt;Settings</li>
+  <li>Select Tools-&gt;Options</li>
   <li>Check the "Enable physical locations for Virtual Sound Decoder"
   option, and save the changes.</li>
   <li>Follow the directions in <a href="VSD_LocationsMgr.shtml">Manage
@@ -169,16 +163,16 @@ following.</p>
 the train, then select the train in the locomotive's VSDecoder Options
 pane.  When you <em>MOVE</em> the train in Operations, the sound will
 move to the next location on the Route.</p>
-<p>For more information on Operations, see the JMRI&reg; Operating User's Guide.</p>
+<p>For more information on Operations, see the JMRI® Operating User's Guide.</p>
 
 <p><em>Note:</em> Operations Locations following is temporarily
 disabled in version 3.1.6.  It will be re-enabled in 3.1.7.</p>
 
 <h5>Menu Items</h5>
-<h6>File->Load VSD File</h6>
+<h6>File-&gt;Load VSD File</h6>
 <p>Load the Sound Profiles from a VSD File.  Profiles loaded will be
 available to any currently running or newly launched VSDecoder.</p>
-<h6>Edit->VSDecoder Preferences</h6>
+<h6>Edit-&gt;VSDecoder Preferences</h6>
 <p>Set preferences for VSDecoder operation.  See below for details.</p>
 
 
@@ -205,10 +199,9 @@ or of the room.
 
 
 
-<div align=right>
+<div align="right">
 <p><a href="Main_Debug.shtml#pricom">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div></body></html>

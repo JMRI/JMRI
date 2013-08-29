@@ -17,9 +17,9 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>JMRI® v3.2 Operations User's Guide</h1>
+<h1>JMRI® v3.4 Operations User's Guide</h1>
 <h1>&nbsp;</h1>
-<h3>8/16//2013</h3>
+<h3>8/29//2013</h3>
 <p>&nbsp;</p>
 <p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
 <p><strong>The programming of Digital
@@ -212,7 +212,7 @@ browser. </p>
   </li>
   <li><strong><a href="Ops_TripThruOperations.shtml">A Tripp Through Operations</a></strong></li>
 </ul>
-<table align="center" border="1" cellpadding="2" cellspacing="1" width="90%">
+<table style="width: 90%; text-align: left; margin-left: auto; margin-right: auto;" border="1" cellpadding="2" cellspacing="1">
 <caption>
     Revisions
   </caption>
@@ -234,7 +234,7 @@ browser. </p>
     <td align="left" valign="top">8/17/2013</td>
     <td align="left" valign="top">Dale A. Tripp</td>
     <td align="left" valign="top">Updated from Version 3.0</td>
-  </tr>
+  </tr><tr><td>3.4</td><td>8/?/2013</td><td>Dale A. Tripp</td><td>Updated from Version 3.2</td></tr>
 </tbody></table>
 <p>
 </p><hr>
