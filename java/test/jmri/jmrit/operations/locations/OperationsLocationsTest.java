@@ -1339,6 +1339,7 @@ public class OperationsLocationsTest extends TestCase {
 		ct.addName("Track 4 Type");
 
 		// The dispose has removed all locations from the Manager.
+		manager = LocationManager.instance();
 		locationList = manager.getLocationsByNameList();
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 

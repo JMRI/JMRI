@@ -52,6 +52,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	public void dispose() {
 		_locationHashTable.clear();
 		_id = 0;
+		_instance = null;
 	}
 
 	protected Hashtable<String, Location> _locationHashTable = new Hashtable<String, Location>(); // stores known

@@ -310,7 +310,7 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("Test directory name", "operations"+File.separator+"JUnitTest", OperationsSetupXml.getOperationsDirectoryName());
 	}
 
-	// test xml file creation
+	// test xml file creation and read
 	@SuppressWarnings("static-access")
 	public void testXMLFileCreate() throws Exception {
 		Setup s;
@@ -334,12 +334,9 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("Create Train Icon Color West", "Green", s.getTrainIconColorWest());
 		Assert.assertEquals("Create Train Icon Color Local", "Black", s.getTrainIconColorLocal());
 		Assert.assertEquals("Create Train Icon Color Terminate", "White", s.getTrainIconColorTerminate());
-	}
-
-	// test xml file read
-	@SuppressWarnings("static-access")
-	public void testXMLFileRead() throws Exception {
-		Setup s = new Setup();
+		
+		// now get ready for the read operation
+		s = new Setup();
 
 		s.setRailroadName("Before Read Test Railroad Name");
 		s.setOwnerName("Before Read Test Railroad Owner");
@@ -356,12 +353,6 @@ public class OperationsSetupTest extends TestCase {
 		s.setCarTypes("Before Read Test Car Types");
 		s.setSwitchTime(22);
 		s.setTravelTime(222);
-		/*
-		s.setShowCarLengthEnabled(false);
-		s.setShowCarLoadEnabled(false);
-		s.setShowCarColorEnabled(false);
-		s.setAppendCarCommentEnabled(false);
-		*/
 		s.setBuildReportLevel("22");
 
 		s.setTrainIconCordEnabled(false);
@@ -388,12 +379,6 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("Before Read Test Car Types", "Before Read Test Car Types", s.getCarTypes());
 		Assert.assertEquals("Before Read Switch Time", 22, s.getSwitchTime());
 		Assert.assertEquals("Before Read Travel Time", 222, s.getTravelTime());
-		/*
-		Assert.assertEquals("Before Read Show Car Length Enabled", false, s.isShowCarLengthEnabled());
-		Assert.assertEquals("Before Read Show Car Load Enabled", false, s.isShowCarLoadEnabled());
-		Assert.assertEquals("Before Read Show Car Color Enabled", false, s.isShowCarColorEnabled());
-		Assert.assertEquals("Before Read Append Car Comment Enabled", false, s.isAppendCarCommentEnabled());
-		*/
 		Assert.assertEquals("Before Read Build Report Level", "22", s.getBuildReportLevel());
 
 		Assert.assertEquals("Before Read Train Icon Cord Enabled True", false, s.isTrainIconCordEnabled());
@@ -422,12 +407,6 @@ public class OperationsSetupTest extends TestCase {
 		Assert.assertEquals("After Read Test Car Types", "File Test Car Types", s.getCarTypes());
 		Assert.assertEquals("After Read Switch Time", 11, s.getSwitchTime());
 		Assert.assertEquals("After Read Travel Time", 111, s.getTravelTime());
-		/*
-		Assert.assertEquals("After Read Show Car Length Enabled", true, s.isShowCarLengthEnabled());
-		Assert.assertEquals("After Read Show Car Load Enabled", true, s.isShowCarLoadEnabled());
-		Assert.assertEquals("After Read Show Car Color Enabled", true, s.isShowCarColorEnabled());
-		Assert.assertEquals("After Read Append Car Comment Enabled", true, s.isAppendCarCommentEnabled());
-		*/
 		Assert.assertEquals("After Read Build Report Level", "11", s.getBuildReportLevel());
 
 		Assert.assertEquals("After Read Train Icon Cord Enabled True", true, s.isTrainIconCordEnabled());
@@ -479,12 +458,6 @@ public class OperationsSetupTest extends TestCase {
 		s.setCarTypes("File Test Car Types");
 		s.setSwitchTime(11);
 		s.setTravelTime(111);
-		/*
-		s.setShowCarLengthEnabled(true);
-		s.setShowCarLoadEnabled(true);
-		s.setShowCarColorEnabled(true);
-		s.setAppendCarCommentEnabled(true);
-		*/
 		s.setBuildReportLevel("11");
 
 		s.setTrainIconCordEnabled(true);
@@ -522,9 +495,6 @@ public class OperationsSetupTest extends TestCase {
 
 		// read it
 		ox.readFile(FileUtil.getUserFilesPath()+OperationsSetupXml.getOperationsDirectoryName()+File.separator+OperationsSetupXml.instance().getOperationsFileName());
-
-		// Set filename back to Operations
-//		ox.setOperationsFileName("Operations.xml");
 	}
 
 	// from here down is testing infrastructure
