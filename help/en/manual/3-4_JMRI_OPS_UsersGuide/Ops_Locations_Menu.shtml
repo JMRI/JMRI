@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_Locations.shtml 18278 2011-08-23 19:50:23Z dat7719 $ -->
+
+
+
+
+
+<title>Operations-Locations</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+<a name="Top"></a>
+
+<h1>Using JMRI® to Operate Trains</h1>
+<h1>Operations Locations MenuBar</h1>
+
+<div align="right">
+<p style="font-weight: bold;"><a href="Ops_Settings.shtml"></a><a href="Ops_Locations.shtml">Back<br></a></p>
+<p style="font-weight: bold;"><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<hr><div style="margin-left: 40px;"><img style="width: 349px; height: 88px;" alt="menubar" src="images/Ops_Location_Menubar.png"></div>
+<ul>
+  <li><strong>  Tools</strong></li>
+  <ul>
+    <li><a href="Ops_schedule.shtml"><strong>Schedules</strong></a><br>
+      Opens the <strong>Schedules</strong>
+panel. &nbsp;If you would like to see cars delivered in a particular
+sequence, or with a specific load for delivery or shipping, the program
+allows you to apply a schedule to a siding. This is an optional feature
+and shouldn't be used until you become very familiar with how the
+program generates manifests and switch lists. <br>
+      <br>
+    </li>
+    <li><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a><br>
+      Opens the <strong>Modify Locations by Car Type </strong>window.<br>
+      <br>
+    </li>
+  </ul>
+  <ul>
+    <li><strong><a href="Ops_Cars.shtml">Show Cars</a></strong><br>
+      Opens Cars window which lists cars for this location    <br>
+      <br>
+    </li>
+    <li><strong>Print
+      </strong><br>
+      <img src="images/Ops_locations_print.png" alt="print" height="179" width="195"><br>
+      Click on 
+      <input name="button10" id="button10" value="Okay" type="button">
+    opens system printer dialog.</li>
+  </ul>
+  <blockquote>
+    <p><img src="images/Ops_print_loc.png" alt="print location" height="608" width="718"><br>
+      <br>
+    </p>
+  </blockquote>
+  <ul>
+    
+    <li>    <strong>Preview</strong><br>
+      <img src="images/Ops_locations_print.png" alt="print" height="158" width="195"><br>
+      Click 
+      <input name="button11" id="button11" value="Okay" type="button"> 
+    opens the print previw window showing Location information.</li>
+  </ul>
+  <blockquote>
+    <p><img src="images/ops_PrintPreview_loc.png" alt="Location preview" height="537" width="675"><br>
+      <br>
+    </p>
+  </blockquote>
+  <li><strong>Operations</strong>
+  </li>
+</ul>
+<ul>
+  <ul>
+    <li><strong>Settings</strong>
+      <blockquote>
+        <p>Opens <strong><a href="Ops_Settings.shtml"> Setting</a></strong> window.</p>
+      </blockquote>
+    </li>
+    <li><strong>Locations</strong></li>
+    <blockquote>
+      <p>Opens <strong><a href="Ops_Locations.shtml">Locations</a></strong> window.</p>
+    </blockquote>
+    <li><strong>Cars</strong></li>
+    <blockquote>
+      <p>Opens <strong><a href="Ops_Cars.shtml">Cars</a></strong> window.</p>
+    </blockquote>
+    <li><strong>:Locomotives</strong>
+      <blockquote>
+        <p>Opens <strong><a href="Ops_Engines.shtml">Locomotives</a></strong> window.</p>
+      </blockquote>
+    </li>
+    <li><strong>Routes</strong>
+      <blockquote>
+        <p>Opens <strong><a href="Ops_Routes.shtml">Routes</a></strong> window.</p>
+      </blockquote>
+    </li>
+    <li><strong>Trains</strong>
+      <blockquote>
+        <p>Opens <a href="Ops_Trains.shtml">Trains</a> window.</p>
+      </blockquote>
+    </li>
+  </ul>
+  <li><strong>Window</strong></li>
+  <li><strong>Help</strong></li>
+</ul><div align="right">
+<p style="font-weight: bold;"><a href="Ops_Locations.shtml">Back</a></p><p style="font-weight: bold;"><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+
+<!--#include virtual="/Footer" -->
+</div></body></html>
