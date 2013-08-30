@@ -550,7 +550,7 @@ public class Router extends TrainCommon {
 				}
 			}
 		}
-		log.debug("Using 3 trains to route car was unsuccessful");
+		log.debug("Using 3 trains to route car to ("+car.getFinalDestinationName()+") was unsuccessful");
 		log.debug("Try to find route using 4 trains");
 		for (int i = 0; i < firstLocationTracks.size(); i++) {
 			Track fltp = firstLocationTracks.get(i);
@@ -617,7 +617,7 @@ public class Router extends TrainCommon {
 				}
 			}
 		}
-		log.debug("Using 4 trains to route car was unsuccessful");
+		log.debug("Using 4 trains to route car to ("+car.getFinalDestinationName()+") was unsuccessful");
 		log.debug("Try to find route using 5 trains");
 		for (int i = 0; i < firstLocationTracks.size(); i++) {
 			Track fltp = firstLocationTracks.get(i);
@@ -707,7 +707,7 @@ public class Router extends TrainCommon {
 				}
 			}
 		}
-		log.debug("Using 5 trains to route car was unsuccessful");
+		log.debug("Using 5 trains to route car to ("+car.getFinalDestinationName()+") was unsuccessful");
 		return false;
 	}
 

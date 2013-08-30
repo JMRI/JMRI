@@ -516,8 +516,13 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("Route status okay", "Okay", r.getStatus());
 	}
 
-	// test location Xml create support
-	public void testXMLCreate() throws Exception {
+	/**
+	 * Test route Xml create, read, and backup support.
+	 * Originally written as three separate tests, now combined into one as of 8/29/2013
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
+	public void testXMLCreate() throws JDOMException, IOException {
 
 		RouteManager manager = RouteManager.instance();
 		List<String> temprouteList = manager.getRoutesByIdList();
@@ -608,25 +613,23 @@ public class OperationsRoutesTest extends TestCase {
 		r6.setComment("r6 comment");
 
 		RouteManagerXml.instance().writeOperationsFile();
-	}
-	
-	// test route Xml read
-	public void testXMLRead() throws JDOMException, IOException{
-		
-		RouteManager manager = RouteManager.instance();
-		List<String> temprouteList = manager.getRoutesByIdList();
+
+		// now perform read operation
+		manager.dispose();
+		manager = RouteManager.instance();
+		temprouteList = manager.getRoutesByIdList();
 		Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
 		
 		RouteManagerXml.instance().readFile(RouteManagerXml.instance().getDefaultOperationsFilename());
 		temprouteList = manager.getRoutesByIdList();
 		Assert.assertEquals("Number of Routes", 6, temprouteList.size());
 		
-		Route r1 = manager.getRouteByName("Test Number 1");
-		Route r2 = manager.getRouteByName("Test Number 2");
-		Route r3 = manager.getRouteByName("Test Number 3");
-		Route r4 = manager.getRouteByName("Test Number 4");
-		Route r5 = manager.getRouteByName("Test Number 5");
-		Route r6 = manager.getRouteByName("Test Number 6");
+		r1 = manager.getRouteByName("Test Number 1");
+		r2 = manager.getRouteByName("Test Number 2");
+		r3 = manager.getRouteByName("Test Number 3");
+		r4 = manager.getRouteByName("Test Number 4");
+		r5 = manager.getRouteByName("Test Number 5");
+		r6 = manager.getRouteByName("Test Number 6");
 		
 		Assert.assertNotNull("route r1 exists", r1);
 		Assert.assertNotNull("route r2 exists", r2);
@@ -689,28 +692,26 @@ public class OperationsRoutesTest extends TestCase {
 		Assert.assertEquals("r4 comment", "r4 comment", r4.getComment());
 		Assert.assertEquals("r5 comment", "r5 comment", r5.getComment());
 		Assert.assertEquals("r6 comment", "r6 comment", r6.getComment());
-	}
-	
-	// test route Xml read
-	public void testXMLReadBackup() throws JDOMException, IOException{
 		
+		// now test backup file
+		manager.dispose();
 		// change default file name to backup
 		RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml.bak");
 		
-		RouteManager manager = RouteManager.instance();
-		List<String> temprouteList = manager.getRoutesByIdList();
+		manager = RouteManager.instance();
+		temprouteList = manager.getRoutesByIdList();
 		Assert.assertEquals("Starting Number of Routes", 0, temprouteList.size());
 		
 		RouteManagerXml.instance().readFile(RouteManagerXml.instance().getDefaultOperationsFilename());
 		temprouteList = manager.getRoutesByIdList();
 		Assert.assertEquals("Number of Routes", 3, temprouteList.size());
 		
-		Route r1 = manager.getRouteByName("Test Number 1");
-		Route r2 = manager.getRouteByName("Test Number 2");
-		Route r3 = manager.getRouteByName("Test Number 3");
-		Route r4 = manager.getRouteByName("Test Number 4");
-		Route r5 = manager.getRouteByName("Test Number 5");
-		Route r6 = manager.getRouteByName("Test Number 6");
+		r1 = manager.getRouteByName("Test Number 1");
+		r2 = manager.getRouteByName("Test Number 2");
+		r3 = manager.getRouteByName("Test Number 3");
+		r4 = manager.getRouteByName("Test Number 4");
+		r5 = manager.getRouteByName("Test Number 5");
+		r6 = manager.getRouteByName("Test Number 6");
 		
 		Assert.assertNotNull("route r1 exists", r1);
 		Assert.assertNotNull("route r2 exists", r2);

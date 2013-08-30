@@ -335,7 +335,7 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track attributes
 	public void testTrackAttributes() {
-		Location l = new Location("Location Test id", "Location Test Name");
+		Location l = new Location("Location Test Attridutes id", "Location Test Name");
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Name", "Test Name", t.getName());
@@ -393,7 +393,7 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track car support
 	public void testTrackCarSupport() {
-		Location l = new Location("Location Test id", "Location Test Name");
+		Location l = new Location("Location Test Car id", "Location Test Name");
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
@@ -488,7 +488,7 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track pickup support
 	public void testTrackPickUpSupport() {
-		Location l = new Location("Location Test id", "Location Test Name");
+		Location l = new Location("Location Test Pickup id", "Location Test Name");
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
@@ -514,7 +514,7 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track drop support
 	public void testTrackDropSupport() {
-		Location l = new Location("Location Test id", "Location Test Name");
+		Location l = new Location("Location Test Drop id", "Location Test Name");
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
@@ -547,11 +547,11 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track typename support
 	public void testTrackTypeNameSupport() {
-		Location l = new Location("Location Test id", "Location Test Name");
+		Location l = new Location("Location Test Name id", "Location Test Name");
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
-		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
-		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
-		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location Track id", "Test id", t.getId());
+		Assert.assertEquals("Location Track Name", "Test Name", t.getName());
+		Assert.assertEquals("Location Track Type", "Test Type", t.getLocType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
 		/* Test Type Name */
@@ -635,7 +635,7 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track schedule support
 	public void testTrackScheduleSupport() {
-		Location l = new Location("Location Test id", "Location Test Name");
+		Location l = new Location("Location Test Schedule id", "Location Test Name");
 		Track t = new Track("Test id", "Test Name", Track.SPUR, l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
@@ -658,7 +658,7 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track load support
 	public void testTrackLoadSupport() {
-		Location l = new Location("Location Test id", "Location Test Name");
+		Location l = new Location("Location Test Load id", "Location Test Name");
 		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
@@ -1151,8 +1151,12 @@ public class OperationsLocationsTest extends TestCase {
 		
 	}
 	
-	// test location Xml create support
-	public void testXMLCreate() {
+	/**
+	 * Test location Xml create and read support.
+	 * Originally this was three test that had to run in the order specified.  Now changed on 8/29/2013 to be one long test.
+	 * @throws Exception
+	 */
+	public void testXMLCreate() throws Exception {
 		LocationManager manager = LocationManager.instance();
 		manager.dispose();
 		// dispose kills instance, so reload manager
@@ -1317,13 +1321,8 @@ public class OperationsLocationsTest extends TestCase {
 
 		LocationManagerXml.instance().writeOperationsFile();
 		
-	}
-
-	// test location Xml read support preparation
-	public void testXMLReadPrep() {
-		LocationManager manager = LocationManager.instance();
-		List<String> locationList = manager.getLocationsByIdList();
-		Assert.assertEquals("Starting Number of Locations", 6, locationList.size());
+		locationList = manager.getLocationsByIdList();
+		Assert.assertEquals("Number of Locations", 6, locationList.size());
 
 		//  Revert the main xml file back to the backup file.
 		LocationManagerXml.instance().revertBackupFile(FileUtil.getUserFilesPath()+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
@@ -1332,14 +1331,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager.dispose();	
 		// delete all schedules
 		ScheduleManager.instance().dispose();	
-	}
-
-	// test location Xml read support
-	public void testXMLRead() throws Exception  {
-		LocationManager manager = LocationManager.instance();
-		List<String> locationList = manager.getLocationsByNameList();
-		
-		CarTypes ct = CarTypes.instance();
+				
 		ct.addName("Boxcar");
 		ct.addName("boxCar");
 		ct.addName("BoxCar");
@@ -1347,20 +1339,11 @@ public class OperationsLocationsTest extends TestCase {
 		ct.addName("Track 4 Type");
 
 		// The dispose has removed all locations from the Manager.
+		locationList = manager.getLocationsByNameList();
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 
 		// Need to force a re-read of the xml file.
 		LocationManagerXml.instance().readFile(FileUtil.getUserFilesPath()+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
-
-		// check options
-		/* all JMRI window position and size are now saved
-		Dimension frameDim = manager.getLocationEditFrameSize();
-		Point frameLoc = manager.getLocationEditFramePosition();
-		Assert.assertEquals("LocationEditFrame size X", 700.0, frameDim.getWidth());
-		Assert.assertEquals("LocationEditFrame size Y", 720.0, frameDim.getHeight());
-		Assert.assertEquals("LocationEditFrame Postion X", 14.0, frameLoc.getX());
-		Assert.assertEquals("LocationEditFrame Postion Y", 16.0, frameLoc.getY());
-		*/
 		
 		// check locations
 		locationList = manager.getLocationsByNameList();
@@ -1456,12 +1439,12 @@ public class OperationsLocationsTest extends TestCase {
 		
 		// check Schedules
 		
-		ScheduleManager sm = ScheduleManager.instance();
+		sm = ScheduleManager.instance();
 		List <String>list = sm.getSchedulesByNameList();
 		
 		Assert.assertEquals("There should be 2 schedules", 2, list.size());
-		Schedule s1 = sm.getScheduleById(list.get(0));
-		Schedule s2 = sm.getScheduleById(list.get(1));
+		s1 = sm.getScheduleById(list.get(0));
+		s2 = sm.getScheduleById(list.get(1));
 		
 		Assert.assertEquals("Schedule 1 name", "Schedule 1 Name", s1.getName());
 		Assert.assertEquals("Schedule 2 name", "Schedule 2 Name", s2.getName());
@@ -1545,6 +1528,9 @@ public class OperationsLocationsTest extends TestCase {
 		CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
 		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		
+		LocationManager.instance().dispose();
+		CarTypes.instance().dispose();
 	}
 
 	public OperationsLocationsTest(String s) {

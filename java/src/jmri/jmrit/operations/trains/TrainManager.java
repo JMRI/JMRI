@@ -389,6 +389,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * @return Train that can service car from its current location to the its destination.
 	 */
 	public Train getTrainForCar(Car car, PrintWriter buildReport) {
+		log.debug("Get train for car ("+car.toString()+") location ("+car.getLocationName()+") destination ("+car.getDestinationName()+")");
 		List<String> trains = getTrainsByIdList();
 		for (int i = 0; i < trains.size(); i++) {
 			Train train = getTrainById(trains.get(i));

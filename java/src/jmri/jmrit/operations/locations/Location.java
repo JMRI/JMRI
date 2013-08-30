@@ -595,7 +595,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	 *            track's name
 	 * @param type
 	 *            track type
-	 * @return track location
+	 * @return track at location
 	 */
 
 	public Track getTrackByName(String name, String type) {

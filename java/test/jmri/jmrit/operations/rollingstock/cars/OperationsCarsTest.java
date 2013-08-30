@@ -785,8 +785,13 @@ public class OperationsCarsTest extends TestCase {
         Assert.assertEquals("After dispose Number of Cars", 0, carList.size());		
 	}
 
-	// test Xml create support
-	public void testXMLCreate(){
+	/**
+	 * Test Xml create and read support.
+	 * Originally written as two separate tests, now combined into one as of 8/29/2013.
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
+	public void testXMLCreate() throws JDOMException, IOException{
 		
 		// confirm that file name has been modified for testing
 		Assert.assertEquals("OperationsJUnitTestCarRoster.xml", CarManagerXml.instance().getOperationsFileName());
@@ -900,16 +905,18 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("New Number of Cars", 6, tempcarList.size());
 
 		CarManagerXml.instance().writeOperationsFile();
-	}
-
-	/**
-	 * Test reading xml car file
-	 * @throws JDOMException
-	 * @throws IOException
-	 */
-	public void testXMLRead() throws JDOMException, IOException{
-		CarManager manager = CarManager.instance();
-		List<String> tempcarList = manager.getByIdList();
+//	}
+//
+//	/**
+//	 * Test reading xml car file
+//	 * @throws JDOMException
+//	 * @throws IOException
+//	 */
+//	public void testXMLRead() throws JDOMException, IOException{
+//		CarManager manager = CarManager.instance();
+		manager.dispose();
+		manager = CarManager.instance();
+		tempcarList = manager.getByIdList();
 		Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
 
 		CarManagerXml.instance().readFile(CarManagerXml.instance().getDefaultOperationsFilename());	
@@ -917,12 +924,12 @@ public class OperationsCarsTest extends TestCase {
 		tempcarList = manager.getByIdList();
 		Assert.assertEquals("Number of Cars", 6, tempcarList.size());
 
-		Car c1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find car by original id
-		Car c2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find car by original id
-		Car c3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find car by original id
-		Car c4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find car by original id 
-		Car c5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find car by original id
-		Car c6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find car by original id
+		c1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find car by original id
+		c2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find car by original id
+		c3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find car by original id
+		c4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find car by original id 
+		c5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find car by original id
+		c6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find car by original id
 
 		Assert.assertNotNull("car c1 exists", c1);
 		Assert.assertNotNull("car c2 exists", c2);
@@ -1031,17 +1038,12 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("car c6 wait", 0, c6.getWait());
 		Assert.assertEquals("car c6 weight", "0", c6.getWeight());
 		Assert.assertEquals("car c6 weight tons", "0", c6.getWeightTons());
-
-	}
-
-	/**
-	 * Test backup file.
-	 * @throws JDOMException
-	 * @throws IOException
-	 */
-	public void testXMLReadBackup() throws JDOMException, IOException{
-		CarManager manager = CarManager.instance();
-		List<String> tempcarList = manager.getByIdList();
+		
+		// Now test back up file
+		
+		manager.dispose();
+		manager = CarManager.instance();
+		tempcarList = manager.getByIdList();
 		Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
 
 		// change default file name to backup
@@ -1052,12 +1054,12 @@ public class OperationsCarsTest extends TestCase {
 		tempcarList = manager.getByIdList();
 		Assert.assertEquals("Number of Cars", 3, tempcarList.size());
 
-		Car c1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find car by original id
-		Car c2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find car by original id
-		Car c3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find car by original id
-		Car c4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find car by original id 
-		Car c5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find car by original id
-		Car c6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find car by original id
+		c1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find car by original id
+		c2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find car by original id
+		c3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find car by original id
+		c4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find car by original id 
+		c5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find car by original id
+		c6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find car by original id
 
 		Assert.assertNotNull("car c1 exists", c1);
 		Assert.assertNotNull("car c2 exists", c2);

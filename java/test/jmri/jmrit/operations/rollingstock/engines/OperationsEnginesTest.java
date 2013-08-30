@@ -794,7 +794,7 @@ public class OperationsEnginesTest extends TestCase {
 	}
 
 	// test Xml create support
-	public void testXMLCreate(){
+	public void testXMLCreate() throws JDOMException, IOException{
 		
 		// confirm that file name has been modified for testing
 		Assert.assertEquals("OperationsJUnitTestEngineRoster.xml", EngineManagerXml.instance().getOperationsFileName());
@@ -904,19 +904,16 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("New Number of Engines", 6, tempengineList.size());
 
 		EngineManagerXml.instance().writeOperationsFile();
-	}
-
-	/**
-	 * Test reading xml engine file
-	 * @throws JDOMException
-	 * @throws IOException
-	 */
-	public void testXMLRead() throws JDOMException, IOException{
-		EngineManager manager = EngineManager.instance();
-		List<String> tempengineList = manager.getByIdList();
+		
+		// now reset everything using dispose
+		manager.dispose();
+	    EngineModels.instance().dispose();
+	    
+		manager = EngineManager.instance();
+		tempengineList = manager.getByIdList();
 		Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
 
-		// confirm that engine models has been reset by setUp()	
+		// confirm that engine models has been reset by dispose
 		Assert.assertEquals("e1 model type", null, EngineModels.instance().getModelType("e1 model"));
 		Assert.assertEquals("e1 model length", null, EngineModels.instance().getModelLength("e1 model"));
 		Assert.assertEquals("e1 model Weight Tons", null, EngineModels.instance().getModelWeight("e1 model"));
@@ -933,12 +930,12 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("e1 model Weight Tons", "100", EngineModels.instance().getModelWeight("e1 model"));
 		Assert.assertEquals("e1 model hp", "e1 hp", EngineModels.instance().getModelHorsepower("e1 model"));
 		
-		Engine e1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find engine by original id
-		Engine e2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find engine by original id
-		Engine e3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find engine by original id
-		Engine e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id 
-		Engine e5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find engine by original id
-		Engine e6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find engine by original id
+		e1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find engine by original id
+		e2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find engine by original id
+		e3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find engine by original id
+		e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id 
+		e5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find engine by original id
+		e6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find engine by original id
 
 		Assert.assertNotNull("engine e1 exists", e1);
 		Assert.assertNotNull("engine e2 exists", e2);
@@ -1038,19 +1035,13 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("engine e6 hp", "", e6.getHp());
 		Assert.assertEquals("engine e6 model", "", e6.getModel());
 
-	}
-
-	/**
-	 * Test backup file.
-	 * @throws JDOMException
-	 * @throws IOException
-	 */
-	public void testXMLReadBackup() throws JDOMException, IOException{
-		EngineManager manager = EngineManager.instance();
-		List<String> tempengineList = manager.getByIdList();
+		// now test backup file
+		manager.dispose();
+		manager = EngineManager.instance();
+		tempengineList = manager.getByIdList();
 		Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
 		
-		// confirm that engine models has been reset by setUp()	
+		// confirm that engine models has been reset by dispose	
 		Assert.assertEquals("e1 model type", null, EngineModels.instance().getModelType("e1 X model"));
 		Assert.assertEquals("e1 model length", null, EngineModels.instance().getModelLength("e1 X model"));
 		Assert.assertEquals("e1 model Weight Tons", null, EngineModels.instance().getModelWeight("e1 X model"));
@@ -1070,12 +1061,12 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("e1 model Weight Tons", "001", EngineModels.instance().getModelWeight("e1 X model"));
 		Assert.assertEquals("e1 model hp", "e1 hp", EngineModels.instance().getModelHorsepower("e1 X model"));
 
-		Engine e1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find engine by original id
-		Engine e2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find engine by original id
-		Engine e3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find engine by original id
-		Engine e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id 
-		Engine e5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find engine by original id
-		Engine e6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find engine by original id
+		e1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find engine by original id
+		e2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find engine by original id
+		e3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find engine by original id
+		e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id 
+		e5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find engine by original id
+		e6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find engine by original id
 
 		Assert.assertNotNull("engine e1 exists", e1);
 		Assert.assertNotNull("engine e2 exists", e2);
