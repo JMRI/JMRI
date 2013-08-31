@@ -193,7 +193,7 @@ public class HardcopyWriter extends Writer {
             previewFrame.getContentPane().add(new JScrollPane(previewPanel),
                     BorderLayout.CENTER);
             // page width 660 for portrait
-            previewFrame.setSize(pagesize.width+48, Toolkit.getDefaultToolkit().getScreenSize().height);
+            previewFrame.setSize(pagesize.width+48, pagesize.height+100);
             previewFrame.setVisible(true);         
         }
 
