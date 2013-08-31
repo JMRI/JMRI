@@ -214,7 +214,7 @@ public class TrainSwitchLists extends TrainCommon {
 			}
 		}
 		// Are there any cars that need to be found?
-		addCarsLocationUnknown(fileOut);
+		addCarsLocationUnknown(fileOut, false);
 		fileOut.flush();
 		fileOut.close();
 	}

@@ -2314,10 +2314,14 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertFalse("Train 2 will NOT build road restriction", train2.isBuilt());
 
 		train2.setRoadOption(Train.INCLUDEROADS);
+		Assert.assertEquals("Number of road names for train", 1, train2.getRoadNames().length);
+		
 		train2.build();
 		Assert.assertFalse("Train 2 will NOT build road restriction CP", train2.isBuilt());
 
 		l3s3.addRoadName("CP");
+		Assert.assertEquals("Number of road names", 1, l3s3.getRoadNames().length);
+		
 		train2.build();
 		Assert.assertTrue("Train 2 will build road restriction CP removed", train2.isBuilt());
 
@@ -2334,6 +2338,8 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertTrue("Train 2 will build no road restrictions", train2.isBuilt());
 
 		l3s3.addRoadName("BM");
+		Assert.assertEquals("Number of road names", 1, l3s3.getRoadNames().length);
+		
 		train2.build();
 		Assert.assertFalse("Train 2 will Not build, staging track will not accept road BM", train2.isBuilt());
 
@@ -3784,6 +3790,7 @@ public class OperationsTrainsTest extends TestCase {
 		Setup.setTrainLength(500);
 		ct.addName("Gon");
 		ct.addName("Coil Car");
+		ct.addName("Flat Car");
 		ct.addName("XCaboose");
 
 		// confirm no locations

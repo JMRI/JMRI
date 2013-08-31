@@ -211,7 +211,7 @@ public class TrainManifest extends TrainCommon {
 			previousRouteLocationName = routeLocationName;
 		}
 		// Are there any cars that need to be found?
-		addCarsLocationUnknown(fileOut);
+		addCarsLocationUnknown(fileOut, true);
 
 		fileOut.flush();
 		fileOut.close();

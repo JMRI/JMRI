@@ -97,6 +97,20 @@ public class TrainCommon {
 				pickupEngine(fileOut, engine, orientation);
 		}
 	}
+	
+	private void pickupEngine(PrintWriter file, Engine engine, String orientation) {
+		StringBuffer buf = new StringBuffer(Setup.getPickupEnginePrefix());
+		String[] format = Setup.getPickupEngineMessageFormat();
+		for (int i = 0; i < format.length; i++) {
+			String s = getEngineAttribute(engine, format[i], PICKUP);
+			if (!checkStringLength(buf.toString() + s, orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
+				addLine(file, buf.toString());
+				buf = new StringBuffer(TAB);
+			}
+			buf.append(s);
+		}
+		addLine(file, buf.toString());
+	}
 
 	/**
 	 * Adds a list of locomotive drops for the route location to the output file
@@ -113,13 +127,13 @@ public class TrainCommon {
 				dropEngine(fileOut, engine, orientation);
 		}
 	}
-
-	private void pickupEngine(PrintWriter file, Engine engine, String orientation) {
-		StringBuffer buf = new StringBuffer(Setup.getPickupEnginePrefix());
-		String[] format = Setup.getPickupEngineMessageFormat();
+	
+	private void dropEngine(PrintWriter file, Engine engine, String orientation) {
+		StringBuffer buf = new StringBuffer(Setup.getDropEnginePrefix());
+		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i = 0; i < format.length; i++) {
-			String s = getEngineAttribute(engine, format[i], PICKUP);
-			if (buf.length() + s.length() > getLineLength(orientation)) {
+			String s = getEngineAttribute(engine, format[i], !PICKUP);
+			if (!checkStringLength(buf.toString() + s, orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -127,7 +141,7 @@ public class TrainCommon {
 		}
 		addLine(file, buf.toString());
 	}
-	
+
 	/**
 	 * Returns the pick up string for a loco.  Useful for frames like the train conductor and yardmaster.
 	 * @param engine
@@ -143,20 +157,6 @@ public class TrainCommon {
 		return buf.toString();
 	}
 
-	public void dropEngine(PrintWriter file, Engine engine, String orientation) {
-		StringBuffer buf = new StringBuffer(Setup.getDropEnginePrefix());
-		String[] format = Setup.getDropEngineMessageFormat();
-		for (int i = 0; i < format.length; i++) {
-			String s = getEngineAttribute(engine, format[i], !PICKUP);
-			if (buf.length() + s.length() > getLineLength(orientation)) {
-				addLine(file, buf.toString());
-				buf = new StringBuffer(TAB);
-			}
-			buf.append(s);
-		}
-		addLine(file, buf.toString());
-	}
-	
 	/**
 	 * Returns the drop string for a loco.  Useful for frames like the train conductor and yardmaster.
 	 * @param engine
@@ -407,7 +407,7 @@ public class TrainCommon {
 			return; // print nothing local move, see dropCar
 		for (int i = 0; i < format.length; i++) {
 			String s = getCarAttribute(car, format[i], PICKUP, !LOCAL);
-			if (buf.length() + s.length() > getLineLength(orientation)) {
+			if (!checkStringLength(buf.toString() + s, orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -491,7 +491,7 @@ public class TrainCommon {
 			boolean isLocal, String orientation) {
 		for (int i = 0; i < format.length; i++) {
 			String s = getCarAttribute(car, format[i], !PICKUP, isLocal);
-			if (buf.length() + s.length() > getLineLength(orientation)) {
+			if (!checkStringLength(buf.toString() + s, orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -766,7 +766,6 @@ public class TrainCommon {
 	private static void printLine(PrintWriter file, String level, String string) {
 		int lineLengthMax = getLineLength(Setup.PORTRAIT, Setup.getBuildReportFontSize());
 		if (string.length() > lineLengthMax) {
-//			log.debug("String is too long for " + Setup.PORTRAIT);
 			String[] s = string.split(SPACE);
 			StringBuffer sb = new StringBuffer();
 			for (int i = 0; i < s.length; i++) {
@@ -835,6 +834,12 @@ public class TrainCommon {
 			file.println(string);
 	}
 	
+	/**
+	 * Writes a string to a file. Checks for string length, and will automatically wrap lines.
+	 * @param file
+	 * @param string
+	 * @param isManifest set true for manifest page orientation, false for switch list orientation
+	 */
 	protected void newLine(PrintWriter file, String string, boolean isManifest) {
 		if (isManifest)
 			newLine(file, string, Setup.getManifestOrientation());
@@ -850,28 +855,23 @@ public class TrainCommon {
 	 */
 	protected void newLine(PrintWriter file, String string, String orientation) {
 		String[] s = string.split(NEW_LINE);
-		int lineLengthMax = getLineLength(orientation);
 		for (int i = 0; i < s.length; i++) {
-			newLine(file, s[i], lineLengthMax);
+			makeNewLine(file, s[i], orientation);
 		}
 	}
-
-	private void newLine(PrintWriter file, String string, int lineLengthMax) {
-		if (string.length() > lineLengthMax) {
-			String[] s = string.split(SPACE);
-			StringBuffer sb = new StringBuffer();
-			for (int i = 0; i < s.length; i++) {
-				if (sb.length() + s[i].length() < lineLengthMax) {
-					sb.append(s[i] + SPACE);
-				} else {
-					addLine(file, sb.toString());
-					sb = new StringBuffer(s[i] + SPACE);
-				}
+	
+	private void makeNewLine(PrintWriter file, String string, String orientation) {
+		String[] s = string.split(SPACE);
+		StringBuffer sb = new StringBuffer();
+		for (int i = 0; i < s.length; i++) {
+			if (checkStringLength(sb.toString() + s[i], orientation, Setup.getFontName(), Setup.getManifestFontSize())) {
+				sb.append(s[i] + SPACE);
+			} else {
+				addLine(file, sb.toString());
+				sb = new StringBuffer(s[i] + SPACE);
 			}
-			addLine(file, sb.toString());
-			return;
 		}
-		addLine(file, string);
+		addLine(file, sb.toString());
 	}
 
 	/**
@@ -950,13 +950,13 @@ public class TrainCommon {
 		return false;
 	}
 
-	protected void addCarsLocationUnknown(PrintWriter file) {
+	protected void addCarsLocationUnknown(PrintWriter file, boolean isManifest) {
 		CarManager cManager = CarManager.instance();
 		List<String> cars = cManager.getCarsLocationUnknown();
 		if (cars.size() == 0)
 			return; // no cars to search for!
 		newLine(file);
-		addLine(file, Setup.getMiaComment());
+		newLine(file, Setup.getMiaComment(), isManifest);
 		for (int i = 0; i < cars.size(); i++) {
 			Car car = cManager.getById(cars.get(i));
 			addSearchForCar(file, car);
@@ -1143,6 +1143,28 @@ public class TrainCommon {
 
 		// compute lines and columns within margins
 		return pagesize.width / charwidth;
+	}
+	
+	/**
+	 * Checks to see if the the string fits on the page.
+	 * @param string
+	 * @param orientation
+	 * @param fontName
+	 * @param fontSize
+	 * @return true if string length is longer than page width
+	 */
+	private boolean checkStringLength(String string, String orientation, String fontName, int fontSize) {
+		// page size has been adjusted to account for margins of .5
+		Dimension pagesize = new Dimension(540, 792); // Portrait
+		if (orientation.equals(Setup.LANDSCAPE))
+			pagesize = new Dimension(720, 612);
+		if (orientation.equals(Setup.HANDHELD))
+			pagesize = new Dimension(206, 792);
+		Font font = new Font(fontName, Font.PLAIN, fontSize); // NOI18N
+		JLabel label = new JLabel();
+		FontMetrics metrics = label.getFontMetrics(font);
+		int stringWidth = metrics.stringWidth(string);
+		return stringWidth < pagesize.width;
 	}
 	
 	/**

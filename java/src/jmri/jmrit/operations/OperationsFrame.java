@@ -380,19 +380,20 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 			JLabel X = new JLabel("X");
 			numberChar = size.width / X.getPreferredSize().width;
 		}
-		
+
 		String[] sa = s.split(NEW_LINE);
 		StringBuilder so = new StringBuilder();
-		
-		for (int i = 0; i<sa.length; i++) {
+
+		for (int i = 0; i < sa.length; i++) {
 			if (i > 0)
-                            so.append(NEW_LINE);
+				so.append(NEW_LINE);
 			StringBuilder sb = new StringBuilder(sa[i]);
 			int j = 0;
-			while (j + numberChar < sb.length() && (j = sb.lastIndexOf(" ", j + numberChar)) != -1) {
+			while (j + numberChar < sb.length()
+					&& (j = sb.lastIndexOf(" ", j + numberChar)) != -1) {
 				sb.replace(j, j + 1, NEW_LINE);
 			}
-                        so.append(sb);
+			so.append(sb);
 		}
 		return so.toString();
 	}
