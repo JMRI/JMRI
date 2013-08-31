@@ -27,20 +27,16 @@
 </div>
 
 <hr>
-<p>The Operations Tool, Locations opens the Locations window as shown.
-Locations are places on your railroad that trains visit to pickup or
-drop off cars and engines. Locations can be cities, towns, or just
-places where trains need to work cars. To enter a new location press <input name="button9" id="button9" value="Add" type="submit">
-, which will open the<strong><a href="#addLoc">Add  Location</a></strong>window which we will discuss in a moment.&nbsp; But first let&#8217;s discuss the &#8220;Locations&#8221;  window itself. </p><strong></strong>The <strong>Add Location</strong> window is opened. At this point only the  Location Name and the type operation at this location entries are active.
-<p><img src="images/Ops_AddLocation.png" alt="add location" height="589" width="772"></p>
+<strong></strong>The <strong>Add Location</strong> window is opened from the <span style="font-weight: bold;">Locations</span> window using the <span style="font-weight: bold;">Add</span> button at the bottom of the window.. At this point only the&nbsp; <span style="font-weight: bold;">Name</span> and the <span style="font-weight: bold;">Operation at this location</span> are active.
+<p style="text-align: center;"><img src="images/Ops_AddLocation.png" alt="add location" height="589" width="772"></p>
 <p><strong>Name</strong>
   <input name="textfield" id="textfield" type="text">
 The location name must be unique; the program will not allow two
 locations with identical names. However, if you want more than one
 location to have the same name for your manifests and switch lists, add
 a hyphen and a number to the locations name. For example, <strong>Boston-1</strong> and <strong>Boston-2</strong> will print as <strong>Boston</strong>. The program  will remove the hyphen and number when printing manifests and switch  lists.</p>
-<p>Add Location Menu</p>
-<p><img src="images/Ops_AddLocation_menu.png" alt="menu" height="168" width="776"></p>
+<p><span style="font-weight: bold;">Add Location</span> Window Menu</p>
+<p style="text-align: center;"><img src="images/Ops_AddLocation_menu.png" alt="menu" height="168" width="776"></p>
 <p><strong>Tools</strong></p>
 <blockquote>
   <p><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a></p>
@@ -52,7 +48,7 @@ a hyphen and a number to the locations name. For example, <strong>Boston-1</stro
     <input name="button2" id="button2" value="Add Location" type="submit">
     at  the bottom of the panel. The various fields that were disabled should  be enabled.</p>
 </blockquote>
-<p><img src="images/Ops_AddLocation01.png" alt="Add Location" height="585" width="772"></p>
+<p style="text-align: center;"><img src="images/Ops_AddLocation01.png" alt="Add Location" height="585" width="772"></p>
 <p>Each location can have several yard, spurs, interchange or staging
 tracks. Yards are where cars and engines are placed for temporary
 storage. A spur can be an industry or any place where a car is loaded

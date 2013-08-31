@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009 -->
-<!-- $Id: Ops_AddYard.shtml 18386 2011-09-07 08:33:40Z dat7719 $ -->
-<title>Operations-Add Yard</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_AddYard.shtml 18386 2011-09-07 08:33:40Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>Operations-Add Yard</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -20,12 +17,12 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>Using JMRI&reg; to Operate Trains</h1>
+<a name="Top"></a>
+<h1>Using JMRI® to Operate Trains</h1>
 <h1>Operations Add Yard</h1>
 
-<div align=right>
-<p><a href="Ops_Locations.shtml">Back</a><a href="Ops_AddInterchange.shtml"></a></p>
+<div align="right">
+<p><a href="Ops_AddLocations.shtml">Back</a><a href="Ops_AddInterchange.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
@@ -33,131 +30,145 @@
 <p align="left">Add<a href="Ops_Locations.shtml"> Location as Yards</a> and the <strong>Add Location </strong>window for Yards is opened from Add Location window. </p>
 <p align="left"><br>
   To add a location as a Yard: in the <strong>Add Location</strong> window, type the<strong> Name</strong>
-  <input type="text" name="textfield" id="textfield">
-of the Yard location, note most of the window is greyed out until the location is added. The location name must be unique; the program  will not allow two locations with identical names. However, if you want  more than one location to have the same name for your manifests and  switch lists, add a hyphen and a number to the locations name. For  example, "Boston-1" and "Boston-2" will print as "Boston". The program  will remove the hyphen and number when printing manifests and switch  lists.</p>
+  <input name="textfield" id="textfield" type="text">
+of the Yard location, note most of the window is greyed out until the
+location is added. The location name must be unique; the program will
+not allow two locations with identical names. However, if you want more
+than one location to have the same name for your manifests and switch
+lists, add a hyphen and a number to the locations name. For example,
+"Boston-1" and "Boston-2" will print as "Boston". The program will
+remove the hyphen and number when printing manifests and switch lists.</p>
 <p>Select <strong>Operations at this location</strong>
-  <input name="radio" type="radio" id="radio" value="radio" checked>
+  <input name="radio" id="radio" value="radio" checked="checked" type="radio">
   <strong>Yards</strong>, then press the
-  <input type="submit" name="button" id="button" value="Add Location">
+  <input name="button" id="button" value="Add Location" type="submit">
 at the bottom of the window.</p>
-<p align="left"><img src="images/Ops_addLocationYard03.png" width="772" height="640" alt="add Yard"></p>
+<p align="left"><img src="images/Ops_addLocationYard03.png" alt="add Yard" height="640" width="772"></p>
 <p align="left">Opens the <strong>Add Location</strong> window with options activated.</p>
-<p align="left"><img src="images/Ops_AddLocationYard.png" width="772" height="640" alt="add Yard"></p>
-<p>A <strong>classification yard </strong>(US and Canada) or <strong>marshalling yard</strong> (UK and Canada)(including <strong>hump yards</strong>) is a railroad yard found at some freight stations, used to separate railroad cars on to one of several tracks. First the cars are taken to a track, sometimes called a <strong>lead</strong> or a <strong>drill</strong>. From there the cars are sent through a series of switches called a <strong>ladder</strong> onto the classification tracks. Larger yards tend to put the lead on an artificially built hill called a <strong>hump</strong> to use the force of gravity to propel the cars through the ladder.</p>
-<p>Freight trains that consist of isolated cars must be made into  trains and divided according to their destinations. Thus the cars must  be shunted several times along their route in contrast to a unit train, which carries, for example, automobiles from the plant to a port or coal from a mine to the power plant.  This shunting is done partly at the starting and final destinations and  partly (for long-distance-hauling) in classification yards.</p>
+<p align="left"><img src="images/Ops_AddLocationYard.png" alt="add Yard" height="640" width="772"></p>
+<p>A <strong>classification yard </strong>(US and Canada) or <strong>marshalling yard</strong> (UK and Canada)(including <strong>hump yards</strong>)
+is a railroad yard found at some freight stations, used to separate
+railroad cars on to one of several tracks. First the cars are taken to
+a track, sometimes called a <strong>lead</strong> or a <strong>drill</strong>. From there the cars are sent through a series of switches called a <strong>ladder</strong> onto the classification tracks. Larger yards tend to put the lead on an artificially built hill called a <strong>hump</strong> to use the force of gravity to propel the cars through the ladder.</p>
+<p>Freight trains that consist of isolated cars must be made into
+trains and divided according to their destinations. Thus the cars must
+be shunted several times along their route in contrast to a unit train,
+which carries, for example, automobiles from the plant to a port or
+coal from a mine to the power plant. This shunting is done partly at
+the starting and final destinations and partly (for
+long-distance-hauling) in classification yards.</p>
 <p align="left">A yard will contain several tracks that must be defined. </p>
 <p>Now after selecting all of the options for the yard, click on 
-  <input type="button" name="button2" id="button2" value="Add Yard Track"> 
+  <input name="button2" id="button2" value="Add Yard Track" type="button"> 
 and the <strong>Add Yard Track</strong> window opens.</p>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
-  <tr>
-    <td width="48%" align="left" valign="top"><img src="images/Ops_YardTrack01.png" width="750" height="634" alt="yard track"></td>
-    <td width="52%" align="left" valign="top"><p>In <strong>Name</strong>
-      <input type="text" name="textfield2" id="textfield2">
+<table border="0" cellpadding="2" cellspacing="1" width="90%">
+  <tbody><tr>
+    <td align="left" valign="top" width="48%"><img src="images/Ops_YardTrack01.png" alt="yard track" height="634" width="750"></td>
+    <td align="left" valign="top" width="52%"><p>In <strong>Name</strong>
+      <input name="textfield2" id="textfield2" type="text">
       type the specific siding track to be serviced at this location.</p>
       <p><strong>Length</strong>
-        <input name="textfield3" type="text" id="textfield3" size="5">
+        <input name="textfield3" id="textfield3" size="5" type="text">
         of the Yard track in scale feet. You may enter the measurement in actual inches as
-        <input name="textfield4" type="text" id="textfield4" value="6&quot;" size="5">
+        <input name="textfield4" id="textfield4" value="6&quot;" size="5" type="text">
         and the program will convert to the scale feet that you select during setup. </p>
       <p>Press
-        <input type="submit" name="button10" id="button10" value="Add Yard Track">
+        <input name="button10" id="button10" value="Add Yard Track" type="submit">
         the siding track is added and the greyed out features are activated.</p></td>
   </tr>
-</table>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
-  <tr>
-    <td width="48%" align="left" valign="top"><img src="images/Ops_AddSidingTrack02.png" width="750" height="634" alt="track"></td>
-    <td width="52%" align="left" valign="top"><p><strong>Select the roads serviced by this track</strong></p>
+</tbody></table>
+<table border="0" cellpadding="2" cellspacing="1" width="90%">
+  <tbody><tr>
+    <td align="left" valign="top" width="48%"><img src="images/Ops_AddSidingTrack02.png" alt="track" height="634" width="750"></td>
+    <td align="left" valign="top" width="52%"><p><strong>Select the roads serviced by this track</strong></p>
       <p>
-        <input name="radio3" type="radio" id="radio3" value="radio3" checked>
+        <input name="radio3" id="radio3" value="radio3" checked="checked" type="radio">
         <strong>        Accept all</strong></p>
       <p>Default accepts rolling stock from any railroad.</p>
       <p>
-        <input type="radio" name="radio4" id="radio4" value="radio4">
+        <input name="radio4" id="radio4" value="radio4" type="radio">
         <strong>Accept only<br>
-        </strong><img src="images/Ops_AddInterchangeTrack04-01.png" width="399" height="86" alt="yard"></p>
+        </strong><img src="images/Ops_AddInterchangeTrack04-01.png" alt="yard" height="86" width="399"></p>
       <p>Allows you to list the railroads whose rolling stock you will accept.</p>
       <p>
-        <input type="radio" name="radio5" id="radio5" value="radio5">
+        <input name="radio5" id="radio5" value="radio5" type="radio">
         <strong>        Exclude</strong><br>
-      <img src="images/Ops_AddInterchangeTrack04-02.png" width="414" height="104" alt="yard">      </p>
+      <img src="images/Ops_AddInterchangeTrack04-02.png" alt="yard" height="104" width="414">      </p>
       <p>Accept all rolling stock except from those railroads that are excluded.</p>
       <p><strong>Select loads serviced by this track</strong></p>
       <p>We will use the default. </p>
       <p>
-        <input name="radio3" type="radio" id="radio2" value="radio3" checked>
+        <input name="radio3" id="radio2" value="radio3" checked="checked" type="radio">
       <strong> Accept all</strong></p>
       <p>Default accepts all loads.</p>
       <p>
-        <input type="radio" name="radio4" id="radio6" value="radio4">
+        <input name="radio4" id="radio6" value="radio4" type="radio">
         Accept only<br>
-      <img src="images/Ops_AddInterchangeTrack04-03.png" width="510" height="87" alt="yard">      </p>
+      <img src="images/Ops_AddInterchangeTrack04-03.png" alt="yard" height="87" width="510">      </p>
       <p>Allows you to list the loads you will accept.</p>
       <p>
-        <input type="radio" name="radio5" id="radio7" value="radio5">
+        <input name="radio5" id="radio7" value="radio5" type="radio">
         <strong>Exclude</strong><br>
-      <img src="images/Ops_AddInterchangeTrack04-04.png" width="513" height="89" alt="yard">      </p>
+      <img src="images/Ops_AddInterchangeTrack04-04.png" alt="yard" height="89" width="513">      </p>
       <p>Accept all loads except from those loads that are excluded.</p>
 <p><strong>Select pick up car order</strong></p>
 <p>
-  <input name="radio3" type="radio" id="radio8" value="radio3" checked>
+  <input name="radio3" id="radio8" value="radio3" checked="checked" type="radio">
   <strong>  Normal
   </strong></p>
 <p>
-  <input type="radio" name="radio4" id="radio9" value="radio4">
+  <input name="radio4" id="radio9" value="radio4" type="radio">
   <strong>First In First Out (FIFO)</strong></p>
 <p>
-  <input type="radio" name="radio5" id="radio10" value="radio5">
+  <input name="radio5" id="radio10" value="radio5" type="radio">
   <strong>Last in First Out (LIFO)</strong></p>
 <p>You may enter a <strong>Comment</strong>
-        <input type="text" name="textfield5" id="textfield5">
+        <input name="textfield5" id="textfield5" type="text">
       for the track.</p>
       <p>You may now press
-        <input type="submit" name="button11" id="button11" value="Save Yard Track">
+        <input name="button11" id="button11" value="Save Yard Track" type="submit">
         to add to the location or press
-        <input type="submit" name="button12" id="button12" value="Delete Yard Track">
+        <input name="button12" id="button12" value="Delete Yard Track" type="submit">
       if you do not want to store the track.</p>
       <p>If you want to add another track to this yard location, then enter new data and Press
-        <input type="submit" name="button13" id="button13" value="Save Yard Track">
+        <input name="button13" id="button13" value="Save Yard Track" type="submit">
         to add the track.</p>
       <p>Close the window when done with this location.</p></td>
   </tr>
-</table>
+</tbody></table>
 <p>The <strong>Add Location</strong> window shows one Yard track at the North Yard.</p>
-<p><img src="images/Ops_AddSidingTrack03.png" width="777" height="466" alt="add siding"></p>
+<p><img src="images/Ops_AddSidingTrack03.png" alt="add siding" height="466" width="777"></p>
 <p>Let's add some more tracks to the yard.</p>
-<p><img src="images/Ops_AddSidingTrack04.png" width="772" height="408" alt="add track"></p>
+<p><img src="images/Ops_AddSidingTrack04.png" alt="add track" height="408" width="772"></p>
 <p>If you want to change information for any track entry, press 
-  <input type="submit" name="button14" id="button14" value="Edit">
+  <input name="button14" id="button14" value="Edit" type="submit">
 and the <strong>Edit Siding Track</strong> window will open</p>
 <p>&nbsp;</p>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
-  <tr>
-    <td width="48%" align="left" valign="top"><img src="images/Ops_EditYardTrack.png" width="750" height="634" alt="edit yard"></td>
-    <td width="52%" align="left" valign="top"><p>Note that it is identical to the Add Yard Track except for the title.</p>
+<table border="0" cellpadding="2" cellspacing="1" width="90%">
+  <tbody><tr>
+    <td align="left" valign="top" width="48%"><img src="images/Ops_EditYardTrack.png" alt="edit yard" height="634" width="750"></td>
+    <td align="left" valign="top" width="52%"><p>Note that it is identical to the Add Yard Track except for the title.</p>
       <p>Change any of the entries that you want to edit and then press the
-        <input type="button" name="button15" id="button15" value="Save Yard Track">
+        <input name="button15" id="button15" value="Save Yard Track" type="button">
         to save the changes.</p>
       <p>You may also
-        <input type="button" name="button16" id="button16" value="Delete Yard Track">
+        <input name="button16" id="button16" value="Delete Yard Track" type="button">
         from your data base.</p>
       <p>When done with editing close the window. </p></td>
   </tr>
-</table>
+</tbody></table>
 <p>The <strong>Locations</strong> window shows all the locations in your database.</p>
 <p>You may Edit any one of them, which opens the<strong> Edit Location</strong> window, which is the same as the <a href="Ops_Locations.shtml"><strong>Add Location</strong></a> window except it contains the info for the location you are editing.</p>
-<p><img src="images/Ops_YardLocation.png" width="670" height="278" alt="yard locatio"></p>
+<p><img src="images/Ops_YardLocation.png" alt="yard locatio" height="278" width="670"></p>
 <p>You may add as many locations and track as you need to complete the description of your layout.</p>
 <p>&nbsp;</p>
 
 <hr>
 
-<div align=right>
-<p><a href="Ops_Locations.shtml">Back</a><a href="Ops_AddInterchange.shtml"></a></p>
+<div align="right">
+<p><a href="Ops_AddLocations.shtml">Back</a><a href="Ops_AddInterchange.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div></body></html>

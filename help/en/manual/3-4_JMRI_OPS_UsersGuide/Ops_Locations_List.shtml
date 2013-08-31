@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/"><!-- /Style --></head>
-
 <body>
 <!--#include virtual="/Header" -->
 
@@ -32,7 +31,9 @@
 on your railroad that trains visit to pickup or drop off cars and
 engines. Locations can be cities, towns, or just places where trains
 need to work cars.&nbsp; </p>
-<p><img style="width: 808px; height: 251px;" alt="locations list" src="images/Ops_locations_list.png"><br></p>T<div align="right"><p><a href="Ops_Locations.shtml">Back<br></a><a href="Ops_Cars.shtml"></a></p>
+<p style="text-align: center;"><img style="width: 808px; height: 251px;" alt="locations list" src="images/Ops_locations_list.png"><br></p><p><span style="font-weight: bold; text-decoration: underline;">Colums</span></p><p><span style="font-weight: bold;">Id</span> &nbsp;-- Identification number assigned to the location.</p><p><span style="font-weight: bold;">Name</span> -- Name of the location, city, locale, or industry assigned by you.</p><p><span style="font-weight: bold;">Track</span> -- &nbsp;Identifies the track a a location, a location may have more than one track.</p><p><span style="font-weight: bold;">Length</span> -- &nbsp;Length of the track in scale feet &nbsp;that determines the number of cars that can be set out.</p><p><span style="font-weight: bold;">Used</span> -- Indicates the scale feet of track at this location that is in use.</p><p><span style="font-weight: bold;">Rolling</span> <span style="font-weight: bold;">Stock</span> -- Number of cars, etc. set out at location.</p><p><span style="font-weight: bold;">Pick ups</span> -- Number of pickup that have been executed.</p><p><span style="font-weight: bold;">Set outs</span> -- Number of set outs that have been executed.</p><p><span style="font-weight: bold;">Action </span>--&nbsp;
+          The&nbsp;<span style="font-weight: bold;">Yardmaster</span> button diplays the&nbsp; <span style="font-weight: bold;"><a href="Ops_Locations_SwitchList.shtml">Yardmaster (Switch List)</a></span> window&nbsp; that allows you to see the scheduled pick ups and set outs 
+          by train. Only trains that have work for the location are available.</p><p><span style="font-weight: bold;">Edit</span> &nbsp;-- &nbsp;The <span style="font-weight: bold;">Edit</span> button opens the<span style="font-weight: bold;"> <a href="Ops_EditLocation.shtml">Edit Location</a></span><a href="Ops_EditLocation.shtml"> </a>&nbsp;window</p><div align="right"><p><a href="Ops_Locations.shtml">Back<br></a><a href="Ops_Cars.shtml"></a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 

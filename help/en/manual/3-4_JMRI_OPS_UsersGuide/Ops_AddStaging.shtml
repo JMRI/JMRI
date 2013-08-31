@@ -1,18 +1,15 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-<head>
-<!-- Copyright ($Author: dat7719 $) 2009 -->
-<!-- $Id: Ops_AddStaging.shtml 18386 2011-09-07 08:33:40Z dat7719 $ -->
-<title>Operations-Add Staging</title>
+<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_AddStaging.shtml 18386 2011-09-07 08:33:40Z dat7719 $ -->
 
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+
+
+
+
+<title>Operations-Add Staging</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
-</head>
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/"><!-- /Style --></head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -20,209 +17,223 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>Using JMRI&reg; to Operate Trains</h1>
+<a name="Top"></a>
+<h1>Using JMRI® to Operate Trains</h1>
 <h1>Operations Add Staging Only</h1>
 
-<div align=right>
-<p><a href="Ops_Locations.shtml">Back</a><a href="Ops_Cars.shtml"></a></p>
+<div align="right">
+<p><a href="Ops_AddLocations.shtml">Back</a><a href="Ops_Cars.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
 <hr>
 <p align="left">Add<a href="Ops_Locations.shtml"> Location as Staging Only</a> and the <strong>Add Location </strong>window will be displayed with Staging only selected.</p>
-<p><img src="images/Ops_Staging01.png" width="772" height="640" alt="staging"></p>
+<p><img src="images/Ops_Staging01.png" alt="staging" height="640" width="772"></p>
 <p><br>
   To add a location as a Staging Only: in the <strong>Add Location</strong> window, type the<strong> Name</strong>
-  <input name="textfield" type="text" id="textfield" value="Staging Area">
-of the Staging Only location, note most of the window is greyed out until the location is added. The location name must be unique; the program  will not allow two locations with identical names. However, if you want  more than one location to have the same name for your manifests and  switch lists, add a hyphen and a number to the locations name. For  example, "Boston-1" and "Boston-2" will print as "Boston". The program  will remove the hyphen and number when printing manifests and switch  lists.</p>
+  <input name="textfield" id="textfield" value="Staging Area" type="text">
+of the Staging Only location, note most of the window is greyed out
+until the location is added. The location name must be unique; the
+program will not allow two locations with identical names. However, if
+you want more than one location to have the same name for your
+manifests and switch lists, add a hyphen and a number to the locations
+name. For example, "Boston-1" and "Boston-2" will print as "Boston".
+The program will remove the hyphen and number when printing manifests
+and switch lists.</p>
 <p>Select <strong>Operations at this location</strong>
-  <input name="radio" type="radio" id="radio" value="radio" checked>
+  <input name="radio" id="radio" value="radio" checked="checked" type="radio">
   <strong>Staging Only</strong>, then press the
-  <input type="submit" name="button" id="button" value="Add Location">
+  <input name="button" id="button" value="Add Location" type="submit">
   at the bottom of the window.</p>
 <p>A Staging Only area may contain several tracks that must be defined. </p>
 <p>This opens the <strong>Add Location</strong> window with all the options enabled.</p>
-<p><img src="images/Ops_Staging02.png" width="772" height="640"></p>
+<p><img src="images/Ops_Staging02.png" height="640" width="772"></p>
 <p>You may select <strong>This location is serviced by trains traveling</strong>, select at least one or any number of the directions depending on access to your staging. We have selected
   
   All directions, for this staging.</p>
-<p>You can decide which train direction the location can service. For  example, if only south bound trains can access the location select  "South" and deselect the other directions. This can be useful if you  want to support only trailing point switching for a given location. If a  location can support multiple directions then select the ones that are  appropriate. </p>
+<p>You can decide which train direction the location can service. For
+example, if only south bound trains can access the location select
+"South" and deselect the other directions. This can be useful if you
+want to support only trailing point switching for a given location. If
+a location can support multiple directions then select the ones that
+are appropriate. </p>
 <p>Next <strong>Select the rolling stock serviced by this location, </strong>you can control the rolling stock that a location can service. Push
-  <input type="submit" name="button7" id="button7" value="Clear All">
+  <input name="button7" id="button7" value="Clear All" type="submit">
   to deselect all types, or
-<input type="submit" name="button8" id="button8" value="Select All">
+<input name="button8" id="button8" value="Select All" type="submit">
 to select all types,  then select or deselect the rolling stock you wish the location to  accept.</p>
 <p>Since the <strong>Operations at this location </strong>is a
-  <input name="radio2" type="radio" id="radio2" value="radio2" checked>
+  <input name="radio2" id="radio2" value="radio2" checked="checked" type="radio">
   <strong>Staging Only</strong>
   the
-  <input type="submit" name="button4" id="button4" value="Add Staging Track">
+  <input name="button4" id="button4" value="Add Staging Track" type="submit">
 is now enabled near the bottom of the window. </p>
 <p>We also have the option to
-  <input type="submit" name="button5" id="button5" value="Delete Location">
+  <input name="button5" id="button5" value="Delete Location" type="submit">
   or
-  <input type="submit" name="button6" id="button6" value="Save Location">
+  <input name="button6" id="button6" value="Save Location" type="submit">
 </p>
 <p>Press
-  <input type="submit" name="button9" id="button9" value="Add Staging Track">
+  <input name="button9" id="button9" value="Add Staging Track" type="submit">
 then the <strong>Add Staging Track</strong> window is displayed, so that you can detail the siding. </p>
 <p>&nbsp;</p>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
-  <tr>
-    <td width="48%" align="left" valign="top"><img src="images/Ops_Staging03.png" width="771" height="719"></td>
-    <td width="52%" align="left" valign="top"><p>In <strong>Name</strong>
-      <input type="text" name="textfield2" id="textfield2">
+<table border="0" cellpadding="2" cellspacing="1" width="90%">
+  <tbody><tr>
+    <td align="left" valign="top" width="48%"><img src="images/Ops_Staging03.png" height="719" width="771"></td>
+    <td align="left" valign="top" width="52%"><p>In <strong>Name</strong>
+      <input name="textfield2" id="textfield2" type="text">
       type the specific  track to be serviced at this location.</p>
       <p><strong>Length</strong>
-        <input name="textfield3" type="text" id="textfield3" value="1000" size="10">
+        <input name="textfield3" id="textfield3" value="1000" size="10" type="text">
         of the Staging track in scale feet. You may enter the measurement in actual inches as
-        <input name="textfield4" type="text" id="textfield4" value="6&quot;" size="5">
+        <input name="textfield4" id="textfield4" value="6&quot;" size="5" type="text">
       and the program will convert to the scale feet that you select during setup. </p>
       <p>Press
-        <input type="submit" name="button10" id="button10" value="Add Staging Track">
+        <input name="button10" id="button10" value="Add Staging Track" type="submit">
     the staging track is added and the greyed out features are activated.</p></td>
   </tr>
-</table>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
-  <tr>
-    <td width="48%" align="left" valign="top"><p><img src="images/Ops_Staging04.png" width="771" height="705"></p></td>
-    <td width="52%" align="left" valign="top"><p>You may <strong>Select the roads serviced by this track</strong></p>
+</tbody></table>
+<table border="0" cellpadding="2" cellspacing="1" width="90%">
+  <tbody><tr>
+    <td align="left" valign="top" width="48%"><p><img src="images/Ops_Staging04.png" height="705" width="771"></p></td>
+    <td align="left" valign="top" width="52%"><p>You may <strong>Select the roads serviced by this track</strong></p>
       <p>
-        <input name="radio3" type="radio" id="radio3" value="radio3" checked>
+        <input name="radio3" id="radio3" value="radio3" checked="checked" type="radio">
         Accept all</p>
       <p>Default accepts rolling stock from any railroad.</p>
       <p>
-        <input type="radio" name="radio4" id="radio4" value="radio4">
+        <input name="radio4" id="radio4" value="radio4" type="radio">
         Accept only<br>
-        <img src="images/Ops_AddInterchangeTrack04-01.png" width="399" height="86" alt="staging"></p>
+        <img src="images/Ops_AddInterchangeTrack04-01.png" alt="staging" height="86" width="399"></p>
       <p>Allows you to list the railroads whose rolling stock you will accept.</p>
       <p>
-        <input type="radio" name="radio5" id="radio5" value="radio5">
+        <input name="radio5" id="radio5" value="radio5" type="radio">
         Exclude<br>
-      <img src="images/Ops_AddInterchangeTrack04-02.png" width="414" height="104" alt="staging">      </p>
+      <img src="images/Ops_AddInterchangeTrack04-02.png" alt="staging" height="104" width="414">      </p>
       <p>Accept all rolling stock except from those railroads that are excluded.</p>
       <p>We will use the default. If you want to edit the roads accepted go to <a href="Ops_AddCars.shtml">Add Cars </a> then Edit Roads, to add another selection to the drop-down list.</p>
       <p><strong>Select the loads serviced by this track</strong></p>
       <p>
-        <input name="radio3" type="radio" id="radio6" value="radio3" checked>
+        <input name="radio3" id="radio6" value="radio3" checked="checked" type="radio">
         Accept all</p>
       <p>Default accepts any load</p>
       <p>
-        <input type="radio" name="radio4" id="radio7" value="radio4">
+        <input name="radio4" id="radio7" value="radio4" type="radio">
         Accept only<br>
-      <img src="images/Ops_AddInterchangeTrack04-03.png" width="510" height="87" alt="staging"></p>
+      <img src="images/Ops_AddInterchangeTrack04-03.png" alt="staging" height="87" width="510"></p>
       <p>Allows you to select the loads you will accept.</p>
       <p>
-        <input type="radio" name="radio5" id="radio8" value="radio5">
+        <input name="radio5" id="radio8" value="radio5" type="radio">
         Exclude<br>
-      <img src="images/Ops_AddInterchangeTrack04-04.png" width="513" height="89" alt="staging"><br>
+      <img src="images/Ops_AddInterchangeTrack04-04.png" alt="staging" height="89" width="513"><br>
       Allows you to exclude any load you do not want service by this track.</p>
       <p><strong>Select trains or routes for arrivals</strong></p>
       <p>
         <strong>
-      <input name="radio9" type="radio" id="radio9" value="radio9" checked>
+      <input name="radio9" id="radio9" value="radio9" checked="checked" type="radio">
       any</strong><br>
       Default</p>
       <p>
         <strong>
-      <input type="radio" name="radio10" id="radio10" value="radio10">
+      <input name="radio10" id="radio10" value="radio10" type="radio">
       Trains</strong><br>
-      <img src="images/Ops_AddInterchangeTrack04-05.png" width="440" height="89"><br>
+      <img src="images/Ops_AddInterchangeTrack04-05.png" height="89" width="440"><br>
       </p>
       <p>
         <strong>
-      <input type="radio" name="radio11" id="radio11" value="radio11">
+      <input name="radio11" id="radio11" value="radio11" type="radio">
       Routes</strong></p>
-      <p><img src="images/Ops_AddInterchangeTrack04-06.png" width="434" height="127"><br>
+      <p><img src="images/Ops_AddInterchangeTrack04-06.png" height="127" width="434"><br>
       </p>
       <p>
-        <input type="radio" name="radio12" id="radio12" value="radio12">
+        <input name="radio12" id="radio12" value="radio12" type="radio">
       <strong>      Exclude Trains</strong></p>
-      <p><img src="images/Ops_AddInterchangeTrack04-07.png" width="435" height="108"></p>
+      <p><img src="images/Ops_AddInterchangeTrack04-07.png" height="108" width="435"></p>
       <p>
         <strong>
-      <input type="radio" name="radio13" id="radio13" value="radio13">
+      <input name="radio13" id="radio13" value="radio13" type="radio">
       Exclude Routes</strong></p>
-      <p><img src="images/Ops_AddInterchangeTrack04-08.png" width="442" height="123"></p>
+      <p><img src="images/Ops_AddInterchangeTrack04-08.png" height="123" width="442"></p>
       <p><strong>Optional car load controls</strong></p>
       <p>
-        <input name="checkbox" type="checkbox" id="checkbox" checked>
+        <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
       <strong>Swap default loads and empties</strong></p>
       <p>
         <strong>
-      <input name="checkbox2" type="checkbox" id="checkbox2" checked>
+      <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox">
       Empty cars with default loads</strong></p>
       <p><strong>Optional custom car load controls</strong></p>
       <p>
         <strong>
-      <input type="checkbox" name="checkbox3" id="checkbox3">
+      <input name="checkbox3" id="checkbox3" type="checkbox">
       Empty cars with custom loads</strong></p>
       <p>
         <strong>
-      <input type="checkbox" name="checkbox4" id="checkbox4">
+      <input name="checkbox4" id="checkbox4" type="checkbox">
       Generated custom loads for spurs serviced by this train</strong></p>
       <p>
         <strong>
-      <input type="checkbox" name="checkbox5" id="checkbox5">
+      <input name="checkbox5" id="checkbox5" type="checkbox">
       Generate custom loads for any spur (muliple trains)</strong><strong></strong></p>
       <p><strong>Optional Car Blocking</strong></p>
       <p>
-        <input type="checkbox" name="checkbox6" id="checkbox6">
+        <input name="checkbox6" id="checkbox6" type="checkbox">
       <strong>Block cars by pickup location</strong></p>
       <p>You may enter a <strong>Comment</strong>
-        <input type="text" name="textfield5" id="textfield5">
+        <input name="textfield5" id="textfield5" type="text">
         for the track.</p>
       <p>You may now press
-        <input type="submit" name="button11" id="button11" value="Add Staging Track">
+        <input name="button11" id="button11" value="Add Staging Track" type="submit">
         to add to the location or press
-        <input type="submit" name="button12" id="button12" value="Delete Staging Track">
+        <input name="button12" id="button12" value="Delete Staging Track" type="submit">
       if you do not want to store the track.</p>
       <p>If you want to add another track to this staging location, then enter new data and Press
-        <input type="submit" name="button13" id="button13" value="Save Staging Track">
+        <input name="button13" id="button13" value="Save Staging Track" type="submit">
         to add the track.</p>
-      <p>Note if you are running a train to and from the same staging location, you must define two staging tracks for the program, one to depart and one to return on. Physically, the tracks can be the same track.</p>
+      <p>Note
+if you are running a train to and from the same staging location, you
+must define two staging tracks for the program, one to depart and one
+to return on. Physically, the tracks can be the same track.</p>
     <p>Close the window when done with this location.</p></td>
   </tr>
-</table>
+</tbody></table>
 <p>The <strong>Add Location</strong> window shows one Staging track.</p>
 <p>
-  <input type="image" name="staging" id="staging" src="images/Ops_Staging05.png">
+  <input name="staging" id="staging" src="images/Ops_Staging05.png" type="image">
 </p>
 <p>You may add as many tracks as required for the Staging area.</p>
 <p>If you want to change information for any track entry, press 
-  <input type="submit" name="button14" id="button14" value="Edit">
+  <input name="button14" id="button14" value="Edit" type="submit">
 and the <strong>Edit Staging Track</strong> window will open.</p>
 <p>&nbsp;</p>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
-  <tr>
-    <td width="48%" align="left" valign="top"><img src="images/Ops_Staging06.png" width="750" height="844"></td>
-    <td width="52%" align="left" valign="top"><p>Note that it is identical to the Add Interchange and Yard Track except for the title.</p>
+<table border="0" cellpadding="2" cellspacing="1" width="90%">
+  <tbody><tr>
+    <td align="left" valign="top" width="48%"><img src="images/Ops_Staging06.png" height="844" width="750"></td>
+    <td align="left" valign="top" width="52%"><p>Note that it is identical to the Add Interchange and Yard Track except for the title.</p>
       <p>Change any of the entries that you want to edit and then press the
-        <input type="submit" name="button15" id="button15" value="Save Staging Track">
+        <input name="button15" id="button15" value="Save Staging Track" type="submit">
         to save the changes.</p>
       <p>You may also
-        <input type="submit" name="button16" id="button16" value="Delete Staging Track">
+        <input name="button16" id="button16" value="Delete Staging Track" type="submit">
         from your data base.</p>
       <p>When done with editing close the window. </p></td>
   </tr>
-</table>
+</tbody></table>
 <p>
-  <T>T</t>he Locations window shows all the locations in your database.</p>
+  <t>T</t>he Locations window shows all the locations in your database.</p>
 <p>You may Edit any one of them, which opens the<strong> Edit Location</strong> window, which is the same as the <a href="Ops_Locations.shtml"><strong>Add Location</strong></a> window except it contains the info for the location you are editing.</p>
 <p>
-  <input type="image" name="staging3" id="staging3" src="images/Ops_Staging07.png">
+  <input name="staging3" id="staging3" src="images/Ops_Staging07.png" type="image">
 </p>
 <p>You may add as many locations and track as you need to complete the description of your layout.</p>
 <p>&nbsp;</p>
 
 <hr>
 
-<div align=right>
-<p><a href="Ops_Locations.shtml">Back</a><a href="Ops_Cars.shtml"></a></p>
+<div align="right">
+<p><a href="Ops_AddLocations.shtml">Back</a><a href="Ops_Cars.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</body>
-</html>
+</div></body></html>
