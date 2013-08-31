@@ -2339,6 +2339,7 @@ public class OperationsTrainsTest extends TestCase {
 		// now allow road into staging
 		l3s3.setRoadOption(Track.EXCLUDEROADS);
 		l3s3.deleteRoadName("CP");
+		Assert.assertEquals("Number of road names", 0, l3s3.getRoadNames().length);
 
 		train2.build();
 		Assert.assertTrue("Train 2 will build no road restrictions", train2.isBuilt());
@@ -6288,7 +6289,8 @@ public class OperationsTrainsTest extends TestCase {
 		TrainManager.instance().dispose();
 		CarManager.instance().dispose();
 		LocationManager.instance().dispose();
-		RouteManager.instance().dispose();		
+		RouteManager.instance().dispose();
+		CarRoads.instance().dispose();
 		
 		Setup.setBuildAggressive(false);
 		Setup.setTrainIntoStagingCheckEnabled(true);
