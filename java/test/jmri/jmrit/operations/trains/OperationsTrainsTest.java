@@ -1559,6 +1559,8 @@ public class OperationsTrainsTest extends TestCase {
 		// Try again, but exclude road name CP
 		train2.setRoadOption(Train.EXCLUDEROADS);
 		train2.addRoadName("CP");
+		Assert.assertEquals("Number of road names for train", 1, train2.getRoadNames().length);
+		
 		train2.build();
 		Assert.assertEquals("Train 2 After Build but exclude road CP", false, train2.isBuilt());
 		train2.setRoadOption(Train.ALLROADS);
@@ -1758,6 +1760,8 @@ public class OperationsTrainsTest extends TestCase {
 		// Try again, but exclude road name CP
 		train1.setRoadOption(Train.EXCLUDEROADS);
 		train1.addRoadName("CP");
+		Assert.assertEquals("Number of road names for train", 1, train1.getRoadNames().length);
+		
 		train1.build();
 		Assert.assertEquals("Train 1 After Build with engines but exclude road CP", false, train1.isBuilt());
 		train1.setRoadOption(Train.ALLROADS);
@@ -2327,6 +2331,8 @@ public class OperationsTrainsTest extends TestCase {
 
 		train2.setRoadOption(Train.EXCLUDEROADS);
 		train2.deleteRoadName("CP");
+		Assert.assertEquals("Number of road names for train", 0, train2.getRoadNames().length);
+		
 		train2.build();
 		Assert.assertFalse("Train 2 will NOT build road restriction exclude road CP", train2.isBuilt());
 
@@ -6284,6 +6290,9 @@ public class OperationsTrainsTest extends TestCase {
 		LocationManager.instance().dispose();
 		RouteManager.instance().dispose();		
 		
+		Setup.setBuildAggressive(false);
+		Setup.setTrainIntoStagingCheckEnabled(true);
+		Setup.setTrainLength(1000);
 		Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 	}
 
