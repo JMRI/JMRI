@@ -27,6 +27,9 @@ public class TrainManifestText {
 	private static String from = Bundle.getMessage("from");
 	private static String to = Bundle.getMessage("to");
 	
+	private static String fd = Bundle.getMessage("FD");
+	private static String dest = Bundle.getMessage("dest");
+	
 	private static String addHelpersAt = Bundle.getMessage("AddHelpersAt");
 	private static String removeHelpersAt = Bundle.getMessage("RemoveHelpersAt");
 	private static String locoChangeAt = Bundle.getMessage("LocoChangeAt");
@@ -134,6 +137,20 @@ public class TrainManifestText {
 	public static void setStringTo(String s) {
 		to = s;
 	}
+	public static String getStringDest() {
+		return dest;
+	}
+
+	public static void setStringDest(String s) {
+		dest = s;
+	}
+	public static String getStringFinalDestination() {
+		return fd;
+	}
+
+	public static void setStringFinalDestination(String s) {
+		fd = s;
+	}
 	public static String getStringAddHelpers() {
 		return addHelpersAt;
 	}
@@ -228,6 +245,14 @@ public class TrainManifestText {
 			e.addContent(values = new Element(Xml.TO));
 			values.setAttribute(Xml.TEXT, getStringTo());
 		}
+		if (!getStringDest().equals(Bundle.getMessage("dest"))) {
+			e.addContent(values = new Element(Xml.DEST));
+			values.setAttribute(Xml.TEXT, getStringDest());
+		}
+		if (!getStringFinalDestination().equals(Bundle.getMessage("FD"))) {
+			e.addContent(values = new Element(Xml.FINAL_DEST));
+			values.setAttribute(Xml.TEXT, getStringFinalDestination());
+		}
 		if (!getStringAddHelpers().equals(Bundle.getMessage("AddHelpersAt"))) {
 			e.addContent(values = new Element(Xml.ADD_HELPERS));
 			values.setAttribute(Xml.TEXT, getStringAddHelpers());
@@ -321,6 +346,16 @@ public class TrainManifestText {
 		if (emts.getChild(Xml.FROM) != null) {
 			if ((a = emts.getChild(Xml.FROM).getAttribute(Xml.TEXT)) != null) {
 				setStringFrom(a.getValue());
+			}
+		}
+		if (emts.getChild(Xml.DEST) != null) {
+			if ((a = emts.getChild(Xml.DEST).getAttribute(Xml.TEXT)) != null) {
+				setStringDest(a.getValue());
+			}
+		}
+		if (emts.getChild(Xml.FINAL_DEST) != null) {
+			if ((a = emts.getChild(Xml.FINAL_DEST).getAttribute(Xml.TEXT)) != null) {
+				setStringFinalDestination(a.getValue());
 			}
 		}
 		if (emts.getChild(Xml.ADD_HELPERS) != null) {

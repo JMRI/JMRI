@@ -1002,7 +1002,7 @@ public class TrainCommon {
 			return "";
 		} else if (attribute.equals(Setup.FINAL_DEST)) {
 			if (!car.getFinalDestinationName().equals(""))
-				return " " + Bundle.getMessage("FD") + " " + splitString(car.getFinalDestinationName());
+				return " " + TrainManifestText.getStringFinalDestination() + " " + splitString(car.getFinalDestinationName());
 			return "";
 		}
 		return getRollingStockAttribute(car, attribute, isPickup, isLocal);
@@ -1033,13 +1033,13 @@ public class TrainCommon {
 			return " " + TrainManifestText.getStringFrom() + " " + splitString(rs.getLocationName());
 		else if (attribute.equals(Setup.DESTINATION) && isPickup) {
 			if (Setup.isTabEnabled())
-				return " " + Bundle.getMessage("dest") + " " + splitString(rs.getDestinationName());
+				return " " + TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName());
 			else
 				return " " + TrainManifestText.getStringDestination() + " " + splitString(rs.getDestinationName());
 		} else if (attribute.equals(Setup.DESTINATION) && !isPickup)
 			return " " + TrainManifestText.getStringTo() + " " + splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.DEST_TRACK))
-			return " " + Bundle.getMessage("dest") + " " + splitString(rs.getDestinationName()) + ", "
+			return " " + TrainManifestText.getStringDest() + " " + splitString(rs.getDestinationName()) + ", "
 					+ splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.OWNER))
 			return " " + tabString(rs.getOwner(), CarOwners.instance().getCurMaxNameLength());

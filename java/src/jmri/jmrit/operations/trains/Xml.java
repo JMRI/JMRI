@@ -144,6 +144,8 @@ public class Xml {
 	static final String DESTINATION = "destination"; // NOI18N
 	static final String FROM = "from"; // NOI18N
 	static final String TO = "to"; // NOI18N
+	static final String DEST = "dest"; // NOI18N
+	static final String FINAL_DEST = "finalDest"; // NOI18N
 	static final String ADD_HELPERS = "addHelpers"; // NOI18N
 	static final String REMOVE_HELPERS = "removeHelpers"; // NOI18N
 	static final String LOCO_CHANGE = "locoChange"; // NOI18N

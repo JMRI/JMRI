@@ -50,6 +50,8 @@ public class EditManifestTextFrame extends OperationsFrame {
 	JTextField destinationTextField = new JTextField(60);
 	JTextField toTextField = new JTextField(25);
 	JTextField fromTextField = new JTextField(25);
+	JTextField destTextField = new JTextField(25);
+	JTextField finalDestinationTextField = new JTextField(25);
 	
 	JTextField addHelpersAtTextField = new JTextField(60);
 	JTextField removeHelpersAtTextField = new JTextField(60);
@@ -161,6 +163,25 @@ public class EditManifestTextFrame extends OperationsFrame {
 		
 		pManifest.add(pToFrom);
 		
+		JPanel pDestFinalDest = new JPanel();
+		pDestFinalDest.setLayout(new BoxLayout(pDestFinalDest, BoxLayout.X_AXIS));
+		
+		JPanel pDest = new JPanel();
+		pDest.setBorder(BorderFactory.createTitledBorder(rb.getString("dest")));
+		pDest.add(destTextField);
+		destTextField.setText(TrainManifestText.getStringDest());
+		pDestFinalDest.add(pDest);
+		
+		JPanel pFinalDestination = new JPanel();
+		pFinalDestination.setBorder(BorderFactory.createTitledBorder(rb.getString("FD") + " ("
+				+ Bundle.getMessage("FinalDestination") + ")"));
+		pFinalDestination.add(finalDestinationTextField);
+		finalDestinationTextField.setText(TrainManifestText
+				.getStringFinalDestination());
+		pDestFinalDest.add(pFinalDestination);
+		
+		pManifest.add(pDestFinalDest);
+		
 		JPanel pAddHelpersAt = new JPanel();
 		pAddHelpersAt.setBorder(BorderFactory.createTitledBorder(rb.getString("AddHelpersAt")));
 		pAddHelpersAt.add(addHelpersAtTextField);
@@ -231,6 +252,8 @@ public class EditManifestTextFrame extends OperationsFrame {
 			destinationTextField.setText(rb.getString("destination"));
 			toTextField.setText(rb.getString("to"));
 			fromTextField.setText(rb.getString("from"));
+			destTextField.setText(rb.getString("dest"));
+			finalDestinationTextField.setText(rb.getString("FD"));
 			
 			addHelpersAtTextField.setText(rb.getString("AddHelpersAt"));
 			removeHelpersAtTextField.setText(rb.getString("RemoveHelpersAt"));
@@ -253,6 +276,8 @@ public class EditManifestTextFrame extends OperationsFrame {
 			TrainManifestText.setStringDestination(destinationTextField.getText());
 			TrainManifestText.setStringTo(toTextField.getText());
 			TrainManifestText.setStringFrom(fromTextField.getText());
+			TrainManifestText.setStringDest(destTextField.getText());
+			TrainManifestText.setStringFinalDestination(finalDestinationTextField.getText());
 			
 			TrainManifestText.setStringAddHelpers(addHelpersAtTextField.getText());
 			TrainManifestText.setStringRemoveHelpers(removeHelpersAtTextField.getText());
