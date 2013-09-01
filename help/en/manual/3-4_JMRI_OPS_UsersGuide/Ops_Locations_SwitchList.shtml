@@ -27,8 +27,10 @@
 </div>
 
 <hr>
-<p>The &nbsp;Location Yardmaster&nbsp; window as shown is opened by the Yardmaster button in the locations list and allows&nbsp;you to see the scheduled pick ups and set outs by train. Only trains 
-          that have work for the location are available.</p><p style="text-align: center;"><img style="width: 637px; height: 500px;" alt="switch List" src="images/Ops_Location_SwitchList.png"><br></p><br><div align="right"><p><a href="Ops_Locations_List.shtml">Back<br></a><a href="Ops_Cars.shtml"></a></p>
+<p>The &nbsp;Location <span style="font-weight: bold;">Yardmaster</span>&nbsp; window as shown is opened by the <span style="font-weight: bold;">Yardmaster</span>
+button in the individual location in the Locations window&nbsp; and
+allows&nbsp;you to see the scheduled pick ups and set outs by train.
+Only trains that have work for the location are available.</p><p style="text-align: center;"><img style="width: 637px; height: 500px;" alt="switch List" src="images/Ops_Location_SwitchList.png"><br></p><br><div align="right"><p><a href="Ops_Locations_List.shtml">Back<br></a><a href="Ops_Cars.shtml"></a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 

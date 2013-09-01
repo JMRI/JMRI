@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/"><!-- /Style --></head>
-
 <body>
 <!--#include virtual="/Header" -->
 
@@ -26,99 +25,13 @@
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
-<hr>
-<h3>Menus</h3>
-<p><img src="images/Ops_Setting_tool_menu.png" alt="settings menu" height="239" width="791"></p>
-
-
-<h3>Tools</h3>
-  <ul>
-    <li><strong name="OptionsMenu"><a name="OptionsMenu"></a><a href="#Options">Options </a></strong>  </li>
-  </ul>
-  <ul>
-    <li><a href="Ops_PrintOptions.shtml"><strong>Manifest Print Options </strong></a>    </li>
-  </ul>
-  <ul>
-    <li><strong>Build Report Options</strong><br>
-      <br>
-    <img style="width: 436px; height: 400px;" alt="build report options" src="images/Ops_Setting_BuildReportOptions.png">&nbsp;<br>
-Let's you select the amount of detail that you want in the build
-report. Very Detailed produces the highest number of pages. </li>
-  
-    <li><strong>Backup</strong></li>
-    Opens the system <strong>Save  backup </strong>dialog to backup <strong>folder </strong>
-    <li><strong>Restore</strong></li>
-    Opens the system <strong>Open</strong> backup file dialog from backup folder 
-	    
-	    
-	    
-    <li><strong>Load Demo Files</strong></li></ul><div style="margin-left: 40px;"><img style="width: 387px; height: 122px;" alt="laod demo files" src="images/Ops_Setting_tool_LoadDemoFiles.png"></div><ul>
-	    
-    <p>Opens the <strong>Demo load successful </strong>dialog box</p>
-    <p> <img src="images/Ops_Setting03.png" alt="Demo load" align="bottom" height="122" width="409">
-      
-      
-      
-    </p>
-    <li><strong>Reset Databases</strong></li>
-	    
-    <p>Opens the <strong>Reset Databases </strong>dialog box</p>
-    <p><img src="images/Ops_Setting04.png" alt="reset database" height="122" width="445"></p>
-    <li><strong>Manage Auto Backups</strong><br>
-      <img src="images/Ops_Setting_ManageBackupSets.png" alt="auto backup" height="387" width="461">      <br>
-    </li>
-  </ul>
-<h3>Operations</h3>
-  <ul>
-    <li><strong>Settings</strong>
-      <blockquote>
-        <p>Opens <strong><a href="Ops_Settings.shtml">Operations Setting</a></strong> window.</p>
-      </blockquote>
-    </li>
-  
-    <li><strong>Locations</strong>    </li>
-    <blockquote>
-      <p>Opens <strong><a href="Ops_Locations.shtml">Locations</a></strong> window.</p>
-    </blockquote>
-    <li><strong>Cars</strong>    </li>
-    <blockquote>
-      <p>Opens <strong><a href="Ops_Cars.shtml">Cars</a></strong> window.</p>
-    </blockquote>
-    <li><strong>:Locomotives</strong>
-      <blockquote>
-        <p>Opens <strong><a href="Ops_Engines.shtml">Locomotives</a></strong> window.</p>
-      </blockquote>
-    </li>
-  
-    <li><strong>Routes</strong>
-      <blockquote>
-        <p>Opens <strong><a href="Ops_Routes.shtml">Routes</a></strong> window.</p>
-      </blockquote>
-    </li>
-  
-    <li><strong>Trains</strong>
-      <blockquote>
-        <p>Opens<strong> <a href="Ops_Trains.shtml">Trains</a> </strong>window.</p>
-      </blockquote>
-    </li>
-  </ul>
-<h3>      Windows      </h3>
-  <blockquote>
-    <p>JMRI normal window menu</p>
-  </blockquote>
-  <h3>Help</h3>
-  <blockquote>
-    <p>JMRI normal help menu</p></blockquote>Body of <span style="font-weight: bold;">Operations Settings Window.</span>
-  <table border="0" cellpadding="2" cellspacing="1" width="100%">
-    <tbody><tr>
-      <td align="left" valign="top" width="62%"><p><img src="images/Ops_Setting01.png" alt="ops setting" height="608" width="778"></p></td>
-      <td align="left" valign="top" width="38%"><p><strong>Railroad Name</strong>
+<hr><span style="font-weight: bold;">Operations Settings </span>Window is opened from DecoderPro® &nbsp; <span style="font-weight: bold;">Tools</span>&nbsp;menu / <span style="font-weight: bold;">Operations</span>&nbsp;<img style="width: 20px; height: 9px;" alt="arrow" src="images/arrow.gif"> <span style="font-weight: bold;">Settings</span> &nbsp;or &nbsp;<span style="font-weight: bold;">Operations</span> menu / &nbsp;<span style="font-weight: bold;">Settings</span> if selected in &nbsp;<span style="font-weight: bold;">Operations Setting</span>&nbsp; window.<p style="text-align: center;"><img src="images/Ops_Setting01.png" alt="ops setting" height="608" width="778"></p><p><a style="font-weight: bold;" href="Ops_Settings_menubar.shtml">Menu Bar</a></p><p><span style="font-weight: bold;">Settings &nbsp;-- </span>describes your railroad to the operations program.</p><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="2" rowspan="1"><img style="width: 800px; height: 156px;" alt="Name" src="images/Ops_Setting05.png"></td></tr><tr><td><strong>Railroad Name</strong>
         <input name="textfield" id="textfield" type="text">      
         <br>
 Enter the name of your railroad. This name will show up on your
 manifests You may use a different name for every train in your roster.
 See <a href="Ops_Trains.shtml">Train Options</a> for details<strong>.<br>
-        <br>
+        </strong></td><td><strong>
         Trains Travel 
         <input name="checkbox" id="checkbox" checked="checked" type="checkbox">
         North/South</strong>
@@ -127,36 +40,28 @@ See <a href="Ops_Trains.shtml">Train Options</a> for details<strong>.<br>
 If your railroad depicts trains traveling north and south select the
 "North/South" box, if your trains travel east and west select the
 "East/West" box. You must select at least one direction, and can if
-desired select both. </p>
-        <p><strong>Scale</strong><br>
+desired select both.</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td><img style="width: 800px; height: 132px;" alt="scale" src="images/Ops_Setting06.png"></td></tr><tr><td><strong>Scale</strong><br>
 Select the radio button for the scale of your railroad. This will be
 used in calculating scale feet when you enter actual inches. <strong>S</strong>elect the scale you are modeling. This
 is useful when you enter the length of cars and tracks. You can enter
 the number of actual inches and the program will convert to scale feet.
 Append a double quote to the length when entering actual inches. The
 program will also automatically assign the proper NMRA weight for a car
-based on scale and length.<br>
-          <br>
-          <strong>Maximum Train Length(ft)</strong>
+based on scale and length.</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="4" rowspan="1"><img style="width: 800px; height: 120px;" alt="length" src="images/Ops_Setting07.png"></td></tr><tr><td style="vertical-align: top;"><strong>Maximum Train Length(ft)</strong>
           <input name="textfield2" id="textfield2" type="text"> 
           <br>
 This field provides the maximum default train length between cities.
 Later you can override this length if you wish a shorter train between
 any two locations. A 1000 foot train can carry approximately 20 cars,
-and is of course dependent on the car lengths assigned to the train.<br>
-          <strong><br>
+and is of course dependent on the car lengths assigned to the train.</td><td style="vertical-align: top;"><strong>
           Maximum Locos per Train</strong>
           <input name="textfield3" id="textfield3" type="text">
           <br>
 Now set the maximum number of locomotives that you want the program to
 assign to a train. If you don't want the program assigning engines, set
-this value to 0.<br>
-          <br>
-          <strong>Switch Time (minutes)</strong>
+this value to 0.</td><td style="vertical-align: top;"><strong>Switch Time (minutes)</strong>
           <input name="textfield4" id="textfield4" type="text">
-          <br>
-          <br>
-          <strong>Travel Time (minutes)</strong>
+</td><td style="vertical-align: top;"><strong>Travel Time (minutes)</strong>
           <input name="textfield5" id="textfield5" type="text">
           <br>
 The program when generating switch lists for the various locations on
@@ -165,345 +70,36 @@ the train's departure time and the switch and travel times. Enter the
 average number of minutes it takes to drop or pickup a car on your
 railroad. Then enter the average amount of time in minutes it takes to
 travel from one location to the another. Later when you create a <strong><a href="Ops_Routes.shtml">route</a></strong><br>
-          you will be able to increase or decrease the train's travel time betwee any two locations.<br>
-      </p></td>
-    </tr>
-    <tr>
-      <td colspan="2" align="left" valign="top"><p><strong>Car Types</strong>
+          you will be able to increase or decrease the train's travel time betwee any two locations</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="3" rowspan="1"><img style="width: 800px; height: 137px;" alt="car types" src="images/Ops_Setting08.png"></td></tr><tr><td style="vertical-align: top; width: 33%;"><p><strong>Car Types</strong>
         </p>
-        <p>
+        
         <input name="radio" id="radio" value="radio" checked="checked" type="radio">
         <strong>Descriptive </strong>
         <input name="radio2" id="radio2" value="radio2" type="radio">
         <strong>AAR Codes</strong><br>
-        The program has two sets of car types for you to use. <strong>Descriptive </strong>provides type names like <strong>Boxcar </strong>and <strong>Tankcar</strong>, and <strong>AAR</strong> provides type  names like <strong>XM</strong> and <strong>T</strong> for boxcars and tank cars respectively. Select  the one that you prefer.</p>
-        <p><strong>Unit of Length  
-        <input name="radio5" id="radio5" value="radio5" checked="checked" type="radio">
+        The program has two sets of car types for you to use. <strong>Descriptive </strong>provides type names like <strong>Boxcar </strong>and <strong>Tankcar</strong>, and <strong>AAR</strong> provides type  names like <strong>XM</strong> and <strong>T</strong> for boxcars and tank cars respectively. Select  the one that you prefer</td><td style="vertical-align: top; width: 33%;"><strong>Unit of Length  
+        <br><br><input name="radio5" id="radio5" value="radio5" checked="checked" type="radio">
         Feet 
         <input name="radio6" id="radio6" value="radio6" type="radio">
-        Meters</strong></p>
-        <p><strong>Optional Year Modeled</strong>
+        Meters</strong></td><td style="vertical-align: top;"><strong>Optional Year Modeled</strong>
           <input name="textfield7" id="textfield7" type="text">
           <br>
-          You can optionally enter the year you want printed on your train manifess.
-          <br>
-        <br>
-        <strong>Options</strong></p>
-        <p><br>
-        <input name="checkbox3" id="checkbox3" checked="checked" type="checkbox">
+          You can optionally enter the year you want printed on your train manifest.</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="4" rowspan="1"><img style="width: 797px; height: 153px;" alt="options" src="images/Ops_Setting09.png"></td></tr><tr><td style="width: 30%;"><span style="font-weight: bold;">Options</span><br><input name="checkbox3" id="checkbox3" checked="checked" type="checkbox">
         <strong>Add Operations Menu to Main Menu</strong><br>
 When selected, and saved, the operations menu will be added to the main
 menu bar the next time you start JMRI.. To remove it go through the
 same procedure&#8230; in the Settings window uncheck the box, &#8220;Save&#8221; the
-change and restart DecoderPro®. </p>
-        <p>&nbsp;</p>
-        <p><img src="images/Ops_Setting02.png" alt="operation menu" height="402" width="492"></p>
-        <p>
-          <input name="checkbox4" id="checkbox4" type="checkbox">
-        <strong>Close Windows on Save<br>
-        <input name="checkbox12" id="checkbox12" checked="checked" type="checkbox">
-        </strong> Auto Save<br>
-        <input name="checkbox13" id="checkbox13" checked="checked" type="checkbox">
-        Auto Backup</p>
-        <p><strong>Panel options</strong> will not be covered in this manual at this time. Panels are normally created as a part of PanelPro®<br>
-          <br>
-        <strong>Icon Colors</strong>  Not covered here and normally used with PanelPro®</p>
-        <p>
-          <input name="button4" id="button4" value="Restore" type="submit">
-will prompt you to select which set of backup files you wish to use to
+change and restart DecoderPro®.<br><p><img style="width: 300px; height: 245px;" alt="setting" src="images/Ops_Setting02.png"><br></p></td><td style="vertical-align: top; width: 20%;"><input name="checkbox4" id="checkbox4" type="checkbox">
+        <strong>Close Windows on Save</strong></td><td style="vertical-align: top; width: 10%;"><strong><input name="checkbox12" id="checkbox12" checked="checked" type="checkbox"><span style="font-weight: bold;">
+        </span></strong><span style="font-weight: bold;"> Auto Save</span></td><td style="vertical-align: top; width: 10%; font-weight: bold;"><small><input name="checkbox13" id="checkbox13" checked="checked" type="checkbox">
+        </small>Auto Backup</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td><img style="width: 800px; height: 132px;" alt="panel options" src="images/Ops_Setting10.png"></td></tr><tr><td><strong>Panel options</strong> will not be covered in this manual at this time. Panels are normally created as a part of PanelPro®</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td><img style="width: 799px; height: 196px;" alt="icon colors" src="images/Ops_Setting11.png"></td></tr><tr><td><strong>Icon Colors</strong>  Not covered here and normally used with PanelPro®</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="3" rowspan="1"><img style="width: 791px; height: 101px;" alt="buttons" src="images/Ops_Setting12.png"></td></tr><tr><td style="vertical-align: top;">The <span style="font-weight: bold;">Restore</span> button will prompt you to select which set of backup files you wish to use to
 recover your operation files. You must quit and restart DecoderPro® to
-complete the restoration of the operation files.<br>
-<br>
-          <input name="button3" id="button3" value="Backup" type="submit">
-          will store a copy of the operation files in a  new  directory in operations called <strong>backups</strong>,
+complete the restoration of the operation files.</td><td style="vertical-align: top;">The <span style="font-weight: bold;">Backup</span> button will store a copy of the operation files in a  new  directory in operations called <strong>backups</strong>,
 and then stores the operation files in a directory that is based on the
 day you created the backup. For example, if today was November 21,
-2008, the program will create a backup directory named <strong>2008_11_21</strong>.<br>
-        </p>
-        <p>
-          <input name="button" id="button" value="Save" type="submit">
-When you're finished with the settings window, press the save button to  store the setting in a file called <strong>Operations.xml.</strong> You can find this  file in your JMRI directory in a folder called <strong>operations</strong>. The program  will also create a backup file each time you press the
-<input name="button2" id="button2" value="Save" type="submit">
-<br>
-        </p></td>
-    </tr>
-</tbody></table>
-<hr>
+2008, the program will create a backup directory named <strong>2008_11_21</strong>.</td><td style="vertical-align: top;">When you're finished with the settings window, press the <span style="font-weight: bold;">Save</span> button to  store the setting in a file called <strong>Operations.xml.</strong> You can find this  file in your JMRI directory in a folder called <strong>operations</strong>. The program  will also create a backup file each time you press the <span style="font-weight: bold;">Save</span> button
+</td></tr></tbody></table><hr>
 	  
-  <h3><a name="Options"></a>Options Window</h3>
-  <p>The Options window allows you to set several options that can be modified.</p>
-  <table align="center" border="1" cellpadding="2" cellspacing="1" width="82%">
-    <tbody><tr>
-      <td colspan="2" valign="top"><p><img src="images/Ops_Setting_tool_options01.png" alt="options" height="235" width="409"></p></td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><p><strong>
-        <input name="radio3" id="radio3" value="radio3" checked="checked" type="radio">
-        Normal
-  <input name="radio4" id="radio4" value="radio4" type="radio">
-        Aggressive<br>
-      </strong>There
-are two build train options, normal and aggressive. Normal is
-recommended when you are beginning, as Normal builds guarantee that
-when a car is delivered(set out) by a train that there will be track
-space available for the car.</p>
-        <p>Aggressive builds makes the car's track space available as soon as a car is scheduled for a pickup. </p>
-      <p>Note that once you've built a train, the build option can not be changed until all trains are terminated or reset.</p></td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><strong>Switcher Service<br>
-        </strong>This
-set of options controls the local car movements. Normally, it is better
-not to allow a car to move from one spur directly to another spur in
-the same location. This type of move is very unrealistic.If you need
-these types of moves, select the appropriate checkbox.<strong><br>
-      </strong></td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><img src="images/Ops_Setting_tool_options02.png" alt="setting" height="219" width="473"></td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><p><strong>Staging
-        </strong></p>
-        <p>
-        <input name="checkbox5" id="checkbox5" checked="checked" type="checkbox">
-        <strong>Enable Type, Road and </strong>Load Restrictions into Staging<br>
-This opton restricts trains to staging tracks that only accept the
-train's rolling stock type, road and load names. This is useful when
-you want trains delivered to staging tracks based on the train's
-rolling stock restrictions. However, if you want certan car types, car
-loads, or road name to be transported by a train, but not delivered to
-staging, deselect this feature</p></td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><p>
-        <input name="checkbox11" id="checkbox11" type="checkbox"> 
-        Make departure track available after train is built (Greyed out in Normal mode)<br>
-When selected the departure track in staging becomes a available for
-other trains immediately after the departure train is built. For trains
-that return to same staging location, this option allow the train to
-return to the same track it departed on. This option is only available
-when using the aggessive mode for building trains.<br>
-      </p></td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><input name="checkbox6" id="checkbox6" type="checkbox">
-      <strong>Prompt for Departure Track from Staging<br>
-      </strong>If
-you would like the program to ask you which track a train should depart
-from staging during the train build, select this option. Normally,
-during the train build the program would select the least recently used
-track when determining the track to depart from. Note that the program
-will only prompt you if there are two or more trains availabe in
-staging that meet the train's requirements.</td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><input name="checkbox8" id="checkbox8" type="checkbox">
-        <strong>Prompt for Arrival Track from Stagiing</strong><br>
-If
-you would like the program to ask you which track a train should Arrive
-to staging during the train build, select this option. Normally, during
-the train build the program would select the least recently used track
-when determining the track to arrive on. Note that the program will
-only prompt you if there are two or more trains availabe in staging
-that meet the train's requirements.</td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><img style="width: 488px; height: 144px;" alt="options settings" src="images/Ops_Setting_tool_options03.png"><br></td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><p><strong>Car Routing Options
-        </strong></p>
-        <p>
-        <input name="checkbox7" id="checkbox7" checked="checked" type="checkbox">
-        <strong>Enable Car Routing<br>
-      </strong>When
-car routing is enabled, the program will use multiple trains to deliver
-a car to its final destination. It is recommended that you leave the
-option enabled. With car routing enabled, you can use a <strong><a href="Ops_schedule.shtml">Schedule</a></strong>
-to deliver a car to a specific location. The car routing algorithm will
-search for the most efficient rout for the car to travel. The algorithm
-will try to find a route using a maximum of five trains to complete the
-car move. Note that the program never gives up trying to route a car.
-If a car has been assigned a "Final Destination" the program will try
-and route the car after every move.</p></td>
-    </tr>
-    <tr><td colspan="2" rowspan="1"><input checked="checked" name="route" type="checkbox"><span style="font-weight: bold;">Enable Car Routing via Yards</span><br>Check if you want to allow car routing via your yards, then yards may be used if the most effiecient route.<span style="font-weight: bold;"></span></td></tr><tr>
-      <td colspan="2" valign="top"><p><img src="images/Ops_Setting_tool_options04.png" alt="options" height="149" width="411"></p>
-        <p><strong>Logging Options</strong></p>
-      <p>If
-you want the operations program to log your locomotive, car, or train
-movements to file, select the appropriate checkboxes. The program will
-create a new directory called logger in the operations directory. For
-each day's session the program will create a new file(.csv) using the
-day's date.</p></td>
-    </tr>
-    <tr>
-      <td colspan="2" valign="top"><p><img src="images/Ops_Setting_tool_options05.png" alt="ops settings" height="233" width="466"><br>
-To create your own custom manifest using a comma separated value (.csv)
-file, select this option. You can use a program like Excel to create a
-manifest to your liking. The manifest is located in the operations
-directory in a directory called <strong>csvManifests. </strong>Each
-line of the file starts with a two or three letter code, followed by
-the code's description, and then any parameters associated with the
-code. </p>
-      <p>
-        <input name="checkbox9" id="checkbox9" type="checkbox">
-        <strong>Enable Radio-Frequency Identification (RFID) Fields</strong> - This option allows the RFID to be renamed to anything you like and set the values that you want.</p>
-      <p>
-        <input name="checkbox10" id="checkbox10" type="checkbox">
-      <strong>Enable physical locations for Virtual Sound Decoder -</strong></p>
-      <p>&nbsp;</p></td>
-    </tr>
-    <tr>
-      <td valign="top" width="66%"><table align="center" border="0" cellpadding="2" cellspacing="1" width="90%">
-        <tbody><tr>
-          <td><strong>Code</strong></td>
-          <td><strong>Desription</strong></td>
-          <td><strong>Parameters</strong></td>
-        </tr>
-        <tr>
-          <td>AH</td>
-          <td><p>Add Helpers</p></td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>AT</td>
-          <td>Arrival Time</td>
-          <td>Time</td>
-        </tr>
-        <tr>
-          <td>CC</td>
-          <td>Change Locos and Caboose</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>CL</td>
-          <td>Change Locos</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>DT</td>
-          <td>Departure Time</td>
-          <td>Time</td>
-        </tr>
-        <tr>
-          <td>DTR</td>
-          <td>Departure Time Route</td>
-          <td>Time</td>
-        </tr>
-        <tr>
-          <td>LC</td>
-          <td>Location Comment</td>
-          <td>Comment</td>
-        </tr>
-        <tr>
-          <td>LN</td>
-          <td>Location Name</td>
-          <td>Name</td>
-        </tr>
-        <tr>
-          <td>NW</td>
-          <td>No Work</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>PC</td>
-          <td>Pick up car</td>
-          <td>See below</td>
-        </tr>
-        <tr>
-          <td>PL</td>
-          <td>Pick up loco</td>
-          <td>See below</td>
-        </tr>
-        <tr>
-          <td>RC</td>
-          <td>Route Comment</td>
-          <td>Comment</td>
-        </tr>
-        <tr>
-          <td>RH</td>
-          <td>Remove Helpers</td>
-          <td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td>RN</td>
-          <td>Railroad Name</td>
-          <td>Name</td>
-        </tr>
-        <tr>
-          <td>SC</td>
-          <td>Set out car</td>
-          <td>See below</td>
-        </tr>
-        <tr>
-          <td>SL</td>
-          <td>Set out loco</td>
-          <td>See below</td>
-        </tr>
-        <tr>
-          <td>TC</td>
-          <td>Train Comment</td>
-          <td>Comment</td>
-        </tr>
-        <tr>
-          <td>TD</td>
-          <td>Train Departs</td>
-          <td>Name</td>
-        </tr>
-        <tr>
-          <td>TL</td>
-          <td>Train Length</td>
-          <td>Length</td>
-        </tr>
-        <tr>
-          <td>TM</td>
-          <td>Train Manifest Description</td>
-          <td>Description</td>
-        </tr>
-        <tr>
-          <td>TN</td>
-          <td>Train Name</td>
-          <td>Name</td>
-        </tr>
-        <tr>
-          <td>TW</td>
-          <td>Train Weight</td>
-          <td>Weight</td>
-        </tr>
-        <tr>
-          <td>TT</td>
-          <td>Train Terminates</td>
-          <td>Name</td>
-        </tr>
-        <tr>
-          <td>VT </td>
-          <td>Valid</td>
-          <td>Month/Day, Year Time</td>
-        </tr>
-        <tr>
-          <td colspan="3">Time uses the format HourMinute</td>
-        </tr>
-        <tr>
-          <td colspan="3"><p>The
-car parametes for pick up car (PC) and set out car (SC) are road,
-number, type, length, load, color, location namel, track name,
-destination name, destination track name, owner name, kernel name, car
-comment, pick up comment, set out comment, C, F, H, RFID. Where C =
-Caboose, F = FRED, and H = Hazardous.</p>
-            <p>The loco
-parameters for pick up (PL) and set out loco (SL) are road, number,
-model, length, type, hp, location name, track name, destination name,
-destination track name, owner name, consist name, car comment, RFID.</p>
-            <p><a href="http://groups.yahoo.com/group/jmriusers/files/Operations" target="_blank">Examples of custom manifests</a> (requires that you have Yahoo ID and Password to JMRI Groups)</p></td>
-        </tr>
-      </tbody></table></td>
-      <td valign="top" width="34%">&nbsp;</td>
-    </tr>
-  </tbody></table>
-<p>&nbsp;</p>
-  <p align="right"><a href="#OptionsMenu">Back</a></p>
   <div align="right">
     <div align="right">
       <p><a href="Ops_Locations.shtml">Next</a></p>

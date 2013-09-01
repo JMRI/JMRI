@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/"><!-- /Style --></head>
-
 <body>
 <!--#include virtual="/Header" -->
 
@@ -22,41 +21,41 @@
 <h1>Manifest Print Options</h1>
 
 <div align="right">
-<p><a href="Ops_Settings.shtml">Back to Settings</a></p>
+<p><a href="Ops_Settings_menubar.shtml">Back to Settings</a></p>
 <p><a href="Ops_Trains.shtml">Back to Trains</a></p>
 </div>
 
 <hr>
-<p><img src="images/Ops_Print.png" alt="print" height="440" width="900">&nbsp;</p>
+<p style="text-align: center;"><img src="images/Ops_Print.png" alt="print" height="440" width="900">&nbsp;</p>
 <p>You can modify  how the program prints the train manifests and the amount of detail  that the build report provides.  </p>
 <h3><strong>Print   Options</strong><br>
   <br>
 </h3>
-<table border="1" cellpadding="2" cellspacing="1" width="90%">
+<table style="width: 90%;" border="0" cellpadding="2" cellspacing="1">
   <tbody><tr>
-    <td><img src="images/Ops_PrintOption_font.png" alt="fosnt" height="113" width="110"></td>
-    <td><img src="images/Ops_PrintOption_fontSize.png" alt="font size" height="208" width="110"></td>
-    <td><img src="images/Ops_printOption_MsgFmt.png" alt="message format" height="111" width="166"></td>
-    <td><img src="images/Ops_PrintOption_Orientation.png" height="96" width="110"></td>
-    <td><img src="images/Ops_PrintOption_color_pu.png" alt="pick up color" height="127" width="110"></td>
-    <td><img src="images/Ops_PrintOption_color_su.png" alt="set out color" height="126" width="110"></td>
-    <td><img src="images/Ops_PrintOption_color_move.png" alt="color move" height="111" width="110"></td>
-    <td><img src="images/Ops_PrintOption_SwitchList.png" alt="switch List" height="101" width="194"></td>
+    <td style="vertical-align: top;"><img src="images/Ops_PrintOption_font.png" alt="fosnt" height="113" width="110"></td>
+    <td style="vertical-align: top;"><img src="images/Ops_PrintOption_fontSize.png" alt="font size" height="208" width="110"></td>
+    <td style="vertical-align: top;"><img src="images/Ops_printOption_MsgFmt.png" alt="message format" height="111" width="166"></td>
+    <td style="vertical-align: top;"><img src="images/Ops_PrintOption_Orientation.png" height="96" width="110"></td>
+    <td style="vertical-align: top;"><img src="images/Ops_PrintOption_color_pu.png" alt="pick up color" height="127" width="110"></td>
+    <td style="vertical-align: top;"><img src="images/Ops_PrintOption_color_su.png" alt="set out color" height="126" width="110"></td>
+    <td style="vertical-align: top;"><img src="images/Ops_PrintOption_color_move.png" alt="color move" height="111" width="110"></td>
+    <td style="vertical-align: top;"><img src="images/Ops_PrintOption_SwitchList.png" alt="switch List" height="101" width="194"></td>
   </tr>
   <tr>
-    <td colspan="2"><div align="center">Select the desired <strong>Font</strong> and <strong>Size</strong></div></td>
-    <td>Select if you want manifest printed in tabular format. It works best with mono-spaced fonts, <strong>Courier</strong> or <strong>Monospaced</strong></td>
-    <td>page <strong>Orientation</strong></td>
-    <td><div align="center">Assign manifest print color for car or locomotive <strong>Pick Up</strong></div></td>
-    <td><div align="center">Assign manifest print color for car or locomotive <strong>Set Out</strong></div></td>
-    <td><div align="center">Assign manifest print color when the operation is to move a car from one track to another at same location</div></td>
-    <td><div align="center">Select if you want the Switch List in the same format as the Manifest</div></td>
+    <td style="vertical-align: top;" colspan="2"><div align="center">Select the desired <strong>Font</strong> and <strong>Size</strong></div></td>
+    <td style="vertical-align: top;">Select if you want manifest printed in tabular format. It works best with mono-spaced fonts, <strong>Courier</strong> or <strong>Monospaced</strong></td>
+    <td style="vertical-align: top;">page <strong>Orientation</strong></td>
+    <td style="vertical-align: top;"><div align="center">Assign manifest print color for car or locomotive <strong>Pick Up</strong></div></td>
+    <td style="vertical-align: top;"><div align="center">Assign manifest print color for car or locomotive <strong>Set Out</strong></div></td>
+    <td style="vertical-align: top;"><div align="center">Assign manifest print color when the operation is to move a car from one track to another at same location</div></td>
+    <td style="vertical-align: top;"><div align="center">Select if you want the Switch List in the same format as the Manifest</div></td>
   </tr>
 </tbody></table>
-<table border="1" cellpadding="2" cellspacing="1" width="90%">
+<table style="width: 90%;" border="0" cellpadding="2" cellspacing="1">
   <tbody><tr>
-    <td width="39%"><h4>Pick Up Locomotive Message Format</h4></td>
-    <td rowspan="5" valign="top" width="61%">You
+    <td style="width: 39%; vertical-align: top;"><h4>Pick Up Locomotive Message Format</h4></td>
+    <td rowspan="5" style="width: 61%; vertical-align: top;">You
 may customize the messages for your manifest and switch list printing.
 Select formats from dropdown menus. To remove an attribute select
 blank. The Prefixes in the text boxes may be edited. If you want to use
@@ -115,7 +114,7 @@ and select a file with the image you want to display. Each train in your roster 
 <hr>
 
 <div align="right">
-<p><a href="Ops_Settings.shtml">Back to Settings</a></p>
+<p><a href="Ops_Settings_menubar.shtml">Back to Settings</a></p>
 <p><a href="Ops_Trains.shtml">Back to Trains</a><a href="index.shtml#Main"></a></p>
 </div>
 
