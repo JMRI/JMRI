@@ -576,8 +576,7 @@ public class TrainCommon {
 	 */
 	protected void setoutUtilityCars(PrintWriter fileOut, List<String> carList, Car car, RouteLocation rl,
 			boolean isManifest) {
-		// TODO should we be using isLocal(car)?
-		boolean isLocal = car.getRouteLocation().equals(car.getRouteDestination()) && car.getTrack() != null;
+		boolean isLocal = isLocalMove(car);
 		StringBuffer buf = new StringBuffer(Setup.getDropCarPrefix());
 		String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
 		if (isLocal && isManifest) {
