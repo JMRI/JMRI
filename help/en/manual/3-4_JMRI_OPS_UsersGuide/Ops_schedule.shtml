@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/"><!-- /Style --></head>
-
 <body>
 <!--#include virtual="/Header" -->
 
@@ -21,7 +20,7 @@
 <h1>Operations Manifest Schedule</h1>
 
 <div align="right">
-<p><a href="Ops_Locations_Menu.html">back</a><a href="#"></a></p>
+<p><a href="Ops_Locations_Menu.shtml">back</a><a href="#"></a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
@@ -37,15 +36,14 @@ example, if you wanted two SP boxcars to be delivered followed by a
 tank car loaded with "Oil", you can create a schedule that will do
 exactly that. </p>
 <h4>Creating a Schedule</h4>
-<p>First open the<a href="Ops_Locations.shtml"> Locations </a>panel.</p>
-<p><img src="images/Ops_locations01.png" alt="locations" height="245" width="670"></p>
+<p>First open the<a style="font-weight: bold;" href="Ops_Locations.shtml"> Locations&nbsp;</a> window.</p>
+
+
 <p>Then press 
   <input name="button" id="button" value="Edit" type="submit"> 
-to the right of the location to open the <strong>Edit Location </strong>panel.</p>
-<p><img src="images/Ops_Schedule02.png" alt="schedule" height="544" width="777"></p>
+in the column to the right of the location that you desire to schedule and the&nbsp; <strong>Edit Location </strong>window will &nbsp;open.</p><p><img src="images/Ops_Schedule02.png" alt="schedule" height="544" width="777"></p>
 <p>To schedule a location, select 
-  <input name="button2" id="button2" value="Edit" type="button"> 
-to display the <strong>Edit Spur Track</strong> window. </p>
+  <input name="button2" id="button2" value="Edit" type="button"> in the column to the right to schedule the specific track at a location, then the&nbsp;<strong>Edit (Spur or other type of track) Track</strong> window will open.. </p>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
   <tbody><tr>
     <td width="44%"><input name="schedule" id="schedule" src="images/Ops_Schedule03.png" type="image"></td>
@@ -96,7 +94,7 @@ can still be placed at yards, staging, and interchanges. </p>
 <p>You can optionally use your staging tracks to empty cars with a
 "Schedule" load, and you can also optionally create "Schedule" loads
 using staging tracks. </p>
-<p>You can also access your Schedules from the <a href="Ops_Locations.shtml">Locations Tools menu</a>.
+<p><a name="Schedules"></a>You can also access your Schedules from the <a href="Ops_Locations.shtml">Locations Tools menu</a>.
 The Schedules table provides status for each schedule. Since you can
 assign a schedule to multiple spurs, the table also provides additional
 status for each of the spurs that use that particular schedule. The
@@ -107,7 +105,7 @@ spur. </p>
 <hr>
 
 <div align="right">
-<p><a href="Ops_Locations_Menu.html">back</a><a href="#"></a></p>
+<p><a href="Ops_Locations_Menu.shtml">back</a><a href="#"></a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 

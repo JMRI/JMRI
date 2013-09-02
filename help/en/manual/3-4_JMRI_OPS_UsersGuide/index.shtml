@@ -19,7 +19,7 @@
 <a name="Top"></a>
 <h1>JMRI® v3.4 Operations User's Guide</h1>
 <h1>&nbsp;</h1>
-<h3>9/1//2013</h3>
+<h3>9/2//2013</h3>
 <p>&nbsp;</p>
 <p><strong>JMRI is a Java-based cross-platform application for model railroaders. JMRi contains applications for:</strong></p>
 <p><strong>The programming of Digital
@@ -70,12 +70,12 @@ browser. </p>
 <ul>
   <li style="font-weight: bold;"><a href="Main_Main.shtml">Main Window</a></li>
   <li style="font-weight: bold;"><a href="Main_Menu.shtml">Menu Overview</a></li>
-  <ul><li><a style="font-weight: bold;" href="Main_Tool.shtml">Tools Menu</a>
+  <ul><li><span style="font-weight: bold;">Tools Menu</span>
     <ul>
       <li style="font-weight: bold;"></li>
       <li style="font-weight: bold;"></li>
       <li style="font-weight: bold;"></li>
-      <li style="font-weight: bold;"><a href="Ops_Settings.shtml">Operations</a><img src="images/arrow.gif" alt="arrow" height="9" width="20">        
+      <li style="font-weight: bold;">Operations<img src="images/arrow.gif" alt="arrow" height="9" width="20">        
         <ul>
           <li><a href="Ops_Settings.shtml">Settings</a> </li>
           <li><a href="Ops_Locations.shtml">Locations</a> </li>
@@ -90,15 +90,15 @@ browser. </p>
       <li></li>
     </ul>
   </li></ul>
-  <ul><li><a style="font-weight: bold;" href="Ops_Settings.shtml">Operations</a><img style="font-weight: bold;" src="images/arrow.gif" alt="arrow" height="9" width="20">
+  <ul><li><span style="font-weight: bold;">Operations Menu</span>
     <ul>
       <li style="font-weight: bold;"><a href="Ops_Settings.shtml">Settings</a>
         
       </li>
-      <ul style="font-weight: bold;"><li><a style="font-weight: normal; font-style: italic;" href="Ops_Settings_menubar.shtml">Menu Bar</a></li><ul><li><a href="Ops_Settings_Tools_Options.shtml"><span style="font-weight: normal; font-style: italic;">Tools/Options</span></a></li><li><span style="font-weight: normal; font-style: italic;"><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></span></li></ul></ul><li style="font-weight: bold;"><a href="Ops_Locations.shtml">Locations</a>
+      <ul style="font-weight: bold;"><li><a style="font-weight: normal; font-style: italic;" href="Ops_Settings_menubar.shtml">Menu Bar</a></li><ul><li><span style="font-weight: normal; font-style: italic;">Tools</span></li><ul><li><a href="Ops_Settings_Tools_Options.shtml"><span style="font-weight: normal; font-style: italic;">Options</span></a></li><li><span style="font-weight: normal; font-style: italic;"><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></span></li></ul></ul></ul><li style="font-weight: bold;"><a href="Ops_Locations.shtml">Locations</a>
         
       </li>
-      <ul><li style="font-weight: bold;"><a href="Ops_Locations_Menu.shtml"><span style="font-style: italic; font-weight: normal;">Menu Bar</span></a></li><ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;">Tools</span></li></ul></ul></ul><ul><ul><ul><ul><li><span style="font-weight: normal; font-style: italic;"><a href="Ops_schedule.shtml">Schedules</a></span></li></ul></ul></ul></ul><ul><ul><ul><ul><li style="font-weight: bold;"><a href="Ops_Locations_byCar.shtml"><span style="font-style: italic; font-weight: normal;">Modify Locations by Car Type</span></a></li></ul><ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Cars.shtml">Show Cars</a><br></span></li></ul></ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Locations_List.shtml">Locations List</a></span></li><ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Locations_SwitchList.shtml">Yardmaster</a></span></li><li style="font-weight: bold;"><a href="Ops_EditLocation.shtml"><span style="font-style: italic; font-weight: normal;">Edit Location</span></a></li></ul><li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_AddLocations.shtml">Add Locations</a></span></li><ul><li style="font-weight: bold;"><a href="Ops_AddSiding.shtml"><span style="font-weight: normal; font-style: italic;">Add Spur Track</span></a></li><li style="font-weight: bold;"><a href="Ops_AddYard.shtml"><span style="font-weight: normal; font-style: italic;">Add Yard Track</span></a></li><li style="font-weight: bold;"><a href="Ops_AddInterchange.shtml"><span style="font-weight: normal; font-style: italic;">Add Classification / Interchange Track</span></a></li><li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></span></li></ul></ul><li style="font-weight: bold;"><a href="Ops_EditLocation.shtml">Cars</a>
+      <ul><li style="font-weight: bold;"><a href="Ops_Locations_Menu.shtml"><span style="font-style: italic; font-weight: normal;">Menu Bar</span></a></li><ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;">Tools</span></li></ul></ul></ul><ul><ul><ul><ul><li><span style="font-weight: normal; font-style: italic;"><a href="Ops_schedule.shtml#Schedules">Schedules</a></span></li></ul></ul></ul></ul><ul><ul><ul><ul><li style="font-weight: bold;"><a href="Ops_Locations_byCar.shtml"><span style="font-style: italic; font-weight: normal;">Modify Locations by Car Type</span></a></li></ul><ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Cars.shtml">Show Cars</a><br></span></li></ul></ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Locations_List.shtml">Locations List</a></span></li><ul><li style="font-weight: bold;"><span style="font-style: italic; font-weight: normal;"><a href="Ops_Locations_SwitchList.shtml">Yardmaster button</a></span></li><li style="font-weight: bold;"><a href="Ops_EditLocation.shtml"><span style="font-style: italic; font-weight: normal;">Edit Location button</span></a></li></ul><li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_AddLocations.shtml">Add Locations</a></span></li><ul><li style="font-weight: bold;"><a href="Ops_AddSiding.shtml"><span style="font-weight: normal; font-style: italic;">Add Spur Track</span></a></li><li style="font-weight: bold;"><a href="Ops_AddYard.shtml"><span style="font-weight: normal; font-style: italic;">Add Yard Track</span></a></li><li style="font-weight: bold;"><a href="Ops_AddInterchange.shtml"><span style="font-weight: normal; font-style: italic;">Add Classification / Interchange Track</span></a></li><li style="font-weight: bold;"><span style="font-weight: normal; font-style: italic;"><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></span></li></ul></ul><li style="font-weight: bold;"><a href="Ops_EditLocation.shtml">Cars</a>
         <ul></ul>
       </li>
       <li style="font-weight: bold;"><a href="Ops_Engines.shtml">Locomotives</a>

@@ -10,7 +10,6 @@
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/"><!-- /Style --></head>
-
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
@@ -22,7 +21,7 @@
 <h1>Operations Modify Locations by Car Type Window</h1>
 
 <div align="right">
-<p><a href="Ops_Locations_Menu.html">Back </a></p>
+<p><a href="Ops_Locations_Menu.shtml">Back </a></p>
 </div>
 
 <hr>
@@ -72,7 +71,7 @@ you would like to copy, then select the <input name="checkbox2" id="checkbox2" c
 <hr>
 
 <div align="right">
-<p><a href="Ops_Locations_Menu.html">Back </a></p>
+<p><a href="Ops_Locations_Menu.shtml">Back </a></p>
 </div>
 
 <!--#include virtual="/Footer" -->

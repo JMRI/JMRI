@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en"><head>
+<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_Locations.shtml 18278 2011-08-23 19:50:23Z dat7719 $ --><title>Operations-Edit Locations Track</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+<body>
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+<div id="mainContent"><a name="Top"></a>
+<h1>Using JMRI® to Operate Trains</h1>
+<h1>Operations Edit Location Track Window</h1>
+<div align="right">
+<p><a href="Ops_EditLocation.shtml">Back</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+<hr>
+<p>The <span style="font-weight: bold;">Edit
+Track&nbsp;</span> window as shown is opened from the <span style="font-weight: bold;">Edit button &nbsp;column in
+the&nbsp;</span> Edit Location window
+for the selected&nbsp;location&nbsp;</p>
+<p>It will open a window with the title for the type of track in
+use.</p>
+<p style="margin-left: 40px;"><img style="width: 800px; height: 108px;" alt="edit spur" src="images/Ops_EditSpur.png"></p>
+<p style="margin-left: 40px;"><img style="width: 795px; height: 77px;" alt="edit yard" src="images/Ops_EditYardTrack02.png"></p>
+<p style="margin-left: 40px;"><img style="width: 798px; height: 78px;" alt="edit interchange" src="images/Ops_EditInterchange01.png"></p>
+
+<a href="Ops_EditLocation_menu.shtml"><span style="font-weight: bold;"></span></a><a href="Ops_EditLocation_trackMenu.shtml"><span style="font-weight: bold;">Menu Bar</span></a><br>
+<br><div style="margin-left: 40px;"><br>
+</div>
+<div align="right">
+<p><a href="Ops_EditLocation.shtml">Back<br>
+</a></p>
+<p><a href="index.shtml#Main">Back to Index</a></p>
+</div>
+<!--#include virtual="/Footer" -->
+</div>
+</body></html>
