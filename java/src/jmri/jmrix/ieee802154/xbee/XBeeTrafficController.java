@@ -157,7 +157,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
         // forward the message to the registered recipients,
         // which includes the communications monitor
         // return a notification via the Swing event queue to ensure proper thread
-        Runnable r = new RcvNotifier(reply, (XBeeListener) mLastSender, this);
+        Runnable r = new RcvNotifier(reply, mLastSender, this);
         try {
             javax.swing.SwingUtilities.invokeAndWait(r);
         } catch (Exception e) {
