@@ -210,8 +210,6 @@ Final release steps:
 ( ) Update the web site front page and downloads page:
      index.html download/Sidebar download/index.shtml releaselist
 
-( ) Update the "releaselist" file at the top of the web directory
-
 ( ) If the decoder definitions have changed, make a .zip file and send to:
     Graham Plowman: gppsoftware@gppsoftware.com
 
