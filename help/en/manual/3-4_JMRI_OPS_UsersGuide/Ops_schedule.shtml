@@ -1,16 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_schedule.shtml 18386 2011-09-07 08:33:40Z dat7719 $ -->
+<html lang="en"><head>
+<!-- Copyright ($Author: dat7719 $) 2009 --><!-- $Id: Ops_schedule.shtml 18386 2011-09-07 08:33:40Z dat7719 $ --><title>Operations-Schedules</title><!-- Style -->
 
 
 
 
 
-<title>Operations-Schedules</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
-<body>
+<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -34,7 +34,17 @@ control on the order types of cars will be delivered to a siding. You
 can also specify the road name for the type of car delivered. For
 example, if you wanted two SP boxcars to be delivered followed by a
 tank car loaded with "Oil", you can create a schedule that will do
-exactly that. </p>
+exactly that.</p>
+<p><a name="Schedules"></a>You can also access your Schedules from the <a href="Ops_Locations.shtml">Locations window Tools menu</a>.
+The Schedules table provides status for each schedule. Since you can
+assign a schedule to multiple spurs, the table also provides additional
+status for each of the spurs that use that particular schedule. The
+table also allows you the edit a schedule once its been assigned to a
+spur. </p>
+
+<p style="text-align: center;"><img src="images/Ops_Schedule07.png" alt="schedule" height="218" width="900"></p>
+<p> </p>
+
 <h4>Creating a Schedule</h4>
 <p>First open the<a style="font-weight: bold;" href="Ops_Locations.shtml"> Locations&nbsp;</a> window.</p>
 
@@ -93,16 +103,7 @@ also requests that particular load. However, cars with a Schedule load
 can still be placed at yards, staging, and interchanges. </p>
 <p>You can optionally use your staging tracks to empty cars with a
 "Schedule" load, and you can also optionally create "Schedule" loads
-using staging tracks. </p>
-<p><a name="Schedules"></a>You can also access your Schedules from the <a href="Ops_Locations.shtml">Locations Tools menu</a>.
-The Schedules table provides status for each schedule. Since you can
-assign a schedule to multiple spurs, the table also provides additional
-status for each of the spurs that use that particular schedule. The
-table also allows you the edit a schedule once its been assigned to a
-spur. </p>
-<p><img src="images/Ops_Schedule07.png" alt="schedule" height="218" width="900"></p>
-
-<hr>
+using staging tracks. </p><hr>
 
 <div align="right">
 <p><a href="Ops_Locations_Menu.shtml">back</a><a href="#"></a></p>
