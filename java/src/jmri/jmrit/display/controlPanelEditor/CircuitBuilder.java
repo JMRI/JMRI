@@ -110,7 +110,6 @@ public class CircuitBuilder  {
     /**
      * Makes menu for ControlPanelEditor
      * Called by ControlPanelEditor at init before contents have been loaded
-     * @return
      */
     protected JMenu makeMenu() {
         _circuitMenu = new JMenu(Bundle.getMessage("CircuitBuilder"));

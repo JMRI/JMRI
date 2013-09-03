@@ -79,7 +79,7 @@ public abstract class IEEE802154Node extends AbstractNode{
  
     /**
      * Set PAN address.
-     * @param byte array containing upper and lower bytes of the 
+     * @param addr byte array containing upper and lower bytes of the 
      * 16 bit PAN address. 
      */
     public void setPANAddress(byte addr[]){
@@ -97,7 +97,7 @@ public abstract class IEEE802154Node extends AbstractNode{
 
     /**
      * Set User address.
-     * @param byte array containing upper and lower bytes of the 
+     * @param addr byte array containing upper and lower bytes of the 
      * 16 bit user assigned address. 
      */
     public void setUserAddress(byte addr[]){
@@ -115,7 +115,7 @@ public abstract class IEEE802154Node extends AbstractNode{
 
     /**
      * Set global address.
-     * @param byte array containing bytes of the 64 bit global address. 
+     * @param addr byte array containing bytes of the 64 bit global address. 
      */
     public void setGlobalAddress(byte addr[]){
         globaladdress=addr;

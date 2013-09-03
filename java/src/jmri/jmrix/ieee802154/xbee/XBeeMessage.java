@@ -48,7 +48,7 @@ public class XBeeMessage extends jmri.jmrix.ieee802154.IEEE802154Message {
      * XBeeRequest message.
      * This is the message form that will generally be used by
      * the implementation.
-     * @param an XBeeRequest of bytes to send
+     * @param request an XBeeRequest of bytes to send
      */
     public  XBeeMessage(XBeeRequest request) {
         _nDataChars = request.getFrameData().length;
