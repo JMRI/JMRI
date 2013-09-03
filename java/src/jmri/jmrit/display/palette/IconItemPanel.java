@@ -61,8 +61,8 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public IconItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
-        super(parentFrame,  type, family, editor);
+    public IconItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
+        super(parentFrame,  type, editor);
         setToolTipText(Bundle.getMessage("ToolTipDragIcon"));
     }
     public void init() {
@@ -121,10 +121,10 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             }
             Iterator <String> iter = families.keySet().iterator();
             while (iter.hasNext()) {
-                _family = iter.next();
+                String family = iter.next();
+                _iconMap = families.get(family);
+                addIconsToPanel(_iconMap);
             }
-            _iconMap = families.get(_family);
-            addIconsToPanel(_iconMap);
         } else {
             // make create message todo!!!
             log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+" families.");

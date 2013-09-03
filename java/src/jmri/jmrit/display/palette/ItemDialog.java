@@ -18,15 +18,15 @@ import jmri.util.JmriJFrame;
 
 public class ItemDialog extends JmriJFrame {
 
-    protected ItemPanel _parent;
+//    protected ItemPanel _parent;
     protected String    _type;
-    protected String    _family;
+//    protected String    _family;
     
     private static ItemDialog _instance = null;		// only let one dialog at a time
 
     /**
     */
-    public ItemDialog(String type, String family, String title, ItemPanel parent) {
+    public ItemDialog(String type, String title) {
         super(title, true, true);
         if (_instance!=null) {
         	_instance.closeDialogs();
@@ -34,17 +34,17 @@ public class ItemDialog extends JmriJFrame {
         }
         _instance = this;
         _type = type;
-        _family = family;
-        _parent = parent;
+ //       _family = family;
+//        _parent = parent;
 //        setAlwaysOnTop(true);
     }
-
+/*
     protected void sizeLocate() {
         setSize(_parent.getSize().width, this.getPreferredSize().height);
         setLocationRelativeTo(_parent);
         setVisible(true);
         pack();
-    }
+    }*/
 
     protected String getDialogType() {
         return _type;
@@ -54,6 +54,7 @@ public class ItemDialog extends JmriJFrame {
        
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification="Null reference to singular version to allow gc earlier") 
     public void dispose() {
+    	closeDialogs();
     	super.dispose();
     	_instance = null;	// remove reference to allow gc
     	

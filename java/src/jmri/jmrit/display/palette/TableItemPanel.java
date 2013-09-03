@@ -62,6 +62,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     	if (!_initialized) {
             super.init();
             add(initTablePanel(_model, _editor), 0);      // top of Panel    		
+            _buttonPostion = 1;
     	}
     }
 
@@ -72,7 +73,8 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     public void init(ActionListener doneAction, HashMap<String, NamedIcon> iconMap) {
         super.init(doneAction, iconMap);
         add(initTablePanel(_model, _editor), 0);
-    }
+        _buttonPostion = 1;
+   }
     
     /**
     *  top Panel

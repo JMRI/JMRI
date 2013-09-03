@@ -31,24 +31,18 @@ public abstract class ItemPanel extends JPanel {
 
     protected JmriJFrame  _paletteFrame;
     protected String    _itemType;
-    protected String    _family;
     protected Editor    _editor;
-    protected boolean   _update = false;    // Editing existing icon, do not allow icon dragging. set in init()
     protected boolean   _initialized = false;    // Has init() been run
+    protected boolean   _update = false;    // Editing existing icon, do not allow icon dragging. set in init()
 	JTextField _linkName = new JTextField(30);
 
     /**
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
     * for the item in jmri.NamedBeanBundle.properties
     */
-    public ItemPanel(JmriJFrame parentFrame, String  type, String family, Editor editor) {
+    public ItemPanel(JmriJFrame parentFrame, String  type, Editor editor) {
         _paletteFrame = parentFrame;
         _itemType = type;
-        if (family!=null && family.trim().length()>0) {
-            _family = family;
-        } else {
-            _family = null;
-        }
         _editor = editor;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
@@ -71,29 +65,11 @@ public abstract class ItemPanel extends JPanel {
     	add(panel);
     }
 
-    /* Methods used upon return from Icon dialogs
-    * to update the panel for TableItemPanel item types.
-    */    
-    protected void addIconsToPanel(HashMap<String, NamedIcon> iconMap){
-    }
-    protected void setFamily(String family) {
-    }
-    protected void removeIconFamiliesPanel() {
-    }
-    protected void removeIconMap(String family) {
-    }
-    protected void reset() {
-      _paletteFrame.repaint();
-    }
-    protected void updateFamiliesPanel() {
-    }
     protected void closeDialogs() {
     } 
-    public void dispose() {
-    }    
-    public String getFamilyName() {
-        return _family;
-    }
+    protected void reset() {
+        _paletteFrame.repaint();
+      }
 
     protected final boolean isUpdate() {
     	return _update;

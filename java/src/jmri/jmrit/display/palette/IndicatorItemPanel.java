@@ -44,7 +44,11 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     	if (!_initialized) {
             super.init();
             _detectPanel= new DetectionPanel(this);
-            add(_detectPanel, 0);
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            panel.add(Box.createVerticalGlue());
+            panel.add(_detectPanel);
+            add(panel, 0);
     	}
     }
 
@@ -62,7 +66,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     * Init for conversion of plain track to indicator track
     */
     public void init(ActionListener doneAction) {
-        super.init(doneAction, null);
+        super.init(doneAction);
     }
 
     public void dispose() {

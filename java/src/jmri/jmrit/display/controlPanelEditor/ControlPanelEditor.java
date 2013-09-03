@@ -3,6 +3,7 @@ package jmri.jmrit.display.controlPanelEditor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 
 import jmri.jmrit.display.*;
@@ -18,16 +19,13 @@ import java.awt.dnd.*;
 import java.io.IOException;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.HashMap;
-import java.util.Map.Entry;
 import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
-import jmri.jmrit.display.palette.BackgroundItemPanel;
 import jmri.jmrit.display.palette.ItemPalette;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.TrackerTableAction;
@@ -139,6 +137,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         pack();
         setVisible(true);
  //       addKeyListener(this);
+        class makeCatalog extends SwingWorker<CatalogPanel, Object> {
+            @Override
+            public CatalogPanel doInBackground() {
+                return CatalogPanel.makeDefaultCatalog();
+            }
+        }
+        (new makeCatalog()).execute();
     }
     
     public void setDrawFrame(jmri.jmrit.display.controlPanelEditor.shape.DrawFrame f) {
@@ -490,6 +495,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         for (int k=0; k<flavors.length; k++) {
             if (_positionableListDataFlavor.equals(flavors[k])) {
                 try{
+                    @SuppressWarnings("unchecked")
                     List<Positionable> clipGroup = (List<Positionable>)clipboard.getData(_positionableListDataFlavor);
                     if (clipGroup!=null && clipGroup.size()>0) {
                         Positionable pos = clipGroup.get(0);

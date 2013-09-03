@@ -295,7 +295,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
                 String fileName = iconfiles.get(j).getText().trim();
                 if (fileName==null || fileName.length()==0) {
                     fileName = "resources/icons/misc/X-red.gif";
-                    log.warn("loadDefaultIcons: iconName= "+iconName+" in family "+familyName+" has no image file.");
+                    log.warn("loadDefaultFamilyMap: iconName= "+iconName+" in family "+familyName+" has no image file.");
                 }
                 NamedIcon icon = NamedIcon.getIconByName(fileName);                	
                 if (icon==null) {
@@ -399,23 +399,24 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
          _tabPane.add(new JScrollPane(itemPanel), Bundle.getMessage("MultiSensor"));
         _tabIndex.put("MultiSensor", itemPanel);
  
-        ItemPanel iconPanel = new IconItemPanel(palette, "Icon", null, editor);
+        ItemPanel iconPanel = new IconItemPanel(palette, "Icon", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Icon"));
         _tabIndex.put("Icon", itemPanel);
  
-        iconPanel = new BackgroundItemPanel(palette, "Background", null, editor);
+        iconPanel = new BackgroundItemPanel(palette, "Background", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Background")); 
         _tabIndex.put("Background", itemPanel);
 
-        iconPanel = new TextItemPanel(palette, "Text", null, editor);
+        iconPanel = new TextItemPanel(palette, "Text", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("Text"));     
         _tabIndex.put("Text", itemPanel);
 
         iconPanel = new RPSItemPanel(palette, "RPSReporter", null, editor);
+//        itemPanel.init();		// show panel on start
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("RPSReporter")); 
         _tabIndex.put("RPSReporter", itemPanel);
 
-        iconPanel = new ClockItemPanel(palette, "FastClock", null, editor);
+        iconPanel = new ClockItemPanel(palette, "FastClock", editor);
         _tabPane.add(new JScrollPane(iconPanel), Bundle.getMessage("FastClock")); 
         _tabIndex.put("FastClock", itemPanel);
 
@@ -508,7 +509,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         	javax.swing.JViewport vp = (javax.swing.JViewport)((JScrollPane)comps[i]).getComponent(0);
             java.awt.Component ip = vp.getView();
         	if (ip instanceof ItemPanel) {
-                ((ItemPanel)ip).dispose();                		
+                ((ItemPanel)ip).closeDialogs();                		
         	}
         }
         super.windowClosing(e);
@@ -548,10 +549,10 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
         Iterator <String> iter = ItemPalette.getFamilyMaps(type).keySet().iterator();
         if (familyNameOK(frame, type, family, iter)) {
             getFamilyMaps(type).put(family, iconMap);
-            ItemPanel itemPanel = _tabIndex.get(type);
+/*            ItemPanel itemPanel = _tabIndex.get(type);
             if (itemPanel instanceof FamilyItemPanel) {
             	((FamilyItemPanel)itemPanel).updateFamiliesPanel();
-            }
+            }*/
             ImageIndexEditor.indexChanged(true);
             return true;
         }

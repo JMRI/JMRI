@@ -422,6 +422,7 @@ public class EditPortalFrame extends jmri.util.JmriJFrame implements ListSelecti
             	}
             }
             if (!portal.equals(p) && duplicate) {
+                // P cannot be null if duplicate==true
                 JOptionPane.showMessageDialog(this, Bundle.getMessage("parallelPortal",
                 		portal.getName(), p.getName(),toBlock.getDisplayName(), fromBlock.getDisplayName()), 
                         Bundle.getMessage("makePortal"), JOptionPane.INFORMATION_MESSAGE);

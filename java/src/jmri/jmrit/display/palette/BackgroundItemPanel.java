@@ -32,8 +32,8 @@ public class BackgroundItemPanel extends IconItemPanel {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public BackgroundItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
-        super(parentFrame, type, family, editor);
+    public BackgroundItemPanel(JmriJFrame parentFrame, String type, Editor editor) {
+        super(parentFrame, type, editor);
         _level = Editor.BKG;
     }
 
